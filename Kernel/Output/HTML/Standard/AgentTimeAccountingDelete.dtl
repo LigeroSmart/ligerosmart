@@ -1,0 +1,56 @@
+# --
+# AgentTimeAccountingDelete.dtl - provides HTML form for delete a day of timeaccounting
+# Copyright (C) 2003-2005 OTRS GmbH, http://www.otrs.de/
+# --
+# $Id: AgentTimeAccountingDelete.dtl,v 1.1.1.1 2005-09-05 12:18:43 tr Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# --
+<!-- start form -->
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+  <tr>
+    <td class="mainhead">
+      $Env{"Box0"}$Text{"Delete"}: $Text{"TimeAccounting of"} $QData{"Year"}-$QData{"Month"}-$QData{"Day"}$Env{"Box1"}
+    </td>
+  </tr>
+#  <tr>
+#    <td class="menu">
+#      <a href="$Env{"Baselink"}$Env{"LastScreenView"}" class="menuitem">$Text{"Back"}</a>
+#    </td>
+#  </tr>
+  <tr>
+    <td class="mainbody">
+      <br>
+      <table border="0" width="350" align="center" cellspacing="0" cellpadding="4">
+        <tr>
+          <td colspan="2" class="contenthead">$Text{"Options"}</td>
+        </tr>
+        <tr>
+          <td class="contentbody">
+            <table border="0" cellspacing="0" cellpadding="3">
+              <tr>
+                <td class="contentkey"  >$Text{"Delete"}: </td>
+                <td class="contentvalue">$Text{"TimeAccounting of"} $QData{"Year"}-$QData{"Month"}-$QData{"Day"}</td>
+              </tr>
+              <tr>
+                <td colspan="2">&nbsp;</td>
+              </tr>
+              <tr>
+                <td colspan="2" class="contentkey">$Text{"Do you really want to delete this Object"}?</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td class="contentfooter" class="contentvalue">
+            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Edit&Year=$QData{"Year"}&Month=$QData{"Month"}&Day=$QData{"Day"}"">$Text{"No"}</a> <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Delete&Year=$QData{"Year"}&Month=$QData{"Month"}&Day=$QData{"Day"}">$Text{"Yes"}</a>
+          </td>
+        </tr>
+      </table>
+      <br>
+    </td>
+  </tr>
+</table>
+<!-- end form -->
