@@ -1,0 +1,25 @@
+# --
+# TODO - todo list of TimeAccounting
+# Copyright (C) 2003-2005 OTRS GmbH, http://www.otrs.com/
+# --
+# $Id: TODO.TimeAccounting,v 1.1 2005-12-21 17:33:33 tr Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# --
+
+2.1
+- change SysConfigSetting for PreApplication from String to Arrayversion
+
+2.2
+-
+
+3.0
+-
+
+misc (not scheduled yet - nobody is working on it yet)
+-
+
+ideas (just ideas - nobody is working on it)
+-
