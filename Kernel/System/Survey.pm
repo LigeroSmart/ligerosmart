@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - manage all survey module events
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: Survey.pm,v 1.2 2006-03-11 11:20:29 mh Exp $
+# $Id: Survey.pm,v 1.3 2006-03-11 11:36:47 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -13,9 +13,10 @@ package Kernel::System::Survey;
 
 use strict;
 use Digest::MD5;
+use Kernel::System::Email;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.2 $';
+$VERSION = '$Revision: 1.3 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -28,6 +29,8 @@ sub new {
     foreach (qw(DBObject ConfigObject LogObject TimeObject UserObject UserID)) {
         $Self->{$_} = $Param{$_} || die "Got no $_!";
     }
+
+    $Self->{SendmailObject} = Kernel::System::Email->new(%Param);
 
     return $Self;
 }
@@ -1024,7 +1027,7 @@ sub RequestSend {
     my $Self = shift;
     my %Param = @_;
     # check needed stuff
-    foreach (qw(TicketID)) {
+    foreach (qw(TicketID From To Subject Body)) {
       if (!defined ($Param{$_})) {
         $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
         return;
@@ -1048,13 +1051,21 @@ sub RequestSend {
 
     if ($Master[0] > 0) {
         $Self->{DBObject}->Do(
-            SQL => "INSERT INTO survey_request (ticket_id, public_survey_key, send_time, survey_id) VALUES (".
-                        "'$Param{TicketID}', ".
+            SQL => "INSERT INTO survey_request (ticket_id, survey_id, valid_id, public_survey_key, send_time) VALUES (".
+                        "$Param{TicketID}, ".
+                        "$Master[0], ".
+                        "1, ".
                         "'$PublicSurveyKey', ".
-                        "current_timestamp, ".
-                        "$Master[0])"
+                        "current_timestamp)"
             );
 
+            $Self->{SendmailObject}->Send(
+                From => $Param{From},
+                To => $Param{To},
+                Subject => $Param{Subject},
+                Type => 'text/plain',
+                Body => $Param{Body}
+            );
     }
 }
 
