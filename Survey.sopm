@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-  <CVS>$Id: Survey.sopm,v 1.3 2006-03-11 11:24:15 mh Exp $</CVS>
+  <CVS>$Id: Survey.sopm,v 1.4 2006-03-11 12:22:29 martin Exp $</CVS>
   <Name>Survey</Name>
   <Version>0.1.0</Version>
   <Framework>2.0.x</Framework>
@@ -21,9 +21,9 @@
     <File Permission="644" Location="Kernel/Language/de_PublicSurvey.pm"></File>
     <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurvey.dtl"></File>
     <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicSurvey.dtl"></File>
-    <File Permission="644" Location="var/httpd/htdocs/images/Standard/Survey.png"></File>
+    <File Permission="644" Location="var/httpd/htdocs/images/Standard/survey.png"></File>
   </Filelist>
-  <DatabaseInstall></DatabaseInstall>
+  <DatabaseInstall>
     <TableCreate Name="survey">
       <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
       <Column Name="number" Required="true" Size="250" Type="VARCHAR"/>
@@ -75,7 +75,14 @@
       <Column Name="vote_value" Required="true" Size="1000" Type="VARCHAR"/>
       <Column Name="create_time" Required="true" Type="DATE"/>
     </TableCreate>
+  </DatabaseInstall>
   <DatabaseUpgrade></DatabaseUpgrade>
   <DatabaseReinstall></DatabaseReinstall>
-  <DatabaseUninstall></DatabaseUninstall>
+  <DatabaseUninstall>
+    <TableDrop Name="survey">
+    <TableDrop Name="survey_answer">
+    <TableDrop Name="survey_question">
+    <TableDrop Name="survey_request">
+    <TableDrop Name="survey_vote">
+  </DatabaseUninstall>
 </otrs_package>
