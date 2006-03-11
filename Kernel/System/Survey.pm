@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - manage all survey module events
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: Survey.pm,v 1.1 2006-03-11 09:46:25 mh Exp $
+# $Id: Survey.pm,v 1.2 2006-03-11 11:20:29 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -12,9 +12,10 @@
 package Kernel::System::Survey;
 
 use strict;
+use Digest::MD5;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.1 $';
+$VERSION = '$Revision: 1.2 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -1034,7 +1035,10 @@ sub RequestSend {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
     }
 
-    my $PublicSurveyKey = "test";
+    # create PublicSurveyKey
+    my $md5 = Digest::MD5->new();
+    $md5->add($Self->{TimeObject}->SystemTime() . int(rand(999999999)));
+    my $PublicSurveyKey = $md5->hexdigest;
 
     # sql for event
     $Self->{DBObject}->Prepare(SQL => "SELECT id ".
