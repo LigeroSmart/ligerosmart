@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-  <CVS>$Id: Survey.sopm,v 1.1.1.1 2006-03-11 08:29:11 martin Exp $</CVS>
+  <CVS>$Id: Survey.sopm,v 1.2 2006-03-11 11:18:19 mh Exp $</CVS>
   <Name>Survey</Name>
-  <Version>1.0.1</Version>
-  <Framework>2.1.x</Framework>
+  <Version>0.1.0</Version>
+  <Framework>2.0.x</Framework>
   <Vendor>OTRS GmbH</Vendor>
   <URL>http://otrs.org/</URL>
   <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
@@ -21,8 +21,59 @@
     <File Permission="644" Location="Kernel/Language/de_PublicSurvey.pm"></File>
     <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurvey.dtl"></File>
     <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicSurvey.dtl"></File>
+    <File Permission="644" Location="var/httpd/htdocs/images/Standard/Survey.png"></File>
   </Filelist>
   <DatabaseInstall></DatabaseInstall>
+    <TableCreate Name="survey">
+      <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
+      <Column Name="number" Required="true" Size="250" Type="VARCHAR"/>
+      <Column Name="title" Required="false" Size="250" Type="VARCHAR"/>
+      <Column Name="introduction" Required="false" Size="1000" Type="VARCHAR"/>
+      <Column Name="description" Required="false" Size="1000" Type="VARCHAR"/>
+      <Column Name="master" Required="true" Size="10" Type="VARCHAR"/>
+      <Column Name="valid" Required="true" Size="10" Type="VARCHAR"/>
+      <Column Name="valid_once" Required="true" Size="10" Type="VARCHAR"/>
+      <Column Name="create_time" Required="true" Type="DATE"/>
+      <Column Name="create_by" Required="true" Type="INTEGER"/>
+      <Column Name="change_time" Required="true" Type="DATE"/>
+      <Column Name="change_by" Required="true" Type="INTEGER"/>
+    </TableCreate>
+    <TableCreate Name="survey_answer">
+      <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
+      <Column Name="question_id" Required="true" Type="BIGINT"/>
+      <Column Name="answer" Required="true" Size="250" Type="VARCHAR"/>
+      <Column Name="position" Required="true" Type="INTEGER"/>
+      <Column Name="create_time" Required="true" Type="DATE"/>
+      <Column Name="create_by" Required="true" Type="INTEGER"/>
+      <Column Name="change_time" Required="true" Type="DATE"/>
+      <Column Name="change_by" Required="true" Type="INTEGER"/>
+    </TableCreate>
+    <TableCreate Name="survey_question">
+      <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
+      <Column Name="survey_id" Required="true" Type="BIGINT"/>
+      <Column Name="question" Required="true" Size="250" Type="VARCHAR"/>
+      <Column Name="type" Required="true" Type="SMALLINT"/>
+      <Column Name="position" Required="true" Type="SMALLINT"/>
+      <Column Name="create_time" Required="true" Type="DATE"/>
+      <Column Name="create_by" Required="true" Type="INTEGER"/>
+      <Column Name="change_time" Required="true" Type="DATE"/>
+      <Column Name="change_by" Required="true" Type="INTEGER"/>
+    </TableCreate>
+    <TableCreate Name="survey_request">
+      <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
+      <Column Name="ticket_id" Required="true" Type="BIGINT"/>
+      <Column Name="survey_id" Required="true" Type="BIGINT"/>
+      <Column Name="public_survey_key" Required="true" Size="250" Type="VARCHAR"/>
+      <Column Name="send_time" Required="true" Type="DATE"/>
+      <Column Name="vote_time" Required="true" Type="DATE"/>
+    </TableCreate>
+    <TableCreate Name="survey_vote">
+      <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
+      <Column Name="request_id" Required="true" Type="BIGINT"/>
+      <Column Name="question_id" Required="true" Type="BIGINT"/>
+      <Column Name="vote_value" Required="true" Size="1000" Type="VARCHAR"/>
+      <Column Name="create_time" Required="true" Type="DATE"/>
+    </TableCreate>
   <DatabaseUpgrade></DatabaseUpgrade>
   <DatabaseReinstall></DatabaseReinstall>
   <DatabaseUninstall></DatabaseUninstall>
