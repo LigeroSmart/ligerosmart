@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.0">
+  <CVS>$Id: Survey.sopm,v 1.1.1.1 2006-03-11 08:29:11 martin Exp $</CVS>
+  <Name>Survey</Name>
+  <Version>1.0.1</Version>
+  <Framework>2.1.x</Framework>
+  <Vendor>OTRS GmbH</Vendor>
+  <URL>http://otrs.org/</URL>
+  <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+  <ChangeLog>2006-03-11 New package</ChangeLog>
+  <Description Lang="en">A customer survey tool.</Description>
+  <Description Lang="de">Ein Kundenumfragen Werkzeug.</Description>
+  <BuildDate>?</BuildDate>
+  <BuildHost>?</BuildHost>
+  <Filelist>
+    <File Permission="644" Location="Kernel/Config/Files/Survey.xml"></File>
+    <File Permission="644" Location="Kernel/System/Survey.pm"></File>
+    <File Permission="644" Location="Kernel/Modules/AgentSurvey.pm"></File>
+    <File Permission="644" Location="Kernel/Modules/PublicSurvey.pm"></File>
+    <File Permission="644" Location="Kernel/Language/de_AgentSurvey.pm"></File>
+    <File Permission="644" Location="Kernel/Language/de_PublicSurvey.pm"></File>
+    <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurvey.dtl"></File>
+    <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicSurvey.dtl"></File>
+  </Filelist>
+  <DatabaseInstall></DatabaseInstall>
+  <DatabaseUpgrade></DatabaseUpgrade>
+  <DatabaseReinstall></DatabaseReinstall>
+  <DatabaseUninstall></DatabaseUninstall>
+</otrs_package>
