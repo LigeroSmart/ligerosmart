@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - manage all survey module events
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: Survey.pm,v 1.3 2006-03-11 11:36:47 mh Exp $
+# $Id: Survey.pm,v 1.4 2006-03-11 13:43:09 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -14,9 +14,11 @@ package Kernel::System::Survey;
 use strict;
 use Digest::MD5;
 use Kernel::System::Email;
+use Kernel::System::Ticket;
+use Kernel::System::CustomerUser;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.3 $';
+$VERSION = '$Revision: 1.4 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -26,11 +28,13 @@ sub new {
     my $Self = {};
     bless ($Self, $Type);
     # check needed objects
-    foreach (qw(DBObject ConfigObject LogObject TimeObject UserObject UserID)) {
+    foreach (qw(DBObject ConfigObject LogObject TimeObject UserObject)) {
         $Self->{$_} = $Param{$_} || die "Got no $_!";
     }
 
     $Self->{SendmailObject} = Kernel::System::Email->new(%Param);
+    $Self->{TicketObject} = Kernel::System::Ticket->new(%Param);
+    $Self->{CustomerUserObject} = Kernel::System::CustomerUser->new(%Param);
 
     return $Self;
 }
@@ -1026,8 +1030,9 @@ sub CountRequestComplete {
 sub RequestSend {
     my $Self = shift;
     my %Param = @_;
+    my $MasterID = '';
     # check needed stuff
-    foreach (qw(TicketID From To Subject Body)) {
+    foreach (qw(TicketID)) {
       if (!defined ($Param{$_})) {
         $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
         return;
@@ -1043,34 +1048,119 @@ sub RequestSend {
     $md5->add($Self->{TimeObject}->SystemTime() . int(rand(999999999)));
     my $PublicSurveyKey = $md5->hexdigest;
 
-    # sql for event
-    $Self->{DBObject}->Prepare(SQL => "SELECT id ".
-        " FROM survey WHERE master='yes' AND valid='yes' AND valid_once='yes'"
-        );
-    my @Master = $Self->{DBObject}->FetchrowArray();
-
-    if ($Master[0] > 0) {
-        $Self->{DBObject}->Do(
-            SQL => "INSERT INTO survey_request (ticket_id, survey_id, valid_id, public_survey_key, send_time) VALUES (".
-                        "$Param{TicketID}, ".
-                        "$Master[0], ".
-                        "1, ".
-                        "'$PublicSurveyKey', ".
-                        "current_timestamp)"
-            );
-
-            $Self->{SendmailObject}->Send(
-                From => $Param{From},
-                To => $Param{To},
-                Subject => $Param{Subject},
-                Type => 'text/plain',
-                Body => $Param{Body}
-            );
+    # find master survey
+    $Self->{DBObject}->Prepare(
+        SQL => "SELECT id FROM survey WHERE master='yes' AND valid='yes' AND valid_once='yes'"
+    );
+    while (my @Row = $Self->{DBObject}->FetchrowArray()) {
+        $MasterID = $Row[0];
     }
+    # if master survey exists
+    if ($MasterID > 0) {
+        my $Subject = $Self->{ConfigObject}->Get('Survey::NotificationSubject');
+        my $Body = $Self->{ConfigObject}->Get('Survey::NotificationBody');
+        # ticket data
+        my %Ticket = $Self->{TicketObject}->TicketGet(TicketID => $Param{TicketID});
+        foreach (keys %Ticket) {
+            if (defined($Ticket{$_})) {
+                $Subject =~ s/<OTRS_TICKET_$_>/$Ticket{$_}/gi;
+                $Body =~ s/<OTRS_TICKET_$_>/$Ticket{$_}/gi;
+            }
+        }
+        # cleanup
+        $Subject =~ s/<OTRS_TICKET_.+?>/-/gi;
+        $Body =~ s/<OTRS_TICKET_.+?>/-/gi;
+        # replace config options
+        $Subject =~ s{<OTRS_CONFIG_(.+?)>}{$Self->{ConfigObject}->Get($1)}egx;
+        $Body =~ s{<OTRS_CONFIG_(.+?)>}{$Self->{ConfigObject}->Get($1)}egx;
+        # cleanup
+        $Subject =~ s/<OTRS_CONFIG_.+?>/-/gi;
+        $Body =~ s/<OTRS_CONFIG_.+?>/-/gi;
+        # get customer data and replace it with <OTRS_CUSTOMER_DATA_...
+        my %CustomerUser = ();
+        if ($Ticket{CustomerUserID}) {
+            %CustomerUser = $Self->{CustomerUserObject}->CustomerUserDataGet(
+                User => $Ticket{CustomerUserID},
+            );
+            # replace customer stuff with tags
+            foreach (keys %CustomerUser) {
+                if ($CustomerUser{$_}) {
+                    $Subject =~ s/<OTRS_CUSTOMER_DATA_$_>/$CustomerUser{$_}/gi;
+                    $Body =~ s/<OTRS_CUSTOMER_DATA_$_>/$CustomerUser{$_}/gi;
+                }
+            }
+        }
+        # cleanup all not needed <OTRS_CUSTOMER_DATA_ tags
+        $Subject =~ s/<OTRS_CUSTOMER_DATA_.+?>/-/gi;
+        $Body =~ s/<OTRS_CUSTOMER_DATA_.+?>/-/gi;
+        # replace key
+        $Subject =~ s/<OTRS_PublicSurveyKey>/$PublicSurveyKey/gi;
+        $Body =~ s/<OTRS_PublicSurveyKey>/$PublicSurveyKey/gi;
+        my $To = $CustomerUser{UserEmail};
+        if (!$To) {
+            my %Article = $Self->{TicketObject}->ArticleLastCustomerArticle(
+                TicketID => $Param{TicketID},
+            );
+            $To = $Article{From};
+        }
+        if ($To) {
+            # check if not survey should be send
+            if ($Self->{ConfigObject}->Get('Survey::SendNoSurveyRegExp')) {
+                if ($To =~ /$Self->{ConfigObject}->Get('Survey::SendNoSurveyRegExp')/i) {
+                    return 1;
+                }
+            }
+            # check if a survey is sent in the last time
+            if ($Self->{ConfigObject}->Get('Survey::SendPeriod')) {
+                my $LastSentTime = 0;
+                $Self->{DBObject}->Prepare(
+                    SQL => "SELECT send_time FROM ".
+                        " survey_request WHERE send_to = '".$Self->{DBObject}->Quote($To)."'"
+                );
+                while (my @Row = $Self->{DBObject}->FetchrowArray()) {
+                    $LastSentTime = $Row[0];
+                }
+                if ($LastSentTime) {
+                    $LastSentTime = $Self->{TimeObject}->TimeStamp2SystemTime(
+                        String => $LastSentTime,
+                    );
+                    if (($LastSentTime+($Self->{ConfigObject}->Get('Survey::SendPeriod')*60*60*24)) >
+                        $Self->{TimeObject}->SystemTime()) {
+                        return 1;
+                    }
+                }
+            }
+            # create a survey_request entry
+            $Self->{DBObject}->Do(
+                SQL => "INSERT INTO survey_request ".
+                    " (ticket_id, survey_id, valid_id, public_survey_key, send_to, send_time) ".
+                    " VALUES (".
+                    "$Param{TicketID}, ".
+                    "$MasterID, ".
+                    "1, ".
+                    "'".$Self->{DBObject}->Quote($PublicSurveyKey)."', ".
+                    "'".$Self->{DBObject}->Quote($To)."', ".
+                    "current_timestamp)"
+            );
+            # log action on ticket
+            $Self->{TicketObject}->HistoryAdd(
+                TicketID => $Param{TicketID},
+                CreateUserID => 1,
+                HistoryType => 'Misc',
+                Name => "Sent customer survey to $To.",
+            );
+            # send survey
+            $Self->{SendmailObject}->Send(
+                From => $Self->{ConfigObject}->Get('Survey::NotificationSender') || '',
+                To => $To,
+                Subject => $Subject,
+                Type => 'text/plain',
+                Body => $Body
+            );
+        }
+    }
+    return 1;
 }
-
-
-
 
 
 sub PublicSurveyGet {
