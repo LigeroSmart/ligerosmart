@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-  <CVS>$Id: Survey.sopm,v 1.2 2006-03-11 11:18:19 mh Exp $</CVS>
+  <CVS>$Id: Survey.sopm,v 1.3 2006-03-11 11:24:15 mh Exp $</CVS>
   <Name>Survey</Name>
   <Version>0.1.0</Version>
   <Framework>2.0.x</Framework>
@@ -63,6 +63,7 @@
       <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
       <Column Name="ticket_id" Required="true" Type="BIGINT"/>
       <Column Name="survey_id" Required="true" Type="BIGINT"/>
+      <Column Name="valid_id" Required="true" Type="SMALLINT"/>
       <Column Name="public_survey_key" Required="true" Size="250" Type="VARCHAR"/>
       <Column Name="send_time" Required="true" Type="DATE"/>
       <Column Name="vote_time" Required="true" Type="DATE"/>
