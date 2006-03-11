@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-  <CVS>$Id: Survey.sopm,v 1.4 2006-03-11 12:22:29 martin Exp $</CVS>
+  <CVS>$Id: Survey.sopm,v 1.5 2006-03-11 13:43:34 martin Exp $</CVS>
   <Name>Survey</Name>
   <Version>0.1.0</Version>
   <Framework>2.0.x</Framework>
@@ -65,6 +65,7 @@
       <Column Name="survey_id" Required="true" Type="BIGINT"/>
       <Column Name="valid_id" Required="true" Type="SMALLINT"/>
       <Column Name="public_survey_key" Required="true" Size="250" Type="VARCHAR"/>
+      <Column Name="send_to" Required="true" Size="250" Type="VARCHAR"/>
       <Column Name="send_time" Required="true" Type="DATE"/>
       <Column Name="vote_time" Required="true" Type="DATE"/>
     </TableCreate>
@@ -79,10 +80,10 @@
   <DatabaseUpgrade></DatabaseUpgrade>
   <DatabaseReinstall></DatabaseReinstall>
   <DatabaseUninstall>
-    <TableDrop Name="survey">
-    <TableDrop Name="survey_answer">
-    <TableDrop Name="survey_question">
-    <TableDrop Name="survey_request">
-    <TableDrop Name="survey_vote">
+    <TableDrop Name="survey"/>
+    <TableDrop Name="survey_answer"/>
+    <TableDrop Name="survey_question"/>
+    <TableDrop Name="survey_request"/>
+    <TableDrop Name="survey_vote"/>
   </DatabaseUninstall>
 </otrs_package>
