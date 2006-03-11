@@ -26,7 +26,7 @@
     </ConfigItem>
     <ConfigItem Name="PublicFrontend::Module###PublicSurvey" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the PublicSurvey object in the public Survey area.</Description>
-        <Description Lang="de">Frontendmodul-Registration fÃ¼r das PublicSurvey-Objekt im Ã¶ffentlichen Umfrage-Bereich.</Description>
+        <Description Lang="de">Frontendmodul-Registration für das PublicSurvey-Objekt im öffentlichen Umfrage-Bereich.</Description>
         <Group>Survey</Group>
         <SubGroup>Frontend::Public::ModuleRegistration</SubGroup>
         <Setting>
@@ -35,6 +35,47 @@
                 <NavBarName>Survey</NavBarName>
                 <Title>Survey</Title>
             </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Survey::NotificationSubject" Required="1" Valid="1">
+        <Description Lang="en">Subject for the notification email to customers about new survey.</Description>
+        <Description Lang="de">Betreff für die Benachrichtigungsmail an Kunden bzgl. neue Umfragen.</Description>
+        <Group>Survey</Group>
+        <SubGroup>Core</SubGroup>
+        <Setting>
+            <String Regex="">Help us with your feedback!</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Survey::NotificationBody" Required="1" Valid="1">
+        <Description Lang="en">Body for the notification email to customers about new survey.</Description>
+        <Description Lang="de">Body für die Benachrichtigungsmail an Kunden bzgl. neue Umfragen.</Description>
+        <Group>Survey</Group>
+        <SubGroup>Core</SubGroup>
+        <Setting>
+            <TextArea>Dear Customer,
+
+thanks for using our service. Help us to improve us and our services.
+
+Give us feedback what we can to:
+
+&lt;OTRS_CONFIG_HttpType&gt;://&lt;OTRS_CONFIG_FQDN&gt;/&lt;OTRS_CONFIG_ScriptAlias&gt;public.pl?Action=PublicSurvey&amp;PublicSurveyKey=&lt;OTRS_PublicSurveyKey&gt;
+
+Thanks for your help!
+
+Your OTRS-Team
+            </TextArea>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::EventModulePost###99-SurveySendRequest" Required="0" Valid="0">
+        <Description Lang="en">Ticket event module to send automatically survey email requests to customers if a ticket gets closed.</Description>
+        <Description Lang="de">Ticket Event Modul welches automatisch Umfragen-Emails an Kunden wenn deren Ticket geschlossen wird.</Description>
+        <Group>Survey</Group>
+        <SubGroup>Core</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::System::Ticket::Event::SurveySendRequest</Item>
+                <Item Key="Event">TicketStateUpdate</Item>
+            </Hash>
         </Setting>
     </ConfigItem>
 </otrs_config>
