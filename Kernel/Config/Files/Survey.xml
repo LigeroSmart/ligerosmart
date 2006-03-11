@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<otrs_config version="1.0" init="Application">
+    <ConfigItem Name="Frontend::Module###AgentSurvey" Required="0" Valid="1">
+        <Description Lang="en">All parameters for the Survey object in the agent interface.</Description>
+        <Description Lang="de">Alle Parameter des Befragungs-Objekts im Agent-Interface.</Description>
+        <Group>Survey</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Description>A Survey Module</Description>
+                <NavBarName>Survey</NavBarName>
+                <Title>Survey</Title>
+                <NavBar>
+                    <Description>A Survey Module</Description>
+                    <Name>Survey</Name>
+                    <Type>Menu</Type>
+                    <Block>ItemArea</Block>
+                    <Image>survey.png</Image>
+                    <Link>Action=AgentSurvey</Link>
+                    <NavBar>Survey</NavBar>
+                    <AccessKey>u</AccessKey>
+                    <Prio>8000</Prio>
+                </NavBar>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="PublicFrontend::Module###PublicSurvey" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the PublicSurvey object in the public Survey area.</Description>
+        <Description Lang="de">Frontendmodul-Registration für das PublicSurvey-Objekt im öffentlichen Umfrage-Bereich.</Description>
+        <Group>Survey</Group>
+        <SubGroup>Frontend::Public::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Description>Public Survey</Description>
+                <NavBarName>Survey</NavBarName>
+                <Title>Survey</Title>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+</otrs_config>
