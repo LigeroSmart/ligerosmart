@@ -59,6 +59,24 @@
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="Survey::SendPeriod" Required="0" Valid="1">
+        <Description Lang="en">Days starting from the latest customer survey email between no customer survey email is sent.</Description>
+        <Description Lang="de">Tage zwischen der letzten Kunden-Umfrage und den keine Kunden-Umfrage gesendet wird.</Description>
+        <Group>Survey</Group>
+        <SubGroup>Core</SubGroup>
+        <Setting>
+            <String Regex="">300</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Survey::NotificationSender" Required="0" Valid="0">
+        <Description Lang="en">Sender for the notification email to customers about new survey.</Description>
+        <Description Lang="de">Sender für die Benachrichtigungsmail an Kunden bzgl. neue Umfragen.</Description>
+        <Group>Survey</Group>
+        <SubGroup>Core</SubGroup>
+        <Setting>
+            <String Regex="">quality@example.com</String>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="Survey::NotificationSubject" Required="1" Valid="1">
         <Description Lang="en">Subject for the notification email to customers about new survey.</Description>
         <Description Lang="de">Betreff für die Benachrichtigungsmail an Kunden bzgl. neue Umfragen.</Description>
@@ -88,7 +106,16 @@ Your OTRS-Team
             </TextArea>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="Ticket::EventModulePost###99-SurveySendRequest" Required="0" Valid="0">
+    <ConfigItem Name="Survey::SendNoSurveyRegExp" Required="0" Valid="1">
+        <Description Lang="en">If this regex matches, no customer survey will be sent.</Description>
+        <Description Lang="de">Trifft dieser reguläre Ausdruck zu, wird keine Benachrichtigungsmail an Kunden bzgl. neue Umfragen gesendet.</Description>
+        <Group>Survey</Group>
+        <SubGroup>Core</SubGroup>
+        <Setting>
+            <String Regex="">(MAILER-DAEMON|postmaster|abuse)@.+?\..+?</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::EventModulePost###99-SurveySendRequest" Required="0" Valid="1">
         <Description Lang="en">Ticket event module to send automatically survey email requests to customers if a ticket gets closed.</Description>
         <Description Lang="de">Ticket Event Modul welches automatisch Umfragen-Emails an Kunden wenn deren Ticket geschlossen wird.</Description>
         <Group>Survey</Group>
@@ -96,7 +123,7 @@ Your OTRS-Team
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::Ticket::Event::SurveySendRequest</Item>
-                <Item Key="Event">TicketStateUpdate</Item>
+                <Item Key="Event">(TicketStateUpdate|StateSet)</Item>
             </Hash>
         </Setting>
     </ConfigItem>
