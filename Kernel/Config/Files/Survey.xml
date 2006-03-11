@@ -21,6 +21,28 @@
                     <AccessKey>u</AccessKey>
                     <Prio>8000</Prio>
                 </NavBar>
+                <NavBar>
+                    <Description>Overview</Description>
+                    <Name>Overview</Name>
+                    <Image>overview.png</Image>
+                    <Link>Action=AgentSurvey</Link>
+                    <Type></Type>
+                    <Block></Block>
+                    <NavBar>Survey</NavBar>
+                    <AccessKey>o</AccessKey>
+                    <Prio>100</Prio>
+                </NavBar>
+                <NavBar>
+                    <Description>New</Description>
+                    <Name>New</Name>
+                    <Image>new.png</Image>
+                    <Link>Action=AgentSurvey&amp;Subaction=SurveyAdd</Link>
+                    <Type></Type>
+                    <Block></Block>
+                    <NavBar>Survey</NavBar>
+                    <AccessKey>n</AccessKey>
+                    <Prio>200</Prio>
+                </NavBar>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
