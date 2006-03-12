@@ -96,7 +96,7 @@
 
 thanks for using our service. Help us to improve us and our services.
 
-Give us feedback what we can to:
+Give us feedback what we can do:
 
 &lt;OTRS_CONFIG_HttpType&gt;://&lt;OTRS_CONFIG_FQDN&gt;/&lt;OTRS_CONFIG_ScriptAlias&gt;public.pl?Action=PublicSurvey&amp;PublicSurveyKey=&lt;OTRS_PublicSurveyKey&gt;
 
