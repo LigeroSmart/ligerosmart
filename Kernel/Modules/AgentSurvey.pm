@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurvey.pm - a survey module
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: AgentSurvey.pm,v 1.1 2006-03-11 09:46:25 mh Exp $
+# $Id: AgentSurvey.pm,v 1.2 2006-03-14 16:16:11 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.1 $';
+$VERSION = '$Revision: 1.2 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 # --
@@ -121,10 +121,10 @@ sub Run {
                         $Data{AnswerID} = "Yes";
                         push(@AnswerList,\%Data);
 
-                        %Data = ();
-                        $Data{Answer} = "No";
-                        $Data{AnswerID} = "No";
-                        push(@AnswerList,\%Data);
+                        my %Data2 = ();
+                        $Data2{Answer} = "No";
+                        $Data2{AnswerID} = "No";
+                        push(@AnswerList,\%Data2);
                     }
                     else {
                         @AnswerList = $Self->{SurveyObject}->AnswerList(QuestionID=>$Question->{QuestionID});
@@ -166,11 +166,11 @@ sub Run {
 
                     push(@Answers,\%Data);
 
-                    %Data = ();
-                    $Data{Answer} = "not answered";
-                    $Data{AnswerPercent} = $Percent;
+                    my %Data2 = ();
+                    $Data2{Answer} = "not answered";
+                    $Data2{AnswerPercent} = $Percent;
 
-                    push(@Answers,\%Data);
+                    push(@Answers,\%Data2);
                 }
 
                 foreach my $Row(@Answers) {
@@ -190,7 +190,7 @@ sub Run {
             if ($RequestComplete > 0) {
                 $Self->{LayoutObject}->Block(
                     Name => 'SurveyEditStatsDetails',
-                    Data => {},
+                    Data => {SurveyID=>$SurveyID},
                 );
             }
         }
@@ -258,7 +258,7 @@ sub Run {
             }
             $Self->{LayoutObject}->Block(
                 Name => 'SurveyEditNewQuestion',
-                Data => {},
+                Data => {SurveyID=>$SurveyID},
             );
         }
 
@@ -276,14 +276,12 @@ sub Run {
 
     elsif ($Self->{Subaction} eq 'SurveySave') {
        my $SurveyID           = $Self->{ParamObject}->GetParam(Param => "SurveyID");
-       my $SurveyNumber       = $Self->{ParamObject}->GetParam(Param => "SurveyNumber");
        my $SurveyTitle        = $Self->{ParamObject}->GetParam(Param => "SurveyTitle");
        my $SurveyIntroduction = $Self->{ParamObject}->GetParam(Param => "SurveyIntroduction");
        my $SurveyDescription  = $Self->{ParamObject}->GetParam(Param => "SurveyDescription");
 
        $Self->{SurveyObject}->SurveySave(
                                          SurveyID=>$SurveyID,
-                                         SurveyNumber=>$SurveyNumber,
                                          SurveyTitle=>$SurveyTitle,
                                          SurveyIntroduction=>$SurveyIntroduction,
                                          SurveyDescription=>$SurveyDescription,
@@ -312,13 +310,11 @@ sub Run {
     }
 
     elsif ($Self->{Subaction} eq 'SurveyNew') {
-       my $SurveyNumber       = $Self->{ParamObject}->GetParam(Param => "SurveyNumber");
        my $SurveyTitle        = $Self->{ParamObject}->GetParam(Param => "SurveyTitle");
        my $SurveyIntroduction = $Self->{ParamObject}->GetParam(Param => "SurveyIntroduction");
        my $SurveyDescription  = $Self->{ParamObject}->GetParam(Param => "SurveyDescription");
 
        my $SurveyID = $Self->{SurveyObject}->SurveyNew(
-                                         SurveyNumber=>$SurveyNumber,
                                          SurveyTitle=>$SurveyTitle,
                                          SurveyIntroduction=>$SurveyIntroduction,
                                          SurveyDescription=>$SurveyDescription,
@@ -611,7 +607,7 @@ sub Run {
        return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=QuestionEdit&SurveyID=$SurveyID&QuestionID=$QuestionID");
     }
 
-    elsif ($Self->{Subaction} eq 'StatsOverview') {
+    elsif ($Self->{Subaction} eq 'Stats') {
         my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
 
         $Output = $Self->{LayoutObject}->Header(Title => 'Stats Overview');
@@ -619,7 +615,7 @@ sub Run {
 
         # print the main table.
         $Self->{LayoutObject}->Block(
-            Name => 'StatsOverview',
+            Name => 'Stats',
             Data => {SurveyID=>$SurveyID},
         );
 
@@ -629,7 +625,7 @@ sub Run {
             $Vote->{SurveyID} = $SurveyID;
 
             $Self->{LayoutObject}->Block(
-                Name => 'StatsOverviewVote',
+                Name => 'StatsVote',
                 Data => $Vote,
             );
         }

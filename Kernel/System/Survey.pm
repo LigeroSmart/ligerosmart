@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - manage all survey module events
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: Survey.pm,v 1.4 2006-03-11 13:43:09 martin Exp $
+# $Id: Survey.pm,v 1.5 2006-03-14 16:16:35 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Ticket;
 use Kernel::System::CustomerUser;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.4 $';
+$VERSION = '$Revision: 1.5 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -270,7 +270,7 @@ sub SurveySave {
     my $Self = shift;
     my %Param = @_;
     # check needed stuff
-    foreach (qw(UserID SurveyID SurveyNumber SurveyTitle SurveyIntroduction SurveyDescription)) {
+    foreach (qw(UserID SurveyID SurveyTitle SurveyIntroduction SurveyDescription)) {
       if (!defined ($Param{$_})) {
         $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
         return;
@@ -283,7 +283,6 @@ sub SurveySave {
     # sql for event
     $Self->{DBObject}->Do(
         SQL => "UPDATE survey SET ".
-                         "number='$Param{SurveyNumber}', ".
                          "title='$Param{SurveyTitle}', ".
                          "introduction='$Param{SurveyIntroduction}', ".
                          "description='$Param{SurveyDescription}', ".
@@ -297,7 +296,7 @@ sub SurveyNew {
     my $Self = shift;
     my %Param = @_;
     # check needed stuff
-    foreach (qw(UserID SurveyNumber SurveyTitle SurveyIntroduction SurveyDescription)) {
+    foreach (qw(UserID SurveyTitle SurveyIntroduction SurveyDescription)) {
       if (!defined ($Param{$_})) {
         $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
         return;
@@ -309,8 +308,7 @@ sub SurveyNew {
     }
     # sql for event
     $Self->{DBObject}->Do(
-        SQL => "INSERT INTO survey (number, title, introduction, description, master, valid, valid_once, create_time, create_by, change_time, change_by) VALUES (".
-                                                         "'$Param{SurveyNumber}', ".
+        SQL => "INSERT INTO survey (title, introduction, description, master, valid, valid_once, create_time, create_by, change_time, change_by) VALUES (".
                                                          "'$Param{SurveyTitle}', ".
                                                          "'$Param{SurveyIntroduction}', ".
                                                          "'$Param{SurveyDescription}', ".
@@ -324,7 +322,6 @@ sub SurveyNew {
         );
 
     my $SQL = "SELECT id FROM survey WHERE ".
-                  "number='$Param{SurveyNumber}' AND ".
                   "title='$Param{SurveyTitle}' AND ".
                   "introduction='$Param{SurveyIntroduction}' AND ".
                   "description='$Param{SurveyDescription}' ".
@@ -333,6 +330,12 @@ sub SurveyNew {
 
     my @Row = $Self->{DBObject}->FetchrowArray();
     my $SurveyID = $Row[0];
+
+    $Self->{DBObject}->Do(
+        SQL => "UPDATE survey SET ".
+                         "number='" . ($SurveyID + 10000) . "' ".
+                         "WHERE id='$SurveyID'",
+        );
 
     return $SurveyID;
 }
@@ -909,15 +912,16 @@ sub VoteList {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
     }
     # sql for event
-    my $SQL = "SELECT id, ticket_id, vote_time ".
-        " FROM survey_request WHERE survey_id=$Param{SurveyID} AND public_survey_key='' ORDER BY vote_time";
+    my $SQL = "SELECT id, ticket_id, send_time, vote_time ".
+        " FROM survey_request WHERE survey_id=$Param{SurveyID} AND valid_id=0 ORDER BY vote_time DESC";
     $Self->{DBObject}->Prepare(SQL => $SQL);
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
         my %Data = ();
 
         $Data{RequestID} = $Row[0];
         $Data{TicketID} = $Row[1];
-        $Data{VoteTime} = $Row[2];
+        $Data{SendTime} = $Row[2];
+        $Data{VoteTime} = $Row[3];
 
         push(@List,\%Data);
     }
@@ -1019,7 +1023,7 @@ sub CountRequestComplete {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
     }
     # sql for event
-    my $SQL = "SELECT COUNT(id) FROM survey_request WHERE survey_id='$Param{SurveyID}' AND public_survey_key=''";
+    my $SQL = "SELECT COUNT(id) FROM survey_request WHERE survey_id='$Param{SurveyID}' AND valid_id=0";
 
     $Self->{DBObject}->Prepare(SQL => $SQL);
     my @CountRequestComplete = $Self->{DBObject}->FetchrowArray();
@@ -1179,7 +1183,7 @@ sub PublicSurveyGet {
     }
     # sql for event
     $Self->{DBObject}->Prepare(SQL => "SELECT survey_id ".
-        " FROM survey_request WHERE public_survey_key='$Param{PublicSurveyKey}'"
+        " FROM survey_request WHERE public_survey_key='$Param{PublicSurveyKey}' AND valid_id=1"
         );
     my @SurveyID = $Self->{DBObject}->FetchrowArray();
 
@@ -1219,7 +1223,7 @@ sub PublicAnswerSave{
     }
     # sql for event
     $Self->{DBObject}->Prepare(SQL => "SELECT id ".
-        " FROM survey_request WHERE public_survey_key='$Param{PublicSurveyKey}'"
+        " FROM survey_request WHERE public_survey_key='$Param{PublicSurveyKey}' AND valid_id=1"
         );
     my @Row = $Self->{DBObject}->FetchrowArray();
     my $RequestID = $Row[0];
@@ -1235,7 +1239,7 @@ sub PublicAnswerSave{
     }
 }
 
-sub PublicSurveyKeyDelete {
+sub PublicSurveyInvalidSet {
     my $Self = shift;
     my %Param = @_;
     # check needed stuff
@@ -1259,7 +1263,7 @@ sub PublicSurveyKeyDelete {
     if ($RequestID > '0') {
         $Self->{DBObject}->Do(
             SQL => "UPDATE survey_request SET ".
-                         "public_survey_key='', ".
+                         "valid_id=0, ".
                          "vote_time=current_timestamp ".
                          "WHERE id=$RequestID"
             );

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-  <CVS>$Id: Survey.sopm,v 1.6 2006-03-12 20:26:58 martin Exp $</CVS>
+  <CVS>$Id: Survey.sopm,v 1.7 2006-03-14 16:15:38 mh Exp $</CVS>
   <Name>Survey</Name>
-  <Version>0.1.1</Version>
+  <Version>0.1.2</Version>
   <Framework>2.0.x</Framework>
   <Vendor>OTRS GmbH</Vendor>
   <URL>http://otrs.org/</URL>
   <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+  <ChangeLog>2006-03-15 A lot of Bugfixes</ChangeLog>
   <ChangeLog>2006-03-11 New package</ChangeLog>
   <Description Lang="en">A customer survey tool.</Description>
   <Description Lang="de">Ein Kundenumfragen Werkzeug.</Description>
@@ -27,7 +28,7 @@
   <DatabaseInstall>
     <TableCreate Name="survey">
       <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
-      <Column Name="number" Required="true" Size="250" Type="VARCHAR"/>
+      <Column Name="number" Required="true" Type="BIGINT"/>
       <Column Name="title" Required="false" Size="250" Type="VARCHAR"/>
       <Column Name="introduction" Required="false" Size="1000" Type="VARCHAR"/>
       <Column Name="description" Required="false" Size="1000" Type="VARCHAR"/>
