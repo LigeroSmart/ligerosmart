@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - manage all survey module events
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: Survey.pm,v 1.5 2006-03-14 16:16:35 mh Exp $
+# $Id: Survey.pm,v 1.6 2006-03-15 19:39:16 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Ticket;
 use Kernel::System::CustomerUser;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.5 $';
+$VERSION = '$Revision: 1.6 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -55,34 +55,10 @@ sub SurveyList {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
     }
     # sql for event
-    my $SQL = "SELECT id, number, title, master, valid, valid_once ".
-        " FROM survey ORDER BY create_time DESC";
+    my $SQL = "SELECT id FROM survey ORDER BY create_time DESC";
     $Self->{DBObject}->Prepare(SQL => $SQL);
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
-        my %Data = ();
-
-        $Data{SurveyID} = $Row[0];
-        $Data{SurveyNumber} = $Row[1];
-        $Data{SurveyTitle} = $Row[2];
-        $Data{SurveyMaster} = $Row[3];
-        $Data{SurveyValid} = $Row[4];
-        $Data{SurveyValidOnce} = $Row[5];
-
-        if ($Data{SurveyValid} eq 'No') {
-            $Data{SurveyStatus} = 'New';
-
-            if ($Data{SurveyValidOnce} eq 'Yes') {
-                $Data{SurveyStatus} = 'Invalid';
-            }
-        } else {
-            $Data{SurveyStatus} = 'Valid';
-
-            if ($Data{SurveyMaster} eq 'Yes') {
-                $Data{SurveyStatus} = 'Master';
-            }
-        }
-
-        push(@List,\%Data);
+        push(@List, $Row[0]);
     }
 
     return @List;
