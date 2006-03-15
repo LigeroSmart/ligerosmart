@@ -2,7 +2,7 @@
 # AgentSurvey.dtl - provides HTML form for AgentSurvey
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: AgentSurvey.dtl,v 1.5 2006-03-15 19:34:24 mh Exp $
+# $Id: AgentSurvey.dtl,v 1.6 2006-03-15 19:39:44 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -36,72 +36,35 @@
     </td>
   </tr>
   <tr>
-    <td class="mainbody">
+    <td class="mainbody" align="center">
 
       <br>
 
-      <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
-        <input type="hidden" name="Action" value="$Env{"Action"}">
-        <input type="hidden" name="Subaction" value="SurveyAdd">
-
-        <table border="0" width="700" align="center" cellspacing="0" cellpadding="4">
-          <tr>
-            <td colspan="4" class="contenthead">$Text{"Surveys"}</td>
-          </tr>
-          <tr>
-            <td class="contentbody">
-              <table border="0" width="100%">
-                <tr>
-                  <td class="contentkey" width="25">&nbsp;</td>
-                  <td class="contentkey" width="80">&nbsp;</td>
-                  <td class="contentkey">&nbsp;</td>
-                  <td class="contentkey" width="60">&nbsp;</td>
-                  <td class="contentkey" width="25">&nbsp;</td>
-                </tr>
-                <tr>
-                  <td class="contentkey" width="25">&nbsp;</td>
-                  <td class="contentkey" width="80">$Text{"Number"}</td>
-                  <td class="contentkey">$Text{"Title"}</td>
-                  <td class="contentkey" width="60">$Text{"Status"}</td>
-                  <td class="contentkey" width="25">&nbsp;</td>
-                </tr>
-                <tr>
-                  <td class="contentkey" width="25">&nbsp;</td>
-                  <td class="contentkey" width="80">&nbsp;</td>
-                  <td class="contentkey">&nbsp;</td>
-                  <td class="contentkey" width="60">&nbsp;</td>
-                  <td class="contentkey" width="25">&nbsp;</td>
-                </tr>
+      <table border="0" width="800" cellspacing="0" cellpadding="2">
+        <tr class="contenthead">
+          <td class="contentkey" width="20%">$Text{"Number"}</td>
+          <td class="contentkey" width="40%">$Text{"Title"}</td>
+          <td class="contentkey" width="20%">$Text{"Status"}</td>
+          <td class="contentkey" width="20%">$Text{"Created"}</td>
+        </tr>
 <!-- dtl:block:OverviewSurvey -->
-                <dtl set $Data{"State"} = "valid">
-                <dtl if ($Data{"SurveyMaster"} eq "Yes") { $Data{"State"} = "master"; }>
-                <dtl if ($Data{"SurveyValid"} ne "Yes") { $Data{"State"} = "novalid"; }>
-
-                <tr>
-                  <td class="contentkey" width="25">&nbsp;</td>
-                  <td class="$Data{"State"}" width="80"><a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Survey&SurveyID=$QData{"SurveyID"}">$QData{"SurveyNumber"}</a></td>
-                  <td class="$Data{"State"}">$QData{"SurveyTitle"}</td>
-                  <td class="$Data{"State"}" width="60">$Text{"$QData{"SurveyStatus"}"}</td>
-                  <td class="contentkey" width="25">&nbsp;</td>
-                </tr>
+        <dtl set $Data{"State"} = "valid">
+        <dtl if ($Data{"SurveyMaster"} eq "Yes") { $Data{"State"} = "master"; }>
+        <dtl if ($Data{"SurveyValid"} ne "Yes") { $Data{"State"} = "novalid"; }>
+        <dtl if ($Env{"Color"} eq "") { $Env{"Color"} = "searchpassive"; }>
+        <tr class="contentbody">
+          <td class="$Env{"Color"}"><a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Survey&SurveyID=$QData{"SurveyID"}">$QData{"SurveyNumber"}</a></td>
+          <td class="$Env{"Color"}">$QData{"SurveyTitle"}</td>
+          <td class="$Env{"Color"}">$Text{"$QData{"AAA"}"}</td>
+          <td class="$Env{"Color"}">$TimeLong{"$QData{"SurveyCreateTime"}"}</td>
+        </tr>
+        <dtl if ($Env{"Color"} eq "searchactive") { $Env{"Color"} = ""; }>
+        <dtl if ($Env{"Color"} eq "searchpassive") { $Env{"Color"} = "searchactive"; }>
 <!-- dtl:block:OverviewSurvey -->
-                <tr>
-                  <td class="contentkey" width="25">&nbsp;</td>
-                  <td class="contentkey" width="80">&nbsp;</td>
-                  <td class="contentkey">&nbsp;</td>
-                  <td class="contentkey" width="60">&nbsp;</td>
-                  <td class="contentkey" width="25">&nbsp;</td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-          <tr>
-            <td class="contentfooter">&nbsp;
-            </td>
-          </tr>
-        </table>
-      </form>
-
+        <tr class="contentfooter">
+          <td colspan="5">&nbsp;</td>
+        </tr>
+      </table>
       <br>
 
     </td>
