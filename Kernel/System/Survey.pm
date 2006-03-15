@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - manage all survey module events
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: Survey.pm,v 1.6 2006-03-15 19:39:16 martin Exp $
+# $Id: Survey.pm,v 1.7 2006-03-15 20:38:12 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,8 +18,22 @@ use Kernel::System::Ticket;
 use Kernel::System::CustomerUser;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.6 $';
+$VERSION = '$Revision: 1.7 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
+
+=head1 NAME
+
+Kernel::System::Survey - survey lib
+
+=head1 SYNOPSIS
+
+All survey functions. E. g. to add survey or and functions.
+
+=head1 PUBLIC INTERFACE
+
+=over 4
+
+=cut
 
 sub new {
     my $Type = shift;
@@ -39,6 +53,14 @@ sub new {
     return $Self;
 }
 
+=item SurveyList()
+
+to get a array list of all survey items
+
+    my @List = $Self->{SurveyObject}->SurveyList();
+
+=cut
+
 sub SurveyList {
     my $Self = shift;
     my %Param = @_;
@@ -50,10 +72,6 @@ sub SurveyList {
         return;
       }
     }
-    # db quote
-    foreach (keys %Param) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
-    }
     # sql for event
     my $SQL = "SELECT id FROM survey ORDER BY create_time DESC";
     $Self->{DBObject}->Prepare(SQL => $SQL);
@@ -63,6 +81,14 @@ sub SurveyList {
 
     return @List;
 }
+
+=item SurveyGet()
+
+to get all attributes of a survey
+
+    my %Survey = $Self->{SurveyObject}->SurveyGet(SurveyID => 123);
+
+=cut
 
 sub SurveyGet {
     my $Self = shift;
@@ -75,8 +101,8 @@ sub SurveyGet {
       }
     }
     # db quote
-    foreach (keys %Param) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
+    foreach (qw(SurveyID)) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql for event
     my $SQL = "SELECT id, number, title, introduction, description, master, valid, create_time, create_by, change_time, change_by ".
@@ -394,12 +420,12 @@ sub QuestionDelete {
     # sql for event
     $Self->{DBObject}->Do(
         SQL => "DELETE FROM survey_answer WHERE ".
-                    "question_id='$Param{QuestionID}'"
+                    "question_id = $Param{QuestionID}"
         );
     $Self->{DBObject}->Do(
         SQL => "DELETE FROM survey_question WHERE ".
-                    "id='$Param{QuestionID}' AND ".
-                    "survey_id='$Param{SurveyID}'"
+                    "id = $Param{QuestionID} AND ".
+                    "survey_id = $Param{SurveyID}"
         );
 }
 
@@ -419,16 +445,15 @@ sub QuestionSort {
     }
     # sql for event
     my $SQL = "SELECT id ".
-        " FROM survey_question WHERE survey_id=$Param{SurveyID} ORDER BY position";
+        " FROM survey_question WHERE survey_id = $Param{SurveyID} ORDER BY position";
     $Self->{DBObject}->Prepare(SQL => $SQL);
 
-    my $counter = 1;
+    my $Counter = 1;
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
         $Self->{DBObject}->Do(
-            SQL => "UPDATE survey_question SET position='$counter' WHERE id=$Row[0]",
+            SQL => "UPDATE survey_question SET position = '$Counter' WHERE id = $Row[0]",
         );
-
-        $counter++;
+        $Counter++;
     }
 }
 
