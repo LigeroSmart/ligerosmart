@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurvey.pm - a survey module
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: AgentSurvey.pm,v 1.2 2006-03-14 16:16:11 mh Exp $
+# $Id: AgentSurvey.pm,v 1.3 2006-03-15 19:06:36 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.2 $';
+$VERSION = '$Revision: 1.3 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 # --
@@ -63,31 +63,25 @@ sub Run {
         if ($Survey{SurveyValid} eq 'No')
         {
             $Self->{LayoutObject}->Block(
-                Name => 'SurveyMasterNo',
+                Name => 'SurveyValid',
                 Data => {%Survey},
             );
-            $Self->{LayoutObject}->Block(
-                Name => 'SurveyValidYes',
-                Data => {%Survey},
-            );
-
         }
         else
         {
-            $Self->{LayoutObject}->Block(
-                Name => 'SurveyMasterYes',
-                Data => {%Survey},
-            );
-
             if ($Survey{SurveyMaster} eq 'No') {
                 $Self->{LayoutObject}->Block(
-                    Name => 'SurveyValidYes',
+                    Name => 'SurveyValid',
+                    Data => {%Survey},
+                );
+                $Self->{LayoutObject}->Block(
+                    Name => 'SurveyMaster',
                     Data => {%Survey},
                 );
             }
             else {
                 $Self->{LayoutObject}->Block(
-                    Name => 'SurveyValidNo',
+                    Name => 'SurveyMaster',
                     Data => {%Survey},
                 );
             }
