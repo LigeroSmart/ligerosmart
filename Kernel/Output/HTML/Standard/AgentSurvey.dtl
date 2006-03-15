@@ -2,7 +2,7 @@
 # AgentSurvey.dtl - provides HTML form for AgentSurvey
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: AgentSurvey.dtl,v 1.4 2006-03-15 19:06:36 mh Exp $
+# $Id: AgentSurvey.dtl,v 1.5 2006-03-15 19:34:24 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -113,7 +113,7 @@
 <table border="0" width="100%" cellspacing="0" cellpadding="3" cols="1">
   <tr>
     <td class="mainhead">
-      $Env{"Box0"}$Text{"Overview"}: $Text{"Survey"}$Env{"Box1"}
+      $Env{"Box0"}$Text{"View"}: $Text{"Survey"}$Env{"Box1"}
     </td>
   </tr>
   <tr>
@@ -458,7 +458,6 @@
                           <tr>
                             <td class="contentkey" width="25">&nbsp;</td>
                             <td class="contentkey">&nbsp;</td>
-                            <td class="contentkey" width="25">&nbsp;</td>
                           </tr>
 <!-- dtl:block:SurveyEditQuestionsValidOnce -->
                           <tr>
@@ -473,16 +472,29 @@
                           <tr>
                             <td class="contentbody"><a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=QuestionEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}">$QData{"Question"}</a></td>
                             <td class="contentbody" align="right">
-                              <a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=QuestionUp&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}"><img border="0" src="$Env{"Images"}up-big.png"></a>
-                              <a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=QuestionDown&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}"><img border="0" src="$Env{"Images"}down-big.png"></a>
-                              <a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=QuestionDelete&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}">$Text{"Delete"}</a>
+                              <table border="0" align="right" cellspacing="0" cellpadding="0">
+                                <tr>
+                                  <td>
+                                    <a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=QuestionUp&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}"><img border="0" src="$Env{"Images"}up-big.png"></a>
+                                    <a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=QuestionDown&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}"><img border="0" src="$Env{"Images"}down-big.png"></a>&nbsp;&nbsp;
+                                  </td>
+                                  <td>
+                                    <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
+                                      <input type="hidden" name="Action" value="$Env{"Action"}">
+                                      <input type="hidden" name="Subaction" value="QuestionDelete">
+                                      <input type="hidden" name="SurveyID" value="$QData{"SurveyID"}">
+                                      <input type="hidden" name="QuestionID" value="$QData{"QuestionID"}">
+                                      <input class="button" type="submit" value="$Text{"Delete"}">
+                                    </form>
+                                  </td>
+                                </tr>
+                              </table>
                             </td>
                           </tr>
 <!-- dtl:block:SurveyEditQuestions -->
                           <tr>
                             <td class="contentkey" width="25">&nbsp;</td>
                             <td class="contentkey">&nbsp;</td>
-                            <td class="contentkey" width="25">&nbsp;</td>
                           </tr>
                         </table>
                       </td>
@@ -739,9 +751,24 @@
                             <tr>
                               <td class="contentbody"><input type="radio" name="Q1">&nbsp;<a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=AnswerEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}">$QData{"Answer"}</a></td>
                               <td class="contentbody" align="right">
-                                <a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=AnswerUp&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}"><img border="0" src="$Env{"Images"}up-big.png"></a>
-                                <a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=AnswerDown&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}"><img border="0" src="$Env{"Images"}down-big.png"></a>
-                                <a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=AnswerDelete&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}">$Text{"Delete"}</a>
+                                <table border="0" align="right" cellspacing="0" cellpadding="0">
+                                  <tr>
+                                    <td>
+                                      <a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=AnswerUp&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}"><img border="0" src="$Env{"Images"}up-big.png"></a>
+                                      <a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=AnswerDown&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}"><img border="0" src="$Env{"Images"}down-big.png"></a>&nbsp;&nbsp;
+                                    </td>
+                                    <td>
+                                      <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
+                                        <input type="hidden" name="Action" value="$Env{"Action"}">
+                                        <input type="hidden" name="Subaction" value="AnswerDelete">
+                                        <input type="hidden" name="SurveyID" value="$QData{"SurveyID"}">
+                                        <input type="hidden" name="QuestionID" value="$QData{"QuestionID"}">
+                                        <input type="hidden" name="AnswerID" value="$QData{"AnswerID"}">
+                                        <input class="button" type="submit" value="$Text{"Delete"}">
+                                      </form>
+                                    </td>
+                                  </tr>
+                                </table>
                               </td>
                             </tr>
 <!-- dtl:block:QuestionEdit2 -->
@@ -768,9 +795,24 @@
                             <tr>
                               <td class="contentbody"><input type="checkbox" name="Q1"><a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=AnswerEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}">$QData{"Answer"}</a></td>
                               <td class="contentbody" align="right">
-                                <a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=AnswerUp&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}"><img border="0" src="$Env{"Images"}up-big.png"></a>
-                                <a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=AnswerDown&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}"><img border="0" src="$Env{"Images"}down-big.png"></a>
-                                <a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=AnswerDelete&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}">$Text{"Delete"}</a>
+                                <table border="0" align="right" cellspacing="0" cellpadding="0">
+                                  <tr>
+                                    <td>
+                                      <a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=AnswerUp&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}"><img border="0" src="$Env{"Images"}up-big.png"></a>
+                                      <a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=AnswerDown&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}"><img border="0" src="$Env{"Images"}down-big.png"></a>&nbsp;&nbsp;
+                                    </td>
+                                    <td>
+                                      <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
+                                        <input type="hidden" name="Action" value="$Env{"Action"}">
+                                        <input type="hidden" name="Subaction" value="AnswerDelete">
+                                        <input type="hidden" name="SurveyID" value="$QData{"SurveyID"}">
+                                        <input type="hidden" name="QuestionID" value="$QData{"QuestionID"}">
+                                        <input type="hidden" name="AnswerID" value="$QData{"AnswerID"}">
+                                        <input class="button" type="submit" value="$Text{"Delete"}">
+                                      </form>
+                                    </td>
+                                  </tr>
+                                </table>
                               </td>
                             </tr>
 <!-- dtl:block:QuestionEdit3 -->
@@ -805,9 +847,7 @@
                   <td class="contentfooter">&nbsp;</td>
                 </tr>
               </table>
-
             </form>
-
             <br>
 
           </td>
@@ -829,9 +869,7 @@
         </tr>
         <tr>
           <td class="mainbody">
-
             <br>
-
             <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
               <input type="hidden" name="Action" value="$Env{"Action"}">
               <input type="hidden" name="Subaction" value="AnswerSave">
