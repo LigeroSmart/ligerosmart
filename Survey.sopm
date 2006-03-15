@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-  <CVS>$Id: Survey.sopm,v 1.7 2006-03-14 16:15:38 mh Exp $</CVS>
+  <CVS>$Id: Survey.sopm,v 1.8 2006-03-15 18:37:03 mh Exp $</CVS>
   <Name>Survey</Name>
   <Version>0.1.2</Version>
   <Framework>2.0.x</Framework>
@@ -28,7 +28,7 @@
   <DatabaseInstall>
     <TableCreate Name="survey">
       <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
-      <Column Name="number" Required="true" Type="BIGINT"/>
+      <Column Name="number" Required="true" Size="50" Type="VARCHAR"/>
       <Column Name="title" Required="false" Size="250" Type="VARCHAR"/>
       <Column Name="introduction" Required="false" Size="1000" Type="VARCHAR"/>
       <Column Name="description" Required="false" Size="1000" Type="VARCHAR"/>

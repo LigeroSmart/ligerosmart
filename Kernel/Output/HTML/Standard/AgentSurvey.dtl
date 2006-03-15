@@ -2,7 +2,7 @@
 # AgentSurvey.dtl - provides HTML form for AgentSurvey
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: AgentSurvey.dtl,v 1.2 2006-03-14 16:16:35 mh Exp $
+# $Id: AgentSurvey.dtl,v 1.3 2006-03-15 18:37:03 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -155,19 +155,19 @@
                 </tr>
                 <tr>
                   <td class="contentkey" width="25">&nbsp;</td>
-                  <td class="contentkey">$Text{"Number"}</td>
+                  <td class="contentkey">$Text{"Number"}:</td>
                   <td class="contentvalue">$QData{"SurveyNumber"}</td>
                   <td class="contentkey" width="25">&nbsp;</td>
                 </tr>
                 <tr>
                   <td class="contentkey" width="25">&nbsp;</td>
-                  <td class="contentkey">$Text{"Title"}</td>
+                  <td class="contentkey">$Text{"Title"}:</td>
                   <td class="contentvalue">$QData{"SurveyTitle"}</td>
                   <td class="contentkey" width="25">&nbsp;</td>
                 </tr>
                 <tr>
                   <td class="contentkey" width="25">&nbsp;</td>
-                  <td class="contentkey">$Text{"Introduction"}</td>
+                  <td class="contentkey">$Text{"Introduction"}:</td>
                   <td class="contentvalue">$QData{"SurveyIntroduction"}</td>
                   <td class="contentkey" width="25">&nbsp;</td>
                 </tr>
@@ -179,7 +179,7 @@
                 </tr>
                 <tr>
                   <td class="contentkey" width="25">&nbsp;</td>
-                  <td class="contentkey">$Text{"Internal"}&nbsp;$Text{"Description"}</td>
+                  <td class="contentkey">$Text{"Internal"}&nbsp;$Text{"Description"}:</td>
                   <td class="contentvalue">$QData{"SurveyDescription"}</td>
                   <td class="contentkey" width="25">&nbsp;</td>
                 </tr>
@@ -192,7 +192,7 @@
 <!-- dtl:block:SurveyMasterYes -->
                 <tr>
                   <td class="contentkey" width="25">&nbsp;</td>
-                  <td class="contentkey">$Text{"Master"}</td>
+                  <td class="contentkey">$Text{"Master"}:</td>
                   <td class="contentvalue">
                     <table width="100%" cellspacing="0" cellpadding="0">
                       <tr>
@@ -209,7 +209,7 @@
 <!-- dtl:block:SurveyMasterNo -->
                 <tr>
                   <td class="contentkey" width="25">&nbsp;</td>
-                  <td class="contentkey">$Text{"Master"}</td>
+                  <td class="contentkey">$Text{"Master"}:</td>
                   <td class="contentvalue">$Text{"$QData{"SurveyMaster"}"}</td>
                   <td class="contentkey" width="25">&nbsp;</td>
                 </tr>
@@ -217,7 +217,7 @@
 <!-- dtl:block:SurveyValidYes -->
                 <tr>
                   <td class="contentkey" width="25">&nbsp;</td>
-                  <td class="contentkey">$Text{"Valid"}</td>
+                  <td class="contentkey">$Text{"Valid"}:</td>
                   <td class="contentvalue">
                     <table width="100%" cellspacing="0" cellpadding="0">
                       <tr>
@@ -234,7 +234,7 @@
 <!-- dtl:block:SurveyValidNo -->
                 <tr>
                   <td class="contentkey" width="25">&nbsp;</td>
-                  <td class="contentkey">$Text{"Valid"}</td>
+                  <td class="contentkey">$Text{"Valid"}:</td>
                   <td class="contentvalue">$Text{"$QData{"SurveyValid"}"}</td>
                   <td class="contentkey" width="25">&nbsp;</td>
                 </tr>
@@ -247,13 +247,13 @@
                 </tr>
                 <tr>
                   <td class="contentkey" width="25">&nbsp;</td>
-                  <td class="contentkey">$Text{"Created"}</td>
+                  <td class="contentkey">$Text{"Created"}:</td>
                   <td class="contentvalue">$TimeLong{"$Data{"SurveyCreateTime"}"}</td>
                   <td class="contentkey" width="25">&nbsp;</td>
                 </tr>
                 <tr>
                   <td class="contentkey" width="25">&nbsp;</td>
-                  <td class="contentkey">$Text{"Created by"}</td>
+                  <td class="contentkey">$Text{"Created by"}:</td>
                   <td class="contentvalue">
                     <div title="$Quote{"$Data{"SurveyCreateUserLogin"} ($Data{"SurveyCreateUserFirstname"} $Data{"SurveyCreateUserLastname"})"}">
                     $Quote{"$Data{"SurveyCreateUserLogin"}"} ($Quote{"$Data{"SurveyCreateUserFirstname"} $Data{"SurveyCreateUserLastname"}","20"})
@@ -263,13 +263,13 @@
                 </tr>
                 <tr>
                   <td class="contentkey" width="25">&nbsp;</td>
-                  <td class="contentkey">$Text{"Changed"}</td>
+                  <td class="contentkey">$Text{"Changed"}:</td>
                   <td class="contentvalue">$TimeLong{"$Data{"SurveyChangeTime"}"}</td>
                   <td class="contentkey" width="25">&nbsp;</td>
                 </tr>
                 <tr>
                   <td class="contentkey" width="25">&nbsp;</td>
-                  <td class="contentkey">$Text{"Changed by"}</td>
+                  <td class="contentkey">$Text{"Changed by"}:</td>
                   <td class="contentvalue">
                     <div title="$Quote{"$Data{"SurveyChangeUserLogin"} ($Data{"SurveyChangeUserFirstname"} $Data{"SurveyChangeUserLastname"})"}">
                     $Quote{"$Data{"SurveyChangeUserLogin"}"} ($Quote{"$Data{"SurveyChangeUserFirstname"} $Data{"SurveyChangeUserLastname"}","20"})
@@ -406,19 +406,19 @@
                   </tr>
                   <tr>
                     <td class="contentkey" width="25">&nbsp;</td>
-                    <td class="contentkey">$Text{"Number"}</td>
+                    <td class="contentkey">$Text{"Number"}:</td>
                     <td class="contentvalue">$QData{"SurveyNumber"}</td>
                     <td class="contentkey" width="25">&nbsp;</td>
                   </tr>
                   <tr>
                     <td class="contentkey" width="25">&nbsp;</td>
-                    <td class="contentkey">$Text{"Title"}</td>
+                    <td class="contentkey">$Text{"Title"}:</td>
                     <td class="contentvalue"><input type="text" size="40" name="SurveyTitle" value="$QData{"SurveyTitle"}"></td>
                     <td class="contentkey" width="25">&nbsp;</td>
                   </tr>
                   <tr>
                     <td class="contentkey" width="25">&nbsp;</td>
-                    <td class="contentkey">$Text{"Introduction"}</td>
+                    <td class="contentkey">$Text{"Introduction"}:</td>
                     <td class="contentvalue"><textarea name="SurveyIntroduction" rows="5" cols="50">$QData{"SurveyIntroduction"}</textarea></td>
                     <td class="contentkey" width="25">&nbsp;</td>
                   </tr>
@@ -430,7 +430,7 @@
                   </tr>
                   <tr>
                     <td class="contentkey" width="25">&nbsp;</td>
-                    <td class="contentkey">$Text{"Internal"}&nbsp;$Text{"Description"}</td>
+                    <td class="contentkey">$Text{"Internal"}&nbsp;$Text{"Description"}:</td>
                     <td class="contentvalue"><textarea name="SurveyDescription" rows="5" cols="50">$QData{"SurveyDescription"}</textarea></td>
                     <td class="contentkey" width="25">&nbsp;</td>
                   </tr>
@@ -591,13 +591,13 @@
                   </tr>
                   <tr>
                     <td class="contentkey" width="25">&nbsp;</td>
-                    <td class="contentkey">$Text{"Title"}</td>
+                    <td class="contentkey">$Text{"Title"}:</td>
                     <td class="contentvalue"><input type="text" size="40" name="SurveyTitle" value=""></td>
                     <td class="contentkey" width="25">&nbsp;</td>
                   </tr>
                   <tr>
                     <td class="contentkey" width="25">&nbsp;</td>
-                    <td class="contentkey">$Text{"Introduction"}</td>
+                    <td class="contentkey">$Text{"Introduction"}:</td>
                     <td class="contentvalue"><textarea name="SurveyIntroduction" rows="5" cols="50">$QData{"SurveyIntroduction"}</textarea></td>
                     <td class="contentkey" width="25">&nbsp;</td>
                   </tr>
@@ -609,7 +609,7 @@
                   </tr>
                   <tr>
                     <td class="contentkey" width="25">&nbsp;</td>
-                    <td class="contentkey">$Text{"Internal"}&nbsp;$Text{"Description"}</td>
+                    <td class="contentkey">$Text{"Internal"}&nbsp;$Text{"Description"}:</td>
                     <td class="contentvalue"><textarea name="SurveyDescription" rows="5" cols="50"></textarea></td>
                     <td class="contentkey" width="25">&nbsp;</td>
                   </tr>
@@ -681,7 +681,7 @@
                   </tr>
                   <tr>
                     <td class="contentkey" width="25">&nbsp;</td>
-                    <td class="contentkey">$Text{"Question"}</td>
+                    <td class="contentkey">$Text{"Question"}:</td>
                     <td class="contentvalue"><input type="text" size="70" name="Question" value="$QData{"Question"}"></td>
                     <td class="contentkey" width="25">&nbsp;</td>
                   </tr>
@@ -876,7 +876,7 @@
                   </tr>
                   <tr>
                     <td class="contentkey" width="25">&nbsp;</td>
-                    <td class="contentkey">$Text{"Answer"}</td>
+                    <td class="contentkey">$Text{"Answer"}:</td>
                     <td class="contentvalue"><input type="text" size="70" name="Answer" value="$QData{"Answer"}"></td>
                     <td class="contentkey" width="25">&nbsp;</td>
                   </tr>
