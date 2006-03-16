@@ -2,7 +2,7 @@
 # AgentSurvey.dtl - provides HTML form for AgentSurvey
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: AgentSurvey.dtl,v 1.7 2006-03-15 19:42:06 martin Exp $
+# $Id: AgentSurvey.dtl,v 1.8 2006-03-16 19:12:30 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -10,25 +10,6 @@
 # --
 
 <!-- dtl:block:Overview -->
-<style type="text/css">
-<!--
-.master            {color:#FF0000; font-size:10pt; font-family:Geneva,Helvetica,Arial,sans-serif;}
-.master a:link     {color:#FF0000; font-size:10pt; font-family:Geneva,Helvetica,Arial,sans-serif;}
-.master a:visited  {color:#FF0000; font-size:10pt; font-family:Geneva,Helvetica,Arial,sans-serif;}
-.master a:hover    {color:#FF0000; font-size:10pt; font-family:Geneva,Helvetica,Arial,sans-serif;}
-
-.valid             {color:#000000; font-size:10pt; font-family:Geneva,Helvetica,Arial,sans-serif;}
-.valid a:link      {color:#000000; font-size:10pt; font-family:Geneva,Helvetica,Arial,sans-serif;}
-.valid a:visited   {color:#000000; font-size:10pt; font-family:Geneva,Helvetica,Arial,sans-serif;}
-.valid a:hover     {color:#000000; font-size:10pt; font-family:Geneva,Helvetica,Arial,sans-serif;}
-
-.novalid           {color:#898989; font-size:10pt; font-family:Geneva,Helvetica,Arial,sans-serif;}
-.novalid a:link    {color:#898989; font-size:10pt; font-family:Geneva,Helvetica,Arial,sans-serif;}
-.novalid a:visited {color:#898989; font-size:10pt; font-family:Geneva,Helvetica,Arial,sans-serif;}
-.novalid a:hover   {color:#898989; font-size:10pt; font-family:Geneva,Helvetica,Arial,sans-serif;}
-//-->
-</style>
-
 <table border="0" width="100%" cellspacing="0" cellpadding="3" cols="1">
   <tr>
     <td class="mainhead">
@@ -37,9 +18,7 @@
   </tr>
   <tr>
     <td class="mainbody" align="center">
-
       <br>
-
       <table border="0" width="800" cellspacing="0" cellpadding="2">
         <tr class="contenthead">
           <td class="contentkey" width="20%">$Text{"Number"}</td>
@@ -48,14 +27,11 @@
           <td class="contentkey" width="20%">$Text{"Created"}</td>
         </tr>
 <!-- dtl:block:OverviewSurvey -->
-        <dtl set $Data{"State"} = "valid">
-        <dtl if ($Data{"SurveyMaster"} eq "Yes") { $Data{"State"} = "master"; }>
-        <dtl if ($Data{"SurveyValid"} ne "Yes") { $Data{"State"} = "novalid"; }>
         <dtl if ($Env{"Color"} eq "") { $Env{"Color"} = "searchpassive"; }>
         <tr class="contentbody">
           <td class="$Env{"Color"}"><a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Survey&SurveyID=$QData{"SurveyID"}">$QData{"SurveyNumber"}</a></td>
           <td class="$Env{"Color"}">$QData{"SurveyTitle"}</td>
-          <td class="$Env{"Color"}">$Text{"$QData{"AAA"}"}</td>
+          <td class="$Env{"Color"}">$Text{"$QData{"SurveyStatus"}"}</td>
           <td class="$Env{"Color"}">$TimeLong{"$QData{"SurveyCreateTime"}"}</td>
         </tr>
         <dtl if ($Env{"Color"} eq "searchactive") { $Env{"Color"} = ""; }>
@@ -66,7 +42,6 @@
         </tr>
       </table>
       <br>
-
     </td>
   </tr>
 </table>
@@ -78,6 +53,7 @@
     <td class="mainhead">
       $Env{"Box0"}$Text{"View"}: $Text{"Survey"}$Env{"Box1"}
     </td>
+    <td class="mainhead">&nbsp;</td>
   </tr>
   <tr>
     <td class="menu">
@@ -86,12 +62,11 @@
       -&nbsp;<a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=Stats&SurveyID=$QData{"SurveyID"}">$Text{"Stats"}</a>
 <!-- dtl:block:SurveyEditStatsDetails -->
     </td>
+    <td class="menu">&nbsp;</td>
   </tr>
   <tr>
     <td class="mainbody">
-
       <br>
-
       <table border="0" width="700" align="center" cellspacing="0" cellpadding="4">
         <tr>
           <td colspan="4" class="contenthead">
@@ -149,52 +124,8 @@
               </tr>
               <tr>
                 <td class="contentkey" width="25">&nbsp;</td>
-                <td class="contentkey">$Text{"Master"}:</td>
-                <td class="contentvalue">$Text{"$QData{"SurveyMaster"}"}</td>
-                <td class="contentkey" width="25">&nbsp;</td>
-              </tr>
-              <tr>
-                <td class="contentkey" width="25">&nbsp;</td>
-                <td class="contentkey">$Text{"Valid"}:</td>
-                <td class="contentvalue">$Text{"$QData{"SurveyValid"}"}</td>
-                <td class="contentkey" width="25">&nbsp;</td>
-              </tr>
-              <tr>
-                <td class="contentkey" width="25">&nbsp;</td>
-                <td class="contentkey">&nbsp;</td>
-                <td class="contentkey">&nbsp;</td>
-                <td class="contentkey" width="25">&nbsp;</td>
-              </tr>
-              <tr>
-                <td class="contentkey" width="25">&nbsp;</td>
-                <td class="contentkey">$Text{"Created"}:</td>
-                <td class="contentvalue">$TimeLong{"$Data{"SurveyCreateTime"}"}</td>
-                <td class="contentkey" width="25">&nbsp;</td>
-              </tr>
-              <tr>
-                <td class="contentkey" width="25">&nbsp;</td>
-                <td class="contentkey">$Text{"Created by"}:</td>
-                <td class="contentvalue">
-                  <div title="$Quote{"$Data{"SurveyCreateUserLogin"} ($Data{"SurveyCreateUserFirstname"} $Data{"SurveyCreateUserLastname"})"}">
-                  $Quote{"$Data{"SurveyCreateUserLogin"}"} ($Quote{"$Data{"SurveyCreateUserFirstname"} $Data{"SurveyCreateUserLastname"}","20"})
-                  </div>
-                </td>
-                <td class="contentkey" width="25">&nbsp;</td>
-              </tr>
-              <tr>
-                <td class="contentkey" width="25">&nbsp;</td>
-                <td class="contentkey">$Text{"Changed"}:</td>
-                <td class="contentvalue">$TimeLong{"$Data{"SurveyChangeTime"}"}</td>
-                <td class="contentkey" width="25">&nbsp;</td>
-              </tr>
-              <tr>
-                <td class="contentkey" width="25">&nbsp;</td>
-                <td class="contentkey">$Text{"Changed by"}:</td>
-                <td class="contentvalue">
-                  <div title="$Quote{"$Data{"SurveyChangeUserLogin"} ($Data{"SurveyChangeUserFirstname"} $Data{"SurveyChangeUserLastname"})"}">
-                  $Quote{"$Data{"SurveyChangeUserLogin"}"} ($Quote{"$Data{"SurveyChangeUserFirstname"} $Data{"SurveyChangeUserLastname"}","20"})
-                  </div>
-                </td>
+                <td class="contentkey">$Text{"Status"}:</td>
+                <td class="contentvalue">$Text{"$QData{"SurveyStatus"}"}</td>
                 <td class="contentkey" width="25">&nbsp;</td>
               </tr>
               <tr>
@@ -210,26 +141,17 @@
           <td class="contentfooter">
             <table border="0" align="right" cellspacing="0" cellpadding="0">
               <tr>
-<!-- dtl:block:SurveyMaster -->
+<!-- dtl:block:SurveyStatus -->
                 <td>
                   <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
                     <input type="hidden" name="Action" value="$Env{"Action"}">
-                    <input type="hidden" name="Subaction" value="SurveyChangeMaster">
+                    <input type="hidden" name="Subaction" value="SurveyStatus">
                     <input type="hidden" name="SurveyID" value="$QData{"SurveyID"}">
-                    <input class="button" type="submit" value="$Text{"Change Master"}">&nbsp;&nbsp;
+                    <input type="hidden" name="NewStatus" value="$QData{"NewStatus"}">
+                    <input class="button" type="submit" value="$Text{"Status"} $Text{"$QData{"NewStatus"}"}">&nbsp;&nbsp;
                   </form>
                 </td>
-<!-- dtl:block:SurveyMaster -->
-<!-- dtl:block:SurveyValid -->
-                <td>
-                  <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
-                    <input type="hidden" name="Action" value="$Env{"Action"}">
-                    <input type="hidden" name="Subaction" value="SurveyChangeValid">
-                    <input type="hidden" name="SurveyID" value="$QData{"SurveyID"}">
-                    <input class="button" type="submit" value="$Text{"Change Valid"}">&nbsp;&nbsp;
-                  </form>
-                </td>
-<!-- dtl:block:SurveyValid -->
+<!-- dtl:block:SurveyStatus -->
                 <td>
                   <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
                     <input type="hidden" name="Action" value="$Env{"Action"}">
@@ -242,7 +164,6 @@
             </tr>
           </table>
           <br>
-
 <!-- dtl:block:SurveyEditStats -->
           <table border="0" width="700" align="center" cellspacing="0" cellpadding="4">
             <tr>
@@ -301,10 +222,36 @@
                 </td>
               </tr>
             </table>
-
             <br>
 <!-- dtl:block:SurveyEditStats -->
-
+          </td>
+          <td width="25%" class="menu">
+            <table border="0" align="right" cellspacing="1" cellpadding="0" width="95%">
+              <tr>
+                <td class="mainkey">$Text{"Created"}:</td>
+                <td class="mainvalue">$TimeLong{"$Data{"SurveyCreateTime"}"}</td>
+              </tr>
+              <tr>
+                <td class="mainkey">$Text{"Created by"}:</td>
+                <td class="mainvalue">
+                  <div title="$Quote{"$Data{"SurveyCreateUserLogin"} ($Data{"SurveyCreateUserFirstname"} $Data{"SurveyCreateUserLastname"})"}">
+                  $Quote{"$Data{"SurveyCreateUserLogin"}"} ($Quote{"$Data{"SurveyCreateUserFirstname"} $Data{"SurveyCreateUserLastname"}","20"})
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="mainkey">$Text{"Changed"}:</td>
+                <td class="mainvalue">$TimeLong{"$Data{"SurveyChangeTime"}"}</td>
+              </tr>
+              <tr>
+                <td class="mainkey">$Text{"Changed by"}:</td>
+                <td class="mainvalue">
+                  <div title="$Quote{"$Data{"SurveyCreateUserLogin"} ($Data{"SurveyCreateUserFirstname"} $Data{"SurveyCreateUserLastname"})"}">
+                  $Quote{"$Data{"SurveyCreateUserLogin"}"} ($Quote{"$Data{"SurveyCreateUserFirstname"} $Data{"SurveyCreateUserLastname"}","20"})
+                  </div>
+                </td>
+              </tr>
+            </table>
           </td>
         </tr>
       </table>
@@ -324,14 +271,11 @@
         </tr>
         <tr>
           <td class="mainbody">
-
             <br>
-
             <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
               <input type="hidden" name="Action" value="$Env{"Action"}">
               <input type="hidden" name="Subaction" value="SurveySave">
               <input type="hidden" name="SurveyID" value="$QData{"SurveyID"}">
-
               <table border="0" width="700" align="center" cellspacing="0" cellpadding="4">
                 <tr>
                   <td colspan="4" class="contenthead">
@@ -397,9 +341,7 @@
                 </tr>
               </table>
             </form>
-
             <br>
-
             <table border="0" width="700" align="center" cellspacing="0" cellpadding="4">
               <tr>
                 <td colspan="4" class="contenthead">
@@ -471,7 +413,6 @@
                           <input type="hidden" name="Action" value="$Env{"Action"}">
                           <input type="hidden" name="Subaction" value="QuestionAdd">
                           <input type="hidden" name="SurveyID" value="$QData{"SurveyID"}">
-
                           <table border="0" width="100%" cellspacing="0" cellpadding="0">
                             <tr>
                               <td rowspan="4"><input type="text" size="70" name="Question"></td>
@@ -505,9 +446,7 @@
                 <td class="contentfooter">&nbsp;</td>
               </tr>
             </table>
-
             <br>
-
           </td>
         </tr>
       </table>
@@ -522,13 +461,10 @@
         </tr>
         <tr>
           <td class="mainbody">
-
             <br>
-
             <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
               <input type="hidden" name="Action" value="$Env{"Action"}">
               <input type="hidden" name="Subaction" value="SurveyNew">
-
               <table border="0" width="700" align="center" cellspacing="0" cellpadding="4">
                 <tr>
                   <td colspan="4" class="contenthead">
@@ -588,9 +524,7 @@
                 </tr>
               </table>
             </form>
-
             <br>
-
           </td>
         </tr>
       </table>
@@ -610,15 +544,12 @@
         </tr>
         <tr>
           <td class="mainbody">
-
             <br>
-
             <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
               <input type="hidden" name="Action" value="$Env{"Action"}">
               <input type="hidden" name="Subaction" value="QuestionSave">
               <input type="hidden" name="QuestionID" value="$QData{"QuestionID"}">
               <input type="hidden" name="SurveyID" value="$QData{"SurveyID"}">
-
               <table border="0" width="700" align="center" cellspacing="0" cellpadding="4">
                 <tr>
                   <td colspan="4" class="contenthead">
@@ -660,15 +591,12 @@
                 </tr>
               </table>
             </form>
-
             <br>
-
             <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
               <input type="hidden" name="Action" value="$Env{"Action"}">
               <input type="hidden" name="Subaction" value="AnswerAdd">
               <input type="hidden" name="QuestionID" value="$QData{"QuestionID"}">
               <input type="hidden" name="SurveyID" value="$QData{"SurveyID"}">
-
               <table border="0" width="700" align="center" cellspacing="0" cellpadding="4">
                 <tr>
                   <td colspan="4" class="contenthead">
@@ -812,7 +740,6 @@
               </table>
             </form>
             <br>
-
           </td>
         </tr>
       </table>
@@ -839,7 +766,6 @@
               <input type="hidden" name="AnswerID" value="$QData{"AnswerID"}">
               <input type="hidden" name="QuestionID" value="$QData{"QuestionID"}">
               <input type="hidden" name="SurveyID" value="$QData{"SurveyID"}">
-
               <table border="0" width="700" align="center" cellspacing="0" cellpadding="4">
                 <tr>
                   <td colspan="4" class="contenthead">
@@ -882,7 +808,6 @@
               </table>
             </form>
             <br>
-
           </td>
         </tr>
       </table>
@@ -902,9 +827,7 @@
         </tr>
         <tr>
           <td class="mainbody">
-
             <br>
-
             <table border="0" width="700" align="center" cellspacing="0" cellpadding="4">
               <tr>
                 <td colspan="4" class="contenthead">
@@ -931,7 +854,7 @@
                       <td class="contentkey">$Text{"Send Time"}</td>
                       <td class="contentkey">$Text{"Vote Time"}</td>
                       <td class="contentkey">$Text{"Ticket"}</td>
-                      <td class="contentkey">&nbsp;</td>
+                      <td class="contentkey" align="right">$Text{"Details"}</td>
                       <td class="contentkey" width="25">&nbsp;</td>
                     </tr>
                     <tr>
@@ -949,7 +872,7 @@
                       <td class="contentvalue">$TimeLong{"$Data{"VoteTime"}"}</td>
                       <td class="contentvalue"><a href="$Env{"CGIHandle"}?Action=AgentTicketZoom&TicketID=$QData{"TicketID"}">$QData{"TicketID"}</a></td>
                       <td class="contentvalue" align="right">
-                        <a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=StatsDetail&SurveyID=$QData{"SurveyID"}&RequestID=$QData{"RequestID"}">$Text{"Details"}</a></td>
+                        <a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=StatsDetail&SurveyID=$QData{"SurveyID"}&RequestID=$QData{"RequestID"}">x</a></td>
                         <td class="contentkey" width="25">&nbsp;</td>
                       </tr>
 <!-- dtl:block:StatsVote -->
@@ -969,9 +892,7 @@
                   </td>
                 </tr>
               </table>
-
               <br>
-
             </td>
           </tr>
         </table>
@@ -991,9 +912,7 @@
           </tr>
           <tr>
             <td class="mainbody">
-
               <br>
-
               <table border="0" width="700" align="center" cellspacing="0" cellpadding="4">
                 <tr>
                   <td colspan="4" class="contenthead">
@@ -1051,5 +970,4 @@
               </td>
             </tr>
           </table>
-
 <!-- dtl:block:StatsDetail -->

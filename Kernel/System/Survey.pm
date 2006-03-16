@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - manage all survey module events
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: Survey.pm,v 1.9 2006-03-16 13:17:36 mh Exp $
+# $Id: Survey.pm,v 1.10 2006-03-16 19:12:30 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Ticket;
 use Kernel::System::CustomerUser;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.9 $';
+$VERSION = '$Revision: 1.10 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -105,7 +105,7 @@ sub SurveyGet {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql for event
-    my $SQL = "SELECT id, number, title, introduction, description, master, valid, create_time, create_by, change_time, change_by ".
+    my $SQL = "SELECT id, number, title, introduction, description, status, create_time, create_by, change_time, change_by ".
         " FROM survey WHERE id = $Param{SurveyID}";
     $Self->{DBObject}->Prepare(SQL => $SQL);
 
@@ -116,12 +116,11 @@ sub SurveyGet {
         $Data{SurveyTitle} = $Row[2];
         $Data{SurveyIntroduction} = $Row[3];
         $Data{SurveyDescription} = $Row[4];
-        $Data{SurveyMaster} = $Row[5];
-        $Data{SurveyValid} = $Row[6];
-        $Data{SurveyCreateTime} = $Row[7];
-        $Data{SurveyCreateBy} = $Row[8];
-        $Data{SurveyChangeTime} = $Row[9];
-        $Data{SurveyChangeBy} = $Row[10];
+        $Data{SurveyStatus} = $Row[5];
+        $Data{SurveyCreateTime} = $Row[6];
+        $Data{SurveyCreateBy} = $Row[7];
+        $Data{SurveyChangeTime} = $Row[8];
+        $Data{SurveyChangeBy} = $Row[9];
     }
     if (%Data) {
         my %CreateUserInfo = $Self->{UserObject}->GetUserData(
@@ -149,119 +148,104 @@ sub SurveyGet {
     }
 }
 
-sub SurveyChangeMaster {
+sub SurveyStatusSet {
     my $Self = shift;
     my %Param = @_;
     # check needed stuff
-    foreach (qw(SurveyID)) {
+    foreach (qw(SurveyID NewStatus)) {
       if (!defined ($Param{$_})) {
         $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
         return;
       }
     }
     # db quote
+    foreach (qw(NewStatus)) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
+    }
     foreach (qw(SurveyID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql for event
-    my $SQL = "SELECT master, valid ".
+    my $SQL = "SELECT status ".
         " FROM survey WHERE id = $Param{SurveyID}";
     $Self->{DBObject}->Prepare(SQL => $SQL);
 
     my @Data = $Self->{DBObject}->FetchrowArray();
 
-    if ($Data[1] eq 'No') {
-        $Self->{DBObject}->Do(
-            SQL => "UPDATE survey SET master = 'No' WHERE id = $Param{SurveyID}",
-        );
-    }
-    else {
-        if ($Data[0] eq 'Yes') {
-            $Self->{DBObject}->Do(
-                SQL => "UPDATE survey SET master = 'No' WHERE id = $Param{SurveyID}",
-            );
-        }
-        else {
-            $Self->{DBObject}->Do(
-                SQL => "UPDATE survey SET master = 'No'",
-            );
-            $Self->{DBObject}->Do(
-                SQL => "UPDATE survey SET master = 'Yes' WHERE id = $Param{SurveyID}",
-            );
-        }
-    }
-}
+    if ($Data[0] eq 'New' || $Data[0] eq 'Invalid') {
+        my $SQL = "SELECT id FROM survey_question WHERE survey_id = $Param{SurveyID}";
+        $Self->{DBObject}->Prepare(SQL => $SQL);
 
-sub SurveyChangeValid {
-    my $Self = shift;
-    my %Param = @_;
-    # check needed stuff
-    foreach (qw(SurveyID)) {
-      if (!defined ($Param{$_})) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
-    }
-    # db quote
-    foreach (qw(SurveyID)) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
-    }
-    # sql for event
-    my $SQL = "SELECT master, valid FROM survey WHERE id = $Param{SurveyID}";
-    $Self->{DBObject}->Prepare(SQL => $SQL);
+        my @Quest = $Self->{DBObject}->FetchrowArray();
 
-    my @Data = $Self->{DBObject}->FetchrowArray();
-
-    if ($Data[0] eq 'No') {
-        if ($Data[1] eq 'Yes') {
-            $Self->{DBObject}->Do(
-                SQL => "UPDATE survey SET valid = 'No' WHERE id = $Param{SurveyID}",
-            );
-        }
-        else {
-            my $SQL = "SELECT id FROM survey_question WHERE survey_id = $Param{SurveyID}";
+        if ($Quest[0] > '0') {
+            my $SQL = "SELECT id FROM survey_question".
+                " WHERE survey_id = $Param{SurveyID} AND (type = 2 OR type = 3)";
             $Self->{DBObject}->Prepare(SQL => $SQL);
 
-            my @Quest = $Self->{DBObject}->FetchrowArray();
+            my $AllQuestionsAnsers = 'Yes';
+            my @QuestionIDs = ();
+            my $Counter1 = 0;
 
-            if ($Quest[0] > '0') {
-                my $SQL = "SELECT id FROM survey_question".
-                    " WHERE survey_id = $Param{SurveyID} AND (type = 2 OR type = 3)";
-                $Self->{DBObject}->Prepare(SQL => $SQL);
+            while (my @Row = $Self->{DBObject}->FetchrowArray()) {
+                $QuestionIDs[$Counter1] = $Row[0];
+                $Counter1++;
+            }
 
-                my $AllQuestionsAnsers = 'Yes';
-                my @QuestionIDs = ();
-                my $Counter1 = 0;
+            foreach my $OneID(@QuestionIDs) {
+                $Self->{DBObject}->Prepare(SQL => "SELECT id FROM survey_answer WHERE question_id = $OneID");
+
+                my $Counter2 = '0';
 
                 while (my @Row = $Self->{DBObject}->FetchrowArray()) {
-                    $QuestionIDs[$Counter1] = $Row[0];
-                    $Counter1++;
+                    $Counter2++;
                 }
 
-                foreach my $OneID(@QuestionIDs) {
-                    $Self->{DBObject}->Prepare(SQL => "SELECT id FROM survey_answer WHERE question_id = $OneID");
-
-                    my $Counter2 = '0';
-
-                    while (my @Row = $Self->{DBObject}->FetchrowArray()) {
-                        $Counter2++;
-                    }
-
-                    if ($Counter2 < 2) {
-                        $AllQuestionsAnsers = 'no';
-                    }
+                if ($Counter2 < 2) {
+                    $AllQuestionsAnsers = 'no';
                 }
+            }
 
-                if ($AllQuestionsAnsers eq 'Yes')
-                {
+            if ($AllQuestionsAnsers eq 'Yes')
+            {
+                if ($Param{NewStatus} eq 'Valid') {
                     $Self->{DBObject}->Do(
-                        SQL => "UPDATE survey SET valid = 'Yes' WHERE id = $Param{SurveyID}",
+                        SQL => "UPDATE survey SET status = 'Valid' WHERE id = $Param{SurveyID}",
                     );
+                }
+                elsif ($Param{NewStatus} eq 'Master') {
                     $Self->{DBObject}->Do(
-                        SQL => "UPDATE survey SET valid_once = 'Yes' WHERE id = $Param{SurveyID}",
+                        SQL => "UPDATE survey SET status = 'Master' WHERE id = $Param{SurveyID}",
                     );
                 }
             }
+        }
+    }
+    elsif ($Data[0] eq 'Valid') {
+        if ($Param{NewStatus} eq 'Master') {
+            $Self->{DBObject}->Do(
+                SQL => "UPDATE survey SET status = 'Valid' WHERE status = 'Master'",
+            );
+            $Self->{DBObject}->Do(
+                SQL => "UPDATE survey SET status = 'Master' WHERE id = $Param{SurveyID}",
+            );
+        }
+        elsif ($Param{NewStatus} eq 'Invalid') {
+            $Self->{DBObject}->Do(
+                SQL => "UPDATE survey SET status = 'Invalid' WHERE id = $Param{SurveyID}",
+            );
+        }
+    }
+    elsif ($Data[0] eq 'Master') {
+        if ($Param{NewStatus} eq 'Valid') {
+            $Self->{DBObject}->Do(
+                SQL => "UPDATE survey SET status = 'Valid' WHERE id = $Param{SurveyID}",
+            );
+        }
+        elsif ($Param{NewStatus} eq 'Invalid') {
+            $Self->{DBObject}->Do(
+                SQL => "UPDATE survey SET status = 'Invalid' WHERE id = $Param{SurveyID}",
+            );
         }
     }
 }
@@ -314,13 +298,11 @@ sub SurveyNew {
     }
     # sql for event
     $Self->{DBObject}->Do(
-        SQL => "INSERT INTO survey (title, introduction, description, master, valid, valid_once, create_time, create_by, change_time, change_by) VALUES (".
+        SQL => "INSERT INTO survey (title, introduction, description, status, create_time, create_by, change_time, change_by) VALUES (".
                                                          "'$Param{SurveyTitle}', ".
                                                          "'$Param{SurveyIntroduction}', ".
                                                          "'$Param{SurveyDescription}', ".
-                                                         "'No', ".
-                                                         "'No', ".
-                                                         "'No', ".
+                                                         "'New', ".
                                                          "current_timestamp, ".
                                                          "$Param{UserID}, ".
                                                          "current_timestamp, ".
@@ -978,30 +960,6 @@ sub VoteGet {
 
 
 
-
-sub ValidOnce {
-    my $Self = shift;
-    my %Param = @_;
-    # check needed stuff
-    foreach (qw(SurveyID)) {
-      if (!defined ($Param{$_})) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
-    }
-    # db quote
-    foreach (qw(SurveyID)) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
-    }
-    # sql for event
-    $Self->{DBObject}->Prepare(SQL => "SELECT valid_once".
-        " FROM survey WHERE id = $Param{SurveyID}"
-        );
-    my @ValidOnce = $Self->{DBObject}->FetchrowArray();
-
-    return $ValidOnce[0];
-}
-
 sub CountVote {
     my $Self = shift;
     my %Param = @_;
@@ -1073,7 +1031,7 @@ sub RequestSend {
 
     # find master survey
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT id FROM survey WHERE master = 'yes' AND valid = 'yes' AND valid_once = 'yes'"
+        SQL => "SELECT id FROM survey WHERE status = 'Master'"
     );
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
         $MasterID = $Row[0];
@@ -1209,7 +1167,7 @@ sub PublicSurveyGet {
     if ($SurveyID[0] > '0')
     {
         my $SQL = "SELECT id, number, title, introduction ".
-            " FROM survey WHERE id = $SurveyID[0] AND valid = 'yes'";
+            " FROM survey WHERE id = $SurveyID[0] AND (status = 'Master' OR status = 'Valid')";
         $Self->{DBObject}->Prepare(SQL => $SQL);
 
         my @Survey = $Self->{DBObject}->FetchrowArray();

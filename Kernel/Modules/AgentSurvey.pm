@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurvey.pm - a survey module
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: AgentSurvey.pm,v 1.4 2006-03-15 19:39:44 martin Exp $
+# $Id: AgentSurvey.pm,v 1.5 2006-03-16 19:12:29 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.4 $';
+$VERSION = '$Revision: 1.5 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 # --
@@ -51,8 +51,7 @@ sub Run {
         $Output = $Self->{LayoutObject}->Header(Title => 'Survey');
         $Output .= $Self->{LayoutObject}->NavigationBar();
 
-        my %Survey=$Self->{SurveyObject}->SurveyGet(SurveyID=>$SurveyID);
-        my $ValidOnce = $Self->{SurveyObject}->ValidOnce(SurveyID=>$SurveyID);
+        my %Survey = $Self->{SurveyObject}->SurveyGet(SurveyID => $SurveyID);
 
         # print the main table.
         $Self->{LayoutObject}->Block(
@@ -60,34 +59,56 @@ sub Run {
             Data => {%Survey},
         );
 
-        if ($Survey{SurveyValid} eq 'No')
+        if ($Survey{SurveyStatus} eq 'New' || $Survey{SurveyStatus} eq 'Invalid')
         {
+            $Survey{NewStatus} = 'Master';
+
             $Self->{LayoutObject}->Block(
-                Name => 'SurveyValid',
-                Data => {%Survey},
+                Name => 'SurveyStatus',
+                Data => {%Survey}
+            );
+
+            $Survey{NewStatus} = 'Valid';
+
+            $Self->{LayoutObject}->Block(
+                Name => 'SurveyStatus',
+                Data => {%Survey}
             );
         }
-        else
+        elsif ($Survey{SurveyStatus} eq 'Valid')
         {
-            if ($Survey{SurveyMaster} eq 'No') {
-                $Self->{LayoutObject}->Block(
-                    Name => 'SurveyValid',
-                    Data => {%Survey},
-                );
-                $Self->{LayoutObject}->Block(
-                    Name => 'SurveyMaster',
-                    Data => {%Survey},
-                );
-            }
-            else {
-                $Self->{LayoutObject}->Block(
-                    Name => 'SurveyMaster',
-                    Data => {%Survey},
-                );
-            }
+            $Survey{NewStatus} = 'Master';
+
+            $Self->{LayoutObject}->Block(
+                Name => 'SurveyStatus',
+                Data => {%Survey}
+            );
+
+            $Survey{NewStatus} = 'Invalid';
+
+            $Self->{LayoutObject}->Block(
+                Name => 'SurveyStatus',
+                Data => {%Survey}
+            );
+        }
+        elsif ($Survey{SurveyStatus} eq 'Master')
+        {
+            $Survey{NewStatus} = 'Valid';
+
+            $Self->{LayoutObject}->Block(
+                Name => 'SurveyStatus',
+                Data => {%Survey}
+            );
+
+            $Survey{NewStatus} = 'Invalid';
+
+            $Self->{LayoutObject}->Block(
+                Name => 'SurveyStatus',
+                Data => {%Survey}
+            );
         }
 
-        if ($ValidOnce eq 'Yes')
+        if ($Survey{SurveyStatus} eq 'Master' || $Survey{SurveyStatus} eq 'Valid' || $Survey{SurveyStatus} eq 'Invalid')
         {
             my $RequestComplete = $Self->{SurveyObject}->CountRequestComplete(SurveyID=>$SurveyID);
 
@@ -201,16 +222,13 @@ sub Run {
         return $Output;
     }
 
-    elsif ($Self->{Subaction} eq 'SurveyChangeMaster') {
+    elsif ($Self->{Subaction} eq 'SurveyStatus') {
        my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
-       $Self->{SurveyObject}->SurveyChangeMaster(SurveyID=>$SurveyID);
+       my $NewStatus = $Self->{ParamObject}->GetParam(Param => "NewStatus");
 
-       return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=Survey&SurveyID=$SurveyID");
-    }
-
-    elsif ($Self->{Subaction} eq 'SurveyChangeValid') {
-       my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
-       $Self->{SurveyObject}->SurveyChangeValid(SurveyID=>$SurveyID);
+       $Self->{SurveyObject}->SurveyStatusSet(
+                                          SurveyID=>$SurveyID,
+                                          NewStatus=>$NewStatus);
 
        return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=Survey&SurveyID=$SurveyID");
     }
@@ -229,20 +247,10 @@ sub Run {
             Data => {%Survey},
         );
 
-        my $ValidOnce = $Self->{SurveyObject}->ValidOnce(SurveyID=>$SurveyID);
         my @List=$Self->{SurveyObject}->QuestionList(SurveyID=>$SurveyID);
 
 
-        if ($ValidOnce eq 'Yes')
-        {
-            foreach my $Question(@List) {
-                $Self->{LayoutObject}->Block(
-                    Name => 'SurveyEditQuestionsValidOnce',
-                    Data => $Question,
-                );
-            }
-        }
-        else
+        if ($Survey{SurveyStatus} eq 'New')
         {
             foreach my $Question(@List) {
                 $Self->{LayoutObject}->Block(
@@ -254,6 +262,15 @@ sub Run {
                 Name => 'SurveyEditNewQuestion',
                 Data => {SurveyID=>$SurveyID},
             );
+        }
+        else
+        {
+            foreach my $Question(@List) {
+                $Self->{LayoutObject}->Block(
+                    Name => 'SurveyEditQuestionsValidOnce',
+                    Data => $Question,
+                );
+            }
         }
 
         $Output .= $Self->{LayoutObject}->Output(
@@ -386,15 +403,14 @@ sub Run {
         $Output = $Self->{LayoutObject}->Header(Title => 'Question Edit');
         $Output .= $Self->{LayoutObject}->NavigationBar();
 
-        my %Question=$Self->{SurveyObject}->QuestionGet(QuestionID=>$QuestionID);
+        my %Survey = $Self->{SurveyObject}->SurveyGet(SurveyID=>$SurveyID);
+        my %Question = $Self->{SurveyObject}->QuestionGet(QuestionID=>$QuestionID);
 
         # print the main table.
         $Self->{LayoutObject}->Block(
             Name => 'QuestionEdit',
             Data => {%Question},
         );
-
-        my $ValidOnce = $Self->{SurveyObject}->ValidOnce(SurveyID=>$SurveyID);
 
         if ($Question{QuestionType} eq 1) {
             $Self->{LayoutObject}->Block(
@@ -404,18 +420,7 @@ sub Run {
         elsif ($Question{QuestionType} eq 2) {
             my @List=$Self->{SurveyObject}->AnswerList(QuestionID=>$QuestionID);
 
-            if ($ValidOnce eq 'Yes')
-            {
-                foreach my $Answer2(@List) {
-                    $Answer2->{SurveyID} = $SurveyID;
-
-                    $Self->{LayoutObject}->Block(
-                        Name => 'QuestionEdit2ValidOnce',
-                        Data => $Answer2,
-                    );
-                }
-            }
-            else
+            if ($Survey{SurveyStatus} eq 'New')
             {
                 foreach my $Answer2(@List) {
                     $Answer2->{SurveyID} = $SurveyID;
@@ -429,22 +434,22 @@ sub Run {
                     Name => 'QuestionEdit2b',
                 );
             }
+            else
+            {
+                foreach my $Answer2(@List) {
+                    $Answer2->{SurveyID} = $SurveyID;
+
+                    $Self->{LayoutObject}->Block(
+                        Name => 'QuestionEdit2ValidOnce',
+                        Data => $Answer2,
+                    );
+                }
+            }
         }
         elsif ($Question{QuestionType} eq 3) {
             my @List=$Self->{SurveyObject}->AnswerList(QuestionID=>$QuestionID);
 
-            if ($ValidOnce eq 'Yes')
-            {
-                foreach my $Answer3(@List) {
-                    $Answer3->{SurveyID} = $SurveyID;
-
-                    $Self->{LayoutObject}->Block(
-                        Name => 'QuestionEdit3ValidOnce',
-                        Data => $Answer3,
-                    );
-                }
-            }
-            else
+            if ($Survey{SurveyStatus} eq 'New')
             {
                 foreach my $Answer3(@List) {
                     $Answer3->{SurveyID} = $SurveyID;
@@ -457,6 +462,17 @@ sub Run {
                 $Self->{LayoutObject}->Block(
                     Name => 'QuestionEdit3b',
                 );
+            }
+            else
+            {
+                foreach my $Answer3(@List) {
+                    $Answer3->{SurveyID} = $SurveyID;
+
+                    $Self->{LayoutObject}->Block(
+                        Name => 'QuestionEdit3ValidOnce',
+                        Data => $Answer3,
+                    );
+                }
             }
         }
         elsif ($Question{QuestionType} eq 4) {
@@ -711,15 +727,15 @@ sub Run {
     # print the main table.
     $Self->{LayoutObject}->Block(
         Name => 'Overview',
-        Data => { },
+        Data => {},
     );
     my @List = $Self->{SurveyObject}->SurveyList();
 
     foreach my $SurveyID (@List) {
         my %Survey = $Self->{SurveyObject}->SurveyGet(SurveyID => $SurveyID);
-       $Self->{LayoutObject}->Block(
-           Name => 'OverviewSurvey',
-           Data => \%Survey,
+        $Self->{LayoutObject}->Block(
+            Name => 'OverviewSurvey',
+            Data => \%Survey,
         );
     }
 
