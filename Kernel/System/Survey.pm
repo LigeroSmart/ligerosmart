@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - manage all survey module events
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: Survey.pm,v 1.8 2006-03-16 12:46:15 mh Exp $
+# $Id: Survey.pm,v 1.9 2006-03-16 13:17:36 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Ticket;
 use Kernel::System::CustomerUser;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.8 $';
+$VERSION = '$Revision: 1.9 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -160,8 +160,8 @@ sub SurveyChangeMaster {
       }
     }
     # db quote
-    foreach (keys %Param) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
+    foreach (qw(SurveyID)) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql for event
     my $SQL = "SELECT master, valid ".
@@ -203,8 +203,8 @@ sub SurveyChangeValid {
       }
     }
     # db quote
-    foreach (keys %Param) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
+    foreach (qw(SurveyID)) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql for event
     my $SQL = "SELECT master, valid FROM survey WHERE id = $Param{SurveyID}";
@@ -277,8 +277,11 @@ sub SurveySave {
       }
     }
     # db quote
-    foreach (keys %Param) {
+    foreach (qw(SurveyTitle SurveyIntroduction SurveyDescription)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
+    }
+    foreach (qw(UserID SurveyID)) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql for event
     $Self->{DBObject}->Do(
@@ -303,8 +306,11 @@ sub SurveyNew {
       }
     }
     # db quote
-    foreach (keys %Param) {
+    foreach (qw(SurveyTitle SurveyIntroduction SurveyDescription)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
+    }
+    foreach (qw(UserID)) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql for event
     $Self->{DBObject}->Do(
@@ -352,8 +358,8 @@ sub QuestionList {
       }
     }
     # db quote
-    foreach (keys %Param) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
+    foreach (qw(SurveyID)) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql for event
     my $SQL = "SELECT id, survey_id, question, type ".
@@ -384,8 +390,11 @@ sub QuestionAdd {
       }
     }
     # db quote
-    foreach (keys %Param) {
+    foreach (qw(Question)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
+    }
+    foreach (qw(UserID SurveyID QuestionType)) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql for event
     $Self->{DBObject}->Do(
@@ -412,8 +421,8 @@ sub QuestionDelete {
       }
     }
     # db quote
-    foreach (keys %Param) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
+    foreach (qw(SurveyID QuestionID)) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql for event
     $Self->{DBObject}->Do(
@@ -438,8 +447,8 @@ sub QuestionSort {
       }
     }
     # db quote
-    foreach (keys %Param) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
+    foreach (qw(SurveyID)) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql for event
     my $SQL = "SELECT id FROM survey_question".
@@ -466,8 +475,8 @@ sub QuestionUp {
       }
     }
     # db quote
-    foreach (keys %Param) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
+    foreach (qw(SurveyID QuestionID)) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql for event
     $Self->{DBObject}->Prepare(SQL => "SELECT position FROM survey_question".
@@ -513,8 +522,8 @@ sub QuestionDown {
       }
     }
     # db quote
-    foreach (keys %Param) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
+    foreach (qw(SurveyID QuestionID)) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql for event
     $Self->{DBObject}->Prepare(SQL => "SELECT position FROM survey_question".
@@ -560,8 +569,8 @@ sub QuestionGet {
       }
     }
     # db quote
-    foreach (keys %Param) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
+    foreach (qw(QuestionID)) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql for event
     my $SQL = "SELECT id, survey_id, question, type, position, create_time, create_by, change_time, change_by ".
@@ -595,8 +604,11 @@ sub QuestionSave {
       }
     }
     # db quote
-    foreach (keys %Param) {
+    foreach (qw(Question)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
+    }
+    foreach (qw(UserID QuestionID SurveyID)) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql for event
     $Self->{DBObject}->Do(
@@ -620,8 +632,8 @@ sub QuestionCount {
       }
     }
     # db quote
-    foreach (keys %Param) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
+    foreach (qw(SurveyID)) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql for event
     my $SQL = "SELECT COUNT(id) FROM survey_question WHERE survey_id = $Param{SurveyID}";
@@ -644,8 +656,8 @@ sub AnswerList {
       }
     }
     # db quote
-    foreach (keys %Param) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
+    foreach (qw(QuestionID)) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql for event
     my $SQL = "SELECT id, question_id, answer ".
@@ -675,8 +687,11 @@ sub AnswerAdd {
       }
     }
     # db quote
-    foreach (keys %Param) {
+    foreach (qw(Answer)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
+    }
+    foreach (qw(UserID QuestionID)) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql for event
     $Self->{DBObject}->Do(
@@ -702,8 +717,8 @@ sub AnswerDelete {
       }
     }
     # db quote
-    foreach (keys %Param) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
+    foreach (qw(QuestionID AnswerID)) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql for event
     $Self->{DBObject}->Do(
@@ -724,8 +739,8 @@ sub AnswerSort {
       }
     }
     # db quote
-    foreach (keys %Param) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
+    foreach (qw(QuestionID)) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql for event
     my $SQL = "SELECT id FROM survey_answer".
@@ -753,8 +768,8 @@ sub AnswerUp {
       }
     }
     # db quote
-    foreach (keys %Param) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
+    foreach (qw(QuestionID AnswerID)) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql for event
     $Self->{DBObject}->Prepare(SQL => "SELECT position FROM survey_answer".
@@ -800,8 +815,8 @@ sub AnswerDown {
       }
     }
     # db quote
-    foreach (keys %Param) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
+    foreach (qw(QuestionID AnswerID)) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql for event
     $Self->{DBObject}->Prepare(SQL => "SELECT position FROM survey_answer".
@@ -847,8 +862,8 @@ sub AnswerGet {
       }
     }
     # db quote
-    foreach (keys %Param) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
+    foreach (qw(AnswerID)) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql for event
     my $SQL = "SELECT id, question_id, answer, position, create_time, create_by, change_time, change_by ".
@@ -881,8 +896,11 @@ sub AnswerSave {
       }
     }
     # db quote
-    foreach (keys %Param) {
+    foreach (qw(Answer)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
+    }
+    foreach (qw(UserID AnswerID QuestionID)) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql for event
     $Self->{DBObject}->Do(
@@ -907,8 +925,8 @@ sub VoteList {
       }
     }
     # db quote
-    foreach (keys %Param) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
+    foreach (qw(SurveyID)) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql for event
     my $SQL = "SELECT id, ticket_id, send_time, vote_time ".
@@ -940,12 +958,12 @@ sub VoteGet {
       }
     }
     # db quote
-    foreach (keys %Param) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
+    foreach (qw(RequestID QuestionID)) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql for event
-    my $SQL = "SELECT id, vote_value ".
-        " FROM survey_vote WHERE request_id = $Param{RequestID} AND question_id = $Param{QuestionID}";
+    my $SQL = "SELECT id, vote_value FROM survey_vote".
+        " WHERE request_id = $Param{RequestID} AND question_id = $Param{QuestionID}";
     $Self->{DBObject}->Prepare(SQL => $SQL);
 
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
@@ -972,8 +990,8 @@ sub ValidOnce {
       }
     }
     # db quote
-    foreach (keys %Param) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
+    foreach (qw(SurveyID)) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql for event
     $Self->{DBObject}->Prepare(SQL => "SELECT valid_once".
@@ -995,11 +1013,14 @@ sub CountVote {
       }
     }
     # db quote
-    foreach (keys %Param) {
+    foreach (qw(VoteValue)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
     }
+    foreach (qw(QuestionID)) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
+    }
     # sql for event
-    my $SQL = "SELECT COUNT(vote_value) FROM survey_vote WHERE question_id = $Param{QuestionID} AND vote_value = $Param{VoteValue}";
+    my $SQL = "SELECT COUNT(vote_value) FROM survey_vote WHERE question_id = $Param{QuestionID} AND vote_value = '$Param{VoteValue}'";
 
     $Self->{DBObject}->Prepare(SQL => $SQL);
     my @CountVote = $Self->{DBObject}->FetchrowArray();
@@ -1018,8 +1039,8 @@ sub CountRequestComplete {
       }
     }
     # db quote
-    foreach (keys %Param) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
+    foreach (qw(SurveyID)) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql for event
     my $SQL = "SELECT COUNT(id) FROM survey_request WHERE survey_id = $Param{SurveyID} AND valid_id = 0";
@@ -1042,10 +1063,9 @@ sub RequestSend {
       }
     }
     # db quote
-    foreach (keys %Param) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
+    foreach (qw(TicketID)) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
-
     # create PublicSurveyKey
     my $md5 = Digest::MD5->new();
     $md5->add($Self->{TimeObject}->SystemTime() . int(rand(999999999)));
@@ -1217,8 +1237,11 @@ sub PublicAnswerSave{
       }
     }
     # db quote
-    foreach (keys %Param) {
+    foreach (qw(PublicSurveyKey VoteValue)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
+    }
+    foreach (qw(QuestionID)) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql for event
     $Self->{DBObject}->Prepare(SQL => "SELECT id ".
@@ -1249,7 +1272,7 @@ sub PublicSurveyInvalidSet {
       }
     }
     # db quote
-    foreach (keys %Param) {
+    foreach (qw(PublicSurveyKey)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
     }
     # sql for event
