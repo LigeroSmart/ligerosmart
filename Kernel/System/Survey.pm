@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - manage all survey module events
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: Survey.pm,v 1.10 2006-03-16 19:12:30 mh Exp $
+# $Id: Survey.pm,v 1.11 2006-03-16 23:14:44 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Ticket;
 use Kernel::System::CustomerUser;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.10 $';
+$VERSION = '$Revision: 1.11 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -170,15 +170,23 @@ sub SurveyStatusSet {
         " FROM survey WHERE id = $Param{SurveyID}";
     $Self->{DBObject}->Prepare(SQL => $SQL);
 
-    my @Data = $Self->{DBObject}->FetchrowArray();
+    my $Status = '';
 
-    if ($Data[0] eq 'New' || $Data[0] eq 'Invalid') {
+    while (my @Row = $Self->{DBObject}->FetchrowArray()) {
+        $Status = $Row[0];
+    }
+
+    if ($Status eq 'New' || $Status eq 'Invalid') {
         my $SQL = "SELECT id FROM survey_question WHERE survey_id = $Param{SurveyID}";
         $Self->{DBObject}->Prepare(SQL => $SQL);
 
-        my @Quest = $Self->{DBObject}->FetchrowArray();
+        my $Quest = '';
 
-        if ($Quest[0] > '0') {
+        while (my @Row2 = $Self->{DBObject}->FetchrowArray()) {
+            $Quest = $Row2[0];
+        }
+
+        if ($Quest > '0') {
             my $SQL = "SELECT id FROM survey_question".
                 " WHERE survey_id = $Param{SurveyID} AND (type = 2 OR type = 3)";
             $Self->{DBObject}->Prepare(SQL => $SQL);
@@ -187,8 +195,8 @@ sub SurveyStatusSet {
             my @QuestionIDs = ();
             my $Counter1 = 0;
 
-            while (my @Row = $Self->{DBObject}->FetchrowArray()) {
-                $QuestionIDs[$Counter1] = $Row[0];
+            while (my @Row3 = $Self->{DBObject}->FetchrowArray()) {
+                $QuestionIDs[$Counter1] = $Row3[0];
                 $Counter1++;
             }
 
@@ -221,7 +229,7 @@ sub SurveyStatusSet {
             }
         }
     }
-    elsif ($Data[0] eq 'Valid') {
+    elsif ($Status eq 'Valid') {
         if ($Param{NewStatus} eq 'Master') {
             $Self->{DBObject}->Do(
                 SQL => "UPDATE survey SET status = 'Valid' WHERE status = 'Master'",
@@ -236,7 +244,7 @@ sub SurveyStatusSet {
             );
         }
     }
-    elsif ($Data[0] eq 'Master') {
+    elsif ($Status eq 'Master') {
         if ($Param{NewStatus} eq 'Valid') {
             $Self->{DBObject}->Do(
                 SQL => "UPDATE survey SET status = 'Valid' WHERE id = $Param{SurveyID}",
@@ -316,8 +324,11 @@ sub SurveyNew {
                   "ORDER BY create_time DESC";
     $Self->{DBObject}->Prepare(SQL => $SQL);
 
-    my @Row = $Self->{DBObject}->FetchrowArray();
-    my $SurveyID = $Row[0];
+    my $SurveyID = '';
+
+    while (my @Row = $Self->{DBObject}->FetchrowArray()) {
+        $SurveyID = $Row[0];
+    }
 
     $Self->{DBObject}->Do(
         SQL => "UPDATE survey SET ".
@@ -464,8 +475,12 @@ sub QuestionUp {
     $Self->{DBObject}->Prepare(SQL => "SELECT position FROM survey_question".
         " WHERE id = $Param{QuestionID} AND survey_id = $Param{SurveyID}"
         );
-    my @Row = $Self->{DBObject}->FetchrowArray();
-    my $Position = $Row[0];
+
+    my $Position = '';
+
+    while (my @Row = $Self->{DBObject}->FetchrowArray()) {
+        $Position = $Row[0];
+    }
 
     if ($Position > '1')
     {
@@ -474,8 +489,12 @@ sub QuestionUp {
         $Self->{DBObject}->Prepare(SQL => "SELECT id FROM survey_question".
             " WHERE survey_id = $Param{SurveyID} AND position = $PositionUp"
             );
-        @Row = $Self->{DBObject}->FetchrowArray();
-        my $QuestionIDDown = $Row[0];
+
+        my $QuestionIDDown = '';
+
+        while (my @Row = $Self->{DBObject}->FetchrowArray()) {
+            $QuestionIDDown = $Row[0];
+        }
 
         if ($QuestionIDDown ne '')
         {
@@ -511,8 +530,12 @@ sub QuestionDown {
     $Self->{DBObject}->Prepare(SQL => "SELECT position FROM survey_question".
         " WHERE id = $Param{QuestionID} AND survey_id = $Param{SurveyID}"
         );
-    my @Row = $Self->{DBObject}->FetchrowArray();
-    my $Position = $Row[0];
+
+    my $Position = '';
+
+    while (my @Row = $Self->{DBObject}->FetchrowArray()) {
+        $Position = $Row[0];
+    }
 
     if ($Position > '0')
     {
@@ -521,8 +544,12 @@ sub QuestionDown {
         $Self->{DBObject}->Prepare(SQL => "SELECT id FROM survey_question".
             " WHERE survey_id = $Param{SurveyID} AND position = $PositionDown"
             );
-        @Row = $Self->{DBObject}->FetchrowArray();
-        my $QuestionIDUp = $Row[0];
+
+        my $QuestionIDUp = '';
+
+        while (my @Row = $Self->{DBObject}->FetchrowArray()) {
+            $QuestionIDUp = $Row[0];
+        }
 
         if ($QuestionIDUp ne '')
         {
@@ -621,9 +648,14 @@ sub QuestionCount {
     my $SQL = "SELECT COUNT(id) FROM survey_question WHERE survey_id = $Param{SurveyID}";
 
     $Self->{DBObject}->Prepare(SQL => $SQL);
-    my @CountQuestion = $Self->{DBObject}->FetchrowArray();
 
-    return $CountQuestion[0];
+    my $CountQuestion = '';
+
+    while (my @Row = $Self->{DBObject}->FetchrowArray()) {
+        $CountQuestion = $Row[0];
+    }
+
+    return $CountQuestion;
 }
 
 sub AnswerList {
@@ -757,8 +789,12 @@ sub AnswerUp {
     $Self->{DBObject}->Prepare(SQL => "SELECT position FROM survey_answer".
         " WHERE id = $Param{AnswerID} AND question_id = $Param{QuestionID}"
         );
-    my @Row = $Self->{DBObject}->FetchrowArray();
-    my $Position = $Row[0];
+
+    my $Position = '';
+
+    while (my @Row = $Self->{DBObject}->FetchrowArray()) {
+        $Position = $Row[0];
+    }
 
     if ($Position > '1')
     {
@@ -767,8 +803,12 @@ sub AnswerUp {
         $Self->{DBObject}->Prepare(SQL => "SELECT id FROM survey_answer".
             " WHERE question_id = $Param{QuestionID} AND position = $PositionUp"
             );
-        @Row = $Self->{DBObject}->FetchrowArray();
-        my $AnswerIDDown = $Row[0];
+
+        my $AnswerIDDown = '';
+
+        while (my @Row = $Self->{DBObject}->FetchrowArray()) {
+            $AnswerIDDown = $Row[0];
+        }
 
         if ($AnswerIDDown ne '')
         {
@@ -804,8 +844,12 @@ sub AnswerDown {
     $Self->{DBObject}->Prepare(SQL => "SELECT position FROM survey_answer".
         " WHERE id = $Param{AnswerID} AND question_id = $Param{QuestionID}"
         );
-    my @Row = $Self->{DBObject}->FetchrowArray();
-    my $Position = $Row[0];
+
+    my $Position = '';
+
+    while (my @Row = $Self->{DBObject}->FetchrowArray()) {
+        $Position = $Row[0];
+    }
 
     if ($Position > '0')
     {
@@ -814,8 +858,12 @@ sub AnswerDown {
         $Self->{DBObject}->Prepare(SQL => "SELECT id FROM survey_answer".
             " WHERE question_id = $Param{QuestionID} AND position = $PositionDown"
             );
-        @Row = $Self->{DBObject}->FetchrowArray();
-        my $AnswerIDUp = $Row[0];
+
+        my $AnswerIDUp = '';
+
+        while (my @Row = $Self->{DBObject}->FetchrowArray()) {
+            $AnswerIDUp = $Row[0];
+        }
 
         if ($AnswerIDUp ne '')
         {
@@ -981,9 +1029,13 @@ sub CountVote {
     my $SQL = "SELECT COUNT(vote_value) FROM survey_vote WHERE question_id = $Param{QuestionID} AND vote_value = '$Param{VoteValue}'";
 
     $Self->{DBObject}->Prepare(SQL => $SQL);
-    my @CountVote = $Self->{DBObject}->FetchrowArray();
 
-    return $CountVote[0];
+    my %Data = ();
+    while (my @Row = $Self->{DBObject}->FetchrowArray()) {
+        $Data{CountVote} = $Row[0];
+    }
+
+    return $Data{CountVote};
 }
 
 sub CountRequestComplete {
@@ -1004,9 +1056,13 @@ sub CountRequestComplete {
     my $SQL = "SELECT COUNT(id) FROM survey_request WHERE survey_id = $Param{SurveyID} AND valid_id = 0";
 
     $Self->{DBObject}->Prepare(SQL => $SQL);
-    my @CountRequestComplete = $Self->{DBObject}->FetchrowArray();
 
-    return $CountRequestComplete[0];
+    my %Data = ();
+    while (my @Row = $Self->{DBObject}->FetchrowArray()) {
+        $Data{CountRequestComplete} = $Row[0];
+    }
+
+    return $Data{CountRequestComplete};
 }
 
 sub RequestSend {
@@ -1162,12 +1218,16 @@ sub PublicSurveyGet {
     $Self->{DBObject}->Prepare(SQL => "SELECT survey_id ".
         " FROM survey_request WHERE public_survey_key = '$Param{PublicSurveyKey}' AND valid_id = 1"
         );
-    my @SurveyID = $Self->{DBObject}->FetchrowArray();
 
-    if ($SurveyID[0] > '0')
+    my $SurveyID = ();
+    while (my @Row = $Self->{DBObject}->FetchrowArray()) {
+        $SurveyID = $Row[0];
+    }
+
+    if ($SurveyID > '0')
     {
         my $SQL = "SELECT id, number, title, introduction ".
-            " FROM survey WHERE id = $SurveyID[0] AND (status = 'Master' OR status = 'Valid')";
+            " FROM survey WHERE id = $SurveyID AND (status = 'Master' OR status = 'Valid')";
         $Self->{DBObject}->Prepare(SQL => $SQL);
 
         my @Survey = $Self->{DBObject}->FetchrowArray();
@@ -1205,8 +1265,11 @@ sub PublicAnswerSave{
     $Self->{DBObject}->Prepare(SQL => "SELECT id ".
         " FROM survey_request WHERE public_survey_key = '$Param{PublicSurveyKey}' AND valid_id = 1"
         );
-    my @Row = $Self->{DBObject}->FetchrowArray();
-    my $RequestID = $Row[0];
+
+    my $RequestID = ();
+    while (my @Row = $Self->{DBObject}->FetchrowArray()) {
+        $RequestID = $Row[0];
+    }
 
     if ($RequestID > '0') {
         $Self->{DBObject}->Do(
@@ -1237,8 +1300,11 @@ sub PublicSurveyInvalidSet {
     $Self->{DBObject}->Prepare(SQL => "SELECT id ".
         " FROM survey_request WHERE public_survey_key = '$Param{PublicSurveyKey}'"
         );
-    my @Row = $Self->{DBObject}->FetchrowArray();
-    my $RequestID = $Row[0];
+
+    my $RequestID = ();
+    while (my @Row = $Self->{DBObject}->FetchrowArray()) {
+        $RequestID = $Row[0];
+    }
 
     if ($RequestID > '0') {
         $Self->{DBObject}->Do(
