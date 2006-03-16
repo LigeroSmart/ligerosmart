@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - manage all survey module events
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: Survey.pm,v 1.7 2006-03-15 20:38:12 martin Exp $
+# $Id: Survey.pm,v 1.8 2006-03-16 12:46:15 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Ticket;
 use Kernel::System::CustomerUser;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.7 $';
+$VERSION = '$Revision: 1.8 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -106,7 +106,7 @@ sub SurveyGet {
     }
     # sql for event
     my $SQL = "SELECT id, number, title, introduction, description, master, valid, create_time, create_by, change_time, change_by ".
-        " FROM survey WHERE id=$Param{SurveyID}";
+        " FROM survey WHERE id = $Param{SurveyID}";
     $Self->{DBObject}->Prepare(SQL => $SQL);
 
     my %Data = ();
@@ -165,7 +165,7 @@ sub SurveyChangeMaster {
     }
     # sql for event
     my $SQL = "SELECT master, valid ".
-        " FROM survey WHERE id=$Param{SurveyID}";
+        " FROM survey WHERE id = $Param{SurveyID}";
     $Self->{DBObject}->Prepare(SQL => $SQL);
 
     my @Data = $Self->{DBObject}->FetchrowArray();
@@ -207,8 +207,7 @@ sub SurveyChangeValid {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
     }
     # sql for event
-    my $SQL = "SELECT master, valid ".
-        " FROM survey WHERE id=$Param{SurveyID}";
+    my $SQL = "SELECT master, valid FROM survey WHERE id = $Param{SurveyID}";
     $Self->{DBObject}->Prepare(SQL => $SQL);
 
     my @Data = $Self->{DBObject}->FetchrowArray();
@@ -220,15 +219,14 @@ sub SurveyChangeValid {
             );
         }
         else {
-            my $SQL = "SELECT id ".
-                " FROM survey_question WHERE survey_id=$Param{SurveyID}";
+            my $SQL = "SELECT id FROM survey_question WHERE survey_id = $Param{SurveyID}";
             $Self->{DBObject}->Prepare(SQL => $SQL);
 
             my @Quest = $Self->{DBObject}->FetchrowArray();
 
             if ($Quest[0] > '0') {
-                my $SQL = "SELECT id ".
-                    " FROM survey_question WHERE survey_id=$Param{SurveyID} AND (type='2' OR type='3')";
+                my $SQL = "SELECT id FROM survey_question".
+                    " WHERE survey_id = $Param{SurveyID} AND (type = 2 OR type = 3)";
                 $Self->{DBObject}->Prepare(SQL => $SQL);
 
                 my $AllQuestionsAnsers = 'Yes';
@@ -241,7 +239,7 @@ sub SurveyChangeValid {
                 }
 
                 foreach my $OneID(@QuestionIDs) {
-                    $Self->{DBObject}->Prepare(SQL => "SELECT id FROM survey_answer WHERE question_id=$OneID");
+                    $Self->{DBObject}->Prepare(SQL => "SELECT id FROM survey_answer WHERE question_id = $OneID");
 
                     my $Counter2 = '0';
 
@@ -285,11 +283,11 @@ sub SurveySave {
     # sql for event
     $Self->{DBObject}->Do(
         SQL => "UPDATE survey SET ".
-                         "title='$Param{SurveyTitle}', ".
-                         "introduction='$Param{SurveyIntroduction}', ".
-                         "description='$Param{SurveyDescription}', ".
-                         "change_time=current_timestamp, ".
-                         "change_by=$Param{UserID} ".
+                         "title = '$Param{SurveyTitle}', ".
+                         "introduction = '$Param{SurveyIntroduction}', ".
+                         "description = '$Param{SurveyDescription}', ".
+                         "change_time = current_timestamp, ".
+                         "change_by = $Param{UserID} ".
                          "WHERE id = $Param{SurveyID}",
         );
 }
@@ -324,9 +322,9 @@ sub SurveyNew {
         );
 
     my $SQL = "SELECT id FROM survey WHERE ".
-                  "title='$Param{SurveyTitle}' AND ".
-                  "introduction='$Param{SurveyIntroduction}' AND ".
-                  "description='$Param{SurveyDescription}' ".
+                  "title = '$Param{SurveyTitle}' AND ".
+                  "introduction = '$Param{SurveyIntroduction}' AND ".
+                  "description = '$Param{SurveyDescription}' ".
                   "ORDER BY create_time DESC";
     $Self->{DBObject}->Prepare(SQL => $SQL);
 
@@ -335,8 +333,8 @@ sub SurveyNew {
 
     $Self->{DBObject}->Do(
         SQL => "UPDATE survey SET ".
-                         "number='" . ($SurveyID + 10000) . "' ".
-                         "WHERE id='$SurveyID'",
+                         "number = '" . ($SurveyID + 10000) . "' ".
+                         "WHERE id = $SurveyID",
         );
 
     return $SurveyID;
@@ -359,7 +357,7 @@ sub QuestionList {
     }
     # sql for event
     my $SQL = "SELECT id, survey_id, question, type ".
-        " FROM survey_question WHERE survey_id=$Param{SurveyID} ORDER BY position";
+        " FROM survey_question WHERE survey_id = $Param{SurveyID} ORDER BY position";
     $Self->{DBObject}->Prepare(SQL => $SQL);
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
         my %Data = ();
@@ -392,10 +390,10 @@ sub QuestionAdd {
     # sql for event
     $Self->{DBObject}->Do(
         SQL => "INSERT INTO survey_question (survey_id, question, type, position, create_time, create_by, change_time, change_by) VALUES (".
-                    "'$Param{SurveyID}', ".
+                    "$Param{SurveyID}, ".
                     "'$Param{Question}', ".
                     "'$Param{QuestionType}', ".
-                    "'255', ".
+                    "255, ".
                     "current_timestamp, ".
                     "$Param{UserID}, ".
                     "current_timestamp, ".
@@ -444,14 +442,14 @@ sub QuestionSort {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
     }
     # sql for event
-    my $SQL = "SELECT id ".
-        " FROM survey_question WHERE survey_id = $Param{SurveyID} ORDER BY position";
+    my $SQL = "SELECT id FROM survey_question".
+        " WHERE survey_id = $Param{SurveyID} ORDER BY position";
     $Self->{DBObject}->Prepare(SQL => $SQL);
 
     my $Counter = 1;
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
         $Self->{DBObject}->Do(
-            SQL => "UPDATE survey_question SET position = '$Counter' WHERE id = $Row[0]",
+            SQL => "UPDATE survey_question SET position = $Counter WHERE id = $Row[0]",
         );
         $Counter++;
     }
@@ -472,8 +470,8 @@ sub QuestionUp {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
     }
     # sql for event
-    $Self->{DBObject}->Prepare(SQL => "SELECT position ".
-        " FROM survey_question WHERE id=$Param{QuestionID} AND survey_id=$Param{SurveyID}"
+    $Self->{DBObject}->Prepare(SQL => "SELECT position FROM survey_question".
+        " WHERE id = $Param{QuestionID} AND survey_id = $Param{SurveyID}"
         );
     my @Row = $Self->{DBObject}->FetchrowArray();
     my $Position = $Row[0];
@@ -482,8 +480,8 @@ sub QuestionUp {
     {
         my $PositionUp = $Position - 1;
 
-        $Self->{DBObject}->Prepare(SQL => "SELECT id ".
-            " FROM survey_question WHERE survey_id=$Param{SurveyID} AND position='$PositionUp'"
+        $Self->{DBObject}->Prepare(SQL => "SELECT id FROM survey_question".
+            " WHERE survey_id = $Param{SurveyID} AND position = $PositionUp"
             );
         @Row = $Self->{DBObject}->FetchrowArray();
         my $QuestionIDDown = $Row[0];
@@ -492,13 +490,13 @@ sub QuestionUp {
         {
             $Self->{DBObject}->Do(
                 SQL => "UPDATE survey_question SET ".
-                            "position='$Position' ".
-                            "WHERE id='$QuestionIDDown'"
+                            "position = $Position ".
+                            "WHERE id = $QuestionIDDown"
                 );
             $Self->{DBObject}->Do(
                 SQL => "UPDATE survey_question SET ".
-                            "position='$PositionUp' ".
-                            "WHERE id='$Param{QuestionID}'"
+                            "position = $PositionUp ".
+                            "WHERE id = $Param{QuestionID}"
                 );
         }
     }
@@ -519,8 +517,8 @@ sub QuestionDown {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
     }
     # sql for event
-    $Self->{DBObject}->Prepare(SQL => "SELECT position ".
-        " FROM survey_question WHERE id=$Param{QuestionID} AND survey_id=$Param{SurveyID}"
+    $Self->{DBObject}->Prepare(SQL => "SELECT position FROM survey_question".
+        " WHERE id = $Param{QuestionID} AND survey_id = $Param{SurveyID}"
         );
     my @Row = $Self->{DBObject}->FetchrowArray();
     my $Position = $Row[0];
@@ -529,8 +527,8 @@ sub QuestionDown {
     {
         my $PositionDown = $Position + 1;
 
-        $Self->{DBObject}->Prepare(SQL => "SELECT id ".
-            " FROM survey_question WHERE survey_id=$Param{SurveyID} AND position='$PositionDown'"
+        $Self->{DBObject}->Prepare(SQL => "SELECT id FROM survey_question".
+            " WHERE survey_id = $Param{SurveyID} AND position = $PositionDown"
             );
         @Row = $Self->{DBObject}->FetchrowArray();
         my $QuestionIDUp = $Row[0];
@@ -539,13 +537,13 @@ sub QuestionDown {
         {
             $Self->{DBObject}->Do(
                 SQL => "UPDATE survey_question SET ".
-                            "position='$Position' ".
-                            "WHERE id='$QuestionIDUp'"
+                            "position = $Position ".
+                            "WHERE id = $QuestionIDUp"
                 );
             $Self->{DBObject}->Do(
                 SQL => "UPDATE survey_question SET ".
-                            "position='$PositionDown' ".
-                            "WHERE id='$Param{QuestionID}'"
+                            "position = $PositionDown ".
+                            "WHERE id = $Param{QuestionID}"
                 );
         }
     }
@@ -567,7 +565,7 @@ sub QuestionGet {
     }
     # sql for event
     my $SQL = "SELECT id, survey_id, question, type, position, create_time, create_by, change_time, change_by ".
-        " FROM survey_question WHERE id=$Param{QuestionID}";
+        " FROM survey_question WHERE id = $Param{QuestionID}";
     $Self->{DBObject}->Prepare(SQL => $SQL);
 
     my %Data = ();
@@ -603,11 +601,11 @@ sub QuestionSave {
     # sql for event
     $Self->{DBObject}->Do(
         SQL => "UPDATE survey_question SET ".
-                         "question='$Param{Question}', ".
-                         "change_time=current_timestamp, ".
-                         "change_by=$Param{UserID} ".
-                         "WHERE id=$Param{QuestionID} ",
-                         "AND survey_id=$Param{SurveyID}",
+                         "question = '$Param{Question}', ".
+                         "change_time = current_timestamp, ".
+                         "change_by = $Param{UserID} ".
+                         "WHERE id = $Param{QuestionID} ",
+                         "AND survey_id = $Param{SurveyID}",
         );
 }
 
@@ -626,7 +624,7 @@ sub QuestionCount {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
     }
     # sql for event
-    my $SQL = "SELECT COUNT(id) FROM survey_question WHERE survey_id='$Param{SurveyID}'";
+    my $SQL = "SELECT COUNT(id) FROM survey_question WHERE survey_id = $Param{SurveyID}";
 
     $Self->{DBObject}->Prepare(SQL => $SQL);
     my @CountQuestion = $Self->{DBObject}->FetchrowArray();
@@ -651,7 +649,7 @@ sub AnswerList {
     }
     # sql for event
     my $SQL = "SELECT id, question_id, answer ".
-        " FROM survey_answer WHERE question_id=$Param{QuestionID} ORDER BY position";
+        " FROM survey_answer WHERE question_id = $Param{QuestionID} ORDER BY position";
     $Self->{DBObject}->Prepare(SQL => $SQL);
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
         my %Data = ();
@@ -683,9 +681,9 @@ sub AnswerAdd {
     # sql for event
     $Self->{DBObject}->Do(
         SQL => "INSERT INTO survey_answer (question_id, answer, position, create_time, create_by, change_time, change_by) VALUES (".
-                    "'$Param{QuestionID}', ".
+                    "$Param{QuestionID}, ".
                     "'$Param{Answer}', ".
-                    "'255', ".
+                    "255, ".
                     "current_timestamp, ".
                     "$Param{UserID}, ".
                     "current_timestamp, ".
@@ -710,8 +708,8 @@ sub AnswerDelete {
     # sql for event
     $Self->{DBObject}->Do(
         SQL => "DELETE FROM survey_answer WHERE ".
-                    "id='$Param{AnswerID}' AND ".
-                    "question_id='$Param{QuestionID}'"
+                    "id = $Param{AnswerID} AND ".
+                    "question_id = $Param{QuestionID}"
         );
 }
 
@@ -730,14 +728,14 @@ sub AnswerSort {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
     }
     # sql for event
-    my $SQL = "SELECT id ".
-        " FROM survey_answer WHERE question_id=$Param{QuestionID} ORDER BY position";
+    my $SQL = "SELECT id FROM survey_answer".
+        " WHERE question_id = $Param{QuestionID} ORDER BY position";
     $Self->{DBObject}->Prepare(SQL => $SQL);
 
     my $counter = 1;
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
         $Self->{DBObject}->Do(
-            SQL => "UPDATE survey_answer SET position='$counter' WHERE id=$Row[0]",
+            SQL => "UPDATE survey_answer SET position = $counter WHERE id = $Row[0]",
         );
 
         $counter++;
@@ -759,8 +757,8 @@ sub AnswerUp {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
     }
     # sql for event
-    $Self->{DBObject}->Prepare(SQL => "SELECT position ".
-        " FROM survey_answer WHERE id=$Param{AnswerID} AND question_id=$Param{QuestionID}"
+    $Self->{DBObject}->Prepare(SQL => "SELECT position FROM survey_answer".
+        " WHERE id = $Param{AnswerID} AND question_id = $Param{QuestionID}"
         );
     my @Row = $Self->{DBObject}->FetchrowArray();
     my $Position = $Row[0];
@@ -769,8 +767,8 @@ sub AnswerUp {
     {
         my $PositionUp = $Position - 1;
 
-        $Self->{DBObject}->Prepare(SQL => "SELECT id ".
-            " FROM survey_answer WHERE question_id=$Param{QuestionID} AND position='$PositionUp'"
+        $Self->{DBObject}->Prepare(SQL => "SELECT id FROM survey_answer".
+            " WHERE question_id = $Param{QuestionID} AND position = $PositionUp"
             );
         @Row = $Self->{DBObject}->FetchrowArray();
         my $AnswerIDDown = $Row[0];
@@ -779,13 +777,13 @@ sub AnswerUp {
         {
             $Self->{DBObject}->Do(
                 SQL => "UPDATE survey_answer SET ".
-                            "position='$Position' ".
-                            "WHERE id='$AnswerIDDown'"
+                            "position = $Position ".
+                            "WHERE id = $AnswerIDDown"
                 );
             $Self->{DBObject}->Do(
                 SQL => "UPDATE survey_answer SET ".
-                            "position='$PositionUp' ".
-                            "WHERE id='$Param{AnswerID}'"
+                            "position = $PositionUp ".
+                            "WHERE id = $Param{AnswerID}"
                 );
         }
     }
@@ -806,8 +804,8 @@ sub AnswerDown {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
     }
     # sql for event
-    $Self->{DBObject}->Prepare(SQL => "SELECT position ".
-        " FROM survey_answer WHERE id=$Param{AnswerID} AND question_id=$Param{QuestionID}"
+    $Self->{DBObject}->Prepare(SQL => "SELECT position FROM survey_answer".
+        " WHERE id = $Param{AnswerID} AND question_id = $Param{QuestionID}"
         );
     my @Row = $Self->{DBObject}->FetchrowArray();
     my $Position = $Row[0];
@@ -816,8 +814,8 @@ sub AnswerDown {
     {
         my $PositionDown = $Position + 1;
 
-        $Self->{DBObject}->Prepare(SQL => "SELECT id ".
-            " FROM survey_answer WHERE question_id=$Param{QuestionID} AND position='$PositionDown'"
+        $Self->{DBObject}->Prepare(SQL => "SELECT id FROM survey_answer".
+            " WHERE question_id = $Param{QuestionID} AND position = $PositionDown"
             );
         @Row = $Self->{DBObject}->FetchrowArray();
         my $AnswerIDUp = $Row[0];
@@ -826,13 +824,13 @@ sub AnswerDown {
         {
             $Self->{DBObject}->Do(
                 SQL => "UPDATE survey_answer SET ".
-                            "position='$Position' ".
-                            "WHERE id='$AnswerIDUp'"
+                            "position = $Position ".
+                            "WHERE id = $AnswerIDUp"
                 );
             $Self->{DBObject}->Do(
                 SQL => "UPDATE survey_answer SET ".
-                            "position='$PositionDown' ".
-                            "WHERE id='$Param{AnswerID}'"
+                            "position = $PositionDown ".
+                            "WHERE id = $Param{AnswerID}"
                 );
         }
     }
@@ -854,7 +852,7 @@ sub AnswerGet {
     }
     # sql for event
     my $SQL = "SELECT id, question_id, answer, position, create_time, create_by, change_time, change_by ".
-        " FROM survey_answer WHERE id=$Param{AnswerID}";
+        " FROM survey_answer WHERE id = $Param{AnswerID}";
     $Self->{DBObject}->Prepare(SQL => $SQL);
 
     my %Data = ();
@@ -889,11 +887,11 @@ sub AnswerSave {
     # sql for event
     $Self->{DBObject}->Do(
         SQL => "UPDATE survey_answer SET ".
-                         "answer='$Param{Answer}', ".
-                         "change_time=current_timestamp, ".
-                         "change_by=$Param{UserID} ".
-                         "WHERE id=$Param{AnswerID} ",
-                         "AND question_id=$Param{QuestionID}",
+                         "answer = '$Param{Answer}', ".
+                         "change_time = current_timestamp, ".
+                         "change_by = $Param{UserID} ".
+                         "WHERE id = $Param{AnswerID} ",
+                         "AND question_id = $Param{QuestionID}",
         );
 }
 
@@ -914,7 +912,7 @@ sub VoteList {
     }
     # sql for event
     my $SQL = "SELECT id, ticket_id, send_time, vote_time ".
-        " FROM survey_request WHERE survey_id=$Param{SurveyID} AND valid_id=0 ORDER BY vote_time DESC";
+        " FROM survey_request WHERE survey_id = $Param{SurveyID} AND valid_id = 0 ORDER BY vote_time DESC";
     $Self->{DBObject}->Prepare(SQL => $SQL);
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
         my %Data = ();
@@ -947,7 +945,7 @@ sub VoteGet {
     }
     # sql for event
     my $SQL = "SELECT id, vote_value ".
-        " FROM survey_vote WHERE request_id=$Param{RequestID} AND question_id=$Param{QuestionID}";
+        " FROM survey_vote WHERE request_id = $Param{RequestID} AND question_id = $Param{QuestionID}";
     $Self->{DBObject}->Prepare(SQL => $SQL);
 
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
@@ -978,8 +976,8 @@ sub ValidOnce {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
     }
     # sql for event
-    $Self->{DBObject}->Prepare(SQL => "SELECT valid_once ".
-        " FROM survey WHERE id=$Param{SurveyID}"
+    $Self->{DBObject}->Prepare(SQL => "SELECT valid_once".
+        " FROM survey WHERE id = $Param{SurveyID}"
         );
     my @ValidOnce = $Self->{DBObject}->FetchrowArray();
 
@@ -1001,7 +999,7 @@ sub CountVote {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
     }
     # sql for event
-    my $SQL = "SELECT COUNT(vote_value) FROM survey_vote WHERE question_id='$Param{QuestionID}' AND vote_value='$Param{VoteValue}'";
+    my $SQL = "SELECT COUNT(vote_value) FROM survey_vote WHERE question_id = $Param{QuestionID} AND vote_value = $Param{VoteValue}";
 
     $Self->{DBObject}->Prepare(SQL => $SQL);
     my @CountVote = $Self->{DBObject}->FetchrowArray();
@@ -1024,7 +1022,7 @@ sub CountRequestComplete {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
     }
     # sql for event
-    my $SQL = "SELECT COUNT(id) FROM survey_request WHERE survey_id='$Param{SurveyID}' AND valid_id=0";
+    my $SQL = "SELECT COUNT(id) FROM survey_request WHERE survey_id = $Param{SurveyID} AND valid_id = 0";
 
     $Self->{DBObject}->Prepare(SQL => $SQL);
     my @CountRequestComplete = $Self->{DBObject}->FetchrowArray();
@@ -1055,7 +1053,7 @@ sub RequestSend {
 
     # find master survey
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT id FROM survey WHERE master='yes' AND valid='yes' AND valid_once='yes'"
+        SQL => "SELECT id FROM survey WHERE master = 'yes' AND valid = 'yes' AND valid_once = 'yes'"
     );
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
         $MasterID = $Row[0];
@@ -1120,7 +1118,7 @@ sub RequestSend {
                 my $LastSentTime = 0;
                 $Self->{DBObject}->Prepare(
                     SQL => "SELECT send_time FROM ".
-                        " survey_request WHERE send_to = '".$Self->{DBObject}->Quote($To)."'"
+                        "survey_request WHERE send_to = '".$Self->{DBObject}->Quote($To)."'"
                 );
                 while (my @Row = $Self->{DBObject}->FetchrowArray()) {
                     $LastSentTime = $Row[0];
@@ -1184,14 +1182,14 @@ sub PublicSurveyGet {
     }
     # sql for event
     $Self->{DBObject}->Prepare(SQL => "SELECT survey_id ".
-        " FROM survey_request WHERE public_survey_key='$Param{PublicSurveyKey}' AND valid_id=1"
+        " FROM survey_request WHERE public_survey_key = '$Param{PublicSurveyKey}' AND valid_id = 1"
         );
     my @SurveyID = $Self->{DBObject}->FetchrowArray();
 
     if ($SurveyID[0] > '0')
     {
         my $SQL = "SELECT id, number, title, introduction ".
-            " FROM survey WHERE id=$SurveyID[0] AND valid='yes'";
+            " FROM survey WHERE id = $SurveyID[0] AND valid = 'yes'";
         $Self->{DBObject}->Prepare(SQL => $SQL);
 
         my @Survey = $Self->{DBObject}->FetchrowArray();
@@ -1224,7 +1222,7 @@ sub PublicAnswerSave{
     }
     # sql for event
     $Self->{DBObject}->Prepare(SQL => "SELECT id ".
-        " FROM survey_request WHERE public_survey_key='$Param{PublicSurveyKey}' AND valid_id=1"
+        " FROM survey_request WHERE public_survey_key = '$Param{PublicSurveyKey}' AND valid_id = 1"
         );
     my @Row = $Self->{DBObject}->FetchrowArray();
     my $RequestID = $Row[0];
@@ -1232,8 +1230,8 @@ sub PublicAnswerSave{
     if ($RequestID > '0') {
         $Self->{DBObject}->Do(
             SQL => "INSERT INTO survey_vote (request_id, question_id, vote_value, create_time) VALUES (".
-                        "'$RequestID', ".
-                        "'$Param{QuestionID}', ".
+                        "$RequestID, ".
+                        "$Param{QuestionID}, ".
                         "'$Param{VoteValue}', ".
                         "current_timestamp)"
         );
@@ -1256,7 +1254,7 @@ sub PublicSurveyInvalidSet {
     }
     # sql for event
     $Self->{DBObject}->Prepare(SQL => "SELECT id ".
-        " FROM survey_request WHERE public_survey_key='$Param{PublicSurveyKey}'"
+        " FROM survey_request WHERE public_survey_key = '$Param{PublicSurveyKey}'"
         );
     my @Row = $Self->{DBObject}->FetchrowArray();
     my $RequestID = $Row[0];
@@ -1264,12 +1262,11 @@ sub PublicSurveyInvalidSet {
     if ($RequestID > '0') {
         $Self->{DBObject}->Do(
             SQL => "UPDATE survey_request SET ".
-                         "valid_id=0, ".
-                         "vote_time=current_timestamp ".
-                         "WHERE id=$RequestID"
+                         "valid_id = 0, ".
+                         "vote_time = current_timestamp ".
+                         "WHERE id = $RequestID"
             );
     }
 }
-
 
 1;
