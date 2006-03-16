@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - manage all survey module events
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: Survey.pm,v 1.11 2006-03-16 23:14:44 mh Exp $
+# $Id: Survey.pm,v 1.12 2006-03-16 23:55:15 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Ticket;
 use Kernel::System::CustomerUser;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.11 $';
+$VERSION = '$Revision: 1.12 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -1006,8 +1006,6 @@ sub VoteGet {
     return @List;
 }
 
-
-
 sub CountVote {
     my $Self = shift;
     my %Param = @_;
@@ -1198,7 +1196,6 @@ sub RequestSend {
     }
     return 1;
 }
-
 
 sub PublicSurveyGet {
     my $Self = shift;
