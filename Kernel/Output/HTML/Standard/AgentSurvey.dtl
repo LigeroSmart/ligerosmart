@@ -2,7 +2,7 @@
 # AgentSurvey.dtl - provides HTML form for AgentSurvey
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: AgentSurvey.dtl,v 1.8 2006-03-16 19:12:30 mh Exp $
+# $Id: AgentSurvey.dtl,v 1.9 2006-03-16 19:31:35 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -854,7 +854,7 @@
                       <td class="contentkey">$Text{"Send Time"}</td>
                       <td class="contentkey">$Text{"Vote Time"}</td>
                       <td class="contentkey">$Text{"Ticket"}</td>
-                      <td class="contentkey" align="right">$Text{"Details"}</td>
+                      <td class="contentkey" align="center">$Text{"Details"}</td>
                       <td class="contentkey" width="25">&nbsp;</td>
                     </tr>
                     <tr>
@@ -870,8 +870,8 @@
                       <td class="contentkey" width="25">&nbsp;</td>
                       <td class="contentvalue">$TimeLong{"$Data{"SendTime"}"}</td>
                       <td class="contentvalue">$TimeLong{"$Data{"VoteTime"}"}</td>
-                      <td class="contentvalue"><a href="$Env{"CGIHandle"}?Action=AgentTicketZoom&TicketID=$QData{"TicketID"}">$QData{"TicketID"}</a></td>
-                      <td class="contentvalue" align="right">
+                      <td class="contentvalue"><a href="$Env{"CGIHandle"}?Action=AgentTicketZoom&TicketID=$QData{"TicketID"}">$QData{"TicketNumber"}</a></td>
+                      <td class="contentvalue" align="center">
                         <a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=StatsDetail&SurveyID=$QData{"SurveyID"}&RequestID=$QData{"RequestID"}">x</a></td>
                         <td class="contentkey" width="25">&nbsp;</td>
                       </tr>

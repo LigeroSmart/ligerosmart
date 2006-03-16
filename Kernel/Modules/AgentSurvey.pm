@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurvey.pm - a survey module
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: AgentSurvey.pm,v 1.5 2006-03-16 19:12:29 mh Exp $
+# $Id: AgentSurvey.pm,v 1.6 2006-03-16 19:31:35 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.5 $';
+$VERSION = '$Revision: 1.6 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 # --
@@ -633,6 +633,8 @@ sub Run {
 
         foreach my $Vote(@List) {
             $Vote->{SurveyID} = $SurveyID;
+            my %Ticket = $Self->{TicketObject}->TicketGet(TicketID=>$Vote->{TicketID});
+            $Vote->{TicketNumber} = $Ticket{TicketNumber};
 
             $Self->{LayoutObject}->Block(
                 Name => 'StatsVote',
