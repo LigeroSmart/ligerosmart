@@ -2,7 +2,7 @@
 # PublicSurvey.dtl - provides HTML form for PublicSurvey
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: PublicSurvey.dtl,v 1.1 2006-03-11 09:46:25 mh Exp $
+# $Id: PublicSurvey.dtl,v 1.2 2006-03-16 23:34:27 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,9 +19,7 @@
   </tr>
   <tr>
     <td class="mainbody">
-
       <br>
-
       <table border="0" width="700" align="center" cellspacing="0" cellpadding="4">
         <tr>
           <td colspan="4" class="contenthead">
@@ -49,14 +47,11 @@
           </td>
         </tr>
       </table>
-
       <br>
-
       <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
         <input type="hidden" name="Action" value="$Env{"Action"}">
         <input type="hidden" name="Subaction" value="PublicSurveyVote">
         <input type="hidden" name="PublicSurveyKey" value="$QData{"PublicSurveyKey"}">
-
         <table border="0" width="700" align="center" cellspacing="0" cellpadding="4">
           <tr>
             <td colspan="4" class="contenthead">$Text{"Questions"}
@@ -197,9 +192,7 @@
                       </tr>
                     </table>
                   </form>
-
                   <br>
-
                 </td>
               </tr>
             </table>
@@ -242,9 +235,7 @@
                       </td>
                     </tr>
                   </table>
-
                   <br>
-
                 </td>
               </tr>
             </table>
@@ -287,12 +278,9 @@
                       </td>
                     </tr>
                   </table>
-
                   <br>
-
                 </td>
               </tr>
             </table>
 <!-- dtl:block:PublicSurveyComplete -->
-
 
