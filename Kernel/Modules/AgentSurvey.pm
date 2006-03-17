@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurvey.pm - a survey module
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: AgentSurvey.pm,v 1.6 2006-03-16 19:31:35 mh Exp $
+# $Id: AgentSurvey.pm,v 1.7 2006-03-17 10:45:17 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.6 $';
+$VERSION = '$Revision: 1.7 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 # --
@@ -271,6 +271,10 @@ sub Run {
                     Data => $Question,
                 );
             }
+            $Self->{LayoutObject}->Block(
+                Name => 'SurveyEditQuestionTypes',
+                Data => {},
+            );
         }
 
         $Output .= $Self->{LayoutObject}->Output(
@@ -432,6 +436,7 @@ sub Run {
                 }
                 $Self->{LayoutObject}->Block(
                     Name => 'QuestionEdit2b',
+                    Data => {%Question},
                 );
             }
             else
@@ -461,6 +466,7 @@ sub Run {
                 }
                 $Self->{LayoutObject}->Block(
                     Name => 'QuestionEdit3b',
+                    Data => {%Question},
                 );
             }
             else
