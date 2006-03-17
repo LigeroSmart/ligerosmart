@@ -2,7 +2,7 @@
 # AgentSurvey.dtl - provides HTML form for AgentSurvey
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: AgentSurvey.dtl,v 1.13 2006-03-17 14:22:40 mh Exp $
+# $Id: AgentSurvey.dtl,v 1.14 2006-03-17 17:37:31 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -183,7 +183,7 @@
 <!-- dtl:block:SurveyEditStatsQuestion -->
                   <tr>
                     <td class="contentkey" width="25">&nbsp;</td>
-                    <td class="contentkey">$QData{"Question"}</td>
+                    <td class="contentkey">$QData{"Question","100"}</td>
                     <td class="contentkey" width="25">&nbsp;</td>
                   </tr>
                   <tr>
@@ -194,7 +194,7 @@
                         <tr>
                           <td width="50" class="contentkey" align="right">
                             &nbsp;</td>
-                            <td class="contentvalue">$Text{"$QData{"Answer"}"}</td>
+                            <td class="contentvalue">$QData{"Answer","70"}</td>
                             <td class="contentkey" width="110">
                               <table border="0" width="100" cellspacing="0" cellpadding="0">
                                 <tr>
@@ -368,7 +368,7 @@
                           </tr>
 <!-- dtl:block:SurveyEditQuestionsValidOnce -->
                           <tr>
-                            <td class="contentbody"><a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=QuestionEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}">$QData{"Question"}</a>&nbsp;($QData{"Type"})</td>
+                            <td class="contentbody"><a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=QuestionEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}">$QData{"Question","90"}</a>&nbsp;($QData{"Type"})</td>
                             <td class="contentbody" align="right">
                               <a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=QuestionUp&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}"><img border="0" src="$Env{"Images"}up-big.png"></a>
                               <a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=QuestionDown&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}"><img border="0" src="$Env{"Images"}down-big.png"></a>
@@ -377,7 +377,7 @@
 <!-- dtl:block:SurveyEditQuestionsValidOnce -->
 <!-- dtl:block:SurveyEditQuestions -->
                           <tr>
-                            <td class="contentbody"><a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=QuestionEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}">$QData{"Question"}</a>&nbsp;($QData{"Type"})</td>
+                            <td class="contentbody"><a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=QuestionEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}">$QData{"Question","70"}</a>&nbsp;($QData{"Type"})</td>
                             <td class="contentbody" align="right">
                               <table border="0" align="right" cellspacing="0" cellpadding="0">
                                 <tr>
@@ -645,7 +645,7 @@
 <!-- dtl:block:QuestionEdit1 -->
 <!-- dtl:block:QuestionEdit2ValidOnce -->
                           <tr>
-                            <td class="contentbody"><input type="radio" name="Q1">&nbsp;<a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=AnswerEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}">$QData{"Answer"}</a></td>
+                            <td class="contentbody"><input type="radio" name="Q1">&nbsp;<a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=AnswerEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}">$QData{"Answer","90"}</a></td>
                             <td class="contentbody" align="right">
                               <a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=AnswerUp&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}"><img border="0" src="$Env{"Images"}up-big.png"></a>
                               <a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=AnswerDown&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}"><img border="0" src="$Env{"Images"}down-big.png"></a>
@@ -654,7 +654,7 @@
 <!-- dtl:block:QuestionEdit2ValidOnce -->
 <!-- dtl:block:QuestionEdit2 -->
                           <tr>
-                            <td class="contentbody"><input type="radio" name="Q1">&nbsp;<a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=AnswerEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}">$QData{"Answer"}</a></td>
+                            <td class="contentbody"><input type="radio" name="Q1">&nbsp;<a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=AnswerEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}">$QData{"Answer","70"}</a></td>
                             <td class="contentbody" align="right">
                               <table border="0" align="right" cellspacing="0" cellpadding="0">
                                 <tr>
