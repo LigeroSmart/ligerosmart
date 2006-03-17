@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurvey.pm - a survey module
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: AgentSurvey.pm,v 1.7 2006-03-17 10:45:17 mh Exp $
+# $Id: AgentSurvey.pm,v 1.8 2006-03-17 11:12:39 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.7 $';
+$VERSION = '$Revision: 1.8 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 # --
@@ -355,7 +355,7 @@ sub Run {
            $Self->{SurveyObject}->QuestionSort(SurveyID=>$SurveyID);
        }
 
-       return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=SurveyEdit&SurveyID=$SurveyID");
+       return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=SurveyEdit&SurveyID=$SurveyID#NewQuestion");
     }
 
     elsif ($Self->{Subaction} eq 'QuestionDelete') {
@@ -369,7 +369,7 @@ sub Run {
 
        $Self->{SurveyObject}->QuestionSort(SurveyID=>$SurveyID);
 
-       return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=SurveyEdit&SurveyID=$SurveyID");
+       return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=SurveyEdit&SurveyID=$SurveyID#Question");
     }
 
     elsif ($Self->{Subaction} eq 'QuestionUp') {
@@ -383,7 +383,7 @@ sub Run {
                                      QuestionID=>$QuestionID,
                                      );
 
-       return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=SurveyEdit&SurveyID=$SurveyID");
+       return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=SurveyEdit&SurveyID=$SurveyID#Question");
     }
 
     elsif ($Self->{Subaction} eq 'QuestionDown') {
@@ -397,7 +397,7 @@ sub Run {
                                      QuestionID=>$QuestionID,
                                      );
 
-       return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=SurveyEdit&SurveyID=$SurveyID");
+       return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=SurveyEdit&SurveyID=$SurveyID#Question");
     }
 
     elsif ($Self->{Subaction} eq 'QuestionEdit') {
@@ -530,7 +530,7 @@ sub Run {
            $Self->{SurveyObject}->AnswerSort(QuestionID=>$QuestionID);
        }
 
-       return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=QuestionEdit&SurveyID=$SurveyID&QuestionID=$QuestionID");
+       return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=QuestionEdit&SurveyID=$SurveyID&QuestionID=$QuestionID#NewAnswer");
     }
 
     elsif ($Self->{Subaction} eq 'AnswerDelete') {
@@ -545,7 +545,7 @@ sub Run {
 
        $Self->{SurveyObject}->AnswerSort(QuestionID=>$QuestionID);
 
-       return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=QuestionEdit&SurveyID=$SurveyID&QuestionID=$QuestionID");
+       return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=QuestionEdit&SurveyID=$SurveyID&QuestionID=$QuestionID#Answer");
     }
 
     elsif ($Self->{Subaction} eq 'AnswerUp') {
@@ -560,7 +560,7 @@ sub Run {
                                      AnswerID=>$AnswerID,
                                      );
 
-       return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=QuestionEdit&SurveyID=$SurveyID&QuestionID=$QuestionID");
+       return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=QuestionEdit&SurveyID=$SurveyID&QuestionID=$QuestionID#Answer");
     }
 
     elsif ($Self->{Subaction} eq 'AnswerDown') {
@@ -575,7 +575,7 @@ sub Run {
                                      AnswerID=>$AnswerID,
                                      );
 
-       return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=QuestionEdit&SurveyID=$SurveyID&QuestionID=$QuestionID");
+       return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=QuestionEdit&SurveyID=$SurveyID&QuestionID=$QuestionID#Answer");
     }
 
     elsif ($Self->{Subaction} eq 'AnswerEdit') {

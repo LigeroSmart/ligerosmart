@@ -2,7 +2,7 @@
 # AgentSurvey.dtl - provides HTML form for AgentSurvey
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: AgentSurvey.dtl,v 1.11 2006-03-17 10:45:17 mh Exp $
+# $Id: AgentSurvey.dtl,v 1.12 2006-03-17 11:12:39 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -349,7 +349,7 @@
                 <td colspan="4" class="contenthead">
                   <table border="0" width="100%" cellspacing="0" cellpadding="0">
                     <tr>
-                      <td class="contenthead">$Text{"Questions"}</td>
+                      <td class="contenthead"><a name="Question"></a>$Text{"Questions"}</td>
                       <td class="contenthead" align="right">&nbsp;</td>
                     </tr>
                   </table>
@@ -409,7 +409,7 @@
                     </tr>
 <!-- dtl:block:SurveyEditNewQuestion -->
                     <tr>
-                      <td class="contentkey" width="25">&nbsp;</td>
+                      <td class="contentkey" width="25"><a name="NewQuestion">&nbsp;</td>
                       <td class="contentvalue">
                         <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
                           <input type="hidden" name="Action" value="$Env{"Action"}">
@@ -616,7 +616,7 @@
                 <td colspan="4" class="contenthead">
                   <table border="0" width="100%" cellspacing="0" cellpadding="0">
                     <tr>
-                      <td class="contenthead">$Text{"Posible Answers"}</td>
+                      <td class="contenthead"><a name="Answer">$Text{"Posible Answers"}</td>
                       <td class="contenthead" align="right">&nbsp;</td>
                     </tr>
                   </table>
@@ -679,7 +679,7 @@
 <!-- dtl:block:QuestionEdit2 -->
 <!-- dtl:block:QuestionEdit2b -->
                           <tr>
-                            <td class="contentkey">&nbsp;</td>
+                            <td class="contentkey"><a name="NewAnswer">&nbsp;</td>
                             <td class="contentkey" width="25">&nbsp;</td>
                           </tr>
                           <tr>
@@ -729,7 +729,7 @@
 <!-- dtl:block:QuestionEdit3 -->
 <!-- dtl:block:QuestionEdit3b -->
                           <tr>
-                            <td class="contentkey">&nbsp;</td>
+                            <td class="contentkey"><a name="NewAnswer">&nbsp;</td>
                             <td class="contentkey" width="25">&nbsp;</td>
                           </tr>
                           <tr>
