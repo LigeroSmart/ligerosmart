@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - manage all survey module events
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: Survey.pm,v 1.13 2006-03-17 10:45:17 mh Exp $
+# $Id: Survey.pm,v 1.14 2006-03-17 13:15:05 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Ticket;
 use Kernel::System::CustomerUser;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.13 $';
+$VERSION = '$Revision: 1.14 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -148,6 +148,14 @@ sub SurveyGet {
     }
 }
 
+=item SurveyStatusSet()
+
+to set a new survey status (Valid, Invalid, Master)
+
+    $Self->{SurveyObject}->SurveyStatusSet(SurveyID => 123, NewStatus => 'Master');
+
+=cut
+
 sub SurveyStatusSet {
     my $Self = shift;
     my %Param = @_;
@@ -258,6 +266,20 @@ sub SurveyStatusSet {
     }
 }
 
+=item SurveySave()
+
+to update an existing survey
+
+    $Self->{SurveyObject}->SurveySave(
+        UserID => 1,
+        SurveyID => 4,
+        SurveyTitle => 'A Title',
+        SurveyIntroduction => 'The introduction of the survey',
+        SurveyDescription => 'The internal description of the survey',
+    );
+
+=cut
+
 sub SurveySave {
     my $Self = shift;
     my %Param = @_;
@@ -286,6 +308,19 @@ sub SurveySave {
                          "WHERE id = $Param{SurveyID}",
         );
 }
+
+=item SurveyNew()
+
+to add a new survey
+
+    my $SurveyID = $Self->{SurveyObject}->SurveyNew(
+        UserID => 1,
+        SurveyTitle => 'A Title',
+        SurveyIntroduction => 'The introduction of the survey',
+        SurveyDescription => 'The internal description of the survey',
+    );
+
+=cut
 
 sub SurveyNew {
     my $Self = shift;
@@ -339,6 +374,14 @@ sub SurveyNew {
     return $SurveyID;
 }
 
+=item QuestionList()
+
+to get a array list of all question items
+
+    my @List = $Self->{SurveyObject}->QuestionList(SurveyID => 1);
+
+=cut
+
 sub QuestionList {
     my $Self = shift;
     my %Param = @_;
@@ -372,6 +415,19 @@ sub QuestionList {
     return @List;
 }
 
+=item QuestionAdd()
+
+to add a new question to a survey
+
+    $Self->{SurveyObject}->QuestionAdd(
+        UserID => 1,
+        SurveyID => 10,
+        Question => 'The Question',
+        QuestionType => 3,
+    );
+
+=cut
+
 sub QuestionAdd {
     my $Self = shift;
     my %Param = @_;
@@ -403,6 +459,17 @@ sub QuestionAdd {
         );
 }
 
+=item QuestionDelete()
+
+to delete a question from a survey
+
+    $Self->{SurveyObject}->QuestionDelete(
+        SurveyID => 1,
+        QuestionID => 10,
+    );
+
+=cut
+
 sub QuestionDelete {
     my $Self = shift;
     my %Param = @_;
@@ -428,6 +495,16 @@ sub QuestionDelete {
                     "survey_id = $Param{SurveyID}"
         );
 }
+
+=item QuestionSort()
+
+to sort all questions from a survey
+
+    $Self->{SurveyObject}->QuestionSort(
+        SurveyID => 1,
+    );
+
+=cut
 
 sub QuestionSort {
     my $Self = shift;
@@ -456,6 +533,17 @@ sub QuestionSort {
         $Counter++;
     }
 }
+
+=item QuestionUp()
+
+to move a question up
+
+    $Self->{SurveyObject}->QuestionUp(
+        SurveyID => 1,
+        QuestionID => 4,
+    );
+
+=cut
 
 sub QuestionUp {
     my $Self = shift;
@@ -512,6 +600,17 @@ sub QuestionUp {
     }
 }
 
+=item QuestionDown()
+
+to move a question down
+
+    $Self->{SurveyObject}->QuestionDown(
+        SurveyID => 1,
+        QuestionID => 4,
+    );
+
+=cut
+
 sub QuestionDown {
     my $Self = shift;
     my %Param = @_;
@@ -567,6 +666,14 @@ sub QuestionDown {
     }
 }
 
+=item QuestionGet()
+
+to get all attributes of a question
+
+    my %Question = $Self->{SurveyObject}->QuestionGet(QuestionID => 123);
+
+=cut
+
 sub QuestionGet {
     my $Self = shift;
     my %Param = @_;
@@ -602,6 +709,19 @@ sub QuestionGet {
     return %Data;
 }
 
+=item QuestionSave()
+
+to update an existing question
+
+    $Self->{SurveyObject}->QuestionSave(
+        UserID => 1,
+        QuestionID => 4,
+        SurveyID => 3,
+        Question => 'The Question',
+    );
+
+=cut
+
 sub QuestionSave {
     my $Self = shift;
     my %Param = @_;
@@ -630,6 +750,14 @@ sub QuestionSave {
         );
 }
 
+=item QuestionCount()
+
+to count all questions of a survey
+
+    my $CountQuestion = $Self->{SurveyObject}->QuestionCount(SurveyID => 123);
+
+=cut
+
 sub QuestionCount {
     my $Self = shift;
     my %Param = @_;
@@ -657,6 +785,14 @@ sub QuestionCount {
 
     return $CountQuestion;
 }
+
+=item AnswerList()
+
+to get a array list of all answer items
+
+    my @List = $Self->{SurveyObject}->AnswerList(QuestionID => 1);
+
+=cut
 
 sub AnswerList {
     my $Self = shift;
@@ -690,6 +826,18 @@ sub AnswerList {
     return @List;
 }
 
+=item AnswerAdd()
+
+to add a new answer to a question
+
+    $Self->{SurveyObject}->AnswerAdd(
+        UserID => 1,
+        QuestionID => 10,
+        Answer => 'The Answer',
+    );
+
+=cut
+
 sub AnswerAdd {
     my $Self = shift;
     my %Param = @_;
@@ -720,6 +868,17 @@ sub AnswerAdd {
         );
 }
 
+=item AnswerDelete()
+
+to delete a answer from a question
+
+    $Self->{SurveyObject}->AnswerDelete(
+        QuestionID => 10,
+        AnswerID => 4,
+    );
+
+=cut
+
 sub AnswerDelete {
     my $Self = shift;
     my %Param = @_;
@@ -742,6 +901,16 @@ sub AnswerDelete {
                     "question_id = $Param{QuestionID}"
         );
 }
+
+=item AnswerSort()
+
+to sort all answers from a question
+
+    $Self->{SurveyObject}->AnswerSort(
+        QuestionID => 1,
+    );
+
+=cut
 
 sub AnswerSort {
     my $Self = shift;
@@ -771,6 +940,17 @@ sub AnswerSort {
         $counter++;
     }
 }
+
+=item AnswerUp()
+
+to move a answer up
+
+    $Self->{SurveyObject}->AnswerUp(
+        QuestionID => 4,
+        AnswerID => 1,
+    );
+
+=cut
 
 sub AnswerUp {
     my $Self = shift;
@@ -827,6 +1007,17 @@ sub AnswerUp {
     }
 }
 
+=item AnswerDown()
+
+to move a answer down
+
+    $Self->{SurveyObject}->AnswerDown(
+        QuestionID => 4,
+        AnswerID => 1,
+    );
+
+=cut
+
 sub AnswerDown {
     my $Self = shift;
     my %Param = @_;
@@ -882,6 +1073,14 @@ sub AnswerDown {
     }
 }
 
+=item AnswerGet()
+
+to get all attributes of a answer
+
+    my %Answer = $Self->{SurveyObject}->AnswerGet(AnswerID => 123);
+
+=cut
+
 sub AnswerGet {
     my $Self = shift;
     my %Param = @_;
@@ -916,6 +1115,19 @@ sub AnswerGet {
     return %Data;
 }
 
+=item AnswerSave()
+
+to update an existing answer
+
+    $Self->{SurveyObject}->AnswerSave(
+        UserID => 1,
+        AnswerID => 6,
+        QuestionID => 4,
+        Answer => 'The Answer',
+    );
+
+=cut
+
 sub AnswerSave {
     my $Self = shift;
     my %Param = @_;
@@ -943,6 +1155,14 @@ sub AnswerSave {
                          "AND question_id = $Param{QuestionID}",
         );
 }
+
+=item VoteList()
+
+to get a array list of all vote items
+
+    my @List = $Self->{SurveyObject}->VoteList(SurveyID => 1);
+
+=cut
 
 sub VoteList {
     my $Self = shift;
@@ -977,6 +1197,17 @@ sub VoteList {
     return @List;
 }
 
+=item VoteGet()
+
+to get all attributes of a vote
+
+    my @Vote = $Self->{SurveyObject}->VoteGet(
+        RequestID => 13,
+        QuestionID => 23
+    );
+
+=cut
+
 sub VoteGet {
     my $Self = shift;
     my %Param = @_;
@@ -1006,6 +1237,17 @@ sub VoteGet {
 
     return @List;
 }
+
+=item CountVote()
+
+to count all votes of a survey
+
+    my $CountVote = $Self->{SurveyObject}->CountVote(
+        QuestionID => 123,
+        VoteValue => 'The Value',
+    );
+
+=cut
 
 sub CountVote {
     my $Self = shift;
@@ -1037,6 +1279,16 @@ sub CountVote {
     return $Data{CountVote};
 }
 
+=item CountRequestComplete()
+
+to count all requests of a survey
+
+    my $CountRequestComplete = $Self->{SurveyObject}->CountRequestComplete(
+        QuestionID => 123,
+    );
+
+=cut
+
 sub CountRequestComplete {
     my $Self = shift;
     my %Param = @_;
@@ -1063,6 +1315,16 @@ sub CountRequestComplete {
 
     return $Data{CountRequestComplete};
 }
+
+=item RequestSend()
+
+to send a request to a customer
+
+    $Self->{SurveyObject}->RequestSend(
+        TicketID => 123,
+    );
+
+=cut
 
 sub RequestSend {
     my $Self = shift;
@@ -1198,6 +1460,16 @@ sub RequestSend {
     return 1;
 }
 
+=item PublicSurveyGet()
+
+to get all public attributes of a survey
+
+    my %PublicSurvey = $Self->{SurveyObject}->PublicSurveyGet(
+        PublicSurveyKey => 'Aw5de3Xf5qA',
+    );
+
+=cut
+
 sub PublicSurveyGet {
     my $Self = shift;
     my %Param = @_;
@@ -1242,6 +1514,18 @@ sub PublicSurveyGet {
     }
 }
 
+=item PublicAnswerSave()
+
+to save a public vote
+
+    $Self->{SurveyObject}->PublicAnswerSave(
+        PublicSurveyKey => 'aVkdE82Dw2qw6erCda',
+        QuestionID => 4,
+        VoteValue => 'The Value',
+    );
+
+=cut
+
 sub PublicAnswerSave{
     my $Self = shift;
     my %Param = @_;
@@ -1280,6 +1564,16 @@ sub PublicAnswerSave{
     }
 }
 
+=item PublicSurveyInvalidSet()
+
+to set a request invalid
+
+    $Self->{SurveyObject}->PublicSurveyInvalidSet(
+        PublicSurveyKey => 'aVkdE82Dw2qw6erCda',
+    );
+
+=cut
+
 sub PublicSurveyInvalidSet {
     my $Self = shift;
     my %Param = @_;
@@ -1315,3 +1609,17 @@ sub PublicSurveyInvalidSet {
 }
 
 1;
+
+=head1 TERMS AND CONDITIONS
+
+This software is part of the OTRS project (http://otrs.org/).
+
+This software comes with ABSOLUTELY NO WARRANTY. For details, see
+the enclosed file COPYING for license information (GPL). If you
+did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+
+=head1 VERSION
+
+$Revision: 1.14 $ $Date: 2006-03-17 13:15:05 $
+
+=cut
