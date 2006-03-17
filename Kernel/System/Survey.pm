@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - manage all survey module events
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: Survey.pm,v 1.14 2006-03-17 13:15:05 mh Exp $
+# $Id: Survey.pm,v 1.15 2006-03-17 14:22:40 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Ticket;
 use Kernel::System::CustomerUser;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.14 $';
+$VERSION = '$Revision: 1.15 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -113,33 +113,33 @@ sub SurveyGet {
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
         $Data{SurveyID} = $Row[0];
         $Data{SurveyNumber} = $Row[1];
-        $Data{SurveyTitle} = $Row[2];
-        $Data{SurveyIntroduction} = $Row[3];
-        $Data{SurveyDescription} = $Row[4];
-        $Data{SurveyStatus} = $Row[5];
-        $Data{SurveyCreateTime} = $Row[6];
-        $Data{SurveyCreateBy} = $Row[7];
-        $Data{SurveyChangeTime} = $Row[8];
-        $Data{SurveyChangeBy} = $Row[9];
+        $Data{Title} = $Row[2];
+        $Data{Introduction} = $Row[3];
+        $Data{Description} = $Row[4];
+        $Data{Status} = $Row[5];
+        $Data{CreateTime} = $Row[6];
+        $Data{CreateBy} = $Row[7];
+        $Data{ChangeTime} = $Row[8];
+        $Data{ChangeBy} = $Row[9];
     }
     if (%Data) {
         my %CreateUserInfo = $Self->{UserObject}->GetUserData(
-            UserID => $Data{SurveyCreateBy},
+            UserID => $Data{CreateBy},
             Cached => 1
         );
 
-        $Data{SurveyCreateUserLogin} = $CreateUserInfo{UserLogin};
-        $Data{SurveyCreateUserFirstname} = $CreateUserInfo{UserFirstname};
-        $Data{SurveyCreateUserLastname} = $CreateUserInfo{UserLastname};
+        $Data{CreateUserLogin} = $CreateUserInfo{UserLogin};
+        $Data{CreateUserFirstname} = $CreateUserInfo{UserFirstname};
+        $Data{CreateUserLastname} = $CreateUserInfo{UserLastname};
 
         my %ChangeUserInfo = $Self->{UserObject}->GetUserData(
-            UserID => $Data{SurveyChangeBy},
+            UserID => $Data{ChangeBy},
             Cached => 1
         );
 
-        $Data{SurveyChangeUserLogin} = $ChangeUserInfo{UserLogin};
-        $Data{SurveyChangeUserFirstname} = $ChangeUserInfo{UserFirstname};
-        $Data{SurveyChangeUserLastname} = $ChangeUserInfo{UserLastname};
+        $Data{ChangeUserLogin} = $ChangeUserInfo{UserLogin};
+        $Data{ChangeUserFirstname} = $ChangeUserInfo{UserFirstname};
+        $Data{ChangeUserLastname} = $ChangeUserInfo{UserLastname};
         return %Data;
     }
     else {
@@ -174,12 +174,10 @@ sub SurveyStatusSet {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql for event
-    my $SQL = "SELECT status ".
-        " FROM survey WHERE id = $Param{SurveyID}";
+    my $SQL = "SELECT status FROM survey WHERE id = $Param{SurveyID}";
     $Self->{DBObject}->Prepare(SQL => $SQL);
 
     my $Status = '';
-
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
         $Status = $Row[0];
     }
@@ -189,7 +187,6 @@ sub SurveyStatusSet {
         $Self->{DBObject}->Prepare(SQL => $SQL);
 
         my $Quest = '';
-
         while (my @Row2 = $Self->{DBObject}->FetchrowArray()) {
             $Quest = $Row2[0];
         }
@@ -212,11 +209,9 @@ sub SurveyStatusSet {
                 $Self->{DBObject}->Prepare(SQL => "SELECT id FROM survey_answer WHERE question_id = $OneID");
 
                 my $Counter2 = '0';
-
                 while (my @Row = $Self->{DBObject}->FetchrowArray()) {
                     $Counter2++;
                 }
-
                 if ($Counter2 < 2) {
                     $AllQuestionsAnsers = 'no';
                 }
@@ -273,9 +268,9 @@ to update an existing survey
     $Self->{SurveyObject}->SurveySave(
         UserID => 1,
         SurveyID => 4,
-        SurveyTitle => 'A Title',
-        SurveyIntroduction => 'The introduction of the survey',
-        SurveyDescription => 'The internal description of the survey',
+        Title => 'A Title',
+        Introduction => 'The introduction of the survey',
+        Description => 'The internal description of the survey',
     );
 
 =cut
@@ -284,14 +279,14 @@ sub SurveySave {
     my $Self = shift;
     my %Param = @_;
     # check needed stuff
-    foreach (qw(UserID SurveyID SurveyTitle SurveyIntroduction SurveyDescription)) {
+    foreach (qw(UserID SurveyID Title Introduction Description)) {
       if (!defined ($Param{$_})) {
         $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
         return;
       }
     }
     # db quote
-    foreach (qw(SurveyTitle SurveyIntroduction SurveyDescription)) {
+    foreach (qw(Title Introduction Description)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
     }
     foreach (qw(UserID SurveyID)) {
@@ -300,9 +295,9 @@ sub SurveySave {
     # sql for event
     $Self->{DBObject}->Do(
         SQL => "UPDATE survey SET ".
-                         "title = '$Param{SurveyTitle}', ".
-                         "introduction = '$Param{SurveyIntroduction}', ".
-                         "description = '$Param{SurveyDescription}', ".
+                         "title = '$Param{Title}', ".
+                         "introduction = '$Param{Introduction}', ".
+                         "description = '$Param{Description}', ".
                          "change_time = current_timestamp, ".
                          "change_by = $Param{UserID} ".
                          "WHERE id = $Param{SurveyID}",
@@ -315,9 +310,9 @@ to add a new survey
 
     my $SurveyID = $Self->{SurveyObject}->SurveyNew(
         UserID => 1,
-        SurveyTitle => 'A Title',
-        SurveyIntroduction => 'The introduction of the survey',
-        SurveyDescription => 'The internal description of the survey',
+        Title => 'A Title',
+        Introduction => 'The introduction of the survey',
+        Description => 'The internal description of the survey',
     );
 
 =cut
@@ -326,14 +321,14 @@ sub SurveyNew {
     my $Self = shift;
     my %Param = @_;
     # check needed stuff
-    foreach (qw(UserID SurveyTitle SurveyIntroduction SurveyDescription)) {
+    foreach (qw(UserID Title Introduction Description)) {
       if (!defined ($Param{$_})) {
         $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
         return;
       }
     }
     # db quote
-    foreach (qw(SurveyTitle SurveyIntroduction SurveyDescription)) {
+    foreach (qw(Title Introduction Description)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
     }
     foreach (qw(UserID)) {
@@ -342,9 +337,9 @@ sub SurveyNew {
     # sql for event
     $Self->{DBObject}->Do(
         SQL => "INSERT INTO survey (title, introduction, description, status, create_time, create_by, change_time, change_by) VALUES (".
-                                                         "'$Param{SurveyTitle}', ".
-                                                         "'$Param{SurveyIntroduction}', ".
-                                                         "'$Param{SurveyDescription}', ".
+                                                         "'$Param{Title}', ".
+                                                         "'$Param{Introduction}', ".
+                                                         "'$Param{Description}', ".
                                                          "'New', ".
                                                          "current_timestamp, ".
                                                          "$Param{UserID}, ".
@@ -353,9 +348,9 @@ sub SurveyNew {
         );
 
     my $SQL = "SELECT id FROM survey WHERE ".
-                  "title = '$Param{SurveyTitle}' AND ".
-                  "introduction = '$Param{SurveyIntroduction}' AND ".
-                  "description = '$Param{SurveyDescription}' ".
+                  "title = '$Param{Title}' AND ".
+                  "introduction = '$Param{Introduction}' AND ".
+                  "description = '$Param{Description}' ".
                   "ORDER BY create_time DESC";
     $Self->{DBObject}->Prepare(SQL => $SQL);
 
@@ -407,7 +402,7 @@ sub QuestionList {
         $Data{QuestionID} = $Row[0];
         $Data{SurveyID} = $Row[1];
         $Data{Question} = $Row[2];
-        $Data{QuestionType} = $Row[3];
+        $Data{Type} = $Row[3];
 
         push(@List,\%Data);
     }
@@ -423,7 +418,7 @@ to add a new question to a survey
         UserID => 1,
         SurveyID => 10,
         Question => 'The Question',
-        QuestionType => 3,
+        Type => 3,
     );
 
 =cut
@@ -432,7 +427,7 @@ sub QuestionAdd {
     my $Self = shift;
     my %Param = @_;
     # check needed stuff
-    foreach (qw(UserID SurveyID Question QuestionType)) {
+    foreach (qw(UserID SurveyID Question Type)) {
       if (!defined ($Param{$_})) {
         $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
         return;
@@ -442,7 +437,7 @@ sub QuestionAdd {
     foreach (qw(Question)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
     }
-    foreach (qw(UserID SurveyID QuestionType)) {
+    foreach (qw(UserID SurveyID Type)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql for event
@@ -450,7 +445,7 @@ sub QuestionAdd {
         SQL => "INSERT INTO survey_question (survey_id, question, type, position, create_time, create_by, change_time, change_by) VALUES (".
                     "$Param{SurveyID}, ".
                     "'$Param{Question}', ".
-                    "'$Param{QuestionType}', ".
+                    "'$Param{Type}', ".
                     "255, ".
                     "current_timestamp, ".
                     "$Param{UserID}, ".
@@ -565,7 +560,6 @@ sub QuestionUp {
         );
 
     my $Position = '';
-
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
         $Position = $Row[0];
     }
@@ -573,13 +567,11 @@ sub QuestionUp {
     if ($Position > '1')
     {
         my $PositionUp = $Position - 1;
-
         $Self->{DBObject}->Prepare(SQL => "SELECT id FROM survey_question".
             " WHERE survey_id = $Param{SurveyID} AND position = $PositionUp"
             );
 
         my $QuestionIDDown = '';
-
         while (my @Row = $Self->{DBObject}->FetchrowArray()) {
             $QuestionIDDown = $Row[0];
         }
@@ -631,7 +623,6 @@ sub QuestionDown {
         );
 
     my $Position = '';
-
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
         $Position = $Row[0];
     }
@@ -639,13 +630,11 @@ sub QuestionDown {
     if ($Position > '0')
     {
         my $PositionDown = $Position + 1;
-
         $Self->{DBObject}->Prepare(SQL => "SELECT id FROM survey_question".
             " WHERE survey_id = $Param{SurveyID} AND position = $PositionDown"
             );
 
         my $QuestionIDUp = '';
-
         while (my @Row = $Self->{DBObject}->FetchrowArray()) {
             $QuestionIDUp = $Row[0];
         }
@@ -698,12 +687,12 @@ sub QuestionGet {
         $Data{QuestionID} = $Row[0];
         $Data{SurveyID} = $Row[1];
         $Data{Question} = $Row[2];
-        $Data{QuestionType} = $Row[3];
-        $Data{QuestionPosition} = $Row[4];
-        $Data{QuestionCreateTime} = $Row[5];
-        $Data{QuestionCreateBy} = $Row[6];
-        $Data{QuestionChangeTime} = $Row[7];
-        $Data{QuestionChangeBy} = $Row[8];
+        $Data{Type} = $Row[3];
+        $Data{Position} = $Row[4];
+        $Data{CreateTime} = $Row[5];
+        $Data{CreateBy} = $Row[6];
+        $Data{ChangeTime} = $Row[7];
+        $Data{ChangeBy} = $Row[8];
     }
 
     return %Data;
@@ -778,7 +767,6 @@ sub QuestionCount {
     $Self->{DBObject}->Prepare(SQL => $SQL);
 
     my $CountQuestion = '';
-
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
         $CountQuestion = $Row[0];
     }
@@ -936,7 +924,6 @@ sub AnswerSort {
         $Self->{DBObject}->Do(
             SQL => "UPDATE survey_answer SET position = $counter WHERE id = $Row[0]",
         );
-
         $counter++;
     }
 }
@@ -972,7 +959,6 @@ sub AnswerUp {
         );
 
     my $Position = '';
-
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
         $Position = $Row[0];
     }
@@ -980,13 +966,11 @@ sub AnswerUp {
     if ($Position > '1')
     {
         my $PositionUp = $Position - 1;
-
         $Self->{DBObject}->Prepare(SQL => "SELECT id FROM survey_answer".
             " WHERE question_id = $Param{QuestionID} AND position = $PositionUp"
             );
 
         my $AnswerIDDown = '';
-
         while (my @Row = $Self->{DBObject}->FetchrowArray()) {
             $AnswerIDDown = $Row[0];
         }
@@ -1038,7 +1022,6 @@ sub AnswerDown {
         );
 
     my $Position = '';
-
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
         $Position = $Row[0];
     }
@@ -1046,13 +1029,11 @@ sub AnswerDown {
     if ($Position > '0')
     {
         my $PositionDown = $Position + 1;
-
         $Self->{DBObject}->Prepare(SQL => "SELECT id FROM survey_answer".
             " WHERE question_id = $Param{QuestionID} AND position = $PositionDown"
             );
 
         my $AnswerIDUp = '';
-
         while (my @Row = $Self->{DBObject}->FetchrowArray()) {
             $AnswerIDUp = $Row[0];
         }
@@ -1105,11 +1086,11 @@ sub AnswerGet {
         $Data{AnswerID} = $Row[0];
         $Data{QuestionID} = $Row[1];
         $Data{Answer} = $Row[2];
-        $Data{AnswerPosition} = $Row[3];
-        $Data{AnswerCreateTime} = $Row[4];
-        $Data{AnswerCreateBy} = $Row[5];
-        $Data{AnswerChangeTime} = $Row[6];
-        $Data{AnswerChangeBy} = $Row[7];
+        $Data{Position} = $Row[3];
+        $Data{CreateTime} = $Row[4];
+        $Data{CreateBy} = $Row[5];
+        $Data{ChangeTime} = $Row[6];
+        $Data{ChangeBy} = $Row[7];
     }
 
     return %Data;
@@ -1506,8 +1487,8 @@ sub PublicSurveyGet {
         if ($Survey[0] > '0') {
             $Data{SurveyID} = $Survey[0];
             $Data{SurveyNumber} = $Survey[1];
-            $Data{SurveyTitle} = $Survey[2];
-            $Data{SurveyIntroduction} = $Survey[3];
+            $Data{Title} = $Survey[2];
+            $Data{Introduction} = $Survey[3];
 
             return %Data;
         }
@@ -1620,6 +1601,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.14 $ $Date: 2006-03-17 13:15:05 $
+$Revision: 1.15 $ $Date: 2006-03-17 14:22:40 $
 
 =cut

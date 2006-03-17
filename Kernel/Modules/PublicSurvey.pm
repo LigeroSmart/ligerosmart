@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicSurvey.pm - a survey module
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: PublicSurvey.pm,v 1.3 2006-03-17 09:59:37 mh Exp $
+# $Id: PublicSurvey.pm,v 1.4 2006-03-17 14:22:40 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.3 $';
+$VERSION = '$Revision: 1.4 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 # --
@@ -57,7 +57,7 @@ sub Run {
             my @QuestionList=$Self->{SurveyObject}->QuestionList(SurveyID=>$Survey{SurveyID});
 
             foreach my $Question(@QuestionList) {
-                if ($Question->{QuestionType} eq '1' ) {
+                if ($Question->{Type} eq '1' ) {
                     my $PublicSurveyVote1 = $Self->{ParamObject}->GetParam(Param => "PublicSurveyVote1[$Question->{QuestionID}]");
 
                     $Self->{SurveyObject}->PublicAnswerSave(
@@ -66,7 +66,7 @@ sub Run {
                                                          VoteValue=>$PublicSurveyVote1
                                                          );
                 }
-                elsif ($Question->{QuestionType} eq '2' ) {
+                elsif ($Question->{Type} eq '2' ) {
                     my $PublicSurveyVote2 = $Self->{ParamObject}->GetParam(Param => "PublicSurveyVote2[$Question->{QuestionID}]");
 
                     $Self->{SurveyObject}->PublicAnswerSave(
@@ -75,7 +75,7 @@ sub Run {
                                                          VoteValue=>$PublicSurveyVote2
                                                          );
                 }
-                elsif ($Question->{QuestionType} eq '3' ) {
+                elsif ($Question->{Type} eq '3' ) {
                     my @AnswerList=$Self->{SurveyObject}->AnswerList(QuestionID=>$Question->{QuestionID});
 
                     foreach my $Answer(@AnswerList) {
@@ -90,7 +90,7 @@ sub Run {
                         }
                     }
                 }
-                elsif ($Question->{QuestionType} eq '4' ) {
+                elsif ($Question->{Type} eq '4' ) {
                     my $PublicSurveyVote4 = $Self->{ParamObject}->GetParam(Param => "PublicSurveyVote4[$Question->{QuestionID}]");
 
                     $Self->{SurveyObject}->PublicAnswerSave(
@@ -153,13 +153,13 @@ sub Run {
             );
 
 
-            if ($Question->{QuestionType} eq '1' ) {
+            if ($Question->{Type} eq '1' ) {
                 $Self->{LayoutObject}->Block(
                     Name => 'PublicAnswer1',
                     Data => $Question,
                 );
             }
-            elsif ($Question->{QuestionType} eq '2' ) {
+            elsif ($Question->{Type} eq '2' ) {
                 $Self->{LayoutObject}->Block(
                     Name => 'PublicAnswer2',
                     Data => $Question,
@@ -183,7 +183,7 @@ sub Run {
                     $Counter++;
                 }
             }
-            elsif ($Question->{QuestionType} eq '3' ) {
+            elsif ($Question->{Type} eq '3' ) {
                 $Self->{LayoutObject}->Block(
                     Name => 'PublicAnswer3',
                     Data => $Question,
@@ -197,7 +197,7 @@ sub Run {
                     );
                 }
             }
-            elsif ($Question->{QuestionType} eq '4' ) {
+            elsif ($Question->{Type} eq '4' ) {
                 $Self->{LayoutObject}->Block(
                     Name => 'PublicAnswer4',
                     Data => $Question,
