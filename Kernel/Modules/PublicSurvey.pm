@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicSurvey.pm - a survey module
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: PublicSurvey.pm,v 1.4 2006-03-17 14:22:40 mh Exp $
+# $Id: PublicSurvey.pm,v 1.5 2006-03-17 14:49:15 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.4 $';
+$VERSION = '$Revision: 1.5 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 # --
@@ -51,41 +51,41 @@ sub Run {
     if ($Self->{Subaction} eq 'PublicSurveyVote') {
         my $PublicSurveyKey = $Self->{ParamObject}->GetParam(Param => "PublicSurveyKey");
 
-        my %Survey=$Self->{SurveyObject}->PublicSurveyGet(PublicSurveyKey=>$PublicSurveyKey);
+        my %Survey = $Self->{SurveyObject}->PublicSurveyGet(PublicSurveyKey => $PublicSurveyKey);
 
         if($Survey{SurveyID} > '0' ) {
-            my @QuestionList=$Self->{SurveyObject}->QuestionList(SurveyID=>$Survey{SurveyID});
+            my @QuestionList = $Self->{SurveyObject}->QuestionList(SurveyID => $Survey{SurveyID});
 
             foreach my $Question(@QuestionList) {
                 if ($Question->{Type} eq '1' ) {
                     my $PublicSurveyVote1 = $Self->{ParamObject}->GetParam(Param => "PublicSurveyVote1[$Question->{QuestionID}]");
 
                     $Self->{SurveyObject}->PublicAnswerSave(
-                                                         PublicSurveyKey=>$PublicSurveyKey,
-                                                         QuestionID=>$Question->{QuestionID},
-                                                         VoteValue=>$PublicSurveyVote1
+                                                         PublicSurveyKey => $PublicSurveyKey,
+                                                         QuestionID => $Question->{QuestionID},
+                                                         VoteValue => $PublicSurveyVote1
                                                          );
                 }
                 elsif ($Question->{Type} eq '2' ) {
                     my $PublicSurveyVote2 = $Self->{ParamObject}->GetParam(Param => "PublicSurveyVote2[$Question->{QuestionID}]");
 
                     $Self->{SurveyObject}->PublicAnswerSave(
-                                                         PublicSurveyKey=>$PublicSurveyKey,
-                                                         QuestionID=>$Question->{QuestionID},
-                                                         VoteValue=>$PublicSurveyVote2
+                                                         PublicSurveyKey => $PublicSurveyKey,
+                                                         QuestionID => $Question->{QuestionID},
+                                                         VoteValue => $PublicSurveyVote2
                                                          );
                 }
                 elsif ($Question->{Type} eq '3' ) {
-                    my @AnswerList=$Self->{SurveyObject}->AnswerList(QuestionID=>$Question->{QuestionID});
+                    my @AnswerList = $Self->{SurveyObject}->AnswerList(QuestionID => $Question->{QuestionID});
 
                     foreach my $Answer(@AnswerList) {
                         my $PublicSurveyVote3 = $Self->{ParamObject}->GetParam(Param => "PublicSurveyVote3[$Answer->{AnswerID}]");
 
                         if ($PublicSurveyVote3 eq 'Yes') {
                             $Self->{SurveyObject}->PublicAnswerSave(
-                                                                 PublicSurveyKey=>$PublicSurveyKey,
-                                                                 QuestionID=>$Question->{QuestionID},
-                                                                 VoteValue=>$Answer->{AnswerID}
+                                                                 PublicSurveyKey => $PublicSurveyKey,
+                                                                 QuestionID => $Question->{QuestionID},
+                                                                 VoteValue => $Answer->{AnswerID}
                                                                  );
                         }
                     }
@@ -94,14 +94,14 @@ sub Run {
                     my $PublicSurveyVote4 = $Self->{ParamObject}->GetParam(Param => "PublicSurveyVote4[$Question->{QuestionID}]");
 
                     $Self->{SurveyObject}->PublicAnswerSave(
-                                                         PublicSurveyKey=>$PublicSurveyKey,
-                                                         QuestionID=>$Question->{QuestionID},
-                                                         VoteValue=>$PublicSurveyVote4
+                                                         PublicSurveyKey => $PublicSurveyKey,
+                                                         QuestionID => $Question->{QuestionID},
+                                                         VoteValue => $PublicSurveyVote4
                                                          );
                 }
             }
 
-            $Self->{SurveyObject}->PublicSurveyInvalidSet(PublicSurveyKey=>$PublicSurveyKey);
+            $Self->{SurveyObject}->PublicSurveyInvalidSet(PublicSurveyKey => $PublicSurveyKey);
         }
 
         $Output = $Self->{LayoutObject}->CustomerHeader(Title => 'Survey');
@@ -134,7 +134,7 @@ sub Run {
 
     $Output = $Self->{LayoutObject}->CustomerHeader(Title => 'Survey');
 
-    my %Survey=$Self->{SurveyObject}->PublicSurveyGet(PublicSurveyKey=>$PublicSurveyKey);
+    my %Survey = $Self->{SurveyObject}->PublicSurveyGet(PublicSurveyKey => $PublicSurveyKey);
 
     $Survey{PublicSurveyKey} = $PublicSurveyKey;
 
@@ -144,7 +144,7 @@ sub Run {
             Data => {%Survey},
         );
 
-        my @QuestionList=$Self->{SurveyObject}->QuestionList(SurveyID=>$Survey{SurveyID});
+        my @QuestionList = $Self->{SurveyObject}->QuestionList(SurveyID => $Survey{SurveyID});
 
         foreach my $Question(@QuestionList) {
             $Self->{LayoutObject}->Block(
@@ -164,7 +164,7 @@ sub Run {
                     Name => 'PublicAnswer2',
                     Data => $Question,
                 );
-                my @AnswerList=$Self->{SurveyObject}->AnswerList(QuestionID=>$Question->{QuestionID});
+                my @AnswerList = $Self->{SurveyObject}->AnswerList(QuestionID => $Question->{QuestionID});
                 my $Counter = 0;
 
                 foreach my $Answer(@AnswerList) {
@@ -188,7 +188,7 @@ sub Run {
                     Name => 'PublicAnswer3',
                     Data => $Question,
                 );
-                my @AnswerList=$Self->{SurveyObject}->AnswerList(QuestionID=>$Question->{QuestionID});
+                my @AnswerList = $Self->{SurveyObject}->AnswerList(QuestionID => $Question->{QuestionID});
 
                 foreach my $Answer(@AnswerList) {
                     $Self->{LayoutObject}->Block(
