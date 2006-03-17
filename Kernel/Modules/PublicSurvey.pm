@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicSurvey.pm - a survey module
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: PublicSurvey.pm,v 1.2 2006-03-14 16:16:20 mh Exp $
+# $Id: PublicSurvey.pm,v 1.3 2006-03-17 09:59:37 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.2 $';
+$VERSION = '$Revision: 1.3 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 # --
@@ -147,6 +147,12 @@ sub Run {
         my @QuestionList=$Self->{SurveyObject}->QuestionList(SurveyID=>$Survey{SurveyID});
 
         foreach my $Question(@QuestionList) {
+            $Self->{LayoutObject}->Block(
+                Name => 'PublicQuestions',
+                Data => {},
+            );
+
+
             if ($Question->{QuestionType} eq '1' ) {
                 $Self->{LayoutObject}->Block(
                     Name => 'PublicAnswer1',
