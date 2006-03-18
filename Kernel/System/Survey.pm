@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - manage all survey module events
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: Survey.pm,v 1.15 2006-03-17 14:22:40 mh Exp $
+# $Id: Survey.pm,v 1.16 2006-03-18 09:47:10 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Ticket;
 use Kernel::System::CustomerUser;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.15 $';
+$VERSION = '$Revision: 1.16 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -1137,6 +1137,41 @@ sub AnswerSave {
         );
 }
 
+=item AnswerCount()
+
+to count all answers of a question
+
+    my $CountAnswer = $Self->{SurveyObject}->AnswerCount(QuestionID => 123);
+
+=cut
+
+sub AnswerCount {
+    my $Self = shift;
+    my %Param = @_;
+    # check needed stuff
+    foreach (qw(QuestionID)) {
+      if (!defined ($Param{$_})) {
+        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+        return;
+      }
+    }
+    # db quote
+    foreach (qw(QuestionID)) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
+    }
+    # sql for event
+    my $SQL = "SELECT COUNT(id) FROM survey_answer WHERE question_id = $Param{QuestionID}";
+
+    $Self->{DBObject}->Prepare(SQL => $SQL);
+
+    my $CountAnswer = '';
+    while (my @Row = $Self->{DBObject}->FetchrowArray()) {
+        $CountAnswer = $Row[0];
+    }
+
+    return $CountAnswer;
+}
+
 =item VoteList()
 
 to get a array list of all vote items
@@ -1601,6 +1636,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.15 $ $Date: 2006-03-17 14:22:40 $
+$Revision: 1.16 $ $Date: 2006-03-18 09:47:10 $
 
 =cut
