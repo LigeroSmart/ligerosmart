@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurvey.pm - a survey module
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: AgentSurvey.pm,v 1.14 2006-03-18 18:36:59 mh Exp $
+# $Id: AgentSurvey.pm,v 1.15 2006-03-18 19:17:12 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.14 $';
+$VERSION = '$Revision: 1.15 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 # --
@@ -82,6 +82,12 @@ sub Run {
             HTMLResultMode => 1,
         );
 
+        my $SendRequest = $Self->{SurveyObject}->CountRequest(SurveyID => $SurveyID, ValidID => 'all');
+        my $RequestComplete = $Self->{SurveyObject}->CountRequest(SurveyID => $SurveyID, ValidID => 0);
+
+        $Survey{SendRequest} = $SendRequest;
+        $Survey{RequestComplete} = $RequestComplete;
+
         # print the main table.
         $Self->{LayoutObject}->Block(
             Name => 'Survey',
@@ -90,8 +96,6 @@ sub Run {
 
         if ($Survey{Status} eq 'Master' || $Survey{Status} eq 'Valid' || $Survey{Status} eq 'Invalid')
         {
-            my $RequestComplete = $Self->{SurveyObject}->CountRequestComplete(SurveyID => $SurveyID);
-
             $Self->{LayoutObject}->Block(
                 Name => 'SurveyEditStats',
                 Data => {SurveyID => $SurveyID},

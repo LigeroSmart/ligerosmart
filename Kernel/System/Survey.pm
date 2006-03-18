@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - manage all survey module events
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: Survey.pm,v 1.17 2006-03-18 18:07:48 mh Exp $
+# $Id: Survey.pm,v 1.18 2006-03-18 19:17:12 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Ticket;
 use Kernel::System::CustomerUser;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.17 $';
+$VERSION = '$Revision: 1.18 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -1311,21 +1311,22 @@ sub CountVote {
     return $Data{CountVote};
 }
 
-=item CountRequestComplete()
+=item CountRequest()
 
 to count all requests of a survey
 
-    my $CountRequestComplete = $Self->{SurveyObject}->CountRequestComplete(
+    my $CountRequest = $Self->{SurveyObject}->CountRequest(
         QuestionID => 123,
+        ValidID => 0,        # 0, 1, all
     );
 
 =cut
 
-sub CountRequestComplete {
+sub CountRequest {
     my $Self = shift;
     my %Param = @_;
     # check needed stuff
-    foreach (qw(SurveyID)) {
+    foreach (qw(SurveyID ValidID)) {
       if (!defined ($Param{$_})) {
         $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
         return;
@@ -1336,16 +1337,23 @@ sub CountRequestComplete {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql for event
-    my $SQL = "SELECT COUNT(id) FROM survey_request WHERE survey_id = $Param{SurveyID} AND valid_id = 0";
+    my $SQL = "SELECT COUNT(id) FROM survey_request WHERE survey_id = $Param{SurveyID}";
+
+    if ($Param{ValidID} eq 0) {
+        $SQL .= " AND valid_id = 0";
+    }
+    elsif ($Param{ValidID} eq 1) {
+        $SQL .= " AND valid_id = 1";
+    }
 
     $Self->{DBObject}->Prepare(SQL => $SQL);
 
     my %Data = ();
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
-        $Data{CountRequestComplete} = $Row[0];
+        $Data{CountRequest} = $Row[0];
     }
 
-    return $Data{CountRequestComplete};
+    return $Data{CountRequest};
 }
 
 =item RequestSend()
@@ -1652,6 +1660,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.17 $ $Date: 2006-03-18 18:07:48 $
+$Revision: 1.18 $ $Date: 2006-03-18 19:17:12 $
 
 =cut
