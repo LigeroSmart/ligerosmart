@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - manage all survey module events
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: Survey.pm,v 1.16 2006-03-18 09:47:10 mh Exp $
+# $Id: Survey.pm,v 1.17 2006-03-18 18:07:48 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Ticket;
 use Kernel::System::CustomerUser;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.16 $';
+$VERSION = '$Revision: 1.17 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -152,7 +152,7 @@ sub SurveyGet {
 
 to set a new survey status (Valid, Invalid, Master)
 
-    $Self->{SurveyObject}->SurveyStatusSet(SurveyID => 123, NewStatus => 'Master');
+    $StatusSet = $Self->{SurveyObject}->SurveyStatusSet(SurveyID => 123, NewStatus => 'Master');
 
 =cut
 
@@ -214,6 +214,7 @@ sub SurveyStatusSet {
                 }
                 if ($Counter2 < 2) {
                     $AllQuestionsAnsers = 'no';
+                    return 'IncompleteQuestion';
                 }
             }
 
@@ -223,13 +224,20 @@ sub SurveyStatusSet {
                     $Self->{DBObject}->Do(
                         SQL => "UPDATE survey SET status = 'Valid' WHERE id = $Param{SurveyID}",
                     );
+
+                    return 'StatusSet';
                 }
                 elsif ($Param{NewStatus} eq 'Master') {
                     $Self->{DBObject}->Do(
                         SQL => "UPDATE survey SET status = 'Master' WHERE id = $Param{SurveyID}",
                     );
+
+                    return 'StatusSet';
                 }
             }
+        }
+        else {
+            return 'NoQuestion';
         }
     }
     elsif ($Status eq 'Valid') {
@@ -240,11 +248,15 @@ sub SurveyStatusSet {
             $Self->{DBObject}->Do(
                 SQL => "UPDATE survey SET status = 'Master' WHERE id = $Param{SurveyID}",
             );
+
+            return 'StatusSet';
         }
         elsif ($Param{NewStatus} eq 'Invalid') {
             $Self->{DBObject}->Do(
                 SQL => "UPDATE survey SET status = 'Invalid' WHERE id = $Param{SurveyID}",
             );
+
+            return 'StatusSet';
         }
     }
     elsif ($Status eq 'Master') {
@@ -252,11 +264,15 @@ sub SurveyStatusSet {
             $Self->{DBObject}->Do(
                 SQL => "UPDATE survey SET status = 'Valid' WHERE id = $Param{SurveyID}",
             );
+
+            return 'StatusSet';
         }
         elsif ($Param{NewStatus} eq 'Invalid') {
             $Self->{DBObject}->Do(
                 SQL => "UPDATE survey SET status = 'Invalid' WHERE id = $Param{SurveyID}",
             );
+
+            return 'StatusSet';
         }
     }
 }
@@ -1636,6 +1652,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.16 $ $Date: 2006-03-18 09:47:10 $
+$Revision: 1.17 $ $Date: 2006-03-18 18:07:48 $
 
 =cut

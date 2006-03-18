@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurvey.pm - a survey module
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: AgentSurvey.pm,v 1.12 2006-03-18 10:18:05 mh Exp $
+# $Id: AgentSurvey.pm,v 1.13 2006-03-18 18:07:48 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.12 $';
+$VERSION = '$Revision: 1.13 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 # --
@@ -47,9 +47,29 @@ sub Run {
 
     if ($Self->{Subaction} eq 'Survey') {
         my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
+        my $Message = $Self->{ParamObject}->GetParam(Param => "Message");
 
         $Output = $Self->{LayoutObject}->Header(Title => 'Survey');
         $Output .= $Self->{LayoutObject}->NavigationBar();
+
+        if ($Message eq 'NoQuestion') {
+            $Output .= $Self->{LayoutObject}->Notify(
+                Priority => 'Error',
+                Info => 'Can\'t set new Status! No Question definied.',
+            );
+        }
+        elsif ($Message eq 'IncompleteQuestion') {
+            $Output .= $Self->{LayoutObject}->Notify(
+                Priority => 'Error',
+                Info => 'Can\'t set new Status! Question(s) incomplete.',
+            );
+        }
+        elsif ($Message eq 'StatusSet') {
+            $Output .= $Self->{LayoutObject}->Notify(
+                Priority => 'Notice',
+                Info => 'New Status aktiv!',
+            );
+        }
 
         my %Survey = $Self->{SurveyObject}->SurveyGet(SurveyID => $SurveyID);
 
@@ -235,11 +255,23 @@ sub Run {
        my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
        my $NewStatus = $Self->{ParamObject}->GetParam(Param => "NewStatus");
 
-       $Self->{SurveyObject}->SurveyStatusSet(
+       my $StatusSet = $Self->{SurveyObject}->SurveyStatusSet(
                                           SurveyID => $SurveyID,
                                           NewStatus => $NewStatus);
 
-       return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=Survey&SurveyID=$SurveyID");
+       my $Message = '';
+
+       if ($StatusSet eq 'NoQuestion') {
+          $Message = '&Message=NoQuestion';
+       }
+       elsif ($StatusSet eq 'IncompleteQuestion') {
+          $Message = '&Message=IncompleteQuestion';
+       }
+       elsif ($StatusSet eq 'StatusSet') {
+          $Message = '&Message=StatusSet';
+       }
+
+       return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=Survey&SurveyID=$SurveyID$Message");
     }
 
     elsif ($Self->{Subaction} eq 'SurveyEdit') {

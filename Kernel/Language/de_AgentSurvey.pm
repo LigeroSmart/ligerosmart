@@ -7,6 +7,9 @@ sub Data {
     my $Self = shift;
 
     $Self->{Translation}->{'Survey'} = 'Umfrage';
+    $Self->{Translation}->{'Can\'t set new Status! No Question definied.'} = 'Neuer Status kann nicht gesetzt werden! Keine Fragen definiert.';
+    $Self->{Translation}->{'Can\'t set new Status! Question(s) incomplete.'} = 'Neuer Status kann nicht gesetzt werden! Frage(n) unvollständig.';
+    $Self->{Translation}->{'New Status aktiv!'} = 'Neuer Status aktiv!';
     $Self->{Translation}->{'Surveys'} = 'Umfragen';
     $Self->{Translation}->{'Invalid'} = 'Ungültig';
     $Self->{Translation}->{'Introduction'} = 'Einleitungstext';
