@@ -13,6 +13,8 @@ sub Data {
     $Self->{Translation}->{'Change Status'} = 'Status ändern';
     $Self->{Translation}->{'Sended Requests'} = 'Gesendete Anfragen';
     $Self->{Translation}->{'Received Votes'} = 'Erhaltene Antworten';
+    $Self->{Translation}->{'answered'} = 'beantwortet';
+    $Self->{Translation}->{'not answered'} = 'nicht beantwortet';
     $Self->{Translation}->{'Surveys'} = 'Umfragen';
     $Self->{Translation}->{'Invalid'} = 'Ungültig';
     $Self->{Translation}->{'Introduction'} = 'Einleitungstext';
