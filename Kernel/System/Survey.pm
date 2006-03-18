@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - manage all survey module events
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: Survey.pm,v 1.18 2006-03-18 19:17:12 mh Exp $
+# $Id: Survey.pm,v 1.19 2006-03-18 22:11:29 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Ticket;
 use Kernel::System::CustomerUser;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.18 $';
+$VERSION = '$Revision: 1.19 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -67,18 +67,19 @@ sub SurveyList {
     my @List = ();
     # check needed stuff
     foreach (qw()) {
-      if (!defined ($Param{$_})) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!defined ($Param{$_})) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
-    # sql for event
+    # ask the db
     my $SQL = "SELECT id FROM survey ORDER BY create_time DESC";
     $Self->{DBObject}->Prepare(SQL => $SQL);
+    # fetch all results
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
         push(@List, $Row[0]);
     }
-
+    # return array
     return @List;
 }
 
@@ -95,20 +96,21 @@ sub SurveyGet {
     my %Param = @_;
     # check needed stuff
     foreach (qw(SurveyID)) {
-      if (!defined ($Param{$_})) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!defined ($Param{$_})) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
-    # db quote
+    # quote
     foreach (qw(SurveyID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
-    # sql for event
-    my $SQL = "SELECT id, number, title, introduction, description, status, create_time, create_by, change_time, change_by ".
+    # get all attributes of a survey
+    my $SQL = "SELECT id, number, title, introduction, description,".
+        " status, create_time, create_by, change_time, change_by ".
         " FROM survey WHERE id = $Param{SurveyID}";
     $Self->{DBObject}->Prepare(SQL => $SQL);
-
+    # fetch the result
     my %Data = ();
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
         $Data{SurveyID} = $Row[0];
@@ -123,23 +125,23 @@ sub SurveyGet {
         $Data{ChangeBy} = $Row[9];
     }
     if (%Data) {
+        # added CreateBy
         my %CreateUserInfo = $Self->{UserObject}->GetUserData(
             UserID => $Data{CreateBy},
             Cached => 1
         );
-
         $Data{CreateUserLogin} = $CreateUserInfo{UserLogin};
         $Data{CreateUserFirstname} = $CreateUserInfo{UserFirstname};
         $Data{CreateUserLastname} = $CreateUserInfo{UserLastname};
-
+        # added ChangeBy
         my %ChangeUserInfo = $Self->{UserObject}->GetUserData(
             UserID => $Data{ChangeBy},
             Cached => 1
         );
-
         $Data{ChangeUserLogin} = $ChangeUserInfo{UserLogin};
         $Data{ChangeUserFirstname} = $ChangeUserInfo{UserFirstname};
         $Data{ChangeUserLastname} = $ChangeUserInfo{UserLastname};
+        # return hash
         return %Data;
     }
     else {
@@ -161,77 +163,79 @@ sub SurveyStatusSet {
     my %Param = @_;
     # check needed stuff
     foreach (qw(SurveyID NewStatus)) {
-      if (!defined ($Param{$_})) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!defined ($Param{$_})) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
-    # db quote
+    # quote
     foreach (qw(NewStatus)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
     }
     foreach (qw(SurveyID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
-    # sql for event
+    # get current status
     my $SQL = "SELECT status FROM survey WHERE id = $Param{SurveyID}";
     $Self->{DBObject}->Prepare(SQL => $SQL);
-
+    # fetch the result
     my $Status = '';
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
         $Status = $Row[0];
     }
-
+    # the curent status
     if ($Status eq 'New' || $Status eq 'Invalid') {
+        # get the question ids
         my $SQL = "SELECT id FROM survey_question WHERE survey_id = $Param{SurveyID}";
         $Self->{DBObject}->Prepare(SQL => $SQL);
-
+        # fetch the result
         my $Quest = '';
         while (my @Row2 = $Self->{DBObject}->FetchrowArray()) {
             $Quest = $Row2[0];
         }
-
+        # if more then one question
         if ($Quest > '0') {
+            # get all questions (type radio and checkbox)
             my $SQL = "SELECT id FROM survey_question".
                 " WHERE survey_id = $Param{SurveyID} AND (type = 2 OR type = 3)";
             $Self->{DBObject}->Prepare(SQL => $SQL);
-
+            # init three vars
             my $AllQuestionsAnsers = 'Yes';
             my @QuestionIDs = ();
             my $Counter1 = 0;
-
+            # fetch the result
             while (my @Row3 = $Self->{DBObject}->FetchrowArray()) {
                 $QuestionIDs[$Counter1] = $Row3[0];
                 $Counter1++;
             }
-
             foreach my $OneID(@QuestionIDs) {
+                # get all answer ids of a question
                 $Self->{DBObject}->Prepare(SQL => "SELECT id FROM survey_answer WHERE question_id = $OneID");
-
+                # fetch the result
                 my $Counter2 = '0';
                 while (my @Row = $Self->{DBObject}->FetchrowArray()) {
                     $Counter2++;
                 }
+                # its ok, if minimum two answers definied
                 if ($Counter2 < 2) {
                     $AllQuestionsAnsers = 'no';
                     return 'IncompleteQuestion';
                 }
             }
-
-            if ($AllQuestionsAnsers eq 'Yes')
-            {
+            # set new status if survey is complete
+            if ($AllQuestionsAnsers eq 'Yes') {
+                # set status Valid
                 if ($Param{NewStatus} eq 'Valid') {
                     $Self->{DBObject}->Do(
                         SQL => "UPDATE survey SET status = 'Valid' WHERE id = $Param{SurveyID}",
                     );
-
                     return 'StatusSet';
                 }
+                # set status Master
                 elsif ($Param{NewStatus} eq 'Master') {
                     $Self->{DBObject}->Do(
                         SQL => "UPDATE survey SET status = 'Master' WHERE id = $Param{SurveyID}",
                     );
-
                     return 'StatusSet';
                 }
             }
@@ -241,6 +245,7 @@ sub SurveyStatusSet {
         }
     }
     elsif ($Status eq 'Valid') {
+        # set status Master
         if ($Param{NewStatus} eq 'Master') {
             $Self->{DBObject}->Do(
                 SQL => "UPDATE survey SET status = 'Valid' WHERE status = 'Master'",
@@ -248,30 +253,29 @@ sub SurveyStatusSet {
             $Self->{DBObject}->Do(
                 SQL => "UPDATE survey SET status = 'Master' WHERE id = $Param{SurveyID}",
             );
-
             return 'StatusSet';
         }
+        # set status Invalid
         elsif ($Param{NewStatus} eq 'Invalid') {
             $Self->{DBObject}->Do(
                 SQL => "UPDATE survey SET status = 'Invalid' WHERE id = $Param{SurveyID}",
             );
-
             return 'StatusSet';
         }
     }
     elsif ($Status eq 'Master') {
+        # set status Valid
         if ($Param{NewStatus} eq 'Valid') {
             $Self->{DBObject}->Do(
                 SQL => "UPDATE survey SET status = 'Valid' WHERE id = $Param{SurveyID}",
             );
-
             return 'StatusSet';
         }
+        # set status Invalid
         elsif ($Param{NewStatus} eq 'Invalid') {
             $Self->{DBObject}->Do(
                 SQL => "UPDATE survey SET status = 'Invalid' WHERE id = $Param{SurveyID}",
             );
-
             return 'StatusSet';
         }
     }
@@ -296,28 +300,28 @@ sub SurveySave {
     my %Param = @_;
     # check needed stuff
     foreach (qw(UserID SurveyID Title Introduction Description)) {
-      if (!defined ($Param{$_})) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!defined ($Param{$_})) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
-    # db quote
+    # quote
     foreach (qw(Title Introduction Description)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
     }
     foreach (qw(UserID SurveyID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
-    # sql for event
+    # update the survey
     $Self->{DBObject}->Do(
         SQL => "UPDATE survey SET ".
-                         "title = '$Param{Title}', ".
-                         "introduction = '$Param{Introduction}', ".
-                         "description = '$Param{Description}', ".
-                         "change_time = current_timestamp, ".
-                         "change_by = $Param{UserID} ".
-                         "WHERE id = $Param{SurveyID}",
-        );
+            "title = '$Param{Title}', ".
+            "introduction = '$Param{Introduction}', ".
+            "description = '$Param{Description}', ".
+            "change_time = current_timestamp, ".
+            "change_by = $Param{UserID} ".
+            "WHERE id = $Param{SurveyID}",
+    );
 }
 
 =item SurveyNew()
@@ -338,50 +342,49 @@ sub SurveyNew {
     my %Param = @_;
     # check needed stuff
     foreach (qw(UserID Title Introduction Description)) {
-      if (!defined ($Param{$_})) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!defined ($Param{$_})) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
-    # db quote
+    # quote
     foreach (qw(Title Introduction Description)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
     }
     foreach (qw(UserID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
-    # sql for event
+    # insert a new survey
     $Self->{DBObject}->Do(
-        SQL => "INSERT INTO survey (title, introduction, description, status, create_time, create_by, change_time, change_by) VALUES (".
-                                                         "'$Param{Title}', ".
-                                                         "'$Param{Introduction}', ".
-                                                         "'$Param{Description}', ".
-                                                         "'New', ".
-                                                         "current_timestamp, ".
-                                                         "$Param{UserID}, ".
-                                                         "current_timestamp, ".
-                                                         "$Param{UserID})"
-        );
-
+        SQL => "INSERT INTO survey (title, introduction, description,".
+            " status, create_time, create_by, change_time, change_by) VALUES (".
+            "'$Param{Title}', ".
+            "'$Param{Introduction}', ".
+            "'$Param{Description}', ".
+            "'New', ".
+            "current_timestamp, ".
+            "$Param{UserID}, ".
+            "current_timestamp, ".
+            "$Param{UserID})"
+    );
+    # get the id of the survey
     my $SQL = "SELECT id FROM survey WHERE ".
-                  "title = '$Param{Title}' AND ".
-                  "introduction = '$Param{Introduction}' AND ".
-                  "description = '$Param{Description}' ".
-                  "ORDER BY create_time DESC";
+        "title = '$Param{Title}' AND ".
+        "introduction = '$Param{Introduction}' AND ".
+        "description = '$Param{Description}' ".
+        "ORDER BY create_time DESC";
     $Self->{DBObject}->Prepare(SQL => $SQL);
-
+    # fetch th result
     my $SurveyID = '';
-
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
         $SurveyID = $Row[0];
     }
-
+    # set the survey number
     $Self->{DBObject}->Do(
         SQL => "UPDATE survey SET ".
-                         "number = '" . ($SurveyID + 10000) . "' ".
-                         "WHERE id = $SurveyID",
-        );
-
+            "number = '" . ($SurveyID + 10000) . "' ".
+            "WHERE id = $SurveyID",
+    );
     return $SurveyID;
 }
 
@@ -399,30 +402,28 @@ sub QuestionList {
     my @List = ();
     # check needed stuff
     foreach (qw(SurveyID)) {
-      if (!defined ($Param{$_})) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!defined ($Param{$_})) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
-    # db quote
+    # quote
     foreach (qw(SurveyID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
-    # sql for event
+    # get all questions of a survey
     my $SQL = "SELECT id, survey_id, question, type ".
         " FROM survey_question WHERE survey_id = $Param{SurveyID} ORDER BY position";
     $Self->{DBObject}->Prepare(SQL => $SQL);
+    # fetch th result
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
         my %Data = ();
-
         $Data{QuestionID} = $Row[0];
         $Data{SurveyID} = $Row[1];
         $Data{Question} = $Row[2];
         $Data{Type} = $Row[3];
-
         push(@List,\%Data);
     }
-
     return @List;
 }
 
@@ -444,30 +445,31 @@ sub QuestionAdd {
     my %Param = @_;
     # check needed stuff
     foreach (qw(UserID SurveyID Question Type)) {
-      if (!defined ($Param{$_})) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!defined ($Param{$_})) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
-    # db quote
+    # quote
     foreach (qw(Question)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
     }
     foreach (qw(UserID SurveyID Type)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
-    # sql for event
+    # insert a new question
     $Self->{DBObject}->Do(
-        SQL => "INSERT INTO survey_question (survey_id, question, type, position, create_time, create_by, change_time, change_by) VALUES (".
-                    "$Param{SurveyID}, ".
-                    "'$Param{Question}', ".
-                    "'$Param{Type}', ".
-                    "255, ".
-                    "current_timestamp, ".
-                    "$Param{UserID}, ".
-                    "current_timestamp, ".
-                    "$Param{UserID})"
-        );
+        SQL => "INSERT INTO survey_question (survey_id, question, type, ".
+            "position, create_time, create_by, change_time, change_by) VALUES (".
+            "$Param{SurveyID}, ".
+            "'$Param{Question}', ".
+            "'$Param{Type}', ".
+            "255, ".
+            "current_timestamp, ".
+            "$Param{UserID}, ".
+            "current_timestamp, ".
+            "$Param{UserID})"
+    );
 }
 
 =item QuestionDelete()
@@ -486,25 +488,26 @@ sub QuestionDelete {
     my %Param = @_;
     # check needed stuff
     foreach (qw(SurveyID QuestionID)) {
-      if (!defined ($Param{$_})) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!defined ($Param{$_})) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
-    # db quote
+    # quote
     foreach (qw(SurveyID QuestionID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
-    # sql for event
+    # delete all answers of a question
     $Self->{DBObject}->Do(
         SQL => "DELETE FROM survey_answer WHERE ".
-                    "question_id = $Param{QuestionID}"
-        );
+            "question_id = $Param{QuestionID}"
+    );
+    # delete th question
     $Self->{DBObject}->Do(
         SQL => "DELETE FROM survey_question WHERE ".
-                    "id = $Param{QuestionID} AND ".
-                    "survey_id = $Param{SurveyID}"
-        );
+            "id = $Param{QuestionID} AND ".
+            "survey_id = $Param{SurveyID}"
+    );
 }
 
 =item QuestionSort()
@@ -522,22 +525,23 @@ sub QuestionSort {
     my %Param = @_;
     # check needed stuff
     foreach (qw(SurveyID)) {
-      if (!defined ($Param{$_})) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!defined ($Param{$_})) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
-    # db quote
+    # quote
     foreach (qw(SurveyID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
-    # sql for event
+    # get all question of a survey (sorted by position)
     my $SQL = "SELECT id FROM survey_question".
         " WHERE survey_id = $Param{SurveyID} ORDER BY position";
     $Self->{DBObject}->Prepare(SQL => $SQL);
-
+    # fetch the result
     my $Counter = 1;
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
+        # update the position
         $Self->{DBObject}->Do(
             SQL => "UPDATE survey_question SET position = $Counter WHERE id = $Row[0]",
         );
@@ -561,49 +565,47 @@ sub QuestionUp {
     my %Param = @_;
     # check needed stuff
     foreach (qw(SurveyID QuestionID)) {
-      if (!defined ($Param{$_})) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!defined ($Param{$_})) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
-    # db quote
+    # quote
     foreach (qw(SurveyID QuestionID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql for event
     $Self->{DBObject}->Prepare(SQL => "SELECT position FROM survey_question".
         " WHERE id = $Param{QuestionID} AND survey_id = $Param{SurveyID}"
-        );
+    );
 
     my $Position = '';
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
         $Position = $Row[0];
     }
 
-    if ($Position > '1')
-    {
+    if ($Position > '1') {
         my $PositionUp = $Position - 1;
         $Self->{DBObject}->Prepare(SQL => "SELECT id FROM survey_question".
             " WHERE survey_id = $Param{SurveyID} AND position = $PositionUp"
-            );
+        );
 
         my $QuestionIDDown = '';
         while (my @Row = $Self->{DBObject}->FetchrowArray()) {
             $QuestionIDDown = $Row[0];
         }
 
-        if ($QuestionIDDown ne '')
-        {
+        if ($QuestionIDDown ne '') {
             $Self->{DBObject}->Do(
                 SQL => "UPDATE survey_question SET ".
-                            "position = $Position ".
-                            "WHERE id = $QuestionIDDown"
-                );
+                    "position = $Position ".
+                    "WHERE id = $QuestionIDDown"
+            );
             $Self->{DBObject}->Do(
                 SQL => "UPDATE survey_question SET ".
-                            "position = $PositionUp ".
-                            "WHERE id = $Param{QuestionID}"
-                );
+                    "position = $PositionUp ".
+                    "WHERE id = $Param{QuestionID}"
+            );
         }
     }
 }
@@ -624,31 +626,30 @@ sub QuestionDown {
     my %Param = @_;
     # check needed stuff
     foreach (qw(SurveyID QuestionID)) {
-      if (!defined ($Param{$_})) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!defined ($Param{$_})) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
-    # db quote
+    # quote
     foreach (qw(SurveyID QuestionID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql for event
     $Self->{DBObject}->Prepare(SQL => "SELECT position FROM survey_question".
         " WHERE id = $Param{QuestionID} AND survey_id = $Param{SurveyID}"
-        );
+    );
 
     my $Position = '';
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
         $Position = $Row[0];
     }
 
-    if ($Position > '0')
-    {
+    if ($Position > '0') {
         my $PositionDown = $Position + 1;
         $Self->{DBObject}->Prepare(SQL => "SELECT id FROM survey_question".
             " WHERE survey_id = $Param{SurveyID} AND position = $PositionDown"
-            );
+        );
 
         my $QuestionIDUp = '';
         while (my @Row = $Self->{DBObject}->FetchrowArray()) {
@@ -659,14 +660,14 @@ sub QuestionDown {
         {
             $Self->{DBObject}->Do(
                 SQL => "UPDATE survey_question SET ".
-                            "position = $Position ".
-                            "WHERE id = $QuestionIDUp"
-                );
+                    "position = $Position ".
+                    "WHERE id = $QuestionIDUp"
+            );
             $Self->{DBObject}->Do(
                 SQL => "UPDATE survey_question SET ".
-                            "position = $PositionDown ".
-                            "WHERE id = $Param{QuestionID}"
-                );
+                    "position = $PositionDown ".
+                    "WHERE id = $Param{QuestionID}"
+            );
         }
     }
 }
@@ -684,18 +685,19 @@ sub QuestionGet {
     my %Param = @_;
     # check needed stuff
     foreach (qw(QuestionID)) {
-      if (!defined ($Param{$_})) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!defined ($Param{$_})) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
-    # db quote
+    # quote
     foreach (qw(QuestionID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql for event
-    my $SQL = "SELECT id, survey_id, question, type, position, create_time, create_by, change_time, change_by ".
-        " FROM survey_question WHERE id = $Param{QuestionID}";
+    my $SQL = "SELECT id, survey_id, question, type, position, ".
+        "create_time, create_by, change_time, change_by ".
+        "FROM survey_question WHERE id = $Param{QuestionID}";
     $Self->{DBObject}->Prepare(SQL => $SQL);
 
     my %Data = ();
@@ -710,7 +712,6 @@ sub QuestionGet {
         $Data{ChangeTime} = $Row[7];
         $Data{ChangeBy} = $Row[8];
     }
-
     return %Data;
 }
 
@@ -732,12 +733,12 @@ sub QuestionSave {
     my %Param = @_;
     # check needed stuff
     foreach (qw(UserID QuestionID SurveyID Question)) {
-      if (!defined ($Param{$_})) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!defined ($Param{$_})) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
-    # db quote
+    # quote
     foreach (qw(Question)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
     }
@@ -747,12 +748,12 @@ sub QuestionSave {
     # sql for event
     $Self->{DBObject}->Do(
         SQL => "UPDATE survey_question SET ".
-                         "question = '$Param{Question}', ".
-                         "change_time = current_timestamp, ".
-                         "change_by = $Param{UserID} ".
-                         "WHERE id = $Param{QuestionID} ",
-                         "AND survey_id = $Param{SurveyID}",
-        );
+            "question = '$Param{Question}', ".
+            "change_time = current_timestamp, ".
+            "change_by = $Param{UserID} ".
+            "WHERE id = $Param{QuestionID} ",
+            "AND survey_id = $Param{SurveyID}",
+    );
 }
 
 =item QuestionCount()
@@ -768,12 +769,12 @@ sub QuestionCount {
     my %Param = @_;
     # check needed stuff
     foreach (qw(SurveyID)) {
-      if (!defined ($Param{$_})) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!defined ($Param{$_})) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
-    # db quote
+    # quote
     foreach (qw(SurveyID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
@@ -786,7 +787,6 @@ sub QuestionCount {
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
         $CountQuestion = $Row[0];
     }
-
     return $CountQuestion;
 }
 
@@ -804,12 +804,12 @@ sub AnswerList {
     my @List = ();
     # check needed stuff
     foreach (qw(QuestionID)) {
-      if (!defined ($Param{$_})) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!defined ($Param{$_})) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
-    # db quote
+    # quote
     foreach (qw(QuestionID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
@@ -826,7 +826,6 @@ sub AnswerList {
 
         push(@List,\%Data);
     }
-
     return @List;
 }
 
@@ -847,12 +846,12 @@ sub AnswerAdd {
     my %Param = @_;
     # check needed stuff
     foreach (qw(UserID QuestionID Answer)) {
-      if (!defined ($Param{$_})) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!defined ($Param{$_})) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
-    # db quote
+    # quote
     foreach (qw(Answer)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
     }
@@ -861,15 +860,16 @@ sub AnswerAdd {
     }
     # sql for event
     $Self->{DBObject}->Do(
-        SQL => "INSERT INTO survey_answer (question_id, answer, position, create_time, create_by, change_time, change_by) VALUES (".
-                    "$Param{QuestionID}, ".
-                    "'$Param{Answer}', ".
-                    "255, ".
-                    "current_timestamp, ".
-                    "$Param{UserID}, ".
-                    "current_timestamp, ".
-                    "$Param{UserID})"
-        );
+        SQL => "INSERT INTO survey_answer (question_id, answer, position, ".
+            "create_time, create_by, change_time, change_by) VALUES (".
+            "$Param{QuestionID}, ".
+            "'$Param{Answer}', ".
+            "255, ".
+            "current_timestamp, ".
+            "$Param{UserID}, ".
+            "current_timestamp, ".
+            "$Param{UserID})"
+    );
 }
 
 =item AnswerDelete()
@@ -888,12 +888,12 @@ sub AnswerDelete {
     my %Param = @_;
     # check needed stuff
     foreach (qw(QuestionID AnswerID)) {
-      if (!defined ($Param{$_})) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!defined ($Param{$_})) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
-    # db quote
+    # quote
     foreach (qw(QuestionID AnswerID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
@@ -901,9 +901,9 @@ sub AnswerDelete {
     # sql for event
     $Self->{DBObject}->Do(
         SQL => "DELETE FROM survey_answer WHERE ".
-                    "id = $Param{AnswerID} AND ".
-                    "question_id = $Param{QuestionID}"
-        );
+            "id = $Param{AnswerID} AND ".
+            "question_id = $Param{QuestionID}"
+    );
 }
 
 =item AnswerSort()
@@ -921,12 +921,12 @@ sub AnswerSort {
     my %Param = @_;
     # check needed stuff
     foreach (qw(QuestionID)) {
-      if (!defined ($Param{$_})) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!defined ($Param{$_})) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
-    # db quote
+    # quote
     foreach (qw(QuestionID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
@@ -960,49 +960,47 @@ sub AnswerUp {
     my %Param = @_;
     # check needed stuff
     foreach (qw(QuestionID AnswerID)) {
-      if (!defined ($Param{$_})) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!defined ($Param{$_})) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
-    # db quote
+    # quote
     foreach (qw(QuestionID AnswerID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql for event
     $Self->{DBObject}->Prepare(SQL => "SELECT position FROM survey_answer".
         " WHERE id = $Param{AnswerID} AND question_id = $Param{QuestionID}"
-        );
+    );
 
     my $Position = '';
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
         $Position = $Row[0];
     }
 
-    if ($Position > '1')
-    {
+    if ($Position > '1') {
         my $PositionUp = $Position - 1;
         $Self->{DBObject}->Prepare(SQL => "SELECT id FROM survey_answer".
             " WHERE question_id = $Param{QuestionID} AND position = $PositionUp"
-            );
+        );
 
         my $AnswerIDDown = '';
         while (my @Row = $Self->{DBObject}->FetchrowArray()) {
             $AnswerIDDown = $Row[0];
         }
 
-        if ($AnswerIDDown ne '')
-        {
+        if ($AnswerIDDown ne '') {
             $Self->{DBObject}->Do(
                 SQL => "UPDATE survey_answer SET ".
-                            "position = $Position ".
-                            "WHERE id = $AnswerIDDown"
-                );
+                    "position = $Position ".
+                    "WHERE id = $AnswerIDDown"
+            );
             $Self->{DBObject}->Do(
                 SQL => "UPDATE survey_answer SET ".
-                            "position = $PositionUp ".
-                            "WHERE id = $Param{AnswerID}"
-                );
+                    "position = $PositionUp ".
+                    "WHERE id = $Param{AnswerID}"
+            );
         }
     }
 }
@@ -1023,49 +1021,47 @@ sub AnswerDown {
     my %Param = @_;
     # check needed stuff
     foreach (qw(QuestionID AnswerID)) {
-      if (!defined ($Param{$_})) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!defined ($Param{$_})) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
-    # db quote
+    # quote
     foreach (qw(QuestionID AnswerID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql for event
     $Self->{DBObject}->Prepare(SQL => "SELECT position FROM survey_answer".
         " WHERE id = $Param{AnswerID} AND question_id = $Param{QuestionID}"
-        );
+    );
 
     my $Position = '';
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
         $Position = $Row[0];
     }
 
-    if ($Position > '0')
-    {
+    if ($Position > '0') {
         my $PositionDown = $Position + 1;
         $Self->{DBObject}->Prepare(SQL => "SELECT id FROM survey_answer".
             " WHERE question_id = $Param{QuestionID} AND position = $PositionDown"
-            );
+        );
 
         my $AnswerIDUp = '';
         while (my @Row = $Self->{DBObject}->FetchrowArray()) {
             $AnswerIDUp = $Row[0];
         }
 
-        if ($AnswerIDUp ne '')
-        {
+        if ($AnswerIDUp ne '') {
             $Self->{DBObject}->Do(
                 SQL => "UPDATE survey_answer SET ".
-                            "position = $Position ".
-                            "WHERE id = $AnswerIDUp"
-                );
+                    "position = $Position ".
+                    "WHERE id = $AnswerIDUp"
+            );
             $Self->{DBObject}->Do(
                 SQL => "UPDATE survey_answer SET ".
-                            "position = $PositionDown ".
-                            "WHERE id = $Param{AnswerID}"
-                );
+                    "position = $PositionDown ".
+                    "WHERE id = $Param{AnswerID}"
+            );
         }
     }
 }
@@ -1083,18 +1079,18 @@ sub AnswerGet {
     my %Param = @_;
     # check needed stuff
     foreach (qw(AnswerID)) {
-      if (!defined ($Param{$_})) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!defined ($Param{$_})) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
-    # db quote
+    # quote
     foreach (qw(AnswerID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql for event
     my $SQL = "SELECT id, question_id, answer, position, create_time, create_by, change_time, change_by ".
-        " FROM survey_answer WHERE id = $Param{AnswerID}";
+        "FROM survey_answer WHERE id = $Param{AnswerID}";
     $Self->{DBObject}->Prepare(SQL => $SQL);
 
     my %Data = ();
@@ -1108,7 +1104,6 @@ sub AnswerGet {
         $Data{ChangeTime} = $Row[6];
         $Data{ChangeBy} = $Row[7];
     }
-
     return %Data;
 }
 
@@ -1130,12 +1125,12 @@ sub AnswerSave {
     my %Param = @_;
     # check needed stuff
     foreach (qw(UserID AnswerID QuestionID Answer)) {
-      if (!defined ($Param{$_})) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!defined ($Param{$_})) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
-    # db quote
+    # quote
     foreach (qw(Answer)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
     }
@@ -1145,12 +1140,12 @@ sub AnswerSave {
     # sql for event
     $Self->{DBObject}->Do(
         SQL => "UPDATE survey_answer SET ".
-                         "answer = '$Param{Answer}', ".
-                         "change_time = current_timestamp, ".
-                         "change_by = $Param{UserID} ".
-                         "WHERE id = $Param{AnswerID} ",
-                         "AND question_id = $Param{QuestionID}",
-        );
+            "answer = '$Param{Answer}', ".
+            "change_time = current_timestamp, ".
+            "change_by = $Param{UserID} ".
+            "WHERE id = $Param{AnswerID} ",
+            "AND question_id = $Param{QuestionID}",
+    );
 }
 
 =item AnswerCount()
@@ -1166,12 +1161,12 @@ sub AnswerCount {
     my %Param = @_;
     # check needed stuff
     foreach (qw(QuestionID)) {
-      if (!defined ($Param{$_})) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!defined ($Param{$_})) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
-    # db quote
+    # quote
     foreach (qw(QuestionID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
@@ -1184,7 +1179,6 @@ sub AnswerCount {
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
         $CountAnswer = $Row[0];
     }
-
     return $CountAnswer;
 }
 
@@ -1202,19 +1196,21 @@ sub VoteList {
     my @List = ();
     # check needed stuff
     foreach (qw(SurveyID)) {
-      if (!defined ($Param{$_})) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!defined ($Param{$_})) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
-    # db quote
+    # quote
     foreach (qw(SurveyID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql for event
     my $SQL = "SELECT id, ticket_id, send_time, vote_time ".
-        " FROM survey_request WHERE survey_id = $Param{SurveyID} AND valid_id = 0 ORDER BY vote_time DESC";
+        "FROM survey_request WHERE survey_id = $Param{SurveyID} ".
+        "AND valid_id = 0 ORDER BY vote_time DESC";
     $Self->{DBObject}->Prepare(SQL => $SQL);
+
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
         my %Data = ();
 
@@ -1225,7 +1221,6 @@ sub VoteList {
 
         push(@List,\%Data);
     }
-
     return @List;
 }
 
@@ -1246,12 +1241,12 @@ sub VoteGet {
     my @List = ();
     # check needed stuff
     foreach (qw(RequestID QuestionID)) {
-      if (!defined ($Param{$_})) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!defined ($Param{$_})) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
-    # db quote
+    # quote
     foreach (qw(RequestID QuestionID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
@@ -1266,7 +1261,6 @@ sub VoteGet {
         $Data{VoteValue} = $Row[1] || '-';
         push(@List, \%Data);
     }
-
     return @List;
 }
 
@@ -1286,12 +1280,12 @@ sub CountVote {
     my %Param = @_;
     # check needed stuff
     foreach (qw(QuestionID VoteValue)) {
-      if (!defined ($Param{$_})) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!defined ($Param{$_})) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
-    # db quote
+    # quote
     foreach (qw(VoteValue)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
     }
@@ -1299,7 +1293,8 @@ sub CountVote {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql for event
-    my $SQL = "SELECT COUNT(vote_value) FROM survey_vote WHERE question_id = $Param{QuestionID} AND vote_value = '$Param{VoteValue}'";
+    my $SQL = "SELECT COUNT(vote_value) FROM survey_vote WHERE ".
+        "question_id = $Param{QuestionID} AND vote_value = '$Param{VoteValue}'";
 
     $Self->{DBObject}->Prepare(SQL => $SQL);
 
@@ -1307,7 +1302,6 @@ sub CountVote {
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
         $Data{CountVote} = $Row[0];
     }
-
     return $Data{CountVote};
 }
 
@@ -1327,12 +1321,12 @@ sub CountRequest {
     my %Param = @_;
     # check needed stuff
     foreach (qw(SurveyID ValidID)) {
-      if (!defined ($Param{$_})) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!defined ($Param{$_})) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
-    # db quote
+    # quote
     foreach (qw(SurveyID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
@@ -1352,7 +1346,6 @@ sub CountRequest {
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
         $Data{CountRequest} = $Row[0];
     }
-
     return $Data{CountRequest};
 }
 
@@ -1372,12 +1365,12 @@ sub RequestSend {
     my $MasterID = '';
     # check needed stuff
     foreach (qw(TicketID)) {
-      if (!defined ($Param{$_})) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!defined ($Param{$_})) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
-    # db quote
+    # quote
     foreach (qw(TicketID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
@@ -1515,31 +1508,29 @@ sub PublicSurveyGet {
     my %Param = @_;
     # check needed stuff
     foreach (qw(PublicSurveyKey)) {
-      if (!defined ($Param{$_})) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!defined ($Param{$_})) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
-    # db quote
+    # quote
     foreach (keys %Param) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
     }
     # sql for event
     $Self->{DBObject}->Prepare(SQL => "SELECT survey_id ".
-        " FROM survey_request WHERE public_survey_key = '$Param{PublicSurveyKey}' AND valid_id = 1"
-        );
+        "FROM survey_request WHERE public_survey_key = '$Param{PublicSurveyKey}' AND valid_id = 1"
+    );
 
     my $SurveyID = ();
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
         $SurveyID = $Row[0];
     }
 
-    if ($SurveyID > '0')
-    {
+    if ($SurveyID > '0') {
         my $SQL = "SELECT id, number, title, introduction ".
-            " FROM survey WHERE id = $SurveyID AND (status = 'Master' OR status = 'Valid')";
+            "FROM survey WHERE id = $SurveyID AND (status = 'Master' OR status = 'Valid')";
         $Self->{DBObject}->Prepare(SQL => $SQL);
-
         my @Survey = $Self->{DBObject}->FetchrowArray();
 
         my %Data = ();
@@ -1548,7 +1539,6 @@ sub PublicSurveyGet {
             $Data{SurveyNumber} = $Survey[1];
             $Data{Title} = $Survey[2];
             $Data{Introduction} = $Survey[3];
-
             return %Data;
         }
     }
@@ -1571,12 +1561,12 @@ sub PublicAnswerSave{
     my %Param = @_;
     # check needed stuff
     foreach (qw(PublicSurveyKey QuestionID VoteValue)) {
-      if (!defined ($Param{$_})) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!defined ($Param{$_})) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
-    # db quote
+    # quote
     foreach (qw(PublicSurveyKey VoteValue)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
     }
@@ -1586,7 +1576,7 @@ sub PublicAnswerSave{
     # sql for event
     $Self->{DBObject}->Prepare(SQL => "SELECT id ".
         " FROM survey_request WHERE public_survey_key = '$Param{PublicSurveyKey}' AND valid_id = 1"
-        );
+    );
 
     my $RequestID = ();
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
@@ -1596,10 +1586,10 @@ sub PublicAnswerSave{
     if ($RequestID > '0') {
         $Self->{DBObject}->Do(
             SQL => "INSERT INTO survey_vote (request_id, question_id, vote_value, create_time) VALUES (".
-                        "$RequestID, ".
-                        "$Param{QuestionID}, ".
-                        "'$Param{VoteValue}', ".
-                        "current_timestamp)"
+                "$RequestID, ".
+                "$Param{QuestionID}, ".
+                "'$Param{VoteValue}', ".
+                "current_timestamp)"
         );
     }
 }
@@ -1619,19 +1609,19 @@ sub PublicSurveyInvalidSet {
     my %Param = @_;
     # check needed stuff
     foreach (qw(PublicSurveyKey)) {
-      if (!defined ($Param{$_})) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!defined ($Param{$_})) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
-    # db quote
+    # quote
     foreach (qw(PublicSurveyKey)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
     }
     # sql for event
     $Self->{DBObject}->Prepare(SQL => "SELECT id ".
         " FROM survey_request WHERE public_survey_key = '$Param{PublicSurveyKey}'"
-        );
+    );
 
     my $RequestID = ();
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
@@ -1641,10 +1631,10 @@ sub PublicSurveyInvalidSet {
     if ($RequestID > '0') {
         $Self->{DBObject}->Do(
             SQL => "UPDATE survey_request SET ".
-                         "valid_id = 0, ".
-                         "vote_time = current_timestamp ".
-                         "WHERE id = $RequestID"
-            );
+                "valid_id = 0, ".
+                "vote_time = current_timestamp ".
+                "WHERE id = $RequestID"
+        );
     }
 }
 
@@ -1660,6 +1650,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.18 $ $Date: 2006-03-18 19:17:12 $
+$Revision: 1.19 $ $Date: 2006-03-18 22:11:29 $
 
 =cut
