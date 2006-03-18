@@ -2,7 +2,7 @@
 # AgentSurvey.dtl - provides HTML form for AgentSurvey
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: AgentSurvey.dtl,v 1.16 2006-03-18 09:47:53 mh Exp $
+# $Id: AgentSurvey.dtl,v 1.17 2006-03-18 10:18:06 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -103,7 +103,7 @@
               <tr>
                 <td class="contentkey" width="25">&nbsp;</td>
                 <td class="contentkey">$Text{"Introduction"}:</td>
-                <td class="contentvalue">$QData{"Introduction"}</td>
+                <td class="contentvalue">$Data{"Introduction"}</td>
                 <td class="contentkey" width="25">&nbsp;</td>
               </tr>
               <tr>
@@ -115,7 +115,7 @@
               <tr>
                 <td class="contentkey" width="25">&nbsp;</td>
                 <td class="contentkey">$Text{"Internal"}&nbsp;$Text{"Description"}:</td>
-                <td class="contentvalue">$QData{"Description"}</td>
+                <td class="contentvalue">$Data{"Description"}</td>
                 <td class="contentkey" width="25">&nbsp;</td>
               </tr>
               <tr>

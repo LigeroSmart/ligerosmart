@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicSurvey.pm - a survey module
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: PublicSurvey.pm,v 1.5 2006-03-17 14:49:15 mh Exp $
+# $Id: PublicSurvey.pm,v 1.6 2006-03-18 10:18:05 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.5 $';
+$VERSION = '$Revision: 1.6 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 # --
@@ -131,10 +131,13 @@ sub Run {
     # ------------------------------------------------------------ #
 
     my $PublicSurveyKey = $Self->{ParamObject}->GetParam(Param => "PublicSurveyKey");
-
     $Output = $Self->{LayoutObject}->CustomerHeader(Title => 'Survey');
-
     my %Survey = $Self->{SurveyObject}->PublicSurveyGet(PublicSurveyKey => $PublicSurveyKey);
+
+    $Survey{Introduction} = $Self->{LayoutObject}->Ascii2Html(
+        Text => $Survey{Introduction},
+        HTMLResultMode => 1,
+    );
 
     $Survey{PublicSurveyKey} = $PublicSurveyKey;
 
@@ -151,7 +154,6 @@ sub Run {
                 Name => 'PublicQuestions',
                 Data => {},
             );
-
 
             if ($Question->{Type} eq '1' ) {
                 $Self->{LayoutObject}->Block(
