@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurvey.pm - a survey module
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: AgentSurvey.pm,v 1.15 2006-03-18 19:17:12 mh Exp $
+# $Id: AgentSurvey.pm,v 1.16 2006-03-20 14:32:52 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.15 $';
+$VERSION = '$Revision: 1.16 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 # --
@@ -46,12 +46,13 @@ sub Run {
     my $Output;
 
     if ($Self->{Subaction} eq 'Survey') {
+        # get params
         my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
         my $Message = $Self->{ParamObject}->GetParam(Param => "Message");
 
         $Output = $Self->{LayoutObject}->Header(Title => 'Survey');
         $Output .= $Self->{LayoutObject}->NavigationBar();
-
+        # output mesages if status was changed
         if ($Message eq 'NoQuestion') {
             $Output .= $Self->{LayoutObject}->Notify(
                 Priority => 'Error',
@@ -70,9 +71,9 @@ sub Run {
                 Info => 'New Status aktiv!',
             );
         }
-
+        # get all attributes of the survey
         my %Survey = $Self->{SurveyObject}->SurveyGet(SurveyID => $SurveyID);
-
+        # konvert the textareas in html (\n --><br>)
         $Survey{Introduction} = $Self->{LayoutObject}->Ascii2Html(
             Text => $Survey{Introduction},
             HTMLResultMode => 1,
@@ -81,26 +82,23 @@ sub Run {
             Text => $Survey{Description},
             HTMLResultMode => 1,
         );
-
+        # get numbers of requests and votes
         my $SendRequest = $Self->{SurveyObject}->CountRequest(SurveyID => $SurveyID, ValidID => 'all');
         my $RequestComplete = $Self->{SurveyObject}->CountRequest(SurveyID => $SurveyID, ValidID => 0);
-
         $Survey{SendRequest} = $SendRequest;
         $Survey{RequestComplete} = $RequestComplete;
-
         # print the main table.
         $Self->{LayoutObject}->Block(
             Name => 'Survey',
             Data => {%Survey},
         );
-
-        if ($Survey{Status} eq 'Master' || $Survey{Status} eq 'Valid' || $Survey{Status} eq 'Invalid')
-        {
+        # display stats if status Master, Valid or Invalid
+        if ($Survey{Status} eq 'Master' || $Survey{Status} eq 'Valid' || $Survey{Status} eq 'Invalid') {
             $Self->{LayoutObject}->Block(
                 Name => 'SurveyEditStats',
                 Data => {SurveyID => $SurveyID},
             );
-
+            # get all questions of the survey
             my @QuestionList = $Self->{SurveyObject}->QuestionList(SurveyID => $SurveyID);
 
             foreach my $Question(@QuestionList) {
@@ -110,10 +108,10 @@ sub Run {
                 );
 
                 my @Answers = ();
-
+                # generate the answers of the question
                 if ($Question->{Type} eq '1' || $Question->{Type} eq '2' || $Question->{Type} eq '3' ) {
                     my @AnswerList = ();
-
+                    # set answers to Yae and no if Type was YesNo
                     if ($Question->{Type} eq '1') {
                         my %Data = ();
                         $Data{Answer} = "Yes";
@@ -126,13 +124,14 @@ sub Run {
                         push(@AnswerList,\%Data2);
                     }
                     else {
+                        # get all answers of a question
                         @AnswerList = $Self->{SurveyObject}->AnswerList(QuestionID => $Question->{QuestionID});
                     }
 
                     foreach my $Row(@AnswerList) {
                         my $CountVote = $Self->{SurveyObject}->CountVote(QuestionID => $Question->{QuestionID}, VoteValue => $Row->{AnswerID});
                         my $Percent = 0;
-
+                        # calculate the percents
                         if ($RequestComplete ne '0') {
                             $Percent = 100 / $RequestComplete * $CountVote;
                             $Percent = sprintf ("%.0f", $Percent);
@@ -148,7 +147,7 @@ sub Run {
                 elsif ($Question->{Type} eq '4' ) {
                     my $AnswerNo = $Self->{SurveyObject}->CountVote(QuestionID => $Question->{QuestionID}, VoteValue => '');
                     my $Percent = 0;
-
+                    # calculate the percents
                     if ($RequestComplete ne '0') {
                         $Percent = 100 / $RequestComplete * $AnswerNo;
                         $Percent = sprintf ("%.0f", $Percent);
@@ -171,7 +170,7 @@ sub Run {
 
                     push(@Answers,\%Data2);
                 }
-
+                # output all answers of the survey
                 foreach my $Row(@Answers) {
                     $Row->{AnswerPercentTable} = $Row->{AnswerPercent};
 
@@ -193,50 +192,41 @@ sub Run {
                 );
             }
         }
-
-        if ($Survey{Status} eq 'New' || $Survey{Status} eq 'Invalid')
-        {
+        # output the possible status
+        if ($Survey{Status} eq 'New' || $Survey{Status} eq 'Invalid') {
             $Survey{NewStatus} = 'Master';
-
             $Self->{LayoutObject}->Block(
                 Name => 'SurveyStatus',
                 Data => {%Survey}
             );
 
             $Survey{NewStatus} = 'Valid';
-
             $Self->{LayoutObject}->Block(
                 Name => 'SurveyStatus',
                 Data => {%Survey}
             );
         }
-        elsif ($Survey{Status} eq 'Valid')
-        {
+        elsif ($Survey{Status} eq 'Valid') {
             $Survey{NewStatus} = 'Master';
-
             $Self->{LayoutObject}->Block(
                 Name => 'SurveyStatus',
                 Data => {%Survey}
             );
 
             $Survey{NewStatus} = 'Invalid';
-
             $Self->{LayoutObject}->Block(
                 Name => 'SurveyStatus',
                 Data => {%Survey}
             );
         }
-        elsif ($Survey{Status} eq 'Master')
-        {
+        elsif ($Survey{Status} eq 'Master') {
             $Survey{NewStatus} = 'Valid';
-
             $Self->{LayoutObject}->Block(
                 Name => 'SurveyStatus',
                 Data => {%Survey}
             );
 
             $Survey{NewStatus} = 'Invalid';
-
             $Self->{LayoutObject}->Block(
                 Name => 'SurveyStatus',
                 Data => {%Survey}
@@ -245,9 +235,7 @@ sub Run {
 
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentSurvey',
-            Data => {
-                %Param,
-            }
+            Data => {%Param}
         );
 
         $Output .= $Self->{LayoutObject}->Footer();
@@ -258,13 +246,12 @@ sub Run {
     elsif ($Self->{Subaction} eq 'SurveyStatus') {
        my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
        my $NewStatus = $Self->{ParamObject}->GetParam(Param => "NewStatus");
-
+       # set a new status
        my $StatusSet = $Self->{SurveyObject}->SurveyStatusSet(
-                                          SurveyID => $SurveyID,
-                                          NewStatus => $NewStatus);
+           SurveyID => $SurveyID,
+           NewStatus => $NewStatus);
 
        my $Message = '';
-
        if ($StatusSet eq 'NoQuestion') {
           $Message = '&Message=NoQuestion';
        }
@@ -294,9 +281,7 @@ sub Run {
 
         my @List = $Self->{SurveyObject}->QuestionList(SurveyID => $SurveyID);
 
-
-        if ($Survey{Status} eq 'New')
-        {
+        if ($Survey{Status} eq 'New') {
             foreach my $Question(@List) {
                 $Self->{LayoutObject}->Block(
                     Name => 'SurveyEditQuestions',
@@ -331,8 +316,7 @@ sub Run {
                 Data => {SurveyID => $SurveyID},
             );
         }
-        else
-        {
+        else {
             foreach my $Question(@List) {
                 $Self->{LayoutObject}->Block(
                     Name => 'SurveyEditQuestionsValidOnce',
@@ -347,9 +331,7 @@ sub Run {
 
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentSurvey',
-            Data => {
-                %Param,
-            }
+            Data => {%Param}
         );
 
         $Output .= $Self->{LayoutObject}->Footer();
@@ -364,12 +346,12 @@ sub Run {
        my $Description = $Self->{ParamObject}->GetParam(Param => "Description");
 
        $Self->{SurveyObject}->SurveySave(
-                                         SurveyID => $SurveyID,
-                                         Title => $Title,
-                                         Introduction => $Introduction,
-                                         Description => $Description,
-                                         UserID => $Self->{UserID},
-                                         );
+           SurveyID => $SurveyID,
+           Title => $Title,
+           Introduction => $Introduction,
+           Description => $Description,
+           UserID => $Self->{UserID},
+       );
 
        return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=Survey&SurveyID=$SurveyID#Question");
     }
@@ -398,11 +380,11 @@ sub Run {
        my $Description = $Self->{ParamObject}->GetParam(Param => "Description");
 
        my $SurveyID = $Self->{SurveyObject}->SurveyNew(
-                                         Title => $Title,
-                                         Introduction => $Introduction,
-                                         Description => $Description,
-                                         UserID => $Self->{UserID},
-                                         );
+           Title => $Title,
+           Introduction => $Introduction,
+           Description => $Description,
+           UserID => $Self->{UserID},
+       );
 
        return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=Survey&SurveyID=$SurveyID");
     }
@@ -414,11 +396,11 @@ sub Run {
 
        if ($Question ne '') {
            $Self->{SurveyObject}->QuestionAdd(
-                                         SurveyID => $SurveyID,
-                                         Question => $Question,
-                                         Type => $Type,
-                                         UserID => $Self->{UserID},
-                                         );
+               SurveyID => $SurveyID,
+               Question => $Question,
+               Type => $Type,
+               UserID => $Self->{UserID},
+           );
 
            $Self->{SurveyObject}->QuestionSort(SurveyID => $SurveyID);
        }
@@ -431,9 +413,9 @@ sub Run {
        my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
 
        $Self->{SurveyObject}->QuestionDelete(
-                                     SurveyID => $SurveyID,
-                                     QuestionID => $QuestionID,
-                                     );
+           SurveyID => $SurveyID,
+           QuestionID => $QuestionID,
+       );
 
        $Self->{SurveyObject}->QuestionSort(SurveyID => $SurveyID);
 
@@ -447,9 +429,9 @@ sub Run {
        $Self->{SurveyObject}->QuestionSort(SurveyID => $SurveyID);
 
        $Self->{SurveyObject}->QuestionUp(
-                                     SurveyID => $SurveyID,
-                                     QuestionID => $QuestionID,
-                                     );
+           SurveyID => $SurveyID,
+           QuestionID => $QuestionID,
+       );
 
        return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=SurveyEdit&SurveyID=$SurveyID#Question");
     }
@@ -461,9 +443,9 @@ sub Run {
        $Self->{SurveyObject}->QuestionSort(SurveyID => $SurveyID);
 
        $Self->{SurveyObject}->QuestionDown(
-                                     SurveyID => $SurveyID,
-                                     QuestionID => $QuestionID,
-                                     );
+           SurveyID => $SurveyID,
+           QuestionID => $QuestionID,
+       );
 
        return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=SurveyEdit&SurveyID=$SurveyID#Question");
     }
@@ -492,8 +474,7 @@ sub Run {
         elsif ($Question{Type} eq 2) {
             my @List = $Self->{SurveyObject}->AnswerList(QuestionID => $QuestionID);
 
-            if ($Survey{Status} eq 'New')
-            {
+            if ($Survey{Status} eq 'New') {
                 foreach my $Answer2(@List) {
                     $Answer2->{SurveyID} = $SurveyID;
 
@@ -507,8 +488,7 @@ sub Run {
                     Data => {%Question},
                 );
             }
-            else
-            {
+            else {
                 foreach my $Answer2(@List) {
                     $Answer2->{SurveyID} = $SurveyID;
 
@@ -522,8 +502,7 @@ sub Run {
         elsif ($Question{Type} eq 3) {
             my @List = $Self->{SurveyObject}->AnswerList(QuestionID => $QuestionID);
 
-            if ($Survey{Status} eq 'New')
-            {
+            if ($Survey{Status} eq 'New') {
                 foreach my $Answer3(@List) {
                     $Answer3->{SurveyID} = $SurveyID;
 
@@ -537,8 +516,7 @@ sub Run {
                     Data => {%Question},
                 );
             }
-            else
-            {
+            else {
                 foreach my $Answer3(@List) {
                     $Answer3->{SurveyID} = $SurveyID;
 
@@ -557,9 +535,7 @@ sub Run {
 
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentSurvey',
-            Data => {
-                %Param,
-            }
+            Data => {%Param}
         );
 
         $Output .= $Self->{LayoutObject}->Footer();
@@ -573,11 +549,11 @@ sub Run {
        my $Question = $Self->{ParamObject}->GetParam(Param => "Question");
 
        $Self->{SurveyObject}->QuestionSave(
-                                         QuestionID => $QuestionID,
-                                         SurveyID => $SurveyID,
-                                         Question => $Question,
-                                         UserID => $Self->{UserID},
-                                         );
+           QuestionID => $QuestionID,
+           SurveyID => $SurveyID,
+           Question => $Question,
+           UserID => $Self->{UserID},
+       );
 
        return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=SurveyEdit&SurveyID=$SurveyID#Question");
     }
@@ -589,11 +565,11 @@ sub Run {
 
        if ($Answer ne '') {
            $Self->{SurveyObject}->AnswerAdd(
-                                         SurveyID => $SurveyID,
-                                         QuestionID => $QuestionID,
-                                         Answer => $Answer,
-                                         UserID => $Self->{UserID},
-                                         );
+               SurveyID => $SurveyID,
+               QuestionID => $QuestionID,
+               Answer => $Answer,
+               UserID => $Self->{UserID},
+           );
 
            $Self->{SurveyObject}->AnswerSort(QuestionID => $QuestionID);
        }
@@ -607,9 +583,9 @@ sub Run {
        my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
 
        $Self->{SurveyObject}->AnswerDelete(
-                                     QuestionID => $QuestionID,
-                                     AnswerID => $AnswerID,
-                                     );
+           QuestionID => $QuestionID,
+           AnswerID => $AnswerID,
+       );
 
        $Self->{SurveyObject}->AnswerSort(QuestionID => $QuestionID);
 
@@ -624,9 +600,9 @@ sub Run {
        $Self->{SurveyObject}->AnswerSort(QuestionID => $QuestionID);
 
        $Self->{SurveyObject}->AnswerUp(
-                                     QuestionID => $QuestionID,
-                                     AnswerID => $AnswerID,
-                                     );
+           QuestionID => $QuestionID,
+           AnswerID => $AnswerID,
+       );
 
        return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=QuestionEdit&SurveyID=$SurveyID&QuestionID=$QuestionID#Answer");
     }
@@ -639,9 +615,9 @@ sub Run {
        $Self->{SurveyObject}->AnswerSort(QuestionID => $QuestionID);
 
        $Self->{SurveyObject}->AnswerDown(
-                                     QuestionID => $QuestionID,
-                                     AnswerID => $AnswerID,
-                                     );
+           QuestionID => $QuestionID,
+           AnswerID => $AnswerID,
+       );
 
        return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=QuestionEdit&SurveyID=$SurveyID&QuestionID=$QuestionID#Answer");
     }
@@ -665,9 +641,7 @@ sub Run {
 
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentSurvey',
-            Data => {
-                %Param,
-            }
+            Data => {%Param}
         );
 
         $Output .= $Self->{LayoutObject}->Footer();
@@ -682,11 +656,11 @@ sub Run {
        my $Answer = $Self->{ParamObject}->GetParam(Param => "Answer");
 
        $Self->{SurveyObject}->AnswerSave(
-                                         AnswerID => $AnswerID,
-                                         QuestionID => $QuestionID,
-                                         Answer => $Answer,
-                                         UserID => $Self->{UserID},
-                                         );
+           AnswerID => $AnswerID,
+           QuestionID => $QuestionID,
+           Answer => $Answer,
+           UserID => $Self->{UserID},
+       );
 
        return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=QuestionEdit&SurveyID=$SurveyID&QuestionID=$QuestionID#Answer");
     }
@@ -718,9 +692,7 @@ sub Run {
 
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentSurvey',
-            Data => {
-                %Param,
-            }
+            Data => {%Param}
         );
 
         $Output .= $Self->{LayoutObject}->Footer();
@@ -783,9 +755,7 @@ sub Run {
 
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentSurvey',
-            Data => {
-                %Param,
-            }
+            Data => {%Param}
         );
 
         $Output .= $Self->{LayoutObject}->Footer();
@@ -817,9 +787,7 @@ sub Run {
 
     $Output .= $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentSurvey',
-        Data => {
-            %Param,
-        }
+        Data => {%Param}
     );
 
     $Output .= $Self->{LayoutObject}->Footer();

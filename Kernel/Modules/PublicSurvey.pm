@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicSurvey.pm - a survey module
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: PublicSurvey.pm,v 1.6 2006-03-18 10:18:05 mh Exp $
+# $Id: PublicSurvey.pm,v 1.7 2006-03-20 14:32:52 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.6 $';
+$VERSION = '$Revision: 1.7 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 # --
@@ -61,19 +61,19 @@ sub Run {
                     my $PublicSurveyVote1 = $Self->{ParamObject}->GetParam(Param => "PublicSurveyVote1[$Question->{QuestionID}]");
 
                     $Self->{SurveyObject}->PublicAnswerSave(
-                                                         PublicSurveyKey => $PublicSurveyKey,
-                                                         QuestionID => $Question->{QuestionID},
-                                                         VoteValue => $PublicSurveyVote1
-                                                         );
+                        PublicSurveyKey => $PublicSurveyKey,
+                        QuestionID => $Question->{QuestionID},
+                        VoteValue => $PublicSurveyVote1
+                    );
                 }
                 elsif ($Question->{Type} eq '2' ) {
                     my $PublicSurveyVote2 = $Self->{ParamObject}->GetParam(Param => "PublicSurveyVote2[$Question->{QuestionID}]");
 
                     $Self->{SurveyObject}->PublicAnswerSave(
-                                                         PublicSurveyKey => $PublicSurveyKey,
-                                                         QuestionID => $Question->{QuestionID},
-                                                         VoteValue => $PublicSurveyVote2
-                                                         );
+                        PublicSurveyKey => $PublicSurveyKey,
+                        QuestionID => $Question->{QuestionID},
+                        VoteValue => $PublicSurveyVote2
+                    );
                 }
                 elsif ($Question->{Type} eq '3' ) {
                     my @AnswerList = $Self->{SurveyObject}->AnswerList(QuestionID => $Question->{QuestionID});
@@ -83,10 +83,10 @@ sub Run {
 
                         if ($PublicSurveyVote3 eq 'Yes') {
                             $Self->{SurveyObject}->PublicAnswerSave(
-                                                                 PublicSurveyKey => $PublicSurveyKey,
-                                                                 QuestionID => $Question->{QuestionID},
-                                                                 VoteValue => $Answer->{AnswerID}
-                                                                 );
+                                PublicSurveyKey => $PublicSurveyKey,
+                                QuestionID => $Question->{QuestionID},
+                                VoteValue => $Answer->{AnswerID}
+                            );
                         }
                     }
                 }
@@ -94,16 +94,14 @@ sub Run {
                     my $PublicSurveyVote4 = $Self->{ParamObject}->GetParam(Param => "PublicSurveyVote4[$Question->{QuestionID}]");
 
                     $Self->{SurveyObject}->PublicAnswerSave(
-                                                         PublicSurveyKey => $PublicSurveyKey,
-                                                         QuestionID => $Question->{QuestionID},
-                                                         VoteValue => $PublicSurveyVote4
-                                                         );
+                        PublicSurveyKey => $PublicSurveyKey,
+                        QuestionID => $Question->{QuestionID},
+                        VoteValue => $PublicSurveyVote4
+                    );
                 }
             }
-
             $Self->{SurveyObject}->PublicSurveyInvalidSet(PublicSurveyKey => $PublicSurveyKey);
         }
-
         $Output = $Self->{LayoutObject}->CustomerHeader(Title => 'Survey');
 
         # print the main table.
@@ -111,18 +109,13 @@ sub Run {
             Name => 'PublicSurveyComplete',
             Data => {},
         );
-
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'PublicSurvey',
-            Data => {
-                %Param,
-            }
+            Data => {%Param}
         );
-
         $Output .= $Self->{LayoutObject}->CustomerFooter();
 
         return $Output;
-
     }
 
 
@@ -146,7 +139,6 @@ sub Run {
             Name => 'PublicSurvey',
             Data => {%Survey},
         );
-
         my @QuestionList = $Self->{SurveyObject}->QuestionList(SurveyID => $Survey{SurveyID});
 
         foreach my $Question(@QuestionList) {
@@ -175,7 +167,8 @@ sub Run {
                             Name => 'PublicAnswer2bChecked',
                             Data => $Answer,
                         );
-                    } else {
+                    }
+                    else {
                         $Self->{LayoutObject}->Block(
                             Name => 'PublicAnswer2b',
                             Data => $Answer,
@@ -213,14 +206,10 @@ sub Run {
             Data => {},
         );
     }
-
     $Output .= $Self->{LayoutObject}->Output(
         TemplateFile => 'PublicSurvey',
-        Data => {
-            %Param,
-        }
+        Data => {%Param}
     );
-
     $Output .= $Self->{LayoutObject}->CustomerFooter();
 
     return $Output;
