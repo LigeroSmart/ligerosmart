@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurvey.pm - a survey module
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: AgentSurvey.pm,v 1.17 2006-03-20 15:25:01 mh Exp $
+# $Id: AgentSurvey.pm,v 1.18 2006-03-20 21:36:39 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.17 $';
+$VERSION = '$Revision: 1.18 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 # --
@@ -49,7 +49,11 @@ sub Run {
         # get params
         my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
         my $Message = $Self->{ParamObject}->GetParam(Param => "Message");
-
+        # check if survey exists
+        if ($Self->{SurveyObject}->ElementExists(ElementID => $SurveyID, Element => 'Survey') ne 'Yes') {
+            return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}");
+        }
+        # output header
         $Output = $Self->{LayoutObject}->Header(Title => 'Survey');
         $Output .= $Self->{LayoutObject}->NavigationBar();
         # output mesages if status was changed
@@ -244,30 +248,38 @@ sub Run {
     }
 
     elsif ($Self->{Subaction} eq 'SurveyStatus') {
-       my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
-       my $NewStatus = $Self->{ParamObject}->GetParam(Param => "NewStatus");
-       # set a new status
-       my $StatusSet = $Self->{SurveyObject}->SurveyStatusSet(
-           SurveyID => $SurveyID,
-           NewStatus => $NewStatus);
+        my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
+        my $NewStatus = $Self->{ParamObject}->GetParam(Param => "NewStatus");
+        # check if survey exists
+        if ($Self->{SurveyObject}->ElementExists(ElementID => $SurveyID, Element => 'Survey') ne 'Yes') {
+            return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}");
+        }
+        # set a new status
+        my $StatusSet = $Self->{SurveyObject}->SurveyStatusSet(
+            SurveyID => $SurveyID,
+            NewStatus => $NewStatus);
 
-       my $Message = '';
-       if ($StatusSet eq 'NoQuestion') {
-          $Message = '&Message=NoQuestion';
-       }
-       elsif ($StatusSet eq 'IncompleteQuestion') {
-          $Message = '&Message=IncompleteQuestion';
-       }
-       elsif ($StatusSet eq 'StatusSet') {
-          $Message = '&Message=StatusSet';
-       }
+        my $Message = '';
+        if ($StatusSet eq 'NoQuestion') {
+            $Message = '&Message=NoQuestion';
+        }
+        elsif ($StatusSet eq 'IncompleteQuestion') {
+            $Message = '&Message=IncompleteQuestion';
+        }
+        elsif ($StatusSet eq 'StatusSet') {
+            $Message = '&Message=StatusSet';
+        }
 
-       return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=Survey&SurveyID=$SurveyID$Message");
+        return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=Survey&SurveyID=$SurveyID$Message");
     }
 
     elsif ($Self->{Subaction} eq 'SurveyEdit') {
         my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
-
+        # check if survey exists
+        if ($Self->{SurveyObject}->ElementExists(ElementID => $SurveyID, Element => 'Survey') ne 'Yes') {
+            return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}");
+        }
+        # output header
         $Output = $Self->{LayoutObject}->Header(Title => 'Survey');
         $Output .= $Self->{LayoutObject}->NavigationBar();
 
@@ -336,20 +348,23 @@ sub Run {
     }
 
     elsif ($Self->{Subaction} eq 'SurveySave') {
-       my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
-       my $Title = $Self->{ParamObject}->GetParam(Param => "Title");
-       my $Introduction = $Self->{ParamObject}->GetParam(Param => "Introduction");
-       my $Description = $Self->{ParamObject}->GetParam(Param => "Description");
+        my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
+        my $Title = $Self->{ParamObject}->GetParam(Param => "Title");
+        my $Introduction = $Self->{ParamObject}->GetParam(Param => "Introduction");
+        my $Description = $Self->{ParamObject}->GetParam(Param => "Description");
+        # check if survey exists
+        if ($Self->{SurveyObject}->ElementExists(ElementID => $SurveyID, Element => 'Survey') ne 'Yes') {
+            return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}");
+        }
+        $Self->{SurveyObject}->SurveySave(
+            SurveyID => $SurveyID,
+            Title => $Title,
+            Introduction => $Introduction,
+            Description => $Description,
+            UserID => $Self->{UserID},
+        );
 
-       $Self->{SurveyObject}->SurveySave(
-           SurveyID => $SurveyID,
-           Title => $Title,
-           Introduction => $Introduction,
-           Description => $Description,
-           UserID => $Self->{UserID},
-       );
-
-       return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=Survey&SurveyID=$SurveyID#Question");
+        return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=Survey&SurveyID=$SurveyID#Question");
     }
 
     elsif ($Self->{Subaction} eq 'SurveyAdd') {
@@ -371,85 +386,106 @@ sub Run {
     }
 
     elsif ($Self->{Subaction} eq 'SurveyNew') {
-       my $Title = $Self->{ParamObject}->GetParam(Param => "Title");
-       my $Introduction = $Self->{ParamObject}->GetParam(Param => "Introduction");
-       my $Description = $Self->{ParamObject}->GetParam(Param => "Description");
+        my $Title = $Self->{ParamObject}->GetParam(Param => "Title");
+        my $Introduction = $Self->{ParamObject}->GetParam(Param => "Introduction");
+        my $Description = $Self->{ParamObject}->GetParam(Param => "Description");
 
-       my $SurveyID = $Self->{SurveyObject}->SurveyNew(
-           Title => $Title,
-           Introduction => $Introduction,
-           Description => $Description,
-           UserID => $Self->{UserID},
-       );
+        my $SurveyID = $Self->{SurveyObject}->SurveyNew(
+            Title => $Title,
+            Introduction => $Introduction,
+            Description => $Description,
+            UserID => $Self->{UserID},
+        );
 
-       return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=Survey&SurveyID=$SurveyID");
+        return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=Survey&SurveyID=$SurveyID");
     }
 
     elsif ($Self->{Subaction} eq 'QuestionAdd') {
-       my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
-       my $Question = $Self->{ParamObject}->GetParam(Param => "Question");
-       my $Type = $Self->{ParamObject}->GetParam(Param => "Type");
+        my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
+        my $Question = $Self->{ParamObject}->GetParam(Param => "Question");
+        my $Type = $Self->{ParamObject}->GetParam(Param => "Type");
+        # check if survey exists
+        if ($Self->{SurveyObject}->ElementExists(ElementID => $SurveyID, Element => 'Survey') ne 'Yes') {
+            return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}");
+        }
 
-       if ($Question ne '') {
-           $Self->{SurveyObject}->QuestionAdd(
-               SurveyID => $SurveyID,
-               Question => $Question,
-               Type => $Type,
-               UserID => $Self->{UserID},
-           );
+        if ($Question ne '') {
+            $Self->{SurveyObject}->QuestionAdd(
+                SurveyID => $SurveyID,
+                Question => $Question,
+                Type => $Type,
+                UserID => $Self->{UserID},
+            );
 
-           $Self->{SurveyObject}->QuestionSort(SurveyID => $SurveyID);
-       }
+            $Self->{SurveyObject}->QuestionSort(SurveyID => $SurveyID);
+        }
 
-       return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=SurveyEdit&SurveyID=$SurveyID#NewQuestion");
+        return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=SurveyEdit&SurveyID=$SurveyID#NewQuestion");
     }
 
     elsif ($Self->{Subaction} eq 'QuestionDelete') {
-       my $QuestionID = $Self->{ParamObject}->GetParam(Param => "QuestionID");
-       my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
+        my $QuestionID = $Self->{ParamObject}->GetParam(Param => "QuestionID");
+        my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
+        # check if survey and question exists
+        if ($Self->{SurveyObject}->ElementExists(ElementID => $SurveyID, Element => 'Survey') ne 'Yes' ||
+            $Self->{SurveyObject}->ElementExists(ElementID => $QuestionID, Element => 'Question') ne 'Yes') {
+            return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}");
+        }
+        $Self->{SurveyObject}->QuestionDelete(
+            SurveyID => $SurveyID,
+            QuestionID => $QuestionID,
+        );
 
-       $Self->{SurveyObject}->QuestionDelete(
-           SurveyID => $SurveyID,
-           QuestionID => $QuestionID,
-       );
+        $Self->{SurveyObject}->QuestionSort(SurveyID => $SurveyID);
 
-       $Self->{SurveyObject}->QuestionSort(SurveyID => $SurveyID);
-
-       return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=SurveyEdit&SurveyID=$SurveyID#Question");
+        return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=SurveyEdit&SurveyID=$SurveyID#Question");
     }
 
     elsif ($Self->{Subaction} eq 'QuestionUp') {
-       my $QuestionID = $Self->{ParamObject}->GetParam(Param => "QuestionID");
-       my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
+        my $QuestionID = $Self->{ParamObject}->GetParam(Param => "QuestionID");
+        my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
+        # check if survey and question exists
+        if ($Self->{SurveyObject}->ElementExists(ElementID => $SurveyID, Element => 'Survey') ne 'Yes' ||
+            $Self->{SurveyObject}->ElementExists(ElementID => $QuestionID, Element => 'Question') ne 'Yes') {
+            return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}");
+        }
+        $Self->{SurveyObject}->QuestionSort(SurveyID => $SurveyID);
 
-       $Self->{SurveyObject}->QuestionSort(SurveyID => $SurveyID);
+        $Self->{SurveyObject}->QuestionUp(
+            SurveyID => $SurveyID,
+            QuestionID => $QuestionID,
+        );
 
-       $Self->{SurveyObject}->QuestionUp(
-           SurveyID => $SurveyID,
-           QuestionID => $QuestionID,
-       );
-
-       return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=SurveyEdit&SurveyID=$SurveyID#Question");
+        return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=SurveyEdit&SurveyID=$SurveyID#Question");
     }
 
     elsif ($Self->{Subaction} eq 'QuestionDown') {
-       my $QuestionID = $Self->{ParamObject}->GetParam(Param => "QuestionID");
-       my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
+        my $QuestionID = $Self->{ParamObject}->GetParam(Param => "QuestionID");
+        my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
+        # check if survey and question exists
+        if ($Self->{SurveyObject}->ElementExists(ElementID => $SurveyID, Element => 'Survey') ne 'Yes' ||
+            $Self->{SurveyObject}->ElementExists(ElementID => $QuestionID, Element => 'Question') ne 'Yes') {
+            return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}");
+        }
+        $Self->{SurveyObject}->QuestionSort(SurveyID => $SurveyID);
 
-       $Self->{SurveyObject}->QuestionSort(SurveyID => $SurveyID);
+        $Self->{SurveyObject}->QuestionDown(
+            SurveyID => $SurveyID,
+            QuestionID => $QuestionID,
+        );
 
-       $Self->{SurveyObject}->QuestionDown(
-           SurveyID => $SurveyID,
-           QuestionID => $QuestionID,
-       );
-
-       return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=SurveyEdit&SurveyID=$SurveyID#Question");
+        return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=SurveyEdit&SurveyID=$SurveyID#Question");
     }
 
     elsif ($Self->{Subaction} eq 'QuestionEdit') {
         my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
         my $QuestionID = $Self->{ParamObject}->GetParam(Param => "QuestionID");
-
+        # check if survey and question exists
+        if ($Self->{SurveyObject}->ElementExists(ElementID => $SurveyID, Element => 'Survey') ne 'Yes' ||
+            $Self->{SurveyObject}->ElementExists(ElementID => $QuestionID, Element => 'Question') ne 'Yes') {
+            return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}");
+        }
+        # output header
         $Output = $Self->{LayoutObject}->Header(Title => 'Question Edit');
         $Output .= $Self->{LayoutObject}->NavigationBar();
 
@@ -540,88 +576,122 @@ sub Run {
     }
 
     elsif ($Self->{Subaction} eq 'QuestionSave') {
-       my $QuestionID = $Self->{ParamObject}->GetParam(Param => "QuestionID");
-       my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
-       my $Question = $Self->{ParamObject}->GetParam(Param => "Question");
+        my $QuestionID = $Self->{ParamObject}->GetParam(Param => "QuestionID");
+        my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
+        my $Question = $Self->{ParamObject}->GetParam(Param => "Question");
+        # check if survey and question exists
+        if ($Self->{SurveyObject}->ElementExists(ElementID => $SurveyID, Element => 'Survey') ne 'Yes' ||
+            $Self->{SurveyObject}->ElementExists(ElementID => $QuestionID, Element => 'Question') ne 'Yes') {
+            return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}");
+        }
 
-       $Self->{SurveyObject}->QuestionSave(
-           QuestionID => $QuestionID,
-           SurveyID => $SurveyID,
-           Question => $Question,
-           UserID => $Self->{UserID},
-       );
+        $Self->{SurveyObject}->QuestionSave(
+            QuestionID => $QuestionID,
+            SurveyID => $SurveyID,
+            Question => $Question,
+            UserID => $Self->{UserID},
+        );
 
-       return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=SurveyEdit&SurveyID=$SurveyID#Question");
+        return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=SurveyEdit&SurveyID=$SurveyID#Question");
     }
 
     elsif ($Self->{Subaction} eq 'AnswerAdd') {
-       my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
-       my $QuestionID = $Self->{ParamObject}->GetParam(Param => "QuestionID");
-       my $Answer = $Self->{ParamObject}->GetParam(Param => "Answer");
+        my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
+        my $QuestionID = $Self->{ParamObject}->GetParam(Param => "QuestionID");
+        my $Answer = $Self->{ParamObject}->GetParam(Param => "Answer");
+        # check if survey and question exists
+        if ($Self->{SurveyObject}->ElementExists(ElementID => $SurveyID, Element => 'Survey') ne 'Yes' ||
+            $Self->{SurveyObject}->ElementExists(ElementID => $QuestionID, Element => 'Question') ne 'Yes') {
+            return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}");
+        }
 
-       if ($Answer ne '') {
-           $Self->{SurveyObject}->AnswerAdd(
-               SurveyID => $SurveyID,
-               QuestionID => $QuestionID,
-               Answer => $Answer,
-               UserID => $Self->{UserID},
-           );
+        if ($Answer ne '') {
+            $Self->{SurveyObject}->AnswerAdd(
+                SurveyID => $SurveyID,
+                QuestionID => $QuestionID,
+                Answer => $Answer,
+                UserID => $Self->{UserID},
+            );
 
-           $Self->{SurveyObject}->AnswerSort(QuestionID => $QuestionID);
-       }
+            $Self->{SurveyObject}->AnswerSort(QuestionID => $QuestionID);
+        }
 
-       return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=QuestionEdit&SurveyID=$SurveyID&QuestionID=$QuestionID#NewAnswer");
+        return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=QuestionEdit&SurveyID=$SurveyID&QuestionID=$QuestionID#NewAnswer");
     }
 
     elsif ($Self->{Subaction} eq 'AnswerDelete') {
-       my $AnswerID = $Self->{ParamObject}->GetParam(Param => "AnswerID");
-       my $QuestionID = $Self->{ParamObject}->GetParam(Param => "QuestionID");
-       my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
+        my $AnswerID = $Self->{ParamObject}->GetParam(Param => "AnswerID");
+        my $QuestionID = $Self->{ParamObject}->GetParam(Param => "QuestionID");
+        my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
+        # check if survey, question and answer exists
+        if ($Self->{SurveyObject}->ElementExists(ElementID => $SurveyID, Element => 'Survey') ne 'Yes' ||
+            $Self->{SurveyObject}->ElementExists(ElementID => $QuestionID, Element => 'Question') ne 'Yes' ||
+            $Self->{SurveyObject}->ElementExists(ElementID => $AnswerID, Element => 'Answer') ne 'Yes') {
+            return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}");
+        }
 
-       $Self->{SurveyObject}->AnswerDelete(
-           QuestionID => $QuestionID,
-           AnswerID => $AnswerID,
-       );
+        $Self->{SurveyObject}->AnswerDelete(
+            QuestionID => $QuestionID,
+            AnswerID => $AnswerID,
+        );
 
-       $Self->{SurveyObject}->AnswerSort(QuestionID => $QuestionID);
+        $Self->{SurveyObject}->AnswerSort(QuestionID => $QuestionID);
 
-       return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=QuestionEdit&SurveyID=$SurveyID&QuestionID=$QuestionID#Answer");
+        return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=QuestionEdit&SurveyID=$SurveyID&QuestionID=$QuestionID#Answer");
     }
 
     elsif ($Self->{Subaction} eq 'AnswerUp') {
-       my $AnswerID = $Self->{ParamObject}->GetParam(Param => "AnswerID");
-       my $QuestionID = $Self->{ParamObject}->GetParam(Param => "QuestionID");
-       my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
+        my $AnswerID = $Self->{ParamObject}->GetParam(Param => "AnswerID");
+        my $QuestionID = $Self->{ParamObject}->GetParam(Param => "QuestionID");
+        my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
+        # check if survey, question and answer exists
+        if ($Self->{SurveyObject}->ElementExists(ElementID => $SurveyID, Element => 'Survey') ne 'Yes' ||
+            $Self->{SurveyObject}->ElementExists(ElementID => $QuestionID, Element => 'Question') ne 'Yes' ||
+            $Self->{SurveyObject}->ElementExists(ElementID => $AnswerID, Element => 'Answer') ne 'Yes') {
+            return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}");
+        }
 
-       $Self->{SurveyObject}->AnswerSort(QuestionID => $QuestionID);
+        $Self->{SurveyObject}->AnswerSort(QuestionID => $QuestionID);
 
-       $Self->{SurveyObject}->AnswerUp(
-           QuestionID => $QuestionID,
-           AnswerID => $AnswerID,
-       );
+        $Self->{SurveyObject}->AnswerUp(
+            QuestionID => $QuestionID,
+            AnswerID => $AnswerID,
+        );
 
-       return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=QuestionEdit&SurveyID=$SurveyID&QuestionID=$QuestionID#Answer");
+        return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=QuestionEdit&SurveyID=$SurveyID&QuestionID=$QuestionID#Answer");
     }
 
     elsif ($Self->{Subaction} eq 'AnswerDown') {
-       my $AnswerID = $Self->{ParamObject}->GetParam(Param => "AnswerID");
-       my $QuestionID = $Self->{ParamObject}->GetParam(Param => "QuestionID");
-       my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
+        my $AnswerID = $Self->{ParamObject}->GetParam(Param => "AnswerID");
+        my $QuestionID = $Self->{ParamObject}->GetParam(Param => "QuestionID");
+        my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
+        # check if survey, question and answer exists
+        if ($Self->{SurveyObject}->ElementExists(ElementID => $SurveyID, Element => 'Survey') ne 'Yes' ||
+            $Self->{SurveyObject}->ElementExists(ElementID => $QuestionID, Element => 'Question') ne 'Yes' ||
+            $Self->{SurveyObject}->ElementExists(ElementID => $AnswerID, Element => 'Answer') ne 'Yes') {
+            return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}");
+        }
 
-       $Self->{SurveyObject}->AnswerSort(QuestionID => $QuestionID);
+        $Self->{SurveyObject}->AnswerSort(QuestionID => $QuestionID);
 
-       $Self->{SurveyObject}->AnswerDown(
-           QuestionID => $QuestionID,
-           AnswerID => $AnswerID,
-       );
+        $Self->{SurveyObject}->AnswerDown(
+            QuestionID => $QuestionID,
+            AnswerID => $AnswerID,
+        );
 
-       return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=QuestionEdit&SurveyID=$SurveyID&QuestionID=$QuestionID#Answer");
+        return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=QuestionEdit&SurveyID=$SurveyID&QuestionID=$QuestionID#Answer");
     }
 
     elsif ($Self->{Subaction} eq 'AnswerEdit') {
         my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
         my $QuestionID = $Self->{ParamObject}->GetParam(Param => "QuestionID");
         my $AnswerID = $Self->{ParamObject}->GetParam(Param => "AnswerID");
+        # check if survey, question and answer exists
+        if ($Self->{SurveyObject}->ElementExists(ElementID => $SurveyID, Element => 'Survey') ne 'Yes' ||
+            $Self->{SurveyObject}->ElementExists(ElementID => $QuestionID, Element => 'Question') ne 'Yes' ||
+            $Self->{SurveyObject}->ElementExists(ElementID => $AnswerID, Element => 'Answer') ne 'Yes') {
+            return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}");
+        }
 
         $Output = $Self->{LayoutObject}->Header(Title => 'Answer Edit');
         $Output .= $Self->{LayoutObject}->NavigationBar();
@@ -632,7 +702,7 @@ sub Run {
         # print the main table.
         $Self->{LayoutObject}->Block(
             Name => 'AnswerEdit',
-            Data => {%Answer},
+            Data => {%Answer}
         );
 
         $Output .= $Self->{LayoutObject}->Output(
@@ -646,23 +716,33 @@ sub Run {
     }
 
     elsif ($Self->{Subaction} eq 'AnswerSave') {
-       my $AnswerID = $Self->{ParamObject}->GetParam(Param => "AnswerID");
-       my $QuestionID = $Self->{ParamObject}->GetParam(Param => "QuestionID");
-       my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
-       my $Answer = $Self->{ParamObject}->GetParam(Param => "Answer");
+        my $AnswerID = $Self->{ParamObject}->GetParam(Param => "AnswerID");
+        my $QuestionID = $Self->{ParamObject}->GetParam(Param => "QuestionID");
+        my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
+        my $Answer = $Self->{ParamObject}->GetParam(Param => "Answer");
+        # check if survey, question and answer exists
+        if ($Self->{SurveyObject}->ElementExists(ElementID => $SurveyID, Element => 'Survey') ne 'Yes' ||
+            $Self->{SurveyObject}->ElementExists(ElementID => $QuestionID, Element => 'Question') ne 'Yes' ||
+            $Self->{SurveyObject}->ElementExists(ElementID => $AnswerID, Element => 'Answer') ne 'Yes') {
+            return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}");
+        }
 
-       $Self->{SurveyObject}->AnswerSave(
-           AnswerID => $AnswerID,
-           QuestionID => $QuestionID,
-           Answer => $Answer,
-           UserID => $Self->{UserID},
-       );
+        $Self->{SurveyObject}->AnswerSave(
+            AnswerID => $AnswerID,
+            QuestionID => $QuestionID,
+            Answer => $Answer,
+            UserID => $Self->{UserID},
+        );
 
-       return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=QuestionEdit&SurveyID=$SurveyID&QuestionID=$QuestionID#Answer");
+        return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=QuestionEdit&SurveyID=$SurveyID&QuestionID=$QuestionID#Answer");
     }
 
     elsif ($Self->{Subaction} eq 'Stats') {
         my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
+        # check if survey exists
+        if ($Self->{SurveyObject}->ElementExists(ElementID => $SurveyID, Element => 'Survey') ne 'Yes') {
+            return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}");
+        }
 
         $Output = $Self->{LayoutObject}->Header(Title => 'Stats Overview');
         $Output .= $Self->{LayoutObject}->NavigationBar();
@@ -699,6 +779,11 @@ sub Run {
     elsif ($Self->{Subaction} eq 'StatsDetail') {
         my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
         my $RequestID = $Self->{ParamObject}->GetParam(Param => "RequestID");
+        # check if survey exists
+        if ($Self->{SurveyObject}->ElementExists(ElementID => $SurveyID, Element => 'Survey') ne 'Yes' ||
+            $Self->{SurveyObject}->ElementExists(ElementID => $RequestID, Element => 'Request') ne 'Yes') {
+            return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}");
+        }
 
         $Output = $Self->{LayoutObject}->Header(Title => 'Stats Detail');
         $Output .= $Self->{LayoutObject}->NavigationBar();

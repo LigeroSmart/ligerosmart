@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - manage all survey module events
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: Survey.pm,v 1.20 2006-03-20 15:25:01 mh Exp $
+# $Id: Survey.pm,v 1.21 2006-03-20 21:36:39 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Ticket;
 use Kernel::System::CustomerUser;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.20 $';
+$VERSION = '$Revision: 1.21 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -1349,6 +1349,89 @@ sub CountRequest {
     return $Data{CountRequest};
 }
 
+=item ElementExists()
+
+exists an survey-, question-, answer- or request-element
+
+    my $CountRequest = $Self->{SurveyObject}->ElementExists(
+        ID => 123,           # SurveyID, QuestionID, AnswerID, RequestID
+        Element => 'Survey'  # Survey, Question, Answer, Request
+    );
+
+=cut
+
+sub ElementExists {
+    my $Self = shift;
+    my %Param = @_;
+    # check needed stuff
+    foreach (qw(ElementID Element)) {
+        if (!defined ($Param{$_})) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
+    }
+    # quote
+    foreach (qw(Element)) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
+    }
+    foreach (qw(ElementID)) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
+    }
+
+    my $ElementExists = 'No';
+
+    if ($Param{Element} eq 'Survey') {
+        my $SQL = "SELECT COUNT(id) FROM survey WHERE id = $Param{ElementID}";
+        $Self->{DBObject}->Prepare(SQL => $SQL);
+
+        my $Data = '';
+        while (my @Row = $Self->{DBObject}->FetchrowArray()) {
+            $Data = $Row[0];
+        }
+        if ($Data > 0) {
+            $ElementExists = 'Yes';
+        }
+    }
+    elsif ($Param{Element} eq 'Question') {
+        my $SQL = "SELECT COUNT(id) FROM survey_question WHERE id = $Param{ElementID}";
+        $Self->{DBObject}->Prepare(SQL => $SQL);
+
+        my $Data = '';
+        while (my @Row = $Self->{DBObject}->FetchrowArray()) {
+            $Data = $Row[0];
+        }
+        if ($Data > 0) {
+            $ElementExists = 'Yes';
+        }
+    }
+    elsif ($Param{Element} eq 'Answer') {
+        my $SQL = "SELECT COUNT(id) FROM survey_answer WHERE id = $Param{ElementID}";
+        $Self->{DBObject}->Prepare(SQL => $SQL);
+
+        my $Data = '';
+        while (my @Row = $Self->{DBObject}->FetchrowArray()) {
+            $Data = $Row[0];
+        }
+        if ($Data > 0) {
+            $ElementExists = 'Yes';
+        }
+    }
+    elsif ($Param{Element} eq 'Request') {
+        my $SQL = "SELECT COUNT(id) FROM survey_request WHERE id = $Param{ElementID}";
+        $Self->{DBObject}->Prepare(SQL => $SQL);
+
+        my $Data = '';
+        while (my @Row = $Self->{DBObject}->FetchrowArray()) {
+            $Data = $Row[0];
+        }
+        if ($Data > 0) {
+            $ElementExists = 'Yes';
+        }
+    }
+
+    return $ElementExists;
+}
+
 =item RequestSend()
 
 to send a request to a customer
@@ -1650,6 +1733,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.20 $ $Date: 2006-03-20 15:25:01 $
+$Revision: 1.21 $ $Date: 2006-03-20 21:36:39 $
 
 =cut

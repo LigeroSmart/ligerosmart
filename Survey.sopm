@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-  <CVS>$Id: Survey.sopm,v 1.10 2006-03-20 15:25:01 mh Exp $</CVS>
+  <CVS>$Id: Survey.sopm,v 1.11 2006-03-20 21:36:39 mh Exp $</CVS>
   <Name>Survey</Name>
-  <Version>0.2.0</Version>
+  <Version>1.0.0</Version>
   <Framework>2.0.x</Framework>
   <Vendor>OTRS GmbH</Vendor>
   <URL>http://otrs.org/</URL>
   <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
-  <ChangeLog>2006-03-15 A lot of Bugfixes</ChangeLog>
+  <ChangeLog>2006-03-20 1.0.0 Final Version</ChangeLog>
   <ChangeLog>2006-03-11 New package</ChangeLog>
   <Description Lang="en">A customer survey tool.</Description>
   <Description Lang="de">Ein Kundenumfragen Werkzeug.</Description>
