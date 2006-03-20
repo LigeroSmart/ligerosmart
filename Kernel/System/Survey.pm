@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - manage all survey module events
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: Survey.pm,v 1.19 2006-03-18 22:11:29 mh Exp $
+# $Id: Survey.pm,v 1.20 2006-03-20 15:25:01 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Ticket;
 use Kernel::System::CustomerUser;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.19 $';
+$VERSION = '$Revision: 1.20 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -197,7 +197,7 @@ sub SurveyStatusSet {
         if ($Quest > '0') {
             # get all questions (type radio and checkbox)
             my $SQL = "SELECT id FROM survey_question".
-                " WHERE survey_id = $Param{SurveyID} AND (type = 2 OR type = 3)";
+                " WHERE survey_id = $Param{SurveyID} AND (type = 'Radio' OR type = 'Checkbox')";
             $Self->{DBObject}->Prepare(SQL => $SQL);
             # init three vars
             my $AllQuestionsAnsers = 'Yes';
@@ -435,7 +435,7 @@ to add a new question to a survey
         UserID => 1,
         SurveyID => 10,
         Question => 'The Question',
-        Type => 3,
+        Type => 'Radio',
     );
 
 =cut
@@ -451,10 +451,10 @@ sub QuestionAdd {
         }
     }
     # quote
-    foreach (qw(Question)) {
+    foreach (qw(Question Type)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
     }
-    foreach (qw(UserID SurveyID Type)) {
+    foreach (qw(UserID SurveyID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # insert a new question
@@ -1650,6 +1650,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.19 $ $Date: 2006-03-18 22:11:29 $
+$Revision: 1.20 $ $Date: 2006-03-20 15:25:01 $
 
 =cut

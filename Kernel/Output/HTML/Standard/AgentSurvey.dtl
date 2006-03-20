@@ -2,7 +2,7 @@
 # AgentSurvey.dtl - provides HTML form for AgentSurvey
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: AgentSurvey.dtl,v 1.21 2006-03-18 21:00:59 mh Exp $
+# $Id: AgentSurvey.dtl,v 1.22 2006-03-20 15:25:01 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -247,7 +247,7 @@
                     <input type="hidden" name="SurveyID" value="$QData{"SurveyID"}">
                     <select name="NewStatus">
 <!-- dtl:block:SurveyStatus -->
-                    <option value="$QData{"NewStatus"}">$Text{"$QData{"NewStatus"}"}</option>
+                      <option value="$QData{"NewStatus"}">$Text{"$QData{"NewStatus"}"}</option>
 <!-- dtl:block:SurveyStatus -->
                     </select>
                     <input class="button" type="submit" value="$Text{"Change"}">
@@ -385,7 +385,7 @@
                           </tr>
 <!-- dtl:block:SurveyEditQuestionsValidOnce -->
                           <tr>
-                            <td class="contentbody"><a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=QuestionEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}">$QData{"Question","90"}</a>&nbsp;($QData{"Type"})</td>
+                            <td class="contentbody"><a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=QuestionEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}">$QData{"Question","90"}</a>&nbsp;($Text{"$QData{"Type"}"})</td>
                             <td class="contentbody" align="right">
                               <a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=QuestionUp&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}"><img border="0" src="$Env{"Images"}up-big.png"></a>
                               <a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=QuestionDown&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}"><img border="0" src="$Env{"Images"}down-big.png"></a>
@@ -396,10 +396,10 @@
                           <tr>
                             <td class="contentbody">
 <!-- dtl:block:SurveyEditQuestionsComplete -->
-                              <a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=QuestionEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}">$QData{"Question","70"}</a>&nbsp;($QData{"Type"})
+                              <a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=QuestionEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}">$QData{"Question","70"}</a>&nbsp;($Text{"$QData{"Type"}"})
 <!-- dtl:block:SurveyEditQuestionsComplete -->
 <!-- dtl:block:SurveyEditQuestionsIncomplete -->
-                              <a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=QuestionEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}"><font color='red'>$QData{"Question","70"}</font></a>&nbsp;($QData{"Type"})
+                              <a href="$Env{"CGIHandle"}?Action=$Env{"Action"}&Subaction=QuestionEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}"><font color='red'>$QData{"Question","70"}</font></a>&nbsp;($Text{"$QData{"Type"}"})
 <!-- dtl:block:SurveyEditQuestionsIncomplete -->
                             </td>
                             <td class="contentbody" align="right">
@@ -433,7 +433,7 @@
                     </tr>
 <!-- dtl:block:SurveyEditNewQuestion -->
                     <tr>
-                      <td class="contentkey" width="25"><a name="NewQuestion">&nbsp;</td>
+                      <td class="contentkey" width="25"><a name="NewQuestion"></a>&nbsp;</td>
                       <td class="contentvalue">
                         <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data">
                           <input type="hidden" name="Action" value="$Env{"Action"}">
@@ -442,17 +442,17 @@
                           <table border="0" width="100%" cellspacing="0" cellpadding="0">
                             <tr>
                               <td rowspan="4"><input type="text" size="70" name="Question"></td>
-                              <td class="contentvalue"><input type="radio" name="Type" value="1" checked>&nbsp;(1)&nbsp;$Text{"Yes"}&nbsp;/&nbsp;$Text{"No"}</td>
+                              <td class="contentvalue"><input type="radio" name="Type" value="YesNo" checked>&nbsp;$Text{"YesNo"}</td>
                               <td rowspan="4">&nbsp;&nbsp;&nbsp;<input class="button" type="submit" value="$Text{"Add"}"></td>
                             </tr>
                             <tr>
-                              <td class="contentvalue"><input type="radio" name="Type" value="2">&nbsp;(2)&nbsp;$Text{"List"}&nbsp;-&nbsp;$Text{"Radio"}</td>
+                              <td class="contentvalue"><input type="radio" name="Type" value="Radio">&nbsp;$Text{"Radio"}&nbsp;($Text{"List"})</td>
                             </tr>
                             <tr>
-                              <td class="contentvalue"><input type="radio" name="Type" value="3">&nbsp;(3)&nbsp;$Text{"List"}&nbsp;-&nbsp;$Text{"Checkbox"}</td>
+                              <td class="contentvalue"><input type="radio" name="Type" value="Checkbox">&nbsp;$Text{"Checkbox"}&nbsp;($Text{"List"})</td>
                             </tr>
                             <tr>
-                              <td class="contentvalue"><input type="radio" name="Type" value="4">&nbsp;(4)&nbsp;$Text{"Textarea"}</td>
+                              <td class="contentvalue"><input type="radio" name="Type" value="Textarea">&nbsp;$Text{"Textarea"}</td>
                             </tr>
                           </table>
                         </form>
@@ -465,23 +465,6 @@
                       <td class="contentkey" width="25">&nbsp;</td>
                     </tr>
 <!-- dtl:block:SurveyEditNewQuestion -->
-<!-- dtl:block:SurveyEditQuestionTypes -->
-                    <tr>
-                      <td class="contentkey" width="25">&nbsp;</td>
-                      <td class="contentvalue">
-                        (1)&nbsp;$Text{"Yes"}&nbsp;/&nbsp;$Text{"No"}&nbsp;&nbsp;&nbsp;&nbsp;
-                        (2)&nbsp;$Text{"List"}&nbsp;-&nbsp;$Text{"Radio"}&nbsp;&nbsp;&nbsp;&nbsp;
-                        (3)&nbsp;$Text{"List"}&nbsp;-&nbsp;$Text{"Checkbox"}&nbsp;&nbsp;&nbsp;&nbsp;
-                        (4)&nbsp;$Text{"Textarea"}
-                      </td>
-                      <td class="contentkey" width="25">&nbsp;</td>
-                    </tr>
-                    <tr>
-                      <td class="contentkey" width="25">&nbsp;</td>
-                      <td class="contentkey">&nbsp;</td>
-                      <td class="contentkey" width="25">&nbsp;</td>
-                    </tr>
-<!-- dtl:block:SurveyEditQuestionTypes -->
                   </table>
                 </td>
               </tr>
@@ -640,7 +623,7 @@
                 <td colspan="4" class="contenthead">
                   <table border="0" width="100%" cellspacing="0" cellpadding="0">
                     <tr>
-                      <td class="contenthead"><a name="Answer">$Text{"Posible Answers"}</td>
+                      <td class="contenthead"><a name="Answer"></a>$Text{"Posible Answers"}</td>
                       <td class="contenthead" align="right">&nbsp;</td>
                     </tr>
                   </table>
@@ -703,7 +686,7 @@
 <!-- dtl:block:QuestionEdit2 -->
 <!-- dtl:block:QuestionEdit2b -->
                           <tr>
-                            <td class="contentkey"><a name="NewAnswer">&nbsp;</td>
+                            <td class="contentkey"><a name="NewAnswer"></a>&nbsp;</td>
                             <td class="contentkey" width="25">&nbsp;</td>
                           </tr>
                           <tr>
@@ -753,7 +736,7 @@
 <!-- dtl:block:QuestionEdit3 -->
 <!-- dtl:block:QuestionEdit3b -->
                           <tr>
-                            <td class="contentkey"><a name="NewAnswer">&nbsp;</td>
+                            <td class="contentkey"><a name="NewAnswer"></a>&nbsp;</td>
                             <td class="contentkey" width="25">&nbsp;</td>
                           </tr>
                           <tr>

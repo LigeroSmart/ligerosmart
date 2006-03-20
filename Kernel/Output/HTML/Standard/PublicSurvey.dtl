@@ -2,7 +2,7 @@
 # PublicSurvey.dtl - provides HTML form for PublicSurvey
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: PublicSurvey.dtl,v 1.5 2006-03-18 10:18:06 mh Exp $
+# $Id: PublicSurvey.dtl,v 1.6 2006-03-20 15:25:01 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -66,7 +66,7 @@
                   <td class="contentkey" width="25">&nbsp;</td>
                 </tr>
 <!-- dtl:block:PublicQuestions -->
-<!-- dtl:block:PublicAnswer1 -->
+<!-- dtl:block:PublicAnswerYesNo -->
                 <tr>
                   <td class="contentkey" width="25">&nbsp;</td>
                   <td class="contentkey">$QData{"Question"}</td>
@@ -95,8 +95,8 @@
                       <td class="contentkey">&nbsp;</td>
                       <td class="contentkey" width="25">&nbsp;</td>
                     </tr>
-<!-- dtl:block:PublicAnswer1 -->
-<!-- dtl:block:PublicAnswer2 -->
+<!-- dtl:block:PublicAnswerYesNo -->
+<!-- dtl:block:PublicAnswerRadio -->
                     <tr>
                       <td class="contentkey" width="25">&nbsp;</td>
                       <td class="contentkey">$QData{"Question"}</td>
@@ -106,20 +106,20 @@
                       <td class="contentkey" width="25">&nbsp;</td>
                       <td class="contentkey">
                         <table border="0" width="100%" cellspacing="0">
-<!-- dtl:block:PublicAnswer2bChecked -->
+<!-- dtl:block:PublicAnswerRadiobChecked -->
                           <tr>
                             <td width="50" align="right">
                               <input type="radio" name="PublicSurveyVote2[$QData{"QuestionID"}]" value="$QData{"AnswerID"}" checked></td>
                               <td>$QData{"Answer"}</td>
                             </tr>
-<!-- dtl:block:PublicAnswer2bChecked -->
-<!-- dtl:block:PublicAnswer2b -->
+<!-- dtl:block:PublicAnswerRadiobChecked -->
+<!-- dtl:block:PublicAnswerRadiob -->
                             <tr>
                               <td width="50" align="right">
                                 <input type="radio" name="PublicSurveyVote2[$QData{"QuestionID"}]" value="$QData{"AnswerID"}"></td>
                                 <td>$QData{"Answer"}</td>
                               </tr>
-<!-- dtl:block:PublicAnswer2b -->
+<!-- dtl:block:PublicAnswerRadiob -->
                             </table>
                           </td>
                           <td class="contentkey" width="25">&nbsp;</td>
@@ -129,8 +129,8 @@
                           <td class="contentkey">&nbsp;</td>
                           <td class="contentkey" width="25">&nbsp;</td>
                         </tr>
-<!-- dtl:block:PublicAnswer2 -->
-<!-- dtl:block:PublicAnswer3 -->
+<!-- dtl:block:PublicAnswerRadio -->
+<!-- dtl:block:PublicAnswerCheckbox -->
                         <tr>
                           <td class="contentkey" width="25">&nbsp;</td>
                           <td class="contentkey">$QData{"Question"}</td>
@@ -140,13 +140,13 @@
                           <td class="contentkey" width="25">&nbsp;</td>
                           <td class="contentkey">
                             <table border="0" width="100%" cellspacing="0">
-<!-- dtl:block:PublicAnswer3b -->
+<!-- dtl:block:PublicAnswerCheckboxb -->
                               <tr>
                                 <td width="50" align="right">
                                   <input type="checkbox" name="PublicSurveyVote3[$QData{"AnswerID"}]" value="Yes"></td>
                                   <td>$QData{"Answer"}</td>
                                 </tr>
-<!-- dtl:block:PublicAnswer3b -->
+<!-- dtl:block:PublicAnswerCheckboxb -->
                               </table>
                             </td>
                             <td class="contentkey" width="25">&nbsp;</td>
@@ -156,8 +156,8 @@
                             <td class="contentkey">&nbsp;</td>
                             <td class="contentkey" width="25">&nbsp;</td>
                           </tr>
-<!-- dtl:block:PublicAnswer3 -->
-<!-- dtl:block:PublicAnswer4 -->
+<!-- dtl:block:PublicAnswerCheckbox -->
+<!-- dtl:block:PublicAnswerTextarea -->
                           <tr>
                             <td class="contentkey" width="25">&nbsp;</td>
                             <td class="contentkey">$QData{"Question"}</td>
@@ -181,7 +181,7 @@
                               <td class="contentkey">&nbsp;</td>
                               <td class="contentkey" width="25">&nbsp;</td>
                             </tr>
-<!-- dtl:block:PublicAnswer4 -->
+<!-- dtl:block:PublicAnswerTextarea -->
 <!-- dtl:block:PublicQuestions -->
                           </table>
                         </td>

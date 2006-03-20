@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicSurvey.pm - a survey module
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: PublicSurvey.pm,v 1.7 2006-03-20 14:32:52 mh Exp $
+# $Id: PublicSurvey.pm,v 1.8 2006-03-20 15:25:01 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.7 $';
+$VERSION = '$Revision: 1.8 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 # --
@@ -57,7 +57,7 @@ sub Run {
             my @QuestionList = $Self->{SurveyObject}->QuestionList(SurveyID => $Survey{SurveyID});
 
             foreach my $Question(@QuestionList) {
-                if ($Question->{Type} eq '1' ) {
+                if ($Question->{Type} eq 'YesNo' ) {
                     my $PublicSurveyVote1 = $Self->{ParamObject}->GetParam(Param => "PublicSurveyVote1[$Question->{QuestionID}]");
 
                     $Self->{SurveyObject}->PublicAnswerSave(
@@ -66,7 +66,7 @@ sub Run {
                         VoteValue => $PublicSurveyVote1
                     );
                 }
-                elsif ($Question->{Type} eq '2' ) {
+                elsif ($Question->{Type} eq 'Radio' ) {
                     my $PublicSurveyVote2 = $Self->{ParamObject}->GetParam(Param => "PublicSurveyVote2[$Question->{QuestionID}]");
 
                     $Self->{SurveyObject}->PublicAnswerSave(
@@ -75,7 +75,7 @@ sub Run {
                         VoteValue => $PublicSurveyVote2
                     );
                 }
-                elsif ($Question->{Type} eq '3' ) {
+                elsif ($Question->{Type} eq 'Checkbox' ) {
                     my @AnswerList = $Self->{SurveyObject}->AnswerList(QuestionID => $Question->{QuestionID});
 
                     foreach my $Answer(@AnswerList) {
@@ -90,7 +90,7 @@ sub Run {
                         }
                     }
                 }
-                elsif ($Question->{Type} eq '4' ) {
+                elsif ($Question->{Type} eq 'Textarea' ) {
                     my $PublicSurveyVote4 = $Self->{ParamObject}->GetParam(Param => "PublicSurveyVote4[$Question->{QuestionID}]");
 
                     $Self->{SurveyObject}->PublicAnswerSave(
@@ -147,15 +147,15 @@ sub Run {
                 Data => {},
             );
 
-            if ($Question->{Type} eq '1' ) {
+            if ($Question->{Type} eq 'YesNo' ) {
                 $Self->{LayoutObject}->Block(
-                    Name => 'PublicAnswer1',
+                    Name => 'PublicAnswerYesNo',
                     Data => $Question,
                 );
             }
-            elsif ($Question->{Type} eq '2' ) {
+            elsif ($Question->{Type} eq 'Radio' ) {
                 $Self->{LayoutObject}->Block(
-                    Name => 'PublicAnswer2',
+                    Name => 'PublicAnswerRadio',
                     Data => $Question,
                 );
                 my @AnswerList = $Self->{SurveyObject}->AnswerList(QuestionID => $Question->{QuestionID});
@@ -164,13 +164,13 @@ sub Run {
                 foreach my $Answer(@AnswerList) {
                     if ($Counter eq '0') {
                         $Self->{LayoutObject}->Block(
-                            Name => 'PublicAnswer2bChecked',
+                            Name => 'PublicAnswerRadiobChecked',
                             Data => $Answer,
                         );
                     }
                     else {
                         $Self->{LayoutObject}->Block(
-                            Name => 'PublicAnswer2b',
+                            Name => 'PublicAnswerRadiob',
                             Data => $Answer,
                         );
                     }
@@ -178,23 +178,23 @@ sub Run {
                     $Counter++;
                 }
             }
-            elsif ($Question->{Type} eq '3' ) {
+            elsif ($Question->{Type} eq 'Checkbox' ) {
                 $Self->{LayoutObject}->Block(
-                    Name => 'PublicAnswer3',
+                    Name => 'PublicAnswerCheckbox',
                     Data => $Question,
                 );
                 my @AnswerList = $Self->{SurveyObject}->AnswerList(QuestionID => $Question->{QuestionID});
 
                 foreach my $Answer(@AnswerList) {
                     $Self->{LayoutObject}->Block(
-                        Name => 'PublicAnswer3b',
+                        Name => 'PublicAnswerCheckboxb',
                         Data => $Answer,
                     );
                 }
             }
-            elsif ($Question->{Type} eq '4' ) {
+            elsif ($Question->{Type} eq 'Textarea' ) {
                 $Self->{LayoutObject}->Block(
-                    Name => 'PublicAnswer4',
+                    Name => 'PublicAnswerTextarea',
                     Data => $Question,
                 );
             }

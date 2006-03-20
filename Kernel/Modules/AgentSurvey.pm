@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurvey.pm - a survey module
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: AgentSurvey.pm,v 1.16 2006-03-20 14:32:52 mh Exp $
+# $Id: AgentSurvey.pm,v 1.17 2006-03-20 15:25:01 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.16 $';
+$VERSION = '$Revision: 1.17 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 # --
@@ -109,10 +109,10 @@ sub Run {
 
                 my @Answers = ();
                 # generate the answers of the question
-                if ($Question->{Type} eq '1' || $Question->{Type} eq '2' || $Question->{Type} eq '3' ) {
+                if ($Question->{Type} eq 'YesNo' || $Question->{Type} eq 'Radio' || $Question->{Type} eq 'Checkbox' ) {
                     my @AnswerList = ();
-                    # set answers to Yae and no if Type was YesNo
-                    if ($Question->{Type} eq '1') {
+                    # set answers to Yes and No if type was YesNo
+                    if ($Question->{Type} eq 'YesNo') {
                         my %Data = ();
                         $Data{Answer} = "Yes";
                         $Data{AnswerID} = "Yes";
@@ -144,7 +144,7 @@ sub Run {
                         push(@Answers,\%Data);
                     }
                 }
-                elsif ($Question->{Type} eq '4' ) {
+                elsif ($Question->{Type} eq 'Textarea' ) {
                     my $AnswerNo = $Self->{SurveyObject}->CountVote(QuestionID => $Question->{QuestionID}, VoteValue => '');
                     my $Percent = 0;
                     # calculate the percents
@@ -290,7 +290,7 @@ sub Run {
 
                 my $AnswerCount = $Self->{SurveyObject}->AnswerCount(QuestionID => $Question->{QuestionID});
 
-                if ($Question->{Type} eq 2 || $Question->{Type} eq 3) {
+                if ($Question->{Type} eq 'Radio' || $Question->{Type} eq 'Checkbox') {
                     if ($AnswerCount < 2) {
                         $Self->{LayoutObject}->Block(
                             Name => 'SurveyEditQuestionsIncomplete',
@@ -323,10 +323,6 @@ sub Run {
                     Data => $Question,
                 );
             }
-            $Self->{LayoutObject}->Block(
-                Name => 'SurveyEditQuestionTypes',
-                Data => {},
-            );
         }
 
         $Output .= $Self->{LayoutObject}->Output(
@@ -466,12 +462,12 @@ sub Run {
             Data => {%Question},
         );
 
-        if ($Question{Type} eq 1) {
+        if ($Question{Type} eq 'YesNo') {
             $Self->{LayoutObject}->Block(
                 Name => 'QuestionEdit1',
             );
         }
-        elsif ($Question{Type} eq 2) {
+        elsif ($Question{Type} eq 'Radio') {
             my @List = $Self->{SurveyObject}->AnswerList(QuestionID => $QuestionID);
 
             if ($Survey{Status} eq 'New') {
@@ -499,7 +495,7 @@ sub Run {
                 }
             }
         }
-        elsif ($Question{Type} eq 3) {
+        elsif ($Question{Type} eq 'Checkbox') {
             my @List = $Self->{SurveyObject}->AnswerList(QuestionID => $QuestionID);
 
             if ($Survey{Status} eq 'New') {
@@ -527,7 +523,7 @@ sub Run {
                 }
             }
         }
-        elsif ($Question{Type} eq 4) {
+        elsif ($Question{Type} eq 'Textarea') {
             $Self->{LayoutObject}->Block(
                 Name => 'QuestionEdit4',
             );
@@ -723,7 +719,7 @@ sub Run {
 
            my @Answers = ();
 
-           if ($Question->{Type} eq '2' || $Question->{Type} eq '3' ) {
+           if ($Question->{Type} eq 'Radio' || $Question->{Type} eq 'Checkbox' ) {
                my @AnswerList = ();
 
                @AnswerList = $Self->{SurveyObject}->VoteGet(RequestID => $RequestID, QuestionID => $Question->{QuestionID});
@@ -736,7 +732,7 @@ sub Run {
                    push(@Answers,\%Data);
                }
             }
-            elsif ($Question->{Type} eq '1' || $Question->{Type} eq '4' ) {
+            elsif ($Question->{Type} eq 'YesNo' || $Question->{Type} eq 'Textarea' ) {
                 my @List = $Self->{SurveyObject}->VoteGet(RequestID => $RequestID, QuestionID => $Question->{QuestionID});
                 my %Data = ();
 

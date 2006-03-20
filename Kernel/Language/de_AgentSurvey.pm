@@ -22,6 +22,7 @@ sub Data {
     $Self->{Translation}->{'Questions'} = 'Fragen';
     $Self->{Translation}->{'Question'} = 'Frage';
     $Self->{Translation}->{'Posible Answers'} = 'Mögliche Antworten';
+    $Self->{Translation}->{'YesNo'} = 'JaNein';
     $Self->{Translation}->{'List'} = 'Liste';
     $Self->{Translation}->{'Textarea'} = 'Freitext';
 }
