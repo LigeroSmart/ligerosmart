@@ -2,7 +2,7 @@
 # TODO - todo list of TimeAccounting
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: TODO.TimeAccounting,v 1.5 2006-03-14 14:05:20 tr Exp $
+# $Id: TODO.TimeAccounting,v 1.6 2006-04-04 12:05:08 cs Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -30,4 +30,5 @@ misc (not scheduled yet - nobody is working on it yet)
 -
 
 ideas (just ideas - nobody is working on it)
--
+
+- include working hours per week into the overview
