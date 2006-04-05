@@ -1,0 +1,170 @@
+# --
+# AgentTimeAccountingView.dtl - provides HTML for view inserts of one day
+# Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
+# --
+# $Id: AgentTimeAccountingView.dtl,v 1.1 2006-04-05 14:52:13 tr Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# --
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+  <tr>
+    <td colspan="3" class="mainhead">
+      $Env{"Box0"}$Text{"View Time Accounting"}$Env{"Box1"}
+    </td>
+  </tr>
+  <tr>
+    <td colspan="3" class="menu">
+      <a href="$Env{"Baselink"}$Env{"LastScreen"}" class="menuitem">$Text{"Back"}</a>
+    </td>
+  </tr>
+  <tr>
+    <td class="mainbody">
+      <br>
+      <table border="0" width="700" align="center" cellspacing="0" cellpadding="0">
+        <tr>
+          <td>
+#            <table class="contentbody" border="0" width="100%" cellspacing="0" cellpadding="4">
+#              <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
+#                <input type="hidden" name="Action"    value="$Env{"Action"}">
+#                <input type="hidden" name="Subaction" value="Edit">
+#                <tr>
+#                  <td colspan="2" class="contenthead">$Text{"Time selection"}</td>
+#                </tr>
+#                <tr>
+#                  <td>$Data{"Date"}
+#                    <input class="button" accesskey="g" type="submit" value="$Text{"submit"}">
+#                  </td>
+#                  <td>
+#                    <table>
+#                      <tr>
+#                        <td>
+#                          $QData{"Year"}-$QData{"Month"}-$QData{"Day"}&nbsp;
+#                        </td>
+#                        <td>
+#                          <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Edit&Year=$QData{"YearBack"}&Month=$QData{"MonthBack"}&Day=$QData{"DayBack"}"><img border="0" src="$Env{"Images"}left-big.png" alt="$Text{"back"}"></a>&nbsp;
+#                        </td>
+#                        <td>
+#                          <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Edit&Year=$QData{"YearNext"}&Month=$QData{"MonthNext"}&Day=$QData{"DayNext"}"><img border="0" src="$Env{"Images"}right-big.png" alt="$Text{"next"}"></a>&nbsp;
+#                        </td>
+#                      </tr>
+#                    </table>
+#                  </td>
+#                </tr>
+#<!-- dtl:block:IncompleteText -->
+#                <tr>
+#                  <td colspan="2">
+#                    $Text{"Incomplete Days"}:
+#    <!-- dtl:block:IncompleteWorkingDays -->
+#                    &nbsp;
+#                    <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Edit&Year=$QData{"Year"}&Month=$QData{"Month"}&Day=$QData{"Day"}">
+#                      $Data{"BoldStart"}
+#                      $QData{"Year"}-$QData{"Month"}-$QData{"Day"}
+#                      $Data{"BoldEnd"}
+#                    </a>
+#    <!-- dtl:block:IncompleteWorkingDays -->
+#                    &nbsp;
+#                  </td>
+#                </tr>
+#<!-- dtl:block:IncompleteText -->
+#                <tr>
+#                  <td colspan="2" class="contentfooter">&nbsp;</td>
+#               </tr>
+#              </form>
+#            </table>
+#            <br>
+            <table border="0" width="100%" cellspacing="0" cellpadding="4">
+              <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="Action"    value="$Env{"Action"}">
+                <input type="hidden" name="Subaction" value="Edit">
+                <input type="hidden" name="Status"    value="Action">
+                <input type="hidden" name="Year"      value="$Data{"Year"}">
+                <input type="hidden" name="Month"     value="$Data{"Month"}">
+                <input type="hidden" name="Day"       value="$Data{"Day"}">
+                <tr>
+                  <td class="contenthead">$Text{"Date"}: $QData{"Weekday_to_Text"} $QData{"Year"}-$QData{"Month"}-$QData{"Day"}</td>
+                </tr>
+                <tr>
+                  <td class="contentbody">
+                    <table border="0" cellspacing="0" cellpadding="3" align="center">
+<!-- dtl:block:UnitBlock -->
+                      <tr>
+                        <td class="contentkey">$Text{"Project"}<span class="required">*</span></td>
+                        <td class="contentkey">$Text{"Action"}<span class="required">*</span></td>
+                        <td class="contentkey">$Text{"Remark"}</td>
+                        <td class="contentkey">$Text{"Starttime"}<span class="$QData{"ClassTime"}">*</span></td>
+                        <td class="contentkey">$Text{"Endtime"}<span class="$QData{"ClassTime"}">*</span></td>
+                        <td class="contentkey">$Text{"Period"}<span class="footnote">$QData{"PeriodNote"}</span></td>
+                      </tr>
+<!-- dtl:block:Unit -->
+                      <tr>
+                        <td class="contentvalue">$Data{"ProjectOption"}</td>
+                        <td class="contentvalue">$Data{"ActionOption"}</td>
+                        <td class="contentvalue"><input type="text" name="Remark[$QData{"ID"}]"    value="$QData{"Remark"}"    size="25"></td>
+#                        <td class="contentvalue">$Data{"StartTime"}"</td>
+#                        <td class="contentvalue">$Data{"EndTime"}"</td>
+                        <td class="contentvalue"><input type="text" name="StartTime[$QData{"ID"}]" value="$QData{"StartTime"}" size="7"></td>
+                        <td class="contentvalue"><input type="text" name="EndTime[$QData{"ID"}]"   value="$QData{"EndTime"}"   size="7"></td>
+<!-- dtl:block:UnitInputPeriod -->
+                        <td class="contentvalue" align="$QData{"TextPosition"}"><input type="text" name="Period[$QData{"ID"}]"    value="$QData{"Period"}"    size="7"></td>
+<!-- dtl:block:UnitInputPeriod -->
+<!-- dtl:block:UnitPeriodWithoutInput -->
+                        <td class="contentvalue" align="$QData{"TextPosition"}">$QData{"Period"}</td>
+<!-- dtl:block:UnitPeriodWithoutInput -->
+                      </tr>
+<!-- dtl:block:UnitRequired -->
+                      <tr><td colspan="6"><div class="required">$Text{"$QData{"Description"}"}</div></td></tr>
+<!-- dtl:block:UnitRequired -->
+<!-- dtl:block:UnitReadonly -->
+                      <tr><td colspan="6"><div class="readonly">$Text{"$QData{"Description"}"}</div></td></tr>
+<!-- dtl:block:UnitReadonly -->
+<!-- dtl:block:Unit -->
+<!-- dtl:block:UnitBlock -->
+                      <tr>
+                        <td class="contentkey" colspan="4">
+<!-- dtl:block:OtherTimes -->
+                          <input type="checkbox" value="-2" name="LeaveDay" $Data{"LeaveDay"}>$Text{"Leave Day"}&nbsp;
+                          <input type="checkbox" value="-1" name="Diseased" $Data{"Diseased"}>$Text{"Diseased"}&nbsp;
+                          <input type="checkbox" value="-3" name="Overtime" $Data{"Overtime"}>$Text{"Overtime"}
+<!-- dtl:block:OtherTimes -->
+                          &nbsp;
+                        </td>
+<!-- dtl:block:Total -->
+                        <td class="contentkey">$Text{"Total"}:</td>
+                        <td class="contentkey" align="$QData{"TextPosition"}">$QData{"Total"}&nbsp;</td>
+<!-- dtl:block:Total -->
+                      </tr>
+<!-- dtl:block:Required -->
+                      <tr><td colspan="6"><div class="required">$Text{"$QData{"Description"}"}</div></td></tr>
+<!-- dtl:block:Required -->
+<!-- dtl:block:Readonly -->
+                      <tr><td colspan="6"><div class="readonly">$Text{"$QData{"Description"}"}</div></td></tr>
+<!-- dtl:block:Readonly -->
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="contentfooter">
+                    <input class="button" accesskey="g" type="submit" value="$Text{"delete"}" name="Delete">
+                    <input class="button" accesskey="g" type="submit" value="$Text{"submit"}">
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="required">* $Text{"Required Field"}</div>
+<!-- dtl:block:FootNote -->
+                    <div class="footnote">* $Text{"You have to insert Start- and Endtime or a Period"}</div>
+<!-- dtl:block:FootNote -->
+                    <div class="footnote">* $Text{"If you use action misc, please give an explanation in the field remark"}</div>
+                  </td>
+                </tr>
+              </form>
+            </table>
+          </td>
+        </tr>
+      </table>
+      <br>
+    </td>
+  </tr>
+</table>
