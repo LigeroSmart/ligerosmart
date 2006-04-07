@@ -1,17 +1,25 @@
 # --
 # AgentTimeAccountingSetting.dtl - provides HTML form for time accounting settings
-# Copyright (C) 2003-2005 OTRS GmbH, http://www.otrs.de/
+# Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: AgentTimeAccountingSetting.dtl,v 1.1.1.1 2005-09-05 12:18:43 tr Exp $
+# $Id: AgentTimeAccountingSetting.dtl,v 1.2 2006-04-07 15:48:53 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 # --
+<!-- dtl:block:ProjectSetting -->
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
   <tr>
     <td class="mainhead">
-      $Env{"Box0"}$Text{"Edit Time Accounting Preference"}$Env{"Box1"}
+      $Env{"Box0"}$Text{"Edit Time Accounting Project Preference"}$Env{"Box1"}
+    </td>
+  </tr>
+  <tr>
+    <td class="menu">
+      <a href="$Env{"Baselink"}$Env{"LastScreen"}" class="menuitem">
+      $Text{"Back"}
+      </a>
     </td>
   </tr>
   <tr>
@@ -19,7 +27,7 @@
       <br>
       <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data">
         <input type="hidden" name="Action" value="$Env{"Action"}">
-        <input type="hidden" name="Subaction" value="Setting">      
+        <input type="hidden" name="Subaction" value="ProjectSetting">
         <table border="0" width="700" align="center" cellspacing="0" cellpadding="4">
           <tr>
             <td class="contenthead">$Text{"Project Setting"}</td>
@@ -27,27 +35,65 @@
           <tr>
             <td class="contentbody">
               <table border="0" cellspacing="0" cellpadding="3" align="center">
-                <tr>
-                  <td class="contentkey">$Text{"Project"}<span class="required">*</span></td>
-                  <td class="contentkey">$Text{"Status"}<span class="required">*</span></td>
+                <tr  class="contentkey">
+                  <td>$Text{"Project"}<span class="required">*</span></td>
+                  <td>$Text{"Descirption"}</td>
+                  <td>$Text{"Status"}<span class="required">*</span></td>
                 </tr>
-<!-- dtl:block:Project -->                
-                <tr>
-                  <td class="contentvalue"><input type="text" name="Project[$QData{"ProjectID"}]" value="$QData{"Project"}" size="40"></td>
-                  <td class="contentvalue">$Data{"StatusOption"}</td>                                                                        
+<!-- dtl:block:Project -->
+                <tr class="contentvalue">
+                  <td>
+                    <input type="text" name="Project[$QData{"ProjectID"}]" value="$QData{"Project"}" size="30">
+                  </td>
+                  <td>
+                    <textarea rows="2" name="ProjectDescription[$QData{"ProjectID"}]" cols="40">$QData{"ProjectDescription"}</textarea>
+                  </td>
+                  <td>$Data{"StatusOption"}</td>
                 </tr>
-<!-- dtl:block:Project -->  
+<!-- dtl:block:Project -->
                 <tr>
-                  <td class="contentkey" colspan="2"><input class="button" accesskey="g" type="submit" value="$Text{"new"}" name="NewProject"></td>
-                </tr>       
+                  <td colspan="2">
+                    <input class="button" accesskey="g" type="submit" value="$Text{"new"}" name="NewProject">
+                  </td>
+                </tr>
               </table>
             </td>
           </tr>
           <tr>
-            <td class="contentfooter"><input class="button" accesskey="g" type="submit" value="$Text{"submit"}" name="ActionProject"></td>
+            <td class="contentfooter">
+              <input class="button" accesskey="g" type="submit" value="$Text{"submit"}" name="ActionProject">
+            </td>
           </tr>
         </table>
-        <br>
+      </form>
+      <table border="0" width="700" align="center" cellspacing="0" cellpadding="4">
+        <tr class="required"><td>* $Text{"Required Field"}</td></tr>
+      </table>
+      <br>
+    </td>
+  </tr>
+</table>
+<!-- dtl:block:ProjectSetting -->
+<!-- dtl:block:Setting -->
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+  <tr>
+    <td class="mainhead">
+      $Env{"Box0"}$Text{"Edit Time Accounting Preference"}$Env{"Box1"}
+    </td>
+  </tr>
+  <tr>
+    <td class="menu">
+      <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=ProjectSetting" class="menuitem">
+      $Text{"ProjectSetting"}
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td class="mainbody">
+      <br>
+      <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="Action" value="$Env{"Action"}">
+        <input type="hidden" name="Subaction" value="Setting">
         <table border="0" width="700" align="center" cellspacing="0" cellpadding="4">
           <tr>
             <td class="contenthead">$Text{"Action Setting"}</td>
@@ -59,22 +105,28 @@
                   <td class="contentkey">$Text{"Action"}<span class="required">*</span></td>
                   <td class="contentkey">$Text{"Status"}<span class="required">*</span></td>
                 </tr>
-<!-- dtl:block:Action -->                
+<!-- dtl:block:Action -->
                 <tr>
-                  <td class="contentvalue"><input type="text" name="Action[$QData{"ActionID"}]" value="$QData{"Action"}" size="40"></td>
-                  <td class="contentvalue">$Data{"StatusOption"}</td>                                                                        
+                  <td class="contentvalue">
+                    <input type="text" name="Action[$QData{"ActionID"}]" value="$QData{"Action"}" size="40">
+                  </td>
+                  <td class="contentvalue">$Data{"StatusOption"}</td>
                 </tr>
-<!-- dtl:block:Action -->  
+<!-- dtl:block:Action -->
                 <tr>
-                  <td class="contentkey" colspan="2"><input class="button" accesskey="g" type="submit" value="$Text{"new"}" name="NewAction"></td>
-                </tr> 
+                  <td class="contentkey" colspan="2">
+                    <input class="button" accesskey="g" type="submit" value="$Text{"new"}" name="NewAction">
+                  </td>
+                </tr>
               </table>
             </td>
           </tr>
           <tr>
-            <td class="contentfooter"><input class="button" accesskey="g" type="submit" value="$Text{"submit"}" name="ActionAction"></td>
+            <td class="contentfooter">
+              <input class="button" accesskey="g" type="submit" value="$Text{"submit"}" name="ActionAction">
+            </td>
           </tr>
-        </table>  
+        </table>
         <br>
         <table border="0" width="700" align="center" cellspacing="0" cellpadding="4">
           <tr>
@@ -83,50 +135,91 @@
           <tr>
             <td class="contentbody">
               <table border="0" cellspacing="0" cellpadding="3" align="center">
-
-<!-- dtl:block:User -->                
+<!-- dtl:block:User -->
                 <tr>
-                  <td class="contentvalue" colspan="6">$QData{"User"}</td>
+                  <td class="contentkey" colspan="3">$QData{"User"}</td>
                 </tr>
                 <tr>
-                  <td class="contentkey">$Text{"Startdate"}<span class="required">*</span></td>   
-                  <td class="contentkey">$Text{"Enddate"}<span class="required">*</span></td>                                 
-                  <td class="contentkey">$Text{"Weekly Hours"}<span class="required">*</span></td>
-                  <td class="contentkey">$Text{"Leave Day"}<span class="required">*</span></td>   
-                  <td class="contentkey">$Text{"Overtime"}<span class="required">*</span></td>                                                                                       
-                  <td class="contentkey">$Text{"Status"}<span class="required">*</span></td>               
-                </tr>                
-   <!-- dtl:block:Period -->                                                                                           
-                <tr>             
-                  <td class="contentvalue"><input type="text" name="DateStart[$QData{"UserID"}][$QData{"Period"}]" value="$QData{"DateStart"}" size="12"></td>                                    
-                  <td class="contentvalue"><input type="text" name="DateEnd[$QData{"UserID"}][$QData{"Period"}]" value="$QData{"DateEnd"}" size="12"></td>                  
-                  <td class="contentvalue"><input type="text" name="WeeklyHours[$QData{"UserID"}][$QData{"Period"}]" value="$QData{"WeeklyHours"}" size="5"></td>
-                  <td class="contentvalue"><input type="text" name="LeaveDays[$QData{"UserID"}][$QData{"Period"}]" value="$QData{"LeaveDays"}" size="5"></td>                                                                      
-                  <td class="contentvalue"><input type="text" name="Overtime[$QData{"UserID"}][$QData{"Period"}]" value="$QData{"Overtime"}" size="5"></td>                                                                                        
-                  <td class="contentvalue">$Data{"StatusOption"}</td>                     
+                  <td class="contentkey">$Text{"Description"}:</td>
+                  <td class="contentvalue">
+                    $Data{"Description"}
+                    <textarea rows="1" name="Description[$QData{"UserID"}]" cols="40"></textarea>
+                  </td>
+                  <td class="contentkey">
+                    <input type="Checkbox" name="ShowOvertime[$QData{"UserID"}][$QData{"Period"}]" value="1" $Data{"SelectedShowOvertime"}>
+                    $Text{"Show Overtime"}<br>
+                    <input type="Checkbox" name="ShowOvertime[$QData{"UserID"}][$QData{"Period"}]" value="1" $Data{"SelectedShowOvertime"}>
+                    $Text{"Create Project"}
+                  </td>
                 </tr>
-   <!-- dtl:block:Period -->    
                 <tr>
-                  <td class="contentvalue"  colspan="6"><input class="button" type="submit" value="$Text{"new user setting"}"  name="NewUserSetting[$QData{"UserID"}]"></td>                                                                                                                                                                                  
-                </tr>                                                    
+                  <td colspan="3">
+                    <table border="0" cellspacing="0" cellpadding="3" align="center" width="100%">
+                      <tr class="contentkey">
+                        <td>$Text{"Startdate"}<span class="required">*</span></td>
+                        <td>$Text{"Enddate"}<span class="required">*</span></td>
+                        <td>$Text{"Weekly Hours"}<span class="required">*</span></td>
+                        <td>$Text{"Leave Day"}<span class="required">*</span></td>
+                        <td>$Text{"Overtime"}<span class="required">*</span></td>
+                        <td>$Text{"Status"}<span class="required">*</span></td>
+                      </tr>
+<!-- dtl:block:Period -->
+                      <tr class="contentvalue">
+                        <td>
+                          <input type="text" name="DateStart[$QData{"UserID"}][$QData{"Period"}]" value="$QData{"DateStart"}" size="12">
+                        </td>
+                        <td>
+                          <input type="text" name="DateEnd[$QData{"UserID"}][$QData{"Period"}]" value="$QData{"DateEnd"}" size="12">
+                        </td>
+                        <td>
+                          <input type="text" name="WeeklyHours[$QData{"UserID"}][$QData{"Period"}]" value="$QData{"WeeklyHours"}" size="5">
+                        </td>
+                        <td>
+                          <input type="text" name="LeaveDays[$QData{"UserID"}][$QData{"Period"}]" value="$QData{"LeaveDays"}" size="5">
+                        </td>
+                        <td>
+                          <input type="text" name="Overtime[$QData{"UserID"}][$QData{"Period"}]" value="$QData{"Overtime"}" size="5">
+                        </td>
+                        <td>$Data{"StatusOption"}</td>
+                      </tr>
+<!-- dtl:block:Period -->
+                    </table>
+                  </td>
+                </tr>
                 <tr>
-                  <td class="contentkey" colspan="6"><hr></td>
-                </tr>                   
-<!-- dtl:block:User -->  
+                  <td class="contentvalue" colspan="3">
+                    <input class="button" type="submit" value="$Text{"new user setting"}"  name="NewUserSetting[$QData{"UserID"}]">
+                  </td>
+                </tr>
                 <tr>
-                  <td class="contentkey" colspan="6">$Data{"NewUserOption"}<input class="button" accesskey="g" type="submit" value="$Text{"new"}"  name="NewUser"></td>
-                </tr>              
+                  <td colspan="3"><hr></td>
+                </tr>
+<!-- dtl:block:User -->
+<!-- dtl:block:NewUserOption -->
+                <tr>
+                  <td class="contentkey" colspan="3">
+                    $Data{"NewUserOption"}
+                    <input class="button" accesskey="g" type="submit" value="$Text{"new"}"  name="NewUser">
+                  </td>
+                </tr>
+<!-- dtl:block:NewUserOption -->
               </table>
             </td>
           </tr>
           <tr>
-            <td class="contentfooter"><input class="button" accesskey="g" type="submit" value="$Text{"submit"}" name="ActionUser"></td>
+            <td class="contentfooter">
+              <input class="button" accesskey="g" type="submit" value="$Text{"submit"}" name="ActionUser">
+            </td>
           </tr>
-          <tr><td><div class="required">* $Text{"Required Field"}</div></td></tr>
-        </table> 
-      </form>             
+        </table>
+      </form>
+      <table border="0" width="700" align="center" cellspacing="0" cellpadding="4">
+        <tr class="required"><td>* $Text{"Required Field"}</td></tr>
+      </table>
       <br>
     </td>
   </tr>
 </table>
+<!-- dtl:block:Setting -->
+
 

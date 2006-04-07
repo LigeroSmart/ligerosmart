@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: TimeAccounting.xml,v 1.1.1.1 2005-09-05 12:18:43 tr Exp $</CVS>
+    <CVS>$Id: TimeAccounting.xml,v 1.2 2006-04-07 15:48:42 tr Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AgentTimeAccounting" Required="0" Valid="1">
         <Description Lang="en">FrontendModulRegistration for TimeAccountingModul to define the registration settings in the programme and set rights and positions of icons in the navigation bar.</Description>
         <Description Lang="de">FrontendModulRegistration für das ZeiterfassungsModul.  Hier
@@ -10,6 +10,7 @@
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
+                <Group>time_accounting</Group>
                 <GroupRo>time_accounting</GroupRo>
                 <Description>TimeAccounting</Description>
                 <NavBarName>TimeAccounting</NavBarName>
@@ -36,7 +37,7 @@
                     <NavBar>TimeAccounting</NavBar>
                     <AccessKey>o</AccessKey>
                     <Prio>100</Prio>
-                </NavBar>                
+                </NavBar>
                 <NavBar>
                 <GroupRo>time_accounting</GroupRo>
                     <Description>TimeRecord-Edit</Description>
@@ -50,7 +51,7 @@
                     <Prio>200</Prio>
                 </NavBar>
                 <NavBar>
-                <Group>time_accounting</Group>    
+                <Group>time_accounting</Group>
                     <Description>Reporting</Description>
                     <Name>Reporting</Name>
                     <Image>reporting.png</Image>
@@ -60,9 +61,9 @@
                     <NavBar>TimeAccounting</NavBar>
                     <AccessKey></AccessKey>
                     <Prio>500</Prio>
-                </NavBar>    
+                </NavBar>
                 <NavBar>
-                    <Group>time_accounting</Group>    
+                    <Group>time_accounting</Group>
                     <Description>Setting</Description>
                     <Name>Setting</Name>
                     <Image>module_setting.png</Image>
@@ -72,7 +73,7 @@
                     <NavBar>TimeAccounting</NavBar>
                     <AccessKey></AccessKey>
                     <Prio>900</Prio>
-                </NavBar>                            
+                </NavBar>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -96,7 +97,7 @@
                 <Item Key="1">valid</Item>
             </Option>
         </Setting>
-    </ConfigItem>    
+    </ConfigItem>
     <ConfigItem Name="TimeAccounting::DefaultActionName" Required="1" Valid="1">
         <Description Lang="en">Default name for new actions.</Description>
         <Description Lang="de">Initialer Name einer neuen Tätigkeit in der Zeiterfassung.</Description>
@@ -117,7 +118,7 @@
                 <Item Key="1">valid</Item>
             </Option>
         </Setting>
-    </ConfigItem>    
+    </ConfigItem>
     <ConfigItem Name="TimeAccounting::DefaultUserWeeklyHours" Required="1" Valid="1">
         <Description Lang="en">Default setting for the standard weekly hours.</Description>
         <Description Lang="de">Standard Wochenarbeitszeit.</Description>
@@ -144,7 +145,7 @@
         <Setting>
             <String Regex="">0</String>
         </Setting>
-    </ConfigItem>    
+    </ConfigItem>
     <ConfigItem Name="TimeAccounting::DefaultUserDateStart" Required="1" Valid="1">
         <Description Lang="en">Default setting for date start.</Description>
         <Description Lang="de">Startdatum für die Eingaben.</Description>
@@ -162,7 +163,7 @@
         <Setting>
             <String Regex="">2006-12-31</String>
         </Setting>
-    </ConfigItem>        
+    </ConfigItem>
     <ConfigItem Name="TimeAccounting::DefaultUserStatus" Required="1" Valid="1">
         <Description Lang="en">Default status of an new user.</Description>
         <Description Lang="de">Anfangsstatus eines neuen Benutzers.</Description>
@@ -174,7 +175,7 @@
                 <Item Key="1">valid</Item>
             </Option>
         </Setting>
-    </ConfigItem> 
+    </ConfigItem>
     <ConfigItem Name="TimeAccounting::MaxIntervalOfIncompleteDays" Required="1" Valid="1">
         <Description Lang="en">Working days after at the latest working units have to insert.</Description>
         <Description Lang="de">Legt fest, nach wievielen Werktagen spätestens die Arbeitsstunden eingetragen werden müssen.</Description>
@@ -183,19 +184,19 @@
         <Setting>
             <String Regex="">5</String>
         </Setting>
-    </ConfigItem>   
+    </ConfigItem>
     <ConfigItem Name="TimeAccounting::MaxAllowedInsertDays" Required="1" Valid="1">
         <Description Lang="en">For how many days ago you can insert working units.</Description>
-        <Description Lang="de">Legt fest, bis wann man in ältere Zeiteinträge bearbeiten kann (z.B. 10 Tage zurückliegend).</Description>
+        <Description Lang="de">Legt fest, bis wann man in ältere Zeiteinträge bearbeiten kann (z. B. 10 Tage zurückliegend).</Description>
         <Group>TimeAccounting</Group>
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
             <String Regex="">10</String>
         </Setting>
-    </ConfigItem> 
+    </ConfigItem>
     <ConfigItem Name="TimeAccounting::ReduceTime" Required="0" Valid="0">
         <Description Lang="en">To use, if some actions acount reduced working hours(Key => journey; Content => 50).</Description>
-        <Description Lang="de">Hier kann man eingeben, ob für eine bestimmte Tätigkeit, die zu verrechnenden Stunden gekürzt werden. Z.B wenn Reisezeiten nur zur Hälfte vergütet werden (Key => journey; Content => 50).</Description>
+        <Description Lang="de">Hier kann man eingeben, ob für eine bestimmte Tätigkeit, die zu verrechnenden Stunden gekürzt werden. Z. B wenn Reisezeiten nur zur Hälfte vergütet werden (Key => journey; Content => 50).</Description>
         <Group>TimeAccounting</Group>
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
@@ -203,7 +204,7 @@
                  <Item Key="journey">50</Item>
             </Hash>
         </Setting>
-    </ConfigItem>                         
+    </ConfigItem>
     <ConfigItem Name="TimeAccounting::InputHoursWithoutStartEndTime" Required="0" Valid="1">
         <Description Lang="en">Setting, if working hours can insert without start- and endtime.</Description>
         <Description Lang="de">Legt fest, ob man Arbeitsstunden auch ohne Anfangs- und Endzeit eingeben kann.</Description>
@@ -215,5 +216,14 @@
                 <Item Key="1">Yes</Item>
             </Option>
         </Setting>
-    </ConfigItem>    
+    </ConfigItem>
+    <ConfigItem Name="PreApplicationModule###AgentTimeAccounting" Required="0" Valid="0">
+        <Description Lang="en">This module you can force inserts in the TimeAccounting.</Description>
+        <Description Lang="de">Mit Hilfe dieses Moduls können Einträge in die Zeiterfassung erzwungen werden, in dem beim Einloggen das Portal geblockt wird und nur das Zeiterfassungsfenster erscheint.</Description>
+        <Group>TimeAccounting</Group>
+        <SubGroup>Frontend::Agent</SubGroup>
+        <Setting>
+            <String Regex="">Kernel::Modules::AgentTimeAccounting</String>
+        </Setting>
+    </ConfigItem>
 </otrs_config>
