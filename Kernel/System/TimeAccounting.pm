@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: TimeAccounting.pm,v 1.2 2006-04-07 15:48:53 tr Exp $
+# $Id: TimeAccounting.pm,v 1.3 2006-04-10 12:26:35 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -13,7 +13,7 @@ package Kernel::System::TimeAccounting;
 
 use strict;
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.2 $';
+$VERSION = '$Revision: 1.3 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week);
@@ -307,16 +307,16 @@ sub ProjectSettingsInsert {
     my $Self    = shift;
     my %Param   = @_;
 
-    # db quote
-    foreach (keys %Param) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}) || '';
-    }
-
     if (!$Param{Project}) {
         $Param{Project}       = $Self->{ConfigObject}->Get('TimeAccounting::DefaultProjectName') || '';
     }
     if (!$Param{ProjectStatus}) {
         $Param{ProjectStatus} = $Self->{ConfigObject}->Get('TimeAccounting::DefaultProjectStatus') || '0';
+    }
+
+    # db quote
+    foreach (keys %Param) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}) || '';
     }
 
     # build sql
@@ -551,10 +551,6 @@ sub UserSettingsInsert {
     my %Param   = @_;
     my $ID      = '';
     my $SQL     = '';
-    # db quote
-    foreach (keys %Param) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}) || '';
-    }
 
     $Param{WeeklyHours} = $Self->{ConfigObject}->Get('TimeAccounting::DefaultUserWeeklyHours') || '40';
     $Param{LeaveDays}   = $Self->{ConfigObject}->Get('TimeAccounting::DefaultUserLeaveDays')   || '25';
@@ -562,6 +558,11 @@ sub UserSettingsInsert {
     $Param{Overtime}    = $Self->{ConfigObject}->Get('TimeAccounting::DefaultUserOvertime')    || '0';
     $Param{DateEnd}     = $Self->{ConfigObject}->Get('TimeAccounting::DefaultUserDateEnd')     || '2005-12-31';
     $Param{DateStart}   = $Self->{ConfigObject}->Get('TimeAccounting::DefaultUserDateStart')   || '2005-01-01';
+
+    # db quote
+    foreach (keys %Param) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}) || '';
+    }
 
     # build sql
     $SQL = "INSERT INTO time_accounting_user_period (user_id, preference_period, date_start, date_end, weekly_hours, leave_days, overtime, status)" .
@@ -788,13 +789,17 @@ sub WorkingUnitsCompletnessCheck {
             }
         }
     }
-    my $MaxIntervallOfIncompleteDays = $Self->{ConfigObject}->Get('TimeAccounting::MaxIntervalOfIncompleteDays') || '5';
+    my $MaxIntervallOfIncompleteDays              = $Self->{ConfigObject}->Get('TimeAccounting::MaxIntervalOfIncompleteDays') || '5';
+    my $MaxIntervallOfIncompleteDaysBeforeWarning = $Self->{ConfigObject}->Get('TimeAccounting::MaxIntervalOfIncompleteDaysBeforeWarning') || '3';
 
     foreach my $Year (keys %{$Data{Incomplete}}) {
         foreach my $Month (keys %{$Data{Incomplete}{$Year}}) {
             foreach my $Day (keys %{$Data{Incomplete}{$Year}{$Month}}) {
                 if ($Data{Incomplete}{$Year}{$Month}{$Day} < $WorkingDays - $MaxIntervallOfIncompleteDays) {
                     $Data{EnforceInsert} = 1;
+                }
+                elsif ($Data{Incomplete}{$Year}{$Month}{$Day} < $WorkingDays - $MaxIntervallOfIncompleteDaysBeforeWarning) {
+                    $Data{Warning} = 1;
                 }
             }
         }
@@ -1042,9 +1047,9 @@ sub SQL {
             my $SQL = "INSERT INTO time_accounting_action (id , action, status)" .
                 " VALUES" .
                 " ('" . $Row->[0] . "', '" . $Row->[1] . "', '" . $Row->[2] . "')";
-#            if (!$Self->{DBObject}->Do (SQL => $SQL)) {
-#                return;
-#            }
+            if (!$Self->{DBObject}->Do (SQL => $SQL)) {
+                return;
+            }
         }
     }
 
@@ -1065,9 +1070,9 @@ sub SQL {
             my $SQL = "INSERT INTO time_accounting_project (id , project, status)" .
                 " VALUES" .
                 " ('" . $Row->[0] . "', '" . $Row->[1] . "', '" . $Row->[2] . "')";
-#            if (!$Self->{DBObject}->Do (SQL => $SQL)) {
-#                return;
-#            }
+            if (!$Self->{DBObject}->Do (SQL => $SQL)) {
+                return;
+            }
         }
     }
 
@@ -1107,9 +1112,9 @@ sub SQL {
                     " VALUES" .
                     " ('" . $Row->[0] . "', '" . $Row->[1] . "', '" . $Row->[2]. " 00:00:00', '" . $Row->[3] . " 00:00:00', '" . $Row->[4] . "', '" . $Row->[5] . "', '" . $Row->[6] . "', '" . $Row->[1] . "')";
 
-#                if (!$Self->{DBObject}->Do (SQL => $SQL)) {
-#                    return;
-#                }
+                if (!$Self->{DBObject}->Do (SQL => $SQL)) {
+                    return;
+                }
             }
         }
 
@@ -1160,9 +1165,9 @@ sub SQL {
             " VALUES" .
             " ('" . $Row . "')";
 
-#        if (!$Self->{DBObject}->Do (SQL => $SQL)) {
-#            return;
-#        }
+        if (!$Self->{DBObject}->Do (SQL => $SQL)) {
+            return;
+        }
         $Self->{GroupObject}->GroupMemberAdd(
             GID => $AccountingGroupID,
             UID => $Row,
@@ -1228,9 +1233,9 @@ sub SQL {
                 "', '" . $Row->[3] . "', '" . $Row->[4] . "', '" . $Row->[8] . " " . $Row->[5] .
                 "', '" . $Row->[8] . " " . $Row->[6] . "', '" . $Row->[7] . "', '" . $Row->[9] . "')";
 
-#            if (!$Self->{DBObject}->Do (SQL => $SQL)) {
-#                return;
-#            }
+            if (!$Self->{DBObject}->Do (SQL => $SQL)) {
+                return;
+            }
         }
     }
 
@@ -1249,6 +1254,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2006-04-07 15:48:53 $
+$Revision: 1.3 $ $Date: 2006-04-10 12:26:35 $
 
 =cut

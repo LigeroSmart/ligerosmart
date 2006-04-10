@@ -2,7 +2,7 @@
 # AgentTimeAccountingOverview.dtl - provides HTML form for time accounting overview
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: AgentTimeAccountingOverview.dtl,v 1.2 2006-04-07 15:48:53 tr Exp $
+# $Id: AgentTimeAccountingOverview.dtl,v 1.3 2006-04-10 12:26:35 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -52,6 +52,7 @@
       </table>
       <br>
       <table border="0" width="33%" cellspacing="0" cellpadding="2" cols="1" align="center">
+<!-- dtl:block:Overtime -->
         <tr class="contenthead">
           <td colspan="2">$Text{"Overtime"}:</td>
         </tr>
@@ -70,6 +71,7 @@
         <tr>
           <td colspan="2">&nbsp;</td>
         </tr>
+<!-- dtl:block:Overtime -->
         <tr class="contenthead">
           <td colspan="2">$Text{"Leave Days"}:</td>
         </tr>
@@ -106,7 +108,11 @@
       <br>
       <table class="contentbody" border="0" width="50%" cellpadding="3" cellspacing="0" align="center">
         <tr>
-          <td class="contenthead">$Text{"Project Reporting"}:</td>
+          <td class="contenthead">$Text{"Project Reporting"}:
+            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Overview&Year=$QData{"YearBack"}&Month=$QData{"MonthBack"}&ProjectStatusShow=$QData{"ProjectStatusShow"}">
+            ($Text{"Show"} $Text{"$QData{"ProjectStatusShow"}"} $Text{"Projects"})
+            </a>
+          </td>
         </tr>
         <tr>
           <td>
@@ -116,7 +122,7 @@
                 <td>$Text{"per Month"}</td>
                 <td>$Text{"Total"}</td>
               </tr>
-              <tr>
+              <tr class="contentkey">
                 <td>$Text{"Project"}</td>
                 <td>$Text{"Action"}</td>
                 <td>$Text{"Hours"}</td>
@@ -125,11 +131,15 @@
 <!-- dtl:block:Action -->
               <tr>
 <!-- dtl:block:Project -->
-                <td class="contentvalue" rowspan="$Data{"RowSpan"}">$Data{"Project"}</td>
+                <td rowspan="$Data{"RowSpan"}" valign="top">
+                  <span class="contentkey$QData{"Status"}">$Data{"Project"}</span>
+                  <br>
+                  <span class="contentvalue$QData{"Status"}">$Data{"ProjectDescription"}</span>
+                </td>
 <!-- dtl:block:Project -->
-                <td class="$QData{"Class"}" >$QData{"Action"}</td>
-                <td class="$QData{"Class"}" align="right">$QData{"Hours"}</td>
-                <td class="$QData{"Class"}" align="right">$QData{"HoursTotal"}</td>
+                <td class="$QData{"Class"}$QData{"Status"}" >$QData{"Action"}</td>
+                <td class="$QData{"Class"}$QData{"Status"}" align="right">$QData{"Hours"}</td>
+                <td class="$QData{"Class"}$QData{"Status"}" align="right">$QData{"HoursTotal"}</td>
               </tr>
 <!-- dtl:block:Action -->
               <tr class="contentkey">

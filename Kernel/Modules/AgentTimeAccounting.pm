@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.2 2006-04-07 15:48:53 tr Exp $
+# $Id: AgentTimeAccounting.pm,v 1.3 2006-04-10 12:26:35 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.2 $';
+$VERSION = '$Revision: 1.3 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 # --
@@ -60,7 +60,6 @@ sub PreRun {
     if ($User{$Self->{UserID}}){
         my %IncompleteWorkingDays = $Self->{TimeAccountingObject}->WorkingUnitsCompletnessCheck();
         # redirect if incomplete working day are out of range
-
         if ($IncompleteWorkingDays{EnforceInsert}
             && $Self->{Action} ne 'AgentTimeAccounting'
             && $Self->{Action} ne 'AgentCalendarSmall')
@@ -122,13 +121,6 @@ sub Run {
             return $Self->{LayoutObject}->NoPermission(WithHeader => 'yes');
         }
 
-        # store last screen
-        $Self->{SessionObject}->UpdateSessionID(
-            SessionID => $Self->{SessionID},
-            Key       => 'LastScreen',
-            Value     => $Self->{RequestedURL},
-        );
-
         # Check Date
         if (!$Param{Year} || !$Param{Month} || !$Param{Day}) {
             $Param{Year}  = $Year;
@@ -165,7 +157,6 @@ sub Run {
             return $Self->{LayoutObject}->ErrorScreen(Message => "No UserPeriod available, please contact the time accounting admin to insert your UserPeriod!");
         }
 
-
         my %IncompleteWorkingDays = $Self->{TimeAccountingObject}->WorkingUnitsCompletnessCheck();
         my $MaxAllowedInsertDays  = $Self->{ConfigObject}->Get('TimeAccounting::MaxAllowedInsertDays') || '10';
         ($Param{YearAllowed}, $Param{MonthAllowed}, $Param{DayAllowed}) = Add_Delta_YMD($Year, $Month, $Day, 0, 0, -$MaxAllowedInsertDays);
@@ -174,6 +165,13 @@ sub Run {
                 return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=View&Year=$Param{Year}&Month=$Param{Month}&Day=$Param{Day}");
             }
         }
+
+        # store last screen
+        $Self->{SessionObject}->UpdateSessionID(
+            SessionID => $Self->{SessionID},
+            Key       => 'LastScreen',
+            Value     => "Action=$Self->{Action}&Subaction=Edit&Year=$Param{Year}&Month=$Param{Month}&Day=$Param{Day}",
+        );
 
         $Param{Month_to_Text}   = $MonthArray[$Param{Month}];
 
@@ -558,8 +556,6 @@ sub Run {
 
         $Param{Weekday_to_Text} = $WeekdayArray[$Param{Weekday} - 1];
 
-
-
         # build output
         $Output = $Self->{LayoutObject}->Header(Title => "Edit");
         if (!$IncompleteWorkingDays{EnforceInsert}) {
@@ -568,15 +564,18 @@ sub Run {
                 Name => 'Overview',
                 Data => {%Param, %Frontend},
             );
+            # show create project link, if allowed
+            my %UserBasics = $Self->{TimeAccountingObject}->UserGet();
+            if ($UserBasics{$Self->{UserID}}{CreateProject}) {
+                $Self->{LayoutObject}->Block(
+                    Name => 'CreateProject',
+                );
+            }
         }
         if (!$Param{RequiredDescription} && !$Param{UnitRequiredDescriptionTrue} && $Param{SuccessfulInsert}) {
             $Output .= $Self->{LayoutObject}->Notify(
                 Info => 'Successful insert!',
             );
-#             $Self->{LayoutObject}->Block(
-#                Name => 'Readonly',
-#                Data => {Description => 'Successful insert!'},
-#            );
         }
         $Output .= $Self->{LayoutObject}->Output(
             Data         => {%Param, %Frontend},
@@ -776,14 +775,8 @@ sub Run {
             return $Self->{LayoutObject}->NoPermission(WithHeader => 'yes');
         }
 
-        # store last screen
-        $Self->{SessionObject}->UpdateSessionID(
-            SessionID => $Self->{SessionID},
-            Key       => 'LastScreen',
-            Value     => $Self->{RequestedURL},
-        );
 
-        foreach (qw(Status Day Month Year UserID)) {
+        foreach (qw(Status Day Month Year UserID ProjectStatusShow)) {
             $Param{$_} = $Self->{ParamObject}->GetParam(Param => $_);
         }
         $Param{Subaction} = 'Edit';
@@ -812,6 +805,14 @@ sub Run {
         else {
             $Param{Month} = sprintf("%02d", $Param{Month});
         }
+
+        # store last screen
+        $Self->{SessionObject}->UpdateSessionID(
+            SessionID => $Self->{SessionID},
+            Key       => 'LastScreen',
+            Value     => "Action=$Self->{Action}&Subaction=Overview&Year=$Param{Year}&Month=$Param{Month}",
+        );
+
 
         $Param{Month_to_Text}   = $MonthArray[$Param{Month}];
 
@@ -904,6 +905,15 @@ sub Run {
             $Param{$_} = sprintf ("%.2f", $UserReport{$Param{UserID}}{$_});
         }
 
+        # Show Overtime if allowed
+        my %UserBasics = $Self->{TimeAccountingObject}->UserGet();
+        if ($UserBasics{$Param{UserID}}{ShowOvertime}) {
+            $Self->{LayoutObject}->Block(
+                Name => 'Overtime',
+                Data => {%Param, %Frontend},
+            );
+        }
+
         # Overview per project and action
         my %ProjectData = $Self->{TimeAccountingObject}->ProjectActionReporting(
             Year   => $Param{Year},
@@ -911,49 +921,80 @@ sub Run {
             UserID => $Param{UserID},
         );
 
+        # show the report sort by projects
+        if (!$Param{ProjectStatusShow} || $Param{ProjectStatusShow} eq 'valid') {
+            $Param{ProjectStatusShow} = 'all';
+        }
+        elsif ($Param{ProjectStatusShow} eq 'all') {
+            $Param{ProjectStatusShow} = 'valid';
+        }
+
+
         my %Project     = $Self->{TimeAccountingObject}->ProjectSettingsGet();
         my %Action      = $Self->{TimeAccountingObject}->ActionSettingsGet();
         foreach my $ProjectID (sort {$Project{Project}{$a} cmp $Project{Project}{$b}} keys %{$Project{Project}}) {
-#        foreach my $ProjectID (keys %{$ProjectData{Total}}) {
             if ($ProjectData{Total}{$ProjectID}) {
                 if ($ProjectID ne '-1') {
                     $Param{Project}= '';
+                    $Param{Class}            = 'contentvalue';
+                    if ($Project{ProjectStatus}{$ProjectID}) {
+                        $Param{Status} = '';
+                    }
+                    else {
+                        $Param{Status} = 'passiv';
+                    }
                     my $Total      = 0;
                     my $TotalTotal = 0;
-                    foreach my $ActionID (keys %{$ProjectData{Total}{$ProjectID}}) {
-                        $Param{RowSpan}++;
-                    }
-                    foreach my $ActionID (keys %{$ProjectData{Total}{$ProjectID}}) {
-                        $Param{Action}     = $Action{$ActionID}{Action};
-                        $Param{Hours}      = sprintf ("%.2f", $ProjectData{PerMonth}{$ProjectID}{$ActionID}{Hours});
-                        $Param{HoursTotal} = sprintf ("%.2f", $ProjectData{Total}{$ProjectID}{$ActionID}{Hours});
-                        $Total += $Param{Hours};
-                        $TotalTotal += $Param{HoursTotal};
+
+                    if (($Param{ProjectStatusShow} eq 'all' && !$Param{Status})
+                        || $Param{ProjectStatusShow} eq 'valid'
+                    ) {
+
+                        # action sort wrapper - be careful its not simular with project!!
+                        my %SortedActions = ();
+                        foreach my $ActionID (keys %{$ProjectData{Total}{$ProjectID}}) {
+                            $SortedActions{$ActionID} = $Action{$ActionID}{Action};
+                            $Param{RowSpan}++;
+                        }
+                        foreach my $ActionID (sort {$SortedActions{$a} cmp $SortedActions{$b}} keys %SortedActions) {
+                        #foreach my $ActionID (keys %{$ProjectData{Total}{$ProjectID}}) {
+
+                            $Param{Action}     = $Action{$ActionID}{Action};
+                            $Param{Hours}      = sprintf ("%.2f", $ProjectData{PerMonth}{$ProjectID}{$ActionID}{Hours} || 0);
+                            $Param{HoursTotal} = sprintf ("%.2f", $ProjectData{Total}{$ProjectID}{$ActionID}{Hours}    || 0);
+                            $Total      += $Param{Hours};
+                            $TotalTotal += $Param{HoursTotal};
+                            $Self->{LayoutObject}->Block(
+                                Name => 'Action',
+                                Data => {%Param, %Frontend},
+                            );
+                            if (!$Param{Project}) {
+                                $Param{Project}            = $Project{Project}{$ProjectID};
+                                $Param{ProjectDescription} = $Self->{LayoutObject}->Ascii2Html(
+                                    Text           => $Project{ProjectDescription}{$ProjectID},
+                                    HTMLResultMode => 1,
+                                    NewLine        => 50,
+                                );
+                                $Param{RowSpan}++;
+                                $Self->{LayoutObject}->Block(
+                                    Name => 'Project',
+                                    Data => {%Param, %Frontend},
+                                );
+                                $Param{RowSpan} = 0;
+                            }
+                        }
+                        $Param{Class}            = 'contentkey';
+                        $Param{Action}           = 'Total';
+                        $Param{Hours}            = sprintf ("%.2f", $Total);
+                        $Param{HoursTotal}       = sprintf ("%.2f", $TotalTotal);
+                        $Param{TotalHours}      += $Total;
+                        $Param{TotalHoursTotal} += $TotalTotal;
                         $Self->{LayoutObject}->Block(
                             Name => 'Action',
                             Data => {%Param, %Frontend},
                         );
-                        if (!$Param{Project}) {
-                            $Param{Project}    = $Project{Project}{$ProjectID};
-                            $Param{RowSpan}++;
-                            $Self->{LayoutObject}->Block(
-                                Name => 'Project',
-                                Data => {%Param, %Frontend},
-                            );
-                            $Param{RowSpan} = 0;
-                        }
+                        $Param{Class} = '';
                     }
-                    $Param{Class}            = 'contentkey';
-                    $Param{Action}           = 'Total';
-                    $Param{Hours}            = sprintf ("%.2f", $Total);
-                    $Param{HoursTotal}       = sprintf ("%.2f", $TotalTotal);
-                    $Param{TotalHours}      += $Total;
-                    $Param{TotalHoursTotal} += $TotalTotal;
-                    $Self->{LayoutObject}->Block(
-                        Name => 'Action',
-                        Data => {%Param, %Frontend},
-                    );
-                    $Param{Class} = '';
                 }
             }
         }
@@ -1000,7 +1041,7 @@ sub Run {
         $Self->{SessionObject}->UpdateSessionID(
             SessionID => $Self->{SessionID},
             Key       => 'LastScreen',
-            Value     => $Self->{RequestedURL},
+            Value     => "Action=$Self->{Action}&Subaction=Setting",
         );
 
         if ($Param{ActionAction} || $Param{NewAction}) {
@@ -1056,7 +1097,12 @@ sub Run {
                     foreach (qw(ShowOvertime CreateProject)) {
                         $Data{$UserID}{$_} = $Self->{ParamObject}->GetParam(Param => $_ . '[' . $UserID . ']');
                     }
-                    $Data{$UserID}{Description} = $UserBasics{$UserID}{Description} . $Self->{ParamObject}->GetParam(Param => 'Description[' . $UserID . ']');
+
+                    my $Break = '';
+                    if ($UserBasics{$UserID}{Description} && $Self->{ParamObject}->GetParam(Param => 'Description[' . $UserID . ']')) {
+                        $Break = "\n";
+                    }
+                    $Data{$UserID}{Description} = $UserBasics{$UserID}{Description} . $Break . $Self->{ParamObject}->GetParam(Param => 'Description[' . $UserID . ']');
 
                     $Data{$UserID}{UserID} = $UserID;
                     foreach my $Period (keys %{$User{$UserID}}) {
@@ -1132,7 +1178,6 @@ sub Run {
         %User = $Self->{TimeAccountingObject}->UserSettingsGet();
         %UserBasics = $Self->{TimeAccountingObject}->UserGet();
         my %ShownUsers = $Self->{UserObject}->UserList(Type => 'Long', Valid => 1);
-# #$Self->{LogObject}->Dumper(%UserBasics);
         foreach my $UserID (sort {$ShownUsers{$a} cmp $ShownUsers{$b}} keys %ShownUsers) {
             if ($User{$UserID}) {
                 $Param{User}        = $ShownUsers{$UserID};
@@ -1145,6 +1190,13 @@ sub Run {
                         HTMLResultMode => 1,
                         NewLine        => 50,
                     ) . "<br>";
+                }
+
+                if ($UserBasics{$UserID}{ShowOvertime}) {
+                    $UserBasics{$UserID}{ShowOvertime} = "checked";
+                }
+                if ($UserBasics{$UserID}{CreateProject}) {
+                    $UserBasics{$UserID}{CreateProject} = "checked";
                 }
 
                 $Self->{LayoutObject}->Block(
@@ -1218,7 +1270,7 @@ sub Run {
         }
 
         # permission check
-        if (!$Self->{AccessRw}) {
+        if (!$Self->{AccessRo}) {
             return $Self->{LayoutObject}->NoPermission(WithHeader => 'yes');
         }
 
@@ -1357,12 +1409,18 @@ sub Run {
             UserID => $Param{UserID},
         );
 
-#        foreach my $UserID (keys %UserReport) {
+        my %UserBasics = $Self->{TimeAccountingObject}->UserGet();
         foreach my $UserID (sort {$ShownUsers{$a} cmp $ShownUsers{$b}} keys %ShownUsers) {
             if ($UserReport{$UserID}) {
                 foreach (qw(LeaveDay Overtime WorkingHours Diseased LeaveDayRemaining OvertimeTotal)) {
                     $Param{$_} = sprintf ("%.2f", $UserReport{$UserID}{$_});
                     $Param{'Total' . $_} += $Param{$_};
+                }
+
+                # Show Overtime if allowed
+                if (!$UserBasics{$UserID}{ShowOvertime}) {
+                    $Param{Overtime}      = '';
+                    $Param{OvertimeTotal} = '';
                 }
 
                 $Param{User}   = $ShownUsers{$UserID};
@@ -1396,7 +1454,6 @@ sub Run {
         my %Project     = $Self->{TimeAccountingObject}->ProjectSettingsGet();
         my %Action      = $Self->{TimeAccountingObject}->ActionSettingsGet();
         foreach my $ProjectID (sort {$Project{Project}{$a} cmp $Project{Project}{$b}} keys %{$Project{Project}}) {
-#        foreach my $ProjectID (keys %{$ProjectData{Total}}) {
             if ($ProjectData{Total}{$ProjectID}) {
                 if ($ProjectID ne '-1') {
                     $Param{Project}= '';
@@ -1413,14 +1470,18 @@ sub Run {
                     if (($Param{ProjectStatusShow} eq 'all' && !$Param{Status})
                         || $Param{ProjectStatusShow} eq 'valid'
                     ) {
+                        # action sort wrapper - be careful its not simular with project!!
+                        my %SortedActions = ();
                         foreach my $ActionID (keys %{$ProjectData{Total}{$ProjectID}}) {
+                            $SortedActions{$ActionID} = $Action{$ActionID}{Action};
                             $Param{RowSpan}++;
                         }
-                        foreach my $ActionID (keys %{$ProjectData{Total}{$ProjectID}}) {
+                        foreach my $ActionID (sort {$SortedActions{$a} cmp $SortedActions{$b}} keys %SortedActions) {
+                        #foreach my $ActionID (keys %{$ProjectData{Total}{$ProjectID}}) {
                             $Param{Action}     = $Action{$ActionID}{Action};
-                            $Param{Hours}      = sprintf ("%.2f", $ProjectData{PerMonth}{$ProjectID}{$ActionID}{Hours});
-                            $Param{HoursTotal} = sprintf ("%.2f", $ProjectData{Total}{$ProjectID}{$ActionID}{Hours});
-                            $Total += $Param{Hours};
+                            $Param{Hours}      = sprintf ("%.2f", $ProjectData{PerMonth}{$ProjectID}{$ActionID}{Hours} || 0);
+                            $Param{HoursTotal} = sprintf ("%.2f", $ProjectData{Total}   {$ProjectID}{$ActionID}{Hours}    || 0);
+                            $Total      += $Param{Hours};
                             $TotalTotal += $Param{HoursTotal};
 
                             $Self->{LayoutObject}->Block(

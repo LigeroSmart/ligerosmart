@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-  <CVS>$Id: TimeAccounting.sopm,v 1.2 2006-04-07 15:48:42 tr Exp $</CVS>
+  <CVS>$Id: TimeAccounting.sopm,v 1.3 2006-04-10 12:26:35 tr Exp $</CVS>
   <Name>TimeAccounting</Name>
-  <Version>0.0.2</Version>
+  <Version>0.9.3</Version>
   <Framework>2.0.x</Framework>
   <Vendor>OTRS GmbH</Vendor>
   <URL>http://otrs.org/</URL>
@@ -23,6 +23,7 @@
     <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingSetting.dtl"></File>
     <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingOverview.dtl"></File>
     <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingReporting.dtl"></File>
+    <File Permission="644" Location="Kernel/Output/HTML/NotificationTimeAccounting.pm"></File>
     <File Permission="644" Location="var/httpd/htdocs/images/Standard/time_accounting.png"></File>
   </Filelist>
   <CodeInstall>

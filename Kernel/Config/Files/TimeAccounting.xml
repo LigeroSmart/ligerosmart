@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: TimeAccounting.xml,v 1.2 2006-04-07 15:48:42 tr Exp $</CVS>
+    <CVS>$Id: TimeAccounting.xml,v 1.3 2006-04-10 12:26:35 tr Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AgentTimeAccounting" Required="0" Valid="1">
         <Description Lang="en">FrontendModulRegistration for TimeAccountingModul to define the registration settings in the programme and set rights and positions of icons in the navigation bar.</Description>
         <Description Lang="de">FrontendModulRegistration für das ZeiterfassungsModul.  Hier
@@ -182,8 +182,28 @@
         <Group>TimeAccounting</Group>
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
-            <String Regex="">5</String>
+            <String Regex="">4</String>
         </Setting>
+    </ConfigItem>
+    <ConfigItem Name="TimeAccounting::MaxIntervalOfIncompleteDaysBeforeWarning" Required="1" Valid="1">
+      <Description Lang="en">Show warning, if to much incomplete working days.</Description>
+      <Description Lang="de">Zeigt eine Warnung, wenn zuviele Arbeitstage nicht eingetragen wurden.</Description>
+      <Group>TimeAccounting</Group>
+      <SubGroup>Frontend::Agent</SubGroup>
+      <Setting>
+        <String Regex="">2</String>
+      </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::NotifyModule###888-TimeAccounting" Required="1" Valid="1">
+      <Description Lang="en">This notification module gives a warning if to much incomplete working days available.</Description>
+      <Description Lang="de">Modul, das den Agent im Notification-Bereich des Agent-Interfaces darüber informiert, wenn schon zu lange keine Stunden mehr eingetragen wurden.</Description>
+      <Group>TimeAccounting</Group>
+      <SubGroup>Frontend::Agent::ModuleNotify</SubGroup>
+      <Setting>
+        <Hash>
+          <Item Key="Module">Kernel::Output::HTML::NotificationTimeAccounting</Item>
+        </Hash>
+      </Setting>
     </ConfigItem>
     <ConfigItem Name="TimeAccounting::MaxAllowedInsertDays" Required="1" Valid="1">
         <Description Lang="en">For how many days ago you can insert working units.</Description>
@@ -194,14 +214,14 @@
             <String Regex="">10</String>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="TimeAccounting::ReduceTime" Required="0" Valid="0">
-        <Description Lang="en">To use, if some actions acount reduced working hours(Key => journey; Content => 50).</Description>
+    <ConfigItem Name="TimeAccounting::ReduceTime" Required="0" Valid="1">
+      <Description Lang="en">To use, if some actions acount reduced working hours(Key => traveling; Content => 50).</Description>
         <Description Lang="de">Hier kann man eingeben, ob für eine bestimmte Tätigkeit, die zu verrechnenden Stunden gekürzt werden. Z. B wenn Reisezeiten nur zur Hälfte vergütet werden (Key => journey; Content => 50).</Description>
         <Group>TimeAccounting</Group>
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
             <Hash>
-                 <Item Key="journey">50</Item>
+              <Item Key="traveling">50</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -217,7 +237,7 @@
             </Option>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="PreApplicationModule###AgentTimeAccounting" Required="0" Valid="0">
+    <ConfigItem Name="PreApplicationModule###AgentTimeAccounting" Required="0" Valid="1">
         <Description Lang="en">This module you can force inserts in the TimeAccounting.</Description>
         <Description Lang="de">Mit Hilfe dieses Moduls können Einträge in die Zeiterfassung erzwungen werden, in dem beim Einloggen das Portal geblockt wird und nur das Zeiterfassungsfenster erscheint.</Description>
         <Group>TimeAccounting</Group>
