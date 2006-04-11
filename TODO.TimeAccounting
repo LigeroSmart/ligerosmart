@@ -2,7 +2,7 @@
 # TODO - todo list of TimeAccounting
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: TODO.TimeAccounting,v 1.7 2006-04-07 15:48:42 tr Exp $
+# $Id: TODO.TimeAccounting,v 1.8 2006-04-11 12:33:48 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -10,23 +10,12 @@
 # --
 
 TimeAccounting 1.0
-   - timeaccounting bug in SysConfigSearch of the otrs portal
-   -> fixed in new version? i can locate him
-
+-
 
 2.1 (OTRS)
-- change SysConfigSetting for PreApplication from String to Arrayversion
-  -> i think its done
+
 - allow several date formats in SysConfig Time::Core
-  -> should be fixed
-- Edit-mode: The date of the current edit mask should be shown bold in the
-  line of "Incomplete Working Days"
-  -> Done
-- show edit mask for project settings for user with create rights
-- timeaccounting setting -> new user -> add a new user automaticlly to
-  the timeaccounting group.
-- make a usersetting that for stefan, martin, christoper and andré no
-  Overtime are visible
+
 3.0
 -
 
