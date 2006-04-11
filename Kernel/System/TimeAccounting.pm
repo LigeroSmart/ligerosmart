@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: TimeAccounting.pm,v 1.3 2006-04-10 12:26:35 tr Exp $
+# $Id: TimeAccounting.pm,v 1.4 2006-04-11 05:41:00 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -13,7 +13,7 @@ package Kernel::System::TimeAccounting;
 
 use strict;
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.3 $';
+$VERSION = '$Revision: 1.4 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week);
@@ -1023,224 +1023,224 @@ sub ProjectActionReporting {
 
 }
 
-sub SQL {
-    my $Self     = shift;
-    my %Param    = @_;
-    my @Insert   = ();
-
-    # Action überspielen
-    $Self->{DBObject}->Prepare (
-        SQL => "SELECT id, action, status FROM time_recording_action",
-    );
-
-    # fetch Data
-    while (my @Row = $Self->{DBObject}->FetchrowArray()) {
-        push (@Insert, \@Row);
-    }
-
-    foreach my $Row (@Insert) {
-        if ($Row->[0] != 4
-            && $Row->[0] != 19
-            && $Row->[0] != 21
-            && $Row->[0] != 22
-        ) {
-            my $SQL = "INSERT INTO time_accounting_action (id , action, status)" .
-                " VALUES" .
-                " ('" . $Row->[0] . "', '" . $Row->[1] . "', '" . $Row->[2] . "')";
-            if (!$Self->{DBObject}->Do (SQL => $SQL)) {
-                return;
-            }
-        }
-    }
-
-    # Projekte überspielen
-    @Insert = ();
-    $Self->{DBObject}->Prepare (
-        SQL => "SELECT id, project, status FROM time_recording_project",
-    );
-
-    while (my @Row = $Self->{DBObject}->FetchrowArray()) {
-        push (@Insert, \@Row);
-    }
-
-    foreach my $Row (@Insert) {
-        if ($Row->[0] != 11
-            && $Row->[0] != 24
-        ) {
-            my $SQL = "INSERT INTO time_accounting_project (id , project, status)" .
-                " VALUES" .
-                " ('" . $Row->[0] . "', '" . $Row->[1] . "', '" . $Row->[2] . "')";
-            if (!$Self->{DBObject}->Do (SQL => $SQL)) {
-                return;
-            }
-        }
-    }
-
-    # User überspielen
-    @Insert     = ();
-    my %InsertUser = ();
-    $Self->{DBObject}->Prepare (
-        SQL => "SELECT user_id, preference_period, date_start, date_end, weekly_hours, leave_days, overtime, status FROM time_recording_user",
-    );
-
-    while (my @Row = $Self->{DBObject}->FetchrowArray()) {
-        push (@Insert, \@Row);
-    }
-
-    use Kernel::System::Group;
-    $Self->{GroupObject} = Kernel::System::Group->new(%{$Self});
-    my %Groups = $Self->{GroupObject}->GroupList(Valid => 1);
-    my $AccountingGroupID     = 0;
-    my $RecordingUserGroupID  = 0;
-    my $RecordingAdminGroupID = 0;
-    foreach (keys %Groups) {
-        if ($Groups{$_} eq 'time_accounting') {
-            $AccountingGroupID = $_;
-        }
-        if ($Groups{$_} eq 'time_recording_user') {
-            $RecordingUserGroupID = $_;
-        }
-        if ($Groups{$_} eq 'time_recording_admin') {
-            $RecordingAdminGroupID = $_;
-        }
-    }
-    foreach my $Row (@Insert) {
-        if ($Row->[0] != 19) {
-            $InsertUser{$Row->[0]} = 1;
-            if (!($Row->[0] == 8 && $Row->[1] == 2)) {
-                my $SQL = "INSERT INTO time_accounting_user_period (user_id, preference_period, date_start, date_end, weekly_hours, leave_days, overtime, status)" .
-                    " VALUES" .
-                    " ('" . $Row->[0] . "', '" . $Row->[1] . "', '" . $Row->[2]. " 00:00:00', '" . $Row->[3] . " 00:00:00', '" . $Row->[4] . "', '" . $Row->[5] . "', '" . $Row->[6] . "', '" . $Row->[1] . "')";
-
-                if (!$Self->{DBObject}->Do (SQL => $SQL)) {
-                    return;
-                }
-            }
-        }
-
-        $Self->{GroupObject}->GroupMemberAdd(
-            GID => $RecordingUserGroupID,
-            UID => $Row->[0],
-            Permission => {
-                ro        => 0,
-                move_into => 0,
-                create    => 0,
-                owner     => 0,
-                priority  => 0,
-                rw        => 0,
-            },
-            UserID => $Self->{UserID},
-        );
-        $Self->{GroupObject}->GroupMemberAdd(
-            GID => $RecordingAdminGroupID,
-            UID => $Row->[0],
-            Permission => {
-                ro        => 0,
-                move_into => 0,
-                create    => 0,
-                owner     => 0,
-                priority  => 0,
-                rw        => 0,
-            },
-            UserID => $Self->{UserID},
-        );
-    }
-    $Self->{GroupObject}->GroupUpdate(
-        ID      => $RecordingUserGroupID,
-        Name    => 'time_recording_user',
-        ValidID => 2,
-        UserID  => $Self->{UserID},
-    );
-    $Self->{GroupObject}->GroupUpdate(
-        ID      => $RecordingAdminGroupID,
-        Name    => 'time_recording_admin',
-        ValidID => 2,
-        UserID  => $Self->{UserID},
-    );
-
-
-    foreach my $Row (keys %InsertUser) {
-        my $SQL = "INSERT INTO time_accounting_user (" .
-            " user_id)" .
-            " VALUES" .
-            " ('" . $Row . "')";
-
-        if (!$Self->{DBObject}->Do (SQL => $SQL)) {
-            return;
-        }
-        $Self->{GroupObject}->GroupMemberAdd(
-            GID => $AccountingGroupID,
-            UID => $Row,
-            Permission => {
-                ro        => 1,
-                move_into => 0,
-                create    => 0,
-                owner     => 0,
-                priority  => 0,
-                rw        => 0,
-            },
-            UserID => $Self->{UserID},
-        );
-    }
-
-    foreach my $UID (qw(6 2 16 5 9)) {
-        $Self->{GroupObject}->GroupMemberAdd(
-            GID => $AccountingGroupID,
-            UID => $UID,
-            Permission => {
-                ro        => 1,
-                move_into => 1,
-                create    => 1,
-                owner     => 1,
-                priority  => 1,
-                rw        => 1,
-            },
-            UserID => $Self->{UserID},
-        );
-    }
-
-    # Working Units übertragen überspielen
-    @Insert = ();
-    $Self->{DBObject}->Prepare (
-        SQL => "SELECT id, user_id, project_id, action_id, remark, time_start, " .
-            "time_end, period, date, created FROM time_recording_table",
-    );
-
-    while (my @Row = $Self->{DBObject}->FetchrowArray()) {
-        push (@Insert, \@Row);
-    }
-
-    foreach my $Row (@Insert) {
-        if ($Row->[1] != 19) {
-            if ($Row->[3] == 4) {
-                $Row->[3] = 29;
-            }
-            if ($Row->[3] == 19) {
-                $Row->[3] = 18;
-            }
-            if ($Row->[3] == 21) {
-                $Row->[3] = 15;
-            }
-            if ($Row->[3] == 22) {
-                $Row->[3] = 15;
-                $Row->[2] = 1;
-            }
-            $Row->[4] = $Self->{DBObject}->Quote($Row->[4]) || '';
-            my $SQL = "INSERT INTO time_accounting_table (" .
-                " id, user_id, project_id, action_id, remark, time_start, time_end, period, created)" .
-                " VALUES" .
-                " ('" . $Row->[0] . "', '" . $Row->[1] . "', '" . $Row->[2] .
-                "', '" . $Row->[3] . "', '" . $Row->[4] . "', '" . $Row->[8] . " " . $Row->[5] .
-                "', '" . $Row->[8] . " " . $Row->[6] . "', '" . $Row->[7] . "', '" . $Row->[9] . "')";
-
-            if (!$Self->{DBObject}->Do (SQL => $SQL)) {
-                return;
-            }
-        }
-    }
-
-    return 1;
-}
+#sub SQL {
+#    my $Self     = shift;
+#    my %Param    = @_;
+#    my @Insert   = ();
+#
+#    # Action überspielen
+#    $Self->{DBObject}->Prepare (
+#        SQL => "SELECT id, action, status FROM time_recording_action",
+#    );
+#
+#    # fetch Data
+#    while (my @Row = $Self->{DBObject}->FetchrowArray()) {
+#        push (@Insert, \@Row);
+#    }#
+#
+#    foreach my $Row (@Insert) {
+#        if ($Row->[0] != 4
+#            && $Row->[0] != 19
+#            && $Row->[0] != 21
+#            && $Row->[0] != 22
+#        ) {
+#            my $SQL = "INSERT INTO time_accounting_action (id , action, status)" .
+#                " VALUES" .
+#                " ('" . $Row->[0] . "', '" . $Row->[1] . "', '" . $Row->[2] . "')";
+#            if (!$Self->{DBObject}->Do (SQL => $SQL)) {
+#                return;
+#            }
+#        }
+#    }
+#
+#    # Projekte überspielen
+#    @Insert = ();
+#    $Self->{DBObject}->Prepare (
+#        SQL => "SELECT id, project, status FROM time_recording_project",
+#    );
+#
+#    while (my @Row = $Self->{DBObject}->FetchrowArray()) {
+#        push (@Insert, \@Row);
+#    }
+#
+#    foreach my $Row (@Insert) {
+#        if ($Row->[0] != 11
+#            && $Row->[0] != 24
+#        ) {
+#            my $SQL = "INSERT INTO time_accounting_project (id , project, status)" .
+#                " VALUES" .
+#                " ('" . $Row->[0] . "', '" . $Row->[1] . "', '" . $Row->[2] . "')";
+#            if (!$Self->{DBObject}->Do (SQL => $SQL)) {
+#                return;
+#            }
+#        }
+#    }
+#
+#    # User überspielen
+#    @Insert     = ();
+#    my %InsertUser = ();
+#    $Self->{DBObject}->Prepare (
+#        SQL => "SELECT user_id, preference_period, date_start, date_end, weekly_hours, leave_days, overtime, status FROM time_recording_user",
+#    );
+#
+#    while (my @Row = $Self->{DBObject}->FetchrowArray()) {
+#        push (@Insert, \@Row);
+#    }
+#
+#    use Kernel::System::Group;
+#    $Self->{GroupObject} = Kernel::System::Group->new(%{$Self});
+#    my %Groups = $Self->{GroupObject}->GroupList(Valid => 1);
+#    my $AccountingGroupID     = 0;
+#    my $RecordingUserGroupID  = 0;
+#    my $RecordingAdminGroupID = 0;
+#    foreach (keys %Groups) {
+#        if ($Groups{$_} eq 'time_accounting') {
+#            $AccountingGroupID = $_;
+#        }
+#        if ($Groups{$_} eq 'time_recording_user') {
+#            $RecordingUserGroupID = $_;
+#        }
+#        if ($Groups{$_} eq 'time_recording_admin') {
+#            $RecordingAdminGroupID = $_;
+#        }
+#    }
+#    foreach my $Row (@Insert) {
+#        if ($Row->[0] != 19) {
+#            $InsertUser{$Row->[0]} = 1;
+#            if (!($Row->[0] == 8 && $Row->[1] == 2)) {
+#                my $SQL = "INSERT INTO time_accounting_user_period (user_id, preference_period, date_start, date_end, weekly_hours, leave_days, overtime, status)" .
+#                    " VALUES" .
+#                    " ('" . $Row->[0] . "', '" . $Row->[1] . "', '" . $Row->[2]. " 00:00:00', '" . $Row->[3] . " 00:00:00', '" . $Row->[4] . "', '" . $Row->[5] . "', '" . $Row->[6] . "', '" . $Row->[1] . "')";#
+#
+#                if (!$Self->{DBObject}->Do (SQL => $SQL)) {
+#                    return;
+#               }
+#            }
+#        }#
+#
+#        $Self->{GroupObject}->GroupMemberAdd(
+#            GID => $RecordingUserGroupID,
+#            UID => $Row->[0],
+#            Permission => {
+#                ro        => 0,
+#                move_into => 0,
+#                create    => 0,
+#                owner     => 0,
+#                priority  => 0,
+#                rw        => 0,
+#            },
+#            UserID => $Self->{UserID},
+#        );
+#        $Self->{GroupObject}->GroupMemberAdd(
+#            GID => $RecordingAdminGroupID,
+#            UID => $Row->[0],
+#            Permission => {
+#                ro        => 0,
+#                move_into => 0,
+#                create    => 0,
+#                owner     => 0,
+#                priority  => 0,
+#                rw        => 0,
+#            },
+#            UserID => $Self->{UserID},
+#        );
+#    }
+#    $Self->{GroupObject}->GroupUpdate(
+#        ID      => $RecordingUserGroupID,
+#        Name    => 'time_recording_user',
+#        ValidID => 2,
+#        UserID  => $Self->{UserID},
+#    );
+#    $Self->{GroupObject}->GroupUpdate(
+#        ID      => $RecordingAdminGroupID,
+#        Name    => 'time_recording_admin',
+#        ValidID => 2,
+#        UserID  => $Self->{UserID},
+#    );
+##
+#
+#    foreach my $Row (keys %InsertUser) {
+#        my $SQL = "INSERT INTO time_accounting_user (" .
+#            " user_id)" .
+#            " VALUES" .
+#            " ('" . $Row . "')";#
+#
+#        if (!$Self->{DBObject}->Do (SQL => $SQL)) {
+#           return;
+#        }
+#        $Self->{GroupObject}->GroupMemberAdd(
+#            GID => $AccountingGroupID,
+#            UID => $Row,
+#            Permission => {
+#                ro        => 1,
+#                move_into => 0,
+#                create    => 0,
+#                owner     => 0,
+#                priority  => 0,
+#                rw        => 0,
+#            },
+#            UserID => $Self->{UserID},
+#        );
+#    }#
+#
+#    foreach my $UID (qw(6 2 16 5 9)) {
+#        $Self->{GroupObject}->GroupMemberAdd(
+#            GID => $AccountingGroupID,
+#            UID => $UID,
+#            Permission => {
+#                ro        => 1,
+#                move_into => 1,
+#                create    => 1,
+#                owner     => 1,
+#                priority  => 1,
+#                rw        => 1,
+#            },
+#            UserID => $Self->{UserID},
+#        );
+#    }#
+#
+#    # Working Units übertragen überspielen
+#    @Insert = ();
+#    $Self->{DBObject}->Prepare (
+#        SQL => "SELECT id, user_id, project_id, action_id, remark, time_start, " .
+#            "time_end, period, date, created FROM time_recording_table",
+#    );
+#
+#    while (my @Row = $Self->{DBObject}->FetchrowArray()) {
+#        push (@Insert, \@Row);
+#    }#
+#
+#    foreach my $Row (@Insert) {
+#        if ($Row->[1] != 19) {
+#            if ($Row->[3] == 4) {
+#                $Row->[3] = 29;
+#            }
+#            if ($Row->[3] == 19) {
+#                $Row->[3] = 18;
+#            }
+#            if ($Row->[3] == 21) {
+#                $Row->[3] = 15;
+#            }
+#            if ($Row->[3] == 22) {
+#                $Row->[3] = 15;
+#                $Row->[2] = 1;
+#            }
+#            $Row->[4] = $Self->{DBObject}->Quote($Row->[4]) || '';
+#            my $SQL = "INSERT INTO time_accounting_table (" .
+#                " id, user_id, project_id, action_id, remark, time_start, time_end, period, created)" .
+#                " VALUES" .
+#                " ('" . $Row->[0] . "', '" . $Row->[1] . "', '" . $Row->[2] .
+#                "', '" . $Row->[3] . "', '" . $Row->[4] . "', '" . $Row->[8] . " " . $Row->[5] .
+#                "', '" . $Row->[8] . " " . $Row->[6] . "', '" . $Row->[7] . "', '" . $Row->[9] . "')";#
+#
+#            if (!$Self->{DBObject}->Do (SQL => $SQL)) {
+#                return;
+#            }
+#        }
+#    }#
+#
+#    return 1;
+#}
 
 1;
 
@@ -1254,6 +1254,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2006-04-10 12:26:35 $
+$Revision: 1.4 $ $Date: 2006-04-11 05:41:00 $
 
 =cut

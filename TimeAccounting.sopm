@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-  <CVS>$Id: TimeAccounting.sopm,v 1.3 2006-04-10 12:26:35 tr Exp $</CVS>
+  <CVS>$Id: TimeAccounting.sopm,v 1.4 2006-04-11 05:41:00 tr Exp $</CVS>
   <Name>TimeAccounting</Name>
-  <Version>0.9.3</Version>
+  <Version>0.9.4</Version>
   <Framework>2.0.x</Framework>
   <Vendor>OTRS GmbH</Vendor>
   <URL>http://otrs.org/</URL>
   <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+  <ChangeLog>2006-04-11 fixed typo</ChangeLog>
+  <ChangeLog>2006-04-10 include new functions</ChangeLog>
   <ChangeLog>2005-08-10 fixed initial bugs</ChangeLog>
   <ChangeLog>2005-08-08 first package</ChangeLog>
   <Description Lang="en">A TimeAccounting Modul.</Description>

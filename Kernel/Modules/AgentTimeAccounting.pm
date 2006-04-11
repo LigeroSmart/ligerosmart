@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.3 2006-04-10 12:26:35 tr Exp $
+# $Id: AgentTimeAccounting.pm,v 1.4 2006-04-11 05:41:00 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.3 $';
+$VERSION = '$Revision: 1.4 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 # --
@@ -1530,18 +1530,18 @@ sub Run {
         $Output .= $Self->{LayoutObject}->Footer();
         return $Output;
     }
-    # ---------------------------------------------------------- #
-    # sql -> Version update
-    # ---------------------------------------------------------- #
-    elsif ($Self->{Subaction} eq 'sql') {
-        if (!$Self->{TimeAccountingObject}->SQL()) {
-            return $Self->{LayoutObject}->ErrorScreen(Message => 'Can not update timeaccounting db');
-        }
-        return $Self->{LayoutObject}->ErrorScreen(Message => 'Timeaccounting db update was successful!');
-    }
-    # ---------------------------------------------------------- #
-    # show error screen
-    # ---------------------------------------------------------- #
+#    # ---------------------------------------------------------- #
+#    # sql -> Version update
+#    # ---------------------------------------------------------- #
+#    elsif ($Self->{Subaction} eq 'sql') {
+#        if (!$Self->{TimeAccountingObject}->SQL()) {
+#            return $Self->{LayoutObject}->ErrorScreen(Message => 'Can not update timeaccounting db');
+#        }
+#        return $Self->{LayoutObject}->ErrorScreen(Message => 'Timeaccounting db update was successful!');
+#    }
+#    # ---------------------------------------------------------- #
+#    # show error screen
+#    # ---------------------------------------------------------- #
     return $Self->{LayoutObject}->ErrorScreen(Message => "Invalid Subaction process!");
 }
 # --
