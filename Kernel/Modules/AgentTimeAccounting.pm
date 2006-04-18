@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.4 2006-04-11 05:41:00 tr Exp $
+# $Id: AgentTimeAccounting.pm,v 1.5 2006-04-18 11:01:35 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.4 $';
+$VERSION = '$Revision: 1.5 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 # --
@@ -537,21 +537,18 @@ sub Run {
             }
         }
 
+        my $VacationCheck = $Self->{TimeAccountingObject}->VacationCheck(
+            Year  => $Year,
+            Month => $Month,
+            Day   => $Day,
+        );
 
-        my $TimeVacationDays = $Self->{ConfigObject}->Get('TimeVacationDays');
-        my $TimeVacationDaysOneTime = $Self->{ConfigObject}->Get('TimeVacationDaysOneTime');
         $Param{Weekday}   = Day_of_Week($Param{Year}, $Param{Month}, $Param{Day});
-        if ($Param{Weekday} != 6 && $Param{Weekday} != 7
-            && !defined($TimeVacationDays->{$Param{Month}}->{$Param{Day}})
-            && !defined($TimeVacationDaysOneTime->{$Param{Year}}->{$Param{Month}}->{$Param{Day}})
-            && !defined($TimeVacationDays->{int($Param{Month})}->{int($Param{Day})})
-            && !defined($TimeVacationDaysOneTime->{$Param{Year}}->{int($Param{Month})}->{int($Param{Day})})
-        ) {
+        if ($Param{Weekday} != 6 && $Param{Weekday} != 7 && !$VacationCheck) {
             $Self->{LayoutObject}->Block(
                 Name => 'OtherTimes',
                 Data => {%Param, %Frontend},
             );
-
         }
 
         $Param{Weekday_to_Text} = $WeekdayArray[$Param{Weekday} - 1];
@@ -703,21 +700,11 @@ sub Run {
             );
         }
 
-        my $TimeVacationDays        = $Self->{ConfigObject}->Get('TimeVacationDays');
-        my $TimeVacationDaysOneTime = $Self->{ConfigObject}->Get('TimeVacationDaysOneTime');
-        my $Vacation = '';
-        if (!defined($TimeVacationDays->{$Param{Month}}->{$Param{Day}})) {
-            $Vacation = $TimeVacationDays->{$Param{Month}}->{$Param{Day}};
-        }
-        elsif (!defined($TimeVacationDaysOneTime->{$Param{Year}}->{$Param{Month}}->{$Param{Day}})) {
-            $Vacation = $TimeVacationDays->{$Param{Month}}->{$Param{Day}};
-        }
-        elsif (!defined($TimeVacationDays->{int($Param{Month})}->{int($Param{Day})})) {
-            $Vacation = $TimeVacationDays->{$Param{Month}}->{$Param{Day}};
-        }
-        elsif (!defined($TimeVacationDaysOneTime->{$Param{Year}}->{int($Param{Month})}->{int($Param{Day})})) {
-            $Vacation = $TimeVacationDays->{$Param{Month}}->{$Param{Day}};
-        }
+        my $Vacation = $Self->{TimeAccountingObject}->VacationCheck(
+            Year  => $Param{Year},
+            Month => $Param{Month},
+            Day   => $Param{Day},
+        );
 
         if ($Vacation) {
             $Self->{LayoutObject}->Block(
@@ -725,7 +712,6 @@ sub Run {
                 Data => {Vacation => $Vacation},
             );
         }
-
 
         # presentation
         my $Output = $Self->{LayoutObject}->Header(Title => "View");
@@ -820,32 +806,23 @@ sub Run {
         ($Param{YearNext}, $Param{MonthNext}, $Param{DayNext}) = Add_Delta_YMD($Param{Year}, $Param{Month}, 1, 0, 1, 0);
 
         # Overview per day
-        my $TimeVacationDays        = $Self->{ConfigObject}->Get('TimeVacationDays');
-        my $TimeVacationDaysOneTime = $Self->{ConfigObject}->Get('TimeVacationDaysOneTime');
         my $DaysOfMonth             = Days_in_Month($Param{Year},  $Param{Month});
 
         for (my $Day = 1; $Day <= $DaysOfMonth; $Day++) {
             $Param{Day}     = sprintf("%02d", $Day);
             $Param{Weekday} = Day_of_Week($Param{Year}, $Param{Month}, $Day)-1;
+            my $VacationCheck = $Self->{TimeAccountingObject}->VacationCheck(
+                Year  => $Param{Year},
+                Month => $Param{Month},
+                Day   => $Day,
+            );
 
             if ($Param{Year} eq $Year && $Param{Month} eq $Month && $CurrentDay eq $Day){
                 $Param{Style} = 'bgcolor="orange"';
             }
-            elsif (defined($TimeVacationDays->{int($Param{Month})}->{int($Param{Day})})) {
+            elsif ($VacationCheck) {
                 $Param{Style}   = 'bgcolor="#EBCCCC"';
-                $Param{Comment} = $TimeVacationDays->{int($Param{Month})}->{int($Param{Day})};
-            }
-            elsif (defined($TimeVacationDaysOneTime->{int($Param{Year})}->{int($Param{Month})}->{int($Param{Day})})) {
-                $Param{Style}   = 'bgcolor="#EBCCCC"';
-                $Param{Comment} = $TimeVacationDaysOneTime->{int($Param{Year})}->{int($Param{Month})}->{int($Param{Day})};
-            }
-            elsif (defined($TimeVacationDays->{$Param{Month}}->{$Param{Day}})) {
-                $Param{Style}   = 'bgcolor="#EBCCCC"';
-                $Param{Comment} = $TimeVacationDays->{$Param{Month}}->{$Param{Day}};
-            }
-            elsif (defined($TimeVacationDaysOneTime->{$Param{Year}}->{$Param{Month}}->{$Param{Day}})) {
-                $Param{Style}   = 'bgcolor="#EBCCCC"';
-                $Param{Comment} = $TimeVacationDaysOneTime->{$Param{Year}}->{$Param{Month}}->{$Param{Day}};
+                $Param{Comment} = $VacationCheck;
             }
             elsif ($Param{Weekday} == 6 || $Param{Weekday} == 5) {
                 $Param{Style} = 'bgcolor="#FFE0E0"';

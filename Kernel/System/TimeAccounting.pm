@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: TimeAccounting.pm,v 1.4 2006-04-11 05:41:00 tr Exp $
+# $Id: TimeAccounting.pm,v 1.5 2006-04-18 11:01:35 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -13,7 +13,7 @@ package Kernel::System::TimeAccounting;
 
 use strict;
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.4 $';
+$VERSION = '$Revision: 1.5 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week);
@@ -149,8 +149,6 @@ sub UserReporting {
         $Param{Day} = Days_in_Month($Param{Year},  $Param{Month});
     }
 
-    my $TimeVacationDays        = $Self->{ConfigObject}->Get('TimeVacationDays');
-    my $TimeVacationDaysOneTime = $Self->{ConfigObject}->Get('TimeVacationDaysOneTime');
     my %UserCurrentPeriod = $Self->UserCurrentPeriodGet(%Param);
     my $YearStart       = 0;
     my $MonthStart      = 0;
@@ -236,13 +234,14 @@ sub UserReporting {
                     }
 
                     $Data{$UserID}{WorkingHoursTotal} += $WorkingHours;
-
+                    my $VacationCheck = $Self->VacationCheck(
+                        Year  => $Year,
+                        Month => $Month,
+                        Day   => $Day,
+                    );
                     my $Weekday = Day_of_Week($Year, $Month, $Day);
                     if ($Weekday != 6 && $Weekday != 7
-                        && !defined($TimeVacationDays->{sprintf("%02d",$Month)}->{sprintf("%02d",$Day)})
-                        && !defined($TimeVacationDaysOneTime->{$Year}->{sprintf("%02d",$Month)}->{sprintf("%02d",$Day)})
-                        && !defined($TimeVacationDays->{$Month}->{$Day})
-                        && !defined($TimeVacationDaysOneTime->{$Year}->{$Month}->{$Day})
+                        && !$VacationCheck
                         && !$Diseased && !$LeaveDay
                     ) {
                         $Data{$UserID}{TargetStateTotal} += $UserCurrentPeriod{$UserID}{WeeklyHours}/5;
@@ -697,8 +696,6 @@ sub WorkingUnitsCompletnessCheck {
     my ($Sec, $Min, $Hour, $Day, $Month, $Year) = $Self->{TimeObject}->SystemTime2Date(
         SystemTime => $Self->{TimeObject}->SystemTime(),
     );
-    my $TimeVacationDays        = $Self->{ConfigObject}->Get('TimeVacationDays');
-    my $TimeVacationDaysOneTime = $Self->{ConfigObject}->Get('TimeVacationDaysOneTime');
 
     $Param{UserID} = $Self->{DBObject}->Quote($Param{UserID}) || '';
 
@@ -767,21 +764,19 @@ sub WorkingUnitsCompletnessCheck {
             }
             my $MonthString = sprintf("%02d",$Month);
             for (my $Day = $DayStartPoint; $Day <= $DayEndPoint; $Day++) {
+                my $VacationCheck = $Self->VacationCheck(
+                    Year  => $Year,
+                    Month => $Month,
+                    Day   => $Day,
+                );
+
                 my $DayString = sprintf("%02d",$Day);
                 my $Weekday = Day_of_Week($Year, $Month, $Day);
-                if ($Weekday != 6 && $Weekday != 7
-                    && !defined($TimeVacationDays->{$MonthString}->{$DayString})
-                    && !defined($TimeVacationDaysOneTime->{$Year}->{$MonthString}->{$DayString})
-                    && !defined($TimeVacationDays->{$Month}->{$Day})
-                    && !defined($TimeVacationDaysOneTime->{$Year}->{$Month}->{$Day})
-                ) {
+                if ($Weekday != 6 && $Weekday != 7 && !$VacationCheck) {
                     $WorkingDays++;
                 }
                 if ($Weekday != 6 && $Weekday != 7
-                    && !defined($TimeVacationDays->{$MonthString}->{$DayString})
-                    && !defined($TimeVacationDaysOneTime->{$Year}->{$MonthString}->{$DayString})
-                    && !defined($TimeVacationDays->{$Month}->{$Day})
-                    && !defined($TimeVacationDaysOneTime->{$Year}->{$Month}->{$Day})
+                    && !$VacationCheck
                     && !$CompleteWorkingDays{$Year}{$MonthString}{$DayString}
                 ) {
                     $Data{Incomplete}{$Year}{$MonthString}{$DayString} = $WorkingDays;
@@ -838,7 +833,6 @@ sub WorkingUnitsGet {
     $Self->{DBObject}->Prepare (
         SQL => "SELECT user_id, project_id, action_id, remark, time_start, time_end, period FROM time_accounting_table WHERE time_start LIKE '$Date%' AND user_id = '$Param{UserID}' ORDER by id",
     );
-#$Self->{LogObject}->Dumper(test => "SELECT user_id, project_id, action_id, remark, time_start, time_end, period, date FROM time_accounting_table WHERE date LIKE '$Date' AND user_id = '$Param{UserID}' ORDER by id");
 
     # fetch Data
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
@@ -856,10 +850,6 @@ sub WorkingUnitsGet {
             }
         }
     }
-#$Self->{LogObject}->Dumper(test => 'Data');
-
-#$Self->{LogObject}->Dumper(%Data);
-
     return %Data;
 }
 
@@ -967,6 +957,54 @@ sub WorkingUnitsDelete {
     return 1;
 }
 
+# FRAMEWORK-2.1: this function should be included in the timeobject
+=item VacationCheck()
+
+check if the selected day is a vacation (it doesn't matter if you
+insert 01 or 1 for month or day in the function or in the SysConfig)
+
+    $TimeAccountingObject->VacationCheck(
+        Year  => '2005',
+        Month => '7', || 07
+        Day   => '13',
+    );
+
+=cut
+
+sub VacationCheck {
+    my $Self         = shift;
+    my %Param        = @_;
+    my $VacationName = '';
+
+    # check required params
+    foreach (qw(Year Month Day)) {
+        if (!$Param{$_}) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "VacationCheck: Need $_!"
+            );
+            return;
+        }
+    }
+    $Param{Month} = sprintf("%02d", $Param{Month});
+    $Param{Day}   = sprintf("%02d", $Param{Day});
+
+    my $TimeVacationDays        = $Self->{ConfigObject}->Get('TimeVacationDays');
+    my $TimeVacationDaysOneTime = $Self->{ConfigObject}->Get('TimeVacationDaysOneTime');
+    if (defined($TimeVacationDays->{$Param{Month}}->{$Param{Day}})) {
+        return $TimeVacationDays->{$Param{Month}}->{$Param{Day}};
+    }
+    elsif (defined($TimeVacationDaysOneTime->{$Param{Year}}->{$Param{Month}}->{$Param{Day}})) {
+        return $TimeVacationDaysOneTime->{$Param{Year}}->{$Param{Month}}->{$Param{Day}};
+    }
+    elsif (defined($TimeVacationDays->{int($Param{Month})}->{int($Param{Day})})) {
+        return $TimeVacationDays->{int($Param{Month})}->{int($Param{Day})};
+    }
+    elsif (defined($TimeVacationDaysOneTime->{$Param{Year}}->{int($Param{Month})}->{int($Param{Day})})) {
+        return $TimeVacationDaysOneTime->{$Param{Year}}->{int($Param{Month})}->{int($Param{Day})};
+    }
+    return;
+}
 
 
 =item ProjectActionReporting()
@@ -1254,6 +1292,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2006-04-11 05:41:00 $
+$Revision: 1.5 $ $Date: 2006-04-18 11:01:35 $
 
 =cut

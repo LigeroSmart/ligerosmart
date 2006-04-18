@@ -2,7 +2,7 @@
 # TODO - todo list of TimeAccounting
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: TODO.TimeAccounting,v 1.8 2006-04-11 12:33:48 tr Exp $
+# $Id: TODO.TimeAccounting,v 1.9 2006-04-18 11:01:35 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -10,7 +10,7 @@
 # --
 
 TimeAccounting 1.0
--
+- delete form: use buttons instead of links
 
 2.1 (OTRS)
 
