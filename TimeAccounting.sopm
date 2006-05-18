@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-  <CVS>$Id: TimeAccounting.sopm,v 1.8 2006-05-16 09:38:43 tr Exp $</CVS>
+  <CVS>$Id: TimeAccounting.sopm,v 1.9 2006-05-18 14:20:40 tr Exp $</CVS>
   <Name>TimeAccounting</Name>
   <Version>0.9.8</Version>
   <Framework>2.0.x</Framework>
@@ -91,5 +91,6 @@
     <TableDrop Name="time_accounting_project"/>
     <TableDrop Name="time_accounting_table"/>
     <TableDrop Name="time_accounting_user"/>
+    <TableDrop Name="time_accounting_user_period"/>
   </DatabaseUninstall>
 </otrs_package>
