@@ -2,7 +2,7 @@
 # AgentTimeAccountingReporting.dtl - provides HTML form for time accounting reporting
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: AgentTimeAccountingReporting.dtl,v 1.4 2006-04-11 08:03:38 tr Exp $
+# $Id: AgentTimeAccountingReporting.dtl,v 1.5 2006-05-23 09:06:49 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -133,7 +133,11 @@
               <tr>
 <!-- dtl:block:Project -->
                 <td rowspan="$Data{"RowSpan"}" valign="top">
-                  <span class="contentkey$QData{"Status"}">$Data{"Project"}</span>
+                  <span class="contentkey$QData{"Status"}">
+                  <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=ProjectReporting&ProjectID=$QData{"ProjectID"}">
+                  $Data{"Project"}
+                  </a>
+                  </span>
                   <br>
                   <span class="contentvalue$QData{"Status"}">$Data{"ProjectDescription"}</span>
                 </td>

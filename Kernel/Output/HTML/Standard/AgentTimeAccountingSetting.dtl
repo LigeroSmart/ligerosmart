@@ -2,7 +2,7 @@
 # AgentTimeAccountingSetting.dtl - provides HTML form for time accounting settings
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: AgentTimeAccountingSetting.dtl,v 1.4 2006-04-11 05:41:00 tr Exp $
+# $Id: AgentTimeAccountingSetting.dtl,v 1.5 2006-05-23 09:06:49 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -197,7 +197,7 @@
 <!-- dtl:block:User -->
 <!-- dtl:block:NewUserOption -->
                 <tr>
-                  <td class="contentkey" colspan="3">
+                  <td class="contentvalue" colspan="3">
                     $Data{"NewUserOption"}
                     <input class="button" accesskey="g" type="submit" value="$Text{"new"}"  name="NewUser">
                   </td>

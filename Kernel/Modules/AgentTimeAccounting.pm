@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.6 2006-05-16 09:37:14 tr Exp $
+# $Id: AgentTimeAccounting.pm,v 1.7 2006-05-23 09:06:49 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.6 $';
+$VERSION = '$Revision: 1.7 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 # --
@@ -957,6 +957,23 @@ sub Run {
                                     Name => 'Project',
                                     Data => {%Param, %Frontend},
                                 );
+                                if ($UserBasics{$Self->{UserID}}{CreateProject}) {
+                                    # persons how are allowed to see the create object link are allowed to see the project reporting
+                                    $Self->{LayoutObject}->Block(
+                                        Name => 'ProjectLink',
+                                        Data => {
+                                            Project => $Param{Project},
+                                            ProjectID => $ProjectID,
+                                        },
+                                    );
+                                }
+                                else {
+                                    $Self->{LayoutObject}->Block(
+                                        Name => 'ProjectNoLink',
+                                        Data => {Project => $Param{Project}},
+                                    );
+                                }
+
                                 $Param{RowSpan} = 0;
                             }
                         }
@@ -1351,6 +1368,13 @@ sub Run {
             $Param{Month} = sprintf("%02d", $Param{Month});
         }
 
+        # store last screen
+        $Self->{SessionObject}->UpdateSessionID(
+            SessionID => $Self->{SessionID},
+            Key       => 'LastScreen',
+            Value     => "Action=$Self->{Action}&Subaction=Reporting&Year=$Param{Year}&Month=$Param{Month}",
+        );
+
         $Param{Month_to_Text}   = $MonthArray[$Param{Month}];
 
         my %Month = ();
@@ -1467,6 +1491,7 @@ sub Run {
                             );
                             if (!$Param{Project}) {
                                 $Param{Project}            = $Project{Project}{$ProjectID};
+                                $Param{ProjectID}          = $ProjectID;
                                 $Param{ProjectDescription} = $Self->{LayoutObject}->Ascii2Html(
                                     Text           => $Project{ProjectDescription}{$ProjectID},
                                     HTMLResultMode => 1,
@@ -1507,18 +1532,132 @@ sub Run {
         $Output .= $Self->{LayoutObject}->Footer();
         return $Output;
     }
-#    # ---------------------------------------------------------- #
-#    # sql -> Version update
-#    # ---------------------------------------------------------- #
-#    elsif ($Self->{Subaction} eq 'sql') {
-#        if (!$Self->{TimeAccountingObject}->SQL()) {
-#            return $Self->{LayoutObject}->ErrorScreen(Message => 'Can not update timeaccounting db');
-#        }
-#        return $Self->{LayoutObject}->ErrorScreen(Message => 'Timeaccounting db update was successful!');
-#    }
-#    # ---------------------------------------------------------- #
-#    # show error screen
-#    # ---------------------------------------------------------- #
+    # ---------------------------------------------------------- #
+    # time accounting project reporting
+    # ---------------------------------------------------------- #
+    elsif ($Self->{Subaction} eq 'ProjectReporting') {
+        my $Output   = '';
+        my %Frontend = ();
+
+        # permission check
+        if (!$Self->{AccessRo}) {
+            return $Self->{LayoutObject}->NoPermission(WithHeader => 'yes');
+        }
+
+        # get params
+        foreach (qw(ProjectID)) {
+            $Param{$_} = $Self->{ParamObject}->GetParam(Param => $_);
+        }
+
+        # check needed params
+        foreach (qw(ProjectID)) {
+            if (!$Param{$_}) {
+                return $Self->{LayoutObject}->ErrorScreen(
+                    Message => "ProjectReporting: Need $_"
+                );
+            }
+        }
+
+        my %Action      = $Self->{TimeAccountingObject}->ActionSettingsGet();
+        my %Project     = $Self->{TimeAccountingObject}->ProjectSettingsGet();
+        $Param{Project} = $Project{Project}{$Param{ProjectID}};
+
+        my %ShownUsers = $Self->{UserObject}->UserList(Type => 'Long', Valid => 0);
+        # necassary because the ProjectActionReporting is not reworked
+        my ($Sec, $Min, $Hour, $CurrentDay, $Month, $Year) = $Self->{TimeObject}->SystemTime2Date(
+            SystemTime => $Self->{TimeObject}->SystemTime(),
+        );
+        my %ProjectData = ();
+        my %ProjectTime     = ();
+
+        # Only one function should be enough
+        foreach my $UserID (keys %ShownUsers) {
+            # Overview per project and action
+            %ProjectData = $Self->{TimeAccountingObject}->ProjectActionReporting(
+                Year   => $Year,
+                Month  => $Month,
+                UserID => $UserID,
+            );
+            if ($ProjectData{Total}{$Param{ProjectID}}) {
+                foreach my $ActionID (keys %{$ProjectData{Total}{$Param{ProjectID}}}) {
+                    $ProjectTime{$ActionID}{$UserID} = $ProjectData{Total}{$Param{ProjectID}}{$ActionID};
+                }
+            }
+            else {
+                delete ($ShownUsers{$UserID});
+            }
+        }
+
+        # show the headerline
+        foreach my $UserID (sort {$ShownUsers{$a} cmp $ShownUsers{$b}} keys %ShownUsers) {
+            $Self->{LayoutObject}->Block(
+                 Name => 'UserName',
+                 Data => {User => $ShownUsers{$UserID}},
+            );
+        }
+
+        # better solution for sort actions necessary
+        my %NewAction = ();
+        foreach my $ActionID (keys %ProjectTime) {
+            $NewAction{$ActionID} = $Action{$ActionID}{Action};
+        }
+        %Action = %NewAction;
+
+        # show the results
+        my %Total = ();
+        foreach my $ActionID (sort {$Action{$a} cmp $Action{$b}} keys %Action) {
+            my $TotalHours = 0;
+            $Self->{LayoutObject}->Block(
+                 Name => 'Action',
+                 Data => {
+                     Action => $Action{$ActionID},
+                 },
+            );
+
+            foreach my $UserID (sort {$ShownUsers{$a} cmp $ShownUsers{$b}} keys %ShownUsers) {
+                $TotalHours += $ProjectTime{$ActionID}{$UserID}{Hours};
+                $Total{$UserID} += $ProjectTime{$ActionID}{$UserID}{Hours};
+                $Self->{LayoutObject}->Block(
+                    Name => 'User',
+                    Data => {
+                        Hours => sprintf ("%.2f", $ProjectTime{$ActionID}{$UserID}{Hours} || 0),
+                    },
+                );
+            }
+            # Total
+            $Self->{LayoutObject}->Block(
+                Name => 'User',
+                Data => {
+                    Hours => sprintf ("%.2f", $TotalHours),
+                },
+            );
+        }
+        $Param{TotalAll} = 0;
+        foreach my $UserID (sort {$ShownUsers{$a} cmp $ShownUsers{$b}} keys %ShownUsers) {
+            $Param{TotalAll} += $Total{$UserID};
+            $Self->{LayoutObject}->Block(
+                 Name => 'UserTotal',
+                 Data => {
+                     Total => sprintf ("%.2f", $Total{$UserID}),
+                 },
+            );
+        }
+
+        $Param{TotalAll} = sprintf ("%.2f", $Param{TotalAll});
+
+        # build output
+        $Output .= $Self->{LayoutObject}->Header(Title => "ProjectReporting");
+        $Output .= $Self->{LayoutObject}->NavigationBar();
+        $Output .= $Self->{LayoutObject}->Output(
+            Data         => {%Param, %Frontend},
+            TemplateFile => 'AgentTimeAccountingProjectReporting'
+        );
+        $Output .= $Self->{LayoutObject}->Footer();
+        return $Output;
+    }
+    # ---------------------------------------------------------- #
+    # show error screen
+    # ---------------------------------------------------------- #
     return $Self->{LayoutObject}->ErrorScreen(Message => "Invalid Subaction process!");
 }
 # --

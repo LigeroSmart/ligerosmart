@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-  <CVS>$Id: TimeAccounting.sopm,v 1.9 2006-05-18 14:20:40 tr Exp $</CVS>
+  <CVS>$Id: TimeAccounting.sopm,v 1.10 2006-05-23 09:06:49 tr Exp $</CVS>
   <Name>TimeAccounting</Name>
-  <Version>0.9.8</Version>
+  <Version>0.9.9</Version>
   <Framework>2.0.x</Framework>
   <Vendor>OTRS GmbH</Vendor>
   <URL>http://otrs.org/</URL>
   <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+  <ChangeLog>2006-05-23 insert a ProjectReporting page</ChangeLog>
   <ChangeLog>2006-05-16 fixed action new bug in setting</ChangeLog>
   <ChangeLog>2006-04-24 insert the delete dtl</ChangeLog>
   <ChangeLog>2006-04-18 fixed vacation bug</ChangeLog>
@@ -29,6 +30,7 @@
     <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingSetting.dtl"></File>
     <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingOverview.dtl"></File>
     <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingReporting.dtl"></File>
+    <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingProjectReporting.dtl"></File>
     <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingDelete.dtl"></File>
     <File Permission="644" Location="Kernel/Output/HTML/NotificationTimeAccounting.pm"></File>
     <File Permission="644" Location="var/httpd/htdocs/images/Standard/time_accounting.png"></File>
