@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-  <CVS>$Id: Survey.sopm,v 1.11 2006-03-20 21:36:39 mh Exp $</CVS>
+  <CVS>$Id: Survey.sopm,v 1.12 2006-05-30 13:03:16 mh Exp $</CVS>
   <Name>Survey</Name>
-  <Version>1.0.0</Version>
+  <Version>1.0.1</Version>
   <Framework>2.0.x</Framework>
   <Vendor>OTRS GmbH</Vendor>
   <URL>http://otrs.org/</URL>
@@ -33,20 +33,20 @@
       <Column Name="introduction" Required="false" Size="1000" Type="VARCHAR"/>
       <Column Name="description" Required="false" Size="1000" Type="VARCHAR"/>
       <Column Name="status" Required="true" Size="50" Type="VARCHAR"/>
-      <Column Name="create_time" Required="true" Type="DATE"/>
-      <Column Name="create_by" Required="true" Type="INTEGER"/>
-      <Column Name="change_time" Required="true" Type="DATE"/>
-      <Column Name="change_by" Required="true" Type="INTEGER"/>
+      <Column Name="create_time" Required="false" Type="DATE"/>
+      <Column Name="create_by" Required="false" Type="INTEGER"/>
+      <Column Name="change_time" Required="false" Type="DATE"/>
+      <Column Name="change_by" Required="false" Type="INTEGER"/>
     </TableCreate>
     <TableCreate Name="survey_answer">
       <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
       <Column Name="question_id" Required="true" Type="BIGINT"/>
       <Column Name="answer" Required="true" Size="250" Type="VARCHAR"/>
       <Column Name="position" Required="true" Type="INTEGER"/>
-      <Column Name="create_time" Required="true" Type="DATE"/>
-      <Column Name="create_by" Required="true" Type="INTEGER"/>
-      <Column Name="change_time" Required="true" Type="DATE"/>
-      <Column Name="change_by" Required="true" Type="INTEGER"/>
+      <Column Name="create_time" Required="false" Type="DATE"/>
+      <Column Name="create_by" Required="false" Type="INTEGER"/>
+      <Column Name="change_time" Required="false" Type="DATE"/>
+      <Column Name="change_by" Required="false" Type="INTEGER"/>
     </TableCreate>
     <TableCreate Name="survey_question">
       <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
@@ -54,10 +54,10 @@
       <Column Name="question" Required="true" Size="250" Type="VARCHAR"/>
       <Column Name="type" Required="true" Size="50" Type="VARCHAR"/>
       <Column Name="position" Required="true" Type="SMALLINT"/>
-      <Column Name="create_time" Required="true" Type="DATE"/>
-      <Column Name="create_by" Required="true" Type="INTEGER"/>
-      <Column Name="change_time" Required="true" Type="DATE"/>
-      <Column Name="change_by" Required="true" Type="INTEGER"/>
+      <Column Name="create_time" Required="false" Type="DATE"/>
+      <Column Name="create_by" Required="false" Type="INTEGER"/>
+      <Column Name="change_time" Required="false" Type="DATE"/>
+      <Column Name="change_by" Required="false" Type="INTEGER"/>
     </TableCreate>
     <TableCreate Name="survey_request">
       <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
@@ -66,15 +66,15 @@
       <Column Name="valid_id" Required="true" Type="SMALLINT"/>
       <Column Name="public_survey_key" Required="true" Size="250" Type="VARCHAR"/>
       <Column Name="send_to" Required="true" Size="250" Type="VARCHAR"/>
-      <Column Name="send_time" Required="true" Type="DATE"/>
-      <Column Name="vote_time" Required="true" Type="DATE"/>
+      <Column Name="send_time" Required="false" Type="DATE"/>
+      <Column Name="vote_time" Required="false" Type="DATE"/>
     </TableCreate>
     <TableCreate Name="survey_vote">
       <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
       <Column Name="request_id" Required="true" Type="BIGINT"/>
       <Column Name="question_id" Required="true" Type="BIGINT"/>
       <Column Name="vote_value" Required="true" Size="1000" Type="VARCHAR"/>
-      <Column Name="create_time" Required="true" Type="DATE"/>
+      <Column Name="create_time" Required="false" Type="DATE"/>
     </TableCreate>
   </DatabaseInstall>
   <DatabaseUpgrade></DatabaseUpgrade>
