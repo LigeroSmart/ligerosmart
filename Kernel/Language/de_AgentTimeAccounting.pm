@@ -10,8 +10,8 @@ sub Data {
     $Self->{Translation} = { %{$Self->{Translation}},
 
       # Template: AgentTimeAccounting
-      '' => '',
-      '' => '',
+      'Setting'        => 'Konfiguration',
+      'ProjectSetting' => 'Projektkonfiguration',
     };
 }
 1;

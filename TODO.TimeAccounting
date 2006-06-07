@@ -2,7 +2,7 @@
 # TODO - todo list of TimeAccounting
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: TODO.TimeAccounting,v 1.11 2006-05-23 09:06:49 tr Exp $
+# $Id: TODO.TimeAccounting,v 1.12 2006-06-07 14:18:59 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,10 +15,18 @@ TimeAccounting 1.0
 - insert a help/description text in projectsetting dtl
 - rework the corefunctions for ProjectAction-Reporting
   one Primary function und serveral extensions
+- translation
+- problems with very long working days
+  16:00 - 1:00 is not possible
+  16:00 - 24:00 is not possible
+  16:00 - 23:59 is possible
+- remove white spaces at time inserts " 12:30 "
+  a better way could be a regexp  ~/*(/d/d):(/d/d)*
+- don't forget to write the text in the submitbuttons big (delete => Delete; löschen => Löschen)
+
 
 2.1 (OTRS)
 
-- allow several date formats in SysConfig Time::Core
 
 3.0
 -

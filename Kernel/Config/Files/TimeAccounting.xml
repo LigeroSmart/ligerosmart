@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: TimeAccounting.xml,v 1.3 2006-04-10 12:26:35 tr Exp $</CVS>
+    <CVS>$Id: TimeAccounting.xml,v 1.4 2006-06-07 14:18:59 tr Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AgentTimeAccounting" Required="0" Valid="1">
-        <Description Lang="en">FrontendModulRegistration for TimeAccountingModul to define the registration settings in the programme and set rights and positions of icons in the navigation bar.</Description>
+      <Description Lang="en">FrontendModuleRegistration for TimeAccountingModule  to define the registration settings in the program and to set rights and positions of icons in the navigation bar.</Description>
         <Description Lang="de">FrontendModulRegistration für das ZeiterfassungsModul.  Hier
        können Sie die Angaben für die Registrierung des Moduls im Programm tätigen. Ferner
-       können die Rechte und die Postitionen der Icons in der Navigationsleiste gesetzt werden.</Description>
+       können die Rechte und die Positionen der Icons in der Navigationsleiste gesetzt werden.</Description>
         <Group>TimeAccounting</Group>
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
