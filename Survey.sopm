@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-  <CVS>$Id: Survey.sopm,v 1.14 2006-06-08 13:07:55 mh Exp $</CVS>
+  <CVS>$Id: Survey.sopm,v 1.15 2006-06-08 13:51:16 mh Exp $</CVS>
   <Name>Survey</Name>
-  <Version>1.0.3</Version>
+  <Version>1.0.4</Version>
   <Framework>2.0.x</Framework>
+  <Framework>2.1.x</Framework>
   <Vendor>OTRS GmbH</Vendor>
   <URL>http://otrs.org/</URL>
   <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>

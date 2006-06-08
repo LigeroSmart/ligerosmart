@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurvey.pm - a survey module
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: AgentSurvey.pm,v 1.18 2006-03-20 21:36:39 mh Exp $
+# $Id: AgentSurvey.pm,v 1.19 2006-06-08 13:51:16 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.18 $';
+$VERSION = '$Revision: 1.19 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 # --
@@ -390,14 +390,19 @@ sub Run {
         my $Introduction = $Self->{ParamObject}->GetParam(Param => "Introduction");
         my $Description = $Self->{ParamObject}->GetParam(Param => "Description");
 
-        my $SurveyID = $Self->{SurveyObject}->SurveyNew(
-            Title => $Title,
-            Introduction => $Introduction,
-            Description => $Description,
-            UserID => $Self->{UserID},
-        );
+        if ($Title && $Introduction && $Description) {
+            my $SurveyID = $Self->{SurveyObject}->SurveyNew(
+                Title => $Title,
+                Introduction => $Introduction,
+                Description => $Description,
+                UserID => $Self->{UserID},
+            );
 
-        return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=Survey&SurveyID=$SurveyID");
+            return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=Survey&SurveyID=$SurveyID");
+        }
+        else {
+            return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=SurveyNew");
+        }
     }
 
     elsif ($Self->{Subaction} eq 'QuestionAdd') {

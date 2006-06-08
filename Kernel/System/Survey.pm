@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - manage all survey module events
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: Survey.pm,v 1.22 2006-06-08 13:02:56 mh Exp $
+# $Id: Survey.pm,v 1.23 2006-06-08 13:51:16 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Ticket;
 use Kernel::System::CustomerUser;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.22 $';
+$VERSION = '$Revision: 1.23 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -354,38 +354,43 @@ sub SurveyNew {
     foreach (qw(UserID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
-    # insert a new survey
-    $Self->{DBObject}->Do(
-        SQL => "INSERT INTO survey (title, introduction, description,".
-            " status, create_time, create_by, change_time, change_by) VALUES (".
-            "'$Param{Title}', ".
-            "'$Param{Introduction}', ".
-            "'$Param{Description}', ".
-            "'New', ".
-            "current_timestamp, ".
-            "$Param{UserID}, ".
-            "current_timestamp, ".
-            "$Param{UserID})"
-    );
-    # get the id of the survey
-    my $SQL = "SELECT id FROM survey WHERE ".
-        "title = '$Param{Title}' AND ".
-        "introduction = '$Param{Introduction}' AND ".
-        "description = '$Param{Description}' ".
-        "ORDER BY create_time DESC";
-    $Self->{DBObject}->Prepare(SQL => $SQL);
-    # fetch th result
-    my $SurveyID = '';
-    while (my @Row = $Self->{DBObject}->FetchrowArray()) {
-        $SurveyID = $Row[0];
+    if ($Param{Title} && $Param{Introduction} && $Param{Description}) {
+        # insert a new survey
+        $Self->{DBObject}->Do(
+            SQL => "INSERT INTO survey (title, introduction, description,".
+                " status, create_time, create_by, change_time, change_by) VALUES (".
+                "'$Param{Title}', ".
+                "'$Param{Introduction}', ".
+                "'$Param{Description}', ".
+                "'New', ".
+                "current_timestamp, ".
+                "$Param{UserID}, ".
+                "current_timestamp, ".
+                "$Param{UserID})"
+        );
+        # get the id of the survey
+        my $SQL = "SELECT id FROM survey WHERE ".
+            "title = '$Param{Title}' AND ".
+            "introduction = '$Param{Introduction}' AND ".
+            "description = '$Param{Description}' ".
+            "ORDER BY create_time DESC";
+        $Self->{DBObject}->Prepare(SQL => $SQL);
+        # fetch the result
+        my $SurveyID = '';
+        while (my @Row = $Self->{DBObject}->FetchrowArray()) {
+            $SurveyID = $Row[0];
+        }
+        # set the survey number
+        $Self->{DBObject}->Do(
+            SQL => "UPDATE survey SET ".
+                "surveynumber = '" . ($SurveyID + 10000) . "' ".
+                "WHERE id = $SurveyID",
+        );
+        return $SurveyID;
     }
-    # set the survey number
-    $Self->{DBObject}->Do(
-        SQL => "UPDATE survey SET ".
-            "surveynumber = '" . ($SurveyID + 10000) . "' ".
-            "WHERE id = $SurveyID",
-    );
-    return $SurveyID;
+    else {
+        return;
+    }
 }
 
 =item QuestionList()
@@ -1733,6 +1738,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.22 $ $Date: 2006-06-08 13:02:56 $
+$Revision: 1.23 $ $Date: 2006-06-08 13:51:16 $
 
 =cut
