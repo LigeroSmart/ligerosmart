@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-  <CVS>$Id: Survey.sopm,v 1.12 2006-05-30 13:03:16 mh Exp $</CVS>
+  <CVS>$Id: Survey.sopm,v 1.13 2006-06-08 13:02:56 mh Exp $</CVS>
   <Name>Survey</Name>
-  <Version>1.0.1</Version>
+  <Version>1.0.2</Version>
   <Framework>2.0.x</Framework>
   <Vendor>OTRS GmbH</Vendor>
   <URL>http://otrs.org/</URL>
   <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+  <ChangeLog>2006-05-30 1.0.2 rename colum "number" to "surveynumber" in survey-table</ChangeLog>
+  <ChangeLog>2006-05-30 1.0.1 fix "not null" error on oracle dbs</ChangeLog>
   <ChangeLog>2006-03-20 1.0.0 Final Version</ChangeLog>
   <ChangeLog>2006-03-11 New package</ChangeLog>
   <Description Lang="en">A customer survey tool.</Description>
@@ -28,7 +30,7 @@
   <DatabaseInstall>
     <TableCreate Name="survey">
       <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
-      <Column Name="number" Required="true" Size="50" Type="VARCHAR"/>
+      <Column Name="surveynumber" Required="true" Size="50" Type="VARCHAR"/>
       <Column Name="title" Required="false" Size="250" Type="VARCHAR"/>
       <Column Name="introduction" Required="false" Size="1000" Type="VARCHAR"/>
       <Column Name="description" Required="false" Size="1000" Type="VARCHAR"/>

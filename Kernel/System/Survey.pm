@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - manage all survey module events
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: Survey.pm,v 1.21 2006-03-20 21:36:39 mh Exp $
+# $Id: Survey.pm,v 1.22 2006-06-08 13:02:56 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Ticket;
 use Kernel::System::CustomerUser;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.21 $';
+$VERSION = '$Revision: 1.22 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -106,7 +106,7 @@ sub SurveyGet {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # get all attributes of a survey
-    my $SQL = "SELECT id, number, title, introduction, description,".
+    my $SQL = "SELECT id, surveynumber, title, introduction, description,".
         " status, create_time, create_by, change_time, change_by ".
         " FROM survey WHERE id = $Param{SurveyID}";
     $Self->{DBObject}->Prepare(SQL => $SQL);
@@ -382,7 +382,7 @@ sub SurveyNew {
     # set the survey number
     $Self->{DBObject}->Do(
         SQL => "UPDATE survey SET ".
-            "number = '" . ($SurveyID + 10000) . "' ".
+            "surveynumber = '" . ($SurveyID + 10000) . "' ".
             "WHERE id = $SurveyID",
     );
     return $SurveyID;
@@ -1611,7 +1611,7 @@ sub PublicSurveyGet {
     }
 
     if ($SurveyID > '0') {
-        my $SQL = "SELECT id, number, title, introduction ".
+        my $SQL = "SELECT id, surveynumber, title, introduction ".
             "FROM survey WHERE id = $SurveyID AND (status = 'Master' OR status = 'Valid')";
         $Self->{DBObject}->Prepare(SQL => $SQL);
         my @Survey = $Self->{DBObject}->FetchrowArray();
@@ -1733,6 +1733,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.21 $ $Date: 2006-03-20 21:36:39 $
+$Revision: 1.22 $ $Date: 2006-06-08 13:02:56 $
 
 =cut
