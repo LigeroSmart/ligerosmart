@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-  <CVS>$Id: Survey.sopm,v 1.13 2006-06-08 13:02:56 mh Exp $</CVS>
+  <CVS>$Id: Survey.sopm,v 1.14 2006-06-08 13:07:55 mh Exp $</CVS>
   <Name>Survey</Name>
-  <Version>1.0.2</Version>
+  <Version>1.0.3</Version>
   <Framework>2.0.x</Framework>
   <Vendor>OTRS GmbH</Vendor>
   <URL>http://otrs.org/</URL>
@@ -30,11 +30,11 @@
   <DatabaseInstall>
     <TableCreate Name="survey">
       <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
-      <Column Name="surveynumber" Required="true" Size="50" Type="VARCHAR"/>
+      <Column Name="surveynumber" Required="false" Size="50" Type="VARCHAR"/>
       <Column Name="title" Required="false" Size="250" Type="VARCHAR"/>
       <Column Name="introduction" Required="false" Size="1000" Type="VARCHAR"/>
       <Column Name="description" Required="false" Size="1000" Type="VARCHAR"/>
-      <Column Name="status" Required="true" Size="50" Type="VARCHAR"/>
+      <Column Name="status" Required="false" Size="50" Type="VARCHAR"/>
       <Column Name="create_time" Required="false" Type="DATE"/>
       <Column Name="create_by" Required="false" Type="INTEGER"/>
       <Column Name="change_time" Required="false" Type="DATE"/>
