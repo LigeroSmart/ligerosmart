@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - manage all survey module events
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: Survey.pm,v 1.23 2006-06-08 13:51:16 mh Exp $
+# $Id: Survey.pm,v 1.24 2006-06-28 10:41:19 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Ticket;
 use Kernel::System::CustomerUser;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.23 $';
+$VERSION = '$Revision: 1.24 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -312,16 +312,18 @@ sub SurveySave {
     foreach (qw(UserID SurveyID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
-    # update the survey
-    $Self->{DBObject}->Do(
-        SQL => "UPDATE survey SET ".
-            "title = '$Param{Title}', ".
-            "introduction = '$Param{Introduction}', ".
-            "description = '$Param{Description}', ".
-            "change_time = current_timestamp, ".
-            "change_by = $Param{UserID} ".
-            "WHERE id = $Param{SurveyID}",
-    );
+    if ($Param{Title} && $Param{Introduction} && $Param{Description}) {
+        # update the survey
+        $Self->{DBObject}->Do(
+            SQL => "UPDATE survey SET ".
+                "title = '$Param{Title}', ".
+                "introduction = '$Param{Introduction}', ".
+                "description = '$Param{Description}', ".
+                "change_time = current_timestamp, ".
+                "change_by = $Param{UserID} ".
+                "WHERE id = $Param{SurveyID}",
+        );
+    }
 }
 
 =item SurveyNew()
@@ -462,19 +464,22 @@ sub QuestionAdd {
     foreach (qw(UserID SurveyID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
-    # insert a new question
-    $Self->{DBObject}->Do(
-        SQL => "INSERT INTO survey_question (survey_id, question, type, ".
-            "position, create_time, create_by, change_time, change_by) VALUES (".
-            "$Param{SurveyID}, ".
-            "'$Param{Question}', ".
-            "'$Param{Type}', ".
-            "255, ".
-            "current_timestamp, ".
-            "$Param{UserID}, ".
-            "current_timestamp, ".
-            "$Param{UserID})"
-    );
+
+    if ($Param{Question}) {
+        # insert a new question
+        $Self->{DBObject}->Do(
+            SQL => "INSERT INTO survey_question (survey_id, question, type, ".
+                "position, create_time, create_by, change_time, change_by) VALUES (".
+                "$Param{SurveyID}, ".
+                "'$Param{Question}', ".
+                "'$Param{Type}', ".
+                "255, ".
+                "current_timestamp, ".
+                "$Param{UserID}, ".
+                "current_timestamp, ".
+                "$Param{UserID})"
+        );
+    }
 }
 
 =item QuestionDelete()
@@ -750,15 +755,18 @@ sub QuestionSave {
     foreach (qw(UserID QuestionID SurveyID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
-    # sql for event
-    $Self->{DBObject}->Do(
-        SQL => "UPDATE survey_question SET ".
-            "question = '$Param{Question}', ".
-            "change_time = current_timestamp, ".
-            "change_by = $Param{UserID} ".
-            "WHERE id = $Param{QuestionID} ",
-            "AND survey_id = $Param{SurveyID}",
-    );
+
+    if ($Param{Question}) {
+        # sql for event
+        $Self->{DBObject}->Do(
+            SQL => "UPDATE survey_question SET ".
+                "question = '$Param{Question}', ".
+                "change_time = current_timestamp, ".
+                "change_by = $Param{UserID} ".
+                "WHERE id = $Param{QuestionID} ",
+                "AND survey_id = $Param{SurveyID}",
+        );
+    }
 }
 
 =item QuestionCount()
@@ -863,18 +871,21 @@ sub AnswerAdd {
     foreach (qw(UserID QuestionID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
-    # sql for event
-    $Self->{DBObject}->Do(
-        SQL => "INSERT INTO survey_answer (question_id, answer, position, ".
-            "create_time, create_by, change_time, change_by) VALUES (".
-            "$Param{QuestionID}, ".
-            "'$Param{Answer}', ".
-            "255, ".
-            "current_timestamp, ".
-            "$Param{UserID}, ".
-            "current_timestamp, ".
-            "$Param{UserID})"
-    );
+
+    if ($Param{Answer}) {
+        # sql for event
+        $Self->{DBObject}->Do(
+            SQL => "INSERT INTO survey_answer (question_id, answer, position, ".
+                "create_time, create_by, change_time, change_by) VALUES (".
+                "$Param{QuestionID}, ".
+                "'$Param{Answer}', ".
+                "255, ".
+                "current_timestamp, ".
+                "$Param{UserID}, ".
+                "current_timestamp, ".
+                "$Param{UserID})"
+        );
+    }
 }
 
 =item AnswerDelete()
@@ -1142,15 +1153,18 @@ sub AnswerSave {
     foreach (qw(UserID AnswerID QuestionID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
-    # sql for event
-    $Self->{DBObject}->Do(
-        SQL => "UPDATE survey_answer SET ".
-            "answer = '$Param{Answer}', ".
-            "change_time = current_timestamp, ".
-            "change_by = $Param{UserID} ".
-            "WHERE id = $Param{AnswerID} ",
-            "AND question_id = $Param{QuestionID}",
-    );
+
+    if ($Param{Answer}) {
+        # sql for event
+        $Self->{DBObject}->Do(
+            SQL => "UPDATE survey_answer SET ".
+                "answer = '$Param{Answer}', ".
+                "change_time = current_timestamp, ".
+                "change_by = $Param{UserID} ".
+                "WHERE id = $Param{AnswerID} ",
+                "AND question_id = $Param{QuestionID}",
+        );
+    }
 }
 
 =item AnswerCount()
@@ -1738,6 +1752,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.23 $ $Date: 2006-06-08 13:51:16 $
+$Revision: 1.24 $ $Date: 2006-06-28 10:41:19 $
 
 =cut

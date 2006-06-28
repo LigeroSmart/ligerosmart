@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurvey.pm - a survey module
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: AgentSurvey.pm,v 1.19 2006-06-08 13:51:16 mh Exp $
+# $Id: AgentSurvey.pm,v 1.20 2006-06-28 10:41:19 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.19 $';
+$VERSION = '$Revision: 1.20 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 # --
@@ -57,19 +57,19 @@ sub Run {
         $Output = $Self->{LayoutObject}->Header(Title => 'Survey');
         $Output .= $Self->{LayoutObject}->NavigationBar();
         # output mesages if status was changed
-        if ($Message eq 'NoQuestion') {
+        if (defined($Message) && $Message eq 'NoQuestion') {
             $Output .= $Self->{LayoutObject}->Notify(
                 Priority => 'Error',
                 Info => 'Can\'t set new Status! No Question definied.',
             );
         }
-        elsif ($Message eq 'IncompleteQuestion') {
+        elsif (defined($Message) && $Message eq 'IncompleteQuestion') {
             $Output .= $Self->{LayoutObject}->Notify(
                 Priority => 'Error',
                 Info => 'Can\'t set new Status! Question(s) incomplete.',
             );
         }
-        elsif ($Message eq 'StatusSet') {
+        elsif (defined($Message) && $Message eq 'StatusSet') {
             $Output .= $Self->{LayoutObject}->Notify(
                 Priority => 'Notice',
                 Info => 'New Status aktiv!',
@@ -260,13 +260,13 @@ sub Run {
             NewStatus => $NewStatus);
 
         my $Message = '';
-        if ($StatusSet eq 'NoQuestion') {
+        if (defined($StatusSet) && $StatusSet eq 'NoQuestion') {
             $Message = '&Message=NoQuestion';
         }
-        elsif ($StatusSet eq 'IncompleteQuestion') {
+        elsif (defined($StatusSet) && $StatusSet eq 'IncompleteQuestion') {
             $Message = '&Message=IncompleteQuestion';
         }
-        elsif ($StatusSet eq 'StatusSet') {
+        elsif (defined($StatusSet) && $StatusSet eq 'StatusSet') {
             $Message = '&Message=StatusSet';
         }
 
@@ -356,15 +356,20 @@ sub Run {
         if ($Self->{SurveyObject}->ElementExists(ElementID => $SurveyID, Element => 'Survey') ne 'Yes') {
             return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}");
         }
-        $Self->{SurveyObject}->SurveySave(
-            SurveyID => $SurveyID,
-            Title => $Title,
-            Introduction => $Introduction,
-            Description => $Description,
-            UserID => $Self->{UserID},
-        );
+        if ($Title && $Introduction && $Description) {
+            $Self->{SurveyObject}->SurveySave(
+                SurveyID => $SurveyID,
+                Title => $Title,
+                Introduction => $Introduction,
+                Description => $Description,
+                UserID => $Self->{UserID},
+            );
 
-        return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=Survey&SurveyID=$SurveyID#Question");
+            return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=Survey&SurveyID=$SurveyID#Question");
+        }
+        else {
+            return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=SurveyEdit&SurveyID=$SurveyID");
+        }
     }
 
     elsif ($Self->{Subaction} eq 'SurveyAdd') {
@@ -401,7 +406,7 @@ sub Run {
             return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=Survey&SurveyID=$SurveyID");
         }
         else {
-            return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=SurveyNew");
+            return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=SurveyAdd");
         }
     }
 
@@ -414,7 +419,7 @@ sub Run {
             return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}");
         }
 
-        if ($Question ne '') {
+        if ($Question) {
             $Self->{SurveyObject}->QuestionAdd(
                 SurveyID => $SurveyID,
                 Question => $Question,
@@ -590,14 +595,19 @@ sub Run {
             return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}");
         }
 
-        $Self->{SurveyObject}->QuestionSave(
-            QuestionID => $QuestionID,
-            SurveyID => $SurveyID,
-            Question => $Question,
-            UserID => $Self->{UserID},
-        );
+        if ($Question) {
+            $Self->{SurveyObject}->QuestionSave(
+                QuestionID => $QuestionID,
+                SurveyID => $SurveyID,
+                Question => $Question,
+                UserID => $Self->{UserID},
+            );
 
-        return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=SurveyEdit&SurveyID=$SurveyID#Question");
+            return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=SurveyEdit&SurveyID=$SurveyID#Question");
+        }
+        else {
+            return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=QuestionEdit&SurveyID=$SurveyID&QuestionID=$QuestionID");
+        }
     }
 
     elsif ($Self->{Subaction} eq 'AnswerAdd') {
@@ -610,7 +620,7 @@ sub Run {
             return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}");
         }
 
-        if ($Answer ne '') {
+        if ($Answer) {
             $Self->{SurveyObject}->AnswerAdd(
                 SurveyID => $SurveyID,
                 QuestionID => $QuestionID,
@@ -732,14 +742,19 @@ sub Run {
             return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}");
         }
 
-        $Self->{SurveyObject}->AnswerSave(
-            AnswerID => $AnswerID,
-            QuestionID => $QuestionID,
-            Answer => $Answer,
-            UserID => $Self->{UserID},
-        );
+        if ($Answer) {
+            $Self->{SurveyObject}->AnswerSave(
+                AnswerID => $AnswerID,
+                QuestionID => $QuestionID,
+                Answer => $Answer,
+                UserID => $Self->{UserID},
+            );
 
-        return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=QuestionEdit&SurveyID=$SurveyID&QuestionID=$QuestionID#Answer");
+            return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=QuestionEdit&SurveyID=$SurveyID&QuestionID=$QuestionID#Answer");
+        }
+        else {
+            return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=AnswerEdit&SurveyID=$SurveyID&QuestionID=$QuestionID&AnswerID=$AnswerID");
+        }
     }
 
     elsif ($Self->{Subaction} eq 'Stats') {
