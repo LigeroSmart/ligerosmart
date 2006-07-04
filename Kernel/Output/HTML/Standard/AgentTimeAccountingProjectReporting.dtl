@@ -1,0 +1,102 @@
+# --
+# AgentTimeAccountingReporting.dtl - provides HTML form for time accounting reporting
+# Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
+# --
+# $Id: AgentTimeAccountingProjectReporting.dtl,v 1.1 2006-07-04 13:15:47 tr Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# --
+
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+  <tr>
+    <td class="mainhead">
+      $Env{"Box0"}$Text{"Time Project Preporting"}: $QData{"Project"} $Env{"Box1"}
+    </td>
+  </tr>
+  <tr>
+    <td class="menu">
+      <a href="$Env{"Baselink"}$Env{"LastScreen"}" class="menuitem">$Text{"Back"}</a>
+    </td>
+  </tr>
+  <tr>
+    <td class="mainbody">
+      <br>
+#      <table class="contentbody" border="0" width="50%" cellpadding="3" cellspacing="0" align="center">
+#        <tr>
+#          <td colspan="2" class="contenthead" >$Text{"Time selection"}</td>
+#        </tr>
+#        <tr class="contentvalue">
+#          <td>
+#            <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
+#              <input type="hidden" name="Action"    value="$Env{"Action"}">
+#              <input type="hidden" name="Subaction" value="Reporting">
+#              $Data{"MonthOption"}
+#              $Data{"YearOption"}
+#              <input class="button" accesskey="g" type="submit" value="$Text{"submit"}">
+#            </form>
+#          </td>
+#          <td>
+#            <table>
+#              <tr>
+#                <td>
+#                  $Text{"$QData{"Month_to_Text"}"} $QData{"Year"}
+#                </td>
+#                <td>
+#                  <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Reporting&Year=$QData{"YearBack"}&Month=$QData{"MonthBack"}"><img border="0" src="$Env{"Images"}left-big.png" alt="$Text{"One day back"}"></a>
+#                </td>
+#                <td>
+#                  <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Reporting&Year=$QData{"YearNext"}&Month=$QData{"MonthNext"}"><img border="0" src="$Env{"Images"}right-big.png" alt="$Text{"Next day"}"></a>
+#                </td>
+#              </tr>
+#            </table>
+#          </td>
+#        </tr>
+#        <tr>
+#          <td colspan="2" class="contentfooter">&nbsp;</td>
+#        </tr>
+#      </table>
+#      <br>
+      <table class="contentbody" border="0" width="50%" cellpadding="3" cellspacing="0" align="center">
+        <tr>
+          <td class="contenthead">
+            $Text{"Project Reporting"}: $QData{"Project"}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <table border="1" width="100%" align="center">
+              <tr class="contentkey">
+                <td>$Text{"Action"}</td>
+<!-- dtl:block:UserName -->
+                <td>$QData{"User"}</td>
+<!-- dtl:block:UserName -->
+                <td>$Text{"Total"}</td>
+              </tr>
+<!-- dtl:block:Action -->
+              <tr>
+                <td class="contentvalue">$QData{"Action"}</td>
+<!-- dtl:block:User -->
+                <td class="contentvalue" align="right">$QData{"Hours"}</td>
+<!-- dtl:block:User -->
+              </tr>
+<!-- dtl:block:Action -->
+              <tr>
+                <td class="contentkey">$Text{"Total"}</td>
+<!-- dtl:block:UserTotal -->
+                <td class="contentkey" align="right">$QData{"Total"}</td>
+<!-- dtl:block:UserTotal -->
+                <td class="contentkey" align="right">$QData{"TotalAll"}</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td class="contentfooter">&nbsp;</td>
+        </tr>
+      </table>
+      <br>
+    </td>
+  </tr>
+</table>
