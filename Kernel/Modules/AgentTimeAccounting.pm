@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.7 2006-05-23 09:06:49 tr Exp $
+# $Id: AgentTimeAccounting.pm,v 1.8 2006-07-04 13:20:15 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.7 $';
+$VERSION = '$Revision: 1.8 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 # --
@@ -771,6 +771,9 @@ sub Run {
             $Param{UserID} = $Self->{UserID};
         }
         else {
+            if (!$Self->{AccessRw}) {
+                return $Self->{LayoutObject}->NoPermission(WithHeader => 'yes');
+            }
             $Param{Subaction} = 'View';
         }
 
