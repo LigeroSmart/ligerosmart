@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-  <CVS>$Id: FAQ.sopm,v 1.1.1.1 2006-06-29 09:29:51 ct Exp $</CVS>
+  <CVS>$Id: FAQ.sopm,v 1.2 2006-08-02 12:36:48 martin Exp $</CVS>
   <Name>FAQ</Name>
-  <Version>0.3.1</Version>
+  <Version>1.0.1</Version>
   <Framework>2.1.x</Framework>
   <Vendor>OTRS GmbH</Vendor>
   <URL>http://otrs.org/</URL>
@@ -29,8 +29,8 @@
     <File Permission="644" Location="scripts/test/FAQ.t"></File>
     <File Permission="644" Location="var/httpd/htdocs/images/Standard/faq-category-small.png"></File>
     <File Permission="644" Location="var/httpd/htdocs/images/Standard/faq-item-small.png"></File>
-    <File Permission="644" Location="var/httpd/htdocs/images/Standard/language.png"></File>    
-    <File Permission="644" Location="var/httpd/htdocs/images/Standard/history.png"></File>      
+    <File Permission="644" Location="var/httpd/htdocs/images/Standard/language.png"></File>
+    <File Permission="644" Location="var/httpd/htdocs/images/Standard/history.png"></File>
   </Filelist>
   <CodeInstall>
     # add faq group
@@ -43,17 +43,7 @@
         UserID =&gt; 1,
     );
   </CodeInstall>
-  <DatabaseUninstall>
-    <TableDrop Name="faq_category"/>      
-    <TableDrop Name="faq_item"/>
-    <TableDrop Name="faq_language"/>
-    <TableDrop Name="faq_history"/>
-    <TableDrop Name="faq_state"/>
-    <TableDrop Name="faq_state_type"/>
-    <TableDrop Name="faq_attachment"/>
-    <TableDrop Name="faq_voting"/>    
-  </DatabaseUninstall>  
-  <DatabaseInstall>  
+  <DatabaseInstall>
     <Table Name="faq_language">
       <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="SMALLINT"/>
       <Column Name="name" Required="true" Size="200" Type="VARCHAR"/>
@@ -105,19 +95,20 @@
         <Data Key="name" Value="public (all)" Type="Quote"/>
         <Data Key="type_id" Value="3"/>
     </Insert>
-    
     <Table Name="faq_category">
       <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>
-      <Column Name="parent_id" Required="true" Type="INTEGER"/>      
+      <Column Name="parent_id" Required="true" Type="INTEGER"/>
       <Column Name="name" Required="true" Size="200" Type="VARCHAR"/>
       <Column Name="comments" Required="false" Size="200" Type="VARCHAR"/>
-      <Column Name="valid_id" Required="false" Type="SMALLINT"/>      
+      <Column Name="valid_id" Required="false" Type="SMALLINT"/>
       <Column Name="created" Required="false" Type="DATE"/>
       <Column Name="created_by" Required="false" Type="INTEGER"/>
       <Column Name="changed" Required="false" Type="DATE"/>
       <Column Name="changed_by" Required="false" Type="INTEGER"/>
-    </Table>    
-        
+    </Table>
+    <Insert Table="faq_category">
+        <Data Key="name" Value="Misc" Type="Quote"/>
+    </Insert>
     <Table Name="faq_item">
       <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>
       <Column Name="f_number" Required="true" Size="200" Type="VARCHAR"/>
@@ -179,15 +170,25 @@
       </Index>
     </Table>
     <Table Name="faq_voting">
-      <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>    
+      <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
       <Column Name="created_by" Required="true" Size="200" Type="VARCHAR"/>
-      <Column Name="item_id" Required="true" Type="INTEGER"/>      
-      <Column Name="interface" Required="false" Size="80" Type="VARCHAR"/> 
-      <Column Name="ip" Required="false" Size="50" Type="VARCHAR"/>                       
-      <Column Name="rate" Required="true" Type="INTEGER"/>            
+      <Column Name="item_id" Required="true" Type="INTEGER"/>
+      <Column Name="interface" Required="false" Size="80" Type="VARCHAR"/>
+      <Column Name="ip" Required="false" Size="50" Type="VARCHAR"/>
+      <Column Name="rate" Required="true" Type="INTEGER"/>
       <Column Name="created" Required="false" Type="DATE"/>
-    </Table>        
+    </Table>
   </DatabaseInstall>
   <DatabaseUpgrade></DatabaseUpgrade>
   <DatabaseReinstall></DatabaseReinstall>
+  <DatabaseUninstall>
+    <TableDrop Name="faq_category"/>
+    <TableDrop Name="faq_item"/>
+    <TableDrop Name="faq_language"/>
+    <TableDrop Name="faq_history"/>
+    <TableDrop Name="faq_state"/>
+    <TableDrop Name="faq_state_type"/>
+    <TableDrop Name="faq_attachment"/>
+    <TableDrop Name="faq_voting"/>
+  </DatabaseUninstall>
 </otrs_package>

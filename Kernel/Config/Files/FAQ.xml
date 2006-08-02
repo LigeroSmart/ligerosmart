@@ -21,7 +21,7 @@
         <Setting>
             <String>FAQ</String>
         </Setting>
-    </ConfigItem> 
+    </ConfigItem>
 
     <ConfigItem Name="FAQ::Default::RootCategoryComment" Required="1" Valid="1">
         <Description Lang="en">default category name.</Description>
@@ -31,7 +31,7 @@
         <Setting>
             <String>default comment</String>
         </Setting>
-    </ConfigItem>         
+    </ConfigItem>
 
     <ConfigItem Name="FAQ::Item::Voting::Rates" Required="1" Valid="1">
         <Description Lang="en">Rates for voting. Key must be in procent.</Description>
@@ -42,14 +42,14 @@
             <Hash>
                 <Item Key="100">100 %</Item>
                 <Item Key="75">75 %</Item>
-                <Item Key="50">50 %</Item>                 
-                <Item Key="25">25 %</Item> 
-                <Item Key="0">0 %</Item>                 
+                <Item Key="50">50 %</Item>
+                <Item Key="25">25 %</Item>
+                <Item Key="0">0 %</Item>
             </Hash>
         </Setting>
     </ConfigItem>
-    
-    
+
+
     <ConfigItem Name="FAQ::Item::Voting::Show" Required="1" Valid="1">
         <Description Lang="en">show voting</Description>
         <Description Lang="de">Interfaces in denen das Voting Feature angezeigt werden soll.</Description>
@@ -58,11 +58,11 @@
         <Setting>
             <Hash>
                 <Item Key="internal">internal (agent)</Item>
-                <Item Key="external">external (customer)</Item> 
+                <Item Key="external">external (customer)</Item>
             </Hash>
         </Setting>
-    </ConfigItem>        
-    
+    </ConfigItem>
+
     <ConfigItem Name="FAQ::Item::Voting::QuestionLangKey" Required="1" Valid="1">
         <Description Lang="en">languagekey which is defined in the langauge file *_FAQ.pm</Description>
         <Description Lang="de">LanguageKey für die Frage bei der Artikelbewertung. Wird in den Sprachfiles definiert.</Description>
@@ -71,7 +71,7 @@
         <Setting>
             <String>ArticleVotingQuestion</String>
         </Setting>
-    </ConfigItem>    
+    </ConfigItem>
 
     <ConfigItem Name="FAQ::Explorer::Path::Show" Required="1" Valid="1">
         <Description Lang="en">show FAQ path yes/no</Description>
@@ -94,8 +94,8 @@
         <Setting>
             <String>2</String>
         </Setting>
-    </ConfigItem> 
-    
+    </ConfigItem>
+
     <ConfigItem Name="FAQ::Explorer::ItemList::VotingResultColors" Required="1" Valid="1">
         <Description Lang="en">css color for the voting result</Description>
         <Description Lang="de">Farben für die Anzeige des Ergebnises.</Description>
@@ -108,8 +108,8 @@
                 <Item Key="100">green</Item>
             </Hash>
         </Setting>
-    </ConfigItem>     
-    
+    </ConfigItem>
+
     <ConfigItem Name="FAQ::Explorer::Path::Seperator" Required="1" Valid="1">
         <Description Lang="en">FAQ path seperator</Description>
         <Description Lang="de">Trennzeichen im FAQ Pfad.</Description>
@@ -118,8 +118,8 @@
         <Setting>
             <String>»</String>
         </Setting>
-    </ConfigItem>   
-    
+    </ConfigItem>
+
     <ConfigItem Name="FAQ::Category::Icon" Required="1" Valid="1">
         <Description Lang="en">category icon</Description>
         <Description Lang="de">Kategorie Icon in der FAQ</Description>
@@ -128,8 +128,8 @@
         <Setting>
             <String>faq-category-small.png</String>
         </Setting>
-    </ConfigItem>  
-        
+    </ConfigItem>
+
     <ConfigItem Name="FAQ::Item::Icon" Required="1" Valid="1">
         <Description Lang="en">item icon</Description>
         <Description Lang="de">Artikel Icon in der FAQ</Description>
@@ -138,7 +138,7 @@
         <Setting>
             <String>faq-item-small.png</String>
         </Setting>
-    </ConfigItem>             
+    </ConfigItem>
 
     <ConfigItem Name="FAQ::Explorer::QuickSearch::Show" Required="1" Valid="1">
         <Description Lang="en">show quicksearch</Description>
@@ -149,12 +149,12 @@
             <Hash>
                 <Item Key="internal">internal (agent)</Item>
                 <Item Key="external">external (customer)</Item>
-                <Item Key="public">public (public)</Item> 
+                <Item Key="public">public (public)</Item>
             </Hash>
         </Setting>
     </ConfigItem>
- 
- 
+
+
     <ConfigItem Name="FAQ::Explorer::QuickSearch::ShowSubCategoryItems" Required="1" Valid="1">
         <Description Lang="en">show items of subcategories</Description>
         <Description Lang="de">Artikel aus Subkategorien anzeigen ja/nein</Description>
@@ -167,7 +167,7 @@
             </Option>
         </Setting>
     </ConfigItem>
- 
+
     <ConfigItem Name="FAQ::Explorer::LastChange::Show" Required="1" Valid="1">
         <Description Lang="en">show last change items</Description>
         <Description Lang="de">Interfaces in denen das LastChange Feature angezeigt werden soll.</Description>
@@ -177,12 +177,12 @@
             <Hash>
                 <Item Key="internal">internal (agent)</Item>
                 <Item Key="external">external (customer)</Item>
-                <Item Key="public">public (public)</Item> 
+                <Item Key="public">public (public)</Item>
             </Hash>
         </Setting>
-    </ConfigItem> 
-    
- 
+    </ConfigItem>
+
+
     <ConfigItem Name="FAQ::Explorer::LastChange::ShowSubCategoryItems" Required="1" Valid="1">
         <Description Lang="en">show items of subcategories</Description>
         <Description Lang="de">Artikel aus Subkategorien anzeigen ja/nein</Description>
@@ -194,8 +194,8 @@
                 <Item Key="1">Yes</Item>
             </Option>
         </Setting>
-    </ConfigItem>          
-    
+    </ConfigItem>
+
     <ConfigItem Name="FAQ::Explorer::LastChange::Limit" Required="1" Valid="1">
         <Description Lang="en">number of items</Description>
         <Description Lang="de">Anzahl der zu anzeigenden Artikel</Description>
@@ -204,8 +204,8 @@
         <Setting>
             <String>3</String>
         </Setting>
-    </ConfigItem>  
- 
+    </ConfigItem>
+
     <ConfigItem Name="FAQ::Explorer::LastCreate::Show" Required="1" Valid="1">
         <Description Lang="en">show last create items</Description>
         <Description Lang="de">Interfaces in denen das LastCreate Feature angezeigt werden soll.</Description>
@@ -215,11 +215,11 @@
             <Hash>
                 <Item Key="internal">internal (agent)</Item>
                 <Item Key="external">external (customer)</Item>
-                <Item Key="public">public (public)</Item> 
+                <Item Key="public">public (public)</Item>
             </Hash>
         </Setting>
-    </ConfigItem>    
-    
+    </ConfigItem>
+
     <ConfigItem Name="FAQ::Explorer::LastCreate::ShowSubCategoryItems" Required="1" Valid="1">
         <Description Lang="en">show items of subcategories</Description>
         <Description Lang="de">Artikel aus Subkategorien anzeigen ja/nein</Description>
@@ -231,8 +231,8 @@
                 <Item Key="1">Yes</Item>
             </Option>
         </Setting>
-    </ConfigItem>      
-    
+    </ConfigItem>
+
     <ConfigItem Name="FAQ::Explorer::LastCreate::Limit" Required="1" Valid="1">
         <Description Lang="en">limit of items</Description>
         <Description Lang="de">Anzahl der zu anzeigenden Artikel</Description>
@@ -241,7 +241,7 @@
         <Setting>
             <String>3</String>
         </Setting>
-    </ConfigItem>    
+    </ConfigItem>
 
     <ConfigItem Name="FAQ::FAQHook" Required="1" Valid="1">
         <Description Lang="en">Default hook for FAQ.</Description>
@@ -252,7 +252,7 @@
             <String>FAQ</String>
         </Setting>
     </ConfigItem>
-    
+
     <ConfigItem Name="FAQ::Default::State" Required="1" Valid="1">
         <Description Lang="en">Default state for FAQ entry.</Description>
         <Description Lang="de">Standard Status eines  FAQ-Eintrags.</Description>
@@ -261,91 +261,91 @@
         <Setting>
             <String>internal (agent)</String>
         </Setting>
-    </ConfigItem>      
-    
+    </ConfigItem>
+
     <ConfigItem Name="FAQ::Item::Field1" Required="1" Valid="1">
         <Description Lang="en">Definition of FAQ item free text field.</Description>
         <Description Lang="de">Definition der freien Textfelder.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Item</SubGroup>
-        <Setting>   
-           <Hash>     
-              <Item Key="Show">public</Item>                                                                                                  
-              <Item Key="Caption">Symptom</Item>                   
-              <Item Key="Prio">100</Item>     
+        <Setting>
+           <Hash>
+              <Item Key="Show">public</Item>
+              <Item Key="Caption">Symptom</Item>
+              <Item Key="Prio">100</Item>
            </Hash>
         </Setting>
     </ConfigItem>
-    
+
     <ConfigItem Name="FAQ::Item::Field2" Required="1" Valid="1">
         <Description Lang="en">Definition of FAQ item free text field.</Description>
         <Description Lang="de">Definition der freien Textfelder.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Item</SubGroup>
-        <Setting>   
-           <Hash>                
-              <Item Key="Show">public</Item>                                                                                     
-              <Item Key="Caption">Problem</Item>                   
-              <Item Key="Prio">200</Item>     
+        <Setting>
+           <Hash>
+              <Item Key="Show">public</Item>
+              <Item Key="Caption">Problem</Item>
+              <Item Key="Prio">200</Item>
            </Hash>
         </Setting>
     </ConfigItem>
-    
+
     <ConfigItem Name="FAQ::Item::Field3" Required="1" Valid="1">
         <Description Lang="en">Definition of FAQ item free text field.</Description>
         <Description Lang="de">Definition der freien Textfelder.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Item</SubGroup>
-        <Setting>   
-           <Hash> 
-              <Item Key="Show">public</Item>                                                                                     
-              <Item Key="Caption">Solution</Item>                   
-              <Item Key="Prio">300</Item>     
+        <Setting>
+           <Hash>
+              <Item Key="Show">public</Item>
+              <Item Key="Caption">Solution</Item>
+              <Item Key="Prio">300</Item>
            </Hash>
         </Setting>
     </ConfigItem>
-    
+
     <ConfigItem Name="FAQ::Item::Field4" Required="1" Valid="1">
         <Description Lang="en">Definition of FAQ item free text field.</Description>
         <Description Lang="de">Definition der freien Textfelder.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Item</SubGroup>
-        <Setting>   
-           <Hash>     
-              <Item Key="Show"></Item>                                                                                                                                                                           
-              <Item Key="Caption">Field4</Item>                   
-              <Item Key="Prio">400</Item>     
+        <Setting>
+           <Hash>
+              <Item Key="Show"></Item>
+              <Item Key="Caption">Field4</Item>
+              <Item Key="Prio">400</Item>
            </Hash>
         </Setting>
     </ConfigItem>
-    
+
     <ConfigItem Name="FAQ::Item::Field5" Required="1" Valid="1">
         <Description Lang="en">Definition of FAQ item free text field.</Description>
         <Description Lang="de">Definition der freien Textfelder.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Item</SubGroup>
-        <Setting>   
-           <Hash>     
-              <Item Key="Show"></Item>                                                                                     
-              <Item Key="Caption">Field5</Item>                   
-              <Item Key="Prio">500</Item>     
+        <Setting>
+           <Hash>
+              <Item Key="Show"></Item>
+              <Item Key="Caption">Field5</Item>
+              <Item Key="Prio">500</Item>
            </Hash>
         </Setting>
     </ConfigItem>
-    
+
     <ConfigItem Name="FAQ::Item::Field6" Required="1" Valid="1">
         <Description Lang="en">Definition of FAQ item free text field.</Description>
         <Description Lang="de">Definition der freien Textfelder.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Item</SubGroup>
-        <Setting>   
-           <Hash>     
-              <Item Key="Show">internal</Item>                                                                                     
-              <Item Key="Caption">Comment</Item>                   
-              <Item Key="Prio">600</Item>     
+        <Setting>
+           <Hash>
+              <Item Key="Show">internal</Item>
+              <Item Key="Caption">Comment</Item>
+              <Item Key="Prio">600</Item>
            </Hash>
         </Setting>
-    </ConfigItem>                                
+    </ConfigItem>
 
     <ConfigItem Name="LinkObject###FAQ" Required="1" Valid="1">
         <Description Lang="en">Link object settings for FAQ. Objects that are known by the system.</Description>
@@ -388,7 +388,7 @@
                     <NavBar>FAQ</NavBar>
                     <AccessKey>q</AccessKey>
                     <Prio>8300</Prio>
-                </NavBar>                                
+                </NavBar>
                 <NavBar>
                     <GroupRo>faq</GroupRo>
                     <Description>Explorer</Description>
@@ -400,7 +400,7 @@
                     <NavBar>FAQ</NavBar>
                     <AccessKey>e</AccessKey>
                     <Prio>100</Prio>
-                </NavBar>                
+                </NavBar>
                 <NavBar>
                     <Group>faq</Group>
                     <Description>New Article</Description>
@@ -448,6 +448,18 @@
                     <NavBar>FAQ</NavBar>
                     <AccessKey>u</AccessKey>
                     <Prio>910</Prio>
+                </NavBar>
+                <NavBar>
+                    <Group>faq</Group>
+                    <Description>Category</Description>
+                    <Name>Category</Name>
+                    <Image>category.png</Image>
+                    <Link>Action=AgentFAQ&amp;Subaction=Category</Link>
+                    <Type></Type>
+                    <Block></Block>
+                    <NavBar>FAQ</NavBar>
+                    <AccessKey>c</AccessKey>
+                    <Prio>920</Prio>
                 </NavBar>
             </FrontendModuleReg>
         </Setting>
