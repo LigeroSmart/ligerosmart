@@ -1,8 +1,8 @@
 # --
 # Kernel/System/Survey.pm - manage all survey module events
-# Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
+# Copyright (C) 2001-2006 OTRS GmbH, http://otrs.org/
 # --
-# $Id: Survey.pm,v 1.24 2006-06-28 10:41:19 mh Exp $
+# $Id: Survey.pm,v 1.25 2006-09-01 21:32:39 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Ticket;
 use Kernel::System::CustomerUser;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.24 $';
+$VERSION = '$Revision: 1.25 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -1489,7 +1489,7 @@ sub RequestSend {
         $MasterID = $Row[0];
     }
     # if master survey exists
-    if ($MasterID > 0) {
+    if ($MasterID && $MasterID > 0) {
         my $Subject = $Self->{ConfigObject}->Get('Survey::NotificationSubject');
         my $Body = $Self->{ConfigObject}->Get('Survey::NotificationBody');
         # ticket data
@@ -1752,6 +1752,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.24 $ $Date: 2006-06-28 10:41:19 $
+$Revision: 1.25 $ $Date: 2006-09-01 21:32:39 $
 
 =cut
