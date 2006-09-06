@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/PublicSurvey.pm - a survey module
-# Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
+# Copyright (C) 2001-2006 OTRS GmbH, http://otrs.org/
 # --
-# $Id: PublicSurvey.pm,v 1.8 2006-03-20 15:25:01 mh Exp $
+# $Id: PublicSurvey.pm,v 1.9 2006-09-06 16:21:00 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,10 +15,9 @@ use strict;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.8 $';
+$VERSION = '$Revision: 1.9 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
-# --
 sub new {
     my $Type = shift;
     my %Param = @_;
@@ -42,7 +41,7 @@ sub new {
 
     return $Self;
 }
-# --
+
 sub Run {
     my $Self = shift;
     my %Param = @_;
@@ -117,7 +116,6 @@ sub Run {
 
         return $Output;
     }
-
 
     # ------------------------------------------------------------ #
     # show survey
@@ -214,6 +212,5 @@ sub Run {
 
     return $Output;
 }
-# --
 
 1;

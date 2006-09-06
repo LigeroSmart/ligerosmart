@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentSurvey.pm - a survey module
-# Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
+# Copyright (C) 2001-2006 OTRS GmbH, http://otrs.org/
 # --
-# $Id: AgentSurvey.pm,v 1.20 2006-06-28 10:41:19 mh Exp $
+# $Id: AgentSurvey.pm,v 1.21 2006-09-06 16:21:00 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,10 +15,9 @@ use strict;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.20 $';
+$VERSION = '$Revision: 1.21 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
-# --
 sub new {
     my $Type = shift;
     my %Param = @_;
@@ -39,7 +38,7 @@ sub new {
 
     return $Self;
 }
-# --
+
 sub Run {
     my $Self = shift;
     my %Param = @_;
@@ -162,7 +161,8 @@ sub Run {
 
                     if ($RequestComplete eq '0') {
                         $Data{AnswerPercent} = 0;
-                    } else {
+                    }
+                    else {
                         $Data{AnswerPercent} = 100 - $Percent;
                     }
 
@@ -188,7 +188,6 @@ sub Run {
                     );
                 }
             }
-
             if ($RequestComplete > 0) {
                 $Self->{LayoutObject}->Block(
                     Name => 'SurveyEditStatsDetails',
@@ -246,7 +245,6 @@ sub Run {
 
         return $Output;
     }
-
     elsif ($Self->{Subaction} eq 'SurveyStatus') {
         my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
         my $NewStatus = $Self->{ParamObject}->GetParam(Param => "NewStatus");
@@ -272,7 +270,6 @@ sub Run {
 
         return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=Survey&SurveyID=$SurveyID$Message");
     }
-
     elsif ($Self->{Subaction} eq 'SurveyEdit') {
         my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
         # check if survey exists
@@ -346,7 +343,6 @@ sub Run {
 
         return $Output;
     }
-
     elsif ($Self->{Subaction} eq 'SurveySave') {
         my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
         my $Title = $Self->{ParamObject}->GetParam(Param => "Title");
@@ -371,7 +367,6 @@ sub Run {
             return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=SurveyEdit&SurveyID=$SurveyID");
         }
     }
-
     elsif ($Self->{Subaction} eq 'SurveyAdd') {
         $Output = $Self->{LayoutObject}->Header(Title => 'Survey Add');
         $Output .= $Self->{LayoutObject}->NavigationBar();
@@ -389,7 +384,6 @@ sub Run {
 
         return $Output;
     }
-
     elsif ($Self->{Subaction} eq 'SurveyNew') {
         my $Title = $Self->{ParamObject}->GetParam(Param => "Title");
         my $Introduction = $Self->{ParamObject}->GetParam(Param => "Introduction");
@@ -409,7 +403,6 @@ sub Run {
             return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=SurveyAdd");
         }
     }
-
     elsif ($Self->{Subaction} eq 'QuestionAdd') {
         my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
         my $Question = $Self->{ParamObject}->GetParam(Param => "Question");
@@ -432,7 +425,6 @@ sub Run {
 
         return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=SurveyEdit&SurveyID=$SurveyID#NewQuestion");
     }
-
     elsif ($Self->{Subaction} eq 'QuestionDelete') {
         my $QuestionID = $Self->{ParamObject}->GetParam(Param => "QuestionID");
         my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
@@ -450,7 +442,6 @@ sub Run {
 
         return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=SurveyEdit&SurveyID=$SurveyID#Question");
     }
-
     elsif ($Self->{Subaction} eq 'QuestionUp') {
         my $QuestionID = $Self->{ParamObject}->GetParam(Param => "QuestionID");
         my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
@@ -468,7 +459,6 @@ sub Run {
 
         return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=SurveyEdit&SurveyID=$SurveyID#Question");
     }
-
     elsif ($Self->{Subaction} eq 'QuestionDown') {
         my $QuestionID = $Self->{ParamObject}->GetParam(Param => "QuestionID");
         my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
@@ -486,7 +476,6 @@ sub Run {
 
         return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=SurveyEdit&SurveyID=$SurveyID#Question");
     }
-
     elsif ($Self->{Subaction} eq 'QuestionEdit') {
         my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
         my $QuestionID = $Self->{ParamObject}->GetParam(Param => "QuestionID");
@@ -584,7 +573,6 @@ sub Run {
 
         return $Output;
     }
-
     elsif ($Self->{Subaction} eq 'QuestionSave') {
         my $QuestionID = $Self->{ParamObject}->GetParam(Param => "QuestionID");
         my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
@@ -609,7 +597,6 @@ sub Run {
             return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=QuestionEdit&SurveyID=$SurveyID&QuestionID=$QuestionID");
         }
     }
-
     elsif ($Self->{Subaction} eq 'AnswerAdd') {
         my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
         my $QuestionID = $Self->{ParamObject}->GetParam(Param => "QuestionID");
@@ -633,7 +620,6 @@ sub Run {
 
         return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=QuestionEdit&SurveyID=$SurveyID&QuestionID=$QuestionID#NewAnswer");
     }
-
     elsif ($Self->{Subaction} eq 'AnswerDelete') {
         my $AnswerID = $Self->{ParamObject}->GetParam(Param => "AnswerID");
         my $QuestionID = $Self->{ParamObject}->GetParam(Param => "QuestionID");
@@ -654,7 +640,6 @@ sub Run {
 
         return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=QuestionEdit&SurveyID=$SurveyID&QuestionID=$QuestionID#Answer");
     }
-
     elsif ($Self->{Subaction} eq 'AnswerUp') {
         my $AnswerID = $Self->{ParamObject}->GetParam(Param => "AnswerID");
         my $QuestionID = $Self->{ParamObject}->GetParam(Param => "QuestionID");
@@ -675,7 +660,6 @@ sub Run {
 
         return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=QuestionEdit&SurveyID=$SurveyID&QuestionID=$QuestionID#Answer");
     }
-
     elsif ($Self->{Subaction} eq 'AnswerDown') {
         my $AnswerID = $Self->{ParamObject}->GetParam(Param => "AnswerID");
         my $QuestionID = $Self->{ParamObject}->GetParam(Param => "QuestionID");
@@ -696,7 +680,6 @@ sub Run {
 
         return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=QuestionEdit&SurveyID=$SurveyID&QuestionID=$QuestionID#Answer");
     }
-
     elsif ($Self->{Subaction} eq 'AnswerEdit') {
         my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
         my $QuestionID = $Self->{ParamObject}->GetParam(Param => "QuestionID");
@@ -729,7 +712,6 @@ sub Run {
 
         return $Output;
     }
-
     elsif ($Self->{Subaction} eq 'AnswerSave') {
         my $AnswerID = $Self->{ParamObject}->GetParam(Param => "AnswerID");
         my $QuestionID = $Self->{ParamObject}->GetParam(Param => "QuestionID");
@@ -756,7 +738,6 @@ sub Run {
             return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=AnswerEdit&SurveyID=$SurveyID&QuestionID=$QuestionID&AnswerID=$AnswerID");
         }
     }
-
     elsif ($Self->{Subaction} eq 'Stats') {
         my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
         # check if survey exists
@@ -795,7 +776,6 @@ sub Run {
 
         return $Output;
     }
-
     elsif ($Self->{Subaction} eq 'StatsDetail') {
         my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
         my $RequestID = $Self->{ParamObject}->GetParam(Param => "RequestID");

@@ -1,8 +1,8 @@
 # --
 # AgentSurvey.dtl - provides HTML form for AgentSurvey
-# Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
+# Copyright (C) 2001-2006 OTRS GmbH, http://otrs.org/
 # --
-# $Id: AgentSurvey.dtl,v 1.23 2006-06-28 10:41:19 mh Exp $
+# $Id: AgentSurvey.dtl,v 1.24 2006-09-06 16:21:00 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -48,7 +48,6 @@
   </tr>
 </table>
 <!-- dtl:block:Overview -->
-
 <!-- dtl:block:Survey -->
 <table border="0" width="100%" cellspacing="0" cellpadding="3" cols="1">
   <tr>
@@ -275,7 +274,6 @@
         </tr>
       </table>
 <!-- dtl:block:Survey -->
-
 <!-- dtl:block:SurveyEdit -->
       <table border="0" width="100%" cellspacing="0" cellpadding="3" cols="1">
         <tr>
@@ -477,7 +475,6 @@
         </tr>
       </table>
 <!-- dtl:block:SurveyEdit -->
-
 <!-- dtl:block:SurveyAdd -->
       <table border="0" width="100%" cellspacing="0" cellpadding="3" cols="1">
         <tr>
@@ -555,7 +552,6 @@
         </tr>
       </table>
 <!-- dtl:block:SurveyAdd -->
-
 <!-- dtl:block:QuestionEdit -->
       <table border="0" width="100%" cellspacing="0" cellpadding="3" cols="1">
         <tr>
@@ -776,7 +772,6 @@
         </tr>
       </table>
 <!-- dtl:block:QuestionEdit -->
-
 <!-- dtl:block:AnswerEdit -->
       <table border="0" width="100%" cellspacing="0" cellpadding="3" cols="1">
         <tr>
@@ -844,7 +839,6 @@
         </tr>
       </table>
 <!-- dtl:block:AnswerEdit -->
-
 <!-- dtl:block:Stats -->
       <table border="0" width="100%" cellspacing="0" cellpadding="3" cols="1">
         <tr>
@@ -929,7 +923,6 @@
           </tr>
         </table>
 <!-- dtl:block:Stats -->
-
 <!-- dtl:block:StatsDetail -->
         <table border="0" width="100%" cellspacing="0" cellpadding="3" cols="1">
           <tr>
