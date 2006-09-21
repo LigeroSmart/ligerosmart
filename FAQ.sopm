@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-  <CVS>$Id: FAQ.sopm,v 1.2 2006-08-02 12:36:48 martin Exp $</CVS>
+  <CVS>$Id: FAQ.sopm,v 1.3 2006-09-21 10:04:13 rk Exp $</CVS>
   <Name>FAQ</Name>
-  <Version>1.0.1</Version>
+  <Version>1.0.2</Version>
   <Framework>2.1.x</Framework>
   <Vendor>OTRS GmbH</Vendor>
   <URL>http://otrs.org/</URL>
@@ -26,6 +26,7 @@
     <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQ.dtl"></File>
     <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQ.dtl"></File>
     <File Permission="644" Location="Kernel/System/FAQ.pm"></File>
+    <File Permission="644" Location="Kernel/System/LinkObject/FAQ.pm"></File>
     <File Permission="644" Location="scripts/test/FAQ.t"></File>
     <File Permission="644" Location="var/httpd/htdocs/images/Standard/faq-category-small.png"></File>
     <File Permission="644" Location="var/httpd/htdocs/images/Standard/faq-item-small.png"></File>
