@@ -1,8 +1,8 @@
 # --
 # Kernel/System/FAQ.pm - all faq funktions
-# Copyright (C) 2001-2005 Martin Edenhofer <martin+code@otrs.org>
+# Copyright (C) 2001-2006 OTRS GmbH, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.1.1.1 2006-06-29 09:29:51 ct Exp $
+# $Id: FAQ.pm,v 1.2 2006-09-28 18:27:21 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -13,9 +13,10 @@ package Kernel::System::FAQ;
 
 use strict;
 use MIME::Base64;
+use Kernel::System::Encode;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.1.1.1 $';
+$VERSION = '$Revision: 1.2 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -69,7 +70,7 @@ sub new {
     foreach (qw(DBObject ConfigObject LogObject UserID)) {
         $Self->{$_} = $Param{$_} || die "Got no $_!";
     }
-
+    $Self->{EncodeObject} = Kernel::System::Encode->new(%Param);
     return $Self;
 }
 
@@ -86,12 +87,12 @@ get an article
 sub FAQGet {
     my $Self = shift;
     my %Param = @_;
-    
+
     # Failures rename from ItemID to FAQID
     if($Param{FAQID}) {
         $Param{ItemID} = $Param{FAQID};
-    }    
-    
+    }
+
     # check needed stuff
     foreach (qw(ItemID)) {
       if (!$Param{$_}) {
@@ -109,25 +110,25 @@ sub FAQGet {
             " i.f_field4, i.f_field5, i.f_field6, ".
             " i.free_key1, i.free_value1, i.free_key2, i.free_value2, ".
             " i.free_key3, i.free_value3, i.free_key4, i.free_value4, ".
-            " i.created, i.created_by, i.changed, i.changed_by, ".            
+            " i.created, i.created_by, i.changed, i.changed_by, ".
             " i.category_id, i.state_id, c.name, s.name, l.name, i.f_keywords, i.f_number, st.id, st.name ".
             " FROM faq_item i, faq_category c, faq_state s, faq_state_type st, faq_language l ".
             " WHERE ".
             " i.state_id = s.id AND ".
-            " s.type_id = st.id AND ".            
+            " s.type_id = st.id AND ".
             " i.category_id = c.id AND ".
-            " i.f_language_id = l.id AND ".           
+            " i.f_language_id = l.id AND ".
             " i.id = $Param{ItemID}";
-    #$Self->{LogObject}->Log(Priority => 'error', Message => $SQL);            
+    #$Self->{LogObject}->Log(Priority => 'error', Message => $SQL);
     $Self->{DBObject}->Prepare(SQL => $SQL);
     while  (my @Row = $Self->{DBObject}->FetchrowArray()) {
         my %VoteData = %{$Self->ItemVoteDataGet(ItemID=>$Param{ItemID})};
         %Data = (
             # var for old versions
-            ID => $Param{ItemID},         
-            FAQID => $Param{ItemID},             
-            # 
-            ItemID => $Param{ItemID},            
+            ID => $Param{ItemID},
+            FAQID => $Param{ItemID},
+            #
+            ItemID => $Param{ItemID},
             Name => $Row[0],
             LanguageID => $Row[1],
             Title => $Row[2],
@@ -152,12 +153,12 @@ sub FAQGet {
             CategoryName => $Row[23],
             State => $Row[24],
             Language => $Row[25],
-            Keywords => $Row[26],            
+            Keywords => $Row[26],
             Number => $Row[27],
-            StateTypeID => $Row[28], 
-            StateTypeName => $Row[29],                         
-            Result => sprintf("%0.".$Self->{ConfigObject}->Get("FAQ::Explorer::ItemList::VotingResultDecimalPlaces")."f",$VoteData{Result} || 0),            
-            Votes => $VoteData{Votes},                                                          
+            StateTypeID => $Row[28],
+            StateTypeName => $Row[29],
+            Result => sprintf("%0.".$Self->{ConfigObject}->Get("FAQ::Explorer::ItemList::VotingResultDecimalPlaces")."f",$VoteData{Result} || 0),
+            Votes => $VoteData{Votes},
         );
     }
     if (!%Data) {
@@ -180,6 +181,7 @@ sub FAQGet {
         # decode attachment if it's a postgresql backend and not BLOB
         if (!$Self->{DBObject}->GetDatabaseFunction('DirectBlob')) {
             $Row[3] = decode_base64($Row[3]);
+            $Self->{EncodeObject}->Encode(\$Row[3]);
         }
         $Data{Filename} = $Row[0];
         $Data{ContentType} = $Row[1];
@@ -211,17 +213,17 @@ sub ItemVoteDataGet {
          return 0;
        }
     }
-    
+
     # db quote
     foreach (qw(ItemID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
-    }    
-    
+    }
+
     my $SQL = " SELECT count(*), avg(rate) FROM faq_voting WHERE item_id = " . $Param{ItemID};
 
     my %Hash = ();
-    $Self->{DBObject}->Prepare(SQL => $SQL, Limit => $Param{Limit} || 500);    
-    if(my @Data = $Self->{DBObject}->FetchrowArray()) {        
+    $Self->{DBObject}->Prepare(SQL => $SQL, Limit => $Param{Limit} || 500);
+    if(my @Data = $Self->{DBObject}->FetchrowArray()) {
         $Hash{Votes}  = $Data[0];
         $Hash{Result} = $Data[1];
     }
@@ -322,13 +324,13 @@ sub FAQAdd {
         # add attachment
         if($Param{Content} && $Param{ContentType} && $Param{Filename}) {
             $Self->AttachmentAdd(
-                ItemID => $ID,            
+                ItemID => $ID,
                 Content => $Param{Content},
                 ContentType => $Param{ContentType},
                 Filename => $Param{Filename}
             );
         }
-        
+
         $Self->FAQHistoryAdd(
             Name => 'Created',
             ItemID => $ID,
@@ -356,7 +358,7 @@ sub AttachmentAdd {
         return;
       }
     }
-    
+
     # get attachment size
     {
         use bytes;
@@ -365,9 +367,10 @@ sub AttachmentAdd {
     }
     # encode attachemnt if it's a postgresql backend!!!
     if (!$Self->{DBObject}->GetDatabaseFunction('DirectBlob')) {
+        $Self->{EncodeObject}->EncodeOutput(\$Param{Content});
         $Param{Content} = encode_base64($Param{Content});
     }
-    
+
     my $SQL = "INSERT INTO faq_attachment ".
         " (faq_id, filename, content_type, content_size, content, ".
         " created, created_by, changed, changed_by) " .
@@ -377,7 +380,7 @@ sub AttachmentAdd {
     # write attachment to db
     if ($Self->{DBObject}->Do(SQL => $SQL, Bind => [\$Param{Content}])) {
         return 1;
-    }    
+    }
     return 0;
 }
 
@@ -514,6 +517,7 @@ sub FAQUpdate {
             }
             # encode attachemnt if it's a postgresql backend!!!
             if (!$Self->{DBObject}->GetDatabaseFunction('DirectBlob')) {
+                $Self->{EncodeObject}->EncodeOutput(\$Param{Content});
                 $Param{Content} = encode_base64($Param{Content});
             }
             # delete old attachment
@@ -555,7 +559,7 @@ count an article
 
 sub FAQCount {
     my $Self = shift;
-    my %Param = @_;    
+    my %Param = @_;
 
     # check needed stuff
     foreach (qw(CategoryIDs ItemStates)) {
@@ -564,26 +568,26 @@ sub FAQCount {
             return;
         }
     }
-    
+
     my $SQL = "";
     my $Ext = "";
     $SQL = "SELECT COUNT(*)" .
            " FROM faq_item i, faq_state s".
            " WHERE i.category_id IN ('${\(join '\', \'', @{$Param{CategoryIDs}})}')".
-           " AND i.state_id = s.id";           
+           " AND i.state_id = s.id";
     if ($Param{ItemStates} && ref($Param{ItemStates}) eq 'HASH' && %{$Param{ItemStates}}) {
         $Ext .= " AND s.type_id IN ('${\(join '\', \'', keys(%{$Param{ItemStates}}))}')";
     }
     $Ext .= " GROUP BY category_id";
-    $SQL .= $Ext;    
-    
+    $SQL .= $Ext;
+
     $Self->{DBObject}->Prepare(SQL => $SQL, Limit => 200);
-    
+
     if(my @Row = $Self->{DBObject}->FetchrowArray()) {
         return $Row[0];
     } else {
         return 0;
-    }           
+    }
 }
 
 
@@ -597,7 +601,7 @@ add an article
       ItemID => '123456',
       IP => 54.43.30.1',
       Interface => 'Some Text',
-      Rate => 100,      
+      Rate => 100,
   );
 
 =cut
@@ -611,16 +615,16 @@ sub VoteAdd {
          $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
          return 0;
        }
-    }  
-    
+    }
+
     # db quote
     foreach (qw(CreatedBy Interface IP)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
     }
     foreach (qw(ItemID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
-    }    
-    
+    }
+
     my $SQL = "INSERT INTO faq_voting ( ".
               " created_by, item_id, ip, interface, rate, created".
               " ) VALUES (".
@@ -631,7 +635,7 @@ sub VoteAdd {
               " '$Param{Rate}', ".
               " current_timestamp ".
               " )";
-    #$Self->{LogObject}->Log(Priority => 'error', Message => $SQL);            
+    #$Self->{LogObject}->Log(Priority => 'error', Message => $SQL);
     if ($Self->{DBObject}->Do(SQL => $SQL)) {
         return 1;
     }
@@ -648,7 +652,7 @@ add an article
   my %VoteData = %{$FAQObject->VoteGet(
       CreateBy => 'Some Text',
       ItemID => '123456',
-      Interface => 'Some Text',     
+      Interface => 'Some Text',
   )};
 
 =cut
@@ -662,44 +666,44 @@ sub VoteGet {
          return {};
        }
     }
-    
-    
+
+
     # db quote
     foreach (qw(CreatedBy Interface IP)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
     }
     foreach (qw(ItemID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
-    }      
-    
+    }
+
     my $Ext = "";
     my $SQL = " SELECT created_by, item_id, interface, ip, created, rate FROM faq_voting WHERE";
-    
+
     # public
     if($Param{Interface} eq '3') {
         $Ext .= " ip LIKE '$Param{IP}' AND".
-                " item_id = $Param{ItemID}";   
-                
-    # customer             
+                " item_id = $Param{ItemID}";
+
+    # customer
     } elsif($Param{Interface} eq '2') {
         $Ext .= " created_by LIKE '$Param{CreateBy}' AND".
-                " item_id = $Param{ItemID}";                
-                
+                " item_id = $Param{ItemID}";
+
     # internal
     } elsif($Param{Interface} eq '1') {
         $Ext .= " created_by LIKE '$Param{CreateBy}' AND".
-                " item_id = $Param{ItemID}";                
+                " item_id = $Param{ItemID}";
     }
     $SQL .= $Ext;
     #$Self->{LogObject}->Log(Priority => 'error', Message => $SQL);
-    
+
     $Self->{DBObject}->Prepare(SQL => $SQL);
-    my %Data = ();    
+    my %Data = ();
     while  (my @Row = $Self->{DBObject}->FetchrowArray()) {
         %Data = (
             CreatedBy => $Row[0],
             ItemID => $Row[1],
-            Interface => $Row[2],            
+            Interface => $Row[2],
             IP => $Row[3],
             Created => $Row[4],
             Rate => $Row[5],
@@ -709,7 +713,7 @@ sub VoteGet {
         #$Self->{LogObject}->Log(Priority => 'error', Message => "No voting for this faq article! Kernel::System::FAQ::VoteGet()");
         return {};
     }
-    return \%Data; 
+    return \%Data;
 }
 
 =item VoteSearch()
@@ -731,22 +735,22 @@ sub VoteSearch {
          return [];
        }
     }
-    
+
     # db quote
     foreach (qw()) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
     }
     foreach (qw(ItemID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
-    }    
-    
+    }
+
     my $Ext = "";
     my $SQL = " SELECT id FROM faq_voting WHERE";
 
     if(defined($Param{ItemID})) {
-        $Ext .= " item_id = " . $Param{ItemID};   
+        $Ext .= " item_id = " . $Param{ItemID};
     }
-    
+
     $SQL .= $Ext;
 
     my @List = ();
@@ -754,7 +758,7 @@ sub VoteSearch {
     while  (my @Row = $Self->{DBObject}->FetchrowArray()) {
         push (@List, $Row[0]);
     }
-    return \@List;    
+    return \@List;
 }
 
 =item VoteDelete()
@@ -769,20 +773,20 @@ add an article
 sub VoteDelete {
     my $Self = shift;
     my %Param = @_;
-    
+
     # check needed stuff
     foreach (qw(VoteID)) {
        if (!$Param{$_}) {
          $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
          return 0;
        }
-    }  
-        
+    }
+
     # db quote
     foreach (qw(VoteID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
-    }            
-        
+    }
+
     my $SQL = "DELETE FROM faq_voting WHERE id = ".$Param{VoteID};
 
     if ($Self->{DBObject}->Do(SQL => $SQL)) {
@@ -790,8 +794,8 @@ sub VoteDelete {
     }
     else {
         return 0;
-    } 
-    
+    }
+
 }
 
 =item FAQDelete()
@@ -974,12 +978,12 @@ sub HistoryGet {
     while  (my @Row = $Self->{DBObject}->FetchrowArray()) {
         my %Record = (
             ItemID => $Row[0],
-            Action => $Row[1],           
+            Action => $Row[1],
             Created => $Row[2],
             CreatedBy => $Row[3],
-            Category => $Row[4],             
-            Subject => $Row[5],               
-            Number => $Row[6],            
+            Category => $Row[4],
+            Subject => $Row[5],
+            Number => $Row[6],
         );
         push (@Data, \%Record);
     }
@@ -1033,41 +1037,41 @@ get the category search as hash
 sub CategorySearch {
     my $Self = shift;
     my %Param = @_;
- 
-    
+
+
     # sql
     my $SQL = "SELECT id FROM faq_category";
     my $Ext = '';
-    
-    # WHERE   
+
+    # WHERE
     if (defined($Param{Name})) {
         $Ext .= " WHERE name LIKE '%".$Self->{DBObject}->Quote($Param{Name})."%'";
     }
     elsif (defined($Param{ParentID})) {
         $Ext .= " WHERE parent_id = '".$Self->{DBObject}->Quote($Param{ParentID}, 'Integer')."'";
-    } 
+    }
     elsif (defined($Param{ParentIDs}) && ref($Param{ParentIDs}) eq 'ARRAY' && @{$Param{ParentIDs}}) {
         $Ext = " WHERE parent_id IN (";
         foreach my $ParentID (@{$Param{ParentIDs}}) {
             $Ext .= $Self->{DBObject}->Quote($ParentID, 'Integer').",";
         }
-        $Ext = substr($Ext,0,-1);    
+        $Ext = substr($Ext,0,-1);
         $Ext .= ")";
-    }    
+    }
     elsif (defined($Param{CategoryIDs}) && ref($Param{CategoryIDs}) eq 'ARRAY' && @{$Param{CategoryIDs}}) {
         $Ext = " WHERE id IN (";
         foreach my $CategoryID (@{$Param{CategoryIDs}}) {
             $Ext .= $Self->{DBObject}->Quote($CategoryID, 'Integer').",";
         }
-        $Ext = substr($Ext,0,-1);    
-        $Ext .= ")";        
-    } 
+        $Ext = substr($Ext,0,-1);
+        $Ext .= ")";
+    }
     #if (defined($Param{ValidID})) {
     #    $Ext .= " AND valid_id = '".$Self->{DBObject}->Quote($Param{ValidID}, 'Integer')."' ";
-    #}          
-    
-        
-    
+    #}
+
+
+
     # ORDER BY
     if ($Param{Order}) {
         $Ext .= " ORDER BY ";
@@ -1076,7 +1080,7 @@ sub CategorySearch {
         }
         #default
         else {
-            $Ext .= "name";        
+            $Ext .= "name";
         }
         # SORT
         if ($Param{Sort}) {
@@ -1085,11 +1089,11 @@ sub CategorySearch {
             }
             elsif ($Param{Sort} eq 'down') {
                 $Ext .= " DESC";
-            }          
-        }        
+            }
+        }
     }
-    
-    # SQL STATEMENT        
+
+    # SQL STATEMENT
     $SQL .= $Ext;
 
     my @List = ();
@@ -1132,11 +1136,11 @@ sub CategoryGet {
     while  (my @Row = $Self->{DBObject}->FetchrowArray()) {
         %Data = (
             CategoryID => $Row[0],
-            ParentID => $Row[1],            
+            ParentID => $Row[1],
             Name => $Row[2],
             Comment => $Row[3],
         );
-    }    
+    }
     return %Data;
 }
 
@@ -1164,23 +1168,23 @@ sub CategorySubCategoryIDList {
             return [];
         }
     }
-    
-    # add subcategoryids        
+
+    # add subcategoryids
     my @SubCategoryIDs = @{$Self->CategorySearch(
         ParentID => $Param{ParentID},
         States => $Param{ItemStates},
         Order => 'Created',
-        Sort => 'down',            
-    )};    
+        Sort => 'down',
+    )};
     foreach my $SubCategoryID (@SubCategoryIDs) {
         my @Temp = @{$Self->CategorySubCategoryIDList(
-            ParentID => $SubCategoryID, 
+            ParentID => $SubCategoryID,
             ItemStates => $Param{ItemStates}
         )};
         if(@Temp) {
             push(@SubCategoryIDs, @Temp);
         }
-    }   
+    }
     return \@SubCategoryIDs;
 }
 
@@ -1212,7 +1216,7 @@ sub CategoryAdd {
     }
     foreach (qw(ParentID UserID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer') || '';
-    }    
+    }
     my $SQL = "INSERT INTO faq_category (name, parent_id, comments, ".
             " created, created_by, changed, changed_by)".
             " VALUES ".
@@ -1276,7 +1280,7 @@ sub CategoryUpdate {
 
     # sql
     my $SQL = "UPDATE faq_category SET ".
-          " parent_id = '$Param{ParentID}', ".    
+          " parent_id = '$Param{ParentID}', ".
           " name = '$Param{Name}', ".
           " comments = '$Param{Comment}', ".
           " changed = current_timestamp, changed_by = $Self->{UserID} ".
@@ -1309,7 +1313,7 @@ check a category
 sub CategoryDuplicateCheck {
     my $Self = shift;
     my %Param = @_;
-    
+
     # db quote
     foreach (qw(Name)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}) || '';
@@ -1317,15 +1321,15 @@ sub CategoryDuplicateCheck {
     foreach (qw(ID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
-    
+
     # sql
     my $SQL = "SELECT id FROM faq_category WHERE ";
     if(defined($Param{Name})) {
         $SQL .= "name = '$Param{Name}' AND parent_id = $Param{ParentID} ";
         if(defined($Param{ID})) {
             $SQL .= "AND id != '$Param{ID}' ";
-        }        
-    }    
+        }
+    }
     $Self->{DBObject}->Prepare(SQL => $SQL);
     $Self->{LogObject}->Log(Message=>$SQL);
     if (my @Row = $Self->{DBObject}->FetchrowArray()) {
@@ -1347,32 +1351,32 @@ count an article
 
 sub CategoryCount {
     my $Self = shift;
-    my %Param = @_;    
-    
+    my %Param = @_;
+
     # check needed stuff
     foreach (qw(ParentIDs)) {
         if (!defined($Param{$_})) {
             $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
             return;
         }
-    }    
-    
+    }
+
     my $SQL = "";
-    my $Ext = "";  
-    
+    my $Ext = "";
+
     $SQL = "SELECT COUNT(*)" .
            " FROM faq_category ";
-           
+
     if(defined($Param{ParentIDs})) {
         $Ext = " WHERE parent_id IN (";
         foreach my $ParentID (@{$Param{ParentIDs}}) {
             $Ext .= $Self->{DBObject}->Quote($ParentID,'Integer').",";
         }
-        $Ext = substr($Ext,0,-1);           
-        $Ext .= ")";        
+        $Ext = substr($Ext,0,-1);
+        $Ext .= ")";
     }
     $Ext .= " GROUP BY parent_id";
-    
+
     $SQL .= $Ext;
     $Self->{DBObject}->Prepare(SQL => $SQL, Limit => 200);
 
@@ -1382,7 +1386,7 @@ sub CategoryCount {
     } else {
         return 0;
     }
-   
+
 }
 
 
@@ -1397,12 +1401,12 @@ get the state type list as hash
 sub StateTypeList {
     my $Self = shift;
     my %Param = @_;
-    
+
     my $SQL = '';
     my $Ext = '';
     $SQL = "SELECT id, name FROM faq_state_type";
-    
-    if($Param{Types}) {    
+
+    if($Param{Types}) {
         my @States = @{$Param{Types}};
         $Ext = " WHERE";
         foreach my $State (@States) {
@@ -1583,19 +1587,19 @@ get a state as hash
 sub StateTypeGet {
     my $Self = shift;
     my %Param = @_;
-    
+
     my $SQL = "";
     my $Ext = "";
-    
+
     $SQL = "SELECT id, name ".
            " FROM faq_state_type WHERE";
-           
-    if(defined($Param{ID})) {           
+
+    if(defined($Param{ID})) {
         $Ext .= " id = ".$Self->{DBObject}->Quote($Param{ID}, 'Integer')
     }
-    elsif(defined($Param{Name})) {           
+    elsif(defined($Param{Name})) {
         $Ext .= " name LIKE '".$Self->{DBObject}->Quote($Param{Name})."'"
-    }    
+    }
     $SQL .= $Ext;
     # sql
     my %Data = ();
@@ -1684,7 +1688,7 @@ check a language
 
   $FAQObject->LanguageDuplicateCheck(
       Name => 'Some Name',
-      ID => 1, # for update      
+      ID => 1, # for update
   );
 
 =cut
@@ -1692,7 +1696,7 @@ check a language
 sub LanguageDuplicateCheck {
     my $Self = shift;
     my %Param = @_;
-    
+
     # db quote
     foreach (qw(Name)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}) || '';
@@ -1700,12 +1704,12 @@ sub LanguageDuplicateCheck {
     foreach (qw(ID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
-    
+
     # sql
     my $SQL = "SELECT id FROM faq_language WHERE ";
     if(defined($Param{Name})) {
         $SQL .= "name = '$Param{Name}' ";
-    }    
+    }
     if(defined($Param{ID})) {
         $SQL .= "AND id != '$Param{ID}' ";
     }
@@ -1800,7 +1804,7 @@ search in articles
       Keywords => '*webserver*',
       States = ['public', 'internal'],
       Order => 'changed'
-      Sort => 'ASC'      
+      Sort => 'ASC'
       Limit => 150,
   );
 
@@ -1815,8 +1819,8 @@ sub FAQSearch {
         $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
         return;
       }
-    }   
-    
+    }
+
     # sql
     my $SQL = "SELECT i.id, count( v.item_id ) votes, avg( v.rate ) result".
         " FROM faq_item i ".
@@ -1859,8 +1863,8 @@ sub FAQSearch {
         foreach my $LanguageID (@{$Param{LanguageIDs}}) {
             $Ext .= $Self->{DBObject}->Quote($LanguageID, 'Integer').",";
         }
-        $Ext = substr($Ext,0,-1);    
-        $Ext .= ")";         
+        $Ext = substr($Ext,0,-1);
+        $Ext .= ")";
     }
     if ($Param{CategoryIDs} && ref($Param{CategoryIDs}) eq 'ARRAY' && @{$Param{CategoryIDs}}) {
         $Ext .= " AND (i.category_id IN  (";
@@ -1869,21 +1873,21 @@ sub FAQSearch {
             $Ext .= $Self->{DBObject}->Quote($CategoryID, 'Integer').",";
             $Counter++;
             if(!($Counter%500)) {
-                $Ext = substr($Ext,0,-1);                    
-                $Ext .= ")";                         
-                $Ext .= " OR i.category_id IN  (";                
+                $Ext = substr($Ext,0,-1);
+                $Ext .= ")";
+                $Ext .= " OR i.category_id IN  (";
             }
-        }        
-        $Ext = substr($Ext,0,-1);    
-        $Ext .= "))";         
+        }
+        $Ext = substr($Ext,0,-1);
+        $Ext .= "))";
     }
     if ($Param{States} && ref($Param{States}) eq 'HASH' && %{$Param{States}}) {
         $Ext .= " AND s.type_id IN (";
         foreach my $StateID (keys(%{$Param{States}})) {
             $Ext .= $Self->{DBObject}->Quote($StateID, 'Integer').",";
         }
-        $Ext = substr($Ext,0,-1);    
-        $Ext .= ")";         
+        $Ext = substr($Ext,0,-1);
+        $Ext .= ")";
     }
     if ($Param{Keyword}) {
         $Ext .= " AND LOWER(i.f_keywords) LIKE LOWER('%".$Self->{DBObject}->Quote($Param{Keyword})."%')";
@@ -1895,7 +1899,7 @@ sub FAQSearch {
         # title
         if ($Param{Order} eq 'Title') {
             $Ext .= "i.f_subject";
-        }         
+        }
         # language
         elsif ($Param{Order} eq 'Language') {
             $Ext .= "i.f_language_id";
@@ -1903,25 +1907,25 @@ sub FAQSearch {
         # state
         elsif ($Param{Order} eq 'State') {
             $Ext .= "s.name";
-        }                
+        }
         # votes
         elsif ($Param{Order} eq 'Votes') {
             $Ext .= "votes";
-        }  
+        }
         # rates
         elsif ($Param{Order} eq 'Result') {
             $Ext .= "result";
-        }  
+        }
         # changed
         elsif ($Param{Order} eq 'Created') {
             $Ext .= "i.changed";
-        }     
+        }
         # created
         elsif ($Param{Order} eq 'Changed') {
             $Ext .= "i.created";
-        }             
-                               
-        
+        }
+
+
         if ($Param{Sort}) {
             if ($Param{Sort} eq 'up') {
                 $Ext .= " ASC";
@@ -1929,10 +1933,10 @@ sub FAQSearch {
             elsif ($Param{Sort} eq 'down') {
                 $Ext .= " DESC";
             }
-        }         
-    }  
-    $SQL .= $Ext;          
-    #$Self->{LogObject}->Log(Priority => 'error', Message => $SQL);    
+        }
+    }
+    $SQL .= $Ext;
+    #$Self->{LogObject}->Log(Priority => 'error', Message => $SQL);
     my @List = ();
     $Self->{DBObject}->Prepare(SQL => $SQL, Limit => $Param{Limit} || 500);
     while  (my @Row = $Self->{DBObject}->FetchrowArray()) {
@@ -1944,7 +1948,7 @@ sub FAQSearch {
 
 returns a category array
 
-  my @IDs = $FAQObject->FAQPathListGet(     
+  my @IDs = $FAQObject->FAQPathListGet(
       CategoryID => 150,
   );
 
@@ -1953,22 +1957,22 @@ returns a category array
 sub FAQPathListGet {
     my $Self = shift;
     my %Param = @_;
-    
-    my @CategoryList = ();         
+
+    my @CategoryList = ();
     my $TempCategoryID = $Param{CategoryID};
     while($TempCategoryID) {
-        my %Data = $Self->CategoryGet(CategoryID => $TempCategoryID);  
-        if(%Data) {        
-            $CategoryList[$#CategoryList+1] = \%Data;             
+        my %Data = $Self->CategoryGet(CategoryID => $TempCategoryID);
+        if(%Data) {
+            $CategoryList[$#CategoryList+1] = \%Data;
         }
-        $TempCategoryID = $Data{ParentID};                     
+        $TempCategoryID = $Data{ParentID};
     }
     @CategoryList = reverse(@CategoryList);
-    
+
     return \@CategoryList;
-    
-}        
-        
+
+}
+
 
 1;
 
@@ -1984,6 +1988,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1.1.1 $ $Date: 2006-06-29 09:29:51 $
+$Revision: 1.2 $ $Date: 2006-09-28 18:27:21 $
 
 =cut

@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentFAQ.pm - faq module
-# Copyright (C) 2001-2005 Martin Edenhofer <martin+code@otrs.org>
+# Copyright (C) 2001-2006 OTRS GmbH, http://otrs.org/
 # --
-# $Id: AgentFAQ.pm,v 1.2 2006-08-02 12:36:48 martin Exp $
+# $Id: AgentFAQ.pm,v 1.3 2006-09-28 18:27:21 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use Kernel::System::LinkObject;
 use Kernel::Modules::FAQ;
 
 use vars qw($VERSION @ISA);
-$VERSION = '$Revision: 1.2 $';
+$VERSION = '$Revision: 1.3 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 @ISA = qw(Kernel::Modules::FAQ);
@@ -746,28 +746,20 @@ sub Run {
     # download item
     # ---------------------------------------------------------- #
     elsif ($Self->{Subaction} eq 'Download') {
-
         @Params = qw(ItemID);
 
         # permission check
-
         if (!$Self->{AccessRw}) {
             return $Self->{LayoutObject}->NoPermission(WithHeader => 'yes');
         }
-
-        # check parameters
-        my %ParamData = ();
-        my @RequiredParams = qw(CategoryID ItemID);
-        foreach (@RequiredParams) {
-            $ParamData{$_} = $Self->{ParamObject}->GetParam(Param => $_);
-            if(!$ParamData{$_}) {
-                return $Self->{LayoutObject}->FatalError(Message => "Need $_!");
+        # manage parameters
+        foreach (@Params) {
+            if(!($GetParam{$_} = $Self->{ParamObject}->GetParam(Param => $_))) {
+                return $Self->{LayoutObject}->FatalError(Message => "Need $_");
             }
         }
-
         # db action
-
-        my %ItemData = $Self->{FAQObject}->FAQGet(ItemID => $ParamData{ItemID}, UserID => $Self->{UserID});
+        my %ItemData = $Self->{FAQObject}->FAQGet(ItemID => $GetParam{ItemID}, UserID => $Self->{UserID});
         if (!%ItemData) {
             return $Self->{LayoutObject}->ErrorScreen();
         }
