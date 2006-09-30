@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-  <CVS>$Id: FAQ.sopm,v 1.5 2006-09-28 19:11:15 rk Exp $</CVS>
+  <CVS>$Id: FAQ.sopm,v 1.6 2006-09-30 22:40:25 rk Exp $</CVS>
   <Name>FAQ</Name>
   <Version>1.0.3</Version>
   <Framework>2.1.x</Framework>
@@ -32,8 +32,8 @@
     <File Permission="644" Location="var/httpd/htdocs/images/Standard/faq-item-small.png"></File>
     <File Permission="644" Location="var/httpd/htdocs/images/Standard/language.png"></File>
     <File Permission="644" Location="var/httpd/htdocs/images/Standard/category.png"></File>
-    <File Permission="644" Location="bin/cgi-bin/faq.pl"></File>
-    <File Permission="644" Location="bin/fcgi-bin/faq.fpl"></File>
+    <File Permission="755" Location="bin/cgi-bin/faq.pl"></File>
+    <File Permission="755" Location="bin/fcgi-bin/faq.fpl"></File>
   </Filelist>
   <CodeInstall>
     # add faq group
