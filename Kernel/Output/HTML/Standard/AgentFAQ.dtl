@@ -1,8 +1,8 @@
 # --
 # AgentFAQ.dtl - provides HTML view for faq articles
-# Copyright (C) 2001-2005 Martin Edenhofer <martin+code@otrs.org>
+# Copyright (C) 2001-2006 OTRS GmbH, http://otrs.org/
 # --
-# $Id: AgentFAQ.dtl,v 1.2 2006-08-02 12:36:48 martin Exp $
+# $Id: AgentFAQ.dtl,v 1.3 2006-10-02 14:36:35 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -347,6 +347,21 @@ function updateMessage()
 
 
 <!-- dtl:block:Add -->
+<script language="JavaScript" type="text/javascript">
+<!--
+function submit_compose()
+{
+    if (document.compose.Title.value == "") {
+        alert('$Text{"A article should have a title!"}');
+        document.compose.Title.focus();
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+//-->
+</script>
 
 <!-- start form -->
 <table border="0" width="100%" cellspacing="0" cellpadding="3" cols="2">
@@ -433,6 +448,23 @@ function updateMessage()
 
 
 <!-- dtl:block:Update -->
+<script language="JavaScript" type="text/javascript">
+<!--
+function submit_compose()
+{
+    if (document.compose.Title.value == "") {
+        alert('$Text{"A article should have a title!"}');
+        document.compose.Title.focus();
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+//-->
+</script>
+
+
   <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
       <td class="mainhead">
