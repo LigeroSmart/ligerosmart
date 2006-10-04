@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2006 OTRS GmbH, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.2 2006-09-28 18:27:21 rk Exp $
+# $Id: FAQ.pm,v 1.3 2006-10-04 09:14:49 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -16,7 +16,7 @@ use MIME::Base64;
 use Kernel::System::Encode;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.2 $';
+$VERSION = '$Revision: 1.3 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -1331,7 +1331,6 @@ sub CategoryDuplicateCheck {
         }
     }
     $Self->{DBObject}->Prepare(SQL => $SQL);
-    $Self->{LogObject}->Log(Message=>$SQL);
     if (my @Row = $Self->{DBObject}->FetchrowArray()) {
         return 1;
     }
@@ -1988,6 +1987,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2006-09-28 18:27:21 $
+$Revision: 1.3 $ $Date: 2006-10-04 09:14:49 $
 
 =cut

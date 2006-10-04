@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQ.pm - faq module
 # Copyright (C) 2001-2006 OTRS GmbH, http://otrs.org/
 # --
-# $Id: AgentFAQ.pm,v 1.4 2006-10-02 14:41:06 rk Exp $
+# $Id: AgentFAQ.pm,v 1.5 2006-10-04 09:14:49 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use Kernel::System::LinkObject;
 use Kernel::Modules::FAQ;
 
 use vars qw($VERSION @ISA);
-$VERSION = '$Revision: 1.4 $';
+$VERSION = '$Revision: 1.5 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 @ISA = qw(Kernel::Modules::FAQ);
@@ -551,6 +551,9 @@ sub Run {
         );
 
         if ($ItemID) {
+            if (!defined($ParamData{ItemID}) && !$ParamData{ItemID}) {
+                $ParamData{ItemID} = '';
+            }
             return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=View&ItemID=$ParamData{ItemID}");
         }
         else {

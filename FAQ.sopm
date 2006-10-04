@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-  <CVS>$Id: FAQ.sopm,v 1.9 2006-10-02 14:58:21 rk Exp $</CVS>
+  <CVS>$Id: FAQ.sopm,v 1.10 2006-10-04 09:14:48 rk Exp $</CVS>
   <Name>FAQ</Name>
   <Version>1.0.5</Version>
   <Framework>2.1.x</Framework>
@@ -8,8 +8,8 @@
   <URL>http://otrs.org/</URL>
   <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
   <ChangeLog>2005-12-04 New package</ChangeLog>
-  <Description Lang="en">A FAQ/knowlage base.</Description>
-  <Description Lang="de">Ein FAQ-/Wissensdatenbank.</Description>
+  <Description Lang="en">A FAQ/knowledge base.</Description>
+  <Description Lang="de">Eine FAQ-/Wissensdatenbank.</Description>
   <BuildDate>?</BuildDate>
   <BuildHost>?</BuildHost>
   <Filelist>
