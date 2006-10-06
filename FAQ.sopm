@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-  <CVS>$Id: FAQ.sopm,v 1.10 2006-10-04 09:14:48 rk Exp $</CVS>
+  <CVS>$Id: FAQ.sopm,v 1.11 2006-10-06 08:02:26 rk Exp $</CVS>
   <Name>FAQ</Name>
-  <Version>1.0.5</Version>
+  <Version>1.0.6</Version>
   <Framework>2.1.x</Framework>
   <Vendor>OTRS GmbH</Vendor>
   <URL>http://otrs.org/</URL>

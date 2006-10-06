@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQ.pm - faq module
 # Copyright (C) 2001-2006 OTRS GmbH, http://otrs.org/
 # --
-# $Id: AgentFAQ.pm,v 1.5 2006-10-04 09:14:49 rk Exp $
+# $Id: AgentFAQ.pm,v 1.6 2006-10-06 08:02:26 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use Kernel::System::LinkObject;
 use Kernel::Modules::FAQ;
 
 use vars qw($VERSION @ISA);
-$VERSION = '$Revision: 1.5 $';
+$VERSION = '$Revision: 1.6 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 @ISA = qw(Kernel::Modules::FAQ);
@@ -353,7 +353,7 @@ sub Run {
 
         # check parameters
         my %ParamData = ();
-        my @RequiredParams = qw(CategoryID Name);
+        my @RequiredParams = qw(CategoryID Name Comment);
         my @Params = qw(ParentID ValidID);
         foreach (@RequiredParams) {
             $ParamData{$_} = $Self->{ParamObject}->GetParam(Param => $_);
@@ -440,7 +440,7 @@ sub Run {
 
         # check parameters
         my %ParamData = ();
-        my @RequiredParams = qw(Name);
+        my @RequiredParams = qw(Name Comment);
         my @Params = qw(ParentID ValidID);
         foreach (@RequiredParams) {
             $ParamData{$_} = $Self->{ParamObject}->GetParam(Param => $_);
