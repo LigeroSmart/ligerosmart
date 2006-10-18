@@ -2,7 +2,7 @@
 # TODO - todo list of TimeAccounting
 # Copyright (C) 2003-2006 OTRS GmbH, http://otrs.com/
 # --
-# $Id: TODO.TimeAccounting,v 1.16 2006-10-17 06:31:10 tr Exp $
+# $Id: TODO.TimeAccounting,v 1.17 2006-10-18 13:01:21 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -29,7 +29,7 @@ TimeAccounting 1.0
   settings AND accounted hours are invisible!!!
 - realize different "timezone" for agents. For example for different VacationDays in Bayern and Nordrheinwestfalen
 - realize reports with following settings: selceted group of persons, weekly witch projects and actions
-
+- grep the TimeAccountingmodule for record and replace the words with accounting or account
 
 2.1 (OTRS)
 
