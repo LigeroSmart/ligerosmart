@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/CustomerFAQ.pm - faq module
-# Copyright (C) 2001-2005 Martin Edenhofer <martin+code@otrs.org>
+# Copyright (C) 2001-2006 OTRS GmbH, http://otrs.org/
 # --
-# $Id: PublicFAQ.pm,v 1.1.1.1 2006-06-29 09:29:51 ct Exp $
+# $Id: PublicFAQ.pm,v 1.2 2006-10-20 12:06:37 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -16,7 +16,7 @@ use Kernel::System::FAQ;
 use Kernel::Modules::FAQ;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.1.1.1 $';
+$VERSION = '$Revision: 1.2 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 our @ISA = qw(Kernel::Modules::FAQ);
@@ -25,23 +25,23 @@ our @ISA = qw(Kernel::Modules::FAQ);
 sub new {
     my $Type = shift;
     my %Param = @_;
-        
+
     # allocate new hash for object
-    # ********************************************************** #            
-    my $Self = new Kernel::Modules::FAQ(%Param);    
-    bless ($Self, $Type);    
+    # ********************************************************** #
+    my $Self = new Kernel::Modules::FAQ(%Param);
+    bless ($Self, $Type);
 
     # interface settings
-    # ********************************************************** # 
+    # ********************************************************** #
     $Self->{Interface} = $Self->{FAQObject}->StateTypeGet(
         Name => 'public'
-    );      
+    );
     $Self->{InterfaceStates} = $Self->{FAQObject}->StateTypeList(
         Types => ['public']
     );
 
     # check needed Opjects
-    # ********************************************************** #            
+    # ********************************************************** #
     foreach (qw()) {
         $Self->{LayoutObject}->FatalError(Message => "Got no $_!") if (!$Self->{$_});
     }
@@ -51,93 +51,110 @@ sub new {
 # --
 sub Run {
     my $Self = shift;
-    my %Param = @_;    
-    
+    my %Param = @_;
+
     # Paramter
     my @Params = ();
     my %GetParam = ();
     my %Frontend = ();
-    
+
     # Output
     my $Output = '';
-    my $Header = '';    
-    my $HeaderTitle =  '';    
-    my $HeaderType =  '';        
-    my $Navigation = '';    
-    my $Notify = '';    
-    my $Content = '';       
+    my $Header = '';
+    my $HeaderTitle =  '';
+    my $HeaderType =  '';
+    my $Navigation = '';
+    my $Notify = '';
+    my $Content = '';
     my $Footer = '';
-    my $FooterType =  '';      
-    
+    my $FooterType =  '';
+
     my $DefaultHeader = '';
-    my $DefaultNavigation = '';       
-    my $DefaultContent = '';       
-    my $DefaultFooter = '';   
-    
+    my $DefaultNavigation = '';
+    my $DefaultContent = '';
+    my $DefaultFooter = '';
+
     # ---------------------------------------------------------- #
     # explorer
     # ---------------------------------------------------------- #
-    if ($Self->{Subaction} eq 'Explorer') {                        
-        $HeaderTitle = 'Explorer';  
+    if ($Self->{Subaction} eq 'Explorer') {
+        $HeaderTitle = 'Explorer';
         $Header = $Self->{LayoutObject}->CustomerHeader(
-            Type => $HeaderType, 
+            Type => $HeaderType,
             Title => $HeaderTitle
-        );  
-        $Self->GetExplorer();          
+        );
+        $Self->GetExplorer();
         $Content = $Self->{LayoutObject}->Output(
             TemplateFile => 'FAQ',
             Data => {%Frontend , %GetParam }
-        ); 
+        );
     }
-    
+
     # ---------------------------------------------------------- #
     # search a item
     # ---------------------------------------------------------- #
-    elsif ($Self->{Subaction} eq 'Search') { 
+    elsif ($Self->{Subaction} eq 'Search') {
         $HeaderTitle = 'Search';
         $Header = $Self->{LayoutObject}->CustomerHeader(
-            Type => $HeaderType, 
+            Type => $HeaderType,
             Title => $HeaderTitle
-        );   
-        $Self->GetItemSearch();        
+        );
+        $Self->GetItemSearch();
         $Content = $Self->{LayoutObject}->Output(
             TemplateFile => 'FAQ',
             Data => {%Frontend , %GetParam }
-        );        
-    }    
-    
-    
+        );
+    }
+    # ---------------------------------------------------------- #
+    # download item
+    # ---------------------------------------------------------- #
+    elsif ($Self->{Subaction} eq 'Download') {
+        # get param
+        my $ItemID  = $Self->{ParamObject}->GetParam(Param => 'ItemID');
+        # db action
+        my %ItemData = $Self->{FAQObject}->FAQGet(ItemID => $ItemID);
+        if (!%ItemData) {
+            return $Self->{LayoutObject}->FatalError(Message => "No FAQ found!");
+        }
+        if ($ItemData{StateTypeName} eq 'public') {
+            return $Self->{LayoutObject}->Attachment(%ItemData);
+        }
+        else {
+            return $Self->{LayoutObject}->FatalError(Message => "Permission denied!");
+        }
+    }
+
     # ---------------------------------------------------------- #
     # item print
     # ---------------------------------------------------------- #
-    elsif ($Self->{Subaction} eq 'Print' && $Self->{ParamObject}->GetParam(Param => 'ItemID')) {                     
+    elsif ($Self->{Subaction} eq 'Print' && $Self->{ParamObject}->GetParam(Param => 'ItemID')) {
         $Header = $Self->{LayoutObject}->PrintHeader(
             Title => $Self->{ItemData}{Subject}
         );
-        $Self->GetItemPrint();          
+        $Self->GetItemPrint();
         $Content = $Self->{LayoutObject}->Output(
             TemplateFile => 'FAQ',
             Data => { %Frontend , %GetParam }
-        );        
+        );
         $Footer = $Self->{LayoutObject}->PrintFooter();
-    }      
-    
+    }
+
     # ---------------------------------------------------------- #
     # item view
     # ---------------------------------------------------------- #
-    elsif ($Self->{ParamObject}->GetParam(Param => 'ItemID')) {        
-        $Self->GetItemView();             
-        $HeaderTitle = $Self->{ItemData}{Number};   
+    elsif ($Self->{ParamObject}->GetParam(Param => 'ItemID')) {
+        $Self->GetItemView();
+        $HeaderTitle = $Self->{ItemData}{Number};
         $Header = $Self->{LayoutObject}->CustomerHeader(
-            Type => $HeaderType, 
+            Type => $HeaderType,
             Title => $HeaderTitle
-        );           
+        );
         $Content = $Self->{LayoutObject}->Output(
             TemplateFile => 'FAQ',
             Data => {%Frontend , %GetParam }
-        ); 
-    }      
-    
+        );
+    }
+
     # ---------------------------------------------------------- #
     # redirect to explorer
     # ---------------------------------------------------------- #
@@ -145,31 +162,31 @@ sub Run {
         return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=Explorer");
     }
 
-    # DEFAULT OUTPUT    
+    # DEFAULT OUTPUT
     $DefaultHeader = $Self->{LayoutObject}->CustomerHeader(
-        Type => $HeaderType, 
+        Type => $HeaderType,
         Title => $HeaderTitle
     );
-    
+
     $DefaultContent = $Self->{LayoutObject}->Output(
-        TemplateFile => 'PublicFAQ', 
+        TemplateFile => 'PublicFAQ',
         Data => { %Frontend , %GetParam }
     );
     $DefaultFooter = $Self->{LayoutObject}->CustomerFooter(Type => $FooterType);
 
-    # OUTPUT      
-    $Output .= $Header || $DefaultHeader;      
+    # OUTPUT
+    $Output .= $Header || $DefaultHeader;
     if(!$Notify) {
         foreach my $Notify (@{$Self->{Notify}}) {
             $Output .= $Self->{LayoutObject}->Notify(
                 Priority => $Notify->[0],
                 Info => $Notify->[1],
-            );  
-        }     
+            );
+        }
     }
-    $Output .= $Content || $DefaultContent;       
-    $Output .= $Footer || $DefaultFooter; 
-             
+    $Output .= $Content || $DefaultContent;
+    $Output .= $Footer || $DefaultFooter;
+
     return $Output;
 }
 # --

@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerFAQ.pm - faq module
 # Copyright (C) 2001-2006 OTRS GmbH, http://otrs.org/
 # --
-# $Id: CustomerFAQ.pm,v 1.2 2006-10-02 14:58:21 rk Exp $
+# $Id: CustomerFAQ.pm,v 1.3 2006-10-20 12:06:37 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -16,7 +16,7 @@ use Kernel::System::FAQ;
 use Kernel::Modules::FAQ;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.2 $';
+$VERSION = '$Revision: 1.3 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 our @ISA = qw(Kernel::Modules::FAQ);
@@ -74,7 +74,6 @@ sub Run {
     my $DefaultContent = '';
     my $DefaultFooter = '';
 
-
     # navigation ON/OFF
     # ********************************************************** #
     if ($GetParam{Nav}) {
@@ -88,7 +87,6 @@ sub Run {
         Key => 'LastFAQNav',
         Value => $HeaderType,
     );
-
 
     # ---------------------------------------------------------- #
     # explorer
@@ -120,7 +118,24 @@ sub Run {
             Data => {%Frontend , %GetParam }
         );
     }
-
+    # ---------------------------------------------------------- #
+    # download item
+    # ---------------------------------------------------------- #
+    elsif ($Self->{Subaction} eq 'Download') {
+        # get param
+        my $ItemID  = $Self->{ParamObject}->GetParam(Param => 'ItemID');
+        # db action
+        my %ItemData = $Self->{FAQObject}->FAQGet(ItemID => $ItemID);
+        if (!%ItemData) {
+            return $Self->{LayoutObject}->FatalError(Message => "No FAQ found!");
+        }
+        if ($ItemData{StateTypeName} eq 'external' || $ItemData{StateTypeName} eq 'public') {
+            return $Self->{LayoutObject}->Attachment(%ItemData);
+        }
+        else {
+            return $Self->{LayoutObject}->FatalError(Message => "Permission denied!");
+        }
+    }
     # ---------------------------------------------------------- #
     # item print
     # ---------------------------------------------------------- #
@@ -159,7 +174,6 @@ sub Run {
     else {
         return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=Explorer");
     }
-
 
     # DEFAULT OUTPUT
     $DefaultHeader = $Self->{LayoutObject}->CustomerHeader(

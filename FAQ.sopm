@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-  <CVS>$Id: FAQ.sopm,v 1.11 2006-10-06 08:02:26 rk Exp $</CVS>
+  <CVS>$Id: FAQ.sopm,v 1.12 2006-10-20 12:06:37 rk Exp $</CVS>
   <Name>FAQ</Name>
-  <Version>1.0.6</Version>
+  <Version>1.0.9</Version>
   <Framework>2.1.x</Framework>
   <Vendor>OTRS GmbH</Vendor>
   <URL>http://otrs.org/</URL>
@@ -71,9 +71,7 @@
         <Data Key="name" Value="internal" Type="Quote"/>
     </Insert>
     <Insert Table="faq_state_type">
-    </Insert>
         <Data Key="name" Value="external" Type="Quote"/>
-    <Insert Table="faq_state_type">
     </Insert>
     <Insert Table="faq_state_type">
         <Data Key="name" Value="public" Type="Quote"/>
