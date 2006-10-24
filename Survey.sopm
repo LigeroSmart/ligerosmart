@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: Survey.sopm,v 1.18 2006-09-06 16:21:00 mh Exp $</CVS>
+    <CVS>$Id: Survey.sopm,v 1.19 2006-10-24 10:56:07 mh Exp $</CVS>
     <Name>Survey</Name>
-    <Version>1.0.9</Version>
-    <Framework>2.0.x</Framework>
+    <Version>0.0.0</Version>
     <Framework>2.1.x</Framework>
     <Vendor>OTRS GmbH</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
-    <ChangeLog>2006-06-22 v1.0.9 change charset to iso-8895-1 and code cleanup</ChangeLog>
-    <ChangeLog>2006-06-22 v1.0.8 fix bug in RequestSend() if $MasterID is null</ChangeLog>
-    <ChangeLog>2006-06-22 v1.0.7 fix problems with blank fields</ChangeLog>
-    <ChangeLog>2006-05-30 v1.0.2 rename colum "number" to "surveynumber" in survey-table</ChangeLog>
-    <ChangeLog>2006-05-30 v1.0.1 fix "not null" error on oracle dbs</ChangeLog>
-    <ChangeLog>2006-03-20 v1.0.0 init paket</ChangeLog>
-    <ChangeLog>2006-03-11 New package</ChangeLog>
+    <ChangeLog Version="1.0.9" Date="2006-06-22">change charset to iso-8895-1 and code cleanup</ChangeLog>
+    <ChangeLog Version="1.0.8" Date="2006-06-22">fix bug in RequestSend() if $MasterID is null</ChangeLog>
+    <ChangeLog Version="1.0.7" Date="2006-06-22">fix problems with blank fields</ChangeLog>
+    <ChangeLog Version="1.0.2" Date="2006-05-30">rename colum "number" to "surveynumber" in survey-table</ChangeLog>
+    <ChangeLog Version="1.0.1" Date="2006-05-30">fix "not null" error on oracle dbs</ChangeLog>
+    <ChangeLog Version="1.0.0" Date="2006-03-11">New package</ChangeLog>
     <Description Lang="en">A customer survey tool.</Description>
     <Description Lang="de">Ein Kundenumfragen Werkzeug.</Description>
     <BuildDate>?</BuildDate>
