@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurvey.pm - a survey module
 # Copyright (C) 2001-2006 OTRS GmbH, http://otrs.org/
 # --
-# $Id: AgentSurvey.pm,v 1.21 2006-09-06 16:21:00 mh Exp $
+# $Id: AgentSurvey.pm,v 1.22 2006-10-24 10:56:25 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.21 $';
+$VERSION = '$Revision: 1.22 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -172,10 +172,10 @@ sub Run {
                     $Data2{Answer} = "not answered";
                     $Data2{AnswerPercent} = $Percent;
 
-                    push(@Answers,\%Data2);
+                    push(@Answers, \%Data2);
                 }
                 # output all answers of the survey
-                foreach my $Row(@Answers) {
+                foreach my $Row (@Answers) {
                     $Row->{AnswerPercentTable} = $Row->{AnswerPercent};
 
                     if ($Row->{AnswerPercent} eq 0) {
@@ -191,7 +191,9 @@ sub Run {
             if ($RequestComplete > 0) {
                 $Self->{LayoutObject}->Block(
                     Name => 'SurveyEditStatsDetails',
-                    Data => {SurveyID => $SurveyID},
+                    Data => {
+                        SurveyID => $SurveyID,
+                    },
                 );
             }
         }
@@ -200,45 +202,45 @@ sub Run {
             $Survey{NewStatus} = 'Master';
             $Self->{LayoutObject}->Block(
                 Name => 'SurveyStatus',
-                Data => {%Survey}
+                Data => {%Survey},
             );
 
             $Survey{NewStatus} = 'Valid';
             $Self->{LayoutObject}->Block(
                 Name => 'SurveyStatus',
-                Data => {%Survey}
+                Data => {%Survey},
             );
         }
         elsif ($Survey{Status} eq 'Valid') {
             $Survey{NewStatus} = 'Master';
             $Self->{LayoutObject}->Block(
                 Name => 'SurveyStatus',
-                Data => {%Survey}
+                Data => {%Survey},
             );
 
             $Survey{NewStatus} = 'Invalid';
             $Self->{LayoutObject}->Block(
                 Name => 'SurveyStatus',
-                Data => {%Survey}
+                Data => {%Survey},
             );
         }
         elsif ($Survey{Status} eq 'Master') {
             $Survey{NewStatus} = 'Valid';
             $Self->{LayoutObject}->Block(
                 Name => 'SurveyStatus',
-                Data => {%Survey}
+                Data => {%Survey},
             );
 
             $Survey{NewStatus} = 'Invalid';
             $Self->{LayoutObject}->Block(
                 Name => 'SurveyStatus',
-                Data => {%Survey}
+                Data => {%Survey},
             );
         }
 
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentSurvey',
-            Data => {%Param}
+            Data => {%Param},
         );
 
         $Output .= $Self->{LayoutObject}->Footer();
@@ -255,7 +257,8 @@ sub Run {
         # set a new status
         my $StatusSet = $Self->{SurveyObject}->SurveyStatusSet(
             SurveyID => $SurveyID,
-            NewStatus => $NewStatus);
+            NewStatus => $NewStatus
+        );
 
         my $Message = '';
         if (defined($StatusSet) && $StatusSet eq 'NoQuestion') {
@@ -322,7 +325,9 @@ sub Run {
             }
             $Self->{LayoutObject}->Block(
                 Name => 'SurveyEditNewQuestion',
-                Data => {SurveyID => $SurveyID},
+                Data => {
+                    SurveyID => $SurveyID,
+                },
             );
         }
         else {
@@ -336,7 +341,7 @@ sub Run {
 
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentSurvey',
-            Data => {%Param}
+            Data => {%Param},
         );
 
         $Output .= $Self->{LayoutObject}->Footer();
@@ -579,7 +584,8 @@ sub Run {
         my $Question = $Self->{ParamObject}->GetParam(Param => "Question");
         # check if survey and question exists
         if ($Self->{SurveyObject}->ElementExists(ElementID => $SurveyID, Element => 'Survey') ne 'Yes' ||
-            $Self->{SurveyObject}->ElementExists(ElementID => $QuestionID, Element => 'Question') ne 'Yes') {
+            $Self->{SurveyObject}->ElementExists(ElementID => $QuestionID, Element => 'Question') ne 'Yes'
+        ) {
             return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}");
         }
 
@@ -603,7 +609,8 @@ sub Run {
         my $Answer = $Self->{ParamObject}->GetParam(Param => "Answer");
         # check if survey and question exists
         if ($Self->{SurveyObject}->ElementExists(ElementID => $SurveyID, Element => 'Survey') ne 'Yes' ||
-            $Self->{SurveyObject}->ElementExists(ElementID => $QuestionID, Element => 'Question') ne 'Yes') {
+            $Self->{SurveyObject}->ElementExists(ElementID => $QuestionID, Element => 'Question') ne 'Yes'
+        ) {
             return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}");
         }
 
@@ -627,7 +634,8 @@ sub Run {
         # check if survey, question and answer exists
         if ($Self->{SurveyObject}->ElementExists(ElementID => $SurveyID, Element => 'Survey') ne 'Yes' ||
             $Self->{SurveyObject}->ElementExists(ElementID => $QuestionID, Element => 'Question') ne 'Yes' ||
-            $Self->{SurveyObject}->ElementExists(ElementID => $AnswerID, Element => 'Answer') ne 'Yes') {
+            $Self->{SurveyObject}->ElementExists(ElementID => $AnswerID, Element => 'Answer') ne 'Yes'
+        ) {
             return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}");
         }
 
@@ -647,7 +655,8 @@ sub Run {
         # check if survey, question and answer exists
         if ($Self->{SurveyObject}->ElementExists(ElementID => $SurveyID, Element => 'Survey') ne 'Yes' ||
             $Self->{SurveyObject}->ElementExists(ElementID => $QuestionID, Element => 'Question') ne 'Yes' ||
-            $Self->{SurveyObject}->ElementExists(ElementID => $AnswerID, Element => 'Answer') ne 'Yes') {
+            $Self->{SurveyObject}->ElementExists(ElementID => $AnswerID, Element => 'Answer') ne 'Yes'
+        ) {
             return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}");
         }
 
@@ -667,7 +676,8 @@ sub Run {
         # check if survey, question and answer exists
         if ($Self->{SurveyObject}->ElementExists(ElementID => $SurveyID, Element => 'Survey') ne 'Yes' ||
             $Self->{SurveyObject}->ElementExists(ElementID => $QuestionID, Element => 'Question') ne 'Yes' ||
-            $Self->{SurveyObject}->ElementExists(ElementID => $AnswerID, Element => 'Answer') ne 'Yes') {
+            $Self->{SurveyObject}->ElementExists(ElementID => $AnswerID, Element => 'Answer') ne 'Yes'
+        ) {
             return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}");
         }
 
@@ -687,7 +697,8 @@ sub Run {
         # check if survey, question and answer exists
         if ($Self->{SurveyObject}->ElementExists(ElementID => $SurveyID, Element => 'Survey') ne 'Yes' ||
             $Self->{SurveyObject}->ElementExists(ElementID => $QuestionID, Element => 'Question') ne 'Yes' ||
-            $Self->{SurveyObject}->ElementExists(ElementID => $AnswerID, Element => 'Answer') ne 'Yes') {
+            $Self->{SurveyObject}->ElementExists(ElementID => $AnswerID, Element => 'Answer') ne 'Yes'
+        ) {
             return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}");
         }
 
@@ -700,12 +711,12 @@ sub Run {
         # print the main table.
         $Self->{LayoutObject}->Block(
             Name => 'AnswerEdit',
-            Data => {%Answer}
+            Data => {%Answer},
         );
 
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentSurvey',
-            Data => {%Param}
+            Data => {%Param},
         );
 
         $Output .= $Self->{LayoutObject}->Footer();
@@ -720,7 +731,8 @@ sub Run {
         # check if survey, question and answer exists
         if ($Self->{SurveyObject}->ElementExists(ElementID => $SurveyID, Element => 'Survey') ne 'Yes' ||
             $Self->{SurveyObject}->ElementExists(ElementID => $QuestionID, Element => 'Question') ne 'Yes' ||
-            $Self->{SurveyObject}->ElementExists(ElementID => $AnswerID, Element => 'Answer') ne 'Yes') {
+            $Self->{SurveyObject}->ElementExists(ElementID => $AnswerID, Element => 'Answer') ne 'Yes'
+        ) {
             return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}");
         }
 
@@ -769,7 +781,7 @@ sub Run {
 
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentSurvey',
-            Data => {%Param}
+            Data => {%Param},
         );
 
         $Output .= $Self->{LayoutObject}->Footer();
@@ -781,7 +793,8 @@ sub Run {
         my $RequestID = $Self->{ParamObject}->GetParam(Param => "RequestID");
         # check if survey exists
         if ($Self->{SurveyObject}->ElementExists(ElementID => $SurveyID, Element => 'Survey') ne 'Yes' ||
-            $Self->{SurveyObject}->ElementExists(ElementID => $RequestID, Element => 'Request') ne 'Yes') {
+            $Self->{SurveyObject}->ElementExists(ElementID => $RequestID, Element => 'Request') ne 'Yes'
+        ) {
             return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}");
         }
 
@@ -804,12 +817,12 @@ sub Run {
 
            my @Answers = ();
 
-           if ($Question->{Type} eq 'Radio' || $Question->{Type} eq 'Checkbox' ) {
+           if ($Question->{Type} eq 'Radio' || $Question->{Type} eq 'Checkbox') {
                my @AnswerList = ();
 
                @AnswerList = $Self->{SurveyObject}->VoteGet(RequestID => $RequestID, QuestionID => $Question->{QuestionID});
 
-               foreach my $Row(@AnswerList) {
+               foreach my $Row (@AnswerList) {
                    my %Answer = $Self->{SurveyObject}->AnswerGet(AnswerID => $Row->{VoteValue});
                    my %Data = ();
                    $Data{Answer} = $Answer{Answer};
@@ -817,7 +830,7 @@ sub Run {
                    push(@Answers,\%Data);
                }
             }
-            elsif ($Question->{Type} eq 'YesNo' || $Question->{Type} eq 'Textarea' ) {
+            elsif ($Question->{Type} eq 'YesNo' || $Question->{Type} eq 'Textarea') {
                 my @List = $Self->{SurveyObject}->VoteGet(RequestID => $RequestID, QuestionID => $Question->{QuestionID});
                 my %Data = ();
 
@@ -826,7 +839,7 @@ sub Run {
                 push(@Answers,\%Data);
             }
 
-            foreach my $Row(@Answers) {
+            foreach my $Row (@Answers) {
                 $Self->{LayoutObject}->Block(
                     Name => 'StatsDetailAnswer',
                     Data => $Row,
@@ -836,7 +849,7 @@ sub Run {
 
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentSurvey',
-            Data => {%Param}
+            Data => {%Param},
         );
 
         $Output .= $Self->{LayoutObject}->Footer();
@@ -868,7 +881,7 @@ sub Run {
 
     $Output .= $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentSurvey',
-        Data => {%Param}
+        Data => {%Param},
     );
 
     $Output .= $Self->{LayoutObject}->Footer();

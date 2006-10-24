@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicSurvey.pm - a survey module
 # Copyright (C) 2001-2006 OTRS GmbH, http://otrs.org/
 # --
-# $Id: PublicSurvey.pm,v 1.9 2006-09-06 16:21:00 mh Exp $
+# $Id: PublicSurvey.pm,v 1.10 2006-10-24 10:56:25 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.9 $';
+$VERSION = '$Revision: 1.10 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -52,7 +52,7 @@ sub Run {
 
         my %Survey = $Self->{SurveyObject}->PublicSurveyGet(PublicSurveyKey => $PublicSurveyKey);
 
-        if($Survey{SurveyID} > '0' ) {
+        if ($Survey{SurveyID} > 0 ) {
             my @QuestionList = $Self->{SurveyObject}->QuestionList(SurveyID => $Survey{SurveyID});
 
             foreach my $Question(@QuestionList) {
@@ -110,7 +110,7 @@ sub Run {
         );
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'PublicSurvey',
-            Data => {%Param}
+            Data => {%Param},
         );
         $Output .= $Self->{LayoutObject}->CustomerFooter();
 
@@ -132,7 +132,7 @@ sub Run {
 
     $Survey{PublicSurveyKey} = $PublicSurveyKey;
 
-    if($Survey{SurveyID} > '0' ) {
+    if($Survey{SurveyID} > 0 ) {
         $Self->{LayoutObject}->Block(
             Name => 'PublicSurvey',
             Data => {%Survey},
@@ -206,7 +206,7 @@ sub Run {
     }
     $Output .= $Self->{LayoutObject}->Output(
         TemplateFile => 'PublicSurvey',
-        Data => {%Param}
+        Data => {%Param},
     );
     $Output .= $Self->{LayoutObject}->CustomerFooter();
 

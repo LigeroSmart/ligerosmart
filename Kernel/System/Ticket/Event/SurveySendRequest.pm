@@ -2,7 +2,7 @@
 # Kernel/System/Ticket/Event/SurveySendRequest.pm - send survey requests
 # Copyright (C) 2001-2006 OTRS GmbH, http://otrs.org/
 # --
-# $Id: SurveySendRequest.pm,v 1.4 2006-09-06 16:21:00 mh Exp $
+# $Id: SurveySendRequest.pm,v 1.5 2006-10-24 10:56:25 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.4 $';
+$VERSION = '$Revision: 1.5 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -41,10 +41,10 @@ sub Run {
     my %Param = @_;
     # check needed stuff
     foreach (qw(TicketID Event Config)) {
-      if (!$Param{$_}) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!$Param{$_}) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
     if ($Param{Event} eq 'StateSet' || $Param{Event} eq 'TicketStateUpdate') {
         my %Ticket = $Self->{TicketObject}->TicketGet(TicketID => $Param{TicketID});
