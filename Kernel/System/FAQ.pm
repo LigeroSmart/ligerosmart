@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2006 OTRS GmbH, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.3 2006-10-04 09:14:49 rk Exp $
+# $Id: FAQ.pm,v 1.4 2006-10-25 10:06:19 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -16,7 +16,7 @@ use MIME::Base64;
 use Kernel::System::Encode;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.3 $';
+$VERSION = '$Revision: 1.4 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -192,8 +192,6 @@ sub FAQGet {
     return %Data;
 }
 
-
-
 =item ItemVoteDataGet()
 
 returns a hash with number and result of a item
@@ -347,7 +345,6 @@ sub FAQAdd {
 
 =cut
 
-
 sub AttachmentAdd {
     my $Self = shift;
     my %Param = @_;
@@ -384,11 +381,9 @@ sub AttachmentAdd {
     return 0;
 }
 
-
 =item AttachmentGet()
 
 =cut
-
 
 sub AttachmentGet {
     my $Self = shift;
@@ -402,11 +397,9 @@ sub AttachmentGet {
     }
 }
 
-
 =item AttachmentDelete()
 
 =cut
-
 
 sub AttachmentDelete {
     my $Self = shift;
@@ -420,11 +413,9 @@ sub AttachmentDelete {
     }
 }
 
-
 =item AttachmentSearch()
 
 =cut
-
 
 sub AttachmentSearch {
     my $Self = shift;
@@ -546,7 +537,6 @@ sub FAQUpdate {
     }
 }
 
-
 =item FAQCount()
 
 count an article
@@ -589,8 +579,6 @@ sub FAQCount {
         return 0;
     }
 }
-
-
 
 =item VoteAdd()
 
@@ -666,7 +654,6 @@ sub VoteGet {
          return {};
        }
     }
-
 
     # db quote
     foreach (qw(CreatedBy Interface IP)) {
@@ -1038,20 +1025,19 @@ sub CategorySearch {
     my $Self = shift;
     my %Param = @_;
 
-
     # sql
-    my $SQL = "SELECT id FROM faq_category";
+    my $SQL = "SELECT id FROM faq_category WHERE valid_id = 1 ";
     my $Ext = '';
 
     # WHERE
     if (defined($Param{Name})) {
-        $Ext .= " WHERE name LIKE '%".$Self->{DBObject}->Quote($Param{Name})."%'";
+        $Ext .= " AND name LIKE '%".$Self->{DBObject}->Quote($Param{Name})."%'";
     }
     elsif (defined($Param{ParentID})) {
-        $Ext .= " WHERE parent_id = '".$Self->{DBObject}->Quote($Param{ParentID}, 'Integer')."'";
+        $Ext .= " AND parent_id = '".$Self->{DBObject}->Quote($Param{ParentID}, 'Integer')."'";
     }
     elsif (defined($Param{ParentIDs}) && ref($Param{ParentIDs}) eq 'ARRAY' && @{$Param{ParentIDs}}) {
-        $Ext = " WHERE parent_id IN (";
+        $Ext = " AND parent_id IN (";
         foreach my $ParentID (@{$Param{ParentIDs}}) {
             $Ext .= $Self->{DBObject}->Quote($ParentID, 'Integer').",";
         }
@@ -1059,7 +1045,7 @@ sub CategorySearch {
         $Ext .= ")";
     }
     elsif (defined($Param{CategoryIDs}) && ref($Param{CategoryIDs}) eq 'ARRAY' && @{$Param{CategoryIDs}}) {
-        $Ext = " WHERE id IN (";
+        $Ext = " AND id IN (";
         foreach my $CategoryID (@{$Param{CategoryIDs}}) {
             $Ext .= $Self->{DBObject}->Quote($CategoryID, 'Integer').",";
         }
@@ -1069,8 +1055,6 @@ sub CategorySearch {
     #if (defined($Param{ValidID})) {
     #    $Ext .= " AND valid_id = '".$Self->{DBObject}->Quote($Param{ValidID}, 'Integer')."' ";
     #}
-
-
 
     # ORDER BY
     if ($Param{Order}) {
@@ -1131,7 +1115,7 @@ sub CategoryGet {
     # sql
     my %Data = ();
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT id, parent_id, name, comments FROM faq_category WHERE id = $Param{CategoryID} ",
+        SQL => "SELECT id, parent_id, name, comments, valid_id FROM faq_category WHERE id = $Param{CategoryID} ",
     );
     while  (my @Row = $Self->{DBObject}->FetchrowArray()) {
         %Data = (
@@ -1139,11 +1123,11 @@ sub CategoryGet {
             ParentID => $Row[1],
             Name => $Row[2],
             Comment => $Row[3],
+            ValidID => $Row[4],
         );
     }
     return %Data;
 }
-
 
 =item CategorySubCategoryIDList()
 
@@ -1188,7 +1172,6 @@ sub CategorySubCategoryIDList {
     return \@SubCategoryIDs;
 }
 
-
 =item CategoryAdd()
 
 add a category
@@ -1214,13 +1197,13 @@ sub CategoryAdd {
     foreach (qw(Name Comment)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}) || '';
     }
-    foreach (qw(ParentID UserID)) {
+    foreach (qw(ParentID UserID ValidID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer') || '';
     }
-    my $SQL = "INSERT INTO faq_category (name, parent_id, comments, ".
+    my $SQL = "INSERT INTO faq_category (name, parent_id, comments, valid_id, ".
             " created, created_by, changed, changed_by)".
             " VALUES ".
-            " ('$Param{Name}', '$Param{ParentID}', '$Param{Comment}', ".
+            " ('$Param{Name}', '$Param{ParentID}', '$Param{Comment}', '$Param{ValidID}', ".
             " current_timestamp, $Self->{UserID}, ".
             " current_timestamp, $Self->{UserID})";
 
@@ -1274,7 +1257,7 @@ sub CategoryUpdate {
     foreach (qw(Name Comment)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}) || '';
     }
-    foreach (qw(CategoryID ParentID)) {
+    foreach (qw(CategoryID ParentID ValidID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
 
@@ -1283,6 +1266,7 @@ sub CategoryUpdate {
           " parent_id = '$Param{ParentID}', ".
           " name = '$Param{Name}', ".
           " comments = '$Param{Comment}', ".
+          " valid_id = '$Param{ValidID}', ".
           " changed = current_timestamp, changed_by = $Self->{UserID} ".
           " WHERE id = $Param{CategoryID}";
     if ($Self->{DBObject}->Do(SQL => $SQL)) {
@@ -1337,7 +1321,6 @@ sub CategoryDuplicateCheck {
     return 0;
 }
 
-
 =item CategoryCount()
 
 count an article
@@ -1364,10 +1347,10 @@ sub CategoryCount {
     my $Ext = "";
 
     $SQL = "SELECT COUNT(*)" .
-           " FROM faq_category ";
+           " FROM faq_category WHERE valid_id = 1";
 
     if(defined($Param{ParentIDs})) {
-        $Ext = " WHERE parent_id IN (";
+        $Ext = " AND parent_id IN (";
         foreach my $ParentID (@{$Param{ParentIDs}}) {
             $Ext .= $Self->{DBObject}->Quote($ParentID,'Integer').",";
         }
@@ -1387,7 +1370,6 @@ sub CategoryCount {
     }
 
 }
-
 
 =item StateTypeList()
 
@@ -1571,7 +1553,6 @@ sub StateGet {
     return %Data;
 }
 
-
 =item StateTypeGet()
 
 get a state as hash
@@ -1679,7 +1660,6 @@ sub LanguageUpdate {
         return;
     }
 }
-
 
 =item LanguageDuplicateCheck()
 
@@ -1924,7 +1904,6 @@ sub FAQSearch {
             $Ext .= "i.created";
         }
 
-
         if ($Param{Sort}) {
             if ($Param{Sort} eq 'up') {
                 $Ext .= " ASC";
@@ -1972,7 +1951,6 @@ sub FAQPathListGet {
 
 }
 
-
 1;
 
 =head1 TERMS AND CONDITIONS
@@ -1987,6 +1965,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2006-10-04 09:14:49 $
+$Revision: 1.4 $ $Date: 2006-10-25 10:06:19 $
 
 =cut

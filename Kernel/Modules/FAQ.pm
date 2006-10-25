@@ -2,7 +2,7 @@
 # Kernel/Modules/FAQ.pm - faq module
 # Copyright (C) 2001-2006 OTRS GmbH, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.3 2006-10-02 14:37:09 rk Exp $
+# $Id: FAQ.pm,v 1.4 2006-10-25 10:06:19 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use Kernel::System::FAQ;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.3 $';
+$VERSION = '$Revision: 1.4 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -449,6 +449,16 @@ sub GetItemView {
     }
     # db action
     my %ItemData = $Self->{FAQObject}->FAQGet(ItemID => $GetParam{ItemID}, UserID => $Self->{UserID});
+    # html quoting
+    foreach my $Key (qw (Field1 Field2 Field3 Field4 Field5 Field6)) {
+        $ItemData{$Key} = $Self->{LayoutObject}->Ascii2Html(
+            NewLine => 70,
+            Text => $ItemData{$Key},
+            VMax => 5000,
+            HTMLResultMode => 1,
+            LinkFeature => 1,
+        );
+    }
     if (!%ItemData) {
         return $Self->{LayoutObject}->ErrorScreen();
     }
@@ -496,21 +506,27 @@ sub GetItemView {
             ItemData => \%ItemData
         );
     }
-    # get linked objects
-    my %Links = $Self->{LinkObject}->AllLinkedObjects(
-        Object => 'FAQ',
-        ObjectID => $ItemData{ItemID},
-        UserID => $Self->{UserID},
-    );
-    foreach my $LinkType (sort keys %Links) {
-        my %ObjectType = %{$Links{$LinkType}};
-        foreach my $Object (sort keys %ObjectType) {
-            my %Data = %{$ObjectType{$Object}};
-            foreach my $Item (sort keys %Data) {
-                $Self->{LayoutObject}->Block(
-                    Name => "Link$LinkType",
-                    Data => $Data{$Item},
-                );
+    if ($Param{Links} && $Param{Links} == 1) {
+        # get linked objects
+        my %Links = $Self->{LinkObject}->AllLinkedObjects(
+            Object => 'FAQ',
+            ObjectID => $ItemData{ItemID},
+            UserID => $Self->{UserID},
+        );
+        $Self->{LayoutObject}->Block(
+            Name => "Links",
+            Data => {},
+        );
+        foreach my $LinkType (sort keys %Links) {
+            my %ObjectType = %{$Links{$LinkType}};
+            foreach my $Object (sort keys %ObjectType) {
+                my %Data = %{$ObjectType{$Object}};
+                foreach my $Item (sort keys %Data) {
+                    $Self->{LayoutObject}->Block(
+                        Name => "Link$LinkType",
+                        Data => $Data{$Item},
+                    );
+                }
             }
         }
     }
@@ -600,6 +616,16 @@ sub GetItemPrint {
     if (!%ItemData) {
         return $Self->{LayoutObject}->ErrorScreen();
     }
+    # html quoting
+    foreach my $Key (qw (Field1 Field2 Field3 Field4 Field5 Field6)) {
+        $ItemData{$Key} = $Self->{LayoutObject}->Ascii2Html(
+            NewLine => 70,
+            Text => $ItemData{$Key},
+            VMax => 5000,
+            HTMLResultMode => 1,
+            LinkFeature => 1,
+        );
+    }
     # permission check
     if (!exists($Self->{InterfaceStates}{$ItemData{StateTypeID}})) {
         return $Self->{LayoutObject}->NoPermission(WithHeader => 'yes');
@@ -609,26 +635,33 @@ sub GetItemPrint {
          Name => 'Print',
          Data => \%ItemData,
     );
-    # get linked objects
-    my %Links = $Self->{LinkObject}->AllLinkedObjects(
-        Object => 'FAQ',
-        ObjectID => $ItemData{ItemID},
-        UserID => $Self->{UserID},
-    );
     # fields
     $Self->_GetItemFields(
         ItemData => \%ItemData
     );
     # links
-    foreach my $LinkType (sort keys %Links) {
-        my %ObjectType = %{$Links{$LinkType}};
-        foreach my $Object (sort keys %ObjectType) {
-            my %Data = %{$ObjectType{$Object}};
-            foreach my $Item (sort keys %Data) {
-                $Self->{LayoutObject}->Block(
-                    Name => "Link$LinkType",
-                    Data => $Data{$Item},
-                );
+    if ($Param{Links} && $Param{Links} == 1) {
+        $Self->{LayoutObject}->Block(
+            Name => 'Links',
+            Data => {},
+        );
+        # get linked objects
+        my %Links = $Self->{LinkObject}->AllLinkedObjects(
+            Object => 'FAQ',
+            ObjectID => $ItemData{ItemID},
+            UserID => $Self->{UserID},
+        );
+        # links
+        foreach my $LinkType (sort keys %Links) {
+            my %ObjectType = %{$Links{$LinkType}};
+            foreach my $Object (sort keys %ObjectType) {
+                my %Data = %{$ObjectType{$Object}};
+                foreach my $Item (sort keys %Data) {
+                    $Self->{LayoutObject}->Block(
+                        Name => "Link$LinkType",
+                        Data => $Data{$Item},
+                    );
+                }
             }
         }
     }

@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQ.pm - faq module
 # Copyright (C) 2001-2006 OTRS GmbH, http://otrs.org/
 # --
-# $Id: AgentFAQ.pm,v 1.6 2006-10-06 08:02:26 rk Exp $
+# $Id: AgentFAQ.pm,v 1.7 2006-10-25 10:06:19 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use Kernel::System::LinkObject;
 use Kernel::Modules::FAQ;
 
 use vars qw($VERSION @ISA);
-$VERSION = '$Revision: 1.6 $';
+$VERSION = '$Revision: 1.7 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 @ISA = qw(Kernel::Modules::FAQ);
@@ -41,7 +41,7 @@ sub new {
         Types => ['internal','external','public']
     );
 
-    # check needed Opjects
+    # check needed Objects
     # ********************************************************** #
     foreach (qw(SessionObject)) {
         $Self->{LayoutObject}->FatalError(Message => "Got no $_!") if (!$Self->{$_});
@@ -110,7 +110,6 @@ sub Run {
         Key => 'LastFAQNav',
         Value => $HeaderType,
     );
-
 
     # view small
     #$HeaderType = $Self->{LastFAQNav} || '';
@@ -275,7 +274,6 @@ sub Run {
         else {
             $Self->{LayoutObject}->FatalError(Message => "Language '$ParamData{Name}' already exists!");
         }
-
 
     }
 
@@ -455,7 +453,6 @@ sub Run {
             }
         }
 
-
         # duplicate check
         if(!$Self->{FAQObject}->CategoryDuplicateCheck(Name=>$ParamData{Name},ParentID=>$ParamData{ParentID})) {
             if ($Self->{FAQObject}->CategoryAdd(%ParamData, UserID => $Self->{UserID}) ) {
@@ -490,7 +487,7 @@ sub Run {
             Selected => $Self->{UserLanguage},
         );
         $Frontend{CategoryOption} = $Self->{LayoutObject}->AgentFAQCategoryListOption(
-            CategoryList => { %{$Self->{FAQObject}->CategoryList()} },
+            CategoryList => { %{$Self->{FAQObject}->CategoryList(Valid => 1)} },
             Name => 'CategoryID',
             LanguageTranslation => 0,
         );
@@ -856,7 +853,7 @@ sub Run {
     # item print
     # ---------------------------------------------------------- #
     elsif ($Self->{Subaction} eq 'Print' && $Self->{ParamObject}->GetParam(Param => 'ItemID')) {
-        $Self->GetItemPrint();
+        $Self->GetItemPrint(Links => 1);
         $Header = $Self->{LayoutObject}->PrintHeader(
             Title => $Self->{ItemData}{Subject}
         );
@@ -892,7 +889,7 @@ sub Run {
         if($Self->{LastFAQNav}) {
             $Self->GetItemSmallView();
         } else {
-            $Self->GetItemView();
+            $Self->GetItemView(Links => 1);
         }
         $HeaderTitle = $Self->{ItemData}{Number};
         $Header = $Self->{LayoutObject}->Header(

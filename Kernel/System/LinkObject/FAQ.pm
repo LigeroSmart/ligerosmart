@@ -2,7 +2,7 @@
 # Kernel/System/LinkObject/FAQ.pm - to link faq objects
 # Copyright (C) 2001-2006 OTRS GmbH, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.1 2006-09-28 17:17:48 rk Exp $
+# $Id: FAQ.pm,v 1.2 2006-10-25 10:06:19 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.1 $';
+$VERSION = '$Revision: 1.2 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub Init {
@@ -44,7 +44,7 @@ sub FillDataMap {
         Number => $Article{Number},
         ID => $Param{ID},
         Object => 'FAQ',
-        FrontendDest => "Action=FAQ&FAQID=",
+        FrontendDest => "Action=AgentFAQ&FAQID=",
     );
 }
 
