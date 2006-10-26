@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2006 OTRS GmbH, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.4 2006-10-25 10:06:19 rk Exp $
+# $Id: FAQ.pm,v 1.5 2006-10-26 14:29:08 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -16,7 +16,7 @@ use MIME::Base64;
 use Kernel::System::Encode;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.4 $';
+$VERSION = '$Revision: 1.5 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -1198,15 +1198,14 @@ sub CategoryAdd {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}) || '';
     }
     foreach (qw(ParentID UserID ValidID)) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer') || '';
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     my $SQL = "INSERT INTO faq_category (name, parent_id, comments, valid_id, ".
             " created, created_by, changed, changed_by)".
             " VALUES ".
-            " ('$Param{Name}', '$Param{ParentID}', '$Param{Comment}', '$Param{ValidID}', ".
+            " ('$Param{Name}', $Param{ParentID}, '$Param{Comment}', $Param{ValidID}, ".
             " current_timestamp, $Self->{UserID}, ".
             " current_timestamp, $Self->{UserID})";
-
     if ($Self->{DBObject}->Do(SQL => $SQL)) {
         # get new category id
         $SQL = "SELECT id ".
@@ -1263,7 +1262,7 @@ sub CategoryUpdate {
 
     # sql
     my $SQL = "UPDATE faq_category SET ".
-          " parent_id = '$Param{ParentID}', ".
+          " parent_id = $Param{ParentID}, ".
           " name = '$Param{Name}', ".
           " comments = '$Param{Comment}', ".
           " valid_id = '$Param{ValidID}', ".
@@ -1965,6 +1964,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2006-10-25 10:06:19 $
+$Revision: 1.5 $ $Date: 2006-10-26 14:29:08 $
 
 =cut
