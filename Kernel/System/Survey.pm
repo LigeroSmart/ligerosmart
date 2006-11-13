@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - manage all survey module events
 # Copyright (C) 2001-2006 OTRS GmbH, http://otrs.org/
 # --
-# $Id: Survey.pm,v 1.26 2006-09-06 16:21:00 mh Exp $
+# $Id: Survey.pm,v 1.27 2006-11-13 10:28:03 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Ticket;
 use Kernel::System::CustomerUser;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.26 $';
+$VERSION = '$Revision: 1.27 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -57,7 +57,7 @@ sub new {
 
 to get a array list of all survey items
 
-    my @List = $Self->{SurveyObject}->SurveyList();
+    my @List = $SurveyObject->SurveyList();
 
 =cut
 
@@ -87,7 +87,9 @@ sub SurveyList {
 
 to get all attributes of a survey
 
-    my %Survey = $Self->{SurveyObject}->SurveyGet(SurveyID => 123);
+    my %Survey = $SurveyObject->SurveyGet(
+        SurveyID => 123
+    );
 
 =cut
 
@@ -154,7 +156,10 @@ sub SurveyGet {
 
 to set a new survey status (Valid, Invalid, Master)
 
-    $StatusSet = $Self->{SurveyObject}->SurveyStatusSet(SurveyID => 123, NewStatus => 'Master');
+    $StatusSet = $SurveyObject->SurveyStatusSet(
+        SurveyID => 123,
+        NewStatus => 'Master'
+    );
 
 =cut
 
@@ -285,7 +290,7 @@ sub SurveyStatusSet {
 
 to update an existing survey
 
-    $Self->{SurveyObject}->SurveySave(
+    $SurveyObject->SurveySave(
         UserID => 1,
         SurveyID => 4,
         Title => 'A Title',
@@ -330,7 +335,7 @@ sub SurveySave {
 
 to add a new survey
 
-    my $SurveyID = $Self->{SurveyObject}->SurveyNew(
+    my $SurveyID = $SurveyObject->SurveyNew(
         UserID => 1,
         Title => 'A Title',
         Introduction => 'The introduction of the survey',
@@ -399,7 +404,9 @@ sub SurveyNew {
 
 to get a array list of all question items
 
-    my @List = $Self->{SurveyObject}->QuestionList(SurveyID => 1);
+    my @List = $SurveyObject->QuestionList(
+        SurveyID => 1
+    );
 
 =cut
 
@@ -438,7 +445,7 @@ sub QuestionList {
 
 to add a new question to a survey
 
-    $Self->{SurveyObject}->QuestionAdd(
+    $SurveyObject->QuestionAdd(
         UserID => 1,
         SurveyID => 10,
         Question => 'The Question',
@@ -486,7 +493,7 @@ sub QuestionAdd {
 
 to delete a question from a survey
 
-    $Self->{SurveyObject}->QuestionDelete(
+    $SurveyObject->QuestionDelete(
         SurveyID => 1,
         QuestionID => 10,
     );
@@ -524,7 +531,7 @@ sub QuestionDelete {
 
 to sort all questions from a survey
 
-    $Self->{SurveyObject}->QuestionSort(
+    $SurveyObject->QuestionSort(
         SurveyID => 1,
     );
 
@@ -557,13 +564,14 @@ sub QuestionSort {
         );
         $Counter++;
     }
+    return 1;
 }
 
 =item QuestionUp()
 
 to move a question up
 
-    $Self->{SurveyObject}->QuestionUp(
+    $SurveyObject->QuestionUp(
         SurveyID => 1,
         QuestionID => 4,
     );
@@ -624,7 +632,7 @@ sub QuestionUp {
 
 to move a question down
 
-    $Self->{SurveyObject}->QuestionDown(
+    $SurveyObject->QuestionDown(
         SurveyID => 1,
         QuestionID => 4,
     );
@@ -686,7 +694,9 @@ sub QuestionDown {
 
 to get all attributes of a question
 
-    my %Question = $Self->{SurveyObject}->QuestionGet(QuestionID => 123);
+    my %Question = $SurveyObject->QuestionGet(
+        QuestionID => 123
+    );
 
 =cut
 
@@ -729,7 +739,7 @@ sub QuestionGet {
 
 to update an existing question
 
-    $Self->{SurveyObject}->QuestionSave(
+    $SurveyObject->QuestionSave(
         UserID => 1,
         QuestionID => 4,
         SurveyID => 3,
@@ -773,7 +783,9 @@ sub QuestionSave {
 
 to count all questions of a survey
 
-    my $CountQuestion = $Self->{SurveyObject}->QuestionCount(SurveyID => 123);
+    my $CountQuestion = $SurveyObject->QuestionCount(
+        SurveyID => 123
+    );
 
 =cut
 
@@ -807,7 +819,9 @@ sub QuestionCount {
 
 to get a array list of all answer items
 
-    my @List = $Self->{SurveyObject}->AnswerList(QuestionID => 1);
+    my @List = $SurveyObject->AnswerList(
+        QuestionID => 1
+    );
 
 =cut
 
@@ -846,7 +860,7 @@ sub AnswerList {
 
 to add a new answer to a question
 
-    $Self->{SurveyObject}->AnswerAdd(
+    $SurveyObject->AnswerAdd(
         UserID => 1,
         QuestionID => 10,
         Answer => 'The Answer',
@@ -892,7 +906,7 @@ sub AnswerAdd {
 
 to delete a answer from a question
 
-    $Self->{SurveyObject}->AnswerDelete(
+    $SurveyObject->AnswerDelete(
         QuestionID => 10,
         AnswerID => 4,
     );
@@ -926,7 +940,7 @@ sub AnswerDelete {
 
 to sort all answers from a question
 
-    $Self->{SurveyObject}->AnswerSort(
+    $SurveyObject->AnswerSort(
         QuestionID => 1,
     );
 
@@ -958,13 +972,14 @@ sub AnswerSort {
         );
         $counter++;
     }
+    return 1;
 }
 
 =item AnswerUp()
 
 to move a answer up
 
-    $Self->{SurveyObject}->AnswerUp(
+    $SurveyObject->AnswerUp(
         QuestionID => 4,
         AnswerID => 1,
     );
@@ -1025,7 +1040,7 @@ sub AnswerUp {
 
 to move a answer down
 
-    $Self->{SurveyObject}->AnswerDown(
+    $SurveyObject->AnswerDown(
         QuestionID => 4,
         AnswerID => 1,
     );
@@ -1086,7 +1101,9 @@ sub AnswerDown {
 
 to get all attributes of a answer
 
-    my %Answer = $Self->{SurveyObject}->AnswerGet(AnswerID => 123);
+    my %Answer = $SurveyObject->AnswerGet(
+        AnswerID => 123
+    );
 
 =cut
 
@@ -1127,7 +1144,7 @@ sub AnswerGet {
 
 to update an existing answer
 
-    $Self->{SurveyObject}->AnswerSave(
+    $SurveyObject->AnswerSave(
         UserID => 1,
         AnswerID => 6,
         QuestionID => 4,
@@ -1171,7 +1188,9 @@ sub AnswerSave {
 
 to count all answers of a question
 
-    my $CountAnswer = $Self->{SurveyObject}->AnswerCount(QuestionID => 123);
+    my $CountAnswer = $SurveyObject->AnswerCount(
+        QuestionID => 123
+    );
 
 =cut
 
@@ -1205,7 +1224,9 @@ sub AnswerCount {
 
 to get a array list of all vote items
 
-    my @List = $Self->{SurveyObject}->VoteList(SurveyID => 1);
+    my @List = $SurveyObject->VoteList(
+        SurveyID => 1
+    );
 
 =cut
 
@@ -1247,7 +1268,7 @@ sub VoteList {
 
 to get all attributes of a vote
 
-    my @Vote = $Self->{SurveyObject}->VoteGet(
+    my @Vote = $SurveyObject->VoteGet(
         RequestID => 13,
         QuestionID => 23
     );
@@ -1287,7 +1308,7 @@ sub VoteGet {
 
 to count all votes of a survey
 
-    my $CountVote = $Self->{SurveyObject}->CountVote(
+    my $CountVote = $SurveyObject->CountVote(
         QuestionID => 123,
         VoteValue => 'The Value',
     );
@@ -1328,9 +1349,9 @@ sub CountVote {
 
 to count all requests of a survey
 
-    my $CountRequest = $Self->{SurveyObject}->CountRequest(
+    my $CountRequest = $SurveyObject->CountRequest(
         QuestionID => 123,
-        ValidID => 0,        # 0, 1, all
+        ValidID => 0,       # (0|1|all)
     );
 
 =cut
@@ -1352,7 +1373,7 @@ sub CountRequest {
     # sql for event
     my $SQL = "SELECT COUNT(id) FROM survey_request WHERE survey_id = $Param{SurveyID}";
 
-    if ($Param{ValidID} eq 0) {
+    if (!$Param{ValidID}) {
         $SQL .= " AND valid_id = 0";
     }
     elsif ($Param{ValidID} eq 1) {
@@ -1372,7 +1393,7 @@ sub CountRequest {
 
 exists an survey-, question-, answer- or request-element
 
-    my $CountRequest = $Self->{SurveyObject}->ElementExists(
+    my $CountRequest = $SurveyObject->ElementExists(
         ID => 123,           # SurveyID, QuestionID, AnswerID, RequestID
         Element => 'Survey'  # Survey, Question, Answer, Request
     );
@@ -1455,7 +1476,7 @@ sub ElementExists {
 
 to send a request to a customer
 
-    $Self->{SurveyObject}->RequestSend(
+    $SurveyObject->RequestSend(
         TicketID => 123,
     );
 
@@ -1599,7 +1620,7 @@ sub RequestSend {
 
 to get all public attributes of a survey
 
-    my %PublicSurvey = $Self->{SurveyObject}->PublicSurveyGet(
+    my %PublicSurvey = $SurveyObject->PublicSurveyGet(
         PublicSurveyKey => 'Aw5de3Xf5qA',
     );
 
@@ -1650,7 +1671,7 @@ sub PublicSurveyGet {
 
 to save a public vote
 
-    $Self->{SurveyObject}->PublicAnswerSave(
+    $SurveyObject->PublicAnswerSave(
         PublicSurveyKey => 'aVkdE82Dw2qw6erCda',
         QuestionID => 4,
         VoteValue => 'The Value',
@@ -1700,7 +1721,7 @@ sub PublicAnswerSave{
 
 to set a request invalid
 
-    $Self->{SurveyObject}->PublicSurveyInvalidSet(
+    $SurveyObject->PublicSurveyInvalidSet(
         PublicSurveyKey => 'aVkdE82Dw2qw6erCda',
     );
 
@@ -1742,6 +1763,8 @@ sub PublicSurveyInvalidSet {
 
 1;
 
+=back
+
 =head1 TERMS AND CONDITIONS
 
 This software is part of the OTRS project (http://otrs.org/).
@@ -1752,6 +1775,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.26 $ $Date: 2006-09-06 16:21:00 $
+$Revision: 1.27 $ $Date: 2006-11-13 10:28:03 $
 
 =cut

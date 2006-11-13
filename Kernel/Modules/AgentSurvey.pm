@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurvey.pm - a survey module
 # Copyright (C) 2001-2006 OTRS GmbH, http://otrs.org/
 # --
-# $Id: AgentSurvey.pm,v 1.22 2006-10-24 10:56:25 mh Exp $
+# $Id: AgentSurvey.pm,v 1.23 2006-11-13 10:28:03 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.22 $';
+$VERSION = '$Revision: 1.23 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -810,25 +810,25 @@ sub Run {
         my @QuestionList = $Self->{SurveyObject}->QuestionList(SurveyID => $SurveyID);
 
         foreach my $Question(@QuestionList) {
-           $Self->{LayoutObject}->Block(
+            $Self->{LayoutObject}->Block(
                 Name => 'StatsDetailQuestion',
                 Data => $Question,
-           );
+            );
 
-           my @Answers = ();
+            my @Answers = ();
 
-           if ($Question->{Type} eq 'Radio' || $Question->{Type} eq 'Checkbox') {
-               my @AnswerList = ();
+            if ($Question->{Type} eq 'Radio' || $Question->{Type} eq 'Checkbox') {
+                my @AnswerList = ();
 
-               @AnswerList = $Self->{SurveyObject}->VoteGet(RequestID => $RequestID, QuestionID => $Question->{QuestionID});
+                @AnswerList = $Self->{SurveyObject}->VoteGet(RequestID => $RequestID, QuestionID => $Question->{QuestionID});
 
-               foreach my $Row (@AnswerList) {
-                   my %Answer = $Self->{SurveyObject}->AnswerGet(AnswerID => $Row->{VoteValue});
-                   my %Data = ();
-                   $Data{Answer} = $Answer{Answer};
+                foreach my $Row (@AnswerList) {
+                    my %Answer = $Self->{SurveyObject}->AnswerGet(AnswerID => $Row->{VoteValue});
+                    my %Data = ();
+                    $Data{Answer} = $Answer{Answer};
 
-                   push(@Answers,\%Data);
-               }
+                    push(@Answers,\%Data);
+                }
             }
             elsif ($Question->{Type} eq 'YesNo' || $Question->{Type} eq 'Textarea') {
                 my @List = $Self->{SurveyObject}->VoteGet(RequestID => $RequestID, QuestionID => $Question->{QuestionID});
