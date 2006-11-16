@@ -2,7 +2,7 @@
 # TODO - todo list of TimeAccounting
 # Copyright (C) 2003-2006 OTRS GmbH, http://otrs.com/
 # --
-# $Id: TODO.TimeAccounting,v 1.18 2006-10-26 06:54:39 tr Exp $
+# $Id: TODO.TimeAccounting,v 1.19 2006-11-16 06:54:07 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -31,6 +31,8 @@ TimeAccounting 1.0
 - realize reports with following settings: selceted group of persons, weekly witch projects and actions
 - grep the TimeAccountingmodule for record and replace the words with accounting or account
 - sysconfig: allow to deactivate the option MaxIncompleteWorkingDays
+- insert a config, that nobody kann insert the hole das misc!!!
+- insert a config, that nobady kann insert misc without a description
 
 2.1 (OTRS)
 
