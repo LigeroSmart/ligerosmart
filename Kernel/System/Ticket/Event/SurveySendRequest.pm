@@ -1,8 +1,8 @@
 # --
 # Kernel/System/Ticket/Event/SurveySendRequest.pm - send survey requests
-# Copyright (C) 2001-2006 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2003-2006 OTRS GmbH, http://otrs.com/
 # --
-# $Id: SurveySendRequest.pm,v 1.5 2006-10-24 10:56:25 mh Exp $
+# $Id: SurveySendRequest.pm,v 1.6 2006-11-21 23:25:03 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.5 $';
+$VERSION = '$Revision: 1.6 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {

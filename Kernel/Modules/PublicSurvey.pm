@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicSurvey.pm - a survey module
 # Copyright (C) 2003-2006 OTRS GmbH, http://otrs.com/
 # --
-# $Id: PublicSurvey.pm,v 1.11 2006-11-21 23:16:31 mh Exp $
+# $Id: PublicSurvey.pm,v 1.12 2006-11-21 23:23:36 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.11 $';
+$VERSION = '$Revision: 1.12 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -36,7 +36,6 @@ sub new {
             $Self->{LayoutObject}->FatalError(Message => "Got no $_!");
         }
     }
-
     $Self->{SurveyObject} = Kernel::System::Survey->new(%Param);
 
     return $Self;
@@ -46,6 +45,10 @@ sub Run {
     my $Self = shift;
     my %Param = @_;
     my $Output;
+
+    # ------------------------------------------------------------ #
+    # public survey vote
+    # ------------------------------------------------------------ #
 
     if ($Self->{Subaction} eq 'PublicSurveyVote') {
         my $PublicSurveyKey = $Self->{ParamObject}->GetParam(Param => "PublicSurveyKey");
