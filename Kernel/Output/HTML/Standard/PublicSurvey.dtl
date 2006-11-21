@@ -1,8 +1,8 @@
 # --
 # PublicSurvey.dtl - provides HTML form for PublicSurvey
-# Copyright (C) 2001-2006 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2003-2006 OTRS GmbH, http://otrs.com/
 # --
-# $Id: PublicSurvey.dtl,v 1.7 2006-09-06 16:21:00 mh Exp $
+# $Id: PublicSurvey.dtl,v 1.8 2006-11-21 23:40:38 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -11,7 +11,7 @@
 
 <!-- dtl:block:PublicSurvey -->
 
-<table border="0" width="100%" cellspacing="0" cellpadding="3" cols="1">
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
   <tr>
     <td class="mainhead">
       $Text{"Survey"}
@@ -78,210 +78,216 @@
                     <table border="0" width="100%" cellspacing="0">
                       <tr>
                         <td width="50" class="contentkey" align="right">
-                          <input type="radio" name="PublicSurveyVote1[$QData{"QuestionID"}]" value="Yes" checked></td>
-                          <td class="contentkey">$Text{"Yes"}</td>
-                        </tr>
-                        <tr>
-                          <td width="50" class="contentkey" align="right">
-                            <input type="radio" name="PublicSurveyVote1[$QData{"QuestionID"}]" value="No"></td>
-                            <td class="contentkey">$Text{"No"}</td>
-                          </tr>
-                        </table>
-                      </td>
-                      <td class="contentkey" width="25">&nbsp;</td>
-                    </tr>
-                    <tr>
-                      <td class="contentkey" width="25">&nbsp;</td>
-                      <td class="contentkey">&nbsp;</td>
-                      <td class="contentkey" width="25">&nbsp;</td>
-                    </tr>
-<!-- dtl:block:PublicAnswerYesNo -->
-<!-- dtl:block:PublicAnswerRadio -->
-                    <tr>
-                      <td class="contentkey" width="25">&nbsp;</td>
-                      <td class="contentkey">$QData{"Question"}</td>
-                      <td class="contentkey" width="25">&nbsp;</td>
-                    </tr>
-                    <tr>
-                      <td class="contentkey" width="25">&nbsp;</td>
-                      <td class="contentkey">
-                        <table border="0" width="100%" cellspacing="0">
-<!-- dtl:block:PublicAnswerRadiobChecked -->
-                          <tr>
-                            <td width="50" align="right">
-                              <input type="radio" name="PublicSurveyVote2[$QData{"QuestionID"}]" value="$QData{"AnswerID"}" checked></td>
-                              <td>$QData{"Answer"}</td>
-                            </tr>
-<!-- dtl:block:PublicAnswerRadiobChecked -->
-<!-- dtl:block:PublicAnswerRadiob -->
-                            <tr>
-                              <td width="50" align="right">
-                                <input type="radio" name="PublicSurveyVote2[$QData{"QuestionID"}]" value="$QData{"AnswerID"}"></td>
-                                <td>$QData{"Answer"}</td>
-                              </tr>
-<!-- dtl:block:PublicAnswerRadiob -->
-                            </table>
-                          </td>
-                          <td class="contentkey" width="25">&nbsp;</td>
-                        </tr>
-                        <tr>
-                          <td class="contentkey" width="25">&nbsp;</td>
-                          <td class="contentkey">&nbsp;</td>
-                          <td class="contentkey" width="25">&nbsp;</td>
-                        </tr>
-<!-- dtl:block:PublicAnswerRadio -->
-<!-- dtl:block:PublicAnswerCheckbox -->
-                        <tr>
-                          <td class="contentkey" width="25">&nbsp;</td>
-                          <td class="contentkey">$QData{"Question"}</td>
-                          <td class="contentkey" width="25">&nbsp;</td>
-                        </tr>
-                        <tr>
-                          <td class="contentkey" width="25">&nbsp;</td>
-                          <td class="contentkey">
-                            <table border="0" width="100%" cellspacing="0">
-<!-- dtl:block:PublicAnswerCheckboxb -->
-                              <tr>
-                                <td width="50" align="right">
-                                  <input type="checkbox" name="PublicSurveyVote3[$QData{"AnswerID"}]" value="Yes"></td>
-                                  <td>$QData{"Answer"}</td>
-                                </tr>
-<!-- dtl:block:PublicAnswerCheckboxb -->
-                              </table>
-                            </td>
-                            <td class="contentkey" width="25">&nbsp;</td>
-                          </tr>
-                          <tr>
-                            <td class="contentkey" width="25">&nbsp;</td>
-                            <td class="contentkey">&nbsp;</td>
-                            <td class="contentkey" width="25">&nbsp;</td>
-                          </tr>
-<!-- dtl:block:PublicAnswerCheckbox -->
-<!-- dtl:block:PublicAnswerTextarea -->
-                          <tr>
-                            <td class="contentkey" width="25">&nbsp;</td>
-                            <td class="contentkey">$QData{"Question"}</td>
-                            <td class="contentkey" width="25">&nbsp;</td>
-                          </tr>
-                          <tr>
-                            <td class="contentkey" width="25">&nbsp;</td>
-                            <td class="contentkey">
-                              <table border="0" width="100%" cellspacing="0">
-                                <tr>
-                                  <td width="50" align="right">&nbsp;</td>
-                                  <td>
-                                    <textarea rows="4" cols="62" name="PublicSurveyVote4[$QData{"QuestionID"}]"></textarea></td>
-                                  </tr>
-                                </table>
-                              </td>
-                              <td class="contentkey" width="25">&nbsp;</td>
-                            </tr>
-                            <tr>
-                              <td class="contentkey" width="25">&nbsp;</td>
-                              <td class="contentkey">&nbsp;</td>
-                              <td class="contentkey" width="25">&nbsp;</td>
-                            </tr>
-<!-- dtl:block:PublicAnswerTextarea -->
-<!-- dtl:block:PublicQuestions -->
-                          </table>
+                          <input type="radio" name="PublicSurveyVote1[$QData{"QuestionID"}]" value="Yes" checked>
                         </td>
+                        <td class="contentkey">$Text{"Yes"}</td>
                       </tr>
                       <tr>
-                        <td class="contentfooter">
-                          <input class="button" type="reset" value="$Text{"Reset"}">&nbsp;
-                          <input class="button" type="submit" value="$Text{"Finish"}">
+                        <td width="50" class="contentkey" align="right">
+                          <input type="radio" name="PublicSurveyVote1[$QData{"QuestionID"}]" value="No">
+                        </td>
+                        <td class="contentkey">$Text{"No"}</td>
+                      </tr>
+                    </table>
+                  </td>
+                  <td class="contentkey" width="25">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td class="contentkey" width="25">&nbsp;</td>
+                  <td class="contentkey">&nbsp;</td>
+                  <td class="contentkey" width="25">&nbsp;</td>
+                </tr>
+<!-- dtl:block:PublicAnswerYesNo -->
+<!-- dtl:block:PublicAnswerRadio -->
+                <tr>
+                  <td class="contentkey" width="25">&nbsp;</td>
+                  <td class="contentkey">$QData{"Question"}</td>
+                  <td class="contentkey" width="25">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td class="contentkey" width="25">&nbsp;</td>
+                  <td class="contentkey">
+                    <table border="0" width="100%" cellspacing="0">
+<!-- dtl:block:PublicAnswerRadiobChecked -->
+                      <tr>
+                        <td width="50" align="right">
+                          <input type="radio" name="PublicSurveyVote2[$QData{"QuestionID"}]" value="$QData{"AnswerID"}" checked>
+                        </td>
+                        <td>$QData{"Answer"}</td>
+                      </tr>
+<!-- dtl:block:PublicAnswerRadiobChecked -->
+<!-- dtl:block:PublicAnswerRadiob -->
+                      <tr>
+                        <td width="50" align="right">
+                          <input type="radio" name="PublicSurveyVote2[$QData{"QuestionID"}]" value="$QData{"AnswerID"}">
+                        </td>
+                        <td>$QData{"Answer"}</td>
+                      </tr>
+<!-- dtl:block:PublicAnswerRadiob -->
+                    </table>
+                  </td>
+                  <td class="contentkey" width="25">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td class="contentkey" width="25">&nbsp;</td>
+                  <td class="contentkey">&nbsp;</td>
+                  <td class="contentkey" width="25">&nbsp;</td>
+                </tr>
+<!-- dtl:block:PublicAnswerRadio -->
+<!-- dtl:block:PublicAnswerCheckbox -->
+                <tr>
+                  <td class="contentkey" width="25">&nbsp;</td>
+                  <td class="contentkey">$QData{"Question"}</td>
+                  <td class="contentkey" width="25">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td class="contentkey" width="25">&nbsp;</td>
+                  <td class="contentkey">
+                    <table border="0" width="100%" cellspacing="0">
+<!-- dtl:block:PublicAnswerCheckboxb -->
+                      <tr>
+                        <td width="50" align="right">
+                          <input type="checkbox" name="PublicSurveyVote3[$QData{"AnswerID"}]" value="Yes">
+                        </td>
+                        <td>$QData{"Answer"}</td>
+                      </tr>
+<!-- dtl:block:PublicAnswerCheckboxb -->
+                    </table>
+                  </td>
+                  <td class="contentkey" width="25">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td class="contentkey" width="25">&nbsp;</td>
+                  <td class="contentkey">&nbsp;</td>
+                  <td class="contentkey" width="25">&nbsp;</td>
+                </tr>
+<!-- dtl:block:PublicAnswerCheckbox -->
+<!-- dtl:block:PublicAnswerTextarea -->
+                <tr>
+                  <td class="contentkey" width="25">&nbsp;</td>
+                  <td class="contentkey">$QData{"Question"}</td>
+                  <td class="contentkey" width="25">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td class="contentkey" width="25">&nbsp;</td>
+                  <td class="contentkey">
+                    <table border="0" width="100%" cellspacing="0">
+                      <tr>
+                        <td width="50" align="right">&nbsp;</td>
+                        <td>
+                          <textarea rows="4" cols="62" name="PublicSurveyVote4[$QData{"QuestionID"}]"></textarea>
                         </td>
                       </tr>
                     </table>
-                  </form>
-                  <br>
-                </td>
-              </tr>
-            </table>
+                  </td>
+                  <td class="contentkey" width="25">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td class="contentkey" width="25">&nbsp;</td>
+                  <td class="contentkey">&nbsp;</td>
+                  <td class="contentkey" width="25">&nbsp;</td>
+                </tr>
+<!-- dtl:block:PublicAnswerTextarea -->
+<!-- dtl:block:PublicQuestions -->
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td class="contentfooter">
+              <input class="button" type="reset" value="$Text{"Reset"}">&nbsp;
+              <input class="button" type="submit" value="$Text{"Finish"}">
+            </td>
+          </tr>
+        </table>
+      </form>
+      <br>
+    </td>
+  </tr>
+</table>
 <!-- dtl:block:PublicSurvey -->
 
 <!-- dtl:block:PublicNoSurvey -->
-            <table border="0" width="100%" cellspacing="0" cellpadding="3" cols="1">
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+  <tr>
+    <td class="mainhead">
+      $Text{"Error"}
+    </td>
+  </tr>
+  <tr>
+    <td class="mainbody">
+      <br>
+      <table border="0" width="700" align="center" cellspacing="0" cellpadding="4">
+        <tr>
+          <td colspan="4" class="contenthead">
+            <table border="0" width="100%" cellspacing="0" cellpadding="0">
               <tr>
-                <td class="mainhead">
-                  $Text{"Error"}
-                </td>
-              </tr>
-              <tr>
-                <td class="mainbody">
-                  <br>
-                  <table border="0" width="700" align="center" cellspacing="0" cellpadding="4">
-                    <tr>
-                      <td colspan="4" class="contenthead">
-                        <table border="0" width="100%" cellspacing="0" cellpadding="0">
-                          <tr>
-                            <td class="contenthead">$Text{"Survey"} $Text{"invalid"}</td>
-                            <td class="contenthead" align="right">&nbsp;</td>
-                          </tr>
-                        </table>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="contentbody">
-                        <table border="0" width="100%">
-                          <tr>
-                            <td class="contentkey" width="25">&nbsp;</td>
-                            <td class="contentkey">$Text{"This Survey-Key is invalid!"}</td>
-                            <td class="contentkey" width="25">&nbsp;</td>
-                          </tr>
-                        </table>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="contentfooter">&nbsp;
-                      </td>
-                    </tr>
-                  </table>
-                  <br>
-                </td>
+                <td class="contenthead">$Text{"Survey"} $Text{"invalid"}</td>
+                <td class="contenthead" align="right">&nbsp;</td>
               </tr>
             </table>
+          </td>
+        </tr>
+        <tr>
+          <td class="contentbody">
+            <table border="0" width="100%">
+              <tr>
+                <td class="contentkey" width="25">&nbsp;</td>
+                <td class="contentkey">$Text{"This Survey-Key is invalid!"}</td>
+                <td class="contentkey" width="25">&nbsp;</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td class="contentfooter">&nbsp;
+          </td>
+        </tr>
+      </table>
+      <br>
+    </td>
+  </tr>
+</table>
 <!-- dtl:block:PublicNoSurvey -->
 
 <!-- dtl:block:PublicSurveyComplete -->
-            <table border="0" width="100%" cellspacing="0" cellpadding="3" cols="1">
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+  <tr>
+    <td class="mainhead">
+      $Text{"Survey"}
+    </td>
+  </tr>
+  <tr>
+    <td class="mainbody">
+      <br>
+      <table border="0" width="700" align="center" cellspacing="0" cellpadding="4">
+        <tr>
+          <td colspan="4" class="contenthead">
+            <table border="0" width="100%" cellspacing="0" cellpadding="0">
               <tr>
-                <td class="mainhead">
-                  $Text{"Survey"}
-                </td>
-              </tr>
-              <tr>
-                <td class="mainbody">
-                  <br>
-                  <table border="0" width="700" align="center" cellspacing="0" cellpadding="4">
-                    <tr>
-                      <td colspan="4" class="contenthead">
-                        <table border="0" width="100%" cellspacing="0" cellpadding="0">
-                          <tr>
-                            <td class="contenthead">$Text{"Survey"} $Text{"finished"}</td>
-                            <td class="contenthead" align="right">&nbsp;</td>
-                          </tr>
-                        </table>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="contentbody">
-                        <table border="0" width="100%">
-                          <tr>
-                            <td class="contentkey" width="25">&nbsp;</td>
-                            <td class="contentkey">$Text{"Thank you for your feedback."}</td>
-                            <td class="contentkey" width="25">&nbsp;</td>
-                          </tr>
-                        </table>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="contentfooter">&nbsp;
-                      </td>
-                    </tr>
-                  </table>
-                  <br>
-                </td>
+                <td class="contenthead">$Text{"Survey"} $Text{"finished"}</td>
+                <td class="contenthead" align="right">&nbsp;</td>
               </tr>
             </table>
+          </td>
+        </tr>
+        <tr>
+          <td class="contentbody">
+            <table border="0" width="100%">
+              <tr>
+                <td class="contentkey" width="25">&nbsp;</td>
+                <td class="contentkey">$Text{"Thank you for your feedback."}</td>
+                <td class="contentkey" width="25">&nbsp;</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td class="contentfooter">&nbsp;
+          </td>
+        </tr>
+      </table>
+      <br>
+    </td>
+  </tr>
+</table>
 <!-- dtl:block:PublicSurveyComplete -->
