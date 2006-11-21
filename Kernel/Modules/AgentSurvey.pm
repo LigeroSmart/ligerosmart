@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurvey.pm - a survey module
 # Copyright (C) 2003-2006 OTRS GmbH, http://otrs.com/
 # --
-# $Id: AgentSurvey.pm,v 1.24 2006-11-13 13:23:53 tr Exp $
+# $Id: AgentSurvey.pm,v 1.25 2006-11-21 21:32:52 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.24 $';
+$VERSION = '$Revision: 1.25 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -746,10 +746,14 @@ sub Run {
                 UserID => $Self->{UserID},
             );
 
-            return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=QuestionEdit&SurveyID=$SurveyID&QuestionID=$QuestionID#Answer");
+            return $Self->{LayoutObject}->Redirect(
+                OP => "Action=$Self->{Action}&Subaction=QuestionEdit&SurveyID=$SurveyID&QuestionID=$QuestionID#Answer"
+            );
         }
         else {
-            return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=AnswerEdit&SurveyID=$SurveyID&QuestionID=$QuestionID&AnswerID=$AnswerID");
+            return $Self->{LayoutObject}->Redirect(
+                OP => "Action=$Self->{Action}&Subaction=AnswerEdit&SurveyID=$SurveyID&QuestionID=$QuestionID&AnswerID=$AnswerID"
+            );
         }
     }
     elsif ($Self->{Subaction} eq 'Stats') {
@@ -874,10 +878,21 @@ sub Run {
     my @List = $Self->{SurveyObject}->SurveyList();
 
     foreach my $SurveyID (@List) {
+        # set output class
+        if ($Param{Class} && $Param{Class} eq 'searchpassive') {
+            $Param{Class} = 'searchactive';
+        }
+        else {
+            $Param{Class} = 'searchpassive';
+        }
+
         my %Survey = $Self->{SurveyObject}->SurveyGet(SurveyID => $SurveyID);
         $Self->{LayoutObject}->Block(
             Name => 'OverviewSurvey',
-            Data => \%Survey,
+            Data => {
+                %Survey,
+                %Param,
+            },
         );
     }
 
