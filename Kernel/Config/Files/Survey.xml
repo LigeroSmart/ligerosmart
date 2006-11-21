@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: Survey.xml,v 1.7 2006-11-16 15:01:57 mh Exp $</CVS>
+    <CVS>$Id: Survey.xml,v 1.8 2006-11-21 23:13:53 mh Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AgentSurvey" Required="0" Valid="1">
         <Description Lang="en">All parameters for the Survey object in the agent interface.</Description>
         <Description Lang="de">Alle Parameter des Befragungs-Objekts im Agent-Interface.</Description>

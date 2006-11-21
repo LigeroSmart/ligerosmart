@@ -1,8 +1,8 @@
 # --
 # Kernel/Language/de_PublicSurvey.pm - the de language for PublicSurvey
-# Copyright (C) 2001-2006 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2003-2006 OTRS GmbH, http://otrs.com/
 # --
-# $Id: de_PublicSurvey.pm,v 1.3 2006-09-06 16:21:00 mh Exp $
+# $Id: de_PublicSurvey.pm,v 1.4 2006-11-21 23:15:17 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you

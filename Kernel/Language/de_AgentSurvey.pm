@@ -1,8 +1,8 @@
 # --
 # Kernel/Language/de_AgentSurvey.pm - the de language for AgentSurvey
-# Copyright (C) 2001-2006 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2003-2006 OTRS GmbH, http://otrs.com/
 # --
-# $Id: de_AgentSurvey.pm,v 1.7 2006-09-06 16:21:00 mh Exp $
+# $Id: de_AgentSurvey.pm,v 1.8 2006-11-21 23:14:57 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
