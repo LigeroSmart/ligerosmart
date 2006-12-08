@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
-# Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
+# Copyright (C) 2003-2006 OTRS GmbH, http://otrs.com/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.8 2006-07-04 13:20:15 tr Exp $
+# $Id: AgentTimeAccounting.pm,v 1.9 2006-12-08 15:07:23 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,10 +17,9 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.8 $';
+$VERSION = '$Revision: 1.9 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
-# --
 sub new {
     my $Type = shift;
     my %Param = @_;
@@ -45,7 +44,7 @@ sub new {
     $Self->{TimeAccountingObject} = Kernel::System::TimeAccounting->new(%Param);
     return $Self;
 }
-# --
+
 sub PreRun {
     my $Self = shift;
     my %Param = @_;
@@ -69,7 +68,7 @@ sub PreRun {
     }
     return;
 }
-# --
+
 sub Run {
     my $Self  = shift;
     my %Param = @_;
@@ -151,16 +150,21 @@ sub Run {
             foreach ((keys %GroupList)) {
                 if ($GroupList{$_} eq 'time_accounting') {
                     return $Self->{LayoutObject}->Redirect(OP => "Action=AgentTimeAccounting&" .
-                                                                 "Subaction=Setting");
+                        "Subaction=Setting"
+                    );
                 }
             }
-            return $Self->{LayoutObject}->ErrorScreen(Message => "No UserPeriod available, please contact the time accounting admin to insert your UserPeriod!");
+            return $Self->{LayoutObject}->ErrorScreen(
+                Message => "No UserPeriod available, please contact the time accounting admin to insert your UserPeriod!"
+            );
         }
 
         my %IncompleteWorkingDays = $Self->{TimeAccountingObject}->WorkingUnitsCompletnessCheck();
         my $MaxAllowedInsertDays  = $Self->{ConfigObject}->Get('TimeAccounting::MaxAllowedInsertDays') || '10';
         ($Param{YearAllowed}, $Param{MonthAllowed}, $Param{DayAllowed}) = Add_Delta_YMD($Year, $Month, $Day, 0, 0, -$MaxAllowedInsertDays);
-        if (timelocal(1, 0, 0 , $Param{Day}, $Param{Month} - 1, $Param{Year} - 1900) < timelocal(1, 0, 0 , $Param{DayAllowed}, $Param{MonthAllowed} - 1, $Param{YearAllowed} - 1900)) {
+        if (timelocal(1, 0, 0 , $Param{Day}, $Param{Month} - 1, $Param{Year} - 1900) <
+            timelocal(1, 0, 0 , $Param{DayAllowed}, $Param{MonthAllowed} - 1, $Param{YearAllowed} - 1900)
+        ) {
             if (!$IncompleteWorkingDays{Incomplete}{$Param{Year}}{$Param{Month}}{$Param{Day}}) {
                 return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=View&Year=$Param{Year}&Month=$Param{Month}&Day=$Param{Day}");
             }
@@ -215,7 +219,7 @@ sub Run {
                         if ($Param{StartTime} =~ /^(\d+):(\d+)/) {
                             my $StartTime = $1*60 + $2;
                             if ($Param{EndTime} =~ /^(\d+):(\d+)/) {
-                                 my $EndTime = $1*60 + $2;
+                                my $EndTime = $1*60 + $2;
                                 if ($ReduceTime{$Action{$Param{ActionID}}{Action}}) {
                                     $Data{$WorkingUnitID}{Period} = ($EndTime - $StartTime)/60 * $ReduceTime{$Action{$Param{ActionID}}{Action}} / 100;
                                 }
@@ -298,7 +302,6 @@ sub Run {
             }
         }
         $ActionList{''} = '';
-
 
         if (time() > timelocal(1, 0, 0 , $Param{Day}, $Param{Month} - 1, $Param{Year} - 1900)) {
             $Self->{LayoutObject}->Block(
@@ -395,7 +398,6 @@ sub Run {
                     Data => {%Param, %Frontend},
                 );
 
-
                 # Validity checks start
                 if ($Data{$WorkingUnitID}{ProjectID} && $Data{$WorkingUnitID}{ActionID} && $Param{Diseased}) {
                     $Param{ReadOnlyDescription} = 'Are you sure, that you worked while you are Diseased?';
@@ -412,13 +414,16 @@ sub Run {
                 if (!$Data{$WorkingUnitID}{ProjectID} && $Data{$WorkingUnitID}{ActionID}) {
                     $Param{UnitRequiredDescription} = 'Can\'t save settings, because of missing Project!';
                 }
-                if ($Data{$WorkingUnitID}{StartTime} && $Data{$WorkingUnitID}{StartTime} ne '00:00' && $Data{$WorkingUnitID}{EndTime} && $Data{$WorkingUnitID}{EndTime}  ne '00:00') {
+                if ($Data{$WorkingUnitID}{StartTime} && $Data{$WorkingUnitID}{StartTime} ne '00:00' &&
+                    $Data{$WorkingUnitID}{EndTime} && $Data{$WorkingUnitID}{EndTime}  ne '00:00'
+                ) {
                     if ($Data{$WorkingUnitID}{StartTime} =~ /^(\d+):(\d+)/) {
                         my $StartTime = $1*60 + $2;
                         if ($Data{$WorkingUnitID}{EndTime} =~ /^(\d+):(\d+)/) {
                             my $EndTime = $1*60 + $2;
                             if ($Data{$WorkingUnitID}{Period} > ($EndTime - $StartTime)/60 + 0.01) {
-                                $Param{UnitRequiredDescription} = 'Can\'t save settings, because the Period is bigger than the interval between Starttime and Endtime!';
+                                $Param{UnitRequiredDescription} = 'Can\'t save settings, because the Period is bigger' .
+                                    ' than the interval between Starttime and Endtime!';
                             }
                             if ($EndTime > 60 * 24 || $StartTime > 60 * 24) {
                                 $Param{UnitRequiredDescription} = 'Can\'t save settings, because a day has only 24 hours!';
@@ -495,7 +500,9 @@ sub Run {
             Format => 'DateInputFormat',
         );
 
-        if (timelocal(1, 0, 0 , $Param{Day}, $Param{Month} - 1, $Param{Year} - 1900) < timelocal(1, 0, 0 , $Param{DayAllowed}, $Param{MonthAllowed} - 1, $Param{YearAllowed} - 1900)) {
+        if (timelocal(1, 0, 0 , $Param{Day}, $Param{Month} - 1, $Param{Year} - 1900) <
+            timelocal(1, 0, 0 , $Param{DayAllowed}, $Param{MonthAllowed} - 1, $Param{YearAllowed} - 1900)
+        ) {
             if ($IncompleteWorkingDays{Incomplete}{$Param{Year}}{$Param{Month}}{$Param{Day}} && !$Param{SuccessfulInsert}) {
                 $Self->{LayoutObject}->Block(
                     Name => 'Required',
@@ -761,7 +768,6 @@ sub Run {
             return $Self->{LayoutObject}->NoPermission(WithHeader => 'yes');
         }
 
-
         foreach (qw(Status Day Month Year UserID ProjectStatusShow)) {
             $Param{$_} = $Self->{ParamObject}->GetParam(Param => $_);
         }
@@ -801,7 +807,6 @@ sub Run {
             Key       => 'LastScreen',
             Value     => "Action=$Self->{Action}&Subaction=Overview&Year=$Param{Year}&Month=$Param{Month}",
         );
-
 
         $Param{Month_to_Text}   = $MonthArray[$Param{Month}];
 
@@ -860,8 +865,6 @@ sub Run {
                 $Param{WorkingHours} = '';
             }
 
-
-
             $Param{Weekday_to_Text} = $WeekdayArray[$Param{Weekday}];
             $Self->{LayoutObject}->Block(
                 Name => 'Row',
@@ -908,7 +911,6 @@ sub Run {
         elsif ($Param{ProjectStatusShow} eq 'all') {
             $Param{ProjectStatusShow} = 'valid';
         }
-
 
         my %Project     = $Self->{TimeAccountingObject}->ProjectSettingsGet();
         my %Action      = $Self->{TimeAccountingObject}->ActionSettingsGet();
@@ -1024,7 +1026,6 @@ sub Run {
             $Param{$_} = $Self->{ParamObject}->GetParam(Param => $_);
         }
 
-
         # permission check
         if (!$Self->{AccessRw}) {
             return $Self->{LayoutObject}->NoPermission(WithHeader => 'yes');
@@ -1099,7 +1100,8 @@ sub Run {
                     if ($UserBasics{$UserID}{Description} && $Self->{ParamObject}->GetParam(Param => 'Description[' . $UserID . ']')) {
                         $Break = "\n";
                     }
-                    $Data{$UserID}{Description} = $UserBasics{$UserID}{Description} . $Break . $Self->{ParamObject}->GetParam(Param => 'Description[' . $UserID . ']');
+                    my $Description = $Self->{ParamObject}->GetParam(Param => 'Description[' . $UserID . ']');
+                    $Data{$UserID}{Description} = $UserBasics{$UserID}{Description} . $Break . $Description;
 
                     $Data{$UserID}{UserID} = $UserID;
                     foreach my $Period (keys %{$User{$UserID}}) {
@@ -1240,7 +1242,7 @@ sub Run {
                 Name => 'NewUserOption',
                 Data => {%Param, %Frontend},
             );
-         }
+        }
 
         # build output
         $Output  = $Self->{LayoutObject}->Header(Title => "Setting");
@@ -1324,7 +1326,6 @@ sub Run {
                 SelectedID => $Project{ProjectStatus}{$ProjectID} || '',
                 Name       => "ProjectStatus[$Param{ProjectID}]",
             );
-
 
             $Self->{LayoutObject}->Block(
                 Name => 'Project',
@@ -1448,7 +1449,6 @@ sub Run {
         elsif ($Param{ProjectStatusShow} eq 'all') {
             $Param{ProjectStatusShow} = 'valid';
         }
-
 
         my %ProjectData = $Self->{TimeAccountingObject}->ProjectActionReporting(
             Year  => $Param{Year},
@@ -1594,8 +1594,8 @@ sub Run {
         # show the headerline
         foreach my $UserID (sort {$ShownUsers{$a} cmp $ShownUsers{$b}} keys %ShownUsers) {
             $Self->{LayoutObject}->Block(
-                 Name => 'UserName',
-                 Data => {User => $ShownUsers{$UserID}},
+                Name => 'UserName',
+                Data => {User => $ShownUsers{$UserID}},
             );
         }
 
@@ -1611,10 +1611,10 @@ sub Run {
         foreach my $ActionID (sort {$Action{$a} cmp $Action{$b}} keys %Action) {
             my $TotalHours = 0;
             $Self->{LayoutObject}->Block(
-                 Name => 'Action',
-                 Data => {
-                     Action => $Action{$ActionID},
-                 },
+                Name => 'Action',
+                Data => {
+                    Action => $Action{$ActionID},
+                },
             );
 
             foreach my $UserID (sort {$ShownUsers{$a} cmp $ShownUsers{$b}} keys %ShownUsers) {
@@ -1639,10 +1639,10 @@ sub Run {
         foreach my $UserID (sort {$ShownUsers{$a} cmp $ShownUsers{$b}} keys %ShownUsers) {
             $Param{TotalAll} += $Total{$UserID};
             $Self->{LayoutObject}->Block(
-                 Name => 'UserTotal',
-                 Data => {
-                     Total => sprintf ("%.2f", $Total{$UserID}),
-                 },
+                Name => 'UserTotal',
+                Data => {
+                    Total => sprintf ("%.2f", $Total{$UserID}),
+                },
             );
         }
 
@@ -1663,5 +1663,5 @@ sub Run {
     # ---------------------------------------------------------- #
     return $Self->{LayoutObject}->ErrorScreen(Message => "Invalid Subaction process!");
 }
-# --
+
 1;

@@ -1,8 +1,8 @@
 #--
 # Kernel/System/TimeAccounting.pm - all time accounting functions
-# Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
+# Copyright (C) 2003-2006 OTRS GmbH, http://otrs.com/
 # --
-# $Id: TimeAccounting.pm,v 1.6 2006-05-23 09:06:49 tr Exp $
+# $Id: TimeAccounting.pm,v 1.7 2006-12-08 15:07:23 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -13,7 +13,7 @@ package Kernel::System::TimeAccounting;
 
 use strict;
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.6 $';
+$VERSION = '$Revision: 1.7 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week);
@@ -35,25 +35,25 @@ All timeaccounting functions
 
 create a object
 
-  use Kernel::Config;
-  use Kernel::System::Log;
-  use Kernel::System::DB;
-  use Kernel::System::TimeAccounting;
+    use Kernel::Config;
+    use Kernel::System::Log;
+    use Kernel::System::DB;
+    use Kernel::System::TimeAccounting;
 
-  my $ConfigObject = Kernel::Config->new();
-  my $LogObject    = Kernel::System::Log->new(
-      ConfigObject => $ConfigObject,
-  );
-  my $DBObject = Kernel::System::DB->new(
-      ConfigObject => $ConfigObject,
-      LogObject => $LogObject,
-  );
-  my $TimeAccountingObject = Kernel::System::TimeAccounting->new(
-      ConfigObject => $ConfigObject,
-      LogObject => $LogObject,
-      DBObject => $DBObject,
-      UserID => 123,
-  );
+    my $ConfigObject = Kernel::Config->new();
+    my $LogObject    = Kernel::System::Log->new(
+        ConfigObject => $ConfigObject,
+    );
+    my $DBObject = Kernel::System::DB->new(
+        ConfigObject => $ConfigObject,
+        LogObject => $LogObject,
+    );
+    my $TimeAccountingObject = Kernel::System::TimeAccounting->new(
+        ConfigObject => $ConfigObject,
+        LogObject => $LogObject,
+        DBObject => $DBObject,
+        UserID => 123,
+    );
 
 =cut
 
@@ -102,7 +102,7 @@ sub UserCurrentPeriodGet {
     # db select
     $Self->{DBObject}->Prepare (
         SQL => "SELECT user_id, preference_period, date_start, date_end, weekly_hours, leave_days, overtime, status FROM time_accounting_user_period ".
-               "WHERE date_start <= '" . $Date . "' AND date_end  >='" . $Date . "'",
+            "WHERE date_start <= '" . $Date . "' AND date_end  >='" . $Date . "'",
     );
 
     # fetch Data
@@ -320,8 +320,9 @@ sub ProjectSettingsInsert {
 
     # build sql
     my $SQL = "INSERT INTO time_accounting_project (project, description, status) " .
-              "VALUES " .
-              "('" . $Param{Project}. "', '" . $Param{ProjectDescription} . "', '" . $Param{ProjectStatus} . "')";
+        "VALUES " .
+        "('" . $Param{Project}. "', '" . $Param{ProjectDescription} . "', '" . $Param{ProjectStatus} . "')";
+
     # db insert
     if (!$Self->{DBObject}->Do(SQL => $SQL)) {
         return;
@@ -358,11 +359,11 @@ sub ProjectSettingsUpdate {
                 $Param{$ProjectID}{$_} = $Self->{DBObject}->Quote($Param{$ProjectID}{$_}) || '';
             }
             # build sql
-            my $SQL = "UPDATE `time_accounting_project` " .
-                    "SET `project` = '" . $Param{$ProjectID}{Project}.
-                         "', `status` = '" . $Param{$ProjectID}{ProjectStatus} .
-                         "', `description` = '" . $Param{$ProjectID}{ProjectDescription} . "' " .
-                    "WHERE `id` = '" . $ProjectID . "'";
+            my $SQL = "UPDATE time_accounting_project " .
+                "SET project = '" . $Param{$ProjectID}{Project}.
+                    "', status = '" . $Param{$ProjectID}{ProjectStatus} .
+                    "', description = '" . $Param{$ProjectID}{ProjectDescription} . "' " .
+                "WHERE id = '" . $ProjectID . "'";
             # db insert
             if (!$Self->{DBObject}->Do(SQL => $SQL)) {
                 return;
@@ -426,8 +427,8 @@ sub ActionSettingsInsert {
 
     # build sql
     my $SQL = "INSERT INTO time_accounting_action (action, status)" .
-              " VALUES" .
-              " ('" . $Param{Action}. "' , '" . $Param{ActionStatus} . "')";
+        " VALUES" .
+        " ('" . $Param{Action}. "' , '" . $Param{ActionStatus} . "')";
     # db insert
     if (!$Self->{DBObject}->Do(SQL => $SQL)) {
         return;
@@ -465,9 +466,9 @@ sub ActionSettingsUpdate {
                 $Param{$ActionID}{$_} = $Self->{DBObject}->Quote($Param{$ActionID}{$_}) || '';
             }
             # build sql
-            $SQL = "UPDATE `time_accounting_action` " .
-                "SET `action` = '" . $Param{$ActionID}{Action}. "', `status` = '" . $Param{$ActionID}{ActionStatus} . "' " .
-                "WHERE `id` = '" . $ActionID . "'";
+            $SQL = "UPDATE time_accounting_action " .
+                "SET action = '" . $Param{$ActionID}{Action}. "', status = '" . $Param{$ActionID}{ActionStatus} . "' " .
+                "WHERE id = '" . $ActionID . "'";
             # db insert
             if (!$Self->{DBObject}->Do(SQL => $SQL)) {
                 return;
@@ -477,7 +478,7 @@ sub ActionSettingsUpdate {
     return 1;
 }
 
-=item UserSettingsGet()
+=item UserGet()
 
 returns a hash with the user data
 
@@ -533,12 +534,11 @@ sub UserSettingsGet {
     return %Data;
 }
 
-
 =item UserSettingsInsert()
 
 insert new user data in the db
 
-    $TimeAccountingObject->ActionSettingsInsert(
+    $TimeAccountingObject->UserSettingsInsert(
         UserID       => '2',
         Period       => '2',
     );
@@ -564,9 +564,11 @@ sub UserSettingsInsert {
     }
 
     # build sql
-    $SQL = "INSERT INTO time_accounting_user_period (user_id, preference_period, date_start, date_end, weekly_hours, leave_days, overtime, status)" .
-           " VALUES" .
-           " ('" . $Param{UserID}. "', '" . $Param{Period}. "', '" . $Param{DateStart}. " 00:00:00', '" . $Param{DateEnd}. " 00:00:00', '" . $Param{WeeklyHours} . "', '" . $Param{LeaveDays}. "', '" . $Param{Overtime}. "', '" . $Param{UserStatus} . "')";
+    $SQL = "INSERT INTO time_accounting_user_period (user_id, preference_period, date_start, date_end," .
+        " weekly_hours, leave_days, overtime, status)" .
+        " VALUES" .
+        " ('$Param{UserID}', '$Param{Period}', '$Param{DateStart} 00:00:00', '$Param{DateEnd} 00:00:00'," .
+        " '$Param{WeeklyHours}', '$Param{LeaveDays}', '$Param{Overtime}', '$Param{UserStatus}')";
     # db insert
     if (!$Self->{DBObject}->Do(SQL => $SQL)) {
         return;
@@ -574,8 +576,8 @@ sub UserSettingsInsert {
 
     # build sql
     $SQL = "INSERT INTO time_accounting_user (user_id)" .
-           " VALUES" .
-           " ('" . $Param{UserID}. "')";
+        " VALUES" .
+        " ('" . $Param{UserID}. "')";
     # db insert
     if (!$Self->{DBObject}->Do(SQL => $SQL)) {
         return;
@@ -635,11 +637,11 @@ sub UserSettingsUpdate {
         }
 
         # build sql
-        my $SQL = "UPDATE `time_accounting_user` " .
-            "SET `description` = '"   . $Param{$UserID}{Description} .
-            "', `show_overtime` = '"  . $Param{$UserID}{ShowOvertime} .
-            "', `create_project` = '" . $Param{$UserID}{CreateProject} . "' " .
-            "WHERE `user_id` = '" . $Param{$UserID}{UserID}. "'";
+        my $SQL = "UPDATE time_accounting_user " .
+            "SET description = '"   . $Param{$UserID}{Description} .
+            "', show_overtime = '"  . $Param{$UserID}{ShowOvertime} .
+            "', create_project = '" . $Param{$UserID}{CreateProject} . "' " .
+            "WHERE user_id = '" . $Param{$UserID}{UserID}. "'";
         # db insert
         if (!$Self->{DBObject}->Do(SQL => $SQL)) {
             return;
@@ -656,14 +658,14 @@ sub UserSettingsUpdate {
             }
             # build sql
             my $SQL = "UPDATE `time_accounting_user_period` " .
-                "SET `leave_days` = '"  . $Param{$UserID}{$Period}{LeaveDays} .
-                "', `date_start` = '"   . $Param{$UserID}{$Period}{DateStart} .
-                "', `date_end` = '"     . $Param{$UserID}{$Period}{DateEnd} .
-                "', `overtime` = '"     . $Param{$UserID}{$Period}{Overtime} .
-                "', `weekly_hours` = '" . $Param{$UserID}{$Period}{WeeklyHours} .
-                "', `status` = '"       . $Param{$UserID}{$Period}{UserStatus}. "' " .
-                "WHERE `user_id` = '" . $Param{$UserID}{$Period}{UserID} .
-                "' AND `preference_period` = '" . $Period . "'";
+                "SET leave_days = '"  . $Param{$UserID}{$Period}{LeaveDays} .
+                "', date_start = '"   . $Param{$UserID}{$Period}{DateStart} .
+                "', date_end = '"     . $Param{$UserID}{$Period}{DateEnd} .
+                "', overtime = '"     . $Param{$UserID}{$Period}{Overtime} .
+                "', weekly_hours = '" . $Param{$UserID}{$Period}{WeeklyHours} .
+                "', status = '"       . $Param{$UserID}{$Period}{UserStatus}. "' " .
+                "WHERE user_id = '" . $Param{$UserID}{$Period}{UserID} .
+                "' AND preference_period = '" . $Period . "'";
             # db insert
             if (!$Self->{DBObject}->Do(SQL => $SQL)) {
                 return;
@@ -672,8 +674,6 @@ sub UserSettingsUpdate {
     }
     return 1;
 }
-
-
 
 =item WorkingUnitsCompletnessCheck()
 
@@ -802,8 +802,6 @@ sub WorkingUnitsCompletnessCheck {
     return %Data;
 }
 
-
-
 =item WorkingUnitsGet()
 
 returns a hash with the working units data
@@ -829,9 +827,11 @@ sub WorkingUnitsGet {
         $Param{UserID} = $Self->{UserID};
     }
 
-     my $Date = sprintf("%04d-%02d-%02d", $Param{Year}, $Param{Month}, $Param{Day});
+    my $Date = sprintf("%04d-%02d-%02d", $Param{Year}, $Param{Month}, $Param{Day});
     $Self->{DBObject}->Prepare (
-        SQL => "SELECT user_id, project_id, action_id, remark, time_start, time_end, period FROM time_accounting_table WHERE time_start LIKE '$Date%' AND user_id = '$Param{UserID}' ORDER by id",
+        SQL => "SELECT user_id, project_id, action_id, remark, time_start, time_end," .
+            " period FROM time_accounting_table WHERE time_start LIKE '$Date%'" .
+            " AND user_id = '$Param{UserID}' ORDER by id",
     );
 
     # fetch Data
@@ -911,9 +911,12 @@ sub WorkingUnitsInsert {
         my $EndTime   = $Date . " " . $Param{$WorkingUnitID}{EndTime};
 
         # build sql
-        $SQL = "INSERT INTO time_accounting_table (user_id, project_id, action_id, remark, time_start, time_end, period, created )" .
-               " VALUES" .
-               " ('" . $Self->{UserID} . "', '" . $Param{$WorkingUnitID}{ProjectID} . "', '" . $Param{$WorkingUnitID}{ActionID}. "' , '" . $Param{$WorkingUnitID}{Remark} . "', '" . $StartTime . "', '" . $EndTime . "', '" . $Param{$WorkingUnitID}{Period} . "', current_timestamp)";
+        $SQL = "INSERT INTO time_accounting_table (user_id, project_id, action_id, remark," .
+            " time_start, time_end, period, created )" .
+            " VALUES" .
+            " ('$Self->{UserID}', '$Param{$WorkingUnitID}{ProjectID}', '$Param{$WorkingUnitID}{ActionID}'," .
+            " '$Param{$WorkingUnitID}{Remark}', '$StartTime', '$EndTime', '$Param{$WorkingUnitID}{Period}'," .
+            " current_timestamp)";
         # db insert
         if (!$Self->{DBObject}->Do(SQL => $SQL)) {
             return;
@@ -950,7 +953,7 @@ sub WorkingUnitsDelete {
 
     # delete old working units
     $SQL = "DELETE FROM time_accounting_table " .
-           "WHERE time_start LIKE '$Date%' AND user_id = '$Self->{UserID}'" ;
+        "WHERE time_start LIKE '$Date%' AND user_id = '$Self->{UserID}'" ;
     if (!$Self->{DBObject}->Do(SQL => $SQL)) {
         return ;
     }
@@ -1006,7 +1009,6 @@ sub VacationCheck {
     return;
 }
 
-
 =item ProjectActionReporting()
 
 returns a hash with the hours dependent project and action data
@@ -1047,11 +1049,9 @@ sub ProjectActionReporting {
         $Data{Total}{$Row[0]}{$Row[1]}{Hours} += $Row[2];
     }
 
-
-
-
     $Self->{DBObject}->Prepare (
-        SQL => "SELECT project_id, action_id, period FROM time_accounting_table WHERE time_start >= '$DateString-01 00:00:00' AND time_start <= '$DateString-31 23:23:59'$IDSelect",
+        SQL => "SELECT project_id, action_id, period FROM time_accounting_table" .
+            " WHERE time_start >= '$DateString-01 00:00:00' AND time_start <= '$DateString-31 23:23:59'$IDSelect",
     );
 
     # fetch Data
@@ -1062,9 +1062,9 @@ sub ProjectActionReporting {
 
 }
 
-
-
 1;
+
+=back
 
 =head1 TERMS AND CONDITIONS
 
@@ -1076,6 +1076,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.6 $ $Date: 2006-05-23 09:06:49 $
+$Revision: 1.7 $ $Date: 2006-12-08 15:07:23 $
 
 =cut

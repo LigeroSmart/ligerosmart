@@ -1,8 +1,8 @@
 # --
 # AgentTimeAccountingOverview.dtl - provides HTML form for time accounting overview
-# Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
+# Copyright (C) 2003-2006 OTRS GmbH, http://otrs.com/
 # --
-# $Id: AgentTimeAccountingOverview.dtl,v 1.5 2006-05-23 09:06:49 tr Exp $
+# $Id: AgentTimeAccountingOverview.dtl,v 1.6 2006-12-08 15:07:23 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@
   <tr>
     <td class="mainbody">
       <br>
-      <table border="0" width="33%" cellspacing="2" cellpadding="2" cols="1" align="center">
+      <table border="0" width="33%" cellspacing="2" cellpadding="2" align="center">
 <!-- dtl:block:User -->
         <tr>
           <td colspan="4" class="contentkey">$Text{"Overview of "} $QData{"User"}<br></td>
@@ -25,8 +25,13 @@
 <!-- dtl:block:User -->
         <tr>
           <td colspan="4" align="center">
-            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Overview&Year=$QData{"YearBack"}&Month=$QData{"MonthBack"}&UserID=$QData{"UserID"}">&#060;&#060;</a>&nbsp;&nbsp;
-            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Overview&Year=$QData{"YearNext"}&Month=$QData{"MonthNext"}&UserID=$QData{"UserID"}">&#062;&#062;</a>
+            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Overview&Year=$QData{"YearBack"}&Month=$QData{"MonthBack"}&UserID=$QData{"UserID"}">
+            &#060;&#060;
+            </a>
+            &nbsp;&nbsp;
+            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Overview&Year=$QData{"YearNext"}&Month=$QData{"MonthNext"}&UserID=$QData{"UserID"}">
+            &#062;&#062;
+            </a>
           </td>
         </tr>
         <tr>
@@ -38,7 +43,8 @@
         <tr $Data{"Style"}>
           <td align="center">
             <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=$QData{"Subaction"}&Year=$QData{"Year"}&Month=$QData{"Month"}&Day=$QData{"Day"}&UserID=$QData{"UserID"}">
-            $QData{"Day"}</a>
+            $QData{"Day"}
+            </a>
           </td>
           <td>$QData{"Weekday_to_Text"}</td>
           <td>$Text{"$QData{"Comment"}"}</td>
@@ -51,7 +57,7 @@
         </tr>
       </table>
       <br>
-      <table border="0" width="33%" cellspacing="0" cellpadding="2" cols="1" align="center">
+      <table border="0" width="33%" cellspacing="0" cellpadding="2" align="center">
 <!-- dtl:block:Overtime -->
         <tr class="contenthead">
           <td colspan="2">$Text{"Overtime"}:</td>
@@ -167,5 +173,3 @@
     </td>
   </tr>
 </table>
-
-

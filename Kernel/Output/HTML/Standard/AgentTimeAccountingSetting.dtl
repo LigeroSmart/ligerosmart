@@ -1,8 +1,8 @@
 # --
 # AgentTimeAccountingSetting.dtl - provides HTML form for time accounting settings
-# Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
+# Copyright (C) 2003-2006 OTRS GmbH, http://otrs.com/
 # --
-# $Id: AgentTimeAccountingSetting.dtl,v 1.5 2006-05-23 09:06:49 tr Exp $
+# $Id: AgentTimeAccountingSetting.dtl,v 1.6 2006-12-08 15:07:23 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -53,7 +53,7 @@
 <!-- dtl:block:Project -->
                 <tr>
                   <td colspan="2">
-                    <input class="button" accesskey="g" type="submit" value="$Text{"new"}" name="NewProject">
+                    <input class="button" accesskey="g" type="submit" value="$Text{"New"}" name="NewProject">
                   </td>
                 </tr>
               </table>
@@ -61,7 +61,7 @@
           </tr>
           <tr>
             <td class="contentfooter">
-              <input class="button" accesskey="g" type="submit" value="$Text{"submit"}" name="ActionProject">
+              <input class="button" accesskey="g" type="submit" value="$Text{"Submit"}" name="ActionProject">
             </td>
           </tr>
         </table>
@@ -115,7 +115,7 @@
 <!-- dtl:block:Action -->
                 <tr>
                   <td class="contentkey" colspan="2">
-                    <input class="button" accesskey="g" type="submit" value="$Text{"new"}" name="NewAction">
+                    <input class="button" accesskey="g" type="submit" value="$Text{"New"}" name="NewAction">
                   </td>
                 </tr>
               </table>
@@ -123,7 +123,7 @@
           </tr>
           <tr>
             <td class="contentfooter">
-              <input class="button" accesskey="g" type="submit" value="$Text{"submit"}" name="ActionAction">
+              <input class="button" accesskey="g" type="submit" value="$Text{"Submit"}" name="ActionAction">
             </td>
           </tr>
         </table>
@@ -188,7 +188,7 @@
                 </tr>
                 <tr>
                   <td class="contentvalue" colspan="3">
-                    <input class="button" type="submit" value="$Text{"new user setting"}"  name="NewUserSetting[$QData{"UserID"}]">
+                    <input class="button" type="submit" value="$Text{"New user setting"}"  name="NewUserSetting[$QData{"UserID"}]">
                   </td>
                 </tr>
                 <tr>
@@ -199,7 +199,7 @@
                 <tr>
                   <td class="contentvalue" colspan="3">
                     $Data{"NewUserOption"}
-                    <input class="button" accesskey="g" type="submit" value="$Text{"new"}"  name="NewUser">
+                    <input class="button" accesskey="g" type="submit" value="$Text{"New"}"  name="NewUser">
                   </td>
                 </tr>
 <!-- dtl:block:NewUserOption -->
@@ -208,7 +208,7 @@
           </tr>
           <tr>
             <td class="contentfooter">
-              <input class="button" accesskey="g" type="submit" value="$Text{"submit"}" name="ActionUser">
+              <input class="button" accesskey="g" type="submit" value="$Text{"Submit"}" name="ActionUser">
             </td>
           </tr>
         </table>
@@ -221,5 +221,3 @@
   </tr>
 </table>
 <!-- dtl:block:Setting -->
-
-

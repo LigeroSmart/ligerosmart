@@ -1,8 +1,8 @@
 # --
 # AgentTimeAccountingEdit.dtl - provides HTML form for time accounting edit
-# Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
+# Copyright (C) 2003-2006 OTRS GmbH, http://otrs.com/
 # --
-# $Id: AgentTimeAccountingEdit.dtl,v 1.4 2006-06-07 14:18:59 tr Exp $
+# $Id: AgentTimeAccountingEdit.dtl,v 1.5 2006-12-08 15:07:23 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -43,7 +43,7 @@
                 <tr class="contentvalue">
                   <td>
                     $Data{"Date"}
-                    <input class="button" type="submit" value="$Text{"submit"}">
+                    <input class="button" type="submit" value="$Text{"Submit"}">
                   </td>
                   <td>
                     <table>
@@ -52,10 +52,12 @@
                           $QData{"Year"}-$QData{"Month"}-$QData{"Day"}&nbsp;
                         </td>
                         <td>
-                          <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Edit&Year=$QData{"YearBack"}&Month=$QData{"MonthBack"}&Day=$QData{"DayBack"}"><img border="0" src="$Env{"Images"}left-big.png" alt="$Text{"back"}"></a>&nbsp;
+                          <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Edit&Year=$QData{"YearBack"}&Month=$QData{"MonthBack"}&Day=$QData{"DayBack"}"><img border="0" src="$Env{"Images"}left-big.png" alt="$Text{"back"}"></a>
+                          &nbsp;
                         </td>
                         <td>
-                          <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Edit&Year=$QData{"YearNext"}&Month=$QData{"MonthNext"}&Day=$QData{"DayNext"}"><img border="0" src="$Env{"Images"}right-big.png" alt="$Text{"next"}"></a>&nbsp;
+                          <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Edit&Year=$QData{"YearNext"}&Month=$QData{"MonthNext"}&Day=$QData{"DayNext"}"><img border="0" src="$Env{"Images"}right-big.png" alt="$Text{"next"}"></a>
+                          &nbsp;
                         </td>
                       </tr>
                     </table>
@@ -173,9 +175,9 @@
                 </tr>
                 <tr>
                   <td class="contentfooter">
-                    <input class="button" style="display:none;" type="submit" value="$Text{"submit"}" >
+                    <input class="button" style="display:none;" type="submit" value="$Text{"Submit"}" >
                     <input class="button" type="submit" value="$Text{"Delete"}" name="Delete">
-                    <input class="button" accesskey="g" type="submit" value="$Text{"submit"}">
+                    <input class="button" accesskey="g" type="submit" value="$Text{"Submit"}">
                   </td>
                 </tr>
                 <tr>

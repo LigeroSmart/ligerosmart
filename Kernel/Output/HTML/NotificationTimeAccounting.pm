@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/NotificationTimeAccounting.pm
-# Copyright (C) 2003-2006 OTRS GmbH, http://www.otrs.com/
+# Copyright (C) 2003-2006 OTRS GmbH, http://otrs.com/
 # --
-# $Id: NotificationTimeAccounting.pm,v 1.1 2006-04-10 12:24:39 tr Exp $
+# $Id: NotificationTimeAccounting.pm,v 1.2 2006-12-08 15:07:23 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -16,10 +16,9 @@ use Kernel::System::TimeAccounting;
 use Kernel::System::Time;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.1 $';
+$VERSION = '$Revision: 1.2 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
-# --
 sub new {
     my $Type = shift;
     my %Param = @_;
@@ -37,7 +36,7 @@ sub new {
     $Self->{TimeAccountingObject} = Kernel::System::TimeAccounting->new(%Param);
     return $Self;
 }
-# --
+
 sub Run {
     my $Self = shift;
     my %Param = @_;
@@ -60,5 +59,5 @@ sub Run {
         }
     }
 }
-# --
+
 1;
