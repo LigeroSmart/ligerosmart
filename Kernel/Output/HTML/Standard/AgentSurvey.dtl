@@ -2,7 +2,7 @@
 # AgentSurvey.dtl - provides HTML form for AgentSurvey
 # Copyright (C) 2003-2006 OTRS GmbH, http://otrs.com/
 # --
-# $Id: AgentSurvey.dtl,v 1.25 2006-12-09 00:51:24 mh Exp $
+# $Id: AgentSurvey.dtl,v 1.26 2006-12-09 01:14:27 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -60,9 +60,9 @@
   </tr>
   <tr>
     <td class="menu">
-      <a href="$Env{"Baselink"}?Action=$Env{"Action"}">$Text{"Back"}</a>
+      <a href="$Env{"Baselink"}Action=$Env{"Action"}">$Text{"Back"}</a>
 <!-- dtl:block:SurveyEditStatsDetails -->
-      -&nbsp;<a href="$Env{"Baselink"}?Action=$Env{"Action"}&Subaction=Stats&SurveyID=$QData{"SurveyID"}">$Text{"Stats"}</a>
+      -&nbsp;<a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Stats&SurveyID=$QData{"SurveyID"}">$Text{"Stats"}</a>
 <!-- dtl:block:SurveyEditStatsDetails -->
     </td>
     <td class="menu">&nbsp;</td>
@@ -286,7 +286,7 @@
   </tr>
   <tr>
     <td class="menu">
-      <a href="$Env{"Baselink"}?Action=$Env{"Action"}&Subaction=Survey&SurveyID=$QData{"SurveyID"}">$Text{"Back"}</a>
+      <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Survey&SurveyID=$QData{"SurveyID"}">$Text{"Back"}</a>
     </td>
   </tr>
   <tr>
@@ -387,13 +387,11 @@
 <!-- dtl:block:SurveyEditQuestionsValidOnce -->
                     <tr>
                       <td class="contentbody">
-                        <a href="$Env{"Baselink"}?Action=$Env{"Action"}&Subaction=QuestionEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}">
-                        $QData{"Question","90"}
-                        </a>&nbsp;($Text{"$QData{"Type"}"})
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=QuestionEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}">$QData{"Question","90"}</a>&nbsp;($Text{"$QData{"Type"}"})
                       </td>
                       <td class="contentbody" align="right">
-                        <a href="$Env{"Baselink"}?Action=$Env{"Action"}&Subaction=QuestionUp&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}"><img border="0" src="$Env{"Images"}up-big.png"></a>
-                        <a href="$Env{"Baselink"}?Action=$Env{"Action"}&Subaction=QuestionDown&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}"><img border="0" src="$Env{"Images"}down-big.png"></a>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=QuestionUp&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}"><img border="0" src="$Env{"Images"}up-big.png"></a>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=QuestionDown&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}"><img border="0" src="$Env{"Images"}down-big.png"></a>
                       </td>
                     </tr>
 <!-- dtl:block:SurveyEditQuestionsValidOnce -->
@@ -401,26 +399,18 @@
                     <tr>
                       <td class="contentbody">
 <!-- dtl:block:SurveyEditQuestionsComplete -->
-                        <a href="$Env{"Baselink"}?Action=$Env{"Action"}&Subaction=QuestionEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}">
-                        $QData{"Question","70"}
-                        </a>&nbsp;($Text{"$QData{"Type"}"})
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=QuestionEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}">$QData{"Question","70"}</a>&nbsp;($Text{"$QData{"Type"}"})
 <!-- dtl:block:SurveyEditQuestionsComplete -->
 <!-- dtl:block:SurveyEditQuestionsIncomplete -->
-                        <a href="$Env{"Baselink"}?Action=$Env{"Action"}&Subaction=QuestionEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}">
-                        <font color='red'>$QData{"Question","70"}</font>
-                        </a>&nbsp;($Text{"$QData{"Type"}"})
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=QuestionEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}"><font color='red'>$QData{"Question","70"}</font></a>&nbsp;($Text{"$QData{"Type"}"})
 <!-- dtl:block:SurveyEditQuestionsIncomplete -->
                       </td>
                       <td class="contentbody" align="right">
                         <table border="0" align="right" cellspacing="0" cellpadding="0">
                           <tr>
                             <td>
-                              <a href="$Env{"Baselink"}?Action=$Env{"Action"}&Subaction=QuestionUp&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}">
-                              <img border="0" src="$Env{"Images"}up-big.png">
-                              </a>
-                              <a href="$Env{"Baselink"}?Action=$Env{"Action"}&Subaction=QuestionDown&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}">
-                              <img border="0" src="$Env{"Images"}down-big.png">
-                              </a>&nbsp;&nbsp;
+                              <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=QuestionUp&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}"><img border="0" src="$Env{"Images"}up-big.png"></a>
+                              <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=QuestionDown&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}"><img border="0" src="$Env{"Images"}down-big.png"></a>&nbsp;&nbsp;
                             </td>
                             <td>
                               <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data">
@@ -576,7 +566,7 @@
   </tr>
   <tr>
     <td class="menu">
-      <a href="$Env{"Baselink"}?Action=$Env{"Action"}&Subaction=SurveyEdit&SurveyID=$QData{"SurveyID"}">$Text{"Back"}</a>
+      <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=SurveyEdit&SurveyID=$QData{"SurveyID"}">$Text{"Back"}</a>
     </td>
   </tr>
   <tr>
@@ -665,13 +655,13 @@
                     <tr>
                       <td class="contentbody">
                         <input type="radio" name="Q1">&nbsp;
-                        <a href="$Env{"Baselink"}?Action=$Env{"Action"}&Subaction=AnswerEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}">
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=AnswerEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}">
                         $QData{"Answer","90"}
                         </a>
                       </td>
                       <td class="contentbody" align="right">
-                        <a href="$Env{"Baselink"}?Action=$Env{"Action"}&Subaction=AnswerUp&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}"><img border="0" src="$Env{"Images"}up-big.png"></a>
-                        <a href="$Env{"Baselink"}?Action=$Env{"Action"}&Subaction=AnswerDown&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}"><img border="0" src="$Env{"Images"}down-big.png"></a>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=AnswerUp&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}"><img border="0" src="$Env{"Images"}up-big.png"></a>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=AnswerDown&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}"><img border="0" src="$Env{"Images"}down-big.png"></a>
                       </td>
                     </tr>
 <!-- dtl:block:QuestionEdit2ValidOnce -->
@@ -679,20 +669,14 @@
                     <tr>
                       <td class="contentbody">
                         <input type="radio" name="Q1">&nbsp;
-                        <a href="$Env{"Baselink"}?Action=$Env{"Action"}&Subaction=AnswerEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}">
-                        $QData{"Answer","70"}
-                        </a>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=AnswerEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}">$QData{"Answer","70"}</a>
                       </td>
                       <td class="contentbody" align="right">
                         <table border="0" align="right" cellspacing="0" cellpadding="0">
                           <tr>
                             <td>
-                              <a href="$Env{"Baselink"}?Action=$Env{"Action"}&Subaction=AnswerUp&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}">
-                              <img border="0" src="$Env{"Images"}up-big.png">
-                              </a>
-                              <a href="$Env{"Baselink"}?Action=$Env{"Action"}&Subaction=AnswerDown&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}">
-                              <img border="0" src="$Env{"Images"}down-big.png">
-                              </a>&nbsp;&nbsp;
+                              <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=AnswerUp&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}"><img border="0" src="$Env{"Images"}up-big.png"></a>
+                              <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=AnswerDown&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}"><img border="0" src="$Env{"Images"}down-big.png"></a>&nbsp;&nbsp;
                             </td>
                             <td>
                               <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data">
@@ -729,13 +713,11 @@
                     <tr>
                       <td class="contentbody">
                         <input type="checkbox" name="Q1">
-                        <a href="$Env{"Baselink"}?Action=$Env{"Action"}&Subaction=AnswerEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}">
-                        $QData{"Answer"}
-                        </a>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=AnswerEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}">$QData{"Answer"}</a>
                       </td>
                       <td class="contentbody" align="right">
-                        <a href="$Env{"Baselink"}?Action=$Env{"Action"}&Subaction=AnswerUp&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}"><img border="0" src="$Env{"Images"}up-big.png"></a>
-                        <a href="$Env{"Baselink"}?Action=$Env{"Action"}&Subaction=AnswerDown&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}"><img border="0" src="$Env{"Images"}down-big.png"></a>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=AnswerUp&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}"><img border="0" src="$Env{"Images"}up-big.png"></a>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=AnswerDown&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}"><img border="0" src="$Env{"Images"}down-big.png"></a>
                       </td>
                     </tr>
 <!-- dtl:block:QuestionEdit3ValidOnce -->
@@ -743,20 +725,14 @@
                     <tr>
                       <td class="contentbody">
                         <input type="checkbox" name="Q1">
-                        <a href="$Env{"Baselink"}?Action=$Env{"Action"}&Subaction=AnswerEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}">
-                        $QData{"Answer"}
-                        </a>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=AnswerEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}">$QData{"Answer"}</a>
                       </td>
                       <td class="contentbody" align="right">
                         <table border="0" align="right" cellspacing="0" cellpadding="0">
                           <tr>
                             <td>
-                              <a href="$Env{"Baselink"}?Action=$Env{"Action"}&Subaction=AnswerUp&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}">
-                              <img border="0" src="$Env{"Images"}up-big.png">
-                              </a>
-                              <a href="$Env{"Baselink"}?Action=$Env{"Action"}&Subaction=AnswerDown&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}">
-                              <img border="0" src="$Env{"Images"}down-big.png">
-                              </a>&nbsp;&nbsp;
+                              <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=AnswerUp&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}"><img border="0" src="$Env{"Images"}up-big.png"></a>
+                              <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=AnswerDown&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}"><img border="0" src="$Env{"Images"}down-big.png"></a>&nbsp;&nbsp;
                             </td>
                             <td>
                               <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data">
@@ -824,7 +800,7 @@
   </tr>
   <tr>
     <td class="menu">
-      <a href="$Env{"Baselink"}?Action=$Env{"Action"}&Subaction=QuestionEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}">$Text{"Back"}</a>
+      <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=QuestionEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}">$Text{"Back"}</a>
     </td>
   </tr>
   <tr>
@@ -891,7 +867,7 @@
   </tr>
   <tr>
     <td class="menu">
-      <a href="$Env{"Baselink"}?Action=$Env{"Action"}&Subaction=Survey&SurveyID=$QData{"SurveyID"}">$Text{"Back"}</a>
+      <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Survey&SurveyID=$QData{"SurveyID"}">$Text{"Back"}</a>
     </td>
   </tr>
   <tr>
@@ -939,9 +915,9 @@
                 <td class="contentkey" width="25">&nbsp;</td>
                 <td class="contentvalue">$TimeLong{"$Data{"SendTime"}"}</td>
                 <td class="contentvalue">$TimeLong{"$Data{"VoteTime"}"}</td>
-                <td class="contentvalue"><a href="$Env{"Baselink"}?Action=AgentTicketZoom&TicketID=$QData{"TicketID"}">$QData{"TicketNumber"}</a></td>
+                <td class="contentvalue"><a href="$Env{"Baselink"}Action=AgentTicketZoom&TicketID=$QData{"TicketID"}">$QData{"TicketNumber"}</a></td>
                 <td class="contentvalue" align="center">
-                  <a href="$Env{"Baselink"}?Action=$Env{"Action"}&Subaction=StatsDetail&SurveyID=$QData{"SurveyID"}&RequestID=$QData{"RequestID"}">x</a>
+                  <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=StatsDetail&SurveyID=$QData{"SurveyID"}&RequestID=$QData{"RequestID"}">x</a>
                 </td>
                 <td class="contentkey" width="25">&nbsp;</td>
               </tr>
@@ -976,7 +952,7 @@
   </tr>
   <tr>
     <td class="menu">
-      <a href="$Env{"Baselink"}?Action=$Env{"Action"}&Subaction=Stats&SurveyID=$QData{"SurveyID"}">$Text{"Back"}</a>
+      <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Stats&SurveyID=$QData{"SurveyID"}">$Text{"Back"}</a>
     </td>
   </tr>
   <tr>
