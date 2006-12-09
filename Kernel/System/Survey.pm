@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - manage all survey module events
 # Copyright (C) 2003-2006 OTRS GmbH, http://otrs.com/
 # --
-# $Id: Survey.pm,v 1.28 2006-11-21 23:24:08 mh Exp $
+# $Id: Survey.pm,v 1.29 2006-12-09 00:35:26 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Ticket;
 use Kernel::System::CustomerUser;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.28 $';
+$VERSION = '$Revision: 1.29 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -199,7 +199,7 @@ sub SurveyStatusSet {
             $Quest = $Row2[0];
         }
         # if more then one question
-        if ($Quest > '0') {
+        if ($Quest) {
             # get all questions (type radio and checkbox)
             my $SQL = "SELECT id FROM survey_question".
                 " WHERE survey_id = $Param{SurveyID} AND (type = 'Radio' OR type = 'Checkbox')";
@@ -318,13 +318,14 @@ sub SurveySave {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     if ($Param{Title} && $Param{Introduction} && $Param{Description}) {
+        my $CurrentTime = $Self->{TimeObject}->CurrentTimestamp();
         # update the survey
         $Self->{DBObject}->Do(
             SQL => "UPDATE survey SET ".
                 "title = '$Param{Title}', ".
                 "introduction = '$Param{Introduction}', ".
                 "description = '$Param{Description}', ".
-                "change_time = current_timestamp, ".
+                "change_time = '$CurrentTime', ".
                 "change_by = $Param{UserID} ".
                 "WHERE id = $Param{SurveyID}",
         );
@@ -362,6 +363,7 @@ sub SurveyNew {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     if ($Param{Title} && $Param{Introduction} && $Param{Description}) {
+        my $CurrentTime = $Self->{TimeObject}->CurrentTimestamp();
         # insert a new survey
         $Self->{DBObject}->Do(
             SQL => "INSERT INTO survey (title, introduction, description,".
@@ -370,9 +372,9 @@ sub SurveyNew {
                 "'$Param{Introduction}', ".
                 "'$Param{Description}', ".
                 "'New', ".
-                "current_timestamp, ".
+                "'$CurrentTime', ".
                 "$Param{UserID}, ".
-                "current_timestamp, ".
+                "'$CurrentTime', ".
                 "$Param{UserID})"
         );
         # get the id of the survey
@@ -473,6 +475,7 @@ sub QuestionAdd {
     }
 
     if ($Param{Question}) {
+        my $CurrentTime = $Self->{TimeObject}->CurrentTimestamp();
         # insert a new question
         $Self->{DBObject}->Do(
             SQL => "INSERT INTO survey_question (survey_id, question, type, ".
@@ -481,9 +484,9 @@ sub QuestionAdd {
                 "'$Param{Question}', ".
                 "'$Param{Type}', ".
                 "255, ".
-                "current_timestamp, ".
+                "'$CurrentTime', ".
                 "$Param{UserID}, ".
-                "current_timestamp, ".
+                "'$CurrentTime', ".
                 "$Param{UserID})"
         );
     }
@@ -663,7 +666,7 @@ sub QuestionDown {
         $Position = $Row[0];
     }
 
-    if ($Position > '0') {
+    if ($Position) {
         my $PositionDown = $Position + 1;
         $Self->{DBObject}->Prepare(SQL => "SELECT id FROM survey_question".
             " WHERE survey_id = $Param{SurveyID} AND position = $PositionDown"
@@ -767,11 +770,12 @@ sub QuestionSave {
     }
 
     if ($Param{Question}) {
+        my $CurrentTime = $Self->{TimeObject}->CurrentTimestamp();
         # sql for event
         $Self->{DBObject}->Do(
             SQL => "UPDATE survey_question SET ".
                 "question = '$Param{Question}', ".
-                "change_time = current_timestamp, ".
+                "change_time = '$CurrentTime', ".
                 "change_by = $Param{UserID} ".
                 "WHERE id = $Param{QuestionID} ",
                 "AND survey_id = $Param{SurveyID}",
@@ -887,6 +891,7 @@ sub AnswerAdd {
     }
 
     if ($Param{Answer}) {
+        my $CurrentTime = $Self->{TimeObject}->CurrentTimestamp();
         # sql for event
         $Self->{DBObject}->Do(
             SQL => "INSERT INTO survey_answer (question_id, answer, position, ".
@@ -894,9 +899,9 @@ sub AnswerAdd {
                 "$Param{QuestionID}, ".
                 "'$Param{Answer}', ".
                 "255, ".
-                "current_timestamp, ".
+                "'$CurrentTime', ".
                 "$Param{UserID}, ".
-                "current_timestamp, ".
+                "'$CurrentTime', ".
                 "$Param{UserID})"
         );
     }
@@ -1071,7 +1076,7 @@ sub AnswerDown {
         $Position = $Row[0];
     }
 
-    if ($Position > '0') {
+    if ($Position) {
         my $PositionDown = $Position + 1;
         $Self->{DBObject}->Prepare(SQL => "SELECT id FROM survey_answer".
             " WHERE question_id = $Param{QuestionID} AND position = $PositionDown"
@@ -1172,11 +1177,12 @@ sub AnswerSave {
     }
 
     if ($Param{Answer}) {
+        my $CurrentTime = $Self->{TimeObject}->CurrentTimestamp();
         # sql for event
         $Self->{DBObject}->Do(
             SQL => "UPDATE survey_answer SET ".
                 "answer = '$Param{Answer}', ".
-                "change_time = current_timestamp, ".
+                "change_time = '$CurrentTime', ".
                 "change_by = $Param{UserID} ".
                 "WHERE id = $Param{AnswerID} ",
                 "AND question_id = $Param{QuestionID}",
@@ -1585,6 +1591,7 @@ sub RequestSend {
                 }
             }
             # create a survey_request entry
+            my $CurrentTime = $Self->{TimeObject}->CurrentTimestamp();
             $Self->{DBObject}->Do(
                 SQL => "INSERT INTO survey_request ".
                     " (ticket_id, survey_id, valid_id, public_survey_key, send_to, send_time) ".
@@ -1594,7 +1601,7 @@ sub RequestSend {
                     "1, ".
                     "'".$Self->{DBObject}->Quote($PublicSurveyKey)."', ".
                     "'".$Self->{DBObject}->Quote($To)."', ".
-                    "current_timestamp)"
+                    "'$CurrentTime')"
             );
             # log action on ticket
             $Self->{TicketObject}->HistoryAdd(
@@ -1650,14 +1657,14 @@ sub PublicSurveyGet {
         $SurveyID = $Row[0];
     }
 
-    if ($SurveyID > '0') {
+    if ($SurveyID) {
         my $SQL = "SELECT id, surveynumber, title, introduction ".
             "FROM survey WHERE id = $SurveyID AND (status = 'Master' OR status = 'Valid')";
         $Self->{DBObject}->Prepare(SQL => $SQL);
         my @Survey = $Self->{DBObject}->FetchrowArray();
 
         my %Data = ();
-        if ($Survey[0] > '0') {
+        if ($Survey[0]) {
             $Data{SurveyID} = $Survey[0];
             $Data{SurveyNumber} = $Survey[1];
             $Data{Title} = $Survey[2];
@@ -1706,13 +1713,14 @@ sub PublicAnswerSave{
         $RequestID = $Row[0];
     }
 
-    if ($RequestID > '0') {
+    if ($RequestID) {
+        my $CurrentTime = $Self->{TimeObject}->CurrentTimestamp();
         $Self->{DBObject}->Do(
             SQL => "INSERT INTO survey_vote (request_id, question_id, vote_value, create_time) VALUES (".
                 "$RequestID, ".
                 "$Param{QuestionID}, ".
                 "'$Param{VoteValue}', ".
-                "current_timestamp)"
+                "'$CurrentTime')"
         );
     }
 }
@@ -1751,11 +1759,12 @@ sub PublicSurveyInvalidSet {
         $RequestID = $Row[0];
     }
 
-    if ($RequestID > '0') {
+    if ($RequestID) {
+        my $CurrentTime = $Self->{TimeObject}->CurrentTimestamp();
         $Self->{DBObject}->Do(
             SQL => "UPDATE survey_request SET ".
                 "valid_id = 0, ".
-                "vote_time = current_timestamp ".
+                "vote_time = '$CurrentTime' ".
                 "WHERE id = $RequestID"
         );
     }
@@ -1775,6 +1784,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.28 $ $Date: 2006-11-21 23:24:08 $
+$Revision: 1.29 $ $Date: 2006-12-09 00:35:26 $
 
 =cut
