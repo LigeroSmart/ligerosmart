@@ -249,7 +249,7 @@
         <Group>FAQ</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
-            <String>FAQ</String>
+            <String>FAQ#</String>
         </Setting>
     </ConfigItem>
 
