@@ -2,7 +2,7 @@
 # AgentFAQ.dtl - provides HTML view for faq articles
 # Copyright (C) 2001-2006 OTRS GmbH, http://otrs.org/
 # --
-# $Id: AgentFAQ.dtl,v 1.4 2006-12-13 12:45:54 rk Exp $
+# $Id: AgentFAQ.dtl,v 1.5 2006-12-13 12:51:49 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -186,13 +186,13 @@
 function updateMessage()
 {
     if (parent.opener.closed) {
-        alert('$Text{"The message being composed has been closed.  Exiting."}');
+        alert('$JSText{"The message being composed has been closed.  Exiting."}');
         this.close();
         return;
     }
 
     if (!parent.opener.document.compose) {
-        alert('$Text{"This window must be called from compose window"}');
+        alert('$JSText{"This window must be called from compose window"}');
         this.close();
         return;
     }
@@ -352,7 +352,7 @@ function updateMessage()
 function submit_compose()
 {
     if (document.compose.Title.value == "") {
-        alert('$Text{"A article should have a title!"}');
+        alert('$JSText{"A article should have a title!"}');
         document.compose.Title.focus();
         return false;
     }
@@ -453,7 +453,7 @@ function submit_compose()
 function submit_compose()
 {
     if (document.compose.Title.value == "") {
-        alert('$Text{"A article should have a title!"}');
+        alert('$JSText{"A article should have a title!"}');
         document.compose.Title.focus();
         return false;
     }
