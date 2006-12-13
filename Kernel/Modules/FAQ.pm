@@ -2,7 +2,7 @@
 # Kernel/Modules/FAQ.pm - faq module
 # Copyright (C) 2001-2006 OTRS GmbH, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.4 2006-10-25 10:06:19 rk Exp $
+# $Id: FAQ.pm,v 1.5 2006-12-13 15:22:01 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use Kernel::System::FAQ;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.4 $';
+$VERSION = '$Revision: 1.5 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -918,7 +918,6 @@ sub GetItemSearch {
         foreach (@ItemIDs) {
             %Frontend = ();
             my %Data = $Self->{FAQObject}->FAQGet(ItemID => $_);
-
             if($CssRow eq 'searchpassive') {
                 $CssRow = 'searchactive';
             }

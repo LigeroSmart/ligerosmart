@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQ.pm - faq module
 # Copyright (C) 2001-2006 OTRS GmbH, http://otrs.org/
 # --
-# $Id: AgentFAQ.pm,v 1.7 2006-10-25 10:06:19 rk Exp $
+# $Id: AgentFAQ.pm,v 1.8 2006-12-13 15:22:01 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,9 +15,10 @@ use strict;
 use Kernel::System::FAQ;
 use Kernel::System::LinkObject;
 use Kernel::Modules::FAQ;
+use Kernel::System::User;
 
 use vars qw($VERSION @ISA);
-$VERSION = '$Revision: 1.7 $';
+$VERSION = '$Revision: 1.8 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 @ISA = qw(Kernel::Modules::FAQ);
@@ -46,7 +47,7 @@ sub new {
     foreach (qw(SessionObject)) {
         $Self->{LayoutObject}->FatalError(Message => "Got no $_!") if (!$Self->{$_});
     }
-
+    $Self->{UserObject} = Kernel::System::User->new(%Param);
     return $Self;
 }
 # --
@@ -832,6 +833,11 @@ sub Run {
 
             $Frontend{Name} = $Row->{Name};
             $Frontend{Created} = $Row->{Created};
+            my %User = $Self->{UserObject}->GetUserData(
+                UserID => $Row->{CreatedBy},
+                Cached => 1,
+            );
+            $Frontend{CreatedBy} = "$User{UserLogin} ($User{UserFirstname} $User{UserLastname})";
 
             $Self->{LayoutObject}->Block(
                 Name => 'HistoryRow',

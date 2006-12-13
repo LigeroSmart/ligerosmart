@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2006 OTRS GmbH, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.5 2006-10-26 14:29:08 rk Exp $
+# $Id: FAQ.pm,v 1.6 2006-12-13 15:22:01 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -16,7 +16,7 @@ use MIME::Base64;
 use Kernel::System::Encode;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.5 $';
+$VERSION = '$Revision: 1.6 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -188,6 +188,8 @@ sub FAQGet {
         $Data{ContentSize} = $Row[2];
         $Data{Content} = $Row[3];
     }
+    my $Hash = $Self->GetCategoryTree();
+    $Data{CategoryName} = $Hash->{$Data{CategoryID}};
 
     return %Data;
 }
@@ -892,12 +894,13 @@ sub FAQHistoryGet {
     }
     my @Data = ();
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT name, created FROM faq_history WHERE item_id = $Param{ItemID}",
+        SQL => "SELECT name, created, created_by FROM faq_history WHERE item_id = $Param{ItemID}",
     );
     while  (my @Row = $Self->{DBObject}->FetchrowArray()) {
         my %Record = (
             Name => $Row[0],
             Created => $Row[1],
+            CreatedBy => $Row[2],
         );
         push (@Data, \%Record);
     }
@@ -1950,6 +1953,62 @@ sub FAQPathListGet {
 
 }
 
+=item GetCategoryTree()
+
+get all categories as tree
+
+  my $Hash = $FAQObject->GetCategoryTree(
+      Valid => 0, # if 1 then check valid category
+   );
+
+=cut
+
+sub GetCategoryTree {
+    my $Self = shift;
+    my %Param = @_;
+    my %Hash = ();
+    my $SQL = '';
+    # sql
+    $SQL = "SELECT id, parent_id, name FROM faq_category";
+    if ($Param{Valid}) {
+        $SQL .= " WHERE valid_id = 1";
+    }
+    $SQL .= " ORDER BY name";
+    $Self->{DBObject}->Prepare(SQL => $SQL);
+    # tree
+    my @Data;
+    while (my @Row = $Self->{DBObject}->FetchrowArray()) {
+        push (@Data, \@Row);
+    }
+    foreach my $Row (@Data) {
+        my @RowData = @{$Row};
+        $Hash{$RowData[1]}{$RowData[0]} = $RowData[2];
+    }
+    # return tree
+    my $Categories = $Self->_MakeTree(ParentID => 0, Parent => '', Hash => \%Hash, Tree => {},);
+    if (!$Categories) {
+        $Categories = {};
+    }
+    return $Categories;
+}
+
+sub _MakeTree {
+    my $Self = shift;
+    my %Param = @_;
+    foreach my $ID (keys(%{$Param{Hash}->{$Param{ParentID}}})) {
+        $Param{Tree}->{$ID} = $Param{Parent}.$Param{Hash}->{$Param{ParentID}}{$ID};
+        if (defined($Param{Hash}->{$ID})) {
+            $Self->_MakeTree(
+                ParentID => $ID,
+                Hash => $Param{Hash},
+                Tree => $Param{Tree},
+                Parent => $Param{Tree}->{$ID}.'::',
+            )
+        }
+    }
+    return $Param{Tree};
+}
+
 1;
 
 =head1 TERMS AND CONDITIONS
@@ -1964,6 +2023,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2006-10-26 14:29:08 $
+$Revision: 1.6 $ $Date: 2006-12-13 15:22:01 $
 
 =cut
