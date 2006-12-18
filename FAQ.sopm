@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-  <CVS>$Id: FAQ.sopm,v 1.15 2006-12-13 12:46:24 rk Exp $</CVS>
+  <CVS>$Id: FAQ.sopm,v 1.16 2006-12-18 08:14:03 martin Exp $</CVS>
   <Name>FAQ</Name>
   <Version>0.0.0</Version>
   <Framework>2.1.x</Framework>
@@ -96,17 +96,23 @@
     </Insert>
     <Table Name="faq_category">
       <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>
-      <Column Name="parent_id" Required="true" Type="INTEGER"/>
+      <Column Name="parent_id" Required="false" Type="INTEGER"/>
       <Column Name="name" Required="true" Size="200" Type="VARCHAR"/>
       <Column Name="comments" Required="false" Size="200" Type="VARCHAR"/>
       <Column Name="valid_id" Required="true" Type="SMALLINT"/>
-      <Column Name="created" Required="false" Type="DATE"/>
-      <Column Name="created_by" Required="false" Type="INTEGER"/>
-      <Column Name="changed" Required="false" Type="DATE"/>
-      <Column Name="changed_by" Required="false" Type="INTEGER"/>
+      <Column Name="created" Required="true" Type="DATE"/>
+      <Column Name="created_by" Required="true" Type="INTEGER"/>
+      <Column Name="changed" Required="true" Type="DATE"/>
+      <Column Name="changed_by" Required="true" Type="INTEGER"/>
     </Table>
     <Insert Table="faq_category">
         <Data Key="name" Value="Misc" Type="Quote"/>
+        <Data Key="comments" Value="Misc Comment" Type="Quote"/>
+        <Data Key="valid_id" Value="1"/>
+        <Data Key="created" Value="current_timestamp"/>
+        <Data Key="created_by" Value="1"/>
+        <Data Key="changed" Value="current_timestamp"/>
+        <Data Key="changed_by" Value="1"/>
     </Insert>
     <Table Name="faq_item">
       <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>
@@ -131,19 +137,19 @@
       <Column Name="free_value3" Required="false" Size="200" Type="VARCHAR"/>
       <Column Name="free_key4" Required="false" Size="80" Type="VARCHAR"/>
       <Column Name="free_value4" Required="false" Size="200" Type="VARCHAR"/>
-      <Column Name="created" Required="false" Type="DATE"/>
-      <Column Name="created_by" Required="false" Type="INTEGER"/>
-      <Column Name="changed" Required="false" Type="DATE"/>
-      <Column Name="changed_by" Required="false" Type="INTEGER"/>
+      <Column Name="created" Required="true" Type="DATE"/>
+      <Column Name="created_by" Required="true" Type="INTEGER"/>
+      <Column Name="changed" Required="true" Type="DATE"/>
+      <Column Name="changed_by" Required="true" Type="INTEGER"/>
     </Table>
     <Table Name="faq_history">
       <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>
       <Column Name="name" Required="true" Size="200" Type="VARCHAR"/>
       <Column Name="item_id" Required="true" Type="INTEGER"/>
-      <Column Name="created" Required="false" Type="DATE"/>
-      <Column Name="created_by" Required="false" Type="INTEGER"/>
-      <Column Name="changed" Required="false" Type="DATE"/>
-      <Column Name="changed_by" Required="false" Type="INTEGER"/>
+      <Column Name="created" Required="true" Type="DATE"/>
+      <Column Name="created_by" Required="true" Type="INTEGER"/>
+      <Column Name="changed" Required="true" Type="DATE"/>
+      <Column Name="changed_by" Required="true" Type="INTEGER"/>
     </Table>
     <Insert Table="faq_history">
         <Data Key="name" Value="Created" Type="Quote"/>
@@ -160,10 +166,10 @@
       <Column Name="content_size" Required="false" Size="30" Type="VARCHAR"/>
       <Column Name="content_type" Required="false" Size="250" Type="VARCHAR"/>
       <Column Name="content" Required="true" Type="LONGBLOB"/>
-      <Column Name="created" Required="false" Type="DATE"/>
-      <Column Name="created_by" Required="false" Type="INTEGER"/>
-      <Column Name="changed" Required="false" Type="DATE"/>
-      <Column Name="changed_by" Required="false" Type="INTEGER"/>
+      <Column Name="created" Required="true" Type="DATE"/>
+      <Column Name="created_by" Required="true" Type="INTEGER"/>
+      <Column Name="changed" Required="true" Type="DATE"/>
+      <Column Name="changed_by" Required="true" Type="INTEGER"/>
       <Index Name="faq_id">
         <IndexColumn Name="faq_id"/>
       </Index>
@@ -178,8 +184,6 @@
       <Column Name="created" Required="false" Type="DATE"/>
     </Table>
   </DatabaseInstall>
-  <DatabaseUpgrade></DatabaseUpgrade>
-  <DatabaseReinstall></DatabaseReinstall>
   <DatabaseUninstall>
     <TableDrop Name="faq_category"/>
     <TableDrop Name="faq_item"/>
