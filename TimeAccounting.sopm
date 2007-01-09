@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-  <CVS>$Id: TimeAccounting.sopm,v 1.10 2006-05-23 09:06:49 tr Exp $</CVS>
+  <CVS>$Id: TimeAccounting.sopm,v 1.11 2007-01-09 07:39:38 tr Exp $</CVS>
   <Name>TimeAccounting</Name>
-  <Version>0.9.9</Version>
+  <Version>0.0.0</Version>
   <Framework>2.0.x</Framework>
   <Vendor>OTRS GmbH</Vendor>
   <URL>http://otrs.org/</URL>
@@ -18,8 +18,6 @@
   <ChangeLog>2005-08-08 first package</ChangeLog>
   <Description Lang="en">A TimeAccounting Modul.</Description>
   <Description Lang="de">Ein Zeiterfassungsmodul.</Description>
-  <BuildDate>?</BuildDate>
-  <BuildHost>?</BuildHost>
   <Filelist>
     <File Permission="644" Location="Kernel/Config/Files/TimeAccounting.xml"></File>
     <File Permission="644" Location="Kernel/System/TimeAccounting.pm"></File>

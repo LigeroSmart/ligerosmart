@@ -1,8 +1,8 @@
 #--
 # Kernel/System/TimeAccounting.pm - all time accounting functions
-# Copyright (C) 2003-2006 OTRS GmbH, http://otrs.com/
+# Copyright (C) 2003-2007 OTRS GmbH, http://otrs.com/
 # --
-# $Id: TimeAccounting.pm,v 1.7 2006-12-08 15:07:23 tr Exp $
+# $Id: TimeAccounting.pm,v 1.8 2007-01-09 07:39:38 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -13,7 +13,7 @@ package Kernel::System::TimeAccounting;
 
 use strict;
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.7 $';
+$VERSION = '$Revision: 1.8 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week);
@@ -574,15 +574,28 @@ sub UserSettingsInsert {
         return;
     }
 
-    # build sql
-    $SQL = "INSERT INTO time_accounting_user (user_id)" .
-        " VALUES" .
-        " ('" . $Param{UserID}. "')";
-    # db insert
-    if (!$Self->{DBObject}->Do(SQL => $SQL)) {
-        return;
-    }
+    # Split the following code in a seperate function!
 
+    #check if the user still exists
+    my $UserID;
+    # build sql
+    $Self->{DBObject}->Prepare (
+        SQL => "SELECT user_id FROM time_accounting_user WHERE user_id = '" . $Param{UserID}. "'",
+    );
+
+    # fetch Data
+    while (my @Row = $Self->{DBObject}->FetchrowArray()) {
+        $UserID           =  $Row[0];
+    }
+    if (!defined($UserID)) {
+        $SQL = "INSERT INTO time_accounting_user (user_id)" .
+            " VALUES" .
+            " ('" . $Param{UserID}. "')";
+        # db insert
+        if (!$Self->{DBObject}->Do(SQL => $SQL)) {
+            return;
+        }
+    }
     return 1;
 }
 
@@ -657,7 +670,7 @@ sub UserSettingsUpdate {
                 $Param{$UserID}{$Period}{$_} = $Self->{DBObject}->Quote($Param{$UserID}{$Period}{$_}) || '';
             }
             # build sql
-            my $SQL = "UPDATE `time_accounting_user_period` " .
+            my $SQL = "UPDATE time_accounting_user_period " .
                 "SET leave_days = '"  . $Param{$UserID}{$Period}{LeaveDays} .
                 "', date_start = '"   . $Param{$UserID}{$Period}{DateStart} .
                 "', date_end = '"     . $Param{$UserID}{$Period}{DateEnd} .
@@ -1076,6 +1089,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.7 $ $Date: 2006-12-08 15:07:23 $
+$Revision: 1.8 $ $Date: 2007-01-09 07:39:38 $
 
 =cut
