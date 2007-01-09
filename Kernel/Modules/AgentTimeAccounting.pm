@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
-# Copyright (C) 2003-2006 OTRS GmbH, http://otrs.com/
+# Copyright (C) 2003-2007 OTRS GmbH, http://otrs.com/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.9 2006-12-08 15:07:23 tr Exp $
+# $Id: AgentTimeAccounting.pm,v 1.10 2007-01-09 08:21:42 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.9 $';
+$VERSION = '$Revision: 1.10 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -1124,8 +1124,13 @@ sub Run {
                         return $Self->{LayoutObject}->ErrorScreen(Message => 'Can\'t insert user data!');
                     }
                     my %Groups = $Self->{GroupObject}->GroupList(Valid => 1);
+                    my %GroupData =$Self->{GroupObject}->GroupMemberList(
+                        UserID => $Data{UserID},
+                        Type => 'ro',
+                        Result => 'HASH',
+                    );
                     foreach (keys %Groups) {
-                        if ($Groups{$_} eq 'time_accounting') {
+                        if ($Groups{$_} eq 'time_accounting' && !$GroupData{$_}) {
 
                             $Self->{GroupObject}->GroupMemberAdd(
                                 GID => $_,
