@@ -2,7 +2,7 @@
 # Kernel/Modules/FAQ.pm - faq module
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.6 2007-01-18 08:54:03 rk Exp $
+# $Id: FAQ.pm,v 1.7 2007-01-18 14:11:20 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use Kernel::System::FAQ;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.6 $';
+$VERSION = '$Revision: 1.7 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -138,11 +138,29 @@ sub GetExplorer {
         );
     }
     # explorer category list
-    $Self->_GetExplorerCategoryList(
-        CategoryID => $GetParam{CategoryID},
-        Order => 'Name',
-        Sort => 'up'
-    );
+    if (!$Param{Mode}) {
+        $Param{Mode} = 'Public';
+    }
+    if (!defined($Param{CustomerUser})) {
+        $Param{CustomerUser} = '';
+    }
+    if ($Param{Mode} && $Param{Mode} eq 'Customer') {
+        $Self->_GetExplorerCategoryList(
+            CategoryID => $GetParam{CategoryID},
+            Order => 'Name',
+            Sort => 'up',
+            Mode => $Param{Mode},
+            CustomerUser => $Param{CustomerUser},
+        );
+    }
+    else {
+        $Self->_GetExplorerCategoryList(
+            CategoryID => $GetParam{CategoryID},
+            Order => 'Name',
+            Sort => 'up',
+            Mode => $Param{Mode},
+        );
+    }
     # explorer item list
     $Self->_GetExplorerItemList(
         CategoryID => $GetParam{CategoryID},
@@ -161,6 +179,8 @@ sub GetExplorer {
     if (exists($ShowLastChange{$Self->{Interface}{Name}})) {
         $Self->_GetExplorerLastChangeItems(
             CategoryID => $GetParam{CategoryID},
+            Mode => $Param{Mode},
+            CustomerUser => $Param{CustomerUser},
         );
     }
     # latest create faq items
@@ -168,6 +188,8 @@ sub GetExplorer {
     if (exists($ShowLastCreate{$Self->{Interface}{Name}})) {
         $Self->_GetExplorerLastCreateItems(
             CategoryID => $GetParam{CategoryID},
+            Mode => $Param{Mode},
+            CustomerUser => $Param{CustomerUser},
         );
     }
 }
@@ -208,11 +230,26 @@ sub _GetExplorerCategoryList {
             $Self->{LayoutObject}->FatalError(Message => "Need parameter $_!")
         }
     }
-    my @CategoryIDs = @{$Self->{FAQObject}->CategorySearch(
-        ParentID => $Param{CategoryID},
-        Order => $Param{Order},
-        Sort => $Param{Sort}
-    )};
+    my @CategoryIDs = ();
+    if ($Param{Mode} && $Param{Mode} eq 'Agent') {
+        @CategoryIDs = @{$Self->{FAQObject}->AgentCategorySearch(
+            ParentID => $Param{CategoryID},
+            UserID => $Self->{UserID},
+        )};
+    }
+    elsif ($Param{Mode} && $Param{Mode} eq 'Customer') {
+        @CategoryIDs = @{$Self->{FAQObject}->CustomerCategorySearch(
+            ParentID => $Param{CategoryID},
+            CustomerUser => $Param{CustomerUser},
+        )};
+    }
+    else {
+        @CategoryIDs = @{$Self->{FAQObject}->CategorySearch(
+            ParentID => $Param{CategoryID},
+            Order => $Param{Order},
+            Sort => $Param{Sort},
+        )};
+    }
 
     if(@CategoryIDs) {
         $Self->{LayoutObject}->Block(
@@ -295,7 +332,6 @@ sub _GetExplorerItemList {
 sub _GetExplorerLastChangeItems {
     my $Self = shift;
     my %Param = @_;
-
     if($Self->{ConfigObject}->Get('FAQ::Explorer::LastChange::Show')) {
         # check needed parameters
         foreach (qw(CategoryID)) {
@@ -304,17 +340,26 @@ sub _GetExplorerLastChangeItems {
             }
         }
         my @ItemIDs = ();
-        if($Param{CategoryID}) {
+        if(defined($Param{CategoryID})) {
             # add current categoryid
             my @CategoryIDs = ();
             if($Param{CategoryID}) {
                 push(@CategoryIDs, ($Param{CategoryID}));
+            }
+            if (!defined($Param{Mode})) {
+                $Param{Mode} = '';
+            }
+            if (!defined($Param{CustomerUser})) {
+                $Param{CustomerUser} = '';
             }
             # add subcategoryids
             if($Self->{ConfigObject}->Get('FAQ::Explorer::LastChange::ShowSubCategoryItems')) {
                 my @SubCategoryIDs = @{$Self->{FAQObject}->CategorySubCategoryIDList(
                     ParentID => $Param{CategoryID},
                     ItemStates => $Self->{InterfaceStates},
+                    Mode => $Param{Mode},
+                    CustomerUser => $Param{CustomerUser},
+                    UserID => $Self->{UserID},
                 )};
                 push(@CategoryIDs, @SubCategoryIDs);
             }
@@ -364,17 +409,26 @@ sub _GetExplorerLastCreateItems {
             }
         }
         my @ItemIDs = ();
-        if($Param{CategoryID}) {
+        if(defined($Param{CategoryID})) {
             # add current categoryid
             my @CategoryIDs = ();
             if($Param{CategoryID}) {
                 push(@CategoryIDs, ($Param{CategoryID}));
+            }
+            if (!defined($Param{Mode})) {
+                $Param{Mode} = '';
+            }
+            if (!defined($Param{CustomerUser})) {
+                $Param{CustomerUser} = '';
             }
             # add subcategoryids
             if($Self->{ConfigObject}->Get('FAQ::Explorer::LastCreate::ShowSubCategoryItems')) {
                 my @SubCategoryIDs = @{$Self->{FAQObject}->CategorySubCategoryIDList(
                     ParentID => $Param{CategoryID},
                     ItemStates => $Self->{InterfaceStates},
+                    Mode => $Param{Mode},
+                    CustomerUser => $Param{CustomerUser},
+                    UserID => $Self->{UserID},
                 )};
                 push(@CategoryIDs, @SubCategoryIDs);
             }
@@ -486,6 +540,16 @@ sub GetItemView {
         Name => 'View',
         Data => { %Param, %ItemData, %Frontend },
     );
+    if ($Param{Permission} && $Param{Permission} eq 'rw') {
+        $Self->{LayoutObject}->Block(
+            Name => 'FAQItemViewLinkUpdate',
+            Data => { %Param, %ItemData, %Frontend },
+        );
+        $Self->{LayoutObject}->Block(
+            Name => 'FAQItemViewLinkDelete',
+            Data => { %Param, %ItemData, %Frontend },
+        );
+    }
     # FAQ path
     if ($Self->_GetFAQPath(CategoryID => $ItemData{CategoryID})) {
         $Self->{LayoutObject}->Block(
@@ -881,9 +945,17 @@ sub GetItemSearch {
     # quicksearch in subcategories?
     if ($GetParam{QuickSearch}) {
         if ($Self->{ConfigObject}->Get('FAQ::Explorer::QuickSearch::ShowSubCategoryItems')) {
+            if (!$Param{Mode}) {
+                $Param{Mode} = 'Public';
+            }
+            if (!defined($Param{User})) {
+                $Param{User} = '';
+            }
             my @SubCategoryIDs = @{$Self->{FAQObject}->CategorySubCategoryIDList(
                 ParentID => $GetParam{CategoryIDs}->[0],
                 ItemStates => $Self->{InterfaceStates},
+                UserID => $Param{User},
+                Mode => $Param{Mode},
             )};
             push(@{$GetParam{CategoryIDs}}, @SubCategoryIDs);
         }
@@ -897,8 +969,24 @@ sub GetItemSearch {
         HTMLQuote => 1,
         LanguageTranslation => 0,
     );
+    my $Categories = ();
+    if ($Param{Mode} && $Param{Mode} eq 'Agent') {
+        $Categories = $Self->{FAQObject}->GetUserCategories(
+            UserID =>  $Self->{UserID},
+            Type => 'rw'
+        );
+    }
+    elsif ($Param{Mode} && $Param{Mode} eq 'Customer') {
+        $Categories = $Self->{FAQObject}->GetCustomerCategories(
+            CustomerUser =>  $Param{CustomerUser},
+            Type => 'rw'
+        );
+    }
+    else {
+        $Categories = $Self->{FAQObject}->CategoryList();
+    }
     $Frontend{CategoryOption} = $Self->{LayoutObject}->AgentFAQCategoryListOption(
-        CategoryList => { %{$Self->{FAQObject}->CategoryList()} },
+        CategoryList => { %{$Categories} },
         Size => 5,
         Name => 'CategoryIDs',
         Multiple => 1,
@@ -928,19 +1016,34 @@ sub GetItemSearch {
         foreach (@ItemIDs) {
             %Frontend = ();
             my %Data = $Self->{FAQObject}->FAQGet(ItemID => $_);
-            if($CssRow eq 'searchpassive') {
-                $CssRow = 'searchactive';
+            my $Permission = 'ro';
+            if ($Param{Mode} && $Param{Mode} eq 'Agent') {
+                $Permission = $Self->{FAQObject}->CheckCategoryUserPermission(
+                    UserID => $Param{User},
+                    CategoryID => $Data{CategoryID},
+                );
             }
-            else {
-                $CssRow = 'searchpassive';
+            elsif ($Param{Mode} && $Param{Mode} eq 'Customer') {
+                $Permission = $Self->{FAQObject}->CheckCategoryCustomerPermission(
+                    CustomerUser => $Param{CustomerUser},
+                    CategoryID => $Data{CategoryID},
+                );
             }
-            $Data{CssRow} = $CssRow;
-            $Frontend{CssColumnVotingResult} = 'color:'.$Self->{LayoutObject}->GetFAQItemVotingRateColor(Rate => $Data{Result}).';';
+            if ($Permission ne '') {
+                if($CssRow eq 'searchpassive') {
+                    $CssRow = 'searchactive';
+                }
+                else {
+                    $CssRow = 'searchpassive';
+                }
+                $Data{CssRow} = $CssRow;
+                $Frontend{CssColumnVotingResult} = 'color:'.$Self->{LayoutObject}->GetFAQItemVotingRateColor(Rate => $Data{Result}).';';
 
-            $Self->{LayoutObject}->Block(
-                Name => 'SearchResultRow',
-                Data => { %Data, %Frontend },
-            );
+                $Self->{LayoutObject}->Block(
+                    Name => 'SearchResultRow',
+                    Data => { %Data, %Frontend },
+                );
+            }
         }
     }
     return;

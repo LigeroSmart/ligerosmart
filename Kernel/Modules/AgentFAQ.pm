@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentFAQ.pm - faq module
-# Copyright (C) 2001-2006 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: AgentFAQ.pm,v 1.8 2006-12-13 15:22:01 rk Exp $
+# $Id: AgentFAQ.pm,v 1.9 2007-01-18 14:11:20 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -16,9 +16,10 @@ use Kernel::System::FAQ;
 use Kernel::System::LinkObject;
 use Kernel::Modules::FAQ;
 use Kernel::System::User;
+use Kernel::System::Group;
 
 use vars qw($VERSION @ISA);
-$VERSION = '$Revision: 1.8 $';
+$VERSION = '$Revision: 1.9 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 @ISA = qw(Kernel::Modules::FAQ);
@@ -48,9 +49,10 @@ sub new {
         $Self->{LayoutObject}->FatalError(Message => "Got no $_!") if (!$Self->{$_});
     }
     $Self->{UserObject} = Kernel::System::User->new(%Param);
+    $Self->{GroupObject} = Kernel::System::Group->new(%Param);
     return $Self;
 }
-# --
+
 sub Run {
 
     my $Self = shift;
@@ -334,6 +336,15 @@ sub Run {
             Name => 'ValidID',
             SelectedID => $CategoryData{ValidID},
         );
+        my $SelectedGroups = $Self->{FAQObject}->GetCategoryGroup(CategoryID => $ParamData{CategoryID});
+        my %Groups = $Self->{GroupObject}->GroupList(Valid => 1);
+        $Frontend{GroupOption} = $Self->{LayoutObject}->OptionStrgHashRef(
+            Data => \%Groups,
+            Name => 'PermissionGroups',
+            Size => 8,
+            Multiple => 1,
+            SelectedIDRefArray => $SelectedGroups,
+        );
         $Self->{LayoutObject}->Block(
             Name => 'Category',
             Data => { %Param, %Frontend, %CategoryData },
@@ -344,7 +355,6 @@ sub Run {
     # category update action
     # ---------------------------------------------------------- #
     elsif ($Self->{Subaction} eq 'CategoryChangeAction') {
-
         # permission check
         if (!$Self->{AccessRw}) {
             return $Self->{LayoutObject}->NoPermission(WithHeader => 'yes');
@@ -371,6 +381,12 @@ sub Run {
         if(!$Self->{FAQObject}->CategoryDuplicateCheck(Name=>$ParamData{Name},ID=>$ParamData{CategoryID},ParentID=>$ParamData{ParentID})) {
             # db action
             if ($Self->{FAQObject}->CategoryUpdate(%ParamData, UserID => $Self->{UserID})) {
+                # set categorygroups
+                my @PermissionGroups = $Self->{ParamObject}->GetArray(Param => "PermissionGroups");
+                $Self->{FAQObject}->SetCategoryGroup(
+                    CategoryID => $ParamData{CategoryID},
+                    GroupIDs => \@PermissionGroups,
+                );
                 return $Self->{LayoutObject}->Redirect(OP => "Action=AgentFAQ&Subaction=Category");
             }
             else {
@@ -386,7 +402,6 @@ sub Run {
     # category add
     # ---------------------------------------------------------- #
     elsif ($Self->{Subaction} eq 'Category') {
-
         # permission check
 
         if (!$Self->{AccessRw}) {
@@ -421,6 +436,14 @@ sub Run {
             },
             Name => 'ValidID',
         );
+        # group permission
+        my %Groups = $Self->{GroupObject}->GroupList(Valid => 1);
+        $Frontend{GroupOption} = $Self->{LayoutObject}->OptionStrgHashRef(
+            Data => \%Groups,
+            Name => 'PermissionGroups',
+            Size => 8,
+            Multiple => 1,
+        );
         $Self->{LayoutObject}->Block(
             Name => 'Category',
             Data => { %Param, %Frontend },
@@ -431,7 +454,6 @@ sub Run {
     # category add action
     # ---------------------------------------------------------- #
     elsif ($Self->{Subaction} eq 'CategoryAddAction') {
-
         # permission check
         if (!$Self->{AccessRw}) {
             return $Self->{LayoutObject}->NoPermission(WithHeader => 'yes');
@@ -456,7 +478,14 @@ sub Run {
 
         # duplicate check
         if(!$Self->{FAQObject}->CategoryDuplicateCheck(Name=>$ParamData{Name},ParentID=>$ParamData{ParentID})) {
-            if ($Self->{FAQObject}->CategoryAdd(%ParamData, UserID => $Self->{UserID}) ) {
+            my $CategoryID = $Self->{FAQObject}->CategoryAdd(%ParamData, UserID => $Self->{UserID});
+            if ($CategoryID) {
+                # set categorygroups
+                my @PermissionGroups = $Self->{ParamObject}->GetArray(Param => "PermissionGroups");
+                $Self->{FAQObject}->SetCategoryGroup(
+                    CategoryID => $CategoryID,
+                    GroupIDs => \@PermissionGroups,
+                );
                 return $Self->{LayoutObject}->Redirect(OP => "Action=AgentFAQ&Subaction=Category");
             }
             else {
@@ -473,7 +502,6 @@ sub Run {
     elsif ($Self->{Subaction} eq 'Add') {
 
         # permission check
-
         if (!$Self->{AccessRw}) {
             return $Self->{LayoutObject}->NoPermission(WithHeader => 'yes');
         }
@@ -487,11 +515,17 @@ sub Run {
             LanguageTranslation => 0,
             Selected => $Self->{UserLanguage},
         );
+
+        my $Categories = $Self->{FAQObject}->GetUserCategories(
+            UserID =>  $Self->{UserID},
+            Type => 'rw'
+        );
         $Frontend{CategoryOption} = $Self->{LayoutObject}->AgentFAQCategoryListOption(
-            CategoryList => { %{$Self->{FAQObject}->CategoryList(Valid => 1)} },
+            CategoryList => $Categories,
             Name => 'CategoryID',
             LanguageTranslation => 0,
         );
+
         $Frontend{StateOption} = $Self->{LayoutObject}->OptionStrgHashRef(
             Data => { $Self->{FAQObject}->StateList() },
             Name => 'StateID',
@@ -593,8 +627,12 @@ sub Run {
             LanguageTranslation => 0,
             SelectedID => $ItemData{LanguageID},
         );
+        my $Categories = $Self->{FAQObject}->GetUserCategories(
+            UserID =>  $Self->{UserID},
+            Type => 'rw'
+        );
         $Frontend{CategoryOption} = $Self->{LayoutObject}->AgentFAQCategoryListOption(
-            CategoryList => { %{$Self->{FAQObject}->CategoryList()} },
+            CategoryList => $Categories,
             Name => 'CategoryID',
             LanguageTranslation => 0,
             SelectedID => $ItemData{CategoryID},
@@ -777,7 +815,10 @@ sub Run {
     # search a item
     # ---------------------------------------------------------- #
     elsif ($Self->{Subaction} eq 'Search') {
-        $Self->GetItemSearch();
+        $Self->GetItemSearch(
+            Mode => 'Agent',
+            User => $Self->{UserID},
+        );
         $HeaderTitle = 'Search';
         $Header = $Self->{LayoutObject}->Header(
             Title => $HeaderTitle,
@@ -875,7 +916,7 @@ sub Run {
     # explorer
     # ---------------------------------------------------------- #
     elsif ($Self->{Subaction} eq 'Explorer') {
-        $Self->GetExplorer();
+        $Self->GetExplorer(Mode => 'Agent');
         $HeaderTitle = 'Explorer';
         $Header = $Self->{LayoutObject}->Header(
             Type => $HeaderType,
@@ -895,7 +936,20 @@ sub Run {
         if($Self->{LastFAQNav}) {
             $Self->GetItemSmallView();
         } else {
-            $Self->GetItemView(Links => 1);
+            my %FAQArticle = $Self->{FAQObject}->FAQGet(
+                FAQID => $Self->{ParamObject}->GetParam(Param => 'ItemID'),
+            );
+            my $Permission = $Self->{FAQObject}->CheckCategoryUserPermission(
+                UserID => $Self->{UserID},
+                CategoryID => $FAQArticle{CategoryID},
+            );
+            if ($Permission eq '') {
+                $Self->{LayoutObject}->FatalError(Message => "Permission denied!");
+            }
+            $Self->GetItemView(
+                Links => 1,
+                Permission => $Permission,
+             );
         }
         $HeaderTitle = $Self->{ItemData}{Number};
         $Header = $Self->{LayoutObject}->Header(

@@ -2,7 +2,7 @@
 # AgentFAQ.dtl - provides HTML view for faq articles
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: AgentFAQ.dtl,v 1.8 2007-01-18 10:32:40 rk Exp $
+# $Id: AgentFAQ.dtl,v 1.9 2007-01-18 14:11:20 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -21,11 +21,15 @@
   <tr>
     <td class="menu">
       <a href="$Env{"Baselink"}Action=$Env{"Action"}&CategoryID=$Data{"CategoryID"}">$Text{"Back"}</a> -
+<!-- dtl:block:FAQItemViewLinkUpdate -->
       <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Update&CategoryID=$Data{"CategoryID"}&ItemID=$Data{"ItemID"}">$Text{"Edit"}</a> -
+<!-- dtl:block:FAQItemViewLinkUpdate -->
       <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=History&CategoryID=$Data{"CategoryID"}&ItemID=$Data{"ItemID"}">$Text{"History"}</a> -
-      <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Print&CategoryID=$Data{"CategoryID"}&ItemID=$Data{"ItemID"}" target="print">$Text{"Print"}</a> -
-      <a href="$Env{"Baselink"}Action=AgentLinkObject&SourceObject=FAQ&CategoryID=$Data{"CategoryID"}&SourceID=$Data{"ItemID"}">$Text{"Link"}</a> -
+      <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Print&CategoryID=$Data{"CategoryID"}&ItemID=$Data{"ItemID"}" target="print">$Text{"Print"}</a>
+<!-- dtl:block:FAQItemViewLinkDelete -->
+      - <a href="$Env{"Baselink"}Action=AgentLinkObject&SourceObject=FAQ&CategoryID=$Data{"CategoryID"}&SourceID=$Data{"ItemID"}">$Text{"Link"}</a> -
       <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Delete&CategoryID=$Data{"CategoryID"}&ItemID=$Data{"ItemID"}">$Text{"Delete"}</a>
+<!-- dtl:block:FAQItemViewLinkDelete -->
     </td>
     <td align="right" class="menu">
 
@@ -275,7 +279,7 @@ function updateMessage()
           <tr>
             <td colspan="2">
               <input type="hidden" name="Title" value="$QData{"Title"}">
-                <textarea name="Body" rows="14" cols="$Config{"Ticket::Frontend::TextAreaEmail"}" wrap="$Env{"BrowserWrap"}">$Data{"ItemFieldValues"}</textarea>
+              <textarea name="Body" rows="14" cols="$Config{"Ticket::Frontend::TextAreaEmail"}" wrap="$Env{"BrowserWrap"}">$Data{"ItemFieldValues"}</textarea>
             </td>
           </tr>
           <tr>
@@ -800,6 +804,10 @@ function submit_compose()
                       <tr>
                         <td class="contentkey">$Text{"Valid"}: </td>
                         <td class="contentbody">$Data{"ValidOption"}</td>
+                      </tr>
+                      <tr>
+                        <td class="contentkey">$Text{"Permission"}: </td>
+                        <td class="contentkey">$Data{"GroupOption"}</td>
                       </tr>
                     </table>
                   </td>

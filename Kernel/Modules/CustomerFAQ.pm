@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/CustomerFAQ.pm - faq module
-# Copyright (C) 2001-2006 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: CustomerFAQ.pm,v 1.3 2006-10-20 12:06:37 rk Exp $
+# $Id: CustomerFAQ.pm,v 1.4 2007-01-18 14:11:20 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -16,7 +16,7 @@ use Kernel::System::FAQ;
 use Kernel::Modules::FAQ;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.3 $';
+$VERSION = '$Revision: 1.4 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 our @ISA = qw(Kernel::Modules::FAQ);
@@ -39,7 +39,6 @@ sub new {
     $Self->{InterfaceStates} = $Self->{FAQObject}->StateTypeList(
         Types => ['external','public']
     );
-
     # check needed Opjects
     # ********************************************************** #
     foreach (qw(UserObject)) {
@@ -92,7 +91,10 @@ sub Run {
     # explorer
     # ---------------------------------------------------------- #
     if ($Self->{Subaction} eq 'Explorer') {
-        $Self->GetExplorer();
+        $Self->GetExplorer(
+            Mode => 'Customer',
+            CustomerUser => $Self->{UserLogin},
+        );
         $HeaderTitle = 'Explorer';
         $Header = $Self->{LayoutObject}->CustomerHeader(
             Type => $HeaderType,
@@ -112,7 +114,11 @@ sub Run {
             Type => $HeaderType,
             Title => $HeaderTitle
         );
-        $Self->GetItemSearch();
+        $Self->GetItemSearch(
+            Mode => 'Customer',
+            CustomerUser => $Self->{UserLogin},
+        );
+
         $Content = $Self->{LayoutObject}->Output(
             TemplateFile => 'FAQ',
             Data => {%Frontend , %GetParam }
@@ -156,7 +162,21 @@ sub Run {
     # item view
     # ---------------------------------------------------------- #
     elsif ($Self->{ParamObject}->GetParam(Param => 'ItemID')) {
-        $Self->GetItemView();
+        my %FAQArticle = $Self->{FAQObject}->FAQGet(
+            FAQID => $Self->{ParamObject}->GetParam(Param => 'ItemID'),
+        );
+        my $Permission = $Self->{FAQObject}->CheckCategoryCustomerPermission(
+            CustomerUser => $Self->{UserLogin},
+            CategoryID => $FAQArticle{CategoryID},
+        );
+        if ($Permission eq '') {
+            $Self->{LayoutObject}->FatalError(Message => "Permission denied!");
+        }
+        $Self->GetItemView(
+            Links => 1,
+            Permission => $Permission,
+        );
+
         $HeaderTitle = $Self->{ItemData}{Number};
         $Header = $Self->{LayoutObject}->CustomerHeader(
             Type => $HeaderType,

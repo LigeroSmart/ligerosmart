@@ -269,11 +269,11 @@
         <Group>FAQ</Group>
         <SubGroup>Core::Item</SubGroup>
         <Setting>
-           <Hash>
-              <Item Key="Show">public</Item>
-              <Item Key="Caption">Symptom</Item>
-              <Item Key="Prio">100</Item>
-           </Hash>
+            <Hash>
+                <Item Key="Show">public</Item>
+                <Item Key="Caption">Symptom</Item>
+                <Item Key="Prio">100</Item>
+            </Hash>
         </Setting>
     </ConfigItem>
 
@@ -283,11 +283,11 @@
         <Group>FAQ</Group>
         <SubGroup>Core::Item</SubGroup>
         <Setting>
-           <Hash>
-              <Item Key="Show">public</Item>
-              <Item Key="Caption">Problem</Item>
-              <Item Key="Prio">200</Item>
-           </Hash>
+            <Hash>
+                <Item Key="Show">public</Item>
+                <Item Key="Caption">Problem</Item>
+                <Item Key="Prio">200</Item>
+            </Hash>
         </Setting>
     </ConfigItem>
 
@@ -297,11 +297,11 @@
         <Group>FAQ</Group>
         <SubGroup>Core::Item</SubGroup>
         <Setting>
-           <Hash>
-              <Item Key="Show">public</Item>
-              <Item Key="Caption">Solution</Item>
-              <Item Key="Prio">300</Item>
-           </Hash>
+            <Hash>
+                <Item Key="Show">public</Item>
+                <Item Key="Caption">Solution</Item>
+                <Item Key="Prio">300</Item>
+            </Hash>
         </Setting>
     </ConfigItem>
 
@@ -311,11 +311,11 @@
         <Group>FAQ</Group>
         <SubGroup>Core::Item</SubGroup>
         <Setting>
-           <Hash>
-              <Item Key="Show"></Item>
-              <Item Key="Caption">Field4</Item>
-              <Item Key="Prio">400</Item>
-           </Hash>
+            <Hash>
+                <Item Key="Show"></Item>
+                <Item Key="Caption">Field4</Item>
+                <Item Key="Prio">400</Item>
+            </Hash>
         </Setting>
     </ConfigItem>
 
@@ -325,11 +325,11 @@
         <Group>FAQ</Group>
         <SubGroup>Core::Item</SubGroup>
         <Setting>
-           <Hash>
-              <Item Key="Show"></Item>
-              <Item Key="Caption">Field5</Item>
-              <Item Key="Prio">500</Item>
-           </Hash>
+            <Hash>
+                <Item Key="Show"></Item>
+                <Item Key="Caption">Field5</Item>
+                <Item Key="Prio">500</Item>
+            </Hash>
         </Setting>
     </ConfigItem>
 
@@ -339,11 +339,11 @@
         <Group>FAQ</Group>
         <SubGroup>Core::Item</SubGroup>
         <Setting>
-           <Hash>
-              <Item Key="Show">internal</Item>
-              <Item Key="Caption">Comment</Item>
-              <Item Key="Prio">600</Item>
-           </Hash>
+            <Hash>
+                <Item Key="Show">internal</Item>
+                <Item Key="Caption">Comment</Item>
+                <Item Key="Prio">600</Item>
+            </Hash>
         </Setting>
     </ConfigItem>
 
@@ -438,7 +438,7 @@
                     <Prio>310</Prio>
                 </NavBar>
                 <NavBar>
-                    <Group>faq</Group>
+                    <Group>faq_admin</Group>
                     <Description>Language</Description>
                     <Name>Language</Name>
                     <Image>language.png</Image>
@@ -450,7 +450,7 @@
                     <Prio>910</Prio>
                 </NavBar>
                 <NavBar>
-                    <Group>faq</Group>
+                    <Group>faq_admin</Group>
                     <Description>Category</Description>
                     <Name>Category</Name>
                     <Image>category.png</Image>

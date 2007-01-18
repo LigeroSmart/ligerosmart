@@ -1,8 +1,8 @@
 # --
 # Kernel/System/FAQ.pm - all faq funktions
-# Copyright (C) 2001-2006 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.6 2006-12-13 15:22:01 rk Exp $
+# $Id: FAQ.pm,v 1.7 2007-01-18 14:11:20 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -14,9 +14,11 @@ package Kernel::System::FAQ;
 use strict;
 use MIME::Base64;
 use Kernel::System::Encode;
+use Kernel::System::Group;
+use Kernel::System::CustomerGroup;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.6 $';
+$VERSION = '$Revision: 1.7 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -70,6 +72,8 @@ sub new {
     foreach (qw(DBObject ConfigObject LogObject UserID)) {
         $Self->{$_} = $Param{$_} || die "Got no $_!";
     }
+    $Self->{GroupObject} = Kernel::System::Group->new(%Param);
+    $Self->{CustomerGroupObject} = Kernel::System::CustomerGroup->new(%Param);
     $Self->{EncodeObject} = Kernel::System::Encode->new(%Param);
     return $Self;
 }
@@ -190,7 +194,6 @@ sub FAQGet {
     }
     my $Hash = $Self->GetCategoryTree();
     $Data{CategoryName} = $Hash->{$Data{CategoryID}};
-
     return %Data;
 }
 
@@ -1155,18 +1158,43 @@ sub CategorySubCategoryIDList {
             return [];
         }
     }
-
-    # add subcategoryids
-    my @SubCategoryIDs = @{$Self->CategorySearch(
-        ParentID => $Param{ParentID},
-        States => $Param{ItemStates},
-        Order => 'Created',
-        Sort => 'down',
-    )};
+    my @SubCategoryIDs = ();
+    if ($Param{Mode} && $Param{Mode} eq 'Agent') {
+        # add subcategoryids
+        @SubCategoryIDs = @{$Self->AgentCategorySearch(
+            ParentID => $Param{ParentID},
+            States => $Param{ItemStates},
+            Order => 'Created',
+            Sort => 'down',
+            UserID => $Param{UserID},
+        )};
+    }
+    elsif ($Param{Mode} && $Param{Mode} eq 'Customer') {
+        # add subcategoryids
+        @SubCategoryIDs = @{$Self->CustomerCategorySearch(
+            ParentID => $Param{ParentID},
+            States => $Param{ItemStates},
+            Order => 'Created',
+            Sort => 'down',
+            CustomerUser => $Param{CustomerUser},
+        )};
+    }
+    else {
+        # add subcategoryids
+        @SubCategoryIDs = @{$Self->CategorySearch(
+            ParentID => $Param{ParentID},
+            States => $Param{ItemStates},
+            Order => 'Created',
+            Sort => 'down',
+        )};
+    }
     foreach my $SubCategoryID (@SubCategoryIDs) {
         my @Temp = @{$Self->CategorySubCategoryIDList(
             ParentID => $SubCategoryID,
-            ItemStates => $Param{ItemStates}
+            ItemStates => $Param{ItemStates},
+            Mode => $Param{Mode},
+            CustomerUser => $Param{CustomerUser},
+            UserID => $Param{UserID},
         )};
         if(@Temp) {
             push(@SubCategoryIDs, @Temp);
@@ -2009,6 +2037,362 @@ sub _MakeTree {
     return $Param{Tree};
 }
 
+=item SetCategoryGroup()
+set groups to a category
+
+    $FAQObject->SetCategoryGroup(
+        CategoryID => 3,
+        GroupIDs => [2,4,1,5,77],
+    );
+
+=cut
+
+sub SetCategoryGroup {
+    my $Self = shift;
+    my %Param = @_;
+    my $SQL = '';
+    # check needed stuff
+    foreach (qw(CategoryID GroupIDs)) {
+      if (!$Param{$_}) {
+        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+        return;
+      }
+    }
+    $Param{CategoryID} = $Self->{DBObject}->Quote($Param{CategoryID}, 'Integer');
+    # delete old groups
+    $Self->{DBObject}->Do(
+        SQL => "DELETE FROM faq_category_group WHERE category_id = $Param{CategoryID}",
+    );
+    # insert groups
+    foreach my $Key (@{$Param{GroupIDs}}) {
+        my $GroupID = $Self->{DBObject}->Quote($Key, 'Integer');
+        $SQL = "INSERT INTO faq_category_group ".
+            " (category_id, group_id, changed, changed_by, created, created_by) VALUES" .
+            " ($Param{CategoryID}, $GroupID, current_timestamp, $Self->{UserID}, ".
+            " current_timestamp, $Self->{UserID})";
+        # write attachment to db
+        if (!$Self->{DBObject}->Do(SQL => $SQL)) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+=item GetCategoryGroup()
+get groups from a category
+
+    $FAQObject->SetCategoryGroup(
+        CategoryID => 3,
+    );
+
+=cut
+
+sub GetCategoryGroup {
+    my $Self = shift;
+    my %Param = @_;
+    my $SQL = '';
+    my @Groups = ();
+    # check needed stuff
+    foreach (qw(CategoryID)) {
+        if (!$Param{$_}) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
+    }
+    $Param{CategoryID} = $Self->{DBObject}->Quote($Param{CategoryID}, 'Integer');
+    # get groups
+    $SQL = "SELECT group_id FROM faq_category_group WHERE category_id = $Param{CategoryID}";
+    $Self->{DBObject}->Prepare(SQL => $SQL);
+    while  (my @Row = $Self->{DBObject}->FetchrowArray()) {
+        push(@Groups, $Row[0]);
+    }
+    return \@Groups;
+}
+
+=item GetAllCategoryGroup()
+get all category-groups
+
+    $FAQObject->GetAllCategoryGroup();
+
+=cut
+
+sub GetAllCategoryGroup {
+    my $Self = shift;
+    my %Param = @_;
+    my $SQL = '';
+    my %Groups = ();
+    # get groups
+    $SQL = "SELECT group_id, category_id FROM faq_category_group";
+    $Self->{DBObject}->Prepare(SQL => $SQL);
+    while  (my @Row = $Self->{DBObject}->FetchrowArray()) {
+        $Groups{$Row[1]}->{$Row[0]} = 1;
+    }
+    return \%Groups;
+}
+
+=item GetUserCategories()
+get all category-groups
+
+    my $Hashref = $FAQObject->GetUserCategories(
+        UserID => '123456',
+        Type => 'rw'
+    );
+
+=cut
+
+sub GetUserCategories {
+    my $Self = shift;
+    my %Param = @_;
+
+    # check needed stuff
+    foreach (qw(UserID Type)) {
+        if (!$Param{$_}) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
+    }
+
+    my $Categories = $Self->CategoryList(Valid => 1);
+    my $CategoryGroups = $Self->GetAllCategoryGroup();
+    my %UserGroups = $Self->{GroupObject}->GroupMemberList(
+        UserID => $Param{UserID},
+        Type => $Param{Type},
+        Result => 'HASH',
+    );
+
+    my %Hash = ();
+    $Self->_UserCategories(
+        Categories => $Categories,
+        CategoryGroups => $CategoryGroups,
+        UserGroups => \%UserGroups,
+        ParentID => 0,
+        NewHash => \%Hash,
+    );
+    return \%Hash;
+}
+
+sub _UserCategories {
+    my $Self = shift;
+    my %Param = @_;
+    my %Hash = ();
+    foreach my $CategoryID (keys %{$Param{Categories}->{$Param{ParentID}}}) {
+        # check category groups
+        if (defined($Param{CategoryGroups}->{$CategoryID})) {
+            # check user groups
+            foreach my $GroupID (keys %{$Param{CategoryGroups}->{$CategoryID}}) {
+                if (defined($Param{UserGroups}->{$GroupID})) {
+                    # add category to new hash
+                    $Hash{$CategoryID} = $Param{Categories}->{$Param{ParentID}}{$CategoryID};
+                    last;
+                }
+            }
+        }
+        else {
+            next;
+        }
+        # recursion
+        $Self->_UserCategories(
+            Categories => $Param{Categories},
+            CategoryGroups => $Param{CategoryGroups},
+            UserGroups => $Param{UserGroups},
+            ParentID => $CategoryID,
+            NewHash => $Param{NewHash},
+        );
+    }
+    $Param{NewHash}->{$Param{ParentID}} = \%Hash;
+    return;
+}
+
+=item GetCustomerCategories()
+get all category-groups
+
+    my $Hashref = $FAQObject->GetCustomerCategories(
+        CustomerUser => 'hans',
+        Type => 'rw'
+    );
+
+=cut
+
+sub GetCustomerCategories {
+    my $Self = shift;
+    my %Param = @_;
+
+    # check needed stuff
+    foreach (qw(CustomerUser Type)) {
+        if (!$Param{$_}) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
+    }
+
+    my $Categories = $Self->CategoryList(Valid => 1);
+    my $CategoryGroups = $Self->GetAllCategoryGroup();
+#    my %UserGroups = $Self->{GroupObject}->GroupMemberList(
+#        UserID => $Param{UserID},
+#        Type => $Param{Type},
+#        Result => 'HASH',
+#    );
+
+    my %UserGroups = $Self->{CustomerGroupObject}->GroupMemberList(
+        UserID => $Param{CustomerUser},
+        Type => 'ro',
+        Result => 'HASH',
+    );
+    my %Hash = ();
+    $Self->_UserCategories(
+        Categories => $Categories,
+        CategoryGroups => $CategoryGroups,
+        UserGroups => \%UserGroups,
+        ParentID => 0,
+        NewHash => \%Hash,
+    );
+    return \%Hash;
+}
+
+=item CheckCategoryUserPermission()
+get userpermission from a category
+
+    $FAQObject->CheckCategoryUserPermission(
+        UserID => '123456',
+        CategoryID => '123',
+    );
+
+=cut
+
+sub CheckCategoryUserPermission {
+    my $Self = shift;
+    my %Param = @_;
+
+    # check needed stuff
+    foreach (qw(UserID CategoryID)) {
+        if (!$Param{$_}) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
+    }
+    foreach my $Permission (qw(rw ro)) {
+        my $Hash = $Self->GetUserCategories(
+            UserID => $Param{UserID},
+            Type => 'ro'
+        );
+        foreach my $ParentID (keys %{$Hash}) {
+            my $CategoryHash = $Hash->{$ParentID};
+            foreach my $CategoryID (keys %{$CategoryHash}) {
+                if ($CategoryID == $Param{CategoryID}) {
+                    return $Permission;
+                }
+            }
+        }
+    }
+    return '';
+}
+
+=item CheckCategoryCustomerPermission()
+get userpermission from a category
+
+    $FAQObject->CheckCategoryCustomerPermission(
+        UserID => '123456',
+        CategoryID => '123',
+    );
+
+=cut
+
+sub CheckCategoryCustomerPermission {
+    my $Self = shift;
+    my %Param = @_;
+
+    # check needed stuff
+    foreach (qw(CustomerUser CategoryID)) {
+        if (!$Param{$_}) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
+    }
+    foreach my $Permission (qw(rw ro)) {
+        my $Hash = $Self->GetCustomerCategories(
+            CustomerUser => $Param{CustomerUser},
+            Type => 'ro'
+        );
+        foreach my $ParentID (keys %{$Hash}) {
+            my $CategoryHash = $Hash->{$ParentID};
+            foreach my $CategoryID (keys %{$CategoryHash}) {
+                if ($CategoryID == $Param{CategoryID}) {
+                    return $Permission;
+                }
+            }
+        }
+    }
+    return '';
+}
+
+=item AgentCategorySearch()
+
+get the category search as hash
+
+  my @CategorieIDs = @{$FAQObject->AgentCategorySearch(
+    Name => "Name"
+  )};
+
+=cut
+
+sub AgentCategorySearch {
+    my $Self = shift;
+    my %Param = @_;
+    my @List = ();
+
+    # check needed stuff
+    foreach (qw(UserID)) {
+        if (!$Param{$_}) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
+    }
+    if (!defined($Param{ParentID})) {
+        $Param{ParentID} = 0;
+    }
+    my $Hashref = $Self->GetUserCategories(
+        UserID => $Param{UserID},
+        Type => 'ro'
+    );
+    my %CategoryHash = %{$Hashref->{$Param{ParentID}}};
+    @List = sort {$CategoryHash{$a} cmp $CategoryHash{$b}} (keys %CategoryHash);
+    return \@List;
+}
+
+=item CustomerCategorySearch()
+
+get the category search as hash
+
+  my @CategorieIDs = @{$FAQObject->CustomerCategorySearch(
+    Name => "Name"
+  )};
+
+=cut
+
+sub CustomerCategorySearch {
+    my $Self = shift;
+    my %Param = @_;
+    my @List = ();
+
+    # check needed stuff
+    foreach (qw(CustomerUser)) {
+        if (!$Param{$_}) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return ();
+        }
+    }
+    if (!defined($Param{ParentID})) {
+        $Param{ParentID} = 0;
+    }
+    my $Hashref = $Self->GetCustomerCategories(
+        CustomerUser => $Param{CustomerUser},
+        Type => 'ro',
+    );
+    my %CategoryHash = %{$Hashref->{$Param{ParentID}}};
+    @List = sort {$CategoryHash{$a} cmp $CategoryHash{$b}} (keys %CategoryHash);
+    return \@List;
+}
+
 1;
 
 =head1 TERMS AND CONDITIONS
@@ -2023,6 +2407,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.6 $ $Date: 2006-12-13 15:22:01 $
+$Revision: 1.7 $ $Date: 2007-01-18 14:11:20 $
 
 =cut
