@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/FAQ.pm - faq module
-# Copyright (C) 2001-2006 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.5 2006-12-13 15:22:01 rk Exp $
+# $Id: FAQ.pm,v 1.6 2007-01-18 08:54:03 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use Kernel::System::FAQ;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.5 $';
+$VERSION = '$Revision: 1.6 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -451,13 +451,18 @@ sub GetItemView {
     my %ItemData = $Self->{FAQObject}->FAQGet(ItemID => $GetParam{ItemID}, UserID => $Self->{UserID});
     # html quoting
     foreach my $Key (qw (Field1 Field2 Field3 Field4 Field5 Field6)) {
-        $ItemData{$Key} = $Self->{LayoutObject}->Ascii2Html(
-            NewLine => 70,
-            Text => $ItemData{$Key},
-            VMax => 5000,
-            HTMLResultMode => 1,
-            LinkFeature => 1,
-        );
+        if ($Self->{ConfigObject}->Get('FAQ::Item::HTML')) {
+            $ItemData{$Key} =~ s/\n/\<br\>/g;
+        }
+        else {
+            $ItemData{$Key} = $Self->{LayoutObject}->Ascii2Html(
+                NewLine => 0,
+                Text => $ItemData{$Key},
+                VMax => 5000,
+                HTMLResultMode => 1,
+                LinkFeature => 1,
+            );
+        }
     }
     if (!%ItemData) {
         return $Self->{LayoutObject}->ErrorScreen();
@@ -618,13 +623,18 @@ sub GetItemPrint {
     }
     # html quoting
     foreach my $Key (qw (Field1 Field2 Field3 Field4 Field5 Field6)) {
-        $ItemData{$Key} = $Self->{LayoutObject}->Ascii2Html(
-            NewLine => 70,
-            Text => $ItemData{$Key},
-            VMax => 5000,
-            HTMLResultMode => 1,
-            LinkFeature => 1,
-        );
+        if ($Self->{ConfigObject}->Get('FAQ::Item::HTML')) {
+            $ItemData{$Key} =~ s/\n/\<br\>/g;
+        }
+        else {
+            $ItemData{$Key} = $Self->{LayoutObject}->Ascii2Html(
+                NewLine => 0,
+                Text => $ItemData{$Key},
+                VMax => 5000,
+                HTMLResultMode => 1,
+                LinkFeature => 1,
+            );
+        }
     }
     # permission check
     if (!exists($Self->{InterfaceStates}{$ItemData{StateTypeID}})) {

@@ -521,4 +521,16 @@
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="FAQ::Item::HTML" Required="1" Valid="1">
+        <Description Lang="en">Show FAQ Article with HTML.</Description>
+        <Description Lang="de">HTML Darstellung der FAQ Artikel einschalten.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Core::Item</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
 </otrs_config>
