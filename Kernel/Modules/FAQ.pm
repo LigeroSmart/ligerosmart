@@ -2,7 +2,7 @@
 # Kernel/Modules/FAQ.pm - faq module
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.7 2007-01-18 14:11:20 rk Exp $
+# $Id: FAQ.pm,v 1.8 2007-01-19 12:59:52 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use Kernel::System::FAQ;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.7 $';
+$VERSION = '$Revision: 1.8 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -366,13 +366,15 @@ sub _GetExplorerLastChangeItems {
             $Self->{LayoutObject}->Block(
                 Name => 'ExplorerLatestChange'
             );
-            @ItemIDs = $Self->{FAQObject}->FAQSearch(
-                CategoryIDs => \@CategoryIDs,
-                States => $Self->{InterfaceStates},
-                Order => 'Changed',
-                Sort => 'down',
-                Limit => $Self->{ConfigObject}->Get('FAQ::Explorer::LastChange::Limit')
-            );
+            if (@CategoryIDs) {
+                @ItemIDs = $Self->{FAQObject}->FAQSearch(
+                    CategoryIDs => \@CategoryIDs,
+                    States => $Self->{InterfaceStates},
+                    Order => 'Changed',
+                    Sort => 'down',
+                    Limit => $Self->{ConfigObject}->Get('FAQ::Explorer::LastChange::Limit')
+                );
+            }
         }
         else {
             $Self->{LayoutObject}->Block(
@@ -435,13 +437,15 @@ sub _GetExplorerLastCreateItems {
             $Self->{LayoutObject}->Block(
                 Name => 'ExplorerLatestCreate'
             );
-            @ItemIDs = $Self->{FAQObject}->FAQSearch(
-                CategoryIDs => \@CategoryIDs,
-                States => $Self->{InterfaceStates},
-                Order => 'Created',
-                Sort => 'down',
-                Limit => $Self->{ConfigObject}->Get('FAQ::Explorer::LastCreate::Limit')
-            );
+            if (@CategoryIDs) {
+                @ItemIDs = $Self->{FAQObject}->FAQSearch(
+                    CategoryIDs => \@CategoryIDs,
+                    States => $Self->{InterfaceStates},
+                    Order => 'Created',
+                    Sort => 'down',
+                    Limit => $Self->{ConfigObject}->Get('FAQ::Explorer::LastCreate::Limit')
+                );
+            }
         }
         else {
             $Self->{LayoutObject}->Block(
