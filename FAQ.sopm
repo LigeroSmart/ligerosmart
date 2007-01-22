@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-  <CVS>$Id: FAQ.sopm,v 1.18 2007-01-22 14:01:15 rk Exp $</CVS>
+  <CVS>$Id: FAQ.sopm,v 1.19 2007-01-22 14:40:44 rk Exp $</CVS>
   <Name>FAQ</Name>
   <Version>0.0.0</Version>
   <Framework>2.1.x</Framework>
@@ -112,6 +112,7 @@
       <Column Name="changed_by" Required="true" Type="INTEGER"/>
     </Table>
     <Insert Table="faq_category">
+        <Data Key="parent_id" Value="0"/>
         <Data Key="name" Value="Misc" Type="Quote"/>
         <Data Key="comments" Value="Misc Comment" Type="Quote"/>
         <Data Key="valid_id" Value="1"/>
