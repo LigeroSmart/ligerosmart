@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-  <CVS>$Id: FAQ.sopm,v 1.17 2007-01-18 14:11:20 rk Exp $</CVS>
+  <CVS>$Id: FAQ.sopm,v 1.18 2007-01-22 14:01:15 rk Exp $</CVS>
   <Name>FAQ</Name>
-  <Version>5.0.3</Version>
+  <Version>0.0.0</Version>
   <Framework>2.1.x</Framework>
   <Vendor>OTRS GmbH</Vendor>
   <URL>http://otrs.org/</URL>
@@ -102,7 +102,7 @@
     </Insert>
     <Table Name="faq_category">
       <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>
-      <Column Name="parent_id" Required="false" Type="INTEGER"/>
+      <Column Name="parent_id" Required="true" Type="INTEGER"/>
       <Column Name="name" Required="true" Size="200" Type="VARCHAR"/>
       <Column Name="comments" Required="false" Size="200" Type="VARCHAR"/>
       <Column Name="valid_id" Required="true" Type="SMALLINT"/>
