@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.7 2007-01-18 14:11:20 rk Exp $
+# $Id: FAQ.pm,v 1.8 2007-01-25 15:21:47 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Group;
 use Kernel::System::CustomerGroup;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.7 $';
+$VERSION = '$Revision: 1.8 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -2393,6 +2393,45 @@ sub CustomerCategorySearch {
     return \@List;
 }
 
+=item PublicCategorySearch()
+
+get the category search as hash
+
+  my @CategorieIDs = @{$FAQObject->PublicCategorySearch(
+    Name => "Name"
+  )};
+
+=cut
+
+sub PublicCategorySearch {
+    my $Self = shift;
+    my %Param = @_;
+    my $SQL = '';
+    my $State = 0;
+
+    # get 'public' state id
+    $SQL = "SELECT id from faq_state_type WHERE name = 'public'";
+    $Self->{DBObject}->Prepare(SQL => $SQL, Limit => 500);
+    while  (my @Row = $Self->{DBObject}->FetchrowArray()) {
+        $State = $Row[0];
+    }
+
+    # get category ids
+    $SQL = "SELECT distinct(faq_item.category_id) FROM faq_item ".
+              "LEFT JOIN faq_category ON faq_item.category_id = faq_category.id ".
+              "WHERE faq_category.valid_id = 1 AND faq_item.state_id = $State";
+    if (defined($Param{ParentID})) {
+        $SQL .= " AND faq_category.parent_id = ".$Self->{DBObject}->Quote($Param{ParentID}, 'Integer');
+    }
+
+    my @List = ();
+    $Self->{DBObject}->Prepare(SQL => $SQL, Limit => 500);
+    while  (my @Row = $Self->{DBObject}->FetchrowArray()) {
+        push (@List, $Row[0]);
+    }
+    return \@List;
+}
+
 1;
 
 =head1 TERMS AND CONDITIONS
@@ -2407,6 +2446,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.7 $ $Date: 2007-01-18 14:11:20 $
+$Revision: 1.8 $ $Date: 2007-01-25 15:21:47 $
 
 =cut

@@ -2,7 +2,7 @@
 # Kernel/Modules/FAQ.pm - faq module
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.8 2007-01-19 12:59:52 rk Exp $
+# $Id: FAQ.pm,v 1.9 2007-01-25 15:21:47 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use Kernel::System::FAQ;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.8 $';
+$VERSION = '$Revision: 1.9 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -244,10 +244,8 @@ sub _GetExplorerCategoryList {
         )};
     }
     else {
-        @CategoryIDs = @{$Self->{FAQObject}->CategorySearch(
+        @CategoryIDs = @{$Self->{FAQObject}->PublicCategorySearch(
             ParentID => $Param{CategoryID},
-            Order => $Param{Order},
-            Sort => $Param{Sort},
         )};
     }
 
