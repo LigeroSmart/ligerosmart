@@ -1,8 +1,8 @@
 # --
 # Kernel/System/Survey.pm - manage all survey module events
-# Copyright (C) 2003-2006 OTRS GmbH, http://otrs.com/
+# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: Survey.pm,v 1.29 2006-12-09 00:35:26 mh Exp $
+# $Id: Survey.pm,v 1.30 2007-02-13 10:16:10 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Ticket;
 use Kernel::System::CustomerUser;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.29 $';
+$VERSION = '$Revision: 1.30 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -35,6 +35,49 @@ All survey functions. E. g. to add survey or and functions.
 
 =cut
 
+=item new()
+
+create a object
+
+    use Kernel::Config;
+    use Kernel::System::Log;
+    use Kernel::System::Time;
+    use Kernel::System::DB;
+    use Kernel::System::Main;
+    use Kernel::System::User;
+    use Kernel::System::Survey;
+
+    my $ConfigObject = Kernel::Config->new();
+    my $LogObject = Kernel::System::Log->new(
+        ConfigObject => $ConfigObject,
+    );
+    my $TimeObject = Kernel::System::Time->new(
+        ConfigObject => $ConfigObject,
+    );
+    my $DBObject = Kernel::System::DB->new(
+        ConfigObject => $ConfigObject,
+        LogObject => $LogObject,
+    );
+    my $MainObject = Kernel::System::Main->new(
+        ConfigObject => $ConfigObject,
+        LogObject => $LogObject,
+    );
+    my $UserObject = Kernel::System::User->new(
+        ConfigObject => $ConfigObject,
+        LogObject => $LogObject,
+        DBObject => $DBObject,
+    );
+    my $SurveyObject = Kernel::System::Survey->new(
+        ConfigObject => $ConfigObject,
+        LogObject => $LogObject,
+        TimeObject => $TimeObject,
+        DBObject => $DBObject,
+        MainObject => $MainObject,
+        UserObject => $UserObject,
+    );
+
+=cut
+
 sub new {
     my $Type = shift;
     my %Param = @_;
@@ -42,7 +85,7 @@ sub new {
     my $Self = {};
     bless ($Self, $Type);
     # check needed objects
-    foreach (qw(DBObject ConfigObject LogObject TimeObject UserObject)) {
+    foreach (qw(ConfigObject LogObject TimeObject DBObject MainObject UserObject)) {
         $Self->{$_} = $Param{$_} || die "Got no $_!";
     }
 
@@ -1784,6 +1827,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.29 $ $Date: 2006-12-09 00:35:26 $
+$Revision: 1.30 $ $Date: 2007-02-13 10:16:10 $
 
 =cut
