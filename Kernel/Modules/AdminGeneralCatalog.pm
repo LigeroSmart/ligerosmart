@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminGeneralCatalog.pm - admin frontend of general catalog management
 # Copyright (C) 2003-2007 OTRS GmbH, http://otrs.com/
 # --
-# $Id: AdminGeneralCatalog.pm,v 1.1.1.1 2007-02-23 15:39:00 mh Exp $
+# $Id: AdminGeneralCatalog.pm,v 1.2 2007-02-24 13:18:16 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use Kernel::System::GeneralCatalog;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.1.1.1 $';
+$VERSION = '$Revision: 1.2 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -99,6 +99,7 @@ sub Run {
         # get catalog item list
         my $ItemIDList = $Self->{GeneralCatalogObject}->ItemList(
             Class => $Class,
+            Valid => 0,
         );
 
         my $CssClass;

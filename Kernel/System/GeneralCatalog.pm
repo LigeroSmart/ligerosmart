@@ -2,7 +2,7 @@
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
 # Copyright (C) 2003-2007 OTRS GmbH, http://otrs.com/
 # --
-# $Id: GeneralCatalog.pm,v 1.1.1.1 2007-02-23 15:39:00 mh Exp $
+# $Id: GeneralCatalog.pm,v 1.2 2007-02-24 13:17:52 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -14,7 +14,7 @@ package Kernel::System::GeneralCatalog;
 use strict;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.1.1.1 $';
+$VERSION = '$Revision: 1.2 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -97,6 +97,7 @@ return a list as hash reference of one general catalog class
 
     my $ListRef = $GeneralCatalogObject->ItemList(
         Class => 'ITSM::Service::Type',
+        Valid => 0,
     );
 
 =cut
@@ -111,11 +112,17 @@ sub ItemList {
             return;
         }
     }
+    if (!defined($Param{Valid})) {
+        $Param{Valid} = 1;
+    }
+
     # ask database
     my %Data = ();
-    $Self->{DBObject}->Prepare(
-        SQL => "SELECT id, name FROM general_catalog WHERE class = '$Param{Class}'",
-    );
+    my $SQL = "SELECT id, name FROM general_catalog WHERE class = '$Param{Class}' ";
+    if ($Param{Valid}) {
+        $SQL .= "AND valid_id = 1";
+    }
+    $Self->{DBObject}->Prepare(SQL => $SQL);
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
         $Data{$Row[0]} = $Row[1];
     }
@@ -442,6 +449,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1.1.1 $ $Date: 2007-02-23 15:39:00 $
+$Revision: 1.2 $ $Date: 2007-02-24 13:17:52 $
 
 =cut
