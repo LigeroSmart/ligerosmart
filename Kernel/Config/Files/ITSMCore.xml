@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMCore.xml,v 1.1.1.1 2007-02-24 11:37:48 mh Exp $</CVS>
+    <CVS>$Id: ITSMCore.xml,v 1.2 2007-02-24 13:21:50 mh Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminTicketPriority" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminTicketPriority configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminTicketPriority Konfiguration im Admin-Bereich.</Description>
@@ -17,6 +17,26 @@
                     <Name>Priority</Name>
                     <Block>Block3</Block>
                     <Prio>420</Prio>
+                </NavBarModule>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AdminCIPAllocate" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AdminCIPAllocate configuration in the admin area.</Description>
+        <Description Lang="de">Frontendmodul-Registration der AdminCIPAllocate Konfiguration im Admin-Bereich.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Admin::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Group>admin</Group>
+                <Description>Admin</Description>
+                <Title>Criticality &lt;-&gt; Impact &lt;-&gt; Priority</Title>
+                <NavBarName>Admin</NavBarName>
+                <NavBarModule>
+                    <Module>Kernel::Output::HTML::NavBarModuleAdmin</Module>
+                    <Name>Criticality &lt;-&gt; Impact &lt;-&gt; Priority</Name>
+                    <Block>Block3</Block>
+                    <Prio>430</Prio>
                 </NavBarModule>
             </FrontendModuleReg>
         </Setting>
