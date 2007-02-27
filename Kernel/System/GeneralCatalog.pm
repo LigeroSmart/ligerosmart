@@ -2,7 +2,7 @@
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
 # Copyright (C) 2003-2007 OTRS GmbH, http://otrs.com/
 # --
-# $Id: GeneralCatalog.pm,v 1.2 2007-02-24 13:17:52 mh Exp $
+# $Id: GeneralCatalog.pm,v 1.3 2007-02-27 20:09:00 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -14,7 +14,7 @@ package Kernel::System::GeneralCatalog;
 use strict;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.2 $';
+$VERSION = '$Revision: 1.3 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -199,7 +199,7 @@ sub ItemGet {
     $Self->{DBObject}->Prepare(
         SQL => "SELECT id, class, name, functionality, valid_id, comments, ".
             "create_time, create_by, change_time, change_by FROM general_catalog WHERE id = $Param{ItemID}",
-        LIMIT => 1,
+        Limit => 1,
     );
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
         $ItemData{ItemID} = $Row[0];
@@ -252,7 +252,7 @@ sub ItemAdd {
     my $NoAdd;
     $Self->{DBObject}->Prepare(
         SQL => "SELECT id FROM general_catalog WHERE name = '$Param{Name}' AND class = '$Param{Class}'",
-        LIMIT => 1,
+        Limit => 1,
     );
     while ($Self->{DBObject}->FetchrowArray()) {
         $NoAdd = 1;
@@ -315,7 +315,7 @@ sub ItemUpdate {
     my $OldFunctionality;
     $Self->{DBObject}->Prepare(
         SQL => "SELECT class, functionality FROM general_catalog WHERE id = $Param{ItemID}",
-        LIMIT => 1,
+        Limit => 1,
     );
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
         $Class = $Row[0] || '';
@@ -325,7 +325,7 @@ sub ItemUpdate {
     my $Update;
     $Self->{DBObject}->Prepare(
         SQL => "SELECT id FROM general_catalog WHERE name = '$Param{Name}' AND class = '$Class'",
-        LIMIT => 1,
+        Limit => 1,
     );
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
         if ($Param{ItemID} eq $Row[0]) {
@@ -337,7 +337,7 @@ sub ItemUpdate {
         $Self->{DBObject}->Prepare(
             SQL => "SELECT COUNT(functionality) FROM general_catalog ".
                 "WHERE class = '$Class' AND functionality = '$OldFunctionality'",
-            LIMIT => 1,
+            Limit => 1,
         );
         my $LastFunctionality = 1;
         while (my @Row = $Self->{DBObject}->FetchrowArray()) {
@@ -449,6 +449,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2007-02-24 13:17:52 $
+$Revision: 1.3 $ $Date: 2007-02-27 20:09:00 $
 
 =cut
