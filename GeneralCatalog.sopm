@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: GeneralCatalog.sopm,v 1.2 2007-02-23 16:25:04 mh Exp $</CVS>
+    <CVS>$Id: GeneralCatalog.sopm,v 1.3 2007-03-20 10:36:45 mh Exp $</CVS>
     <Name>GeneralCatalog</Name>
     <Version>0.0.0</Version>
     <Framework>2.2.x</Framework>
@@ -10,6 +10,7 @@
     <Description Lang="en">The general catalog package.</Description>
     <Description Lang="de">Das Allgemeiner Katalog Paket.</Description>
     <Filelist>
+        <File Permission="644" Location="CHANGES.GeneralCatalog"></File>
         <File Permission="644" Location="Kernel/Config/Files/GeneralCatalog.xml"></File>
         <File Permission="644" Location="Kernel/Language/de_GeneralCatalog.pm"></File>
         <File Permission="644" Location="Kernel/Modules/AdminGeneralCatalog.pm"></File>
@@ -28,6 +29,10 @@
             <Column Name="create_by" Required="true" Type="INTEGER"/>
             <Column Name="change_time" Required="true" Type="DATE"/>
             <Column Name="change_by" Required="true" Type="INTEGER"/>
+            <Unique Name="class_name">
+                <UniqueColumn Name="class"/>
+                <UniqueColumn Name="name"/>
+            </Unique>
             <ForeignKey ForeignTable="system_user">
                 <Reference Local="create_by" Foreign="id"/>
                 <Reference Local="change_by" Foreign="id"/>
