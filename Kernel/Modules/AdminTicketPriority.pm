@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminTicketPriority.pm - admin frontend of ticket priority
 # Copyright (C) 2003-2007 OTRS GmbH, http://otrs.com/
 # --
-# $Id: AdminTicketPriority.pm,v 1.1.1.1 2007-02-24 11:37:48 mh Exp $
+# $Id: AdminTicketPriority.pm,v 1.2 2007-03-20 11:50:36 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -16,7 +16,7 @@ use Kernel::System::Valid;
 use Kernel::System::Priority;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.1.1.1 $';
+$VERSION = '$Revision: 1.2 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -89,7 +89,7 @@ sub Run {
             Data => {
                 %Param,
                 %PriorityData,
-                
+
             },
         );
         # generate output
@@ -141,7 +141,7 @@ sub Run {
         # output header and navbar
         my $Output = $Self->{LayoutObject}->Header();
         $Output .= $Self->{LayoutObject}->NavigationBar();
-        
+
         # output error notify
         if ($Self->{ParamObject}->GetParam(Param => "ErrorAdd")) {
             $Output .= $Self->{LayoutObject}->Notify(
@@ -201,7 +201,7 @@ sub Run {
                 },
             );
         }
-
+        # start template output
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AdminTicketPriority',
             Data => \%Param,
