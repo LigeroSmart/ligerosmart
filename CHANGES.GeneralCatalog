@@ -1,0 +1,15 @@
+# --
+# CHANGES.GeneralCatalog - change log of GeneralCatalog package
+# Copyright (C) 2003-2007 OTRS GmbH, http://otrs.com/
+# --
+# $Id: CHANGES.GeneralCatalog,v 1.1 2007-03-20 10:36:10 mh Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# --
+
+0.9.1 BETA1 (2007/??/??)
+ - (2007/??/??) first beta release
+
+EOF
