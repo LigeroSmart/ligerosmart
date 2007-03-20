@@ -1,15 +1,15 @@
 # --
-# Kernel/System/CIPAllocate.pm - all criticality, impact and priority allocation functions
+# Kernel/System/ITSMCIPAllocate.pm - all criticality, impact and priority allocation functions
 # Copyright (C) 2003-2007 OTRS GmbH, http://otrs.com/
 # --
-# $Id: CIPAllocate.pm,v 1.1 2007-02-24 13:22:39 mh Exp $
+# $Id: ITSMCIPAllocate.pm,v 1.1 2007-03-20 11:50:08 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 # --
 
-package Kernel::System::CIPAllocate;
+package Kernel::System::ITSMCIPAllocate;
 
 use strict;
 
@@ -183,6 +183,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2007-02-24 13:22:39 $
+$Revision: 1.1 $ $Date: 2007-03-20 11:50:08 $
 
 =cut

@@ -1,21 +1,21 @@
 # --
-# Kernel/Modules/AdminCIPAllocate.pm - admin frontend of criticality, impact and priority
+# Kernel/Modules/AdminITSMCIPAllocate.pm - admin frontend of criticality, impact and priority
 # Copyright (C) 2003-2007 OTRS GmbH, http://otrs.com/
 # --
-# $Id: AdminCIPAllocate.pm,v 1.1 2007-02-24 13:22:38 mh Exp $
+# $Id: AdminITSMCIPAllocate.pm,v 1.1 2007-03-20 11:50:08 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 # --
 
-package Kernel::Modules::AdminCIPAllocate;
+package Kernel::Modules::AdminITSMCIPAllocate;
 
 use strict;
 use Kernel::System::Valid;
 use Kernel::System::Priority;
 use Kernel::System::GeneralCatalog;
-use Kernel::System::CIPAllocate;
+use Kernel::System::ITSMCIPAllocate;
 
 use vars qw($VERSION);
 $VERSION = '$Revision: 1.1 $';
@@ -43,7 +43,7 @@ sub new {
     $Self->{ValidObject} = Kernel::System::Valid->new(%Param);
     $Self->{PriorityObject} = Kernel::System::Priority->new(%Param);
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
-    $Self->{CIPAllocateObject} = Kernel::System::CIPAllocate->new(%Param);
+    $Self->{CIPAllocateObject} = Kernel::System::ITSMCIPAllocate->new(%Param);
 
     return $Self;
 }
@@ -85,7 +85,6 @@ sub Run {
             AllocateData => $AllocateData,
             UserID => 1,
         );
-
         return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}");
     }
     # ------------------------------------------------------------ #
@@ -155,9 +154,9 @@ sub Run {
                 );
             }
         }
-
+        # start template output
         $Output .= $Self->{LayoutObject}->Output(
-            TemplateFile => 'AdminCIPAllocate',
+            TemplateFile => 'AdminITSMCIPAllocate',
             Data => \%Param,
         );
         $Output .= $Self->{LayoutObject}->Footer();
