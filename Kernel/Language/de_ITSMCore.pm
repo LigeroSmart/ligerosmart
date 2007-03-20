@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMCore.pm - the german translation of ITSMCore
 # Copyright (C) 2003-2007 OTRS GmbH, http://otrs.com/
 # --
-# $Id: de_ITSMCore.pm,v 1.2 2007-02-24 13:21:50 mh Exp $
+# $Id: de_ITSMCore.pm,v 1.3 2007-03-20 11:49:42 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -27,8 +27,6 @@ sub Data {
     $Self->{Translation}->{'Criticality <-> Impact <-> Priority'} = 'Kritikalität <-> Auswirkung <-> Priorität';
     $Self->{Translation}->{'Priority Allocation'} = 'Prioritätszuweisung';
     $Self->{Translation}->{'allocate'} = 'zuordnen';
-
-    $Self->{Translation}->{''} = '';
 }
 
 1;

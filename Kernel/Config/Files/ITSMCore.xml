@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMCore.xml,v 1.3 2007-03-15 14:27:31 mh Exp $</CVS>
+    <CVS>$Id: ITSMCore.xml,v 1.4 2007-03-20 11:49:42 mh Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminTicketPriority" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminTicketPriority configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminTicketPriority Konfiguration im Admin-Bereich.</Description>
@@ -21,9 +21,9 @@
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="Frontend::Module###AdminCIPAllocate" Required="0" Valid="1">
-        <Description Lang="en">Frontend module registration for the AdminCIPAllocate configuration in the admin area.</Description>
-        <Description Lang="de">Frontendmodul-Registration der AdminCIPAllocate Konfiguration im Admin-Bereich.</Description>
+    <ConfigItem Name="Frontend::Module###AdminITSMCIPAllocate" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.</Description>
+        <Description Lang="de">Frontendmodul-Registration der AdminITSMCIPAllocate Konfiguration im Admin-Bereich.</Description>
         <Group>ITSM</Group>
         <SubGroup>Frontend::Admin::ModuleRegistration</SubGroup>
         <Setting>
