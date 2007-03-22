@@ -2,7 +2,7 @@
 # Kernel/System/ITSMCIPAllocate.pm - all criticality, impact and priority allocation functions
 # Copyright (C) 2003-2007 OTRS GmbH, http://otrs.com/
 # --
-# $Id: ITSMCIPAllocate.pm,v 1.1 2007-03-20 11:50:08 mh Exp $
+# $Id: ITSMCIPAllocate.pm,v 1.2 2007-03-22 13:27:10 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -14,7 +14,7 @@ package Kernel::System::ITSMCIPAllocate;
 use strict;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.1 $';
+$VERSION = '$Revision: 1.2 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -167,6 +167,44 @@ sub AllocateUpdate {
     return $Return;
 }
 
+=item PriorityAllocationGet()
+
+return the priority id of a criticality and an impact
+
+    my $PriorityID = $CIPAllocateObject->PriorityAllocationGet(
+        CriticalityID => 321,
+        ImpactID => 123,
+    );
+
+=cut
+
+sub PriorityAllocationGet {
+    my $Self = shift;
+    my %Param = @_;
+    # check needed stuff
+    foreach (qw(CriticalityID ImpactID)) {
+        if (!$Param{$_}) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
+    }
+    # quote
+    foreach (qw(CriticalityID ImpactID)) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
+    }
+    # get priority id from db
+    my $PriorityID;
+    $Self->{DBObject}->Prepare(
+        SQL => "SELECT priority_id FROM cip_allocate ".
+            "WHERE criticality_id = $Param{CriticalityID} AND impact_id = $Param{ImpactID}",
+        Limit => 1,
+    );
+    while (my @Row = $Self->{DBObject}->FetchrowArray()) {
+        $PriorityID = $Row[0];
+    }
+    return $PriorityID;
+}
+
 1;
 
 =back
@@ -183,6 +221,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2007-03-20 11:50:08 $
+$Revision: 1.2 $ $Date: 2007-03-22 13:27:10 $
 
 =cut
