@@ -1,213 +1,213 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-  <CVS>$Id: FAQ.sopm,v 1.19 2007-01-22 14:40:44 rk Exp $</CVS>
-  <Name>FAQ</Name>
-  <Version>0.0.0</Version>
-  <Framework>2.1.x</Framework>
-  <Vendor>OTRS GmbH</Vendor>
-  <URL>http://otrs.org/</URL>
-  <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
-  <ChangeLog>2005-12-04 New package</ChangeLog>
-  <Description Lang="en">A FAQ/knowledge base.</Description>
-  <Description Lang="de">Eine FAQ-/Wissensdatenbank.</Description>
-  <Filelist>
-    <File Permission="644" Location="Kernel/Config/Files/FAQ.xml"></File>
-    <File Permission="644" Location="Kernel/Language/de_FAQ.pm"></File>
-    <File Permission="644" Location="Kernel/Language/en_FAQ.pm"></File>
-    <File Permission="644" Location="Kernel/Modules/FAQ.pm"></File>
-    <File Permission="644" Location="Kernel/Modules/AgentFAQ.pm"></File>
-    <File Permission="644" Location="Kernel/Modules/CustomerFAQ.pm"></File>
-    <File Permission="644" Location="Kernel/Modules/PublicFAQ.pm"></File>
-    <File Permission="644" Location="Kernel/Output/HTML/LayoutFAQ.pm"></File>
-    <File Permission="644" Location="Kernel/Output/HTML/Standard/FAQ.dtl"></File>
-    <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQ.dtl"></File>
-    <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQ.dtl"></File>
-    <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQ.dtl"></File>
-    <File Permission="644" Location="Kernel/System/FAQ.pm"></File>
-    <File Permission="644" Location="Kernel/System/LinkObject/FAQ.pm"></File>
-    <File Permission="644" Location="scripts/test/FAQ.t"></File>
-    <File Permission="644" Location="var/httpd/htdocs/images/Standard/faq-category-small.png"></File>
-    <File Permission="644" Location="var/httpd/htdocs/images/Standard/faq-item-small.png"></File>
-    <File Permission="644" Location="var/httpd/htdocs/images/Standard/language.png"></File>
-    <File Permission="644" Location="var/httpd/htdocs/images/Standard/category.png"></File>
-    <File Permission="755" Location="bin/cgi-bin/faq.pl"></File>
-    <File Permission="755" Location="bin/fcgi-bin/faq.fpl"></File>
-  </Filelist>
-  <CodeInstall>
-    # add faq group
-    require Kernel::System::Group;
-    $Self-&gt;{GroupObject} = Kernel::System::Group-&gt;new(%{$Self});
-    $Self-&gt;{GroupObject}-&gt;GroupAdd(
-        Name =&gt; 'faq',
-        Comment =&gt; 'faq database users',
-        ValidID =&gt; 1,
-        UserID =&gt; 1,
-    );
-    $Self-&gt;{GroupObject}-&gt;GroupAdd(
-        Name =&gt; 'faq_admin',
-        Comment =&gt; 'faq admin users',
-        ValidID =&gt; 1,
-        UserID =&gt; 1,
-    );
-  </CodeInstall>
-  <DatabaseInstall>
-    <Table Name="faq_language">
-      <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="SMALLINT"/>
-      <Column Name="name" Required="true" Size="200" Type="VARCHAR"/>
-      <Unique>
-        <UniqueColumn Name="name"/>
-      </Unique>
-    </Table>
-    <Insert Table="faq_language">
-        <Data Key="name" Value="en" Type="Quote"/>
-    </Insert>
-    <Insert Table="faq_language">
-        <Data Key="name" Value="de" Type="Quote"/>
-    </Insert>
-    <Table Name="faq_state_type">
-      <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="SMALLINT"/>
-      <Column Name="name" Required="true" Size="200" Type="VARCHAR"/>
-      <Unique>
-        <UniqueColumn Name="name"/>
-      </Unique>
-    </Table>
-    <Insert Table="faq_state_type">
-        <Data Key="name" Value="internal" Type="Quote"/>
-    </Insert>
-    <Insert Table="faq_state_type">
-        <Data Key="name" Value="external" Type="Quote"/>
-    </Insert>
-    <Insert Table="faq_state_type">
-        <Data Key="name" Value="public" Type="Quote"/>
-    </Insert>
-    <Table Name="faq_state">
-      <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="SMALLINT"/>
-      <Column Name="name" Required="true" Size="200" Type="VARCHAR"/>
-      <Column Name="type_id" Required="true" Type="INTEGER"/>
-      <Unique>
-        <UniqueColumn Name="name"/>
-      </Unique>
-    </Table>
-    <Insert Table="faq_state">
-        <Data Key="name" Value="internal (agent)" Type="Quote"/>
-        <Data Key="type_id" Value="1"/>
-    </Insert>
-    <Insert Table="faq_state">
-        <Data Key="name" Value="external (customer)" Type="Quote"/>
-        <Data Key="type_id" Value="2"/>
-    </Insert>
-    <Insert Table="faq_state">
-        <Data Key="name" Value="public (all)" Type="Quote"/>
-        <Data Key="type_id" Value="3"/>
-    </Insert>
-    <Table Name="faq_category">
-      <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>
-      <Column Name="parent_id" Required="true" Type="INTEGER"/>
-      <Column Name="name" Required="true" Size="200" Type="VARCHAR"/>
-      <Column Name="comments" Required="false" Size="200" Type="VARCHAR"/>
-      <Column Name="valid_id" Required="true" Type="SMALLINT"/>
-      <Column Name="created" Required="true" Type="DATE"/>
-      <Column Name="created_by" Required="true" Type="INTEGER"/>
-      <Column Name="changed" Required="true" Type="DATE"/>
-      <Column Name="changed_by" Required="true" Type="INTEGER"/>
-    </Table>
-    <Insert Table="faq_category">
-        <Data Key="parent_id" Value="0"/>
-        <Data Key="name" Value="Misc" Type="Quote"/>
-        <Data Key="comments" Value="Misc Comment" Type="Quote"/>
-        <Data Key="valid_id" Value="1"/>
-        <Data Key="created" Value="current_timestamp"/>
-        <Data Key="created_by" Value="1"/>
-        <Data Key="changed" Value="current_timestamp"/>
-        <Data Key="changed_by" Value="1"/>
-    </Insert>
-    <Table Name="faq_category_group">
-      <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>
-      <Column Name="category_id" Required="true" Size="200" Type="INTEGER"/>
-      <Column Name="group_id" Required="true" Type="INTEGER"/>
-      <Column Name="created" Required="false" Type="DATE"/>
-      <Column Name="created_by" Required="false" Type="INTEGER"/>
-      <Column Name="changed" Required="false" Type="DATE"/>
-      <Column Name="changed_by" Required="false" Type="INTEGER"/>
-    </Table>
-    <Table Name="faq_item">
-      <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>
-      <Column Name="f_number" Required="true" Size="200" Type="VARCHAR"/>
-      <Column Name="f_subject" Required="false" Size="200" Type="VARCHAR"/>
-      <Column Name="f_name" Required="true" Size="200" Type="VARCHAR"/>
-      <Column Name="f_language_id" Required="true" Type="SMALLINT"/>
-      <Column Name="state_id" Required="true" Type="SMALLINT"/>
-      <Column Name="category_id" Required="true" Type="SMALLINT"/>
-      <Column Name="f_keywords" Required="false" Size="20000" Type="VARCHAR"/>
-      <Column Name="f_field1" Required="false" Size="20000" Type="VARCHAR"/>
-      <Column Name="f_field2" Required="false" Size="20000" Type="VARCHAR"/>
-      <Column Name="f_field3" Required="false" Size="20000" Type="VARCHAR"/>
-      <Column Name="f_field4" Required="false" Size="20000" Type="VARCHAR"/>
-      <Column Name="f_field5" Required="false" Size="20000" Type="VARCHAR"/>
-      <Column Name="f_field6" Required="false" Size="20000" Type="VARCHAR"/>
-      <Column Name="free_key1" Required="false" Size="80" Type="VARCHAR"/>
-      <Column Name="free_value1" Required="false" Size="200" Type="VARCHAR"/>
-      <Column Name="free_key2" Required="false" Size="80" Type="VARCHAR"/>
-      <Column Name="free_value2" Required="false" Size="200" Type="VARCHAR"/>
-      <Column Name="free_key3" Required="false" Size="80" Type="VARCHAR"/>
-      <Column Name="free_value3" Required="false" Size="200" Type="VARCHAR"/>
-      <Column Name="free_key4" Required="false" Size="80" Type="VARCHAR"/>
-      <Column Name="free_value4" Required="false" Size="200" Type="VARCHAR"/>
-      <Column Name="created" Required="true" Type="DATE"/>
-      <Column Name="created_by" Required="true" Type="INTEGER"/>
-      <Column Name="changed" Required="true" Type="DATE"/>
-      <Column Name="changed_by" Required="true" Type="INTEGER"/>
-    </Table>
-    <Table Name="faq_history">
-      <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>
-      <Column Name="name" Required="true" Size="200" Type="VARCHAR"/>
-      <Column Name="item_id" Required="true" Type="INTEGER"/>
-      <Column Name="created" Required="true" Type="DATE"/>
-      <Column Name="created_by" Required="true" Type="INTEGER"/>
-      <Column Name="changed" Required="true" Type="DATE"/>
-      <Column Name="changed_by" Required="true" Type="INTEGER"/>
-    </Table>
-    <Insert Table="faq_history">
-        <Data Key="name" Value="Created" Type="Quote"/>
-        <Data Key="item_id" Value="1"/>
-        <Data Key="created" Value="current_timestamp"/>
-        <Data Key="created_by" Value="1"/>
-        <Data Key="changed" Value="current_timestamp"/>
-        <Data Key="changed_by" Value="1"/>
-    </Insert>
-    <Table Name="faq_attachment">
-      <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
-      <Column Name="faq_id" Required="true" Type="BIGINT"/>
-      <Column Name="filename" Required="false" Size="250" Type="VARCHAR"/>
-      <Column Name="content_size" Required="false" Size="30" Type="VARCHAR"/>
-      <Column Name="content_type" Required="false" Size="250" Type="VARCHAR"/>
-      <Column Name="content" Required="true" Type="LONGBLOB"/>
-      <Column Name="created" Required="true" Type="DATE"/>
-      <Column Name="created_by" Required="true" Type="INTEGER"/>
-      <Column Name="changed" Required="true" Type="DATE"/>
-      <Column Name="changed_by" Required="true" Type="INTEGER"/>
-      <Index Name="faq_id">
-        <IndexColumn Name="faq_id"/>
-      </Index>
-    </Table>
-    <Table Name="faq_voting">
-      <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
-      <Column Name="created_by" Required="true" Size="200" Type="VARCHAR"/>
-      <Column Name="item_id" Required="true" Type="INTEGER"/>
-      <Column Name="interface" Required="false" Size="80" Type="VARCHAR"/>
-      <Column Name="ip" Required="false" Size="50" Type="VARCHAR"/>
-      <Column Name="rate" Required="true" Type="INTEGER"/>
-      <Column Name="created" Required="false" Type="DATE"/>
-    </Table>
-  </DatabaseInstall>
-  <DatabaseUninstall>
-    <TableDrop Name="faq_category"/>
-    <TableDrop Name="faq_item"/>
-    <TableDrop Name="faq_language"/>
-    <TableDrop Name="faq_history"/>
-    <TableDrop Name="faq_state"/>
-    <TableDrop Name="faq_state_type"/>
-    <TableDrop Name="faq_attachment"/>
-    <TableDrop Name="faq_voting"/>
-  </DatabaseUninstall>
+    <CVS>$Id: FAQ.sopm,v 1.20 2007-04-10 10:54:25 rk Exp $</CVS>
+    <Name>FAQ</Name>
+    <Version>0.0.0</Version>
+    <Framework>2.1.x</Framework>
+    <Vendor>OTRS GmbH</Vendor>
+    <URL>http://otrs.org/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <ChangeLog>2005-12-04 New package</ChangeLog>
+    <Description Lang="en">A FAQ/knowledge base.</Description>
+    <Description Lang="de">Eine FAQ-/Wissensdatenbank.</Description>
+    <Filelist>
+        <File Permission="644" Location="Kernel/Config/Files/FAQ.xml"></File>
+        <File Permission="644" Location="Kernel/Language/de_FAQ.pm"></File>
+        <File Permission="644" Location="Kernel/Language/en_FAQ.pm"></File>
+        <File Permission="644" Location="Kernel/Modules/FAQ.pm"></File>
+        <File Permission="644" Location="Kernel/Modules/AgentFAQ.pm"></File>
+        <File Permission="644" Location="Kernel/Modules/CustomerFAQ.pm"></File>
+        <File Permission="644" Location="Kernel/Modules/PublicFAQ.pm"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/LayoutFAQ.pm"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/FAQ.dtl"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQ.dtl"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQ.dtl"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQ.dtl"></File>
+        <File Permission="644" Location="Kernel/System/FAQ.pm"></File>
+        <File Permission="644" Location="Kernel/System/LinkObject/FAQ.pm"></File>
+        <File Permission="644" Location="scripts/test/FAQ.t"></File>
+        <File Permission="644" Location="var/httpd/htdocs/images/Standard/faq-category-small.png"></File>
+        <File Permission="644" Location="var/httpd/htdocs/images/Standard/faq-item-small.png"></File>
+        <File Permission="644" Location="var/httpd/htdocs/images/Standard/language.png"></File>
+        <File Permission="644" Location="var/httpd/htdocs/images/Standard/category.png"></File>
+        <File Permission="755" Location="bin/cgi-bin/faq.pl"></File>
+        <File Permission="755" Location="bin/fcgi-bin/faq.fpl"></File>
+    </Filelist>
+    <CodeInstall>
+        # add faq group
+        require Kernel::System::Group;
+        $Self-&gt;{GroupObject} = Kernel::System::Group-&gt;new(%{$Self});
+        $Self-&gt;{GroupObject}-&gt;GroupAdd(
+            Name =&gt; 'faq',
+            Comment =&gt; 'faq database users',
+            ValidID =&gt; 1,
+            UserID =&gt; 1,
+        );
+        $Self-&gt;{GroupObject}-&gt;GroupAdd(
+            Name =&gt; 'faq_admin',
+            Comment =&gt; 'faq admin users',
+            ValidID =&gt; 1,
+            UserID =&gt; 1,
+        );
+    </CodeInstall>
+    <DatabaseInstall>
+        <TableCreate Name="faq_language">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="SMALLINT"/>
+            <Column Name="name" Required="true" Size="200" Type="VARCHAR"/>
+            <Unique>
+                <UniqueColumn Name="name"/>
+            </Unique>
+        </TableCreate>
+        <Insert Table="faq_language">
+            <Data Key="name" Value="en" Type="Quote"/>
+        </Insert>
+        <Insert Table="faq_language">
+            <Data Key="name" Value="de" Type="Quote"/>
+        </Insert>
+        <TableCreate Name="faq_state_type">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="SMALLINT"/>
+            <Column Name="name" Required="true" Size="200" Type="VARCHAR"/>
+            <Unique>
+                <UniqueColumn Name="name"/>
+            </Unique>
+        </TableCreate>
+        <Insert Table="faq_state_type">
+            <Data Key="name" Value="internal" Type="Quote"/>
+        </Insert>
+        <Insert Table="faq_state_type">
+            <Data Key="name" Value="external" Type="Quote"/>
+        </Insert>
+        <Insert Table="faq_state_type">
+            <Data Key="name" Value="public" Type="Quote"/>
+        </Insert>
+        <TableCreate Name="faq_state">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="SMALLINT"/>
+            <Column Name="name" Required="true" Size="200" Type="VARCHAR"/>
+            <Column Name="type_id" Required="true" Type="INTEGER"/>
+            <Unique>
+                <UniqueColumn Name="name"/>
+            </Unique>
+        </TableCreate>
+        <Insert Table="faq_state">
+            <Data Key="name" Value="internal (agent)" Type="Quote"/>
+            <Data Key="type_id" Value="1"/>
+        </Insert>
+        <Insert Table="faq_state">
+            <Data Key="name" Value="external (customer)" Type="Quote"/>
+            <Data Key="type_id" Value="2"/>
+        </Insert>
+        <Insert Table="faq_state">
+            <Data Key="name" Value="public (all)" Type="Quote"/>
+            <Data Key="type_id" Value="3"/>
+        </Insert>
+        <TableCreate Name="faq_category">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>
+            <Column Name="parent_id" Required="true" Type="INTEGER"/>
+            <Column Name="name" Required="true" Size="200" Type="VARCHAR"/>
+            <Column Name="comments" Required="false" Size="200" Type="VARCHAR"/>
+            <Column Name="valid_id" Required="true" Type="SMALLINT"/>
+            <Column Name="created" Required="true" Type="DATE"/>
+            <Column Name="created_by" Required="true" Type="INTEGER"/>
+            <Column Name="changed" Required="true" Type="DATE"/>
+            <Column Name="changed_by" Required="true" Type="INTEGER"/>
+        </TableCreate>
+        <Insert Table="faq_category">
+            <Data Key="name" Value="Misc" Type="Quote"/>
+            <Data Key="comments" Value="Misc Comment" Type="Quote"/>
+            <Data Key="valid_id" Value="1"/>
+            <Data Key="created" Value="current_timestamp"/>
+            <Data Key="created_by" Value="1"/>
+            <Data Key="changed" Value="current_timestamp"/>
+            <Data Key="changed_by" Value="1"/>
+            <Data Key="parent_id" Value="0"/>
+        </Insert>
+        <TableCreate Name="faq_category_group">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>
+            <Column Name="category_id" Required="true" Size="200" Type="INTEGER"/>
+            <Column Name="group_id" Required="true" Type="INTEGER"/>
+            <Column Name="created" Required="false" Type="DATE"/>
+            <Column Name="created_by" Required="false" Type="INTEGER"/>
+            <Column Name="changed" Required="false" Type="DATE"/>
+            <Column Name="changed_by" Required="false" Type="INTEGER"/>
+        </TableCreate>
+        <TableCreate Name="faq_item">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>
+            <Column Name="f_number" Required="true" Size="200" Type="VARCHAR"/>
+            <Column Name="f_subject" Required="false" Size="200" Type="VARCHAR"/>
+            <Column Name="f_name" Required="true" Size="200" Type="VARCHAR"/>
+            <Column Name="f_language_id" Required="true" Type="SMALLINT"/>
+            <Column Name="state_id" Required="true" Type="SMALLINT"/>
+            <Column Name="category_id" Required="true" Type="SMALLINT"/>
+            <Column Name="f_keywords" Required="false" Size="20000" Type="VARCHAR"/>
+            <Column Name="f_field1" Required="false" Size="20000" Type="VARCHAR"/>
+            <Column Name="f_field2" Required="false" Size="20000" Type="VARCHAR"/>
+            <Column Name="f_field3" Required="false" Size="20000" Type="VARCHAR"/>
+            <Column Name="f_field4" Required="false" Size="20000" Type="VARCHAR"/>
+            <Column Name="f_field5" Required="false" Size="20000" Type="VARCHAR"/>
+            <Column Name="f_field6" Required="false" Size="20000" Type="VARCHAR"/>
+            <Column Name="free_key1" Required="false" Size="80" Type="VARCHAR"/>
+            <Column Name="free_value1" Required="false" Size="200" Type="VARCHAR"/>
+            <Column Name="free_key2" Required="false" Size="80" Type="VARCHAR"/>
+            <Column Name="free_value2" Required="false" Size="200" Type="VARCHAR"/>
+            <Column Name="free_key3" Required="false" Size="80" Type="VARCHAR"/>
+            <Column Name="free_value3" Required="false" Size="200" Type="VARCHAR"/>
+            <Column Name="free_key4" Required="false" Size="80" Type="VARCHAR"/>
+            <Column Name="free_value4" Required="false" Size="200" Type="VARCHAR"/>
+            <Column Name="created" Required="true" Type="DATE"/>
+            <Column Name="created_by" Required="true" Type="INTEGER"/>
+            <Column Name="changed" Required="true" Type="DATE"/>
+            <Column Name="changed_by" Required="true" Type="INTEGER"/>
+        </TableCreate>
+        <TableCreate Name="faq_history">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>
+            <Column Name="name" Required="true" Size="200" Type="VARCHAR"/>
+            <Column Name="item_id" Required="true" Type="INTEGER"/>
+            <Column Name="created" Required="true" Type="DATE"/>
+            <Column Name="created_by" Required="true" Type="INTEGER"/>
+            <Column Name="changed" Required="true" Type="DATE"/>
+            <Column Name="changed_by" Required="true" Type="INTEGER"/>
+        </TableCreate>
+        <Insert Table="faq_history">
+            <Data Key="name" Value="Created" Type="Quote"/>
+            <Data Key="item_id" Value="1"/>
+            <Data Key="created" Value="current_timestamp"/>
+            <Data Key="created_by" Value="1"/>
+            <Data Key="changed" Value="current_timestamp"/>
+            <Data Key="changed_by" Value="1"/>
+        </Insert>
+        <TableCreate Name="faq_attachment">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
+            <Column Name="faq_id" Required="true" Type="BIGINT"/>
+            <Column Name="filename" Required="false" Size="250" Type="VARCHAR"/>
+            <Column Name="content_size" Required="false" Size="30" Type="VARCHAR"/>
+            <Column Name="content_type" Required="false" Size="250" Type="VARCHAR"/>
+            <Column Name="content" Required="true" Type="LONGBLOB"/>
+            <Column Name="created" Required="true" Type="DATE"/>
+            <Column Name="created_by" Required="true" Type="INTEGER"/>
+            <Column Name="changed" Required="true" Type="DATE"/>
+            <Column Name="changed_by" Required="true" Type="INTEGER"/>
+            <Index Name="faq_id">
+                <IndexColumn Name="faq_id"/>
+            </Index>
+        </TableCreate>
+        <TableCreate Name="faq_voting">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
+            <Column Name="created_by" Required="true" Size="200" Type="VARCHAR"/>
+            <Column Name="item_id" Required="true" Type="INTEGER"/>
+            <Column Name="interface" Required="false" Size="80" Type="VARCHAR"/>
+            <Column Name="ip" Required="false" Size="50" Type="VARCHAR"/>
+            <Column Name="rate" Required="true" Type="INTEGER"/>
+            <Column Name="created" Required="false" Type="DATE"/>
+        </TableCreate>
+    </DatabaseInstall>
+    <DatabaseUninstall>
+        <TableDrop Name="faq_category"/>
+        <TableDrop Name="faq_item"/>
+        <TableDrop Name="faq_language"/>
+        <TableDrop Name="faq_history"/>
+        <TableDrop Name="faq_state"/>
+        <TableDrop Name="faq_state_type"/>
+        <TableDrop Name="faq_attachment"/>
+        <TableDrop Name="faq_voting"/>
+    </DatabaseUninstall>
 </otrs_package>

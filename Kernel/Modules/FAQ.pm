@@ -2,7 +2,7 @@
 # Kernel/Modules/FAQ.pm - faq module
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.9 2007-01-25 15:21:47 rk Exp $
+# $Id: FAQ.pm,v 1.10 2007-04-10 10:54:25 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use Kernel::System::FAQ;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.9 $';
+$VERSION = '$Revision: 1.10 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -201,8 +201,8 @@ sub _GetFAQPath {
     $Self->{LayoutObject}->Block(
         Name => 'FAQPathCategoryElement',
         Data => { 'Name' => $Self->{ConfigObject}->Get('FAQ::Default::RootCategoryName'),
-                  'CategoryID' => '0'
-                },
+            'CategoryID' => '0'
+        },
     );
 
     if($Self->{ConfigObject}->Get('FAQ::Explorer::Path::Show')) {
@@ -508,7 +508,18 @@ sub GetItemView {
     # html quoting
     foreach my $Key (qw (Field1 Field2 Field3 Field4 Field5 Field6)) {
         if ($Self->{ConfigObject}->Get('FAQ::Item::HTML')) {
-            $ItemData{$Key} =~ s/\n/\<br\>/g;
+            my @Array = split /pre>/, $ItemData{$Key};
+            my $Text = '';
+            foreach (@Array) {
+                if ($_ =~ /(.*)\<\/$/) {
+                    $Text .= 'pre>'.$_.'pre>';
+                }
+                else {
+                    $_ =~ s/\n/\<br\>/g;
+                    $Text .= $_;
+                }
+            }
+            $ItemData{$Key} = $Text;
         }
         else {
             $ItemData{$Key} = $Self->{LayoutObject}->Ascii2Html(
@@ -708,8 +719,8 @@ sub GetItemPrint {
     }
     # add article
     $Self->{LayoutObject}->Block(
-         Name => 'Print',
-         Data => \%ItemData,
+        Name => 'Print',
+        Data => \%ItemData,
     );
     # fields
     $Self->_GetItemFields(

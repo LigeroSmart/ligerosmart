@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
+    <CVS>$Id: FAQ.xml,v 1.6 2007-04-10 10:54:25 rk Exp $</CVS>
     <ConfigItem Name="Ticket::Frontend::NoteTypes" Required="1" Valid="1">
         <Description Lang="en">Specify the different note types, that you want to use in your system.</Description>
         <Description Lang="de">Hier k?nen die verschiedenen Notiz-Typen festgelegt werden, die innerhalb des Systems verwendet werden sollen.</Description>
@@ -22,7 +23,6 @@
             <String>FAQ</String>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="FAQ::Default::RootCategoryComment" Required="1" Valid="1">
         <Description Lang="en">default category name.</Description>
         <Description Lang="de">Root Kategorie Name.</Description>
@@ -32,7 +32,6 @@
             <String>default comment</String>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="FAQ::Item::Voting::Rates" Required="1" Valid="1">
         <Description Lang="en">Rates for voting. Key must be in procent.</Description>
         <Description Lang="de">Gewichtung für die Bewertung. Der Key muss in Prozent angegeben werden.</Description>
@@ -48,8 +47,6 @@
             </Hash>
         </Setting>
     </ConfigItem>
-
-
     <ConfigItem Name="FAQ::Item::Voting::Show" Required="1" Valid="1">
         <Description Lang="en">show voting</Description>
         <Description Lang="de">Interfaces in denen das Voting Feature angezeigt werden soll.</Description>
@@ -62,7 +59,6 @@
             </Hash>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="FAQ::Item::Voting::QuestionLangKey" Required="1" Valid="1">
         <Description Lang="en">languagekey which is defined in the langauge file *_FAQ.pm</Description>
         <Description Lang="de">LanguageKey für die Frage bei der Artikelbewertung. Wird in den Sprachfiles definiert.</Description>
@@ -72,7 +68,6 @@
             <String>ArticleVotingQuestion</String>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="FAQ::Explorer::Path::Show" Required="1" Valid="1">
         <Description Lang="en">show FAQ path yes/no</Description>
         <Description Lang="de">FAQ Pfad anzeigen ja/nein</Description>
@@ -85,7 +80,6 @@
             </Option>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="FAQ::Explorer::ItemList::VotingResultDecimalPlaces" Required="1" Valid="1">
         <Description Lang="en">decimal places of the voting result</Description>
         <Description Lang="de">Dezimalstellen des Ergebnises bei der Artikelbewertung.</Description>
@@ -95,7 +89,6 @@
             <String>2</String>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="FAQ::Explorer::ItemList::VotingResultColors" Required="1" Valid="1">
         <Description Lang="en">css color for the voting result</Description>
         <Description Lang="de">Farben für die Anzeige des Ergebnises.</Description>
@@ -109,7 +102,6 @@
             </Hash>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="FAQ::Explorer::Path::Seperator" Required="1" Valid="1">
         <Description Lang="en">FAQ path seperator</Description>
         <Description Lang="de">Trennzeichen im FAQ Pfad.</Description>
@@ -119,7 +111,6 @@
             <String>»</String>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="FAQ::Category::Icon" Required="1" Valid="1">
         <Description Lang="en">category icon</Description>
         <Description Lang="de">Kategorie Icon in der FAQ</Description>
@@ -129,7 +120,6 @@
             <String>faq-category-small.png</String>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="FAQ::Item::Icon" Required="1" Valid="1">
         <Description Lang="en">item icon</Description>
         <Description Lang="de">Artikel Icon in der FAQ</Description>
@@ -139,7 +129,6 @@
             <String>faq-item-small.png</String>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="FAQ::Explorer::QuickSearch::Show" Required="1" Valid="1">
         <Description Lang="en">show quicksearch</Description>
         <Description Lang="de">Interfaces in denen das QuickSearch Feature angezeigt wird.</Description>
@@ -153,8 +142,6 @@
             </Hash>
         </Setting>
     </ConfigItem>
-
-
     <ConfigItem Name="FAQ::Explorer::QuickSearch::ShowSubCategoryItems" Required="1" Valid="1">
         <Description Lang="en">show items of subcategories</Description>
         <Description Lang="de">Artikel aus Subkategorien anzeigen ja/nein</Description>
@@ -167,7 +154,6 @@
             </Option>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="FAQ::Explorer::LastChange::Show" Required="1" Valid="1">
         <Description Lang="en">show last change items</Description>
         <Description Lang="de">Interfaces in denen das LastChange Feature angezeigt werden soll.</Description>
@@ -181,8 +167,6 @@
             </Hash>
         </Setting>
     </ConfigItem>
-
-
     <ConfigItem Name="FAQ::Explorer::LastChange::ShowSubCategoryItems" Required="1" Valid="1">
         <Description Lang="en">show items of subcategories</Description>
         <Description Lang="de">Artikel aus Subkategorien anzeigen ja/nein</Description>
@@ -195,7 +179,6 @@
             </Option>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="FAQ::Explorer::LastChange::Limit" Required="1" Valid="1">
         <Description Lang="en">number of items</Description>
         <Description Lang="de">Anzahl der zu anzeigenden Artikel</Description>
@@ -205,7 +188,6 @@
             <String>3</String>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="FAQ::Explorer::LastCreate::Show" Required="1" Valid="1">
         <Description Lang="en">show last create items</Description>
         <Description Lang="de">Interfaces in denen das LastCreate Feature angezeigt werden soll.</Description>
@@ -219,7 +201,6 @@
             </Hash>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="FAQ::Explorer::LastCreate::ShowSubCategoryItems" Required="1" Valid="1">
         <Description Lang="en">show items of subcategories</Description>
         <Description Lang="de">Artikel aus Subkategorien anzeigen ja/nein</Description>
@@ -232,7 +213,6 @@
             </Option>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="FAQ::Explorer::LastCreate::Limit" Required="1" Valid="1">
         <Description Lang="en">limit of items</Description>
         <Description Lang="de">Anzahl der zu anzeigenden Artikel</Description>
@@ -242,7 +222,6 @@
             <String>3</String>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="FAQ::FAQHook" Required="1" Valid="1">
         <Description Lang="en">Default hook for FAQ.</Description>
         <Description Lang="de">Standard Bezeichner für eine FAQ.</Description>
@@ -252,7 +231,6 @@
             <String>FAQ#</String>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="FAQ::Default::State" Required="1" Valid="1">
         <Description Lang="en">Default state for FAQ entry.</Description>
         <Description Lang="de">Standard Status eines  FAQ-Eintrags.</Description>
@@ -262,7 +240,6 @@
             <String>internal (agent)</String>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="FAQ::Item::Field1" Required="1" Valid="1">
         <Description Lang="en">Definition of FAQ item free text field.</Description>
         <Description Lang="de">Definition der freien Textfelder.</Description>
@@ -276,7 +253,6 @@
             </Hash>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="FAQ::Item::Field2" Required="1" Valid="1">
         <Description Lang="en">Definition of FAQ item free text field.</Description>
         <Description Lang="de">Definition der freien Textfelder.</Description>
@@ -290,7 +266,6 @@
             </Hash>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="FAQ::Item::Field3" Required="1" Valid="1">
         <Description Lang="en">Definition of FAQ item free text field.</Description>
         <Description Lang="de">Definition der freien Textfelder.</Description>
@@ -304,7 +279,6 @@
             </Hash>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="FAQ::Item::Field4" Required="1" Valid="1">
         <Description Lang="en">Definition of FAQ item free text field.</Description>
         <Description Lang="de">Definition der freien Textfelder.</Description>
@@ -318,7 +292,6 @@
             </Hash>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="FAQ::Item::Field5" Required="1" Valid="1">
         <Description Lang="en">Definition of FAQ item free text field.</Description>
         <Description Lang="de">Definition der freien Textfelder.</Description>
@@ -332,7 +305,6 @@
             </Hash>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="FAQ::Item::Field6" Required="1" Valid="1">
         <Description Lang="en">Definition of FAQ item free text field.</Description>
         <Description Lang="de">Definition der freien Textfelder.</Description>
@@ -346,7 +318,6 @@
             </Hash>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="LinkObject###FAQ" Required="1" Valid="1">
         <Description Lang="en">Link object settings for FAQ. Objects that are known by the system.</Description>
         <Description Lang="de">Link Objekt Einstellungen für die FAQ. Objekte, die dem System bekannt sind.</Description>
