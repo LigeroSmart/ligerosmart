@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMCore.xml,v 1.4 2007-03-20 11:49:42 mh Exp $</CVS>
+    <CVS>$Id: ITSMCore.xml,v 1.5 2007-04-16 10:50:37 mh Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminTicketPriority" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminTicketPriority configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminTicketPriority Konfiguration im Admin-Bereich.</Description>
@@ -39,6 +39,66 @@
                     <Prio>430</Prio>
                 </NavBarModule>
             </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="LinkObject2::Type###RelevantTo" Required="0" Valid="1">
+        <Description Lang="en">Link type.</Description>
+        <Description Lang="de">Link Typ.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::LinkObject2::Types</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="NormalName">Relevant to</Item>
+                <Item Key="ReverseName">Relevant to</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="LinkObject2::Type###Includes" Required="0" Valid="1">
+        <Description Lang="en">Link type.</Description>
+        <Description Lang="de">Link Typ.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::LinkObject2::Types</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="NormalName">Includes</Item>
+                <Item Key="ReverseName">Part of</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="LinkObject2::Type###DependsOn" Required="0" Valid="1">
+        <Description Lang="en">Link type.</Description>
+        <Description Lang="de">Link Typ.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::LinkObject2::Types</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="NormalName">Depends on</Item>
+                <Item Key="ReverseName">Required for</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="LinkObject2::Type###ConnectedTo" Required="0" Valid="1">
+        <Description Lang="en">Link type.</Description>
+        <Description Lang="de">Link Typ.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::LinkObject2::Types</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="NormalName">Connected to</Item>
+                <Item Key="ReverseName">Connected to</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="LinkObject2::Type###AlternativeTo" Required="0" Valid="1">
+        <Description Lang="en">Link type.</Description>
+        <Description Lang="de">Link Typ.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::LinkObject2::Types</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="NormalName">Alternative to</Item>
+                <Item Key="ReverseName">Alternative to</Item>
+            </Hash>
         </Setting>
     </ConfigItem>
 </otrs_config>
