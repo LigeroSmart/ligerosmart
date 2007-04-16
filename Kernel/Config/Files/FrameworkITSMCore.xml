@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Framework">
-    <CVS>$Id: FrameworkITSMCore.xml,v 1.1 2007-03-20 16:11:04 mh Exp $</CVS>
-    <CVS>$Id: FrameworkITSMCore.xml,v 1.1 2007-03-20 16:11:04 mh Exp $</CVS>
+    <CVS>$Id: FrameworkITSMCore.xml,v 1.2 2007-04-16 13:47:38 mh Exp $</CVS>
+    <CVS>$Id: FrameworkITSMCore.xml,v 1.2 2007-04-16 13:47:38 mh Exp $</CVS>
     <ConfigItem Name="ProductName" Required="1" Valid="1">
         <Description Lang="en">The name of the application that is shown in the frontend.</Description>
         <Description Lang="de">Im WebFrontend angezeigter Name der Software.</Description>
         <Group>Framework</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
-            <String Regex="">OTRS::ITSM</String>
+            <String Regex="">OTRS::ITSM (beta2)</String>
         </Setting>
     </ConfigItem>
 </otrs_config>
