@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMCore.sopm,v 1.10 2007-04-16 13:47:38 mh Exp $</CVS>
+    <CVS>$Id: ITSMCore.sopm,v 1.11 2007-04-16 17:00:25 mh Exp $</CVS>
     <Name>ITSMCore</Name>
     <Version>0.0.0</Version>
     <Framework>2.2.x</Framework>
@@ -9,10 +9,9 @@
     <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
     <Description Lang="en">The OTRS::ITSM core package.</Description>
     <Description Lang="de">Das OTRS::ITSM Core Paket.</Description>
-    <PackageRequired Version="0.1.7">GeneralCatalog</PackageRequired>
-    <PackageRequired Version="0.1.2">LinkObject2</PackageRequired>
+    <PackageRequired Version="0.9.1">GeneralCatalog</PackageRequired>
+    <PackageRequired Version="0.9.1">LinkObject2</PackageRequired>
     <Filelist>
-        <File Permission="644" Location="CHANGES.ITSMCore"></File>
         <File Permission="644" Location="Kernel/Config/Files/FrameworkITSMCore.xml"></File>
         <File Permission="644" Location="Kernel/Config/Files/ITSMCore.xml"></File>
         <File Permission="644" Location="Kernel/Language/de_ITSMCore.pm"></File>
