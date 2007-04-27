@@ -2,7 +2,7 @@
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
 # Copyright (C) 2003-2007 OTRS GmbH, http://otrs.com/
 # --
-# $Id: GeneralCatalog.pm,v 1.3 2007-02-27 20:09:00 mh Exp $
+# $Id: GeneralCatalog.pm,v 1.4 2007-04-27 14:11:16 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -14,7 +14,7 @@ package Kernel::System::GeneralCatalog;
 use strict;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.3 $';
+$VERSION = '$Revision: 1.4 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -322,14 +322,14 @@ sub ItemUpdate {
         $OldFunctionality = $Row[1] || '';
     }
     # find exiting item with same name
-    my $Update;
+    my $Update = 1;
     $Self->{DBObject}->Prepare(
         SQL => "SELECT id FROM general_catalog WHERE name = '$Param{Name}' AND class = '$Class'",
         Limit => 1,
     );
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
-        if ($Param{ItemID} eq $Row[0]) {
-            $Update = 1;
+        if ($Param{ItemID} ne $Row[0]) {
+            $Update = 0;
         }
     }
     # count functionality
@@ -449,6 +449,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2007-02-27 20:09:00 $
+$Revision: 1.4 $ $Date: 2007-04-27 14:11:16 $
 
 =cut
