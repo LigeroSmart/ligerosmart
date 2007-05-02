@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Framework">
-    <CVS>$Id: FrameworkITSMCore.xml,v 1.3 2007-04-16 14:33:54 mh Exp $</CVS>
-    <CVS>$Id: FrameworkITSMCore.xml,v 1.3 2007-04-16 14:33:54 mh Exp $</CVS>
+    <CVS>$Id: FrameworkITSMCore.xml,v 1.4 2007-05-02 17:50:36 mh Exp $</CVS>
+    <CVS>$OldId: Framework.xml,v 1.140 2007/04/11 21:49:44 martin Exp $</CVS>
     <ConfigItem Name="ProductName" Required="1" Valid="1">
         <Description Lang="en">The name of the application that is shown in the frontend.</Description>
         <Description Lang="de">Im WebFrontend angezeigter Name der Software.</Description>
@@ -9,6 +9,17 @@
         <SubGroup>Core</SubGroup>
         <Setting>
             <String Regex="">OTRS::ITSM 1.0.0-beta2</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Package::RepositoryList" Required="0" Valid="1">
+        <Description Lang="en">List of online repositories.</Description>
+        <Description Lang="de">Liste der zur Verfügung stehenden Online-Quellen.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::Package</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="http://ftp.otrs.org/pub/otrs/itsm/packages/">[--OTRS::ITSM Master--] http://ftp.otrs.org/</Item>
+            </Hash>
         </Setting>
     </ConfigItem>
 </otrs_config>
