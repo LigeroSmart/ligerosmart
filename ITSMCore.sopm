@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMCore.sopm,v 1.12 2007-05-07 15:19:23 mh Exp $</CVS>
+    <CVS>$Id: ITSMCore.sopm,v 1.13 2007-05-09 14:53:10 mh Exp $</CVS>
     <Name>ITSMCore</Name>
     <Version>0.0.0</Version>
     <Framework>2.2.x</Framework>
@@ -358,4 +358,42 @@
     <DatabaseUninstall>
         <TableDrop Name="cip_allocate"/>
     </DatabaseUninstall>
+    <CodeInstall>
+        # change background color of standard theme
+        my $CssFile = $Self-&gt;{ConfigObject}-&gt;Get('Home') . "/Kernel/Output/HTML/Standard/css.dtl";
+        if (!-e $CssFile . ".save" &amp;&amp; open (IN, "&lt; $CssFile")) {
+            my $Content = '';
+            while (&lt;IN&gt;) {
+                if ($_ =~ /^body /) {
+                    $_ =~ s/background-color\:\#bbddff\;/background-color\:\#003399\;/;
+                }
+                $Content .= $_;
+            }
+            close (IN);
+            if (open (OUT, "&gt; $CssFile")) {
+                binmode(OUT);
+                print OUT $Content;
+                close (OUT);
+            }
+        }
+    </CodeInstall>
+    <CodeUninstall>
+        # change background color of standard theme back to original
+        my $CssFile = $Self-&gt;{ConfigObject}-&gt;Get('Home') . "/Kernel/Output/HTML/Standard/css.dtl";
+        if (!-e $CssFile . ".save" &amp;&amp; open (IN, "&lt; $CssFile")) {
+            my $Content = '';
+            while (&lt;IN&gt;) {
+                if ($_ =~ /^body /) {
+                    $_ =~ s/background-color\:\#003399\;/background-color\:\#bbddff\;/;
+                }
+                $Content .= $_;
+            }
+            close (IN);
+            if (open (OUT, "&gt; $CssFile")) {
+                binmode(OUT);
+                print OUT $Content;
+                close (OUT);
+            }
+        }
+    </CodeUninstall>
 </otrs_package>
