@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: TimeAccounting.xml,v 1.6 2007-01-09 07:39:38 tr Exp $</CVS>
+    <CVS>$Id: TimeAccounting.xml,v 1.7 2007-05-11 14:37:05 tr Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AgentTimeAccounting" Required="0" Valid="1">
-      <Description Lang="en">FrontendModuleRegistration for TimeAccountingModule  to define the registration settings in the program and to set rights and positions of icons in the navigation bar.</Description>
+        <Description Lang="en">FrontendModuleRegistration for TimeAccountingModule  to define the registration settings in the program and to set rights and positions of icons in the navigation bar.</Description>
         <Description Lang="de">FrontendModulRegistration für das ZeiterfassungsModul.  Hier
-       können Sie die Angaben für die Registrierung des Moduls im Programm tätigen. Ferner
-       können die Rechte und die Positionen der Icons in der Navigationsleiste gesetzt werden.</Description>
+können Sie die Angaben für die Registrierung des Moduls im Programm tätigen. Ferner
+können die Rechte und die Positionen der Icons in der Navigationsleiste gesetzt werden.</Description>
         <Group>TimeAccounting</Group>
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
@@ -186,24 +186,24 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="TimeAccounting::MaxIntervalOfIncompleteDaysBeforeWarning" Required="1" Valid="1">
-      <Description Lang="en">Show warning, if to much incomplete working days.</Description>
-      <Description Lang="de">Zeigt eine Warnung, wenn zuviele Arbeitstage nicht eingetragen wurden.</Description>
-      <Group>TimeAccounting</Group>
-      <SubGroup>Frontend::Agent</SubGroup>
-      <Setting>
-        <String Regex="">2</String>
-      </Setting>
+        <Description Lang="en">Show warning, if to much incomplete working days.</Description>
+        <Description Lang="de">Zeigt eine Warnung, wenn zuviele Arbeitstage nicht eingetragen wurden.</Description>
+        <Group>TimeAccounting</Group>
+        <SubGroup>Frontend::Agent</SubGroup>
+        <Setting>
+            <String Regex="">2</String>
+        </Setting>
     </ConfigItem>
     <ConfigItem Name="Frontend::NotifyModule###888-TimeAccounting" Required="1" Valid="1">
-      <Description Lang="en">This notification module gives a warning if to much incomplete working days available.</Description>
-      <Description Lang="de">Modul, das den Agent im Notification-Bereich des Agent-Interfaces darüber informiert, wenn schon zu lange keine Stunden mehr eingetragen wurden.</Description>
-      <Group>TimeAccounting</Group>
-      <SubGroup>Frontend::Agent::ModuleNotify</SubGroup>
-      <Setting>
-        <Hash>
-          <Item Key="Module">Kernel::Output::HTML::NotificationTimeAccounting</Item>
-        </Hash>
-      </Setting>
+        <Description Lang="en">This notification module gives a warning if to much incomplete working days available.</Description>
+        <Description Lang="de">Modul, das den Agent im Notification-Bereich des Agent-Interfaces darüber informiert, wenn schon zu lange keine Stunden mehr eingetragen wurden.</Description>
+        <Group>TimeAccounting</Group>
+        <SubGroup>Frontend::Agent::ModuleNotify</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::NotificationTimeAccounting</Item>
+            </Hash>
+        </Setting>
     </ConfigItem>
     <ConfigItem Name="TimeAccounting::MaxAllowedInsertDays" Required="1" Valid="1">
         <Description Lang="en">For how many days ago you can insert working units.</Description>
@@ -215,13 +215,13 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="TimeAccounting::ReduceTime" Required="0" Valid="1">
-      <Description Lang="en">To use, if some actions acount reduced working hours(Key =&gt; traveling; Content =&gt; 50).</Description>
-      <Description Lang="de">Hier kann man eingeben, ob für eine bestimmte Tätigkeit, die zu verrechnenden Stunden gekürzt werden. Z. B wenn Reisezeiten nur zur Hälfte vergütet werden (Key =&gt; journey; Content =&gt; 50).</Description>
+        <Description Lang="en">To use, if some actions acount reduced working hours(Key =&gt; traveling; Content =&gt; 50).</Description>
+        <Description Lang="de">Hier kann man eingeben, ob für eine bestimmte Tätigkeit, die zu verrechnenden Stunden gekürzt werden. Z. B wenn Reisezeiten nur zur Hälfte vergütet werden (Key =&gt; journey; Content =&gt; 50).</Description>
         <Group>TimeAccounting</Group>
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
             <Hash>
-              <Item Key="traveling">50</Item>
+                <Item Key="traveling">50</Item>
             </Hash>
         </Setting>
     </ConfigItem>

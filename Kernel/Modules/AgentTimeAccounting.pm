@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2003-2007 OTRS GmbH, http://otrs.com/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.10 2007-01-09 08:21:42 tr Exp $
+# $Id: AgentTimeAccounting.pm,v 1.11 2007-05-11 14:36:37 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.10 $';
+$VERSION = '$Revision: 1.11 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -1053,7 +1053,7 @@ sub Run {
                 if (!$Data{$ActionID}{Action}) {
                     $ActionEmpty = 1;
                 }
-                if ($Data{$ActionID}{Action} && $ActionCheck{$Data{$ActionID}{Action}} == 1) {
+                if ($Data{$ActionID}{Action} && $ActionCheck{$Data{$ActionID}{Action}}  && $ActionCheck{$Data{$ActionID}{Action}} == 1) {
                     return $Self->{LayoutObject}->ErrorScreen(Message => 'The actionnaming must be unique!');
                 }
                 else {
@@ -1294,13 +1294,15 @@ sub Run {
                 if (!$Data{$ProjectID}{Project}) {
                     $ProjectEmpty = 1;
                 }
-                if ($Data{$ProjectID}{Project} && $ProjectCheck{$Data{$ProjectID}{Project}} == 1) {
+                if ($Data{$ProjectID}{Project} && $ProjectCheck{$Data{$ProjectID}{Project}} && $ProjectCheck{$Data{$ProjectID}{Project}} == 1) {
                     return $Self->{LayoutObject}->ErrorScreen(
                         Message => 'The projectnaming must be unique!'
                     );
                 }
                 else {
-                    $ProjectCheck{$Data{$ProjectID}{Project}} = 1;
+                    if ($Data{$ProjectID}{Project}) {
+                        $ProjectCheck{$Data{$ProjectID}{Project}} = 1;
+                    }
                 }
             }
             if (!$Self->{TimeAccountingObject}->ProjectSettingsUpdate(%Data)) {
@@ -1528,8 +1530,16 @@ sub Run {
                 }
             }
         }
+        if (!$Param{TotalHours}) {
+            $Param{TotalHours} = 0;
+        }
+        if (!$Param{TotalHoursTotal}) {
+            $Param{TotalHoursTotal} = 0;
+        }
+
         $Param{TotalHours}      = sprintf ("%.2f", $Param{TotalHours});
         $Param{TotalHoursTotal} = sprintf ("%.2f", $Param{TotalHoursTotal});
+
         # build output
         $Output .= $Self->{LayoutObject}->Header(Title => "Reporting");
         $Output .= $Self->{LayoutObject}->NavigationBar();

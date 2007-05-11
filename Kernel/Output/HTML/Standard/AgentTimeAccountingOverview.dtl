@@ -1,8 +1,8 @@
 # --
 # AgentTimeAccountingOverview.dtl - provides HTML form for time accounting overview
-# Copyright (C) 2003-2006 OTRS GmbH, http://otrs.com/
+# Copyright (C) 2003-2007 OTRS GmbH, http://otrs.com/
 # --
-# $Id: AgentTimeAccountingOverview.dtl,v 1.6 2006-12-08 15:07:23 tr Exp $
+# $Id: AgentTimeAccountingOverview.dtl,v 1.7 2007-05-11 14:36:37 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -25,11 +25,11 @@
 <!-- dtl:block:User -->
         <tr>
           <td colspan="4" align="center">
-            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Overview&Year=$QData{"YearBack"}&Month=$QData{"MonthBack"}&UserID=$QData{"UserID"}">
+            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Overview&Year=$LQData{"YearBack"}&Month=$LQData{"MonthBack"}&UserID=$LQData{"UserID"}">
             &#060;&#060;
             </a>
             &nbsp;&nbsp;
-            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Overview&Year=$QData{"YearNext"}&Month=$QData{"MonthNext"}&UserID=$QData{"UserID"}">
+            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Overview&Year=$LQData{"YearNext"}&Month=$LQData{"MonthNext"}&UserID=$LQData{"UserID"}">
             &#062;&#062;
             </a>
           </td>
@@ -42,7 +42,7 @@
 <!-- dtl:block:Row -->
         <tr $Data{"Style"}>
           <td align="center">
-            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=$QData{"Subaction"}&Year=$QData{"Year"}&Month=$QData{"Month"}&Day=$QData{"Day"}&UserID=$QData{"UserID"}">
+            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=$LQData{"Subaction"}&Year=$LQData{"Year"}&Month=$LQData{"Month"}&Day=$LQData{"Day"}&UserID=$LQData{"UserID"}">
             $QData{"Day"}
             </a>
           </td>
@@ -115,7 +115,7 @@
       <table class="contentbody" border="0" width="50%" cellpadding="3" cellspacing="0" align="center">
         <tr>
           <td class="contenthead">$Text{"Project Reporting"}:
-            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Overview&Year=$QData{"Year"}&Month=$QData{"Month"}&ProjectStatusShow=$QData{"ProjectStatusShow"}&UserID=$QData{"UserID"}"">
+            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Overview&Year=$LQData{"Year"}&Month=$LQData{"Month"}&ProjectStatusShow=$LQData{"ProjectStatusShow"}&UserID=$LQData{"UserID"}">
             ($Text{"Show"} $Text{"$QData{"ProjectStatusShow"}"} $Text{"Projects"})
             </a>
           </td>

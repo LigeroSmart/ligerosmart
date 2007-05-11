@@ -1,96 +1,96 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-  <CVS>$Id: TimeAccounting.sopm,v 1.11 2007-01-09 07:39:38 tr Exp $</CVS>
-  <Name>TimeAccounting</Name>
-  <Version>0.0.0</Version>
-  <Framework>2.0.x</Framework>
-  <Vendor>OTRS GmbH</Vendor>
-  <URL>http://otrs.org/</URL>
-  <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
-  <ChangeLog>2006-05-23 insert a ProjectReporting page</ChangeLog>
-  <ChangeLog>2006-05-16 fixed action new bug in setting</ChangeLog>
-  <ChangeLog>2006-04-24 insert the delete dtl</ChangeLog>
-  <ChangeLog>2006-04-18 fixed vacation bug</ChangeLog>
-  <ChangeLog>2006-04-11 fixed Show all bug</ChangeLog>
-  <ChangeLog>2006-04-11 fixed typo</ChangeLog>
-  <ChangeLog>2006-04-10 include new functions</ChangeLog>
-  <ChangeLog>2005-08-10 fixed initial bugs</ChangeLog>
-  <ChangeLog>2005-08-08 first package</ChangeLog>
-  <Description Lang="en">A TimeAccounting Modul.</Description>
-  <Description Lang="de">Ein Zeiterfassungsmodul.</Description>
-  <Filelist>
-    <File Permission="644" Location="Kernel/Config/Files/TimeAccounting.xml"></File>
-    <File Permission="644" Location="Kernel/System/TimeAccounting.pm"></File>
-    <File Permission="644" Location="Kernel/Language/de_AgentTimeAccounting.pm"></File>
-    <File Permission="644" Location="Kernel/Modules/AgentTimeAccounting.pm"></File>
-    <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingEdit.dtl"></File>
-    <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingView.dtl"></File>
-    <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingSetting.dtl"></File>
-    <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingOverview.dtl"></File>
-    <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingReporting.dtl"></File>
-    <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingProjectReporting.dtl"></File>
-    <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingDelete.dtl"></File>
-    <File Permission="644" Location="Kernel/Output/HTML/NotificationTimeAccounting.pm"></File>
-    <File Permission="644" Location="var/httpd/htdocs/images/Standard/time_accounting.png"></File>
-  </Filelist>
-  <CodeInstall>
-    # add groups
-    $Self-&gt;{GroupObject}-&gt;GroupAdd(
-        Name =&gt; 'time_accounting',
-        Comment =&gt; '',
-        ValidID =&gt; 1,
-        UserID =&gt; 1,
-    );
-
-  </CodeInstall>
-  <DatabaseInstall>
-    <TableCreate Name="time_accounting_action">
-      <Column Name="id"                Required="true"  Type="BIGINT" PrimaryKey="true" AutoIncrement="true"/>
-      <Column Name="action"            Required="false" Type="VARCHAR" Size="250"/>
-      <Column Name="status"            Required="true"  Type="VARCHAR" Size="15"/>
-    </TableCreate>
-    <TableCreate Name="time_accounting_project">
-      <Column Name="id"                Required="true"  Type="BIGINT" PrimaryKey="true" AutoIncrement="true"/>
-      <Column Name="project"           Required="false" Type="VARCHAR" Size="250"/>
-      <Column Name="description"       Required="false" Type="VARCHAR" Size="500"/>
-      <Column Name="status"            Required="true"  Type="VARCHAR" Size="15"/>
-    </TableCreate>
-    <TableCreate Name="time_accounting_table">
-      <Column Name="id"                Required="true"  Type="BIGINT" PrimaryKey="true" AutoIncrement="true"/>
-      <Column Name="user_id"           Required="true"  Type="INTEGER"/>
-      <Column Name="project_id"        Required="true"  Type="BIGINT"/>
-      <Column Name="action_id"         Required="true"  Type="BIGINT"/>
-      <Column Name="remark"            Required="false" Type="VARCHAR" Size="250"/>
-      <Column Name="time_start"        Required="true"  Type="DATE"/>
-      <Column Name="time_end"          Required="true"  Type="DATE"/>
-      <Column Name="period"            Required="false" Type="DECIMAL" Size="10,3"/>
-      <Column Name="created"           Required="true"  Type="DATE"/>
-    </TableCreate>
-    <TableCreate Name="time_accounting_user_period">
-      <Column Name="id"                Required="true"  Type="BIGINT" PrimaryKey="true" AutoIncrement="true"/>
-      <Column Name="user_id"           Required="true"  Type="INTEGER"/>
-      <Column Name="preference_period" Required="true"  Type="INTEGER"/>
-      <Column Name="date_start"        Required="true"  Type="DATE"/>
-      <Column Name="date_end"          Required="true"  Type="DATE"/>
-      <Column Name="weekly_hours"      Required="false" Type="DECIMAL" Size="10,2"/>
-      <Column Name="leave_days"        Required="false" Type="DECIMAL" Size="10,2"/>
-      <Column Name="overtime"          Required="false" Type="DECIMAL" Size="10,2"/>
-      <Column Name="status"            Required="true"  Type="VARCHAR" Size="15"/>
-    </TableCreate>
-    <TableCreate Name="time_accounting_user">
-      <Column Name="id"                Required="true"  Type="BIGINT" PrimaryKey="true" AutoIncrement="true"/>
-      <Column Name="user_id"           Required="true"  Type="INTEGER"/>
-      <Column Name="description"       Required="true"  Type="VARCHAR" Size="1020"/>
-      <Column Name="show_overtime"     Required="false" Type="INTEGER"/>
-      <Column Name="create_project"    Required="false" Type="INTEGER"/>
-    </TableCreate>
-  </DatabaseInstall>
-  <DatabaseReinstall></DatabaseReinstall>
-  <DatabaseUninstall>
-    <TableDrop Name="time_accounting_action"/>
-    <TableDrop Name="time_accounting_project"/>
-    <TableDrop Name="time_accounting_table"/>
-    <TableDrop Name="time_accounting_user"/>
-    <TableDrop Name="time_accounting_user_period"/>
-  </DatabaseUninstall>
+    <CVS>$Id: TimeAccounting.sopm,v 1.12 2007-05-11 14:36:37 tr Exp $</CVS>
+    <Name>TimeAccounting</Name>
+    <Version>0.0.0</Version>
+    <Framework>2.1.x</Framework>
+    <Framework>2.2.x</Framework>
+    <Vendor>OTRS GmbH</Vendor>
+    <URL>http://otrs.org/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <ChangeLog>2006-05-23 insert a ProjectReporting page</ChangeLog>
+    <ChangeLog>2006-05-16 fixed action new bug in setting</ChangeLog>
+    <ChangeLog>2006-04-24 insert the delete dtl</ChangeLog>
+    <ChangeLog>2006-04-18 fixed vacation bug</ChangeLog>
+    <ChangeLog>2006-04-11 fixed Show all bug</ChangeLog>
+    <ChangeLog>2006-04-11 fixed typo</ChangeLog>
+    <ChangeLog>2006-04-10 include new functions</ChangeLog>
+    <ChangeLog>2005-08-10 fixed initial bugs</ChangeLog>
+    <ChangeLog>2005-08-08 first package</ChangeLog>
+    <Description Lang="en">A TimeAccounting Modul.</Description>
+    <Description Lang="de">Ein Zeiterfassungsmodul.</Description>
+    <Filelist>
+        <File Permission="644" Location="Kernel/Config/Files/TimeAccounting.xml"></File>
+        <File Permission="644" Location="Kernel/System/TimeAccounting.pm"></File>
+        <File Permission="644" Location="Kernel/Language/de_AgentTimeAccounting.pm"></File>
+        <File Permission="644" Location="Kernel/Modules/AgentTimeAccounting.pm"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingEdit.dtl"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingView.dtl"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingSetting.dtl"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingOverview.dtl"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingReporting.dtl"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingProjectReporting.dtl"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingDelete.dtl"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/NotificationTimeAccounting.pm"></File>
+        <File Permission="644" Location="var/httpd/htdocs/images/Standard/time_accounting.png"></File>
+    </Filelist>
+    <CodeInstall>
+        # add groups
+        $Self-&gt;{GroupObject}-&gt;GroupAdd(
+            Name =&gt; 'time_accounting',
+            Comment =&gt; '',
+            ValidID =&gt; 1,
+            UserID =&gt; 1,
+        );
+    </CodeInstall>
+    <DatabaseInstall>
+        <TableCreate Name="time_accounting_action">
+            <Column Name="id"                Required="true"  Type="BIGINT" PrimaryKey="true" AutoIncrement="true"/>
+            <Column Name="action"            Required="false" Type="VARCHAR" Size="250"/>
+            <Column Name="status"            Required="true"  Type="VARCHAR" Size="15"/>
+        </TableCreate>
+        <TableCreate Name="time_accounting_project">
+            <Column Name="id"                Required="true"  Type="BIGINT" PrimaryKey="true" AutoIncrement="true"/>
+            <Column Name="project"           Required="false" Type="VARCHAR" Size="250"/>
+            <Column Name="description"       Required="false" Type="VARCHAR" Size="500"/>
+            <Column Name="status"            Required="true"  Type="VARCHAR" Size="15"/>
+        </TableCreate>
+        <TableCreate Name="time_accounting_table">
+            <Column Name="id"                Required="true"  Type="BIGINT" PrimaryKey="true" AutoIncrement="true"/>
+            <Column Name="user_id"           Required="true"  Type="INTEGER"/>
+            <Column Name="project_id"        Required="true"  Type="BIGINT"/>
+            <Column Name="action_id"         Required="true"  Type="BIGINT"/>
+            <Column Name="remark"            Required="false" Type="VARCHAR" Size="250"/>
+            <Column Name="time_start"        Required="true"  Type="DATE"/>
+            <Column Name="time_end"          Required="true"  Type="DATE"/>
+            <Column Name="period"            Required="false" Type="DECIMAL" Size="10,3"/>
+            <Column Name="created"           Required="true"  Type="DATE"/>
+        </TableCreate>
+        <TableCreate Name="time_accounting_user_period">
+            <Column Name="id"                Required="true"  Type="BIGINT" PrimaryKey="true" AutoIncrement="true"/>
+            <Column Name="user_id"           Required="true"  Type="INTEGER"/>
+            <Column Name="preference_period" Required="true"  Type="INTEGER"/>
+            <Column Name="date_start"        Required="true"  Type="DATE"/>
+            <Column Name="date_end"          Required="true"  Type="DATE"/>
+            <Column Name="weekly_hours"      Required="false" Type="DECIMAL" Size="10,2"/>
+            <Column Name="leave_days"        Required="false" Type="DECIMAL" Size="10,2"/>
+            <Column Name="overtime"          Required="false" Type="DECIMAL" Size="10,2"/>
+            <Column Name="status"            Required="true"  Type="VARCHAR" Size="15"/>
+        </TableCreate>
+        <TableCreate Name="time_accounting_user">
+            <Column Name="id"                Required="true"  Type="BIGINT" PrimaryKey="true" AutoIncrement="true"/>
+            <Column Name="user_id"           Required="true"  Type="INTEGER"/>
+            <Column Name="description"       Required="true"  Type="VARCHAR" Size="1020"/>
+            <Column Name="show_overtime"     Required="false" Type="INTEGER"/>
+            <Column Name="create_project"    Required="false" Type="INTEGER"/>
+        </TableCreate>
+    </DatabaseInstall>
+    <DatabaseReinstall></DatabaseReinstall>
+    <DatabaseUninstall>
+        <TableDrop Name="time_accounting_action"/>
+        <TableDrop Name="time_accounting_project"/>
+        <TableDrop Name="time_accounting_table"/>
+        <TableDrop Name="time_accounting_user"/>
+        <TableDrop Name="time_accounting_user_period"/>
+    </DatabaseUninstall>
 </otrs_package>

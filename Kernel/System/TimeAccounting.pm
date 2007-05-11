@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2003-2007 OTRS GmbH, http://otrs.com/
 # --
-# $Id: TimeAccounting.pm,v 1.8 2007-01-09 07:39:38 tr Exp $
+# $Id: TimeAccounting.pm,v 1.9 2007-05-11 14:36:37 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -13,7 +13,7 @@ package Kernel::System::TimeAccounting;
 
 use strict;
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.8 $';
+$VERSION = '$Revision: 1.9 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week);
@@ -313,15 +313,20 @@ sub ProjectSettingsInsert {
         $Param{ProjectStatus} = $Self->{ConfigObject}->Get('TimeAccounting::DefaultProjectStatus') || '0';
     }
 
+    if (!$Param{ProjectDescription}) {
+        $Param{ProjectDescription} = '';
+    }
+
     # db quote
     foreach (keys %Param) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}) || '';
     }
 
     # build sql
+
     my $SQL = "INSERT INTO time_accounting_project (project, description, status) " .
         "VALUES " .
-        "('" . $Param{Project}. "', '" . $Param{ProjectDescription} . "', '" . $Param{ProjectStatus} . "')";
+        "('" . $Param{Project} . "', '" . $Param{ProjectDescription} . "', '" . $Param{ProjectStatus} . "')";
 
     # db insert
     if (!$Self->{DBObject}->Do(SQL => $SQL)) {
@@ -1089,6 +1094,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.8 $ $Date: 2007-01-09 07:39:38 $
+$Revision: 1.9 $ $Date: 2007-05-11 14:36:37 $
 
 =cut
