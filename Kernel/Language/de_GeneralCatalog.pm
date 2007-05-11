@@ -1,8 +1,8 @@
 # --
 # Kernel/Language/de_GeneralCatalog.pm - the german translation of GeneralCatalog
-# Copyright (C) 2003-2007 OTRS GmbH, http://otrs.com/
+# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: de_GeneralCatalog.pm,v 1.1.1.1 2007-02-23 15:39:00 mh Exp $
+# $Id: de_GeneralCatalog.pm,v 1.2 2007-05-11 07:52:01 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,6 +19,7 @@ sub Data {
     $Self->{Translation}->{'General Catalog'} = 'Allgemeiner Katalog';
     $Self->{Translation}->{'General Catalog Management'} = 'Allgemeiner Katalog Verwaltung';
     $Self->{Translation}->{'Catalog Class'} = 'Katalog Klasse';
+    $Self->{Translation}->{'Add new Catalog Class'} = 'Neue Katalog Klasse hinzufügen';
     $Self->{Translation}->{'Functionality'} = 'Funktionalität';
     $Self->{Translation}->{'Add new item failed! See System Log for details.'} = 'Hinzufügen des neuen Eintrags fehlgeschlagen! Im System Log finden Sie weitere Informationen.';
     $Self->{Translation}->{'Update item faild! See System Log for details.'} = 'Updaten des Eintrags fehlgeschlagen! Im System Log finden Sie weitere Informationen.';

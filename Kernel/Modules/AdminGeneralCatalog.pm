@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AdminGeneralCatalog.pm - admin frontend of general catalog management
-# Copyright (C) 2003-2007 OTRS GmbH, http://otrs.com/
+# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: AdminGeneralCatalog.pm,v 1.3 2007-03-20 10:37:19 mh Exp $
+# $Id: AdminGeneralCatalog.pm,v 1.4 2007-05-11 07:52:01 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use Kernel::System::GeneralCatalog;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.3 $';
+$VERSION = '$Revision: 1.4 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -78,6 +78,8 @@ sub Run {
             Name => 'Class',
             Data => $ClassList,
             SelectedID => $Class,
+            PossibleNone => 1,
+            Translation => 0,
         );
         # output overview
         $Self->{LayoutObject}->Block(
@@ -101,7 +103,6 @@ sub Run {
             Class => $Class,
             Valid => 0,
         );
-
         my $CssClass;
         foreach my $ItemID (sort {$ItemIDList->{$a} cmp $ItemIDList->{$b}} keys %{$ItemIDList}) {
             # get item data
@@ -140,10 +141,9 @@ sub Run {
         # get params
         $ItemData{ItemID} = $Self->{ParamObject}->GetParam(Param => "ItemID");
         if ($ItemData{ItemID} eq 'NEW') {
-            $ItemData{Name} = $Self->{ParamObject}->GetParam(Param => "Name");
             $ItemData{Class} = $Self->{ParamObject}->GetParam(Param => "Class");
             # redirect to overview
-            if (!$ItemData{Name} || !$ItemData{Class}) {
+            if (!$ItemData{Class}) {
                 return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}");
             }
         }
@@ -163,6 +163,8 @@ sub Run {
             Name => 'Class',
             Data => $ClassList,
             SelectedID => $ItemData{Class},
+            PossibleNone => 1,
+            Translation => 0,
         );
         # output overview
         $Self->{LayoutObject}->Block(
@@ -181,6 +183,7 @@ sub Run {
             Data => $FunctionalityRef,
             PossibleNone => 1,
             SelectedID => $ItemData{Functionality} || '',
+            Translation => 0,
         );
         # generate ValidOptionStrg
         my $ValidRef = $Self->{GeneralCatalogObject}->ValidList();
@@ -201,6 +204,24 @@ sub Run {
                 ValidOptionStrg => $ValidOptionStrg,
             },
         );
+        if ($ItemData{Class} eq 'NEW') {
+            # output ItemEditClassAdd
+            $Self->{LayoutObject}->Block(
+                Name => 'ItemEditClassAdd',
+                Data => {
+                    Class => $ItemData{Class},
+                },
+            );
+        }
+        else {
+            # output ItemEditClassExist
+            $Self->{LayoutObject}->Block(
+                Name => 'ItemEditClassExist',
+                Data => {
+                    Class => $ItemData{Class},
+                },
+            );
+        }
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AdminGeneralCatalog',
             Data => \%Param,
@@ -217,6 +238,13 @@ sub Run {
         # get params
         foreach (qw(Class ItemID Name Functionality ValidID Comment)) {
             $ItemData{$_} = $Self->{ParamObject}->GetParam(Param => "$_") || '';
+        }
+        # check class
+        if (!$ItemData{Class} || ($ItemData{Class} && $ItemData{Class} eq 'NEW')) {
+            # redirect to overview class list
+            return $Self->{LayoutObject}->Redirect(
+                OP => "Action=$Self->{Action}&ErrorClassAdd=1",
+            );
         }
         # save to database
         if ($ItemData{ItemID} eq 'NEW') {
@@ -249,12 +277,20 @@ sub Run {
         # output header and navbar
         my $Output = $Self->{LayoutObject}->Header();
         $Output .= $Self->{LayoutObject}->NavigationBar();
-
+        # output error notify
+        if ($Self->{ParamObject}->GetParam(Param => "ErrorClassAdd")) {
+            $Output .= $Self->{LayoutObject}->Notify(
+                Priority => 'Error',
+                Data => '$Text{"Add new class failed! Class name not valid."}',
+            );
+        }
         # get catalog class list
         my $ClassList = $Self->{GeneralCatalogObject}->ClassList();
         my $ClassOptionStrg = $Self->{LayoutObject}->BuildSelection(
             Name => 'Class',
             Data => $ClassList,
+            PossibleNone => 1,
+            Translation => 0,
         );
         # output overview
         $Self->{LayoutObject}->Block(

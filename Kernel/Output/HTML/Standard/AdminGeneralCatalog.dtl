@@ -1,8 +1,8 @@
 # --
 # AdminGeneralCatalog.dtl - provides HTML form for AdminGeneralCatalog
-# Copyright (C) 2003-2007 OTRS GmbH, http://otrs.com/
+# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: AdminGeneralCatalog.dtl,v 1.1.1.1 2007-02-23 15:39:00 mh Exp $
+# $Id: AdminGeneralCatalog.dtl,v 1.2 2007-05-11 07:52:01 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -30,15 +30,31 @@
             <td class="contentbody">
               <table>
                 <tr>
-                  <td class="contentkey">$Text{"Name"}:</td>
-                  <td class="contentvalue"><input type="text" name="Name" size="25" maxlength="100"></td>
-                </tr>
-                <tr>
                   <td class="contentkey">$Text{"Catalog Class"}:</td>
                   <td class="contentvalue">$Data{"ClassOptionStrg"}</td>
                 </tr>
               </table>
             </td>
+          </tr>
+          <tr>
+            <td class="contentfooter">
+              <input class="button" type="submit" value="$Text{"Add"}">
+            </td>
+          </tr>
+        </table>
+      </form>
+      <br>
+      <form action="$Env{"CGIHandle"}" method="get">
+        <input type="hidden" name="Action" value="$Env{"Action"}">
+        <input type="hidden" name="Subaction" value="ItemEdit">
+        <input type="hidden" name="ItemID" value="NEW">
+        <input type="hidden" name="Class" value="NEW">
+        <table width="100%" cellspacing="0" cellpadding="4">
+          <tr>
+            <td class="contenthead">$Text{"Add"}:</td>
+          </tr>
+          <tr>
+            <td class="contentbody">$Text{"Add new Catalog Class"}</td>
           </tr>
           <tr>
             <td class="contentfooter">
@@ -121,7 +137,6 @@
       <form action="$Env{"CGIHandle"}" method="get">
         <input type="hidden" name="Action" value="$Env{"Action"}">
         <input type="hidden" name="Subaction" value="ItemSave">
-        <input type="hidden" name="Class" value="$QData{"Class"}">
         <input type="hidden" name="ItemID" value="$QData{"ItemID"}">
         <table width="100%" cellspacing="0" cellpadding="4">
           <tr>
@@ -130,10 +145,23 @@
           <tr>
             <td class="contentbody">
               <table border="0" cellspacing="0" cellpadding="3">
+<!-- dtl:block:ItemEditClassAdd -->
                 <tr>
                   <td class="contentkey">$Text{"Catalog Class"}: </td>
-                  <td class="contentvalue">$QData{"Class"}</td>
+                  <td class="contentvalue">
+                    <input type="text" name="Class" value="$QData{"Name"}" size="45" maxlength="100">
+                  </td>
                 </tr>
+<!-- dtl:block:ItemEditClassAdd -->
+<!-- dtl:block:ItemEditClassExist -->
+                <tr>
+                  <td class="contentkey">$Text{"Catalog Class"}: </td>
+                  <td class="contentvalue">
+                    $QData{"Class"}
+                    <input type="hidden" name="Class" value="$QData{"Class"}">
+                  </td>
+                </tr>
+<!-- dtl:block:ItemEditClassExist -->
                 <tr>
                   <td class="contentkey">$Text{"Name"}: </td>
                   <td class="contentvalue">
