@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - manage all survey module events
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: Survey.pm,v 1.30 2007-02-13 10:16:10 mh Exp $
+# $Id: Survey.pm,v 1.31 2007-05-16 10:20:54 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Ticket;
 use Kernel::System::CustomerUser;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.30 $';
+$VERSION = '$Revision: 1.31 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -1659,7 +1659,8 @@ sub RequestSend {
                 To => $To,
                 Subject => $Subject,
                 Type => 'text/plain',
-                Body => $Body
+                Charset => $Self->{ConfigObject}->Get('DefaultCharset'),
+                Body => $Body,
             );
         }
     }
@@ -1827,6 +1828,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.30 $ $Date: 2007-02-13 10:16:10 $
+$Revision: 1.31 $ $Date: 2007-05-16 10:20:54 $
 
 =cut
