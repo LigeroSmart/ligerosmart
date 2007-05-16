@@ -1,8 +1,8 @@
 # --
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
-# Copyright (C) 2003-2007 OTRS GmbH, http://otrs.com/
+# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.4 2007-04-27 14:11:16 mh Exp $
+# $Id: GeneralCatalog.pm,v 1.5 2007-05-16 11:27:29 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -14,7 +14,7 @@ package Kernel::System::GeneralCatalog;
 use strict;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.4 $';
+$VERSION = '$Revision: 1.5 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -182,23 +182,36 @@ Return
         ItemID => 3,
     );
 
+    or
+
+    my $ItemDataRef = $GeneralCatalogObject->ItemGet(
+        Class => 'ITSM::Service::Type',
+        Name => 'Item Name',
+    );
+
 =cut
 
 sub ItemGet {
     my $Self = shift;
     my %Param = @_;
     # check needed stuff
-    foreach (qw(ItemID)) {
-        if (!$Param{$_}) {
-            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-            return;
-        }
+    if (!$Param{ItemID} && (!$Param{Class} || !$Param{Name})) {
+        $Self->{LogObject}->Log(Priority => 'error', Message => "Need ItemID OR Class and Name!");
+        return;
     }
+    my $SQL = "SELECT id, class, name, functionality, valid_id, comments, ".
+        "create_time, create_by, change_time, change_by FROM general_catalog WHERE ";
+    if ($Param{Class} && $Param{Name}) {
+        $SQL .= "class = '$Param{Class}' AND name = '$Param{Name}'";
+    }
+    else {
+        $SQL .= "id = $Param{ItemID}";
+    }
+
     # ask database
     my %ItemData = ();
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT id, class, name, functionality, valid_id, comments, ".
-            "create_time, create_by, change_time, change_by FROM general_catalog WHERE id = $Param{ItemID}",
+        SQL => $SQL,
         Limit => 1,
     );
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
@@ -449,6 +462,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2007-04-27 14:11:16 $
+$Revision: 1.5 $ $Date: 2007-05-16 11:27:29 $
 
 =cut
