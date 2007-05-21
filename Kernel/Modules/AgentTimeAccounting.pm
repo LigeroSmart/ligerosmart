@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2003-2007 OTRS GmbH, http://otrs.com/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.11 2007-05-11 14:36:37 tr Exp $
+# $Id: AgentTimeAccounting.pm,v 1.12 2007-05-21 13:46:47 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.11 $';
+$VERSION = '$Revision: 1.12 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -545,9 +545,9 @@ sub Run {
         }
 
         my $VacationCheck = $Self->{TimeAccountingObject}->VacationCheck(
-            Year  => $Year,
-            Month => $Month,
-            Day   => $Day,
+            Year  => $Param{Year},
+            Month => $Param{Month},
+            Day   => $Param{Day},
         );
 
         $Param{Weekday}   = Day_of_Week($Param{Year}, $Param{Month}, $Param{Day});
