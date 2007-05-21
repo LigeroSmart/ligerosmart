@@ -2,7 +2,7 @@
 # AdminGeneralCatalog.dtl - provides HTML form for AdminGeneralCatalog
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: AdminGeneralCatalog.dtl,v 1.2 2007-05-11 07:52:01 mh Exp $
+# $Id: AdminGeneralCatalog.dtl,v 1.3 2007-05-21 15:38:06 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -54,7 +54,7 @@
             <td class="contenthead">$Text{"Add"}:</td>
           </tr>
           <tr>
-            <td class="contentbody">$Text{"Add new Catalog Class"}</td>
+            <td class="contentbody">$Text{"Add a new Catalog Class."}</td>
           </tr>
           <tr>
             <td class="contentfooter">
