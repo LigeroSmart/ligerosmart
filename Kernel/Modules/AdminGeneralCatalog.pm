@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminGeneralCatalog.pm - admin frontend of general catalog management
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: AdminGeneralCatalog.pm,v 1.4 2007-05-11 07:52:01 mh Exp $
+# $Id: AdminGeneralCatalog.pm,v 1.5 2007-05-22 07:40:43 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -12,10 +12,11 @@
 package Kernel::Modules::AdminGeneralCatalog;
 
 use strict;
+
 use Kernel::System::GeneralCatalog;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.4 $';
+$VERSION = '$Revision: 1.5 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -58,20 +59,6 @@ sub Run {
         # output header and navbar
         my $Output = $Self->{LayoutObject}->Header();
         $Output .= $Self->{LayoutObject}->NavigationBar();
-
-        # output error notify
-        if ($Self->{ParamObject}->GetParam(Param => "ErrorAdd")) {
-            $Output .= $Self->{LayoutObject}->Notify(
-                Priority => 'Error',
-                Data => '$Text{"Add new item failed! See System Log for details."}',
-            );
-        }
-        elsif ($Self->{ParamObject}->GetParam(Param => "ErrorUpdate")) {
-            $Output .= $Self->{LayoutObject}->Notify(
-                Priority => 'Error',
-                Data => '$Text{"Update item faild! See System Log for details."}',
-            );
-        }
         # get catalog class list
         my $ClassList = $Self->{GeneralCatalogObject}->ClassList();
         my $ClassOptionStrg = $Self->{LayoutObject}->BuildSelection(
@@ -233,7 +220,6 @@ sub Run {
     # catalog item save
     # ------------------------------------------------------------ #
     elsif ($Self->{Subaction} eq 'ItemSave') {
-        my $ErrorNotify = '';
         my %ItemData;
         # get params
         foreach (qw(Class ItemID Name Functionality ValidID Comment)) {
@@ -243,7 +229,7 @@ sub Run {
         if (!$ItemData{Class} || ($ItemData{Class} && $ItemData{Class} eq 'NEW')) {
             # redirect to overview class list
             return $Self->{LayoutObject}->Redirect(
-                OP => "Action=$Self->{Action}&ErrorClassAdd=1",
+                OP => "Action=$Self->{Action}",
             );
         }
         # save to database
@@ -253,7 +239,7 @@ sub Run {
                 UserID => $Self->{UserID},
             );
             if (!$Success) {
-                $ErrorNotify .= "&ErrorAdd=1";
+                return $Self->{LayoutObject}->ErrorScreen();
             }
         }
         else {
@@ -262,12 +248,12 @@ sub Run {
                 UserID => $Self->{UserID},
             );
             if (!$Success) {
-                $ErrorNotify .= "&ErrorUpdate=1";
+                return $Self->{LayoutObject}->ErrorScreen();
             }
         }
         # redirect to overview class list
         return $Self->{LayoutObject}->Redirect(
-            OP => "Action=$Self->{Action}&Subaction=ItemList&Class=$ItemData{Class}$ErrorNotify",
+            OP => "Action=$Self->{Action}&Subaction=ItemList&Class=$ItemData{Class}",
         );
     }
     # ------------------------------------------------------------ #
@@ -277,13 +263,6 @@ sub Run {
         # output header and navbar
         my $Output = $Self->{LayoutObject}->Header();
         $Output .= $Self->{LayoutObject}->NavigationBar();
-        # output error notify
-        if ($Self->{ParamObject}->GetParam(Param => "ErrorClassAdd")) {
-            $Output .= $Self->{LayoutObject}->Notify(
-                Priority => 'Error',
-                Data => '$Text{"Add new class failed! Class name not valid."}',
-            );
-        }
         # get catalog class list
         my $ClassList = $Self->{GeneralCatalogObject}->ClassList();
         my $ClassOptionStrg = $Self->{LayoutObject}->BuildSelection(
