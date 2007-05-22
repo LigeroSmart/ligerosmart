@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AdminTicketPriority.pm - admin frontend of ticket priority
-# Copyright (C) 2003-2007 OTRS GmbH, http://otrs.com/
+# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: AdminTicketPriority.pm,v 1.2 2007-03-20 11:50:36 mh Exp $
+# $Id: AdminTicketPriority.pm,v 1.3 2007-05-22 07:53:18 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -12,11 +12,12 @@
 package Kernel::Modules::AdminTicketPriority;
 
 use strict;
+
 use Kernel::System::Valid;
 use Kernel::System::Priority;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.2 $';
+$VERSION = '$Revision: 1.3 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -55,10 +56,7 @@ sub Run {
         my %PriorityData;
         # get params
         $PriorityData{PriorityID} = $Self->{ParamObject}->GetParam(Param => "PriorityID");
-        if ($PriorityData{PriorityID} eq 'NEW') {
-            $PriorityData{Name} = $Self->{ParamObject}->GetParam(Param => "Name");
-        }
-        else {
+        if ($PriorityData{PriorityID} ne 'NEW') {
             %PriorityData = $Self->{PriorityObject}->PriorityGet(
                 PriorityID => $PriorityData{PriorityID},
                 UserID => $Self->{UserID},
@@ -105,7 +103,6 @@ sub Run {
     # priority save
     # ------------------------------------------------------------ #
     elsif ($Self->{Subaction} eq 'PrioritySave') {
-        my $ErrorNotify = '';
         my %PriorityData;
         # get params
         foreach (qw(PriorityID Name ValidID)) {
@@ -119,7 +116,7 @@ sub Run {
                 UserID => $Self->{UserID},
             );
             if (!$Success) {
-                $ErrorNotify .= "&ErrorAdd=1";
+                return $Self->{LayoutObject}->ErrorScreen();
             }
         }
         else {
@@ -128,11 +125,11 @@ sub Run {
                 UserID => $Self->{UserID},
             );
             if (!$Success) {
-                $ErrorNotify .= "&ErrorUpdate=1";
+                return $Self->{LayoutObject}->ErrorScreen();
             }
         }
         # redirect to overview
-        return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}$ErrorNotify");
+        return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}");
     }
     # ------------------------------------------------------------ #
     # overview
@@ -141,20 +138,6 @@ sub Run {
         # output header and navbar
         my $Output = $Self->{LayoutObject}->Header();
         $Output .= $Self->{LayoutObject}->NavigationBar();
-
-        # output error notify
-        if ($Self->{ParamObject}->GetParam(Param => "ErrorAdd")) {
-            $Output .= $Self->{LayoutObject}->Notify(
-                Priority => 'Error',
-                Data => '$Text{"Add new priority failed! See System Log for details."}',
-            );
-        }
-        elsif ($Self->{ParamObject}->GetParam(Param => "ErrorUpdate")) {
-            $Output .= $Self->{LayoutObject}->Notify(
-                Priority => 'Error',
-                Data => '$Text{"Update priority faild! See System Log for details."}',
-            );
-        }
         # output overview
         $Self->{LayoutObject}->Block(
             Name => 'Overview',
