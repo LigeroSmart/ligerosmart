@@ -2,7 +2,7 @@
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.5 2007-05-16 11:27:29 mh Exp $
+# $Id: GeneralCatalog.pm,v 1.6 2007-05-26 19:31:47 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -14,7 +14,7 @@ package Kernel::System::GeneralCatalog;
 use strict;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.5 $';
+$VERSION = '$Revision: 1.6 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -233,7 +233,7 @@ sub ItemGet {
 
 add a new general catalog item
 
-    my $True = $GeneralCatalogObject->ItemAdd(
+    my $ItemID = $GeneralCatalogObject->ItemAdd(
         Class => 'ITSM::Service::Type',
         Name => 'Item Name',
         Functionality => 'Func3',       # (optional)
@@ -254,6 +254,10 @@ sub ItemAdd {
             return;
         }
     }
+    # set default values
+    foreach (qw(Functionality Comment)) {
+        $Param{$_} = $Param{$_} || '';
+    }
     # quote
     foreach (qw(Class Name Functionality Comment)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
@@ -264,31 +268,44 @@ sub ItemAdd {
     # find exiting item with same name
     my $NoAdd;
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT id FROM general_catalog WHERE name = '$Param{Name}' AND class = '$Param{Class}'",
+        SQL => "SELECT id FROM general_catalog WHERE class = '$Param{Class}' AND name = '$Param{Name}'",
         Limit => 1,
     );
     while ($Self->{DBObject}->FetchrowArray()) {
         $NoAdd = 1;
     }
-    # add item
+    # add item to database
     my $Return;
     if (!$NoAdd) {
-        $Self->{DBObject}->Do(
+        if ($Self->{DBObject}->Do(
             SQL =>"INSERT INTO general_catalog ".
                 "(class, name, functionality, valid_id, comments, ".
                 "create_time, create_by, change_time, change_by) VALUES ".
                 "('$Param{Class}', '$Param{Name}', '$Param{Functionality}', $Param{ValidID}, '$Param{Comment}', ".
                 "current_timestamp, $Param{UserID}, current_timestamp, $Param{UserID})",
-        );
-        $Return = 1;
+        )) {
+            # get item id
+            $Self->{DBObject}->Prepare(
+                SQL => "SELECT id FROM general_catalog WHERE class = '$Param{Class}' AND name = '$Param{Name}'",
+                Limit => 1,
+            );
+            my $ItemID;
+            while (my @Row = $Self->{DBObject}->FetchrowArray()) {
+                $ItemID = $Row[0];
+            }
+            return $ItemID;
+        }
+        else {
+            return;
+        }
     }
     else {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message => "Can't add new item! General catalog item with same name already exists in this class.",
         );
+        return;
     }
-    return $Return;
 }
 
 =item ItemUpdate()
@@ -316,6 +333,10 @@ sub ItemUpdate {
             return;
         }
     }
+    # set default values
+    foreach (qw(Functionality Comment)) {
+        $Param{$_} = $Param{$_} || '';
+    }
     # quote
     foreach (qw(Name Functionality Comment)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
@@ -337,7 +358,7 @@ sub ItemUpdate {
     # find exiting item with same name
     my $Update = 1;
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT id FROM general_catalog WHERE name = '$Param{Name}' AND class = '$Class'",
+        SQL => "SELECT id FROM general_catalog WHERE class = '$Param{Class}' AND name = '$Param{Name}'",
         Limit => 1,
     );
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
@@ -368,12 +389,11 @@ sub ItemUpdate {
     }
     # update item
     if ($Update && $Class) {
-        $Self->{DBObject}->Do(
+        return $Self->{DBObject}->Do(
             SQL => "UPDATE general_catalog SET name = '$Param{Name}', functionality = '$Param{Functionality}',".
                 "valid_id = $Param{ValidID}, comments = '$Param{Comment}', ".
                 "change_time = current_timestamp, change_by = $Param{UserID} WHERE id = $Param{ItemID}",
         );
-        return 1;
     }
     else {
         $Self->{LogObject}->Log(
@@ -462,6 +482,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2007-05-16 11:27:29 $
+$Revision: 1.6 $ $Date: 2007-05-26 19:31:47 $
 
 =cut
