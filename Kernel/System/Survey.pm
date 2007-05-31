@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - manage all survey module events
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: Survey.pm,v 1.31 2007-05-16 10:20:54 mh Exp $
+# $Id: Survey.pm,v 1.32 2007-05-31 14:35:39 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Ticket;
 use Kernel::System::CustomerUser;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.31 $';
+$VERSION = '$Revision: 1.32 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -245,7 +245,7 @@ sub SurveyStatusSet {
         if ($Quest) {
             # get all questions (type radio and checkbox)
             my $SQL = "SELECT id FROM survey_question".
-                " WHERE survey_id = $Param{SurveyID} AND (type = 'Radio' OR type = 'Checkbox')";
+                " WHERE survey_id = $Param{SurveyID} AND (question_type = 'Radio' OR question_type = 'Checkbox')";
             $Self->{DBObject}->Prepare(SQL => $SQL);
             # init three vars
             my $AllQuestionsAnsers = 'Yes';
@@ -471,7 +471,7 @@ sub QuestionList {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # get all questions of a survey
-    my $SQL = "SELECT id, survey_id, question, type ".
+    my $SQL = "SELECT id, survey_id, question, question_type ".
         " FROM survey_question WHERE survey_id = $Param{SurveyID} ORDER BY position";
     $Self->{DBObject}->Prepare(SQL => $SQL);
     # fetch th result
@@ -521,7 +521,7 @@ sub QuestionAdd {
         my $CurrentTime = $Self->{TimeObject}->CurrentTimestamp();
         # insert a new question
         $Self->{DBObject}->Do(
-            SQL => "INSERT INTO survey_question (survey_id, question, type, ".
+            SQL => "INSERT INTO survey_question (survey_id, question, question_type, ".
                 "position, create_time, create_by, change_time, change_by) VALUES (".
                 "$Param{SurveyID}, ".
                 "'$Param{Question}', ".
@@ -761,7 +761,7 @@ sub QuestionGet {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql for event
-    my $SQL = "SELECT id, survey_id, question, type, position, ".
+    my $SQL = "SELECT id, survey_id, question, question_type, position, ".
         "create_time, create_by, change_time, change_by ".
         "FROM survey_question WHERE id = $Param{QuestionID}";
     $Self->{DBObject}->Prepare(SQL => $SQL);
@@ -1828,6 +1828,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.31 $ $Date: 2007-05-16 10:20:54 $
+$Revision: 1.32 $ $Date: 2007-05-31 14:35:39 $
 
 =cut

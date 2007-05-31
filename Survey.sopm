@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: Survey.sopm,v 1.20 2006-12-07 14:36:31 mh Exp $</CVS>
+    <CVS>$Id: Survey.sopm,v 1.21 2007-05-31 14:35:39 mh Exp $</CVS>
     <Name>Survey</Name>
     <Version>0.0.0</Version>
     <Framework>2.1.x</Framework>
@@ -54,7 +54,7 @@
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
             <Column Name="survey_id" Required="true" Type="BIGINT"/>
             <Column Name="question" Required="true" Size="250" Type="VARCHAR"/>
-            <Column Name="type" Required="true" Size="50" Type="VARCHAR"/>
+            <Column Name="question_type" Required="true" Size="50" Type="VARCHAR"/>
             <Column Name="position" Required="true" Type="SMALLINT"/>
             <Column Name="create_time" Required="false" Type="DATE"/>
             <Column Name="create_by" Required="false" Type="INTEGER"/>
@@ -79,6 +79,11 @@
             <Column Name="create_time" Required="false" Type="DATE"/>
         </TableCreate>
     </DatabaseInstall>
+    <DatabaseUpgrade>
+        <TableAlter Name="survey_question" Version="1.0.14">
+            <ColumnChange NameOld="type" NameNew="question_type" Required="true" Size="50" Type="VARCHAR"/>
+        </TableAlter>
+    </DatabaseUpgrade>
     <DatabaseUninstall>
         <TableDrop Name="survey"/>
         <TableDrop Name="survey_answer"/>
