@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2003-2007 OTRS GmbH, http://otrs.com/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.13 2007-05-23 14:34:14 tr Exp $
+# $Id: AgentTimeAccounting.pm,v 1.14 2007-06-05 14:15:48 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.13 $';
+$VERSION = '$Revision: 1.14 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -40,7 +40,7 @@ sub new {
         $Self->{LayoutObject}->FatalError(Message => "Got no $_!") if (!$Self->{$_});
     }
 
-    # create needen objects
+    # create required objects...
     $Self->{TimeAccountingObject} = Kernel::System::TimeAccounting->new(%Param);
     return $Self;
 }
@@ -79,7 +79,7 @@ sub Run {
         'March',
         'April',
         'May',
-        'Juny',
+        'June',
         'July',
         'August',
         'September',
@@ -207,14 +207,15 @@ sub Run {
                         $Data{$WorkingUnitID}{Period}    = $1 . "." . $2;
                     }
                     else {
-                        $Data{$WorkingUnitID}{Period}    = $Param{Period};
+                        $Data{$WorkingUnitID}{Period} = $Param{Period};
                     }
 
                     my %ReduceTime = ();
                     if ($Self->{ConfigObject}->Get('TimeAccounting::ReduceTime')) {
                         %ReduceTime = %{$Self->{ConfigObject}->Get('TimeAccounting::ReduceTime')};
                     }
-#                    if ($Param{StartTime} && $Param{EndTime} && !$Param{Period}) {
+                    #if ($Param{StartTime} && $Param{EndTime} && !$Param{Period}) {
+                    #overwrite Period when Start and Endtime is given...
                     if ($Param{StartTime} && $Param{EndTime}) {
                         if ($Param{StartTime} =~ /^(\d+):(\d+)/) {
                             my $StartTime = $1*60 + $2;
@@ -231,7 +232,6 @@ sub Run {
                     }
                 }
             }
-
             my $CheckboxCheck = 0;
             foreach (qw(LeaveDay Diseased Overtime)) {
                 $Param{$_} = $Self->{ParamObject}->GetParam(Param => $_);
@@ -249,7 +249,6 @@ sub Run {
             if ($CheckboxCheck > 1) {
                 $Param{RequiredDescription} = "You can only select one checkbox element!";
             }
-
             $Data{Year}  = $Param{Year};
             $Data{Month} = $Param{Month};
             $Data{Day}   = $Param{Day};
@@ -261,7 +260,7 @@ sub Run {
             }
         }
 
-    # Show Working Units
+        # Show Working Units
         # get existing working units
         %Data    = $Self->{TimeAccountingObject}->WorkingUnitsGet(
             Year  => $Param{Year},
@@ -347,6 +346,10 @@ sub Run {
                             $Param{Period}    = $Data{$WorkingUnitID}{Period};
                             $Param{Total}    += $Param{Period};
                         }
+                        elsif( $Data{$WorkingUnitID}{Period} == 0) {
+                            $Param{UnitRequiredDescription} = 'Can\'t save settings, because Period is not given given!';
+                        }
+
                         else {
                             $Param{UnitRequiredDescription} = 'Can\'t save settings, because Starttime is older than Endtime!';
                         }
@@ -997,9 +1000,12 @@ sub Run {
                 }
             }
         }
-        $Param{TotalHours}      = sprintf ("%.2f", $Param{TotalHours});
-        $Param{TotalHoursTotal} = sprintf ("%.2f", $Param{TotalHoursTotal});
-
+        if( defined($Param{TotalHours})) {
+            $Param{TotalHours}      = sprintf ("%.2f", $Param{TotalHours});
+        }
+        if( defined($Param{TotalHoursTotal})) {
+            $Param{TotalHoursTotal} = sprintf ("%.2f", $Param{TotalHoursTotal});
+        }
         # build output
         $Output  = $Self->{LayoutObject}->Header(Title => "Overview");
         $Output .= $Self->{LayoutObject}->NavigationBar();

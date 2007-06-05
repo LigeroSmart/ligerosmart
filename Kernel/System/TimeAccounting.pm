@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2003-2007 OTRS GmbH, http://otrs.com/
 # --
-# $Id: TimeAccounting.pm,v 1.9 2007-05-11 14:36:37 tr Exp $
+# $Id: TimeAccounting.pm,v 1.10 2007-06-05 14:19:49 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -13,7 +13,7 @@ package Kernel::System::TimeAccounting;
 
 use strict;
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.9 $';
+$VERSION = '$Revision: 1.10 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week);
@@ -560,12 +560,16 @@ sub UserSettingsInsert {
     $Param{LeaveDays}   = $Self->{ConfigObject}->Get('TimeAccounting::DefaultUserLeaveDays')   || '25';
     $Param{UserStatus}  = $Self->{ConfigObject}->Get('TimeAccounting::DefaultUserStatus')      || '1';
     $Param{Overtime}    = $Self->{ConfigObject}->Get('TimeAccounting::DefaultUserOvertime')    || '0';
-    $Param{DateEnd}     = $Self->{ConfigObject}->Get('TimeAccounting::DefaultUserDateEnd')     || '2005-12-31';
-    $Param{DateStart}   = $Self->{ConfigObject}->Get('TimeAccounting::DefaultUserDateStart')   || '2005-01-01';
+    $Param{DateEnd}     = $Self->{ConfigObject}->Get('TimeAccounting::DefaultUserDateEnd')     || '2007-12-31';
+    $Param{DateStart}   = $Self->{ConfigObject}->Get('TimeAccounting::DefaultUserDateStart')   || '2007-01-01';
+    $Param{Description}   = $Self->{ConfigObject}->Get('TimeAccounting::DefaultUserDescription') || '';
 
     # db quote
     foreach (keys %Param) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}) || '';
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
+        if( !defined($Param{$_})) {
+            $Param{$_} = '';
+        }
     }
 
     # build sql
@@ -593,9 +597,9 @@ sub UserSettingsInsert {
         $UserID           =  $Row[0];
     }
     if (!defined($UserID)) {
-        $SQL = "INSERT INTO time_accounting_user (user_id)" .
+        $SQL = "INSERT INTO time_accounting_user (user_id, description)" .
             " VALUES" .
-            " ('" . $Param{UserID}. "')";
+            " ('$Param{UserID}', '$Param{Description}')";
         # db insert
         if (!$Self->{DBObject}->Do(SQL => $SQL)) {
             return;
@@ -650,8 +654,18 @@ sub UserSettingsUpdate {
     my $Self    = shift;
     my %Param   = @_;
     foreach my $UserID (sort keys  %Param) {
-        foreach (qw(UserID Description ShowOvertime CreateProject)) {
+        foreach (qw(UserID Description)) {
             $Param{$UserID}{$_} = $Self->{DBObject}->Quote($Param{$UserID}{$_}) || '';
+        }
+
+        #set default for ShowOverTime...
+        if( !defined($Param{$UserID}{ShowOvertime})) {
+            $Param{$UserID}{ShowOvertime} = 0;
+        }
+
+        #set default for CreateProject...
+        if( !defined($Param{$UserID}{CreateProject})) {
+            $Param{$UserID}{CreateProject} = 0;
         }
 
         # build sql
@@ -861,7 +875,12 @@ sub WorkingUnitsGet {
             $Data{$WorkingUnitID}{ActionID}   =  $Row[2];
             $Data{$WorkingUnitID}{Remark}     =  $Row[3];
             $Data{$WorkingUnitID}{StartTime}  =  $2;
-            $Data{$WorkingUnitID}{Period}     =  sprintf ("%.2f", $Row[6]);
+            if( defined($Row[6])) {
+                $Data{$WorkingUnitID}{Period}     =  sprintf ("%.2f", $Row[6]);
+            } else {
+                $Data{$WorkingUnitID}{Period}     =  0;
+            }
+
             $Data{$WorkingUnitID}{Date}       =  $1;
             if ($Row[5] =~ /^(.+?)\s(\d+:\d+):(\d+)/) {
                 $Data{$WorkingUnitID}{EndTime}    =  $2;
@@ -907,10 +926,11 @@ sub WorkingUnitsInsert {
     my $Date = sprintf("%04d-%02d-%02d", $Param{Year}, $Param{Month}, $Param{Day});
 
     if (!$Self->WorkingUnitsDelete(
-        Year  => $Param{Year},
-        Month => $Param{Month},
-        Day   => $Param{Day},
-    )) {
+            Year  => $Param{Year},
+            Month => $Param{Month},
+            Day   => $Param{Day},
+        )
+    ) {
         $Self->{LogObject}->Log(Priority => 'error', Message => 'Can\'t delete Working Units!');
         return;
     }
@@ -919,21 +939,25 @@ sub WorkingUnitsInsert {
     delete $Param{Month};
     delete $Param{Day};
 
-    # instert new working units
+    #insert new working units
     foreach my $WorkingUnitID (sort keys  %Param) {
         # db quote
         foreach (keys %{$Param{$WorkingUnitID}}) {
             $Param{$WorkingUnitID}{$_} = $Self->{DBObject}->Quote($Param{$WorkingUnitID}{$_}) || '';
         }
-        my $StartTime = $Date . " " . $Param{$WorkingUnitID}{StartTime};
-        my $EndTime   = $Date . " " . $Param{$WorkingUnitID}{EndTime};
+        my $StartTime = $Date." ".$Param{$WorkingUnitID}{StartTime};
+        my $EndTime   = $Date." ".$Param{$WorkingUnitID}{EndTime};
+
+        if( (!defined($Param{$WorkingUnitID}{Period})) || ($Param{$WorkingUnitID}{Period} eq '')) {
+            $Param{$WorkingUnitID}{Period} = 'NULL';
+        }
 
         # build sql
         $SQL = "INSERT INTO time_accounting_table (user_id, project_id, action_id, remark," .
             " time_start, time_end, period, created )" .
             " VALUES" .
             " ('$Self->{UserID}', '$Param{$WorkingUnitID}{ProjectID}', '$Param{$WorkingUnitID}{ActionID}'," .
-            " '$Param{$WorkingUnitID}{Remark}', '$StartTime', '$EndTime', '$Param{$WorkingUnitID}{Period}'," .
+            " '$Param{$WorkingUnitID}{Remark}', '$StartTime', '$EndTime', $Param{$WorkingUnitID}{Period}," .
             " current_timestamp)";
         # db insert
         if (!$Self->{DBObject}->Do(SQL => $SQL)) {
@@ -1058,9 +1082,17 @@ sub ProjectActionReporting {
     # hours per month
     my $DateString = $Param{Year} . "-" . sprintf("%02d", $Param{Month});
 
+    my $SQL_Query_TimeStart = "time_start <= '$DateString-31 23:59:59'$IDSelect";
+
+    #tto: yes, I know there are some non-leap-years, ...
+    #...but com'on these few entries in the error log won't bother too much... :-)
+    if( ($Param{Month} == 2) || ($Param{Month} == 4) || ($Param{Month} == 6) || ($Param{Month} == 9) || ($Param{Month} == 11)){
+        $SQL_Query_TimeStart = "time_start <= '$DateString-30 23:59:59'$IDSelect";
+    }
+
     # Total hours
     $Self->{DBObject}->Prepare (
-        SQL => "SELECT project_id, action_id, period FROM time_accounting_table WHERE time_start <= '$DateString-31 23:23:59'$IDSelect",
+        SQL => "SELECT project_id, action_id, period FROM time_accounting_table WHERE $SQL_Query_TimeStart",
     );
     # fetch Data
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
@@ -1069,7 +1101,7 @@ sub ProjectActionReporting {
 
     $Self->{DBObject}->Prepare (
         SQL => "SELECT project_id, action_id, period FROM time_accounting_table" .
-            " WHERE time_start >= '$DateString-01 00:00:00' AND time_start <= '$DateString-31 23:23:59'$IDSelect",
+            " WHERE time_start >= '$DateString-01 00:00:00' AND $SQL_Query_TimeStart",
     );
 
     # fetch Data
@@ -1094,6 +1126,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.9 $ $Date: 2007-05-11 14:36:37 $
+$Revision: 1.10 $ $Date: 2007-06-05 14:19:49 $
 
 =cut
