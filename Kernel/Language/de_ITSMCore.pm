@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMCore.pm - the german translation of ITSMCore
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: de_ITSMCore.pm,v 1.4 2007-05-22 07:52:58 mh Exp $
+# $Id: de_ITSMCore.pm,v 1.5 2007-06-11 12:27:20 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -16,16 +16,22 @@ use strict;
 sub Data {
     my $Self = shift;
 
-    # AdminTicketPriority
     $Self->{Translation}->{'Priority Management'} = 'Priorität Verwaltung';
     $Self->{Translation}->{'Add a new Priority.'} = 'Eine neue Priorität hinzufügen.';
     $Self->{Translation}->{'Add Priority'} = 'Priorität hinzufügen';
 
-    # AdminCIPAllocate
     $Self->{Translation}->{'Criticality'} = 'Kritikalität';
     $Self->{Translation}->{'Impact'} = 'Auswirkung';
     $Self->{Translation}->{'Criticality <-> Impact <-> Priority'} = 'Kritikalität <-> Auswirkung <-> Priorität';
     $Self->{Translation}->{'allocate'} = 'zuordnen';
+
+    $Self->{Translation}->{'Relevant to'} = 'Relevant für';
+    $Self->{Translation}->{'Includes'} = 'Beinhaltet';
+    $Self->{Translation}->{'Part of'} = 'Teil von';
+    $Self->{Translation}->{'Depends on'} = 'Hängt ab von';
+    $Self->{Translation}->{'Required for'} = 'Benötigt für';
+    $Self->{Translation}->{'Connected to'} = 'Verbunden mit';
+    $Self->{Translation}->{'Alternative to'} = 'Alternativ zu';
 }
 
 1;
