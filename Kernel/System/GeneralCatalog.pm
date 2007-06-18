@@ -2,7 +2,7 @@
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.6 2007-05-26 19:31:47 mh Exp $
+# $Id: GeneralCatalog.pm,v 1.7 2007-06-18 12:14:58 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -14,7 +14,7 @@ package Kernel::System::GeneralCatalog;
 use strict;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.6 $';
+$VERSION = '$Revision: 1.7 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -97,6 +97,7 @@ return a list as hash reference of one general catalog class
 
     my $ListRef = $GeneralCatalogObject->ItemList(
         Class => 'ITSM::Service::Type',
+        Functionality => 'active',       # (optional) string or array reference
         Valid => 0,
     );
 
@@ -112,15 +113,33 @@ sub ItemList {
             return;
         }
     }
+    # set valid
     if (!defined($Param{Valid})) {
         $Param{Valid} = 1;
     }
-
+    # quote
+    foreach (qw(Class)) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
+    }
+    foreach (qw(Valid)) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
+    }
     # ask database
     my %Data = ();
     my $SQL = "SELECT id, name FROM general_catalog WHERE class = '$Param{Class}' ";
     if ($Param{Valid}) {
-        $SQL .= "AND valid_id = 1";
+        $SQL .= "AND valid_id = 1 ";
+    }
+    if ($Param{Functionality} && ref($Param{Functionality}) eq 'ARRAY') {
+        my @Functionality;
+        foreach (@{$Param{Functionality}}) {
+            push(@Functionality, $Self->{DBObject}->Quote($_));
+        }
+        $SQL .= "AND functionality IN ('${\(join '\', \'', @Functionality)}')";
+    }
+    elsif ($Param{Functionality}) {
+        $Param{Functionality} = $Self->{DBObject}->Quote($Param{Functionality});
+        $SQL .= "AND functionality = '$Param{Functionality}'";
     }
     $Self->{DBObject}->Prepare(SQL => $SQL);
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
@@ -149,6 +168,10 @@ sub FunctionalityList {
             $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
             return;
         }
+    }
+    # quote
+    foreach (qw(Class)) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
     }
     # ask database
     $Self->{DBObject}->Prepare(
@@ -202,9 +225,17 @@ sub ItemGet {
     my $SQL = "SELECT id, class, name, functionality, valid_id, comments, ".
         "create_time, create_by, change_time, change_by FROM general_catalog WHERE ";
     if ($Param{Class} && $Param{Name}) {
+        # quote
+        foreach (qw(Class Name)) {
+            $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
+        }
         $SQL .= "class = '$Param{Class}' AND name = '$Param{Name}'";
     }
     else {
+        # quote
+        foreach (qw(ItemID)) {
+            $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
+        }
         $SQL .= "id = $Param{ItemID}";
     }
 
@@ -482,6 +513,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.6 $ $Date: 2007-05-26 19:31:47 $
+$Revision: 1.7 $ $Date: 2007-06-18 12:14:58 $
 
 =cut
