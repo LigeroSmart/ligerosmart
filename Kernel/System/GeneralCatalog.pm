@@ -2,7 +2,7 @@
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.8 2007-06-20 12:28:09 mh Exp $
+# $Id: GeneralCatalog.pm,v 1.9 2007-06-20 15:51:21 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -14,7 +14,7 @@ package Kernel::System::GeneralCatalog;
 use strict;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.8 $';
+$VERSION = '$Revision: 1.9 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -83,7 +83,7 @@ sub ClassList {
     my @ClassList;
     # ask database
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT DISTINCT(class) FROM general_catalog ORDER BY class",
+        SQL => "SELECT DISTINCT(general_catalog_class) FROM general_catalog ORDER BY general_catalog_class",
     );
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
         push(@ClassList, $Row[0]);
@@ -126,7 +126,7 @@ sub ItemList {
     }
     # ask database
     my %Data = ();
-    my $SQL = "SELECT id, name FROM general_catalog WHERE class = '$Param{Class}' ";
+    my $SQL = "SELECT id, name FROM general_catalog WHERE general_catalog_class = '$Param{Class}' ";
     if ($Param{Valid}) {
         $SQL .= "AND valid_id = 1 ";
     }
@@ -175,7 +175,8 @@ sub FunctionalityList {
     }
     # ask database
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT DISTINCT(functionality) FROM general_catalog WHERE class = '$Param{Class}' ORDER BY functionality",
+        SQL => "SELECT DISTINCT(functionality) FROM general_catalog ".
+            "WHERE general_catalog_class = '$Param{Class}' ORDER BY functionality",
     );
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
         $FunctionalityList{$Row[0]} = $Row[0];
@@ -222,14 +223,14 @@ sub ItemGet {
         $Self->{LogObject}->Log(Priority => 'error', Message => "Need ItemID OR Class and Name!");
         return;
     }
-    my $SQL = "SELECT id, class, name, functionality, valid_id, comments, ".
+    my $SQL = "SELECT id, general_catalog_class, name, functionality, valid_id, comments, ".
         "create_time, create_by, change_time, change_by FROM general_catalog WHERE ";
     if ($Param{Class} && $Param{Name}) {
         # quote
         foreach (qw(Class Name)) {
             $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
         }
-        $SQL .= "class = '$Param{Class}' AND name = '$Param{Name}'";
+        $SQL .= "general_catalog_class = '$Param{Class}' AND name = '$Param{Name}'";
     }
     else {
         # quote
@@ -299,7 +300,7 @@ sub ItemAdd {
     # find exiting item with same name
     my $NoAdd;
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT id FROM general_catalog WHERE class = '$Param{Class}' AND name = '$Param{Name}'",
+        SQL => "SELECT id FROM general_catalog WHERE general_catalog_class = '$Param{Class}' AND name = '$Param{Name}'",
         Limit => 1,
     );
     while ($Self->{DBObject}->FetchrowArray()) {
@@ -310,14 +311,15 @@ sub ItemAdd {
     if (!$NoAdd) {
         if ($Self->{DBObject}->Do(
             SQL =>"INSERT INTO general_catalog ".
-                "(class, name, functionality, valid_id, comments, ".
+                "(general_catalog_class, name, functionality, valid_id, comments, ".
                 "create_time, create_by, change_time, change_by) VALUES ".
                 "('$Param{Class}', '$Param{Name}', '$Param{Functionality}', $Param{ValidID}, '$Param{Comment}', ".
                 "current_timestamp, $Param{UserID}, current_timestamp, $Param{UserID})",
         )) {
             # get item id
             $Self->{DBObject}->Prepare(
-                SQL => "SELECT id FROM general_catalog WHERE class = '$Param{Class}' AND name = '$Param{Name}'",
+                SQL => "SELECT id FROM general_catalog ".
+                    "WHERE general_catalog_class = '$Param{Class}' AND name = '$Param{Name}'",
                 Limit => 1,
             );
             my $ItemID;
@@ -379,7 +381,7 @@ sub ItemUpdate {
     my $Class;
     my $OldFunctionality;
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT class, functionality FROM general_catalog WHERE id = $Param{ItemID}",
+        SQL => "SELECT general_catalog_class, functionality FROM general_catalog WHERE id = $Param{ItemID}",
         Limit => 1,
     );
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
@@ -389,7 +391,7 @@ sub ItemUpdate {
     # find exiting item with same name
     my $Update = 1;
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT id FROM general_catalog WHERE class = '$Class' AND name = '$Param{Name}'",
+        SQL => "SELECT id FROM general_catalog WHERE general_catalog_class = '$Class' AND name = '$Param{Name}'",
         Limit => 1,
     );
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
@@ -401,7 +403,7 @@ sub ItemUpdate {
     if ($OldFunctionality) {
         $Self->{DBObject}->Prepare(
             SQL => "SELECT COUNT(functionality) FROM general_catalog ".
-                "WHERE class = '$Class' AND functionality = '$OldFunctionality'",
+                "WHERE general_catalog_class = '$Class' AND functionality = '$OldFunctionality'",
             Limit => 1,
         );
         my $LastFunctionality = 1;
@@ -513,6 +515,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.8 $ $Date: 2007-06-20 12:28:09 $
+$Revision: 1.9 $ $Date: 2007-06-20 15:51:21 $
 
 =cut
