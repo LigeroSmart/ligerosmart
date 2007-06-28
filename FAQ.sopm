@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.21 2007-04-10 12:51:15 rk Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.22 2007-06-28 13:29:41 rk Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
     <Framework>2.1.x</Framework>
@@ -59,10 +59,10 @@
             </Unique>
         </TableCreate>
         <Insert Table="faq_language">
-            <Data Key="name" Value="en" Type="Quote"/>
+            <Data Key="name" Type="Quote">en</Data>
         </Insert>
         <Insert Table="faq_language">
-            <Data Key="name" Value="de" Type="Quote"/>
+            <Data Key="name" Type="Quote">de</Data>
         </Insert>
         <TableCreate Name="faq_state_type">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="SMALLINT"/>
@@ -72,13 +72,13 @@
             </Unique>
         </TableCreate>
         <Insert Table="faq_state_type">
-            <Data Key="name" Value="internal" Type="Quote"/>
+            <Data Key="name" Type="Quote">internal</Data>
         </Insert>
         <Insert Table="faq_state_type">
-            <Data Key="name" Value="external" Type="Quote"/>
+            <Data Key="name" Type="Quote">external</Data>
         </Insert>
         <Insert Table="faq_state_type">
-            <Data Key="name" Value="public" Type="Quote"/>
+            <Data Key="name" Type="Quote">public</Data>
         </Insert>
         <TableCreate Name="faq_state">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="SMALLINT"/>
@@ -89,16 +89,16 @@
             </Unique>
         </TableCreate>
         <Insert Table="faq_state">
-            <Data Key="name" Value="internal (agent)" Type="Quote"/>
-            <Data Key="type_id" Value="1"/>
+            <Data Key="name" Type="Quote">internal (agent)</Data>
+            <Data Key="type_id">1</Data>
         </Insert>
         <Insert Table="faq_state">
-            <Data Key="name" Value="external (customer)" Type="Quote"/>
-            <Data Key="type_id" Value="2"/>
+            <Data Key="name" Type="Quote">external (customer)</Data>
+            <Data Key="type_id">2</Data>
         </Insert>
         <Insert Table="faq_state">
-            <Data Key="name" Value="public (all)" Type="Quote"/>
-            <Data Key="type_id" Value="3"/>
+            <Data Key="name" Type="Quote">public (all)</Data>
+            <Data Key="type_id">3</Data>
         </Insert>
         <TableCreate Name="faq_category">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>
@@ -112,14 +112,14 @@
             <Column Name="changed_by" Required="true" Type="INTEGER"/>
         </TableCreate>
         <Insert Table="faq_category">
-            <Data Key="name" Value="Misc" Type="Quote"/>
-            <Data Key="comments" Value="Misc Comment" Type="Quote"/>
-            <Data Key="valid_id" Value="1"/>
-            <Data Key="created" Value="current_timestamp"/>
-            <Data Key="created_by" Value="1"/>
-            <Data Key="changed" Value="current_timestamp"/>
-            <Data Key="changed_by" Value="1"/>
-            <Data Key="parent_id" Value="0"/>
+            <Data Key="name" Type="Quote">Misc</Data>
+            <Data Key="comments" Type="Quote">Misc Comment</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="created">current_timestamp</Data>
+            <Data Key="created_by">1</Data>
+            <Data Key="changed">current_timestamp</Data>
+            <Data Key="changed_by">1</Data>
+            <Data Key="parent_id">0</Data>
         </Insert>
         <TableCreate Name="faq_category_group">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>
@@ -168,12 +168,12 @@
             <Column Name="changed_by" Required="true" Type="INTEGER"/>
         </TableCreate>
         <Insert Table="faq_history">
-            <Data Key="name" Value="Created" Type="Quote"/>
-            <Data Key="item_id" Value="1"/>
-            <Data Key="created" Value="current_timestamp"/>
-            <Data Key="created_by" Value="1"/>
-            <Data Key="changed" Value="current_timestamp"/>
-            <Data Key="changed_by" Value="1"/>
+            <Data Key="name" Type="Quote">Created</Data>
+            <Data Key="item_id">1</Data>
+            <Data Key="created">current_timestamp</Data>
+            <Data Key="created_by">1</Data>
+            <Data Key="changed">current_timestamp</Data>
+            <Data Key="changed_by">1</Data>
         </Insert>
         <TableCreate Name="faq_attachment">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
