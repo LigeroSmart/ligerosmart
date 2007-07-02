@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AdminITSMCIPAllocate.pm - admin frontend of criticality, impact and priority
-# Copyright (C) 2003-2007 OTRS GmbH, http://otrs.com/
+# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: AdminITSMCIPAllocate.pm,v 1.1 2007-03-20 11:50:08 mh Exp $
+# $Id: AdminITSMCIPAllocate.pm,v 1.2 2007-07-02 13:29:20 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -12,13 +12,15 @@
 package Kernel::Modules::AdminITSMCIPAllocate;
 
 use strict;
-use Kernel::System::Valid;
-use Kernel::System::Priority;
+use warnings;
+
 use Kernel::System::GeneralCatalog;
 use Kernel::System::ITSMCIPAllocate;
+use Kernel::System::Priority;
+use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.1 $';
+$VERSION = '$Revision: 1.2 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -40,10 +42,10 @@ sub new {
             $Self->{LayoutObject}->FatalError(Message => "Got no $_!");
         }
     }
-    $Self->{ValidObject} = Kernel::System::Valid->new(%Param);
-    $Self->{PriorityObject} = Kernel::System::Priority->new(%Param);
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
     $Self->{CIPAllocateObject} = Kernel::System::ITSMCIPAllocate->new(%Param);
+    $Self->{PriorityObject} = Kernel::System::Priority->new(%Param);
+    $Self->{ValidObject} = Kernel::System::Valid->new(%Param);
 
     return $Self;
 }

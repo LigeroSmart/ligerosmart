@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMCore.pm - the german translation of ITSMCore
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: de_ITSMCore.pm,v 1.5 2007-06-11 12:27:20 mh Exp $
+# $Id: de_ITSMCore.pm,v 1.6 2007-07-02 13:29:20 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -12,6 +12,7 @@
 package Kernel::Language::de_ITSMCore;
 
 use strict;
+use warnings;
 
 sub Data {
     my $Self = shift;
@@ -32,6 +33,8 @@ sub Data {
     $Self->{Translation}->{'Required for'} = 'Benötigt für';
     $Self->{Translation}->{'Connected to'} = 'Verbunden mit';
     $Self->{Translation}->{'Alternative to'} = 'Alternativ zu';
+
+    return 1;
 }
 
 1;
