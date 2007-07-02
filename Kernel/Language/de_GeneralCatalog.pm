@@ -2,7 +2,7 @@
 # Kernel/Language/de_GeneralCatalog.pm - the german translation of GeneralCatalog
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: de_GeneralCatalog.pm,v 1.5 2007-05-22 07:41:07 mh Exp $
+# $Id: de_GeneralCatalog.pm,v 1.6 2007-07-02 12:06:44 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -12,6 +12,7 @@
 package Kernel::Language::de_GeneralCatalog;
 
 use strict;
+use warnings;
 
 sub Data {
     my $Self = shift;
@@ -23,6 +24,8 @@ sub Data {
     $Self->{Translation}->{'Add Catalog Item'} = 'Katalog Eintrag hinzufügen';
     $Self->{Translation}->{'Add Catalog Class'} = 'Katalog Klasse hinzufügen';
     $Self->{Translation}->{'Functionality'} = 'Funktionalität';
+
+    return 1;
 }
 
 1;
