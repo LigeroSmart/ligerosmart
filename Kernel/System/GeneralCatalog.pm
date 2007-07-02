@@ -2,7 +2,7 @@
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.10 2007-07-02 12:08:21 mh Exp $
+# $Id: GeneralCatalog.pm,v 1.11 2007-07-02 13:16:21 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.10 $';
+$VERSION = '$Revision: 1.11 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -180,9 +180,10 @@ sub FunctionalityList {
             "WHERE general_catalog_class = '$Param{Class}' ORDER BY functionality",
     );
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
-        $FunctionalityList{$Row[0]} = $Row[0];
+        if ($Row[0]) {
+            $FunctionalityList{$Row[0]} = $Row[0];
+        }
     }
-    delete($FunctionalityList{''});
 
     return \%FunctionalityList;
 }
@@ -516,6 +517,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.10 $ $Date: 2007-07-02 12:08:21 $
+$Revision: 1.11 $ $Date: 2007-07-02 13:16:21 $
 
 =cut
