@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQ.pm - faq module
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: AgentFAQ.pm,v 1.9 2007-01-18 14:11:20 rk Exp $
+# $Id: AgentFAQ.pm,v 1.10 2007-07-03 14:02:46 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,14 +17,14 @@ use Kernel::System::LinkObject;
 use Kernel::Modules::FAQ;
 use Kernel::System::User;
 use Kernel::System::Group;
+use Kernel::System::Valid;
 
 use vars qw($VERSION @ISA);
-$VERSION = '$Revision: 1.9 $';
+$VERSION = '$Revision: 1.10 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 @ISA = qw(Kernel::Modules::FAQ);
 
-# --
 sub new {
     my $Type = shift;
     my %Param = @_;
@@ -48,6 +48,7 @@ sub new {
     foreach (qw(SessionObject)) {
         $Self->{LayoutObject}->FatalError(Message => "Got no $_!") if (!$Self->{$_});
     }
+    $Self->{ValidObject} = Kernel::System::Valid->new(%Param);
     $Self->{UserObject} = Kernel::System::User->new(%Param);
     $Self->{GroupObject} = Kernel::System::Group->new(%Param);
     return $Self;
@@ -83,7 +84,8 @@ sub Run {
 
     # manage parameters
     # ********************************************************** #
-    @Params = qw(ItemID ID Number Name Comment CategoryID ParentID StateID LanguageID Title UserID Field1 Field2 Field3 Field4 Field5 Field6 FreeKey1 FreeKey2 FreeKey3 Keywords Order Sort Nav);
+    @Params = qw(ItemID ID Number Name Comment CategoryID ParentID StateID LanguageID Title UserID
+    Field1 Field2 Field3 Field4 Field5 Field6 FreeKey1 FreeKey2 FreeKey3 Keywords Order Sort Nav);
     foreach (@Params) {
         $GetParam{$_} = $Self->{ParamObject}->GetParam(Param => $_) || '';
     }
@@ -324,15 +326,10 @@ sub Run {
             LanguageTranslation => 0,
             RootElement => 1,
         );
+
         # build ValidID string
         $Frontend{ValidOption} = $Self->{LayoutObject}->OptionStrgHashRef(
-            Data => {
-                $Self->{DBObject}->GetTableData(
-                    What => 'id, name',
-                    Table => 'valid',
-                    Valid => 0,
-                )
-            },
+            Data => {$Self->{ValidObject}->ValidList()},
             Name => 'ValidID',
             SelectedID => $CategoryData{ValidID},
         );
@@ -345,9 +342,15 @@ sub Run {
             Multiple => 1,
             SelectedIDRefArray => $SelectedGroups,
         );
+        $Param{Headline} = 'Update';
+        $Param{FormSubaction} = 'CategoryChangeAction';
         $Self->{LayoutObject}->Block(
             Name => 'Category',
             Data => { %Param, %Frontend, %CategoryData },
+        );
+        $Self->{LayoutObject}->Block(
+            Name => 'CategoryAddLink',
+            Data => { %Param },
         );
 
     }
@@ -427,15 +430,11 @@ sub Run {
         );
         # build ValidID string
         $Frontend{ValidOption} = $Self->{LayoutObject}->OptionStrgHashRef(
-            Data => {
-                $Self->{DBObject}->GetTableData(
-                    What => 'id, name',
-                    Table => 'valid',
-                    Valid => 0,
-                )
-            },
+            Data => {$Self->{ValidObject}->ValidList()},
             Name => 'ValidID',
         );
+        $Param{Headline} = 'Add';
+        $Param{FormSubaction} = 'CategoryAddAction';
         # group permission
         my %Groups = $Self->{GroupObject}->GroupList(Valid => 1);
         $Frontend{GroupOption} = $Self->{LayoutObject}->OptionStrgHashRef(
@@ -949,7 +948,7 @@ sub Run {
             $Self->GetItemView(
                 Links => 1,
                 Permission => $Permission,
-             );
+            );
         }
         $HeaderTitle = $Self->{ItemData}{Number};
         $Header = $Self->{LayoutObject}->Header(

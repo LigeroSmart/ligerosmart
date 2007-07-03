@@ -2,7 +2,7 @@
 # FAQ.dtl - provides HTML view for faq articles
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: FAQ.dtl,v 1.5 2007-01-09 07:59:02 rk Exp $
+# $Id: FAQ.dtl,v 1.6 2007-07-03 14:02:46 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -97,11 +97,11 @@
         </tr>
 
         <tr valign="top">
-          <td class="contentkey">$Text{"Created"}: </b></td>
+          <td class="contentkey">$Text{"Created"}:</td>
           <td class="contentvalue">$TimeLong{"$Data{"Created"}"} ($Data{"CreatedByLogin"})</td>
         </tr>
         <tr valign="top">
-          <td class="contentkey">$Text{"Changed"}</b></td>
+          <td class="contentkey">$Text{"Changed"}:</td>
           <td class="contentvalue">$TimeLong{"$Data{"Changed"}"} ($Data{"ChangedByLogin"})</td>
         </tr>
 
@@ -178,7 +178,7 @@
 
 <h1>$Data{"Title"}</h1>
 
-<table border="0" width="100%" cellspacing="0" cellpadding="3" cols="2">
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
   <tr>
     <td class="mainhead">
       $Config{"FAQ::FAQHook"}: $QData{"Number"}
@@ -265,13 +265,12 @@
         <tr>
           <td colspan="2"><hr></td>
         </tr>
-        <tr>
 <!-- dtl:block:FAQItemField -->
 
-        </table>
-      </td>
-    </tr>
-  </table>
+      </table>
+    </td>
+  </tr>
+</table>
 <!-- dtl:block:Print -->
 
 
@@ -282,67 +281,60 @@
 
 
 <!-- dtl:block:Search -->
-
-  <table border="0" width="100%" cellspacing="0" cellpadding="3">
-    <tr>
-      <td class="mainhead">
-        $Env{"Box0"}$Text{"Search"}: $Config{"FAQ::FAQHook"}$Env{"Box1"}
-      </td>
-    </tr>
-    <tr>
-      <td align="center" class="mainbody">
-
-        <br>
-
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+  <tr>
+    <td class="mainhead">
+      $Env{"Box0"}$Text{"Search"}: $Config{"FAQ::FAQHook"}$Env{"Box1"}
+    </td>
+  </tr>
+  <tr>
+    <td align="center" class="mainbody">
+      <br>
+      <form action="$Env{"CGIHandle"}" method="post">
         <table width="600" border="0" cellspacing="0" cellpadding="3">
           <tr>
             <td class="contenthead">$Text{"Options"}</td>
           </tr>
           <tr>
             <td class="contentbody">
-
-              <form action="$Env{"CGIHandle"}" method="get">
-                <input type="hidden" name="Action" value="$Env{"Action"}">
-                <input type="hidden" name="Subaction" value="Search">
-                <input type="hidden" name="Submit" value="yes">
-                <table border="0" cellspacing="0" cellpadding="3">
-                  <tr>
-                    <td width="25%" class="contentkey">$Text{"Number"}: </td>
-                    <td width="75%" class="contentvalue" colspan="3"> <input type="text" name="Number" value="$QData{"Number"}" size="50" maxlength="50"></td>
-                  </tr>
-                  <tr>
-                    <td class="contentkey">$Text{"Title"}: </td>
-                    <td class="contentvalue" colspan="3"> <input type="text" name="Title" value="$QData{"Title"}" size="50" maxlength="50"></td>
-                  </tr>
-                  <tr>
-                    <td class="contentkey">$Text{"Fulltext"}: </td>
-                    <td class="contentvalue" colspan="3"> <input type="text" name="What" value="$QData{"What"}" size="50" maxlength="50"></td>
-                  </tr>
-                  <tr>
-                    <td class="contentkey">$Text{"Keyword"}: </td>
-                    <td class="contentvalue" colspan="3"> <input type="text" name="Keyword" value="$QData{"Keyword"}" size="50" maxlength="50"></td>
-                  </tr>
-                  <tr>
-                    <td valign="top" class="contentkey">$Text{"Language"}:</td>
-                    <td valign="top" class="contentvalue">$Data{"LanguageOption"}</td>
-                    <td valign="top" class="contentkey">$Text{"Category"}:</td>
-                    <td valign="top" class="contentvalue">$Data{"CategoryOption"}</td>
-                  </tr>
-                </table>
-
-              </td>
-            </tr>
-            <tr>
-              <td class="contentfooter"> <input accesskey="g" class="button" type="submit" value="$Text{"Search"}"></td>
-            </tr>
-          </table>
-        </form>
-
-        <br>
-
-      </td>
-    </tr>
-  </table>
+              <input type="hidden" name="Action" value="$Env{"Action"}">
+              <input type="hidden" name="Subaction" value="Search">
+              <input type="hidden" name="Submit" value="yes">
+              <table border="0" cellspacing="0" cellpadding="3">
+                <tr>
+                  <td width="25%" class="contentkey">$Text{"Number"}: </td>
+                  <td width="75%" class="contentvalue" colspan="3"> <input type="text" name="Number" value="$QData{"Number"}" size="50" maxlength="50"></td>
+                </tr>
+                <tr>
+                  <td class="contentkey">$Text{"Title"}: </td>
+                  <td class="contentvalue" colspan="3"> <input type="text" name="Title" value="$QData{"Title"}" size="50" maxlength="50"></td>
+                </tr>
+                <tr>
+                  <td class="contentkey">$Text{"Fulltext"}: </td>
+                  <td class="contentvalue" colspan="3"> <input type="text" name="What" value="$QData{"What"}" size="50" maxlength="50"></td>
+                </tr>
+                <tr>
+                  <td class="contentkey">$Text{"Keyword"}: </td>
+                  <td class="contentvalue" colspan="3"> <input type="text" name="Keyword" value="$QData{"Keyword"}" size="50" maxlength="50"></td>
+                </tr>
+                <tr>
+                  <td valign="top" class="contentkey">$Text{"Language"}:</td>
+                  <td valign="top" class="contentvalue">$Data{"LanguageOption"}</td>
+                  <td valign="top" class="contentkey">$Text{"Category"}:</td>
+                  <td valign="top" class="contentvalue">$Data{"CategoryOption"}</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td class="contentfooter"> <input accesskey="g" class="button" type="submit" value="$Text{"Search"}"></td>
+          </tr>
+        </table>
+      </form>
+      <br>
+    </td>
+  </tr>
+</table>
 <!-- dtl:block:Search -->
 
 
@@ -351,37 +343,37 @@
 
 
 <!-- dtl:block:SearchResult -->
-  <table border="0" width="100%" cellspacing="0" cellpadding="3">
-    <tr>
-      <td class="mainhead">
-        $Env{"Box0"}$Text{"Search"}: $Config{"FAQ::FAQHook"}$Env{"Box1"}
-      </td>
-    </tr>
-    <tr>
-      <td class="mainbody">
-        <table border="0" width="100%" cellspacing="0" cellpadding="2">
-          <tr class="contenthead">
-            <td class="contentkey">$Config{"FAQ::FAQHook"}</td>
-            <td class="contentkey">$Text{"Title"}</td>
-            <td class="contentkey">$Text{"Category"}</td>
-            <td class="contentkey">$Text{"Language"}</td>
-            <td class="contentkey">$Text{"State"}</td>
-            <td class="contentkey">$Text{"Changed"}</td>
-          </tr>
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+  <tr>
+    <td class="mainhead">
+      $Env{"Box0"}$Text{"Search"}: $Config{"FAQ::FAQHook"}$Env{"Box1"}
+    </td>
+  </tr>
+  <tr>
+    <td class="mainbody">
+      <table border="0" width="100%" cellspacing="0" cellpadding="2">
+        <tr class="contenthead">
+          <td class="contentkey">$Config{"FAQ::FAQHook"}</td>
+          <td class="contentkey">$Text{"Title"}</td>
+          <td class="contentkey">$Text{"Category"}</td>
+          <td class="contentkey">$Text{"Language"}</td>
+          <td class="contentkey">$Text{"State"}</td>
+          <td class="contentkey">$Text{"Changed"}</td>
+        </tr>
 <!-- dtl:block:SearchResultRow -->
-          <tr class="contentbody">
-            <td class="$QData{"CssRow"}"><a href="$Env{"Baselink"}Action=$Env{"Action"}&ItemID=$QData{"ItemID"}">$QData{"Number"}</a></td>
-            <td class="$QData{"CssRow"}">$QData{"Title"}</td>
-            <td class="$QData{"CssRow"}">$QData{"CategoryName"}</td>
-            <td class="$QData{"CssRow"}">$QData{"Language"}</td>
-            <td class="$QData{"CssRow"}">$QData{"State"}</td>
-            <td class="$QData{"CssRow"}">($TimeLong{"$Data{"Changed"}"})</td>
-          </tr>
+        <tr class="contentbody">
+          <td class="$QData{"CssRow"}"><a href="$Env{"Baselink"}Action=$Env{"Action"}&ItemID=$QData{"ItemID"}">$QData{"Number"}</a></td>
+          <td class="$QData{"CssRow"}">$QData{"Title"}</td>
+          <td class="$QData{"CssRow"}">$QData{"CategoryName"}</td>
+          <td class="$QData{"CssRow"}">$QData{"Language"}</td>
+          <td class="$QData{"CssRow"}">$QData{"State"}</td>
+          <td class="$QData{"CssRow"}">($TimeLong{"$Data{"Changed"}"})</td>
+        </tr>
 <!-- dtl:block:SearchResultRow -->
-        </table>
-      </td>
-    </tr>
-  </table>
+      </table>
+    </td>
+  </tr>
+</table>
 <!-- dtl:block:SearchResult -->
 
 
@@ -392,110 +384,110 @@
 
 
 <!-- dtl:block:Explorer-->
-  <table border="0" width="100%" cellspacing="0" cellpadding="3">
-    <tr>
-      <td colspan="2" class="mainhead">
-        $Env{"Box0"}$Text{"Explorer"}: $Config{"FAQ::FAQHook"}$Env{"Box1"}
-      </td>
-    </tr>
-    <tr>
-      <td width="75%" class="menu">
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+  <tr>
+    <td colspan="2" class="mainhead">
+      $Env{"Box0"}$Text{"Explorer"}: $Config{"FAQ::FAQHook"}$Env{"Box1"}
+    </td>
+  </tr>
+  <tr>
+    <td width="75%" class="menu">
 <!--<a href="$Env{"Baselink"}$Env{"LastScreenView"}">$Text{"Back"}</a>-->
-      </td>
-      <td width="35%" class="menu">
-        &nbsp;
-      </td>
-    </tr>
-    <tr>
-      <td class="mainbody">
+    </td>
+    <td width="35%" class="menu">
+      &nbsp;
+    </td>
+  </tr>
+  <tr>
+    <td class="mainbody">
 
 
 <!-- dtl:block:FAQPathCategoryElement -->
-        $Config{"FAQ::Explorer::Path::Seperator"} <b><a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=$Env{"Subaction"}&CategoryID=$Data{"CategoryID"}">$QData{"Name"}</a></b>
+      $Config{"FAQ::Explorer::Path::Seperator"} <b><a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=$Env{"Subaction"}&CategoryID=$Data{"CategoryID"}">$QData{"Name"}</a></b>
 <!-- dtl:block:FAQPathCategoryElement -->
 
 <!-- dtl:block:ExplorerTitle -->
-        <h1>$QData{"Name"}</h1>
-        <p>$QData{"Comment"}</p>
+      <h1>$QData{"Name"}</h1>
+      <p>$QData{"Comment"}</p>
 <!-- dtl:block:ExplorerTitle -->
 
 
 
 <!-- dtl:block:ExplorerCategoryList -->
-        <table border="0" cellpadding="2" cellspacing="0" width="100%">
-          <colgroup><col width="15" /><col width="*" /><col width="100" /><col width="100" /></colgroup>
-          <tr class="contenthead">
-            <td class="contentkey" colspan="2">
-              $Text{"Name"} /
-              $Text{"Comment"}
-            </td>
-            <td class="contentkey">
-              $Text{"SubCategories"}
-            </td>
-            <td class="contentkey">
-              $Text{"Article"}
-            </td>
-          </tr>
+      <table border="0" cellpadding="2" cellspacing="0" width="100%">
+        <colgroup><col width="15" /><col width="*" /><col width="100" /><col width="100" /></colgroup>
+        <tr class="contenthead">
+          <td class="contentkey" colspan="2">
+            $Text{"Name"} /
+            $Text{"Comment"}
+          </td>
+          <td class="contentkey">
+            $Text{"SubCategories"}
+          </td>
+          <td class="contentkey">
+            $Text{"Article"}
+          </td>
+        </tr>
 <!-- dtl:block:ExplorerCategoryRow -->
-          <tr class="contentbody">
-            <td class="$QData{"CssRow"}" valign="top"><img src="$Env{"Images"}$Config{"FAQ::Category::Icon"}"></td>
-            <td class="$QData{"CssRow"}">
-              <b><a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=$Env{"Subaction"}&CategoryID=$QData{"CategoryID"}">$QData{"Name"}</a></b>
-              <br>$QData{"Comment"}&nbsp;
-            </td>
-            <td class="$QData{"CssRow"}">
-              $QData{"CategoryNumber"}
-            </td>
-            <td class="$QData{"CssRow"}">
-              $QData{"ArticleNumber"}
-            </td>
-          </tr>
+        <tr class="contentbody">
+          <td class="$QData{"CssRow"}" valign="top"><img src="$Env{"Images"}$Config{"FAQ::Category::Icon"}"></td>
+          <td class="$QData{"CssRow"}">
+            <b><a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=$Env{"Subaction"}&CategoryID=$QData{"CategoryID"}">$QData{"Name"}</a></b>
+            <br>$QData{"Comment"}&nbsp;
+          </td>
+          <td class="$QData{"CssRow"}">
+            $QData{"CategoryNumber"}
+          </td>
+          <td class="$QData{"CssRow"}">
+            $QData{"ArticleNumber"}
+          </td>
+        </tr>
 <!-- dtl:block:ExplorerCategoryRow -->
-        </table>
+      </table>
 <!-- dtl:block:ExplorerCategoryList -->
 
-        <br>
+      <br>
 
 <!-- dtl:block:ExplorerFAQItemList -->
-        <table border="0" width="100%" cellspacing="0" cellpadding="2">
-          <tr class="contenthead">
-            <td class="contentkey">
-              $Text{"Title"}
-              <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Explorer&CategoryID=$QData{"CategoryID"}&Order=Title&Sort=up"><img border="0" src="$Env{"Images"}up-small.png" alt="$Text{"up"}"></a>&nbsp;/
-              <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Explorer&CategoryID=$QData{"CategoryID"}&Order=Title&Sort=down"><img border="0" src="$Env{"Images"}down-small.png" alt="$Text{"down"}"></a>
-            </td>
-            <td class="contentkey">
-              $Text{"Language"}
-              <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Explorer&CategoryID=$QData{"CategoryID"}&Order=Language&Sort=up"><img border="0" src="$Env{"Images"}up-small.png" alt="$Text{"up"}"></a>&nbsp;/
-              <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Explorer&CategoryID=$QData{"CategoryID"}&Order=Language&Sort=down"><img border="0" src="$Env{"Images"}down-small.png" alt="$Text{"down"}"></a>
-            </td>
-            <td class="contentkey">
-              $Text{"State"}
-              <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Explorer&CategoryID=$QData{"CategoryID"}&Order=State&Sort=up"><img border="0" src="$Env{"Images"}up-small.png" alt="$Text{"up"}"></a>&nbsp;/
-              <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Explorer&CategoryID=$QData{"CategoryID"}&Order=State&Sort=down"><img border="0" src="$Env{"Images"}down-small.png" alt="$Text{"down"}"></a>
-            </td>
-            <td class="contentkey">
-              $Text{"Result"} (&#37;)
-              <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Explorer&CategoryID=$QData{"CategoryID"}&Order=Result&Sort=up"><img border="0" src="$Env{"Images"}up-small.png" alt="$Text{"up"}"></a>&nbsp;/
-              <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Explorer&CategoryID=$QData{"CategoryID"}&Order=Result&Sort=down"><img border="0" src="$Env{"Images"}down-small.png" alt="$Text{"down"}"></a>
-            </td>
-            <td class="contentkey">
-              $Text{"Votes"}
-              <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Explorer&CategoryID=$Data{"CategoryID"}&Order=Votes&Sort=up"><img border="0" src="$Env{"Images"}up-small.png" alt="$Text{"up"}"></a>&nbsp;/
-              <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Explorer&CategoryID=$Data{"CategoryID"}&Order=Votes&Sort=down"><img border="0" src="$Env{"Images"}down-small.png" alt="$Text{"down"}"></a>
-            </td>
-          </tr>
+      <table border="0" width="100%" cellspacing="0" cellpadding="2">
+        <tr class="contenthead">
+          <td class="contentkey">
+            $Text{"Title"}
+            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Explorer&CategoryID=$QData{"CategoryID"}&Order=Title&Sort=up"><img border="0" src="$Env{"Images"}up-small.png" alt="$Text{"up"}"></a>&nbsp;/
+            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Explorer&CategoryID=$QData{"CategoryID"}&Order=Title&Sort=down"><img border="0" src="$Env{"Images"}down-small.png" alt="$Text{"down"}"></a>
+          </td>
+          <td class="contentkey">
+            $Text{"Language"}
+            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Explorer&CategoryID=$QData{"CategoryID"}&Order=Language&Sort=up"><img border="0" src="$Env{"Images"}up-small.png" alt="$Text{"up"}"></a>&nbsp;/
+            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Explorer&CategoryID=$QData{"CategoryID"}&Order=Language&Sort=down"><img border="0" src="$Env{"Images"}down-small.png" alt="$Text{"down"}"></a>
+          </td>
+          <td class="contentkey">
+            $Text{"State"}
+            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Explorer&CategoryID=$QData{"CategoryID"}&Order=State&Sort=up"><img border="0" src="$Env{"Images"}up-small.png" alt="$Text{"up"}"></a>&nbsp;/
+            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Explorer&CategoryID=$QData{"CategoryID"}&Order=State&Sort=down"><img border="0" src="$Env{"Images"}down-small.png" alt="$Text{"down"}"></a>
+          </td>
+          <td class="contentkey">
+            $Text{"Result"} (&#37;)
+            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Explorer&CategoryID=$QData{"CategoryID"}&Order=Result&Sort=up"><img border="0" src="$Env{"Images"}up-small.png" alt="$Text{"up"}"></a>&nbsp;/
+            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Explorer&CategoryID=$QData{"CategoryID"}&Order=Result&Sort=down"><img border="0" src="$Env{"Images"}down-small.png" alt="$Text{"down"}"></a>
+          </td>
+          <td class="contentkey">
+            $Text{"Votes"}
+            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Explorer&CategoryID=$Data{"CategoryID"}&Order=Votes&Sort=up"><img border="0" src="$Env{"Images"}up-small.png" alt="$Text{"up"}"></a>&nbsp;/
+            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Explorer&CategoryID=$Data{"CategoryID"}&Order=Votes&Sort=down"><img border="0" src="$Env{"Images"}down-small.png" alt="$Text{"down"}"></a>
+          </td>
+        </tr>
 
 <!-- dtl:block:ExplorerFAQItemRow -->
-          <tr class="contentbody">
-            <td class="$QData{"CssRow"}"><img src="$Env{"Images"}$Config{"FAQ::Item::Icon"}" style="vertical-align:middle;">&nbsp;<a href="$Env{"Baselink"}Action=$Env{"Action"}&CategoryID=$QData{"CategoryID"}&ItemID=$QData{"ItemID"}">$QData{"Title"}</a></td>
-            <td class="$QData{"CssRow"}">$QData{"Language"}</td>
-            <td class="$QData{"CssRow"}">$QData{"State"}</td>
-            <td class="$QData{"CssRow"}" style="$Data{"CssColumnVotingResult"}">$QData{"Result"}</td>
-            <td class="$QData{"CssRow"}">$QData{"Votes"}</td>
-          </tr>
+        <tr class="contentbody">
+          <td class="$QData{"CssRow"}"><img src="$Env{"Images"}$Config{"FAQ::Item::Icon"}" style="vertical-align:middle;">&nbsp;<a href="$Env{"Baselink"}Action=$Env{"Action"}&CategoryID=$QData{"CategoryID"}&ItemID=$QData{"ItemID"}">$QData{"Title"}</a></td>
+          <td class="$QData{"CssRow"}">$QData{"Language"}</td>
+          <td class="$QData{"CssRow"}">$QData{"State"}</td>
+          <td class="$QData{"CssRow"}" style="$Data{"CssColumnVotingResult"}">$QData{"Result"}</td>
+          <td class="$QData{"CssRow"}">$QData{"Votes"}</td>
+        </tr>
 <!-- dtl:block:ExplorerFAQItemRow -->
-        </table>
+      </table>
 
 <!-- dtl:block:ExplorerFAQItemList -->
 
@@ -503,56 +495,56 @@
 
 
 
-      </td>
-      <td class="menu">
+    </td>
+    <td class="menu">
 
 
 <!-- dtl:block:ExplorerQuickSearch -->
-        <h3>$Text{"QuickSearch"}</h3>
-        <form action="$Env{"Baselink"}" method="get" style="margin:0px;padding:0px;">
-          <input type="hidden" name="Action" value="$Env{"Action"}">
-          <input type="hidden" name="Subaction" value="Search">
-          <input type="hidden" name="Submit" value="yes">
+      <h3>$Text{"QuickSearch"}</h3>
+      <form action="$Env{"CGIHandle"}" method="get" style="margin:0px;padding:0px;">
+        <input type="hidden" name="Action" value="$Env{"Action"}">
+        <input type="hidden" name="Subaction" value="Search">
+        <input type="hidden" name="Submit" value="yes">
 
 <!-- dtl:block:ExplorerQuickSearchCategory -->
-          <input type="hidden" name="CategoryIDs" value="$Data{"CategoryID"}">
+        <input type="hidden" name="CategoryIDs" value="$Data{"CategoryID"}">
 <!-- dtl:block:ExplorerQuickSearchCategory -->
 
-          <input type="hidden" name="QuickSearch" value="1">
-          <input type="hidden" name="CategoryIDs" value="$Data{"CategoryID"}">
-          <input type="text" name="What" value="$QData{"What"}" size="30" maxlength="50"><input class="button" type="submit" value="$Text{"Search"}"><br>
-          <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Search">$Text{"DetailSearch"}</a>
-        </form>
+        <input type="hidden" name="QuickSearch" value="1">
+        <input type="hidden" name="CategoryIDs" value="$Data{"CategoryID"}">
+        <input type="text" name="What" value="$QData{"What"}" size="30" maxlength="50"><input class="button" type="submit" value="$Text{"Search"}"><br>
+        <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Search">$Text{"DetailSearch"}</a>
+      </form>
 <!-- dtl:block:ExplorerQuickSearch -->
 
 
 <!-- dtl:block:ExplorerLatestCreate -->
-        <h3>$Text{"LatestCreatedItems"}</h3>
-        <ul style="padding-left:0px;list-style-image:url($Env{"Images"}$Config{"FAQ::Item::Icon"});">
+      <h3>$Text{"LatestCreatedItems"}</h3>
+      <ul style="padding-left:0px;list-style-image:url($Env{"Images"}$Config{"FAQ::Item::Icon"});">
 <!-- dtl:block:ExplorerLatestCreateFAQItemRow -->
-        <li>
-        <a href="$Env{"Baselink"}Action=$Env{"Action"}&CategoryID=$QData{"CategoryID"}&ItemID=$QData{"ItemID"}">$QData{"Title"} ($QData{"CategoryName"})</a> $QData{"Language"} <br>
-        <i>$TimeLong{"$Data{"Created"}"}</i>
-        </li>
+      <li>
+      <a href="$Env{"Baselink"}Action=$Env{"Action"}&CategoryID=$QData{"CategoryID"}&ItemID=$QData{"ItemID"}">$QData{"Title"} ($QData{"CategoryName"})</a> $QData{"Language"} <br>
+      <i>$TimeLong{"$Data{"Created"}"}</i>
+      </li>
 <!-- dtl:block:ExplorerLatestCreateFAQItemRow -->
-        </ul>
+      </ul>
 <!-- dtl:block:ExplorerLatestCreate -->
 
 
 <!-- dtl:block:ExplorerLatestChange -->
-        <h3>$Text{"LatestChangedItems"}</h3>
-        <ul style="padding-left:0px;list-style-image:url($Env{"Images"}$Config{"FAQ::Item::Icon"});">
+      <h3>$Text{"LatestChangedItems"}</h3>
+      <ul style="padding-left:0px;list-style-image:url($Env{"Images"}$Config{"FAQ::Item::Icon"});">
 <!-- dtl:block:ExplorerLatestChangeFAQItemRow -->
-        <li>
-        <a href="$Env{"Baselink"}Action=$Env{"Action"}&CategoryID=$QData{"CategoryID"}&ItemID=$QData{"ItemID"}">$QData{"Title"} ($QData{"CategoryName"})</a> $QData{"Language"} <br>
-        <i>$TimeLong{"$Data{"Changed"}"}</i>
-        </li>
+      <li>
+      <a href="$Env{"Baselink"}Action=$Env{"Action"}&CategoryID=$QData{"CategoryID"}&ItemID=$QData{"ItemID"}">$QData{"Title"} ($QData{"CategoryName"})</a> $QData{"Language"} <br>
+      <i>$TimeLong{"$Data{"Changed"}"}</i>
+      </li>
 <!-- dtl:block:ExplorerLatestChangeFAQItemRow -->
-        </ul>
+      </ul>
 <!-- dtl:block:ExplorerLatestChange -->
 
 
-      </td>
-    </tr>
-  </table>
+    </td>
+  </tr>
+</table>
 <!-- dtl:block:Explorer -->

@@ -1,8 +1,8 @@
 # --
-# Kernel/Output/HTML/Agent.pm - provides generic agent HTML output
-# Copyright (C) 2001-2006 Martin Edenhofer <martin+code@otrs.org>
+# Kernel/Output/HTML/LayoutFAQ.pm - provides generic agent HTML output
+# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: LayoutFAQ.pm,v 1.1.1.1 2006-06-29 09:29:51 ct Exp $
+# $Id: LayoutFAQ.pm,v 1.2 2007-07-03 14:02:46 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -14,10 +14,8 @@ package Kernel::Output::HTML::LayoutFAQ;
 use strict;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.1.1.1 $';
+$VERSION = '$Revision: 1.2 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
-
-# --
 
 sub AgentFAQCategoryListOption {
 
@@ -30,7 +28,7 @@ sub AgentFAQCategoryListOption {
     my $SelectedIDs = $Param{SelectedIDs} || [];
     my $SelectedID = defined($Param{SelectedID}) ? $Param{SelectedID} : '';
     my $Multiple = $Param{Multiple} ? 'multiple' : '';
-    my $OnChangeSubmit = defined($Param{OnChangeSubmit}) ? $Param{OnChangeSubmit} : 0;
+    my $OnChangeSubmit = defined($Param{OnChangeSubmit}) ? $Param{OnChangeSubmit} : '';
     if ($OnChangeSubmit) {
         $OnChangeSubmit = " onchange=\"submit()\"";
     }
@@ -69,7 +67,6 @@ sub AgentFAQCategoryListOption {
     return $Output;
 }
 
-
 sub AgentFAQCategoryListOptionElement {
     my $Self = shift;
     my %Param = @_;
@@ -83,9 +80,9 @@ sub AgentFAQCategoryListOptionElement {
     foreach my $CategoryID (sort( { $CategoryLevelList{$a} cmp $CategoryLevelList{$b} } keys(%CategoryLevelList))) {
         $Output .= '<option value="'.$CategoryID.'"';
         for(my $i=0;$i<@SelectedIDs;$i++) {
-           if($Param{SelectedIDs}[$i] eq $CategoryID) {
-               $Output .= ' selected';
-           }           
+            if($Param{SelectedIDs}[$i] eq $CategoryID) {
+                $Output .= ' selected';
+            }
         }
         $Output .= '>';
         for(my $i=0;$i<$Param{LevelCounter};$i++) {
@@ -105,8 +102,6 @@ sub AgentFAQCategoryListOptionElement {
     return $Output;
 }
 
-
-
 sub GetFAQItemVotingRateColor {
     my $Self = shift;
     my %Param = @_;
@@ -125,6 +120,5 @@ sub GetFAQItemVotingRateColor {
     }
     return $CssTmp;
 }
-
 
 1;

@@ -2,7 +2,7 @@
 # Kernel/Modules/FAQ.pm - faq module
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.10 2007-04-10 10:54:25 rk Exp $
+# $Id: FAQ.pm,v 1.11 2007-07-03 14:02:46 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use Kernel::System::FAQ;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.10 $';
+$VERSION = '$Revision: 1.11 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -967,6 +967,7 @@ sub GetItemSearch {
             my @SubCategoryIDs = @{$Self->{FAQObject}->CategorySubCategoryIDList(
                 ParentID => $GetParam{CategoryIDs}->[0],
                 ItemStates => $Self->{InterfaceStates},
+                CustomerUser => $Param{CustomerUser},
                 UserID => $Param{User},
                 Mode => $Param{Mode},
             )};

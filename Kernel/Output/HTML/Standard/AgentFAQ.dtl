@@ -2,7 +2,7 @@
 # AgentFAQ.dtl - provides HTML view for faq articles
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: AgentFAQ.dtl,v 1.9 2007-01-18 14:11:20 rk Exp $
+# $Id: AgentFAQ.dtl,v 1.10 2007-07-03 14:02:46 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -115,11 +115,11 @@
         </tr>
 
         <tr valign="top">
-          <td class="contentkey">$Text{"Created"}: </b></td>
+          <td class="contentkey">$Text{"Created"}:</td>
           <td class="contentvalue">$TimeLong{"$Data{"Created"}"} ($Data{"CreatedByLogin"})</td>
         </tr>
         <tr valign="top">
-          <td class="contentkey">$Text{"Changed"}</b></td>
+          <td class="contentkey">$Text{"Changed"}:</td>
           <td class="contentvalue">$TimeLong{"$Data{"Changed"}"} ($Data{"ChangedByLogin"})</td>
         </tr>
         <br>
@@ -153,7 +153,6 @@
 <!-- dtl:block:LinkChild -->
           </td>
         </tr>
-
       </table>
 
 <!-- dtl:block:VoteForm -->
@@ -212,7 +211,7 @@ function updateMessage()
 
 <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="spelling">
 
-  <table border="0" width="100%" cellspacing="0" cellpadding="3" cols="2">
+  <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
       <td colspan="2" class="mainhead">
         $Env{"Box0"}$Config{"FAQ::FAQHook"}: $QData{"Number"}$Env{"Box1"}
@@ -298,10 +297,7 @@ function updateMessage()
       </td>
     </tr>
   </table>
-
-</td>
-</tr>
-</table>
+  </form>
 <!-- dtl:block:ViewSmall -->
 
 
@@ -309,25 +305,24 @@ function updateMessage()
 
 <!-- dtl:block:History -->
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
-<tr>
-<td class="mainhead">
-  $Env{"Box0"}$Text{"History"}: $Config{"FAQ::FAQHook"} $QData{"Number"}$Env{"Box1"}
-</td>
-</tr>
-<tr>
-<td class="menu">
-  <a href="$Env{"Baselink"}Action=$Env{"Action"}&CategoryID=$Data{"CategoryID"}&ItemID=$Data{"ItemID"}">$Text{"Back"}</a>
-</td>
-<tr>
-  <td class="mainbody">
-
+  <tr>
+    <td class="mainhead">
+      $Env{"Box0"}$Text{"History"}: $Config{"FAQ::FAQHook"} $QData{"Number"}$Env{"Box1"}
+    </td>
+    </tr>
+  <tr>
+    <td class="menu">
+      <a href="$Env{"Baselink"}Action=$Env{"Action"}&CategoryID=$Data{"CategoryID"}&ItemID=$Data{"ItemID"}">$Text{"Back"}</a>
+    </td>
+  </tr>
+  <tr>
+    <td class="mainbody">
     <table border="0" width="100%" cellspacing="0" cellpadding="2">
       <tr class="contenthead">
         <td class="contentkey">$Text{"Action"}</td>
         <td class="contentkey">$Text{"Time"}</td>
         <td class="contentkey">$Text{"User"}</td>
       </tr>
-
 <!-- dtl:block:HistoryRow -->
       <tr class="contentbody">
         <td class="$Data{"CssRow"}">$Text{"$Data{"Name"}"}</td>
@@ -335,10 +330,9 @@ function updateMessage()
         <td class="$Data{"CssRow"}">$Data{"CreatedBy"}</td>
       </tr>
 <!-- dtl:block:HistoryRow -->
-
     </table>
-  </td>
-</tr>
+    </td>
+  </tr>
 </table>
 <!-- dtl:block:History -->
 
@@ -365,8 +359,7 @@ function submit_compose()
 //-->
 </script>
 
-<!-- start form -->
-<table border="0" width="100%" cellspacing="0" cellpadding="3" cols="2">
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
 <tr>
   <td align="left" colspan="2" class="mainhead">
     $Env{"Box0"}$Text{"New FAQ Article"}$Env{"Box1"}
@@ -374,17 +367,14 @@ function submit_compose()
 </tr>
 <tr>
   <td width="100%" class="mainbody">
-
     <br>
-
+    <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
     <table border="0" width="700" align="center" cellspacing="0" cellpadding="4">
       <tr>
         <td colspan="2" class="contenthead">$Text{"Options"}</td>
       </tr>
       <tr>
         <td class="contentbody">
-
-          <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
             <input type="hidden" name="Action" value="$Env{"Action"}">
             <input type="hidden" name="Subaction" value="AddAction">
             <input type="hidden" name="ItemID" value="$Data{"ItemID"}">
@@ -411,7 +401,7 @@ function submit_compose()
               </tr>
               <tr>
                 <td class="contentkey">$Text{"Attachment"}:</td>
-                <td class="contentvalue"><input name="file_upload" type="file" size="40" class="fixed">&nbsp;<a name="attachment"></td>
+                <td class="contentvalue"><input name="file_upload" type="file" size="40" class="fixed">&nbsp;<a name="attachment"></a></td>
               </tr>
               <tr>
                 <td colspan="2"><hr></td>
@@ -420,24 +410,21 @@ function submit_compose()
 <!-- dtl:block:FAQItemField -->
               <tr>
                 <td class="contentkey">$Text{"$Data{"Caption"}"}:  <br> <i class="small">($Text{"$Data{"StateName"}"})</i> </td>
-                <td class="contentvalue"><textarea name="$Data{"Key"}" rows="12" cols="75" wrap="$Env{"BrowserWrap"}">$Data{"Value"}</textarea></tr>
-                  <tr>
-                    <td colspan="2"><hr></td>
-                  </tr>
+                <td class="contentvalue"><textarea name="$Data{"Key"}" rows="12" cols="75" wrap="$Env{"BrowserWrap"}">$Data{"Value"}</textarea></td>
+              </tr>
+              <tr>
+                <td colspan="2"><hr></td>
+              </tr>
 <!-- dtl:block:FAQItemField -->
-
                 </table>
-
               </td>
             </tr>
             <tr>
-              <td class="contentfooter"><input accesskey="g" class="button" type="submit" value="$Text{"submit"}" onclick="return submit_compose();"></td>
+              <td class="contentfooter"><input accesskey="g" class="button" type="submit" value="$Text{"Submit"}" onclick="return submit_compose();"></td>
             </tr>
           </table>
         </form>
-
         <br>
-
       </td>
     </tr>
   </table>
@@ -480,15 +467,13 @@ function submit_compose()
     </tr>
     <tr>
       <td class="mainbody">
-
-        <table border="0" width="100%" cellspacing="0" cellpadding="4">
+        <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
+        <table border="0" width="700" cellspacing="0" cellpadding="4" align="center">
           <tr>
             <td colspan="2" class="contenthead">$Text{"Options"}</td>
           </tr>
           <tr>
             <td class="contentbody">
-
-              <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
                 <input type="hidden" name="Action" value="$Env{"Action"}">
                 <input type="hidden" name="Subaction" value="UpdateAction">
                 <input type="hidden" name="ItemID" value="$Data{"ItemID"}">
@@ -511,7 +496,7 @@ function submit_compose()
                   </tr>
                   <tr>
                     <td class="contentkey">$Text{"Attachment"}:</td>
-                    <td class="contentvalue">$Data{"Filename"} <input name="file_upload" type="file" size="30" class="fixed">&nbsp;<a name="attachment"></td>
+                    <td class="contentvalue">$Data{"Filename"} <input name="file_upload" type="file" size="30" class="fixed">&nbsp;<a name="attachment"></a></td>
                   </tr>
                   <tr>
                     <td class="contentkey">$Text{"Language"}: </td>
@@ -520,33 +505,26 @@ function submit_compose()
                   <tr>
                     <td colspan="2"><hr></td>
                   </tr>
-
 <!-- dtl:block:FAQItemField -->
                   <tr>
                     <td class="contentkey">$Text{"$Data{"Caption"}"}:  <br> <i class="small">($Text{"$Data{"StateName"}"})</i> </td>
-                    <td class="contentvalue"><textarea name="$Data{"Key"}" rows="12" cols="75" wrap="$Env{"BrowserWrap"}">$QData{"Value"}</textarea></tr>
-                      <tr>
-                        <td colspan="2"><hr></td>
-                      </tr>
+                    <td class="contentvalue"><textarea name="$Data{"Key"}" rows="12" cols="75" wrap="$Env{"BrowserWrap"}">$QData{"Value"}</textarea></td>
+                  </tr>
+                  <tr>
+                    <td colspan="2"><hr></td>
+                  </tr>
 <!-- dtl:block:FAQItemField -->
-
-                    </table>
-
+                  </table>
                   </td>
                 </tr>
                 <tr>
-                  <td class="contentfooter"><input accesskey="g" class="button" type="submit" value="$Text{"submit"}" onclick="return submit_compose();"></td>
+                  <td class="contentfooter"><input accesskey="g" class="button" type="submit" value="$Text{"Submit"}" onclick="return submit_compose();"></td>
                 </tr>
               </table>
             </form>
-
           </td>
         </tr>
       </table>
-
-    </td>
-  </tr>
-</table>
 <!-- dtl:block:Update -->
 
 
@@ -649,7 +627,6 @@ function submit_compose()
           <td class="contentkey">$Text{"Name"}</td>
           <td class="contentkey">$Text{"Time"}</td>
         </tr>
-
 <!-- dtl:block:SystemHistoryRow -->
         <tr class="contentbody">
           <td class="$Data{"CssRow"}"><a href="$Env{"Baselink"}Action=$Env{"Action"}&ItemID=$QData{"ItemID"}">$QData{"Number"}</a></td>
@@ -659,7 +636,6 @@ function submit_compose()
           <td class="$Data{"CssRow"}">($TimeLong{"$Data{"Created"}"})</td>
         </tr>
 <!-- dtl:block:SystemHistoryRow -->
-
       </table>
     </td>
   </tr>
@@ -680,7 +656,6 @@ function submit_compose()
   </tr>
   <tr>
     <td width="40%" class="mainbody">
-
       <form action="$Env{"CGIHandle"}" method="post">
         <input type="hidden" name="Action" value="$Env{"Action"}">
         <input type="hidden" name="Subaction" value="LanguageChange">
@@ -697,10 +672,7 @@ function submit_compose()
         </table>
       </form>
     </td>
-
-
     <td width="60%" class="mainbody">
-
       <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
         <input type="hidden" name="Action" value="$Env{"Action"}">
         <input type="hidden" name="Subaction" value="$Env{"Subaction"}Action">
@@ -725,7 +697,7 @@ function submit_compose()
             </td>
           </tr>
         </table>
-
+        </form>
       </td>
     </tr>
   </table>
@@ -738,7 +710,7 @@ function submit_compose()
 
 
 <!-- dtl:block:Category -->
-  <table border="0" width="100%" cellspacing="0" cellpadding="3" cols="2">
+  <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
       <td align="left" colspan="2" class="mainhead">
         $Env{"Box0"}$Text{"FAQ Category"}$Env{"Box1"}
@@ -746,7 +718,6 @@ function submit_compose()
     </tr>
     <tr>
       <td width="40%" class="mainbody">
-
         <form action="$Env{"CGIHandle"}" method="post">
           <input type="hidden" name="Action" value="$Env{"Action"}">
           <input type="hidden" name="Subaction" value="CategoryChange">
@@ -763,27 +734,21 @@ function submit_compose()
           </table>
         </form>
       </td>
-
-
       <td width="60%" class="mainbody">
-# --
-# check subaction
-# --
-        <dtl set $Data{"Headline"} = "Add">
-        <dtl if ($Env{"Subaction"} eq "CategoryChange") { $Data{"Headline"} = "Update"; }>
-# set subaction!
-        <dtl if ($Env{"Subaction"} eq "Category") { $Env{"Subaction"} = "CategoryAdd"; }>
-# check add link
-        <dtl if ($Env{"Subaction"} eq "CategoryChange") { $Data{"AddLink"} = "(Click here to add)"; }>
-# --
         <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
           <input type="hidden" name="Action" value="$Env{"Action"}">
-          <input type="hidden" name="Subaction" value="$Env{"Subaction"}Action">
+          <input type="hidden" name="Subaction" value="$Data{"FormSubaction"}">
           <input type="hidden" name="CategoryID" value="$Data{"CategoryID"}">
           <table border="0" width="100%" align="center" cellspacing="0" cellpadding="4">
             <tr>
-              <td class="contenthead">$Text{"$Data{"Headline"}"} <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Category">$Text{"$Data{"AddLink"}"}</a></td>
+              <td class="contenthead">
+                $Text{"$Data{"Headline"}"}
+                <!-- dtl:block:CategoryAddLink -->
+                <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Category">$Text{"(Click here to add)"}</a>
+                <!-- dtl:block:CategoryAddLink -->
+              </td>
             </tr>
+            <tr>
             <td class="contentbody">
               <table border="0" cellspacing="0" cellpadding="3">
                 <tr>
@@ -822,7 +787,6 @@ function submit_compose()
           </tr>
         </table>
       </form>
-
     </td>
   </tr>
 </table>
