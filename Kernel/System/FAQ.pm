@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.8 2007-01-25 15:21:47 rk Exp $
+# $Id: FAQ.pm,v 1.9 2007-07-03 14:24:03 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Group;
 use Kernel::System::CustomerGroup;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.8 $';
+$VERSION = '$Revision: 1.9 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -39,24 +39,24 @@ All faq functions. E. g. to add faqs or to get faqs.
 
 create a faq object
 
-  use Kernel::Config;
-  use Kernel::System::Log;
-  use Kernel::System::DB;
-  use Kernel::System::FAQ;
+    use Kernel::Config;
+    use Kernel::System::Log;
+    use Kernel::System::DB;
+    use Kernel::System::FAQ;
 
-  my $ConfigObject = Kernel::Config->new();
-  my $LogObject    = Kernel::System::Log->new(
-      ConfigObject => $ConfigObject,
-  );
-  my $DBObject = Kernel::System::DB->new(
-      ConfigObject => $ConfigObject,
-      LogObject => $LogObject,
-  );
-  my $FAQObject = Kernel::System::FAQ->new(
-      ConfigObject => $ConfigObject,
-      LogObject => $LogObject,
-      DBObject => $DBObject,
-  );
+    my $ConfigObject = Kernel::Config->new();
+    my $LogObject    = Kernel::System::Log->new(
+        ConfigObject => $ConfigObject,
+    );
+    my $DBObject = Kernel::System::DB->new(
+        ConfigObject => $ConfigObject,
+        LogObject => $LogObject,
+    );
+    my $FAQObject = Kernel::System::FAQ->new(
+        ConfigObject => $ConfigObject,
+        LogObject => $LogObject,
+        DBObject => $DBObject,
+    );
 
 =cut
 
@@ -82,9 +82,9 @@ sub new {
 
 get an article
 
-  my %Article = $FAQObject->FAQGet(
-      ID => 1,
-  );
+    my %Article = $FAQObject->FAQGet(
+        ID => 1,
+    );
 
 =cut
 
@@ -99,10 +99,10 @@ sub FAQGet {
 
     # check needed stuff
     foreach (qw(ItemID)) {
-      if (!$Param{$_}) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return {};
-      }
+        if (!$Param{$_}) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return {};
+        }
     }
     # db quote
     foreach (qw(ItemID)) {
@@ -201,9 +201,9 @@ sub FAQGet {
 
 returns a hash with number and result of a item
 
-  my %Flag = $FAQObject->ItemVoteDataGet(
-      ItemID => 1,
-  );
+    my %Flag = $FAQObject->ItemVoteDataGet(
+        ItemID => 1,
+    );
 
 =cut
 sub ItemVoteDataGet {
@@ -211,10 +211,10 @@ sub ItemVoteDataGet {
     my %Param = @_;
     # check needed stuff
     foreach (qw(ItemID)) {
-       if (!$Param{$_}) {
-         $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-         return 0;
-       }
+        if (!$Param{$_}) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return 0;
+        }
     }
 
     # db quote
@@ -237,23 +237,23 @@ sub ItemVoteDataGet {
 
 add an article
 
-  my $ItemID = $FAQObject->FAQAdd(
-      Number => '13402',
-      Title => 'Some Text',
-      CategoryID => 1,
-      StateID => 1,
-      LanguageID => 1,
-      Field1 => 'Problem...',
-      Field2 => 'Solution...',
-      FreeKey1 => 'Software',
-      FreeText1 => 'Apache 3.4.2',
-      FreeKey2 => 'OS',
-      FreeText2 => 'OpenBSD 4.2.2',
-      # attachment options (not required)
-      Filename => $Filename,
-      Content => $Content,
-      ContentType => $ContentType,
-  );
+    my $ItemID = $FAQObject->FAQAdd(
+        Number => '13402',
+        Title => 'Some Text',
+        CategoryID => 1,
+        StateID => 1,
+        LanguageID => 1,
+        Field1 => 'Problem...',
+        Field2 => 'Solution...',
+        FreeKey1 => 'Software',
+        FreeText1 => 'Apache 3.4.2',
+        FreeKey2 => 'OS',
+        FreeText2 => 'OpenBSD 4.2.2',
+        # attachment options (not required)
+        Filename => $Filename,
+        Content => $Content,
+        ContentType => $ContentType,
+    );
 
 =cut
 
@@ -262,10 +262,10 @@ sub FAQAdd {
     my %Param = @_;
     # check needed stuff
     foreach (qw(CategoryID StateID LanguageID Title)) {
-      if (!$Param{$_}) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return 0;
-      }
+        if (!$Param{$_}) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return 0;
+        }
     }
     # check name
     if (!$Param{Name}) {
@@ -312,8 +312,8 @@ sub FAQAdd {
         # get id
         $Self->{DBObject}->Prepare(
             SQL => "SELECT id FROM faq_item WHERE ".
-              "f_name = '$Param{Name}' AND f_language_id = $Param{LanguageID} ".
-              " AND f_subject = '$Param{Title}'",
+            "f_name = '$Param{Name}' AND f_language_id = $Param{LanguageID} ".
+            " AND f_subject = '$Param{Title}'",
         );
         my $ID = 0;
         while  (my @Row = $Self->{DBObject}->FetchrowArray()) {
@@ -355,10 +355,10 @@ sub AttachmentAdd {
     my %Param = @_;
     # check needed stuff
     foreach (qw(ItemID Content ContentType Filename)) {
-      if (!$Param{$_}) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!$Param{$_}) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
 
     # get attachment size
@@ -395,10 +395,10 @@ sub AttachmentGet {
     my %Param = @_;
     # check needed stuff
     foreach (qw(ItemID Content ContentType Filename)) {
-      if (!$Param{$_}) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!$Param{$_}) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
 }
 
@@ -411,10 +411,10 @@ sub AttachmentDelete {
     my %Param = @_;
     # check needed stuff
     foreach (qw(ItemID Content ContentType Filename)) {
-      if (!$Param{$_}) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!$Param{$_}) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
 }
 
@@ -427,10 +427,10 @@ sub AttachmentSearch {
     my %Param = @_;
     # check needed stuff
     foreach (qw(ItemID Content ContentType Filename)) {
-      if (!$Param{$_}) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!$Param{$_}) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
 }
 
@@ -438,22 +438,22 @@ sub AttachmentSearch {
 
 update an article
 
-  $FAQObject->FAQUpdate(
-      CategoryID => 1,
-      StateID => 1,
-      LanguageID => 1,
-      Title => 'Some Text',
-      Field1 => 'Problem...',
-      Field2 => 'Solution...',
-      FreeKey1 => 'Software',
-      FreeText1 => 'Apache 3.4.2',
-      FreeKey2 => 'OS',
-      FreeText2 => 'OpenBSD 4.2.2',
-      # attachment options (not required)
-      Filename => $Filename,
-      Content => $Content,
-      ContentType => $ContentType,
-  );
+    $FAQObject->FAQUpdate(
+        CategoryID => 1,
+        StateID => 1,
+        LanguageID => 1,
+        Title => 'Some Text',
+        Field1 => 'Problem...',
+        Field2 => 'Solution...',
+        FreeKey1 => 'Software',
+        FreeText1 => 'Apache 3.4.2',
+        FreeKey2 => 'OS',
+        FreeText2 => 'OpenBSD 4.2.2',
+        # attachment options (not required)
+        Filename => $Filename,
+        Content => $Content,
+        ContentType => $ContentType,
+    );
 
 =cut
 
@@ -462,10 +462,10 @@ sub FAQUpdate {
     my %Param = @_;
     # check needed stuff
     foreach (qw(ItemID CategoryID StateID LanguageID Title)) {
-      if (!$Param{$_}) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!$Param{$_}) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
     # check name
     if (!$Param{Name}) {
@@ -546,9 +546,9 @@ sub FAQUpdate {
 
 count an article
 
-  $FAQObject->FAQCount(
-      CategoryIDs => [1,2,3,4],
-  );
+    $FAQObject->FAQCount(
+        CategoryIDs => [1,2,3,4],
+    );
 
 =cut
 
@@ -567,9 +567,9 @@ sub FAQCount {
     my $SQL = "";
     my $Ext = "";
     $SQL = "SELECT COUNT(*)" .
-           " FROM faq_item i, faq_state s".
-           " WHERE i.category_id IN ('${\(join '\', \'', @{$Param{CategoryIDs}})}')".
-           " AND i.state_id = s.id";
+        " FROM faq_item i, faq_state s".
+        " WHERE i.category_id IN ('${\(join '\', \'', @{$Param{CategoryIDs}})}')".
+        " AND i.state_id = s.id";
     if ($Param{ItemStates} && ref($Param{ItemStates}) eq 'HASH' && %{$Param{ItemStates}}) {
         $Ext .= " AND s.type_id IN ('${\(join '\', \'', keys(%{$Param{ItemStates}}))}')";
     }
@@ -589,13 +589,13 @@ sub FAQCount {
 
 add an article
 
-  my $ItemID = $FAQObject->FAQVote(
-      CreateBy => 'Some Text',
-      ItemID => '123456',
-      IP => 54.43.30.1',
-      Interface => 'Some Text',
-      Rate => 100,
-  );
+    my $ItemID = $FAQObject->VoteAdd(
+        CreateBy => 'Some Text',
+        ItemID => '123456',
+        IP => 54.43.30.1',
+        Interface => 'Some Text',
+        Rate => 100,
+    );
 
 =cut
 
@@ -604,10 +604,10 @@ sub VoteAdd {
     my %Param = @_;
     # check needed stuff
     foreach (qw(CreatedBy ItemID IP Interface)) {
-       if (!$Param{$_}) {
-         $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-         return 0;
-       }
+        if (!$Param{$_}) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return 0;
+        }
     }
 
     # db quote
@@ -619,15 +619,15 @@ sub VoteAdd {
     }
 
     my $SQL = "INSERT INTO faq_voting ( ".
-              " created_by, item_id, ip, interface, rate, created".
-              " ) VALUES (".
-              " '$Param{CreatedBy}', ".
-              " $Param{ItemID}, ".
-              " '$Param{IP}', ".
-              " '$Param{Interface}', ".
-              " '$Param{Rate}', ".
-              " current_timestamp ".
-              " )";
+        " created_by, item_id, ip, interface, rate, created".
+        " ) VALUES (".
+        " '$Param{CreatedBy}', ".
+        " $Param{ItemID}, ".
+        " '$Param{IP}', ".
+        " '$Param{Interface}', ".
+        " '$Param{Rate}', ".
+        " current_timestamp ".
+        " )";
     #$Self->{LogObject}->Log(Priority => 'error', Message => $SQL);
     if ($Self->{DBObject}->Do(SQL => $SQL)) {
         return 1;
@@ -642,11 +642,11 @@ sub VoteAdd {
 
 add an article
 
-  my %VoteData = %{$FAQObject->VoteGet(
-      CreateBy => 'Some Text',
-      ItemID => '123456',
-      Interface => 'Some Text',
-  )};
+    my %VoteData = %{$FAQObject->VoteGet(
+        CreateBy => 'Some Text',
+        ItemID => '123456',
+        Interface => 'Some Text',
+    )};
 
 =cut
 sub VoteGet {
@@ -654,10 +654,10 @@ sub VoteGet {
     my %Param = @_;
     # check needed stuff
     foreach (qw(CreateBy ItemID Interface IP)) {
-       if (!$Param{$_}) {
-         $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-         return {};
-       }
+        if (!$Param{$_}) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return {};
+        }
     }
 
     # db quote
@@ -712,9 +712,9 @@ sub VoteGet {
 
 returns a array with VoteIDs
 
-  my @FAQIDs = @{$FAQObject->VoteSearch(
-      ItemID => 1,
-  )};
+    my @FAQIDs = @{$FAQObject->VoteSearch(
+        ItemID => 1,
+    )};
 
 =cut
 sub VoteSearch {
@@ -722,10 +722,10 @@ sub VoteSearch {
     my %Param = @_;
     # check needed stuff
     foreach (qw(ItemID)) {
-       if (!$Param{$_}) {
-         $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-         return [];
-       }
+        if (!$Param{$_}) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return [];
+        }
     }
 
     # db quote
@@ -757,9 +757,9 @@ sub VoteSearch {
 
 add an article
 
-  my $Flag = $FAQObject->VoteDelete(
-      VoteID => 1,
-  );
+    my $Flag = $FAQObject->VoteDelete(
+        VoteID => 1,
+    );
 
 =cut
 sub VoteDelete {
@@ -768,10 +768,10 @@ sub VoteDelete {
 
     # check needed stuff
     foreach (qw(VoteID)) {
-       if (!$Param{$_}) {
-         $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-         return 0;
-       }
+        if (!$Param{$_}) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return 0;
+        }
     }
 
     # db quote
@@ -794,7 +794,7 @@ sub VoteDelete {
 
 delete an article
 
-  $Flag = $FAQObject->FAQDelete(ItemID => 1);
+    $Flag = $FAQObject->FAQDelete(ItemID => 1);
 
 =cut
 
@@ -803,10 +803,10 @@ sub FAQDelete {
     my %Param = @_;
     # check needed stuff
     foreach (qw(ItemID)) {
-      if (!$Param{$_}) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return 0;
-      }
+        if (!$Param{$_}) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return 0;
+        }
     }
     # db quote
     foreach (qw(ItemID)) {
@@ -832,10 +832,10 @@ sub FAQDelete {
 
 add an history to an article
 
-  $Flag = $FAQObject->FAQHistoryAdd(
-      ItemID => 1,
-      Name => 'Updated Article.',
-  );
+    $Flag = $FAQObject->FAQHistoryAdd(
+        ItemID => 1,
+        Name => 'Updated Article.',
+    );
 
 =cut
 
@@ -844,10 +844,10 @@ sub FAQHistoryAdd {
     my %Param = @_;
     # check needed stuff
     foreach (qw(ItemID Name)) {
-      if (!$Param{$_}) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return 0;
-      }
+        if (!$Param{$_}) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return 0;
+        }
     }
     # db quote
     foreach (qw(Name)) {
@@ -875,9 +875,9 @@ sub FAQHistoryAdd {
 
 get a array with hachref (Name, Created) with history of an article back
 
-  my @Data = @{$FAQObject->FAQHistoryGet(
-      ItemID => 1,
-  )};
+    my @Data = @{$FAQObject->FAQHistoryGet(
+        ItemID => 1,
+    )};
 
 =cut
 
@@ -886,10 +886,10 @@ sub FAQHistoryGet {
     my %Param = @_;
     # check needed stuff
     foreach (qw(ItemID)) {
-      if (!$Param{$_}) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return [];
-      }
+        if (!$Param{$_}) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return [];
+        }
     }
     # db quote
     foreach (qw(ItemID)) {
@@ -914,9 +914,9 @@ sub FAQHistoryGet {
 
 delete an history of an article
 
-  $FAQObject->FAQHistoryDelete(
-      ItemID => 1,
-  );
+    $FAQObject->FAQHistoryDelete(
+        ItemID => 1,
+    );
 
 =cut
 
@@ -925,10 +925,10 @@ sub FAQHistoryDelete {
     my %Param = @_;
     # check needed stuff
     foreach (qw(ItemID)) {
-      if (!$Param{$_}) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return 0;
-      }
+        if (!$Param{$_}) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return 0;
+        }
     }
     # db quote
     foreach (qw(ItemID)) {
@@ -944,7 +944,7 @@ sub FAQHistoryDelete {
 
 get the system history
 
-  my @Data = @{$FAQObject->HistoryGet()};
+    my @Data = @{$FAQObject->HistoryGet()};
 
 =cut
 
@@ -953,10 +953,10 @@ sub HistoryGet {
     my %Param = @_;
     # check needed stuff
     foreach (qw()) {
-      if (!$Param{$_}) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!$Param{$_}) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
     # query
     my $SQL = "SELECT i.id, h.name, h.created, h.created_by, c.name, i.f_subject, i.f_number FROM".
@@ -987,9 +987,9 @@ sub HistoryGet {
 
 get the category list as hash
 
-  my %Categories = %{$FAQObject->CategoryList(
-     Valid => 1,
-  )};
+    my %Categories = %{$FAQObject->CategoryList(
+        Valid => 1,
+    )};
 
 =cut
 
@@ -998,10 +998,10 @@ sub CategoryList {
     my %Param = @_;
     # check needed stuff
     foreach (qw()) {
-      if (!$Param{$_}) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return {};
-      }
+        if (!$Param{$_}) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return {};
+        }
     }
     # sql
     my $SQL = 'SELECT id, parent_id, name FROM faq_category ';
@@ -1021,9 +1021,9 @@ sub CategoryList {
 
 get the category search as hash
 
-  my @CategorieIDs = @{$FAQObject->CategorySearch(
-    Name => "Name"
-  )};
+    my @CategorieIDs = @{$FAQObject->CategorySearch(
+        Name => "Name"
+    )};
 
 =cut
 
@@ -1098,9 +1098,9 @@ sub CategorySearch {
 
 get a category as hash
 
-  my %Category = $FAQObject->CategoryGet(
-      ID => 1,
-  );
+    my %Category = $FAQObject->CategoryGet(
+        ID => 1,
+    );
 
 =cut
 
@@ -1109,10 +1109,10 @@ sub CategoryGet {
     my %Param = @_;
     # check needed stuff
     foreach (qw(CategoryID)) {
-      if (!defined($Param{$_})) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!defined($Param{$_})) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
     # db quote
     foreach (qw(CategoryID)) {
@@ -1139,15 +1139,14 @@ sub CategoryGet {
 
 get all subcategory ids of of a category
 
-  my %Category = $FAQObject->CategorySubCategorieIDList(
-      ParentID => 1,
-      ItemStates => [1,2,3]
-  );
+    my %Category = $FAQObject->CategorySubCategorieIDList(
+        ParentID => 1,
+        ItemStates => [1,2,3]
+    );
 
 =cut
 
 sub CategorySubCategoryIDList {
-
     my $Self = shift;
     my %Param = @_;
 
@@ -1188,6 +1187,7 @@ sub CategorySubCategoryIDList {
             Sort => 'down',
         )};
     }
+    my @Result = @SubCategoryIDs;
     foreach my $SubCategoryID (@SubCategoryIDs) {
         my @Temp = @{$Self->CategorySubCategoryIDList(
             ParentID => $SubCategoryID,
@@ -1197,20 +1197,20 @@ sub CategorySubCategoryIDList {
             UserID => $Param{UserID},
         )};
         if(@Temp) {
-            push(@SubCategoryIDs, @Temp);
+            push(@Result, @Temp);
         }
     }
-    return \@SubCategoryIDs;
+    return \@Result;
 }
 
 =item CategoryAdd()
 
 add a category
 
-  my $ID = $FAQObject->CategoryAdd(
-      Name => 'Some Category',
-      Comment => 'some comment ...',
-  );
+    my $ID = $FAQObject->CategoryAdd(
+        Name => 'Some Category',
+        Comment => 'some comment ...',
+    );
 
 =cut
 
@@ -1219,10 +1219,10 @@ sub CategoryAdd {
     my %Param = @_;
     # check needed stuff
     foreach (qw(ParentID Name)) {
-      if (!defined($Param{$_})) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!defined($Param{$_})) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
     # db quote
     foreach (qw(Name Comment)) {
@@ -1240,19 +1240,19 @@ sub CategoryAdd {
     if ($Self->{DBObject}->Do(SQL => $SQL)) {
         # get new category id
         $SQL = "SELECT id ".
-          " FROM " .
-          " faq_category " .
-          " WHERE " .
-          " name = '$Param{Name}'";
+            " FROM " .
+            " faq_category " .
+            " WHERE " .
+            " name = '$Param{Name}'";
         my $ID = '';
         $Self->{DBObject}->Prepare(SQL => $SQL);
         while (my @Row = $Self->{DBObject}->FetchrowArray()) {
-          $ID = $Row[0];
+            $ID = $Row[0];
         }
         # log notice
         $Self->{LogObject}->Log(
-          Priority => 'notice',
-          Message => "FAQCategory: '$Param{Name}' ID: '$ID' created successfully ($Self->{UserID})!",
+            Priority => 'notice',
+            Message => "FAQCategory: '$Param{Name}' ID: '$ID' created successfully ($Self->{UserID})!",
         );
         return $ID;
     }
@@ -1265,11 +1265,11 @@ sub CategoryAdd {
 
 update a category
 
-  $FAQObject->CategoryUpdate(
-      ID => 1,
-      Name => 'Some Category',
-      Comment => 'some comment ...',
-  );
+    $FAQObject->CategoryUpdate(
+        ID => 1,
+        Name => 'Some Category',
+        Comment => 'some comment ...',
+    );
 
 =cut
 
@@ -1278,10 +1278,10 @@ sub CategoryUpdate {
     my %Param = @_;
     # check needed stuff
     foreach (qw(CategoryID ParentID Name)) {
-      if (!defined($Param{$_})) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!defined($Param{$_})) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
     # db quote
     foreach (qw(Name Comment)) {
@@ -1293,17 +1293,17 @@ sub CategoryUpdate {
 
     # sql
     my $SQL = "UPDATE faq_category SET ".
-          " parent_id = $Param{ParentID}, ".
-          " name = '$Param{Name}', ".
-          " comments = '$Param{Comment}', ".
-          " valid_id = '$Param{ValidID}', ".
-          " changed = current_timestamp, changed_by = $Self->{UserID} ".
-          " WHERE id = $Param{CategoryID}";
+        " parent_id = $Param{ParentID}, ".
+        " name = '$Param{Name}', ".
+        " comments = '$Param{Comment}', ".
+        " valid_id = '$Param{ValidID}', ".
+        " changed = current_timestamp, changed_by = $Self->{UserID} ".
+        " WHERE id = $Param{CategoryID}";
     if ($Self->{DBObject}->Do(SQL => $SQL)) {
         # log notice
         $Self->{LogObject}->Log(
-          Priority => 'notice',
-          Message => "FAQCategory: '$Param{Name}' ID: '$Param{CategoryID}' updated successfully ($Self->{UserID})!",
+            Priority => 'notice',
+            Message => "FAQCategory: '$Param{Name}' ID: '$Param{CategoryID}' updated successfully ($Self->{UserID})!",
         );
         return 1;
     }
@@ -1316,11 +1316,11 @@ sub CategoryUpdate {
 
 check a category
 
-  $FAQObject->CategoryDuplicateCheck(
-      ID => 1, # or
-      Name => 'Some Name',
-      ParentID => 1,
-  );
+    $FAQObject->CategoryDuplicateCheck(
+        ID => 1, # or
+        Name => 'Some Name',
+        ParentID => 1,
+    );
 
 =cut
 
@@ -1355,9 +1355,9 @@ sub CategoryDuplicateCheck {
 
 count an article
 
-  $FAQObject->CategoryCount(
-      ParentIDs => [1,2,3,4],
-  );
+    $FAQObject->CategoryCount(
+        ParentIDs => [1,2,3,4],
+    );
 
 =cut
 
@@ -1377,7 +1377,7 @@ sub CategoryCount {
     my $Ext = "";
 
     $SQL = "SELECT COUNT(*)" .
-           " FROM faq_category WHERE valid_id = 1";
+        " FROM faq_category WHERE valid_id = 1";
 
     if(defined($Param{ParentIDs})) {
         $Ext = " AND parent_id IN (";
@@ -1405,7 +1405,7 @@ sub CategoryCount {
 
 get the state type list as hash
 
-  my %StateTypes = $FAQObject->StateTypeList();
+    my %StateTypes = $FAQObject->StateTypeList();
 
 =cut
 
@@ -1440,20 +1440,13 @@ sub StateTypeList {
 
 get the state list as hash
 
-  my %States = $FAQObject->StateList();
+    my %States = $FAQObject->StateList();
 
 =cut
 
 sub StateList {
     my $Self = shift;
     my %Param = @_;
-    # check needed stuff
-    foreach (qw()) {
-      if (!$Param{$_}) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
-    }
     # sql
     my %List = ();
     $Self->{DBObject}->Prepare(SQL => 'SELECT id, name FROM faq_state');
@@ -1467,11 +1460,11 @@ sub StateList {
 
 update a state
 
-  $FAQObject->StateUpdate(
-      ID => 1,
-      Name => 'public',
-      TypeID => 1,
-  );
+    $FAQObject->StateUpdate(
+        ID => 1,
+        Name => 'public',
+        TypeID => 1,
+    );
 
 =cut
 
@@ -1480,10 +1473,10 @@ sub StateUpdate {
     my %Param = @_;
     # check needed stuff
     foreach (qw(ID Name TypeID)) {
-      if (!$Param{$_}) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!$Param{$_}) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
     # db quote
     foreach (qw(Name)) {
@@ -1494,7 +1487,7 @@ sub StateUpdate {
     }
     # sql
     my $SQL = "UPDATE faq_state SET name = '$Param{Name}', type_id = $Param{TypeID}, ".
-          " WHERE id = $Param{ID}";
+        " WHERE id = $Param{ID}";
     if ($Self->{DBObject}->Do(SQL => $SQL)) {
         return 1;
     }
@@ -1507,11 +1500,11 @@ sub StateUpdate {
 
 add a state
 
-  my $ID = $FAQObject->StateAdd(
-      ID => 1,
-      Name => 'public',
-      TypeID => 1,
-  );
+    my $ID = $FAQObject->StateAdd(
+        ID => 1,
+        Name => 'public',
+        TypeID => 1,
+    );
 
 =cut
 
@@ -1520,10 +1513,10 @@ sub StateAdd {
     my %Param = @_;
     # check needed stuff
     foreach (qw(Name TypeID)) {
-      if (!$Param{$_}) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!$Param{$_}) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
     # db quote
     foreach (qw(Name)) {
@@ -1533,8 +1526,8 @@ sub StateAdd {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     my $SQL = "INSERT INTO faq_state (name, type_id) ".
-            " VALUES ".
-            " ('$Param{Name}', $Param{TypeID}) ";
+        " VALUES ".
+        " ('$Param{Name}', $Param{TypeID}) ";
 
     if ($Self->{DBObject}->Do(SQL => $SQL)) {
         return 1;
@@ -1548,9 +1541,9 @@ sub StateAdd {
 
 get a state as hash
 
-  my %State = $FAQObject->StateGet(
-      ID => 1,
-  );
+    my %State = $FAQObject->StateGet(
+        ID => 1,
+    );
 
 =cut
 
@@ -1559,10 +1552,10 @@ sub StateGet {
     my %Param = @_;
     # check needed stuff
     foreach (qw(ID)) {
-      if (!$Param{$_}) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!$Param{$_}) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
     # db quote
     foreach (qw(ID)) {
@@ -1587,10 +1580,10 @@ sub StateGet {
 
 get a state as hash
 
-  my %State = $FAQObject->StateGet(
-      ID => 1, # or
-      Name => 'internal',
-  );
+    my %State = $FAQObject->StateTypeGet(
+        ID => 1, # or
+        Name => 'internal',
+    );
 
 =cut
 
@@ -1602,7 +1595,7 @@ sub StateTypeGet {
     my $Ext = "";
 
     $SQL = "SELECT id, name ".
-           " FROM faq_state_type WHERE";
+        " FROM faq_state_type WHERE";
 
     if(defined($Param{ID})) {
         $Ext .= " id = ".$Self->{DBObject}->Quote($Param{ID}, 'Integer')
@@ -1629,7 +1622,7 @@ sub StateTypeGet {
 
 get the language list as hash
 
-  my %Languages = $FAQObject->LanguageList();
+    my %Languages = $FAQObject->LanguageList();
 
 =cut
 
@@ -1638,10 +1631,10 @@ sub LanguageList {
     my %Param = @_;
     # check needed stuff
     foreach (qw()) {
-      if (!$Param{$_}) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!$Param{$_}) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
     # sql
     my %List = ();
@@ -1656,10 +1649,10 @@ sub LanguageList {
 
 update a language
 
-  $FAQObject->LanguageUpdate(
-      ID => 1,
-      Name => 'Some Category',
-  );
+    $FAQObject->LanguageUpdate(
+        ID => 1,
+        Name => 'Some Category',
+    );
 
 =cut
 
@@ -1668,10 +1661,10 @@ sub LanguageUpdate {
     my %Param = @_;
     # check needed stuff
     foreach (qw(ID Name)) {
-      if (!$Param{$_}) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!$Param{$_}) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
     # db quote
     foreach (qw(Name)) {
@@ -1682,7 +1675,7 @@ sub LanguageUpdate {
     }
     # sql
     my $SQL = "UPDATE faq_language SET name = '$Param{Name}' ".
-          " WHERE id = $Param{ID}";
+        " WHERE id = $Param{ID}";
     if ($Self->{DBObject}->Do(SQL => $SQL)) {
         return 1;
     }
@@ -1695,10 +1688,10 @@ sub LanguageUpdate {
 
 check a language
 
-  $FAQObject->LanguageDuplicateCheck(
-      Name => 'Some Name',
-      ID => 1, # for update
-  );
+    $FAQObject->LanguageDuplicateCheck(
+        Name => 'Some Name',
+        ID => 1, # for update
+    );
 
 =cut
 
@@ -1733,9 +1726,9 @@ sub LanguageDuplicateCheck {
 
 add a language
 
-  my $ID = $FAQObject->LanguageAdd(
-      Name => 'Some Category',
-  );
+    my $ID = $FAQObject->LanguageAdd(
+        Name => 'Some Category',
+    );
 
 =cut
 
@@ -1744,10 +1737,10 @@ sub LanguageAdd {
     my %Param = @_;
     # check needed stuff
     foreach (qw(Name)) {
-      if (!$Param{$_}) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!$Param{$_}) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
     # db quote
     foreach (qw(Name)) {
@@ -1769,9 +1762,9 @@ sub LanguageAdd {
 
 get a language as hash
 
-  my %Language = $FAQObject->LanguageGet(
-      ID => 1,
-  );
+    my %Language = $FAQObject->LanguageGet(
+        ID => 1,
+    );
 
 =cut
 
@@ -1780,10 +1773,10 @@ sub LanguageGet {
     my %Param = @_;
     # check needed stuff
     foreach (qw(ID)) {
-      if (!$Param{$_}) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!$Param{$_}) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
     # db quote
     foreach (qw(ID)) {
@@ -1807,15 +1800,15 @@ sub LanguageGet {
 
 search in articles
 
-  my @IDs = $FAQObject->FAQSearch(
-      Number => '*134*',
-      What => '*some text*',
-      Keywords => '*webserver*',
-      States = ['public', 'internal'],
-      Order => 'changed'
-      Sort => 'ASC'
-      Limit => 150,
-  );
+    my @IDs = $FAQObject->FAQSearch(
+        Number => '*134*',
+        What => '*some text*',
+        Keywords => '*webserver*',
+        States = ['public', 'internal'],
+        Order => 'changed'
+        Sort => 'ASC'
+        Limit => 150,
+    );
 
 =cut
 
@@ -1824,10 +1817,10 @@ sub FAQSearch {
     my %Param = @_;
     # check needed stuff
     foreach (qw()) {
-      if (!$Param{$_}) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!$Param{$_}) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
 
     # sql
@@ -1956,9 +1949,9 @@ sub FAQSearch {
 
 returns a category array
 
-  my @IDs = $FAQObject->FAQPathListGet(
-      CategoryID => 150,
-  );
+    my @IDs = $FAQObject->FAQPathListGet(
+        CategoryID => 150,
+    );
 
 =cut
 
@@ -1985,9 +1978,9 @@ sub FAQPathListGet {
 
 get all categories as tree
 
-  my $Hash = $FAQObject->GetCategoryTree(
-      Valid => 0, # if 1 then check valid category
-   );
+    my $Hash = $FAQObject->GetCategoryTree(
+        Valid => 0, # if 1 then check valid category
+    );
 
 =cut
 
@@ -2040,10 +2033,10 @@ sub _MakeTree {
 =item SetCategoryGroup()
 set groups to a category
 
-    $FAQObject->SetCategoryGroup(
-        CategoryID => 3,
-        GroupIDs => [2,4,1,5,77],
-    );
+        $FAQObject->SetCategoryGroup(
+            CategoryID => 3,
+            GroupIDs => [2,4,1,5,77],
+        );
 
 =cut
 
@@ -2053,10 +2046,10 @@ sub SetCategoryGroup {
     my $SQL = '';
     # check needed stuff
     foreach (qw(CategoryID GroupIDs)) {
-      if (!$Param{$_}) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-        return;
-      }
+        if (!$Param{$_}) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
     $Param{CategoryID} = $Self->{DBObject}->Quote($Param{CategoryID}, 'Integer');
     # delete old groups
@@ -2081,7 +2074,7 @@ sub SetCategoryGroup {
 =item GetCategoryGroup()
 get groups from a category
 
-    $FAQObject->SetCategoryGroup(
+    $FAQObject->GetCategoryGroup(
         CategoryID => 3,
     );
 
@@ -2329,9 +2322,9 @@ sub CheckCategoryCustomerPermission {
 
 get the category search as hash
 
-  my @CategorieIDs = @{$FAQObject->AgentCategorySearch(
-    Name => "Name"
-  )};
+    my @CategorieIDs = @{$FAQObject->AgentCategorySearch(
+        Name => "Name"
+    )};
 
 =cut
 
@@ -2363,9 +2356,9 @@ sub AgentCategorySearch {
 
 get the category search as hash
 
-  my @CategorieIDs = @{$FAQObject->CustomerCategorySearch(
-    Name => "Name"
-  )};
+    my @CategorieIDs = @{$FAQObject->CustomerCategorySearch(
+        Name => "Name"
+    )};
 
 =cut
 
@@ -2397,9 +2390,9 @@ sub CustomerCategorySearch {
 
 get the category search as hash
 
-  my @CategorieIDs = @{$FAQObject->PublicCategorySearch(
-    Name => "Name"
-  )};
+    my @CategorieIDs = @{$FAQObject->PublicCategorySearch(
+        Name => "Name"
+    )};
 
 =cut
 
@@ -2418,8 +2411,8 @@ sub PublicCategorySearch {
 
     # get category ids
     $SQL = "SELECT distinct(faq_item.category_id) FROM faq_item ".
-              "LEFT JOIN faq_category ON faq_item.category_id = faq_category.id ".
-              "WHERE faq_category.valid_id = 1 AND faq_item.state_id = $State";
+        "LEFT JOIN faq_category ON faq_item.category_id = faq_category.id ".
+        "WHERE faq_category.valid_id = 1 AND faq_item.state_id = $State";
     if (defined($Param{ParentID})) {
         $SQL .= " AND faq_category.parent_id = ".$Self->{DBObject}->Quote($Param{ParentID}, 'Integer');
     }
@@ -2434,6 +2427,7 @@ sub PublicCategorySearch {
 
 1;
 
+=back
 =head1 TERMS AND CONDITIONS
 
 This software is part of the OTRS project (http://otrs.org/).
@@ -2446,6 +2440,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.8 $ $Date: 2007-01-25 15:21:47 $
+$Revision: 1.9 $ $Date: 2007-07-03 14:24:03 $
 
 =cut
