@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.9 2007-07-03 14:24:03 rk Exp $
+# $Id: FAQ.pm,v 1.10 2007-07-04 09:36:44 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Group;
 use Kernel::System::CustomerGroup;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.9 $';
+$VERSION = '$Revision: 1.10 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -180,7 +180,7 @@ sub FAQGet {
     # get attachment
     $SQL = "SELECT filename, content_type, content_size, content ".
         " FROM faq_attachment WHERE faq_id = $Param{ItemID}";
-    $Self->{DBObject}->Prepare(SQL => $SQL);
+    $Self->{DBObject}->Prepare(SQL => $SQL, Encode => [1,0]);
     while  (my @Row = $Self->{DBObject}->FetchrowArray()) {
         # decode attachment if it's a postgresql backend and not BLOB
         if (!$Self->{DBObject}->GetDatabaseFunction('DirectBlob')) {
@@ -2440,6 +2440,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.9 $ $Date: 2007-07-03 14:24:03 $
+$Revision: 1.10 $ $Date: 2007-07-04 09:36:44 $
 
 =cut
