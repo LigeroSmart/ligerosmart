@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminTicketPriority.pm - admin frontend of ticket priority
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: AdminTicketPriority.pm,v 1.4 2007-07-02 13:29:20 mh Exp $
+# $Id: AdminTicketPriority.pm,v 1.5 2007-08-02 12:44:58 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Priority;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.4 $';
+$VERSION = '$Revision: 1.5 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -29,12 +29,12 @@ sub new {
     my $Self = {};
     bless ($Self, $Type);
 
-    # get common opjects
+    # get common objects
     foreach (keys %Param) {
         $Self->{$_} = $Param{$_};
     }
 
-    # check all needed objects
+    # check needed objects
     foreach (qw(ConfigObject ParamObject LogObject LayoutObject)) {
         if (!$Self->{$_}) {
             $Self->{LayoutObject}->FatalError(Message => "Got no $_!");
