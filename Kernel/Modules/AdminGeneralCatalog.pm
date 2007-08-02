@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminGeneralCatalog.pm - admin frontend of general catalog management
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: AdminGeneralCatalog.pm,v 1.6 2007-07-02 12:06:59 mh Exp $
+# $Id: AdminGeneralCatalog.pm,v 1.7 2007-08-02 12:52:19 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::GeneralCatalog;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.6 $';
+$VERSION = '$Revision: 1.7 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -28,12 +28,12 @@ sub new {
     my $Self = {};
     bless ($Self, $Type);
 
-    # get common opjects
+    # get common objects
     foreach (keys %Param) {
         $Self->{$_} = $Param{$_};
     }
 
-    # check all needed objects
+    # check needed objects
     foreach (qw(ConfigObject ParamObject LogObject LayoutObject)) {
         if (!$Self->{$_}) {
             $Self->{LayoutObject}->FatalError(Message => "Got no $_!");
