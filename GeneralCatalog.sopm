@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: GeneralCatalog.sopm,v 1.6 2007-06-20 15:50:56 mh Exp $</CVS>
+    <CVS>$Id: GeneralCatalog.sopm,v 1.7 2007-08-03 08:09:53 mh Exp $</CVS>
     <Name>GeneralCatalog</Name>
     <Version>0.0.0</Version>
-    <Framework>2.2.x</Framework>
+    <Framework>2.2.2</Framework>
     <Vendor>OTRS GmbH</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
