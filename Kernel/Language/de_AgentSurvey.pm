@@ -1,8 +1,8 @@
 # --
 # Kernel/Language/de_AgentSurvey.pm - the de language for AgentSurvey
-# Copyright (C) 2003-2006 OTRS GmbH, http://otrs.com/
+# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: de_AgentSurvey.pm,v 1.8 2006-11-21 23:14:57 mh Exp $
+# $Id: de_AgentSurvey.pm,v 1.9 2007-08-17 10:12:33 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -12,6 +12,7 @@
 package Kernel::Language::de_AgentSurvey;
 
 use strict;
+use warnings;
 
 sub Data {
     my $Self = shift;
@@ -35,6 +36,8 @@ sub Data {
     $Self->{Translation}->{'YesNo'} = 'JaNein';
     $Self->{Translation}->{'List'} = 'Liste';
     $Self->{Translation}->{'Textarea'} = 'Freitext';
+
+    return 1;
 }
 
 1;
