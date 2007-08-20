@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurvey.pm - a survey module
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: AgentSurvey.pm,v 1.29 2007-08-17 10:12:33 mh Exp $
+# $Id: AgentSurvey.pm,v 1.30 2007-08-20 09:39:46 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.29 $';
+$VERSION = '$Revision: 1.30 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -31,7 +31,6 @@ sub new {
     foreach (keys %Param) {
         $Self->{$_} = $Param{$_};
     }
-
     # check needed objects
     foreach (qw(ParamObject DBObject LayoutObject LogObject ConfigObject)) {
         if (!$Self->{$_}) {
@@ -82,7 +81,9 @@ sub Run {
             );
         }
         # get all attributes of the survey
-        my %Survey = $Self->{SurveyObject}->SurveyGet(SurveyID => $SurveyID);
+        my %Survey = $Self->{SurveyObject}->SurveyGet(
+            SurveyID => $SurveyID,
+        );
         # konvert the textareas in html (\n --><br>)
         $Survey{Introduction} = $Self->{LayoutObject}->Ascii2Html(
             Text => $Survey{Introduction},
@@ -106,38 +107,44 @@ sub Run {
         # print the main table.
         $Self->{LayoutObject}->Block(
             Name => 'Survey',
-            Data => {%Survey},
+            Data => {
+                %Survey,
+            },
         );
         # display stats if status Master, Valid or Invalid
         if ($Survey{Status} eq 'Master' || $Survey{Status} eq 'Valid' || $Survey{Status} eq 'Invalid') {
             $Self->{LayoutObject}->Block(
                 Name => 'SurveyEditStats',
-                Data => {SurveyID => $SurveyID},
+                Data => {
+                    SurveyID => $SurveyID,
+                },
             );
             # get all questions of the survey
-            my @QuestionList = $Self->{SurveyObject}->QuestionList(SurveyID => $SurveyID);
-            foreach my $Question(@QuestionList) {
+            my @QuestionList = $Self->{SurveyObject}->QuestionList(
+                SurveyID => $SurveyID,
+            );
+            foreach my $Question (@QuestionList) {
                 $Self->{LayoutObject}->Block(
                     Name => 'SurveyEditStatsQuestion',
                     Data => $Question,
                 );
-                my @Answers = ();
+                my @Answers;
                 # generate the answers of the question
                 if ($Question->{Type} eq 'YesNo' ||
                     $Question->{Type} eq 'Radio' ||
                     $Question->{Type} eq 'Checkbox'
                 ) {
-                    my @AnswerList = ();
+                    my @AnswerList;
                     # set answers to Yes and No if type was YesNo
                     if ($Question->{Type} eq 'YesNo') {
-                        my %Data = ();
+                        my %Data;
                         $Data{Answer} = "Yes";
                         $Data{AnswerID} = "Yes";
-                        push(@AnswerList,\%Data);
-                        my %Data2 = ();
+                        push (@AnswerList, \%Data);
+                        my %Data2;
                         $Data2{Answer} = "No";
                         $Data2{AnswerID} = "No";
-                        push(@AnswerList,\%Data2);
+                        push (@AnswerList, \%Data2);
                     }
                     else {
                         # get all answers of a question
@@ -145,21 +152,21 @@ sub Run {
                             QuestionID => $Question->{QuestionID},
                         );
                     }
-                    foreach my $Row(@AnswerList) {
+                    foreach my $Row (@AnswerList) {
                         my $CountVote = $Self->{SurveyObject}->CountVote(
                             QuestionID => $Question->{QuestionID},
                             VoteValue => $Row->{AnswerID},
                         );
                         my $Percent = 0;
                         # calculate the percents
-                        if ($RequestComplete ne '0') {
+                        if ($RequestComplete) {
                             $Percent = 100 / $RequestComplete * $CountVote;
                             $Percent = sprintf ("%.0f", $Percent);
                         }
-                        my %Data = ();
+                        my %Data;
                         $Data{Answer} = $Row->{Answer};
                         $Data{AnswerPercent} = $Percent;
-                        push(@Answers,\%Data);
+                        push (@Answers, \%Data);
                     }
                 }
                 elsif ($Question->{Type} eq 'Textarea' ) {
@@ -169,28 +176,28 @@ sub Run {
                     );
                     my $Percent = 0;
                     # calculate the percents
-                    if ($RequestComplete ne '0') {
+                    if ($RequestComplete) {
                         $Percent = 100 / $RequestComplete * $AnswerNo;
                         $Percent = sprintf ("%.0f", $Percent);
                     }
-                    my %Data = ();
+                    my %Data;
                     $Data{Answer} = "answered";
-                    if ($RequestComplete eq '0') {
+                    if (!$RequestComplete) {
                         $Data{AnswerPercent} = 0;
                     }
                     else {
                         $Data{AnswerPercent} = 100 - $Percent;
                     }
-                    push(@Answers,\%Data);
-                    my %Data2 = ();
+                    push (@Answers, \%Data);
+                    my %Data2;
                     $Data2{Answer} = "not answered";
                     $Data2{AnswerPercent} = $Percent;
-                    push(@Answers, \%Data2);
+                    push (@Answers, \%Data2);
                 }
                 # output all answers of the survey
                 foreach my $Row (@Answers) {
                     $Row->{AnswerPercentTable} = $Row->{AnswerPercent};
-                    if ($Row->{AnswerPercent} eq 0) {
+                    if (!$Row->{AnswerPercent}) {
                         $Row->{AnswerPercentTable} = 1;
                     }
                     $Self->{LayoutObject}->Block(
@@ -199,7 +206,7 @@ sub Run {
                     );
                 }
             }
-            if ($RequestComplete > 0) {
+            if ($RequestComplete) {
                 $Self->{LayoutObject}->Block(
                     Name => 'SurveyEditStatsDetails',
                     Data => {
@@ -211,16 +218,16 @@ sub Run {
         # output the possible status
         my %NewStatus;
         if ($Survey{Status} eq 'New' || $Survey{Status} eq 'Invalid') {
-            $NewStatus{'Master'} = 'Master';
-            $NewStatus{'Valid'} = 'Valid';
+            $NewStatus{Master} = 'Master';
+            $NewStatus{Valid} = 'Valid';
         }
         elsif ($Survey{Status} eq 'Valid') {
-            $NewStatus{'Master'} = 'Master';
-            $NewStatus{'Invalid'} = 'Invalid';
+            $NewStatus{Master} = 'Master';
+            $NewStatus{Invalid} = 'Invalid';
         }
         elsif ($Survey{Status} eq 'Master') {
-            $NewStatus{'Valid'} = 'Valid';
-            $NewStatus{'Invalid'} = 'Invalid';
+            $NewStatus{Valid} = 'Valid';
+            $NewStatus{Invalid} = 'Invalid';
         }
         my $NewStatusStr = $Self->{LayoutObject}->OptionStrgHashRef(
             Name => 'NewStatus',
@@ -234,7 +241,9 @@ sub Run {
         );
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentSurvey',
-            Data => {%Param},
+            Data => {
+                %Param,
+            },
         );
         $Output .= $Self->{LayoutObject}->Footer();
         return $Output;
@@ -252,7 +261,7 @@ sub Run {
         # set a new status
         my $StatusSet = $Self->{SurveyObject}->SurveyStatusSet(
             SurveyID => $SurveyID,
-            NewStatus => $NewStatus
+            NewStatus => $NewStatus,
         );
         my $Message = '';
         if (defined($StatusSet) && $StatusSet eq 'NoQuestion') {
@@ -265,7 +274,7 @@ sub Run {
             $Message = '&Message=StatusSet';
         }
         return $Self->{LayoutObject}->Redirect(
-            OP => "Action=$Self->{Action}&Subaction=Survey&SurveyID=$SurveyID$Message"
+            OP => "Action=$Self->{Action}&Subaction=Survey&SurveyID=$SurveyID$Message",
         );
     }
     # ------------------------------------------------------------ #
@@ -286,13 +295,15 @@ sub Run {
         # print the main table.
         $Self->{LayoutObject}->Block(
             Name => 'SurveyEdit',
-            Data => {%Survey},
+            Data => {
+                %Survey
+            },
         );
         my @List = $Self->{SurveyObject}->QuestionList(
             SurveyID => $SurveyID,
         );
         if ($Survey{Status} eq 'New') {
-            foreach my $Question(@List) {
+            foreach my $Question (@List) {
                 $Self->{LayoutObject}->Block(
                     Name => 'SurveyEditQuestions',
                     Data => $Question,
@@ -329,7 +340,7 @@ sub Run {
             );
         }
         else {
-            foreach my $Question(@List) {
+            foreach my $Question (@List) {
                 $Self->{LayoutObject}->Block(
                     Name => 'SurveyEditQuestionsValidOnce',
                     Data => $Question,
@@ -338,7 +349,9 @@ sub Run {
         }
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentSurvey',
-            Data => {%Param},
+            Data => {
+                %Param,
+            },
         );
         $Output .= $Self->{LayoutObject}->Footer();
         return $Output;
@@ -527,7 +540,9 @@ sub Run {
         # print the main table.
         $Self->{LayoutObject}->Block(
             Name => 'QuestionEdit',
-            Data => {%Question},
+            Data => {
+                %Question,
+            },
         );
         if ($Question{Type} eq 'YesNo') {
             $Self->{LayoutObject}->Block(
@@ -539,7 +554,7 @@ sub Run {
                 QuestionID => $QuestionID,
             );
             if ($Survey{Status} eq 'New') {
-                foreach my $Answer2(@List) {
+                foreach my $Answer2 (@List) {
                     $Answer2->{SurveyID} = $SurveyID;
                     $Self->{LayoutObject}->Block(
                         Name => 'QuestionEdit2',
@@ -548,11 +563,13 @@ sub Run {
                 }
                 $Self->{LayoutObject}->Block(
                     Name => 'QuestionEdit2b',
-                    Data => {%Question},
+                    Data => {
+                        %Question,
+                    },
                 );
             }
             else {
-                foreach my $Answer2(@List) {
+                foreach my $Answer2 (@List) {
                     $Answer2->{SurveyID} = $SurveyID;
                     $Self->{LayoutObject}->Block(
                         Name => 'QuestionEdit2ValidOnce',
@@ -566,7 +583,7 @@ sub Run {
                 QuestionID => $QuestionID,
             );
             if ($Survey{Status} eq 'New') {
-                foreach my $Answer3(@List) {
+                foreach my $Answer3 (@List) {
                     $Answer3->{SurveyID} = $SurveyID;
                     $Self->{LayoutObject}->Block(
                         Name => 'QuestionEdit3',
@@ -575,11 +592,13 @@ sub Run {
                 }
                 $Self->{LayoutObject}->Block(
                     Name => 'QuestionEdit3b',
-                    Data => {%Question},
+                    Data => {
+                        %Question,
+                    },
                 );
             }
             else {
-                foreach my $Answer3(@List) {
+                foreach my $Answer3 (@List) {
                     $Answer3->{SurveyID} = $SurveyID;
                     $Self->{LayoutObject}->Block(
                         Name => 'QuestionEdit3ValidOnce',
@@ -595,7 +614,9 @@ sub Run {
         }
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentSurvey',
-            Data => {%Param}
+            Data => {
+                %Param,
+            },
         );
         $Output .= $Self->{LayoutObject}->Footer();
         return $Output;
@@ -631,7 +652,7 @@ sub Run {
         }
     }
     # ------------------------------------------------------------ #
-    # answer addd
+    # answer add
     # ------------------------------------------------------------ #
     elsif ($Self->{Subaction} eq 'AnswerAdd') {
         my $SurveyID = $Self->{ParamObject}->GetParam(Param => "SurveyID");
@@ -756,11 +777,15 @@ sub Run {
         # print the main table.
         $Self->{LayoutObject}->Block(
             Name => 'AnswerEdit',
-            Data => {%Answer},
+            Data => {
+                %Answer
+            },
         );
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentSurvey',
-            Data => {%Param},
+            Data => {
+                %Param
+            },
         );
         $Output .= $Self->{LayoutObject}->Footer();
         return $Output;
@@ -811,12 +836,14 @@ sub Run {
         # print the main table.
         $Self->{LayoutObject}->Block(
             Name => 'Stats',
-            Data => {SurveyID => $SurveyID},
+            Data => {
+                SurveyID => $SurveyID,
+            },
         );
         my @List = $Self->{SurveyObject}->VoteList(
             SurveyID => $SurveyID,
         );
-        foreach my $Vote(@List) {
+        foreach my $Vote (@List) {
             $Vote->{SurveyID} = $SurveyID;
             my %Ticket = $Self->{TicketObject}->TicketGet(
                 TicketID => $Vote->{TicketID},
@@ -829,7 +856,9 @@ sub Run {
         }
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentSurvey',
-            Data => {%Param},
+            Data => {
+                %Param,
+            },
         );
         $Output .= $Self->{LayoutObject}->Footer();
         return $Output;
@@ -851,19 +880,21 @@ sub Run {
         # print the main table.
         $Self->{LayoutObject}->Block(
             Name => 'StatsDetail',
-            Data => {SurveyID => $SurveyID},
+            Data => {
+                SurveyID => $SurveyID,
+            },
         );
         my @QuestionList = $Self->{SurveyObject}->QuestionList(
             SurveyID => $SurveyID,
         );
-        foreach my $Question(@QuestionList) {
+        foreach my $Question (@QuestionList) {
             $Self->{LayoutObject}->Block(
                 Name => 'StatsDetailQuestion',
                 Data => $Question,
             );
-            my @Answers = ();
+            my @Answers;
             if ($Question->{Type} eq 'Radio' || $Question->{Type} eq 'Checkbox') {
-                my @AnswerList = ();
+                my @AnswerList;
                 @AnswerList = $Self->{SurveyObject}->VoteGet(
                     RequestID => $RequestID,
                     QuestionID => $Question->{QuestionID},
@@ -872,9 +903,9 @@ sub Run {
                     my %Answer = $Self->{SurveyObject}->AnswerGet(
                         AnswerID => $Row->{VoteValue},
                     );
-                    my %Data = ();
+                    my %Data;
                     $Data{Answer} = $Answer{Answer};
-                    push(@Answers,\%Data);
+                    push (@Answers, \%Data);
                 }
             }
             elsif ($Question->{Type} eq 'YesNo' || $Question->{Type} eq 'Textarea') {
@@ -882,9 +913,9 @@ sub Run {
                     RequestID => $RequestID,
                     QuestionID => $Question->{QuestionID},
                 );
-                my %Data = ();
+                my %Data;
                 $Data{Answer} = $List[0]->{VoteValue};
-                push(@Answers,\%Data);
+                push (@Answers, \%Data);
             }
             foreach my $Row (@Answers) {
                 $Self->{LayoutObject}->Block(
@@ -895,7 +926,9 @@ sub Run {
         }
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentSurvey',
-            Data => {%Param},
+            Data => {
+                %Param,
+            },
         );
         $Output .= $Self->{LayoutObject}->Footer();
         return $Output;
@@ -908,7 +941,6 @@ sub Run {
     # print the main table.
     $Self->{LayoutObject}->Block(
         Name => 'Overview',
-        Data => {},
     );
     my @List = $Self->{SurveyObject}->SurveyList();
     foreach my $SurveyID (@List) {
@@ -932,7 +964,9 @@ sub Run {
     }
     $Output .= $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentSurvey',
-        Data => {%Param},
+        Data => {
+            %Param,
+        },
     );
     $Output .= $Self->{LayoutObject}->Footer();
     return $Output;
