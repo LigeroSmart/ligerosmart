@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
-# Copyright (C) 2003-2007 OTRS GmbH, http://otrs.com/
+# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.14 2007-06-05 14:15:48 tr Exp $
+# $Id: AgentTimeAccounting.pm,v 1.15 2007-08-29 15:57:54 ea Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.14 $';
+$VERSION = '$Revision: 1.15 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -33,7 +33,7 @@ sub new {
         $Self->{$_} = $Param{$_};
     }
 
-    # check needed Opjects
+    # check needed Objects
     foreach (qw(ParamObject DBObject ModuleReg LogObject
         ConfigObject TicketObject TimeObject GroupObject)
     ) {
@@ -138,7 +138,7 @@ sub Run {
             Day   => $Param{Day},
         );
 
-        # for inital useing, the first agent with rw-right will be redirected
+        # for initial useing, the first agent with rw-right will be redirected
         # to 'Setting'. Then he can do the initial settings
         if (!$User{$Self->{UserID}}){
             my %GroupList = $Self->{GroupObject}->GroupMemberList(
