@@ -2,7 +2,7 @@
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.11 2007-07-02 13:16:21 mh Exp $
+# $Id: GeneralCatalog.pm,v 1.12 2007-08-30 14:55:09 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.11 $';
+$VERSION = '$Revision: 1.12 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -288,6 +288,9 @@ sub ItemAdd {
             return;
         }
     }
+    # cleanup item name
+    $Param{Name} =~ s/(\n|\r)//g;
+    $Param{Name} =~ s/\s$//g;
     # set default values
     foreach (qw(Functionality Comment)) {
         $Param{$_} = $Param{$_} || '';
@@ -368,6 +371,9 @@ sub ItemUpdate {
             return;
         }
     }
+    # cleanup item name
+    $Param{Name} =~ s/(\n|\r)//g;
+    $Param{Name} =~ s/\s$//g;
     # set default values
     foreach (qw(Functionality Comment)) {
         $Param{$_} = $Param{$_} || '';
@@ -517,6 +523,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.11 $ $Date: 2007-07-02 13:16:21 $
+$Revision: 1.12 $ $Date: 2007-08-30 14:55:09 $
 
 =cut
