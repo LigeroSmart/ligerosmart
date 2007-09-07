@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: GeneralCatalog.sopm,v 1.7 2007-08-03 08:09:53 mh Exp $</CVS>
+    <CVS>$Id: GeneralCatalog.sopm,v 1.8 2007-09-07 13:57:29 mh Exp $</CVS>
     <Name>GeneralCatalog</Name>
     <Version>0.0.0</Version>
     <Framework>2.2.2</Framework>
@@ -28,7 +28,7 @@
             <Column Name="create_by" Required="true" Type="INTEGER"/>
             <Column Name="change_time" Required="true" Type="DATE"/>
             <Column Name="change_by" Required="true" Type="INTEGER"/>
-            <Unique Name="class_name">
+            <Unique>
                 <UniqueColumn Name="general_catalog_class"/>
                 <UniqueColumn Name="name"/>
             </Unique>
