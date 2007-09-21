@@ -2,7 +2,7 @@
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.12 2007-08-30 14:55:09 mh Exp $
+# $Id: GeneralCatalog.pm,v 1.13 2007-09-21 11:55:33 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.12 $';
+$VERSION = '$Revision: 1.13 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -99,7 +99,8 @@ return a list as hash reference of one general catalog class
     my $ListRef = $GeneralCatalogObject->ItemList(
         Class => 'ITSM::Service::Type',
         Functionality => 'active',       # (optional) string or array reference
-        Valid => 0,
+        Valid => 0,                      # (optional) default 1
+        Cache => 0,                      # (optional) default 1
     );
 
 =cut
@@ -118,6 +119,10 @@ sub ItemList {
     if (!defined($Param{Valid})) {
         $Param{Valid} = 1;
     }
+    # set cache
+    if (!defined($Param{Cache})) {
+        $Param{Cache} = 1;
+    }
     # quote
     foreach (qw(Class)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
@@ -133,19 +138,27 @@ sub ItemList {
     }
     if ($Param{Functionality} && ref($Param{Functionality}) eq 'ARRAY') {
         my @Functionality;
-        foreach (@{$Param{Functionality}}) {
-            push(@Functionality, $Self->{DBObject}->Quote($_));
-        }
+        # quote
+        @Functionality = map $Self->{DBObject}->Quote($_), @{$Param{Functionality}};
         $SQL .= "AND functionality IN ('${\(join '\', \'', @Functionality)}')";
     }
     elsif ($Param{Functionality}) {
+        # quote
         $Param{Functionality} = $Self->{DBObject}->Quote($Param{Functionality});
         $SQL .= "AND functionality = '$Param{Functionality}'";
     }
+    # read cache
+    if ($Param{Cache} && $Self->{Cache}->{ItemList}->{$SQL}) {
+        return $Self->{Cache}->{ItemList}->{$SQL};
+    }
+    # ask database
     $Self->{DBObject}->Prepare(SQL => $SQL);
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
         $Data{$Row[0]} = $Row[1];
     }
+    # write cache
+    $Self->{Cache}->{ItemList}->{$SQL} = \%Data;
+
     return \%Data;
 }
 
@@ -523,6 +536,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.12 $ $Date: 2007-08-30 14:55:09 $
+$Revision: 1.13 $ $Date: 2007-09-21 11:55:33 $
 
 =cut
