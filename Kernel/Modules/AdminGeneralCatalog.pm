@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminGeneralCatalog.pm - admin frontend of general catalog management
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: AdminGeneralCatalog.pm,v 1.7 2007-08-02 12:52:19 mh Exp $
+# $Id: AdminGeneralCatalog.pm,v 1.8 2007-09-24 12:47:55 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,9 +15,10 @@ use strict;
 use warnings;
 
 use Kernel::System::GeneralCatalog;
+use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.7 $';
+$VERSION = '$Revision: 1.8 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -40,6 +41,7 @@ sub new {
         }
     }
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
+    $Self->{ValidObject} = Kernel::System::Valid->new(%Param);
 
     return $Self;
 }
@@ -85,7 +87,7 @@ sub Run {
             },
         );
         # get availability list
-        my $ValidRef = $Self->{GeneralCatalogObject}->ValidList();
+        my %ValidList = $Self->{ValidObject}->ValidList();
         # get catalog item list
         my $ItemIDList = $Self->{GeneralCatalogObject}->ItemList(
             Class => $Class,
@@ -110,7 +112,7 @@ sub Run {
                     %{$ItemData},
                     CssClass => $CssClass,
                     Functionality => $ItemData->{Functionality} || '-',
-                    Valid => $ValidRef->{$ItemData->{ValidID}},
+                    Valid => $ValidList{$ItemData->{ValidID}},
                 },
             );
         }
@@ -174,14 +176,12 @@ sub Run {
             Translation => 0,
         );
         # generate ValidOptionStrg
-        my $ValidRef = $Self->{GeneralCatalogObject}->ValidList();
-        my $ValidDefault = $Self->{GeneralCatalogObject}->ValidLookup(
-            Name => 'valid',
-        );
+        my %ValidList = $Self->{ValidObject}->ValidList();
+        my %ValidListReverse = reverse %ValidList;
         my $ValidOptionStrg = $Self->{LayoutObject}->BuildSelection(
             Name => 'ValidID',
-            Data => $ValidRef,
-            SelectedID => $ItemData{ValidID} || $ValidDefault->{ValidID},
+            Data => \%ValidList,
+            SelectedID => $ItemData{ValidID} || $ValidListReverse{valid},
         );
         # output ItemEdit
         $Self->{LayoutObject}->Block(

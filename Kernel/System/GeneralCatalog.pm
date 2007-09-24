@@ -2,7 +2,7 @@
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.13 2007-09-21 11:55:33 mh Exp $
+# $Id: GeneralCatalog.pm,v 1.14 2007-09-24 12:47:55 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -14,8 +14,10 @@ package Kernel::System::GeneralCatalog;
 use strict;
 use warnings;
 
+use Kernel::System::Valid;
+
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.13 $';
+$VERSION = '$Revision: 1.14 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -66,6 +68,7 @@ sub new {
     foreach (qw(DBObject ConfigObject LogObject)) {
         $Self->{$_} = $Param{$_} || die "Got no $_!";
     }
+    $Self->{ValidObject} = Kernel::System::Valid->new(%Param);
 
     return $Self;
 }
@@ -458,68 +461,6 @@ sub ItemUpdate {
     }
 }
 
-=item ValidLookup()
-
-return a hash reference of all general catalog availabilities
-
-Return
-    $Valid{ValidID}
-    $Valid{Name}
-
-    my $ValidRef = $GeneralCatalogObject->ValidLookup(
-        ValidID => 1,
-    );
-
-    or
-
-    my $ValidRef = $GeneralCatalogObject->ValidLookup(
-        Name => 'valid',
-    );
-
-=cut
-
-sub ValidLookup {
-    my $Self = shift;
-    my %Param = @_;
-    my %Valid;
-    if (!$Param{ValidID} && !$Param{Name}) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need ValidID or Name!");
-        return;
-    }
-    # get valid list
-    my $ValidListRef = $Self->ValidList();
-    if ($Param{ValidID}) {
-        $Valid{ValidID} = $Param{ValidID};
-        $Valid{Name} = $ValidListRef->{ValidID};
-    }
-    elsif ($Param{Name}) {
-        my %ValidReverse = reverse(%{$ValidListRef});
-        $Valid{ValidID} = $ValidReverse{$Param{Name}};
-        $Valid{Name} = $Param{Name};
-    }
-    return \%Valid;
-}
-
-=item ValidList()
-
-return a hash reference of all general catalog availabilities
-
-    my $ListRef = $GeneralCatalogObject->ValidList();
-
-=cut
-
-sub ValidList {
-    my $Self = shift;
-    my %Param = @_;
-    my %ValidList;
-
-    $ValidList{'1'} = 'valid';
-    $ValidList{'2'} = 'invalid';
-    $ValidList{'3'} = 'invalid-temporarily';
-
-    return \%ValidList;
-}
-
 1;
 
 =back
@@ -536,6 +477,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.13 $ $Date: 2007-09-21 11:55:33 $
+$Revision: 1.14 $ $Date: 2007-09-24 12:47:55 $
 
 =cut
