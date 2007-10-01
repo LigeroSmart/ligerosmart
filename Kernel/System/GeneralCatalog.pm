@@ -2,7 +2,7 @@
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.14 2007-09-24 12:47:55 mh Exp $
+# $Id: GeneralCatalog.pm,v 1.15 2007-10-01 15:08:34 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -16,9 +16,8 @@ use warnings;
 
 use Kernel::System::Valid;
 
-use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.14 $';
-$VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
+use vars qw($VERSION);
+$VERSION = qw($Revision: 1.15 $) [1];
 
 =head1 NAME
 
@@ -59,14 +58,15 @@ create a object
 =cut
 
 sub new {
-    my $Type = shift;
-    my %Param = @_;
+    my ( $Type, %Param ) = @_;
+
     # allocate new hash for object
     my $Self = {};
-    bless ($Self, $Type);
+    bless( $Self, $Type );
+
     # check needed objects
-    foreach (qw(DBObject ConfigObject LogObject)) {
-        $Self->{$_} = $Param{$_} || die "Got no $_!";
+    for my $Object (qw(DBObject ConfigObject LogObject)) {
+        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
     $Self->{ValidObject} = Kernel::System::Valid->new(%Param);
 
@@ -82,15 +82,17 @@ return an array reference of all general catalog classes
 =cut
 
 sub ClassList {
-    my $Self = shift;
-    my %Param = @_;
-    my @ClassList;
+    my ( $Self, %Param ) = @_;
+
     # ask database
-    $Self->{DBObject}->Prepare(
-        SQL => "SELECT DISTINCT(general_catalog_class) FROM general_catalog ORDER BY general_catalog_class",
+    $Self->{DBObject}->Prepare( SQL =>
+            'SELECT DISTINCT(general_catalog_class) FROM general_catalog ORDER BY general_catalog_class',
     );
-    while (my @Row = $Self->{DBObject}->FetchrowArray()) {
-        push(@ClassList, $Row[0]);
+
+    # fetch the result
+    my @ClassList;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        push( @ClassList, $Row[0] );
     }
     return \@ClassList;
 }
@@ -109,56 +111,71 @@ return a list as hash reference of one general catalog class
 =cut
 
 sub ItemList {
-    my $Self = shift;
-    my %Param = @_;
+    my ( $Self, %Param ) = @_;
+
     # check needed stuff
-    foreach (qw(Class)) {
-        if (!$Param{$_}) {
-            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-            return;
-        }
+    if ( !$Param{Class} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need Class!'
+        );
+        return;
     }
+
     # set valid
-    if (!defined($Param{Valid})) {
+    if ( !defined( $Param{Valid} ) ) {
         $Param{Valid} = 1;
     }
+
     # set cache
-    if (!defined($Param{Cache})) {
+    if ( !defined( $Param{Cache} ) ) {
         $Param{Cache} = 1;
     }
+
     # quote
-    foreach (qw(Class)) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
-    }
-    foreach (qw(Valid)) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
-    }
-    # ask database
-    my %Data = ();
+    $Param{Class} = $Self->{DBObject}->Quote( $Param{Class} );
+    $Param{Valid} = $Self->{DBObject}->Quote( $Param{Valid}, 'Integer' );
+
+    # create sql string
     my $SQL = "SELECT id, name FROM general_catalog WHERE general_catalog_class = '$Param{Class}' ";
-    if ($Param{Valid}) {
-        $SQL .= "AND valid_id = 1 ";
+
+    # add valid string to sql string
+    if ( $Param{Valid} ) {
+        $SQL .= 'AND valid_id = 1 ';
     }
-    if ($Param{Functionality} && ref($Param{Functionality}) eq 'ARRAY') {
-        my @Functionality;
-        # quote
-        @Functionality = map $Self->{DBObject}->Quote($_), @{$Param{Functionality}};
-        $SQL .= "AND functionality IN ('${\(join '\', \'', @Functionality)}')";
+
+    # add functionality to sql string
+    if ( $Param{Functionality} ) {
+
+        # create array reference, if functionality is give as sting
+        if ( ref( $Param{Functionality} ) ne 'ARRAY' ) {
+            $Param{Functionality} = [ $Param{Functionality} ];
+        }
+
+        # quote each element
+        my @Functionality = map { $Self->{DBObject}->Quote($_) } @{ $Param{Functionality} };
+
+        # create functionality string
+        my $FunctionalityString = join q{', '}, @Functionality;
+
+        # add functionality string to sql string
+        $SQL .= "AND functionality IN ('$FunctionalityString')";
     }
-    elsif ($Param{Functionality}) {
-        # quote
-        $Param{Functionality} = $Self->{DBObject}->Quote($Param{Functionality});
-        $SQL .= "AND functionality = '$Param{Functionality}'";
-    }
+
     # read cache
-    if ($Param{Cache} && $Self->{Cache}->{ItemList}->{$SQL}) {
+    if ( $Param{Cache} && $Self->{Cache}->{ItemList}->{$SQL} ) {
         return $Self->{Cache}->{ItemList}->{$SQL};
     }
+
     # ask database
-    $Self->{DBObject}->Prepare(SQL => $SQL);
-    while (my @Row = $Self->{DBObject}->FetchrowArray()) {
-        $Data{$Row[0]} = $Row[1];
+    $Self->{DBObject}->Prepare( SQL => $SQL );
+
+    # fetch the result
+    my %Data;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $Data{ $Row[0] } = $Row[1];
     }
+
     # write cache
     $Self->{Cache}->{ItemList}->{$SQL} = \%Data;
 
@@ -176,30 +193,32 @@ return an hash reference of all functionalities of a general catalog class
 =cut
 
 sub FunctionalityList {
-    my $Self = shift;
-    my %Param = @_;
-    my %FunctionalityList;
+    my ( $Self, %Param ) = @_;
+
     # check needed stuff
-    foreach (qw(Class)) {
-        if (!$Param{$_}) {
-            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-            return;
-        }
+    if ( !$Param{Class} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need Class!'
+        );
+        return;
     }
+
     # quote
-    foreach (qw(Class)) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
-    }
+    $Param{Class} = $Self->{DBObject}->Quote( $Param{Class} );
+
     # ask database
-    $Self->{DBObject}->Prepare(
-        SQL => "SELECT DISTINCT(functionality) FROM general_catalog ".
-            "WHERE general_catalog_class = '$Param{Class}' ORDER BY functionality",
-    );
-    while (my @Row = $Self->{DBObject}->FetchrowArray()) {
-        if ($Row[0]) {
-            $FunctionalityList{$Row[0]} = $Row[0];
-        }
+    $Self->{DBObject}->Prepare( SQL => "SELECT DISTINCT(functionality) FROM general_catalog "
+            . "WHERE general_catalog_class = '$Param{Class}' ORDER BY functionality", );
+
+    # fetch the result
+    my %FunctionalityList;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $FunctionalityList{ $Row[0] } = $Row[0];
     }
+
+    # remove empty elements
+    delete $FunctionalityList{''};
 
     return \%FunctionalityList;
 }
@@ -234,47 +253,60 @@ Return
 =cut
 
 sub ItemGet {
-    my $Self = shift;
-    my %Param = @_;
+    my ( $Self, %Param ) = @_;
+
     # check needed stuff
-    if (!$Param{ItemID} && (!$Param{Class} || !$Param{Name})) {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "Need ItemID OR Class and Name!");
+    if ( !$Param{ItemID} && ( !$Param{Class} || !$Param{Name} ) ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need ItemID OR Class and Name!'
+        );
         return;
     }
-    my $SQL = "SELECT id, general_catalog_class, name, functionality, valid_id, comments, ".
-        "create_time, create_by, change_time, change_by FROM general_catalog WHERE ";
-    if ($Param{Class} && $Param{Name}) {
+
+    # create sql string
+    my $SQL = "SELECT id, general_catalog_class, name, functionality, valid_id, comments, "
+        . "create_time, create_by, change_time, change_by FROM general_catalog WHERE ";
+
+    # add options to sql string
+    if ( $Param{Class} && $Param{Name} ) {
+
         # quote
-        foreach (qw(Class Name)) {
-            $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
+        for my $Argument (qw(Class Name)) {
+            $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument} );
         }
+
+        # add class and name to sql string
         $SQL .= "general_catalog_class = '$Param{Class}' AND name = '$Param{Name}'";
     }
     else {
+
         # quote
-        foreach (qw(ItemID)) {
-            $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
-        }
+        $Param{ItemID} = $Self->{DBObject}->Quote( $Param{ItemID}, 'Integer' );
+
+        # add item id to sql string
         $SQL .= "id = $Param{ItemID}";
     }
 
     # ask database
-    my %ItemData = ();
     $Self->{DBObject}->Prepare(
-        SQL => $SQL,
+        SQL   => $SQL,
         Limit => 1,
     );
-    while (my @Row = $Self->{DBObject}->FetchrowArray()) {
-        $ItemData{ItemID} = $Row[0];
-        $ItemData{Class} = $Row[1];
-        $ItemData{Name} = $Row[2];
+
+    # fetch the result
+    my %ItemData;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $ItemData{ItemID}        = $Row[0];
+        $ItemData{Class}         = $Row[1];
+        $ItemData{Name}          = $Row[2];
         $ItemData{Functionality} = $Row[3] || '';
-        $ItemData{ValidID} = $Row[4];
-        $ItemData{Comment} = $Row[5] || '';
-        $ItemData{CreateTime} = $Row[6];
-        $ItemData{CreateBy} = $Row[7];
-        $ItemData{ChangeTime} = $Row[8];
-        $ItemData{ChangeBy} = $Row[9];
+        $ItemData{ValidID}       = $Row[4];
+        $ItemData{Comment}       = $Row[5] || '';
+        $ItemData{CreateTime}    = $Row[6];
+        $ItemData{CreateBy}      = $Row[7];
+        $ItemData{ChangeTime}    = $Row[8];
+        $ItemData{ChangeBy}      = $Row[9];
     }
     return \%ItemData;
 }
@@ -295,71 +327,87 @@ add a new general catalog item
 =cut
 
 sub ItemAdd {
-    my $Self = shift;
-    my %Param = @_;
+    my ( $Self, %Param ) = @_;
+
     # check needed stuff
-    foreach (qw(Class Name ValidID UserID)) {
-        if (!$Param{$_}) {
-            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+    for my $Argument (qw(Class Name ValidID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!"
+            );
             return;
         }
     }
+
     # cleanup item name
     $Param{Name} =~ s/(\n|\r)//g;
     $Param{Name} =~ s/\s$//g;
+
     # set default values
-    foreach (qw(Functionality Comment)) {
-        $Param{$_} = $Param{$_} || '';
+    for my $Argument (qw(Functionality Comment)) {
+        $Param{$Argument} = $Param{$Argument} || '';
     }
+
     # quote
-    foreach (qw(Class Name Functionality Comment)) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
+    for my $Argument (qw(Class Name Functionality Comment)) {
+        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument} );
     }
-    foreach (qw(ValidID UserID)) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
+    for my $Argument (qw(ValidID UserID)) {
+        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument}, 'Integer' );
     }
+
     # find exiting item with same name
-    my $NoAdd;
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT id FROM general_catalog WHERE general_catalog_class = '$Param{Class}' AND name = '$Param{Name}'",
+        SQL =>
+            "SELECT id FROM general_catalog WHERE general_catalog_class = '$Param{Class}' AND name = '$Param{Name}'",
         Limit => 1,
     );
-    while ($Self->{DBObject}->FetchrowArray()) {
+
+    # fetch the result
+    my $NoAdd;
+    while ( $Self->{DBObject}->FetchrowArray() ) {
         $NoAdd = 1;
     }
-    # add item to database
-    my $Return;
-    if (!$NoAdd) {
-        if ($Self->{DBObject}->Do(
-            SQL =>"INSERT INTO general_catalog ".
-                "(general_catalog_class, name, functionality, valid_id, comments, ".
-                "create_time, create_by, change_time, change_by) VALUES ".
-                "('$Param{Class}', '$Param{Name}', '$Param{Functionality}', $Param{ValidID}, '$Param{Comment}', ".
-                "current_timestamp, $Param{UserID}, current_timestamp, $Param{UserID})",
-        )) {
-            # get item id
-            $Self->{DBObject}->Prepare(
-                SQL => "SELECT id FROM general_catalog ".
-                    "WHERE general_catalog_class = '$Param{Class}' AND name = '$Param{Name}'",
-                Limit => 1,
-            );
-            my $ItemID;
-            while (my @Row = $Self->{DBObject}->FetchrowArray()) {
-                $ItemID = $Row[0];
-            }
-            return $ItemID;
-        }
-        else {
-            return;
-        }
-    }
-    else {
+
+    # abort insert of new item, if item name already exists
+    if ($NoAdd) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message => "Can't add new item! General catalog item with same name already exists in this class.",
+            Message =>
+                "Can't add new item! General catalog item with same name already exists in this class.",
         );
         return;
     }
+
+    # insert new item
+    my $Success
+        = $Self->{DBObject}->Do( SQL => "INSERT INTO general_catalog "
+            . "(general_catalog_class, name, functionality, valid_id, comments, "
+            . "create_time, create_by, change_time, change_by) VALUES "
+            . "('$Param{Class}', '$Param{Name}', '$Param{Functionality}', $Param{ValidID}, '$Param{Comment}', "
+            . "current_timestamp, $Param{UserID}, current_timestamp, $Param{UserID})", );
+
+    # find id of new item
+    if ($Success) {
+
+        # ask database
+        $Self->{DBObject}->Prepare(
+            SQL => "SELECT id FROM general_catalog "
+                . "WHERE general_catalog_class = '$Param{Class}' AND name = '$Param{Name}'",
+            Limit => 1,
+        );
+
+        # fetch the result
+        my $ItemID;
+        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+            $ItemID = $Row[0];
+        }
+
+        return $ItemID;
+    }
+
+    return;
 }
 
 =item ItemUpdate()
@@ -378,84 +426,108 @@ update a existing general catalog item
 =cut
 
 sub ItemUpdate {
-    my $Self = shift;
-    my %Param = @_;
+    my ( $Self, %Param ) = @_;
+
     # check needed stuff
-    foreach (qw(ItemID Name ValidID UserID)) {
-        if (!$Param{$_}) {
-            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-            return;
-        }
-    }
-    # cleanup item name
-    $Param{Name} =~ s/(\n|\r)//g;
-    $Param{Name} =~ s/\s$//g;
-    # set default values
-    foreach (qw(Functionality Comment)) {
-        $Param{$_} = $Param{$_} || '';
-    }
-    # quote
-    foreach (qw(Name Functionality Comment)) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
-    }
-    foreach (qw(ItemID ValidID UserID)) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
-    }
-    # get class of item
-    my $Class;
-    my $OldFunctionality;
-    $Self->{DBObject}->Prepare(
-        SQL => "SELECT general_catalog_class, functionality FROM general_catalog WHERE id = $Param{ItemID}",
-        Limit => 1,
-    );
-    while (my @Row = $Self->{DBObject}->FetchrowArray()) {
-        $Class = $Row[0] || '';
-        $OldFunctionality = $Row[1] || '';
-    }
-    # find exiting item with same name
-    my $Update = 1;
-    $Self->{DBObject}->Prepare(
-        SQL => "SELECT id FROM general_catalog WHERE general_catalog_class = '$Class' AND name = '$Param{Name}'",
-        Limit => 1,
-    );
-    while (my @Row = $Self->{DBObject}->FetchrowArray()) {
-        if ($Param{ItemID} ne $Row[0]) {
-            $Update = 0;
-        }
-    }
-    # count functionality
-    if ($OldFunctionality) {
-        $Self->{DBObject}->Prepare(
-            SQL => "SELECT COUNT(functionality) FROM general_catalog ".
-                "WHERE general_catalog_class = '$Class' AND functionality = '$OldFunctionality'",
-            Limit => 1,
-        );
-        my $LastFunctionality = 1;
-        while (my @Row = $Self->{DBObject}->FetchrowArray()) {
-            if ($Row[0] > 1 || $Param{Functionality} eq $OldFunctionality) {
-                $LastFunctionality = 0;
-            }
-        }
-        if ($LastFunctionality) {
+    for my $Argument (qw(ItemID Name ValidID UserID)) {
+        if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message => "Can't update item! The functionality of this item is the last in this class.",
+                Message  => "Need $Argument!"
             );
             return;
         }
     }
+
+    # cleanup item name
+    $Param{Name} =~ s/(\n|\r)//g;
+    $Param{Name} =~ s/\s$//g;
+
+    # set default values
+    for my $Argument (qw(Functionality Comment)) {
+        $Param{$Argument} = $Param{$Argument} || '';
+    }
+
+    # quote
+    for my $Argument (qw(Name Functionality Comment)) {
+        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument} );
+    }
+    for my $Argument (qw(ItemID ValidID UserID)) {
+        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument}, 'Integer' );
+    }
+
+    # get class of item
+    $Self->{DBObject}->Prepare(
+        SQL =>
+            "SELECT general_catalog_class, functionality FROM general_catalog WHERE id = $Param{ItemID}",
+        Limit => 1,
+    );
+
+    # fetch the result
+    my $Class;
+    my $OldFunctionality;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $Class            = $Row[0] || '';
+        $OldFunctionality = $Row[1] || '';
+    }
+
+    # find exiting item with same name
+    $Self->{DBObject}->Prepare(
+        SQL =>
+            "SELECT id FROM general_catalog WHERE general_catalog_class = '$Class' AND name = '$Param{Name}'",
+        Limit => 1,
+    );
+
+    # fetch the result
+    my $Update = 1;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        if ( $Param{ItemID} ne $Row[0] ) {
+            $Update = 0;
+        }
+    }
+
+    # count functionality
+    if ($OldFunctionality) {
+
+        # count the functionality
+        $Self->{DBObject}->Prepare(
+            SQL => "SELECT COUNT(functionality) FROM general_catalog "
+                . "WHERE general_catalog_class = '$Class' AND functionality = '$OldFunctionality'",
+            Limit => 1,
+        );
+
+        # fetch the result
+        my $LastFunctionality = 1;
+        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+            if ( $Row[0] > 1 || $Param{Functionality} eq $OldFunctionality ) {
+                $LastFunctionality = 0;
+            }
+        }
+
+        # abort update, if functionality is the last one
+        if ($LastFunctionality) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message =>
+                    "Can't update item! The functionality of this item is the last in this class.",
+            );
+            return;
+        }
+    }
+
     # update item
-    if ($Update && $Class) {
-        return $Self->{DBObject}->Do(
-            SQL => "UPDATE general_catalog SET name = '$Param{Name}', functionality = '$Param{Functionality}',".
-                "valid_id = $Param{ValidID}, comments = '$Param{Comment}', ".
-                "change_time = current_timestamp, change_by = $Param{UserID} WHERE id = $Param{ItemID}",
+    if ( $Update && $Class ) {
+        return $Self->{DBObject}->Do( SQL =>
+                "UPDATE general_catalog SET name = '$Param{Name}', functionality = '$Param{Functionality}',"
+                . "valid_id = $Param{ValidID}, comments = '$Param{Comment}', "
+                . "change_time = current_timestamp, change_by = $Param{UserID} WHERE id = $Param{ItemID}",
         );
     }
     else {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message => "Can't update item! General catalog item with same name already exists in this class.",
+            Message =>
+                "Can't update item! General catalog item with same name already exists in this class.",
         );
         return;
     }
@@ -477,6 +549,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.14 $ $Date: 2007-09-24 12:47:55 $
+$Revision: 1.15 $ $Date: 2007-10-01 15:08:34 $
 
 =cut
