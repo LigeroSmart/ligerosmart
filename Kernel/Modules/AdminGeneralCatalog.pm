@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminGeneralCatalog.pm - admin frontend of general catalog management
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: AdminGeneralCatalog.pm,v 1.9 2007-10-01 15:08:34 mh Exp $
+# $Id: AdminGeneralCatalog.pm,v 1.10 2007-10-04 14:58:47 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -166,7 +166,7 @@ sub Run {
 
         # generate FunctionalityOptionStrg
         my $FunctionalityRef
-            = $Self->{GeneralCatalogObject}->FunctionalityList( Class => $ItemData{Class}, );
+            = $Self->{GeneralCatalogObject}->FunctionalityList( Class => $ItemData{Class} );
         my $FunctionalityOptionStrg = $Self->{LayoutObject}->BuildSelection(
             Name         => 'Functionality',
             Data         => $FunctionalityRef,
