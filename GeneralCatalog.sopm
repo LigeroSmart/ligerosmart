@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: GeneralCatalog.sopm,v 1.8 2007-09-07 13:57:29 mh Exp $</CVS>
+    <CVS>$Id: GeneralCatalog.sopm,v 1.9 2007-10-04 15:03:20 mh Exp $</CVS>
     <Name>GeneralCatalog</Name>
     <Version>0.0.0</Version>
     <Framework>2.2.2</Framework>
@@ -15,6 +15,7 @@
         <File Permission="644" Location="Kernel/Modules/AdminGeneralCatalog.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminGeneralCatalog.dtl"/>
         <File Permission="644" Location="Kernel/System/GeneralCatalog.pm"/>
+        <File Permission="644" Location="scripts/test/GeneralCatalog.t"/>
     </Filelist>
     <DatabaseInstall>
         <TableCreate Name="general_catalog">
