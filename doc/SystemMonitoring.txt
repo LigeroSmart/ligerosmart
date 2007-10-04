@@ -1,0 +1,133 @@
+NAME
+    Kernel::System::PostMaster::Filter::SystemMonitoring - Basic System
+    Monitoring Interface
+
+SYNOPSIS
+    This module implemets a basic interface to System Monitoring Suites. It
+    works by receiving email messages sent by the Monitoring Suite. New
+    tickets are created in case of component failures. Once a ticket has
+    been opened messages regarding the effected component are attached to
+    this ticket. When the component recovers, the ticket state can be
+    changed or the ticket can be closed.
+
+    Once a open ticket for a given Host/Service combination exists, all
+    mails concerning this particular combination will be attached to the
+    ticket until it's closed.
+
+CONFIGURATION OPTIONS
+    To allow flexible integration between OTRS and a System Monitoring Suite
+    the following configuration options are available. The default values
+    (as shown below) should be suitable for a standard Nagios installation.
+
+    * "FromAddressRegExp"
+        Only mails matching this "From:" address will be considered for this
+        filter. You need to adjust this setting to the from address your
+        System Monitoring Suite uses for outgoing mails.
+
+        Default: 'sysmon@mysystem.com'
+
+    * "StateRegExp"
+        Regular Expression to extract "State"
+
+        Default: '\s*State:\s+(\S+)'
+
+    * "NewTicketRegExp"
+        Regular expression for extracted "State" to trigger new ticket
+
+        Default: 'CRITICAL|DOWN'
+
+    * "CloseTicketRegExp"
+        Regular expression for extracted "State" to trigger ticket
+        transition to "CloseActionState"
+
+        Default: 'OK|UP'
+
+    * "CloseActionState"
+        New status for ticket when service recoveres. This can be either
+        "OLD" in which case the old status stays, or the name of the new
+        status. Please note, that this state needs to be configured in your
+        OTRS installation as valid state. If the state you set here does not
+        exist, the ticket state will not be altered.
+
+        Default: 'closed successful'
+
+    * "ClosePendingTime"
+        Pending time in seconds for 'Pending...' status time. (Ignored for
+        other status types). Please note that this setting will be ignored
+        by OTRS versions older than 2.2. On these systems the pending time
+        already associated with the ticket will be used, which may have in
+        surprising effects. It's recommended not to use 'Pending...' states
+        with OTRS prior to 2.2.
+
+        Default: "60*60*24*2" (2 days)
+
+    * "HostRegExp"
+        Regular expression to extract "Host"
+
+        Default: '\s*Address:\s+(\d+\.\d+\.\d+\.\d+)\s*'
+
+    * "FreeTextHost"
+        Free text field index to store "Host"
+
+        Default: '1'
+
+    * "ServiceRegExp"
+        Regular expression to extract "Service"
+
+        Default: '\s*Service:\s+(.*)\s*'
+
+    * "DefaultService"
+        Default for "Service"; used if no service can be extracted, i.e. if
+        host goes DOWN/UP
+
+        Default: 'Host'
+
+    * "FreeTexyService"
+        Free text field index to store service
+
+        Default: '2'
+
+    * "SenderType"
+        Sender type used for creating tickets and attaching notes
+
+        Default: "system"
+
+    * "ArticleType"
+        Article type used to attach follow up emails to existing tickets
+
+        Default: "note-report"
+
+CONTROL FLOW
+    The following diagram illustrates how mails are handled by this module
+    and in which cases they trigger which action. Pretty much all checks are
+    configable using the regular expressions given by the parameters listed
+    above.
+
+     Mail matches 'FromAddress'?
+     |
+     +-> NO  -> Continue with regular mail processing
+     |
+     +-> YES -> Does a ticket with matching Host/Service combination
+                already exist in OTRS?
+                |
+                +-> NO  -> Does 'State:' match 'NewTicketRegExp'?
+                |          |
+                |          +-> NO  -> Stop processing this mail
+                |          |          (silent drop)
+                |          |
+                |          +-> YES -> Create new ticket, record Host
+                |                     and Service, attach mail
+                |
+                +-> YES -> Attach mail to ticket
+                        -> Does 'State:' match 'CloseTicketRegExp'?
+                           |
+                           +-> NO  -> Continue with regular mail processing
+                           |
+                           +-> YES -> Change ticket type as configured in
+                                      'CloseActionState'
+
+    Besides of a few additional sanity checks this is how the
+    SystemMonitoring modul treats incoming mails. By changing the regular
+    expressions it should be possible to adopt it to different monitoring
+    systems.
+

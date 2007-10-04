@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.1">
+    <CVS>$Id: SystemMonitoring.sopm,v 1.1.1.1 2007-10-04 13:34:40 bb Exp $</CVS>
+    <Name>SystemMonitoring</Name>
+    <Version>1.2.0</Version>
+    <Framework>2.2.x</Framework>
+    <Vendor>OTRS GmbH</Vendor>
+    <URL>http://otrs.org/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <Description Lang="en">Basic mail interface to System Monitoring Suites</Description>
+    <Description Lang="de">Einfache Email Schnittstelle zur System Monitoring Suites</Description>
+    <Filelist>
+        <File Permission="644" Location="Kernel/System/PostMaster/Filter/SystemMonitoring.pm"></File>
+        <File Permission="644" Location="Kernel/Config/Files/SystemMonitoring.xml"></File>
+        <File Permission="644" Location="doc/SystemMonitoring.txt"></File>
+    </Filelist>
+</otrs_package>
