@@ -2,7 +2,7 @@
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.16 2007-10-04 14:58:47 mh Exp $
+# $Id: GeneralCatalog.pm,v 1.17 2007-10-05 15:03:21 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 =head1 NAME
 
@@ -152,11 +152,8 @@ sub ItemList {
             $Param{Functionality} = [ $Param{Functionality} ];
         }
 
-        # quote each element
-        my @Functionality = map { $Self->{DBObject}->Quote($_) } @{ $Param{Functionality} };
-
-        # create functionality string
-        my $FunctionalityString = join q{', '}, @Functionality;
+        # quote each element and create functionality string
+        my $FunctionalityString = join q{', '}, map { $Self->{DBObject}->Quote($_) } @{ $Param{Functionality} };
 
         # add functionality string to sql string
         $SQL .= "AND functionality IN ('$FunctionalityString')";
@@ -548,6 +545,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.16 $ $Date: 2007-10-04 14:58:47 $
+$Revision: 1.17 $ $Date: 2007-10-05 15:03:21 $
 
 =cut

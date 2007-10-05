@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminGeneralCatalog.pm - admin frontend of general catalog management
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: AdminGeneralCatalog.pm,v 1.10 2007-10-04 14:58:47 mh Exp $
+# $Id: AdminGeneralCatalog.pm,v 1.11 2007-10-05 15:03:21 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -71,11 +71,11 @@ sub Run {
         # output overview
         $Self->{LayoutObject}->Block(
             Name => 'Overview',
-            Data => { %Param, ClassOptionStrg => $ClassOptionStrg, },
+            Data => { %Param, ClassOptionStrg => $ClassOptionStrg },
         );
         $Self->{LayoutObject}->Block(
             Name => 'OverviewItem',
-            Data => { %Param, Class => $Class, },
+            Data => { %Param, Class => $Class },
         );
 
         # get availability list
@@ -90,7 +90,7 @@ sub Run {
         for my $ItemID ( sort { $ItemIDList->{$a} cmp $ItemIDList->{$b} } keys %{$ItemIDList} ) {
 
             # get item data
-            my $ItemData = $Self->{GeneralCatalogObject}->ItemGet( ItemID => $ItemID, );
+            my $ItemData = $Self->{GeneralCatalogObject}->ItemGet( ItemID => $ItemID );
 
             # set output class
             if ( $CssClass && $CssClass eq 'searchactive' ) {
@@ -144,7 +144,7 @@ sub Run {
         }
         else {
             my $ItemDataRef
-                = $Self->{GeneralCatalogObject}->ItemGet( ItemID => $ItemData{ItemID}, );
+                = $Self->{GeneralCatalogObject}->ItemGet( ItemID => $ItemData{ItemID} );
             %ItemData = %{$ItemDataRef};
         }
 
@@ -161,7 +161,7 @@ sub Run {
         # output overview
         $Self->{LayoutObject}->Block(
             Name => 'Overview',
-            Data => { %Param, ClassOptionStrg => $ClassOptionStrg, },
+            Data => { %Param, ClassOptionStrg => $ClassOptionStrg },
         );
 
         # generate FunctionalityOptionStrg
@@ -198,7 +198,7 @@ sub Run {
             # output ItemEditClassAdd
             $Self->{LayoutObject}->Block(
                 Name => 'ItemEditClassAdd',
-                Data => { Class => $ItemData{Class}, },
+                Data => { Class => $ItemData{Class} },
             );
         }
         else {
@@ -206,7 +206,7 @@ sub Run {
             # output ItemEditClassExist
             $Self->{LayoutObject}->Block(
                 Name => 'ItemEditClassExist',
-                Data => { Class => $ItemData{Class}, },
+                Data => { Class => $ItemData{Class} },
             );
         }
 
@@ -243,20 +243,20 @@ sub Run {
         {
 
             # redirect to overview class list
-            return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}", );
+            return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
         }
 
         # save to database
         if ( $ItemData{ItemID} eq 'NEW' ) {
             my $Success
-                = $Self->{GeneralCatalogObject}->ItemAdd( %ItemData, UserID => $Self->{UserID}, );
+                = $Self->{GeneralCatalogObject}->ItemAdd( %ItemData, UserID => $Self->{UserID} );
             if ( !$Success ) {
                 return $Self->{LayoutObject}->ErrorScreen();
             }
         }
         else {
             my $Success = $Self->{GeneralCatalogObject}
-                ->ItemUpdate( %ItemData, UserID => $Self->{UserID}, );
+                ->ItemUpdate( %ItemData, UserID => $Self->{UserID} );
             if ( !$Success ) {
                 return $Self->{LayoutObject}->ErrorScreen();
             }
@@ -264,7 +264,7 @@ sub Run {
 
         # redirect to overview class list
         return $Self->{LayoutObject}
-            ->Redirect( OP => "Action=$Self->{Action}&Subaction=ItemList&Class=$ItemData{Class}", );
+            ->Redirect( OP => "Action=$Self->{Action}&Subaction=ItemList&Class=$ItemData{Class}" );
     }
 
     # ------------------------------------------------------------ #
@@ -284,11 +284,11 @@ sub Run {
         # output overview
         $Self->{LayoutObject}->Block(
             Name => 'Overview',
-            Data => { %Param, ClassOptionStrg => $ClassOptionStrg, },
+            Data => { %Param, ClassOptionStrg => $ClassOptionStrg },
         );
         $Self->{LayoutObject}->Block(
             Name => 'OverviewClass',
-            Data => { %Param, },
+            Data => { %Param },
         );
         my $CssClass;
         for my $Class ( @{$ClassList} ) {

@@ -2,24 +2,27 @@
 # GeneralCatalog.t - general catalog tests
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: GeneralCatalog.t,v 1.1 2007-10-04 15:03:20 mh Exp $
+# $Id: GeneralCatalog.t,v 1.2 2007-10-05 15:03:21 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 # --
 
+use strict;
+use warnings;
+
 use Kernel::System::GeneralCatalog;
 
 $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
 
 # create some random numbers
-my $Rand1 = int( rand(1000000) );
-my $Rand2 = int( rand(1000000) );
-my $Rand3 = int( rand(1000000) );
-my $Rand4 = int( rand(1000000) );
-my $Rand5 = int( rand(1000000) );
-my $Rand6 = int( rand(1000000) );
+my $Rand1 = int( rand(1_000_000) );
+my $Rand2 = int( rand(1_000_000) );
+my $Rand3 = int( rand(1_000_000) );
+my $Rand4 = int( rand(1_000_000) );
+my $Rand5 = int( rand(1_000_000) );
+my $Rand6 = int( rand(1_000_000) );
 
 my $ItemData = [
 
