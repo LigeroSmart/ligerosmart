@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminGeneralCatalog.pm - admin frontend of general catalog management
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: AdminGeneralCatalog.pm,v 1.11 2007-10-05 15:03:21 mh Exp $
+# $Id: AdminGeneralCatalog.pm,v 1.12 2007-10-05 15:49:00 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -143,8 +143,7 @@ sub Run {
             }
         }
         else {
-            my $ItemDataRef
-                = $Self->{GeneralCatalogObject}->ItemGet( ItemID => $ItemData{ItemID} );
+            my $ItemDataRef = $Self->{GeneralCatalogObject}->ItemGet( ItemID => $ItemData{ItemID} );
             %ItemData = %{$ItemDataRef};
         }
 
@@ -255,8 +254,8 @@ sub Run {
             }
         }
         else {
-            my $Success = $Self->{GeneralCatalogObject}
-                ->ItemUpdate( %ItemData, UserID => $Self->{UserID} );
+            my $Success
+                = $Self->{GeneralCatalogObject}->ItemUpdate( %ItemData, UserID => $Self->{UserID} );
             if ( !$Success ) {
                 return $Self->{LayoutObject}->ErrorScreen();
             }
@@ -288,7 +287,7 @@ sub Run {
         );
         $Self->{LayoutObject}->Block(
             Name => 'OverviewClass',
-            Data => { %Param },
+            Data => {%Param},
         );
         my $CssClass;
         for my $Class ( @{$ClassList} ) {
