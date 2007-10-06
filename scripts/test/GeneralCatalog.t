@@ -2,7 +2,7 @@
 # GeneralCatalog.t - general catalog tests
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: GeneralCatalog.t,v 1.4 2007-10-06 08:53:35 mh Exp $
+# $Id: GeneralCatalog.t,v 1.5 2007-10-06 15:36:39 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -188,13 +188,13 @@ for my $Item ( @{$ItemData} ) {
 
         # check if item was added successfully or not
         if ( $Item->{AddGet} ) {
-            $Self->True( $ItemID, "Test $TestCount: ItemAdd() - ItemKey: $ItemID", );
+            $Self->True( $ItemID, "Test $TestCount: ItemAdd() - ItemKey: $ItemID" );
 
             # set last item id variable
             $LastAddedItemID = $ItemID;
         }
         else {
-            $Self->False( $ItemID, "Test $TestCount: ItemAdd()", );
+            $Self->False( $ItemID, "Test $TestCount: ItemAdd()" );
         }
 
         # get item data to check the values after creation of item
@@ -217,12 +217,12 @@ for my $Item ( @{$ItemData} ) {
 
         # check last item id varaible
         if ( !$LastAddedItemID ) {
-            $Self->False( 1, "Test $TestCount: NO LAST ITEM ID GIVEN", );
+            $Self->False( 1, "Test $TestCount: NO LAST ITEM ID GIVEN" );
         }
 
         # update the item
         my $UpdateSucess = $Self->{GeneralCatalogObject}
-            ->ItemUpdate( %{ $Item->{Update} }, ItemID => $LastAddedItemID, );
+            ->ItemUpdate( %{ $Item->{Update} }, ItemID => $LastAddedItemID );
 
         # check if item was updated successfully or not
         if ( $Item->{UpdateGet} ) {
@@ -230,7 +230,7 @@ for my $Item ( @{$ItemData} ) {
             );
         }
         else {
-            $Self->False( $UpdateSucess, "Test $TestCount: ItemUpdate()", );
+            $Self->False( $UpdateSucess, "Test $TestCount: ItemUpdate()" );
         }
 
         # get item data to check the values after the update

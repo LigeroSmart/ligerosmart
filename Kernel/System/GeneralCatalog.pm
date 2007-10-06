@@ -2,7 +2,7 @@
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.18 2007-10-05 15:49:00 mh Exp $
+# $Id: GeneralCatalog.pm,v 1.19 2007-10-06 15:36:39 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 =head1 NAME
 
@@ -207,7 +207,7 @@ sub FunctionalityList {
 
     # ask database
     $Self->{DBObject}->Prepare( SQL => "SELECT DISTINCT(functionality) FROM general_catalog "
-            . "WHERE general_catalog_class = '$Param{Class}' ORDER BY functionality", );
+            . "WHERE general_catalog_class = '$Param{Class}' ORDER BY functionality" );
 
     # fetch the result
     my @FunctionalityList;
@@ -383,7 +383,7 @@ sub ItemAdd {
             . "(general_catalog_class, name, functionality, valid_id, comments, "
             . "create_time, create_by, change_time, change_by) VALUES "
             . "('$Param{Class}', '$Param{Name}', '$Param{Functionality}', $Param{ValidID}, '$Param{Comment}', "
-            . "current_timestamp, $Param{UserID}, current_timestamp, $Param{UserID})", );
+            . "current_timestamp, $Param{UserID}, current_timestamp, $Param{UserID})" );
 
     # find id of new item
     if ($Success) {
@@ -520,14 +520,13 @@ sub ItemUpdate {
                 . "change_time = current_timestamp, change_by = $Param{UserID} WHERE id = $Param{ItemID}",
         );
     }
-    else {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message =>
-                "Can't update item! General catalog item with same name already exists in this class.",
-        );
-        return;
-    }
+
+    $Self->{LogObject}->Log(
+        Priority => 'error',
+        Message =>
+            "Can't update item! General catalog item with same name already exists in this class.",
+    );
+    return;
 }
 
 1;
@@ -546,6 +545,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.18 $ $Date: 2007-10-05 15:49:00 $
+$Revision: 1.19 $ $Date: 2007-10-06 15:36:39 $
 
 =cut
