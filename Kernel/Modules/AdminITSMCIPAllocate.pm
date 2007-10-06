@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminITSMCIPAllocate.pm - admin frontend of criticality, impact and priority
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: AdminITSMCIPAllocate.pm,v 1.3 2007-08-02 12:44:58 mh Exp $
+# $Id: AdminITSMCIPAllocate.pm,v 1.4 2007-10-06 10:53:53 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -20,146 +20,153 @@ use Kernel::System::Priority;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.3 $';
-$VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
-    my $Type = shift;
-    my %Param = @_;
+    my ( $Type, %Param ) = @_;
 
     # allocate new hash for object
     my $Self = {};
-    bless ($Self, $Type);
+    bless( $Self, $Type );
 
     # get common objects
-    foreach (keys %Param) {
-        $Self->{$_} = $Param{$_};
-    }
+    %{$Self} = %Param;
 
     # check needed objects
-    foreach (qw(ConfigObject ParamObject LogObject LayoutObject)) {
-        if (!$Self->{$_}) {
-            $Self->{LayoutObject}->FatalError(Message => "Got no $_!");
+    for my $Object (qw(ConfigObject ParamObject LogObject LayoutObject)) {
+        if ( !$Self->{$Object} ) {
+            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
         }
     }
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
-    $Self->{CIPAllocateObject} = Kernel::System::ITSMCIPAllocate->new(%Param);
-    $Self->{PriorityObject} = Kernel::System::Priority->new(%Param);
-    $Self->{ValidObject} = Kernel::System::Valid->new(%Param);
+    $Self->{CIPAllocateObject}    = Kernel::System::ITSMCIPAllocate->new(%Param);
+    $Self->{PriorityObject}       = Kernel::System::Priority->new(%Param);
+    $Self->{ValidObject}          = Kernel::System::Valid->new(%Param);
 
     return $Self;
 }
 
 sub Run {
-    my $Self = shift;
-    my %Param = @_;
+    my ( $Self, %Param ) = @_;
 
     # ------------------------------------------------------------ #
     # criticality, impact and priority allocation
     # ------------------------------------------------------------ #
-    if ($Self->{Subaction} eq 'CIPAllocate') {
+    if ( $Self->{Subaction} eq 'CIPAllocate' ) {
+
         # get option lists
         my %ObjectOption;
-        $ObjectOption{CriticalityList} = $Self->{GeneralCatalogObject}->ItemList(
-            Class => 'ITSM::Core::Criticality',
-        );
-        $ObjectOption{ImpactList} = $Self->{GeneralCatalogObject}->ItemList(
-            Class => 'ITSM::Core::Impact',
-        );
-        my %OptionPriorityList = $Self->{PriorityObject}->PriorityList(UserID => 1);
+        $ObjectOption{CriticalityList}
+            = $Self->{GeneralCatalogObject}->ItemList( Class => 'ITSM::Core::Criticality', );
+        $ObjectOption{ImpactList}
+            = $Self->{GeneralCatalogObject}->ItemList( Class => 'ITSM::Core::Impact', );
+        my %OptionPriorityList = $Self->{PriorityObject}->PriorityList( UserID => 1 );
         $ObjectOption{PriorityList} = \%OptionPriorityList;
 
         # get all PriorityIDs of the matrix
         my $AllocateData;
-        foreach my $ImpactID (sort keys %{$ObjectOption{ImpactList}}) {
-            foreach my $CriticalityID (sort keys %{$ObjectOption{CriticalityList}}) {
-                my $PriorityID = $Self->{ParamObject}->GetParam(
-                    Param => "PriorityID" . $ImpactID .'-'. $CriticalityID,
-                ) || '';
+        for my $ImpactID ( sort keys %{ $ObjectOption{ImpactList} } ) {
+            for my $CriticalityID ( sort keys %{ $ObjectOption{CriticalityList} } ) {
+                my $PriorityID = $Self->{ParamObject}
+                    ->GetParam( Param => "PriorityID" . $ImpactID . '-' . $CriticalityID, ) || '';
 
                 if ($PriorityID) {
                     $AllocateData->{$ImpactID}->{$CriticalityID} = $PriorityID;
                 }
             }
         }
+
         # update allocations
         $Self->{CIPAllocateObject}->AllocateUpdate(
             AllocateData => $AllocateData,
-            UserID => 1,
+            UserID       => 1,
         );
-        return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}");
+        return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
     }
+
     # ------------------------------------------------------------ #
     # overview
     # ------------------------------------------------------------ #
     else {
+
         # output header and navbar
         my $Output = $Self->{LayoutObject}->Header();
         $Output .= $Self->{LayoutObject}->NavigationBar();
 
         # get option lists
         my %ObjectOption;
-        $ObjectOption{CriticalityList} = $Self->{GeneralCatalogObject}->ItemList(
-            Class => 'ITSM::Core::Criticality',
-        );
-        $ObjectOption{ImpactList} = $Self->{GeneralCatalogObject}->ItemList(
-            Class => 'ITSM::Core::Impact',
-        );
-        my %OptionPriorityList = $Self->{PriorityObject}->PriorityList(UserID => 1);
+        $ObjectOption{CriticalityList}
+            = $Self->{GeneralCatalogObject}->ItemList( Class => 'ITSM::Core::Criticality', );
+        $ObjectOption{ImpactList}
+            = $Self->{GeneralCatalogObject}->ItemList( Class => 'ITSM::Core::Impact', );
+        my %OptionPriorityList = $Self->{PriorityObject}->PriorityList( UserID => 1 );
         $ObjectOption{PriorityList} = \%OptionPriorityList;
 
         # get allocation data
-        my $AllocateData = $Self->{CIPAllocateObject}->AllocateList(UserID => 1);
+        my $AllocateData = $Self->{CIPAllocateObject}->AllocateList( UserID => 1 );
 
         my $AllocateMatrix;
         $AllocateMatrix->[0]->[0]->{Class} = 'Description';
+
         # generate table description (Impact)
         my $Counter1 = 1;
-        foreach (sort {$ObjectOption{ImpactList}->{$a} cmp $ObjectOption{ImpactList}->{$b}} keys %{$ObjectOption{ImpactList}}) {
-            $AllocateMatrix->[$Counter1]->[0]->{ObjectType} = 'Impact';
-            $AllocateMatrix->[$Counter1]->[0]->{ImpactKey} = $_;
+        for (
+            sort { $ObjectOption{ImpactList}->{$a} cmp $ObjectOption{ImpactList}->{$b} }
+            keys %{ $ObjectOption{ImpactList} }
+            )
+        {
+            $AllocateMatrix->[$Counter1]->[0]->{ObjectType}   = 'Impact';
+            $AllocateMatrix->[$Counter1]->[0]->{ImpactKey}    = $_;
             $AllocateMatrix->[$Counter1]->[0]->{ObjectOption} = $ObjectOption{ImpactList}{$_};
-            $AllocateMatrix->[$Counter1]->[0]->{Class} = 'Description';
+            $AllocateMatrix->[$Counter1]->[0]->{Class}        = 'Description';
             $Counter1++;
         }
+
         # generate table description (Criticality)
         my $Counter2 = 1;
-        foreach (sort {$ObjectOption{CriticalityList}->{$a} cmp $ObjectOption{CriticalityList}->{$b}} keys %{$ObjectOption{CriticalityList}}) {
-            $AllocateMatrix->[0]->[$Counter2]->{ObjectType} = 'Criticality';
+        for (
+            sort { $ObjectOption{CriticalityList}->{$a} cmp $ObjectOption{CriticalityList}->{$b} }
+            keys %{ $ObjectOption{CriticalityList} }
+            )
+        {
+            $AllocateMatrix->[0]->[$Counter2]->{ObjectType}     = 'Criticality';
             $AllocateMatrix->[0]->[$Counter2]->{CriticalityKey} = $_;
             $AllocateMatrix->[0]->[$Counter2]->{ObjectOption} = $ObjectOption{CriticalityList}{$_};
-            $AllocateMatrix->[0]->[$Counter2]->{Class} = 'Description';
+            $AllocateMatrix->[0]->[$Counter2]->{Class}        = 'Description';
             $Counter2++;
         }
+
         # generate content
-        foreach my $Row (1..($Counter1-1)) {
-            foreach my $Column (1..($Counter2-1)) {
+        for my $Row ( 1 .. ( $Counter1 - 1 ) ) {
+            for my $Column ( 1 .. ( $Counter2 - 1 ) ) {
                 $AllocateMatrix->[$Row]->[$Column]->{Class} = 'Content';
-                $AllocateMatrix->[$Row]->[$Column]->{OptionStrg} = $Self->{LayoutObject}->OptionStrgHashRef(
-                    Name => 'PriorityID'.
-                        $AllocateMatrix->[$Row]->[0]->{ImpactKey}.'-'.
-                        $AllocateMatrix->[0]->[$Column]->{CriticalityKey},
-                    Data => $ObjectOption{PriorityList},
-                    SelectedID => $AllocateData->{$AllocateMatrix->[$Row]->[0]->{ImpactKey}}{$AllocateMatrix->[0]->[$Column]->{CriticalityKey}} || '',
-                );
+                $AllocateMatrix->[$Row]->[$Column]->{OptionStrg}
+                    = $Self->{LayoutObject}->OptionStrgHashRef(
+                    Name => 'PriorityID'
+                        . $AllocateMatrix->[$Row]->[0]->{ImpactKey} . '-'
+                        . $AllocateMatrix->[0]->[$Column]->{CriticalityKey},
+                    Data       => $ObjectOption{PriorityList},
+                    SelectedID => $AllocateData->{ $AllocateMatrix->[$Row]->[0]->{ImpactKey} }
+                        { $AllocateMatrix->[0]->[$Column]->{CriticalityKey} } || '',
+                    );
             }
         }
+
         # output allocation matrix
-        foreach my $RowRef (@{$AllocateMatrix}) {
-            $Self->{LayoutObject}->Block(
-                Name => 'CIPAllocateRow',
-            );
-            foreach my $Cell (@{$RowRef}) {
+        for my $RowRef ( @{$AllocateMatrix} ) {
+            $Self->{LayoutObject}->Block( Name => 'CIPAllocateRow', );
+            for my $Cell ( @{$RowRef} ) {
                 $Self->{LayoutObject}->Block(
-                    Name => 'CIPAllocateRowColumn'. $Cell->{Class},
+                    Name => 'CIPAllocateRowColumn' . $Cell->{Class},
                     Data => $Cell,
                 );
             }
         }
+
         # start template output
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AdminITSMCIPAllocate',
-            Data => \%Param,
+            Data         => \%Param,
         );
         $Output .= $Self->{LayoutObject}->Footer();
         return $Output;

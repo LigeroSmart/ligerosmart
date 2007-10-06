@@ -2,7 +2,7 @@
 # Kernel/System/ITSMCIPAllocate.pm - all criticality, impact and priority allocation functions
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: ITSMCIPAllocate.pm,v 1.3 2007-07-02 13:29:20 mh Exp $
+# $Id: ITSMCIPAllocate.pm,v 1.4 2007-10-06 10:53:53 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -14,9 +14,8 @@ package Kernel::System::ITSMCIPAllocate;
 use strict;
 use warnings;
 
-use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.3 $';
-$VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
+use vars qw($VERSION);
+$VERSION = qw($Revision: 1.4 $) [1];
 
 =head1 NAME
 
@@ -58,14 +57,15 @@ create a object
 =cut
 
 sub new {
-    my $Type = shift;
-    my %Param = @_;
+    my ( $Type, %Param ) = @_;
+
     # allocate new hash for object
     my $Self = {};
-    bless ($Self, $Type);
+    bless( $Self, $Type );
+
     # check needed objects
-    foreach (qw(DBObject ConfigObject LogObject)) {
-        $Self->{$_} = $Param{$_} || die "Got no $_!";
+    for my $Object (qw(DBObject ConfigObject LogObject)) {
+        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
     return $Self;
@@ -82,25 +82,28 @@ return a 2d hash reference of allocations
 =cut
 
 sub AllocateList {
-    my $Self = shift;
-    my %Param = @_;
+    my ( $Self, %Param ) = @_;
+
     # check needed stuff
-    foreach (qw(UserID)) {
-        if (!$Param{$_}) {
-            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-            return;
-        }
+    if ( !$Param{UserID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need UserID!'
+        );
+        return;
     }
+
     # quote
-    foreach (qw(UserID)) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
-    }
+    $Param{UserID} = $Self->{DBObject}->Quote( $Param{UserID}, 'Integer' );
+
     # ask database
+    $Self->{DBObject}
+        ->Prepare( SQL => 'SELECT criticality_id, impact_id, priority_id FROM cip_allocate' );
+
+    # result list
     my %AllocateData = ();
-    if ($Self->{DBObject}->Prepare(SQL => 'SELECT criticality_id, impact_id, priority_id FROM cip_allocate')) {
-        while (my @Row = $Self->{DBObject}->FetchrowArray()) {
-            $AllocateData{$Row[1]}{$Row[0]} = $Row[2];
-        }
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $AllocateData{ $Row[1] }{ $Row[0] } = $Row[2];
     }
 
     return \%AllocateData;
@@ -118,54 +121,68 @@ update the allocation of criticality, impact and priority
 =cut
 
 sub AllocateUpdate {
-    my $Self = shift;
-    my %Param = @_;
+    my ( $Self, %Param ) = @_;
+
     # check needed stuff
-    foreach (qw(AllocateData UserID)) {
-        if (!$Param{$_}) {
-            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+    for my $Argument (qw(AllocateData UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!"
+            );
             return;
         }
     }
-    if (!ref($Param{AllocateData}) eq 'HASH') {
-        $Self->{LogObject}->Log(Priority => 'error', Message => "AllocateData must be a 2D hash reference!");
+
+    # check if allocate data is a hash reference
+    if ( ref( $Param{AllocateData} ) ne 'HASH' ) {
+        $Self->{LogObject}
+            ->Log( Priority => 'error', Message => 'AllocateData must be a 2D hash reference!' );
         return;
     }
-    # quote
-    foreach (qw(UserID)) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
+
+    # check if allocate data is a 2D hash reference
+    for my $ImpactID ( keys %{ $Param{AllocateData} } ) {
+        if ( ref( $Param{AllocateData}->{$ImpactID} ) ne 'HASH' ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => 'AllocateData must be a 2D hash reference!'
+            );
+            return;
+        }
     }
+
+    # quote
+    $Param{UserID} = $Self->{DBObject}->Quote( $Param{UserID}, 'Integer' );
+
     # delete old allocations
-    my $SQL = "DELETE FROM cip_allocate";
-    my $Delete = $Self->{DBObject}->Do(SQL => $SQL);
-    my $Return = 0;
+    $Self->{DBObject}->Do( SQL => 'DELETE FROM cip_allocate' );
 
     # insert new allocations
-    if ($Delete) {
-        foreach my $ImpactID (keys %{$Param{AllocateData}}) {
-            # abort insert, if no 2d hash reference was found
-            if (ref($Param{AllocateData}->{$ImpactID}) ne 'HASH') {
-                $Self->{LogObject}->Log(Priority => 'error', Message => "AllocateData must be a 2D hash reference!");
-                next;
-            }
-            foreach my $CriticalityID (keys %{$Param{AllocateData}->{$ImpactID}}) {
-                my $PriorityID = $Param{AllocateData}->{$ImpactID}->{$CriticalityID};
-                # quote
-                $CriticalityID = $Self->{DBObject}->Quote($CriticalityID, 'Integer');
-                $ImpactID = $Self->{DBObject}->Quote($ImpactID, 'Integer');
-                $PriorityID = $Self->{DBObject}->Quote($PriorityID, 'Integer');
+    for my $ImpactID ( keys %{ $Param{AllocateData} } ) {
 
-                # insert new allocation
-                my $SQL = "INSERT INTO cip_allocate (criticality_id, impact_id, priority_id, ".
-                    "create_time, create_by, change_time, change_by) VALUES ".
-                    "($CriticalityID, $ImpactID, $PriorityID, ".
-                    "current_timestamp, $Param{UserID}, current_timestamp, $Param{UserID})";
-                $Self->{DBObject}->Do(SQL => $SQL);
-            }
+        # quote
+        $ImpactID = $Self->{DBObject}->Quote( $ImpactID, 'Integer' );
+
+        for my $CriticalityID ( keys %{ $Param{AllocateData}->{$ImpactID} } ) {
+
+            # extract priority
+            my $PriorityID = $Param{AllocateData}->{$ImpactID}->{$CriticalityID};
+
+            # quote
+            $CriticalityID = $Self->{DBObject}->Quote( $CriticalityID, 'Integer' );
+            $PriorityID    = $Self->{DBObject}->Quote( $PriorityID,    'Integer' );
+
+            # insert new allocation
+            $Self->{DBObject}->Do( SQL => "INSERT INTO cip_allocate "
+                    . "(criticality_id, impact_id, priority_id, "
+                    . "create_time, create_by, change_time, change_by) VALUES "
+                    . "($CriticalityID, $ImpactID, $PriorityID, "
+                    . "current_timestamp, $Param{UserID}, current_timestamp, $Param{UserID})", );
         }
-        $Return = 1;
     }
-    return $Return;
+
+    return 1;
 }
 
 =item PriorityAllocationGet()
@@ -180,29 +197,37 @@ return the priority id of a criticality and an impact
 =cut
 
 sub PriorityAllocationGet {
-    my $Self = shift;
-    my %Param = @_;
+    my ( $Self, %Param ) = @_;
+
     # check needed stuff
-    foreach (qw(CriticalityID ImpactID)) {
-        if (!$Param{$_}) {
-            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+    for my $Argument (qw(CriticalityID ImpactID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!"
+            );
             return;
         }
     }
+
     # quote
-    foreach (qw(CriticalityID ImpactID)) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
+    for my $Argument (qw(CriticalityID ImpactID)) {
+        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument}, 'Integer' );
     }
+
     # get priority id from db
-    my $PriorityID;
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT priority_id FROM cip_allocate ".
-            "WHERE criticality_id = $Param{CriticalityID} AND impact_id = $Param{ImpactID}",
+        SQL => "SELECT priority_id FROM cip_allocate "
+            . "WHERE criticality_id = $Param{CriticalityID} AND impact_id = $Param{ImpactID}",
         Limit => 1,
     );
-    while (my @Row = $Self->{DBObject}->FetchrowArray()) {
+
+    # fetch result
+    my $PriorityID;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $PriorityID = $Row[0];
     }
+
     return $PriorityID;
 }
 
@@ -222,6 +247,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2007-07-02 13:29:20 $
+$Revision: 1.4 $ $Date: 2007-10-06 10:53:53 $
 
 =cut
