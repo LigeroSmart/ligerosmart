@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminGeneralCatalog.pm - admin frontend of general catalog management
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: AdminGeneralCatalog.pm,v 1.12 2007-10-05 15:49:00 mh Exp $
+# $Id: AdminGeneralCatalog.pm,v 1.13 2007-10-06 10:31:44 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -28,9 +28,7 @@ sub new {
     bless( $Self, $Type );
 
     # get common objects
-    for my $Object ( keys %Param ) {
-        $Self->{$Object} = $Param{$Object};
-    }
+    %{$Self} = %Param;
 
     # check needed objects
     for my $Object (qw(ConfigObject ParamObject LogObject LayoutObject)) {
