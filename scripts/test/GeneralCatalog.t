@@ -2,7 +2,7 @@
 # GeneralCatalog.t - general catalog tests
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: GeneralCatalog.t,v 1.3 2007-10-05 15:49:00 mh Exp $
+# $Id: GeneralCatalog.t,v 1.4 2007-10-06 08:53:35 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -187,7 +187,7 @@ for my $Item ( @{$ItemData} ) {
         my $ItemID = $Self->{GeneralCatalogObject}->ItemAdd( %{ $Item->{Add} } );
 
         # check if item was added successfully or not
-        if ( $ItemID && $Item->{AddGet} ) {
+        if ( $Item->{AddGet} ) {
             $Self->True( $ItemID, "Test $TestCount: ItemAdd() - ItemKey: $ItemID", );
 
             # set last item id variable
@@ -225,7 +225,7 @@ for my $Item ( @{$ItemData} ) {
             ->ItemUpdate( %{ $Item->{Update} }, ItemID => $LastAddedItemID, );
 
         # check if item was updated successfully or not
-        if ( $UpdateSucess && $Item->{UpdateGet} ) {
+        if ( $Item->{UpdateGet} ) {
             $Self->True( $UpdateSucess, "Test $TestCount: ItemUpdate() - ItemKey: $LastAddedItemID",
             );
         }
