@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminITSMCIPAllocate.pm - admin frontend of criticality, impact and priority
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: AdminITSMCIPAllocate.pm,v 1.4 2007-10-06 10:53:53 mh Exp $
+# $Id: AdminITSMCIPAllocate.pm,v 1.5 2007-10-06 15:46:03 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::Priority;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -57,9 +57,9 @@ sub Run {
         # get option lists
         my %ObjectOption;
         $ObjectOption{CriticalityList}
-            = $Self->{GeneralCatalogObject}->ItemList( Class => 'ITSM::Core::Criticality', );
+            = $Self->{GeneralCatalogObject}->ItemList( Class => 'ITSM::Core::Criticality' );
         $ObjectOption{ImpactList}
-            = $Self->{GeneralCatalogObject}->ItemList( Class => 'ITSM::Core::Impact', );
+            = $Self->{GeneralCatalogObject}->ItemList( Class => 'ITSM::Core::Impact' );
         my %OptionPriorityList = $Self->{PriorityObject}->PriorityList( UserID => 1 );
         $ObjectOption{PriorityList} = \%OptionPriorityList;
 
@@ -68,7 +68,7 @@ sub Run {
         for my $ImpactID ( sort keys %{ $ObjectOption{ImpactList} } ) {
             for my $CriticalityID ( sort keys %{ $ObjectOption{CriticalityList} } ) {
                 my $PriorityID = $Self->{ParamObject}
-                    ->GetParam( Param => "PriorityID" . $ImpactID . '-' . $CriticalityID, ) || '';
+                    ->GetParam( Param => "PriorityID" . $ImpactID . '-' . $CriticalityID ) || '';
 
                 if ($PriorityID) {
                     $AllocateData->{$ImpactID}->{$CriticalityID} = $PriorityID;
@@ -96,9 +96,9 @@ sub Run {
         # get option lists
         my %ObjectOption;
         $ObjectOption{CriticalityList}
-            = $Self->{GeneralCatalogObject}->ItemList( Class => 'ITSM::Core::Criticality', );
+            = $Self->{GeneralCatalogObject}->ItemList( Class => 'ITSM::Core::Criticality' );
         $ObjectOption{ImpactList}
-            = $Self->{GeneralCatalogObject}->ItemList( Class => 'ITSM::Core::Impact', );
+            = $Self->{GeneralCatalogObject}->ItemList( Class => 'ITSM::Core::Impact' );
         my %OptionPriorityList = $Self->{PriorityObject}->PriorityList( UserID => 1 );
         $ObjectOption{PriorityList} = \%OptionPriorityList;
 
@@ -110,29 +110,30 @@ sub Run {
 
         # generate table description (Impact)
         my $Counter1 = 1;
-        for (
+        for my $Impact (
             sort { $ObjectOption{ImpactList}->{$a} cmp $ObjectOption{ImpactList}->{$b} }
             keys %{ $ObjectOption{ImpactList} }
             )
         {
             $AllocateMatrix->[$Counter1]->[0]->{ObjectType}   = 'Impact';
-            $AllocateMatrix->[$Counter1]->[0]->{ImpactKey}    = $_;
-            $AllocateMatrix->[$Counter1]->[0]->{ObjectOption} = $ObjectOption{ImpactList}{$_};
+            $AllocateMatrix->[$Counter1]->[0]->{ImpactKey}    = $Impact;
+            $AllocateMatrix->[$Counter1]->[0]->{ObjectOption} = $ObjectOption{ImpactList}{$Impact};
             $AllocateMatrix->[$Counter1]->[0]->{Class}        = 'Description';
             $Counter1++;
         }
 
         # generate table description (Criticality)
         my $Counter2 = 1;
-        for (
+        for my $Criticality (
             sort { $ObjectOption{CriticalityList}->{$a} cmp $ObjectOption{CriticalityList}->{$b} }
             keys %{ $ObjectOption{CriticalityList} }
             )
         {
             $AllocateMatrix->[0]->[$Counter2]->{ObjectType}     = 'Criticality';
-            $AllocateMatrix->[0]->[$Counter2]->{CriticalityKey} = $_;
-            $AllocateMatrix->[0]->[$Counter2]->{ObjectOption} = $ObjectOption{CriticalityList}{$_};
-            $AllocateMatrix->[0]->[$Counter2]->{Class}        = 'Description';
+            $AllocateMatrix->[0]->[$Counter2]->{CriticalityKey} = $Criticality;
+            $AllocateMatrix->[0]->[$Counter2]->{ObjectOption}
+                = $ObjectOption{CriticalityList}{$Criticality};
+            $AllocateMatrix->[0]->[$Counter2]->{Class} = 'Description';
             $Counter2++;
         }
 
@@ -154,7 +155,7 @@ sub Run {
 
         # output allocation matrix
         for my $RowRef ( @{$AllocateMatrix} ) {
-            $Self->{LayoutObject}->Block( Name => 'CIPAllocateRow', );
+            $Self->{LayoutObject}->Block( Name => 'CIPAllocateRow' );
             for my $Cell ( @{$RowRef} ) {
                 $Self->{LayoutObject}->Block(
                     Name => 'CIPAllocateRowColumn' . $Cell->{Class},

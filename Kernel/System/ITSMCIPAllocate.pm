@@ -2,7 +2,7 @@
 # Kernel/System/ITSMCIPAllocate.pm - all criticality, impact and priority allocation functions
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: ITSMCIPAllocate.pm,v 1.4 2007-10-06 10:53:53 mh Exp $
+# $Id: ITSMCIPAllocate.pm,v 1.5 2007-10-06 15:46:03 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 =head1 NAME
 
@@ -178,7 +178,7 @@ sub AllocateUpdate {
                     . "(criticality_id, impact_id, priority_id, "
                     . "create_time, create_by, change_time, change_by) VALUES "
                     . "($CriticalityID, $ImpactID, $PriorityID, "
-                    . "current_timestamp, $Param{UserID}, current_timestamp, $Param{UserID})", );
+                    . "current_timestamp, $Param{UserID}, current_timestamp, $Param{UserID})" );
         }
     }
 
@@ -247,6 +247,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2007-10-06 10:53:53 $
+$Revision: 1.5 $ $Date: 2007-10-06 15:46:03 $
 
 =cut

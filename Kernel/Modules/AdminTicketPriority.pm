@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminTicketPriority.pm - admin frontend of ticket priority
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: AdminTicketPriority.pm,v 1.6 2007-10-06 10:53:53 mh Exp $
+# $Id: AdminTicketPriority.pm,v 1.7 2007-10-06 15:46:03 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Priority;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -68,7 +68,7 @@ sub Run {
         # output overview
         $Self->{LayoutObject}->Block(
             Name => 'Overview',
-            Data => { %Param, },
+            Data => {%Param},
         );
 
         # generate ValidOptionStrg
@@ -106,22 +106,22 @@ sub Run {
         my %PriorityData;
 
         # get params
-        for (qw(PriorityID Name ValidID)) {
-            $PriorityData{$_} = $Self->{ParamObject}->GetParam( Param => "$_" ) || '';
+        for my $FormParam (qw(PriorityID Name ValidID)) {
+            $PriorityData{$FormParam} = $Self->{ParamObject}->GetParam( Param => $FormParam ) || '';
         }
         $PriorityData{ID} = $PriorityData{PriorityID};
 
         # save to database
         if ( $PriorityData{PriorityID} eq 'NEW' ) {
             my $Success
-                = $Self->{PriorityObject}->PriorityAdd( %PriorityData, UserID => $Self->{UserID}, );
+                = $Self->{PriorityObject}->PriorityAdd( %PriorityData, UserID => $Self->{UserID} );
             if ( !$Success ) {
                 return $Self->{LayoutObject}->ErrorScreen();
             }
         }
         else {
             my $Success = $Self->{PriorityObject}
-                ->PriorityUpdate( %PriorityData, UserID => $Self->{UserID}, );
+                ->PriorityUpdate( %PriorityData, UserID => $Self->{UserID} );
             if ( !$Success ) {
                 return $Self->{LayoutObject}->ErrorScreen();
             }
@@ -143,13 +143,13 @@ sub Run {
         # output overview
         $Self->{LayoutObject}->Block(
             Name => 'Overview',
-            Data => { %Param, },
+            Data => {%Param},
         );
 
         # output overview result
         $Self->{LayoutObject}->Block(
             Name => 'OverviewList',
-            Data => { %Param, },
+            Data => {%Param},
         );
 
         # get priority list
