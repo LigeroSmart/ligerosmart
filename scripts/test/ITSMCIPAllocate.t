@@ -2,7 +2,7 @@
 # ITSMCIPAllocate.t - general catalog tests
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: ITSMCIPAllocate.t,v 1.1 2007-10-06 11:28:31 mh Exp $
+# $Id: ITSMCIPAllocate.t,v 1.2 2007-10-08 15:55:28 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -35,20 +35,20 @@ if ( ref($AllocateData2) ne 'HASH' ) {
 }
 
 # check the allocation 2d hash
-IMPACT:
+IMPACTID:
 for my $ImpactID ( keys %{$AllocateData2} ) {
 
     if ( ref( $AllocateData2->{$ImpactID} ) ne 'HASH' ) {
         $HashOK = 0;
-        last IMPACT;
+        last IMPACTID;
     }
 
-    CRITICALITY:
+    CRITICALITYID:
     for my $CriticalityID ( keys %{ $AllocateData2->{$ImpactID} } ) {
 
         if ( !$CriticalityID || !$AllocateData2->{$ImpactID}->{$CriticalityID} ) {
             $HashOK = 0;
-            last IMPACT;
+            last IMPACTID;
         }
     }
 }
