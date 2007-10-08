@@ -2,7 +2,7 @@
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.19 2007-10-06 15:36:39 mh Exp $
+# $Id: GeneralCatalog.pm,v 1.20 2007-10-08 15:51:33 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 =head1 NAME
 
@@ -385,26 +385,22 @@ sub ItemAdd {
             . "('$Param{Class}', '$Param{Name}', '$Param{Functionality}', $Param{ValidID}, '$Param{Comment}', "
             . "current_timestamp, $Param{UserID}, current_timestamp, $Param{UserID})" );
 
+    return if !$Success;
+
     # find id of new item
-    if ($Success) {
+    $Self->{DBObject}->Prepare(
+        SQL => "SELECT id FROM general_catalog "
+            . "WHERE general_catalog_class = '$Param{Class}' AND name = '$Param{Name}'",
+        Limit => 1,
+    );
 
-        # ask database
-        $Self->{DBObject}->Prepare(
-            SQL => "SELECT id FROM general_catalog "
-                . "WHERE general_catalog_class = '$Param{Class}' AND name = '$Param{Name}'",
-            Limit => 1,
-        );
-
-        # fetch the result
-        my $ItemID;
-        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-            $ItemID = $Row[0];
-        }
-
-        return $ItemID;
+    # fetch the result
+    my $ItemID;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $ItemID = $Row[0];
     }
 
-    return;
+    return $ItemID;
 }
 
 =item ItemUpdate()
@@ -545,6 +541,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.19 $ $Date: 2007-10-06 15:36:39 $
+$Revision: 1.20 $ $Date: 2007-10-08 15:51:33 $
 
 =cut
