@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMCore.sopm,v 1.21 2007-10-06 11:28:31 mh Exp $</CVS>
+    <CVS>$Id: ITSMCore.sopm,v 1.22 2007-10-12 14:21:33 mh Exp $</CVS>
     <Name>ITSMCore</Name>
     <Version>0.0.0</Version>
-    <Framework>2.2.2</Framework>
+    <Framework>2.2.4</Framework>
     <Vendor>OTRS GmbH</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
     <Description Lang="en">The OTRS::ITSM core package.</Description>
     <Description Lang="de">Das OTRS::ITSM Core Paket.</Description>
-    <PackageRequired Version="1.0.2">GeneralCatalog</PackageRequired>
-    <PackageRequired Version="1.0.2">LinkObject2</PackageRequired>
+    <PackageRequired Version="1.0.90">GeneralCatalog</PackageRequired>
+    <PackageRequired Version="1.0.90">LinkObject2</PackageRequired>
     <Filelist>
         <File Permission="644" Location="Kernel/Config/Files/FrameworkITSMCore.xml"/>
         <File Permission="644" Location="Kernel/Config/Files/ITSMCore.xml"/>
@@ -402,4 +402,88 @@
             }
         }
     </CodeUninstall>
+    <IntroInstallPre Title="Install Information" Lang="en">
+        &lt;br&gt;
+        WELCOME&lt;br&gt;
+        &lt;br&gt;
+        You are about to install the OTRS module ITSMCore.&lt;br&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        REQUIRED OTRS PACKAGES
+        &lt;ul&gt;
+        &lt;li&gt;GeneralCatalog 1.0.90&lt;/li&gt;
+        &lt;li&gt;LinkObject 1.0.90&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;br&gt;
+        ATTENTION&lt;br&gt;
+        &lt;br&gt;
+        Make sure your database accepts packages over 5 MB in size. A MySQL database for example accepts packages up to 1 MB by default. In this case, the value for max_allowed_packet must be increased. The recommended maximum size accepted is 20 MB.&lt;br&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+    </IntroInstallPre>
+    <IntroInstallPre Title="Installation Information" Lang="de">
+        &lt;br&gt;
+        WILLKOMMEN&lt;br&gt;
+        &lt;br&gt;
+        Sie sind im Begriff das OTRS-Modul ITSMCore zu installieren.&lt;br&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        BENÖTIGTE OTRS-PAKETE
+        &lt;ul&gt;
+        &lt;li&gt;GeneralCatalog 1.0.90&lt;/li&gt;
+        &lt;li&gt;LinkObject 1.0.90&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;br&gt;
+        ACHTUNG&lt;br&gt;
+        &lt;br&gt;
+        Vergewissern Sie sich, dass ihre Datenbank Pakete mit einer Größe von mehr als 5 MB akzeptiert. Eine MySQL Datenbank akzeptiert beispielsweise standartmäßig Pakete mit einer Größe von maximal 1 MB. In diesem Fall muss der Wert für max_allowed_packet erhöht werden. Empfohlen werden 20 MB.&lt;br&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+    </IntroInstallPre>
+    <IntroUpgradePre Title="Upgrade Information" Lang="en">
+        &lt;br&gt;
+        WELCOME&lt;br&gt;
+        &lt;br&gt;
+        You are about to upgrade the OTRS module ITSMCore.&lt;br&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        REQUIRED OTRS PACKAGES
+        &lt;ul&gt;
+        &lt;li&gt;GeneralCatalog 1.0.90&lt;/li&gt;
+        &lt;li&gt;LinkObject 1.0.90&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;br&gt;
+        ATTENTION&lt;br&gt;
+        &lt;br&gt;
+        Make sure your database accepts packages over 5 MB in size. A MySQL database for example accepts packages up to 1 MB by default. In this case, the value for max_allowed_packet must be increased. The recommended maximum size accepted is 20 MB.&lt;br&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+    </IntroUpgradePre>
+    <IntroUpgradePre Title="Upgrade Information" Lang="de">
+        &lt;br&gt;
+        WILLKOMMEN&lt;br&gt;
+        &lt;br&gt;
+        Sie sind im Begriff das OTRS-Modul ITSMCore zu upzugraden.&lt;br&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        BENÖTIGTE OTRS-PAKETE
+        &lt;ul&gt;
+        &lt;li&gt;GeneralCatalog 1.0.90&lt;/li&gt;
+        &lt;li&gt;LinkObject 1.0.90&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;br&gt;
+        ACHTUNG&lt;br&gt;
+        &lt;br&gt;
+        Vergewissern Sie sich, dass ihre Datenbank Pakete mit einer Größe von mehr als 5 MB akzeptiert. Eine MySQL Datenbank akzeptiert beispielsweise standartmäßig Pakete mit einer Größe von maximal 1 MB. In diesem Fall muss der Wert für max_allowed_packet erhöht werden. Empfohlen werden 20 MB.&lt;br&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+    </IntroUpgradePre>
 </otrs_package>
