@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMCore.sopm,v 1.22 2007-10-12 14:21:33 mh Exp $</CVS>
+    <CVS>$Id: ITSMCore.sopm,v 1.23 2007-10-12 14:40:58 mh Exp $</CVS>
     <Name>ITSMCore</Name>
     <Version>0.0.0</Version>
     <Framework>2.2.4</Framework>
@@ -469,7 +469,7 @@
         &lt;br&gt;
         WILLKOMMEN&lt;br&gt;
         &lt;br&gt;
-        Sie sind im Begriff das OTRS-Modul ITSMCore zu upzugraden.&lt;br&gt;
+        Sie sind im Begriff das OTRS-Modul ITSMCore upzugraden.&lt;br&gt;
         &lt;br&gt;
         &lt;br&gt;
         BENÖTIGTE OTRS-PAKETE
