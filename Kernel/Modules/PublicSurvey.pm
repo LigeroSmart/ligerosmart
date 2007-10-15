@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicSurvey.pm - a survey module
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: PublicSurvey.pm,v 1.14 2007-08-20 09:39:46 mh Exp $
+# $Id: PublicSurvey.pm,v 1.15 2007-10-15 11:23:26 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,24 +17,22 @@ use warnings;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.14 $';
-$VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
+$VERSION = qw($Revision: 1.15 $) [1];
 
 sub new {
-    my $Type = shift;
-    my %Param = @_;
+    my ( $Type, %Param ) = @_;
 
     # allocate new hash for object
     my $Self = {};
-    bless ($Self, $Type);
+    bless( $Self, $Type );
 
-    foreach (keys %Param) {
-        $Self->{$_} = $Param{$_};
-    }
+    # get common objects
+    %{$Self} = %Param;
+
     # check needed objects
-    foreach (qw(ParamObject DBObject LayoutObject LogObject ConfigObject UserObject)) {
-        if (!$Self->{$_}) {
-            $Self->{LayoutObject}->FatalError(Message => "Got no $_!");
+    for my $Object (qw(ParamObject DBObject LayoutObject LogObject ConfigObject UserObject)) {
+        if ( !$Self->{$Object} ) {
+            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
         }
     }
     $Self->{SurveyObject} = Kernel::System::Survey->new(%Param);
@@ -43,133 +41,111 @@ sub new {
 }
 
 sub Run {
-    my $Self = shift;
-    my %Param = @_;
+    my ( $Self, %Param ) = @_;
+
     my $Output;
 
     # ------------------------------------------------------------ #
     # public survey vote
     # ------------------------------------------------------------ #
-    if ($Self->{Subaction} eq 'PublicSurveyVote') {
-        my $PublicSurveyKey = $Self->{ParamObject}->GetParam(Param => "PublicSurveyKey");
-        my %Survey = $Self->{SurveyObject}->PublicSurveyGet(
-            PublicSurveyKey => $PublicSurveyKey,
-        );
-        if ($Survey{SurveyID}) {
-            my @QuestionList = $Self->{SurveyObject}->QuestionList(
-                SurveyID => $Survey{SurveyID},
-            );
-            foreach my $Question (@QuestionList) {
-                if ($Question->{Type} eq 'YesNo' ) {
-                    my $PublicSurveyVote1 = $Self->{ParamObject}->GetParam(
-                        Param => "PublicSurveyVote1[$Question->{QuestionID}]",
-                    );
+    if ( $Self->{Subaction} eq 'PublicSurveyVote' ) {
+        my $PublicSurveyKey = $Self->{ParamObject}->GetParam( Param => "PublicSurveyKey" );
+        my %Survey = $Self->{SurveyObject}->PublicSurveyGet( PublicSurveyKey => $PublicSurveyKey );
+        if ( $Survey{SurveyID} ) {
+            my @QuestionList = $Self->{SurveyObject}->QuestionList( SurveyID => $Survey{SurveyID} );
+            for my $Question (@QuestionList) {
+                if ( $Question->{Type} eq 'YesNo' ) {
+                    my $PublicSurveyVote1 = $Self->{ParamObject}
+                        ->GetParam( Param => "PublicSurveyVote1[$Question->{QuestionID}]" );
                     $Self->{SurveyObject}->PublicAnswerSave(
                         PublicSurveyKey => $PublicSurveyKey,
-                        QuestionID => $Question->{QuestionID},
-                        VoteValue => $PublicSurveyVote1,
+                        QuestionID      => $Question->{QuestionID},
+                        VoteValue       => $PublicSurveyVote1,
                     );
                 }
-                elsif ($Question->{Type} eq 'Radio' ) {
-                    my $PublicSurveyVote2 = $Self->{ParamObject}->GetParam(
-                        Param => "PublicSurveyVote2[$Question->{QuestionID}]",
-                    );
+                elsif ( $Question->{Type} eq 'Radio' ) {
+                    my $PublicSurveyVote2 = $Self->{ParamObject}
+                        ->GetParam( Param => "PublicSurveyVote2[$Question->{QuestionID}]" );
                     $Self->{SurveyObject}->PublicAnswerSave(
                         PublicSurveyKey => $PublicSurveyKey,
-                        QuestionID => $Question->{QuestionID},
-                        VoteValue => $PublicSurveyVote2,
+                        QuestionID      => $Question->{QuestionID},
+                        VoteValue       => $PublicSurveyVote2,
                     );
                 }
-                elsif ($Question->{Type} eq 'Checkbox' ) {
-                    my @AnswerList = $Self->{SurveyObject}->AnswerList(
-                        QuestionID => $Question->{QuestionID},
-                    );
-                    foreach my $Answer (@AnswerList) {
-                        my $PublicSurveyVote3 = $Self->{ParamObject}->GetParam(
-                            Param => "PublicSurveyVote3[$Answer->{AnswerID}]",
-                        );
-                        if ($PublicSurveyVote3 eq 'Yes') {
+                elsif ( $Question->{Type} eq 'Checkbox' ) {
+                    my @AnswerList = $Self->{SurveyObject}
+                        ->AnswerList( QuestionID => $Question->{QuestionID} );
+                    for my $Answer (@AnswerList) {
+                        my $PublicSurveyVote3 = $Self->{ParamObject}
+                            ->GetParam( Param => "PublicSurveyVote3[$Answer->{AnswerID}]" );
+                        if ( $PublicSurveyVote3 && $PublicSurveyVote3 eq 'Yes' ) {
                             $Self->{SurveyObject}->PublicAnswerSave(
                                 PublicSurveyKey => $PublicSurveyKey,
-                                QuestionID => $Question->{QuestionID},
-                                VoteValue => $Answer->{AnswerID},
+                                QuestionID      => $Question->{QuestionID},
+                                VoteValue       => $Answer->{AnswerID},
                             );
                         }
                     }
                 }
-                elsif ($Question->{Type} eq 'Textarea' ) {
-                    my $PublicSurveyVote4 = $Self->{ParamObject}->GetParam(
-                        Param => "PublicSurveyVote4[$Question->{QuestionID}]",
-                    );
+                elsif ( $Question->{Type} eq 'Textarea' ) {
+                    my $PublicSurveyVote4 = $Self->{ParamObject}
+                        ->GetParam( Param => "PublicSurveyVote4[$Question->{QuestionID}]" );
                     $Self->{SurveyObject}->PublicAnswerSave(
                         PublicSurveyKey => $PublicSurveyKey,
-                        QuestionID => $Question->{QuestionID},
-                        VoteValue => $PublicSurveyVote4,
+                        QuestionID      => $Question->{QuestionID},
+                        VoteValue       => $PublicSurveyVote4,
                     );
                 }
             }
-            $Self->{SurveyObject}->PublicSurveyInvalidSet(
-                PublicSurveyKey => $PublicSurveyKey,
-            );
+            $Self->{SurveyObject}->PublicSurveyInvalidSet( PublicSurveyKey => $PublicSurveyKey );
         }
-        $Output = $Self->{LayoutObject}->CustomerHeader(Title => 'Survey');
+        $Output = $Self->{LayoutObject}->CustomerHeader( Title => 'Survey' );
+
         # print the main table.
-        $Self->{LayoutObject}->Block(
-            Name => 'PublicSurveyComplete',
-        );
+        $Self->{LayoutObject}->Block( Name => 'PublicSurveyComplete' );
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'PublicSurvey',
-            Data => {
-                %Param,
-            },
+            Data         => {%Param},
         );
         $Output .= $Self->{LayoutObject}->CustomerFooter();
         return $Output;
     }
+
     # ------------------------------------------------------------ #
     # show survey
     # ------------------------------------------------------------ #
-    my $PublicSurveyKey = $Self->{ParamObject}->GetParam(Param => "PublicSurveyKey");
-    $Output = $Self->{LayoutObject}->CustomerHeader(Title => 'Survey');
-    my %Survey = $Self->{SurveyObject}->PublicSurveyGet(
-        PublicSurveyKey => $PublicSurveyKey,
-    );
+    my $PublicSurveyKey = $Self->{ParamObject}->GetParam( Param => "PublicSurveyKey" );
+    $Output = $Self->{LayoutObject}->CustomerHeader( Title => 'Survey' );
+    my %Survey = $Self->{SurveyObject}->PublicSurveyGet( PublicSurveyKey => $PublicSurveyKey );
     $Survey{Introduction} = $Self->{LayoutObject}->Ascii2Html(
-        Text => $Survey{Introduction},
+        Text           => $Survey{Introduction},
         HTMLResultMode => 1,
     );
     $Survey{PublicSurveyKey} = $PublicSurveyKey;
-    if($Survey{SurveyID} > 0 ) {
+    if ( $Survey{SurveyID} > 0 ) {
         $Self->{LayoutObject}->Block(
             Name => 'PublicSurvey',
-            Data => {
-                %Survey,
-            },
+            Data => {%Survey},
         );
-        my @QuestionList = $Self->{SurveyObject}->QuestionList(
-            SurveyID => $Survey{SurveyID},
-        );
-        foreach my $Question (@QuestionList) {
-            $Self->{LayoutObject}->Block(
-                Name => 'PublicQuestions',
-            );
-            if ($Question->{Type} eq 'YesNo' ) {
+        my @QuestionList = $Self->{SurveyObject}->QuestionList( SurveyID => $Survey{SurveyID} );
+        for my $Question (@QuestionList) {
+            $Self->{LayoutObject}->Block( Name => 'PublicQuestions' );
+            if ( $Question->{Type} eq 'YesNo' ) {
                 $Self->{LayoutObject}->Block(
                     Name => 'PublicAnswerYesNo',
                     Data => $Question,
                 );
             }
-            elsif ($Question->{Type} eq 'Radio' ) {
+            elsif ( $Question->{Type} eq 'Radio' ) {
                 $Self->{LayoutObject}->Block(
                     Name => 'PublicAnswerRadio',
                     Data => $Question,
                 );
-                my @AnswerList = $Self->{SurveyObject}->AnswerList(
-                    QuestionID => $Question->{QuestionID},
-                );
+                my @AnswerList
+                    = $Self->{SurveyObject}->AnswerList( QuestionID => $Question->{QuestionID} );
                 my $Counter = 0;
-                foreach my $Answer (@AnswerList) {
-                    if (!$Counter) {
+                for my $Answer (@AnswerList) {
+                    if ( !$Counter ) {
                         $Self->{LayoutObject}->Block(
                             Name => 'PublicAnswerRadiobChecked',
                             Data => $Answer,
@@ -184,22 +160,21 @@ sub Run {
                     $Counter++;
                 }
             }
-            elsif ($Question->{Type} eq 'Checkbox' ) {
+            elsif ( $Question->{Type} eq 'Checkbox' ) {
                 $Self->{LayoutObject}->Block(
                     Name => 'PublicAnswerCheckbox',
                     Data => $Question,
                 );
-                my @AnswerList = $Self->{SurveyObject}->AnswerList(
-                    QuestionID => $Question->{QuestionID},
-                );
-                foreach my $Answer (@AnswerList) {
+                my @AnswerList
+                    = $Self->{SurveyObject}->AnswerList( QuestionID => $Question->{QuestionID} );
+                for my $Answer (@AnswerList) {
                     $Self->{LayoutObject}->Block(
                         Name => 'PublicAnswerCheckboxb',
                         Data => $Answer,
                     );
                 }
             }
-            elsif ($Question->{Type} eq 'Textarea' ) {
+            elsif ( $Question->{Type} eq 'Textarea' ) {
                 $Self->{LayoutObject}->Block(
                     Name => 'PublicAnswerTextarea',
                     Data => $Question,
@@ -208,15 +183,11 @@ sub Run {
         }
     }
     else {
-        $Self->{LayoutObject}->Block(
-            Name => 'PublicNoSurvey',
-        );
+        $Self->{LayoutObject}->Block( Name => 'PublicNoSurvey' );
     }
     $Output .= $Self->{LayoutObject}->Output(
         TemplateFile => 'PublicSurvey',
-        Data => {
-            %Param,
-        },
+        Data         => {%Param},
     );
     $Output .= $Self->{LayoutObject}->CustomerFooter();
     return $Output;

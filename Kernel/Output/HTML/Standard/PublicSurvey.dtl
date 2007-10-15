@@ -1,8 +1,8 @@
 # --
 # PublicSurvey.dtl - provides HTML form for PublicSurvey
-# Copyright (C) 2003-2006 OTRS GmbH, http://otrs.com/
+# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: PublicSurvey.dtl,v 1.10 2006-11-21 23:51:05 mh Exp $
+# $Id: PublicSurvey.dtl,v 1.11 2007-10-15 11:23:26 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -47,7 +47,7 @@
         </tr>
       </table>
       <br>
-      <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
+      <form action="$Env{"CGIHandle"}" method="post" name="compose">
         <input type="hidden" name="Action" value="$Env{"Action"}">
         <input type="hidden" name="Subaction" value="PublicSurveyVote">
         <input type="hidden" name="PublicSurveyKey" value="$QData{"PublicSurveyKey"}">

@@ -2,7 +2,7 @@
 # AgentSurvey.dtl - provides HTML form for AgentSurvey
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: AgentSurvey.dtl,v 1.27 2007-08-17 10:12:33 mh Exp $
+# $Id: AgentSurvey.dtl,v 1.28 2007-10-15 11:23:26 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -130,7 +130,7 @@
             <table border="0" align="right" cellspacing="0" cellpadding="0">
               <tr>
                 <td>
-                  <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data">
+                  <form action="$Env{"CGIHandle"}" method="post">
                     <input type="hidden" name="Action" value="$Env{"Action"}">
                     <input type="hidden" name="Subaction" value="SurveyEdit">
                     <input type="hidden" name="SurveyID" value="$QData{"SurveyID"}">
@@ -242,7 +242,7 @@
         <tr>
           <td class="mainkey">$Text{"Change Status"}:</td>
           <td class="mainvalue">
-            <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data">
+            <form action="$Env{"CGIHandle"}" method="post">
               <input type="hidden" name="Action" value="$Env{"Action"}">
               <input type="hidden" name="Subaction" value="SurveyStatus">
               <input type="hidden" name="SurveyID" value="$QData{"SurveyID"}">
@@ -289,7 +289,7 @@
   <tr>
     <td class="mainbody">
       <br>
-      <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data">
+      <form action="$Env{"CGIHandle"}" method="post">
         <input type="hidden" name="Action" value="$Env{"Action"}">
         <input type="hidden" name="Subaction" value="SurveySave">
         <input type="hidden" name="SurveyID" value="$QData{"SurveyID"}">
@@ -410,7 +410,7 @@
                               <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=QuestionDown&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}"><img border="0" src="$Env{"Images"}down-big.png"></a>&nbsp;&nbsp;
                             </td>
                             <td>
-                              <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data">
+                              <form action="$Env{"CGIHandle"}" method="post">
                                 <input type="hidden" name="Action" value="$Env{"Action"}">
                                 <input type="hidden" name="Subaction" value="QuestionDelete">
                                 <input type="hidden" name="SurveyID" value="$QData{"SurveyID"}">
@@ -435,7 +435,7 @@
               <tr>
                 <td class="contentkey" width="25"><a name="NewQuestion"></a>&nbsp;</td>
                 <td class="contentvalue">
-                  <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data">
+                  <form action="$Env{"CGIHandle"}" method="post">
                     <input type="hidden" name="Action" value="$Env{"Action"}">
                     <input type="hidden" name="Subaction" value="QuestionAdd">
                     <input type="hidden" name="SurveyID" value="$QData{"SurveyID"}">
@@ -487,7 +487,7 @@
   <tr>
     <td class="mainbody">
       <br>
-      <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data">
+      <form action="$Env{"CGIHandle"}" method="post">
         <input type="hidden" name="Action" value="$Env{"Action"}">
         <input type="hidden" name="Subaction" value="SurveyNew">
         <table border="0" width="700" align="center" cellspacing="0" cellpadding="4">
@@ -569,7 +569,7 @@
   <tr>
     <td class="mainbody">
       <br>
-      <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data">
+      <form action="$Env{"CGIHandle"}" method="post">
         <input type="hidden" name="Action" value="$Env{"Action"}">
         <input type="hidden" name="Subaction" value="QuestionSave">
         <input type="hidden" name="QuestionID" value="$QData{"QuestionID"}">
@@ -676,7 +676,7 @@
                               <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=AnswerDown&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}"><img border="0" src="$Env{"Images"}down-big.png"></a>&nbsp;&nbsp;
                             </td>
                             <td>
-                              <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data">
+                              <form action="$Env{"CGIHandle"}" method="post">
                                 <input type="hidden" name="Action" value="$Env{"Action"}">
                                 <input type="hidden" name="Subaction" value="AnswerDelete">
                                 <input type="hidden" name="SurveyID" value="$QData{"SurveyID"}">
@@ -696,7 +696,7 @@
                       <td class="contentkey" width="25">&nbsp;</td>
                     </tr>
                     <tr>
-                      <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data">
+                      <form action="$Env{"CGIHandle"}" method="post">
                         <input type="hidden" name="Action" value="$Env{"Action"}">
                         <input type="hidden" name="Subaction" value="AnswerAdd">
                         <input type="hidden" name="QuestionID" value="$QData{"QuestionID"}">
@@ -732,7 +732,7 @@
                               <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=AnswerDown&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}&AnswerID=$QData{"AnswerID"}"><img border="0" src="$Env{"Images"}down-big.png"></a>&nbsp;&nbsp;
                             </td>
                             <td>
-                              <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data">
+                              <form action="$Env{"CGIHandle"}" method="post">
                                 <input type="hidden" name="Action" value="$Env{"Action"}">
                                 <input type="hidden" name="Subaction" value="AnswerDelete">
                                 <input type="hidden" name="SurveyID" value="$QData{"SurveyID"}">
@@ -752,7 +752,7 @@
                       <td class="contentkey" width="25">&nbsp;</td>
                     </tr>
                     <tr>
-                      <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data">
+                      <form action="$Env{"CGIHandle"}" method="post">
                         <input type="hidden" name="Action" value="$Env{"Action"}">
                         <input type="hidden" name="Subaction" value="AnswerAdd">
                         <input type="hidden" name="QuestionID" value="$QData{"QuestionID"}">
@@ -803,7 +803,7 @@
   <tr>
     <td class="mainbody">
       <br>
-      <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data">
+      <form action="$Env{"CGIHandle"}" method="post">
         <input type="hidden" name="Action" value="$Env{"Action"}">
         <input type="hidden" name="Subaction" value="AnswerSave">
         <input type="hidden" name="AnswerID" value="$QData{"AnswerID"}">
