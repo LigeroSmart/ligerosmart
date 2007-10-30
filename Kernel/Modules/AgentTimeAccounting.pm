@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.15 2007-08-29 15:57:54 ea Exp $
+# $Id: AgentTimeAccounting.pm,v 1.16 2007-10-30 10:45:33 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.15 $';
+$VERSION = '$Revision: 1.16 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -332,11 +332,13 @@ sub Run {
                     Data       => \%ActionList,
                     SelectedID => $Data{$WorkingUnitID}{ActionID} || '',
                     Name       => "ActionID[$WorkingUnitID]",
+                    LanguageTranslation => 0,
                 );
                 $Frontend{'ProjectOption'} = $Self->{LayoutObject}->OptionStrgHashRef(
                     Data       => \%ProjectList,
                     SelectedID => $Data{$WorkingUnitID}{ProjectID} || '',
                     Name       => "ProjectID[$WorkingUnitID]",
+                    LanguageTranslation => 0,
                 );
 
                 $Param{Remark}    = $Data{$WorkingUnitID}{Remark} || '';
@@ -1248,6 +1250,7 @@ sub Run {
                 Data       => \%ShownUsers,
                 SelectedID => '',
                 Name       => "NewUserID",
+                LanguageTranslation => 0,
             );
             $Self->{LayoutObject}->Block(
                 Name => 'NewUserOption',
@@ -1416,6 +1419,7 @@ sub Run {
             Data       => \%Year,
             SelectedID => $Param{Year} || '',
             Name       => "Year",
+            LanguageTranslation => 0,
         );
 
         ($Param{YearBack}, $Param{MonthBack}, $Param{DayBack}) = Add_Delta_YMD($Param{Year}, $Param{Month}, 1, 0, -1, 0);
