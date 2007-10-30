@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: TimeAccounting.sopm,v 1.12 2007-05-11 14:36:37 tr Exp $</CVS>
+    <CVS>$Id: TimeAccounting.sopm,v 1.13 2007-10-30 12:25:02 tr Exp $</CVS>
     <Name>TimeAccounting</Name>
     <Version>0.0.0</Version>
     <Framework>2.1.x</Framework>
@@ -8,31 +8,22 @@
     <Vendor>OTRS GmbH</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
-    <ChangeLog>2006-05-23 insert a ProjectReporting page</ChangeLog>
-    <ChangeLog>2006-05-16 fixed action new bug in setting</ChangeLog>
-    <ChangeLog>2006-04-24 insert the delete dtl</ChangeLog>
-    <ChangeLog>2006-04-18 fixed vacation bug</ChangeLog>
-    <ChangeLog>2006-04-11 fixed Show all bug</ChangeLog>
-    <ChangeLog>2006-04-11 fixed typo</ChangeLog>
-    <ChangeLog>2006-04-10 include new functions</ChangeLog>
-    <ChangeLog>2005-08-10 fixed initial bugs</ChangeLog>
-    <ChangeLog>2005-08-08 first package</ChangeLog>
     <Description Lang="en">A TimeAccounting Modul.</Description>
     <Description Lang="de">Ein Zeiterfassungsmodul.</Description>
     <Filelist>
-        <File Permission="644" Location="Kernel/Config/Files/TimeAccounting.xml"></File>
-        <File Permission="644" Location="Kernel/System/TimeAccounting.pm"></File>
-        <File Permission="644" Location="Kernel/Language/de_AgentTimeAccounting.pm"></File>
-        <File Permission="644" Location="Kernel/Modules/AgentTimeAccounting.pm"></File>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingEdit.dtl"></File>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingView.dtl"></File>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingSetting.dtl"></File>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingOverview.dtl"></File>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingReporting.dtl"></File>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingProjectReporting.dtl"></File>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingDelete.dtl"></File>
-        <File Permission="644" Location="Kernel/Output/HTML/NotificationTimeAccounting.pm"></File>
-        <File Permission="644" Location="var/httpd/htdocs/images/Standard/time_accounting.png"></File>
+        <File Permission="644" Location="Kernel/Config/Files/TimeAccounting.xml"/>
+        <File Permission="644" Location="Kernel/System/TimeAccounting.pm"/>
+        <File Permission="644" Location="Kernel/Language/de_AgentTimeAccounting.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentTimeAccounting.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingEdit.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingView.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingSetting.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingOverview.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingReporting.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingProjectReporting.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingDelete.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/NotificationTimeAccounting.pm"/>
+        <File Permission="644" Location="var/httpd/htdocs/images/Standard/time_accounting.png"/>
     </Filelist>
     <CodeInstall>
         # add groups
@@ -85,7 +76,6 @@
             <Column Name="create_project"    Required="false" Type="INTEGER"/>
         </TableCreate>
     </DatabaseInstall>
-    <DatabaseReinstall></DatabaseReinstall>
     <DatabaseUninstall>
         <TableDrop Name="time_accounting_action"/>
         <TableDrop Name="time_accounting_project"/>
