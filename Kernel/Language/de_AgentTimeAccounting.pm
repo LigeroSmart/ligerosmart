@@ -1,8 +1,8 @@
 # --
 # Kernel/Language/de_AgentTimeAccounting.pm - the de language for AgentTimeAccounting
-# Copyright (C) 2003-2007 OTRS GmbH, http://otrs.com/
+# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: de_AgentTimeAccounting.pm,v 1.4 2007-06-05 14:13:44 tr Exp $
+# $Id: de_AgentTimeAccounting.pm,v 1.5 2007-10-30 10:44:24 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -85,6 +85,9 @@ sub Data {
         'Please insert your working hours!' => 'Bitte tragen Sie Ihre Arbeitszeiten ein!',
         'You have to insert Start- and Endtime or a Period' => 'Sie müssen Beginn- und Endezeit angeben.',
         'You can only select one checkbox element!' => 'Sie können nur eine Checkbox markieren!',
+        'Edit Time Accounting Project Preference' => 'Zeiterfassung: Bearbeitung der Projektkonfiguration',
+        'Project Setting' => 'Projektkonfiguration',
+        '' => '',
         'If you use action misc, please give an explanation in the field remark' => 'Wenn Sie Aktion Sonstiges auswählen, geben Sie eine Beschreibung um Feld Anmerkung an.',
         #actually the following should be included in file de.pm, however they're not so I put'em here...
         'Mon' => 'Mo',
