@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.16 2007-10-30 10:45:33 tr Exp $
+# $Id: AgentTimeAccounting.pm,v 1.17 2007-10-31 06:14:36 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.16 $';
+$VERSION = '$Revision: 1.17 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -1412,7 +1412,9 @@ sub Run {
         );
 
         my %Year = ();
-        for (my $ID = 2005; $ID <= 2006; $ID++) {
+        # FIXME the range should be created automatically
+        # Further, here I can use the map function
+        for (my $ID = 2005; $ID <= 2008; $ID++) {
             $Year{$ID} = $ID;
         }
         $Frontend{'YearOption'} = $Self->{LayoutObject}->OptionStrgHashRef(
