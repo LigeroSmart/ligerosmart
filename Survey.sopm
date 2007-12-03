@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: Survey.sopm,v 1.23 2007-08-20 09:39:46 mh Exp $</CVS>
+    <CVS>$Id: Survey.sopm,v 1.24 2007-12-03 16:03:24 mh Exp $</CVS>
     <Name>Survey</Name>
     <Version>0.0.0</Version>
     <Framework>2.1.x</Framework>
@@ -18,14 +18,16 @@
     <Description Lang="de">Ein Kundenumfragen Werkzeug.</Description>
     <Filelist>
         <File Permission="644" Location="Kernel/Config/Files/Survey.xml"/>
-        <File Permission="644" Location="Kernel/System/Survey.pm"/>
-        <File Permission="644" Location="Kernel/System/Ticket/Event/SurveySendRequest.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentSurvey.pm"/>
-        <File Permission="644" Location="Kernel/Modules/PublicSurvey.pm"/>
+        <File Permission="644" Location="Kernel/Language/bg_AgentSurvey.pm"/>
+        <File Permission="644" Location="Kernel/Language/bg_PublicSurvey.pm"/>
         <File Permission="644" Location="Kernel/Language/de_AgentSurvey.pm"/>
         <File Permission="644" Location="Kernel/Language/de_PublicSurvey.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentSurvey.pm"/>
+        <File Permission="644" Location="Kernel/Modules/PublicSurvey.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurvey.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicSurvey.dtl"/>
+        <File Permission="644" Location="Kernel/System/Survey.pm"/>
+        <File Permission="644" Location="Kernel/System/Ticket/Event/SurveySendRequest.pm"/>
         <File Permission="644" Location="var/httpd/htdocs/images/Standard/survey.png"/>
     </Filelist>
     <DatabaseInstall>
