@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: GeneralCatalog.sopm,v 1.12 2007-10-12 15:37:46 mh Exp $</CVS>
+    <CVS>$Id: GeneralCatalog.sopm,v 1.13 2007-12-03 16:21:01 mh Exp $</CVS>
     <Name>GeneralCatalog</Name>
     <Version>0.0.0</Version>
     <Framework>2.2.4</Framework>
@@ -11,6 +11,7 @@
     <Description Lang="de">Das Allgemeiner Katalog Paket.</Description>
     <Filelist>
         <File Permission="644" Location="Kernel/Config/Files/GeneralCatalog.xml"/>
+        <File Permission="644" Location="Kernel/Language/bg_GeneralCatalog.pm"/>
         <File Permission="644" Location="Kernel/Language/de_GeneralCatalog.pm"/>
         <File Permission="644" Location="Kernel/Modules/AdminGeneralCatalog.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminGeneralCatalog.dtl"/>
