@@ -2,7 +2,7 @@
 # Kernel/Language/bg_GeneralCatalog.pm - the bulgarian translation of GeneralCatalog
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: bg_GeneralCatalog.pm,v 1.2 2007-12-03 16:21:01 mh Exp $
+# $Id: bg_GeneralCatalog.pm,v 1.3 2007-12-03 16:45:49 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,10 +15,10 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub Data {
-    my $Self = shift;
+    my ($Self) = @_;
 
     $Self->{Translation}->{'General Catalog'} = 'Основен каталог';
     $Self->{Translation}->{'General Catalog Management'}
