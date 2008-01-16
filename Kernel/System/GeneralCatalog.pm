@@ -2,7 +2,7 @@
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
 # Copyright (C) 2001-2008 OTRS GmbH, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.21 2008-01-16 11:31:33 mh Exp $
+# $Id: GeneralCatalog.pm,v 1.22 2008-01-16 14:08:38 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.21 $) [1];
+$VERSION = qw($Revision: 1.22 $) [1];
 
 =head1 NAME
 
@@ -339,8 +339,10 @@ sub ItemAdd {
     }
 
     # cleanup item name
-    $Param{Name} =~ s{(\n|\r)}{}gxms;
-    $Param{Name} =~ s{\s$}{}gxms;
+    $Param{Name} =~ s{ \A \s+   }{}xmsg;  # TrimLeft
+    $Param{Name} =~ s{ \s+ \z   }{}xmsg;  # TrimRight
+    $Param{Name} =~ s{ [\n\r\f] }{}xmsg;  # RemoveAllNewlines
+    $Param{Name} =~ s{ \t       }{}xmsg;  # RemoveAllTabs
 
     # set default values
     for my $Argument (qw(Functionality Comment)) {
@@ -379,14 +381,11 @@ sub ItemAdd {
     }
 
     # insert new item
-    my $Success
-        = $Self->{DBObject}->Do( SQL => "INSERT INTO general_catalog "
-            . "(general_catalog_class, name, functionality, valid_id, comments, "
-            . "create_time, create_by, change_time, change_by) VALUES "
-            . "('$Param{Class}', '$Param{Name}', '$Param{Functionality}', $Param{ValidID}, '$Param{Comment}', "
-            . "current_timestamp, $Param{UserID}, current_timestamp, $Param{UserID})" );
-
-    return if !$Success;
+    return if !$Self->{DBObject}->Do( SQL => "INSERT INTO general_catalog "
+        . "(general_catalog_class, name, functionality, valid_id, comments, "
+        . "create_time, create_by, change_time, change_by) VALUES "
+        . "('$Param{Class}', '$Param{Name}', '$Param{Functionality}', $Param{ValidID}, '$Param{Comment}', "
+        . "current_timestamp, $Param{UserID}, current_timestamp, $Param{UserID})" );
 
     # find id of new item
     $Self->{DBObject}->Prepare(
@@ -434,8 +433,10 @@ sub ItemUpdate {
     }
 
     # cleanup item name
-    $Param{Name} =~ s{(\n|\r)}{}gxms;
-    $Param{Name} =~ s{\s$}{}gxms;
+    $Param{Name} =~ s{ \A \s+   }{}xmsg;  # TrimLeft
+    $Param{Name} =~ s{ \s+ \z   }{}xmsg;  # TrimRight
+    $Param{Name} =~ s{ [\n\r\f] }{}xmsg;  # RemoveAllNewlines
+    $Param{Name} =~ s{ \t       }{}xmsg;  # RemoveAllTabs
 
     # set default values
     for my $Argument (qw(Functionality Comment)) {
@@ -543,6 +544,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.21 $ $Date: 2008-01-16 11:31:33 $
+$Revision: 1.22 $ $Date: 2008-01-16 14:08:38 $
 
 =cut
