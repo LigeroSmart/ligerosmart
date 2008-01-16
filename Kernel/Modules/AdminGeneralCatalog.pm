@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AdminGeneralCatalog.pm - admin frontend of general catalog management
-# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2008 OTRS GmbH, http://otrs.org/
 # --
-# $Id: AdminGeneralCatalog.pm,v 1.14 2007-10-06 15:36:39 mh Exp $
+# $Id: AdminGeneralCatalog.pm,v 1.15 2008-01-16 11:31:33 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -31,10 +31,10 @@ sub new {
     %{$Self} = %Param;
 
     # check needed objects
+    OBJECT:
     for my $Object (qw(ConfigObject ParamObject LogObject LayoutObject)) {
-        if ( !$Self->{$Object} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
-        }
+        next OBJECT if $Self->{$Object};
+        $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
     }
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
     $Self->{ValidObject}          = Kernel::System::Valid->new(%Param);
@@ -51,10 +51,8 @@ sub Run {
     if ( $Self->{Subaction} eq 'ItemList' ) {
         my $Class = $Self->{ParamObject}->GetParam( Param => "Class" ) || '';
 
-        # check needed Class
-        if ( !$Class ) {
-            return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
-        }
+        # check needed class
+        return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" ) if !$Class;
 
         # get catalog class list
         my $ClassList       = $Self->{GeneralCatalogObject}->ClassList();
@@ -84,19 +82,17 @@ sub Run {
             Class => $Class,
             Valid => 0,
         );
-        my $CssClass;
+
+        my $CssClass = 'searchpassive';
         for my $ItemID ( sort { $ItemIDList->{$a} cmp $ItemIDList->{$b} } keys %{$ItemIDList} ) {
+
+            # set output class
+            $CssClass = $CssClass eq 'searchactive' ? 'searchpassive' : 'searchactive';
 
             # get item data
             my $ItemData = $Self->{GeneralCatalogObject}->ItemGet( ItemID => $ItemID );
 
-            # set output class
-            if ( $CssClass && $CssClass eq 'searchactive' ) {
-                $CssClass = 'searchpassive';
-            }
-            else {
-                $CssClass = 'searchactive';
-            }
+            # output overview item list
             $Self->{LayoutObject}->Block(
                 Name => 'OverviewItemList',
                 Data => {
@@ -133,19 +129,22 @@ sub Run {
         # get params
         $ItemData{ItemID} = $Self->{ParamObject}->GetParam( Param => "ItemID" );
         if ( $ItemData{ItemID} eq 'NEW' ) {
+
+            # get class
             $ItemData{Class} = $Self->{ParamObject}->GetParam( Param => "Class" );
 
             # redirect to overview
-            if ( !$ItemData{Class} ) {
-                return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
-            }
+            return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" )
+                if !$ItemData{Class};
         }
         else {
+
+            # get item data
             my $ItemDataRef = $Self->{GeneralCatalogObject}->ItemGet( ItemID => $ItemData{ItemID} );
             %ItemData = %{$ItemDataRef};
         }
 
-        # get catalog class list
+        # generate ClassOptionStrg
         my $ClassList       = $Self->{GeneralCatalogObject}->ClassList();
         my $ClassOptionStrg = $Self->{LayoutObject}->BuildSelection(
             Name         => 'Class',
@@ -190,6 +189,7 @@ sub Run {
                 ValidOptionStrg         => $ValidOptionStrg,
             },
         );
+
         if ( $ItemData{Class} eq 'NEW' ) {
 
             # output ItemEditClassAdd
@@ -235,29 +235,21 @@ sub Run {
         }
 
         # check class
-        if ( !$ItemData{Class}
-            || ( $ItemData{Class} && $ItemData{Class} eq 'NEW' ) )
-        {
-
-            # redirect to overview class list
-            return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
-        }
+        return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" )
+            if !$ItemData{Class} || $ItemData{Class} eq 'NEW';
 
         # save to database
+        my $Success;
         if ( $ItemData{ItemID} eq 'NEW' ) {
-            my $Success
+            $Success
                 = $Self->{GeneralCatalogObject}->ItemAdd( %ItemData, UserID => $Self->{UserID} );
-            if ( !$Success ) {
-                return $Self->{LayoutObject}->ErrorScreen();
-            }
         }
         else {
-            my $Success
+            $Success
                 = $Self->{GeneralCatalogObject}->ItemUpdate( %ItemData, UserID => $Self->{UserID} );
-            if ( !$Success ) {
-                return $Self->{LayoutObject}->ErrorScreen();
-            }
         }
+
+        return $Self->{LayoutObject}->ErrorScreen() if !$Success;
 
         # redirect to overview class list
         return $Self->{LayoutObject}
@@ -287,16 +279,12 @@ sub Run {
             Name => 'OverviewClass',
             Data => {%Param},
         );
-        my $CssClass;
+
+        my $CssClass = 'searchpassive';
         for my $Class ( @{$ClassList} ) {
 
             # set output class
-            if ( $CssClass && $CssClass eq 'searchactive' ) {
-                $CssClass = 'searchpassive';
-            }
-            else {
-                $CssClass = 'searchactive';
-            }
+            $CssClass = $CssClass eq 'searchactive' ? 'searchpassive' : 'searchactive';
 
             # output overview class list
             $Self->{LayoutObject}->Block(

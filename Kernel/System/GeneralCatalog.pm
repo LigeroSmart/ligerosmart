@@ -1,8 +1,8 @@
 # --
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
-# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2008 OTRS GmbH, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.20 2007-10-08 15:51:33 mh Exp $
+# $Id: GeneralCatalog.pm,v 1.21 2008-01-16 11:31:33 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 =head1 NAME
 
@@ -94,6 +94,7 @@ sub ClassList {
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         push @ClassList, $Row[0];
     }
+
     return \@ClassList;
 }
 
@@ -522,6 +523,7 @@ sub ItemUpdate {
         Message =>
             "Can't update item! General catalog item with same name already exists in this class.",
     );
+
     return;
 }
 
@@ -541,6 +543,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.20 $ $Date: 2007-10-08 15:51:33 $
+$Revision: 1.21 $ $Date: 2008-01-16 11:31:33 $
 
 =cut
