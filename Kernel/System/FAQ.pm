@@ -1,8 +1,8 @@
 # --
 # Kernel/System/FAQ.pm - all faq funktions
-# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2008 OTRS GmbH, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.11 2007-08-06 10:10:01 martin Exp $
+# $Id: FAQ.pm,v 1.12 2008-01-21 14:03:55 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Group;
 use Kernel::System::CustomerGroup;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.11 $';
+$VERSION = '$Revision: 1.12 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -180,12 +180,11 @@ sub FAQGet {
     # get attachment
     $SQL = "SELECT filename, content_type, content_size, content ".
         " FROM faq_attachment WHERE faq_id = $Param{ItemID}";
-    $Self->{DBObject}->Prepare(SQL => $SQL, Encode => [1,0]);
+    $Self->{DBObject}->Prepare(SQL => $SQL, Encode => [1,1,1,0]);
     while  (my @Row = $Self->{DBObject}->FetchrowArray()) {
         # decode attachment if it's a postgresql backend and not BLOB
         if (!$Self->{DBObject}->GetDatabaseFunction('DirectBlob')) {
             $Row[3] = decode_base64($Row[3]);
-            $Self->{EncodeObject}->Encode(\$Row[3]);
         }
         $Data{Filename} = $Row[0];
         $Data{ContentType} = $Row[1];
@@ -1824,7 +1823,7 @@ sub FAQSearch {
     }
 
     # sql
-    my $SQL = "SELECT i.id, count( v.item_id ) votes, avg( v.rate ) result".
+    my $SQL = "SELECT i.id, count( v.item_id ) AS votes, avg( v.rate ) AS result".
         " FROM faq_item i ".
         " LEFT JOIN faq_voting v ON v.item_id = i.id".
         " LEFT JOIN faq_state s ON s.id = i.state_id".
@@ -1937,7 +1936,6 @@ sub FAQSearch {
         }
     }
     $SQL .= $Ext;
-    #$Self->{LogObject}->Log(Priority => 'error', Message => $SQL);
     my @List = ();
     $Self->{DBObject}->Prepare(SQL => $SQL, Limit => $Param{Limit} || 500);
     while  (my @Row = $Self->{DBObject}->FetchrowArray()) {
@@ -2440,6 +2438,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.11 $ $Date: 2007-08-06 10:10:01 $
+$Revision: 1.12 $ $Date: 2008-01-21 14:03:55 $
 
 =cut
