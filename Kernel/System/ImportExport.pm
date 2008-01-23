@@ -1,12 +1,12 @@
 # --
 # Kernel/System/ImportExport.pm - all import and export functions
-# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pm,v 1.1.1.1 2008-01-16 14:11:00 mh Exp $
+# $Id: ImportExport.pm,v 1.2 2008-01-23 17:14:36 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 
 package Kernel::System::ImportExport;
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1.1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -46,8 +46,10 @@ create a object
     );
     my $DBObject = Kernel::System::DB->new(
         ConfigObject => $ConfigObject,
-        LogObject => $LogObject,
+        LogObject    => $LogObject,
+        MainObject   => $MainObject,
     );
+
     my $ImportExportObject = Kernel::System::ImportExport->new(
         ConfigObject => $ConfigObject,
         LogObject => $LogObject,
@@ -80,11 +82,12 @@ return a list of available classes as hash reference
 =cut
 
 sub ClassList {
+    my ( $Self, %Param ) = @_;
 
     my $ClassList = {
         ITSMConfigItem => 'Config Item',
-        Ticket => 'Ticket',
-        FAQ => 'FAQ',
+        Ticket         => 'Ticket',
+        FAQ            => 'FAQ',
     };
 
     return $ClassList;
@@ -116,7 +119,7 @@ sub TemplateList {
     }
 
     # quote
-    $Param{Class}  = $Self->{DBObject}->Quote( $Param{Class} );
+    $Param{Class} = $Self->{DBObject}->Quote( $Param{Class} );
     $Param{UserID} = $Self->{DBObject}->Quote( $Param{UserID}, 'Integer' );
 
     # ask database
@@ -188,15 +191,15 @@ sub TemplateGet {
     # fetch the result
     my %TemplateData;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $TemplateData{TemplateID}    = $Row[0];
-        $TemplateData{Class}         = $Row[1];
-        $TemplateData{Name}          = $Row[2];
-        $TemplateData{ValidID}       = $Row[3];
-        $TemplateData{Comment}       = $Row[4] || '';
-        $TemplateData{CreateTime}    = $Row[5];
-        $TemplateData{CreateBy}      = $Row[6];
-        $TemplateData{ChangeTime}    = $Row[7];
-        $TemplateData{ChangeBy}      = $Row[8];
+        $TemplateData{TemplateID} = $Row[0];
+        $TemplateData{Class}      = $Row[1];
+        $TemplateData{Name}       = $Row[2];
+        $TemplateData{ValidID}    = $Row[3];
+        $TemplateData{Comment}    = $Row[4] || '';
+        $TemplateData{CreateTime} = $Row[5];
+        $TemplateData{CreateBy}   = $Row[6];
+        $TemplateData{ChangeTime} = $Row[7];
+        $TemplateData{ChangeBy}   = $Row[8];
     }
 
     return \%TemplateData;
@@ -231,10 +234,12 @@ sub TemplateAdd {
     }
 
     # cleanup template name
-    $Param{Name} =~ s{ \A \s+   }{}xmsg;  # TrimLeft
-    $Param{Name} =~ s{ \s+ \z   }{}xmsg;  # TrimRight
-    $Param{Name} =~ s{ [\n\r\f] }{}xmsg;  # RemoveAllNewlines
-    $Param{Name} =~ s{ \t       }{}xmsg;  # RemoveAllTabs
+    for my $Element (qw(Class Name)) {
+        $Param{$Element} =~ s{ [\n\r\f] }{}xmsg;    # RemoveAllNewlines
+        $Param{$Element} =~ s{ \t       }{}xmsg;    # RemoveAllTabs
+        $Param{$Element} =~ s{ \A \s+   }{}xmsg;    # TrimLeft
+        $Param{$Element} =~ s{ \s+ \z   }{}xmsg;    # TrimRight
+    }
 
     # set default values
     $Param{Comment} = $Param{Comment} || '';
@@ -271,11 +276,13 @@ sub TemplateAdd {
     }
 
     # insert new template
-    return if !$Self->{DBObject}->Do( SQL => "INSERT INTO importexport_template "
-        . "(importexport_class, name, valid_id, comments, "
-        . "create_time, create_by, change_time, change_by) VALUES "
-        . "('$Param{Class}', '$Param{Name}', $Param{ValidID}, '$Param{Comment}', "
-        . "current_timestamp, $Param{UserID}, current_timestamp, $Param{UserID})" );
+    return if !$Self->{DBObject}->Do(
+        SQL => "INSERT INTO importexport_template "
+            . "(importexport_class, name, valid_id, comments, "
+            . "create_time, create_by, change_time, change_by) VALUES "
+            . "('$Param{Class}', '$Param{Name}', $Param{ValidID}, '$Param{Comment}', "
+            . "current_timestamp, $Param{UserID}, current_timestamp, $Param{UserID})"
+    );
 
     # find id of new template
     $Self->{DBObject}->Prepare(
@@ -322,10 +329,10 @@ sub TemplateUpdate {
     }
 
     # cleanup template name
-    $Param{Name} =~ s{ \A \s+   }{}xmsg;  # TrimLeft
-    $Param{Name} =~ s{ \s+ \z   }{}xmsg;  # TrimRight
-    $Param{Name} =~ s{ [\n\r\f] }{}xmsg;  # RemoveAllNewlines
-    $Param{Name} =~ s{ \t       }{}xmsg;  # RemoveAllTabs
+    $Param{Name} =~ s{ [\n\r\f] }{}xmsg;    # RemoveAllNewlines
+    $Param{Name} =~ s{ \t       }{}xmsg;    # RemoveAllTabs
+    $Param{Name} =~ s{ \A \s+   }{}xmsg;    # TrimLeft
+    $Param{Name} =~ s{ \s+ \z   }{}xmsg;    # TrimRight
 
     # set default values
     $Param{Comment} = $Param{Comment} || '';
@@ -338,10 +345,32 @@ sub TemplateUpdate {
         $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument}, 'Integer' );
     }
 
+    # get the class of this template id
+    $Self->{DBObject}->Prepare(
+        SQL =>
+            "SELECT importexport_class FROM importexport_template WHERE id = '$Param{TemplateID}'",
+        Limit => 1,
+    );
+
+    # fetch the result
+    my $Class;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $Class = $Row[0];
+    }
+
+    if ( !$Class ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message =>
+                "Can't update template! I can't find the template.",
+        );
+        return;
+    }
+
     # find exiting template with same name
     $Self->{DBObject}->Prepare(
         SQL =>
-            "SELECT id FROM importexport_template WHERE importexport_class = '$Param{Class}' AND name = '$Param{Name}'",
+            "SELECT id FROM importexport_template WHERE importexport_class = '$Class' AND name = '$Param{Name}'",
         Limit => 1,
     );
 
@@ -353,7 +382,7 @@ sub TemplateUpdate {
         }
     }
 
-    if (!$Update) {
+    if ( !$Update ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message =>
@@ -363,10 +392,69 @@ sub TemplateUpdate {
     }
 
     # update template
-    return $Self->{DBObject}->Do( SQL =>
-        "UPDATE importexport_template SET name = '$Param{Name}',"
-        . "valid_id = $Param{ValidID}, comments = '$Param{Comment}', "
-        . "change_time = current_timestamp, change_by = $Param{UserID} WHERE id = $Param{TemplateID}",
+    return $Self->{DBObject}->Do(
+        SQL =>
+            "UPDATE importexport_template SET name = '$Param{Name}',"
+            . "valid_id = $Param{ValidID}, comments = '$Param{Comment}', "
+            . "change_time = current_timestamp, change_by = $Param{UserID} WHERE id = $Param{TemplateID}",
+    );
+}
+
+=item TemplateDelete()
+
+delete existing import/export templates
+
+    my $True = $ImportExportObject->TemplateDelete(
+        TemplateID => 123,
+        UserID => 1,
+    );
+
+    or
+
+    my $True = $ImportExportObject->TemplateDelete(
+        TemplateID => [1,44,166,5],
+        UserID => 1,
+    );
+
+=cut
+
+sub TemplateDelete {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(TemplateID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!"
+            );
+            return;
+        }
+    }
+
+    if ( !ref $Param{TemplateID} ) {
+        $Param{TemplateID} = [ $Param{TemplateID} ];
+    }
+    elsif ( ref $Param{TemplateID} ne 'ARRAY' ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "TemplateID must be an array reference or a string!"
+        );
+        return;
+    }
+
+    # quote
+    for my $TemplateID ( @{ $Param{TemplateID} } ) {
+        $TemplateID = $Self->{DBObject}->Quote( $TemplateID, 'Integer' );
+    }
+
+    # create the template id string
+    my $TemplateIDString = join ',', @{ $Param{TemplateID} };
+
+    # delete templates
+    return $Self->{DBObject}->Do(
+        SQL =>
+            "DELETE FROM importexport_template WHERE id IN ( $TemplateIDString )",
     );
 }
 
@@ -380,12 +468,12 @@ This Software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (GPL). If you
-did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.1.1.1 $ $Date: 2008-01-16 14:11:00 $
+$Revision: 1.2 $ $Date: 2008-01-23 17:14:36 $
 
 =cut
