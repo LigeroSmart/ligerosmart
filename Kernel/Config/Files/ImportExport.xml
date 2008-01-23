@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
-<otrs_config version="1.0" init="Config">
-    <CVS>$Id: ImportExport.xml,v 1.1.1.1 2008-01-16 14:11:00 mh Exp $</CVS>
+<otrs_config version="1.0" init="Framework">
+    <CVS>$Id: ImportExport.xml,v 1.2 2008-01-23 08:59:02 mh Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminImportExport" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminImportExport in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminImportExport im Admin-Bereich.</Description>
