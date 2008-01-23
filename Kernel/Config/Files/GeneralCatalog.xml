@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
-<otrs_config version="1.0" init="Config">
-    <CVS>$Id: GeneralCatalog.xml,v 1.2 2007-02-24 11:35:28 mh Exp $</CVS>
+<otrs_config version="1.0" init="Framework">
+    <CVS>$Id: GeneralCatalog.xml,v 1.3 2008-01-23 08:58:26 mh Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminGeneralCatalog" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminGeneralCatalog configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminGeneralCatalog Konfiguration im Admin-Bereich.</Description>
