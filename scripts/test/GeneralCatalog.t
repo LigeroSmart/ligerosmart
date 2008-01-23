@@ -1,12 +1,12 @@
 # --
 # GeneralCatalog.t - general catalog tests
-# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.t,v 1.5 2007-10-06 15:36:39 mh Exp $
+# $Id: GeneralCatalog.t,v 1.6 2008-01-23 14:01:51 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 
 use strict;
@@ -206,7 +206,7 @@ for my $Item ( @{$ItemData} ) {
         # check item data after creation of item
         for my $ItemAttribute ( keys %{ $Item->{AddGet} } ) {
             $Self->Is(
-                $ItemGet->{$ItemAttribute}        || '',
+                $ItemGet->{$ItemAttribute} || '',
                 $Item->{AddGet}->{$ItemAttribute} || '',
                 "Test $TestCount: ItemGet() - $ItemAttribute",
             );
@@ -242,7 +242,7 @@ for my $Item ( @{$ItemData} ) {
         # check item data after update
         for my $ItemAttribute ( keys %{ $Item->{UpdateGet} } ) {
             $Self->Is(
-                $ItemGet2->{$ItemAttribute}          || '',
+                $ItemGet2->{$ItemAttribute} || '',
                 $Item->{UpdateGet}->{$ItemAttribute} || '',
                 "Test $TestCount: ItemGet() - $ItemAttribute",
             );
