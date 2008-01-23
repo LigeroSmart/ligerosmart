@@ -2,7 +2,7 @@
 # GeneralCatalog.t - general catalog tests
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.t,v 1.6 2008-01-23 14:01:51 mh Exp $
+# $Id: GeneralCatalog.t,v 1.7 2008-01-23 16:24:31 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -27,7 +27,8 @@ my $Rand6 = int( rand(1_000_000) );
 my $ItemData = [
 
     # this item is NOT complete and must not be added
-    {   Add => {
+    {
+        Add => {
             Name    => 'TestItem' . $Rand1,
             ValidID => 1,
             UserID  => 1,
@@ -35,7 +36,8 @@ my $ItemData = [
     },
 
     # this item is NOT complete and must not be added
-    {   Add => {
+    {
+        Add => {
             Class   => 'UniTest::TestClass1',
             ValidID => 1,
             UserID  => 1,
@@ -43,7 +45,8 @@ my $ItemData = [
     },
 
     # this item is NOT complete and must not be added
-    {   Add => {
+    {
+        Add => {
             Class  => 'UniTest::TestClass1',
             Name   => 'TestItem' . $Rand2,
             UserID => 1,
@@ -51,7 +54,8 @@ my $ItemData = [
     },
 
     # this item is NOT complete and must not be added
-    {   Add => {
+    {
+        Add => {
             Class   => 'UniTest::TestClass1',
             Name    => 'TestItem' . $Rand3,
             ValidID => 1,
@@ -59,7 +63,8 @@ my $ItemData = [
     },
 
     # this item must be inserted sucessfully
-    {   Add => {
+    {
+        Add => {
             Class   => 'UniTest::TestClass1',
             Name    => 'TestItem' . $Rand4,
             ValidID => 1,
@@ -77,7 +82,8 @@ my $ItemData = [
     },
 
     # this item have the same name as one test before and must not be added
-    {   Add => {
+    {
+        Add => {
             Class   => 'UniTest::TestClass1',
             Name    => 'TestItem' . $Rand4,
             ValidID => 1,
@@ -86,7 +92,8 @@ my $ItemData = [
     },
 
     # this item must be inserted sucessfully
-    {   Add => {
+    {
+        Add => {
             Class         => 'UniTest::TestClass1',
             Name          => 'TestItem' . $Rand5,
             Functionality => 'Test1',
@@ -105,28 +112,32 @@ my $ItemData = [
     },
 
     # the item one add-test before must be NOT updated (item update arguments NOT complete)
-    {   Update => {
+    {
+        Update => {
             ValidID => 2,
             UserID  => 2,
         },
     },
 
     # the item one add-test before must be NOT updated (item update arguments NOT complete)
-    {   Update => {
+    {
+        Update => {
             Name   => 'TestItem' . $Rand5 . 'Edit',
             UserID => 2,
         },
     },
 
     # the item one add-test before must be NOT updated (item update arguments NOT complete)
-    {   Update => {
+    {
+        Update => {
             Name    => 'TestItem' . $Rand5 . 'Edit',
             ValidID => 2,
         },
     },
 
     # the item one add-test before must be updated (item update arguments are complete)
-    {   Update => {
+    {
+        Update => {
             Name    => 'TestItem' . $Rand5 . 'Edit',
             ValidID => 2,
             UserID  => 2,
@@ -142,7 +153,8 @@ my $ItemData = [
     },
 
     # the item one add-test before must be updated (item update arguments are complete)
-    {   Update => {
+    {
+        Update => {
             Name          => 'TestItem' . $Rand5 . 'Edit',
             Functionality => 'Test1',
             ValidID       => 1,
@@ -159,7 +171,8 @@ my $ItemData = [
     },
 
     # the item one add-test before must be updated (item update arguments are complete)
-    {   Update => {
+    {
+        Update => {
             Name          => 'TestItem' . $Rand6 . 'Edit',
             Functionality => 'Test2',
             ValidID       => 1,
@@ -226,7 +239,8 @@ for my $Item ( @{$ItemData} ) {
 
         # check if item was updated successfully or not
         if ( $Item->{UpdateGet} ) {
-            $Self->True( $UpdateSucess, "Test $TestCount: ItemUpdate() - ItemKey: $LastAddedItemID",
+            $Self->True(
+                $UpdateSucess, "Test $TestCount: ItemUpdate() - ItemKey: $LastAddedItemID",
             );
         }
         else {
