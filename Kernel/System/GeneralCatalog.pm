@@ -2,7 +2,7 @@
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.23 2008-01-23 16:24:31 mh Exp $
+# $Id: GeneralCatalog.pm,v 1.24 2008-01-23 17:28:54 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.23 $) [1];
+$VERSION = qw($Revision: 1.24 $) [1];
 
 =head1 NAME
 
@@ -70,7 +70,7 @@ sub new {
     for my $Object (qw(DBObject ConfigObject LogObject)) {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
-    $Self->{ValidObject} = Kernel::System::Valid->new(%Param);
+    $Self->{ValidObject} = Kernel::System::Valid->new( %{$Self} );
 
     return $Self;
 }
@@ -89,7 +89,8 @@ sub ClassList {
     # ask database
     $Self->{DBObject}->Prepare(
         SQL =>
-            'SELECT DISTINCT(general_catalog_class) FROM general_catalog ORDER BY general_catalog_class',
+            'SELECT DISTINCT(general_catalog_class) '
+            . 'FROM general_catalog ORDER BY general_catalog_class',
     );
 
     # fetch the result
@@ -365,7 +366,8 @@ sub ItemAdd {
     # find exiting item with same name
     $Self->{DBObject}->Prepare(
         SQL =>
-            "SELECT id FROM general_catalog WHERE general_catalog_class = '$Param{Class}' AND name = '$Param{Name}'",
+            "SELECT id FROM general_catalog "
+            . "WHERE general_catalog_class = '$Param{Class}' AND name = '$Param{Name}'",
         Limit => 1,
     );
 
@@ -390,7 +392,8 @@ sub ItemAdd {
         SQL => "INSERT INTO general_catalog "
             . "(general_catalog_class, name, functionality, valid_id, comments, "
             . "create_time, create_by, change_time, change_by) VALUES "
-            . "('$Param{Class}', '$Param{Name}', '$Param{Functionality}', $Param{ValidID}, '$Param{Comment}', "
+            . "('$Param{Class}', '$Param{Name}', "
+            . "'$Param{Functionality}', $Param{ValidID}, '$Param{Comment}', "
             . "current_timestamp, $Param{UserID}, current_timestamp, $Param{UserID})"
     );
 
@@ -461,7 +464,8 @@ sub ItemUpdate {
     # get class of item
     $Self->{DBObject}->Prepare(
         SQL =>
-            "SELECT general_catalog_class, functionality FROM general_catalog WHERE id = $Param{ItemID}",
+            "SELECT general_catalog_class, functionality FROM general_catalog "
+            . "WHERE id = $Param{ItemID}",
         Limit => 1,
     );
 
@@ -476,7 +480,8 @@ sub ItemUpdate {
     # find exiting item with same name
     $Self->{DBObject}->Prepare(
         SQL =>
-            "SELECT id FROM general_catalog WHERE general_catalog_class = '$Class' AND name = '$Param{Name}'",
+            "SELECT id FROM general_catalog "
+            . "WHERE general_catalog_class = '$Class' AND name = '$Param{Name}'",
         Limit => 1,
     );
 
@@ -552,6 +557,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.23 $ $Date: 2008-01-23 16:24:31 $
+$Revision: 1.24 $ $Date: 2008-01-23 17:28:54 $
 
 =cut

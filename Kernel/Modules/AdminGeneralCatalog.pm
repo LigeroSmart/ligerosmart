@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminGeneralCatalog.pm - admin frontend of general catalog management
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminGeneralCatalog.pm,v 1.16 2008-01-23 14:01:51 mh Exp $
+# $Id: AdminGeneralCatalog.pm,v 1.17 2008-01-23 17:28:54 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -67,11 +67,17 @@ sub Run {
         # output overview
         $Self->{LayoutObject}->Block(
             Name => 'Overview',
-            Data => { %Param, ClassOptionStrg => $ClassOptionStrg },
+            Data => {
+                %Param,
+                ClassOptionStrg => $ClassOptionStrg,
+            },
         );
         $Self->{LayoutObject}->Block(
             Name => 'OverviewItem',
-            Data => { %Param, Class => $Class },
+            Data => {
+                %Param,
+                Class => $Class,
+            },
         );
 
         # get availability list
@@ -90,7 +96,9 @@ sub Run {
             $CssClass = $CssClass eq 'searchactive' ? 'searchpassive' : 'searchactive';
 
             # get item data
-            my $ItemData = $Self->{GeneralCatalogObject}->ItemGet( ItemID => $ItemID );
+            my $ItemData = $Self->{GeneralCatalogObject}->ItemGet(
+                ItemID => $ItemID,
+            );
 
             # output overview item list
             $Self->{LayoutObject}->Block(
@@ -140,7 +148,9 @@ sub Run {
         else {
 
             # get item data
-            my $ItemDataRef = $Self->{GeneralCatalogObject}->ItemGet( ItemID => $ItemData{ItemID} );
+            my $ItemDataRef = $Self->{GeneralCatalogObject}->ItemGet(
+                ItemID => $ItemData{ItemID},
+            );
             %ItemData = %{$ItemDataRef};
         }
 
@@ -157,12 +167,16 @@ sub Run {
         # output overview
         $Self->{LayoutObject}->Block(
             Name => 'Overview',
-            Data => { %Param, ClassOptionStrg => $ClassOptionStrg },
+            Data => {
+                %Param,
+                ClassOptionStrg => $ClassOptionStrg,
+            },
         );
 
         # generate FunctionalityOptionStrg
-        my $FunctionalityRef
-            = $Self->{GeneralCatalogObject}->FunctionalityList( Class => $ItemData{Class} );
+        my $FunctionalityRef = $Self->{GeneralCatalogObject}->FunctionalityList(
+            Class => $ItemData{Class},
+        );
         my $FunctionalityOptionStrg = $Self->{LayoutObject}->BuildSelection(
             Name         => 'Functionality',
             Data         => $FunctionalityRef,
@@ -195,7 +209,9 @@ sub Run {
             # output ItemEditClassAdd
             $Self->{LayoutObject}->Block(
                 Name => 'ItemEditClassAdd',
-                Data => { Class => $ItemData{Class} },
+                Data => {
+                    Class => $ItemData{Class},
+                },
             );
         }
         else {
@@ -203,7 +219,9 @@ sub Run {
             # output ItemEditClassExist
             $Self->{LayoutObject}->Block(
                 Name => 'ItemEditClassExist',
-                Data => { Class => $ItemData{Class} },
+                Data => {
+                    Class => $ItemData{Class},
+                },
             );
         }
 
@@ -241,19 +259,24 @@ sub Run {
         # save to database
         my $Success;
         if ( $ItemData{ItemID} eq 'NEW' ) {
-            $Success
-                = $Self->{GeneralCatalogObject}->ItemAdd( %ItemData, UserID => $Self->{UserID} );
+            $Success = $Self->{GeneralCatalogObject}->ItemAdd(
+                %ItemData,
+                UserID => $Self->{UserID},
+            );
         }
         else {
-            $Success
-                = $Self->{GeneralCatalogObject}->ItemUpdate( %ItemData, UserID => $Self->{UserID} );
+            $Success = $Self->{GeneralCatalogObject}->ItemUpdate(
+                %ItemData,
+                UserID => $Self->{UserID},
+            );
         }
 
         return $Self->{LayoutObject}->ErrorScreen() if !$Success;
 
         # redirect to overview class list
-        return $Self->{LayoutObject}
-            ->Redirect( OP => "Action=$Self->{Action}&Subaction=ItemList&Class=$ItemData{Class}" );
+        return $Self->{LayoutObject}->Redirect(
+            OP => "Action=$Self->{Action}&Subaction=ItemList&Class=$ItemData{Class}"
+        );
     }
 
     # ------------------------------------------------------------ #
@@ -273,7 +296,10 @@ sub Run {
         # output overview
         $Self->{LayoutObject}->Block(
             Name => 'Overview',
-            Data => { %Param, ClassOptionStrg => $ClassOptionStrg },
+            Data => {
+                %Param,
+                ClassOptionStrg => $ClassOptionStrg,
+            },
         );
         $Self->{LayoutObject}->Block(
             Name => 'OverviewClass',
