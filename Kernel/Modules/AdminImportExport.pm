@@ -1,12 +1,12 @@
 # --
 # Kernel/Modules/AdminImportExport.pm - admin frontend of import export module
-# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.pm,v 1.1.1.1 2008-01-16 14:11:00 mh Exp $
+# $Id: AdminImportExport.pm,v 1.2 2008-01-23 17:15:32 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 
 package Kernel::Modules::AdminImportExport;
@@ -18,7 +18,7 @@ use Kernel::System::ImportExport;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1.1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -67,7 +67,7 @@ sub Run {
             # get template data
             $TemplateData = $Self->{ImportExportObject}->TemplateGet(
                 TemplateID => $TemplateData->{TemplateID},
-                UserID => $Self->{UserID},
+                UserID     => $Self->{UserID},
             );
         }
 
@@ -140,18 +140,23 @@ sub Run {
         if ( $TemplateData->{TemplateID} eq 'NEW' ) {
             $Success
                 = $TemplateData->{TemplateID}
-                = $Self->{ImportExportObject}->TemplateAdd( %{$TemplateData}, UserID => $Self->{UserID} );
+                = $Self->{ImportExportObject}
+                ->TemplateAdd( %{$TemplateData}, UserID => $Self->{UserID} );
         }
         else {
             $Success
-                = $Self->{ImportExportObject}->TemplateUpdate( %{$TemplateData}, UserID => $Self->{UserID} );
+                = $Self->{ImportExportObject}
+                ->TemplateUpdate( %{$TemplateData}, UserID => $Self->{UserID} );
         }
 
         return $Self->{LayoutObject}->ErrorScreen() if !$Success;
 
         # redirect to overview class list
         return $Self->{LayoutObject}
-            ->Redirect( OP => "Action=$Self->{Action}&Subaction=TemplateTemplateID&TemplateID=$TemplateData->{TemplateID}" );
+            ->Redirect(
+            OP =>
+                "Action=$Self->{Action}&Subaction=TemplateTemplateID&TemplateID=$TemplateData->{TemplateID}"
+            );
     }
 
     # ------------------------------------------------------------ #
@@ -190,8 +195,8 @@ sub Run {
 
             # get template list
             my $TemplateList = $Self->{ImportExportObject}->TemplateList(
-                Class   => $Class,
-                UserID  => $Self->{UserID},
+                Class  => $Class,
+                UserID => $Self->{UserID},
             );
 
             next CLASS if !$TemplateList;
@@ -215,7 +220,7 @@ sub Run {
                 # get template data
                 my $TemplateData = $Self->{ImportExportObject}->TemplateGet(
                     TemplateID => $TemplateID,
-                    UserID => $Self->{UserID},
+                    UserID     => $Self->{UserID},
                 );
 
                 # output row
@@ -224,7 +229,7 @@ sub Run {
                     Data => {
                         %{$TemplateData},
                         CssClass => $CssClass,
-                        Valid => $ValidList{$TemplateData->{ValidID}},
+                        Valid    => $ValidList{ $TemplateData->{ValidID} },
                     },
                 );
             }
