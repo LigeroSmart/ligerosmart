@@ -1,12 +1,12 @@
 # --
 # ITSMCIPAllocate.t - general catalog tests
-# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMCIPAllocate.t,v 1.2 2007-10-08 15:55:28 mh Exp $
+# $Id: ITSMCIPAllocate.t,v 1.3 2008-01-23 16:48:36 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 
 use strict;
@@ -71,7 +71,7 @@ $Self->False( $Success2, 'AllocateUpdate()' );
 # update the allocation hash (allocation hash )
 my $Success3 = $Self->{CIPAllocateObject}->AllocateUpdate(
     AllocateData => { Test => 'aaa', Test2 => 'bbb' },
-    UserID       => 1,
+    UserID => 1,
 );
 
 # check the result

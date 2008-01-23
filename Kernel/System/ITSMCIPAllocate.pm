@@ -1,12 +1,12 @@
 # --
 # Kernel/System/ITSMCIPAllocate.pm - all criticality, impact and priority allocation functions
-# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMCIPAllocate.pm,v 1.5 2007-10-06 15:46:03 mh Exp $
+# $Id: ITSMCIPAllocate.pm,v 1.6 2008-01-23 16:48:36 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 
 package Kernel::System::ITSMCIPAllocate;
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 =head1 NAME
 
@@ -46,8 +46,10 @@ create a object
     );
     my $DBObject = Kernel::System::DB->new(
         ConfigObject => $ConfigObject,
-        LogObject => $LogObject,
+        LogObject    => $LogObject,
+        MainObject   => $MainObject,
     );
+
     my $CIPAllocateObject = Kernel::System::CIPAllocate->new(
         ConfigObject => $ConfigObject,
         LogObject => $LogObject,
@@ -174,11 +176,13 @@ sub AllocateUpdate {
             $PriorityID    = $Self->{DBObject}->Quote( $PriorityID,    'Integer' );
 
             # insert new allocation
-            $Self->{DBObject}->Do( SQL => "INSERT INTO cip_allocate "
+            $Self->{DBObject}->Do(
+                SQL => "INSERT INTO cip_allocate "
                     . "(criticality_id, impact_id, priority_id, "
                     . "create_time, create_by, change_time, change_by) VALUES "
                     . "($CriticalityID, $ImpactID, $PriorityID, "
-                    . "current_timestamp, $Param{UserID}, current_timestamp, $Param{UserID})" );
+                    . "current_timestamp, $Param{UserID}, current_timestamp, $Param{UserID})"
+            );
         }
     }
 
@@ -241,12 +245,12 @@ This Software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (GPL). If you
-did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2007-10-06 15:46:03 $
+$Revision: 1.6 $ $Date: 2008-01-23 16:48:36 $
 
 =cut
