@@ -1,12 +1,12 @@
 # --
 # Kernel/System/FAQ.pm - all faq funktions
-# Copyright (C) 2001-2008 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.12 2008-01-21 14:03:55 rk Exp $
+# $Id: FAQ.pm,v 1.13 2008-01-23 10:18:25 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 
 package Kernel::System::FAQ;
@@ -18,7 +18,7 @@ use Kernel::System::Group;
 use Kernel::System::CustomerGroup;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.12 $';
+$VERSION = '$Revision: 1.13 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -1823,7 +1823,7 @@ sub FAQSearch {
     }
 
     # sql
-    my $SQL = "SELECT i.id, count( v.item_id ) AS votes, avg( v.rate ) AS result".
+    my $SQL = "SELECT i.id, count( v.item_id ) votes, avg( v.rate ) vrate".
         " FROM faq_item i ".
         " LEFT JOIN faq_voting v ON v.item_id = i.id".
         " LEFT JOIN faq_state s ON s.id = i.state_id".
@@ -1915,7 +1915,7 @@ sub FAQSearch {
         }
         # rates
         elsif ($Param{Order} eq 'Result') {
-            $Ext .= "result";
+            $Ext .= "vrate";
         }
         # changed
         elsif ($Param{Order} eq 'Created') {
@@ -2432,12 +2432,12 @@ This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (GPL). If you
-did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.12 $ $Date: 2008-01-21 14:03:55 $
+$Revision: 1.13 $ $Date: 2008-01-23 10:18:25 $
 
 =cut
