@@ -1,12 +1,12 @@
 # --
 # Kernel/System/Survey.pm - all survey funtions
-# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.pm,v 1.35 2007-10-15 11:23:26 mh Exp $
+# $Id: Survey.pm,v 1.36 2008-01-23 17:43:25 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 
 package Kernel::System::Survey;
@@ -20,7 +20,7 @@ use Kernel::System::Email;
 use Kernel::System::Ticket;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.35 $) [1];
+$VERSION = qw($Revision: 1.36 $) [1];
 
 =head1 NAME
 
@@ -55,13 +55,14 @@ create a object
     my $TimeObject = Kernel::System::Time->new(
         ConfigObject => $ConfigObject,
     );
-    my $DBObject = Kernel::System::DB->new(
-        ConfigObject => $ConfigObject,
-        LogObject => $LogObject,
-    );
     my $MainObject = Kernel::System::Main->new(
         ConfigObject => $ConfigObject,
         LogObject => $LogObject,
+    );
+    my $DBObject = Kernel::System::DB->new(
+        ConfigObject => $ConfigObject,
+        LogObject    => $LogObject,
+        MainObject   => $MainObject,
     );
     my $UserObject = Kernel::System::User->new(
         ConfigObject => $ConfigObject,
@@ -254,9 +255,11 @@ sub SurveyStatusSet {
         return 'NoQuestion' if !$Quest;
 
         # get all questions (type radio and checkbox)
-        $Self->{DBObject}->Prepare( SQL => "SELECT id FROM survey_question"
+        $Self->{DBObject}->Prepare(
+            SQL => "SELECT id FROM survey_question"
                 . " WHERE survey_id = $Param{SurveyID} AND "
-                . "(question_type = 'Radio' OR question_type = 'Checkbox')" );
+                . "(question_type = 'Radio' OR question_type = 'Checkbox')"
+        );
 
         # fetch the result
         my @QuestionIDs;
@@ -282,8 +285,10 @@ sub SurveyStatusSet {
 
         # set new status
         if ( $Param{NewStatus} eq 'Valid' || $Param{NewStatus} eq 'Master' ) {
-            $Self->{DBObject}->Do( SQL => "UPDATE survey SET status = '$Param{NewStatus}' "
-                    . "WHERE id = $Param{SurveyID}" );
+            $Self->{DBObject}->Do(
+                SQL => "UPDATE survey SET status = '$Param{NewStatus}' "
+                    . "WHERE id = $Param{SurveyID}"
+            );
             return 'StatusSet';
         }
     }
@@ -309,8 +314,10 @@ sub SurveyStatusSet {
 
         # set status Valid
         if ( $Param{NewStatus} eq 'Valid' || $Param{NewStatus} eq 'Invalid' ) {
-            $Self->{DBObject}->Do( SQL => "UPDATE survey SET status = '$Param{NewStatus}' "
-                    . "WHERE id = $Param{SurveyID}" );
+            $Self->{DBObject}->Do(
+                SQL => "UPDATE survey SET status = '$Param{NewStatus}' "
+                    . "WHERE id = $Param{SurveyID}"
+            );
             return 'StatusSet';
         }
     }
@@ -355,13 +362,15 @@ sub SurveySave {
     if ( $Param{Title} && $Param{Introduction} && $Param{Description} ) {
 
         # update the survey
-        return $Self->{DBObject}->Do( SQL => "UPDATE survey SET "
+        return $Self->{DBObject}->Do(
+            SQL => "UPDATE survey SET "
                 . "title = '$Param{Title}', "
                 . "introduction = '$Param{Introduction}', "
                 . "description = '$Param{Description}', "
                 . "change_time = current_timestamp, "
                 . "change_by = $Param{UserID} "
-                . "WHERE id = $Param{SurveyID}" );
+                . "WHERE id = $Param{SurveyID}"
+        );
     }
 
     return;
@@ -403,7 +412,8 @@ sub SurveyNew {
     if ( $Param{Title} && $Param{Introduction} && $Param{Description} ) {
 
         # insert a new survey
-        $Self->{DBObject}->Do( SQL => "INSERT INTO survey (title, introduction, description,"
+        $Self->{DBObject}->Do(
+            SQL => "INSERT INTO survey (title, introduction, description,"
                 . " status, create_time, create_by, change_time, change_by) VALUES ("
                 . "'$Param{Title}', "
                 . "'$Param{Introduction}', "
@@ -412,7 +422,8 @@ sub SurveyNew {
                 . "current_timestamp, "
                 . "$Param{UserID}, "
                 . "current_timestamp, "
-                . "$Param{UserID})" );
+                . "$Param{UserID})"
+        );
 
         # get the id of the survey
         $Self->{DBObject}->Prepare(
@@ -431,10 +442,12 @@ sub SurveyNew {
         }
 
         # set the survey number
-        $Self->{DBObject}->Do( SQL => "UPDATE survey SET "
+        $Self->{DBObject}->Do(
+            SQL => "UPDATE survey SET "
                 . "surveynumber = '"
                 . ( $SurveyID + 10000 ) . "' "
-                . "WHERE id = $SurveyID" );
+                . "WHERE id = $SurveyID"
+        );
 
         return $SurveyID;
     }
@@ -468,8 +481,10 @@ sub QuestionList {
     $Param{SurveyID} = $Self->{DBObject}->Quote( $Param{SurveyID}, 'Integer' );
 
     # get all questions of a survey
-    $Self->{DBObject}->Prepare( SQL => "SELECT id, survey_id, question, question_type "
-            . " FROM survey_question WHERE survey_id = $Param{SurveyID} ORDER BY position" );
+    $Self->{DBObject}->Prepare(
+        SQL => "SELECT id, survey_id, question, question_type "
+            . " FROM survey_question WHERE survey_id = $Param{SurveyID} ORDER BY position"
+    );
 
     # fetch the result
     my @List;
@@ -524,7 +539,8 @@ sub QuestionAdd {
 
     # insert a new question
     return $Self->{DBObject}
-        ->Do( SQL => "INSERT INTO survey_question (survey_id, question, question_type, "
+        ->Do(
+        SQL => "INSERT INTO survey_question (survey_id, question, question_type, "
             . "position, create_time, create_by, change_time, change_by) VALUES ("
             . "$Param{SurveyID}, "
             . "'$Param{Question}', "
@@ -532,7 +548,8 @@ sub QuestionAdd {
             . "current_timestamp, "
             . "$Param{UserID}, "
             . "current_timestamp, "
-            . "$Param{UserID})" );
+            . "$Param{UserID})"
+        );
 }
 
 =item QuestionDelete()
@@ -570,9 +587,11 @@ sub QuestionDelete {
         ->Do( SQL => "DELETE FROM survey_answer WHERE question_id = $Param{QuestionID}" );
 
     # delete the question
-    return $Self->{DBObject}->Do( SQL => "DELETE FROM survey_question WHERE "
+    return $Self->{DBObject}->Do(
+        SQL => "DELETE FROM survey_question WHERE "
             . "id = $Param{QuestionID} AND "
-            . "survey_id = $Param{SurveyID}" );
+            . "survey_id = $Param{SurveyID}"
+    );
 }
 
 =item QuestionSort()
@@ -601,8 +620,10 @@ sub QuestionSort {
     $Param{SurveyID} = $Self->{DBObject}->Quote( $Param{SurveyID}, 'Integer' );
 
     # get all question of a survey (sorted by position)
-    $Self->{DBObject}->Prepare( SQL => "SELECT id FROM survey_question"
-            . " WHERE survey_id = $Param{SurveyID} ORDER BY position" );
+    $Self->{DBObject}->Prepare(
+        SQL => "SELECT id FROM survey_question"
+            . " WHERE survey_id = $Param{SurveyID} ORDER BY position"
+    );
 
     my @List;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
@@ -682,14 +703,18 @@ sub QuestionUp {
     return if !$QuestionIDDown;
 
     # update position
-    $Self->{DBObject}->Do( SQL => "UPDATE survey_question SET "
+    $Self->{DBObject}->Do(
+        SQL => "UPDATE survey_question SET "
             . "position = $Position "
-            . "WHERE id = $QuestionIDDown" );
+            . "WHERE id = $QuestionIDDown"
+    );
 
     # update position
-    return $Self->{DBObject}->Do( SQL => "UPDATE survey_question SET "
+    return $Self->{DBObject}->Do(
+        SQL => "UPDATE survey_question SET "
             . "position = $PositionUp "
-            . "WHERE id = $Param{QuestionID}" );
+            . "WHERE id = $Param{QuestionID}"
+    );
 }
 
 =item QuestionDown()
@@ -755,14 +780,18 @@ sub QuestionDown {
     return if !$QuestionIDUp;
 
     # update position
-    $Self->{DBObject}->Do( SQL => "UPDATE survey_question SET "
+    $Self->{DBObject}->Do(
+        SQL => "UPDATE survey_question SET "
             . "position = $Position "
-            . "WHERE id = $QuestionIDUp" );
+            . "WHERE id = $QuestionIDUp"
+    );
 
     # update position
-    return $Self->{DBObject}->Do( SQL => "UPDATE survey_question SET "
+    return $Self->{DBObject}->Do(
+        SQL => "UPDATE survey_question SET "
             . "position = $PositionDown "
-            . "WHERE id = $Param{QuestionID}" );
+            . "WHERE id = $Param{QuestionID}"
+    );
 }
 
 =item QuestionGet()
@@ -927,8 +956,10 @@ sub AnswerList {
     $Param{QuestionID} = $Self->{DBObject}->Quote( $Param{QuestionID}, 'Integer' );
 
     # get answer list
-    $Self->{DBObject}->Prepare( SQL => "SELECT id, question_id, answer "
-            . " FROM survey_answer WHERE question_id = $Param{QuestionID} ORDER BY position" );
+    $Self->{DBObject}->Prepare(
+        SQL => "SELECT id, question_id, answer "
+            . " FROM survey_answer WHERE question_id = $Param{QuestionID} ORDER BY position"
+    );
 
     # fetcht the result
     my @List;
@@ -981,14 +1012,16 @@ sub AnswerAdd {
 
     # insert answer
     return $Self->{DBObject}
-        ->Do( SQL => "INSERT INTO survey_answer (question_id, answer, position, "
+        ->Do(
+        SQL => "INSERT INTO survey_answer (question_id, answer, position, "
             . "create_time, create_by, change_time, change_by) VALUES ("
             . "$Param{QuestionID}, "
             . "'$Param{Answer}', 255, "
             . "current_timestamp, "
             . "$Param{UserID}, "
             . "current_timestamp, "
-            . "$Param{UserID})" );
+            . "$Param{UserID})"
+        );
 }
 
 =item AnswerDelete()
@@ -1022,9 +1055,11 @@ sub AnswerDelete {
     }
 
     # delete answer
-    return $Self->{DBObject}->Do( SQL => "DELETE FROM survey_answer WHERE "
+    return $Self->{DBObject}->Do(
+        SQL => "DELETE FROM survey_answer WHERE "
             . "id = $Param{AnswerID} AND "
-            . "question_id = $Param{QuestionID}" );
+            . "question_id = $Param{QuestionID}"
+    );
 }
 
 =item AnswerSort()
@@ -1053,8 +1088,10 @@ sub AnswerSort {
     $Param{QuestionID} = $Self->{DBObject}->Quote( $Param{QuestionID}, 'Integer' );
 
     # get answer list
-    $Self->{DBObject}->Prepare( SQL => "SELECT id FROM survey_answer"
-            . " WHERE question_id = $Param{QuestionID} ORDER BY position" );
+    $Self->{DBObject}->Prepare(
+        SQL => "SELECT id FROM survey_answer"
+            . " WHERE question_id = $Param{QuestionID} ORDER BY position"
+    );
 
     # fetch the result
     my @List;
@@ -1141,9 +1178,11 @@ sub AnswerUp {
         ->Do( SQL => "UPDATE survey_answer SET position = $Position WHERE id = $AnswerIDDown" );
 
     # update position
-    return $Self->{DBObject}->Do( SQL => "UPDATE survey_answer SET "
+    return $Self->{DBObject}->Do(
+        SQL => "UPDATE survey_answer SET "
             . "position = $PositionUp "
-            . "WHERE id = $Param{AnswerID}" );
+            . "WHERE id = $Param{AnswerID}"
+    );
 }
 
 =item AnswerDown()
@@ -1213,9 +1252,11 @@ sub AnswerDown {
         ->Do( SQL => "UPDATE survey_answer SET position = $Position WHERE id = $AnswerIDUp" );
 
     # update position
-    return $Self->{DBObject}->Do( SQL => "UPDATE survey_answer SET "
+    return $Self->{DBObject}->Do(
+        SQL => "UPDATE survey_answer SET "
             . "position = $PositionDown "
-            . "WHERE id = $Param{AnswerID}" );
+            . "WHERE id = $Param{AnswerID}"
+    );
 }
 
 =item AnswerGet()
@@ -1381,9 +1422,11 @@ sub VoteList {
     $Param{SurveyID} = $Self->{DBObject}->Quote( $Param{SurveyID}, 'Integer' );
 
     # get vote list
-    $Self->{DBObject}->Prepare( SQL => "SELECT id, ticket_id, send_time, vote_time "
+    $Self->{DBObject}->Prepare(
+        SQL => "SELECT id, ticket_id, send_time, vote_time "
             . "FROM survey_request WHERE survey_id = $Param{SurveyID} "
-            . "AND valid_id = 0 ORDER BY vote_time DESC" );
+            . "AND valid_id = 0 ORDER BY vote_time DESC"
+    );
 
     # fetch the result
     my @List;
@@ -1701,8 +1744,10 @@ sub RequestSend {
     return if !$To;
 
     # check if not survey should be send
-    if (   $Self->{ConfigObject}->Get('Survey::SendNoSurveyRegExp')
-        && $To =~ /$Self->{ConfigObject}->Get('Survey::SendNoSurveyRegExp')/i )
+    if (
+        $Self->{ConfigObject}->Get('Survey::SendNoSurveyRegExp')
+        && $To =~ /$Self->{ConfigObject}->Get('Survey::SendNoSurveyRegExp')/i
+        )
     {
         return 1;
     }
@@ -1725,7 +1770,9 @@ sub RequestSend {
 
         if ($LastSentTime) {
             $LastSentTime = $Self->{TimeObject}->TimeStamp2SystemTime( String => $LastSentTime );
-            if ((   $LastSentTime
+            if (
+                (
+                    $LastSentTime
                     + ( $Self->{ConfigObject}->Get('Survey::SendPeriod') * 60 * 60 * 24 )
                 ) > $Self->{TimeObject}->SystemTime()
                 )
@@ -1736,14 +1783,16 @@ sub RequestSend {
     }
 
     # insert request
-    $Self->{DBObject}->Do( SQL => "INSERT INTO survey_request "
+    $Self->{DBObject}->Do(
+        SQL => "INSERT INTO survey_request "
             . " (ticket_id, survey_id, valid_id, public_survey_key, send_to, send_time) "
             . " VALUES ("
             . "$Param{TicketID}, "
             . "$MasterID, 1, '"
             . $Self->{DBObject}->Quote($PublicSurveyKey) . "', '"
             . $Self->{DBObject}->Quote($To) . "', "
-            . "current_timestamp)" );
+            . "current_timestamp)"
+    );
 
     # log action on ticket
     $Self->{TicketObject}->HistoryAdd(
@@ -1876,7 +1925,8 @@ sub PublicAnswerSave {
             . "$RequestID, "
             . "$Param{QuestionID}, "
             . "'$Param{VoteValue}', "
-            . "current_timestamp)" );
+            . "current_timestamp)"
+    );
 }
 
 =item PublicSurveyInvalidSet()
@@ -1920,10 +1970,12 @@ sub PublicSurveyInvalidSet {
     return if !$RequestID;
 
     # update request
-    return $Self->{DBObject}->Do( SQL => "UPDATE survey_request SET "
+    return $Self->{DBObject}->Do(
+        SQL => "UPDATE survey_request SET "
             . "valid_id = 0, "
             . "vote_time = current_timestamp "
-            . "WHERE id = $RequestID" );
+            . "WHERE id = $RequestID"
+    );
 }
 
 1;
@@ -1936,10 +1988,10 @@ This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (GPL). If you
-did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.35 $ $Date: 2007-10-15 11:23:26 $
+$Revision: 1.36 $ $Date: 2008-01-23 17:43:25 $
 
 =cut

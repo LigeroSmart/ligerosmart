@@ -1,12 +1,12 @@
 # --
 # Kernel/Modules/PublicSurvey.pm - a survey module
-# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicSurvey.pm,v 1.15 2007-10-15 11:23:26 mh Exp $
+# $Id: PublicSurvey.pm,v 1.16 2008-01-23 17:43:25 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 
 package Kernel::Modules::PublicSurvey;
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
