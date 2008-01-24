@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminImportExport.pm - admin frontend of import export module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.pm,v 1.2 2008-01-23 17:15:32 mh Exp $
+# $Id: AdminImportExport.pm,v 1.3 2008-01-24 08:46:52 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ImportExport;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -138,25 +138,22 @@ sub Run {
         # save to database
         my $Success;
         if ( $TemplateData->{TemplateID} eq 'NEW' ) {
-            $Success
-                = $TemplateData->{TemplateID}
-                = $Self->{ImportExportObject}
-                ->TemplateAdd( %{$TemplateData}, UserID => $Self->{UserID} );
+            $Success = $Self->{ImportExportObject}->TemplateAdd(
+                %{$TemplateData},
+                UserID => $Self->{UserID},
+            );
         }
         else {
-            $Success
-                = $Self->{ImportExportObject}
-                ->TemplateUpdate( %{$TemplateData}, UserID => $Self->{UserID} );
+            $Success = $Self->{ImportExportObject}->TemplateUpdate(
+                %{$TemplateData},
+                UserID => $Self->{UserID},
+            );
         }
 
         return $Self->{LayoutObject}->ErrorScreen() if !$Success;
 
         # redirect to overview class list
-        return $Self->{LayoutObject}
-            ->Redirect(
-            OP =>
-                "Action=$Self->{Action}&Subaction=TemplateTemplateID&TemplateID=$TemplateData->{TemplateID}"
-            );
+        return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
     }
 
     # ------------------------------------------------------------ #

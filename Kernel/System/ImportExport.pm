@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport.pm - all import and export functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pm,v 1.2 2008-01-23 17:14:36 mh Exp $
+# $Id: ImportExport.pm,v 1.3 2008-01-24 08:46:52 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
@@ -254,8 +254,8 @@ sub TemplateAdd {
 
     # find exiting template with same name
     $Self->{DBObject}->Prepare(
-        SQL =>
-            "SELECT id FROM importexport_template WHERE importexport_class = '$Param{Class}' AND name = '$Param{Name}'",
+        SQL => "SELECT id FROM importexport_template "
+            . "WHERE importexport_class = '$Param{Class}' AND name = '$Param{Name}'",
         Limit => 1,
     );
 
@@ -347,8 +347,8 @@ sub TemplateUpdate {
 
     # get the class of this template id
     $Self->{DBObject}->Prepare(
-        SQL =>
-            "SELECT importexport_class FROM importexport_template WHERE id = '$Param{TemplateID}'",
+        SQL => "SELECT importexport_class FROM importexport_template "
+            . "WHERE id = '$Param{TemplateID}'",
         Limit => 1,
     );
 
@@ -369,8 +369,8 @@ sub TemplateUpdate {
 
     # find exiting template with same name
     $Self->{DBObject}->Prepare(
-        SQL =>
-            "SELECT id FROM importexport_template WHERE importexport_class = '$Class' AND name = '$Param{Name}'",
+        SQL => "SELECT id FROM importexport_template "
+            . "WHERE importexport_class = '$Class' AND name = '$Param{Name}'",
         Limit => 1,
     );
 
@@ -393,10 +393,10 @@ sub TemplateUpdate {
 
     # update template
     return $Self->{DBObject}->Do(
-        SQL =>
-            "UPDATE importexport_template SET name = '$Param{Name}',"
+        SQL => "UPDATE importexport_template SET name = '$Param{Name}',"
             . "valid_id = $Param{ValidID}, comments = '$Param{Comment}', "
-            . "change_time = current_timestamp, change_by = $Param{UserID} WHERE id = $Param{TemplateID}",
+            . "change_time = current_timestamp, change_by = $Param{UserID} "
+            . "WHERE id = $Param{TemplateID}",
     );
 }
 
@@ -438,7 +438,7 @@ sub TemplateDelete {
     elsif ( ref $Param{TemplateID} ne 'ARRAY' ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "TemplateID must be an array reference or a string!"
+            Message  => 'TemplateID must be an array reference or a string!',
         );
         return;
     }
@@ -453,8 +453,7 @@ sub TemplateDelete {
 
     # delete templates
     return $Self->{DBObject}->Do(
-        SQL =>
-            "DELETE FROM importexport_template WHERE id IN ( $TemplateIDString )",
+        SQL => "DELETE FROM importexport_template WHERE id IN ( $TemplateIDString )",
     );
 }
 
@@ -474,6 +473,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2008-01-23 17:14:36 $
+$Revision: 1.3 $ $Date: 2008-01-24 08:46:52 $
 
 =cut
