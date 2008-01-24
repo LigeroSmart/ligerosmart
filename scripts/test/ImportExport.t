@@ -2,7 +2,7 @@
 # ImportExport.t - import export tests
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.t,v 1.2 2008-01-23 17:13:01 mh Exp $
+# $Id: ImportExport.t,v 1.3 2008-01-24 16:33:56 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,26 +17,26 @@ use Kernel::System::ImportExport;
 $Self->{ImportExportObject} = Kernel::System::ImportExport->new( %{$Self} );
 
 # ------------------------------------------------------------ #
-# ClassList() test
+# ObjectList() test
 # ------------------------------------------------------------ #
 
-# get class list
-my $ClassList1 = $Self->{ImportExportObject}->ClassList();
+# get object list
+my $ObjectList1 = $Self->{ImportExportObject}->ObjectList();
 
 # list must be a hash reference
 $Self->True(
-    ref $ClassList1 eq 'HASH',
-    '#1 ClassList() - hash reference',
+    ref $ObjectList1 eq 'HASH',
+    '#1 ObjectList() - hash reference',
 );
 
 # list must have valid content
-if ( ref $ClassList1 eq 'HASH' ) {
+if ( ref $ObjectList1 eq 'HASH' ) {
 
     my $Counter1 = 1;
-    for my $Key ( keys %{$ClassList1} ) {
+    for my $Key ( keys %{$ObjectList1} ) {
         $Self->True(
-            $Key && $ClassList1->{$Key} && !ref $ClassList1->{$Key},
-            "#$Counter1 ClassList() - valid content",
+            $Key && $ObjectList1->{$Key} && !ref $ObjectList1->{$Key},
+            "#$Counter1 ObjectList() - valid content",
         );
         $Counter1++;
     }
@@ -46,12 +46,12 @@ if ( ref $ClassList1 eq 'HASH' ) {
 # TemplateList() test #1
 # ------------------------------------------------------------ #
 
-# create a random class name
-my $ClassRand = 'UnitTest' . int rand 1_000_000;
+# create a random object name
+my $ObjectRand = 'UnitTest' . int rand 1_000_000;
 
 # get template list
 my $TemplateList1 = $Self->{ImportExportObject}->TemplateList(
-    Class  => $ClassRand,
+    Object  => $ObjectRand,
     UserID => 1,
 );
 
@@ -68,8 +68,6 @@ $Self->True(
 my $TemplateRandName1 = 'UnitTest' . int rand 1_000_000;
 my $TemplateRandName2 = 'UnitTest' . int rand 1_000_000;
 my $TemplateRandName3 = 'UnitTest' . int rand 1_000_000;
-my $TemplateRandName4 = 'UnitTest' . int rand 1_000_000;
-my $TemplateRandName5 = 'UnitTest' . int rand 1_000_000;
 
 my $TemplateChecks = [
 
@@ -85,7 +83,7 @@ my $TemplateChecks = [
     # this template is NOT complete and must not be added
     {
         Add => {
-            Class   => $ClassRand,
+            Object   => $ObjectRand,
             ValidID => 1,
             UserID  => 1,
         },
@@ -94,7 +92,7 @@ my $TemplateChecks = [
     # this template is NOT complete and must not be added
     {
         Add => {
-            Class  => $ClassRand,
+            Object  => $ObjectRand,
             Name   => $TemplateRandName1,
             UserID => 1,
         },
@@ -103,8 +101,17 @@ my $TemplateChecks = [
     # this template is NOT complete and must not be added
     {
         Add => {
-            Class   => $ClassRand,
+            Object  => $ObjectRand,
             Name    => $TemplateRandName1,
+            ValidID => 1,
+        },
+    },
+
+    # this template is NOT complete and must not be added
+    {
+        Add => {
+            Object  => $ObjectRand,
+            Format  => 'CSV',
             ValidID => 1,
         },
     },
@@ -112,13 +119,15 @@ my $TemplateChecks = [
     # this template must be inserted sucessfully
     {
         Add => {
-            Class   => $ClassRand,
+            Object   => $ObjectRand,
+            Format => 'CSV',
             Name    => $TemplateRandName1,
             ValidID => 1,
             UserID  => 1,
         },
         AddGet => {
-            Class    => $ClassRand,
+            Object    => $ObjectRand,
+            Format => 'CSV',
             Name     => $TemplateRandName1,
             ValidID  => 1,
             Comment  => '',
@@ -130,7 +139,8 @@ my $TemplateChecks = [
     # this template have the same name as one test before and must not be added
     {
         Add => {
-            Class   => $ClassRand,
+            Object   => $ObjectRand,
+            Format => 'CSV',
             Name    => $TemplateRandName1,
             ValidID => 1,
             UserID  => 1,
@@ -140,14 +150,16 @@ my $TemplateChecks = [
     # this template must be inserted sucessfully
     {
         Add => {
-            Class   => $ClassRand,
+            Object   => $ObjectRand,
+            Format => 'CSV',
             Name    => $TemplateRandName2,
             ValidID => 1,
             Comment => 'This is a test!',
             UserID  => 1,
         },
         AddGet => {
-            Class    => $ClassRand,
+            Object    => $ObjectRand,
+            Format => 'CSV',
             Name     => $TemplateRandName2,
             ValidID  => 1,
             Comment  => 'This is a test!',
@@ -234,13 +246,15 @@ my $TemplateChecks = [
     # this template must be inserted sucessfully (check string cleaner function)
     {
         Add => {
-            Class   => " \t \n \r " . $ClassRand . " \t \n \r ",
+            Object   => " \t \n \r " . $ObjectRand . " \t \n \r ",
+            Format => " \t \n \r CSV \t \n \r ",
             Name    => " \t \n \r " . $TemplateRandName3 . " \t \n \r ",
             ValidID => 1,
             UserID  => 1,
         },
         AddGet => {
-            Class    => $ClassRand,
+            Object    => $ObjectRand,
+            Format => 'CSV',
             Name     => $TemplateRandName3,
             ValidID  => 1,
             Comment  => '',
@@ -368,7 +382,7 @@ continue {
 
 # get template list
 my $TemplateList2 = $Self->{ImportExportObject}->TemplateList(
-    Class  => $ClassRand,
+    Object  => $ObjectRand,
     UserID => 1,
 );
 
@@ -412,7 +426,7 @@ $Self->True(
 
 # get template list
 my $TemplateList3 = $Self->{ImportExportObject}->TemplateList(
-    Class  => $ClassRand,
+    Object  => $ObjectRand,
     UserID => 1,
 );
 

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ImportExport.sopm,v 1.1.1.1 2008-01-16 14:11:00 mh Exp $</CVS>
+    <CVS>$Id: ImportExport.sopm,v 1.2 2008-01-24 16:33:55 mh Exp $</CVS>
     <Name>ImportExport</Name>
     <Version>0.0.0</Version>
     <Framework>2.2.4</Framework>
-    <Vendor>OTRS GmbH</Vendor>
+    <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
     <Description Lang="en">The ImportExport package.</Description>
@@ -22,7 +22,8 @@
     <DatabaseInstall>
         <TableCreate Name="importexport_template">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
-            <Column Name="importexport_class" Required="true" Size="100" Type="VARCHAR"/>
+            <Column Name="im_ex_object" Required="true" Size="100" Type="VARCHAR"/>
+            <Column Name="im_ex_format" Required="true" Size="100" Type="VARCHAR"/>
             <Column Name="name" Required="true" Size="100" Type="VARCHAR"/>
             <Column Name="valid_id" Required="true" Type="SMALLINT"/>
             <Column Name="comments" Required="false" Size="200" Type="VARCHAR"/>

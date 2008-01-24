@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminImportExport.pm - admin frontend of import export module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.pm,v 1.3 2008-01-24 08:46:52 mh Exp $
+# $Id: AdminImportExport.pm,v 1.4 2008-01-24 16:33:56 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ImportExport;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -49,18 +49,31 @@ sub Run {
     # template edit
     # ------------------------------------------------------------ #
     if ( $Self->{Subaction} eq 'TemplateEdit1' ) {
-        my $TemplateData = {};
+
+        # get object list
+        my $ObjectList = $Self->{ImportExportObject}->ObjectList();
+
+        return $Self->{LayoutObject}->FatalError(Message => 'No object backend found!')
+            if !$ObjectList;
+
+        # get format list
+        my $FormatList = $Self->{ImportExportObject}->FormatList();
+
+        return $Self->{LayoutObject}->FatalError(Message => 'No format backend found!')
+            if !$FormatList;
 
         # get params
-        $TemplateData->{TemplateID} = $Self->{ParamObject}->GetParam( Param => "TemplateID" );
+        my $TemplateData = {};
+        $TemplateData->{TemplateID} = $Self->{ParamObject}->GetParam( Param => 'TemplateID' );
         if ( $TemplateData->{TemplateID} eq 'NEW' ) {
 
-            # get class
-            $TemplateData->{Class} = $Self->{ParamObject}->GetParam( Param => "Class" );
+            # get object and format
+            $TemplateData->{Object} = $Self->{ParamObject}->GetParam( Param => 'Object' );
+            $TemplateData->{Format} = $Self->{ParamObject}->GetParam( Param => 'Format' );
 
             # redirect to overview
             return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" )
-                if !$TemplateData->{Class};
+                if !$TemplateData->{Object} || !$TemplateData->{Format};
         }
         else {
 
@@ -71,14 +84,20 @@ sub Run {
             );
         }
 
-        # get class list
-        my $ClassList = $Self->{ImportExportObject}->ClassList();
+        # generate ObjectOptionStrg
+        my $ObjectOptionStrg = $Self->{LayoutObject}->BuildSelection(
+            Data         => $ObjectList,
+            Name         => 'Object',
+            SelectedID   => $TemplateData->{Object},
+            PossibleNone => 1,
+            Translation  => 1,
+        );
 
-        # generate ClassOptionStrg
-        my $ClassOptionStrg = $Self->{LayoutObject}->BuildSelection(
-            Data         => $ClassList,
-            Name         => 'Class',
-            SelectedID   => $TemplateData->{Class},
+        # generate FormatOptionStrg
+        my $FormatOptionStrg = $Self->{LayoutObject}->BuildSelection(
+            Data         => $FormatList,
+            Name         => 'Format',
+            SelectedID   => $TemplateData->{Format},
             PossibleNone => 1,
             Translation  => 1,
         );
@@ -88,7 +107,8 @@ sub Run {
             Name => 'Overview',
             Data => {
                 %Param,
-                ClassOptionStrg => $ClassOptionStrg,
+                ObjectOptionStrg => $ObjectOptionStrg,
+                FormatOptionStrg => $FormatOptionStrg,
             },
         );
 
@@ -106,6 +126,8 @@ sub Run {
             Name => 'TemplateEdit1',
             Data => {
                 %{$TemplateData},
+                ObjectName      => $ObjectList->{ $TemplateData->{Object} },
+                FormatName      => $FormatList->{ $TemplateData->{Format} },
                 ValidOptionStrg => $ValidOptionStrg,
             },
         );
@@ -131,7 +153,7 @@ sub Run {
         my $TemplateData = {};
 
         # get params
-        for my $Param (qw(TemplateID Class Name ValidID Comment)) {
+        for my $Param (qw(TemplateID Object Format Name ValidID Comment)) {
             $TemplateData->{$Param} = $Self->{ParamObject}->GetParam( Param => $Param ) || '';
         }
 
@@ -150,9 +172,28 @@ sub Run {
             );
         }
 
-        return $Self->{LayoutObject}->ErrorScreen() if !$Success;
+        return $Self->{LayoutObject}->FatalError(Message => "Can't insert/update template!")
+            if !$Success;
 
-        # redirect to overview class list
+        # redirect to overview object list
+        return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
+    }
+
+    # ------------------------------------------------------------ #
+    # template delete
+    # ------------------------------------------------------------ #
+    elsif ( $Self->{Subaction} eq 'TemplateDelete' ) {
+
+        # get template id
+        my $TemplateID = $Self->{ParamObject}->GetParam( Param => 'TemplateID' );
+
+        # save to database
+        $Self->{ImportExportObject}->TemplateDelete(
+            TemplateID => $TemplateID,
+            UserID => $Self->{UserID},
+        );
+
+        # redirect to overview
         return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
     }
 
@@ -161,16 +202,30 @@ sub Run {
     # ------------------------------------------------------------ #
     else {
 
-        # get valid list
-        my %ValidList = $Self->{ValidObject}->ValidList();
+        # get object list
+        my $ObjectList = $Self->{ImportExportObject}->ObjectList();
 
-        # get class list
-        my $ClassList = $Self->{ImportExportObject}->ClassList();
+        return $Self->{LayoutObject}->FatalError(Message => 'No object backend found!')
+            if !$ObjectList;
 
-        # generate ClassOptionStrg
-        my $ClassOptionStrg = $Self->{LayoutObject}->BuildSelection(
-            Data         => $ClassList,
-            Name         => 'Class',
+        # get format list
+        my $FormatList = $Self->{ImportExportObject}->FormatList();
+
+        return $Self->{LayoutObject}->FatalError(Message => 'No format backend found!')
+            if !$FormatList;
+
+        # generate ObjectOptionStrg
+        my $ObjectOptionStrg = $Self->{LayoutObject}->BuildSelection(
+            Data         => $ObjectList,
+            Name         => 'Object',
+            PossibleNone => 1,
+            Translation  => 1,
+        );
+
+        # generate FormatOptionStrg
+        my $FormatOptionStrg = $Self->{LayoutObject}->BuildSelection(
+            Data         => $FormatList,
+            Name         => 'Format',
             PossibleNone => 1,
             Translation  => 1,
         );
@@ -180,19 +235,20 @@ sub Run {
             Name => 'Overview',
             Data => {
                 %Param,
-                ClassOptionStrg => $ClassOptionStrg,
+                ObjectOptionStrg => $ObjectOptionStrg,
+                FormatOptionStrg => $FormatOptionStrg,
             },
         );
-        $Self->{LayoutObject}->Block(
-            Name => 'OverviewList',
-        );
+
+        # get valid list
+        my %ValidList = $Self->{ValidObject}->ValidList();
 
         CLASS:
-        for my $Class ( sort { $ClassList->{$a} cmp $ClassList->{$b} } keys %{$ClassList} ) {
+        for my $Object ( sort { $ObjectList->{$a} cmp $ObjectList->{$b} } keys %{$ObjectList} ) {
 
             # get template list
             my $TemplateList = $Self->{ImportExportObject}->TemplateList(
-                Class  => $Class,
+                Object  => $Object,
                 UserID => $Self->{UserID},
             );
 
@@ -202,16 +258,16 @@ sub Run {
 
             # output list
             $Self->{LayoutObject}->Block(
-                Name => 'OverviewListClass',
+                Name => 'OverviewList',
                 Data => {
-                    ClassName => $ClassList->{$Class},
+                    ObjectName => $ObjectList->{$Object},
                 },
             );
 
             my $CssClass = 'searchpassive';
             for my $TemplateID ( @{$TemplateList} ) {
 
-                # set output class
+                # set output object
                 $CssClass = $CssClass eq 'searchactive' ? 'searchpassive' : 'searchactive';
 
                 # get template data
@@ -222,11 +278,12 @@ sub Run {
 
                 # output row
                 $Self->{LayoutObject}->Block(
-                    Name => 'OverviewListClassRow',
+                    Name => 'OverviewListRow',
                     Data => {
                         %{$TemplateData},
-                        CssClass => $CssClass,
-                        Valid    => $ValidList{ $TemplateData->{ValidID} },
+                        FormatName => $FormatList->{ $TemplateData->{Format} },
+                        CssClass   => $CssClass,
+                        Valid      => $ValidList{ $TemplateData->{ValidID} },
                     },
                 );
             }

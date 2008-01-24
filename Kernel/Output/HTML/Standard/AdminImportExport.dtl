@@ -1,12 +1,12 @@
 # --
 # AdminImportExport.dtl - provides HTML form for AdminImportExport
-# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.dtl,v 1.1.1.1 2008-01-16 14:11:00 mh Exp $
+# $Id: AdminImportExport.dtl,v 1.2 2008-01-24 16:33:56 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 
 <!-- dtl:block:Overview -->
@@ -30,8 +30,12 @@
             <td class="contentbody">
               <table>
                 <tr>
-                  <td class="contentkey">$Text{"Import/Export Class"}: </td>
-                  <td class="contentvalue">$Data{"ClassOptionStrg"}</td>
+                  <td class="contentkey">$Text{"Object"}: </td>
+                  <td class="contentvalue">$Data{"ObjectOptionStrg"}</td>
+                </tr>
+                <tr>
+                  <td class="contentkey">$Text{"Format"}: </td>
+                  <td class="contentvalue">$Data{"FormatOptionStrg"}</td>
                 </tr>
               </table>
             </td>
@@ -48,31 +52,45 @@
 <!-- dtl:block:OverviewList -->
       <table width="100%" cellspacing="0" cellpadding="4">
         <tr>
-          <td class="contenthead">$Text{"List"}:</td>
+          <td class="contenthead">$Text{"$QData{"ObjectName"}"}:</td>
         </tr>
         <tr>
           <td class="contentbody">
-<!-- dtl:block:OverviewListClass -->
             <table width="100%" border="0" cellspacing="0" cellpadding="3">
               <tr>
-                <td class="contentkey" width="60%">$Text{"$QData{"ClassName"}"}</td>
+                <td class="contentkey">$Text{"Name"}</td>
+                <td class="contentkey">$Text{"Format"}</td>
                 <td align="center" class="contentkey">$Text{"valid"}/$Text{"invalid"}</td>
+                <td align="center" class="contentkey" width="100">$Text{"Delete"}</td>
+                <td align="center" class="contentkey" width="100">$Text{"Run Now!"}</td>
               </tr>
-<!-- dtl:block:OverviewListClassRow -->
+<!-- dtl:block:OverviewListRow -->
               <tr>
                 <td class="$QData{"CssClass"}">
                   <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=TemplateEdit1&TemplateID=$QData{"TemplateID"}">
                   $QData{"Name"}
                   </a>
                 </td>
+                <td class="$QData{"CssClass"}">
+                  $Text{"$QData{"FormatName"}"}
+                </td>
                 <td align="center" class="$QData{"CssClass"}">
                   $Text{"$QData{"Valid"}"}
                 </td>
+                <td align="center" class="$QData{"CssClass"}">
+                  <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=TemplateDelete&TemplateID=$QData{"TemplateID"}">
+                  $Text{"x"}
+                  </a>
+                </td>
+                <td align="center" class="$QData{"CssClass"}">
+                  <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=RunNow&TemplateID=$QData{"TemplateID"}">
+                  $Text{"x"}
+                  </a>
+                </td>
               </tr>
-<!-- dtl:block:OverviewListClassRow -->
+<!-- dtl:block:OverviewListRow -->
             </table>
             <br>
-<!-- dtl:block:OverviewListClass -->
           </td>
         </tr>
         <tr>
@@ -81,6 +99,7 @@
           </td>
         </tr>
       </table>
+      <br>
 <!-- dtl:block:OverviewList -->
 <!-- dtl:block:TemplateEdit1 -->
       <form action="$Env{"CGIHandle"}" method="get">
@@ -95,10 +114,17 @@
             <td class="contentbody">
               <table border="0" cellspacing="0" cellpadding="3">
                 <tr>
-                  <td class="contentkey">$Text{"Import/Export Class"}: </td>
+                  <td class="contentkey">$Text{"Object"}: </td>
                   <td class="contentvalue">
-                    $QData{"Class"}
-                    <input type="hidden" name="Class" value="$QData{"Class"}">
+                    $QData{"ObjectName"}
+                    <input type="hidden" name="Object" value="$QData{"Object"}">
+                  </td>
+                </tr>
+                <tr>
+                  <td class="contentkey">$Text{"Format"}: </td>
+                  <td class="contentvalue">
+                    $QData{"FormatName"}
+                    <input type="hidden" name="Format" value="$QData{"Format"}">
                   </td>
                 </tr>
                 <tr>

@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport.pm - all import and export functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pm,v 1.3 2008-01-24 08:46:52 mh Exp $
+# $Id: ImportExport.pm,v 1.4 2008-01-24 16:33:56 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 =head1 NAME
 
@@ -49,11 +49,10 @@ create a object
         LogObject    => $LogObject,
         MainObject   => $MainObject,
     );
-
     my $ImportExportObject = Kernel::System::ImportExport->new(
         ConfigObject => $ConfigObject,
-        LogObject => $LogObject,
-        DBObject => $DBObject,
+        LogObject    => $LogObject,
+        DBObject     => $DBObject,
     );
 
 =cut
@@ -66,31 +65,63 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Object (qw(ConfigObject LogObject DBObject)) {
+    for my $Object (qw(ConfigObject LogObject DBObject MainObject)) {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
     return $Self;
 }
 
-=item ClassList()
+=item ObjectList()
 
-return a list of available classes as hash reference
+return a list of available objects as hash reference
 
-    my $ClassList = $ImportExportObject->ClassList();
+    my $ObjectList = $ImportExportObject->ObjectList();
 
 =cut
 
-sub ClassList {
+sub ObjectList {
     my ( $Self, %Param ) = @_;
 
-    my $ClassList = {
-        ITSMConfigItem => 'Config Item',
-        Ticket         => 'Ticket',
-        FAQ            => 'FAQ',
-    };
+    # get config
+    my $ModuleList = $Self->{ConfigObject}->Get('ImportExport::ObjectBackendRegistration');
 
-    return $ClassList;
+    return if !$ModuleList;
+    return if ref $ModuleList ne 'HASH';
+
+    # create the object list
+    my $ObjectList = {};
+    for my $Module (sort keys %{$ModuleList}) {
+        $ObjectList->{$Module} = $ModuleList->{$Module}->{Name};
+    }
+
+    return $ObjectList;
+}
+
+=item FormatList()
+
+return a list of available formats as hash reference
+
+    my $FormatList = $ImportExportObject->FormatList();
+
+=cut
+
+sub FormatList {
+    my ( $Self, %Param ) = @_;
+
+    # get config
+    my $ModuleList = $Self->{ConfigObject}->Get('ImportExport::FormatBackendRegistration');
+
+    return if !$ModuleList;
+    return if ref $ModuleList ne 'HASH';
+
+    # create the format list
+    my $FormatList = {};
+    for my $Module (sort keys %{$ModuleList}) {
+        $FormatList->{$Module} = $ModuleList->{$Module}->{Name};
+    }
+
+    return $FormatList;
 }
 
 =item TemplateList()
@@ -98,7 +129,7 @@ sub ClassList {
 return a list of templates as array reference
 
     my $TemplateList = $ImportExportObject->TemplateList(
-        Class   => 'ITSMConfigItem',
+        Object   => 'Ticket',
         UserID  => 1,
     );
 
@@ -108,7 +139,7 @@ sub TemplateList {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(Class UserID)) {
+    for my $Argument (qw(Object UserID)) {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -119,13 +150,13 @@ sub TemplateList {
     }
 
     # quote
-    $Param{Class} = $Self->{DBObject}->Quote( $Param{Class} );
+    $Param{Object} = $Self->{DBObject}->Quote( $Param{Object} );
     $Param{UserID} = $Self->{DBObject}->Quote( $Param{UserID}, 'Integer' );
 
     # ask database
     $Self->{DBObject}->Prepare(
         SQL => "SELECT id FROM importexport_template WHERE "
-            . "importexport_class = '$Param{Class}' "
+            . "im_ex_object = '$Param{Object}' "
             . "ORDER BY name",
     );
 
@@ -144,7 +175,8 @@ get a import export template
 
 Return
     $TemplateData{TemplateID}
-    $TemplateData{Class}
+    $TemplateData{Object}
+    $TemplateData{Format}
     $TemplateData{Name}
     $TemplateData{ValidID}
     $TemplateData{Comment}
@@ -178,7 +210,7 @@ sub TemplateGet {
     $Param{TemplateID} = $Self->{DBObject}->Quote( $Param{TemplateID}, 'Integer' );
 
     # create sql string
-    my $SQL = "SELECT id, importexport_class, name, valid_id, comments, "
+    my $SQL = "SELECT id, im_ex_object, im_ex_format, name, valid_id, comments, "
         . "create_time, create_by, change_time, change_by FROM importexport_template WHERE "
         . "id = $Param{TemplateID}";
 
@@ -192,14 +224,15 @@ sub TemplateGet {
     my %TemplateData;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $TemplateData{TemplateID} = $Row[0];
-        $TemplateData{Class}      = $Row[1];
-        $TemplateData{Name}       = $Row[2];
-        $TemplateData{ValidID}    = $Row[3];
-        $TemplateData{Comment}    = $Row[4] || '';
-        $TemplateData{CreateTime} = $Row[5];
-        $TemplateData{CreateBy}   = $Row[6];
-        $TemplateData{ChangeTime} = $Row[7];
-        $TemplateData{ChangeBy}   = $Row[8];
+        $TemplateData{Object}     = $Row[1];
+        $TemplateData{Format}     = $Row[2];
+        $TemplateData{Name}       = $Row[3];
+        $TemplateData{ValidID}    = $Row[4];
+        $TemplateData{Comment}    = $Row[5] || '';
+        $TemplateData{CreateTime} = $Row[6];
+        $TemplateData{CreateBy}   = $Row[7];
+        $TemplateData{ChangeTime} = $Row[8];
+        $TemplateData{ChangeBy}   = $Row[9];
     }
 
     return \%TemplateData;
@@ -210,11 +243,12 @@ sub TemplateGet {
 add a new import/export template
 
     my $TemplateID = $ImportExportObject->TemplateAdd(
-        Class => 'ITSMConfigItem',
-        Name => 'Template Name',
+        Object  => 'Ticket',
+        Format  => 'CSV',
+        Name    => 'Template Name',
         ValidID => 1,
         Comment => 'Comment',       # (optional)
-        UserID => 1,
+        UserID  => 1,
     );
 
 =cut
@@ -223,7 +257,7 @@ sub TemplateAdd {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(Class Name ValidID UserID)) {
+    for my $Argument (qw(Object Format Name ValidID UserID)) {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -234,7 +268,7 @@ sub TemplateAdd {
     }
 
     # cleanup template name
-    for my $Element (qw(Class Name)) {
+    for my $Element (qw(Object Format Name)) {
         $Param{$Element} =~ s{ [\n\r\f] }{}xmsg;    # RemoveAllNewlines
         $Param{$Element} =~ s{ \t       }{}xmsg;    # RemoveAllTabs
         $Param{$Element} =~ s{ \A \s+   }{}xmsg;    # TrimLeft
@@ -245,7 +279,7 @@ sub TemplateAdd {
     $Param{Comment} = $Param{Comment} || '';
 
     # quote
-    for my $Argument (qw(Class Name Functionality Comment)) {
+    for my $Argument (qw(Object Format Name Functionality Comment)) {
         $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument} );
     }
     for my $Argument (qw(ValidID UserID)) {
@@ -255,7 +289,7 @@ sub TemplateAdd {
     # find exiting template with same name
     $Self->{DBObject}->Prepare(
         SQL => "SELECT id FROM importexport_template "
-            . "WHERE importexport_class = '$Param{Class}' AND name = '$Param{Name}'",
+            . "WHERE im_ex_object = '$Param{Object}' AND name = '$Param{Name}'",
         Limit => 1,
     );
 
@@ -270,7 +304,7 @@ sub TemplateAdd {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message =>
-                "Can't add new template! Template with same name already exists in this class.",
+                "Can't add new template! Template with same name already exists in this object.",
         );
         return;
     }
@@ -278,16 +312,17 @@ sub TemplateAdd {
     # insert new template
     return if !$Self->{DBObject}->Do(
         SQL => "INSERT INTO importexport_template "
-            . "(importexport_class, name, valid_id, comments, "
+            . "(im_ex_object, im_ex_format, name, valid_id, comments, "
             . "create_time, create_by, change_time, change_by) VALUES "
-            . "('$Param{Class}', '$Param{Name}', $Param{ValidID}, '$Param{Comment}', "
+            . "('$Param{Object}', '$Param{Format}', "
+            . "'$Param{Name}', $Param{ValidID}, '$Param{Comment}', "
             . "current_timestamp, $Param{UserID}, current_timestamp, $Param{UserID})"
     );
 
     # find id of new template
     $Self->{DBObject}->Prepare(
         SQL => "SELECT id FROM importexport_template "
-            . "WHERE importexport_class = '$Param{Class}' AND name = '$Param{Name}'",
+            . "WHERE im_ex_object = '$Param{Object}' AND name = '$Param{Name}'",
         Limit => 1,
     );
 
@@ -306,10 +341,10 @@ update a existing import/export template
 
     my $True = $ImportExportObject->TemplateUpdate(
         TemplateID => 123,
-        Name => 'Template Name',
-        ValidID => 1,
-        Comment => 'Comment',     # (optional)
-        UserID => 1,
+        Name       => 'Template Name',
+        ValidID    => 1,
+        Comment    => 'Comment',        # (optional)
+        UserID     => 1,
     );
 
 =cut
@@ -345,20 +380,20 @@ sub TemplateUpdate {
         $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument}, 'Integer' );
     }
 
-    # get the class of this template id
+    # get the object of this template id
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT importexport_class FROM importexport_template "
+        SQL => "SELECT im_ex_object FROM importexport_template "
             . "WHERE id = '$Param{TemplateID}'",
         Limit => 1,
     );
 
     # fetch the result
-    my $Class;
+    my $Object;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $Class = $Row[0];
+        $Object = $Row[0];
     }
 
-    if ( !$Class ) {
+    if ( !$Object ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message =>
@@ -370,7 +405,7 @@ sub TemplateUpdate {
     # find exiting template with same name
     $Self->{DBObject}->Prepare(
         SQL => "SELECT id FROM importexport_template "
-            . "WHERE importexport_class = '$Class' AND name = '$Param{Name}'",
+            . "WHERE im_ex_object = '$Object' AND name = '$Param{Name}'",
         Limit => 1,
     );
 
@@ -386,7 +421,7 @@ sub TemplateUpdate {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message =>
-                "Can't update template! Template with same name already exists in this class.",
+                "Can't update template! Template with same name already exists in this object.",
         );
         return;
     }
@@ -457,6 +492,57 @@ sub TemplateDelete {
     );
 }
 
+=item _LoadBackend()
+
+to load a import/export backend module
+
+    $HashRef = $ImportExportObject->_LoadBackend(
+        Module => 'Kernel::System::ImportExport::ObjectBackend::Ticket',
+    );
+
+=cut
+
+sub _LoadBackend {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    if ( !$Param{Module} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need Module!'
+        );
+        return;
+    }
+
+    # check if object is already cached
+    return $Self->{Cache}->{ $Param{Module} } if $Self->{Cache}->{ $Param{Module} };
+
+    # load object backend module
+    if ( !$Self->{MainObject}->Require( $Param{Module} ) ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Can't load backend module $Param{Module}!"
+        );
+        return;
+    }
+
+    # create new instance
+    my $BackendObject = $Param{Module}->new( %{$Self}, %Param );
+
+    if (!$BackendObject) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Can't create a new instance of backend module $Param{Module}!",
+        );
+        return;
+    }
+
+    # cache the object
+    $Self->{Cache}->{ $Param{Module} } = $BackendObject;
+
+    return $BackendObject;
+}
+
 1;
 
 =back
@@ -473,6 +559,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2008-01-24 08:46:52 $
+$Revision: 1.4 $ $Date: 2008-01-24 16:33:56 $
 
 =cut
