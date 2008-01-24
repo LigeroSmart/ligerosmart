@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminImportExport.pm - admin frontend of import export module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.pm,v 1.4 2008-01-24 16:33:56 mh Exp $
+# $Id: AdminImportExport.pm,v 1.5 2008-01-24 16:57:56 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ImportExport;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -53,13 +53,13 @@ sub Run {
         # get object list
         my $ObjectList = $Self->{ImportExportObject}->ObjectList();
 
-        return $Self->{LayoutObject}->FatalError(Message => 'No object backend found!')
+        return $Self->{LayoutObject}->FatalError( Message => 'No object backend found!' )
             if !$ObjectList;
 
         # get format list
         my $FormatList = $Self->{ImportExportObject}->FormatList();
 
-        return $Self->{LayoutObject}->FatalError(Message => 'No format backend found!')
+        return $Self->{LayoutObject}->FatalError( Message => 'No format backend found!' )
             if !$FormatList;
 
         # get params
@@ -172,7 +172,7 @@ sub Run {
             );
         }
 
-        return $Self->{LayoutObject}->FatalError(Message => "Can't insert/update template!")
+        return $Self->{LayoutObject}->FatalError( Message => "Can't insert/update template!" )
             if !$Success;
 
         # redirect to overview object list
@@ -190,7 +190,7 @@ sub Run {
         # save to database
         $Self->{ImportExportObject}->TemplateDelete(
             TemplateID => $TemplateID,
-            UserID => $Self->{UserID},
+            UserID     => $Self->{UserID},
         );
 
         # redirect to overview
@@ -205,13 +205,13 @@ sub Run {
         # get object list
         my $ObjectList = $Self->{ImportExportObject}->ObjectList();
 
-        return $Self->{LayoutObject}->FatalError(Message => 'No object backend found!')
+        return $Self->{LayoutObject}->FatalError( Message => 'No object backend found!' )
             if !$ObjectList;
 
         # get format list
         my $FormatList = $Self->{ImportExportObject}->FormatList();
 
-        return $Self->{LayoutObject}->FatalError(Message => 'No format backend found!')
+        return $Self->{LayoutObject}->FatalError( Message => 'No format backend found!' )
             if !$FormatList;
 
         # generate ObjectOptionStrg
@@ -248,7 +248,7 @@ sub Run {
 
             # get template list
             my $TemplateList = $Self->{ImportExportObject}->TemplateList(
-                Object  => $Object,
+                Object => $Object,
                 UserID => $Self->{UserID},
             );
 

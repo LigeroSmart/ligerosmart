@@ -2,7 +2,7 @@
 # ImportExport.t - import export tests
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.t,v 1.3 2008-01-24 16:33:56 mh Exp $
+# $Id: ImportExport.t,v 1.4 2008-01-24 16:57:56 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -51,7 +51,7 @@ my $ObjectRand = 'UnitTest' . int rand 1_000_000;
 
 # get template list
 my $TemplateList1 = $Self->{ImportExportObject}->TemplateList(
-    Object  => $ObjectRand,
+    Object => $ObjectRand,
     UserID => 1,
 );
 
@@ -83,7 +83,7 @@ my $TemplateChecks = [
     # this template is NOT complete and must not be added
     {
         Add => {
-            Object   => $ObjectRand,
+            Object  => $ObjectRand,
             ValidID => 1,
             UserID  => 1,
         },
@@ -92,7 +92,7 @@ my $TemplateChecks = [
     # this template is NOT complete and must not be added
     {
         Add => {
-            Object  => $ObjectRand,
+            Object => $ObjectRand,
             Name   => $TemplateRandName1,
             UserID => 1,
         },
@@ -119,15 +119,15 @@ my $TemplateChecks = [
     # this template must be inserted sucessfully
     {
         Add => {
-            Object   => $ObjectRand,
-            Format => 'CSV',
+            Object  => $ObjectRand,
+            Format  => 'CSV',
             Name    => $TemplateRandName1,
             ValidID => 1,
             UserID  => 1,
         },
         AddGet => {
-            Object    => $ObjectRand,
-            Format => 'CSV',
+            Object   => $ObjectRand,
+            Format   => 'CSV',
             Name     => $TemplateRandName1,
             ValidID  => 1,
             Comment  => '',
@@ -139,8 +139,8 @@ my $TemplateChecks = [
     # this template have the same name as one test before and must not be added
     {
         Add => {
-            Object   => $ObjectRand,
-            Format => 'CSV',
+            Object  => $ObjectRand,
+            Format  => 'CSV',
             Name    => $TemplateRandName1,
             ValidID => 1,
             UserID  => 1,
@@ -150,16 +150,16 @@ my $TemplateChecks = [
     # this template must be inserted sucessfully
     {
         Add => {
-            Object   => $ObjectRand,
-            Format => 'CSV',
+            Object  => $ObjectRand,
+            Format  => 'CSV',
             Name    => $TemplateRandName2,
             ValidID => 1,
             Comment => 'This is a test!',
             UserID  => 1,
         },
         AddGet => {
-            Object    => $ObjectRand,
-            Format => 'CSV',
+            Object   => $ObjectRand,
+            Format   => 'CSV',
             Name     => $TemplateRandName2,
             ValidID  => 1,
             Comment  => 'This is a test!',
@@ -246,15 +246,15 @@ my $TemplateChecks = [
     # this template must be inserted sucessfully (check string cleaner function)
     {
         Add => {
-            Object   => " \t \n \r " . $ObjectRand . " \t \n \r ",
-            Format => " \t \n \r CSV \t \n \r ",
+            Object  => " \t \n \r " . $ObjectRand . " \t \n \r ",
+            Format  => " \t \n \r CSV \t \n \r ",
             Name    => " \t \n \r " . $TemplateRandName3 . " \t \n \r ",
             ValidID => 1,
             UserID  => 1,
         },
         AddGet => {
-            Object    => $ObjectRand,
-            Format => 'CSV',
+            Object   => $ObjectRand,
+            Format   => 'CSV',
             Name     => $TemplateRandName3,
             ValidID  => 1,
             Comment  => '',
@@ -382,7 +382,7 @@ continue {
 
 # get template list
 my $TemplateList2 = $Self->{ImportExportObject}->TemplateList(
-    Object  => $ObjectRand,
+    Object => $ObjectRand,
     UserID => 1,
 );
 
@@ -426,7 +426,7 @@ $Self->True(
 
 # get template list
 my $TemplateList3 = $Self->{ImportExportObject}->TemplateList(
-    Object  => $ObjectRand,
+    Object => $ObjectRand,
     UserID => 1,
 );
 

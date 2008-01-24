@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport.pm - all import and export functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pm,v 1.4 2008-01-24 16:33:56 mh Exp $
+# $Id: ImportExport.pm,v 1.5 2008-01-24 16:57:56 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 =head1 NAME
 
@@ -91,7 +91,7 @@ sub ObjectList {
 
     # create the object list
     my $ObjectList = {};
-    for my $Module (sort keys %{$ModuleList}) {
+    for my $Module ( sort keys %{$ModuleList} ) {
         $ObjectList->{$Module} = $ModuleList->{$Module}->{Name};
     }
 
@@ -117,7 +117,7 @@ sub FormatList {
 
     # create the format list
     my $FormatList = {};
-    for my $Module (sort keys %{$ModuleList}) {
+    for my $Module ( sort keys %{$ModuleList} ) {
         $FormatList->{$Module} = $ModuleList->{$Module}->{Name};
     }
 
@@ -529,7 +529,7 @@ sub _LoadBackend {
     # create new instance
     my $BackendObject = $Param{Module}->new( %{$Self}, %Param );
 
-    if (!$BackendObject) {
+    if ( !$BackendObject ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message  => "Can't create a new instance of backend module $Param{Module}!",
@@ -559,6 +559,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2008-01-24 16:33:56 $
+$Revision: 1.5 $ $Date: 2008-01-24 16:57:56 $
 
 =cut
