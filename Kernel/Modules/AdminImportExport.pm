@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminImportExport.pm - admin frontend of import export module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.pm,v 1.5 2008-01-24 16:57:56 mh Exp $
+# $Id: AdminImportExport.pm,v 1.6 2008-01-25 17:50:43 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ImportExport;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -160,10 +160,12 @@ sub Run {
         # save to database
         my $Success;
         if ( $TemplateData->{TemplateID} eq 'NEW' ) {
-            $Success = $Self->{ImportExportObject}->TemplateAdd(
+            $TemplateData->{TemplateID} = $Self->{ImportExportObject}->TemplateAdd(
                 %{$TemplateData},
                 UserID => $Self->{UserID},
             );
+
+            $Success = $TemplateData->{TemplateID};
         }
         else {
             $Success = $Self->{ImportExportObject}->TemplateUpdate(
@@ -176,7 +178,125 @@ sub Run {
             if !$Success;
 
         # redirect to overview object list
-        return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
+        return $Self->{LayoutObject}->Redirect(
+            OP => "Action=$Self->{Action}&Subaction=TemplateEdit2&TemplateID=$TemplateData->{TemplateID}",
+        );
+    }
+
+    # ------------------------------------------------------------ #
+    # template edit
+    # ------------------------------------------------------------ #
+    if ( $Self->{Subaction} eq 'TemplateEdit2' ) {
+
+        # get object list
+        my $ObjectList = $Self->{ImportExportObject}->ObjectList();
+
+        return $Self->{LayoutObject}->FatalError( Message => 'No object backend found!' )
+            if !$ObjectList;
+
+        # get format list
+        my $FormatList = $Self->{ImportExportObject}->FormatList();
+
+        return $Self->{LayoutObject}->FatalError( Message => 'No format backend found!' )
+            if !$FormatList;
+
+        # get params
+        my $TemplateData = {};
+        $TemplateData->{TemplateID} = $Self->{ParamObject}->GetParam( Param => 'TemplateID' );
+
+        # get template data
+        $TemplateData = $Self->{ImportExportObject}->TemplateGet(
+            TemplateID => $TemplateData->{TemplateID},
+            UserID     => $Self->{UserID},
+        );
+
+        # generate ObjectOptionStrg
+        my $ObjectOptionStrg = $Self->{LayoutObject}->BuildSelection(
+            Data         => $ObjectList,
+            Name         => 'Object',
+            SelectedID   => $TemplateData->{Object},
+            PossibleNone => 1,
+            Translation  => 1,
+        );
+
+        # generate FormatOptionStrg
+        my $FormatOptionStrg = $Self->{LayoutObject}->BuildSelection(
+            Data         => $FormatList,
+            Name         => 'Format',
+            SelectedID   => $TemplateData->{Format},
+            PossibleNone => 1,
+            Translation  => 1,
+        );
+
+        # output overview
+        $Self->{LayoutObject}->Block(
+            Name => 'Overview',
+            Data => {
+                %Param,
+                ObjectOptionStrg => $ObjectOptionStrg,
+                FormatOptionStrg => $FormatOptionStrg,
+            },
+        );
+
+        # output list
+        $Self->{LayoutObject}->Block(
+            Name => 'TemplateEdit2',
+            Data => {
+                %{$TemplateData},
+            },
+        );
+
+        # output header and navbar
+        my $Output = $Self->{LayoutObject}->Header();
+        $Output .= $Self->{LayoutObject}->NavigationBar();
+
+        # start template output
+        $Output .= $Self->{LayoutObject}->Output(
+            TemplateFile => 'AdminImportExport',
+            Data         => \%Param,
+        );
+
+        $Output .= $Self->{LayoutObject}->Footer();
+        return $Output;
+    }
+
+    # ------------------------------------------------------------ #
+    # template save
+    # ------------------------------------------------------------ #
+    elsif ( $Self->{Subaction} eq 'TemplateSave2' ) {
+        my $TemplateData = {};
+
+        # get params
+        for my $Param (qw(TemplateID SubmitBack)) {
+            $TemplateData->{$Param} = $Self->{ParamObject}->GetParam( Param => $Param ) || '';
+        }
+        my $SubmitAction = $Self->{ParamObject}->GetParam( Param => 'SubmitBack' );
+
+#        # save to database
+#        my $Success;
+#        if ( $TemplateData->{TemplateID} eq 'NEW' ) {
+#            $TemplateData->{TemplateID} = $Self->{ImportExportObject}->TemplateAdd(
+#                %{$TemplateData},
+#                UserID => $Self->{UserID},
+#            );
+#
+#            $Success = $TemplateData->{TemplateID};
+#        }
+#        else {
+#            $Success = $Self->{ImportExportObject}->TemplateUpdate(
+#                %{$TemplateData},
+#                UserID => $Self->{UserID},
+#            );
+#        }
+#
+#        return $Self->{LayoutObject}->FatalError( Message => "Can't insert/update template!" )
+#            if !$Success;
+
+        my $Subaction = $SubmitAction ? 'TemplateEdit1' : 'TemplateEdit3';
+
+        return $Self->{LayoutObject}->Redirect(
+            OP => "Action=$Self->{Action}&Subaction=$Subaction&TemplateID=$TemplateData->{TemplateID}",
+        );
     }
 
     # ------------------------------------------------------------ #

@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport.pm - all import and export functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pm,v 1.5 2008-01-24 16:57:56 mh Exp $
+# $Id: ImportExport.pm,v 1.6 2008-01-25 17:50:43 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 =head1 NAME
 
@@ -492,6 +492,23 @@ sub TemplateDelete {
     );
 }
 
+#=it em ObjectAttributesGet()
+#
+#get the attributes of an object backend
+#
+#    my $Attributes = $ImportExportObject->ObjectAttributesGet(
+#        Object => 123,
+#        UserID => 1,
+#    );
+#
+#=cu t
+#
+#sub ObjectAttributesGet {
+#    my ( $Self, %Param ) = @_;
+#
+#
+#}
+
 =item _LoadBackend()
 
 to load a import/export backend module
@@ -559,6 +576,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2008-01-24 16:57:56 $
+$Revision: 1.6 $ $Date: 2008-01-25 17:50:43 $
 
 =cut
