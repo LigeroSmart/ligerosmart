@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminITSMCIPAllocate.pm - admin frontend of criticality, impact and priority
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminITSMCIPAllocate.pm,v 1.6 2008-01-23 16:48:36 mh Exp $
+# $Id: AdminITSMCIPAllocate.pm,v 1.7 2008-01-30 19:14:17 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::Priority;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -56,19 +56,24 @@ sub Run {
 
         # get option lists
         my %ObjectOption;
-        $ObjectOption{CriticalityList}
-            = $Self->{GeneralCatalogObject}->ItemList( Class => 'ITSM::Core::Criticality' );
-        $ObjectOption{ImpactList}
-            = $Self->{GeneralCatalogObject}->ItemList( Class => 'ITSM::Core::Impact' );
-        my %OptionPriorityList = $Self->{PriorityObject}->PriorityList( UserID => 1 );
+        $ObjectOption{CriticalityList} = $Self->{GeneralCatalogObject}->ItemList(
+            Class => 'ITSM::Core::Criticality',
+        );
+        $ObjectOption{ImpactList} = $Self->{GeneralCatalogObject}->ItemList(
+            Class => 'ITSM::Core::Impact',
+        );
+        my %OptionPriorityList = $Self->{PriorityObject}->PriorityList(
+            UserID => 1,
+        );
         $ObjectOption{PriorityList} = \%OptionPriorityList;
 
         # get all PriorityIDs of the matrix
         my $AllocateData;
-        for my $ImpactID ( sort keys %{ $ObjectOption{ImpactList} } ) {
-            for my $CriticalityID ( sort keys %{ $ObjectOption{CriticalityList} } ) {
-                my $PriorityID = $Self->{ParamObject}
-                    ->GetParam( Param => "PriorityID" . $ImpactID . '-' . $CriticalityID ) || '';
+        for my $ImpactID ( keys %{ $ObjectOption{ImpactList} } ) {
+            for my $CriticalityID ( keys %{ $ObjectOption{CriticalityList} } ) {
+                my $PriorityID = $Self->{ParamObject}->GetParam(
+                    Param => "PriorityID" . $ImpactID . '-' . $CriticalityID
+                ) || '';
 
                 if ($PriorityID) {
                     $AllocateData->{$ImpactID}->{$CriticalityID} = $PriorityID;
@@ -81,6 +86,7 @@ sub Run {
             AllocateData => $AllocateData,
             UserID       => 1,
         );
+
         return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
     }
 
@@ -95,15 +101,21 @@ sub Run {
 
         # get option lists
         my %ObjectOption;
-        $ObjectOption{CriticalityList}
-            = $Self->{GeneralCatalogObject}->ItemList( Class => 'ITSM::Core::Criticality' );
-        $ObjectOption{ImpactList}
-            = $Self->{GeneralCatalogObject}->ItemList( Class => 'ITSM::Core::Impact' );
-        my %OptionPriorityList = $Self->{PriorityObject}->PriorityList( UserID => 1 );
+        $ObjectOption{CriticalityList} = $Self->{GeneralCatalogObject}->ItemList(
+            Class => 'ITSM::Core::Criticality',
+        );
+        $ObjectOption{ImpactList} = $Self->{GeneralCatalogObject}->ItemList(
+            Class => 'ITSM::Core::Impact',
+        );
+        my %OptionPriorityList = $Self->{PriorityObject}->PriorityList(
+            UserID => 1,
+        );
         $ObjectOption{PriorityList} = \%OptionPriorityList;
 
         # get allocation data
-        my $AllocateData = $Self->{CIPAllocateObject}->AllocateList( UserID => 1 );
+        my $AllocateData = $Self->{CIPAllocateObject}->AllocateList(
+            UserID => 1,
+        );
 
         my $AllocateMatrix;
         $AllocateMatrix->[0]->[0]->{Class} = 'Description';
@@ -155,7 +167,10 @@ sub Run {
 
         # output allocation matrix
         for my $RowRef ( @{$AllocateMatrix} ) {
-            $Self->{LayoutObject}->Block( Name => 'CIPAllocateRow' );
+            $Self->{LayoutObject}->Block(
+                Name => 'CIPAllocateRow'
+            );
+
             for my $Cell ( @{$RowRef} ) {
                 $Self->{LayoutObject}->Block(
                     Name => 'CIPAllocateRowColumn' . $Cell->{Class},

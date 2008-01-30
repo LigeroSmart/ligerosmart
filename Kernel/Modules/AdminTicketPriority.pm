@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminTicketPriority.pm - admin frontend of ticket priority
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminTicketPriority.pm,v 1.8 2008-01-23 16:48:36 mh Exp $
+# $Id: AdminTicketPriority.pm,v 1.9 2008-01-30 19:14:17 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Priority;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -61,10 +61,6 @@ sub Run {
             $PriorityData{PriorityID} = $PriorityData{ID};
         }
 
-        # output header
-        my $Output = $Self->{LayoutObject}->Header();
-        $Output .= $Self->{LayoutObject}->NavigationBar();
-
         # output overview
         $Self->{LayoutObject}->Block(
             Name => 'Overview',
@@ -89,6 +85,10 @@ sub Run {
             },
         );
 
+        # output header
+        my $Output = $Self->{LayoutObject}->Header();
+        $Output .= $Self->{LayoutObject}->NavigationBar();
+
         # generate output
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AdminTicketPriority',
@@ -112,22 +112,21 @@ sub Run {
         $PriorityData{ID} = $PriorityData{PriorityID};
 
         # save to database
+        my $Success;
         if ( $PriorityData{PriorityID} eq 'NEW' ) {
-            my $Success
-                = $Self->{PriorityObject}->PriorityAdd( %PriorityData, UserID => $Self->{UserID} );
-            if ( !$Success ) {
-                return $Self->{LayoutObject}->ErrorScreen();
-            }
+            $Success = $Self->{PriorityObject}->PriorityAdd(
+                %PriorityData,
+                UserID => $Self->{UserID},
+            );
         }
         else {
-            my $Success = $Self->{PriorityObject}
-                ->PriorityUpdate( %PriorityData, UserID => $Self->{UserID} );
-            if ( !$Success ) {
-                return $Self->{LayoutObject}->ErrorScreen();
-            }
+            $Success = $Self->{PriorityObject}->PriorityUpdate(
+                %PriorityData,
+                UserID => $Self->{UserID},
+            );
         }
 
-        # redirect to overview
+        return $Self->{LayoutObject}->ErrorScreen() if !$Success;
         return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
     }
 
@@ -135,10 +134,6 @@ sub Run {
     # overview
     # ------------------------------------------------------------ #
     else {
-
-        # output header and navbar
-        my $Output = $Self->{LayoutObject}->Header();
-        $Output .= $Self->{LayoutObject}->NavigationBar();
 
         # output overview
         $Self->{LayoutObject}->Block(
@@ -161,22 +156,18 @@ sub Run {
         # get valid list
         my %ValidList = $Self->{ValidObject}->ValidList();
 
-        my $CssClass;
+        my $CssClass = '';
         for my $PriorityID ( sort { $PriorityList{$a} cmp $PriorityList{$b} } keys %PriorityList ) {
 
-            # set output class
-            if ( $CssClass && $CssClass eq 'searchactive' ) {
-                $CssClass = 'searchpassive';
-            }
-            else {
-                $CssClass = 'searchactive';
-            }
+            # set output object
+            $CssClass = $CssClass eq 'searchactive' ? 'searchpassive' : 'searchactive';
 
             # get priority data
             my %PriorityData = $Self->{PriorityObject}->PriorityGet(
                 PriorityID => $PriorityID,
                 UserID     => $Self->{UserID},
             );
+
             $Self->{LayoutObject}->Block(
                 Name => 'OverviewListRow',
                 Data => {
@@ -188,12 +179,17 @@ sub Run {
             );
         }
 
+        # output header and navbar
+        my $Output = $Self->{LayoutObject}->Header();
+        $Output .= $Self->{LayoutObject}->NavigationBar();
+
         # start template output
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AdminTicketPriority',
             Data         => \%Param,
         );
         $Output .= $Self->{LayoutObject}->Footer();
+
         return $Output;
     }
 }

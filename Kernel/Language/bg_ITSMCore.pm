@@ -2,7 +2,7 @@
 # Kernel/Language/bg_ITSMCore.pm - the bulgarian translation of ITSMCore
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: bg_ITSMCore.pm,v 1.4 2008-01-23 16:48:36 mh Exp $
+# $Id: bg_ITSMCore.pm,v 1.5 2008-01-30 19:14:17 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,13 +15,12 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub Data {
     my ($Self) = @_;
 
-    $Self->{Translation}->{'Priority Management'}
-        = 'Управление на приоритетите';
+    $Self->{Translation}->{'Priority Management'} = 'Управление на приоритетите';
     $Self->{Translation}->{'Add a new Priority.'} = 'Добави нов приоритет.';
     $Self->{Translation}->{'Add Priority'}        = 'Добави приоритет';
     $Self->{Translation}->{'Criticality'}         = 'Критичност';

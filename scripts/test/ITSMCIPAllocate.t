@@ -2,7 +2,7 @@
 # ITSMCIPAllocate.t - general catalog tests
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMCIPAllocate.t,v 1.3 2008-01-23 16:48:36 mh Exp $
+# $Id: ITSMCIPAllocate.t,v 1.4 2008-01-30 19:14:17 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -23,14 +23,16 @@ my $AllocateData1 = $Self->{CIPAllocateObject}->AllocateList();
 $Self->False( $AllocateData1, 'AllocateList()' );
 
 # get current allocation list
-my $AllocateData2 = $Self->{CIPAllocateObject}->AllocateList( UserID => 1 );
+my $AllocateData2 = $Self->{CIPAllocateObject}->AllocateList(
+    UserID => 1,
+);
 
 # check the result
 $Self->True( $AllocateData2, 'AllocateList()' );
 
 # check the allocation hash
 my $HashOK = 1;
-if ( ref($AllocateData2) ne 'HASH' ) {
+if ( ref $AllocateData2 ne 'HASH' ) {
     $HashOK = 0;
 }
 
@@ -38,7 +40,7 @@ if ( ref($AllocateData2) ne 'HASH' ) {
 IMPACTID:
 for my $ImpactID ( keys %{$AllocateData2} ) {
 
-    if ( ref( $AllocateData2->{$ImpactID} ) ne 'HASH' ) {
+    if ( ref $AllocateData2->{$ImpactID} ne 'HASH' ) {
         $HashOK = 0;
         last IMPACTID;
     }
@@ -57,20 +59,27 @@ for my $ImpactID ( keys %{$AllocateData2} ) {
 $Self->True( $HashOK, 'AllocateList()' );
 
 # update the allocation hash (not all needed arguments given)
-my $Success1 = $Self->{CIPAllocateObject}->AllocateUpdate( UserID => 1 );
+my $Success1 = $Self->{CIPAllocateObject}->AllocateUpdate(
+    UserID => 1,
+);
 
 # check the result
 $Self->False( $Success1, 'AllocateUpdate()' );
 
 # update the allocation hash (not all needed arguments given)
-my $Success2 = $Self->{CIPAllocateObject}->AllocateUpdate( AllocateData => $AllocateData2 );
+my $Success2 = $Self->{CIPAllocateObject}->AllocateUpdate(
+    AllocateData => $AllocateData2,
+);
 
 # check the result
 $Self->False( $Success2, 'AllocateUpdate()' );
 
 # update the allocation hash (allocation hash )
 my $Success3 = $Self->{CIPAllocateObject}->AllocateUpdate(
-    AllocateData => { Test => 'aaa', Test2 => 'bbb' },
+    AllocateData => {
+        Test  => 'aaa',
+        Test2 => 'bbb',
+    },
     UserID => 1,
 );
 

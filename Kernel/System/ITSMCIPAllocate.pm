@@ -2,7 +2,7 @@
 # Kernel/System/ITSMCIPAllocate.pm - all criticality, impact and priority allocation functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMCIPAllocate.pm,v 1.6 2008-01-23 16:48:36 mh Exp $
+# $Id: ITSMCIPAllocate.pm,v 1.7 2008-01-30 19:14:17 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 =head1 NAME
 
@@ -49,11 +49,10 @@ create a object
         LogObject    => $LogObject,
         MainObject   => $MainObject,
     );
-
     my $CIPAllocateObject = Kernel::System::CIPAllocate->new(
         ConfigObject => $ConfigObject,
-        LogObject => $LogObject,
-        DBObject => $DBObject,
+        LogObject    => $LogObject,
+        DBObject     => $DBObject,
     );
 
 =cut
@@ -99,11 +98,12 @@ sub AllocateList {
     $Param{UserID} = $Self->{DBObject}->Quote( $Param{UserID}, 'Integer' );
 
     # ask database
-    $Self->{DBObject}
-        ->Prepare( SQL => 'SELECT criticality_id, impact_id, priority_id FROM cip_allocate' );
+    $Self->{DBObject}->Prepare(
+        SQL => 'SELECT criticality_id, impact_id, priority_id FROM cip_allocate',
+    );
 
     # result list
-    my %AllocateData = ();
+    my %AllocateData;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $AllocateData{ $Row[1] }{ $Row[0] } = $Row[2];
     }
@@ -137,21 +137,25 @@ sub AllocateUpdate {
     }
 
     # check if allocate data is a hash reference
-    if ( ref( $Param{AllocateData} ) ne 'HASH' ) {
-        $Self->{LogObject}
-            ->Log( Priority => 'error', Message => 'AllocateData must be a 2D hash reference!' );
+    if ( ref $Param{AllocateData} ne 'HASH' ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'AllocateData must be a 2D hash reference!',
+        );
         return;
     }
 
     # check if allocate data is a 2D hash reference
+    IMPACTID:
     for my $ImpactID ( keys %{ $Param{AllocateData} } ) {
-        if ( ref( $Param{AllocateData}->{$ImpactID} ) ne 'HASH' ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => 'AllocateData must be a 2D hash reference!'
-            );
-            return;
-        }
+
+        next IMPACTID if ref $Param{AllocateData}->{$ImpactID} eq 'HASH';
+
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'AllocateData must be a 2D hash reference!'
+        );
+        return;
     }
 
     # quote
@@ -251,6 +255,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.6 $ $Date: 2008-01-23 16:48:36 $
+$Revision: 1.7 $ $Date: 2008-01-30 19:14:17 $
 
 =cut
