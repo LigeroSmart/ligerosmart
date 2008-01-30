@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminGeneralCatalog.pm - admin frontend of general catalog management
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminGeneralCatalog.pm,v 1.17 2008-01-23 17:28:54 mh Exp $
+# $Id: AdminGeneralCatalog.pm,v 1.18 2008-01-30 19:09:42 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -89,7 +89,7 @@ sub Run {
             Valid => 0,
         );
 
-        my $CssClass = 'searchpassive';
+        my $CssClass = '';
         for my $ItemID ( sort { $ItemIDList->{$a} cmp $ItemIDList->{$b} } keys %{$ItemIDList} ) {
 
             # set output class
@@ -306,7 +306,7 @@ sub Run {
             Data => {%Param},
         );
 
-        my $CssClass = 'searchpassive';
+        my $CssClass = '';
         for my $Class ( @{$ClassList} ) {
 
             # set output class

@@ -2,7 +2,7 @@
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.25 2008-01-30 14:47:54 mh Exp $
+# $Id: GeneralCatalog.pm,v 1.26 2008-01-30 19:09:42 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.25 $) [1];
+$VERSION = qw($Revision: 1.26 $) [1];
 
 =head1 NAME
 
@@ -50,11 +50,10 @@ create a object
         LogObject    => $LogObject,
         MainObject   => $MainObject,
     );
-
     my $GeneralCatalogObject = Kernel::System::GeneralCatalog->new(
         ConfigObject => $ConfigObject,
-        LogObject => $LogObject,
-        DBObject => $DBObject,
+        LogObject    => $LogObject,
+        DBObject     => $DBObject,
     );
 
 =cut
@@ -88,8 +87,7 @@ sub ClassList {
 
     # ask database
     $Self->{DBObject}->Prepare(
-        SQL =>
-            'SELECT DISTINCT(general_catalog_class) '
+        SQL => 'SELECT DISTINCT(general_catalog_class) '
             . 'FROM general_catalog ORDER BY general_catalog_class',
     );
 
@@ -153,7 +151,7 @@ sub ItemList {
     if ( $Param{Functionality} ) {
 
         # create array reference, if functionality is give as sting
-        if ( ref( $Param{Functionality} ) ne 'ARRAY' ) {
+        if ( ref $Param{Functionality} ne 'ARRAY' ) {
             $Param{Functionality} = [ $Param{Functionality} ];
         }
 
@@ -557,6 +555,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.25 $ $Date: 2008-01-30 14:47:54 $
+$Revision: 1.26 $ $Date: 2008-01-30 19:09:42 $
 
 =cut
