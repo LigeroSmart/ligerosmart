@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport.pm - all import and export functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pm,v 1.6 2008-01-25 17:50:43 mh Exp $
+# $Id: ImportExport.pm,v 1.7 2008-01-31 19:28:48 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 =head1 NAME
 
@@ -72,65 +72,13 @@ sub new {
     return $Self;
 }
 
-=item ObjectList()
-
-return a list of available objects as hash reference
-
-    my $ObjectList = $ImportExportObject->ObjectList();
-
-=cut
-
-sub ObjectList {
-    my ( $Self, %Param ) = @_;
-
-    # get config
-    my $ModuleList = $Self->{ConfigObject}->Get('ImportExport::ObjectBackendRegistration');
-
-    return if !$ModuleList;
-    return if ref $ModuleList ne 'HASH';
-
-    # create the object list
-    my $ObjectList = {};
-    for my $Module ( sort keys %{$ModuleList} ) {
-        $ObjectList->{$Module} = $ModuleList->{$Module}->{Name};
-    }
-
-    return $ObjectList;
-}
-
-=item FormatList()
-
-return a list of available formats as hash reference
-
-    my $FormatList = $ImportExportObject->FormatList();
-
-=cut
-
-sub FormatList {
-    my ( $Self, %Param ) = @_;
-
-    # get config
-    my $ModuleList = $Self->{ConfigObject}->Get('ImportExport::FormatBackendRegistration');
-
-    return if !$ModuleList;
-    return if ref $ModuleList ne 'HASH';
-
-    # create the format list
-    my $FormatList = {};
-    for my $Module ( sort keys %{$ModuleList} ) {
-        $FormatList->{$Module} = $ModuleList->{$Module}->{Name};
-    }
-
-    return $FormatList;
-}
-
 =item TemplateList()
 
 return a list of templates as array reference
 
     my $TemplateList = $ImportExportObject->TemplateList(
-        Object   => 'Ticket',
-        UserID  => 1,
+        Object => 'Ticket',
+        UserID => 1,
     );
 
 =cut
@@ -441,19 +389,262 @@ delete existing import/export templates
 
     my $True = $ImportExportObject->TemplateDelete(
         TemplateID => 123,
-        UserID => 1,
+        UserID     => 1,
     );
 
     or
 
     my $True = $ImportExportObject->TemplateDelete(
         TemplateID => [1,44,166,5],
-        UserID => 1,
+        UserID     => 1,
     );
 
 =cut
 
 sub TemplateDelete {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(TemplateID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!"
+            );
+            return;
+        }
+    }
+
+    if ( !ref $Param{TemplateID} ) {
+        $Param{TemplateID} = [ $Param{TemplateID} ];
+    }
+    elsif ( ref $Param{TemplateID} ne 'ARRAY' ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'TemplateID must be an array reference or a string!',
+        );
+        return;
+    }
+
+    # delete existing format data
+    $Self->FormatDataDelete(
+        TemplateID => $Param{TemplateID},
+        UserID     => $Param{UserID},
+    );
+
+    # delete existing object data
+    $Self->ObjectDataDelete(
+        TemplateID => $Param{TemplateID},
+        UserID     => $Param{UserID},
+    );
+
+    # quote
+    for my $TemplateID ( @{ $Param{TemplateID} } ) {
+        $TemplateID = $Self->{DBObject}->Quote( $TemplateID, 'Integer' );
+    }
+
+    # create the template id string
+    my $TemplateIDString = join ',', @{ $Param{TemplateID} };
+
+    # delete templates
+    return $Self->{DBObject}->Do(
+        SQL => "DELETE FROM importexport_template WHERE id IN ( $TemplateIDString )",
+    );
+}
+
+=item ObjectList()
+
+return a list of available objects as hash reference
+
+    my $ObjectList = $ImportExportObject->ObjectList();
+
+=cut
+
+sub ObjectList {
+    my ( $Self, %Param ) = @_;
+
+    # get config
+    my $ModuleList = $Self->{ConfigObject}->Get('ImportExport::ObjectBackendRegistration');
+
+    return if !$ModuleList;
+    return if ref $ModuleList ne 'HASH';
+
+    # create the object list
+    my $ObjectList = {};
+    for my $Module ( sort keys %{$ModuleList} ) {
+        $ObjectList->{$Module} = $ModuleList->{$Module}->{Name};
+    }
+
+    return $ObjectList;
+}
+
+=item ObjectAttributesGet()
+
+get the attributes of an object backend as array/hash reference
+
+    my $Attributes = $ImportExportObject->ObjectAttributesGet(
+        TemplateID => 123,
+        UserID     => 1,
+    );
+
+=cut
+
+sub ObjectAttributesGet {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(TemplateID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # get template data
+    my $TemplateData = $Self->TemplateGet(
+        TemplateID => $Param{TemplateID},
+        UserID     => $Param{UserID},
+    );
+
+    # load backend
+    my $Backend = $Self->_LoadBackend(
+        Module => "Kernel::System::ImportExport::ObjectBackend::$TemplateData->{Object}",
+    );
+
+    return if !$Backend;
+
+    # get an attribute list of the object
+    my $Attributes = $Backend->AttributesGet(
+        %Param,
+        UserID => $Param{UserID},
+    );
+
+    return $Attributes;
+}
+
+=item ObjectDataGet()
+
+get the object data from a template
+
+    my $ObjectDataRef = $ImportExportObject->ObjectDataGet(
+        TemplateID => 3,
+        UserID     => 1,
+    );
+
+=cut
+
+sub ObjectDataGet {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(TemplateID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!"
+            );
+            return;
+        }
+    }
+
+    # quote
+    $Param{TemplateID} = $Self->{DBObject}->Quote( $Param{TemplateID}, 'Integer' );
+
+    # create sql string
+    my $SQL = "SELECT data_key, data_value FROM importexport_objectdata WHERE "
+        . "template_id = $Param{TemplateID}";
+
+    # ask database
+    $Self->{DBObject}->Prepare( SQL => $SQL );
+
+    # fetch the result
+    my %ObjectData;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $ObjectData{$Row[0]} = $Row[1];
+    }
+
+    return \%ObjectData;
+}
+
+=item ObjectDataSave()
+
+save the object data from a template
+
+    my $True = $ImportExportObject->ObjectDataSave(
+        TemplateID => 123,
+        ObjectData => $HashRef,
+        UserID     => 1,
+    );
+
+=cut
+
+sub ObjectDataSave {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(TemplateID ObjectData UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!"
+            );
+            return;
+        }
+    }
+
+    if ( ref $Param{ObjectData} ne 'HASH' ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'ObjectData must be an hash reference!',
+        );
+        return;
+    }
+
+    # delete existing object data
+    $Self->ObjectDataDelete(
+        TemplateID => $Param{TemplateID},
+        UserID     => $Param{UserID},
+    );
+
+    for my $DataKey (keys %{ $Param{ObjectData} } ) {
+
+        # quote
+        my $QDataKey   = $Self->{DBObject}->Quote( $DataKey );
+        my $QDataValue = $Self->{DBObject}->Quote( $Param{ObjectData}->{$DataKey} );
+
+        # insert one row
+        $Self->{DBObject}->Do(
+            SQL => "INSERT INTO importexport_objectdata "
+                . "(template_id, data_key, data_value) VALUES "
+                . "($Param{TemplateID}, '$QDataKey', '$QDataValue')"
+        );
+    }
+
+    return 1;
+}
+
+=item ObjectDataDelete()
+
+delete the existing object data from a template
+
+    my $True = $ImportExportObject->ObjectDataDelete(
+        TemplateID => 123,
+        UserID     => 1,
+    );
+
+    or
+
+    my $True = $ImportExportObject->ObjectDataDelete(
+        TemplateID => [1,44,166,5],
+        UserID     => 1,
+    );
+
+=cut
+
+sub ObjectDataDelete {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
@@ -488,26 +679,240 @@ sub TemplateDelete {
 
     # delete templates
     return $Self->{DBObject}->Do(
-        SQL => "DELETE FROM importexport_template WHERE id IN ( $TemplateIDString )",
+        SQL => "DELETE FROM importexport_objectdata WHERE template_id IN ( $TemplateIDString )",
     );
 }
 
-#=it em ObjectAttributesGet()
-#
-#get the attributes of an object backend
-#
-#    my $Attributes = $ImportExportObject->ObjectAttributesGet(
-#        Object => 123,
-#        UserID => 1,
-#    );
-#
-#=cu t
-#
-#sub ObjectAttributesGet {
-#    my ( $Self, %Param ) = @_;
-#
-#
-#}
+=item FormatList()
+
+return a list of available formats as hash reference
+
+    my $FormatList = $ImportExportObject->FormatList();
+
+=cut
+
+sub FormatList {
+    my ( $Self, %Param ) = @_;
+
+    # get config
+    my $ModuleList = $Self->{ConfigObject}->Get('ImportExport::FormatBackendRegistration');
+
+    return if !$ModuleList;
+    return if ref $ModuleList ne 'HASH';
+
+    # create the format list
+    my $FormatList = {};
+    for my $Module ( sort keys %{$ModuleList} ) {
+        $FormatList->{$Module} = $ModuleList->{$Module}->{Name};
+    }
+
+    return $FormatList;
+}
+
+=item FormatAttributesGet()
+
+get the attributes of a format backend as array/hash reference
+
+    my $Attributes = $ImportExportObject->FormatAttributesGet(
+        TemplateID => 123,
+        UserID     => 1,
+    );
+
+=cut
+
+sub FormatAttributesGet {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(TemplateID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # get template data
+    my $TemplateData = $Self->TemplateGet(
+        TemplateID => $Param{TemplateID},
+        UserID     => $Param{UserID},
+    );
+
+    # load backend
+    my $Backend = $Self->_LoadBackend(
+        Module => "Kernel::System::ImportExport::FormatBackend::$TemplateData->{Format}",
+    );
+
+    return if !$Backend;
+
+    # get an attribute list of the format
+    my $Attributes = $Backend->AttributesGet(
+        %Param,
+        UserID => $Param{UserID},
+    );
+
+    return $Attributes;
+}
+
+=item FormatDataGet()
+
+get the format data from a template
+
+    my $FormatDataRef = $ImportExportObject->FormatDataGet(
+        TemplateID => 3,
+        UserID     => 1,
+    );
+
+=cut
+
+sub FormatDataGet {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(TemplateID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!"
+            );
+            return;
+        }
+    }
+
+    # quote
+    $Param{TemplateID} = $Self->{DBObject}->Quote( $Param{TemplateID}, 'Integer' );
+
+    # create sql string
+    my $SQL = "SELECT data_key, data_value FROM importexport_formatdata WHERE "
+        . "template_id = $Param{TemplateID}";
+
+    # ask database
+    $Self->{DBObject}->Prepare( SQL => $SQL );
+
+    # fetch the result
+    my %FormatData;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $FormatData{$Row[0]} = $Row[1];
+    }
+
+    return \%FormatData;
+}
+
+=item FormatDataSave()
+
+save the format data from a template
+
+    my $True = $ImportExportObject->FormatDataSave(
+        TemplateID => 123,
+        FormatData => $HashRef,
+        UserID     => 1,
+    );
+
+=cut
+
+sub FormatDataSave {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(TemplateID FormatData UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!"
+            );
+            return;
+        }
+    }
+
+    if ( ref $Param{FormatData} ne 'HASH' ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'FormatData must be an hash reference!',
+        );
+        return;
+    }
+
+    # delete existing format data
+    $Self->FormatDataDelete(
+        TemplateID => $Param{TemplateID},
+        UserID     => $Param{UserID},
+    );
+
+    for my $DataKey (keys %{ $Param{FormatData} } ) {
+
+        # quote
+        my $QDataKey   = $Self->{DBObject}->Quote( $DataKey );
+        my $QDataValue = $Self->{DBObject}->Quote( $Param{FormatData}->{$DataKey} );
+
+        # insert one row
+        $Self->{DBObject}->Do(
+            SQL => "INSERT INTO importexport_formatdata "
+                . "(template_id, data_key, data_value) VALUES "
+                . "($Param{TemplateID}, '$QDataKey', '$QDataValue')"
+        );
+    }
+
+    return 1;
+}
+
+=item FormatDataDelete()
+
+delete the existing format data from a template
+
+    my $True = $ImportExportObject->FormatDataDelete(
+        TemplateID => 123,
+        UserID     => 1,
+    );
+
+    or
+
+    my $True = $ImportExportObject->FormatDataDelete(
+        TemplateID => [1,44,166,5],
+        UserID     => 1,
+    );
+
+=cut
+
+sub FormatDataDelete {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(TemplateID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!"
+            );
+            return;
+        }
+    }
+
+    if ( !ref $Param{TemplateID} ) {
+        $Param{TemplateID} = [ $Param{TemplateID} ];
+    }
+    elsif ( ref $Param{TemplateID} ne 'ARRAY' ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'TemplateID must be an array reference or a string!',
+        );
+        return;
+    }
+
+    # quote
+    for my $TemplateID ( @{ $Param{TemplateID} } ) {
+        $TemplateID = $Self->{DBObject}->Quote( $TemplateID, 'Integer' );
+    }
+
+    # create the template id string
+    my $TemplateIDString = join ',', @{ $Param{TemplateID} };
+
+    # delete templates
+    return $Self->{DBObject}->Do(
+        SQL => "DELETE FROM importexport_formatdata WHERE template_id IN ( $TemplateIDString )",
+    );
+}
 
 =item _LoadBackend()
 
@@ -532,7 +937,8 @@ sub _LoadBackend {
     }
 
     # check if object is already cached
-    return $Self->{Cache}->{ $Param{Module} } if $Self->{Cache}->{ $Param{Module} };
+    return $Self->{Cache}->{LoadBackend}->{ $Param{Module} }
+        if $Self->{Cache}->{LoadBackend}->{ $Param{Module} };
 
     # load object backend module
     if ( !$Self->{MainObject}->Require( $Param{Module} ) ) {
@@ -544,7 +950,10 @@ sub _LoadBackend {
     }
 
     # create new instance
-    my $BackendObject = $Param{Module}->new( %{$Self}, %Param );
+    my $BackendObject = $Param{Module}->new(
+        %{$Self},
+        %Param,
+    );
 
     if ( !$BackendObject ) {
         $Self->{LogObject}->Log(
@@ -555,7 +964,7 @@ sub _LoadBackend {
     }
 
     # cache the object
-    $Self->{Cache}->{ $Param{Module} } = $BackendObject;
+    $Self->{Cache}->{LoadBackend}->{ $Param{Module} } = $BackendObject;
 
     return $BackendObject;
 }
@@ -576,6 +985,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.6 $ $Date: 2008-01-25 17:50:43 $
+$Revision: 1.7 $ $Date: 2008-01-31 19:28:48 $
 
 =cut

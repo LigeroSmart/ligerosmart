@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ImportExport.sopm,v 1.3 2008-01-28 15:00:17 mh Exp $</CVS>
+    <CVS>$Id: ImportExport.sopm,v 1.4 2008-01-31 19:28:47 mh Exp $</CVS>
     <Name>ImportExport</Name>
     <Version>0.0.0</Version>
     <Framework>2.2.5</Framework>
@@ -15,8 +15,11 @@
         <File Permission="644" Location="Kernel/Language/cz_ImportExport.pm"/>
         <File Permission="644" Location="Kernel/Language/de_ImportExport.pm"/>
         <File Permission="644" Location="Kernel/Modules/AdminImportExport.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/ImportExportLayoutSelection.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/LayoutImportExport.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminImportExport.dtl"/>
         <File Permission="644" Location="Kernel/System/ImportExport.pm"/>
+        <File Permission="644" Location="Kernel/System/ImportExport/FormatBackend/CSV.pm"/>
         <File Permission="644" Location="scripts/test/ImportExport.t"/>
     </Filelist>
     <DatabaseInstall>
@@ -36,9 +39,29 @@
                 <Reference Local="change_by" Foreign="id"/>
             </ForeignKey>
         </TableCreate>
+        <TableCreate Name="importexport_objectdata">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
+            <Column Name="template_id" Required="true" Type="BIGINT"/>
+            <Column Name="data_key" Required="true" Size="100" Type="VARCHAR"/>
+            <Column Name="data_value" Required="true" Size="200" Type="VARCHAR"/>
+            <Index Name="importexport_objectdata_template_id">
+                <IndexColumn Name="template_id"/>
+            </Index>
+        </TableCreate>
+        <TableCreate Name="importexport_formatdata">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
+            <Column Name="template_id" Required="true" Type="BIGINT"/>
+            <Column Name="data_key" Required="true" Size="100" Type="VARCHAR"/>
+            <Column Name="data_value" Required="true" Size="200" Type="VARCHAR"/>
+            <Index Name="importexport_formatdata_template_id">
+                <IndexColumn Name="template_id"/>
+            </Index>
+        </TableCreate>
     </DatabaseInstall>
     <DatabaseUninstall>
         <TableDrop Name="importexport_template"/>
+        <TableDrop Name="importexport_objectdata"/>
+        <TableDrop Name="importexport_formatdata"/>
     </DatabaseUninstall>
     <IntroInstallPre Title="Install Information" Lang="en">
         &lt;br&gt;
