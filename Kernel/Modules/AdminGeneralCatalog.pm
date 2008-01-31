@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminGeneralCatalog.pm - admin frontend of general catalog management
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminGeneralCatalog.pm,v 1.18 2008-01-30 19:09:42 mh Exp $
+# $Id: AdminGeneralCatalog.pm,v 1.19 2008-01-31 09:48:22 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,23 +18,20 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
 
     # allocate new hash for object
-    my $Self = {};
+    my $Self = { %Param };
     bless( $Self, $Type );
 
-    # get common objects
-    %{$Self} = %Param;
-
     # check needed objects
-    OBJECT:
     for my $Object (qw(ConfigObject ParamObject LogObject LayoutObject)) {
-        next OBJECT if $Self->{$Object};
-        $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
+        if ( !$Self->{$Object} ) {
+            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
+        }
     }
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
     $Self->{ValidObject}          = Kernel::System::Valid->new(%Param);
