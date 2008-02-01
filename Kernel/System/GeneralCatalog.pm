@@ -2,7 +2,7 @@
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.26 2008-01-30 19:09:42 mh Exp $
+# $Id: GeneralCatalog.pm,v 1.27 2008-02-01 17:04:45 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.26 $) [1];
+$VERSION = qw($Revision: 1.27 $) [1];
 
 =head1 NAME
 
@@ -38,12 +38,18 @@ All general catalog functions.
 create a object
 
     use Kernel::Config;
-    use Kernel::System::Log;
     use Kernel::System::DB;
+    use Kernel::System::GeneralCatalog;
+    use Kernel::System::Log;
+    use Kernel::System::Main;
 
     my $ConfigObject = Kernel::Config->new();
     my $LogObject = Kernel::System::Log->new(
         ConfigObject => $ConfigObject,
+    );
+    my $MainObject = Kernel::System::Main->new(
+        ConfigObject => $ConfigObject,
+        LogObject    => $LogObject,
     );
     my $DBObject = Kernel::System::DB->new(
         ConfigObject => $ConfigObject,
@@ -54,6 +60,7 @@ create a object
         ConfigObject => $ConfigObject,
         LogObject    => $LogObject,
         DBObject     => $DBObject,
+        MainObject   => $MainObject,
     );
 
 =cut
@@ -555,6 +562,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.26 $ $Date: 2008-01-30 19:09:42 $
+$Revision: 1.27 $ $Date: 2008-02-01 17:04:45 $
 
 =cut
