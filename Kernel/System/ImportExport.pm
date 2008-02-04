@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport.pm - all import and export functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pm,v 1.9 2008-02-04 15:21:21 mh Exp $
+# $Id: ImportExport.pm,v 1.10 2008-02-04 19:53:32 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 =head1 NAME
 
@@ -109,8 +109,8 @@ sub TemplateList {
 
     # ask database
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT id FROM importexport_template WHERE "
-            . "im_ex_object = '$Param{Object}' "
+        SQL => "SELECT id FROM imexport_template WHERE "
+            . "imexport_object = '$Param{Object}' "
             . "ORDER BY name",
     );
 
@@ -165,8 +165,8 @@ sub TemplateGet {
     $Param{TemplateID} = $Self->{DBObject}->Quote( $Param{TemplateID}, 'Integer' );
 
     # create sql string
-    my $SQL = "SELECT id, im_ex_object, im_ex_format, name, valid_id, comments, "
-        . "create_time, create_by, change_time, change_by FROM importexport_template WHERE "
+    my $SQL = "SELECT id, imexport_object, imexport_format, name, valid_id, comments, "
+        . "create_time, create_by, change_time, change_by FROM imexport_template WHERE "
         . "id = $Param{TemplateID}";
 
     # ask database
@@ -245,8 +245,8 @@ sub TemplateAdd {
 
     # find exiting template with same name
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT id FROM importexport_template "
-            . "WHERE im_ex_object = '$Param{Object}' AND name = '$Param{Name}'",
+        SQL => "SELECT id FROM imexport_template "
+            . "WHERE imexport_object = '$Param{Object}' AND name = '$Param{Name}'",
         Limit => 1,
     );
 
@@ -268,8 +268,8 @@ sub TemplateAdd {
 
     # insert new template
     return if !$Self->{DBObject}->Do(
-        SQL => "INSERT INTO importexport_template "
-            . "(im_ex_object, im_ex_format, name, valid_id, comments, "
+        SQL => "INSERT INTO imexport_template "
+            . "(imexport_object, imexport_format, name, valid_id, comments, "
             . "create_time, create_by, change_time, change_by) VALUES "
             . "('$Param{Object}', '$Param{Format}', "
             . "'$Param{Name}', $Param{ValidID}, '$Param{Comment}', "
@@ -278,8 +278,8 @@ sub TemplateAdd {
 
     # find id of new template
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT id FROM importexport_template "
-            . "WHERE im_ex_object = '$Param{Object}' AND name = '$Param{Name}'",
+        SQL => "SELECT id FROM imexport_template "
+            . "WHERE imexport_object = '$Param{Object}' AND name = '$Param{Name}'",
         Limit => 1,
     );
 
@@ -339,7 +339,7 @@ sub TemplateUpdate {
 
     # get the object of this template id
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT im_ex_object FROM importexport_template "
+        SQL => "SELECT imexport_object FROM imexport_template "
             . "WHERE id = '$Param{TemplateID}'",
         Limit => 1,
     );
@@ -361,8 +361,8 @@ sub TemplateUpdate {
 
     # find exiting template with same name
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT id FROM importexport_template "
-            . "WHERE im_ex_object = '$Object' AND name = '$Param{Name}'",
+        SQL => "SELECT id FROM imexport_template "
+            . "WHERE imexport_object = '$Object' AND name = '$Param{Name}'",
         Limit => 1,
     );
 
@@ -385,7 +385,7 @@ sub TemplateUpdate {
 
     # update template
     return $Self->{DBObject}->Do(
-        SQL => "UPDATE importexport_template SET name = '$Param{Name}',"
+        SQL => "UPDATE imexport_template SET name = '$Param{Name}',"
             . "valid_id = $Param{ValidID}, comments = '$Param{Comment}', "
             . "change_time = current_timestamp, change_by = $Param{UserID} "
             . "WHERE id = $Param{TemplateID}",
@@ -435,6 +435,14 @@ sub TemplateDelete {
         return;
     }
 
+    # delete all mapping data
+    for my $TemplateID ( @{ $Param{TemplateID} } ) {
+        $Self->MappingDataDelete(
+            TemplateID => $TemplateID,
+            UserID     => $Param{UserID},
+        );
+    }
+
     # delete existing format data
     $Self->FormatDataDelete(
         TemplateID => $Param{TemplateID},
@@ -457,7 +465,7 @@ sub TemplateDelete {
 
     # delete templates
     return $Self->{DBObject}->Do(
-        SQL => "DELETE FROM importexport_template WHERE id IN ( $TemplateIDString )",
+        SQL => "DELETE FROM imexport_template WHERE id IN ( $TemplateIDString )",
     );
 }
 
@@ -563,7 +571,7 @@ sub ObjectDataGet {
     $Param{TemplateID} = $Self->{DBObject}->Quote( $Param{TemplateID}, 'Integer' );
 
     # create sql string
-    my $SQL = "SELECT data_key, data_value FROM importexport_objectdata WHERE "
+    my $SQL = "SELECT data_key, data_value FROM imexport_object WHERE "
         . "template_id = $Param{TemplateID}";
 
     # ask database
@@ -626,7 +634,7 @@ sub ObjectDataSave {
 
         # insert one row
         $Self->{DBObject}->Do(
-            SQL => "INSERT INTO importexport_objectdata "
+            SQL => "INSERT INTO imexport_object "
                 . "(template_id, data_key, data_value) VALUES "
                 . "($Param{TemplateID}, '$QDataKey', '$QDataValue')"
         );
@@ -688,7 +696,7 @@ sub ObjectDataDelete {
 
     # delete templates
     return $Self->{DBObject}->Do(
-        SQL => "DELETE FROM importexport_objectdata WHERE template_id IN ( $TemplateIDString )",
+        SQL => "DELETE FROM imexport_object WHERE template_id IN ( $TemplateIDString )",
     );
 }
 
@@ -794,7 +802,7 @@ sub FormatDataGet {
     $Param{TemplateID} = $Self->{DBObject}->Quote( $Param{TemplateID}, 'Integer' );
 
     # create sql string
-    my $SQL = "SELECT data_key, data_value FROM importexport_formatdata WHERE "
+    my $SQL = "SELECT data_key, data_value FROM imexport_format WHERE "
         . "template_id = $Param{TemplateID}";
 
     # ask database
@@ -857,7 +865,7 @@ sub FormatDataSave {
 
         # insert one row
         $Self->{DBObject}->Do(
-            SQL => "INSERT INTO importexport_formatdata "
+            SQL => "INSERT INTO imexport_format "
                 . "(template_id, data_key, data_value) VALUES "
                 . "($Param{TemplateID}, '$QDataKey', '$QDataValue')"
         );
@@ -919,8 +927,346 @@ sub FormatDataDelete {
 
     # delete templates
     return $Self->{DBObject}->Do(
-        SQL => "DELETE FROM importexport_formatdata WHERE template_id IN ( $TemplateIDString )",
+        SQL => "DELETE FROM imexport_format WHERE template_id IN ( $TemplateIDString )",
     );
+}
+
+=item MappingDataList()
+
+return a list of mapping data ids sorted by position as array reference
+
+    my $MappingDataList = $ImportExportObject->MappingDataList(
+        TemplateID => 123,
+        UserID     => 1,
+    );
+
+=cut
+
+sub MappingDataList {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(TemplateID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!"
+            );
+            return;
+        }
+    }
+
+    # quote
+    $Param{TemplateID} = $Self->{DBObject}->Quote( $Param{TemplateID}, 'Integer' );
+
+    # create sql string
+    my $SQL = "SELECT id FROM imexport_mapping WHERE "
+        . "template_id = $Param{TemplateID} ORDER BY position";
+
+    # ask database
+    $Self->{DBObject}->Prepare( SQL => $SQL );
+
+    # fetch the result
+    my @MappingDataList;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        push @MappingDataList, $Row[0];
+    }
+
+    return \@MappingDataList;
+}
+
+=item MappingDataAdd()
+
+add a new mapping data row
+
+    my $True = $ImportExportObject->MappingDataAdd(
+        TemplateID => 123,
+        UserID     => 1,
+    );
+
+=cut
+
+sub MappingDataAdd {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(TemplateID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!"
+            );
+            return;
+        }
+    }
+
+    # quote
+    for my $Argument (qw(TemplateID UserID)) {
+        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument}, 'Integer' );
+    }
+
+    # find maximum position
+    $Self->{DBObject}->Prepare(
+        SQL => "SELECT max(position) FROM imexport_mapping "
+            . "WHERE template_id = $Param{TemplateID}",
+        Limit => 1,
+    );
+
+    # fetch the result
+    my $NewPosition = 0;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $NewPosition = $Row[0] + 1;
+    }
+
+    # insert a new mapping data row
+    return $Self->{DBObject}->Do(
+        SQL => "INSERT INTO imexport_mapping "
+            . "(template_id, position) VALUES "
+            . "($Param{TemplateID}, $NewPosition)"
+    );
+}
+
+=item MappingDataDelete()
+
+delete existing mapping data rows
+
+    my $True = $ImportExportObject->MappingDataDelete(
+        MappingID  => 123,
+        TemplateID => 321,
+        UserID     => 1,
+    );
+
+    or
+
+    my $True = $ImportExportObject->MappingDataDelete(
+        TemplateID => 321,
+        UserID     => 1,
+    );
+
+=cut
+
+sub MappingDataDelete {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(TemplateID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!"
+            );
+            return;
+        }
+    }
+
+    # quote
+    for my $Argument (qw(TemplateID UserID)) {
+        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument}, 'Integer' );
+    }
+
+    if ( defined $Param{MappingID} ) {
+
+        # quote
+        $Param{MappingID} = $Self->{DBObject}->Quote( $Param{MappingID}, 'Integer' );
+
+        # delete one mapping row
+        $Self->{DBObject}->Do(
+            SQL => "DELETE FROM imexport_mapping WHERE id = $Param{MappingID}",
+        );
+
+        # rebuild mapping positions
+        $Self->MappingDataPositionRebuild(
+            TemplateID => $Param{TemplateID},
+            UserID     => $Param{UserID},
+        );
+
+        return 1;
+    }
+    else {
+
+        # delete all mapping rows of this template
+        return $Self->{DBObject}->Do(
+            SQL => "DELETE FROM imexport_mapping WHERE template_id = $Param{TemplateID}",
+        );
+    }
+}
+
+=item MappingDataUp()
+
+move an mapping data row up
+
+    my $True = $ImportExportObject->MappingDataUp(
+        MappingID  => 123,
+        TemplateID => 321,
+        UserID     => 1,
+    );
+
+=cut
+
+sub MappingDataUp {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(MappingID TemplateID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!"
+            );
+            return;
+        }
+    }
+
+    # get mapping data list
+    my $MappingDataList = $Self->MappingDataList(
+        TemplateID => $Param{TemplateID},
+        UserID     => $Param{UserID},
+    );
+
+    return 1 if $Param{MappingID} == $MappingDataList->[0];
+
+    # quote
+    for my $Argument (qw(MappingID TemplateID UserID)) {
+        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument}, 'Integer' );
+    }
+
+    # get position
+    my $SQL = "SELECT position FROM imexport_mapping WHERE id = $Param{MappingID}";
+
+    # ask database
+    $Self->{DBObject}->Prepare( SQL => $SQL );
+
+    # fetch the result
+    my $Position;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $Position = $Row[0];
+    }
+
+    return 1 if !$Position;
+
+    my $PositionUpper = $Position - 1;
+
+    # update positions
+    $Self->{DBObject}->Do(
+        SQL => "UPDATE imexport_mapping SET position = $Position "
+            . "WHERE template_id = $Param{TemplateID} AND position = $PositionUpper",
+    );
+    $Self->{DBObject}->Do(
+        SQL => "UPDATE imexport_mapping SET position = $PositionUpper "
+            . "WHERE id = $Param{MappingID}",
+    );
+
+    return 1;
+}
+
+=item MappingDataDown()
+
+move an mapping data row down
+
+    my $True = $ImportExportObject->MappingDataDown(
+        MappingID  => 123,
+        TemplateID => 321,
+        UserID     => 1,
+    );
+
+=cut
+
+sub MappingDataDown {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(MappingID TemplateID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!"
+            );
+            return;
+        }
+    }
+
+    # get mapping data list
+    my $MappingDataList = $Self->MappingDataList(
+        TemplateID => $Param{TemplateID},
+        UserID     => $Param{UserID},
+    );
+
+    return 1 if $Param{MappingID} == $MappingDataList->[-1];
+
+    # quote
+    for my $Argument (qw(MappingID TemplateID UserID)) {
+        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument}, 'Integer' );
+    }
+
+    # get position
+    my $SQL = "SELECT position FROM imexport_mapping WHERE id = $Param{MappingID}";
+
+    # ask database
+    $Self->{DBObject}->Prepare( SQL => $SQL );
+
+    # fetch the result
+    my $Position;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $Position = $Row[0];
+    }
+
+    my $PositionDown = $Position + 1;
+
+    # update positions
+    $Self->{DBObject}->Do(
+        SQL => "UPDATE imexport_mapping SET position = $Position "
+            . "WHERE template_id = $Param{TemplateID} AND position = $PositionDown",
+    );
+    $Self->{DBObject}->Do(
+        SQL => "UPDATE imexport_mapping SET position = $PositionDown "
+            . "WHERE id = $Param{MappingID}",
+    );
+
+    return 1;
+}
+
+=item MappingDataPositionRebuild()
+
+rebuild the positions of a mapping list
+
+    my $True = $ImportExportObject->MappingDataPositionRebuild(
+        TemplateID => 123,
+        UserID     => 1,
+    );
+
+=cut
+
+sub MappingDataPositionRebuild {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(TemplateID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!"
+            );
+            return;
+        }
+    }
+
+    # get mapping data list
+    my $MappingDataList = $Self->MappingDataList(
+        TemplateID => $Param{TemplateID},
+        UserID     => $Param{UserID},
+    );
+
+    # update position
+    my $Counter = 0;
+    for my $MappingID ( @{$MappingDataList} ) {
+        $Self->{DBObject}->Do(
+            SQL => "UPDATE imexport_mapping SET position = $Counter "
+                . "WHERE id = $MappingID",
+        );
+        $Counter++;
+    }
+
+    return 1;
 }
 
 =item _LoadBackend()
@@ -994,6 +1340,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.9 $ $Date: 2008-02-04 15:21:21 $
+$Revision: 1.10 $ $Date: 2008-02-04 19:53:32 $
 
 =cut

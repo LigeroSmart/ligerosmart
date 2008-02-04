@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminImportExport.pm - admin frontend of import export module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.pm,v 1.9 2008-02-04 15:21:21 mh Exp $
+# $Id: AdminImportExport.pm,v 1.10 2008-02-04 19:53:32 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ImportExport;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -584,21 +584,32 @@ sub Run {
             },
         );
 
-        for (1..3) {
+        # get mapping data list
+        my $MappingDataList = $Self->{ImportExportObject}->MappingDataList(
+            TemplateID => $TemplateData->{TemplateID},
+            UserID     => $Self->{UserID},
+        );
+
+        for my $MappingID ( @{$MappingDataList} ) {
 
             # output attribute row
             $Self->{LayoutObject}->Block(
                 Name => 'TemplateEdit4Row',
+                Data => {
+                    MappingID => $MappingID
+                },
             );
 
-            for (1..3) {
+            for ( 1 .. 3 ) {
+
                 # output attribute row
                 $Self->{LayoutObject}->Block(
                     Name => 'TemplateEdit4RowObject',
                 );
             }
 
-            for (1..2) {
+            for ( 1 .. 2 ) {
+
                 # output attribute row
                 $Self->{LayoutObject}->Block(
                     Name => 'TemplateEdit4RowFormat',
@@ -629,42 +640,75 @@ sub Run {
         my $TemplateID = $Self->{ParamObject}->GetParam( Param => 'TemplateID' );
 
         my %Submit = (
-            SubmitBack => 'TemplateEdit3',
-            Reload     => 'TemplateEdit4',
+            SubmitNext     => 'Overview',
+            SubmitBack     => 'TemplateEdit3',
+            Reload         => 'TemplateEdit4',
+            MappingDataAdd => 'TemplateEdit4',
         );
 
         # get submit action
-        my $Subaction = $Submit{Reload};
+        my $Subaction    = $Submit{Reload};
+        my $SubmitButton = '';
 
         PARAM:
         for my $SubmitKey ( keys %Submit ) {
             next PARAM if !$Self->{ParamObject}->GetParam( Param => $SubmitKey );
 
-            $Subaction = $Submit{$SubmitKey};
+            $Subaction    = $Submit{$SubmitKey};
+            $SubmitButton = $SubmitKey;
             last PARAM;
         }
 
-#        # get format attributes
-#        my $FormatAttributeList = $Self->{ImportExportObject}->FormatAttributesGet(
-#            TemplateID => $TemplateID,
-#            UserID     => $Self->{UserID},
-#        );
-#
-#        # get attribute values from form
-#        my %AttributeValues;
-#        for my $Item ( @{$FormatAttributeList} ) {
-#
-#            # get form data
-#            $AttributeValues{ $Item->{Key} } = $Self->{LayoutObject}->ImportExportFormDataGet(
-#                Item => $Item,
-#            );
-#        }
-#
-#        $Self->{ImportExportObject}->FormatDataSave(
-#            TemplateID => $TemplateID,
-#            FormatData => \%AttributeValues,
-#            UserID     => $Self->{UserID},
-#        );
+        # get mapping data list
+        my $MappingDataList = $Self->{ImportExportObject}->MappingDataList(
+            TemplateID => $TemplateID,
+            UserID     => $Self->{UserID},
+        );
+
+        MAPPINGID:
+        for my $MappingID ( @{$MappingDataList} ) {
+
+            # delete this mapping row
+            if ( $Self->{ParamObject}->GetParam( Param => "MappingDataDelete::$MappingID" ) ) {
+                $Self->{ImportExportObject}->MappingDataDelete(
+                    MappingID  => $MappingID,
+                    TemplateID => $TemplateID,
+                    UserID     => $Self->{UserID},
+                );
+
+                next MAPPINGID;
+            }
+
+            # move mapping data row up
+            if ( $Self->{ParamObject}->GetParam( Param => "MappingDataUp::$MappingID" ) ) {
+                $Self->{ImportExportObject}->MappingDataUp(
+                    MappingID  => $MappingID,
+                    TemplateID => $TemplateID,
+                    UserID     => $Self->{UserID},
+                );
+
+                next MAPPINGID;
+            }
+
+            # move mapping data row down
+            if ( $Self->{ParamObject}->GetParam( Param => "MappingDataDown::$MappingID" ) ) {
+                $Self->{ImportExportObject}->MappingDataDown(
+                    MappingID  => $MappingID,
+                    TemplateID => $TemplateID,
+                    UserID     => $Self->{UserID},
+                );
+
+                next MAPPINGID;
+            }
+        }
+
+        # add a new mapping row
+        if ( $SubmitButton eq 'MappingDataAdd' ) {
+            $Self->{ImportExportObject}->MappingDataAdd(
+                TemplateID => $TemplateID,
+                UserID     => $Self->{UserID},
+            );
+        }
 
         return $Self->{LayoutObject}->Redirect(
             OP => "Action=$Self->{Action}&Subaction=$Subaction&TemplateID=$TemplateID",

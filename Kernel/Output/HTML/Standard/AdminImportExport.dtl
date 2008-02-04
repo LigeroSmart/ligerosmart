@@ -2,7 +2,7 @@
 # AdminImportExport.dtl - provides HTML form for AdminImportExport
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.dtl,v 1.6 2008-02-04 15:21:21 mh Exp $
+# $Id: AdminImportExport.dtl,v 1.7 2008-02-04 19:53:32 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -259,6 +259,11 @@
 <!-- dtl:block:TemplateEdit4Row -->
                 <tr>
                   <td>
+
+
+                    ID: $QData{"MappingID"}
+
+
 <!-- dtl:block:TemplateEdit4RowObject -->
                     <table border="0" cellspacing="0" cellpadding="3">
                       <tr>
@@ -279,10 +284,10 @@
 <!-- dtl:block:TemplateEdit4RowFormat -->
                   </td>
                   <td align="right">
-                    <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=QuestionUp&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}"><img border="0" src="$Env{"Images"}up-small.png"></a>
-                    <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=QuestionDown&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}"><img border="0" src="$Env{"Images"}down-small.png"></a>
+                    <input class="button" type="submit" name="MappingDataUp::$QData{"MappingID"}" value="$Text{"Up"}">
+                    <input class="button" type="submit" name="MappingDataDown::$QData{"MappingID"}" value="$Text{"Down"}">
                     &nbsp;&nbsp;&nbsp;
-                    <input class="button" type="submit" name="$QData{"Key"}::Delete" value="$Text{"Delete"}">
+                    <input class="button" type="submit" name="MappingDataDelete::$QData{"MappingID"}" value="$Text{"Delete"}">
                   </td>
                 </tr>
                 <tr>
@@ -291,7 +296,7 @@
 <!-- dtl:block:TemplateEdit4Row -->
                 <tr>
                   <td class="contentvalue" colspan="3">
-                    <input class="button" type="submit" name="$QData{"Key"}::Add" value="$Text{"Add"}">
+                    <input class="button" type="submit" name="MappingDataAdd" value="$Text{"Add"}">
                   </td>
                 </tr>
               </table>

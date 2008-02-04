@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ImportExport.sopm,v 1.6 2008-02-04 15:21:21 mh Exp $</CVS>
+    <CVS>$Id: ImportExport.sopm,v 1.7 2008-02-04 19:53:32 mh Exp $</CVS>
     <Name>ImportExport</Name>
     <Version>0.0.0</Version>
     <Framework>2.2.5</Framework>
@@ -23,10 +23,10 @@
         <File Permission="644" Location="scripts/test/ImportExport.t"/>
     </Filelist>
     <DatabaseInstall>
-        <TableCreate Name="importexport_template">
+        <TableCreate Name="imexport_template">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
-            <Column Name="im_ex_object" Required="true" Size="100" Type="VARCHAR"/>
-            <Column Name="im_ex_format" Required="true" Size="100" Type="VARCHAR"/>
+            <Column Name="imexport_object" Required="true" Size="100" Type="VARCHAR"/>
+            <Column Name="imexport_format" Required="true" Size="100" Type="VARCHAR"/>
             <Column Name="name" Required="true" Size="100" Type="VARCHAR"/>
             <Column Name="valid_id" Required="true" Type="SMALLINT"/>
             <Column Name="comments" Required="false" Size="200" Type="VARCHAR"/>
@@ -39,29 +39,58 @@
                 <Reference Local="change_by" Foreign="id"/>
             </ForeignKey>
         </TableCreate>
-        <TableCreate Name="importexport_objectdata">
+        <TableCreate Name="imexport_object">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
             <Column Name="template_id" Required="true" Type="BIGINT"/>
             <Column Name="data_key" Required="true" Size="100" Type="VARCHAR"/>
             <Column Name="data_value" Required="true" Size="200" Type="VARCHAR"/>
-            <Index Name="importexport_objectdata_template_id">
+            <Index Name="imexport_object_template_id">
                 <IndexColumn Name="template_id"/>
             </Index>
         </TableCreate>
-        <TableCreate Name="importexport_formatdata">
+        <TableCreate Name="imexport_format">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
             <Column Name="template_id" Required="true" Type="BIGINT"/>
             <Column Name="data_key" Required="true" Size="100" Type="VARCHAR"/>
             <Column Name="data_value" Required="true" Size="200" Type="VARCHAR"/>
-            <Index Name="importexport_formatdata_template_id">
+            <Index Name="imexport_format_template_id">
                 <IndexColumn Name="template_id"/>
+            </Index>
+        </TableCreate>
+        <TableCreate Name="imexport_mapping">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
+            <Column Name="template_id" Required="true" Type="BIGINT"/>
+            <Column Name="position" Required="true" Type="INTEGER"/>
+            <Index Name="imexport_mapping_template_id">
+                <IndexColumn Name="template_id"/>
+            </Index>
+        </TableCreate>
+        <TableCreate Name="imexport_mapping_object">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
+            <Column Name="mapping_id" Required="true" Type="BIGINT"/>
+            <Column Name="object_key" Required="true" Size="100" Type="VARCHAR"/>
+            <Column Name="object_value" Required="true" Size="200" Type="VARCHAR"/>
+            <Index Name="imexport_mapping_object_mapping_id">
+                <IndexColumn Name="mapping_id"/>
+            </Index>
+        </TableCreate>
+        <TableCreate Name="imexport_mapping_format">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
+            <Column Name="mapping_id" Required="true" Type="BIGINT"/>
+            <Column Name="format_key" Required="true" Size="100" Type="VARCHAR"/>
+            <Column Name="format_value" Required="true" Size="200" Type="VARCHAR"/>
+            <Index Name="imexport_mapping_format_mapping_id">
+                <IndexColumn Name="mapping_id"/>
             </Index>
         </TableCreate>
     </DatabaseInstall>
     <DatabaseUninstall>
-        <TableDrop Name="importexport_template"/>
-        <TableDrop Name="importexport_objectdata"/>
-        <TableDrop Name="importexport_formatdata"/>
+        <TableDrop Name="imexport_template"/>
+        <TableDrop Name="imexport_object"/>
+        <TableDrop Name="imexport_format"/>
+        <TableDrop Name="imexport_mapping"/>
+        <TableDrop Name="imexport_mapping_object"/>
+        <TableDrop Name="imexport_mapping_format"/>
     </DatabaseUninstall>
     <IntroInstallPre Title="Install Information" Lang="en">
         &lt;br&gt;
