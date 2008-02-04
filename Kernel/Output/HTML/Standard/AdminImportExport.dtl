@@ -2,7 +2,7 @@
 # AdminImportExport.dtl - provides HTML form for AdminImportExport
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.dtl,v 1.5 2008-02-04 12:19:54 mh Exp $
+# $Id: AdminImportExport.dtl,v 1.6 2008-02-04 15:21:21 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -29,10 +29,6 @@
           <tr>
             <td class="contentbody">
               <table>
-                <tr>
-                  <td class="contentkey">$Text{"Type"}: </td>
-                  <td class="contentvalue">$Data{"TypeOptionStrg"}</td>
-                </tr>
                 <tr>
                   <td class="contentkey" width="100">$Text{"Object"}: </td>
                   <td class="contentvalue">$Data{"ObjectOptionStrg"}</td>
@@ -63,7 +59,6 @@
             <table width="100%" border="0" cellspacing="0" cellpadding="3">
               <tr>
                 <td class="contentkey">$Text{"Number"}</td>
-                <td class="contentkey">$Text{"Type"}</td>
                 <td class="contentkey">$Text{"Name"}</td>
                 <td class="contentkey">$Text{"Format"}</td>
                 <td align="center" class="contentkey">$Text{"valid"}/$Text{"invalid"}</td>
@@ -77,7 +72,6 @@
                   $QData{"Number"}
                   </a>
                 </td>
-                <td class="$QData{"CssClass"}">$Text{"$QData{"Type"}"}</td>
                 <td class="$QData{"CssClass"}">$QData{"Name"}</td>
                 <td class="$QData{"CssClass"}">$Text{"$QData{"FormatName"}"}</td>
                 <td align="center" class="$QData{"CssClass"}">$Text{"$QData{"Valid"}"}</td>
@@ -117,13 +111,6 @@
           <tr>
             <td class="contentbody">
               <table border="0" cellspacing="0" cellpadding="3">
-                <tr>
-                  <td class="contentkey">$Text{"Type"}: </td>
-                  <td class="contentvalue">
-                    $Text{"$QData{"Type"}"}
-                    <input type="hidden" name="Type" value="$QData{"Type"}">
-                  </td>
-                </tr>
                 <tr>
                   <td class="contentkey" width="150">$Text{"Name"}: </td>
                   <td class="contentvalue">
@@ -178,10 +165,6 @@
             <td class="contentbody">
               <table border="0" cellspacing="0" cellpadding="3">
                 <tr>
-                  <td class="contentkey">$Text{"Type"}: </td>
-                  <td class="contentvalue">$Text{"$QData{"Type"}"}</td>
-                </tr>
-                <tr>
                   <td class="contentkey" width="150">$Text{"Name"}: </td>
                   <td class="contentvalue">$QData{"Name"}</td>
                 </tr>
@@ -219,10 +202,6 @@
           <tr>
             <td class="contentbody">
               <table border="0" cellspacing="0" cellpadding="3">
-                <tr>
-                  <td class="contentkey">$Text{"Type"}: </td>
-                  <td class="contentvalue">$Text{"$QData{"Type"}"}</td>
-                </tr>
                 <tr>
                   <td class="contentkey" width="150">$Text{"Name"}: </td>
                   <td class="contentvalue">$QData{"Name"}</td>
@@ -262,34 +241,61 @@
             <td class="contentbody">
               <table border="0" cellspacing="0" cellpadding="3">
                 <tr>
-                  <td class="contentkey">$Text{"Type"}: </td>
-                  <td class="contentvalue">$Text{"$QData{"Type"}"}</td>
-                </tr>
-                <tr>
                   <td class="contentkey" width="150">$Text{"Name"}: </td>
                   <td class="contentvalue">$QData{"Name"}</td>
                 </tr>
               </table>
               <br>
-              <table border="0" cellspacing="0" cellpadding="3" width="100%">
+              <table border="0" cellspacing="0" cellpadding="2" width="100%">
                 <tr>
-                  <td class="contentkey" align="center" width="33%">$QData{"ObjectName"}</td>
-                  <td class="contentkey" align="center" width="33%">$QData{"FormatName"}</td>
-                  <td class="contentkey" align="center"></td>
+                  <td class="contentkey" width="40%">$QData{"ObjectName"}</td>
+                  <td class="contentkey" width="40%">$QData{"FormatName"}</td>
+                  <td class="contentkey">&nbsp;</td>
+                </tr>
+                <br>
+                <tr>
+                  <td class="contentvalue" colspan="3"><hr width="100%"></td>
+                </tr>
+<!-- dtl:block:TemplateEdit4Row -->
+                <tr>
+                  <td>
+<!-- dtl:block:TemplateEdit4RowObject -->
+                    <table border="0" cellspacing="0" cellpadding="3">
+                      <tr>
+                        <td class="contentkey">aaa: </td>
+                        <td class="contentvalue">bbb</td>
+                      </tr>
+                    </table>
+<!-- dtl:block:TemplateEdit4RowObject -->
+                  </td>
+                  <td>
+<!-- dtl:block:TemplateEdit4RowFormat -->
+                    <table border="0" cellspacing="0" cellpadding="3">
+                      <tr>
+                        <td class="contentkey">ccc: </td>
+                        <td class="contentvalue">ddd</td>
+                      </tr>
+                    </table>
+<!-- dtl:block:TemplateEdit4RowFormat -->
+                  </td>
+                  <td align="right">
+                    <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=QuestionUp&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}"><img border="0" src="$Env{"Images"}up-small.png"></a>
+                    <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=QuestionDown&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}"><img border="0" src="$Env{"Images"}down-small.png"></a>
+                    &nbsp;&nbsp;&nbsp;
+                    <input class="button" type="submit" name="$QData{"Key"}::Delete" value="$Text{"Delete"}">
+                  </td>
                 </tr>
                 <tr>
                   <td class="contentvalue" colspan="3"><hr width="100%"></td>
                 </tr>
 <!-- dtl:block:TemplateEdit4Row -->
                 <tr>
-                  <td class="contentkey">$Text{"$QData{"Name"}"}: </td>
-                  <td class="contentvalue">$Data{"InputStrg"}</td>
-                </tr>
-<!-- dtl:block:TemplateEdit4Row -->
-                <tr>
-                  <td class="contentvalue" colspan="3"><hr width="100%"></td>
+                  <td class="contentvalue" colspan="3">
+                    <input class="button" type="submit" name="$QData{"Key"}::Add" value="$Text{"Add"}">
+                  </td>
                 </tr>
               </table>
+              <br>
             </td>
           </tr>
           <tr>

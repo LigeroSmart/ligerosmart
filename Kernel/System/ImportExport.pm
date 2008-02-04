@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport.pm - all import and export functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pm,v 1.8 2008-02-04 12:19:54 mh Exp $
+# $Id: ImportExport.pm,v 1.9 2008-02-04 15:21:21 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 =head1 NAME
 
@@ -129,7 +129,7 @@ get a import export template
 
 Return
     $TemplateData{TemplateID}
-    $TemplateData{Type}
+    $TemplateData{Number}
     $TemplateData{Object}
     $TemplateData{Format}
     $TemplateData{Name}
@@ -165,7 +165,7 @@ sub TemplateGet {
     $Param{TemplateID} = $Self->{DBObject}->Quote( $Param{TemplateID}, 'Integer' );
 
     # create sql string
-    my $SQL = "SELECT id, im_ex_type, im_ex_object, im_ex_format, name, valid_id, comments, "
+    my $SQL = "SELECT id, im_ex_object, im_ex_format, name, valid_id, comments, "
         . "create_time, create_by, change_time, change_by FROM importexport_template WHERE "
         . "id = $Param{TemplateID}";
 
@@ -179,16 +179,15 @@ sub TemplateGet {
     my %TemplateData;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $TemplateData{TemplateID} = $Row[0];
-        $TemplateData{Type}       = $Row[1];
-        $TemplateData{Object}     = $Row[2];
-        $TemplateData{Format}     = $Row[3];
-        $TemplateData{Name}       = $Row[4];
-        $TemplateData{ValidID}    = $Row[5];
-        $TemplateData{Comment}    = $Row[6] || '';
-        $TemplateData{CreateTime} = $Row[7];
-        $TemplateData{CreateBy}   = $Row[8];
-        $TemplateData{ChangeTime} = $Row[9];
-        $TemplateData{ChangeBy}   = $Row[10];
+        $TemplateData{Object}     = $Row[1];
+        $TemplateData{Format}     = $Row[2];
+        $TemplateData{Name}       = $Row[3];
+        $TemplateData{ValidID}    = $Row[4];
+        $TemplateData{Comment}    = $Row[5] || '';
+        $TemplateData{CreateTime} = $Row[6];
+        $TemplateData{CreateBy}   = $Row[7];
+        $TemplateData{ChangeTime} = $Row[8];
+        $TemplateData{ChangeBy}   = $Row[9];
 
         $TemplateData{Number} = sprintf "%06d", $TemplateData{TemplateID};
     }
@@ -201,7 +200,6 @@ sub TemplateGet {
 add a new import/export template
 
     my $TemplateID = $ImportExportObject->TemplateAdd(
-        Type    => 'Import',
         Object  => 'Ticket',
         Format  => 'CSV',
         Name    => 'Template Name',
@@ -216,7 +214,7 @@ sub TemplateAdd {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(Type Object Format Name ValidID UserID)) {
+    for my $Argument (qw(Object Format Name ValidID UserID)) {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -227,7 +225,7 @@ sub TemplateAdd {
     }
 
     # cleanup template name
-    for my $Element (qw(Type Object Format Name)) {
+    for my $Element (qw(Object Format Name)) {
         $Param{$Element} =~ s{ [\n\r\f] }{}xmsg;    # RemoveAllNewlines
         $Param{$Element} =~ s{ \t       }{}xmsg;    # RemoveAllTabs
         $Param{$Element} =~ s{ \A \s+   }{}xmsg;    # TrimLeft
@@ -238,7 +236,7 @@ sub TemplateAdd {
     $Param{Comment} = $Param{Comment} || '';
 
     # quote
-    for my $Argument (qw(Type Object Format Name Functionality Comment)) {
+    for my $Argument (qw(Object Format Name Functionality Comment)) {
         $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument} );
     }
     for my $Argument (qw(ValidID UserID)) {
@@ -271,9 +269,9 @@ sub TemplateAdd {
     # insert new template
     return if !$Self->{DBObject}->Do(
         SQL => "INSERT INTO importexport_template "
-            . "(im_ex_type, im_ex_object, im_ex_format, name, valid_id, comments, "
+            . "(im_ex_object, im_ex_format, name, valid_id, comments, "
             . "create_time, create_by, change_time, change_by) VALUES "
-            . "('$Param{Type}', '$Param{Object}', '$Param{Format}', "
+            . "('$Param{Object}', '$Param{Format}', "
             . "'$Param{Name}', $Param{ValidID}, '$Param{Comment}', "
             . "current_timestamp, $Param{UserID}, current_timestamp, $Param{UserID})"
     );
@@ -530,7 +528,6 @@ sub ObjectAttributesGet {
     # get an attribute list of the object
     my $Attributes = $Backend->AttributesGet(
         %Param,
-        Type   => $TemplateData->{Type},
         UserID => $Param{UserID},
     );
 
@@ -762,7 +759,6 @@ sub FormatAttributesGet {
     # get an attribute list of the format
     my $Attributes = $Backend->AttributesGet(
         %Param,
-        Type   => $TemplateData->{Type},
         UserID => $Param{UserID},
     );
 
@@ -998,6 +994,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.8 $ $Date: 2008-02-04 12:19:54 $
+$Revision: 1.9 $ $Date: 2008-02-04 15:21:21 $
 
 =cut

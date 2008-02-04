@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminImportExport.pm - admin frontend of import export module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.pm,v 1.8 2008-02-04 12:19:54 mh Exp $
+# $Id: AdminImportExport.pm,v 1.9 2008-02-04 15:21:21 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ImportExport;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -65,13 +65,12 @@ sub Run {
         if ( $TemplateData->{TemplateID} eq 'NEW' ) {
 
             # get needed data
-            $TemplateData->{Type}   = $Self->{ParamObject}->GetParam( Param => 'Type' );
             $TemplateData->{Object} = $Self->{ParamObject}->GetParam( Param => 'Object' );
             $TemplateData->{Format} = $Self->{ParamObject}->GetParam( Param => 'Format' );
 
             # redirect to overview
             return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" )
-                if !$TemplateData->{Object} || !$TemplateData->{Format} || !$TemplateData->{Type};
+                if !$TemplateData->{Object} || !$TemplateData->{Format};
         }
         else {
 
@@ -81,15 +80,6 @@ sub Run {
                 UserID     => $Self->{UserID},
             );
         }
-
-        # generate TypeOptionStrg
-        my $TypeOptionStrg = $Self->{LayoutObject}->BuildSelection(
-            Data => [ 'Import', 'Export' ],
-            Name => 'Type',
-            SelectedID   => $TemplateData->{Type},
-            PossibleNone => 1,
-            Translation  => 1,
-        );
 
         # generate ObjectOptionStrg
         my $ObjectOptionStrg = $Self->{LayoutObject}->BuildSelection(
@@ -114,7 +104,6 @@ sub Run {
             Name => 'Overview',
             Data => {
                 %Param,
-                TypeOptionStrg   => $TypeOptionStrg,
                 ObjectOptionStrg => $ObjectOptionStrg,
                 FormatOptionStrg => $FormatOptionStrg,
             },
@@ -161,7 +150,7 @@ sub Run {
         my $TemplateData = {};
 
         # get params
-        for my $Param (qw(TemplateID Type Object Format Name ValidID Comment)) {
+        for my $Param (qw(TemplateID Object Format Name ValidID Comment)) {
             $TemplateData->{$Param} = $Self->{ParamObject}->GetParam( Param => $Param ) || '';
         }
 
@@ -235,15 +224,6 @@ sub Run {
             UserID     => $Self->{UserID},
         );
 
-        # generate TypeOptionStrg
-        my $TypeOptionStrg = $Self->{LayoutObject}->BuildSelection(
-            Data => [ 'Import', 'Export' ],
-            Name => 'Type',
-            SelectedID   => $TemplateData->{Type},
-            PossibleNone => 1,
-            Translation  => 1,
-        );
-
         # generate ObjectOptionStrg
         my $ObjectOptionStrg = $Self->{LayoutObject}->BuildSelection(
             Data         => $ObjectList,
@@ -267,7 +247,6 @@ sub Run {
             Name => 'Overview',
             Data => {
                 %Param,
-                TypeOptionStrg   => $TypeOptionStrg,
                 ObjectOptionStrg => $ObjectOptionStrg,
                 FormatOptionStrg => $FormatOptionStrg,
             },
@@ -406,15 +385,6 @@ sub Run {
             UserID     => $Self->{UserID},
         );
 
-        # generate TypeOptionStrg
-        my $TypeOptionStrg = $Self->{LayoutObject}->BuildSelection(
-            Data => [ 'Import', 'Export' ],
-            Name => 'Type',
-            SelectedID   => $TemplateData->{Type},
-            PossibleNone => 1,
-            Translation  => 1,
-        );
-
         # generate ObjectOptionStrg
         my $ObjectOptionStrg = $Self->{LayoutObject}->BuildSelection(
             Data         => $ObjectList,
@@ -438,7 +408,6 @@ sub Run {
             Name => 'Overview',
             Data => {
                 %Param,
-                TypeOptionStrg   => $TypeOptionStrg,
                 ObjectOptionStrg => $ObjectOptionStrg,
                 FormatOptionStrg => $FormatOptionStrg,
             },
@@ -577,15 +546,6 @@ sub Run {
             UserID     => $Self->{UserID},
         );
 
-        # generate TypeOptionStrg
-        my $TypeOptionStrg = $Self->{LayoutObject}->BuildSelection(
-            Data => [ 'Import', 'Export' ],
-            Name => 'Type',
-            SelectedID   => $TemplateData->{Type},
-            PossibleNone => 1,
-            Translation  => 1,
-        );
-
         # generate ObjectOptionStrg
         my $ObjectOptionStrg = $Self->{LayoutObject}->BuildSelection(
             Data         => $ObjectList,
@@ -609,13 +569,12 @@ sub Run {
             Name => 'Overview',
             Data => {
                 %Param,
-                TypeOptionStrg   => $TypeOptionStrg,
                 ObjectOptionStrg => $ObjectOptionStrg,
                 FormatOptionStrg => $FormatOptionStrg,
             },
         );
 
-        # output list
+        # output headline
         $Self->{LayoutObject}->Block(
             Name => 'TemplateEdit4',
             Data => {
@@ -625,36 +584,27 @@ sub Run {
             },
         );
 
-#        # get format attributes
-#        my $FormatAttributeList = $Self->{ImportExportObject}->FormatAttributesGet(
-#            TemplateID => $TemplateData->{TemplateID},
-#            UserID     => $Self->{UserID},
-#        );
-#
-#        # get format data
-#        my $FormatData = $Self->{ImportExportObject}->FormatDataGet(
-#            TemplateID => $TemplateData->{TemplateID},
-#            UserID     => $Self->{UserID},
-#        );
-#
-#        # output format attributes
-#        for my $Item ( @{$FormatAttributeList} ) {
-#
-#            # create form input
-#            my $InputString = $Self->{LayoutObject}->ImportExportFormInputCreate(
-#                Item  => $Item,
-#                Value => $FormatData->{ $Item->{Key} },
-#            );
-#
-#            # output attribute row
-#            $Self->{LayoutObject}->Block(
-#                Name => 'TemplateEdit4Row',
-#                Data => {
-#                    Name      => $Item->{Name} || '',
-#                    InputStrg => $InputString,
-#                },
-#            );
-#        }
+        for (1..3) {
+
+            # output attribute row
+            $Self->{LayoutObject}->Block(
+                Name => 'TemplateEdit4Row',
+            );
+
+            for (1..3) {
+                # output attribute row
+                $Self->{LayoutObject}->Block(
+                    Name => 'TemplateEdit4RowObject',
+                );
+            }
+
+            for (1..2) {
+                # output attribute row
+                $Self->{LayoutObject}->Block(
+                    Name => 'TemplateEdit4RowFormat',
+                );
+            }
+        }
 
         # output header and navbar
         my $Output = $Self->{LayoutObject}->Header();
@@ -756,14 +706,6 @@ sub Run {
         return $Self->{LayoutObject}->FatalError( Message => 'No format backend found!' )
             if !$FormatList;
 
-        # generate TypeOptionStrg
-        my $TypeOptionStrg = $Self->{LayoutObject}->BuildSelection(
-            Data => [ 'Import', 'Export' ],
-            Name => 'Type',
-            PossibleNone => 1,
-            Translation  => 1,
-        );
-
         # generate ObjectOptionStrg
         my $ObjectOptionStrg = $Self->{LayoutObject}->BuildSelection(
             Data         => $ObjectList,
@@ -785,7 +727,6 @@ sub Run {
             Name => 'Overview',
             Data => {
                 %Param,
-                TypeOptionStrg   => $TypeOptionStrg,
                 ObjectOptionStrg => $ObjectOptionStrg,
                 FormatOptionStrg => $FormatOptionStrg,
             },

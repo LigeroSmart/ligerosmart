@@ -2,7 +2,7 @@
 # ImportExport.t - import export tests
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.t,v 1.5 2008-02-04 12:19:54 mh Exp $
+# $Id: ImportExport.t,v 1.6 2008-02-04 15:21:22 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -83,15 +83,6 @@ my $TemplateChecks = [
     # this template is NOT complete and must not be added
     {
         Add => {
-            Type    => 'Import',
-            ValidID => 1,
-            UserID  => 1,
-        },
-    },
-
-    # this template is NOT complete and must not be added
-    {
-        Add => {
             Object  => $ObjectRand,
             ValidID => 1,
             UserID  => 1,
@@ -128,7 +119,6 @@ my $TemplateChecks = [
     # this template must be inserted sucessfully
     {
         Add => {
-            Type    => 'Import',
             Object  => $ObjectRand,
             Format  => 'CSV',
             Name    => $TemplateRandName1,
@@ -136,7 +126,6 @@ my $TemplateChecks = [
             UserID  => 1,
         },
         AddGet => {
-            Type     => 'Import',
             Object   => $ObjectRand,
             Format   => 'CSV',
             Name     => $TemplateRandName1,
@@ -150,7 +139,6 @@ my $TemplateChecks = [
     # this template have the same name as one test before and must not be added
     {
         Add => {
-            Type    => 'Import',
             Object  => $ObjectRand,
             Format  => 'CSV',
             Name    => $TemplateRandName1,
@@ -162,7 +150,6 @@ my $TemplateChecks = [
     # this template must be inserted sucessfully
     {
         Add => {
-            Type    => 'Import',
             Object  => $ObjectRand,
             Format  => 'CSV',
             Name    => $TemplateRandName2,
@@ -171,7 +158,6 @@ my $TemplateChecks = [
             UserID  => 1,
         },
         AddGet => {
-            Type     => 'Import',
             Object   => $ObjectRand,
             Format   => 'CSV',
             Name     => $TemplateRandName2,
@@ -260,7 +246,6 @@ my $TemplateChecks = [
     # this template must be inserted sucessfully (check string cleaner function)
     {
         Add => {
-            Type    => " \t \n \r Import \t \n \r ",
             Object  => " \t \n \r " . $ObjectRand . " \t \n \r ",
             Format  => " \t \n \r CSV \t \n \r ",
             Name    => " \t \n \r " . $TemplateRandName3 . " \t \n \r ",
@@ -268,7 +253,6 @@ my $TemplateChecks = [
             UserID  => 1,
         },
         AddGet => {
-            Type     => 'Import',
             Object   => $ObjectRand,
             Format   => 'CSV',
             Name     => $TemplateRandName3,

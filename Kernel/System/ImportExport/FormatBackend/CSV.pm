@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport/FormatBackend/CSV.pm - import/export backend for CSV
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: CSV.pm,v 1.2 2008-02-04 12:19:54 mh Exp $
+# $Id: CSV.pm,v 1.3 2008-02-04 15:21:22 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
@@ -80,7 +80,6 @@ sub new {
 get the attributes of a format as array/hash reference
 
     my $Attributes = $FormatBackend->AttributesGet(
-        Type   => 'Import',
         UserID => 1,
     );
 
@@ -90,40 +89,27 @@ sub AttributesGet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(Type UserID)) {
-        if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Argument!",
-            );
-            return;
-        }
+    if ( !$Param{UserID} ) {
+        $Self->{LogObject}->Log( Priority => 'error', Message  => 'Need UserID!' );
+        return;
     }
 
-    my $Attributes = [];
-
-    if ( $Param{Type} eq 'Import' ) {
-        $Attributes = [
-            {
-                Key         => 'ImportDirectory',
-                Name        => 'Import Directory',
-                Description => 'Only needed for automated importing per script',
-                Type        => 'Text',
-                Required    => 0,
-            },
-        ];
-    }
-    else {
-        $Attributes = [
-            {
-                Key         => 'ExportDirectory',
-                Name        => 'Export Directory',
-                Description => 'Only needed for automated importing per script',
-                Type        => 'Text',
-                Required    => 0,
-            },
-        ];
-    }
+    my $Attributes = [
+        {
+            Key         => 'ImportDirectory',
+            Name        => 'Import Directory',
+            Description => 'Only needed for automated importing per script',
+            Type        => 'Text',
+            Required    => 0,
+        },
+        {
+            Key         => 'ExportDirectory',
+            Name        => 'Export Directory',
+            Description => 'Only needed for automated importing per script',
+            Type        => 'Text',
+            Required    => 0,
+        },
+    ];
 
     return $Attributes;
 }
@@ -144,6 +130,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2008-02-04 12:19:54 $
+$Revision: 1.3 $ $Date: 2008-02-04 15:21:22 $
 
 =cut
