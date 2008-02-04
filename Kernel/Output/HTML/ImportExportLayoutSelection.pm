@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ImportExportLayoutSelection.pm - layout backend module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExportLayoutSelection.pm,v 1.1 2008-01-31 19:28:48 mh Exp $
+# $Id: ImportExportLayoutSelection.pm,v 1.2 2008-02-04 12:19:54 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -23,7 +23,7 @@ Kernel::Output::HTML::ImportExportLayoutSelection - layout backend module
 
 =head1 SYNOPSIS
 
-All layout functions for select
+All layout functions for selection elements
 
 =over 4
 
@@ -70,14 +70,14 @@ sub FormInputCreate {
 
     # check needed stuff
     if ( !$Param{Item} ) {
-        $Self->{LogObject}->Log( Priority => 'error', Message  => 'Need Item!' );
+        $Self->{LogObject}->Log( Priority => 'error', Message => 'Need Item!' );
         return;
     }
 
     # generate OptionStrg
     my $String = $Self->{LayoutObject}->BuildSelection(
         %{ $Param{Item}->{Input} },
-        Name       => $Param{Item}->{Key} || '',
+        Name => $Param{Item}->{Key} || '',
         SelectedID => $Param{Value},
     );
 
@@ -99,7 +99,7 @@ sub FormDataGet {
 
     # check needed stuff
     if ( !$Param{Item} ) {
-        $Self->{LogObject}->Log( Priority => 'error', Message  => 'Need Item!' );
+        $Self->{LogObject}->Log( Priority => 'error', Message => 'Need Item!' );
         return;
     }
 
@@ -125,6 +125,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2008-01-31 19:28:48 $
+$Revision: 1.2 $ $Date: 2008-02-04 12:19:54 $
 
 =cut

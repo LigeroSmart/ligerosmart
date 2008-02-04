@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport/FormatBackend/CSV.pm - import/export backend for CSV
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: CSV.pm,v 1.1 2008-01-31 19:28:48 mh Exp $
+# $Id: CSV.pm,v 1.2 2008-02-04 12:19:54 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -26,6 +26,37 @@ Kernel::System::ImportExport::FormatBackend::CSV - import/export backend for CSV
 All functions to import and export a csv format
 
 =over 4
+
+=cut
+
+=item new()
+
+create a object
+
+    use Kernel::Config;
+    use Kernel::System::DB;
+    use Kernel::System::Log;
+    use Kernel::System::Main;
+    use Kernel::System::ImportExport::FormatBackend::CSV;
+
+    my $ConfigObject = Kernel::Config->new();
+    my $LogObject = Kernel::System::Log->new(
+        ConfigObject => $ConfigObject,
+    );
+    my $MainObject = Kernel::System::Main->new(
+        ConfigObject => $ConfigObject,
+        LogObject    => $LogObject,
+    );
+    my $DBObject = Kernel::System::DB->new(
+        ConfigObject => $ConfigObject,
+        LogObject    => $LogObject,
+        MainObject   => $MainObject,
+    );
+    my $BackendObject = Kernel::System::ImportExport::FormatBackend::CSV->new(
+        ConfigObject => $ConfigObject,
+        LogObject    => $LogObject,
+        DBObject     => $DBObject,
+    );
 
 =cut
 
@@ -49,6 +80,7 @@ sub new {
 get the attributes of a format as array/hash reference
 
     my $Attributes = $FormatBackend->AttributesGet(
+        Type   => 'Import',
         UserID => 1,
     );
 
@@ -57,24 +89,41 @@ get the attributes of a format as array/hash reference
 sub AttributesGet {
     my ( $Self, %Param ) = @_;
 
-    # check needed object
-    if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log( Priority => 'error', Message => 'Need UserID!' );
-        return;
+    # check needed stuff
+    for my $Argument (qw(Type UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
     }
 
-    my $Attributes = [
-        {
-            Key   => 'Test123',
-            Name  => 'Test123',
-            Type  => 'Selection',
-            Input => {
-                Data         => { 0 => 'Nix', 1 => 'Test', },
-                PossibleNone => 1,
-                Translation  => 0,
+    my $Attributes = [];
+
+    if ( $Param{Type} eq 'Import' ) {
+        $Attributes = [
+            {
+                Key         => 'ImportDirectory',
+                Name        => 'Import Directory',
+                Description => 'Only needed for automated importing per script',
+                Type        => 'Text',
+                Required    => 0,
             },
-        },
-    ];
+        ];
+    }
+    else {
+        $Attributes = [
+            {
+                Key         => 'ExportDirectory',
+                Name        => 'Export Directory',
+                Description => 'Only needed for automated importing per script',
+                Type        => 'Text',
+                Required    => 0,
+            },
+        ];
+    }
 
     return $Attributes;
 }
@@ -95,6 +144,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2008-01-31 19:28:48 $
+$Revision: 1.2 $ $Date: 2008-02-04 12:19:54 $
 
 =cut

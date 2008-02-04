@@ -2,7 +2,7 @@
 # AdminImportExport.dtl - provides HTML form for AdminImportExport
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.dtl,v 1.4 2008-01-31 19:28:48 mh Exp $
+# $Id: AdminImportExport.dtl,v 1.5 2008-02-04 12:19:54 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -30,7 +30,11 @@
             <td class="contentbody">
               <table>
                 <tr>
-                  <td class="contentkey">$Text{"Object"}: </td>
+                  <td class="contentkey">$Text{"Type"}: </td>
+                  <td class="contentvalue">$Data{"TypeOptionStrg"}</td>
+                </tr>
+                <tr>
+                  <td class="contentkey" width="100">$Text{"Object"}: </td>
                   <td class="contentvalue">$Data{"ObjectOptionStrg"}</td>
                 </tr>
                 <tr>
@@ -58,6 +62,8 @@
           <td class="contentbody">
             <table width="100%" border="0" cellspacing="0" cellpadding="3">
               <tr>
+                <td class="contentkey">$Text{"Number"}</td>
+                <td class="contentkey">$Text{"Type"}</td>
                 <td class="contentkey">$Text{"Name"}</td>
                 <td class="contentkey">$Text{"Format"}</td>
                 <td align="center" class="contentkey">$Text{"valid"}/$Text{"invalid"}</td>
@@ -68,15 +74,13 @@
               <tr>
                 <td class="$QData{"CssClass"}">
                   <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=TemplateEdit1&TemplateID=$QData{"TemplateID"}">
-                  $QData{"Name"}
+                  $QData{"Number"}
                   </a>
                 </td>
-                <td class="$QData{"CssClass"}">
-                  $Text{"$QData{"FormatName"}"}
-                </td>
-                <td align="center" class="$QData{"CssClass"}">
-                  $Text{"$QData{"Valid"}"}
-                </td>
+                <td class="$QData{"CssClass"}">$Text{"$QData{"Type"}"}</td>
+                <td class="$QData{"CssClass"}">$QData{"Name"}</td>
+                <td class="$QData{"CssClass"}">$Text{"$QData{"FormatName"}"}</td>
+                <td align="center" class="$QData{"CssClass"}">$Text{"$QData{"Valid"}"}</td>
                 <td align="center" class="$QData{"CssClass"}">
                   <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=TemplateDelete&TemplateID=$QData{"TemplateID"}">
                   $Text{"x"}
@@ -108,11 +112,24 @@
         <input type="hidden" name="TemplateID" value="$QData{"TemplateID"}">
         <table width="100%" cellspacing="0" cellpadding="4">
           <tr>
-            <td class="contenthead">$Text{"Step"} 1 $Text{"of"} 4 - $Text{"Edit common information"}:</td>
+            <td class="contenthead">$Text{"Step"} 1 - $Text{"Edit common information"}:</td>
           </tr>
           <tr>
             <td class="contentbody">
               <table border="0" cellspacing="0" cellpadding="3">
+                <tr>
+                  <td class="contentkey">$Text{"Type"}: </td>
+                  <td class="contentvalue">
+                    $Text{"$QData{"Type"}"}
+                    <input type="hidden" name="Type" value="$QData{"Type"}">
+                  </td>
+                </tr>
+                <tr>
+                  <td class="contentkey" width="150">$Text{"Name"}: </td>
+                  <td class="contentvalue">
+                    <input type="text" name="Name" value="$QData{"Name"}" size="45" maxlength="200">
+                  </td>
+                </tr>
                 <tr>
                   <td class="contentkey">$Text{"Object"}: </td>
                   <td class="contentvalue">
@@ -125,12 +142,6 @@
                   <td class="contentvalue">
                     $QData{"FormatName"}
                     <input type="hidden" name="Format" value="$QData{"Format"}">
-                  </td>
-                </tr>
-                <tr>
-                  <td class="contentkey">$Text{"Name"}: </td>
-                  <td class="contentvalue">
-                    <input type="text" name="Name" value="$QData{"Name"}" size="45" maxlength="200">
                   </td>
                 </tr>
                 <tr>
@@ -161,16 +172,22 @@
         <input type="hidden" name="TemplateID" value="$QData{"TemplateID"}">
         <table width="100%" cellspacing="0" cellpadding="4">
           <tr>
-            <td class="contenthead">$Text{"Step"} 2 $Text{"of"} 4 - $Text{"Edit object information"}:</td>
+            <td class="contenthead">$Text{"Step"} 2 - $Text{"Edit object information"}:</td>
           </tr>
           <tr>
             <td class="contentbody">
               <table border="0" cellspacing="0" cellpadding="3">
                 <tr>
+                  <td class="contentkey">$Text{"Type"}: </td>
+                  <td class="contentvalue">$Text{"$QData{"Type"}"}</td>
+                </tr>
+                <tr>
+                  <td class="contentkey" width="150">$Text{"Name"}: </td>
+                  <td class="contentvalue">$QData{"Name"}</td>
+                </tr>
+                <tr>
                   <td class="contentkey">$Text{"Object"}: </td>
-                  <td class="contentvalue">
-                    $QData{"ObjectName"}
-                  </td>
+                  <td class="contentvalue">$QData{"ObjectName"}</td>
                 </tr>
 <!-- dtl:block:TemplateEdit2Row -->
                 <tr>
@@ -197,16 +214,22 @@
         <input type="hidden" name="TemplateID" value="$QData{"TemplateID"}">
         <table width="100%" cellspacing="0" cellpadding="4">
           <tr>
-            <td class="contenthead">$Text{"Step"} 3 $Text{"of"} 4 - $Text{"Edit format information"}:</td>
+            <td class="contenthead">$Text{"Step"} 3 - $Text{"Edit format information"}:</td>
           </tr>
           <tr>
             <td class="contentbody">
               <table border="0" cellspacing="0" cellpadding="3">
                 <tr>
+                  <td class="contentkey">$Text{"Type"}: </td>
+                  <td class="contentvalue">$Text{"$QData{"Type"}"}</td>
+                </tr>
+                <tr>
+                  <td class="contentkey" width="150">$Text{"Name"}: </td>
+                  <td class="contentvalue">$QData{"Name"}</td>
+                </tr>
+                <tr>
                   <td class="contentkey">$Text{"Format"}: </td>
-                  <td class="contentvalue">
-                    $QData{"FormatName"}
-                  </td>
+                  <td class="contentvalue">$QData{"FormatName"}</td>
                 </tr>
 <!-- dtl:block:TemplateEdit3Row -->
                 <tr>
@@ -226,6 +249,58 @@
         </table>
       </form>
 <!-- dtl:block:TemplateEdit3 -->
+<!-- dtl:block:TemplateEdit4 -->
+      <form action="$Env{"CGIHandle"}" method="get">
+        <input type="hidden" name="Action" value="$Env{"Action"}">
+        <input type="hidden" name="Subaction" value="TemplateSave4">
+        <input type="hidden" name="TemplateID" value="$QData{"TemplateID"}">
+        <table width="100%" cellspacing="0" cellpadding="4">
+          <tr>
+            <td class="contenthead">$Text{"Step"} 4 - $Text{"Edit mapping information"}:</td>
+          </tr>
+          <tr>
+            <td class="contentbody">
+              <table border="0" cellspacing="0" cellpadding="3">
+                <tr>
+                  <td class="contentkey">$Text{"Type"}: </td>
+                  <td class="contentvalue">$Text{"$QData{"Type"}"}</td>
+                </tr>
+                <tr>
+                  <td class="contentkey" width="150">$Text{"Name"}: </td>
+                  <td class="contentvalue">$QData{"Name"}</td>
+                </tr>
+              </table>
+              <br>
+              <table border="0" cellspacing="0" cellpadding="3" width="100%">
+                <tr>
+                  <td class="contentkey" align="center" width="33%">$QData{"ObjectName"}</td>
+                  <td class="contentkey" align="center" width="33%">$QData{"FormatName"}</td>
+                  <td class="contentkey" align="center"></td>
+                </tr>
+                <tr>
+                  <td class="contentvalue" colspan="3"><hr width="100%"></td>
+                </tr>
+<!-- dtl:block:TemplateEdit4Row -->
+                <tr>
+                  <td class="contentkey">$Text{"$QData{"Name"}"}: </td>
+                  <td class="contentvalue">$Data{"InputStrg"}</td>
+                </tr>
+<!-- dtl:block:TemplateEdit4Row -->
+                <tr>
+                  <td class="contentvalue" colspan="3"><hr width="100%"></td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td class="contentfooter">
+              <input class="button" type="submit" name="SubmitBack" value="$Text{"...Back"}">&nbsp;
+              <input class="button" type="submit" name="SubmitNext" value="$Text{"Next..."}">
+            </td>
+          </tr>
+        </table>
+      </form>
+<!-- dtl:block:TemplateEdit4 -->
     </td>
   </tr>
 </table>

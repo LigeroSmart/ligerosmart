@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport.pm - all import and export functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pm,v 1.7 2008-01-31 19:28:48 mh Exp $
+# $Id: ImportExport.pm,v 1.8 2008-02-04 12:19:54 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 =head1 NAME
 
@@ -36,13 +36,18 @@ All import and export functions.
 create a object
 
     use Kernel::Config;
-    use Kernel::System::Log;
     use Kernel::System::DB;
-    use Kernel::System::Priority;
+    use Kernel::System::ImportExport;
+    use Kernel::System::Log;
+    use Kernel::System::Main;
 
     my $ConfigObject = Kernel::Config->new();
     my $LogObject = Kernel::System::Log->new(
         ConfigObject => $ConfigObject,
+    );
+    my $MainObject = Kernel::System::Main->new(
+        ConfigObject => $ConfigObject,
+        LogObject    => $LogObject,
     );
     my $DBObject = Kernel::System::DB->new(
         ConfigObject => $ConfigObject,
@@ -53,6 +58,7 @@ create a object
         ConfigObject => $ConfigObject,
         LogObject    => $LogObject,
         DBObject     => $DBObject,
+        MainObject   => $MainObject,
     );
 
 =cut
@@ -123,6 +129,7 @@ get a import export template
 
 Return
     $TemplateData{TemplateID}
+    $TemplateData{Type}
     $TemplateData{Object}
     $TemplateData{Format}
     $TemplateData{Name}
@@ -158,7 +165,7 @@ sub TemplateGet {
     $Param{TemplateID} = $Self->{DBObject}->Quote( $Param{TemplateID}, 'Integer' );
 
     # create sql string
-    my $SQL = "SELECT id, im_ex_object, im_ex_format, name, valid_id, comments, "
+    my $SQL = "SELECT id, im_ex_type, im_ex_object, im_ex_format, name, valid_id, comments, "
         . "create_time, create_by, change_time, change_by FROM importexport_template WHERE "
         . "id = $Param{TemplateID}";
 
@@ -172,15 +179,18 @@ sub TemplateGet {
     my %TemplateData;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $TemplateData{TemplateID} = $Row[0];
-        $TemplateData{Object}     = $Row[1];
-        $TemplateData{Format}     = $Row[2];
-        $TemplateData{Name}       = $Row[3];
-        $TemplateData{ValidID}    = $Row[4];
-        $TemplateData{Comment}    = $Row[5] || '';
-        $TemplateData{CreateTime} = $Row[6];
-        $TemplateData{CreateBy}   = $Row[7];
-        $TemplateData{ChangeTime} = $Row[8];
-        $TemplateData{ChangeBy}   = $Row[9];
+        $TemplateData{Type}       = $Row[1];
+        $TemplateData{Object}     = $Row[2];
+        $TemplateData{Format}     = $Row[3];
+        $TemplateData{Name}       = $Row[4];
+        $TemplateData{ValidID}    = $Row[5];
+        $TemplateData{Comment}    = $Row[6] || '';
+        $TemplateData{CreateTime} = $Row[7];
+        $TemplateData{CreateBy}   = $Row[8];
+        $TemplateData{ChangeTime} = $Row[9];
+        $TemplateData{ChangeBy}   = $Row[10];
+
+        $TemplateData{Number} = sprintf "%06d", $TemplateData{TemplateID};
     }
 
     return \%TemplateData;
@@ -191,6 +201,7 @@ sub TemplateGet {
 add a new import/export template
 
     my $TemplateID = $ImportExportObject->TemplateAdd(
+        Type    => 'Import',
         Object  => 'Ticket',
         Format  => 'CSV',
         Name    => 'Template Name',
@@ -205,7 +216,7 @@ sub TemplateAdd {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(Object Format Name ValidID UserID)) {
+    for my $Argument (qw(Type Object Format Name ValidID UserID)) {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -216,7 +227,7 @@ sub TemplateAdd {
     }
 
     # cleanup template name
-    for my $Element (qw(Object Format Name)) {
+    for my $Element (qw(Type Object Format Name)) {
         $Param{$Element} =~ s{ [\n\r\f] }{}xmsg;    # RemoveAllNewlines
         $Param{$Element} =~ s{ \t       }{}xmsg;    # RemoveAllTabs
         $Param{$Element} =~ s{ \A \s+   }{}xmsg;    # TrimLeft
@@ -227,7 +238,7 @@ sub TemplateAdd {
     $Param{Comment} = $Param{Comment} || '';
 
     # quote
-    for my $Argument (qw(Object Format Name Functionality Comment)) {
+    for my $Argument (qw(Type Object Format Name Functionality Comment)) {
         $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument} );
     }
     for my $Argument (qw(ValidID UserID)) {
@@ -260,9 +271,9 @@ sub TemplateAdd {
     # insert new template
     return if !$Self->{DBObject}->Do(
         SQL => "INSERT INTO importexport_template "
-            . "(im_ex_object, im_ex_format, name, valid_id, comments, "
+            . "(im_ex_type, im_ex_object, im_ex_format, name, valid_id, comments, "
             . "create_time, create_by, change_time, change_by) VALUES "
-            . "('$Param{Object}', '$Param{Format}', "
+            . "('$Param{Type}', '$Param{Object}', '$Param{Format}', "
             . "'$Param{Name}', $Param{ValidID}, '$Param{Comment}', "
             . "current_timestamp, $Param{UserID}, current_timestamp, $Param{UserID})"
     );
@@ -519,6 +530,7 @@ sub ObjectAttributesGet {
     # get an attribute list of the object
     my $Attributes = $Backend->AttributesGet(
         %Param,
+        Type   => $TemplateData->{Type},
         UserID => $Param{UserID},
     );
 
@@ -563,7 +575,7 @@ sub ObjectDataGet {
     # fetch the result
     my %ObjectData;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $ObjectData{$Row[0]} = $Row[1];
+        $ObjectData{ $Row[0] } = $Row[1];
     }
 
     return \%ObjectData;
@@ -609,10 +621,10 @@ sub ObjectDataSave {
         UserID     => $Param{UserID},
     );
 
-    for my $DataKey (keys %{ $Param{ObjectData} } ) {
+    for my $DataKey ( keys %{ $Param{ObjectData} } ) {
 
         # quote
-        my $QDataKey   = $Self->{DBObject}->Quote( $DataKey );
+        my $QDataKey   = $Self->{DBObject}->Quote($DataKey);
         my $QDataValue = $Self->{DBObject}->Quote( $Param{ObjectData}->{$DataKey} );
 
         # insert one row
@@ -750,6 +762,7 @@ sub FormatAttributesGet {
     # get an attribute list of the format
     my $Attributes = $Backend->AttributesGet(
         %Param,
+        Type   => $TemplateData->{Type},
         UserID => $Param{UserID},
     );
 
@@ -794,7 +807,7 @@ sub FormatDataGet {
     # fetch the result
     my %FormatData;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $FormatData{$Row[0]} = $Row[1];
+        $FormatData{ $Row[0] } = $Row[1];
     }
 
     return \%FormatData;
@@ -840,10 +853,10 @@ sub FormatDataSave {
         UserID     => $Param{UserID},
     );
 
-    for my $DataKey (keys %{ $Param{FormatData} } ) {
+    for my $DataKey ( keys %{ $Param{FormatData} } ) {
 
         # quote
-        my $QDataKey   = $Self->{DBObject}->Quote( $DataKey );
+        my $QDataKey   = $Self->{DBObject}->Quote($DataKey);
         my $QDataValue = $Self->{DBObject}->Quote( $Param{FormatData}->{$DataKey} );
 
         # insert one row
@@ -985,6 +998,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.7 $ $Date: 2008-01-31 19:28:48 $
+$Revision: 1.8 $ $Date: 2008-02-04 12:19:54 $
 
 =cut
