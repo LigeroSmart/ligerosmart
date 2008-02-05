@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport.pm - all import and export functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pm,v 1.10 2008-02-04 19:53:32 mh Exp $
+# $Id: ImportExport.pm,v 1.11 2008-02-05 11:29:01 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 =head1 NAME
 
@@ -111,7 +111,7 @@ sub TemplateList {
     $Self->{DBObject}->Prepare(
         SQL => "SELECT id FROM imexport_template WHERE "
             . "imexport_object = '$Param{Object}' "
-            . "ORDER BY name",
+            . "ORDER BY id",
     );
 
     # fetch the result
@@ -1015,7 +1015,11 @@ sub MappingDataAdd {
     # fetch the result
     my $NewPosition = 0;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $NewPosition = $Row[0] + 1;
+
+        if ( defined $Row[0] ) {
+            $NewPosition = $Row[0];
+            $NewPosition++;
+        }
     }
 
     # insert a new mapping data row
@@ -1340,6 +1344,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.10 $ $Date: 2008-02-04 19:53:32 $
+$Revision: 1.11 $ $Date: 2008-02-05 11:29:01 $
 
 =cut

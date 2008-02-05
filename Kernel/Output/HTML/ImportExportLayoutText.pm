@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ImportExportLayoutText.pm - layout backend module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExportLayoutText.pm,v 1.2 2008-02-04 12:19:54 mh Exp $
+# $Id: ImportExportLayoutText.pm,v 1.3 2008-02-05 11:29:01 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
@@ -74,11 +74,9 @@ sub FormInputCreate {
         return;
     }
 
+    my $Value = $Param{Value} || $Param{Item}->{Input}->{ValueDefault};
     my $Size = $Param{Item}->{Input}->{Size} || 40;
-    my $Key  = $Param{Item}->{Key}           || '';
-    my $Value = $Param{Value} || $Param{Item}->{Input}->{ValueDefault} || '';
-
-    my $String = "<input type=\"Text\" name=\"$Key\" size=\"$Size\" ";
+    my $String = "<input type=\"Text\" name=\"$Param{Item}->{Key}\" size=\"$Size\" ";
 
     if ($Value) {
 
@@ -94,6 +92,11 @@ sub FormInputCreate {
         );
 
         $String .= "value=\"$Value\" ";
+    }
+
+    # add maximum length
+    if ( $Param{Item}->{Input}->{MaxLength} ) {
+        $String .= "maxlength=\"$Param{Item}->{Input}->{MaxLength}\" ";
     }
 
     $String .= "> ";
@@ -123,6 +126,12 @@ sub FormDataGet {
     # get form data
     my $FormData = $Self->{ParamObject}->GetParam( Param => $Param{Item}->{Key} );
 
+    return $FormData if $FormData;
+    return $FormData if !$Param{Item}->{Input}->{Required};
+
+    # set invalid param
+    $Param{Item}->{Form}->{Invalid} = 1;
+
     return $FormData;
 }
 
@@ -142,6 +151,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2008-02-04 12:19:54 $
+$Revision: 1.3 $ $Date: 2008-02-05 11:29:01 $
 
 =cut

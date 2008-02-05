@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutImportExport.pm - provides generic HTML output for ImportExport
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutImportExport.pm,v 1.2 2008-02-04 12:19:54 mh Exp $
+# $Id: LayoutImportExport.pm,v 1.3 2008-02-05 11:29:01 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =item ImportExportFormInputCreate()
 
@@ -39,7 +39,7 @@ sub ImportExportFormInputCreate {
 
     # load backend
     my $BackendObject = $Self->_ImportExportLoadLayoutBackend(
-        Type => $Param{Item}->{Type},
+        Type => $Param{Item}->{Input}->{Type},
     );
 
     return '' if !$BackendObject;
@@ -71,7 +71,7 @@ sub ImportExportFormDataGet {
 
     # load backend
     my $BackendObject = $Self->_ImportExportLoadLayoutBackend(
-        Type => $Param{Item}->{Type},
+        Type => $Param{Item}->{Input}->{Type},
     );
 
     return if !$BackendObject;

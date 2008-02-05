@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ImportExportLayoutSelection.pm - layout backend module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExportLayoutSelection.pm,v 1.2 2008-02-04 12:19:54 mh Exp $
+# $Id: ImportExportLayoutSelection.pm,v 1.3 2008-02-05 11:29:01 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
@@ -74,11 +74,18 @@ sub FormInputCreate {
         return;
     }
 
-    # generate OptionStrg
+    # set default value
+    if ( !defined $Param{Item}->{Input}->{Translation} ) {
+        $Param{Item}->{Input}->{Translation} = 1;
+    }
+
+    # generate option string
     my $String = $Self->{LayoutObject}->BuildSelection(
-        %{ $Param{Item}->{Input} },
-        Name => $Param{Item}->{Key} || '',
-        SelectedID => $Param{Value},
+        Name       => $Param{Item}->{Key}           || '',
+        Data       => $Param{Item}->{Input}->{Data} || {},
+        SelectedID => $Param{Value}                 || $Param{Item}->{Input}->{ValueDefault},
+        Translation => $Param{Item}->{Input}->{Translation},
+        PossibleNone => $Param{Item}->{Input}->{PossibleNone} || 0,
     );
 
     return $String;
@@ -106,6 +113,12 @@ sub FormDataGet {
     # get form data
     my $FormData = $Self->{ParamObject}->GetParam( Param => $Param{Item}->{Key} );
 
+    return $FormData if $FormData;
+    return $FormData if !$Param{Item}->{Input}->{Required};
+
+    # set invalid param
+    $Param{Item}->{Form}->{Invalid} = 1;
+
     return $FormData;
 }
 
@@ -125,6 +138,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2008-02-04 12:19:54 $
+$Revision: 1.3 $ $Date: 2008-02-05 11:29:01 $
 
 =cut

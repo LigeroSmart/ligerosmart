@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport/FormatBackend/CSV.pm - import/export backend for CSV
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: CSV.pm,v 1.3 2008-02-04 15:21:22 mh Exp $
+# $Id: CSV.pm,v 1.4 2008-02-05 11:29:01 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 =head1 NAME
 
@@ -90,24 +90,23 @@ sub AttributesGet {
 
     # check needed stuff
     if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log( Priority => 'error', Message  => 'Need UserID!' );
+        $Self->{LogObject}->Log( Priority => 'error', Message => 'Need UserID!' );
         return;
     }
 
     my $Attributes = [
         {
-            Key         => 'ImportDirectory',
-            Name        => 'Import Directory',
-            Description => 'Only needed for automated importing per script',
-            Type        => 'Text',
-            Required    => 0,
-        },
-        {
-            Key         => 'ExportDirectory',
-            Name        => 'Export Directory',
-            Description => 'Only needed for automated importing per script',
-            Type        => 'Text',
-            Required    => 0,
+            Key         => 'ColumnSeperator',
+            Name        => 'Column Seperator',
+            Description => '',
+            Input       => {
+                Type         => 'Text',
+                ValueDefault => ';',
+                Required     => 1,
+                Translation  => 0,
+                Size         => 5,
+                MaxLength    => 5,
+            },
         },
     ];
 
@@ -130,6 +129,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2008-02-04 15:21:22 $
+$Revision: 1.4 $ $Date: 2008-02-05 11:29:01 $
 
 =cut

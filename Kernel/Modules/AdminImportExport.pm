@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminImportExport.pm - admin frontend of import export module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.pm,v 1.10 2008-02-04 19:53:32 mh Exp $
+# $Id: AdminImportExport.pm,v 1.11 2008-02-05 11:29:01 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ImportExport;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -290,6 +290,13 @@ sub Run {
                     InputStrg => $InputString,
                 },
             );
+
+            # output required notice
+            if ( $Item->{Input}->{Required} ) {
+                $Self->{LayoutObject}->Block(
+                    Name => 'TemplateEdit2RowRequired',
+                );
+            }
         }
 
         # output header and navbar
@@ -345,6 +352,11 @@ sub Run {
             $AttributeValues{ $Item->{Key} } = $Self->{LayoutObject}->ImportExportFormDataGet(
                 Item => $Item,
             );
+
+            # reload form if value is required
+            if ( $Item->{Form}->{Invalid} ) {
+                $Subaction = $Submit{Reload};
+            }
         }
 
         $Self->{ImportExportObject}->ObjectDataSave(
@@ -451,6 +463,13 @@ sub Run {
                     InputStrg => $InputString,
                 },
             );
+
+            # output required notice
+            if ( $Item->{Input}->{Required} ) {
+                $Self->{LayoutObject}->Block(
+                    Name => 'TemplateEdit3RowRequired',
+                );
+            }
         }
 
         # output header and navbar
@@ -506,6 +525,11 @@ sub Run {
             $AttributeValues{ $Item->{Key} } = $Self->{LayoutObject}->ImportExportFormDataGet(
                 Item => $Item,
             );
+
+            # reload form if value is required
+            if ( $Item->{Form}->{Invalid} ) {
+                $Subaction = $Submit{Reload};
+            }
         }
 
         $Self->{ImportExportObject}->FormatDataSave(

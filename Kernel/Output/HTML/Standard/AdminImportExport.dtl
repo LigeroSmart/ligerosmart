@@ -2,7 +2,7 @@
 # AdminImportExport.dtl - provides HTML form for AdminImportExport
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.dtl,v 1.7 2008-02-04 19:53:32 mh Exp $
+# $Id: AdminImportExport.dtl,v 1.8 2008-02-05 11:29:01 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -174,7 +174,12 @@
                 </tr>
 <!-- dtl:block:TemplateEdit2Row -->
                 <tr>
-                  <td class="contentkey">$Text{"$QData{"Name"}"}: </td>
+                  <td class="contentkey">$Text{"$QData{"Name"}"}:
+<!-- dtl:block:TemplateEdit2RowRequired -->
+                    <font color="red" title="$Text{"Required"}">*</font>
+<!-- dtl:block:TemplateEdit2RowRequired -->
+                    &nbsp;
+                  </td>
                   <td class="contentvalue">$Data{"InputStrg"}</td>
                 </tr>
 <!-- dtl:block:TemplateEdit2Row -->
@@ -212,7 +217,12 @@
                 </tr>
 <!-- dtl:block:TemplateEdit3Row -->
                 <tr>
-                  <td class="contentkey">$Text{"$QData{"Name"}"}: </td>
+                  <td class="contentkey">$Text{"$QData{"Name"}"}:
+<!-- dtl:block:TemplateEdit3RowRequired -->
+                    <font color="red" title="$Text{"Required"}">*</font>
+<!-- dtl:block:TemplateEdit3RowRequired -->
+                    &nbsp;
+                  </td>
                   <td class="contentvalue">$Data{"InputStrg"}</td>
                 </tr>
 <!-- dtl:block:TemplateEdit3Row -->
