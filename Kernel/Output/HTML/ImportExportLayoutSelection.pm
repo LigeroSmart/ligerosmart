@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ImportExportLayoutSelection.pm - layout backend module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExportLayoutSelection.pm,v 1.3 2008-02-05 11:29:01 mh Exp $
+# $Id: ImportExportLayoutSelection.pm,v 1.4 2008-02-05 19:23:56 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 =head1 NAME
 
@@ -59,8 +59,9 @@ sub new {
 create a input string
 
     my $Value = $BackendObject->FormInputCreate(
-        Item  => $ItemRef,
-        Value => 'Value',   # (optional)
+        Item   => $ItemRef,
+        Prefix => 'Prefix::',  # (optional)
+        Value  => 'Value',     # (optional)
     );
 
 =cut
@@ -74,6 +75,8 @@ sub FormInputCreate {
         return;
     }
 
+    $Param{Prefix} ||= '';
+
     # set default value
     if ( !defined $Param{Item}->{Input}->{Translation} ) {
         $Param{Item}->{Input}->{Translation} = 1;
@@ -81,7 +84,7 @@ sub FormInputCreate {
 
     # generate option string
     my $String = $Self->{LayoutObject}->BuildSelection(
-        Name       => $Param{Item}->{Key}           || '',
+        Name       => $Param{Prefix} . $Param{Item}->{Key},
         Data       => $Param{Item}->{Input}->{Data} || {},
         SelectedID => $Param{Value}                 || $Param{Item}->{Input}->{ValueDefault},
         Translation => $Param{Item}->{Input}->{Translation},
@@ -96,7 +99,8 @@ sub FormInputCreate {
 get form data
 
     my $FormData = $BackendObject->FormDataGet(
-        Item => $ItemRef,
+        Item   => $ItemRef,
+        Prefix => 'Prefix::',  # (optional)
     );
 
 =cut
@@ -110,8 +114,12 @@ sub FormDataGet {
         return;
     }
 
+    $Param{Prefix} ||= '';
+
     # get form data
-    my $FormData = $Self->{ParamObject}->GetParam( Param => $Param{Item}->{Key} );
+    my $FormData = $Self->{ParamObject}->GetParam(
+        Param => $Param{Prefix} . $Param{Item}->{Key},
+    );
 
     return $FormData if $FormData;
     return $FormData if !$Param{Item}->{Input}->{Required};
@@ -138,6 +146,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2008-02-05 11:29:01 $
+$Revision: 1.4 $ $Date: 2008-02-05 19:23:56 $
 
 =cut

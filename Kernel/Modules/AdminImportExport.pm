@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminImportExport.pm - admin frontend of import export module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.pm,v 1.11 2008-02-05 11:29:01 mh Exp $
+# $Id: AdminImportExport.pm,v 1.12 2008-02-05 19:23:55 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ImportExport;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -609,36 +609,75 @@ sub Run {
         );
 
         # get mapping data list
-        my $MappingDataList = $Self->{ImportExportObject}->MappingDataList(
+        my $MappingList = $Self->{ImportExportObject}->MappingList(
             TemplateID => $TemplateData->{TemplateID},
             UserID     => $Self->{UserID},
         );
 
-        for my $MappingID ( @{$MappingDataList} ) {
+        # get object attributes
+        my $ObjectAttributes = $Self->{ImportExportObject}->MappingObjectAttributesGet(
+            TemplateID => $TemplateData->{TemplateID},
+            UserID     => $Self->{UserID},
+        );
+
+        # get format attributes
+        my $FormatAttributes = $Self->{ImportExportObject}->MappingFormatAttributesGet(
+            TemplateID => $TemplateData->{TemplateID},
+            UserID     => $Self->{UserID},
+        );
+
+        my $Counter = 0;
+        for my $MappingID ( @{$MappingList} ) {
 
             # output attribute row
             $Self->{LayoutObject}->Block(
                 Name => 'TemplateEdit4Row',
                 Data => {
-                    MappingID => $MappingID
+                    MappingID => $MappingID,
                 },
             );
 
-            for ( 1 .. 3 ) {
+            for my $Item ( @{$ObjectAttributes} ) {
+
+                # create form input
+                my $InputString = $Self->{LayoutObject}->ImportExportFormInputCreate(
+                    Item    => $Item,
+                    Prefix  => 'Object::' . $Counter . '::',
+#                    Value   => $FormatData->{ $Item->{Key} },
+                );
 
                 # output attribute row
                 $Self->{LayoutObject}->Block(
                     Name => 'TemplateEdit4RowObject',
+                    Data => {
+                        Name      => $Item->{Name},
+                        InputStrg => $InputString,
+                        Counter   => $Counter,
+                    },
                 );
             }
 
-            for ( 1 .. 2 ) {
+            for my $Item ( @{$FormatAttributes} ) {
+
+                # create form input
+                my $InputString = $Self->{LayoutObject}->ImportExportFormInputCreate(
+                    Item   => $Item,
+                    Prefix => 'Format::' . $Counter . '::',
+#                    Value => $FormatData->{ $Item->{Key} },
+                );
 
                 # output attribute row
                 $Self->{LayoutObject}->Block(
                     Name => 'TemplateEdit4RowFormat',
+                    Data => {
+                        Name      => $Item->{Name},
+                        InputStrg => $InputString,
+                        Counter   => $Counter,
+                    },
                 );
             }
+
+            $Counter++;
         }
 
         # output header and navbar
@@ -667,7 +706,7 @@ sub Run {
             SubmitNext     => 'Overview',
             SubmitBack     => 'TemplateEdit3',
             Reload         => 'TemplateEdit4',
-            MappingDataAdd => 'TemplateEdit4',
+            MappingAdd => 'TemplateEdit4',
         );
 
         # get submit action
@@ -684,17 +723,17 @@ sub Run {
         }
 
         # get mapping data list
-        my $MappingDataList = $Self->{ImportExportObject}->MappingDataList(
+        my $MappingList = $Self->{ImportExportObject}->MappingList(
             TemplateID => $TemplateID,
             UserID     => $Self->{UserID},
         );
 
         MAPPINGID:
-        for my $MappingID ( @{$MappingDataList} ) {
+        for my $MappingID ( @{$MappingList} ) {
 
             # delete this mapping row
-            if ( $Self->{ParamObject}->GetParam( Param => "MappingDataDelete::$MappingID" ) ) {
-                $Self->{ImportExportObject}->MappingDataDelete(
+            if ( $Self->{ParamObject}->GetParam( Param => "MappingDelete::$MappingID" ) ) {
+                $Self->{ImportExportObject}->MappingDelete(
                     MappingID  => $MappingID,
                     TemplateID => $TemplateID,
                     UserID     => $Self->{UserID},
@@ -704,8 +743,8 @@ sub Run {
             }
 
             # move mapping data row up
-            if ( $Self->{ParamObject}->GetParam( Param => "MappingDataUp::$MappingID" ) ) {
-                $Self->{ImportExportObject}->MappingDataUp(
+            if ( $Self->{ParamObject}->GetParam( Param => "MappingUp::$MappingID" ) ) {
+                $Self->{ImportExportObject}->MappingUp(
                     MappingID  => $MappingID,
                     TemplateID => $TemplateID,
                     UserID     => $Self->{UserID},
@@ -715,8 +754,8 @@ sub Run {
             }
 
             # move mapping data row down
-            if ( $Self->{ParamObject}->GetParam( Param => "MappingDataDown::$MappingID" ) ) {
-                $Self->{ImportExportObject}->MappingDataDown(
+            if ( $Self->{ParamObject}->GetParam( Param => "MappingDown::$MappingID" ) ) {
+                $Self->{ImportExportObject}->MappingDown(
                     MappingID  => $MappingID,
                     TemplateID => $TemplateID,
                     UserID     => $Self->{UserID},
@@ -727,8 +766,8 @@ sub Run {
         }
 
         # add a new mapping row
-        if ( $SubmitButton eq 'MappingDataAdd' ) {
-            $Self->{ImportExportObject}->MappingDataAdd(
+        if ( $SubmitButton eq 'MappingAdd' ) {
+            $Self->{ImportExportObject}->MappingAdd(
                 TemplateID => $TemplateID,
                 UserID     => $Self->{UserID},
             );

@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ImportExportLayoutText.pm - layout backend module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExportLayoutText.pm,v 1.3 2008-02-05 11:29:01 mh Exp $
+# $Id: ImportExportLayoutText.pm,v 1.4 2008-02-05 19:23:56 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 =head1 NAME
 
@@ -59,8 +59,9 @@ sub new {
 create a input string
 
     my $Value = $BackendObject->FormInputCreate(
-        Item  => $ItemRef,
-        Value => 'Value',   # (optional)
+        Item   => $ItemRef,
+        Prefix => 'Prefix::',  # (optional)
+        Value  => 'Value',     # (optional)
     );
 
 =cut
@@ -74,9 +75,11 @@ sub FormInputCreate {
         return;
     }
 
+    $Param{Prefix} ||= '';
+
     my $Value = $Param{Value} || $Param{Item}->{Input}->{ValueDefault};
     my $Size = $Param{Item}->{Input}->{Size} || 40;
-    my $String = "<input type=\"Text\" name=\"$Param{Item}->{Key}\" size=\"$Size\" ";
+    my $String = "<input type=\"Text\" name=\"$Param{Prefix}$Param{Item}->{Key}\" size=\"$Size\" ";
 
     if ($Value) {
 
@@ -109,7 +112,8 @@ sub FormInputCreate {
 get form data
 
     my $FormData = $BackendObject->FormDataGet(
-        Item => $ItemRef,
+        Item   => $ItemRef,
+        Prefix => 'Prefix::',  # (optional)
     );
 
 =cut
@@ -123,8 +127,12 @@ sub FormDataGet {
         return;
     }
 
+    $Param{Prefix} ||= '';
+
     # get form data
-    my $FormData = $Self->{ParamObject}->GetParam( Param => $Param{Item}->{Key} );
+    my $FormData = $Self->{ParamObject}->GetParam(
+        Param => $Param{Prefix} . $Param{Item}->{Key},
+    );
 
     return $FormData if $FormData;
     return $FormData if !$Param{Item}->{Input}->{Required};
@@ -151,6 +159,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2008-02-05 11:29:01 $
+$Revision: 1.4 $ $Date: 2008-02-05 19:23:56 $
 
 =cut

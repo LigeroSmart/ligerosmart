@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport/FormatBackend/CSV.pm - import/export backend for CSV
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: CSV.pm,v 1.4 2008-02-05 11:29:01 mh Exp $
+# $Id: CSV.pm,v 1.5 2008-02-05 19:23:56 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 =head1 NAME
 
@@ -75,17 +75,17 @@ sub new {
     return $Self;
 }
 
-=item AttributesGet()
+=item FormatAttributesGet()
 
-get the attributes of a format as array/hash reference
+get the format attributes of a format as array/hash reference
 
-    my $Attributes = $FormatBackend->AttributesGet(
+    my $Attributes = $FormatBackend->FormatAttributesGet(
         UserID => 1,
     );
 
 =cut
 
-sub AttributesGet {
+sub FormatAttributesGet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
@@ -98,7 +98,6 @@ sub AttributesGet {
         {
             Key         => 'ColumnSeperator',
             Name        => 'Column Seperator',
-            Description => '',
             Input       => {
                 Type         => 'Text',
                 ValueDefault => ';',
@@ -106,6 +105,41 @@ sub AttributesGet {
                 Translation  => 0,
                 Size         => 5,
                 MaxLength    => 5,
+            },
+        },
+    ];
+
+    return $Attributes;
+}
+
+=item MappingFormatAttributesGet()
+
+get the mapping attributes of an format as array/hash reference
+
+    my $Attributes = $ObjectBackend->MappingFormatAttributesGet(
+        UserID => 1,
+    );
+
+=cut
+
+sub MappingFormatAttributesGet {
+    my ( $Self, %Param ) = @_;
+
+    # check needed object
+    if ( !$Param{UserID} ) {
+        $Self->{LogObject}->Log( Priority => 'error', Message => 'Need UserID!' );
+        return;
+    }
+
+    my $Attributes = [
+        {
+            Key         => 'Column',
+            Name        => 'Column',
+            Input       => {
+                Type         => 'DisplayText',
+                Data         => '$QData{"Counter"}',
+                Required     => 0,
+                Translation  => 1,
             },
         },
     ];
@@ -129,6 +163,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2008-02-05 11:29:01 $
+$Revision: 1.5 $ $Date: 2008-02-05 19:23:56 $
 
 =cut

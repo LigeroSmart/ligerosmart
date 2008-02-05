@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport.pm - all import and export functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pm,v 1.11 2008-02-05 11:29:01 mh Exp $
+# $Id: ImportExport.pm,v 1.12 2008-02-05 19:23:56 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 =head1 NAME
 
@@ -164,6 +164,10 @@ sub TemplateGet {
     # quote
     $Param{TemplateID} = $Self->{DBObject}->Quote( $Param{TemplateID}, 'Integer' );
 
+    # check if result is already cached
+    return $Self->{Cache}->{TemplateGet}->{ $Param{TemplateID} }
+        if $Self->{Cache}->{TemplateGet}->{ $Param{TemplateID} };
+
     # create sql string
     my $SQL = "SELECT id, imexport_object, imexport_format, name, valid_id, comments, "
         . "create_time, create_by, change_time, change_by FROM imexport_template WHERE "
@@ -191,6 +195,9 @@ sub TemplateGet {
 
         $TemplateData{Number} = sprintf "%06d", $TemplateData{TemplateID};
     }
+
+    # cache the result
+    $Self->{Cache}->{TemplateGet}->{ $Param{TemplateID} } = \%TemplateData;
 
     return \%TemplateData;
 }
@@ -437,7 +444,7 @@ sub TemplateDelete {
 
     # delete all mapping data
     for my $TemplateID ( @{ $Param{TemplateID} } ) {
-        $Self->MappingDataDelete(
+        $Self->MappingDelete(
             TemplateID => $TemplateID,
             UserID     => $Param{UserID},
         );
@@ -534,7 +541,7 @@ sub ObjectAttributesGet {
     return if !$Backend;
 
     # get an attribute list of the object
-    my $Attributes = $Backend->AttributesGet(
+    my $Attributes = $Backend->ObjectAttributesGet(
         %Param,
         UserID => $Param{UserID},
     );
@@ -765,7 +772,7 @@ sub FormatAttributesGet {
     return if !$Backend;
 
     # get an attribute list of the format
-    my $Attributes = $Backend->AttributesGet(
+    my $Attributes = $Backend->FormatAttributesGet(
         %Param,
         UserID => $Param{UserID},
     );
@@ -931,18 +938,18 @@ sub FormatDataDelete {
     );
 }
 
-=item MappingDataList()
+=item MappingList()
 
 return a list of mapping data ids sorted by position as array reference
 
-    my $MappingDataList = $ImportExportObject->MappingDataList(
+    my $MappingList = $ImportExportObject->MappingList(
         TemplateID => 123,
         UserID     => 1,
     );
 
 =cut
 
-sub MappingDataList {
+sub MappingList {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
@@ -967,26 +974,26 @@ sub MappingDataList {
     $Self->{DBObject}->Prepare( SQL => $SQL );
 
     # fetch the result
-    my @MappingDataList;
+    my @MappingList;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        push @MappingDataList, $Row[0];
+        push @MappingList, $Row[0];
     }
 
-    return \@MappingDataList;
+    return \@MappingList;
 }
 
-=item MappingDataAdd()
+=item MappingAdd()
 
 add a new mapping data row
 
-    my $True = $ImportExportObject->MappingDataAdd(
+    my $True = $ImportExportObject->MappingAdd(
         TemplateID => 123,
         UserID     => 1,
     );
 
 =cut
 
-sub MappingDataAdd {
+sub MappingAdd {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
@@ -1030,11 +1037,11 @@ sub MappingDataAdd {
     );
 }
 
-=item MappingDataDelete()
+=item MappingDelete()
 
 delete existing mapping data rows
 
-    my $True = $ImportExportObject->MappingDataDelete(
+    my $True = $ImportExportObject->MappingDelete(
         MappingID  => 123,
         TemplateID => 321,
         UserID     => 1,
@@ -1042,14 +1049,14 @@ delete existing mapping data rows
 
     or
 
-    my $True = $ImportExportObject->MappingDataDelete(
+    my $True = $ImportExportObject->MappingDelete(
         TemplateID => 321,
         UserID     => 1,
     );
 
 =cut
 
-sub MappingDataDelete {
+sub MappingDelete {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
@@ -1079,7 +1086,7 @@ sub MappingDataDelete {
         );
 
         # rebuild mapping positions
-        $Self->MappingDataPositionRebuild(
+        $Self->MappingPositionRebuild(
             TemplateID => $Param{TemplateID},
             UserID     => $Param{UserID},
         );
@@ -1095,11 +1102,11 @@ sub MappingDataDelete {
     }
 }
 
-=item MappingDataUp()
+=item MappingUp()
 
 move an mapping data row up
 
-    my $True = $ImportExportObject->MappingDataUp(
+    my $True = $ImportExportObject->MappingUp(
         MappingID  => 123,
         TemplateID => 321,
         UserID     => 1,
@@ -1107,7 +1114,7 @@ move an mapping data row up
 
 =cut
 
-sub MappingDataUp {
+sub MappingUp {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
@@ -1122,12 +1129,12 @@ sub MappingDataUp {
     }
 
     # get mapping data list
-    my $MappingDataList = $Self->MappingDataList(
+    my $MappingList = $Self->MappingList(
         TemplateID => $Param{TemplateID},
         UserID     => $Param{UserID},
     );
 
-    return 1 if $Param{MappingID} == $MappingDataList->[0];
+    return 1 if $Param{MappingID} == $MappingList->[0];
 
     # quote
     for my $Argument (qw(MappingID TemplateID UserID)) {
@@ -1163,11 +1170,11 @@ sub MappingDataUp {
     return 1;
 }
 
-=item MappingDataDown()
+=item MappingDown()
 
 move an mapping data row down
 
-    my $True = $ImportExportObject->MappingDataDown(
+    my $True = $ImportExportObject->MappingDown(
         MappingID  => 123,
         TemplateID => 321,
         UserID     => 1,
@@ -1175,7 +1182,7 @@ move an mapping data row down
 
 =cut
 
-sub MappingDataDown {
+sub MappingDown {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
@@ -1190,12 +1197,12 @@ sub MappingDataDown {
     }
 
     # get mapping data list
-    my $MappingDataList = $Self->MappingDataList(
+    my $MappingList = $Self->MappingList(
         TemplateID => $Param{TemplateID},
         UserID     => $Param{UserID},
     );
 
-    return 1 if $Param{MappingID} == $MappingDataList->[-1];
+    return 1 if $Param{MappingID} == $MappingList->[-1];
 
     # quote
     for my $Argument (qw(MappingID TemplateID UserID)) {
@@ -1229,18 +1236,18 @@ sub MappingDataDown {
     return 1;
 }
 
-=item MappingDataPositionRebuild()
+=item MappingPositionRebuild()
 
 rebuild the positions of a mapping list
 
-    my $True = $ImportExportObject->MappingDataPositionRebuild(
+    my $True = $ImportExportObject->MappingPositionRebuild(
         TemplateID => 123,
         UserID     => 1,
     );
 
 =cut
 
-sub MappingDataPositionRebuild {
+sub MappingPositionRebuild {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
@@ -1255,14 +1262,14 @@ sub MappingDataPositionRebuild {
     }
 
     # get mapping data list
-    my $MappingDataList = $Self->MappingDataList(
+    my $MappingList = $Self->MappingList(
         TemplateID => $Param{TemplateID},
         UserID     => $Param{UserID},
     );
 
     # update position
     my $Counter = 0;
-    for my $MappingID ( @{$MappingDataList} ) {
+    for my $MappingID ( @{$MappingList} ) {
         $Self->{DBObject}->Do(
             SQL => "UPDATE imexport_mapping SET position = $Counter "
                 . "WHERE id = $MappingID",
@@ -1271,6 +1278,100 @@ sub MappingDataPositionRebuild {
     }
 
     return 1;
+}
+
+=item MappingObjectAttributesGet()
+
+get the attributes of an object backend as array/hash reference
+
+    my $Attributes = $ImportExportObject->MappingObjectAttributesGet(
+        TemplateID => 123,
+        UserID     => 1,
+    );
+
+=cut
+
+sub MappingObjectAttributesGet {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(TemplateID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # get template data
+    my $TemplateData = $Self->TemplateGet(
+        TemplateID => $Param{TemplateID},
+        UserID     => $Param{UserID},
+    );
+
+    # load backend
+    my $Backend = $Self->_LoadBackend(
+        Module => "Kernel::System::ImportExport::ObjectBackend::$TemplateData->{Object}",
+    );
+
+    return if !$Backend;
+
+    # get an attribute list of the object
+    my $Attributes = $Backend->MappingObjectAttributesGet(
+        %Param,
+        UserID => $Param{UserID},
+    );
+
+    return $Attributes;
+}
+
+=item MappingFormatAttributesGet()
+
+get the attributes of an format backend as array/hash reference
+
+    my $Attributes = $ImportExportObject->MappingFormatAttributesGet(
+        TemplateID => 123,
+        UserID     => 1,
+    );
+
+=cut
+
+sub MappingFormatAttributesGet {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(TemplateID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # get template data
+    my $TemplateData = $Self->TemplateGet(
+        TemplateID => $Param{TemplateID},
+        UserID     => $Param{UserID},
+    );
+
+    # load backend
+    my $Backend = $Self->_LoadBackend(
+        Module => "Kernel::System::ImportExport::FormatBackend::$TemplateData->{Format}",
+    );
+
+    return if !$Backend;
+
+    # get an attribute list of the format
+    my $Attributes = $Backend->MappingFormatAttributesGet(
+        %Param,
+        UserID => $Param{UserID},
+    );
+
+    return $Attributes;
 }
 
 =item _LoadBackend()
@@ -1344,6 +1445,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.11 $ $Date: 2008-02-05 11:29:01 $
+$Revision: 1.12 $ $Date: 2008-02-05 19:23:56 $
 
 =cut

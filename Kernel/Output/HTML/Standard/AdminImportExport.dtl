@@ -2,7 +2,7 @@
 # AdminImportExport.dtl - provides HTML form for AdminImportExport
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.dtl,v 1.8 2008-02-05 11:29:01 mh Exp $
+# $Id: AdminImportExport.dtl,v 1.9 2008-02-05 19:23:56 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -269,16 +269,11 @@
 <!-- dtl:block:TemplateEdit4Row -->
                 <tr>
                   <td>
-
-
-                    ID: $QData{"MappingID"}
-
-
 <!-- dtl:block:TemplateEdit4RowObject -->
                     <table border="0" cellspacing="0" cellpadding="3">
                       <tr>
-                        <td class="contentkey">aaa: </td>
-                        <td class="contentvalue">bbb</td>
+                        <td class="contentkey">$QData{"Name"}: </td>
+                        <td class="contentvalue">$Data{"InputStrg"}</td>
                       </tr>
                     </table>
 <!-- dtl:block:TemplateEdit4RowObject -->
@@ -287,17 +282,17 @@
 <!-- dtl:block:TemplateEdit4RowFormat -->
                     <table border="0" cellspacing="0" cellpadding="3">
                       <tr>
-                        <td class="contentkey">ccc: </td>
-                        <td class="contentvalue">ddd</td>
+                        <td class="contentkey">$QData{"Name"}: </td>
+                        <td class="contentvalue">$Data{"InputStrg"}</td>
                       </tr>
                     </table>
 <!-- dtl:block:TemplateEdit4RowFormat -->
                   </td>
                   <td align="right">
-                    <input class="button" type="submit" name="MappingDataUp::$QData{"MappingID"}" value="$Text{"Up"}">
-                    <input class="button" type="submit" name="MappingDataDown::$QData{"MappingID"}" value="$Text{"Down"}">
+                    <input class="button" type="submit" name="MappingUp::$QData{"MappingID"}" value="$Text{"Up"}">
+                    <input class="button" type="submit" name="MappingDown::$QData{"MappingID"}" value="$Text{"Down"}">
                     &nbsp;&nbsp;&nbsp;
-                    <input class="button" type="submit" name="MappingDataDelete::$QData{"MappingID"}" value="$Text{"Delete"}">
+                    <input class="button" type="submit" name="MappingDelete::$QData{"MappingID"}" value="$Text{"Delete"}">
                   </td>
                 </tr>
                 <tr>
@@ -306,7 +301,7 @@
 <!-- dtl:block:TemplateEdit4Row -->
                 <tr>
                   <td class="contentvalue" colspan="3">
-                    <input class="button" type="submit" name="MappingDataAdd" value="$Text{"Add"}">
+                    <input class="button" type="submit" name="MappingAdd" value="$Text{"Add"}">
                   </td>
                 </tr>
               </table>
