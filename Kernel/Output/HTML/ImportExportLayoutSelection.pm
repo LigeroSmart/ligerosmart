@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ImportExportLayoutSelection.pm - layout backend module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExportLayoutSelection.pm,v 1.4 2008-02-05 19:23:56 mh Exp $
+# $Id: ImportExportLayoutSelection.pm,v 1.5 2008-02-06 17:53:07 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 =head1 NAME
 
@@ -84,10 +84,10 @@ sub FormInputCreate {
 
     # generate option string
     my $String = $Self->{LayoutObject}->BuildSelection(
-        Name       => $Param{Prefix} . $Param{Item}->{Key},
-        Data       => $Param{Item}->{Input}->{Data} || {},
-        SelectedID => $Param{Value}                 || $Param{Item}->{Input}->{ValueDefault},
-        Translation => $Param{Item}->{Input}->{Translation},
+        Name         => $Param{Prefix} . $Param{Item}->{Key},
+        Data         => $Param{Item}->{Input}->{Data} || {},
+        SelectedID   => $Param{Value} || $Param{Item}->{Input}->{ValueDefault},
+        Translation  => $Param{Item}->{Input}->{Translation},
         PossibleNone => $Param{Item}->{Input}->{PossibleNone} || 0,
     );
 
@@ -146,6 +146,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2008-02-05 19:23:56 $
+$Revision: 1.5 $ $Date: 2008-02-06 17:53:07 $
 
 =cut

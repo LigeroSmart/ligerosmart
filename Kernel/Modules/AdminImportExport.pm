@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminImportExport.pm - admin frontend of import export module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.pm,v 1.13 2008-02-06 17:47:26 mh Exp $
+# $Id: AdminImportExport.pm,v 1.14 2008-02-06 17:53:07 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ImportExport;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -655,9 +655,9 @@ sub Run {
 
                 # create form input
                 my $InputString = $Self->{LayoutObject}->ImportExportFormInputCreate(
-                    Item    => $Item,
-                    Prefix  => 'Object::' . $Counter . '::',
-                    Value   => $MappingObjectData->{ $Item->{Key} },
+                    Item   => $Item,
+                    Prefix => 'Object::' . $Counter . '::',
+                    Value  => $MappingObjectData->{ $Item->{Key} },
                 );
 
                 # output attribute row
@@ -677,7 +677,7 @@ sub Run {
                 my $InputString = $Self->{LayoutObject}->ImportExportFormInputCreate(
                     Item   => $Item,
                     Prefix => 'Format::' . $Counter . '::',
-                    Value => $MappingFormatData->{ $Item->{Key} },
+                    Value  => $MappingFormatData->{ $Item->{Key} },
                 );
 
                 # output attribute row
@@ -717,9 +717,9 @@ sub Run {
         my $TemplateID = $Self->{ParamObject}->GetParam( Param => 'TemplateID' );
 
         my %Submit = (
-            SubmitNext     => 'Overview',
-            SubmitBack     => 'TemplateEdit3',
-            Reload         => 'TemplateEdit4',
+            SubmitNext => 'Overview',
+            SubmitBack => 'TemplateEdit3',
+            Reload     => 'TemplateEdit4',
             MappingAdd => 'TemplateEdit4',
         );
 
@@ -763,10 +763,11 @@ sub Run {
             for my $Item ( @{$MappingObjectAttributes} ) {
 
                 # get object form data
-                $ObjectAttributeValues{ $Item->{Key} } = $Self->{LayoutObject}->ImportExportFormDataGet(
-                    Item => $Item,
+                $ObjectAttributeValues{ $Item->{Key} }
+                    = $Self->{LayoutObject}->ImportExportFormDataGet(
+                    Item   => $Item,
                     Prefix => 'Object::' . $Counter . '::',
-                );
+                    );
             }
 
             # save the mapping object data
@@ -781,10 +782,11 @@ sub Run {
             for my $Item ( @{$MappingFormatAttributes} ) {
 
                 # get format form data
-                $FormatAttributeValues{ $Item->{Key} } = $Self->{LayoutObject}->ImportExportFormDataGet(
-                    Item => $Item,
+                $FormatAttributeValues{ $Item->{Key} }
+                    = $Self->{LayoutObject}->ImportExportFormDataGet(
+                    Item   => $Item,
                     Prefix => 'Format::' . $Counter . '::',
-                );
+                    );
             }
 
             # save the mapping format data
