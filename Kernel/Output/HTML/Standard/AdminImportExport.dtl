@@ -2,7 +2,7 @@
 # AdminImportExport.dtl - provides HTML form for AdminImportExport
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.dtl,v 1.9 2008-02-05 19:23:56 mh Exp $
+# $Id: AdminImportExport.dtl,v 1.10 2008-02-06 17:47:26 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -272,7 +272,7 @@
 <!-- dtl:block:TemplateEdit4RowObject -->
                     <table border="0" cellspacing="0" cellpadding="3">
                       <tr>
-                        <td class="contentkey">$QData{"Name"}: </td>
+                        <td class="contentkey">$Text{"$QData{"Name"}"}: </td>
                         <td class="contentvalue">$Data{"InputStrg"}</td>
                       </tr>
                     </table>
@@ -282,7 +282,7 @@
 <!-- dtl:block:TemplateEdit4RowFormat -->
                     <table border="0" cellspacing="0" cellpadding="3">
                       <tr>
-                        <td class="contentkey">$QData{"Name"}: </td>
+                        <td class="contentkey">$Text{"$QData{"Name"}"}: </td>
                         <td class="contentvalue">$Data{"InputStrg"}</td>
                       </tr>
                     </table>

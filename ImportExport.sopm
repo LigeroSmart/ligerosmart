@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ImportExport.sopm,v 1.7 2008-02-04 19:53:32 mh Exp $</CVS>
+    <CVS>$Id: ImportExport.sopm,v 1.8 2008-02-06 17:47:26 mh Exp $</CVS>
     <Name>ImportExport</Name>
     <Version>0.0.0</Version>
     <Framework>2.2.5</Framework>
@@ -15,7 +15,9 @@
         <File Permission="644" Location="Kernel/Language/cz_ImportExport.pm"/>
         <File Permission="644" Location="Kernel/Language/de_ImportExport.pm"/>
         <File Permission="644" Location="Kernel/Modules/AdminImportExport.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/ImportExportLayoutDTL.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ImportExportLayoutSelection.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/ImportExportLayoutText.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/LayoutImportExport.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminImportExport.dtl"/>
         <File Permission="644" Location="Kernel/System/ImportExport.pm"/>
@@ -68,8 +70,8 @@
         <TableCreate Name="imexport_mapping_object">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
             <Column Name="mapping_id" Required="true" Type="BIGINT"/>
-            <Column Name="object_key" Required="true" Size="100" Type="VARCHAR"/>
-            <Column Name="object_value" Required="true" Size="200" Type="VARCHAR"/>
+            <Column Name="data_key" Required="true" Size="100" Type="VARCHAR"/>
+            <Column Name="data_value" Required="true" Size="200" Type="VARCHAR"/>
             <Index Name="imexport_mapping_object_mapping_id">
                 <IndexColumn Name="mapping_id"/>
             </Index>
@@ -77,8 +79,8 @@
         <TableCreate Name="imexport_mapping_format">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
             <Column Name="mapping_id" Required="true" Type="BIGINT"/>
-            <Column Name="format_key" Required="true" Size="100" Type="VARCHAR"/>
-            <Column Name="format_value" Required="true" Size="200" Type="VARCHAR"/>
+            <Column Name="data_key" Required="true" Size="100" Type="VARCHAR"/>
+            <Column Name="data_value" Required="true" Size="200" Type="VARCHAR"/>
             <Index Name="imexport_mapping_format_mapping_id">
                 <IndexColumn Name="mapping_id"/>
             </Index>

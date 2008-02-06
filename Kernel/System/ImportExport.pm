@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport.pm - all import and export functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pm,v 1.12 2008-02-05 19:23:56 mh Exp $
+# $Id: ImportExport.pm,v 1.13 2008-02-06 17:47:26 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 =head1 NAME
 
@@ -1077,6 +1077,18 @@ sub MappingDelete {
 
     if ( defined $Param{MappingID} ) {
 
+        # delete existing object mapping data
+        $Self->MappingObjectDataDelete(
+            MappingID => $Param{MappingID},
+            UserID    => $Param{UserID},
+        );
+
+        # delete existing format mapping data
+        $Self->MappingFormatDataDelete(
+            MappingID => $Param{MappingID},
+            UserID    => $Param{UserID},
+        );
+
         # quote
         $Param{MappingID} = $Self->{DBObject}->Quote( $Param{MappingID}, 'Integer' );
 
@@ -1094,6 +1106,27 @@ sub MappingDelete {
         return 1;
     }
     else {
+
+        # get mapping list
+        my $MappingList = $Self->MappingList(
+            TemplateID => $Param{TemplateID},
+            UserID     => $Param{UserID},
+        );
+
+        for my $MappingID ( @{$MappingList} ) {
+
+            # delete existing object mapping data
+            $Self->MappingObjectDataDelete(
+                MappingID => $MappingID,
+                UserID    => $Param{UserID},
+            );
+
+            # delete existing format mapping data
+            $Self->MappingFormatDataDelete(
+                MappingID => $MappingID,
+                UserID    => $Param{UserID},
+            );
+        }
 
         # delete all mapping rows of this template
         return $Self->{DBObject}->Do(
@@ -1327,6 +1360,168 @@ sub MappingObjectAttributesGet {
     return $Attributes;
 }
 
+=item MappingObjectDataDelete()
+
+delete the existing object data of a mapping
+
+    my $True = $ImportExportObject->MappingObjectDataDelete(
+        MappingID => 123,
+        UserID    => 1,
+    );
+
+    or
+
+    my $True = $ImportExportObject->MappingObjectDataDelete(
+        MappingID => [1,44,166,5],
+        UserID    => 1,
+    );
+
+=cut
+
+sub MappingObjectDataDelete {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(MappingID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!"
+            );
+            return;
+        }
+    }
+
+    if ( !ref $Param{MappingID} ) {
+        $Param{MappingID} = [ $Param{MappingID} ];
+    }
+    elsif ( ref $Param{MappingID} ne 'ARRAY' ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'MappingID must be an array reference or a string!',
+        );
+        return;
+    }
+
+    # quote
+    for my $MappingID ( @{ $Param{MappingID} } ) {
+        $MappingID = $Self->{DBObject}->Quote( $MappingID, 'Integer' );
+    }
+
+    # create the mapping id string
+    my $MappingIDString = join ',', @{ $Param{MappingID} };
+
+    # delete mapping object data
+    return $Self->{DBObject}->Do(
+        SQL => "DELETE FROM imexport_mapping_object WHERE mapping_id IN ( $MappingIDString )",
+    );
+}
+
+=item MappingObjectDataSave()
+
+save the object data of a mapping
+
+    my $True = $ImportExportObject->MappingObjectDataSave(
+        MappingID         => 123,
+        MappingObjectData => $HashRef,
+        UserID            => 1,
+    );
+
+=cut
+
+sub MappingObjectDataSave {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(MappingID MappingObjectData UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!"
+            );
+            return;
+        }
+    }
+
+    if ( ref $Param{MappingObjectData} ne 'HASH' ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'MappingObjectData must be an hash reference!',
+        );
+        return;
+    }
+
+    # delete existing object mapping data
+    $Self->MappingObjectDataDelete(
+        MappingID => $Param{MappingID},
+        UserID    => $Param{UserID},
+    );
+
+    DATAKEY:
+    for my $DataKey ( keys %{ $Param{MappingObjectData} } ) {
+
+        # quote
+        my $QDataKey   = $Self->{DBObject}->Quote($DataKey);
+        my $QDataValue = $Self->{DBObject}->Quote( $Param{MappingObjectData}->{$DataKey} );
+
+        next DATAKEY if !defined $QDataKey;
+        next DATAKEY if !defined $QDataValue;
+
+        # insert one mapping object row
+        $Self->{DBObject}->Do(
+            SQL => "INSERT INTO imexport_mapping_object "
+                . "(mapping_id, data_key, data_value) VALUES "
+                . "($Param{MappingID}, '$QDataKey', '$QDataValue')"
+        );
+    }
+
+    return 1;
+}
+
+=item MappingObjectDataGet()
+
+get the object data of a mapping
+
+    my $ObjectDataRef = $ImportExportObject->MappingObjectDataGet(
+        MappingID => 123,
+        UserID    => 1,
+    );
+
+=cut
+
+sub MappingObjectDataGet {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(MappingID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!"
+            );
+            return;
+        }
+    }
+
+    # quote
+    $Param{MappingID} = $Self->{DBObject}->Quote( $Param{MappingID}, 'Integer' );
+
+    # create sql string
+    my $SQL = "SELECT data_key, data_value FROM imexport_mapping_object WHERE "
+        . "mapping_id = $Param{MappingID}";
+
+    # ask database
+    $Self->{DBObject}->Prepare( SQL => $SQL );
+
+    # fetch the result
+    my %MappingObjectData;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $MappingObjectData{ $Row[0] } = $Row[1];
+    }
+
+    return \%MappingObjectData;
+}
+
 =item MappingFormatAttributesGet()
 
 get the attributes of an format backend as array/hash reference
@@ -1372,6 +1567,168 @@ sub MappingFormatAttributesGet {
     );
 
     return $Attributes;
+}
+
+=item MappingFormatDataDelete()
+
+delete the existing format data of a mapping
+
+    my $True = $ImportExportObject->MappingFormatDataDelete(
+        MappingID => 123,
+        UserID    => 1,
+    );
+
+    or
+
+    my $True = $ImportExportObject->MappingFormatDataDelete(
+        MappingID => [1,44,166,5],
+        UserID    => 1,
+    );
+
+=cut
+
+sub MappingFormatDataDelete {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(MappingID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!"
+            );
+            return;
+        }
+    }
+
+    if ( !ref $Param{MappingID} ) {
+        $Param{MappingID} = [ $Param{MappingID} ];
+    }
+    elsif ( ref $Param{MappingID} ne 'ARRAY' ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'MappingID must be an array reference or a string!',
+        );
+        return;
+    }
+
+    # quote
+    for my $MappingID ( @{ $Param{MappingID} } ) {
+        $MappingID = $Self->{DBObject}->Quote( $MappingID, 'Integer' );
+    }
+
+    # create the mapping id string
+    my $MappingIDString = join ',', @{ $Param{MappingID} };
+
+    # delete mapping format data
+    return $Self->{DBObject}->Do(
+        SQL => "DELETE FROM imexport_mapping_format WHERE mapping_id IN ( $MappingIDString )",
+    );
+}
+
+=item MappingFormatDataSave()
+
+save the format data of a mapping
+
+    my $True = $ImportExportObject->MappingFormatDataSave(
+        MappingID         => 123,
+        MappingFormatData => $HashRef,
+        UserID            => 1,
+    );
+
+=cut
+
+sub MappingFormatDataSave {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(MappingID MappingFormatData UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!"
+            );
+            return;
+        }
+    }
+
+    if ( ref $Param{MappingFormatData} ne 'HASH' ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'MappingFormatData must be an hash reference!',
+        );
+        return;
+    }
+
+    # delete existing format mapping data
+    $Self->MappingFormatDataDelete(
+        MappingID => $Param{MappingID},
+        UserID    => $Param{UserID},
+    );
+
+    DATAKEY:
+    for my $DataKey ( keys %{ $Param{MappingFormatData} } ) {
+
+        # quote
+        my $QDataKey   = $Self->{DBObject}->Quote($DataKey);
+        my $QDataValue = $Self->{DBObject}->Quote( $Param{MappingFormatData}->{$DataKey} );
+
+        next DATAKEY if !defined $QDataKey;
+        next DATAKEY if !defined $QDataValue;
+
+        # insert one mapping format row
+        $Self->{DBObject}->Do(
+            SQL => "INSERT INTO imexport_mapping_format "
+                . "(mapping_id, data_key, data_value) VALUES "
+                . "($Param{MappingID}, '$QDataKey', '$QDataValue')"
+        );
+    }
+
+    return 1;
+}
+
+=item MappingFormatDataGet()
+
+get the format data of a mapping
+
+    my $ObjectDataRef = $ImportExportObject->MappingFormatDataGet(
+        MappingID => 123,
+        UserID    => 1,
+    );
+
+=cut
+
+sub MappingFormatDataGet {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(MappingID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!"
+            );
+            return;
+        }
+    }
+
+    # quote
+    $Param{MappingID} = $Self->{DBObject}->Quote( $Param{MappingID}, 'Integer' );
+
+    # create sql string
+    my $SQL = "SELECT data_key, data_value FROM imexport_mapping_format WHERE "
+        . "mapping_id = $Param{MappingID}";
+
+    # ask database
+    $Self->{DBObject}->Prepare( SQL => $SQL );
+
+    # fetch the result
+    my %MappingFormatData;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $MappingFormatData{ $Row[0] } = $Row[1];
+    }
+
+    return \%MappingFormatData;
 }
 
 =item _LoadBackend()
@@ -1445,6 +1802,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.12 $ $Date: 2008-02-05 19:23:56 $
+$Revision: 1.13 $ $Date: 2008-02-06 17:47:26 $
 
 =cut

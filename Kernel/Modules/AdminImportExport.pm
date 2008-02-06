@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminImportExport.pm - admin frontend of import export module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.pm,v 1.12 2008-02-05 19:23:55 mh Exp $
+# $Id: AdminImportExport.pm,v 1.13 2008-02-06 17:47:26 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ImportExport;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -359,6 +359,7 @@ sub Run {
             }
         }
 
+        # save the object data
         $Self->{ImportExportObject}->ObjectDataSave(
             TemplateID => $TemplateID,
             ObjectData => \%AttributeValues,
@@ -532,6 +533,7 @@ sub Run {
             }
         }
 
+        # save the format data
         $Self->{ImportExportObject}->FormatDataSave(
             TemplateID => $TemplateID,
             FormatData => \%AttributeValues,
@@ -615,13 +617,13 @@ sub Run {
         );
 
         # get object attributes
-        my $ObjectAttributes = $Self->{ImportExportObject}->MappingObjectAttributesGet(
+        my $MappingObjectAttributes = $Self->{ImportExportObject}->MappingObjectAttributesGet(
             TemplateID => $TemplateData->{TemplateID},
             UserID     => $Self->{UserID},
         );
 
         # get format attributes
-        my $FormatAttributes = $Self->{ImportExportObject}->MappingFormatAttributesGet(
+        my $MappingFormatAttributes = $Self->{ImportExportObject}->MappingFormatAttributesGet(
             TemplateID => $TemplateData->{TemplateID},
             UserID     => $Self->{UserID},
         );
@@ -637,13 +639,25 @@ sub Run {
                 },
             );
 
-            for my $Item ( @{$ObjectAttributes} ) {
+            # get mapping object data
+            my $MappingObjectData = $Self->{ImportExportObject}->MappingObjectDataGet(
+                MappingID => $MappingID,
+                UserID    => $Self->{UserID},
+            );
+
+            # get mapping format data
+            my $MappingFormatData = $Self->{ImportExportObject}->MappingFormatDataGet(
+                MappingID => $MappingID,
+                UserID    => $Self->{UserID},
+            );
+
+            for my $Item ( @{$MappingObjectAttributes} ) {
 
                 # create form input
                 my $InputString = $Self->{LayoutObject}->ImportExportFormInputCreate(
                     Item    => $Item,
                     Prefix  => 'Object::' . $Counter . '::',
-#                    Value   => $FormatData->{ $Item->{Key} },
+                    Value   => $MappingObjectData->{ $Item->{Key} },
                 );
 
                 # output attribute row
@@ -657,13 +671,13 @@ sub Run {
                 );
             }
 
-            for my $Item ( @{$FormatAttributes} ) {
+            for my $Item ( @{$MappingFormatAttributes} ) {
 
                 # create form input
                 my $InputString = $Self->{LayoutObject}->ImportExportFormInputCreate(
                     Item   => $Item,
                     Prefix => 'Format::' . $Counter . '::',
-#                    Value => $FormatData->{ $Item->{Key} },
+                    Value => $MappingFormatData->{ $Item->{Key} },
                 );
 
                 # output attribute row
@@ -727,6 +741,61 @@ sub Run {
             TemplateID => $TemplateID,
             UserID     => $Self->{UserID},
         );
+
+        # get object attributes
+        my $MappingObjectAttributes = $Self->{ImportExportObject}->MappingObjectAttributesGet(
+            TemplateID => $TemplateID,
+            UserID     => $Self->{UserID},
+        );
+
+        # get format attributes
+        my $MappingFormatAttributes = $Self->{ImportExportObject}->MappingFormatAttributesGet(
+            TemplateID => $TemplateID,
+            UserID     => $Self->{UserID},
+        );
+
+        my $Counter = 0;
+        MAPPINGID:
+        for my $MappingID ( @{$MappingList} ) {
+
+            # get object attribute values
+            my %ObjectAttributeValues;
+            for my $Item ( @{$MappingObjectAttributes} ) {
+
+                # get object form data
+                $ObjectAttributeValues{ $Item->{Key} } = $Self->{LayoutObject}->ImportExportFormDataGet(
+                    Item => $Item,
+                    Prefix => 'Object::' . $Counter . '::',
+                );
+            }
+
+            # save the mapping object data
+            $Self->{ImportExportObject}->MappingObjectDataSave(
+                MappingID         => $MappingID,
+                MappingObjectData => \%ObjectAttributeValues,
+                UserID            => $Self->{UserID},
+            );
+
+            # get format attribute values
+            my %FormatAttributeValues;
+            for my $Item ( @{$MappingFormatAttributes} ) {
+
+                # get format form data
+                $FormatAttributeValues{ $Item->{Key} } = $Self->{LayoutObject}->ImportExportFormDataGet(
+                    Item => $Item,
+                    Prefix => 'Format::' . $Counter . '::',
+                );
+            }
+
+            # save the mapping format data
+            $Self->{ImportExportObject}->MappingFormatDataSave(
+                MappingID         => $MappingID,
+                MappingFormatData => \%FormatAttributeValues,
+                UserID            => $Self->{UserID},
+            );
+
+            $Counter++;
+        }
 
         MAPPINGID:
         for my $MappingID ( @{$MappingList} ) {
