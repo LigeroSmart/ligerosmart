@@ -1,12 +1,12 @@
 # --
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
-# Copyright (C) 2001-2008 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.18 2008-01-22 07:48:06 tr Exp $
+# $Id: AgentTimeAccounting.pm,v 1.19 2008-02-07 09:35:28 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 
 package Kernel::Modules::AgentTimeAccounting;
@@ -19,19 +19,14 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
 
     # allocate new hash for object
-    my $Self = {};
+    my $Self = { %Param };
     bless( $Self, $Type );
-
-    # get common objects
-    for ( keys %Param ) {
-        $Self->{$_} = $Param{$_};
-    }
 
     # check needed Objects
     for (
@@ -39,7 +34,7 @@ sub new {
         ConfigObject TicketObject TimeObject GroupObject)
         )
     {
-        $Self->{LayoutObject}->FatalError( Message => "Got no $_!" ) if ( !$Self->{$_} );
+        $Self->{LayoutObject}->FatalError( Message => "Got no $_!" ) if !$Self->{$_};
     }
 
     # create required objects...
@@ -49,6 +44,9 @@ sub new {
 
 sub PreRun {
     my ( $Self, %Param ) = @_;
+
+    # permission check
+    return 1 if !$Self->{AccessRo};
 
     my ( $Sec, $Min, $Hour, $Day, $Month, $Year )
         = $Self->{TimeObject}->SystemTime2Date( SystemTime => $Self->{TimeObject}->SystemTime(), );
@@ -69,7 +67,7 @@ sub PreRun {
                 ->Redirect( OP => "Action=AgentTimeAccounting&Subaction=Edit" );
         }
     }
-    return;
+    return 1;
 }
 
 sub Run {
