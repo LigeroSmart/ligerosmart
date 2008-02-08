@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport/FormatBackend/CSV.pm - import/export backend for CSV
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: CSV.pm,v 1.7 2008-02-06 17:53:07 mh Exp $
+# $Id: CSV.pm,v 1.8 2008-02-08 19:40:09 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -14,8 +14,10 @@ package Kernel::System::ImportExport::FormatBackend::CSV;
 use strict;
 use warnings;
 
+use Kernel::System::ImportExport;
+
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 =head1 NAME
 
@@ -68,9 +70,11 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Object (qw(ConfigObject LogObject DBObject)) {
+    for my $Object (qw(ConfigObject LogObject DBObject MainObject)) {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
+
+    $Self->{ImportExportObject} = Kernel::System::ImportExport->new( %{$Self} );
 
     return $Self;
 }
@@ -116,7 +120,7 @@ sub FormatAttributesGet {
 
 get the mapping attributes of an format as array/hash reference
 
-    my $Attributes = $ObjectBackend->MappingFormatAttributesGet(
+    my $Attributes = $FormatBackend->MappingFormatAttributesGet(
         UserID => 1,
     );
 
@@ -146,6 +150,85 @@ sub MappingFormatAttributesGet {
     return $Attributes;
 }
 
+=item ImportDataGet()
+
+get import data as 2D-array-hash reference
+
+    my $ImportData = $FormatBackend->ImportDataGet(
+        TemplateID    => 123,
+        SourceContent => $StringRef,
+        UserID        => 1,
+    );
+
+=cut
+
+sub ImportDataGet {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(TemplateID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    my @ImportData;
+
+    return \@ImportData;
+}
+
+=item ExportDataSave()
+
+export one row of the export data
+
+    my $DestinationContent = $FormatBackend->ExportDataSave(
+        TemplateID    => 123,
+        ExportDataRow => $ArrayRef,
+        UserID        => 1,
+    );
+
+=cut
+
+sub ExportDataSave {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(TemplateID ExportDataRow UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    return if ref $Param{ExportDataRow} ne 'ARRAY';
+
+    # get format data
+    my $FormatData = $Self->{ImportExportObject}->FormatDataGet(
+        TemplateID => $Param{TemplateID},
+        UserID     => $Param{UserID},
+    );
+
+    return if !$FormatData;
+    return if ref $FormatData ne 'HASH';
+    return if !$FormatData->{ColumnSeperator};
+
+    # replace undef with empty string
+    map { $_ ||= '' } @{ $Param{ExportDataRow} };
+
+    # create one csv row
+    my $DestinationContent = join $FormatData->{ColumnSeperator}, @{ $Param{ExportDataRow} };
+    $DestinationContent .= "\n";
+
+    return $DestinationContent;
+}
+
 1;
 
 =back
@@ -162,6 +245,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.7 $ $Date: 2008-02-06 17:53:07 $
+$Revision: 1.8 $ $Date: 2008-02-08 19:40:09 $
 
 =cut

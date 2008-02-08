@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ImportExport.sopm,v 1.8 2008-02-06 17:47:26 mh Exp $</CVS>
+    <CVS>$Id: ImportExport.sopm,v 1.9 2008-02-08 19:40:09 mh Exp $</CVS>
     <Name>ImportExport</Name>
     <Version>0.0.0</Version>
     <Framework>2.2.5</Framework>
@@ -10,6 +10,7 @@
     <Description Lang="en">The ImportExport package.</Description>
     <Description Lang="de">Das ImportExport Paket.</Description>
     <Filelist>
+        <File Permission="755" Location="bin/ImportExport.pl"/>
         <File Permission="644" Location="Kernel/Config/Files/ImportExport.xml"/>
         <File Permission="644" Location="Kernel/Language/bg_ImportExport.pm"/>
         <File Permission="644" Location="Kernel/Language/cz_ImportExport.pm"/>
