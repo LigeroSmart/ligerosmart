@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport/FormatBackend/CSV.pm - import/export backend for CSV
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: CSV.pm,v 1.9 2008-02-09 20:09:04 mh Exp $
+# $Id: CSV.pm,v 1.10 2008-02-09 22:22:49 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ImportExport;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 =head1 NAME
 
@@ -108,7 +108,7 @@ sub FormatAttributesGet {
                     Tabulator => 'Tabulator (TAB)',
                     Semicolon => 'Semicolon (;)',
                     Colon     => 'Colon (:)',
-                    Dot       => 'Dot (.)'
+                    Dot       => 'Dot (.)',
                 },
                 Required     => 1,
                 Translation  => 1,
@@ -253,11 +253,20 @@ sub ExportDataSave {
     return if ref $FormatData ne 'HASH';
     return if !$FormatData->{ColumnSeperator};
 
+    my %AvailableSeperators = (
+        Tabulator => "\t",
+        Semicolon => ';',
+        Colon     => ':',
+        Dot       => '.',
+    );
+
+    my $Seperator = $AvailableSeperators{ $FormatData->{ColumnSeperator} } || '';
+
     # replace undef with empty string
     map { $_ ||= '' } @{ $Param{ExportDataRow} };
 
     # create one csv row
-    my $DestinationContent = join $FormatData->{ColumnSeperator}, @{ $Param{ExportDataRow} };
+    my $DestinationContent = join $Seperator, @{ $Param{ExportDataRow} };
     $DestinationContent .= "\n";
 
     return $DestinationContent;
@@ -279,6 +288,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.9 $ $Date: 2008-02-09 20:09:04 $
+$Revision: 1.10 $ $Date: 2008-02-09 22:22:49 $
 
 =cut
