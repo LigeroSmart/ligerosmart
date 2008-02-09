@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ImportExportLayoutSelection.pm - layout backend module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExportLayoutSelection.pm,v 1.5 2008-02-06 17:53:07 mh Exp $
+# $Id: ImportExportLayoutSelection.pm,v 1.6 2008-02-09 20:09:04 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 =head1 NAME
 
@@ -75,20 +75,24 @@ sub FormInputCreate {
         return;
     }
 
-    $Param{Prefix} ||= '';
-
     # set default value
-    if ( !defined $Param{Item}->{Input}->{Translation} ) {
-        $Param{Item}->{Input}->{Translation} = 1;
+    $Param{Prefix} ||= '';
+    $Param{Value}  ||= $Param{Item}->{Input}->{ValueDefault};
+
+    if ( $Param{Value} && $Param{Value} =~ m{ ##### }xms ) {
+        my @Values = split '#####', $Param{Value};
+        $Param{Value} = \@Values;
     }
 
     # generate option string
     my $String = $Self->{LayoutObject}->BuildSelection(
         Name         => $Param{Prefix} . $Param{Item}->{Key},
         Data         => $Param{Item}->{Input}->{Data} || {},
-        SelectedID   => $Param{Value} || $Param{Item}->{Input}->{ValueDefault},
+        SelectedID   => $Param{Value},
         Translation  => $Param{Item}->{Input}->{Translation},
-        PossibleNone => $Param{Item}->{Input}->{PossibleNone} || 0,
+        PossibleNone => $Param{Item}->{Input}->{PossibleNone},
+        Multiple     => $Param{Item}->{Input}->{Multiple},
+        Size         => $Param{Item}->{Input}->{Size},
     );
 
     return $String;
@@ -117,9 +121,11 @@ sub FormDataGet {
     $Param{Prefix} ||= '';
 
     # get form data
-    my $FormData = $Self->{ParamObject}->GetParam(
+    my @FormDatas = $Self->{ParamObject}->GetArray(
         Param => $Param{Prefix} . $Param{Item}->{Key},
     );
+
+    my $FormData = join '#####', @FormDatas;
 
     return $FormData if $FormData;
     return $FormData if !$Param{Item}->{Input}->{Required};
@@ -146,6 +152,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2008-02-06 17:53:07 $
+$Revision: 1.6 $ $Date: 2008-02-09 20:09:04 $
 
 =cut

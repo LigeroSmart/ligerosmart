@@ -2,7 +2,7 @@
 # AdminImportExport.dtl - provides HTML form for AdminImportExport
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.dtl,v 1.10 2008-02-06 17:47:26 mh Exp $
+# $Id: AdminImportExport.dtl,v 1.11 2008-02-09 20:09:04 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -106,7 +106,7 @@
         <input type="hidden" name="TemplateID" value="$QData{"TemplateID"}">
         <table width="100%" cellspacing="0" cellpadding="4">
           <tr>
-            <td class="contenthead">$Text{"Step"} 1 - $Text{"Edit common information"}:</td>
+            <td class="contenthead">$Text{"Step"} 1 $Text{"of"} 5 - $Text{"Edit common information"}:</td>
           </tr>
           <tr>
             <td class="contentbody">
@@ -159,7 +159,7 @@
         <input type="hidden" name="TemplateID" value="$QData{"TemplateID"}">
         <table width="100%" cellspacing="0" cellpadding="4">
           <tr>
-            <td class="contenthead">$Text{"Step"} 2 - $Text{"Edit object information"}:</td>
+            <td class="contenthead">$Text{"Step"} 2 $Text{"of"} 5 - $Text{"Edit object information"}:</td>
           </tr>
           <tr>
             <td class="contentbody">
@@ -202,7 +202,7 @@
         <input type="hidden" name="TemplateID" value="$QData{"TemplateID"}">
         <table width="100%" cellspacing="0" cellpadding="4">
           <tr>
-            <td class="contenthead">$Text{"Step"} 3 - $Text{"Edit format information"}:</td>
+            <td class="contenthead">$Text{"Step"} 3 $Text{"of"} 5 - $Text{"Edit format information"}:</td>
           </tr>
           <tr>
             <td class="contentbody">
@@ -245,7 +245,7 @@
         <input type="hidden" name="TemplateID" value="$QData{"TemplateID"}">
         <table width="100%" cellspacing="0" cellpadding="4">
           <tr>
-            <td class="contenthead">$Text{"Step"} 4 - $Text{"Edit mapping information"}:</td>
+            <td class="contenthead">$Text{"Step"} 4 $Text{"of"} 5 - $Text{"Edit mapping information"}:</td>
           </tr>
           <tr>
             <td class="contentbody">
@@ -269,24 +269,24 @@
 <!-- dtl:block:TemplateEdit4Row -->
                 <tr>
                   <td>
-<!-- dtl:block:TemplateEdit4RowObject -->
                     <table border="0" cellspacing="0" cellpadding="3">
+<!-- dtl:block:TemplateEdit4RowObject -->
                       <tr>
                         <td class="contentkey">$Text{"$QData{"Name"}"}: </td>
                         <td class="contentvalue">$Data{"InputStrg"}</td>
                       </tr>
-                    </table>
 <!-- dtl:block:TemplateEdit4RowObject -->
+                    </table>
                   </td>
                   <td>
-<!-- dtl:block:TemplateEdit4RowFormat -->
                     <table border="0" cellspacing="0" cellpadding="3">
+<!-- dtl:block:TemplateEdit4RowFormat -->
                       <tr>
                         <td class="contentkey">$Text{"$QData{"Name"}"}: </td>
                         <td class="contentvalue">$Data{"InputStrg"}</td>
                       </tr>
-                    </table>
 <!-- dtl:block:TemplateEdit4RowFormat -->
+                    </table>
                   </td>
                   <td align="right">
                     <input class="button" type="submit" name="MappingUp::$QData{"MappingID"}" value="$Text{"Up"}">
@@ -317,6 +317,55 @@
         </table>
       </form>
 <!-- dtl:block:TemplateEdit4 -->
+<!-- dtl:block:TemplateEdit5 -->
+      <form action="$Env{"CGIHandle"}" method="get">
+        <input type="hidden" name="Action" value="$Env{"Action"}">
+        <input type="hidden" name="Subaction" value="TemplateSave5">
+        <input type="hidden" name="TemplateID" value="$QData{"TemplateID"}">
+        <table width="100%" cellspacing="0" cellpadding="4">
+          <tr>
+            <td class="contenthead">$Text{"Step"} 5 $Text{"of"} 5 - $Text{"Edit search information"}:</td>
+          </tr>
+          <tr>
+            <td class="contentbody">
+              <table border="0" cellspacing="0" cellpadding="3">
+                <tr>
+                  <td class="contentkey" width="150">$Text{"Name"}: </td>
+                  <td class="contentvalue">$QData{"Name"}</td>
+                </tr>
+                <tr>
+                  <td class="contentkey">$Text{"Restrict export per search"}: </td>
+                  <td class="contentvalue">$Data{"RestrictExportStrg"}</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td class="contenthead">&nbsp;</td>
+          </tr>
+          <tr>
+            <td class="contentbody">
+              <table border="0" cellspacing="0" cellpadding="3">
+<!-- dtl:block:TemplateEdit5Row -->
+                <tr>
+                  <td class="contentkey">$Text{"$QData{"Name"}"}:
+                    &nbsp;
+                  </td>
+                  <td class="contentvalue">$Data{"InputStrg"}</td>
+                </tr>
+<!-- dtl:block:TemplateEdit5Row -->
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td class="contentfooter">
+              <input class="button" type="submit" name="SubmitBack" value="$Text{"...Back"}">&nbsp;
+              <input class="button" type="submit" name="SubmitNext" value="$Text{"Next..."}">
+            </td>
+          </tr>
+        </table>
+      </form>
+<!-- dtl:block:TemplateEdit5 -->
     </td>
   </tr>
 </table>

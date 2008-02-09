@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminImportExport.pm - admin frontend of import export module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.pm,v 1.14 2008-02-06 17:53:07 mh Exp $
+# $Id: AdminImportExport.pm,v 1.15 2008-02-09 20:09:04 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ImportExport;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -79,6 +79,9 @@ sub Run {
                 TemplateID => $TemplateData->{TemplateID},
                 UserID     => $Self->{UserID},
             );
+
+            return $Self->{LayoutObject}->FatalError( Message => 'Template not found!' )
+                if !$TemplateData->{TemplateID};
         }
 
         # generate ObjectOptionStrg
@@ -223,6 +226,9 @@ sub Run {
             TemplateID => $TemplateData->{TemplateID},
             UserID     => $Self->{UserID},
         );
+
+        return $Self->{LayoutObject}->FatalError( Message => 'Template not found!' )
+            if !$TemplateData->{TemplateID};
 
         # generate ObjectOptionStrg
         my $ObjectOptionStrg = $Self->{LayoutObject}->BuildSelection(
@@ -398,6 +404,9 @@ sub Run {
             UserID     => $Self->{UserID},
         );
 
+        return $Self->{LayoutObject}->FatalError( Message => 'Template not found!' )
+            if !$TemplateData->{TemplateID};
+
         # generate ObjectOptionStrg
         my $ObjectOptionStrg = $Self->{LayoutObject}->BuildSelection(
             Data         => $ObjectList,
@@ -572,6 +581,9 @@ sub Run {
             UserID     => $Self->{UserID},
         );
 
+        return $Self->{LayoutObject}->FatalError( Message => 'Template not found!' )
+            if !$TemplateData->{TemplateID};
+
         # generate ObjectOptionStrg
         my $ObjectOptionStrg = $Self->{LayoutObject}->BuildSelection(
             Data         => $ObjectList,
@@ -717,7 +729,7 @@ sub Run {
         my $TemplateID = $Self->{ParamObject}->GetParam( Param => 'TemplateID' );
 
         my %Submit = (
-            SubmitNext => 'Overview',
+            SubmitNext => 'TemplateEdit5',
             SubmitBack => 'TemplateEdit3',
             Reload     => 'TemplateEdit4',
             MappingAdd => 'TemplateEdit4',
@@ -843,6 +855,201 @@ sub Run {
                 UserID     => $Self->{UserID},
             );
         }
+
+        return $Self->{LayoutObject}->Redirect(
+            OP => "Action=$Self->{Action}&Subaction=$Subaction&TemplateID=$TemplateID",
+        );
+    }
+
+    # ------------------------------------------------------------ #
+    # template edit (search)
+    # ------------------------------------------------------------ #
+    if ( $Self->{Subaction} eq 'TemplateEdit5' ) {
+
+        # get object list
+        my $ObjectList = $Self->{ImportExportObject}->ObjectList();
+
+        return $Self->{LayoutObject}->FatalError( Message => 'No object backend found!' )
+            if !$ObjectList;
+
+        # get format list
+        my $FormatList = $Self->{ImportExportObject}->FormatList();
+
+        return $Self->{LayoutObject}->FatalError( Message => 'No format backend found!' )
+            if !$FormatList;
+
+        # get params
+        my $TemplateData = {};
+        $TemplateData->{TemplateID} = $Self->{ParamObject}->GetParam( Param => 'TemplateID' );
+
+        # get template data
+        $TemplateData = $Self->{ImportExportObject}->TemplateGet(
+            TemplateID => $TemplateData->{TemplateID},
+            UserID     => $Self->{UserID},
+        );
+
+        return $Self->{LayoutObject}->FatalError( Message => 'Template not found!' )
+            if !$TemplateData->{TemplateID};
+
+        # generate ObjectOptionStrg
+        my $ObjectOptionStrg = $Self->{LayoutObject}->BuildSelection(
+            Data         => $ObjectList,
+            Name         => 'Object',
+            SelectedID   => $TemplateData->{Object},
+            PossibleNone => 1,
+            Translation  => 1,
+        );
+
+        # generate FormatOptionStrg
+        my $FormatOptionStrg = $Self->{LayoutObject}->BuildSelection(
+            Data         => $FormatList,
+            Name         => 'Format',
+            SelectedID   => $TemplateData->{Format},
+            PossibleNone => 1,
+            Translation  => 1,
+        );
+
+        # output overview
+        $Self->{LayoutObject}->Block(
+            Name => 'Overview',
+            Data => {
+                %Param,
+                ObjectOptionStrg => $ObjectOptionStrg,
+                FormatOptionStrg => $FormatOptionStrg,
+            },
+        );
+
+        # get search data
+        my $SearchData = $Self->{ImportExportObject}->SearchDataGet(
+            TemplateID => $TemplateData->{TemplateID},
+            UserID     => $Self->{UserID},
+        );
+
+        # create rescrict export string
+        my $RestrictExportStrg = $Self->{LayoutObject}->ImportExportFormInputCreate(
+            Item => {
+                Key   => 'RestrictExport',
+                Input => {
+                    Type => 'Checkbox',
+                },
+            },
+            Value => scalar keys %{$SearchData},
+        );
+
+        # output list
+        $Self->{LayoutObject}->Block(
+            Name => 'TemplateEdit5',
+            Data => {
+                %{$TemplateData},
+                RestrictExportStrg => $RestrictExportStrg,
+            },
+        );
+
+        # get search attributes
+        my $SearchAttributeList = $Self->{ImportExportObject}->SearchAttributesGet(
+            TemplateID => $TemplateData->{TemplateID},
+            UserID     => $Self->{UserID},
+        );
+
+        # output object attributes
+        for my $Item ( @{$SearchAttributeList} ) {
+
+            # create form input
+            my $InputString = $Self->{LayoutObject}->ImportExportFormInputCreate(
+                Item  => $Item,
+                Value => $SearchData->{ $Item->{Key} },
+            );
+
+            # output attribute row
+            $Self->{LayoutObject}->Block(
+                Name => 'TemplateEdit5Row',
+                Data => {
+                    Name => $Item->{Name} || '',
+                    InputStrg => $InputString,
+                },
+            );
+        }
+
+        # output header and navbar
+        my $Output = $Self->{LayoutObject}->Header();
+        $Output .= $Self->{LayoutObject}->NavigationBar();
+
+        # start template output
+        $Output .= $Self->{LayoutObject}->Output(
+            TemplateFile => 'AdminImportExport',
+            Data         => \%Param,
+        );
+
+        $Output .= $Self->{LayoutObject}->Footer();
+        return $Output;
+    }
+
+    # ------------------------------------------------------------ #
+    # template save (search)
+    # ------------------------------------------------------------ #
+    elsif ( $Self->{Subaction} eq 'TemplateSave5' ) {
+
+        # get template id
+        my $TemplateID = $Self->{ParamObject}->GetParam( Param => 'TemplateID' );
+
+        my %Submit = (
+            SubmitNext => 'Overview',
+            SubmitBack => 'TemplateEdit4',
+            Reload     => 'TemplateEdit5',
+        );
+
+        # get submit action
+        my $Subaction = $Submit{Reload};
+
+        PARAM:
+        for my $SubmitKey ( keys %Submit ) {
+            next PARAM if !$Self->{ParamObject}->GetParam( Param => $SubmitKey );
+
+            $Subaction = $Submit{$SubmitKey};
+            last PARAM;
+        }
+
+        # delete all search restrictions
+        if ( !$Self->{ParamObject}->GetParam( Param => 'RestrictExport' ) ) {
+
+            # delete all search data
+            $Self->{ImportExportObject}->SearchDataDelete(
+                TemplateID => $TemplateID,
+                UserID     => $Self->{UserID},
+            );
+
+            return $Self->{LayoutObject}->Redirect(
+                OP => "Action=$Self->{Action}&Subaction=$Subaction&TemplateID=$TemplateID",
+            );
+        }
+
+        # get search attributes
+        my $SearchAttributeList = $Self->{ImportExportObject}->SearchAttributesGet(
+            TemplateID => $TemplateID,
+            UserID     => $Self->{UserID},
+        );
+
+        # get attribute values from form
+        my %AttributeValues;
+        for my $Item ( @{$SearchAttributeList} ) {
+
+            # get form data
+            $AttributeValues{ $Item->{Key} } = $Self->{LayoutObject}->ImportExportFormDataGet(
+                Item => $Item,
+            );
+
+            # reload form if value is required
+            if ( $Item->{Form}->{Invalid} ) {
+                $Subaction = $Submit{Reload};
+            }
+        }
+
+        # save the search data
+        $Self->{ImportExportObject}->SearchDataSave(
+            TemplateID => $TemplateID,
+            SearchData => \%AttributeValues,
+            UserID     => $Self->{UserID},
+        );
 
         return $Self->{LayoutObject}->Redirect(
             OP => "Action=$Self->{Action}&Subaction=$Subaction&TemplateID=$TemplateID",

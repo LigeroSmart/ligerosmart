@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ImportExport.sopm,v 1.9 2008-02-08 19:40:09 mh Exp $</CVS>
+    <CVS>$Id: ImportExport.sopm,v 1.10 2008-02-09 20:09:04 mh Exp $</CVS>
     <Name>ImportExport</Name>
     <Version>0.0.0</Version>
     <Framework>2.2.5</Framework>
@@ -16,6 +16,7 @@
         <File Permission="644" Location="Kernel/Language/cz_ImportExport.pm"/>
         <File Permission="644" Location="Kernel/Language/de_ImportExport.pm"/>
         <File Permission="644" Location="Kernel/Modules/AdminImportExport.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/ImportExportLayoutCheckbox.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ImportExportLayoutDTL.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ImportExportLayoutSelection.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ImportExportLayoutText.pm"/>
@@ -86,6 +87,15 @@
                 <IndexColumn Name="mapping_id"/>
             </Index>
         </TableCreate>
+        <TableCreate Name="imexport_search">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
+            <Column Name="template_id" Required="true" Type="BIGINT"/>
+            <Column Name="data_key" Required="true" Size="100" Type="VARCHAR"/>
+            <Column Name="data_value" Required="true" Size="200" Type="VARCHAR"/>
+            <Index Name="imexport_search_template_id">
+                <IndexColumn Name="template_id"/>
+            </Index>
+        </TableCreate>
     </DatabaseInstall>
     <DatabaseUninstall>
         <TableDrop Name="imexport_template"/>
@@ -94,6 +104,7 @@
         <TableDrop Name="imexport_mapping"/>
         <TableDrop Name="imexport_mapping_object"/>
         <TableDrop Name="imexport_mapping_format"/>
+        <TableDrop Name="imexport_search"/>
     </DatabaseUninstall>
     <IntroInstallPre Title="Install Information" Lang="en">
         &lt;br&gt;

@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport/FormatBackend/CSV.pm - import/export backend for CSV
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: CSV.pm,v 1.8 2008-02-08 19:40:09 mh Exp $
+# $Id: CSV.pm,v 1.9 2008-02-09 20:09:04 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ImportExport;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 =head1 NAME
 
@@ -103,12 +103,16 @@ sub FormatAttributesGet {
             Key   => 'ColumnSeperator',
             Name  => 'Column Seperator',
             Input => {
-                Type         => 'Text',
-                ValueDefault => ';',
+                Type => 'Selection',
+                Data => {
+                    Tabulator => 'Tabulator (TAB)',
+                    Semicolon => 'Semicolon (;)',
+                    Colon     => 'Colon (:)',
+                    Dot       => 'Dot (.)'
+                },
                 Required     => 1,
-                Translation  => 0,
-                Size         => 5,
-                MaxLength    => 5,
+                Translation  => 1,
+                PossibleNone => 1,
             },
         },
     ];
@@ -145,6 +149,13 @@ sub MappingFormatAttributesGet {
                 Required => 0,
             },
         },
+        {
+            Key   => 'Identifier',
+            Name  => 'Identifier',
+            Input => {
+                Type => 'Checkbox',
+            },
+        },
     ];
 
     return $Attributes;
@@ -176,7 +187,30 @@ sub ImportDataGet {
         }
     }
 
+    return [] if !$Param{SourceContent};
+    return [] if ref $Param{SourceContent} ne 'SCALAR';
+
+    # get format data
+    my $FormatData = $Self->{ImportExportObject}->FormatDataGet(
+        TemplateID => $Param{TemplateID},
+        UserID     => $Param{UserID},
+    );
+
+    return if !$FormatData;
+    return if ref $FormatData ne 'HASH';
+    return if !$FormatData->{ColumnSeperator};
+
+    # split content in rows
+    my @SourceContent = split "\n", ${ $Param{SourceContent} };
+
     my @ImportData;
+    for my $SourceRow (@SourceContent) {
+
+        # split source row
+        my @Row = split $FormatData->{ColumnSeperator}, $SourceRow;
+
+        push @ImportData, \@Row;
+    }
 
     return \@ImportData;
 }
@@ -245,6 +279,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.8 $ $Date: 2008-02-08 19:40:09 $
+$Revision: 1.9 $ $Date: 2008-02-09 20:09:04 $
 
 =cut

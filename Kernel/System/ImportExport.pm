@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport.pm - all import and export functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pm,v 1.14 2008-02-08 19:40:09 mh Exp $
+# $Id: ImportExport.pm,v 1.15 2008-02-09 20:09:04 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 =head1 NAME
 
@@ -442,6 +442,12 @@ sub TemplateDelete {
         return;
     }
 
+    # delete existing search data
+    $Self->SearchDataDelete(
+        TemplateID => $Param{TemplateID},
+        UserID     => $Param{UserID},
+    );
+
     # delete all mapping data
     for my $TemplateID ( @{ $Param{TemplateID} } ) {
         $Self->MappingDelete(
@@ -595,7 +601,7 @@ sub ObjectDataGet {
 
 =item ObjectDataSave()
 
-save the object data from a template
+save the object data of a template
 
     my $True = $ImportExportObject->ObjectDataSave(
         TemplateID => 123,
@@ -633,11 +639,15 @@ sub ObjectDataSave {
         UserID     => $Param{UserID},
     );
 
+    DATAKEY:
     for my $DataKey ( keys %{ $Param{ObjectData} } ) {
 
         # quote
         my $QDataKey   = $Self->{DBObject}->Quote($DataKey);
         my $QDataValue = $Self->{DBObject}->Quote( $Param{ObjectData}->{$DataKey} );
+
+        next DATAKEY if !defined $QDataKey;
+        next DATAKEY if !defined $QDataValue;
 
         # insert one row
         $Self->{DBObject}->Do(
@@ -652,7 +662,7 @@ sub ObjectDataSave {
 
 =item ObjectDataDelete()
 
-delete the existing object data from a template
+delete the existing object data of a template
 
     my $True = $ImportExportObject->ObjectDataDelete(
         TemplateID => 123,
@@ -826,7 +836,7 @@ sub FormatDataGet {
 
 =item FormatDataSave()
 
-save the format data from a template
+save the format data of a template
 
     my $True = $ImportExportObject->FormatDataSave(
         TemplateID => 123,
@@ -864,11 +874,15 @@ sub FormatDataSave {
         UserID     => $Param{UserID},
     );
 
+    DATAKEY:
     for my $DataKey ( keys %{ $Param{FormatData} } ) {
 
         # quote
         my $QDataKey   = $Self->{DBObject}->Quote($DataKey);
         my $QDataValue = $Self->{DBObject}->Quote( $Param{FormatData}->{$DataKey} );
+
+        next DATAKEY if !defined $QDataKey;
+        next DATAKEY if !defined $QDataValue;
 
         # insert one row
         $Self->{DBObject}->Do(
@@ -883,7 +897,7 @@ sub FormatDataSave {
 
 =item FormatDataDelete()
 
-delete the existing format data from a template
+delete the existing format data of a template
 
     my $True = $ImportExportObject->FormatDataDelete(
         TemplateID => 123,
@@ -1797,7 +1811,7 @@ sub Export {
             UserID        => $Param{UserID},
         );
 
-        if (!$DestinationContentRow) {
+        if ( !$DestinationContentRow ) {
             $Result{Failed}++;
             next EXPORTDATAROW;
         }
@@ -1863,6 +1877,8 @@ sub Import {
         UserID        => $Param{UserID},
     );
 
+    return if !$ImportData;
+
     my %Result;
     $Result{Success} = 0;
     $Result{Failed}  = 0;
@@ -1877,7 +1893,7 @@ sub Import {
             UserID        => $Param{UserID},
         );
 
-        if (!$Success) {
+        if ( !$Success ) {
             $Result{Failed}++;
             next IMPORTDATAROW;
         }
@@ -1886,6 +1902,215 @@ sub Import {
     }
 
     return \%Result;
+}
+
+=item SearchAttributesGet()
+
+get the search attributes of a object backend as array/hash reference
+
+    my $Attributes = $ImportExportObject->SearchAttributesGet(
+        TemplateID => 123,
+        UserID     => 1,
+    );
+
+=cut
+
+sub SearchAttributesGet {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(TemplateID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # get template data
+    my $TemplateData = $Self->TemplateGet(
+        TemplateID => $Param{TemplateID},
+        UserID     => $Param{UserID},
+    );
+
+    # load backend
+    my $Backend = $Self->_LoadBackend(
+        Module => "Kernel::System::ImportExport::ObjectBackend::$TemplateData->{Object}",
+    );
+
+    return if !$Backend;
+
+    # get an search attribute list of an object
+    my $Attributes = $Backend->SearchAttributesGet(
+        %Param,
+        UserID => $Param{UserID},
+    );
+
+    return $Attributes;
+}
+
+=item SearchDataGet()
+
+get the search data from a template
+
+    my $SearchDataRef = $ImportExportObject->SearchDataGet(
+        TemplateID => 3,
+        UserID     => 1,
+    );
+
+=cut
+
+sub SearchDataGet {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(TemplateID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!"
+            );
+            return;
+        }
+    }
+
+    # quote
+    $Param{TemplateID} = $Self->{DBObject}->Quote( $Param{TemplateID}, 'Integer' );
+
+    # create sql string
+    my $SQL = "SELECT data_key, data_value FROM imexport_search WHERE "
+        . "template_id = $Param{TemplateID}";
+
+    # ask database
+    $Self->{DBObject}->Prepare( SQL => $SQL );
+
+    # fetch the result
+    my %SearchData;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $SearchData{ $Row[0] } = $Row[1];
+    }
+
+    return \%SearchData;
+}
+
+=item SearchDataSave()
+
+save the search data of a template
+
+    my $True = $ImportExportObject->SearchDataSave(
+        TemplateID => 123,
+        SearchData => $HashRef,
+        UserID     => 1,
+    );
+
+=cut
+
+sub SearchDataSave {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(TemplateID SearchData UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!"
+            );
+            return;
+        }
+    }
+
+    if ( ref $Param{SearchData} ne 'HASH' ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'SearchData must be an hash reference!',
+        );
+        return;
+    }
+
+    # delete existing search data
+    $Self->SearchDataDelete(
+        TemplateID => $Param{TemplateID},
+        UserID     => $Param{UserID},
+    );
+
+    DATAKEY:
+    for my $DataKey ( keys %{ $Param{SearchData} } ) {
+
+        # quote
+        my $QDataKey   = $Self->{DBObject}->Quote($DataKey);
+        my $QDataValue = $Self->{DBObject}->Quote( $Param{SearchData}->{$DataKey} );
+
+        next DATAKEY if !$QDataKey;
+        next DATAKEY if !$QDataValue;
+
+        # insert one row
+        $Self->{DBObject}->Do(
+            SQL => "INSERT INTO imexport_search "
+                . "(template_id, data_key, data_value) VALUES "
+                . "($Param{TemplateID}, '$QDataKey', '$QDataValue')"
+        );
+    }
+
+    return 1;
+}
+
+=item SearchDataDelete()
+
+delete the existing search data of a template
+
+    my $True = $ImportExportObject->SearchDataDelete(
+        TemplateID => 123,
+        UserID     => 1,
+    );
+
+    or
+
+    my $True = $ImportExportObject->SearchDataDelete(
+        TemplateID => [1,44,166,5],
+        UserID     => 1,
+    );
+
+=cut
+
+sub SearchDataDelete {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(TemplateID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!"
+            );
+            return;
+        }
+    }
+
+    if ( !ref $Param{TemplateID} ) {
+        $Param{TemplateID} = [ $Param{TemplateID} ];
+    }
+    elsif ( ref $Param{TemplateID} ne 'ARRAY' ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'TemplateID must be an array reference or a string!',
+        );
+        return;
+    }
+
+    # quote
+    for my $TemplateID ( @{ $Param{TemplateID} } ) {
+        $TemplateID = $Self->{DBObject}->Quote( $TemplateID, 'Integer' );
+    }
+
+    # create the template id string
+    my $TemplateIDString = join ',', @{ $Param{TemplateID} };
+
+    # delete templates
+    return $Self->{DBObject}->Do(
+        SQL => "DELETE FROM imexport_search WHERE template_id IN ( $TemplateIDString )",
+    );
 }
 
 =item _LoadBackend()
@@ -1959,6 +2184,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.14 $ $Date: 2008-02-08 19:40:09 $
+$Revision: 1.15 $ $Date: 2008-02-09 20:09:04 $
 
 =cut
