@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport.pm - all import and export functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pm,v 1.15 2008-02-09 20:09:04 mh Exp $
+# $Id: ImportExport.pm,v 1.16 2008-02-11 08:33:18 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 =head1 NAME
 
@@ -1745,165 +1745,6 @@ sub MappingFormatDataGet {
     return \%MappingFormatData;
 }
 
-=item Export()
-
-export function
-
-    my $ResultRef = $ImportExportObject->Export(
-        TemplateID => 123,
-        UserID     => 1,
-    );
-
-=cut
-
-sub Export {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for my $Argument (qw(TemplateID UserID)) {
-        if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Argument!"
-            );
-            return;
-        }
-    }
-
-    # get template data
-    my $TemplateData = $Self->TemplateGet(
-        TemplateID => $Param{TemplateID},
-        UserID     => $Param{UserID},
-    );
-
-    # load object backend
-    my $ObjectBackend = $Self->_LoadBackend(
-        Module => "Kernel::System::ImportExport::ObjectBackend::$TemplateData->{Object}",
-    );
-
-    return if !$ObjectBackend;
-
-    # load format backend
-    my $FormatBackend = $Self->_LoadBackend(
-        Module => "Kernel::System::ImportExport::FormatBackend::$TemplateData->{Format}",
-    );
-
-    return if !$FormatBackend;
-
-    # get export data
-    my $ExportData = $ObjectBackend->ExportDataGet(
-        TemplateID => $Param{TemplateID},
-        UserID     => $Param{UserID},
-    );
-
-    my %Result;
-    $Result{Success}            = 0;
-    $Result{Failed}             = 0;
-    $Result{DestinationContent} = '';
-
-    EXPORTDATAROW:
-    for my $ExportDataRow ( @{$ExportData} ) {
-
-        # export one row
-        my $DestinationContentRow = $FormatBackend->ExportDataSave(
-            TemplateID    => $Param{TemplateID},
-            ExportDataRow => $ExportDataRow,
-            UserID        => $Param{UserID},
-        );
-
-        if ( !$DestinationContentRow ) {
-            $Result{Failed}++;
-            next EXPORTDATAROW;
-        }
-
-        # add row to destination content
-        $Result{DestinationContent} .= $DestinationContentRow;
-        $Result{Success}++;
-    }
-
-    return \%Result;
-}
-
-=item Import()
-
-import function
-
-    my $ResultRef = $ImportExportObject->Import(
-        TemplateID    => 123,
-        SourceContent => \$StringRef,
-        UserID        => 1,
-    );
-
-=cut
-
-sub Import {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for my $Argument (qw(TemplateID UserID)) {
-        if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Argument!"
-            );
-            return;
-        }
-    }
-
-    # get template data
-    my $TemplateData = $Self->TemplateGet(
-        TemplateID => $Param{TemplateID},
-        UserID     => $Param{UserID},
-    );
-
-    # load object backend
-    my $ObjectBackend = $Self->_LoadBackend(
-        Module => "Kernel::System::ImportExport::ObjectBackend::$TemplateData->{Object}",
-    );
-
-    return if !$ObjectBackend;
-
-    # load format backend
-    my $FormatBackend = $Self->_LoadBackend(
-        Module => "Kernel::System::ImportExport::FormatBackend::$TemplateData->{Format}",
-    );
-
-    return if !$FormatBackend;
-
-    # get import data
-    my $ImportData = $FormatBackend->ImportDataGet(
-        TemplateID    => $Param{TemplateID},
-        SourceContent => $Param{SourceContent},
-        UserID        => $Param{UserID},
-    );
-
-    return if !$ImportData;
-
-    my %Result;
-    $Result{Success} = 0;
-    $Result{Failed}  = 0;
-
-    IMPORTDATAROW:
-    for my $ImportDataRow ( @{$ImportData} ) {
-
-        # import one row
-        my $Success = $ObjectBackend->ImportDataSave(
-            TemplateID    => $Param{TemplateID},
-            ImportDataRow => $ImportDataRow,
-            UserID        => $Param{UserID},
-        );
-
-        if ( !$Success ) {
-            $Result{Failed}++;
-            next IMPORTDATAROW;
-        }
-
-        $Result{Success}++;
-    }
-
-    return \%Result;
-}
-
 =item SearchAttributesGet()
 
 get the search attributes of a object backend as array/hash reference
@@ -2113,6 +1954,167 @@ sub SearchDataDelete {
     );
 }
 
+=item Export()
+
+export function
+
+    my $ResultRef = $ImportExportObject->Export(
+        TemplateID => 123,
+        UserID     => 1,
+    );
+
+=cut
+
+sub Export {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(TemplateID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!"
+            );
+            return;
+        }
+    }
+
+    # get template data
+    my $TemplateData = $Self->TemplateGet(
+        TemplateID => $Param{TemplateID},
+        UserID     => $Param{UserID},
+    );
+
+    # load object backend
+    my $ObjectBackend = $Self->_LoadBackend(
+        Module => "Kernel::System::ImportExport::ObjectBackend::$TemplateData->{Object}",
+    );
+
+    return if !$ObjectBackend;
+
+    # load format backend
+    my $FormatBackend = $Self->_LoadBackend(
+        Module => "Kernel::System::ImportExport::FormatBackend::$TemplateData->{Format}",
+    );
+
+    return if !$FormatBackend;
+
+    # get export data
+    my $ExportData = $ObjectBackend->ExportDataGet(
+        TemplateID => $Param{TemplateID},
+        UserID     => $Param{UserID},
+    );
+
+    my %Result;
+    $Result{Success}            = 0;
+    $Result{Failed}             = 0;
+    $Result{DestinationContent} = [];
+
+    EXPORTDATAROW:
+    for my $ExportDataRow ( @{$ExportData} ) {
+
+        # export one row
+        my $DestinationContentRow = $FormatBackend->ExportDataSave(
+            TemplateID    => $Param{TemplateID},
+            ExportDataRow => $ExportDataRow,
+            UserID        => $Param{UserID},
+        );
+
+        if ( !defined $DestinationContentRow ) {
+            $Result{Failed}++;
+            next EXPORTDATAROW;
+        }
+
+        # add row to destination content
+        push @{ $Result{DestinationContent} }, $DestinationContentRow;
+        $Result{Success}++;
+    }
+
+    return \%Result;
+}
+
+=item Import()
+
+import function
+
+    my $ResultRef = $ImportExportObject->Import(
+        TemplateID    => 123,
+        SourceContent => $ArrayRef,
+        UserID        => 1,
+    );
+
+=cut
+
+sub Import {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(TemplateID SourceContent UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!"
+            );
+            return;
+        }
+    }
+
+    return if ref $Param{SourceContent} ne 'ARRAY';
+
+    # get template data
+    my $TemplateData = $Self->TemplateGet(
+        TemplateID => $Param{TemplateID},
+        UserID     => $Param{UserID},
+    );
+
+    # load object backend
+    my $ObjectBackend = $Self->_LoadBackend(
+        Module => "Kernel::System::ImportExport::ObjectBackend::$TemplateData->{Object}",
+    );
+
+    return if !$ObjectBackend;
+
+    # load format backend
+    my $FormatBackend = $Self->_LoadBackend(
+        Module => "Kernel::System::ImportExport::FormatBackend::$TemplateData->{Format}",
+    );
+
+    return if !$FormatBackend;
+
+    # get import data
+    my $ImportData = $FormatBackend->ImportDataGet(
+        TemplateID    => $Param{TemplateID},
+        SourceContent => $Param{SourceContent},
+        UserID        => $Param{UserID},
+    );
+
+    return if !$ImportData;
+
+    my %Result;
+    $Result{Success} = 0;
+    $Result{Failed}  = 0;
+
+    IMPORTDATAROW:
+    for my $ImportDataRow ( @{$ImportData} ) {
+
+        # import one row
+        my $Success = $ObjectBackend->ImportDataSave(
+            TemplateID    => $Param{TemplateID},
+            ImportDataRow => $ImportDataRow,
+            UserID        => $Param{UserID},
+        );
+
+        if ( !$Success ) {
+            $Result{Failed}++;
+            next IMPORTDATAROW;
+        }
+
+        $Result{Success}++;
+    }
+
+    return \%Result;
+}
+
 =item _LoadBackend()
 
 to load a import/export backend module
@@ -2184,6 +2186,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.15 $ $Date: 2008-02-09 20:09:04 $
+$Revision: 1.16 $ $Date: 2008-02-11 08:33:18 $
 
 =cut

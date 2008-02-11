@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport/FormatBackend/CSV.pm - import/export backend for CSV
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: CSV.pm,v 1.10 2008-02-09 22:22:49 mh Exp $
+# $Id: CSV.pm,v 1.11 2008-02-11 08:33:18 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ImportExport;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 =head1 NAME
 
@@ -149,13 +149,6 @@ sub MappingFormatAttributesGet {
                 Required => 0,
             },
         },
-        {
-            Key   => 'Identifier',
-            Name  => 'Identifier',
-            Input => {
-                Type => 'Checkbox',
-            },
-        },
     ];
 
     return $Attributes;
@@ -163,11 +156,11 @@ sub MappingFormatAttributesGet {
 
 =item ImportDataGet()
 
-get import data as 2D-array-hash reference
+get import data as 2D-array reference
 
     my $ImportData = $FormatBackend->ImportDataGet(
         TemplateID    => 123,
-        SourceContent => $StringRef,
+        SourceContent => $ArrayRef,
         UserID        => 1,
     );
 
@@ -177,7 +170,7 @@ sub ImportDataGet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(TemplateID UserID)) {
+    for my $Argument (qw(TemplateID SourceContent UserID)) {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -187,8 +180,7 @@ sub ImportDataGet {
         }
     }
 
-    return [] if !$Param{SourceContent};
-    return [] if ref $Param{SourceContent} ne 'SCALAR';
+    return if ref $Param{SourceContent} ne 'ARRAY';
 
     # get format data
     my $FormatData = $Self->{ImportExportObject}->FormatDataGet(
@@ -200,14 +192,21 @@ sub ImportDataGet {
     return if ref $FormatData ne 'HASH';
     return if !$FormatData->{ColumnSeperator};
 
-    # split content in rows
-    my @SourceContent = split "\n", ${ $Param{SourceContent} };
+    my %AvailableSeperators = (
+        Tabulator => "\t",
+        Semicolon => ';',
+        Colon     => ':',
+        Dot       => '.',
+    );
 
     my @ImportData;
-    for my $SourceRow (@SourceContent) {
+    SOURCEROW:
+    for my $SourceRow ( @{ $Param{SourceContent} } ) {
+
+        next SOURCEROW if $SourceRow eq '';
 
         # split source row
-        my @Row = split $FormatData->{ColumnSeperator}, $SourceRow;
+        my @Row = split $AvailableSeperators{ $FormatData->{ColumnSeperator} }, $SourceRow;
 
         push @ImportData, \@Row;
     }
@@ -267,7 +266,6 @@ sub ExportDataSave {
 
     # create one csv row
     my $DestinationContent = join $Seperator, @{ $Param{ExportDataRow} };
-    $DestinationContent .= "\n";
 
     return $DestinationContent;
 }
@@ -288,6 +286,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.10 $ $Date: 2008-02-09 22:22:49 $
+$Revision: 1.11 $ $Date: 2008-02-11 08:33:18 $
 
 =cut
