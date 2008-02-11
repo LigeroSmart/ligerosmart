@@ -2,7 +2,7 @@
 # Kernel/Language/de_ImportExport.pm - the german translation of ImportExport
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: de_ImportExport.pm,v 1.10 2008-02-09 20:09:04 mh Exp $
+# $Id: de_ImportExport.pm,v 1.11 2008-02-11 13:32:14 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub Data {
     my ($Self) = @_;
@@ -23,6 +23,8 @@ sub Data {
     $Self->{Translation}->{'Import/Export'}                 = 'Import/Export';
     $Self->{Translation}->{'Import/Export Management'}      = 'Import/Export Verwaltung';
     $Self->{Translation}->{'Add mapping template'}          = 'Mapping-Template hinzufügen';
+    $Self->{Translation}->{'Start Import!'}                 = 'Import starten!';
+    $Self->{Translation}->{'Start Export!'}                 = 'Export starten!';
     $Self->{Translation}->{'Step'}                          = 'Schritt';
     $Self->{Translation}->{'Edit common information'}       = 'Allgemeine Informationen bearbeiten';
     $Self->{Translation}->{'Edit object information'}       = 'Objekt-Informationen bearbeiten';
@@ -39,8 +41,6 @@ sub Data {
     $Self->{Translation}->{'Dot (.)'}                      = 'Punkt (.)';
     $Self->{Translation}->{'Identifier'}                   = 'Identifikator';
     $Self->{Translation}->{'Restrict export per search'}   = 'Export per Suche eischränken';
-    $Self->{Translation}->{''}                             = '';
-    $Self->{Translation}->{''}                             = '';
     $Self->{Translation}->{''}                             = '';
     $Self->{Translation}->{''}                             = '';
     $Self->{Translation}->{''}                             = '';

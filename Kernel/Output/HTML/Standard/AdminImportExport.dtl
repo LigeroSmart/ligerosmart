@@ -2,7 +2,7 @@
 # AdminImportExport.dtl - provides HTML form for AdminImportExport
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.dtl,v 1.12 2008-02-09 22:22:49 mh Exp $
+# $Id: AdminImportExport.dtl,v 1.13 2008-02-11 13:32:14 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -62,8 +62,9 @@
                 <td class="contentkey">$Text{"Name"}</td>
                 <td class="contentkey">$Text{"Format"}</td>
                 <td align="center" class="contentkey">$Text{"valid"}/$Text{"invalid"}</td>
-                <td align="center" class="contentkey" width="100">$Text{"Delete"}</td>
-                <td align="center" class="contentkey" width="100">$Text{"Run Now!"}</td>
+                <td align="center" class="contentkey" width="90">$Text{"Delete"}</td>
+                <td align="center" class="contentkey" width="90">$Text{"Start Import!"}</td>
+                <td align="center" class="contentkey" width="90">$Text{"Start Export!"}</td>
               </tr>
 <!-- dtl:block:OverviewListRow -->
               <tr>
@@ -81,7 +82,12 @@
                   </a>
                 </td>
                 <td align="center" class="$QData{"CssClass"}">
-                  <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=RunNow&TemplateID=$QData{"TemplateID"}">
+                  <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Import&TemplateID=$QData{"TemplateID"}">
+                  $Text{"x"}
+                  </a>
+                </td>
+                <td align="center" class="$QData{"CssClass"}">
+                  <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Export&TemplateID=$QData{"TemplateID"}">
                   $Text{"x"}
                   </a>
                 </td>
