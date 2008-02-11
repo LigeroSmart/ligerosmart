@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport.pm - all import and export functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pm,v 1.16 2008-02-11 08:33:18 mh Exp $
+# $Id: ImportExport.pm,v 1.17 2008-02-11 16:34:29 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 =head1 NAME
 
@@ -2039,7 +2039,7 @@ import function
 
     my $ResultRef = $ImportExportObject->Import(
         TemplateID    => 123,
-        SourceContent => $ArrayRef,
+        SourceContent => $ArrayRef,  # (optional)
         UserID        => 1,
     );
 
@@ -2049,7 +2049,7 @@ sub Import {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(TemplateID SourceContent UserID)) {
+    for my $Argument (qw(TemplateID UserID)) {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -2058,8 +2058,6 @@ sub Import {
             return;
         }
     }
-
-    return if ref $Param{SourceContent} ne 'ARRAY';
 
     # get template data
     my $TemplateData = $Self->TemplateGet(
@@ -2186,6 +2184,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.16 $ $Date: 2008-02-11 08:33:18 $
+$Revision: 1.17 $ $Date: 2008-02-11 16:34:29 $
 
 =cut

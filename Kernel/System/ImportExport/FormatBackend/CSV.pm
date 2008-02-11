@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport/FormatBackend/CSV.pm - import/export backend for CSV
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: CSV.pm,v 1.11 2008-02-11 08:33:18 mh Exp $
+# $Id: CSV.pm,v 1.12 2008-02-11 16:34:29 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ImportExport;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 =head1 NAME
 
@@ -160,7 +160,7 @@ get import data as 2D-array reference
 
     my $ImportData = $FormatBackend->ImportDataGet(
         TemplateID    => 123,
-        SourceContent => $ArrayRef,
+        SourceContent => $ArrayRef,  # (optional)
         UserID        => 1,
     );
 
@@ -170,7 +170,7 @@ sub ImportDataGet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(TemplateID SourceContent UserID)) {
+    for my $Argument (qw(TemplateID UserID)) {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -180,7 +180,8 @@ sub ImportDataGet {
         }
     }
 
-    return if ref $Param{SourceContent} ne 'ARRAY';
+    return [] if !$Param{SourceContent};
+    return [] if ref $Param{SourceContent} ne 'ARRAY';
 
     # get format data
     my $FormatData = $Self->{ImportExportObject}->FormatDataGet(
@@ -286,6 +287,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.11 $ $Date: 2008-02-11 08:33:18 $
+$Revision: 1.12 $ $Date: 2008-02-11 16:34:29 $
 
 =cut

@@ -2,7 +2,7 @@
 # AdminImportExport.dtl - provides HTML form for AdminImportExport
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.dtl,v 1.13 2008-02-11 13:32:14 mh Exp $
+# $Id: AdminImportExport.dtl,v 1.14 2008-02-11 16:34:29 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -63,8 +63,8 @@
                 <td class="contentkey">$Text{"Format"}</td>
                 <td align="center" class="contentkey">$Text{"valid"}/$Text{"invalid"}</td>
                 <td align="center" class="contentkey" width="90">$Text{"Delete"}</td>
-                <td align="center" class="contentkey" width="90">$Text{"Start Import!"}</td>
-                <td align="center" class="contentkey" width="90">$Text{"Start Export!"}</td>
+                <td align="center" class="contentkey" width="90">$Text{"Start Import"}</td>
+                <td align="center" class="contentkey" width="90">$Text{"Start Export"}</td>
               </tr>
 <!-- dtl:block:OverviewListRow -->
               <tr>
@@ -82,7 +82,7 @@
                   </a>
                 </td>
                 <td align="center" class="$QData{"CssClass"}">
-                  <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Import&TemplateID=$QData{"TemplateID"}">
+                  <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=ImportInformation&TemplateID=$QData{"TemplateID"}">
                   $Text{"x"}
                   </a>
                 </td>
@@ -372,6 +372,39 @@
         </table>
       </form>
 <!-- dtl:block:TemplateEdit5 -->
+<!-- dtl:block:ImportInformation -->
+      <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="Action" value="$Env{"Action"}">
+        <input type="hidden" name="Subaction" value="Import">
+        <input type="hidden" name="TemplateID" value="$QData{"TemplateID"}">
+        <table width="100%" cellspacing="0" cellpadding="4">
+          <tr>
+            <td class="contenthead">$Text{"Import information"}:</td>
+          </tr>
+          <tr>
+            <td class="contentbody">
+              <table border="0" cellspacing="0" cellpadding="3">
+                <tr>
+                  <td class="contentkey" width="150">$Text{"Name"}: </td>
+                  <td class="contentvalue">$QData{"Name"}</td>
+                </tr>
+                <tr>
+                  <td class="contentkey" width="150">$Text{"Source File"}: </td>
+                  <td class="contentvalue">
+                    <input type="file" name="SourceFile" size="40" class="fixed">
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td class="contentfooter">
+              <input class="button" type="submit" value="$Text{"Start Import"}">
+            </td>
+          </tr>
+        </table>
+      </form>
+<!-- dtl:block:ImportInformation -->
     </td>
   </tr>
 </table>

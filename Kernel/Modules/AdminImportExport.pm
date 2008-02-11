@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminImportExport.pm - admin frontend of import export module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.pm,v 1.15 2008-02-09 20:09:04 mh Exp $
+# $Id: AdminImportExport.pm,v 1.16 2008-02-11 16:34:29 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ImportExport;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -203,7 +203,7 @@ sub Run {
     # ------------------------------------------------------------ #
     # template edit (object)
     # ------------------------------------------------------------ #
-    if ( $Self->{Subaction} eq 'TemplateEdit2' ) {
+    elsif ( $Self->{Subaction} eq 'TemplateEdit2' ) {
 
         # get object list
         my $ObjectList = $Self->{ImportExportObject}->ObjectList();
@@ -380,7 +380,7 @@ sub Run {
     # ------------------------------------------------------------ #
     # template edit (format)
     # ------------------------------------------------------------ #
-    if ( $Self->{Subaction} eq 'TemplateEdit3' ) {
+    elsif ( $Self->{Subaction} eq 'TemplateEdit3' ) {
 
         # get object list
         my $ObjectList = $Self->{ImportExportObject}->ObjectList();
@@ -557,7 +557,7 @@ sub Run {
     # ------------------------------------------------------------ #
     # template edit (mapping)
     # ------------------------------------------------------------ #
-    if ( $Self->{Subaction} eq 'TemplateEdit4' ) {
+    elsif ( $Self->{Subaction} eq 'TemplateEdit4' ) {
 
         # get object list
         my $ObjectList = $Self->{ImportExportObject}->ObjectList();
@@ -864,7 +864,7 @@ sub Run {
     # ------------------------------------------------------------ #
     # template edit (search)
     # ------------------------------------------------------------ #
-    if ( $Self->{Subaction} eq 'TemplateEdit5' ) {
+    elsif ( $Self->{Subaction} eq 'TemplateEdit5' ) {
 
         # get object list
         my $ObjectList = $Self->{ImportExportObject}->ObjectList();
@@ -1072,6 +1072,186 @@ sub Run {
 
         # redirect to overview
         return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
+    }
+
+    # ------------------------------------------------------------ #
+    # import information
+    # ------------------------------------------------------------ #
+    elsif ( $Self->{Subaction} eq 'ImportInformation' ) {
+
+        # get object list
+        my $ObjectList = $Self->{ImportExportObject}->ObjectList();
+
+        return $Self->{LayoutObject}->FatalError( Message => 'No object backend found!' )
+            if !$ObjectList;
+
+        # get format list
+        my $FormatList = $Self->{ImportExportObject}->FormatList();
+
+        return $Self->{LayoutObject}->FatalError( Message => 'No format backend found!' )
+            if !$FormatList;
+
+        # get params
+        my $TemplateData = {};
+        $TemplateData->{TemplateID} = $Self->{ParamObject}->GetParam( Param => 'TemplateID' );
+
+        # get template data
+        $TemplateData = $Self->{ImportExportObject}->TemplateGet(
+            TemplateID => $TemplateData->{TemplateID},
+            UserID     => $Self->{UserID},
+        );
+
+        return $Self->{LayoutObject}->FatalError( Message => 'Template not found!' )
+            if !$TemplateData->{TemplateID};
+
+        # generate ObjectOptionStrg
+        my $ObjectOptionStrg = $Self->{LayoutObject}->BuildSelection(
+            Data         => $ObjectList,
+            Name         => 'Object',
+            SelectedID   => $TemplateData->{Object},
+            PossibleNone => 1,
+            Translation  => 1,
+        );
+
+        # generate FormatOptionStrg
+        my $FormatOptionStrg = $Self->{LayoutObject}->BuildSelection(
+            Data         => $FormatList,
+            Name         => 'Format',
+            SelectedID   => $TemplateData->{Format},
+            PossibleNone => 1,
+            Translation  => 1,
+        );
+
+        # output overview
+        $Self->{LayoutObject}->Block(
+            Name => 'Overview',
+            Data => {
+                %Param,
+                ObjectOptionStrg => $ObjectOptionStrg,
+                FormatOptionStrg => $FormatOptionStrg,
+            },
+        );
+
+        # output list
+        $Self->{LayoutObject}->Block(
+            Name => 'ImportInformation',
+            Data => {
+                %{$TemplateData},
+            },
+        );
+
+        # output header and navbar
+        my $Output = $Self->{LayoutObject}->Header();
+        $Output .= $Self->{LayoutObject}->NavigationBar();
+
+        # start template output
+        $Output .= $Self->{LayoutObject}->Output(
+            TemplateFile => 'AdminImportExport',
+            Data         => \%Param,
+        );
+
+        $Output .= $Self->{LayoutObject}->Footer();
+        return $Output;
+    }
+
+    # ------------------------------------------------------------ #
+    # import
+    # ------------------------------------------------------------ #
+    elsif ( $Self->{Subaction} eq 'Import' ) {
+
+        # get params
+        my $TemplateData = {};
+        $TemplateData->{TemplateID} = $Self->{ParamObject}->GetParam( Param => 'TemplateID' );
+
+        # get template data
+        $TemplateData = $Self->{ImportExportObject}->TemplateGet(
+            TemplateID => $TemplateData->{TemplateID},
+            UserID     => $Self->{UserID},
+        );
+
+        return $Self->{LayoutObject}->FatalError( Message => 'Template not found!' )
+            if !$TemplateData->{TemplateID};
+
+        # get source file
+        my %SourceFile = $Self->{ParamObject}->GetUploadAll(
+            Param  => 'SourceFile',
+            Source => 'String',
+        );
+
+        $SourceFile{Content} ||= '';
+        my @SourceContent = split "\n", $SourceFile{Content};
+
+        # import data
+        my $Result = $Self->{ImportExportObject}->Import(
+            TemplateID    => $TemplateData->{TemplateID},
+            SourceContent => \@SourceContent,
+            UserID        => $Self->{UserID},
+        );
+
+        return $Self->{LayoutObject}->FatalError( Message => 'Error occurred. Import impossible!' )
+            if !$Result;
+
+        # log result
+        $Self->{LogObject}->Log(
+            Priority => 'notice',
+            Message  => "$Result->{Failed} items exported not successful.",
+        );
+        $Self->{LogObject}->Log(
+            Priority => 'notice',
+            Message  => "$Result->{Success} items exported successful.",
+        );
+
+        return $Self->{LayoutObject}->Redirect(
+            OP =>
+                "Action=$Self->{Action}&Subaction=Overview&TemplateID=$TemplateData->{TemplateID}",
+        );
+    }
+
+    # ------------------------------------------------------------ #
+    # export
+    # ------------------------------------------------------------ #
+    elsif ( $Self->{Subaction} eq 'Export' ) {
+
+        # get params
+        my $TemplateData = {};
+        $TemplateData->{TemplateID} = $Self->{ParamObject}->GetParam( Param => 'TemplateID' );
+
+        # get template data
+        $TemplateData = $Self->{ImportExportObject}->TemplateGet(
+            TemplateID => $TemplateData->{TemplateID},
+            UserID     => $Self->{UserID},
+        );
+
+        return $Self->{LayoutObject}->FatalError( Message => 'Template not found!' )
+            if !$TemplateData->{TemplateID};
+
+        # export data
+        my $Result = $Self->{ImportExportObject}->Export(
+            TemplateID => $TemplateData->{TemplateID},
+            UserID     => $Self->{UserID},
+        );
+
+        return $Self->{LayoutObject}->FatalError( Message => 'Error occurred. Export impossible!' )
+            if !$Result;
+
+        # log result
+        $Self->{LogObject}->Log(
+            Priority => 'notice',
+            Message  => "$Result->{Failed} items exported not successful.",
+        );
+        $Self->{LogObject}->Log(
+            Priority => 'notice',
+            Message  => "$Result->{Success} items exported successful.",
+        );
+
+        my $FileContent = join "\n", @{ $Result->{DestinationContent} };
+
+        return $Self->{LayoutObject}->Attachment(
+            Type        => 'inline',
+            Filename    => 'Export.csv',
+            ContentType => 'text/csv',
+            Content     => $FileContent,
+        );
     }
 
     # ------------------------------------------------------------ #
