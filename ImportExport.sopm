@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ImportExport.sopm,v 1.10 2008-02-09 20:09:04 mh Exp $</CVS>
+    <CVS>$Id: ImportExport.sopm,v 1.11 2008-02-11 19:50:00 mh Exp $</CVS>
     <Name>ImportExport</Name>
     <Version>0.0.0</Version>
     <Framework>2.2.5</Framework>
@@ -115,7 +115,7 @@
         &lt;br&gt;
         ATTENTION&lt;br&gt;
         &lt;br&gt;
-        Make sure your database accepts packages over 5 MB in size. A MySQL database for example accepts packages up to 1 MB by default. In this case, the value for max_allowed_packet must be increased. The recommended maximum size accepted is 20 MB.&lt;br&gt;
+        In order to use the CSV import/export function, the Text::CSV_XS CPAN module must be installed.
         &lt;br&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
@@ -130,7 +130,7 @@
         &lt;br&gt;
         ACHTUNG&lt;br&gt;
         &lt;br&gt;
-        Vergewissern Sie sich, dass ihre Datenbank Pakete mit einer Größe von mehr als 5 MB akzeptiert. Eine MySQL Datenbank akzeptiert beispielsweise standartmäßig Pakete mit einer Größe von maximal 1 MB. In diesem Fall muss der Wert für max_allowed_packet erhöht werden. Empfohlen werden 20 MB.&lt;br&gt;
+        Um CSV-Import/Export nutzen zu können, muss das CPAN Module Text::CSV_XS installiert sein!
         &lt;br&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
@@ -145,7 +145,7 @@
         &lt;br&gt;
         ATTENTION&lt;br&gt;
         &lt;br&gt;
-        Make sure your database accepts packages over 5 MB in size. A MySQL database for example accepts packages up to 1 MB by default. In this case, the value for max_allowed_packet must be increased. The recommended maximum size accepted is 20 MB.&lt;br&gt;
+        In order to use the CSV import/export function, the Text::CSV_XS CPAN module must be installed.
         &lt;br&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
@@ -160,7 +160,7 @@
         &lt;br&gt;
         ACHTUNG&lt;br&gt;
         &lt;br&gt;
-        Vergewissern Sie sich, dass ihre Datenbank Pakete mit einer Größe von mehr als 5 MB akzeptiert. Eine MySQL Datenbank akzeptiert beispielsweise standartmäßig Pakete mit einer Größe von maximal 1 MB. In diesem Fall muss der Wert für max_allowed_packet erhöht werden. Empfohlen werden 20 MB.&lt;br&gt;
+        Um CSV-Import/Export nutzen zu können, muss das CPAN Module Text::CSV_XS installiert sein!
         &lt;br&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;

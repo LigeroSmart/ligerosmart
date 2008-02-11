@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport/FormatBackend/CSV.pm - import/export backend for CSV
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: CSV.pm,v 1.12 2008-02-11 16:34:29 mh Exp $
+# $Id: CSV.pm,v 1.13 2008-02-11 19:50:00 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,9 +15,10 @@ use strict;
 use warnings;
 
 use Kernel::System::ImportExport;
+use Text::CSV_XS;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 =head1 NAME
 
@@ -200,14 +201,24 @@ sub ImportDataGet {
         Dot       => '.',
     );
 
+    my $Seperator = $AvailableSeperators{ $FormatData->{ColumnSeperator} } || '';
+
+    # create the parser object
+    my $ParseObject = Text::CSV_XS->new( {
+        binary   => 1,
+        sep_char => $Seperator,
+    } );
+
     my @ImportData;
     SOURCEROW:
     for my $SourceRow ( @{ $Param{SourceContent} } ) {
 
         next SOURCEROW if $SourceRow eq '';
 
-        # split source row
-        my @Row = split $AvailableSeperators{ $FormatData->{ColumnSeperator} }, $SourceRow;
+        # parse the line
+        $ParseObject->parse( $SourceRow );
+
+        my @Row = $ParseObject->fields;
 
         push @ImportData, \@Row;
     }
@@ -262,13 +273,15 @@ sub ExportDataSave {
 
     my $Seperator = $AvailableSeperators{ $FormatData->{ColumnSeperator} } || '';
 
-    # replace undef with empty string
-    map { $_ ||= '' } @{ $Param{ExportDataRow} };
+    # create the parser object
+    my $ParseObject = Text::CSV_XS->new( {
+        binary   => 1,
+        sep_char => $Seperator,
+    } );
 
-    # create one csv row
-    my $DestinationContent = join $Seperator, @{ $Param{ExportDataRow} };
+    return if !$ParseObject->combine( @{ $Param{ExportDataRow} } );
 
-    return $DestinationContent;
+    return $ParseObject->string;
 }
 
 1;
@@ -287,6 +300,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.12 $ $Date: 2008-02-11 16:34:29 $
+$Revision: 1.13 $ $Date: 2008-02-11 19:50:00 $
 
 =cut
