@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.13 2008-01-23 10:18:25 rk Exp $
+# $Id: FAQ.pm,v 1.14 2008-02-13 13:56:29 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Group;
 use Kernel::System::CustomerGroup;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.13 $';
+$VERSION = '$Revision: 1.14 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -1829,7 +1829,7 @@ sub FAQSearch {
         " LEFT JOIN faq_state s ON s.id = i.state_id".
         " WHERE";
     my $Ext = '';
-    foreach (qw(f_subject f_field1 f_field2 f_field3 f_field4 f_field5 f_field6)) {
+    foreach my $Key (qw(f_subject f_field1 f_field2 f_field3 f_field4 f_field5 f_field6)) {
         if ($Ext) {
             $Ext .= ' OR ';
         }
@@ -1843,21 +1843,24 @@ sub FAQSearch {
                 if ($What) {
                     $What .= ' OR ';
                 }
-                $What .= " LOWER(i.$_) LIKE LOWER('%".$Self->{DBObject}->Quote($Value)."%')";
+                my $ValueInsert = lc $Self->{DBObject}->Quote($Value);
+                $What .= " i.$Key LIKE '%".$ValueInsert."%'";
             }
             $Ext .= $What;
         }
         else {
-            $Ext .= " LOWER(i.$_) LIKE LOWER('%')";
+            $Ext .= " i.$Key LIKE '%'";
         }
     }
     $Ext .= ' )';
     if ($Param{Number}) {
         $Param{Number} =~ s/\*/%/g;
-        $Ext .= " AND LOWER(i.f_number) LIKE LOWER('".$Self->{DBObject}->Quote($Param{Number})."')";
+        $Param{Number} = lc $Self->{DBObject}->Quote($Param{Number});
+        $Ext .= " AND i.f_number LIKE '$Param{Number}'";
     }
     if ($Param{Title}) {
-        $Ext .= " AND LOWER(i.f_subject) LIKE LOWER('%".$Self->{DBObject}->Quote($Param{Title})."%')";
+        $Param{Title} = lc $Self->{DBObject}->Quote($Param{Title});
+        $Ext .= " AND i.f_subject LIKE '%".$Param{Title}."%'";
     }
     if ($Param{LanguageIDs} && ref($Param{LanguageIDs}) eq 'ARRAY' && @{$Param{LanguageIDs}}) {
         $Ext .= " AND i.f_language_id IN (";
@@ -1891,7 +1894,8 @@ sub FAQSearch {
         $Ext .= ")";
     }
     if ($Param{Keyword}) {
-        $Ext .= " AND LOWER(i.f_keywords) LIKE LOWER('%".$Self->{DBObject}->Quote($Param{Keyword})."%')";
+        $Param{Keyword} = lc $Self->{DBObject}->Quote($Param{Keyword});
+        $Ext .= " AND i.f_keywords LIKE '%".$Param{Keyword}."%'";
     }
     $Ext .= " GROUP BY i.id, i.f_subject, i.f_language_id, i.created, i.changed, s.name, v.item_id";
     if ($Param{Order}) {
@@ -2438,6 +2442,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.13 $ $Date: 2008-01-23 10:18:25 $
+$Revision: 1.14 $ $Date: 2008-02-13 13:56:29 $
 
 =cut
