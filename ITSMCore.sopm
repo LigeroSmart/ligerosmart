@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMCore.sopm,v 1.27 2008-01-28 15:01:57 mh Exp $</CVS>
+    <CVS>$Id: ITSMCore.sopm,v 1.28 2008-02-13 19:27:37 mh Exp $</CVS>
     <Name>ITSMCore</Name>
     <Version>0.0.0</Version>
     <Framework>2.2.5</Framework>
@@ -23,6 +23,9 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminTicketPriority.dtl"/>
         <File Permission="644" Location="Kernel/System/ITSMCIPAllocate.pm"/>
         <File Permission="644" Location="scripts/test/ITSMCIPAllocate.t"/>
+        <File Permission="644" Location="var/httpd/htdocs/images/Standard/greenled.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/images/Standard/redled.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/images/Standard/yellowled.png"/>
     </Filelist>
     <DatabaseInstall>
         <TableCreate Name="cip_allocate">
