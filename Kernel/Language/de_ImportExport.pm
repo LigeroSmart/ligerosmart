@@ -2,7 +2,7 @@
 # Kernel/Language/de_ImportExport.pm - the german translation of ImportExport
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: de_ImportExport.pm,v 1.12 2008-02-11 16:34:29 mh Exp $
+# $Id: de_ImportExport.pm,v 1.13 2008-02-13 10:42:05 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub Data {
     my ($Self) = @_;
@@ -34,7 +34,7 @@ sub Data {
     $Self->{Translation}->{'Import information'}            = 'Import Informationen';
     $Self->{Translation}->{'Column'}                        = 'Spalte';
     $Self->{Translation}->{'Column Seperator'}              = 'Spaltentrenner';
-    $Self->{Translation}->{'Maximum number of one element'} = 'Maimale Anzahl eines Elements';
+    $Self->{Translation}->{'Maximum number of one element'} = 'Maximale Anzahl eines Elements';
     $Self->{Translation}->{'Only import changed datasets'} = 'Nur geänderte Datensätze importieren';
     $Self->{Translation}->{'Tabulator (TAB)'}              = 'Tabulator (TAB)';
     $Self->{Translation}->{'Semicolon (;)'}                = 'Semicolon (;)';
@@ -43,9 +43,6 @@ sub Data {
     $Self->{Translation}->{'Identifier'}                   = 'Identifikator';
     $Self->{Translation}->{'Restrict export per search'}   = 'Export per Suche eischränken';
     $Self->{Translation}->{'Source File'}                  = 'Quell-Datei';
-    $Self->{Translation}->{''}                             = '';
-    $Self->{Translation}->{''}                             = '';
-    $Self->{Translation}->{''}                             = '';
 
     return 1;
 }
