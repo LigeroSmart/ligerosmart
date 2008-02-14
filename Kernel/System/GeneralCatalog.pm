@@ -2,7 +2,7 @@
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.27 2008-02-01 17:04:45 mh Exp $
+# $Id: GeneralCatalog.pm,v 1.28 2008-02-14 13:37:14 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.27 $) [1];
+$VERSION = qw($Revision: 1.28 $) [1];
 
 =head1 NAME
 
@@ -105,6 +105,43 @@ sub ClassList {
     }
 
     return \@ClassList;
+}
+
+=item ClassRename()
+
+rename a general catalog class
+
+    my $True = $GeneralCatalogObject->ClassRename(
+        ClassOld => 'ITSM::Service::State',
+        ClassNew => 'ITSM::Service::DeploymentState',
+    );
+
+=cut
+
+sub ClassRename {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(ClassOld ClassNew)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!"
+            );
+            return;
+        }
+    }
+
+    # quote
+    for my $Argument (qw(ClassOld ClassNew)) {
+        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument} );
+    }
+
+    # rename general catalog class
+    return $Self->{DBObject}->Do(
+        SQL => "UPDATE general_catalog SET general_catalog_class = '$Param{ClassNew}' "
+            . "WHERE general_catalog_class = '$Param{ClassOld}'",
+    );
 }
 
 =item ItemList()
@@ -562,6 +599,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.27 $ $Date: 2008-02-01 17:04:45 $
+$Revision: 1.28 $ $Date: 2008-02-14 13:37:14 $
 
 =cut
