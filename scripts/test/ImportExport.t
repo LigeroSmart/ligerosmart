@@ -2,7 +2,7 @@
 # ImportExport.t - import export tests
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.t,v 1.6 2008-02-04 15:21:22 mh Exp $
+# $Id: ImportExport.t,v 1.7 2008-02-14 13:34:52 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -11,6 +11,8 @@
 
 use strict;
 use warnings;
+
+use vars qw($Self);
 
 use Kernel::System::ImportExport;
 
