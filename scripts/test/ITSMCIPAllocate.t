@@ -2,7 +2,7 @@
 # ITSMCIPAllocate.t - general catalog tests
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMCIPAllocate.t,v 1.4 2008-01-30 19:14:17 mh Exp $
+# $Id: ITSMCIPAllocate.t,v 1.5 2008-02-14 13:36:31 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -11,6 +11,8 @@
 
 use strict;
 use warnings;
+
+use vars qw($Self);
 
 use Kernel::System::ITSMCIPAllocate;
 
