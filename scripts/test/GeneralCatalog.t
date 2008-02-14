@@ -2,7 +2,7 @@
 # GeneralCatalog.t - general catalog tests
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.t,v 1.7 2008-01-23 16:24:31 mh Exp $
+# $Id: GeneralCatalog.t,v 1.8 2008-02-14 13:34:22 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -11,6 +11,8 @@
 
 use strict;
 use warnings;
+
+use vars qw($Self);
 
 use Kernel::System::GeneralCatalog;
 
