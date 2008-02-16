@@ -2,7 +2,7 @@
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.29 2008-02-14 15:42:26 mh Exp $
+# $Id: GeneralCatalog.pm,v 1.30 2008-02-16 17:13:48 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.29 $) [1];
+$VERSION = qw($Revision: 1.30 $) [1];
 
 =head1 NAME
 
@@ -207,10 +207,9 @@ sub ItemList {
         $SQL .= "AND functionality IN ('$FunctionalityString')";
     }
 
-    # read cache
-    if ( $Param{Cache} && $Self->{Cache}->{ItemList}->{$SQL} ) {
-        return $Self->{Cache}->{ItemList}->{$SQL};
-    }
+    # check if result is already cached
+    return $Self->{Cache}->{ItemList}->{$SQL}
+        if $Param{Cache} && $Self->{Cache}->{ItemList}->{$SQL};
 
     # ask database
     $Self->{DBObject}->Prepare( SQL => $SQL );
@@ -221,7 +220,7 @@ sub ItemList {
         $Data{ $Row[0] } = $Row[1];
     }
 
-    # write cache
+    # cache the result
     $Self->{Cache}->{ItemList}->{$SQL} = \%Data;
 
     return \%Data;
@@ -317,6 +316,10 @@ sub ItemGet {
     # add options to sql string
     if ( $Param{Class} && $Param{Name} ) {
 
+        # check if result is already cached
+        return $Self->{Cache}->{ItemGet}->{Class}->{ $Param{Class} }->{ $Param{Name} }
+            if $Self->{Cache}->{ItemGet}->{Class}->{ $Param{Class} }->{ $Param{Name} };
+
         # quote
         for my $Argument (qw(Class Name)) {
             $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument} );
@@ -326,6 +329,10 @@ sub ItemGet {
         $SQL .= "general_catalog_class = '$Param{Class}' AND name = '$Param{Name}'";
     }
     else {
+
+        # check if result is already cached
+        return $Self->{Cache}->{ItemGet}->{ItemID}->{ $Param{ItemID} }
+            if $Self->{Cache}->{ItemGet}->{ItemID}->{ $Param{ItemID} };
 
         # quote
         $Param{ItemID} = $Self->{DBObject}->Quote( $Param{ItemID}, 'Integer' );
@@ -354,6 +361,11 @@ sub ItemGet {
         $ItemData{ChangeTime}    = $Row[8];
         $ItemData{ChangeBy}      = $Row[9];
     }
+
+    # cache the result
+    $Self->{Cache}->{ItemGet}->{Class}->{ $ItemData{Class} }->{ $ItemData{Name} } = \%ItemData;
+    $Self->{Cache}->{ItemGet}->{ItemID}->{ $Param{ItemID} } = \%ItemData;
+
     return \%ItemData;
 }
 
@@ -599,6 +611,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.29 $ $Date: 2008-02-14 15:42:26 $
+$Revision: 1.30 $ $Date: 2008-02-16 17:13:48 $
 
 =cut
