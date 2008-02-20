@@ -2,7 +2,7 @@
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.30 2008-02-16 17:13:48 mh Exp $
+# $Id: GeneralCatalog.pm,v 1.31 2008-02-20 09:32:13 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.30 $) [1];
+$VERSION = qw($Revision: 1.31 $) [1];
 
 =head1 NAME
 
@@ -149,10 +149,10 @@ sub ClassRename {
 return a list as hash reference of one general catalog class
 
     my $ListRef = $GeneralCatalogObject->ItemList(
-        Class => 'ITSM::Service::Type',
-        Functionality => 'active',       # (optional) string or array reference
-        Valid => 0,                      # (optional) default 1
-        Cache => 0,                      # (optional) default 1
+        Class         => 'ITSM::Service::Type',
+        Functionality => 'active',               # (optional) string or array reference
+        Valid         => 0,                      # (optional) default 1
+        Cache         => 0,                      # (optional) default 1
     );
 
 =cut
@@ -292,7 +292,7 @@ Return
 
     my $ItemDataRef = $GeneralCatalogObject->ItemGet(
         Class => 'ITSM::Service::Type',
-        Name => 'Item Name',
+        Name  => 'Item Name',
     );
 
 =cut
@@ -374,12 +374,12 @@ sub ItemGet {
 add a new general catalog item
 
     my $ItemID = $GeneralCatalogObject->ItemAdd(
-        Class => 'ITSM::Service::Type',
-        Name => 'Item Name',
-        Functionality => 'Func3',       # (optional)
-        ValidID => 1,
-        Comment => 'Comment',           # (optional)
-        UserID => 1,
+        Class         => 'ITSM::Service::Type',
+        Name          => 'Item Name',
+        Functionality => 'Func3',                # (optional)
+        ValidID       => 1,
+        Comment       => 'Comment',              # (optional)
+        UserID        => 1,
     );
 
 =cut
@@ -472,12 +472,12 @@ sub ItemAdd {
 update a existing general catalog item
 
     my $True = $GeneralCatalogObject->ItemUpdate(
-        ItemID => 123,
-        Name => 'Item Name',
-        Functionality => 'Func3',  # (optional)
-        ValidID => 1,
-        Comment => 'Comment',      # (optional)
-        UserID => 1,
+        ItemID        => 123,
+        Name          => 'Item Name',
+        Functionality => 'Func3',      # (optional)
+        ValidID       => 1,
+        Comment       => 'Comment',    # (optional)
+        UserID        => 1,
     );
 
 =cut
@@ -611,6 +611,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.30 $ $Date: 2008-02-16 17:13:48 $
+$Revision: 1.31 $ $Date: 2008-02-20 09:32:13 $
 
 =cut
