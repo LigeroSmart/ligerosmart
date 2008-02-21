@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport/FormatBackend/CSV.pm - import/export backend for CSV
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: CSV.pm,v 1.13 2008-02-11 19:50:00 mh Exp $
+# $Id: CSV.pm,v 1.14 2008-02-21 12:27:31 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ImportExport;
 use Text::CSV_XS;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 =head1 NAME
 
@@ -204,10 +204,12 @@ sub ImportDataGet {
     my $Seperator = $AvailableSeperators{ $FormatData->{ColumnSeperator} } || '';
 
     # create the parser object
-    my $ParseObject = Text::CSV_XS->new( {
-        binary   => 1,
-        sep_char => $Seperator,
-    } );
+    my $ParseObject = Text::CSV_XS->new(
+        {
+            binary   => 1,
+            sep_char => $Seperator,
+        }
+    );
 
     my @ImportData;
     SOURCEROW:
@@ -216,7 +218,7 @@ sub ImportDataGet {
         next SOURCEROW if $SourceRow eq '';
 
         # parse the line
-        $ParseObject->parse( $SourceRow );
+        $ParseObject->parse($SourceRow);
 
         my @Row = $ParseObject->fields;
 
@@ -274,10 +276,12 @@ sub ExportDataSave {
     my $Seperator = $AvailableSeperators{ $FormatData->{ColumnSeperator} } || '';
 
     # create the parser object
-    my $ParseObject = Text::CSV_XS->new( {
-        binary   => 1,
-        sep_char => $Seperator,
-    } );
+    my $ParseObject = Text::CSV_XS->new(
+        {
+            binary   => 1,
+            sep_char => $Seperator,
+        }
+    );
 
     return if !$ParseObject->combine( @{ $Param{ExportDataRow} } );
 
@@ -300,6 +304,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.13 $ $Date: 2008-02-11 19:50:00 $
+$Revision: 1.14 $ $Date: 2008-02-21 12:27:31 $
 
 =cut
