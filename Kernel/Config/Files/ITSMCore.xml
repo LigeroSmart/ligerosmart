@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMCore.xml,v 1.5 2007-04-16 10:50:37 mh Exp $</CVS>
+    <CVS>$Id: ITSMCore.xml,v 1.6 2008-02-21 12:33:42 mh Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminTicketPriority" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminTicketPriority configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminTicketPriority Konfiguration im Admin-Bereich.</Description>
@@ -99,6 +99,15 @@
                 <Item Key="NormalName">Alternative to</Item>
                 <Item Key="ReverseName">Alternative to</Item>
             </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMCore::IncidentLinkType" Required="1" Valid="1">
+        <Description Lang="en">Set the type of link to be used to calculate the incident state.</Description>
+        <Description Lang="de">Legt den Linktyp fest, der zur Berechnung des Vorfallstatus verwendet wird.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Core::ITSMCore</SubGroup>
+        <Setting>
+            <String Regex="">DependsOn</String>
         </Setting>
     </ConfigItem>
 </otrs_config>
