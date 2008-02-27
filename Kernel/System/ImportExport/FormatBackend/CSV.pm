@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport/FormatBackend/CSV.pm - import/export backend for CSV
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: CSV.pm,v 1.14 2008-02-21 12:27:31 mh Exp $
+# $Id: CSV.pm,v 1.15 2008-02-27 14:45:23 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,10 +15,9 @@ use strict;
 use warnings;
 
 use Kernel::System::ImportExport;
-use Text::CSV_XS;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 =head1 NAME
 
@@ -73,6 +72,14 @@ sub new {
     # check needed objects
     for my $Object (qw(ConfigObject LogObject DBObject MainObject)) {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
+    }
+
+    if ( !$Self->{MainObject}->Require('Text::CSV_XS') ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "CPAN module Text::CSV_XS is required to use the CSV import/export module!",
+        );
+        return;
     }
 
     $Self->{ImportExportObject} = Kernel::System::ImportExport->new( %{$Self} );
@@ -304,6 +311,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.14 $ $Date: 2008-02-21 12:27:31 $
+$Revision: 1.15 $ $Date: 2008-02-27 14:45:23 $
 
 =cut
