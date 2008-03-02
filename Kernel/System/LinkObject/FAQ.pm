@@ -1,12 +1,12 @@
 # --
 # Kernel/System/LinkObject/FAQ.pm - to link faq objects
-# Copyright (C) 2001-2006 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.3 2006-12-13 12:45:54 rk Exp $
+# $Id: FAQ.pm,v 1.4 2008-03-02 23:00:44 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 
 package Kernel::System::LinkObject::FAQ;
@@ -15,7 +15,7 @@ use strict;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.3 $';
+$VERSION = '$Revision: 1.4 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub Init {
@@ -32,7 +32,7 @@ sub FillDataMap {
     my %Param = @_;
     foreach (qw(ID)) {
         if (!$Param{$_}) {
-             $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
             return;
         }
     }
@@ -42,6 +42,7 @@ sub FillDataMap {
     return (
         Text => 'F:'.$Article{Number},
         Number => $Article{Number},
+        Title  => $Article{Title},
         ID => $Param{ID},
         Object => 'FAQ',
         FrontendDest => "Action=AgentFAQ&ItemID=",
@@ -81,10 +82,11 @@ sub LinkSearch {
     );
     foreach (@Result) {
         my %Article = $Self->{FAQObject}->FAQGet(FAQID => $_);
-        push (@ResultWithData, {
-            %Article,
-            ID => $Article{ItemID},
-          },
+        push (@ResultWithData,
+            {
+                %Article,
+                ID => $Article{ItemID},
+            },
         );
     }
     return @ResultWithData;
