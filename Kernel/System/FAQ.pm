@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.14 2008-02-13 13:56:29 rk Exp $
+# $Id: FAQ.pm,v 1.15 2008-03-02 22:27:06 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Group;
 use Kernel::System::CustomerGroup;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.14 $';
+$VERSION = '$Revision: 1.15 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -83,7 +83,7 @@ sub new {
 get an article
 
     my %Article = $FAQObject->FAQGet(
-        ID => 1,
+        ItemID => 1,
     );
 
 =cut
@@ -143,11 +143,13 @@ sub FAQGet {
             Field5 => $Row[7],
             Field6 => $Row[8],
             FreeKey1 => $Row[9],
-            FreeKey2 => $Row[10],
-            FreeKey3 => $Row[11],
-            FreeKey4 => $Row[12],
-            FreeKey5 => $Row[13],
-            FreeKey6 => $Row[14],
+            FreeText1 => $Row[10],
+            FreeKey2 => $Row[11],
+            FreeText2 => $Row[12],
+            FreeKey3 => $Row[13],
+            FreeText3 => $Row[14],
+            FreeKey4 => $Row[15],
+            FreeText4 => $Row[16],
             Created => $Row[17],
             CreatedBy => $Row[18],
             Changed => $Row[19],
@@ -242,6 +244,7 @@ add an article
         CategoryID => 1,
         StateID => 1,
         LanguageID => 1,
+        Keywords => 'some keywords',
         Field1 => 'Problem...',
         Field2 => 'Solution...',
         FreeKey1 => 'Software',
@@ -438,6 +441,7 @@ sub AttachmentSearch {
 update an article
 
     $FAQObject->FAQUpdate(
+        ItemID => 123,
         CategoryID => 1,
         StateID => 1,
         LanguageID => 1,
@@ -588,10 +592,10 @@ sub FAQCount {
 
 add an article
 
-    my $ItemID = $FAQObject->VoteAdd(
-        CreateBy => 'Some Text',
+    my $Ok = $FAQObject->VoteAdd(
+        CreatedBy => 'Some Text',
         ItemID => '123456',
-        IP => 54.43.30.1',
+        IP => '54.43.30.1',
         Interface => 'Some Text',
         Rate => 100,
     );
@@ -644,10 +648,12 @@ add an article
     my %VoteData = %{$FAQObject->VoteGet(
         CreateBy => 'Some Text',
         ItemID => '123456',
+        IP     => '127.0.0.1',
         Interface => 'Some Text',
     )};
 
 =cut
+
 sub VoteGet {
     my $Self = shift;
     my %Param = @_;
@@ -711,11 +717,12 @@ sub VoteGet {
 
 returns a array with VoteIDs
 
-    my @FAQIDs = @{$FAQObject->VoteSearch(
+    my @VoteIDs = @{$FAQObject->VoteSearch(
         ItemID => 1,
     )};
 
 =cut
+
 sub VoteSearch {
     my $Self = shift;
     my %Param = @_;
@@ -756,11 +763,12 @@ sub VoteSearch {
 
 add an article
 
-    my $Flag = $FAQObject->VoteDelete(
+    my $Ok = $FAQObject->VoteDelete(
         VoteID => 1,
     );
 
 =cut
+
 sub VoteDelete {
     my $Self = shift;
     my %Param = @_;
@@ -1803,9 +1811,9 @@ search in articles
         Number => '*134*',
         What => '*some text*',
         Keywords => '*webserver*',
-        States = ['public', 'internal'],
-        Order => 'changed'
-        Sort => 'ASC'
+        States => ['public', 'internal'],
+        Order => 'Changed',
+        Sort => 'ASC',
         Limit => 150,
     );
 
@@ -1840,11 +1848,14 @@ sub FAQSearch {
             my @List = split(/;/, $Param{What});
             my $What = '';
             foreach my $Value (@List) {
+                $Value = "\%$Value\%";
+                $Value =~ s/\*/%/g;
+                $Value =~ s/%%/%/g;
                 if ($What) {
                     $What .= ' OR ';
                 }
                 my $ValueInsert = lc $Self->{DBObject}->Quote($Value);
-                $What .= " i.$Key LIKE '%".$ValueInsert."%'";
+                $What .= " i.$Key LIKE '$ValueInsert'";
             }
             $Ext .= $What;
         }
@@ -2442,6 +2453,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.14 $ $Date: 2008-02-13 13:56:29 $
+$Revision: 1.15 $ $Date: 2008-03-02 22:27:06 $
 
 =cut
