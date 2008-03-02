@@ -2,14 +2,12 @@
 # AgentFAQ.dtl - provides HTML view for faq articles
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.dtl,v 1.11 2008-03-02 22:47:54 martin Exp $
+# $Id: AgentFAQ.dtl,v 1.12 2008-03-02 23:05:19 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
-
-
 
 <!-- dtl:block:View -->
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
@@ -200,8 +198,49 @@ function updateMessage()
         return;
     }
 
-    parent.opener.document.compose.Body.value = document.spelling.Body.value + parent.opener.document.compose.Body.value
-    parent.opener.document.compose.Subject.value = document.spelling.Title.value
+    /* copy subject */
+    parent.opener.document.compose.Subject.value = document.spelling.Title.value;
+
+    /* create short alias */
+    var input = parent.opener.document.compose.Body;
+
+    /* focus orig input field */
+    input.focus();
+
+    /* IE */
+    if (typeof document.selection != 'undefined') {
+        var range = parent.opener.document.selection.createRange();
+        var insText = range.text;
+        range.text = document.spelling.Body.value + insText;
+        range = document.selection.createRange();
+        range.moveStart('character', document.spelling.Body.value.length + insText.length);
+        range.select();
+    }
+    /* gecko */
+    else if (typeof input.selectionStart != 'undefined') {
+        var Start = input.selectionStart;
+        var End = input.selectionEnd;
+        /* set focus to start, if curser it not dedicated set to the end (only done automaticaly if more then 400 chars avail)*/
+        if (input.value.length > 400 && End == input.value.length && Start == input.value.length) {
+            Start = 0;
+            End = 0;
+        }
+        var insText = input.value.substring(Start, End);
+        input.value = input.value.substr(0, Start) + document.spelling.Body.value + insText + input.value.substr(End);
+        var pos;
+        if (insText.length == 0) {
+            pos = Start + document.spelling.Body.value.length;
+        }
+        else {
+            pos = Start + document.spelling.Body.value.length + insText.length;
+        }
+        input.selectionStart = pos;
+        input.selectionEnd = pos;
+    }
+    /* other, insert on top */
+    else {
+        parent.opener.document.compose.Body.value = document.spelling.Body.value + parent.opener.document.compose.Body.value;
+    }
 
     this.close();
 }
@@ -338,10 +377,6 @@ function updateMessage()
 
 
 
-
-
-
-
 <!-- dtl:block:Add -->
 <script language="JavaScript" type="text/javascript">
 <!--
@@ -429,9 +464,6 @@ function submit_compose()
     </tr>
   </table>
 <!-- dtl:block:Add -->
-
-
-
 
 
 
@@ -529,9 +561,6 @@ function submit_compose()
 
 
 
-
-
-
 <!-- dtl:block:Delete -->
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
   <tr>
@@ -605,11 +634,6 @@ function submit_compose()
 
 
 
-
-
-
-
-
 <!-- dtl:block:SystemHistory -->
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
   <tr>
@@ -641,10 +665,6 @@ function submit_compose()
   </tr>
 </table>
 <!-- dtl:block:SystemHistory -->
-
-
-
-
 
 
 <!-- dtl:block:Language -->
@@ -702,10 +722,6 @@ function submit_compose()
     </tr>
   </table>
 <!-- dtl:block:Language -->
-
-
-
-
 
 
 
