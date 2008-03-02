@@ -1,12 +1,12 @@
 # --
 # FAQ.dtl - provides HTML view for faq articles
-# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.dtl,v 1.6 2007-07-03 14:02:46 rk Exp $
+# $Id: FAQ.dtl,v 1.7 2008-03-02 22:48:25 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 
 
@@ -66,78 +66,44 @@
     <td width="35%" class="menu">
 
       <table border="0" cellspacing="1" cellpadding="0" width="95%">
-        <tr valign="top">
+        <tr>
           <td class="contentkey">$Text{"Category"}:</td>
-          <td class="contentvalue"> $QData{"CategoryName"}</td>
+          <td class="contentvalue"> <div title="$QData{"CategoryName"}">$QData{"CategoryName","30"}</div></td>
         </tr>
-        <tr valign="top">
+        <tr>
           <td class="contentkey">$Text{"State"}:</td>
-          <td class="contentvalue"> $QData{"State"}</td>
+          <td class="contentvalue"> <div title="$QData{"State"}">$QData{"State"}</div></td>
         </tr>
-        <tr valign="top">
+        <tr>
           <td class="contentkey">$Text{"Language"}:</td>
-          <td class="contentvalue"> $QData{"Language"}</td>
+          <td class="contentvalue"> <div title="$QData{"Language"}">$QData{"Language"}</div></td>
         </tr>
-        <tr valign="top">
+        <tr>
           <td class="contentkey">$Text{"Keywords"}:</td>
-          <td class="contentvalue"> $QData{"Keywords"}</td>
+          <td class="contentvalue"> <div title="$QData{"Keywords"}">$QData{"Keywords","40"}</div></td>
         </tr>
-        <tr valign="top">
+        <tr>
           <td class="contentkey">$Text{"Result"}:</td>
           <td style="$Data{"CssColumnVotingResult"}"> $QData{"Result"} &#37;</td>
         </tr>
-        <tr valign="top">
+        <tr>
           <td class="contentkey">$Text{"Votes"}:</td>
           <td class="contentvalue"> $QData{"Votes"}</td>
         </tr>
 
-        <tr valign="top">
+        <tr>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
         </tr>
-
-        <tr valign="top">
-          <td class="contentkey">$Text{"Created"}:</td>
-          <td class="contentvalue">$TimeLong{"$Data{"Created"}"} ($Data{"CreatedByLogin"})</td>
+        <tr>
+          <td class="contentkey">$Text{"Created"}: </td>
+          <td class="contentvalue"> $Quote{"$TimeLong{"$Data{"Created"}"}"}</td>
         </tr>
-        <tr valign="top">
-          <td class="contentkey">$Text{"Changed"}:</td>
-          <td class="contentvalue">$TimeLong{"$Data{"Changed"}"} ($Data{"ChangedByLogin"})</td>
-        </tr>
-
-        <br>
-        <tr valign="top">
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-        </tr>
-<!-- dtl:block:Links -->
-        <tr valign="top">
-          <td class="contentkey">$Text{"Linked"} ($Text{"Normal"}):</td>
-          <td class="contentvalue">
-<!-- dtl:block:LinkNormal -->
-            <a href="$Env{"Baselink"}Action=$QData{"FrontendDest"}$QData{"ID"}" title="$QData{"Object"}: $QData{"Number"}">$QData{"Text"}</a>
-<!-- dtl:block:LinkNormal -->
-          </td>
+        <tr>
+          <td class="contentkey">$Text{"Changed"}: </td>
+          <td class="contentvalue"> $Quote{"$TimeLong{"$Data{"Changed"}"}"}</td>
         </tr>
 
-        <tr valign="top">
-          <td class="contentkey">$Text{"Linked"} ($Text{"Parent"}):</td>
-          <td class="contentvalue">
-<!-- dtl:block:LinkParent -->
-            <a href="$Env{"Baselink"}Action=$QData{"FrontendDest"}$QData{"ID"}" title="$QData{"Object"}: $QData{"Number"}">$QData{"Text"}</a>
-<!-- dtl:block:LinkParent -->
-          </td>
-        </tr>
-
-        <tr valign="top">
-          <td class="contentkey">$Text{"Linked"} ($Text{"Child"}):</td>
-          <td class="contentvalue">
-<!-- dtl:block:LinkChild -->
-            <a href="$Env{"Baselink"}Action=$QData{"FrontendDest"}$QData{"ID"}" title="$QData{"Object"}: $QData{"Number"}">$QData{"Text"}</a>
-<!-- dtl:block:LinkChild -->
-          </td>
-        </tr>
-<!-- dtl:block:Links -->
       </table>
 
 <!-- dtl:block:VoteForm -->
@@ -212,43 +178,6 @@
           <td class="contentvalue"> $QData{"Result"} &#37;</td>
         </tr>
 
-# --
-# object links
-# --
-<!-- dtl:block:Links -->
-        <tr>
-          <td class="contentkey">$Text{"Linked"} ($Text{"Normal"}):</td>
-          <td class="contentvalue">
-
-<!-- dtl:block:LinkNormal -->
-            <a href="$Env{"Baselink"}$Data{"FrontendDest"}$QData{"ID"}" title="$QData{"Object"}: $QData{"Number"}">$QData{"Text"}</a>
-<!-- dtl:block:LinkNormal -->
-
-          </td>
-        </tr>
-
-        <tr>
-          <td class="contentkey">$Text{"Linked"} ($Text{"Parent"}):</td>
-          <td class="contentvalue">
-
-<!-- dtl:block:LinkParent -->
-            <a href="$Env{"Baselink"}$Data{"FrontendDest"}$QData{"ID"}" title="$QData{"Object"}: $QData{"Number"}">$QData{"Text"}</a>
-<!-- dtl:block:LinkParent -->
-
-          </td>
-        </tr>
-
-        <tr>
-          <td class="contentkey">$Text{"Linked"} ($Text{"Child"}):</td>
-          <td class="contentvalue">
-
-<!-- dtl:block:LinkChild -->
-            <a href="$Env{"Baselink"}$Data{"FrontendDest"}$QData{"ID"}" title="$QData{"Object"}: $QData{"Number"}">$QData{"Text"}</a>
-<!-- dtl:block:LinkChild -->
-
-          </td>
-        </tr>
-<!-- dtl:block:Links -->
         <tr>
           <td class="contentkey">$Text{"Last update"}: </td>
           <td class="contentvalue"> $Quote{"$TimeLong{"$Data{"Changed"}"}"}</td>
