@@ -2,7 +2,7 @@
 # FAQ.t - FAQ tests
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.t,v 1.2 2008-03-02 22:26:14 martin Exp $
+# $Id: FAQ.t,v 1.3 2008-03-05 23:46:12 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -33,7 +33,7 @@ my $FAQID = $Self->{FAQObject}->FAQAdd(
 
 $Self->True(
     $FAQID || 0,
-    "FAQAdd() - FAQAdd()",
+    "FAQAdd() - 1",
 );
 
 my %FAQ = $Self->{FAQObject}->FAQGet(
@@ -141,10 +141,33 @@ $Self->Is(
     "VoteGet() - IP",
 );
 
+my $FAQID2 = $Self->{FAQObject}->FAQAdd(
+    Title => 'Title',
+    CategoryID => 1,
+    StateID => 1,
+    LanguageID => 1,
+    Keywords => '',
+    Field1 => 'Problem1...',
+    Field2 => 'Solution1...',
+    FreeKey1 => 'Software1',
+    FreeText1 => 'Apache 3.4.2',
+    FreeKey2 => 'OS',
+    FreeText2 => 'OpenBSD 4.2.2',
+    FreeKey3 => 'Key3',
+    FreeText3 => 'Value3',
+    FreeKey4 => 'Key4',
+    FreeText4 => 'Value4',
+);
+
+$Self->True(
+    $FAQID2 || 0,
+    "FAQAdd() - 2",
+);
+
 my @FAQIDs = $Self->{FAQObject}->FAQSearch(
     Number => '*',
     What => '*s*',
-    Keywords => 'some*',
+    Keyword => 'some*',
     States => ['public', 'internal'],
     Order => 'Votes',
     Sort => 'ASC',
@@ -152,15 +175,51 @@ my @FAQIDs = $Self->{FAQObject}->FAQSearch(
 );
 
 my $FAQSearchFound = 0;
+my $FAQSearchFound2 = 0;
 for my $FAQIDSearch ( @FAQIDs ) {
     if ( $FAQIDSearch eq $FAQID ) {
         $FAQSearchFound = 1;
-        last;
+    }
+    if ( $FAQIDSearch eq $FAQID2 ) {
+        $FAQSearchFound2 = 1;
     }
 }
 $Self->True(
     $FAQSearchFound,
-    "FAQSearch()",
+    "FAQSearch() - $FAQID",
+);
+$Self->False(
+    $FAQSearchFound2,
+    "FAQSearch() - $FAQID2",
+);
+
+@FAQIDs = $Self->{FAQObject}->FAQSearch(
+    Number => '*',
+    Title => 'tITLe',
+    What  => 'l',
+    States => ['public', 'internal'],
+    Order => 'Created',
+    Sort => 'ASC',
+    Limit => 150,
+);
+
+$FAQSearchFound = 0;
+$FAQSearchFound2 = 0;
+for my $FAQIDSearch ( @FAQIDs ) {
+    if ( $FAQIDSearch eq $FAQID ) {
+        $FAQSearchFound = 1;
+    }
+    if ( $FAQIDSearch eq $FAQID2 ) {
+        $FAQSearchFound2 = 1;
+    }
+}
+$Self->False(
+    $FAQSearchFound,
+    "FAQSearch() - $FAQID",
+);
+$Self->True(
+    $FAQSearchFound2,
+    "FAQSearch() - $FAQID2",
 );
 
 my @VoteIDs = @{$Self->{FAQObject}->VoteSearch(
@@ -182,6 +241,14 @@ my $FAQDelete = $Self->{FAQObject}->FAQDelete(
 );
 $Self->True(
     $FAQDelete || 0,
+    "FAQDelete()",
+);
+
+my $FAQDelete2 = $Self->{FAQObject}->FAQDelete(
+    ItemID => $FAQID2,
+);
+$Self->True(
+    $FAQDelete2 || 0,
     "FAQDelete()",
 );
 
