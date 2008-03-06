@@ -2,7 +2,7 @@
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.31 2008-02-20 09:32:13 mh Exp $
+# $Id: GeneralCatalog.pm,v 1.32 2008-03-06 14:28:04 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.31 $) [1];
+$VERSION = qw($Revision: 1.32 $) [1];
 
 =head1 NAME
 
@@ -60,7 +60,6 @@ create a object
         ConfigObject => $ConfigObject,
         LogObject    => $LogObject,
         DBObject     => $DBObject,
-        MainObject   => $MainObject,
     );
 
 =cut
@@ -85,7 +84,7 @@ sub new {
 
 return an array reference of all general catalog classes
 
-    my $ListRef = $GeneralCatalogObject->ClassList();
+    my $ArrayRef = $GeneralCatalogObject->ClassList();
 
 =cut
 
@@ -137,6 +136,44 @@ sub ClassRename {
         $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument} );
     }
 
+    # cleanup given params (replace it with StringClean() in OTRS 2.3 and later)
+    for my $Argument (qw(ClassOld ClassNew)) {
+        $Self->_StringClean(
+            StringRef         => \$Param{$Argument},
+            RemoveAllNewlines => 1,
+            RemoveAllTabs     => 1,
+            RemoveAllSpaces   => 1,
+        );
+    }
+
+    return 1 if $Param{ClassNew} eq $Param{ClassOld};
+
+    # check if new class name already exists
+    $Self->{DBObject}->Prepare(
+        SQL   => "SELECT id FROM general_catalog WHERE general_catalog_class = '$Param{ClassNew}'",
+        Limit => 1,
+    );
+
+    # fetch the result
+    my $AlreadyExists = 0;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $AlreadyExists = 1;
+    }
+
+    if ($AlreadyExists) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Can't rename class $Param{ClassOld}! New classname already exists."
+        );
+        return;
+    }
+
+    # reset cache
+    delete $Self->{Cache}->{ItemGet}->{Class}->{ $Param{ClassOld} };
+    delete $Self->{Cache}->{ItemGet}->{Class}->{ $Param{ClassNew} };
+    delete $Self->{Cache}->{ItemGet}->{ItemID};
+    delete $Self->{Cache}->{ItemList};
+
     # rename general catalog class
     return $Self->{DBObject}->Do(
         SQL => "UPDATE general_catalog SET general_catalog_class = '$Param{ClassNew}' "
@@ -148,11 +185,11 @@ sub ClassRename {
 
 return a list as hash reference of one general catalog class
 
-    my $ListRef = $GeneralCatalogObject->ItemList(
+    my $HashRef = $GeneralCatalogObject->ItemList(
         Class         => 'ITSM::Service::Type',
         Functionality => 'active',               # (optional) string or array reference
         Valid         => 0,                      # (optional) default 1
-        Cache         => 0,                      # (optional) default 1
+        NoCache       => 1,                      # (optional) default 0
     );
 
 =cut
@@ -169,16 +206,6 @@ sub ItemList {
         return;
     }
 
-    # set valid
-    if ( !defined $Param{Valid} ) {
-        $Param{Valid} = 1;
-    }
-
-    # set cache
-    if ( !defined $Param{Cache} ) {
-        $Param{Cache} = 1;
-    }
-
     # quote
     $Param{Class} = $Self->{DBObject}->Quote( $Param{Class} );
     $Param{Valid} = $Self->{DBObject}->Quote( $Param{Valid}, 'Integer' );
@@ -187,7 +214,7 @@ sub ItemList {
     my $SQL = "SELECT id, name FROM general_catalog WHERE general_catalog_class = '$Param{Class}' ";
 
     # add valid string to sql string
-    if ( $Param{Valid} ) {
+    if ( !defined $Param{Valid} || $Param{Valid} ) {
         $SQL .= 'AND valid_id = 1 ';
     }
 
@@ -209,7 +236,7 @@ sub ItemList {
 
     # check if result is already cached
     return $Self->{Cache}->{ItemList}->{$SQL}
-        if $Param{Cache} && $Self->{Cache}->{ItemList}->{$SQL};
+        if !$Param{NoCache} && $Self->{Cache}->{ItemList}->{$SQL};
 
     # ask database
     $Self->{DBObject}->Prepare( SQL => $SQL );
@@ -220,17 +247,34 @@ sub ItemList {
         $Data{ $Row[0] } = $Row[1];
     }
 
-    # cache the result
-    $Self->{Cache}->{ItemList}->{$SQL} = \%Data;
+    # check item
+    if ( !%Data ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Class not found in database!',
+        );
+        return;
+    }
+
+    if ( $Param{NoCache} ) {
+
+        # reset cache
+        delete $Self->{Cache}->{ItemList}->{$SQL};
+    }
+    else {
+
+        # cache the result
+        $Self->{Cache}->{ItemList}->{$SQL} = \%Data;
+    }
 
     return \%Data;
 }
 
 =item FunctionalityList()
 
-return an hash reference of all functionalities of a general catalog class
+return an array reference of all functionalities of a general catalog class
 
-    my $ListRef = $GeneralCatalogObject->FunctionalityList(
+    my $ArrayRef = $GeneralCatalogObject->FunctionalityList(
         Class => 'ITSM::Service::Type',
     );
 
@@ -260,9 +304,8 @@ sub FunctionalityList {
     # fetch the result
     my @FunctionalityList;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        if ( $Row[0] ) {
-            push @FunctionalityList, $Row[0];
-        }
+        $Row[0] ||= '';
+        push @FunctionalityList, $Row[0];
     }
 
     return \@FunctionalityList;
@@ -285,7 +328,8 @@ Return
     $ItemData{ChangeBy}
 
     my $ItemDataRef = $GeneralCatalogObject->ItemGet(
-        ItemID => 3,
+        ItemID  => 3,
+        NoCache => 1,  # (optional) default 0
     );
 
     or
@@ -318,7 +362,8 @@ sub ItemGet {
 
         # check if result is already cached
         return $Self->{Cache}->{ItemGet}->{Class}->{ $Param{Class} }->{ $Param{Name} }
-            if $Self->{Cache}->{ItemGet}->{Class}->{ $Param{Class} }->{ $Param{Name} };
+            if !$Param{NoCache}
+                && $Self->{Cache}->{ItemGet}->{Class}->{ $Param{Class} }->{ $Param{Name} };
 
         # quote
         for my $Argument (qw(Class Name)) {
@@ -332,7 +377,7 @@ sub ItemGet {
 
         # check if result is already cached
         return $Self->{Cache}->{ItemGet}->{ItemID}->{ $Param{ItemID} }
-            if $Self->{Cache}->{ItemGet}->{ItemID}->{ $Param{ItemID} };
+            if !$Param{NoCache} && $Self->{Cache}->{ItemGet}->{ItemID}->{ $Param{ItemID} };
 
         # quote
         $Param{ItemID} = $Self->{DBObject}->Quote( $Param{ItemID}, 'Integer' );
@@ -362,9 +407,27 @@ sub ItemGet {
         $ItemData{ChangeBy}      = $Row[9];
     }
 
-    # cache the result
-    $Self->{Cache}->{ItemGet}->{Class}->{ $ItemData{Class} }->{ $ItemData{Name} } = \%ItemData;
-    $Self->{Cache}->{ItemGet}->{ItemID}->{ $Param{ItemID} } = \%ItemData;
+    # check item
+    if ( !$ItemData{ItemID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Item not found in database!',
+        );
+        return;
+    }
+
+    if ( $Param{NoCache} ) {
+
+        # reset cache
+        delete $Self->{Cache}->{ItemGet}->{Class}->{ $ItemData{Class} }->{ $ItemData{Name} };
+        delete $Self->{Cache}->{ItemGet}->{ItemID}->{ $Param{ItemID} };
+    }
+    else {
+
+        # cache the result
+        $Self->{Cache}->{ItemGet}->{Class}->{ $ItemData{Class} }->{ $ItemData{Name} } = \%ItemData;
+        $Self->{Cache}->{ItemGet}->{ItemID}->{ $Param{ItemID} } = \%ItemData;
+    }
 
     return \%ItemData;
 }
@@ -398,12 +461,6 @@ sub ItemAdd {
         }
     }
 
-    # cleanup item name
-    $Param{Name} =~ s{ \A \s+   }{}xmsg;    # TrimLeft
-    $Param{Name} =~ s{ \s+ \z   }{}xmsg;    # TrimRight
-    $Param{Name} =~ s{ [\n\r\f] }{}xmsg;    # RemoveAllNewlines
-    $Param{Name} =~ s{ \t       }{}xmsg;    # RemoveAllTabs
-
     # set default values
     for my $Argument (qw(Functionality Comment)) {
         $Param{$Argument} = $Param{$Argument} || '';
@@ -415,6 +472,23 @@ sub ItemAdd {
     }
     for my $Argument (qw(ValidID UserID)) {
         $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument}, 'Integer' );
+    }
+
+    # cleanup given params (replace it with StringClean() in OTRS 2.3 and later)
+    for my $Argument (qw(Class Functionality)) {
+        $Self->_StringClean(
+            StringRef         => \$Param{$Argument},
+            RemoveAllNewlines => 1,
+            RemoveAllTabs     => 1,
+            RemoveAllSpaces   => 1,
+        );
+    }
+    for my $Argument (qw(Name Comment)) {
+        $Self->_StringClean(
+            StringRef         => \$Param{$Argument},
+            RemoveAllNewlines => 1,
+            RemoveAllTabs     => 1,
+        );
     }
 
     # find exiting item with same name
@@ -440,6 +514,9 @@ sub ItemAdd {
         );
         return;
     }
+
+    # reset cache
+    delete $Self->{Cache}->{ItemList};
 
     # insert new item
     return if !$Self->{DBObject}->Do(
@@ -496,12 +573,6 @@ sub ItemUpdate {
         }
     }
 
-    # cleanup item name
-    $Param{Name} =~ s{ \A \s+   }{}xmsg;    # TrimLeft
-    $Param{Name} =~ s{ \s+ \z   }{}xmsg;    # TrimRight
-    $Param{Name} =~ s{ [\n\r\f] }{}xmsg;    # RemoveAllNewlines
-    $Param{Name} =~ s{ \t       }{}xmsg;    # RemoveAllTabs
-
     # set default values
     for my $Argument (qw(Functionality Comment)) {
         $Param{$Argument} = $Param{$Argument} || '';
@@ -515,10 +586,26 @@ sub ItemUpdate {
         $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument}, 'Integer' );
     }
 
+    # cleanup given params (replace it with StringClean() in OTRS 2.3 and later)
+    for my $Argument (qw(Class Functionality)) {
+        $Self->_StringClean(
+            StringRef         => \$Param{$Argument},
+            RemoveAllNewlines => 1,
+            RemoveAllTabs     => 1,
+            RemoveAllSpaces   => 1,
+        );
+    }
+    for my $Argument (qw(Name Comment)) {
+        $Self->_StringClean(
+            StringRef         => \$Param{$Argument},
+            RemoveAllNewlines => 1,
+            RemoveAllTabs     => 1,
+        );
+    }
+
     # get class of item
     $Self->{DBObject}->Prepare(
-        SQL =>
-            "SELECT general_catalog_class, functionality FROM general_catalog "
+        SQL => "SELECT general_catalog_class, functionality FROM general_catalog "
             . "WHERE id = $Param{ItemID}",
         Limit => 1,
     );
@@ -527,14 +614,21 @@ sub ItemUpdate {
     my $Class;
     my $OldFunctionality;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $Class            = $Row[0] || '';
+        $Class = $Row[0];
         $OldFunctionality = $Row[1] || '';
+    }
+
+    if ( !$Class ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Can't update item! General catalog item not found in this class.",
+        );
+        return;
     }
 
     # find exiting item with same name
     $Self->{DBObject}->Prepare(
-        SQL =>
-            "SELECT id FROM general_catalog "
+        SQL => "SELECT id FROM general_catalog "
             . "WHERE general_catalog_class = '$Class' AND name = '$Param{Name}'",
         Limit => 1,
     );
@@ -547,52 +641,106 @@ sub ItemUpdate {
         }
     }
 
-    # count functionality
-    if ($OldFunctionality) {
-
-        # count the functionality
-        $Self->{DBObject}->Prepare(
-            SQL => "SELECT COUNT(functionality) FROM general_catalog "
-                . "WHERE general_catalog_class = '$Class' AND functionality = '$OldFunctionality'",
-            Limit => 1,
+    if ( !$Update ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message =>
+                "Can't update item! General catalog item with same name already exists in this class.",
         );
-
-        # fetch the result
-        my $LastFunctionality = 1;
-        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-            if ( $Row[0] > 1 || $Param{Functionality} eq $OldFunctionality ) {
-                $LastFunctionality = 0;
-            }
-        }
-
-        # abort update, if functionality is the last one
-        if ($LastFunctionality) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message =>
-                    "Can't update item! The functionality of this item is the last in this class.",
-            );
-            return;
-        }
+        return;
     }
 
-    # update item
-    if ( $Update && $Class ) {
-        return $Self->{DBObject}->Do(
-            SQL =>
-                "UPDATE general_catalog SET name = '$Param{Name}', functionality = '$Param{Functionality}',"
-                . "valid_id = $Param{ValidID}, comments = '$Param{Comment}', "
-                . "change_time = current_timestamp, change_by = $Param{UserID} WHERE id = $Param{ItemID}",
-        );
-    }
-
-    $Self->{LogObject}->Log(
-        Priority => 'error',
-        Message =>
-            "Can't update item! General catalog item with same name already exists in this class.",
+    # count the functionality
+    $Self->{DBObject}->Prepare(
+        SQL => "SELECT COUNT(functionality) FROM general_catalog "
+            . "WHERE general_catalog_class = '$Class' AND functionality = '$OldFunctionality'",
+        Limit => 1,
     );
 
-    return;
+    # fetch the result
+    my $LastFunctionality = 1;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        if ( $Row[0] > 1 || $Param{Functionality} eq $OldFunctionality ) {
+            $LastFunctionality = 0;
+        }
+    }
+
+    # abort update, if functionality is the last one
+    if ($LastFunctionality) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message =>
+                "Can't update item! The functionality of this item is the last in this class.",
+        );
+        return;
+    }
+
+    # reset cache
+    delete $Self->{Cache}->{ItemGet}->{Class}->{$Class}->{ $Param{Name} };
+    delete $Self->{Cache}->{ItemGet}->{ItemID}->{ $Param{ItemID} };
+    delete $Self->{Cache}->{ItemList};
+
+    return $Self->{DBObject}->Do(
+        SQL => "UPDATE general_catalog SET "
+            . "name = '$Param{Name}', functionality = '$Param{Functionality}',"
+            . "valid_id = $Param{ValidID}, comments = '$Param{Comment}', "
+            . "change_time = current_timestamp, change_by = $Param{UserID} "
+            . "WHERE id = $Param{ItemID}",
+    );
+}
+
+=item _StringClean()
+
+DON'T USE THIS INTERNAL FUNCTION IN OTHER MODULES!
+
+This function can be replaced with Kernel::System::CheckItem::StringClean() in OTRS 2.3 and later!
+
+clean a given string
+
+    my $Error = $CheckItemObject->_StringClean(
+        StringRef         => \'String',
+        TrimLeft          => 0,  # (optional) default 1
+        TrimRight         => 0,  # (optional) default 1
+        RemoveAllNewlines => 1,  # (optional) default 0
+        RemoveAllTabs     => 1,  # (optional) default 0
+        RemoveAllSpaces   => 1,  # (optional) default 0
+    );
+
+=cut
+
+sub _StringClean {
+    my ( $Self, %Param ) = @_;
+
+    if ( !$Param{StringRef} || ref $Param{StringRef} ne 'SCALAR' ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need a scalar reference!'
+        );
+        return;
+    }
+
+    return 1 if !${ $Param{StringRef} };
+
+    # set default values
+    $Param{TrimLeft}  = defined $Param{TrimLeft}  ? $Param{TrimLeft}  : 1;
+    $Param{TrimRight} = defined $Param{TrimRight} ? $Param{TrimRight} : 1;
+
+    my %TrimAction = (
+        RemoveAllNewlines => qr{ [\n\r\f] }xms,
+        RemoveAllTabs     => qr{ \t       }xms,
+        RemoveAllSpaces   => qr{ [ ]      }xms,
+        TrimLeft          => qr{ \A \s+   }xms,
+        TrimRight         => qr{ \s+ \z   }xms,
+    );
+
+    ACTION:
+    for my $Action ( sort keys %TrimAction ) {
+        next ACTION if !$Param{$Action};
+
+        ${ $Param{StringRef} } =~ s{ $TrimAction{$Action} }{}xmsg;
+    }
+
+    return 1;
 }
 
 1;
@@ -611,6 +759,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.31 $ $Date: 2008-02-20 09:32:13 $
+$Revision: 1.32 $ $Date: 2008-03-06 14:28:04 $
 
 =cut

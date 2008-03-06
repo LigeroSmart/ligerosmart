@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminGeneralCatalog.pm - admin frontend of general catalog management
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminGeneralCatalog.pm,v 1.20 2008-02-20 09:31:45 mh Exp $
+# $Id: AdminGeneralCatalog.pm,v 1.21 2008-03-06 14:28:04 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -86,6 +86,10 @@ sub Run {
             Valid => 0,
         );
 
+        # check item list
+        return $Self->{LayoutObject}->ErrorScreen()
+            if !$ItemIDList || !%{$ItemIDList};
+
         my $CssClass = '';
         for my $ItemID ( sort { $ItemIDList->{$a} cmp $ItemIDList->{$b} } keys %{$ItemIDList} ) {
 
@@ -148,6 +152,11 @@ sub Run {
             my $ItemDataRef = $Self->{GeneralCatalogObject}->ItemGet(
                 ItemID => $ItemData{ItemID},
             );
+
+            # check item data
+            return $Self->{LayoutObject}->ErrorScreen()
+                if !$ItemDataRef;
+
             %ItemData = %{$ItemDataRef};
         }
 
@@ -170,16 +179,28 @@ sub Run {
             },
         );
 
-        # generate FunctionalityOptionStrg
+        # get functionality list
         my $FunctionalityRef = $Self->{GeneralCatalogObject}->FunctionalityList(
             Class => $ItemData{Class},
         );
+
+        # prepare functionality list
+        my %FunctionalityList;
+        for my $Functionality ( @{$FunctionalityRef} ) {
+            $FunctionalityList{$Functionality} = $Functionality || '-';
+        }
+        if ( !%FunctionalityList ) {
+            %FunctionalityList = (
+                '' => '-',
+            );
+        }
+
+        # generate FunctionalityOptionStrg
         my $FunctionalityOptionStrg = $Self->{LayoutObject}->BuildSelection(
-            Name         => 'Functionality',
-            Data         => $FunctionalityRef,
-            PossibleNone => 1,
-            SelectedID   => $ItemData{Functionality} || '',
-            Translation  => 0,
+            Name        => 'Functionality',
+            Data        => \%FunctionalityList,
+            SelectedID  => $ItemData{Functionality} || '',
+            Translation => 0,
         );
 
         # generate ValidOptionStrg
@@ -300,7 +321,9 @@ sub Run {
         );
         $Self->{LayoutObject}->Block(
             Name => 'OverviewClass',
-            Data => {%Param},
+            Data => {
+                %Param,
+            },
         );
 
         my $CssClass = '';
