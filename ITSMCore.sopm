@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMCore.sopm,v 1.30 2008-02-27 17:12:33 mh Exp $</CVS>
+    <CVS>$Id: ITSMCore.sopm,v 1.31 2008-03-06 15:23:47 mh Exp $</CVS>
     <Name>ITSMCore</Name>
     <Version>0.0.0</Version>
     <Framework>2.2.5</Framework>
@@ -376,6 +376,7 @@
         # change background color of standard theme
         my $CssFile = $Self-&gt;{ConfigObject}-&gt;Get('Home') . "/Kernel/Output/HTML/Standard/css.dtl";
         if (!-e $CssFile . ".save" &amp;&amp; open (IN, "&lt; $CssFile")) {
+
             my $Content = '';
             while (&lt;IN&gt;) {
                 if ($_ =~ /^body /) {
@@ -384,6 +385,7 @@
                 $Content .= $_;
             }
             close (IN);
+
             if (open (OUT, "&gt; $CssFile")) {
                 binmode(OUT);
                 print OUT $Content;
@@ -395,6 +397,7 @@
         # change background color of standard theme back to original
         my $CssFile = $Self-&gt;{ConfigObject}-&gt;Get('Home') . "/Kernel/Output/HTML/Standard/css.dtl";
         if (!-e $CssFile . ".save" &amp;&amp; open (IN, "&lt; $CssFile")) {
+
             my $Content = '';
             while (&lt;IN&gt;) {
                 if ($_ =~ /^body /) {
@@ -403,6 +406,7 @@
                 $Content .= $_;
             }
             close (IN);
+
             if (open (OUT, "&gt; $CssFile")) {
                 binmode(OUT);
                 print OUT $Content;
