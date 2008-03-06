@@ -2,7 +2,7 @@
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.32 2008-03-06 14:28:04 mh Exp $
+# $Id: GeneralCatalog.pm,v 1.33 2008-03-06 15:36:14 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.32 $) [1];
+$VERSION = qw($Revision: 1.33 $) [1];
 
 =head1 NAME
 
@@ -189,7 +189,6 @@ return a list as hash reference of one general catalog class
         Class         => 'ITSM::Service::Type',
         Functionality => 'active',               # (optional) string or array reference
         Valid         => 0,                      # (optional) default 1
-        NoCache       => 1,                      # (optional) default 0
     );
 
 =cut
@@ -236,7 +235,7 @@ sub ItemList {
 
     # check if result is already cached
     return $Self->{Cache}->{ItemList}->{$SQL}
-        if !$Param{NoCache} && $Self->{Cache}->{ItemList}->{$SQL};
+        if $Self->{Cache}->{ItemList}->{$SQL};
 
     # ask database
     $Self->{DBObject}->Prepare( SQL => $SQL );
@@ -256,16 +255,8 @@ sub ItemList {
         return;
     }
 
-    if ( $Param{NoCache} ) {
-
-        # reset cache
-        delete $Self->{Cache}->{ItemList}->{$SQL};
-    }
-    else {
-
-        # cache the result
-        $Self->{Cache}->{ItemList}->{$SQL} = \%Data;
-    }
+    # cache the result
+    $Self->{Cache}->{ItemList}->{$SQL} = \%Data;
 
     return \%Data;
 }
@@ -329,7 +320,6 @@ Return
 
     my $ItemDataRef = $GeneralCatalogObject->ItemGet(
         ItemID  => 3,
-        NoCache => 1,  # (optional) default 0
     );
 
     or
@@ -362,8 +352,7 @@ sub ItemGet {
 
         # check if result is already cached
         return $Self->{Cache}->{ItemGet}->{Class}->{ $Param{Class} }->{ $Param{Name} }
-            if !$Param{NoCache}
-                && $Self->{Cache}->{ItemGet}->{Class}->{ $Param{Class} }->{ $Param{Name} };
+            if $Self->{Cache}->{ItemGet}->{Class}->{ $Param{Class} }->{ $Param{Name} };
 
         # quote
         for my $Argument (qw(Class Name)) {
@@ -377,7 +366,7 @@ sub ItemGet {
 
         # check if result is already cached
         return $Self->{Cache}->{ItemGet}->{ItemID}->{ $Param{ItemID} }
-            if !$Param{NoCache} && $Self->{Cache}->{ItemGet}->{ItemID}->{ $Param{ItemID} };
+            if $Self->{Cache}->{ItemGet}->{ItemID}->{ $Param{ItemID} };
 
         # quote
         $Param{ItemID} = $Self->{DBObject}->Quote( $Param{ItemID}, 'Integer' );
@@ -416,18 +405,9 @@ sub ItemGet {
         return;
     }
 
-    if ( $Param{NoCache} ) {
-
-        # reset cache
-        delete $Self->{Cache}->{ItemGet}->{Class}->{ $ItemData{Class} }->{ $ItemData{Name} };
-        delete $Self->{Cache}->{ItemGet}->{ItemID}->{ $Param{ItemID} };
-    }
-    else {
-
-        # cache the result
-        $Self->{Cache}->{ItemGet}->{Class}->{ $ItemData{Class} }->{ $ItemData{Name} } = \%ItemData;
-        $Self->{Cache}->{ItemGet}->{ItemID}->{ $Param{ItemID} } = \%ItemData;
-    }
+    # cache the result
+    $Self->{Cache}->{ItemGet}->{Class}->{ $ItemData{Class} }->{ $ItemData{Name} } = \%ItemData;
+    $Self->{Cache}->{ItemGet}->{ItemID}->{ $Param{ItemID} } = \%ItemData;
 
     return \%ItemData;
 }
@@ -759,6 +739,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.32 $ $Date: 2008-03-06 14:28:04 $
+$Revision: 1.33 $ $Date: 2008-03-06 15:36:14 $
 
 =cut
