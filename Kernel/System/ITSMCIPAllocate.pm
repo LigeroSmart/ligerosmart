@@ -2,7 +2,7 @@
 # Kernel/System/ITSMCIPAllocate.pm - all criticality, impact and priority allocation functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMCIPAllocate.pm,v 1.7 2008-01-30 19:14:17 mh Exp $
+# $Id: ITSMCIPAllocate.pm,v 1.8 2008-03-06 17:02:24 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 =head1 NAME
 
@@ -117,7 +117,7 @@ update the allocation of criticality, impact and priority
 
     my $True = $CIPAllocateObject->AllocateUpdate(
         AllocateData => $DataRef,  # 2D hash reference
-        UserID => 1,
+        UserID       => 1,
     );
 
 =cut
@@ -199,7 +199,7 @@ return the priority id of a criticality and an impact
 
     my $PriorityID = $CIPAllocateObject->PriorityAllocationGet(
         CriticalityID => 321,
-        ImpactID => 123,
+        ImpactID      => 123,
     );
 
 =cut
@@ -255,6 +255,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.7 $ $Date: 2008-01-30 19:14:17 $
+$Revision: 1.8 $ $Date: 2008-03-06 17:02:24 $
 
 =cut

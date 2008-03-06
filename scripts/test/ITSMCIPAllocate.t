@@ -2,7 +2,7 @@
 # ITSMCIPAllocate.t - general catalog tests
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMCIPAllocate.t,v 1.5 2008-02-14 13:36:31 mh Exp $
+# $Id: ITSMCIPAllocate.t,v 1.6 2008-03-06 17:02:24 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -39,20 +39,23 @@ if ( ref $AllocateData2 ne 'HASH' ) {
 }
 
 # check the allocation 2d hash
-IMPACTID:
-for my $ImpactID ( keys %{$AllocateData2} ) {
+if ($HashOK) {
 
-    if ( ref $AllocateData2->{$ImpactID} ne 'HASH' ) {
-        $HashOK = 0;
-        last IMPACTID;
-    }
+    IMPACTID:
+    for my $ImpactID ( keys %{$AllocateData2} ) {
 
-    CRITICALITYID:
-    for my $CriticalityID ( keys %{ $AllocateData2->{$ImpactID} } ) {
-
-        if ( !$CriticalityID || !$AllocateData2->{$ImpactID}->{$CriticalityID} ) {
+        if ( ref $AllocateData2->{$ImpactID} ne 'HASH' ) {
             $HashOK = 0;
             last IMPACTID;
+        }
+
+        CRITICALITYID:
+        for my $CriticalityID ( keys %{ $AllocateData2->{$ImpactID} } ) {
+
+            if ( !$CriticalityID || !$AllocateData2->{$ImpactID}->{$CriticalityID} ) {
+                $HashOK = 0;
+                last IMPACTID;
+            }
         }
     }
 }
@@ -76,7 +79,7 @@ my $Success2 = $Self->{CIPAllocateObject}->AllocateUpdate(
 # check the result
 $Self->False( $Success2, 'AllocateUpdate()' );
 
-# update the allocation hash (allocation hash )
+# update the allocation hash (allocation hash)
 my $Success3 = $Self->{CIPAllocateObject}->AllocateUpdate(
     AllocateData => {
         Test  => 'aaa',

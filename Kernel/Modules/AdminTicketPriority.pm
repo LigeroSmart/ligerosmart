@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminTicketPriority.pm - admin frontend of ticket priority
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminTicketPriority.pm,v 1.11 2008-02-21 12:35:06 mh Exp $
+# $Id: AdminTicketPriority.pm,v 1.12 2008-03-06 17:02:24 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Priority;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -51,6 +51,8 @@ sub Run {
         # get params
         $PriorityData{PriorityID} = $Self->{ParamObject}->GetParam( Param => "PriorityID" );
         if ( $PriorityData{PriorityID} ne 'NEW' ) {
+
+            # get priority
             %PriorityData = $Self->{PriorityObject}->PriorityGet(
                 PriorityID => $PriorityData{PriorityID},
                 UserID     => $Self->{UserID},
@@ -61,7 +63,9 @@ sub Run {
         # output overview
         $Self->{LayoutObject}->Block(
             Name => 'Overview',
-            Data => {%Param},
+            Data => {
+                %Param,
+            },
         );
 
         # generate ValidOptionStrg
@@ -78,7 +82,6 @@ sub Run {
             Data => {
                 %Param,
                 %PriorityData,
-
             },
         );
 
@@ -135,13 +138,17 @@ sub Run {
         # output overview
         $Self->{LayoutObject}->Block(
             Name => 'Overview',
-            Data => {%Param},
+            Data => {
+                %Param,
+            },
         );
 
         # output overview result
         $Self->{LayoutObject}->Block(
             Name => 'OverviewList',
-            Data => {%Param},
+            Data => {
+                %Param,
+            },
         );
 
         # get priority list

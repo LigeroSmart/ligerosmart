@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminITSMCIPAllocate.pm - admin frontend of criticality, impact and priority
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminITSMCIPAllocate.pm,v 1.9 2008-02-21 12:35:06 mh Exp $
+# $Id: AdminITSMCIPAllocate.pm,v 1.10 2008-03-06 17:02:24 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::Priority;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -67,14 +67,18 @@ sub Run {
         # get all PriorityIDs of the matrix
         my $AllocateData;
         for my $ImpactID ( keys %{ $ObjectOption{ImpactList} } ) {
+
+            CRITICALITYID:
             for my $CriticalityID ( keys %{ $ObjectOption{CriticalityList} } ) {
+
+                # get form param
                 my $PriorityID = $Self->{ParamObject}->GetParam(
                     Param => "PriorityID" . $ImpactID . '-' . $CriticalityID
                 ) || '';
 
-                if ($PriorityID) {
-                    $AllocateData->{$ImpactID}->{$CriticalityID} = $PriorityID;
-                }
+                next CRITICALITYID if !$PriorityID;
+
+                $AllocateData->{$ImpactID}->{$CriticalityID} = $PriorityID;
             }
         }
 
@@ -91,10 +95,6 @@ sub Run {
     # overview
     # ------------------------------------------------------------ #
     else {
-
-        # output header and navbar
-        my $Output = $Self->{LayoutObject}->Header();
-        $Output .= $Self->{LayoutObject}->NavigationBar();
 
         # get option lists
         my %ObjectOption;
@@ -149,23 +149,27 @@ sub Run {
         # generate content
         for my $Row ( 1 .. ( $Counter1 - 1 ) ) {
             for my $Column ( 1 .. ( $Counter2 - 1 ) ) {
-                $AllocateMatrix->[$Row]->[$Column]->{Class} = 'Content';
-                $AllocateMatrix->[$Row]->[$Column]->{OptionStrg}
-                    = $Self->{LayoutObject}->OptionStrgHashRef(
-                    Name => 'PriorityID'
-                        . $AllocateMatrix->[$Row]->[0]->{ImpactKey} . '-'
-                        . $AllocateMatrix->[0]->[$Column]->{CriticalityKey},
+
+                # extract keys
+                my $ImpactKey      = $AllocateMatrix->[$Row]->[0]->{ImpactKey};
+                my $CriticalityKey = $AllocateMatrix->[0]->[$Column]->{CriticalityKey};
+
+                # create option string
+                my $OptionStrg = $Self->{LayoutObject}->BuildSelection(
+                    Name       => 'PriorityID' . $ImpactKey . '-' . $CriticalityKey,
                     Data       => $ObjectOption{PriorityList},
-                    SelectedID => $AllocateData->{ $AllocateMatrix->[$Row]->[0]->{ImpactKey} }
-                        { $AllocateMatrix->[0]->[$Column]->{CriticalityKey} } || '',
-                    );
+                    SelectedID => $AllocateData->{$ImpactKey}{$CriticalityKey} || '',
+                );
+
+                $AllocateMatrix->[$Row]->[$Column]->{OptionStrg} = $OptionStrg;
+                $AllocateMatrix->[$Row]->[$Column]->{Class}      = 'Content';
             }
         }
 
         # output allocation matrix
         for my $RowRef ( @{$AllocateMatrix} ) {
             $Self->{LayoutObject}->Block(
-                Name => 'CIPAllocateRow'
+                Name => 'CIPAllocateRow',
             );
 
             for my $Cell ( @{$RowRef} ) {
@@ -176,12 +180,17 @@ sub Run {
             }
         }
 
-        # start template output
+        # output header and navbar
+        my $Output = $Self->{LayoutObject}->Header();
+        $Output .= $Self->{LayoutObject}->NavigationBar();
+
+        # generate output
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AdminITSMCIPAllocate',
             Data         => \%Param,
         );
         $Output .= $Self->{LayoutObject}->Footer();
+
         return $Output;
     }
 }
