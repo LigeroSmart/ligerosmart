@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminImportExport.pm - admin frontend of import export module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.pm,v 1.16 2008-02-11 16:34:29 mh Exp $
+# $Id: AdminImportExport.pm,v 1.17 2008-03-06 14:41:13 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ImportExport;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1247,7 +1247,7 @@ sub Run {
         my $FileContent = join "\n", @{ $Result->{DestinationContent} };
 
         return $Self->{LayoutObject}->Attachment(
-            Type        => 'inline',
+            Type        => 'attachment',
             Filename    => 'Export.csv',
             ContentType => 'text/csv',
             Content     => $FileContent,
