@@ -2,7 +2,7 @@
 # GeneralCatalog.t - general catalog tests
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.t,v 1.10 2008-03-10 16:04:48 mh Exp $
+# $Id: GeneralCatalog.t,v 1.11 2008-03-10 17:46:04 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -16,8 +16,28 @@ use utf8;
 use vars qw($Self);
 
 use Kernel::System::GeneralCatalog;
+use Kernel::System::User;
 
 $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
+$Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
+
+# create new users for the tests
+my $UserID1 = $Self->{UserObject}->UserAdd(
+    UserFirstname => 'UnitTest1',
+    UserLastname  => 'UnitTest1',
+    UserLogin     => 'UnitTest-GeneralCatalog-1' . int( rand(1_000_000) ),
+    UserEmail     => 'unittest1@localhost',
+    ValidID       => 1,
+    ChangeUserID  => 1,
+);
+my $UserID2 = $Self->{UserObject}->UserAdd(
+    UserFirstname => 'UnitTest2',
+    UserLastname  => 'UnitTest2',
+    UserLogin     => 'UnitTest-GeneralCatalog-2' . int( rand(1_000_000) ),
+    UserEmail     => 'unittest2@localhost',
+    ValidID       => 1,
+    ChangeUserID  => 1,
+);
 
 # create some random numbers for the classes
 my $ClassRand1 = int( rand(1_000_000) );
@@ -96,8 +116,8 @@ my $ItemData = [
         Update => {
             Name          => 'TestItem4UPDATE1',
             Functionality => 'Test',
-            ValidID       => 2,
-            UserID        => 2,
+            ValidID       => $UserID1,
+            UserID        => $UserID1,
         },
     },
 
@@ -124,8 +144,8 @@ my $ItemData = [
     # the item one add-test before must be NOT updated (item update arguments NOT complete)
     {
         Update => {
-            ValidID => 2,
-            UserID  => 2,
+            ValidID => $UserID1,
+            UserID  => $UserID1,
         },
     },
 
@@ -133,7 +153,7 @@ my $ItemData = [
     {
         Update => {
             Name   => 'TestItem5UPDATE1',
-            UserID => 2,
+            UserID => $UserID1,
         },
     },
 
@@ -141,7 +161,7 @@ my $ItemData = [
     {
         Update => {
             Functionality => 'Test1',
-            ValidID       => 2,
+            ValidID       => $UserID1,
         },
     },
 
@@ -149,8 +169,8 @@ my $ItemData = [
     {
         Update => {
             Name    => 'TestItem5',
-            ValidID => 2,
-            UserID  => 2,
+            ValidID => $UserID1,
+            UserID  => $UserID1,
         },
     },
 
@@ -159,8 +179,8 @@ my $ItemData = [
         Update => {
             Name          => 'TestItem5',
             Functionality => 'Test2',
-            ValidID       => 2,
-            UserID        => 2,
+            ValidID       => $UserID1,
+            UserID        => $UserID1,
         },
     },
 
@@ -169,16 +189,16 @@ my $ItemData = [
         Update => {
             Name          => 'TestItem5UPDATE2',
             Functionality => 'Test1',
-            ValidID       => 2,
-            UserID        => 2,
+            ValidID       => $UserID1,
+            UserID        => $UserID1,
         },
         UpdateGet => {
             Name          => 'TestItem5UPDATE2',
             Functionality => 'Test1',
-            ValidID       => 2,
+            ValidID       => $UserID1,
             Comment       => '',
             CreateBy      => 1,
-            ChangeBy      => 2,
+            ChangeBy      => $UserID1,
         },
     },
 
@@ -226,17 +246,17 @@ my $ItemData = [
         Update => {
             Name          => " \t \n \r Test Item UPDATED \t \n \r ",
             Functionality => " \t \n \r Test Func tiona lity \t \n \r ",
-            ValidID       => 2,
+            ValidID       => $UserID1,
             Comment       => " \t \n \r Test Comment UPDATED \t \n \r ",
-            UserID        => 2,
+            UserID        => $UserID1,
         },
         UpdateGet => {
             Name          => 'Test Item UPDATED',
             Functionality => 'TestFunctionality',
-            ValidID       => 2,
+            ValidID       => $UserID1,
             Comment       => 'Test Comment UPDATED',
             CreateBy      => 1,
-            ChangeBy      => 2,
+            ChangeBy      => $UserID1,
         },
     },
 
@@ -266,17 +286,17 @@ my $ItemData = [
         Update => {
             Name          => 'Test Item Ʃ ɤ UPDATED',
             Functionality => ' Ѡ Ѥ TestFunctionality Ϡ Ω ',
-            ValidID       => 2,
+            ValidID       => $UserID2,
             Comment       => ' Test Comment љ ђ UPDATED ',
-            UserID        => 2,
+            UserID        => $UserID2,
         },
         UpdateGet => {
             Name          => 'Test Item Ʃ ɤ UPDATED',
             Functionality => 'ѠѤTestFunctionalityϠΩ',
-            ValidID       => 2,
+            ValidID       => $UserID2,
             Comment       => 'Test Comment љ ђ UPDATED',
             CreateBy      => 1,
-            ChangeBy      => 2,
+            ChangeBy      => $UserID2,
         },
     },
 
