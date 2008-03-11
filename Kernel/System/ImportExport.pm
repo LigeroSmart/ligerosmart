@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport.pm - all import and export functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pm,v 1.17 2008-02-11 16:34:29 mh Exp $
+# $Id: ImportExport.pm,v 1.18 2008-03-11 09:18:36 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 =head1 NAME
 
@@ -164,9 +164,10 @@ sub TemplateGet {
     # quote
     $Param{TemplateID} = $Self->{DBObject}->Quote( $Param{TemplateID}, 'Integer' );
 
-    # check if result is already cached
-    return $Self->{Cache}->{TemplateGet}->{ $Param{TemplateID} }
-        if $Self->{Cache}->{TemplateGet}->{ $Param{TemplateID} };
+# TODO FIXME
+#    # check if result is already cached
+#    return $Self->{Cache}->{TemplateGet}->{ $Param{TemplateID} }
+#        if $Self->{Cache}->{TemplateGet}->{ $Param{TemplateID} };
 
     # create sql string
     my $SQL = "SELECT id, imexport_object, imexport_format, name, valid_id, comments, "
@@ -2184,6 +2185,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.17 $ $Date: 2008-02-11 16:34:29 $
+$Revision: 1.18 $ $Date: 2008-03-11 09:18:36 $
 
 =cut
