@@ -2,7 +2,7 @@
 # GeneralCatalog.t - general catalog tests
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.t,v 1.11 2008-03-10 17:46:04 mh Exp $
+# $Id: GeneralCatalog.t,v 1.12 2008-03-11 09:15:43 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -21,22 +21,32 @@ use Kernel::System::User;
 $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
 $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
 
+# disable email checks to create new user
+my $CheckEmailAddressesOrg = $Self->{ConfigObject}->Get('CheckEmailAddresses') || 1;
+$Self->{ConfigObject}->Set( Key => 'CheckEmailAddresses', Value => 0 );
+
 # create new users for the tests
 my $UserID1 = $Self->{UserObject}->UserAdd(
-    UserFirstname => 'UnitTest1',
-    UserLastname  => 'UnitTest1',
+    UserFirstname => 'GeneralCatalog1',
+    UserLastname  => 'UnitTest',
     UserLogin     => 'UnitTest-GeneralCatalog-1' . int( rand(1_000_000) ),
-    UserEmail     => 'unittest1@localhost',
+    UserEmail     => 'UnitTest-GeneralCatalog-1@localhost',
     ValidID       => 1,
     ChangeUserID  => 1,
 );
 my $UserID2 = $Self->{UserObject}->UserAdd(
-    UserFirstname => 'UnitTest2',
-    UserLastname  => 'UnitTest2',
+    UserFirstname => 'GeneralCatalog2',
+    UserLastname  => 'UnitTest',
     UserLogin     => 'UnitTest-GeneralCatalog-2' . int( rand(1_000_000) ),
-    UserEmail     => 'unittest2@localhost',
+    UserEmail     => 'UnitTest-GeneralCatalog-2@localhost',
     ValidID       => 1,
     ChangeUserID  => 1,
+);
+
+# restore original email check param
+$Self->{ConfigObject}->Set(
+    Key   => 'CheckEmailAddresses',
+    Value => $CheckEmailAddressesOrg,
 );
 
 # create some random numbers for the classes
