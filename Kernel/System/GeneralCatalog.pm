@@ -2,7 +2,7 @@
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.33 2008-03-06 15:36:14 mh Exp $
+# $Id: GeneralCatalog.pm,v 1.34 2008-03-11 10:51:19 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.33 $) [1];
+$VERSION = qw($Revision: 1.34 $) [1];
 
 =head1 NAME
 
@@ -606,6 +606,10 @@ sub ItemUpdate {
         return;
     }
 
+    # quote
+    $Class            = $Self->{DBObject}->Quote($Class);
+    $OldFunctionality = $Self->{DBObject}->Quote($OldFunctionality);
+
     # find exiting item with same name
     $Self->{DBObject}->Prepare(
         SQL => "SELECT id FROM general_catalog "
@@ -739,6 +743,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.33 $ $Date: 2008-03-06 15:36:14 $
+$Revision: 1.34 $ $Date: 2008-03-11 10:51:19 $
 
 =cut

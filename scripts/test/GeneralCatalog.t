@@ -2,7 +2,7 @@
 # GeneralCatalog.t - general catalog tests
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.t,v 1.14 2008-03-11 10:02:46 mh Exp $
+# $Id: GeneralCatalog.t,v 1.15 2008-03-11 10:51:33 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -257,17 +257,17 @@ my $ItemData = [
     # the item one add-test before must be updated sucessfully (check string cleaner function)
     {
         Update => {
-            Name          => " \t \n \r Test Item UPDATED \t \n \r ",
+            Name          => " \t \n \r Test Item UPDATE1 \t \n \r ",
             Functionality => " \t \n \r Test Func tiona lity \t \n \r ",
             ValidID       => $UserID1,
-            Comment       => " \t \n \r Test Comment UPDATED \t \n \r ",
+            Comment       => " \t \n \r Test Comment UPDATE1 \t \n \r ",
             UserID        => $UserID1,
         },
         UpdateGet => {
-            Name          => 'Test Item UPDATED',
+            Name          => 'Test Item UPDATE1',
             Functionality => 'TestFunctionality',
             ValidID       => $UserID1,
-            Comment       => 'Test Comment UPDATED',
+            Comment       => 'Test Comment UPDATE1',
             CreateBy      => 1,
             ChangeBy      => $UserID1,
         },
@@ -297,17 +297,17 @@ my $ItemData = [
     # the item one add-test before must be updated sucessfully (unicode checks)
     {
         Update => {
-            Name          => 'Test Item Ʃ ɤ UPDATED',
+            Name          => 'Test Item Ʃ ɤ UPDATE1',
             Functionality => ' Ѡ Ѥ TestFunctionality Ϡ Ω ',
             ValidID       => $UserID2,
-            Comment       => ' Test Comment љ ђ UPDATED ',
+            Comment       => ' Test Comment љ ђ UPDATE1 ',
             UserID        => $UserID2,
         },
         UpdateGet => {
-            Name          => 'Test Item Ʃ ɤ UPDATED',
+            Name          => 'Test Item Ʃ ɤ UPDATE1',
             Functionality => 'ѠѤTestFunctionalityϠΩ',
             ValidID       => $UserID2,
-            Comment       => 'Test Comment љ ђ UPDATED',
+            Comment       => 'Test Comment љ ђ UPDATE1',
             CreateBy      => 1,
             ChangeBy      => $UserID2,
         },
@@ -348,6 +348,46 @@ my $ItemData = [
             Comment       => '',
             CreateBy      => 1,
             ChangeBy      => 1,
+        },
+    },
+
+    # this item must be inserted sucessfully (special character checks)
+    {
+        Add => {
+            Class         => 'UnitTest::TestClass[test]%*\\' . $ClassRand2,
+            Name          => ' [test]%*\\ Test Item [test]%*\\ ',
+            Functionality => ' [test]%*\\ TestFunctionality [test]%*\\ ',
+            ValidID       => 1,
+            Comment       => ' [test]%*\\ Test Comment [test]%*\\ ',
+            UserID        => 1,
+        },
+        AddGet => {
+            Class         => 'UnitTest::TestClass[test]%*\\' . $ClassRand2,
+            Name          => '[test]%*\\ Test Item [test]%*\\',
+            Functionality => '[test]%*\\TestFunctionality[test]%*\\',
+            ValidID       => 1,
+            Comment       => '[test]%*\\ Test Comment [test]%*\\',
+            CreateBy      => 1,
+            ChangeBy      => 1,
+        },
+    },
+
+    # the item one add-test before must be updated sucessfully (special character checks)
+    {
+        Update => {
+            Name          => ' [test]%*\\ Test Item UPDATE1 [test]%*\\ ',
+            Functionality => ' [test]%*\\ TestFunctionality [test]%*\\ ',
+            ValidID       => $UserID2,
+            Comment       => ' [test]%*\\ Test Comment UPDATE1 [test]%*\\ ',
+            UserID        => $UserID2,
+        },
+        UpdateGet => {
+            Name          => '[test]%*\\ Test Item UPDATE1 [test]%*\\',
+            Functionality => '[test]%*\\TestFunctionality[test]%*\\',
+            ValidID       => $UserID2,
+            Comment       => '[test]%*\\ Test Comment UPDATE1 [test]%*\\',
+            CreateBy      => 1,
+            ChangeBy      => $UserID2,
         },
     },
 ];
