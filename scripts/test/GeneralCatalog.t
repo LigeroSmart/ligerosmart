@@ -2,7 +2,7 @@
 # GeneralCatalog.t - general catalog tests
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.t,v 1.13 2008-03-11 09:33:28 mh Exp $
+# $Id: GeneralCatalog.t,v 1.14 2008-03-11 10:02:46 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -726,6 +726,13 @@ for my $Class (@ExistingClasses) {
 # clean the general catalog table
 $Self->{DBObject}->Do(
     SQL => "DELETE FROM general_catalog WHERE general_catalog_class LIKE 'UnitTest%'",
+);
+
+# clean the system user table
+my $UserTable = $Self->{ConfigObject}->Get('DatabaseUserTable') || 'system_user';
+
+$Self->{DBObject}->Do(
+    SQL => "DELETE FROM $UserTable WHERE login LIKE 'UnitTest-GeneralCatalog-%'",
 );
 
 1;
