@@ -2,7 +2,7 @@
 # GeneralCatalog.t - general catalog tests
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.t,v 1.12 2008-03-11 09:15:43 mh Exp $
+# $Id: GeneralCatalog.t,v 1.13 2008-03-11 09:33:28 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -23,7 +23,10 @@ $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
 
 # disable email checks to create new user
 my $CheckEmailAddressesOrg = $Self->{ConfigObject}->Get('CheckEmailAddresses') || 1;
-$Self->{ConfigObject}->Set( Key => 'CheckEmailAddresses', Value => 0 );
+$Self->{ConfigObject}->Set(
+    Key   => 'CheckEmailAddresses',
+    Value => 0,
+);
 
 # create new users for the tests
 my $UserID1 = $Self->{UserObject}->UserAdd(
