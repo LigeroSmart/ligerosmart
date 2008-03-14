@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.15 2008-03-02 22:27:06 martin Exp $
+# $Id: FAQ.pm,v 1.16 2008-03-14 15:50:44 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Group;
 use Kernel::System::CustomerGroup;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.15 $';
+$VERSION = '$Revision: 1.16 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -617,7 +617,7 @@ sub VoteAdd {
     foreach (qw(CreatedBy Interface IP)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
     }
-    foreach (qw(ItemID)) {
+    foreach (qw(ItemID Rate)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
 
@@ -628,7 +628,7 @@ sub VoteAdd {
         " $Param{ItemID}, ".
         " '$Param{IP}', ".
         " '$Param{Interface}', ".
-        " '$Param{Rate}', ".
+        " $Param{Rate}, ".
         " current_timestamp ".
         " )";
     #$Self->{LogObject}->Log(Priority => 'error', Message => $SQL);
@@ -1810,7 +1810,7 @@ search in articles
     my @IDs = $FAQObject->FAQSearch(
         Number => '*134*',
         What => '*some text*',
-        Keywords => '*webserver*',
+        Keyword => '*webserver*',
         States => ['public', 'internal'],
         Order => 'Changed',
         Sort => 'ASC',
@@ -1831,13 +1831,13 @@ sub FAQSearch {
     }
 
     # sql
-    my $SQL = "SELECT i.id, count( v.item_id ) votes, avg( v.rate ) vrate".
+    my $SQL = "SELECT i.id, count( v.item_id ) as votes, avg( v.rate ) as vrate".
         " FROM faq_item i ".
         " LEFT JOIN faq_voting v ON v.item_id = i.id".
         " LEFT JOIN faq_state s ON s.id = i.state_id".
         " WHERE";
     my $Ext = '';
-    foreach my $Key (qw(f_subject f_field1 f_field2 f_field3 f_field4 f_field5 f_field6)) {
+    foreach my $Key (qw(f_subject f_keywords f_field1 f_field2 f_field3 f_field4 f_field5 f_field6)) {
         if ($Ext) {
             $Ext .= ' OR ';
         }
@@ -1854,8 +1854,21 @@ sub FAQSearch {
                 if ($What) {
                     $What .= ' OR ';
                 }
-                my $ValueInsert = lc $Self->{DBObject}->Quote($Value);
-                $What .= " i.$Key LIKE '$ValueInsert'";
+# prepared for OTRS 2.3.x
+                my $ValueInsert = $Self->{DBObject}->Quote($Value);
+#                my $ValueInsert = $Self->{DBObject}->Quote($Value, 'Like');
+#                if ( $Self->{DBObject}->GetDatabaseFunction('NoLowerInLargeText') ) {
+                if ( $Self->{DBObject}->GetDatabaseFunction('Type') eq 'mssql' ) {
+                    $What .= " i.$Key LIKE '$ValueInsert'";
+                }
+# prepared for OTRS 2.3.x
+#                elsif ( $Self->{DBObject}->GetDatabaseFunction('LcaseLikeInLargeText') ) {
+                elsif ( $Self->{DBObject}->GetDatabaseFunction('Type') eq 'db2' ) {
+                    $What .= " LCASE(i.$Key) LIKE LCASE('$ValueInsert')";
+                }
+                else {
+                    $What .= " LOWER(i.$Key) LIKE LOWER('$ValueInsert')";
+                }
             }
             $Ext .= $What;
         }
@@ -1866,12 +1879,16 @@ sub FAQSearch {
     $Ext .= ' )';
     if ($Param{Number}) {
         $Param{Number} =~ s/\*/%/g;
-        $Param{Number} = lc $Self->{DBObject}->Quote($Param{Number});
-        $Ext .= " AND i.f_number LIKE '$Param{Number}'";
+        $Param{Number} =~ s/%%/%/g;
+        $Param{Number} = $Self->{DBObject}->Quote($Param{Number});
+        $Ext .= " AND LOWER(i.f_number) LIKE LOWER('$Param{Number}')";
     }
     if ($Param{Title}) {
-        $Param{Title} = lc $Self->{DBObject}->Quote($Param{Title});
-        $Ext .= " AND i.f_subject LIKE '%".$Param{Title}."%'";
+        $Param{Title} = "\%$Param{Title}\%";
+        $Param{Title} =~ s/\*/%/g;
+        $Param{Title} =~ s/%%/%/g;
+        $Param{Title} = $Self->{DBObject}->Quote($Param{Title});
+        $Ext .= " AND LOWER(i.f_subject) LIKE LOWER('".$Param{Title}."')";
     }
     if ($Param{LanguageIDs} && ref($Param{LanguageIDs}) eq 'ARRAY' && @{$Param{LanguageIDs}}) {
         $Ext .= " AND i.f_language_id IN (";
@@ -1905,8 +1922,24 @@ sub FAQSearch {
         $Ext .= ")";
     }
     if ($Param{Keyword}) {
-        $Param{Keyword} = lc $Self->{DBObject}->Quote($Param{Keyword});
-        $Ext .= " AND i.f_keywords LIKE '%".$Param{Keyword}."%'";
+        $Param{Keyword} = "\%$Param{Keyword}\%";
+        $Param{Keyword} =~ s/\*/%/g;
+        $Param{Keyword} =~ s/%%/%/g;
+        $Param{Keyword} = $Self->{DBObject}->Quote($Param{Keyword});
+# prepared for OTRS 2.3.x
+#        $Param{Keyword} = $Self->{DBObject}->Quote($Param{Keyword}, 'Like');
+#        if ( $Self->{DBObject}->GetDatabaseFunction('NoLowerInLargeText') ) {
+        if ( $Self->{DBObject}->GetDatabaseFunction('Type') eq 'mssql' ) {
+            $Ext .= " AND i.f_keywords LIKE '".$Param{Keyword}."'";
+        }
+# prepared for OTRS 2.3.x
+#        elsif ( $Self->{DBObject}->GetDatabaseFunction('LcaseLikeInLargeText') ) {
+        elsif ( $Self->{DBObject}->GetDatabaseFunction('Type') eq 'db2' ) {
+            $Ext .= " AND LCASE(i.f_keywords) LIKE LCASE('".$Param{Keyword}."')";
+        }
+        else {
+            $Ext .= " AND LOWER(i.f_keywords) LIKE LOWER('".$Param{Keyword}."')";
+        }
     }
     $Ext .= " GROUP BY i.id, i.f_subject, i.f_language_id, i.created, i.changed, s.name, v.item_id";
     if ($Param{Order}) {
@@ -2453,6 +2486,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.15 $ $Date: 2008-03-02 22:27:06 $
+$Revision: 1.16 $ $Date: 2008-03-14 15:50:44 $
 
 =cut
