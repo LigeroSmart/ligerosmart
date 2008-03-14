@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.24 2008-03-02 22:30:23 martin Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.25 2008-03-14 15:51:41 martin Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
     <Framework>2.2.x</Framework>
@@ -138,7 +138,7 @@
             <Column Name="f_language_id" Required="true" Type="SMALLINT"/>
             <Column Name="state_id" Required="true" Type="SMALLINT"/>
             <Column Name="category_id" Required="true" Type="SMALLINT"/>
-            <Column Name="f_keywords" Required="false" Size="20000" Type="VARCHAR"/>
+            <Column Name="f_keywords" Required="false" Size="400" Type="VARCHAR"/>
             <Column Name="f_field1" Required="false" Size="20000" Type="VARCHAR"/>
             <Column Name="f_field2" Required="false" Size="20000" Type="VARCHAR"/>
             <Column Name="f_field3" Required="false" Size="20000" Type="VARCHAR"/>
