@@ -2,7 +2,7 @@
 # AgentFAQ.dtl - provides HTML view for faq articles
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.dtl,v 1.12 2008-03-02 23:05:19 martin Exp $
+# $Id: AgentFAQ.dtl,v 1.13 2008-03-16 21:37:15 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -129,7 +129,7 @@
           <td class="contentkey">$Text{"Linked"} ($Text{"Normal"}):</td>
           <td class="contentvalue">
 <!-- dtl:block:LinkNormal -->
-            <a href="$Env{"Baselink"}$Data{"FrontendDest"}$QData{"ID"}" title="$QData{"Object"}: $QData{"Number"} $QData{"Title"}">$QData{"Text"}</a>
+            <a href="$Env{"Baselink"}$Data{"FrontendDest"}$QData{"ID"}" title="$QData{"Object"}: $QData{"Number"} $QData{"Title"}" $Data{"Css"}>$QData{"Text"}</a>
 <!-- dtl:block:LinkNormal -->
           </td>
         </tr>
@@ -138,7 +138,7 @@
           <td class="contentkey">$Text{"Linked"} ($Text{"Parent"}):</td>
           <td class="contentvalue">
 <!-- dtl:block:LinkParent -->
-            <a href="$Env{"Baselink"}$Data{"FrontendDest"}$QData{"ID"}" title="$QData{"Object"}: $QData{"Number"} $QData{"Title"}">$QData{"Text"}</a>
+            <a href="$Env{"Baselink"}$Data{"FrontendDest"}$QData{"ID"}" title="$QData{"Object"}: $QData{"Number"} $QData{"Title"}" $Data{"Css"}>$QData{"Text"}</a>
 <!-- dtl:block:LinkParent -->
           </td>
         </tr>
@@ -147,7 +147,7 @@
           <td class="contentkey">$Text{"Linked"} ($Text{"Child"}):</td>
           <td class="contentvalue">
 <!-- dtl:block:LinkChild -->
-            <a href="$Env{"Baselink"}$Data{"FrontendDest"}$QData{"ID"}" title="$QData{"Object"}: $QData{"Number"} $QData{"Title"}">$QData{"Text"}</a>
+            <a href="$Env{"Baselink"}$Data{"FrontendDest"}$QData{"ID"}" title="$QData{"Object"}: $QData{"Number"} $QData{"Title"}" $Data{"Css"}>$QData{"Text"}</a>
 <!-- dtl:block:LinkChild -->
           </td>
         </tr>
