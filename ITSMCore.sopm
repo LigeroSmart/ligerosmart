@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMCore.sopm,v 1.31 2008-03-06 15:23:47 mh Exp $</CVS>
+    <CVS>$Id: ITSMCore.sopm,v 1.32 2008-03-17 11:01:30 mh Exp $</CVS>
     <Name>ITSMCore</Name>
     <Version>0.0.0</Version>
     <Framework>2.2.5</Framework>
@@ -9,8 +9,8 @@
     <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
     <Description Lang="en">The OTRS::ITSM core package.</Description>
     <Description Lang="de">Das OTRS::ITSM Core Paket.</Description>
-    <PackageRequired Version="1.0.91">GeneralCatalog</PackageRequired>
-    <PackageRequired Version="1.0.91">LinkObject2</PackageRequired>
+    <PackageRequired Version="1.0.92">GeneralCatalog</PackageRequired>
+    <PackageRequired Version="1.0.92">LinkObject2</PackageRequired>
     <Filelist>
         <File Permission="644" Location="Kernel/Config/Files/FrameworkITSMCore.xml"/>
         <File Permission="644" Location="Kernel/Config/Files/ITSMCore.xml"/>
@@ -423,8 +423,8 @@
         &lt;br&gt;
         REQUIRED OTRS PACKAGES
         &lt;ul&gt;
-        &lt;li&gt;GeneralCatalog 1.0.91&lt;/li&gt;
-        &lt;li&gt;LinkObject 1.0.91&lt;/li&gt;
+        &lt;li&gt;GeneralCatalog 1.0.92&lt;/li&gt;
+        &lt;li&gt;LinkObject 1.0.92&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         ATTENTION&lt;br&gt;
@@ -444,8 +444,8 @@
         &lt;br&gt;
         BENÖTIGTE OTRS-PAKETE
         &lt;ul&gt;
-        &lt;li&gt;GeneralCatalog 1.0.91&lt;/li&gt;
-        &lt;li&gt;LinkObject 1.0.91&lt;/li&gt;
+        &lt;li&gt;GeneralCatalog 1.0.92&lt;/li&gt;
+        &lt;li&gt;LinkObject 1.0.92&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         ACHTUNG&lt;br&gt;
@@ -465,8 +465,8 @@
         &lt;br&gt;
         REQUIRED OTRS PACKAGES
         &lt;ul&gt;
-        &lt;li&gt;GeneralCatalog 1.0.91&lt;/li&gt;
-        &lt;li&gt;LinkObject 1.0.91&lt;/li&gt;
+        &lt;li&gt;GeneralCatalog 1.0.92&lt;/li&gt;
+        &lt;li&gt;LinkObject 1.0.92&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         ATTENTION&lt;br&gt;
@@ -486,8 +486,8 @@
         &lt;br&gt;
         BENÖTIGTE OTRS-PAKETE
         &lt;ul&gt;
-        &lt;li&gt;GeneralCatalog 1.0.91&lt;/li&gt;
-        &lt;li&gt;LinkObject 1.0.91&lt;/li&gt;
+        &lt;li&gt;GeneralCatalog 1.0.92&lt;/li&gt;
+        &lt;li&gt;LinkObject 1.0.92&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         ACHTUNG&lt;br&gt;
