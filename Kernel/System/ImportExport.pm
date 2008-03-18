@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport.pm - all import and export functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pm,v 1.18 2008-03-11 09:18:36 mh Exp $
+# $Id: ImportExport.pm,v 1.19 2008-03-18 13:36:47 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 =head1 NAME
 
@@ -348,7 +348,7 @@ sub TemplateUpdate {
     # get the object of this template id
     $Self->{DBObject}->Prepare(
         SQL => "SELECT imexport_object FROM imexport_template "
-            . "WHERE id = '$Param{TemplateID}'",
+            . "WHERE id = $Param{TemplateID}",
         Limit => 1,
     );
 
@@ -2185,6 +2185,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.18 $ $Date: 2008-03-11 09:18:36 $
+$Revision: 1.19 $ $Date: 2008-03-18 13:36:47 $
 
 =cut
