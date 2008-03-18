@@ -2,7 +2,7 @@
 # ImportExport.t - import export tests
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.t,v 1.8 2008-03-18 08:09:51 mh Exp $
+# $Id: ImportExport.t,v 1.9 2008-03-18 13:37:11 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -215,7 +215,7 @@ my $TemplateChecks = [
     # the template one add-test before must be NOT updated (template update arguments NOT complete)
     {
         Update => {
-            Name   => $TemplateRandName2 . 'Update1',
+            Name   => $TemplateRandName2 . 'UPDATE1',
             UserID => $UserID1,
         },
     },
@@ -223,7 +223,7 @@ my $TemplateChecks = [
     # the template one add-test before must be NOT updated (template update arguments NOT complete)
     {
         Update => {
-            Name    => $TemplateRandName2 . 'Update2',
+            Name    => $TemplateRandName2 . 'UPDATE2',
             ValidID => 2,
         },
     },
@@ -231,13 +231,13 @@ my $TemplateChecks = [
     # the template one add-test before must be updated (template update arguments are complete)
     {
         Update => {
-            Name    => $TemplateRandName2 . 'Update3',
+            Name    => $TemplateRandName2 . 'UPDATE3',
             Comment => 'This is a second test!',
             ValidID => 2,
             UserID  => $UserID1,
         },
         UpdateGet => {
-            Name     => $TemplateRandName2 . 'Update3',
+            Name     => $TemplateRandName2 . 'UPDATE3',
             ValidID  => 2,
             Comment  => 'This is a second test!',
             CreateBy => 1,
@@ -248,13 +248,13 @@ my $TemplateChecks = [
     # the template one add-test before must be updated (template update arguments are complete)
     {
         Update => {
-            Name    => $TemplateRandName2 . 'Update4',
+            Name    => $TemplateRandName2 . 'UPDATE4',
             ValidID => 1,
             Comment => '',
             UserID  => 1,
         },
         UpdateGet => {
-            Name     => $TemplateRandName2 . 'Update4',
+            Name     => $TemplateRandName2 . 'UPDATE4',
             ValidID  => 1,
             Comment  => '',
             CreateBy => 1,
@@ -302,12 +302,12 @@ my $TemplateChecks = [
     # the template one add-test before must be updated (check string cleaner function)
     {
         Update => {
-            Name    => " \t \n \r " . $TemplateRandName3 . "Update1 \t \n \r ",
+            Name    => " \t \n \r " . $TemplateRandName3 . "UPDATE1 \t \n \r ",
             ValidID => 1,
             UserID  => 1,
         },
         UpdateGet => {
-            Name     => $TemplateRandName3 . 'Update1',
+            Name     => $TemplateRandName3 . 'UPDATE1',
             ValidID  => 1,
             CreateBy => 1,
             ChangeBy => 1,
