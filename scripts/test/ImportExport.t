@@ -2,7 +2,7 @@
 # ImportExport.t - import export tests
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.t,v 1.7 2008-02-14 13:34:52 mh Exp $
+# $Id: ImportExport.t,v 1.8 2008-03-18 08:09:51 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -11,12 +11,46 @@
 
 use strict;
 use warnings;
+use utf8;
 
 use vars qw($Self);
 
 use Kernel::System::ImportExport;
+use Kernel::System::User;
 
 $Self->{ImportExportObject} = Kernel::System::ImportExport->new( %{$Self} );
+$Self->{UserObject}         = Kernel::System::User->new( %{$Self} );
+
+# disable email checks to create new user
+my $CheckEmailAddressesOrg = $Self->{ConfigObject}->Get('CheckEmailAddresses') || 1;
+$Self->{ConfigObject}->Set(
+    Key   => 'CheckEmailAddresses',
+    Value => 0,
+);
+
+# create new users for the tests
+my $UserID1 = $Self->{UserObject}->UserAdd(
+    UserFirstname => 'ImportExport1',
+    UserLastname  => 'UnitTest',
+    UserLogin     => 'UnitTest-ImportExport-1' . int( rand(1_000_000) ),
+    UserEmail     => 'UnitTest-ImportExport-1@localhost',
+    ValidID       => 1,
+    ChangeUserID  => 1,
+);
+my $UserID2 = $Self->{UserObject}->UserAdd(
+    UserFirstname => 'ImportExport2',
+    UserLastname  => 'UnitTest',
+    UserLogin     => 'UnitTest-ImportExport-2' . int( rand(1_000_000) ),
+    UserEmail     => 'UnitTest-ImportExport-2@localhost',
+    ValidID       => 1,
+    ChangeUserID  => 1,
+);
+
+# restore original email check param
+$Self->{ConfigObject}->Set(
+    Key   => 'CheckEmailAddresses',
+    Value => $CheckEmailAddressesOrg,
+);
 
 # ------------------------------------------------------------ #
 # ObjectList() test
@@ -174,7 +208,7 @@ my $TemplateChecks = [
     {
         Update => {
             ValidID => 2,
-            UserID  => 2,
+            UserID  => $UserID1,
         },
     },
 
@@ -182,7 +216,7 @@ my $TemplateChecks = [
     {
         Update => {
             Name   => $TemplateRandName2 . 'Update1',
-            UserID => 2,
+            UserID => $UserID1,
         },
     },
 
@@ -200,14 +234,14 @@ my $TemplateChecks = [
             Name    => $TemplateRandName2 . 'Update3',
             Comment => 'This is a second test!',
             ValidID => 2,
-            UserID  => 2,
+            UserID  => $UserID1,
         },
         UpdateGet => {
             Name     => $TemplateRandName2 . 'Update3',
             ValidID  => 2,
             Comment  => 'This is a second test!',
             CreateBy => 1,
-            ChangeBy => 2,
+            ChangeBy => $UserID1,
         },
     },
 
@@ -339,8 +373,10 @@ for my $Template ( @{$TemplateChecks} ) {
         }
 
         # update the template
-        my $UpdateSucess = $Self->{ImportExportObject}
-            ->TemplateUpdate( %{ $Template->{Update} }, TemplateID => $LastAddedTemplateID );
+        my $UpdateSucess = $Self->{ImportExportObject}->TemplateUpdate(
+            %{ $Template->{Update} },
+            TemplateID => $LastAddedTemplateID,
+        );
 
         # check if template was updated successfully or not
         if ( $Template->{UpdateGet} ) {
@@ -359,7 +395,7 @@ for my $Template ( @{$TemplateChecks} ) {
         # get template data to check the values after the update
         my $TemplateGet = $Self->{ImportExportObject}->TemplateGet(
             TemplateID => $LastAddedTemplateID,
-            UserID => $Template->{Update}->{UserID} || 1,
+            UserID     => $Template->{Update}->{UserID} || 1,
         );
 
         # check template data after update
@@ -436,6 +472,13 @@ my $TemplateList3 = $Self->{ImportExportObject}->TemplateList(
 $Self->True(
     ref $TemplateList3 eq 'ARRAY' && scalar @{$TemplateList3} eq 0,
     "#3 TemplateList() - empty array reference",
+);
+
+# clean the system user table
+my $UserTable = $Self->{ConfigObject}->Get('DatabaseUserTable') || 'system_user';
+
+$Self->{DBObject}->Do(
+    SQL => "DELETE FROM $UserTable WHERE login LIKE 'UnitTest-ImportExport-%'",
 );
 
 1;
