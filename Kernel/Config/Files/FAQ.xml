@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.7 2008-03-18 23:53:00 martin Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.8 2008-03-18 23:53:41 martin Exp $</CVS>
     <ConfigItem Name="Ticket::Frontend::NoteTypes" Required="1" Valid="1">
         <Description Lang="en">Specify the different note types, that you want to use in your system.</Description>
         <Description Lang="de">Hier können die verschiedenen Notiz-Typen festgelegt werden, die innerhalb des Systems verwendet werden sollen.</Description>
@@ -60,7 +60,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Item::Voting::QuestionLangKey" Required="1" Valid="1">
-        <Description Lang="en">Languagekey which is defined in the langauge file *_FAQ.pm.</Description>
+        <Description Lang="en">Languagekey which is defined in the language file *_FAQ.pm.</Description>
         <Description Lang="de">LanguageKey für die Frage bei der Artikelbewertung. Wird in den Sprachfiles definiert.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Item::Voting</SubGroup>
