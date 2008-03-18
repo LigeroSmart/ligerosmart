@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.6 2007-04-10 10:54:25 rk Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.7 2008-03-18 23:53:00 martin Exp $</CVS>
     <ConfigItem Name="Ticket::Frontend::NoteTypes" Required="1" Valid="1">
         <Description Lang="en">Specify the different note types, that you want to use in your system.</Description>
-        <Description Lang="de">Hier k?nen die verschiedenen Notiz-Typen festgelegt werden, die innerhalb des Systems verwendet werden sollen.</Description>
+        <Description Lang="de">Hier können die verschiedenen Notiz-Typen festgelegt werden, die innerhalb des Systems verwendet werden sollen.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewNote</SubGroup>
         <Setting>
@@ -15,7 +15,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
-        <Description Lang="en">default category name.</Description>
+        <Description Lang="en">Default category name.</Description>
         <Description Lang="de">Root Kategorie Name.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Default</SubGroup>
@@ -24,7 +24,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Default::RootCategoryComment" Required="1" Valid="1">
-        <Description Lang="en">default category name.</Description>
+        <Description Lang="en">Default category name.</Description>
         <Description Lang="de">Root Kategorie Name.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Default</SubGroup>
@@ -48,7 +48,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Item::Voting::Show" Required="1" Valid="1">
-        <Description Lang="en">show voting</Description>
+        <Description Lang="en">Show voting in defined interfaces.</Description>
         <Description Lang="de">Interfaces in denen das Voting Feature angezeigt werden soll.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Item::Voting</SubGroup>
@@ -60,7 +60,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Item::Voting::QuestionLangKey" Required="1" Valid="1">
-        <Description Lang="en">languagekey which is defined in the langauge file *_FAQ.pm</Description>
+        <Description Lang="en">Languagekey which is defined in the langauge file *_FAQ.pm.</Description>
         <Description Lang="de">LanguageKey für die Frage bei der Artikelbewertung. Wird in den Sprachfiles definiert.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Item::Voting</SubGroup>
@@ -69,8 +69,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Explorer::Path::Show" Required="1" Valid="1">
-        <Description Lang="en">show FAQ path yes/no</Description>
-        <Description Lang="de">FAQ Pfad anzeigen ja/nein</Description>
+        <Description Lang="en">Show FAQ path yes/no.</Description>
+        <Description Lang="de">FAQ Pfad anzeigen ja/nein.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Explorer</SubGroup>
         <Setting>
@@ -81,7 +81,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Explorer::ItemList::VotingResultDecimalPlaces" Required="1" Valid="1">
-        <Description Lang="en">decimal places of the voting result</Description>
+        <Description Lang="en">Decimal places of the voting result.</Description>
         <Description Lang="de">Dezimalstellen des Ergebnises bei der Artikelbewertung.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Explorer</SubGroup>
@@ -90,7 +90,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Explorer::ItemList::VotingResultColors" Required="1" Valid="1">
-        <Description Lang="en">css color for the voting result</Description>
+        <Description Lang="en">CSS color for the voting result.</Description>
         <Description Lang="de">Farben für die Anzeige des Ergebnises.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Explorer</SubGroup>
@@ -103,7 +103,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Explorer::Path::Seperator" Required="1" Valid="1">
-        <Description Lang="en">FAQ path seperator</Description>
+        <Description Lang="en">FAQ path seperator.</Description>
         <Description Lang="de">Trennzeichen im FAQ Pfad.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Explorer</SubGroup>
@@ -112,8 +112,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Category::Icon" Required="1" Valid="1">
-        <Description Lang="en">category icon</Description>
-        <Description Lang="de">Kategorie Icon in der FAQ</Description>
+        <Description Lang="en">Category icon.</Description>
+        <Description Lang="de">Kategorie Icon in der FAQ.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Category</SubGroup>
         <Setting>
@@ -121,8 +121,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Item::Icon" Required="1" Valid="1">
-        <Description Lang="en">item icon</Description>
-        <Description Lang="de">Artikel Icon in der FAQ</Description>
+        <Description Lang="en">Item icon.</Description>
+        <Description Lang="de">Artikel Icon in der FAQ.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Item</SubGroup>
         <Setting>
@@ -130,7 +130,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Explorer::QuickSearch::Show" Required="1" Valid="1">
-        <Description Lang="en">show quicksearch</Description>
+        <Description Lang="en">Interfaces where the quicksearch should be shown.</Description>
         <Description Lang="de">Interfaces in denen das QuickSearch Feature angezeigt wird.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Explorer</SubGroup>
@@ -143,8 +143,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Explorer::QuickSearch::ShowSubCategoryItems" Required="1" Valid="1">
-        <Description Lang="en">show items of subcategories</Description>
-        <Description Lang="de">Artikel aus Subkategorien anzeigen ja/nein</Description>
+        <Description Lang="en">Show items of subcategories.</Description>
+        <Description Lang="de">Artikel aus Subkategorien anzeigen ja/nein.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Explorer</SubGroup>
         <Setting>
@@ -155,7 +155,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Explorer::LastChange::Show" Required="1" Valid="1">
-        <Description Lang="en">show last change items</Description>
+        <Description Lang="en">Show last change items.</Description>
         <Description Lang="de">Interfaces in denen das LastChange Feature angezeigt werden soll.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Explorer</SubGroup>
@@ -168,8 +168,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Explorer::LastChange::ShowSubCategoryItems" Required="1" Valid="1">
-        <Description Lang="en">show items of subcategories</Description>
-        <Description Lang="de">Artikel aus Subkategorien anzeigen ja/nein</Description>
+        <Description Lang="en">Show items of subcategories.</Description>
+        <Description Lang="de">Artikel aus Subkategorien anzeigen ja/nein.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Explorer</SubGroup>
         <Setting>
@@ -180,8 +180,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Explorer::LastChange::Limit" Required="1" Valid="1">
-        <Description Lang="en">number of items</Description>
-        <Description Lang="de">Anzahl der zu anzeigenden Artikel</Description>
+        <Description Lang="en">Number of shown items in last changes.</Description>
+        <Description Lang="de">Anzahl der zu anzeigenden Artikel in letzten Änderungen.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Explorer</SubGroup>
         <Setting>
@@ -189,7 +189,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Explorer::LastCreate::Show" Required="1" Valid="1">
-        <Description Lang="en">show last create items</Description>
+        <Description Lang="en">Number of shown items in last created.</Description>
         <Description Lang="de">Interfaces in denen das LastCreate Feature angezeigt werden soll.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Explorer</SubGroup>
@@ -202,8 +202,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Explorer::LastCreate::ShowSubCategoryItems" Required="1" Valid="1">
-        <Description Lang="en">show items of subcategories</Description>
-        <Description Lang="de">Artikel aus Subkategorien anzeigen ja/nein</Description>
+        <Description Lang="en">Show items of subcategories.</Description>
+        <Description Lang="de">Artikel aus Subkategorien anzeigen ja/nein.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Explorer</SubGroup>
         <Setting>
@@ -214,8 +214,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Explorer::LastCreate::Limit" Required="1" Valid="1">
-        <Description Lang="en">limit of items</Description>
-        <Description Lang="de">Anzahl der zu anzeigenden Artikel</Description>
+        <Description Lang="en">Shown items in last created.</Description>
+        <Description Lang="de">Anzahl der zu anzeigenden Artikel in zuletzt erstellte.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Explorer</SubGroup>
         <Setting>
