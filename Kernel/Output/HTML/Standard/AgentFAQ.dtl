@@ -2,7 +2,7 @@
 # AgentFAQ.dtl - provides HTML view for faq articles
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.dtl,v 1.13 2008-03-16 21:37:15 martin Exp $
+# $Id: AgentFAQ.dtl,v 1.14 2008-03-19 10:54:57 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -48,15 +48,6 @@
 
       <h1>$QData{"Title"}</h1>
 
-      <p>
-
-<!-- dtl:block:FAQItemViewAttachment -->
-        <b>$Text{"Attachment"}:</b>
-        <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Download&ItemID=$QData{"ItemID"}">$QData{"Filename"}</a>
-<!-- dtl:block:FAQItemViewAttachment -->
-
-      </p>
-
       <table border="0" width="100%" cellspacing="0" cellpadding="4">
         <tr>
           <td colspan="2" class="contenthead">$Text{"Options"}</td>
@@ -64,6 +55,12 @@
         <tr>
           <td class="contentbody">
             <table border="0" cellspacing="0" cellpadding="3">
+<!-- dtl:block:FAQItemViewAttachment -->
+              <tr>
+                <td class="contentkey">$Text{"Attachment"}:</td>
+                <td class="contentvalue"> <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Download&ItemID=$QData{"ItemID"}">$QData{"Filename"}</a></td>
+              </tr>
+<!-- dtl:block:FAQItemViewAttachment -->
 <!-- dtl:block:FAQItemField -->
               <tr>
                 <td width="25%" class="contentkey" valign="top">$Text{"$Data{"Caption"}"}:  <br> <i class="small">($Text{"$Data{"StateName"}"})</i></td>
@@ -125,32 +122,23 @@
           <td>&nbsp;</td>
           <td>&nbsp;</td>
         </tr>
+# object links
         <tr>
-          <td class="contentkey">$Text{"Linked"} ($Text{"Normal"}):</td>
-          <td class="contentvalue">
-<!-- dtl:block:LinkNormal -->
-            <a href="$Env{"Baselink"}$Data{"FrontendDest"}$QData{"ID"}" title="$QData{"Object"}: $QData{"Number"} $QData{"Title"}" $Data{"Css"}>$QData{"Text"}</a>
-<!-- dtl:block:LinkNormal -->
-          </td>
+          <td class="contentkey">$Text{"Linked"}:</td>
+          <td class="contentvalue"></td>
         </tr>
 
+<!-- dtl:block:Link -->
         <tr>
-          <td class="contentkey">$Text{"Linked"} ($Text{"Parent"}):</td>
+          <td class="contentkey">&nbsp;&nbsp;$Text{"$QData{"LinkType"}"}:</td>
           <td class="contentvalue">
-<!-- dtl:block:LinkParent -->
+<!-- dtl:block:LinkItem -->
             <a href="$Env{"Baselink"}$Data{"FrontendDest"}$QData{"ID"}" title="$QData{"Object"}: $QData{"Number"} $QData{"Title"}" $Data{"Css"}>$QData{"Text"}</a>
-<!-- dtl:block:LinkParent -->
+<!-- dtl:block:LinkItem -->
           </td>
         </tr>
+<!-- dtl:block:Link -->
 
-        <tr>
-          <td class="contentkey">$Text{"Linked"} ($Text{"Child"}):</td>
-          <td class="contentvalue">
-<!-- dtl:block:LinkChild -->
-            <a href="$Env{"Baselink"}$Data{"FrontendDest"}$QData{"ID"}" title="$QData{"Object"}: $QData{"Number"} $QData{"Title"}" $Data{"Css"}>$QData{"Text"}</a>
-<!-- dtl:block:LinkChild -->
-          </td>
-        </tr>
       </table>
 
 <!-- dtl:block:VoteForm -->
@@ -271,13 +259,6 @@ function updateMessage()
 
         <h1>$QData{"Title"}</h1>
 
-        <p>
-<!-- dtl:block:FAQItemViewAttachment -->
-          <b>$Text{"Attachment"}:</b>
-          <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Download&ItemID=$QData{"ItemID"}">$QData{"Filename"}</a>
-<!-- dtl:block:FAQItemViewAttachment -->
-        </p>
-
         <table border="0" cellspacing="0" cellpadding="3">
           <tr>
             <td class="contentkey">$Config{"FAQ::FAQHook"}: </td>
@@ -303,6 +284,12 @@ function updateMessage()
             <td class="contentkey">$Text{"Keywords"}: </td>
             <td class="contentvalue"> $QData{"Keywords"}</td>
           </tr>
+<!-- dtl:block:FAQItemViewAttachment -->
+          <tr>
+            <td class="contentkey">$Text{"Attachment"}: </td>
+            <td class="contentvalue"> <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Download&ItemID=$QData{"ItemID"}">$QData{"Filename"}</a></td>
+          </tr>
+<!-- dtl:block:FAQItemViewAttachment -->
           <tr valign="top">
             <td class="contentkey">$Text{"Result"}:</td>
             <td style="$Data{"CssColumnVotingResult"}"> $QData{"Result"} &#37;</td>
@@ -528,7 +515,12 @@ function submit_compose()
                   </tr>
                   <tr>
                     <td class="contentkey">$Text{"Attachment"}:</td>
-                    <td class="contentvalue">$Data{"Filename"} <input name="file_upload" type="file" size="30" class="fixed">&nbsp;<a name="attachment"></a></td>
+                    <td class="contentvalue">
+                        <input name="file_upload" type="file" size="30" class="fixed">&nbsp;<a name="attachment"></a>
+                        <br/>
+                        $Data{"Filename"}
+#                        <input class="button" type="submit" name="AttachmentDelete" value="$Text{"Delete"}" onclick="return submit_compose();">
+                    </td>
                   </tr>
                   <tr>
                     <td class="contentkey">$Text{"Language"}: </td>
@@ -726,6 +718,23 @@ function submit_compose()
 
 
 <!-- dtl:block:Category -->
+<script language="JavaScript" type="text/javascript">
+<!--
+function submit_compose() {
+    if (document.compose.Name.value == "") {
+        alert('$JSText{"A category should have a name!"}');
+        document.compose.Name.focus();
+        return false;
+    }
+    else if (document.compose.Comment.value == "") {
+        alert('$JSText{"A category should have a comment!"}');
+        document.compose.Comment.focus();
+        return false;
+    }
+    return true;
+}
+//-->
+</script>
   <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
       <td align="left" colspan="2" class="mainhead">

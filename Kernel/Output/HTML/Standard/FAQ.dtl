@@ -2,7 +2,7 @@
 # FAQ.dtl - provides HTML view for faq articles
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.dtl,v 1.7 2008-03-02 22:48:25 martin Exp $
+# $Id: FAQ.dtl,v 1.8 2008-03-19 10:54:57 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -35,11 +35,6 @@
 
       <h1>$QData{"Title"}</h1>
 
-<!-- dtl:block:FAQItemViewAttachment -->
-      <b>$Text{"Attachment"}:</b>
-      <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Download&ItemID=$QData{"ItemID"}">$QData{"Filename"}</a>
-<!-- dtl:block:FAQItemViewAttachment -->
-
       <table border="0" width="100%" cellspacing="0" cellpadding="4">
         <tr>
           <td colspan="2" class="contenthead">$Text{"Options"}</td>
@@ -47,6 +42,12 @@
         <tr>
           <td class="contentbody">
             <table border="0" cellspacing="0" cellpadding="3">
+<!-- dtl:block:FAQItemViewAttachment -->
+              <tr>
+                <td class="contentkey" valign="top">$Text{"Attachment"}:</td>
+                <td class="contentvalue"> <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Download&ItemID=$QData{"ItemID"}">$QData{"Filename"}</a></td>
+              </tr>
+<!-- dtl:block:FAQItemViewAttachment -->
 <!-- dtl:block:FAQItemField -->
               <tr>
                 <td width="25%" class="contentkey" valign="top">$Text{"$Data{"Caption"}"}:  <br> <i class="small">($Text{"$Data{"StateName"}"})</i></td>
@@ -372,6 +373,9 @@
           </td>
         </tr>
 <!-- dtl:block:ExplorerCategoryRow -->
+        <tr class="contentfooter">
+          <td colspan="5">&nbsp;</td>
+        </tr>
       </table>
 <!-- dtl:block:ExplorerCategoryList -->
 
@@ -409,13 +413,16 @@
 
 <!-- dtl:block:ExplorerFAQItemRow -->
         <tr class="contentbody">
-          <td class="$QData{"CssRow"}"><img src="$Env{"Images"}$Config{"FAQ::Item::Icon"}" style="vertical-align:middle;">&nbsp;<a href="$Env{"Baselink"}Action=$Env{"Action"}&CategoryID=$QData{"CategoryID"}&ItemID=$QData{"ItemID"}">$QData{"Title"}</a></td>
+          <td class="$QData{"CssRow"}"><img src="$Env{"Images"}$Config{"FAQ::Item::Icon"}" style="vertical-align:middle;">&nbsp;<a href="$Env{"Baselink"}Action=$Env{"Action"}&CategoryID=$QData{"CategoryID"}&ItemID=$QData{"ItemID"}" title="$QData{"Title"}">$QData{"Title","60"}</a></td>
           <td class="$QData{"CssRow"}">$QData{"Language"}</td>
           <td class="$QData{"CssRow"}">$QData{"State"}</td>
           <td class="$QData{"CssRow"}" style="$Data{"CssColumnVotingResult"}">$QData{"Result"}</td>
           <td class="$QData{"CssRow"}">$QData{"Votes"}</td>
         </tr>
 <!-- dtl:block:ExplorerFAQItemRow -->
+        <tr class="contentfooter">
+          <td colspan="5">&nbsp;</td>
+        </tr>
       </table>
 
 <!-- dtl:block:ExplorerFAQItemList -->
@@ -449,27 +456,33 @@
 
 <!-- dtl:block:ExplorerLatestCreate -->
       <h3>$Text{"LatestCreatedItems"}</h3>
-      <ul style="padding-left:0px;list-style-image:url($Env{"Images"}$Config{"FAQ::Item::Icon"});">
+      <table>
 <!-- dtl:block:ExplorerLatestCreateFAQItemRow -->
-      <li>
-      <a href="$Env{"Baselink"}Action=$Env{"Action"}&CategoryID=$QData{"CategoryID"}&ItemID=$QData{"ItemID"}">$QData{"Title"} ($QData{"CategoryName"})</a> $QData{"Language"} <br>
-      <i>$TimeLong{"$Data{"Created"}"}</i>
-      </li>
+        <tr>
+          <td valign="top"><img src="$Env{"Images"}$Config{"FAQ::Item::Icon"}"></td>
+          <td><a href="$Env{"Baselink"}Action=$Env{"Action"}&CategoryID=$QData{"CategoryID"}&ItemID=$QData{"ItemID"}" title="$QData{"Title"} ($QData{"CategoryName"})">$QData{"Title","40"} ($QData{"CategoryName","40"})</a>
+            <br/>
+            <i class="small">($QData{"Language"}) $TimeShort{"$Data{"Created"}"}</i>
+          </td>
+        </tr>
 <!-- dtl:block:ExplorerLatestCreateFAQItemRow -->
-      </ul>
+      </table>
 <!-- dtl:block:ExplorerLatestCreate -->
 
 
 <!-- dtl:block:ExplorerLatestChange -->
       <h3>$Text{"LatestChangedItems"}</h3>
-      <ul style="padding-left:0px;list-style-image:url($Env{"Images"}$Config{"FAQ::Item::Icon"});">
+      <table>
 <!-- dtl:block:ExplorerLatestChangeFAQItemRow -->
-      <li>
-      <a href="$Env{"Baselink"}Action=$Env{"Action"}&CategoryID=$QData{"CategoryID"}&ItemID=$QData{"ItemID"}">$QData{"Title"} ($QData{"CategoryName"})</a> $QData{"Language"} <br>
-      <i>$TimeLong{"$Data{"Changed"}"}</i>
-      </li>
+        <tr>
+          <td valign="top"><img src="$Env{"Images"}$Config{"FAQ::Item::Icon"}"></td>
+          <td><a href="$Env{"Baselink"}Action=$Env{"Action"}&CategoryID=$QData{"CategoryID"}&ItemID=$QData{"ItemID"}" title="$QData{"Title"} ($QData{"CategoryName"})">$QData{"Title","40"} ($QData{"CategoryName","40"})</a>
+            <br/>
+            <i class="small">($QData{"Language"}) $TimeShort{"$Data{"Changed"}"}</i>
+          </td>
+        </tr>
 <!-- dtl:block:ExplorerLatestChangeFAQItemRow -->
-      </ul>
+      </table>
 <!-- dtl:block:ExplorerLatestChange -->
 
 
