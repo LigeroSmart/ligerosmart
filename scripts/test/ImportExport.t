@@ -2,7 +2,7 @@
 # ImportExport.t - import export tests
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.t,v 1.9 2008-03-18 13:37:11 mh Exp $
+# $Id: ImportExport.t,v 1.10 2008-03-19 13:24:32 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -472,13 +472,6 @@ my $TemplateList3 = $Self->{ImportExportObject}->TemplateList(
 $Self->True(
     ref $TemplateList3 eq 'ARRAY' && scalar @{$TemplateList3} eq 0,
     "#3 TemplateList() - empty array reference",
-);
-
-# clean the system user table
-my $UserTable = $Self->{ConfigObject}->Get('DatabaseUserTable') || 'system_user';
-
-$Self->{DBObject}->Do(
-    SQL => "DELETE FROM $UserTable WHERE login LIKE 'UnitTest-ImportExport-%'",
 );
 
 1;
