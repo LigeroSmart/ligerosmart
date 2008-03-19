@@ -2,7 +2,7 @@
 # Kernel/Language/en_FAQ.pm - provides en language translation
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: en_FAQ.pm,v 1.2 2008-03-19 00:34:55 martin Exp $
+# $Id: en_FAQ.pm,v 1.3 2008-03-19 10:55:43 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -13,8 +13,7 @@ package Kernel::Language::en_FAQ;
 use strict;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.2 $';
-$VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -38,6 +37,7 @@ sub Data {
     $Translation->{SubCategories} = 'Subcategories';
 
     # $$STOP$$
+    return 1;
 }
 
 1;
