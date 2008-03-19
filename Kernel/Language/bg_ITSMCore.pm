@@ -2,7 +2,7 @@
 # Kernel/Language/bg_ITSMCore.pm - the bulgarian translation of ITSMCore
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: bg_ITSMCore.pm,v 1.5 2008-01-30 19:14:17 mh Exp $
+# $Id: bg_ITSMCore.pm,v 1.6 2008-03-19 15:19:40 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,26 +15,28 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub Data {
     my ($Self) = @_;
+    my $Lang = $Self->{Translation};
 
-    $Self->{Translation}->{'Priority Management'} = 'Управление на приоритетите';
-    $Self->{Translation}->{'Add a new Priority.'} = 'Добави нов приоритет.';
-    $Self->{Translation}->{'Add Priority'}        = 'Добави приоритет';
-    $Self->{Translation}->{'Criticality'}         = 'Критичност';
-    $Self->{Translation}->{'Impact'}              = 'Влияние';
-    $Self->{Translation}->{'Criticality <-> Impact <-> Priority'}
-        = 'Критичност<->Влияние<->Приотитет';
-    $Self->{Translation}->{'allocate'}       = 'определен';
-    $Self->{Translation}->{'Relevant to'}    = 'Съответен с';
-    $Self->{Translation}->{'Includes'}       = 'Включени';
-    $Self->{Translation}->{'Part of'}        = 'Част от';
-    $Self->{Translation}->{'Depends on'}     = 'Зависи от';
-    $Self->{Translation}->{'Required for'}   = 'Необходим за';
-    $Self->{Translation}->{'Connected to'}   = 'Свързан с';
-    $Self->{Translation}->{'Alternative to'} = 'Алтернативен на';
+    return if ref $Lang ne 'HASH';
+
+    $Lang->{'Priority Management'}                 = 'Управление на приоритетите';
+    $Lang->{'Add a new Priority.'}                 = 'Добави нов приоритет.';
+    $Lang->{'Add Priority'}                        = 'Добави приоритет';
+    $Lang->{'Criticality'}                         = 'Критичност';
+    $Lang->{'Impact'}                              = 'Влияние';
+    $Lang->{'Criticality <-> Impact <-> Priority'} = 'Критичност<->Влияние<->Приотитет';
+    $Lang->{'allocate'}                            = 'определен';
+    $Lang->{'Relevant to'}                         = 'Съответен с';
+    $Lang->{'Includes'}                            = 'Включени';
+    $Lang->{'Part of'}                             = 'Част от';
+    $Lang->{'Depends on'}                          = 'Зависи от';
+    $Lang->{'Required for'}                        = 'Необходим за';
+    $Lang->{'Connected to'}                        = 'Свързан с';
+    $Lang->{'Alternative to'}                      = 'Алтернативен на';
 
     return 1;
 }

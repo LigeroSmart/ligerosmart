@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMCore.pm - the german translation of ITSMCore
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: de_ITSMCore.pm,v 1.9 2008-01-23 16:48:36 mh Exp $
+# $Id: de_ITSMCore.pm,v 1.10 2008-03-19 15:19:40 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,26 +15,28 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub Data {
     my ($Self) = @_;
+    my $Lang = $Self->{Translation};
 
-    $Self->{Translation}->{'Priority Management'} = 'Priorität Verwaltung';
-    $Self->{Translation}->{'Add a new Priority.'} = 'Eine neue Priorität hinzufügen.';
-    $Self->{Translation}->{'Add Priority'}        = 'Priorität hinzufügen';
-    $Self->{Translation}->{'Criticality'}         = 'Kritikalität';
-    $Self->{Translation}->{'Impact'}              = 'Auswirkung';
-    $Self->{Translation}->{'Criticality <-> Impact <-> Priority'}
-        = 'Kritikalität <-> Auswirkung <-> Priorität';
-    $Self->{Translation}->{'allocate'}       = 'zuordnen';
-    $Self->{Translation}->{'Relevant to'}    = 'Relevant für';
-    $Self->{Translation}->{'Includes'}       = 'Beinhaltet';
-    $Self->{Translation}->{'Part of'}        = 'Teil von';
-    $Self->{Translation}->{'Depends on'}     = 'Hängt ab von';
-    $Self->{Translation}->{'Required for'}   = 'Benötigt für';
-    $Self->{Translation}->{'Connected to'}   = 'Verbunden mit';
-    $Self->{Translation}->{'Alternative to'} = 'Alternativ zu';
+    return if ref $Lang ne 'HASH';
+
+    $Lang->{'Priority Management'}                 = 'Priorität Verwaltung';
+    $Lang->{'Add a new Priority.'}                 = 'Eine neue Priorität hinzufügen.';
+    $Lang->{'Add Priority'}                        = 'Priorität hinzufügen';
+    $Lang->{'Criticality'}                         = 'Kritikalität';
+    $Lang->{'Impact'}                              = 'Auswirkung';
+    $Lang->{'Criticality <-> Impact <-> Priority'} = 'Kritikalität <-> Auswirkung <-> Priorität';
+    $Lang->{'allocate'}                            = 'zuordnen';
+    $Lang->{'Relevant to'}                         = 'Relevant für';
+    $Lang->{'Includes'}                            = 'Beinhaltet';
+    $Lang->{'Part of'}                             = 'Teil von';
+    $Lang->{'Depends on'}                          = 'Hängt ab von';
+    $Lang->{'Required for'}                        = 'Benötigt für';
+    $Lang->{'Connected to'}                        = 'Verbunden mit';
+    $Lang->{'Alternative to'}                      = 'Alternativ zu';
 
     return 1;
 }
