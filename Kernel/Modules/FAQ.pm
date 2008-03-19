@@ -1,12 +1,12 @@
 # --
 # Kernel/Modules/FAQ.pm - faq module
-# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.11 2007-07-03 14:02:46 rk Exp $
+# $Id: FAQ.pm,v 1.12 2008-03-19 10:52:50 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 
 package Kernel::Modules::FAQ;
@@ -17,7 +17,7 @@ use Kernel::System::FAQ;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.11 $';
+$VERSION = '$Revision: 1.12 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -599,14 +599,31 @@ sub GetItemView {
             Name => "Links",
             Data => {},
         );
-        foreach my $LinkType (sort keys %Links) {
+        my %LinkTypeBox = ();
+        for my $LinkType ( qw(Normal Parent Child) ) {
+            if ( ! $Links{$LinkType} ) {
+                next;
+            }
             my %ObjectType = %{$Links{$LinkType}};
             foreach my $Object (sort keys %ObjectType) {
                 my %Data = %{$ObjectType{$Object}};
                 foreach my $Item (sort keys %Data) {
+                    if ( !$LinkTypeBox{$LinkType} ) {
+                        $Self->{LayoutObject}->Block(
+                            Name => 'Link',
+                            Data => {
+                                %Param,
+                                LinkType => $LinkType,
+                            },
+                        );
+                        $LinkTypeBox{$LinkType} = 1;
+                    }
                     $Self->{LayoutObject}->Block(
-                        Name => "Link$LinkType",
-                        Data => $Data{$Item},
+                        Name => 'LinkItem',
+                        Data => {
+                            %{ $Data{$Item} },
+                            LinkType => $LinkType,
+                        },
                     );
                 }
             }
@@ -658,6 +675,13 @@ sub GetItemSmallView {
         $Self->{LayoutObject}->Block(
             Name => 'FAQPathItemElement',
             Data => \%ItemData,
+        );
+    }
+    # item attachment
+    if (defined($ItemData{Filename})) {
+        $Self->{LayoutObject}->Block(
+            Name => 'FAQItemViewAttachment',
+            Data => { %Param, %ItemData },
         );
     }
     # get linked objects
