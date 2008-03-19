@@ -2,7 +2,7 @@
 # Kernel/Language/cz_GeneralCatalog.pm - the czech translation of GeneralCatalog
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: cz_GeneralCatalog.pm,v 1.4 2008-01-23 17:28:54 mh Exp $
+# $Id: cz_GeneralCatalog.pm,v 1.5 2008-03-19 15:06:42 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,18 +15,21 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub Data {
     my ($Self) = @_;
+    my $Lang = $Self->{Translation};
 
-    $Self->{Translation}->{'General Catalog'}            = 'Všeobecný katalog';
-    $Self->{Translation}->{'General Catalog Management'} = 'Řízení všeobecného katalogu';
-    $Self->{Translation}->{'Catalog Class'}              = 'Třídy v katalogu';
-    $Self->{Translation}->{'Add a new Catalog Class.'}   = 'Přidat novou třídu do katalogu.';
-    $Self->{Translation}->{'Add Catalog Item'}           = 'Přidat prvek do katalogu';
-    $Self->{Translation}->{'Add Catalog Class'}          = 'Přidat třídu do katalogu';
-    $Self->{Translation}->{'Functionality'}              = 'Funkcionalita';
+    return if ref $Lang ne 'HASH';
+
+    $Lang->{'General Catalog'}            = 'Všeobecný katalog';
+    $Lang->{'General Catalog Management'} = 'Řízení všeobecného katalogu';
+    $Lang->{'Catalog Class'}              = 'Třídy v katalogu';
+    $Lang->{'Add a new Catalog Class.'}   = 'Přidat novou třídu do katalogu.';
+    $Lang->{'Add Catalog Item'}           = 'Přidat prvek do katalogu';
+    $Lang->{'Add Catalog Class'}          = 'Přidat třídu do katalogu';
+    $Lang->{'Functionality'}              = 'Funkcionalita';
 
     return 1;
 }
