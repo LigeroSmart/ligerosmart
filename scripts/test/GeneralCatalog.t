@@ -2,7 +2,7 @@
 # GeneralCatalog.t - general catalog tests
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.t,v 1.15 2008-03-11 10:51:33 mh Exp $
+# $Id: GeneralCatalog.t,v 1.16 2008-03-19 13:23:31 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -21,41 +21,54 @@ use Kernel::System::User;
 $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
 $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
 
-# disable email checks to create new user
-my $CheckEmailAddressesOrg = $Self->{ConfigObject}->Get('CheckEmailAddresses') || 1;
-$Self->{ConfigObject}->Set(
-    Key   => 'CheckEmailAddresses',
-    Value => 0,
-);
+# ------------------------------------------------------------ #
+# make preparations
+# ------------------------------------------------------------ #
 
-# create new users for the tests
-my $UserID1 = $Self->{UserObject}->UserAdd(
-    UserFirstname => 'GeneralCatalog1',
-    UserLastname  => 'UnitTest',
-    UserLogin     => 'UnitTest-GeneralCatalog-1' . int( rand(1_000_000) ),
-    UserEmail     => 'UnitTest-GeneralCatalog-1@localhost',
-    ValidID       => 1,
-    ChangeUserID  => 1,
-);
-my $UserID2 = $Self->{UserObject}->UserAdd(
-    UserFirstname => 'GeneralCatalog2',
-    UserLastname  => 'UnitTest',
-    UserLogin     => 'UnitTest-GeneralCatalog-2' . int( rand(1_000_000) ),
-    UserEmail     => 'UnitTest-GeneralCatalog-2@localhost',
-    ValidID       => 1,
-    ChangeUserID  => 1,
-);
+# create needed users
+my @UserIDs;
+{
 
-# restore original email check param
-$Self->{ConfigObject}->Set(
-    Key   => 'CheckEmailAddresses',
-    Value => $CheckEmailAddressesOrg,
-);
+    # disable email checks to create new user
+    my $CheckEmailAddressesOrg = $Self->{ConfigObject}->Get('CheckEmailAddresses') || 1;
+    $Self->{ConfigObject}->Set(
+        Key   => 'CheckEmailAddresses',
+        Value => 0,
+    );
 
-# create some random numbers for the classes
-my $ClassRand1 = int( rand(1_000_000) );
-my $ClassRand2 = int( rand(1_000_000) );
-my $ClassRand3 = int( rand(1_000_000) );
+    for my $Counter ( 1 .. 2 ) {
+
+        # create new users for the tests
+        my $UserID = $Self->{UserObject}->UserAdd(
+            UserFirstname => 'GeneralCatalog' . $Counter,
+            UserLastname  => 'UnitTest',
+            UserLogin     => 'UnitTest-GeneralCatalog-' . $Counter . int rand 1_000_000,
+            UserEmail     => 'UnitTest-GeneralCatalog-' . $Counter . '@localhost',
+            ValidID       => 1,
+            ChangeUserID  => 1,
+        );
+
+        push @UserIDs, $UserID;
+    }
+
+    # restore original email check param
+    $Self->{ConfigObject}->Set(
+        Key   => 'CheckEmailAddresses',
+        Value => $CheckEmailAddressesOrg,
+    );
+}
+
+# create needed random classes
+my @ClassRand;
+
+for my $Counter ( 1 .. 3 ) {
+
+    push @ClassRand, int rand 1_000_000;
+}
+
+# ------------------------------------------------------------ #
+# define general tests
+# ------------------------------------------------------------ #
 
 my $ItemData = [
 
@@ -71,7 +84,7 @@ my $ItemData = [
     # this item is NOT complete and must not be added
     {
         Add => {
-            Class   => 'UnitTest::TestClass' . $ClassRand1,
+            Class   => 'UnitTest::TestClass' . $ClassRand[0],
             ValidID => 1,
             UserID  => 1,
         },
@@ -80,7 +93,7 @@ my $ItemData = [
     # this item is NOT complete and must not be added
     {
         Add => {
-            Class  => 'UnitTest::TestClass' . $ClassRand1,
+            Class  => 'UnitTest::TestClass' . $ClassRand[0],
             Name   => 'TestItem2',
             UserID => 1,
         },
@@ -89,7 +102,7 @@ my $ItemData = [
     # this item is NOT complete and must not be added
     {
         Add => {
-            Class   => 'UnitTest::TestClass' . $ClassRand1,
+            Class   => 'UnitTest::TestClass' . $ClassRand[0],
             Name    => 'TestItem3',
             ValidID => 1,
         },
@@ -98,13 +111,13 @@ my $ItemData = [
     # this item must be inserted sucessfully
     {
         Add => {
-            Class   => 'UnitTest::TestClass' . $ClassRand1,
+            Class   => 'UnitTest::TestClass' . $ClassRand[0],
             Name    => 'TestItem4',
             ValidID => 1,
             UserID  => 1,
         },
         AddGet => {
-            Class         => 'UnitTest::TestClass' . $ClassRand1,
+            Class         => 'UnitTest::TestClass' . $ClassRand[0],
             Name          => 'TestItem4',
             Functionality => '',
             ValidID       => 1,
@@ -117,7 +130,7 @@ my $ItemData = [
     # this item have the same name as one test before and must not be added
     {
         Add => {
-            Class   => 'UnitTest::TestClass' . $ClassRand1,
+            Class   => 'UnitTest::TestClass' . $ClassRand[0],
             Name    => 'TestItem4',
             ValidID => 1,
             UserID  => 1,
@@ -129,22 +142,22 @@ my $ItemData = [
         Update => {
             Name          => 'TestItem4UPDATE1',
             Functionality => 'Test',
-            ValidID       => $UserID1,
-            UserID        => $UserID1,
+            ValidID       => $UserIDs[0],
+            UserID        => $UserIDs[0],
         },
     },
 
     # this item must be inserted sucessfully
     {
         Add => {
-            Class         => 'UnitTest::TestClass' . $ClassRand1,
+            Class         => 'UnitTest::TestClass' . $ClassRand[0],
             Name          => 'TestItem5',
             Functionality => 'Test1',
             ValidID       => 1,
             UserID        => 1,
         },
         AddGet => {
-            Class         => 'UnitTest::TestClass' . $ClassRand1,
+            Class         => 'UnitTest::TestClass' . $ClassRand[0],
             Name          => 'TestItem5',
             Functionality => 'Test1',
             ValidID       => 1,
@@ -157,8 +170,8 @@ my $ItemData = [
     # the item one add-test before must be NOT updated (item update arguments NOT complete)
     {
         Update => {
-            ValidID => $UserID1,
-            UserID  => $UserID1,
+            ValidID => $UserIDs[0],
+            UserID  => $UserIDs[0],
         },
     },
 
@@ -166,7 +179,7 @@ my $ItemData = [
     {
         Update => {
             Name   => 'TestItem5UPDATE1',
-            UserID => $UserID1,
+            UserID => $UserIDs[0],
         },
     },
 
@@ -174,7 +187,7 @@ my $ItemData = [
     {
         Update => {
             Functionality => 'Test1',
-            ValidID       => $UserID1,
+            ValidID       => $UserIDs[0],
         },
     },
 
@@ -182,8 +195,8 @@ my $ItemData = [
     {
         Update => {
             Name    => 'TestItem5',
-            ValidID => $UserID1,
-            UserID  => $UserID1,
+            ValidID => $UserIDs[0],
+            UserID  => $UserIDs[0],
         },
     },
 
@@ -192,8 +205,8 @@ my $ItemData = [
         Update => {
             Name          => 'TestItem5',
             Functionality => 'Test2',
-            ValidID       => $UserID1,
-            UserID        => $UserID1,
+            ValidID       => $UserIDs[0],
+            UserID        => $UserIDs[0],
         },
     },
 
@@ -202,16 +215,16 @@ my $ItemData = [
         Update => {
             Name          => 'TestItem5UPDATE2',
             Functionality => 'Test1',
-            ValidID       => $UserID1,
-            UserID        => $UserID1,
+            ValidID       => $UserIDs[0],
+            UserID        => $UserIDs[0],
         },
         UpdateGet => {
             Name          => 'TestItem5UPDATE2',
             Functionality => 'Test1',
-            ValidID       => $UserID1,
+            ValidID       => $UserIDs[0],
             Comment       => '',
             CreateBy      => 1,
-            ChangeBy      => $UserID1,
+            ChangeBy      => $UserIDs[0],
         },
     },
 
@@ -236,7 +249,7 @@ my $ItemData = [
     # this template must be inserted sucessfully (check string cleaner function)
     {
         Add => {
-            Class         => " \t \n \r Unit Test :: Test Class \t \n \r " . $ClassRand1,
+            Class         => " \t \n \r Unit Test :: Test Class \t \n \r " . $ClassRand[0],
             Name          => " \t \n \r Test Item \t \n \r ",
             Functionality => " \t \n \r Test Functionality \t \n \r ",
             ValidID       => 1,
@@ -244,7 +257,7 @@ my $ItemData = [
             UserID        => 1,
         },
         AddGet => {
-            Class         => 'UnitTest::TestClass' . $ClassRand1,
+            Class         => 'UnitTest::TestClass' . $ClassRand[0],
             Name          => 'Test Item',
             Functionality => 'TestFunctionality',
             ValidID       => 1,
@@ -259,24 +272,24 @@ my $ItemData = [
         Update => {
             Name          => " \t \n \r Test Item UPDATE1 \t \n \r ",
             Functionality => " \t \n \r Test Func tiona lity \t \n \r ",
-            ValidID       => $UserID1,
+            ValidID       => $UserIDs[0],
             Comment       => " \t \n \r Test Comment UPDATE1 \t \n \r ",
-            UserID        => $UserID1,
+            UserID        => $UserIDs[0],
         },
         UpdateGet => {
             Name          => 'Test Item UPDATE1',
             Functionality => 'TestFunctionality',
-            ValidID       => $UserID1,
+            ValidID       => $UserIDs[0],
             Comment       => 'Test Comment UPDATE1',
             CreateBy      => 1,
-            ChangeBy      => $UserID1,
+            ChangeBy      => $UserIDs[0],
         },
     },
 
     # this item must be inserted sucessfully (unicode checks)
     {
         Add => {
-            Class         => 'UnitTest::TestClass©' . $ClassRand2,
+            Class         => 'UnitTest::TestClass©' . $ClassRand[1],
             Name          => ' ϒ ϡ Test Item Ʃ Ϟ ',
             Functionality => ' Ѡ Ѥ TestFunctionality Ϡ Ω ',
             ValidID       => 1,
@@ -284,7 +297,7 @@ my $ItemData = [
             UserID        => 1,
         },
         AddGet => {
-            Class         => 'UnitTest::TestClass©' . $ClassRand2,
+            Class         => 'UnitTest::TestClass©' . $ClassRand[1],
             Name          => 'ϒ ϡ Test Item Ʃ Ϟ',
             Functionality => 'ѠѤTestFunctionalityϠΩ',
             ValidID       => 1,
@@ -299,31 +312,31 @@ my $ItemData = [
         Update => {
             Name          => 'Test Item Ʃ ɤ UPDATE1',
             Functionality => ' Ѡ Ѥ TestFunctionality Ϡ Ω ',
-            ValidID       => $UserID2,
+            ValidID       => $UserIDs[1],
             Comment       => ' Test Comment љ ђ UPDATE1 ',
-            UserID        => $UserID2,
+            UserID        => $UserIDs[1],
         },
         UpdateGet => {
             Name          => 'Test Item Ʃ ɤ UPDATE1',
             Functionality => 'ѠѤTestFunctionalityϠΩ',
-            ValidID       => $UserID2,
+            ValidID       => $UserIDs[1],
             Comment       => 'Test Comment љ ђ UPDATE1',
             CreateBy      => 1,
-            ChangeBy      => $UserID2,
+            ChangeBy      => $UserIDs[1],
         },
     },
 
     # this item must be inserted sucessfully (a second item with Functionality 'test1')
     {
         Add => {
-            Class         => 'UnitTest::TestClass' . $ClassRand1,
+            Class         => 'UnitTest::TestClass' . $ClassRand[0],
             Name          => 'TestItem6',
             Functionality => 'Test1',
             ValidID       => 1,
             UserID        => 1,
         },
         AddGet => {
-            Class         => 'UnitTest::TestClass' . $ClassRand1,
+            Class         => 'UnitTest::TestClass' . $ClassRand[0],
             Name          => 'TestItem6',
             Functionality => 'Test1',
             ValidID       => 1,
@@ -354,7 +367,7 @@ my $ItemData = [
     # this item must be inserted sucessfully (special character checks)
     {
         Add => {
-            Class         => 'UnitTest::TestClass[test]%*\\' . $ClassRand2,
+            Class         => 'UnitTest::TestClass[test]%*\\' . $ClassRand[1],
             Name          => ' [test]%*\\ Test Item [test]%*\\ ',
             Functionality => ' [test]%*\\ TestFunctionality [test]%*\\ ',
             ValidID       => 1,
@@ -362,7 +375,7 @@ my $ItemData = [
             UserID        => 1,
         },
         AddGet => {
-            Class         => 'UnitTest::TestClass[test]%*\\' . $ClassRand2,
+            Class         => 'UnitTest::TestClass[test]%*\\' . $ClassRand[1],
             Name          => '[test]%*\\ Test Item [test]%*\\',
             Functionality => '[test]%*\\TestFunctionality[test]%*\\',
             ValidID       => 1,
@@ -377,20 +390,24 @@ my $ItemData = [
         Update => {
             Name          => ' [test]%*\\ Test Item UPDATE1 [test]%*\\ ',
             Functionality => ' [test]%*\\ TestFunctionality [test]%*\\ ',
-            ValidID       => $UserID2,
+            ValidID       => $UserIDs[1],
             Comment       => ' [test]%*\\ Test Comment UPDATE1 [test]%*\\ ',
-            UserID        => $UserID2,
+            UserID        => $UserIDs[1],
         },
         UpdateGet => {
             Name          => '[test]%*\\ Test Item UPDATE1 [test]%*\\',
             Functionality => '[test]%*\\TestFunctionality[test]%*\\',
-            ValidID       => $UserID2,
+            ValidID       => $UserIDs[1],
             Comment       => '[test]%*\\ Test Comment UPDATE1 [test]%*\\',
             CreateBy      => 1,
-            ChangeBy      => $UserID2,
+            ChangeBy      => $UserIDs[1],
         },
     },
 ];
+
+# ------------------------------------------------------------ #
+# run general tests
+# ------------------------------------------------------------ #
 
 my $TestCount = 1;
 my $LastAddedItemID;
@@ -494,6 +511,10 @@ for my $Item ( @{$ItemData} ) {
     $TestCount++;
 }
 
+# ------------------------------------------------------------ #
+# make preparations for later tests
+# ------------------------------------------------------------ #
+
 # create needed arrays
 my %ExistingClassesTmp;
 ITEM:
@@ -513,7 +534,10 @@ my @ExistingFunctionalities = sort keys %ExistingFunctionalitiesTmp;
 
 my @NonExistingClasses = ( 'UnitTest::NoExistingClass1', 'UnitTest::NoExistingClass2' );
 
+# ------------------------------------------------------------ #
 # ClassList test 1
+# ------------------------------------------------------------ #
+
 my $ClassList1 = $Self->{GeneralCatalogObject}->ClassList();
 
 for my $Class (@ExistingClasses) {
@@ -532,7 +556,10 @@ for my $Class (@ExistingClasses) {
     $TestCount++;
 }
 
+# ------------------------------------------------------------ #
 # ItemList test 1
+# ------------------------------------------------------------ #
+
 for my $Class (@NonExistingClasses) {
 
     my $ItemList = $Self->{GeneralCatalogObject}->ItemList(
@@ -548,7 +575,10 @@ for my $Class (@NonExistingClasses) {
     $TestCount++;
 }
 
+# ------------------------------------------------------------ #
 # ItemList test 2
+# ------------------------------------------------------------ #
+
 for my $Class (@ExistingClasses) {
 
     my $ItemList = $Self->{GeneralCatalogObject}->ItemList(
@@ -570,7 +600,10 @@ for my $Class (@ExistingClasses) {
     $TestCount++;
 }
 
+# ------------------------------------------------------------ #
 # FunctionalityList test 1
+# ------------------------------------------------------------ #
+
 my %FunctionalityList1;
 map { $FunctionalityList1{$_} = 1 } @ExistingFunctionalities;
 
@@ -599,7 +632,10 @@ $Self->True(
 
 $TestCount++;
 
+# ------------------------------------------------------------ #
 # ClassRename test 1 (check normal rename)
+# ------------------------------------------------------------ #
+
 CLASS:
 for my $Class (@ExistingClasses) {
 
@@ -661,7 +697,10 @@ for my $Class (@ExistingClasses) {
     $TestCount++;
 }
 
+# ------------------------------------------------------------ #
 # ClassRename test 2 (check string cleaner function)
+# ------------------------------------------------------------ #
+
 CLASS:
 for my $Class (@ExistingClasses) {
 
@@ -723,7 +762,10 @@ for my $Class (@ExistingClasses) {
     $TestCount++;
 }
 
+# ------------------------------------------------------------ #
 # ClassRename test 2 (identical name test)
+# ------------------------------------------------------------ #
+
 for my $Class (@ExistingClasses) {
 
     my $Success = $Self->{GeneralCatalogObject}->ClassRename(
@@ -739,9 +781,12 @@ for my $Class (@ExistingClasses) {
     $TestCount++;
 }
 
+# ------------------------------------------------------------ #
 # ClassRename test 3 (new class name already exists)
+# ------------------------------------------------------------ #
+
 $Self->{GeneralCatalogObject}->ItemAdd(
-    Class         => 'UnitTest::TestClass' . $ClassRand3,
+    Class         => 'UnitTest::TestClass' . $ClassRand[2],
     Name          => 'Dummy',
     Functionality => '',
     ValidID       => 1,
@@ -752,7 +797,7 @@ for my $Class (@ExistingClasses) {
 
     my $Success = $Self->{GeneralCatalogObject}->ClassRename(
         ClassOld => $Class . 'RENAME2',
-        ClassNew => 'UnitTest::TestClass' . $ClassRand3,
+        ClassNew => 'UnitTest::TestClass' . $ClassRand[2],
     );
 
     $Self->False(
@@ -762,17 +807,5 @@ for my $Class (@ExistingClasses) {
 
     $TestCount++;
 }
-
-# clean the general catalog table
-$Self->{DBObject}->Do(
-    SQL => "DELETE FROM general_catalog WHERE general_catalog_class LIKE 'UnitTest%'",
-);
-
-# clean the system user table
-my $UserTable = $Self->{ConfigObject}->Get('DatabaseUserTable') || 'system_user';
-
-$Self->{DBObject}->Do(
-    SQL => "DELETE FROM $UserTable WHERE login LIKE 'UnitTest-GeneralCatalog-%'",
-);
 
 1;
