@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.25 2008-03-14 15:51:41 martin Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.26 2008-03-19 00:00:25 martin Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
     <Framework>2.2.x</Framework>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
-    <ChangeLog>2005-12-04 New package</ChangeLog>
     <Description Lang="en">A FAQ/knowledge base.</Description>
     <Description Lang="de">Eine FAQ-/Wissensdatenbank.</Description>
+    <IntroInstallPost Title="Notice - Introduction" Lang="en">The FAQ/knowledge base will be found at the navigation bar and required "faq" group permissions to use it.</IntroInstallPost>
+    <IntroInstallPost Title="Hinweis - Einfuerhrung" Lang="de">Die FAQ/Knowledge Base ist in der Navigationsleiste zu finden. Es werden "faq" Gruppen-Rechte benötig um die FAQ benutzen zu können.</IntroInstallPost>
     <Filelist>
         <File Permission="644" Location="Kernel/Config/Files/FAQ.xml"></File>
         <File Permission="644" Location="Kernel/Language/de_FAQ.pm"></File>
