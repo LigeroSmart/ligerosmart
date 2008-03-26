@@ -1,12 +1,12 @@
 # --
 # Kernel/Modules/CustomerFAQ.pm - faq module
-# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQ.pm,v 1.4 2007-01-18 14:11:20 rk Exp $
+# $Id: CustomerFAQ.pm,v 1.5 2008-03-26 08:42:27 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 
 package Kernel::Modules::CustomerFAQ;
@@ -16,12 +16,10 @@ use Kernel::System::FAQ;
 use Kernel::Modules::FAQ;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.4 $';
-$VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
+$VERSION = qw($Revision: 1.5 $) [1];
 
 our @ISA = qw(Kernel::Modules::FAQ);
 
-# --
 sub new {
     my $Type = shift;
     my %Param = @_;
@@ -39,7 +37,7 @@ sub new {
     $Self->{InterfaceStates} = $Self->{FAQObject}->StateTypeList(
         Types => ['external','public']
     );
-    # check needed Opjects
+    # check needed Objects
     # ********************************************************** #
     foreach (qw(UserObject)) {
         $Self->{LayoutObject}->FatalError(Message => "Got no $_!") if (!$Self->{$_});
@@ -47,7 +45,7 @@ sub new {
 
     return $Self;
 }
-# --
+
 sub Run {
     my $Self = shift;
     my %Param = @_;
@@ -77,7 +75,8 @@ sub Run {
     # ********************************************************** #
     if ($GetParam{Nav}) {
         $HeaderType = 'Small';
-    } else {
+    }
+    else {
         $HeaderType = '';
     }
     # store nav param
@@ -130,13 +129,21 @@ sub Run {
     elsif ($Self->{Subaction} eq 'Download') {
         # get param
         my $ItemID  = $Self->{ParamObject}->GetParam(Param => 'ItemID');
+        my $FileID  = $Self->{ParamObject}->GetParam(Param => 'FileID');
         # db action
         my %ItemData = $Self->{FAQObject}->FAQGet(ItemID => $ItemID);
         if (!%ItemData) {
             return $Self->{LayoutObject}->FatalError(Message => "No FAQ found!");
         }
         if ($ItemData{StateTypeName} eq 'external' || $ItemData{StateTypeName} eq 'public') {
-            return $Self->{LayoutObject}->Attachment(%ItemData);
+            my %File = $Self->{FAQObject}->AttachmentGet(
+                ItemID => $ItemID,
+                FileID => $FileID,
+            );
+            if (!%File) {
+                return $Self->{LayoutObject}->FatalError(Message => "No File found!");
+            }
+            return $Self->{LayoutObject}->Attachment(%File);
         }
         else {
             return $Self->{LayoutObject}->FatalError(Message => "Permission denied!");
@@ -223,6 +230,5 @@ sub Run {
 
     return $Output;
 }
-# --
 
 1;

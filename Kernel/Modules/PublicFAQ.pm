@@ -1,12 +1,12 @@
 # --
-# Kernel/Modules/CustomerFAQ.pm - faq module
-# Copyright (C) 2001-2006 OTRS GmbH, http://otrs.org/
+# Kernel/Modules/PublicFAQ.pm - faq module
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQ.pm,v 1.2 2006-10-20 12:06:37 rk Exp $
+# $Id: PublicFAQ.pm,v 1.3 2008-03-26 08:42:27 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 
 package Kernel::Modules::PublicFAQ;
@@ -16,12 +16,10 @@ use Kernel::System::FAQ;
 use Kernel::Modules::FAQ;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.2 $';
-$VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
+$VERSION = qw($Revision: 1.3 $) [1];
 
 our @ISA = qw(Kernel::Modules::FAQ);
 
-# --
 sub new {
     my $Type = shift;
     my %Param = @_;
@@ -40,15 +38,15 @@ sub new {
         Types => ['public']
     );
 
-    # check needed Opjects
+    # check needed Objects
     # ********************************************************** #
-    foreach (qw()) {
+    for (qw()) {
         $Self->{LayoutObject}->FatalError(Message => "Got no $_!") if (!$Self->{$_});
     }
 
     return $Self;
 }
-# --
+
 sub Run {
     my $Self = shift;
     my %Param = @_;
@@ -78,6 +76,25 @@ sub Run {
     # explorer
     # ---------------------------------------------------------- #
     if ($Self->{Subaction} eq 'Explorer') {
+        # add rss feed link
+        $Self->{LayoutObject}->Block(
+            Name => 'MetaLink',
+            Data => {
+                Rel => 'alternate',
+                Type => 'application/rss+xml',
+                Title => '$Text{"FAQ News (new created)"}',
+                Href => '$Env{"Baselink"}Action=$Env{"Action"}&Subaction=rss&Type=Created',
+            },
+        );
+        $Self->{LayoutObject}->Block(
+            Name => 'MetaLink',
+            Data => {
+                Rel => 'alternate',
+                Type => 'application/rss+xml',
+                Title => '$Text{"FAQ News (recently changed)"}',
+                Href => '$Env{"Baselink"}Action=$Env{"Action"}&Subaction=rss&Type=Changed',
+            },
+        );
         $HeaderTitle = 'Explorer';
         $Header = $Self->{LayoutObject}->CustomerHeader(
             Type => $HeaderType,
@@ -106,18 +123,86 @@ sub Run {
         );
     }
     # ---------------------------------------------------------- #
+    # rss
+    # ---------------------------------------------------------- #
+    elsif ($Self->{Subaction} eq 'rss') {
+        my $Type   = $Self->{ParamObject}->GetParam(Param => 'Type') || 'Changed';
+        my $States = $Self->{FAQObject}->StateTypeList(
+            Types => ['public']
+        );
+
+        my @IDs = $Self->{FAQObject}->FAQSearch(
+            States => $States,
+            Order  => $Type,
+            Sort   => 'ASC',
+            Limit  => 20,
+        );
+
+        # generate rss feed
+        use XML::RSS::SimpleGen;
+        rss_new( "http://".$ENV{HTTP_HOST} );
+        my $Title = $Self->{ConfigObject}->Get('Product') . ' FAQ';
+        rss_title( $Title );
+
+        for my $ItemID ( @IDs ) {
+            my %Article = $Self->{FAQObject}->FAQGet(
+                ItemID => $ItemID,
+            );
+            my $Preview = '';
+            for my $Count ( 1..2 ) {
+                if ( $Article{"Field$Count"} ) {
+                    $Preview .= $Article{"Field$Count"};
+                }
+            }
+
+            # remove html tags
+            $Preview =~ s/\<.+?\>//gs;
+
+            # replace "  " with " " space
+            $Preview =~ s/  / /mg;
+
+            # reduce size of preview
+            $Preview =~ s/^(.{80}).*$/$1\[\.\.\]/gs;
+
+            rss_item(
+                "http://$ENV{HTTP_HOST}$Self->{LayoutObject}->{Baselink}Action=$Self->{Action}&ItemID=$ItemID",
+                $Article{Title},
+                $Preview,
+            );
+        }
+        my $Output = rss_as_string();
+
+        if ( !$Output ) {
+            return $Self->{LayoutObject}->FatalError(Message => "Can't create RSS file!");
+        }
+        return $Self->{LayoutObject}->Attachment(
+            Content     => $Output,
+            ContentType => 'text/xml',
+            Type        => 'inline',
+        );
+    }
+
+    # ---------------------------------------------------------- #
     # download item
     # ---------------------------------------------------------- #
     elsif ($Self->{Subaction} eq 'Download') {
         # get param
         my $ItemID  = $Self->{ParamObject}->GetParam(Param => 'ItemID');
+        my $FileID  = $Self->{ParamObject}->GetParam(Param => 'FileID');
         # db action
         my %ItemData = $Self->{FAQObject}->FAQGet(ItemID => $ItemID);
         if (!%ItemData) {
             return $Self->{LayoutObject}->FatalError(Message => "No FAQ found!");
         }
         if ($ItemData{StateTypeName} eq 'public') {
-            return $Self->{LayoutObject}->Attachment(%ItemData);
+            my %File = $Self->{FAQObject}->AttachmentGet(
+                ItemID => $ItemID,
+                FileID => $FileID,
+            );
+            if (!%File) {
+                return $Self->{LayoutObject}->FatalError(Message => "No File found!");
+            }
+            return $Self->{LayoutObject}->Attachment(%File);
         }
         else {
             return $Self->{LayoutObject}->FatalError(Message => "Permission denied!");
@@ -177,7 +262,7 @@ sub Run {
     # OUTPUT
     $Output .= $Header || $DefaultHeader;
     if(!$Notify) {
-        foreach my $Notify (@{$Self->{Notify}}) {
+        for my $Notify (@{$Self->{Notify}}) {
             $Output .= $Self->{LayoutObject}->Notify(
                 Priority => $Notify->[0],
                 Info => $Notify->[1],
@@ -189,6 +274,5 @@ sub Run {
 
     return $Output;
 }
-# --
 
 1;

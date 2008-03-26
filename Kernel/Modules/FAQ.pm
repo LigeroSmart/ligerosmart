@@ -2,7 +2,7 @@
 # Kernel/Modules/FAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.12 2008-03-19 10:52:50 martin Exp $
+# $Id: FAQ.pm,v 1.13 2008-03-26 08:42:27 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,8 +17,7 @@ use Kernel::System::FAQ;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.12 $';
-$VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub new {
     my $Type = shift;
@@ -28,12 +27,12 @@ sub new {
     my $Self = {};
     bless ($Self, $Type);
 
-    foreach (keys %Param) {
+    for (keys %Param) {
         $Self->{$_} = $Param{$_};
     }
 
     # check needed Opjects
-    foreach (qw(ParamObject DBObject LayoutObject LogObject ConfigObject UserObject)) {
+    for (qw(ParamObject DBObject LayoutObject LogObject ConfigObject UserObject)) {
         $Self->{LayoutObject}->FatalError(Message => "Got no $_!") if (!$Self->{$_});
     }
 
@@ -56,23 +55,6 @@ sub new {
     # global output vars
     $Self->{Notify} = [];
 
-    # store last screen
-    if($Self->{SessionObject}) {
-        if($Self->{Subaction} eq 'Explorer') {
-            $Self->{SessionObject}->UpdateSessionID(
-                SessionID => $Self->{SessionID},
-                Key => 'LastScreenOverview',
-                Value => $Self->{RequestedURL},
-            );
-        }
-        else {
-            $Self->{SessionObject}->UpdateSessionID(
-                SessionID => $Self->{SessionID},
-                Key => 'LastScreenView',
-                Value => $Self->{RequestedURL},
-            );
-        }
-    }
     return $Self;
 }
 
@@ -87,18 +69,10 @@ sub GetExplorer {
     $GetParam{CategoryID} = $Self->{ParamObject}->GetParam(Param => 'CategoryID') || 0;
     $GetParam{Order} = $Self->{ParamObject}->GetParam(Param => 'Order') || 'Title';
     $GetParam{Sort} = $Self->{ParamObject}->GetParam(Param => 'Sort') || 'up';
-    foreach (@Params) {
+    for (@Params) {
         if(!$GetParam{$_} && !($GetParam{$_} = $Self->{ParamObject}->GetParam(Param => $_))) {
             return $Self->{LayoutObject}->FatalError(Message => "Need parameter $_");
         }
-    }
-    # store back link
-    if($Self->{SessionObject}) {
-        $Self->{SessionObject}->UpdateSessionID(
-            SessionID => $Self->{SessionID},
-            Key => 'LastScreenView',
-            Value => $Self->{RequestedURL},
-        );
     }
     # db action
     my %CategoryData = ();
@@ -109,7 +83,6 @@ sub GetExplorer {
         }
     }
     # dtl block
-    $Frontend{LastScreenOverview} = $Self->{RequestedURL};
     $Self->{LayoutObject}->Block(
         Name => 'Explorer',
         Data => { %CategoryData, %Frontend },
@@ -123,18 +96,18 @@ sub GetExplorer {
         $Self->{LayoutObject}->Block(
             Name => 'ExplorerTitle',
             Data => {
-                        'Name' => $CategoryData{Name},
-                        'Comment' => $CategoryData{Comment}
-                    },
+                Name    => $CategoryData{Name},
+                Comment => $CategoryData{Comment}
+            },
         );
     }
     else {
         $Self->{LayoutObject}->Block(
             Name => 'ExplorerTitle',
             Data => {
-                        'Name' => $Self->{ConfigObject}->Get('FAQ::Default::RootCategoryName'),
-                        'Comment' => $Self->{ConfigObject}->Get('FAQ::Default::RootCategoryComment')
-                    },
+                Name    => $Self->{ConfigObject}->Get('FAQ::Default::RootCategoryName'),
+                Comment => $Self->{ConfigObject}->Get('FAQ::Default::RootCategoryComment')
+            },
         );
     }
     # explorer category list
@@ -207,7 +180,7 @@ sub _GetFAQPath {
 
     if($Self->{ConfigObject}->Get('FAQ::Explorer::Path::Show')) {
         my @CategoryList = @{$Self->{FAQObject}->FAQPathListGet(CategoryID => $Param{CategoryID})};
-        foreach my $Data (@CategoryList) {
+        for my $Data (@CategoryList) {
             $Self->{LayoutObject}->Block(
                 Name => 'FAQPathCategoryElement',
                 Data => { %{$Data} },
@@ -225,7 +198,7 @@ sub _GetExplorerCategoryList {
     $Frontend{CssRow} = '';
 
     # check needed parameters
-    foreach (qw(Order Sort)) {
+    for (qw(Order Sort)) {
         if (!$Param{$_}) {
             $Self->{LayoutObject}->FatalError(Message => "Need parameter $_!")
         }
@@ -253,7 +226,7 @@ sub _GetExplorerCategoryList {
         $Self->{LayoutObject}->Block(
             Name => 'ExplorerCategoryList',
         );
-        foreach (@CategoryIDs) {
+        for (@CategoryIDs) {
             my %Data = $Self->{FAQObject}->CategoryGet(CategoryID => $_);
             $Data{CategoryNumber} = $Self->{FAQObject}->CategoryCount(
                 ParentIDs => [$_]
@@ -284,7 +257,7 @@ sub _GetExplorerItemList {
     my %Param = @_;
 
     # check needed parameters
-    foreach (qw(Order Sort)) {
+    for (qw(Order Sort)) {
         if (!$Param{$_}) {
             $Self->{LayoutObject}->FatalError(Message => "Need parameter $_!")
         }
@@ -304,7 +277,7 @@ sub _GetExplorerItemList {
             Name => 'ExplorerFAQItemList',
             Data => {%Param}
         );
-        foreach (@ItemIDs) {
+        for (@ItemIDs) {
             my %Frontend = ();
             my %Data = $Self->{FAQObject}->FAQGet(ItemID => $_);
 
@@ -332,7 +305,7 @@ sub _GetExplorerLastChangeItems {
     my %Param = @_;
     if($Self->{ConfigObject}->Get('FAQ::Explorer::LastChange::Show')) {
         # check needed parameters
-        foreach (qw(CategoryID)) {
+        for (qw(CategoryID)) {
             if (!defined($Param{$_})) {
                 $Self->{LayoutObject}->FatalError(Message => "Need parameter $_!")
             }
@@ -364,6 +337,12 @@ sub _GetExplorerLastChangeItems {
             $Self->{LayoutObject}->Block(
                 Name => 'ExplorerLatestChange'
             );
+            if ( $Param{Mode} =~ /public/i ) {
+                $Self->{LayoutObject}->Block(
+                    Name => 'ExplorerLatestChangeRss',
+                    Data => { },
+                );
+            }
             if (@CategoryIDs) {
                 @ItemIDs = $Self->{FAQObject}->FAQSearch(
                     CategoryIDs => \@CategoryIDs,
@@ -385,7 +364,7 @@ sub _GetExplorerLastChangeItems {
                 Limit => $Self->{ConfigObject}->Get('FAQ::Explorer::LastChange::Limit')
             );
         }
-        foreach (@ItemIDs) {
+        for (@ItemIDs) {
             my %Data = $Self->{FAQObject}->FAQGet(ItemID => $_);
             $Self->{LayoutObject}->Block(
                 Name => 'ExplorerLatestChangeFAQItemRow',
@@ -403,7 +382,7 @@ sub _GetExplorerLastCreateItems {
 
     if($Self->{ConfigObject}->Get('FAQ::Explorer::LastCreate::Show')) {
         # check needed parameters
-        foreach (qw(CategoryID)) {
+        for (qw(CategoryID)) {
             if (!defined($Param{$_})) {
                 $Self->{LayoutObject}->FatalError(Message => "Need parameter $_!")
             }
@@ -435,6 +414,12 @@ sub _GetExplorerLastCreateItems {
             $Self->{LayoutObject}->Block(
                 Name => 'ExplorerLatestCreate'
             );
+            if ( $Param{Mode} =~ /public/i ) {
+                $Self->{LayoutObject}->Block(
+                    Name => 'ExplorerLatestCreateRss',
+                    Data => { },
+                );
+            }
             if (@CategoryIDs) {
                 @ItemIDs = $Self->{FAQObject}->FAQSearch(
                     CategoryIDs => \@CategoryIDs,
@@ -457,7 +442,7 @@ sub _GetExplorerLastCreateItems {
             );
         }
         # dtl block
-        foreach (@ItemIDs) {
+        for (@ItemIDs) {
             my %Data = $Self->{FAQObject}->FAQGet(ItemID => $_);
             $Self->{LayoutObject}->Block(
                 Name => 'ExplorerLatestCreateFAQItemRow',
@@ -475,7 +460,7 @@ sub _GetExplorerQuickSearch {
 
     if($Self->{ConfigObject}->Get('FAQ::Explorer::QuickSearch::Show')) {
         # check needed parameters
-        foreach (qw()) {
+        for (qw()) {
             if (!$Param{$_}) {
                 $Self->{LayoutObject}->FatalError(Message => "Need parameter $_!")
             }
@@ -498,19 +483,22 @@ sub GetItemView {
     my @Params = qw(ItemID);
 
     # manage parameters
-    foreach (@Params) {
+    for (@Params) {
         if (!($GetParam{$_} = $Self->{ParamObject}->GetParam(Param => $_))) {
             $Self->{LayoutObject}->FatalError(Message => "Need parameter $_");
         }
     }
     # db action
-    my %ItemData = $Self->{FAQObject}->FAQGet(ItemID => $GetParam{ItemID}, UserID => $Self->{UserID});
+    my %ItemData = $Self->{FAQObject}->FAQGet(
+        ItemID => $GetParam{ItemID},
+        UserID => $Self->{UserID},
+    );
     # html quoting
-    foreach my $Key (qw (Field1 Field2 Field3 Field4 Field5 Field6)) {
+    for my $Key (qw (Field1 Field2 Field3 Field4 Field5 Field6)) {
         if ($Self->{ConfigObject}->Get('FAQ::Item::HTML')) {
             my @Array = split /pre>/, $ItemData{$Key};
             my $Text = '';
-            foreach (@Array) {
+            for (@Array) {
                 if ($_ =~ /(.*)\<\/$/) {
                     $Text .= 'pre>'.$_.'pre>';
                 }
@@ -571,11 +559,20 @@ sub GetItemView {
         );
     }
     # item attachment
-    if (defined($ItemData{Filename})) {
+    my @AttachmentIndex = $Self->{FAQObject}->AttachmentIndex(
+        ItemID => $GetParam{ItemID},
+    );
+    if ( @AttachmentIndex ) {
         $Self->{LayoutObject}->Block(
             Name => 'FAQItemViewAttachment',
-            Data => { %Param, %ItemData },
+            Data => { %ItemData },
         );
+        for my $Attachment ( @AttachmentIndex ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'FAQItemViewAttachmentRow',
+                Data => { %ItemData, %{ $Attachment } },
+            );
+        }
     }
     # item fields
     $Self->_GetItemFields(
@@ -605,9 +602,9 @@ sub GetItemView {
                 next;
             }
             my %ObjectType = %{$Links{$LinkType}};
-            foreach my $Object (sort keys %ObjectType) {
+            for my $Object (sort keys %ObjectType) {
                 my %Data = %{$ObjectType{$Object}};
-                foreach my $Item (sort keys %Data) {
+                for my $Item (sort keys %Data) {
                     if ( !$LinkTypeBox{$LinkType} ) {
                         $Self->{LayoutObject}->Block(
                             Name => 'Link',
@@ -640,13 +637,16 @@ sub GetItemSmallView {
     my @Params = qw(ItemID);
 
     # manage parameters
-    foreach (@Params) {
+    for (@Params) {
         if (!($GetParam{$_} = $Self->{ParamObject}->GetParam(Param => $_))) {
             $Self->{LayoutObject}->FatalError(Message => "Need parameter $_");
         }
     }
     # db action
-    my %ItemData = $Self->{FAQObject}->FAQGet(ItemID => $GetParam{ItemID}, UserID => $Self->{UserID});
+    my %ItemData = $Self->{FAQObject}->FAQGet(
+        ItemID => $GetParam{ItemID},
+        UserID => $Self->{UserID},
+    );
     if (!%ItemData) {
         return $Self->{LayoutObject}->ErrorScreen();
     }
@@ -690,11 +690,11 @@ sub GetItemSmallView {
         ObjectID => $ItemData{ItemID},
         UserID => $Self->{UserID},
     );
-    foreach my $LinkType (sort keys %Links) {
+    for my $LinkType (sort keys %Links) {
         my %ObjectType = %{$Links{$LinkType}};
-        foreach my $Object (sort keys %ObjectType) {
+        for my $Object (sort keys %ObjectType) {
             my %Data = %{$ObjectType{$Object}};
-            foreach my $Item (sort keys %Data) {
+            for my $Item (sort keys %Data) {
                 $Self->{LayoutObject}->Block(
                     Name => "Link$LinkType",
                     Data => $Data{$Item},
@@ -712,18 +712,21 @@ sub GetItemPrint {
     my @Params = qw(ItemID);
 
     # manage parameters
-    foreach (@Params) {
+    for (@Params) {
         if (!($GetParam{$_} = $Self->{ParamObject}->GetParam(Param => $_))) {
             $Self->{LayoutObject}->FatalError(Message => "Need parameter $_");
         }
     }
     # db action
-    my %ItemData = $Self->{FAQObject}->FAQGet(ItemID => $GetParam{ItemID}, UserID => $Self->{UserID});
+    my %ItemData = $Self->{FAQObject}->FAQGet(
+        ItemID => $GetParam{ItemID},
+        UserID => $Self->{UserID},
+    );
     if (!%ItemData) {
         return $Self->{LayoutObject}->ErrorScreen();
     }
     # html quoting
-    foreach my $Key (qw (Field1 Field2 Field3 Field4 Field5 Field6)) {
+    for my $Key (qw (Field1 Field2 Field3 Field4 Field5 Field6)) {
         if ($Self->{ConfigObject}->Get('FAQ::Item::HTML')) {
             $ItemData{$Key} =~ s/\n/\<br\>/g;
         }
@@ -763,11 +766,11 @@ sub GetItemPrint {
             UserID => $Self->{UserID},
         );
         # links
-        foreach my $LinkType (sort keys %Links) {
+        for my $LinkType (sort keys %Links) {
             my %ObjectType = %{$Links{$LinkType}};
-            foreach my $Object (sort keys %ObjectType) {
+            for my $Object (sort keys %ObjectType) {
                 my %Data = %{$ObjectType{$Object}};
-                foreach my $Item (sort keys %Data) {
+                for my $Item (sort keys %Data) {
                     $Self->{LayoutObject}->Block(
                         Name => "Link$LinkType",
                         Data => $Data{$Item},
@@ -786,7 +789,7 @@ sub _GetItemFields {
     my @Params = qw(ItemData);
 
     # manage parameters
-    foreach (@Params) {
+    for (@Params) {
         if(!exists($Param{$_})) {
             return $Self->{LayoutObject}->FatalError(Message => "Need parameter $_");
         }
@@ -799,7 +802,7 @@ sub _GetItemFields {
             $ItemFields{"Field".$i} = \%ItemConfig;
         }
     }
-    foreach my $Key (sort( { $ItemFields{$a}{Prio} <=> $ItemFields{$b}{Prio} } keys(%ItemFields))) {
+    for my $Key (sort( { $ItemFields{$a}{Prio} <=> $ItemFields{$b}{Prio} } keys(%ItemFields))) {
         my %StateTypeData = %{$Self->{FAQObject}->StateTypeGet(
             Name => $ItemFields{$Key}{Show}
         )};
@@ -826,7 +829,7 @@ sub _GetItemFieldValues {
     my @Params = qw(ItemData);
 
     # manage parameters
-    foreach (@Params) {
+    for (@Params) {
         if (!exists($Param{$_})) {
             return $Self->{LayoutObject}->FatalError(Message => "Need parameter $_");
         }
@@ -840,7 +843,7 @@ sub _GetItemFieldValues {
         }
     }
     my $String = '';
-    foreach my $Key (sort( { $ItemFields{$a}{Prio} <=> $ItemFields{$b}{Prio} } keys(%ItemFields))) {
+    for my $Key (sort( { $ItemFields{$a}{Prio} <=> $ItemFields{$b}{Prio} } keys(%ItemFields))) {
         my %StateTypeData = %{$Self->{FAQObject}->StateTypeGet(
             Name => $ItemFields{$Key}{Show}
         )};
@@ -858,7 +861,7 @@ sub _GetItemVoting {
     my %Param = @_;
 
     # check needed parameters
-    foreach (qw(ItemData)) {
+    for (qw(ItemData)) {
         if (!$Param{$_}) {
             $Self->{LayoutObject}->FatalError(Message => "Need parameter $_!");
         }
@@ -895,7 +898,7 @@ sub _GetItemVoting {
     }
     if ($Self->{Subaction} eq 'Vote' && $Flag) {
         # check needed parameters
-        foreach (qw(ItemData)) {
+        for (qw(ItemData)) {
             if (!$Param{$_}) {
                 $Self->{LayoutObject}->FatalError(Message => "Need parameter $_!")
             }
@@ -903,7 +906,7 @@ sub _GetItemVoting {
         # manage parameters
         my %GetParam = ();
         my @Params = qw(ItemID Rate);
-        foreach (@Params) {
+        for (@Params) {
             $GetParam{$_} = $Self->{ParamObject}->GetParam(Param => $_);
         }
 
@@ -942,7 +945,7 @@ sub _GetItemVotingForm {
     my %Param = @_;
 
     # check needed parameters
-    foreach (qw(ItemData)) {
+    for (qw(ItemData)) {
         if (!$Param{$_}) {
             $Self->{LayoutObject}->FatalError(Message => "Need parameter $_!")
         }
@@ -953,7 +956,7 @@ sub _GetItemVotingForm {
     );
 
     my %VotingRates = %{$Self->{ConfigObject}->Get('FAQ::Item::Voting::Rates')};
-    foreach my $key ( sort( { $b <=> $a } keys(%VotingRates ) ) ) {
+    for my $key ( sort( { $b <=> $a } keys(%VotingRates ) ) ) {
         my %Data = ("Value"=>$key, "Title"=>$VotingRates{$key} );
         $Self->{LayoutObject}->Block(
             Name => "VotingRateRow",
@@ -970,13 +973,13 @@ sub GetItemSearch {
     my %Frontend    = ();
 
     # get params
-    foreach (qw(LanguageIDs CategoryIDs)) {
+    for (qw(LanguageIDs CategoryIDs)) {
         my @Array = $Self->{ParamObject}->GetArray(Param => $_);
         if (@Array) {
             $GetParam{$_} = \@Array;
         }
     }
-    foreach (qw(QuickSearch Number Title What Keyword)) {
+    for (qw(QuickSearch Number Title What Keyword)) {
         $GetParam{$_} = $Self->{ParamObject}->GetParam(Param => $_);
     }
     # quicksearch in subcategories?
@@ -1051,7 +1054,7 @@ sub GetItemSearch {
             Name => 'SearchResult',
             Data => { %Param, %Frontend },
         );
-        foreach (@ItemIDs) {
+        for (@ItemIDs) {
             %Frontend = ();
             my %Data = $Self->{FAQObject}->FAQGet(ItemID => $_);
             my $Permission = 'ro';
@@ -1092,18 +1095,6 @@ sub GetSystemHistory {
     my %Param = @_;
     my %Frontend = ();
 
-    # store last queue screen
-    $Self->{SessionObject}->UpdateSessionID(
-        SessionID => $Self->{SessionID},
-        Key => 'LastScreenOverview',
-        Value => $Self->{RequestedURL},
-    );
-    # store last screen
-    $Self->{SessionObject}->UpdateSessionID(
-        SessionID => $Self->{SessionID},
-        Key => 'LastScreenView',
-        Value => $Self->{RequestedURL},
-    );
     $Self->{LayoutObject}->Block(
         Name => 'SystemHistory',
         Data => { %Param },
@@ -1111,7 +1102,7 @@ sub GetSystemHistory {
 
     $Frontend{CssRow} = '';
     my @History = @{$Self->{FAQObject}->HistoryGet()};
-    foreach my $Row (@History) {
+    for my $Row (@History) {
         # css configuration
         if($Frontend{CssRow} eq 'searchpassive') {
             $Frontend{CssRow} = 'searchactive';

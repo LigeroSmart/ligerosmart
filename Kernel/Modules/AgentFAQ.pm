@@ -1,12 +1,12 @@
 # --
 # Kernel/Modules/AgentFAQ.pm - faq module
-# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.pm,v 1.11 2007-09-26 11:55:34 rk Exp $
+# $Id: AgentFAQ.pm,v 1.12 2008-03-26 08:42:27 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 
 package Kernel::Modules::AgentFAQ;
@@ -20,8 +20,7 @@ use Kernel::System::Group;
 use Kernel::System::Valid;
 
 use vars qw($VERSION @ISA);
-$VERSION = '$Revision: 1.11 $';
-$VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
+$VERSION = qw($Revision: 1.12 $) [1];
 
 @ISA = qw(Kernel::Modules::FAQ);
 
@@ -45,7 +44,7 @@ sub new {
 
     # check needed Objects
     # ********************************************************** #
-    foreach (qw(SessionObject)) {
+    for (qw(SessionObject)) {
         $Self->{LayoutObject}->FatalError(Message => "Got no $_!") if (!$Self->{$_});
     }
     $Self->{ValidObject} = Kernel::System::Valid->new(%Param);
@@ -86,7 +85,7 @@ sub Run {
     # ********************************************************** #
     @Params = qw(ItemID ID Number Name Comment CategoryID ParentID StateID LanguageID Title UserID
     Field1 Field2 Field3 Field4 Field5 Field6 FreeKey1 FreeKey2 FreeKey3 Keywords Order Sort Nav);
-    foreach (@Params) {
+    for (@Params) {
         $GetParam{$_} = $Self->{ParamObject}->GetParam(Param => $_) || '';
     }
 
@@ -95,19 +94,15 @@ sub Run {
     $HeaderType = $Self->{LastFAQNav};
     if($GetParam{Nav} eq 'Normal') {
         $HeaderType = '';
-    } elsif ($GetParam{Nav} eq 'None' || $Self->{LastFAQNav}) {
+    }
+    elsif ($GetParam{Nav} eq 'None' || $Self->{LastFAQNav}) {
         $HeaderType = 'Small';
         $Navigation = ' ';
         $Notify    = ' ';
-    } else {
+    }
+    else {
         $HeaderType = '';
     }
-
-    $Self->{SessionObject}->UpdateSessionID(
-        SessionID => $Self->{SessionID},
-        Key => 'LastFAQNav',
-        Value => $HeaderType,
-    );
 
     # store nav param
     $Self->{SessionObject}->UpdateSessionID(
@@ -303,7 +298,10 @@ sub Run {
         }
 
         # db action
-        my %CategoryData = $Self->{FAQObject}->CategoryGet(CategoryID => $ParamData{CategoryID}, UserID => $Self->{UserID});
+        my %CategoryData = $Self->{FAQObject}->CategoryGet(
+            CategoryID => $ParamData{CategoryID},
+            UserID => $Self->{UserID},
+        );
         if (!%CategoryData) {
             return $Self->{LayoutObject}->ErrorScreen();
         }
@@ -333,12 +331,14 @@ sub Run {
             Name => 'ValidID',
             SelectedID => $CategoryData{ValidID},
         );
-        my $SelectedGroups = $Self->{FAQObject}->GetCategoryGroup(CategoryID => $ParamData{CategoryID});
+        my $SelectedGroups = $Self->{FAQObject}->GetCategoryGroup(
+            CategoryID => $ParamData{CategoryID},
+        );
         my %Groups = $Self->{GroupObject}->GroupList(Valid => 1);
         $Frontend{GroupOption} = $Self->{LayoutObject}->OptionStrgHashRef(
             Data => \%Groups,
             Name => 'PermissionGroups',
-            Size => 8,
+            Size => 12,
             Multiple => 1,
             SelectedIDRefArray => $SelectedGroups,
         );
@@ -367,13 +367,13 @@ sub Run {
         my %ParamData = ();
         my @RequiredParams = qw(CategoryID Name Comment);
         my @Params = qw(ParentID ValidID);
-        foreach (@RequiredParams) {
+        for (@RequiredParams) {
             $ParamData{$_} = $Self->{ParamObject}->GetParam(Param => $_);
             if(!$ParamData{$_}) {
                 return $Self->{LayoutObject}->FatalError(Message => "Need $_!");
             }
         }
-        foreach (@Params) {
+        for (@Params) {
             $ParamData{$_} = $Self->{ParamObject}->GetParam(Param => $_);
             if(!defined($ParamData{$_})) {
                 return $Self->{LayoutObject}->FatalError(Message => "Need $_!");
@@ -440,7 +440,7 @@ sub Run {
         $Frontend{GroupOption} = $Self->{LayoutObject}->OptionStrgHashRef(
             Data => \%Groups,
             Name => 'PermissionGroups',
-            Size => 8,
+            Size => 12,
             Multiple => 1,
         );
         $Self->{LayoutObject}->Block(
@@ -462,13 +462,13 @@ sub Run {
         my %ParamData = ();
         my @RequiredParams = qw(Name Comment);
         my @Params = qw(ParentID ValidID);
-        foreach (@RequiredParams) {
+        for (@RequiredParams) {
             $ParamData{$_} = $Self->{ParamObject}->GetParam(Param => $_);
             if(!$ParamData{$_}) {
                 return $Self->{LayoutObject}->FatalError(Message => "Need $_");
             }
         }
-        foreach (@Params) {
+        for (@Params) {
             $ParamData{$_} = $Self->{ParamObject}->GetParam(Param => $_);
             if(!defined($ParamData{$_})) {
                 return $Self->{LayoutObject}->FatalError(Message => "Need $_");
@@ -558,38 +558,40 @@ sub Run {
         my %ParamData = ();
         my @RequiredParams = qw(CategoryID Title);
         my @Params = qw(StateID LanguageID Field1 Field2 Field3 Field4 Field5 Field6 Keywords Title);
-        foreach (@RequiredParams) {
+        for (@RequiredParams) {
             $ParamData{$_} = $Self->{ParamObject}->GetParam(Param => $_);
             if(!$ParamData{$_}) {
                 return $Self->{LayoutObject}->FatalError(Message => "Need $_!");
             }
         }
-        foreach (@Params) {
+        for (@Params) {
             $ParamData{$_} = $Self->{ParamObject}->GetParam(Param => $_);
         }
 
+        # insert item
+        my $ItemID = $Self->{FAQObject}->FAQAdd(
+            %ParamData,
+            UserID => $Self->{UserID}
+        );
+
+        if ( !$ItemID ) {
+            return $Self->{LayoutObject}->ErrorScreen();
+        }
         # get submit attachment
         my %UploadStuff = $Self->{ParamObject}->GetUploadAll(
             Param => 'file_upload',
             Source => 'String',
         );
+        if ( %UploadStuff ) {
+            $Self->{FAQObject}->AttachmentAdd(
+                ItemID => $ItemID,
+                %UploadStuff,
+            );
+        }
 
-        # insert item
-        my $ItemID = $Self->{FAQObject}->FAQAdd(
-            %ParamData,
-            %UploadStuff,
-            UserID => $Self->{UserID}
+        return $Self->{LayoutObject}->Redirect(
+            OP => "Action=$Self->{Action}&Subaction=View&ItemID=$ItemID",
         );
-
-        if ($ItemID) {
-            if (!defined($ParamData{ItemID}) && !$ParamData{ItemID}) {
-                $ParamData{ItemID} = '';
-            }
-            return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=View&ItemID=$ParamData{ItemID}");
-        }
-        else {
-            return $Self->{LayoutObject}->ErrorScreen();
-        }
     }
     # ---------------------------------------------------------- #
     # item update
@@ -599,22 +601,25 @@ sub Run {
         @Params = qw(ItemID);
 
         # permission check
-        if (!$Self->{AccessRw}) {
+        if ( !$Self->{AccessRw} ) {
             return $Self->{LayoutObject}->NoPermission(WithHeader => 'yes');
         }
 
         # check parameters
         my %ParamData = ();
         my @RequiredParams = qw(CategoryID ItemID);
-        foreach (@RequiredParams) {
+        for (@RequiredParams) {
             $ParamData{$_} = $Self->{ParamObject}->GetParam(Param => $_);
-            if(!$ParamData{$_}) {
+            if( !$ParamData{$_} ) {
                 return $Self->{LayoutObject}->FatalError(Message => "Need $_!");
             }
         }
 
         # db action
-        my %ItemData = $Self->{FAQObject}->FAQGet(ItemID => $ParamData{ItemID}, UserID => $Self->{UserID});
+        my %ItemData = $Self->{FAQObject}->FAQGet(
+            ItemID => $ParamData{ItemID},
+            UserID => $Self->{UserID},
+        );
         if (!%ItemData) {
             return $Self->{LayoutObject}->ErrorScreen();
         }
@@ -645,6 +650,16 @@ sub Run {
             Name => 'Update',
             Data => { %ItemData, %Frontend },
         );
+        # add attachments
+        my @AttachmentIndex = $Self->{FAQObject}->AttachmentIndex(
+            ItemID => $ParamData{ItemID},
+        );
+        for my $Attachment ( @AttachmentIndex ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'UpdateAttachment',
+                Data => { %ItemData, %{ $Attachment } },
+            );
+        }
 
         # fields
         $Self->_GetItemFields(
@@ -672,31 +687,65 @@ sub Run {
         # check parameters
         my %ParamData = ();
         my @RequiredParams = qw(Title CategoryID);
-        my @Params = qw(ItemID StateID LanguageID Field1 Field2 Field3 Field4 Field5 Field6 Keywords);
-        foreach (@RequiredParams) {
+        my @Params = qw(ItemID StateID LanguageID Field1 Field2 Field3 Field4 Field5 Field6 Keywords
+        AttachmentUpload AttachmentDelete0 AttachmentDelete1 AttachmentDelete2 AttachmentDelete3 AttachmentDelete4
+        AttachmentDelete5 AttachmentDelete6 AttachmentDelete7 AttachmentDelete8
+        AttachmentDelete9 AttachmentDelete10 AttachmentDelete11 AttachmentDelete12
+        AttachmentDelete13 AttachmentDelete14 AttachmentDelete15 AttachmentDelete16);
+        for (@RequiredParams) {
             $ParamData{$_} = $Self->{ParamObject}->GetParam(Param => $_);
-            if(!$ParamData{$_}) {
+            if( !$ParamData{$_} ) {
                 return $Self->{LayoutObject}->FatalError(Message => "Need $_!");
             }
         }
-        foreach (@Params) {
+        for (@Params) {
             $ParamData{$_} = $Self->{ParamObject}->GetParam(Param => $_);
         }
 
-        # db action
+        my $Redirect = 1;
+        # attachment delete
+        for ( 0 .. 16 ) {
+            if ( $ParamData{"AttachmentDelete$_"} ) {
+                $Redirect = 0;
+                $Self->{FAQObject}->AttachmentDelete(
+                    ItemID => $ParamData{ItemID},
+                    FileID => $_,
+                );
+            }
+        }
 
-        # get submit attachment
-        my %UploadStuff = $Self->{ParamObject}->GetUploadAll(
-            Param => 'file_upload',
-            Source => 'String',
-        );
+        # attachment upload
+        if ( $ParamData{AttachmentUpload} ) {
+            $Redirect = 0;
+            my %UploadStuff = $Self->{ParamObject}->GetUploadAll(
+                Param  => "file_upload",
+                Source => 'string',
+            );
+            $Self->{FAQObject}->AttachmentAdd(
+                ItemID => $ParamData{ItemID},
+                %UploadStuff,
+            );
+        }
 
         # update item
-        if ($Self->{FAQObject}->FAQUpdate(%ParamData, %UploadStuff, UserID => $Self->{UserID})) {
-            return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=View&ItemID=$GetParam{ItemID}");
+        my $Update = $Self->{FAQObject}->FAQUpdate(
+            %ParamData,
+            UserID => $Self->{UserID},
+        );
+
+        if ( !$Update ) {
+            return $Self->{LayoutObject}->ErrorScreen();
+        }
+
+        if ( $Redirect ) {
+            return $Self->{LayoutObject}->Redirect(
+                OP => "Action=$Self->{Action}&Subaction=View&ItemID=$GetParam{ItemID}",
+            );
         }
         else {
-            return $Self->{LayoutObject}->ErrorScreen();
+            return $Self->{LayoutObject}->Redirect(
+                OP => "Action=$Self->{Action}&Subaction=Update&ItemID=$GetParam{ItemID}&CategoryID=$GetParam{CategoryID}",
+            );
         }
     }
     # ---------------------------------------------------------- #
@@ -715,13 +764,13 @@ sub Run {
         # check parameters
         my %ParamData = ();
         my @RequiredParams = qw(CategoryID ItemID);
-        foreach (@RequiredParams) {
+        for (@RequiredParams) {
             $ParamData{$_} = $Self->{ParamObject}->GetParam(Param => $_);
             if(!$ParamData{$_}) {
                 return $Self->{LayoutObject}->FatalError(Message => "Need $_!");
             }
         }
-        foreach (@Params) {
+        for (@Params) {
             $ParamData{$_} = $Self->{ParamObject}->GetParam(Param => $_);
         }
 
@@ -759,7 +808,7 @@ sub Run {
         # check parameters
         my %ParamData = ();
         my @RequiredParams = qw(CategoryID ItemID);
-        foreach (@RequiredParams) {
+        for (@RequiredParams) {
             $ParamData{$_} = $Self->{ParamObject}->GetParam(Param => $_);
             if(!$ParamData{$_}) {
                 return $Self->{LayoutObject}->FatalError(Message => "Need $_!");
@@ -784,26 +833,35 @@ sub Run {
     # download item
     # ---------------------------------------------------------- #
     elsif ($Self->{Subaction} eq 'Download') {
-        @Params = qw(ItemID);
+        @Params = qw(ItemID FileID);
 
         # permission check
-        if (!$Self->{AccessRo}) {
+        if ( !$Self->{AccessRo} ) {
             return $Self->{LayoutObject}->NoPermission(WithHeader => 'yes');
         }
         # manage parameters
-        foreach (@Params) {
-            if(!($GetParam{$_} = $Self->{ParamObject}->GetParam(Param => $_))) {
+        for (@Params) {
+            if( !defined ($GetParam{$_} = $Self->{ParamObject}->GetParam(Param => $_)) ) {
                 return $Self->{LayoutObject}->FatalError(Message => "Need $_");
             }
         }
         # db action
-        my %ItemData = $Self->{FAQObject}->FAQGet(ItemID => $GetParam{ItemID}, UserID => $Self->{UserID});
+        my %ItemData = $Self->{FAQObject}->FAQGet(
+            ItemID => $GetParam{ItemID},
+            UserID => $Self->{UserID},
+        );
+
         if (!%ItemData) {
             return $Self->{LayoutObject}->ErrorScreen();
         }
 
-        if (%ItemData) {
-            return $Self->{LayoutObject}->Attachment(%ItemData);
+        # get attachments
+        my %File = $Self->{FAQObject}->AttachmentGet(
+            ItemID => $GetParam{ItemID},
+            FileID => $GetParam{FileID},
+        );
+        if ( %File ) {
+            return $Self->{LayoutObject}->Attachment(%File);
         }
         else {
             return $Self->{LayoutObject}->ErrorScreen();
@@ -837,7 +895,7 @@ sub Run {
         # check parameters
         my %ParamData = ();
         my @RequiredParams = qw(CategoryID ItemID);
-        foreach (@RequiredParams) {
+        for (@RequiredParams) {
             $ParamData{$_} = $Self->{ParamObject}->GetParam(Param => $_);
             if(!$ParamData{$_}) {
                 return $Self->{LayoutObject}->FatalError(Message => "Need $_!");
@@ -861,7 +919,7 @@ sub Run {
         $HeaderTitle = 'History';
         $Frontend{CssRow} = 'searchactive';
         my @History = @{$Self->{FAQObject}->FAQHistoryGet(ItemID => $ItemData{ItemID})};
-        foreach my $Row (@History) {
+        for my $Row (@History) {
 
             # css configuration
             if($Frontend{CssRow} eq 'searchpassive') {
@@ -934,7 +992,14 @@ sub Run {
     elsif ($Self->{ParamObject}->GetParam(Param => 'ItemID')) {
         if($Self->{LastFAQNav}) {
             $Self->GetItemSmallView();
-        } else {
+        }
+        else {
+            # store last screen (to get back from linkin object mask)
+            $Self->{SessionObject}->UpdateSessionID(
+                SessionID => $Self->{SessionID},
+                Key => 'LastScreenView',
+                Value => $Self->{RequestedURL},
+            );
             my %FAQArticle = $Self->{FAQObject}->FAQGet(
                 FAQID => $Self->{ParamObject}->GetParam(Param => 'ItemID'),
             );
@@ -983,7 +1048,7 @@ sub Run {
     $Output .= $Header || $DefaultHeader;
     $Output .= $Navigation || $DefaultNavigation;
     if(!$Notify) {
-        foreach my $Notify (@{$Self->{Notify}}) {
+        for my $Notify (@{$Self->{Notify}}) {
             $Output .= $Self->{LayoutObject}->Notify(
                 Priority => $Notify->[0],
                 Info => $Notify->[1],
