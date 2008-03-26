@@ -2,13 +2,12 @@
 # FAQ.dtl - provides HTML view for faq articles
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.dtl,v 1.8 2008-03-19 10:54:57 martin Exp $
+# $Id: FAQ.dtl,v 1.9 2008-03-26 08:38:22 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
-
 
 <!-- dtl:block:View -->
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
@@ -45,7 +44,16 @@
 <!-- dtl:block:FAQItemViewAttachment -->
               <tr>
                 <td class="contentkey" valign="top">$Text{"Attachment"}:</td>
-                <td class="contentvalue"> <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Download&ItemID=$QData{"ItemID"}">$QData{"Filename"}</a></td>
+                <td class="contentvalue">
+                  <table cellspacing="0" cellpadding="0">
+<!-- dtl:block:FAQItemViewAttachmentRow -->
+                    <tr>
+                      <td><a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Download&ItemID=$QData{"ItemID"}&FileID=$QData{"FileID"}">$QData{"Filename"}</a></td>
+                      <td align="right">&nbsp;&nbsp; $QData{"Filesize"}</td>
+                    </tr>
+<!-- dtl:block:FAQItemViewAttachmentRow -->
+                  </table>
+                </td>
               </tr>
 <!-- dtl:block:FAQItemViewAttachment -->
 <!-- dtl:block:FAQItemField -->
@@ -448,14 +456,20 @@
 
         <input type="hidden" name="QuickSearch" value="1">
         <input type="hidden" name="CategoryIDs" value="$Data{"CategoryID"}">
-        <input type="text" name="What" value="$QData{"What"}" size="30" maxlength="50"><input class="button" type="submit" value="$Text{"Search"}"><br>
-        <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Search">$Text{"DetailSearch"}</a>
+        <input type="text" name="What" value="$QData{"What"}" size="30" maxlength="50"><input class="button" type="submit" value="$Text{"Search"}">
       </form>
 <!-- dtl:block:ExplorerQuickSearch -->
 
 
 <!-- dtl:block:ExplorerLatestCreate -->
-      <h3>$Text{"LatestCreatedItems"}</h3>
+      <table border="0" width="100%" cellspacing="0" cellpadding="2">
+        <tr>
+          <td><h3>$Text{"LatestCreatedItems"}</h3></td>
+<!-- dtl:block:ExplorerLatestCreateRss -->
+          <td valign="top" align="right"><a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=rss&Type=Created" title="$Text{"FAQ News (new created)"}"><img src="$Env{"Images"}/rss.png" border="0"></a></td>
+<!-- dtl:block:ExplorerLatestCreateRss -->
+        </tr>
+      </table>
       <table>
 <!-- dtl:block:ExplorerLatestCreateFAQItemRow -->
         <tr>
@@ -471,7 +485,14 @@
 
 
 <!-- dtl:block:ExplorerLatestChange -->
-      <h3>$Text{"LatestChangedItems"}</h3>
+      <table border="0" width="100%" cellspacing="0" cellpadding="2">
+        <tr>
+          <td><h3>$Text{"LatestChangedItems"}</h3></td>
+<!-- dtl:block:ExplorerLatestChangeRss -->
+          <td valign="top" align="right"><a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=rss&Type=Changed" title="$Text{"FAQ News (recently changed)"}"><img src="$Env{"Images"}/rss.png" border="0"></a></td>
+<!-- dtl:block:ExplorerLatestChangeRss -->
+        </tr>
+      </table>
       <table>
 <!-- dtl:block:ExplorerLatestChangeFAQItemRow -->
         <tr>

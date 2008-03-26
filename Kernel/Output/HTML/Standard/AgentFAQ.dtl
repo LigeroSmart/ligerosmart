@@ -2,7 +2,7 @@
 # AgentFAQ.dtl - provides HTML view for faq articles
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.dtl,v 1.14 2008-03-19 10:54:57 martin Exp $
+# $Id: AgentFAQ.dtl,v 1.15 2008-03-26 08:38:22 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -57,8 +57,17 @@
             <table border="0" cellspacing="0" cellpadding="3">
 <!-- dtl:block:FAQItemViewAttachment -->
               <tr>
-                <td class="contentkey">$Text{"Attachment"}:</td>
-                <td class="contentvalue"> <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Download&ItemID=$QData{"ItemID"}">$QData{"Filename"}</a></td>
+                <td class="contentkey" valign="top">$Text{"Attachment"}:</td>
+                <td class="contentvalue">
+                  <table cellspacing="0" cellpadding="0">
+<!-- dtl:block:FAQItemViewAttachmentRow -->
+                    <tr>
+                      <td><a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Download&ItemID=$QData{"ItemID"}&FileID=$QData{"FileID"}">$QData{"Filename"}</a></td>
+                      <td align="right">&nbsp;&nbsp; $QData{"Filesize"}</td>
+                    </tr>
+<!-- dtl:block:FAQItemViewAttachmentRow -->
+                  </table>
+                </td>
               </tr>
 <!-- dtl:block:FAQItemViewAttachment -->
 <!-- dtl:block:FAQItemField -->
@@ -356,6 +365,9 @@ function updateMessage()
         <td class="$Data{"CssRow"}">$Data{"CreatedBy"}</td>
       </tr>
 <!-- dtl:block:HistoryRow -->
+      <tr class="contentfooter">
+        <td colspan="3">&nbsp;</td>
+      </tr>
     </table>
     </td>
   </tr>
@@ -450,6 +462,16 @@ function submit_compose()
       </td>
     </tr>
   </table>
+# check, min one category should be accessible
+<script language="JavaScript" type="text/javascript">
+<!--
+
+if ( !document.compose.CategoryID.options[0] ) {
+    alert('$JSText{"No category accesable. To create an article you need have at lease access to min. one category. Please check your group/category permission under -category menu-!"}');
+}
+
+//-->
+</script>
 <!-- dtl:block:Add -->
 
 
@@ -514,17 +536,31 @@ function submit_compose()
                     <td class="contentvalue"> $Data{"StateOption"}</td>
                   </tr>
                   <tr>
-                    <td class="contentkey">$Text{"Attachment"}:</td>
-                    <td class="contentvalue">
-                        <input name="file_upload" type="file" size="30" class="fixed">&nbsp;<a name="attachment"></a>
-                        <br/>
-                        $Data{"Filename"}
-#                        <input class="button" type="submit" name="AttachmentDelete" value="$Text{"Delete"}" onclick="return submit_compose();">
-                    </td>
-                  </tr>
-                  <tr>
                     <td class="contentkey">$Text{"Language"}: </td>
                     <td class="contentvalue"> $Data{"LanguageOption"} </td>
+                  </tr>
+                  <tr>
+                    <td class="contentkey">$Text{"Attachment"}:</td>
+                    <td class="contentvalue">
+                      <table cellspacing="0" cellpadding="0" width="400">
+<!-- dtl:block:UpdateAttachment -->
+                        <tr>
+                          <td><a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Download&ItemID=$QData{"ItemID"}&FileID=$QData{"FileID"}">$QData{"Filename"}</a></td>
+                          <td>$QData{"Filesize"}</td>
+                          <td align="right">
+                            <input class="button" type="submit" name="AttachmentDelete$QData{"FileID"}" value="$Text{"Delete"}">
+                          </td>
+                        </tr>
+<!-- dtl:block:UpdateAttachment -->
+                        <tr>
+                          <td colspan="2"><input name="file_upload" type="file" size="40" class="fixed"></td>
+                          <td align="right">
+                            <input class="button" type="submit" name="AttachmentUpload" value="$Text{"Attach"}">
+                            <a name="attachment"></a>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
                   </tr>
                   <tr>
                     <td colspan="2"><hr></td>
@@ -652,6 +688,9 @@ function submit_compose()
           <td class="$Data{"CssRow"}">($TimeLong{"$Data{"Created"}"})</td>
         </tr>
 <!-- dtl:block:SystemHistoryRow -->
+      <tr class="contentfooter">
+        <td colspan="5">&nbsp;</td>
+      </tr>
       </table>
     </td>
   </tr>
@@ -731,6 +770,10 @@ function submit_compose() {
         document.compose.Comment.focus();
         return false;
     }
+    else if ( document.compose.PermissionGroups.selectedIndex == -1 ) {
+        alert('$JSText{"A category need min. one permission group!"}');
+        return false;
+    }
     return true;
 }
 //-->
@@ -780,7 +823,7 @@ function submit_compose() {
                   <td class="contentvalue">
                     <table border="0" cellspacing="0" cellpadding="3">
                       <tr>
-                        <td class="contentkey">$Text{"Category"}: </td>
+                        <td width="25%" class="contentkey">$Text{"Category"}: </td>
                         <td class="contentvalue"> <input type="text" name="Name" value="$QData{"Name"}" size="35" maxlength="50"></td>
                       </tr>
                       <tr>
@@ -788,7 +831,7 @@ function submit_compose() {
                         <td class="contentbody">$Data{"CategoryOption"}</td>
                       </tr>
                       <tr>
-                        <td class="contentkey">$Text{"Comment"}: </td>
+                        <td class="contentkey">$Text{"Comment"}:<br/><i class="small">($Text{"Will be shown as comment in Explore."})</i> </td>
                         <td class="contentvalue"> <input type="text" name="Comment" value="$QData{"Comment"}" size="50" maxlength="80"></td>
                       </tr>
                       <tr>
@@ -796,7 +839,7 @@ function submit_compose() {
                         <td class="contentbody">$Data{"ValidOption"}</td>
                       </tr>
                       <tr>
-                        <td class="contentkey">$Text{"Permission"}: </td>
+                        <td class="contentkey">$Text{"Permission"}:<br/><i class="small">($Text{"Agent Groups which can access this category."})</i></td>
                         <td class="contentkey">$Data{"GroupOption"}</td>
                       </tr>
                     </table>
