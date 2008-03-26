@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.16 2008-03-14 15:50:44 martin Exp $
+# $Id: FAQ.pm,v 1.17 2008-03-26 08:37:23 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -16,10 +16,10 @@ use MIME::Base64;
 use Kernel::System::Encode;
 use Kernel::System::Group;
 use Kernel::System::CustomerGroup;
+use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.16 $';
-$VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
+$VERSION = qw($Revision: 1.17 $) [1];
 
 =head1 NAME
 
@@ -69,7 +69,7 @@ sub new {
     bless ($Self, $Type);
 
     # check needed objects
-    foreach (qw(DBObject ConfigObject LogObject UserID)) {
+    for (qw(DBObject ConfigObject LogObject MainObject TimeObject UserID)) {
         $Self->{$_} = $Param{$_} || die "Got no $_!";
     }
     $Self->{GroupObject} = Kernel::System::Group->new(%Param);
@@ -98,14 +98,14 @@ sub FAQGet {
     }
 
     # check needed stuff
-    foreach (qw(ItemID)) {
+    for (qw(ItemID)) {
         if (!$Param{$_}) {
             $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
             return {};
         }
     }
     # db quote
-    foreach (qw(ItemID)) {
+    for (qw(ItemID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     my %Data = ();
@@ -123,8 +123,7 @@ sub FAQGet {
             " i.category_id = c.id AND ".
             " i.f_language_id = l.id AND ".
             " i.id = $Param{ItemID}";
-    #$Self->{LogObject}->Log(Priority => 'error', Message => $SQL);
-    $Self->{DBObject}->Prepare(SQL => $SQL);
+    return if ! $Self->{DBObject}->Prepare( SQL => $SQL);
     while  (my @Row = $Self->{DBObject}->FetchrowArray()) {
         my %VoteData = %{$Self->ItemVoteDataGet(ItemID=>$Param{ItemID})};
         %Data = (
@@ -179,20 +178,6 @@ sub FAQGet {
         );
         $Data{Number} = $Number;
     }
-    # get attachment
-    $SQL = "SELECT filename, content_type, content_size, content ".
-        " FROM faq_attachment WHERE faq_id = $Param{ItemID}";
-    $Self->{DBObject}->Prepare(SQL => $SQL, Encode => [1,1,1,0]);
-    while  (my @Row = $Self->{DBObject}->FetchrowArray()) {
-        # decode attachment if it's a postgresql backend and not BLOB
-        if (!$Self->{DBObject}->GetDatabaseFunction('DirectBlob')) {
-            $Row[3] = decode_base64($Row[3]);
-        }
-        $Data{Filename} = $Row[0];
-        $Data{ContentType} = $Row[1];
-        $Data{ContentSize} = $Row[2];
-        $Data{Content} = $Row[3];
-    }
     my $Hash = $Self->GetCategoryTree();
     $Data{CategoryName} = $Hash->{$Data{CategoryID}};
     return %Data;
@@ -207,11 +192,13 @@ returns a hash with number and result of a item
     );
 
 =cut
+
 sub ItemVoteDataGet {
     my $Self = shift;
     my %Param = @_;
+
     # check needed stuff
-    foreach (qw(ItemID)) {
+    for (qw(ItemID)) {
         if (!$Param{$_}) {
             $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
             return 0;
@@ -219,15 +206,15 @@ sub ItemVoteDataGet {
     }
 
     # db quote
-    foreach (qw(ItemID)) {
+    for (qw(ItemID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
 
-    my $SQL = " SELECT count(*), avg(rate) FROM faq_voting WHERE item_id = " . $Param{ItemID};
+    my $SQL = "SELECT count(*), avg(rate) FROM faq_voting WHERE item_id = " . $Param{ItemID};
 
     my %Hash = ();
     $Self->{DBObject}->Prepare(SQL => $SQL, Limit => $Param{Limit} || 500);
-    if(my @Data = $Self->{DBObject}->FetchrowArray()) {
+    if ( my @Data = $Self->{DBObject}->FetchrowArray() ) {
         $Hash{Votes}  = $Data[0];
         $Hash{Result} = $Data[1];
     }
@@ -262,178 +249,77 @@ add an article
 sub FAQAdd {
     my $Self = shift;
     my %Param = @_;
+
     # check needed stuff
-    foreach (qw(CategoryID StateID LanguageID Title)) {
+    for (qw(CategoryID StateID LanguageID Title)) {
         if (!$Param{$_}) {
             $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-            return 0;
+            return;
         }
     }
+
     # check name
     if (!$Param{Name}) {
         $Param{Name} = time().'-'.rand(100);
     }
+
     # check number
     if (!$Param{Number}) {
         $Param{Number} = $Self->{ConfigObject}->Get('SystemID').rand(100);
     }
-    # db quote (just not Content, use db Bind values)
-    foreach (qw(Number Name Title Keywords Field1 Field2 Field3 Field4 Field5 Field6 FreeKey1 FreeText1 FreeKey2 FreeText2 FreeKey3 FreeText3 FreeKey4 FreeText4 Filename ContentType Filesize)) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
-    }
-    foreach (qw(CategoryID StateID LanguageID)) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
-    }
 
-    foreach my $Type (qw(Field FreeKey FreeText)) {
-        foreach (1..6) {
-            if (!defined($Param{$Type.$_})) {
-                $Param{$Type.$_} = '';
-            }
-        }
-    }
-    my $SQL = "INSERT INTO faq_item (f_number, f_name, f_language_id, f_subject, ".
+    return if ! $Self->{DBObject}->Do(
+        SQL => "INSERT INTO faq_item (f_number, f_name, f_language_id, f_subject, ".
             " category_id, state_id, f_keywords, ".
             " f_field1, f_field2, f_field3, f_field4, f_field5, f_field6, ".
             " free_key1, free_value1, free_key2, free_value2, ".
             " free_key3, free_value3, free_key4, free_value4, ".
             " created, created_by, changed, changed_by)".
             " VALUES ".
-            " ('$Param{Number}', '$Param{Name}', $Param{LanguageID}, '$Param{Title}', ".
-            " $Param{CategoryID}, $Param{StateID}, '$Param{Keywords}', ".
-            " '$Param{Field1}', '$Param{Field2}', '$Param{Field3}', ".
-            " '$Param{Field4}', '$Param{Field5}', '$Param{Field6}', ".
-            " '$Param{FreeKey1}', '$Param{FreeText1}', ".
-            " '$Param{FreeKey2}', '$Param{FreeText2}', ".
-            " '$Param{FreeKey3}', '$Param{FreeText3}', ".
-            " '$Param{FreeKey4}', '$Param{FreeText4}', ".
-            " current_timestamp, $Self->{UserID}, ".
-            " current_timestamp, $Self->{UserID})";
+            " (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ".
+            " ?, ?, ?, ?, current_timestamp, ?, current_timestamp, ?)",
+        Bind => [
+            \$Param{Number}, \$Param{Name}, \$Param{LanguageID}, \$Param{Title},
+            \$Param{CategoryID}, \$Param{StateID}, \$Param{Keywords},
+            \$Param{Field1}, \$Param{Field2}, \$Param{Field3},
+            \$Param{Field4}, \$Param{Field5}, \$Param{Field6},
+            \$Param{FreeKey1}, \$Param{FreeText1}, \$Param{FreeKey2}, \$Param{FreeText2},
+            \$Param{FreeKey3}, \$Param{FreeText3}, \$Param{FreeKey4}, \$Param{FreeText4},
+            \$Self->{UserID}, \$Self->{UserID},
+        ]
+    );
 
-    if ($Self->{DBObject}->Do(SQL => $SQL)) {
-        # get id
-        $Self->{DBObject}->Prepare(
-            SQL => "SELECT id FROM faq_item WHERE ".
+    # db quote
+    for (qw(Name Title)) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
+    }
+    for (qw(LanguageID)) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
+    }
+
+    # get id
+    $Self->{DBObject}->Prepare(
+        SQL => "SELECT id FROM faq_item WHERE ".
             "f_name = '$Param{Name}' AND f_language_id = $Param{LanguageID} ".
             " AND f_subject = '$Param{Title}'",
-        );
-        my $ID = 0;
-        while  (my @Row = $Self->{DBObject}->FetchrowArray()) {
-            $ID = $Row[0];
-        }
-        # update number
-        my $Number = $Self->{ConfigObject}->Get('SystemID')."00".$ID;
-        $Self->{DBObject}->Do(
-            SQL => "UPDATE faq_item SET f_number = '$Number' WHERE id = $ID",
-        );
-        # add attachment
-        if($Param{Content} && $Param{ContentType} && $Param{Filename}) {
-            $Self->AttachmentAdd(
-                ItemID => $ID,
-                Content => $Param{Content},
-                ContentType => $Param{ContentType},
-                Filename => $Param{Filename}
-            );
-        }
-
-        $Self->FAQHistoryAdd(
-            Name => 'Created',
-            ItemID => $ID,
-        );
-        return $ID;
-    }
-    else {
-        return;
+    );
+    my $ID;
+    while  ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $ID = $Row[0];
     }
 
-}
+    # update number
+    my $Number = $Self->{ConfigObject}->Get('SystemID')."00".$ID;
+    $Self->{DBObject}->Do(
+        SQL => "UPDATE faq_item SET f_number = '$Number' WHERE id = $ID",
+    );
 
-=item AttachmentAdd()
-
-=cut
-
-sub AttachmentAdd {
-    my $Self = shift;
-    my %Param = @_;
-    # check needed stuff
-    foreach (qw(ItemID Content ContentType Filename)) {
-        if (!$Param{$_}) {
-            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-            return;
-        }
-    }
-
-    # get attachment size
-    {
-        use bytes;
-        $Param{Filesize} = length($Param{Content});
-        no bytes;
-    }
-    # encode attachemnt if it's a postgresql backend!!!
-    if (!$Self->{DBObject}->GetDatabaseFunction('DirectBlob')) {
-        $Self->{EncodeObject}->EncodeOutput(\$Param{Content});
-        $Param{Content} = encode_base64($Param{Content});
-    }
-
-    my $SQL = "INSERT INTO faq_attachment ".
-        " (faq_id, filename, content_type, content_size, content, ".
-        " created, created_by, changed, changed_by) " .
-        " VALUES ".
-        " ($Param{ItemID}, '$Param{Filename}', '$Param{ContentType}', '$Param{Filesize}', ?, ".
-        " current_timestamp, $Self->{UserID}, current_timestamp, $Self->{UserID})";
-    # write attachment to db
-    if ($Self->{DBObject}->Do(SQL => $SQL, Bind => [\$Param{Content}])) {
-        return 1;
-    }
-    return 0;
-}
-
-=item AttachmentGet()
-
-=cut
-
-sub AttachmentGet {
-    my $Self = shift;
-    my %Param = @_;
-    # check needed stuff
-    foreach (qw(ItemID Content ContentType Filename)) {
-        if (!$Param{$_}) {
-            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-            return;
-        }
-    }
-}
-
-=item AttachmentDelete()
-
-=cut
-
-sub AttachmentDelete {
-    my $Self = shift;
-    my %Param = @_;
-    # check needed stuff
-    foreach (qw(ItemID Content ContentType Filename)) {
-        if (!$Param{$_}) {
-            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-            return;
-        }
-    }
-}
-
-=item AttachmentSearch()
-
-=cut
-
-sub AttachmentSearch {
-    my $Self = shift;
-    my %Param = @_;
-    # check needed stuff
-    foreach (qw(ItemID Content ContentType Filename)) {
-        if (!$Param{$_}) {
-            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-            return;
-        }
-    }
+    # add history
+    $Self->FAQHistoryAdd(
+        Name => 'Created',
+        ItemID => $ID,
+    );
+    return $ID;
 }
 
 =item FAQUpdate()
@@ -464,7 +350,7 @@ sub FAQUpdate {
     my $Self = shift;
     my %Param = @_;
     # check needed stuff
-    foreach (qw(ItemID CategoryID StateID LanguageID Title)) {
+    for (qw(ItemID CategoryID StateID LanguageID Title)) {
         if (!$Param{$_}) {
             $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
             return;
@@ -475,74 +361,231 @@ sub FAQUpdate {
         my %Article = $Self->FAQGet(%Param);
         $Param{Name} = $Article{Name};
     }
-    # db quote (just not Content, use db Bind values)
-    foreach (qw(Number Name Title Keywords Field1 Field2 Field3 Field4 Field5 Field6 FreeKey1 FreeText1 FreeKey2 FreeText2 FreeKey3 FreeText3 FreeKey4 FreeText4 Filename ContentType Filesize)) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
+
+    return if ! $Self->{DBObject}->Do(
+        SQL => "UPDATE faq_item SET f_name = ?, f_language_id = ?, f_subject = ?, ".
+            " category_id = ?, state_id = ?, f_keywords = ?, ".
+            " f_field1 = ?, f_field2 = ?, f_field3 = ?, f_field4 = ?, f_field5 = ?, f_field6 = ?, ".
+            " free_key1 = ?, free_value1 = ?, free_key2 = ?, free_value2 = ?, ".
+            " free_key3 = ?, free_value3 = ?, free_key4 = ?, free_value4 = ?, ".
+            " changed = current_timestamp, changed_by = ? WHERE id = ?",
+        Bind => [
+            \$Param{Name}, \$Param{LanguageID}, \$Param{Title}, \$Param{CategoryID},
+            \$Param{StateID}, \$Param{Keywords}, \$Param{Field1}, \$Param{Field2},
+            \$Param{Field3}, \$Param{Field4}, \$Param{Field5}, \$Param{Field6},
+            \$Param{FreeKey1}, \$Param{FreeText1}, \$Param{FreeKey2}, \$Param{FreeText2},
+            \$Param{FreeKey3}, \$Param{FreeText3}, \$Param{FreeKey4}, \$Param{FreeText4},
+            \$Self->{UserID}, \$Param{ItemID}
+        ]
+    );
+
+    $Self->FAQHistoryAdd(
+        Name => 'Updated',
+        ItemID => $Param{ItemID},
+    );
+    return 1;
+}
+
+=item AttachmentAdd()
+
+add article attachments
+
+    my $Ok = $FAQObject->AttachmentAdd(
+        ItemID      => 123,
+        Content     => $Content
+        ContentType => 'text/xml',
+        Filename    => 'somename.xml',
+    );
+
+=cut
+
+sub AttachmentAdd {
+    my $Self = shift;
+    my %Param = @_;
+
+    # check needed stuff
+    for (qw(ItemID Content ContentType Filename)) {
+        if (!$Param{$_}) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
-    foreach (qw(ItemID CategoryID StateID LanguageID)) {
+
+    # get attachment size
+    {
+        use bytes;
+        $Param{Filesize} = length($Param{Content});
+        no bytes;
+    }
+
+    # double check
+    my @Index = $Self->AttachmentIndex(
+        ItemID => $Param{ItemID},
+    );
+    for my $File ( @Index ) {
+        if ( $File->{Filename} eq $Param{Filename} && $Param{Filesize} == $File->{FilesizeRaw} ) {
+            return;
+        }
+    }
+
+    # encode attachemnt if it's a postgresql backend!!!
+    if (!$Self->{DBObject}->GetDatabaseFunction('DirectBlob')) {
+        $Self->{EncodeObject}->EncodeOutput(\$Param{Content});
+        $Param{Content} = encode_base64($Param{Content});
+    }
+
+    # write attachment to db
+    return $Self->{DBObject}->Do(
+        SQL => "INSERT INTO faq_attachment ".
+            " (faq_id, filename, content_type, content_size, content, ".
+            " created, created_by, changed, changed_by) VALUES ".
+            " (?, ?, ?, ?, ?, current_timestamp, ?, current_timestamp, ?)",
+        Bind => [
+            \$Param{ItemID}, \$Param{Filename}, \$Param{ContentType}, \$Param{Filesize},
+            \$Param{Content}, \$Self->{UserID}, \$Self->{UserID},
+        ],
+    );
+}
+
+=item AttachmentGet()
+
+get attachment of article
+
+    my %File = $FAQObject->AttachmentGet(
+        ItemID => 123,
+        FileID => 1,
+    );
+
+=cut
+
+sub AttachmentGet {
+    my $Self = shift;
+    my %Param = @_;
+    # check needed stuff
+    for (qw(ItemID FileID)) {
+        if ( !defined$Param{$_} ) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
+    }
+    # db quote
+    for (qw(ItemID FileID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
-    # fill up empty stuff
-    foreach my $Type (qw(Field FreeKey FreeText)) {
-        foreach (1..6) {
-            if (!$Param{$Type.$_}) {
-                $Param{$Type.$_} = '';
-            }
+    $Self->{DBObject}->Prepare(
+        SQL   => "SELECT filename, content_type, content_size, content FROM "
+            . "faq_attachment WHERE faq_id = $Param{ItemID} ORDER BY created",
+        Encode => [ 1, 1, 1, 0 ],
+        Limit => $Param{FileID}+1,
+    );
+    my %File = ();
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        # decode attachment if it's a postgresql backend and not BLOB
+        if (!$Self->{DBObject}->GetDatabaseFunction('DirectBlob')) {
+            $Row[3] = decode_base64($Row[3]);
         }
-    }
-
-    my $SQL = "UPDATE faq_item SET f_name = '$Param{Name}', ".
-            " f_language_id = $Param{LanguageID}, f_subject = '$Param{Title}', ".
-            " category_id = $Param{CategoryID}, state_id = $Param{StateID}, ".
-            " f_keywords = '$Param{Keywords}', ".
-            " f_field1 = '$Param{Field1}', f_field2 = '$Param{Field2}', ".
-            " f_field3 = '$Param{Field3}', f_field4 = '$Param{Field4}', ".
-            " f_field5 = '$Param{Field5}', f_field6 = '$Param{Field6}', ".
-            " free_key1 = '$Param{FreeKey1}', free_value1 = '$Param{FreeText1}', ".
-            " free_key2 = '$Param{FreeKey2}', free_value2 = '$Param{FreeText2}', ".
-            " free_key3 = '$Param{FreeKey3}', free_value3 = '$Param{FreeText3}', ".
-            " free_key4 = '$Param{FreeKey4}', free_value4 = '$Param{FreeText4}', ".
-            " changed = current_timestamp, changed_by = $Self->{UserID} ".
-            " WHERE id = $Param{ItemID} ";
-
-    if ($Self->{DBObject}->Do(SQL => $SQL)) {
-        # add attachment
-        if ($Param{Content} && $Param{ContentType} && $Param{Filename}) {
-            # get attachment size
-            {
-                use bytes;
-                $Param{Filesize} = length($Param{Content});
-                no bytes;
-            }
-            # encode attachemnt if it's a postgresql backend!!!
-            if (!$Self->{DBObject}->GetDatabaseFunction('DirectBlob')) {
-                $Self->{EncodeObject}->EncodeOutput(\$Param{Content});
-                $Param{Content} = encode_base64($Param{Content});
-            }
-            # delete old attachment
-            $Self->{DBObject}->Do(
-                SQL => "DELETE FROM faq_attachment WHERE faq_id = $Param{ItemID}",
-            );
-            my $SQL = "INSERT INTO faq_attachment ".
-                " (faq_id, filename, content_type, content_size, content, ".
-                " created, created_by, changed, changed_by) " .
-                " VALUES ".
-                " ($Param{ItemID}, '$Param{Filename}', '$Param{ContentType}', '$Param{Filesize}', ?, ".
-                " current_timestamp, $Self->{UserID}, current_timestamp, $Self->{UserID})";
-            # write attachment to db
-            if ($Self->{DBObject}->Do(SQL => $SQL, Bind => [\$Param{Content}])) {
-
-            }
-        }
-        $Self->FAQHistoryAdd(
-            Name => 'Updated',
-            ItemID => $Param{ItemID},
+        %File = (
+            Filename    => $Row[0],
+            ContentType => $Row[1],
+            Filesize    => $Row[2],
+            Content     => $Row[3],
         );
-        return 1;
     }
-    else {
-        return;
+    return %File;
+}
+
+=item AttachmentDelete()
+
+delete attachment of article
+
+    my $Ok = $FAQObject->AttachmentDelete(
+        ItemID => 123,
+        FileID => 1,
+    );
+
+=cut
+
+sub AttachmentDelete {
+    my $Self = shift;
+    my %Param = @_;
+    # check needed stuff
+    for (qw(ItemID FileID)) {
+        if ( !defined $Param{$_} ) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
     }
+    my @Index = $Self->AttachmentIndex(
+        ItemID => $Param{ItemID},
+    );
+    if ( $Index[$Param{FileID}] ) {
+        return $Self->{DBObject}->Do(
+            SQL => 'DELETE FROM faq_attachment WHERE faq_id = ? AND filename = ? AND content_size = ?',
+            Bind => [ \$Param{ItemID}, \$Index[$Param{FileID}]->{Filename}, \$Index[$Param{FileID}]->{FilesizeRaw} ],
+        );
+    }
+    return;
+}
+
+=item AttachmentIndex()
+
+return an attachment index of an article
+
+    my @Index = $FAQObject->AttachmentIndex(
+        ItemID => 123,
+    );
+
+=cut
+
+sub AttachmentIndex {
+    my $Self = shift;
+    my %Param = @_;
+
+    # check needed stuff
+    for (qw(ItemID)) {
+        if (!$Param{$_}) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+            return;
+        }
+    }
+
+    # db quote
+    for (qw(ItemID)) {
+        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
+    }
+    $Self->{DBObject}->Prepare(
+        SQL   => "SELECT filename, content_type, content_size FROM "
+            . "faq_attachment WHERE faq_id = $Param{ItemID} ORDER BY created",
+        Limit => 100,
+    );
+    my @Index = ();
+    my $ID = 0;
+    while (my @Row = $Self->{DBObject}->FetchrowArray()) {
+
+        # human readable file size
+        my $FileSizeRaw = $Row[2];
+        if ( $Row[2] ) {
+            if ( $Row[2] > ( 1024 * 1024 ) ) {
+                $Row[2] = sprintf "%.1f MBytes", ( $Row[2] / ( 1024 * 1024 ) );
+            }
+            elsif ( $Row[2] > 1024 ) {
+                $Row[2] = sprintf "%.1f KBytes", ( ( $Row[2] / 1024 ) );
+            }
+            else {
+                $Row[2] = $Row[2] . ' Bytes';
+            }
+        }
+
+        push @Index, {
+            Filename    => $Row[0],
+            ContentType => $Row[1],
+            Filesize    => $Row[2],
+            FilesizeRaw => $FileSizeRaw,
+            FileID      => $ID,
+        };
+        $ID++;
+    }
+    return @Index;
 }
 
 =item FAQCount()
@@ -560,7 +603,7 @@ sub FAQCount {
     my %Param = @_;
 
     # check needed stuff
-    foreach (qw(CategoryIDs ItemStates)) {
+    for (qw(CategoryIDs ItemStates)) {
         if (!defined($Param{$_})) {
             $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
             return;
@@ -581,11 +624,11 @@ sub FAQCount {
 
     $Self->{DBObject}->Prepare(SQL => $SQL, Limit => 200);
 
-    if(my @Row = $Self->{DBObject}->FetchrowArray()) {
-        return $Row[0];
-    } else {
-        return 0;
+    my $Count = 0;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $Count = $Row[0];
     }
+    return $Count;
 }
 
 =item VoteAdd()
@@ -606,7 +649,7 @@ sub VoteAdd {
     my $Self = shift;
     my %Param = @_;
     # check needed stuff
-    foreach (qw(CreatedBy ItemID IP Interface)) {
+    for (qw(CreatedBy ItemID IP Interface)) {
         if (!$Param{$_}) {
             $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
             return 0;
@@ -614,10 +657,10 @@ sub VoteAdd {
     }
 
     # db quote
-    foreach (qw(CreatedBy Interface IP)) {
+    for (qw(CreatedBy Interface IP)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
     }
-    foreach (qw(ItemID Rate)) {
+    for (qw(ItemID Rate)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
 
@@ -658,7 +701,7 @@ sub VoteGet {
     my $Self = shift;
     my %Param = @_;
     # check needed stuff
-    foreach (qw(CreateBy ItemID Interface IP)) {
+    for (qw(CreateBy ItemID Interface IP)) {
         if (!$Param{$_}) {
             $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
             return {};
@@ -666,10 +709,10 @@ sub VoteGet {
     }
 
     # db quote
-    foreach (qw(CreatedBy Interface IP)) {
+    for (qw(CreatedBy Interface IP)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
     }
-    foreach (qw(ItemID)) {
+    for (qw(ItemID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
 
@@ -727,7 +770,7 @@ sub VoteSearch {
     my $Self = shift;
     my %Param = @_;
     # check needed stuff
-    foreach (qw(ItemID)) {
+    for (qw(ItemID)) {
         if (!$Param{$_}) {
             $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
             return [];
@@ -735,10 +778,10 @@ sub VoteSearch {
     }
 
     # db quote
-    foreach (qw()) {
+    for (qw()) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_});
     }
-    foreach (qw(ItemID)) {
+    for (qw(ItemID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
 
@@ -774,7 +817,7 @@ sub VoteDelete {
     my %Param = @_;
 
     # check needed stuff
-    foreach (qw(VoteID)) {
+    for (qw(VoteID)) {
         if (!$Param{$_}) {
             $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
             return 0;
@@ -782,7 +825,7 @@ sub VoteDelete {
     }
 
     # db quote
-    foreach (qw(VoteID)) {
+    for (qw(VoteID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
 
@@ -808,31 +851,73 @@ delete an article
 sub FAQDelete {
     my $Self = shift;
     my %Param = @_;
+
     # check needed stuff
-    foreach (qw(ItemID)) {
+    for (qw(ItemID)) {
         if (!$Param{$_}) {
             $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-            return 0;
+            return;
         }
     }
-    # db quote
-    foreach (qw(ItemID)) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
+
+    # delete attachments
+    my @Index = $Self->AttachmentIndex(
+        ItemID => $Param{ItemID},
+    );
+    for my $FileID ( @Index ) {
+        return if ! $Self->AttachmentDelete( %Param, FileID => $FileID+1 );
     }
-    #if ($Self->AttachmentDelete(%Param)) {
-        my @VoteIDs = @{$Self->VoteSearch(ItemID => $Param{ItemID})};
-        foreach my $TmpVoteID (@VoteIDs) {
-            if(!$Self->VoteDelete(VoteID => $TmpVoteID)) {
-                return;
+
+    # delete votes
+    my @VoteIDs = @{$Self->VoteSearch(ItemID => $Param{ItemID})};
+    for my $TmpVoteID (@VoteIDs) {
+        if(!$Self->VoteDelete(VoteID => $TmpVoteID)) {
+            return;
+        }
+    }
+
+    # delete ticket links
+    my $LinkObject = Kernel::System::LinkObject->new(
+        %Param,
+        %{$Self},
+        TicketObject => $Self,
+    );
+    $LinkObject->LoadBackend( Module => 'FAQ' );
+
+    # get linked objects and ids, then delete links
+    my %Links = $LinkObject->AllLinkedObjects(
+        Object   => 'FAQ',
+        ObjectID => $Param{ItemID},
+        UserID   => $Param{UserID},
+    );
+    for my $LinkType ( qw(Normal Parent Child) ) {
+        if ( ! $Links{$LinkType} ) {
+            next;
+        }
+        my %ObjectType = %{ $Links{$LinkType} };
+        for my $Object ( sort keys %ObjectType ) {
+            my %Data = %{ $ObjectType{$Object} };
+            for my $Item ( sort keys %Data ) {
+                $LinkObject->UnlinkObject(
+                    LinkType    => $LinkType,
+                    LinkID1     => $Data{$Item}->{ID},
+                    LinkObject1 => $Object,
+                    LinkID2     => $Param{ItemID},
+                    LinkObject2 => 'FAQ',
+                    UserID      => $Param{UserID},
+                );
             }
         }
-        if ($Self->FAQHistoryDelete(%Param)) {
-            if ($Self->{DBObject}->Prepare(SQL => "DELETE FROM faq_item WHERE id = $Param{ItemID}")) {
-                return 1;
-            }
-        }
-    #}
-    return 0;
+    }
+
+    # delete history
+    return if ! $Self->FAQHistoryDelete(%Param);
+
+    # delete article
+    return $Self->{DBObject}->Prepare(
+        SQL  => "DELETE FROM faq_item WHERE id = ?",
+        Bind => [ \$Param{ItemID} ],
+    );
 }
 
 =item FAQHistoryAdd()
@@ -849,18 +934,20 @@ add an history to an article
 sub FAQHistoryAdd {
     my $Self = shift;
     my %Param = @_;
+
     # check needed stuff
-    foreach (qw(ItemID Name)) {
+    for (qw(ItemID Name)) {
         if (!$Param{$_}) {
             $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
-            return 0;
+            return;
         }
     }
+
     # db quote
-    foreach (qw(Name)) {
+    for (qw(Name)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}) || '';
     }
-    foreach (qw(ItemID)) {
+    for (qw(ItemID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     my $SQL = "INSERT INTO faq_history (name, item_id, ".
@@ -870,12 +957,7 @@ sub FAQHistoryAdd {
             " current_timestamp, $Self->{UserID}, ".
             " current_timestamp, $Self->{UserID})";
 
-    if ($Self->{DBObject}->Do(SQL => $SQL)) {
-        return 1;
-    }
-    else {
-        return 0;
-    }
+    return $Self->{DBObject}->Do(SQL => $SQL);
 }
 
 =item FAQHistoryGet()
@@ -891,15 +973,17 @@ get a array with hachref (Name, Created) with history of an article back
 sub FAQHistoryGet {
     my $Self = shift;
     my %Param = @_;
+
     # check needed stuff
-    foreach (qw(ItemID)) {
+    for (qw(ItemID)) {
         if (!$Param{$_}) {
             $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
             return [];
         }
     }
+
     # db quote
-    foreach (qw(ItemID)) {
+    for (qw(ItemID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     my @Data = ();
@@ -930,21 +1014,18 @@ delete an history of an article
 sub FAQHistoryDelete {
     my $Self = shift;
     my %Param = @_;
+
     # check needed stuff
-    foreach (qw(ItemID)) {
+    for (qw(ItemID)) {
         if (!$Param{$_}) {
             $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
             return 0;
         }
     }
-    # db quote
-    foreach (qw(ItemID)) {
-        $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
-    }
-    $Self->{DBObject}->Prepare(
-        SQL => "DELETE FROM faq_history WHERE item_id = $Param{ItemID}",
+    return $Self->{DBObject}->Prepare(
+        SQL  => "DELETE FROM faq_history WHERE item_id = ?",
+        Bind => [ \$Param{ItemID} ],
     );
-    return 1;
 }
 
 =item HistoryGet()
@@ -958,8 +1039,9 @@ get the system history
 sub HistoryGet {
     my $Self = shift;
     my %Param = @_;
+
     # check needed stuff
-    foreach (qw()) {
+    for (qw()) {
         if (!$Param{$_}) {
             $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
             return;
@@ -1003,8 +1085,9 @@ get the category list as hash
 sub CategoryList {
     my $Self = shift;
     my %Param = @_;
+
     # check needed stuff
-    foreach (qw()) {
+    for (qw()) {
         if (!$Param{$_}) {
             $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
             return {};
@@ -1051,7 +1134,7 @@ sub CategorySearch {
     }
     elsif (defined($Param{ParentIDs}) && ref($Param{ParentIDs}) eq 'ARRAY' && @{$Param{ParentIDs}}) {
         $Ext = " AND parent_id IN (";
-        foreach my $ParentID (@{$Param{ParentIDs}}) {
+        for my $ParentID (@{$Param{ParentIDs}}) {
             $Ext .= $Self->{DBObject}->Quote($ParentID, 'Integer').",";
         }
         $Ext = substr($Ext,0,-1);
@@ -1059,7 +1142,7 @@ sub CategorySearch {
     }
     elsif (defined($Param{CategoryIDs}) && ref($Param{CategoryIDs}) eq 'ARRAY' && @{$Param{CategoryIDs}}) {
         $Ext = " AND id IN (";
-        foreach my $CategoryID (@{$Param{CategoryIDs}}) {
+        for my $CategoryID (@{$Param{CategoryIDs}}) {
             $Ext .= $Self->{DBObject}->Quote($CategoryID, 'Integer').",";
         }
         $Ext = substr($Ext,0,-1);
@@ -1114,15 +1197,16 @@ get a category as hash
 sub CategoryGet {
     my $Self = shift;
     my %Param = @_;
+
     # check needed stuff
-    foreach (qw(CategoryID)) {
+    for (qw(CategoryID)) {
         if (!defined($Param{$_})) {
             $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
             return;
         }
     }
     # db quote
-    foreach (qw(CategoryID)) {
+    for (qw(CategoryID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql
@@ -1158,7 +1242,7 @@ sub CategorySubCategoryIDList {
     my %Param = @_;
 
     # check needed stuff
-    foreach (qw(ParentID ItemStates)) {
+    for (qw(ParentID ItemStates)) {
         if (!defined($Param{$_})) {
             $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
             return [];
@@ -1195,7 +1279,7 @@ sub CategorySubCategoryIDList {
         )};
     }
     my @Result = @SubCategoryIDs;
-    foreach my $SubCategoryID (@SubCategoryIDs) {
+    for my $SubCategoryID (@SubCategoryIDs) {
         my @Temp = @{$Self->CategorySubCategoryIDList(
             ParentID => $SubCategoryID,
             ItemStates => $Param{ItemStates},
@@ -1224,18 +1308,19 @@ add a category
 sub CategoryAdd {
     my $Self = shift;
     my %Param = @_;
+
     # check needed stuff
-    foreach (qw(ParentID Name)) {
+    for (qw(ParentID Name)) {
         if (!defined($Param{$_})) {
             $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
             return;
         }
     }
     # db quote
-    foreach (qw(Name Comment)) {
+    for (qw(Name Comment)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}) || '';
     }
-    foreach (qw(ParentID UserID ValidID)) {
+    for (qw(ParentID UserID ValidID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     my $SQL = "INSERT INTO faq_category (name, parent_id, comments, valid_id, ".
@@ -1283,18 +1368,19 @@ update a category
 sub CategoryUpdate {
     my $Self = shift;
     my %Param = @_;
+
     # check needed stuff
-    foreach (qw(CategoryID ParentID Name)) {
+    for (qw(CategoryID ParentID Name)) {
         if (!defined($Param{$_})) {
             $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
             return;
         }
     }
     # db quote
-    foreach (qw(Name Comment)) {
+    for (qw(Name Comment)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}) || '';
     }
-    foreach (qw(CategoryID ParentID ValidID)) {
+    for (qw(CategoryID ParentID ValidID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
 
@@ -1336,10 +1422,10 @@ sub CategoryDuplicateCheck {
     my %Param = @_;
 
     # db quote
-    foreach (qw(Name)) {
+    for (qw(Name)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}) || '';
     }
-    foreach (qw(ID)) {
+    for (qw(ID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
 
@@ -1352,10 +1438,11 @@ sub CategoryDuplicateCheck {
         }
     }
     $Self->{DBObject}->Prepare(SQL => $SQL);
-    if (my @Row = $Self->{DBObject}->FetchrowArray()) {
-        return 1;
+    my $Exists = 0;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $Exists = 1;
     }
-    return 0;
+    return $Exists;
 }
 
 =item CategoryCount()
@@ -1373,7 +1460,7 @@ sub CategoryCount {
     my %Param = @_;
 
     # check needed stuff
-    foreach (qw(ParentIDs)) {
+    for (qw(ParentIDs)) {
         if (!defined($Param{$_})) {
             $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
             return;
@@ -1388,7 +1475,7 @@ sub CategoryCount {
 
     if(defined($Param{ParentIDs})) {
         $Ext = " AND parent_id IN (";
-        foreach my $ParentID (@{$Param{ParentIDs}}) {
+        for my $ParentID (@{$Param{ParentIDs}}) {
             $Ext .= $Self->{DBObject}->Quote($ParentID,'Integer').",";
         }
         $Ext = substr($Ext,0,-1);
@@ -1399,13 +1486,11 @@ sub CategoryCount {
     $SQL .= $Ext;
     $Self->{DBObject}->Prepare(SQL => $SQL, Limit => 200);
 
-    my %Data = ();
-    if(my @Row = $Self->{DBObject}->FetchrowArray()) {
-        return $Row[0];
-    } else {
-        return 0;
+    my $Count = 0;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $Count = $Row[0];
     }
-
+    return $Count;
 }
 
 =item StateTypeList()
@@ -1427,7 +1512,7 @@ sub StateTypeList {
     if($Param{Types}) {
         my @States = @{$Param{Types}};
         $Ext = " WHERE";
-        foreach my $State (@States) {
+        for my $State (@States) {
             $Ext .= " name LIKE '".$Self->{DBObject}->Quote($State)."' OR";
         }
         $Ext = substr($Ext,0,-3);
@@ -1478,29 +1563,25 @@ update a state
 sub StateUpdate {
     my $Self = shift;
     my %Param = @_;
+
     # check needed stuff
-    foreach (qw(ID Name TypeID)) {
+    for (qw(ID Name TypeID)) {
         if (!$Param{$_}) {
             $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
             return;
         }
     }
     # db quote
-    foreach (qw(Name)) {
+    for (qw(Name)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}) || '';
     }
-    foreach (qw(ID TypeID)) {
+    for (qw(ID TypeID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql
     my $SQL = "UPDATE faq_state SET name = '$Param{Name}', type_id = $Param{TypeID}, ".
         " WHERE id = $Param{ID}";
-    if ($Self->{DBObject}->Do(SQL => $SQL)) {
-        return 1;
-    }
-    else {
-        return;
-    }
+    return $Self->{DBObject}->Do(SQL => $SQL);
 }
 
 =item StateAdd()
@@ -1518,30 +1599,26 @@ add a state
 sub StateAdd {
     my $Self = shift;
     my %Param = @_;
+
     # check needed stuff
-    foreach (qw(Name TypeID)) {
+    for (qw(Name TypeID)) {
         if (!$Param{$_}) {
             $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
             return;
         }
     }
     # db quote
-    foreach (qw(Name)) {
+    for (qw(Name)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}) || '';
     }
-    foreach (qw(TypeID)) {
+    for (qw(TypeID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     my $SQL = "INSERT INTO faq_state (name, type_id) ".
         " VALUES ".
         " ('$Param{Name}', $Param{TypeID}) ";
 
-    if ($Self->{DBObject}->Do(SQL => $SQL)) {
-        return 1;
-    }
-    else {
-        return;
-    }
+    return $Self->{DBObject}->Do(SQL => $SQL);
 }
 
 =item StateGet()
@@ -1557,15 +1634,16 @@ get a state as hash
 sub StateGet {
     my $Self = shift;
     my %Param = @_;
+
     # check needed stuff
-    foreach (qw(ID)) {
+    for (qw(ID)) {
         if (!$Param{$_}) {
             $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
             return;
         }
     }
     # db quote
-    foreach (qw(ID)) {
+    for (qw(ID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql
@@ -1636,8 +1714,9 @@ get the language list as hash
 sub LanguageList {
     my $Self = shift;
     my %Param = @_;
+
     # check needed stuff
-    foreach (qw()) {
+    for (qw()) {
         if (!$Param{$_}) {
             $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
             return;
@@ -1666,29 +1745,25 @@ update a language
 sub LanguageUpdate {
     my $Self = shift;
     my %Param = @_;
+
     # check needed stuff
-    foreach (qw(ID Name)) {
+    for (qw(ID Name)) {
         if (!$Param{$_}) {
             $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
             return;
         }
     }
     # db quote
-    foreach (qw(Name)) {
+    for (qw(Name)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}) || '';
     }
-    foreach (qw(ID)) {
+    for (qw(ID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql
     my $SQL = "UPDATE faq_language SET name = '$Param{Name}' ".
         " WHERE id = $Param{ID}";
-    if ($Self->{DBObject}->Do(SQL => $SQL)) {
-        return 1;
-    }
-    else {
-        return;
-    }
+    return $Self->{DBObject}->Do(SQL => $SQL);
 }
 
 =item LanguageDuplicateCheck()
@@ -1707,10 +1782,10 @@ sub LanguageDuplicateCheck {
     my %Param = @_;
 
     # db quote
-    foreach (qw(Name)) {
+    for (qw(Name)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}) || '';
     }
-    foreach (qw(ID)) {
+    for (qw(ID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
 
@@ -1723,10 +1798,11 @@ sub LanguageDuplicateCheck {
         $SQL .= "AND id != '$Param{ID}' ";
     }
     $Self->{DBObject}->Prepare(SQL => $SQL);
-    while (my @Row = $Self->{DBObject}->FetchrowArray()) {
-        return 1;
+    my $Exists = 0;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $Exists = 1;
     }
-    return 0;
+    return $Exists;
 }
 
 =item LanguageAdd()
@@ -1742,27 +1818,23 @@ add a language
 sub LanguageAdd {
     my $Self = shift;
     my %Param = @_;
+
     # check needed stuff
-    foreach (qw(Name)) {
+    for (qw(Name)) {
         if (!$Param{$_}) {
             $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
             return;
         }
     }
     # db quote
-    foreach (qw(Name)) {
+    for (qw(Name)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}) || '';
     }
     my $SQL = "INSERT INTO faq_language (name) ".
             " VALUES ".
             " ('$Param{Name}') ";
 
-    if ($Self->{DBObject}->Do(SQL => $SQL)) {
-        return 1;
-    }
-    else {
-        return;
-    }
+    return $Self->{DBObject}->Do(SQL => $SQL);
 }
 
 =item LanguageGet()
@@ -1778,15 +1850,16 @@ get a language as hash
 sub LanguageGet {
     my $Self = shift;
     my %Param = @_;
+
     # check needed stuff
-    foreach (qw(ID)) {
+    for (qw(ID)) {
         if (!$Param{$_}) {
             $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
             return;
         }
     }
     # db quote
-    foreach (qw(ID)) {
+    for (qw(ID)) {
         $Param{$_} = $Self->{DBObject}->Quote($Param{$_}, 'Integer');
     }
     # sql
@@ -1823,7 +1896,7 @@ sub FAQSearch {
     my $Self = shift;
     my %Param = @_;
     # check needed stuff
-    foreach (qw()) {
+    for (qw()) {
         if (!$Param{$_}) {
             $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
             return;
@@ -1837,7 +1910,7 @@ sub FAQSearch {
         " LEFT JOIN faq_state s ON s.id = i.state_id".
         " WHERE";
     my $Ext = '';
-    foreach my $Key (qw(f_subject f_keywords f_field1 f_field2 f_field3 f_field4 f_field5 f_field6)) {
+    for my $Key (qw(f_subject f_keywords f_field1 f_field2 f_field3 f_field4 f_field5 f_field6)) {
         if ($Ext) {
             $Ext .= ' OR ';
         }
@@ -1847,7 +1920,7 @@ sub FAQSearch {
         if ($Param{What}) {
             my @List = split(/;/, $Param{What});
             my $What = '';
-            foreach my $Value (@List) {
+            for my $Value (@List) {
                 $Value = "\%$Value\%";
                 $Value =~ s/\*/%/g;
                 $Value =~ s/%%/%/g;
@@ -1892,7 +1965,7 @@ sub FAQSearch {
     }
     if ($Param{LanguageIDs} && ref($Param{LanguageIDs}) eq 'ARRAY' && @{$Param{LanguageIDs}}) {
         $Ext .= " AND i.f_language_id IN (";
-        foreach my $LanguageID (@{$Param{LanguageIDs}}) {
+        for my $LanguageID (@{$Param{LanguageIDs}}) {
             $Ext .= $Self->{DBObject}->Quote($LanguageID, 'Integer').",";
         }
         $Ext = substr($Ext,0,-1);
@@ -1901,7 +1974,7 @@ sub FAQSearch {
     if ($Param{CategoryIDs} && ref($Param{CategoryIDs}) eq 'ARRAY' && @{$Param{CategoryIDs}}) {
         $Ext .= " AND (i.category_id IN  (";
         my $Counter=0;
-        foreach my $CategoryID (@{$Param{CategoryIDs}}) {
+        for my $CategoryID (@{$Param{CategoryIDs}}) {
             $Ext .= $Self->{DBObject}->Quote($CategoryID, 'Integer').",";
             $Counter++;
             if(!($Counter%500)) {
@@ -1915,7 +1988,7 @@ sub FAQSearch {
     }
     if ($Param{States} && ref($Param{States}) eq 'HASH' && %{$Param{States}}) {
         $Ext .= " AND s.type_id IN (";
-        foreach my $StateID (keys(%{$Param{States}})) {
+        for my $StateID (keys(%{$Param{States}})) {
             $Ext .= $Self->{DBObject}->Quote($StateID, 'Integer').",";
         }
         $Ext = substr($Ext,0,-1);
@@ -1991,6 +2064,7 @@ sub FAQSearch {
     }
     return @List;
 }
+
 =item FAQPathListGet()
 
 returns a category array
@@ -2047,7 +2121,7 @@ sub GetCategoryTree {
     while (my @Row = $Self->{DBObject}->FetchrowArray()) {
         push (@Data, \@Row);
     }
-    foreach my $Row (@Data) {
+    for my $Row (@Data) {
         my @RowData = @{$Row};
         $Hash{$RowData[1]}{$RowData[0]} = $RowData[2];
     }
@@ -2062,7 +2136,7 @@ sub GetCategoryTree {
 sub _MakeTree {
     my $Self = shift;
     my %Param = @_;
-    foreach my $ID (keys(%{$Param{Hash}->{$Param{ParentID}}})) {
+    for my $ID (keys(%{$Param{Hash}->{$Param{ParentID}}})) {
         $Param{Tree}->{$ID} = $Param{Parent}.$Param{Hash}->{$Param{ParentID}}{$ID};
         if (defined($Param{Hash}->{$ID})) {
             $Self->_MakeTree(
@@ -2090,8 +2164,9 @@ sub SetCategoryGroup {
     my $Self = shift;
     my %Param = @_;
     my $SQL = '';
+
     # check needed stuff
-    foreach (qw(CategoryID GroupIDs)) {
+    for (qw(CategoryID GroupIDs)) {
         if (!$Param{$_}) {
             $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
             return;
@@ -2103,7 +2178,7 @@ sub SetCategoryGroup {
         SQL => "DELETE FROM faq_category_group WHERE category_id = $Param{CategoryID}",
     );
     # insert groups
-    foreach my $Key (@{$Param{GroupIDs}}) {
+    for my $Key (@{$Param{GroupIDs}}) {
         my $GroupID = $Self->{DBObject}->Quote($Key, 'Integer');
         $SQL = "INSERT INTO faq_category_group ".
             " (category_id, group_id, changed, changed_by, created, created_by) VALUES" .
@@ -2131,8 +2206,9 @@ sub GetCategoryGroup {
     my %Param = @_;
     my $SQL = '';
     my @Groups = ();
+
     # check needed stuff
-    foreach (qw(CategoryID)) {
+    for (qw(CategoryID)) {
         if (!$Param{$_}) {
             $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
             return;
@@ -2160,6 +2236,7 @@ sub GetAllCategoryGroup {
     my %Param = @_;
     my $SQL = '';
     my %Groups = ();
+
     # get groups
     $SQL = "SELECT group_id, category_id FROM faq_category_group";
     $Self->{DBObject}->Prepare(SQL => $SQL);
@@ -2184,7 +2261,7 @@ sub GetUserCategories {
     my %Param = @_;
 
     # check needed stuff
-    foreach (qw(UserID Type)) {
+    for (qw(UserID Type)) {
         if (!$Param{$_}) {
             $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
             return;
@@ -2214,11 +2291,11 @@ sub _UserCategories {
     my $Self = shift;
     my %Param = @_;
     my %Hash = ();
-    foreach my $CategoryID (keys %{$Param{Categories}->{$Param{ParentID}}}) {
+    for my $CategoryID (keys %{$Param{Categories}->{$Param{ParentID}}}) {
         # check category groups
         if (defined($Param{CategoryGroups}->{$CategoryID})) {
             # check user groups
-            foreach my $GroupID (keys %{$Param{CategoryGroups}->{$CategoryID}}) {
+            for my $GroupID (keys %{$Param{CategoryGroups}->{$CategoryID}}) {
                 if (defined($Param{UserGroups}->{$GroupID})) {
                     # add category to new hash
                     $Hash{$CategoryID} = $Param{Categories}->{$Param{ParentID}}{$CategoryID};
@@ -2257,7 +2334,7 @@ sub GetCustomerCategories {
     my %Param = @_;
 
     # check needed stuff
-    foreach (qw(CustomerUser Type)) {
+    for (qw(CustomerUser Type)) {
         if (!$Param{$_}) {
             $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
             return;
@@ -2303,20 +2380,20 @@ sub CheckCategoryUserPermission {
     my %Param = @_;
 
     # check needed stuff
-    foreach (qw(UserID CategoryID)) {
+    for (qw(UserID CategoryID)) {
         if (!$Param{$_}) {
             $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
             return;
         }
     }
-    foreach my $Permission (qw(rw ro)) {
+    for my $Permission (qw(rw ro)) {
         my $Hash = $Self->GetUserCategories(
             UserID => $Param{UserID},
             Type => 'ro'
         );
-        foreach my $ParentID (keys %{$Hash}) {
+        for my $ParentID (keys %{$Hash}) {
             my $CategoryHash = $Hash->{$ParentID};
-            foreach my $CategoryID (keys %{$CategoryHash}) {
+            for my $CategoryID (keys %{$CategoryHash}) {
                 if ($CategoryID == $Param{CategoryID}) {
                     return $Permission;
                 }
@@ -2341,20 +2418,20 @@ sub CheckCategoryCustomerPermission {
     my %Param = @_;
 
     # check needed stuff
-    foreach (qw(CustomerUser CategoryID)) {
+    for (qw(CustomerUser CategoryID)) {
         if (!$Param{$_}) {
             $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
             return;
         }
     }
-    foreach my $Permission (qw(rw ro)) {
+    for my $Permission (qw(rw ro)) {
         my $Hash = $Self->GetCustomerCategories(
             CustomerUser => $Param{CustomerUser},
             Type => 'ro'
         );
-        foreach my $ParentID (keys %{$Hash}) {
+        for my $ParentID (keys %{$Hash}) {
             my $CategoryHash = $Hash->{$ParentID};
-            foreach my $CategoryID (keys %{$CategoryHash}) {
+            for my $CategoryID (keys %{$CategoryHash}) {
                 if ($CategoryID == $Param{CategoryID}) {
                     return $Permission;
                 }
@@ -2380,7 +2457,7 @@ sub AgentCategorySearch {
     my @List = ();
 
     # check needed stuff
-    foreach (qw(UserID)) {
+    for (qw(UserID)) {
         if (!$Param{$_}) {
             $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
             return;
@@ -2414,7 +2491,7 @@ sub CustomerCategorySearch {
     my @List = ();
 
     # check needed stuff
-    foreach (qw(CustomerUser)) {
+    for (qw(CustomerUser)) {
         if (!$Param{$_}) {
             $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
             return ();
@@ -2486,6 +2563,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.16 $ $Date: 2008-03-14 15:50:44 $
+$Revision: 1.17 $ $Date: 2008-03-26 08:37:23 $
 
 =cut
