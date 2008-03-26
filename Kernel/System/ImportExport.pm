@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport.pm - all import and export functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pm,v 1.20 2008-03-26 13:04:15 mh Exp $
+# $Id: ImportExport.pm,v 1.21 2008-03-26 17:34:31 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 =head1 NAME
 
@@ -83,7 +83,8 @@ sub new {
 return a list of templates as array reference
 
     my $TemplateList = $ImportExportObject->TemplateList(
-        Object => 'Ticket',
+        Object => 'Ticket',  # (optional)
+        Format => 'CSV'      # (optional)
         UserID => 1,
     );
 
@@ -93,26 +94,35 @@ sub TemplateList {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(Object UserID)) {
-        if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Argument!"
-            );
-            return;
-        }
+    if ( !$Param{UserID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need UserID!',
+        );
+        return;
     }
 
     # quote
-    $Param{Object} = $Self->{DBObject}->Quote( $Param{Object} );
+    for my $Argument (qw(Object Format)) {
+        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument} ) || '';
+    }
     $Param{UserID} = $Self->{DBObject}->Quote( $Param{UserID}, 'Integer' );
 
+    # create sql string
+    my $SQL = 'SELECT id FROM imexport_template WHERE 1=1 ';
+
+    if ( $Param{Object} ) {
+        $SQL .= "AND imexport_object = '$Param{Object}' ";
+    }
+    if ( $Param{Format} ) {
+        $SQL .= "AND imexport_format = '$Param{Format}' ";
+    }
+
+    # add order option
+    $SQL .= 'ORDER BY id';
+
     # ask database
-    $Self->{DBObject}->Prepare(
-        SQL => "SELECT id FROM imexport_template WHERE "
-            . "imexport_object = '$Param{Object}' "
-            . "ORDER BY id",
-    );
+    $Self->{DBObject}->Prepare( SQL => $SQL );
 
     # fetch the result
     my @TemplateList;
@@ -231,14 +241,6 @@ sub TemplateAdd {
         }
     }
 
-    # cleanup template name
-    for my $Element (qw(Object Format Name)) {
-        $Param{$Element} =~ s{ [\n\r\f] }{}xmsg;    # RemoveAllNewlines
-        $Param{$Element} =~ s{ \t       }{}xmsg;    # RemoveAllTabs
-        $Param{$Element} =~ s{ \A \s+   }{}xmsg;    # TrimLeft
-        $Param{$Element} =~ s{ \s+ \z   }{}xmsg;    # TrimRight
-    }
-
     # set default values
     $Param{Comment} = $Param{Comment} || '';
 
@@ -248,6 +250,23 @@ sub TemplateAdd {
     }
     for my $Argument (qw(ValidID UserID)) {
         $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument}, 'Integer' );
+    }
+
+    # cleanup given params (replace it with StringClean() in OTRS 2.3 and later)
+    for my $Argument (qw(Object Format)) {
+        $Self->_StringClean(
+            StringRef         => \$Param{$Argument},
+            RemoveAllNewlines => 1,
+            RemoveAllTabs     => 1,
+            RemoveAllSpaces   => 1,
+        );
+    }
+    for my $Argument (qw(Name Comment)) {
+        $Self->_StringClean(
+            StringRef         => \$Param{$Argument},
+            RemoveAllNewlines => 1,
+            RemoveAllTabs     => 1,
+        );
     }
 
     # find exiting template with same name
@@ -327,12 +346,6 @@ sub TemplateUpdate {
         }
     }
 
-    # cleanup template name
-    $Param{Name} =~ s{ [\n\r\f] }{}xmsg;    # RemoveAllNewlines
-    $Param{Name} =~ s{ \t       }{}xmsg;    # RemoveAllTabs
-    $Param{Name} =~ s{ \A \s+   }{}xmsg;    # TrimLeft
-    $Param{Name} =~ s{ \s+ \z   }{}xmsg;    # TrimRight
-
     # set default values
     $Param{Comment} = $Param{Comment} || '';
 
@@ -342,6 +355,15 @@ sub TemplateUpdate {
     }
     for my $Argument (qw(TemplateID ValidID UserID)) {
         $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument}, 'Integer' );
+    }
+
+    # cleanup given params (replace it with StringClean() in OTRS 2.3 and later)
+    for my $Argument (qw(Name Comment)) {
+        $Self->_StringClean(
+            StringRef         => \$Param{$Argument},
+            RemoveAllNewlines => 1,
+            RemoveAllTabs     => 1,
+        );
     }
 
     # get the object of this template id
@@ -2174,6 +2196,60 @@ sub _LoadBackend {
     return $BackendObject;
 }
 
+=item _StringClean()
+
+DON'T USE THIS INTERNAL FUNCTION IN OTHER MODULES!
+
+This function can be replaced with Kernel::System::CheckItem::StringClean() in OTRS 2.3 and later!
+
+clean a given string
+
+    my $Error = $CheckItemObject->_StringClean(
+        StringRef         => \'String',
+        TrimLeft          => 0,  # (optional) default 1
+        TrimRight         => 0,  # (optional) default 1
+        RemoveAllNewlines => 1,  # (optional) default 0
+        RemoveAllTabs     => 1,  # (optional) default 0
+        RemoveAllSpaces   => 1,  # (optional) default 0
+    );
+
+=cut
+
+sub _StringClean {
+    my ( $Self, %Param ) = @_;
+
+    if ( !$Param{StringRef} || ref $Param{StringRef} ne 'SCALAR' ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need a scalar reference!'
+        );
+        return;
+    }
+
+    return 1 if !${ $Param{StringRef} };
+
+    # set default values
+    $Param{TrimLeft}  = defined $Param{TrimLeft}  ? $Param{TrimLeft}  : 1;
+    $Param{TrimRight} = defined $Param{TrimRight} ? $Param{TrimRight} : 1;
+
+    my %TrimAction = (
+        RemoveAllNewlines => qr{ [\n\r\f] }xms,
+        RemoveAllTabs     => qr{ \t       }xms,
+        RemoveAllSpaces   => qr{ [ ]      }xms,
+        TrimLeft          => qr{ \A \s+   }xms,
+        TrimRight         => qr{ \s+ \z   }xms,
+    );
+
+    ACTION:
+    for my $Action ( sort keys %TrimAction ) {
+        next ACTION if !$Param{$Action};
+
+        ${ $Param{StringRef} } =~ s{ $TrimAction{$Action} }{}xmsg;
+    }
+
+    return 1;
+}
+
 1;
 
 =back
@@ -2190,6 +2266,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.20 $ $Date: 2008-03-26 13:04:15 $
+$Revision: 1.21 $ $Date: 2008-03-26 17:34:31 $
 
 =cut
