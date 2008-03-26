@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport.pm - all import and export functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pm,v 1.19 2008-03-18 13:36:47 mh Exp $
+# $Id: ImportExport.pm,v 1.20 2008-03-26 13:04:15 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 =head1 NAME
 
@@ -164,10 +164,9 @@ sub TemplateGet {
     # quote
     $Param{TemplateID} = $Self->{DBObject}->Quote( $Param{TemplateID}, 'Integer' );
 
-# TODO FIXME
-#    # check if result is already cached
-#    return $Self->{Cache}->{TemplateGet}->{ $Param{TemplateID} }
-#        if $Self->{Cache}->{TemplateGet}->{ $Param{TemplateID} };
+    # check if result is already cached
+    return $Self->{Cache}->{TemplateGet}->{ $Param{TemplateID} }
+        if $Self->{Cache}->{TemplateGet}->{ $Param{TemplateID} };
 
     # create sql string
     my $SQL = "SELECT id, imexport_object, imexport_format, name, valid_id, comments, "
@@ -391,6 +390,9 @@ sub TemplateUpdate {
         return;
     }
 
+    # reset cache
+    delete $Self->{Cache}->{TemplateGet}->{ $Param{TemplateID} };
+
     # update template
     return $Self->{DBObject}->Do(
         SQL => "UPDATE imexport_template SET name = '$Param{Name}',"
@@ -476,6 +478,9 @@ sub TemplateDelete {
 
     # create the template id string
     my $TemplateIDString = join ',', @{ $Param{TemplateID} };
+
+    # reset cache
+    delete $Self->{Cache}->{TemplateGet};
 
     # delete templates
     return $Self->{DBObject}->Do(
@@ -2185,6 +2190,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.19 $ $Date: 2008-03-18 13:36:47 $
+$Revision: 1.20 $ $Date: 2008-03-26 13:04:15 $
 
 =cut
