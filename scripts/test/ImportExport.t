@@ -2,7 +2,7 @@
 # ImportExport.t - import export tests
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.t,v 1.10 2008-03-19 13:24:32 mh Exp $
+# $Id: ImportExport.t,v 1.11 2008-03-26 12:26:33 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -21,36 +21,58 @@ use Kernel::System::User;
 $Self->{ImportExportObject} = Kernel::System::ImportExport->new( %{$Self} );
 $Self->{UserObject}         = Kernel::System::User->new( %{$Self} );
 
-# disable email checks to create new user
-my $CheckEmailAddressesOrg = $Self->{ConfigObject}->Get('CheckEmailAddresses') || 1;
-$Self->{ConfigObject}->Set(
-    Key   => 'CheckEmailAddresses',
-    Value => 0,
-);
+# ------------------------------------------------------------ #
+# make preparations
+# ------------------------------------------------------------ #
 
-# create new users for the tests
-my $UserID1 = $Self->{UserObject}->UserAdd(
-    UserFirstname => 'ImportExport1',
-    UserLastname  => 'UnitTest',
-    UserLogin     => 'UnitTest-ImportExport-1' . int( rand(1_000_000) ),
-    UserEmail     => 'UnitTest-ImportExport-1@localhost',
-    ValidID       => 1,
-    ChangeUserID  => 1,
-);
-my $UserID2 = $Self->{UserObject}->UserAdd(
-    UserFirstname => 'ImportExport2',
-    UserLastname  => 'UnitTest',
-    UserLogin     => 'UnitTest-ImportExport-2' . int( rand(1_000_000) ),
-    UserEmail     => 'UnitTest-ImportExport-2@localhost',
-    ValidID       => 1,
-    ChangeUserID  => 1,
-);
+# create needed users
+my @UserIDs;
+{
 
-# restore original email check param
-$Self->{ConfigObject}->Set(
-    Key   => 'CheckEmailAddresses',
-    Value => $CheckEmailAddressesOrg,
-);
+    # disable email checks to create new user
+    my $CheckEmailAddressesOrg = $Self->{ConfigObject}->Get('CheckEmailAddresses') || 1;
+    $Self->{ConfigObject}->Set(
+        Key   => 'CheckEmailAddresses',
+        Value => 0,
+    );
+
+    for my $Counter ( 1 .. 2 ) {
+
+        # create new users for the tests
+        my $UserID = $Self->{UserObject}->UserAdd(
+            UserFirstname => 'ImportExport' . $Counter,
+            UserLastname  => 'UnitTest',
+            UserLogin     => 'UnitTest-ImportExport-' . $Counter . int rand 1_000_000,
+            UserEmail     => 'UnitTest-ImportExport-' . $Counter . '@localhost',
+            ValidID       => 1,
+            ChangeUserID  => 1,
+        );
+
+        push @UserIDs, $UserID;
+    }
+
+    # restore original email check param
+    $Self->{ConfigObject}->Set(
+        Key   => 'CheckEmailAddresses',
+        Value => $CheckEmailAddressesOrg,
+    );
+}
+
+# create needed random template names
+my @TemplateName;
+
+for my $Counter ( 1 .. 3 ) {
+
+    push @TemplateName, 'UnitTest' . int rand 1_000_000;
+}
+
+# create needed random object names
+my @ObjectName;
+
+for my $Counter ( 1 .. 1 ) {
+
+    push @ObjectName, 'UnitTest' . int rand 1_000_000;
+}
 
 # ------------------------------------------------------------ #
 # ObjectList() test
@@ -82,12 +104,9 @@ if ( ref $ObjectList1 eq 'HASH' ) {
 # TemplateList() test #1
 # ------------------------------------------------------------ #
 
-# create a random object name
-my $ObjectRand = 'UnitTest' . int rand 1_000_000;
-
 # get template list
 my $TemplateList1 = $Self->{ImportExportObject}->TemplateList(
-    Object => $ObjectRand,
+    Object => $ObjectName[0],
     UserID => 1,
 );
 
@@ -101,16 +120,12 @@ $Self->True(
 # TemplateAdd() tests
 # ------------------------------------------------------------ #
 
-my $TemplateRandName1 = 'UnitTest' . int rand 1_000_000;
-my $TemplateRandName2 = 'UnitTest' . int rand 1_000_000;
-my $TemplateRandName3 = 'UnitTest' . int rand 1_000_000;
-
 my $TemplateChecks = [
 
     # this template is NOT complete and must not be added
     {
         Add => {
-            Name    => $TemplateRandName1,
+            Name    => $TemplateName[0],
             ValidID => 1,
             UserID  => 1,
         },
@@ -119,7 +134,7 @@ my $TemplateChecks = [
     # this template is NOT complete and must not be added
     {
         Add => {
-            Object  => $ObjectRand,
+            Object  => $ObjectName[0],
             ValidID => 1,
             UserID  => 1,
         },
@@ -128,8 +143,8 @@ my $TemplateChecks = [
     # this template is NOT complete and must not be added
     {
         Add => {
-            Object => $ObjectRand,
-            Name   => $TemplateRandName1,
+            Object => $ObjectName[0],
+            Name   => $TemplateName[0],
             UserID => 1,
         },
     },
@@ -137,8 +152,8 @@ my $TemplateChecks = [
     # this template is NOT complete and must not be added
     {
         Add => {
-            Object  => $ObjectRand,
-            Name    => $TemplateRandName1,
+            Object  => $ObjectName[0],
+            Name    => $TemplateName[0],
             ValidID => 1,
         },
     },
@@ -146,7 +161,7 @@ my $TemplateChecks = [
     # this template is NOT complete and must not be added
     {
         Add => {
-            Object  => $ObjectRand,
+            Object  => $ObjectName[0],
             Format  => 'CSV',
             ValidID => 1,
         },
@@ -155,16 +170,16 @@ my $TemplateChecks = [
     # this template must be inserted sucessfully
     {
         Add => {
-            Object  => $ObjectRand,
+            Object  => $ObjectName[0],
             Format  => 'CSV',
-            Name    => $TemplateRandName1,
+            Name    => $TemplateName[0],
             ValidID => 1,
             UserID  => 1,
         },
         AddGet => {
-            Object   => $ObjectRand,
+            Object   => $ObjectName[0],
             Format   => 'CSV',
-            Name     => $TemplateRandName1,
+            Name     => $TemplateName[0],
             ValidID  => 1,
             Comment  => '',
             CreateBy => 1,
@@ -175,9 +190,9 @@ my $TemplateChecks = [
     # this template have the same name as one test before and must not be added
     {
         Add => {
-            Object  => $ObjectRand,
+            Object  => $ObjectName[0],
             Format  => 'CSV',
-            Name    => $TemplateRandName1,
+            Name    => $TemplateName[0],
             ValidID => 1,
             UserID  => 1,
         },
@@ -186,17 +201,17 @@ my $TemplateChecks = [
     # this template must be inserted sucessfully
     {
         Add => {
-            Object  => $ObjectRand,
+            Object  => $ObjectName[0],
             Format  => 'CSV',
-            Name    => $TemplateRandName2,
+            Name    => $TemplateName[1],
             ValidID => 1,
             Comment => 'This is a test!',
             UserID  => 1,
         },
         AddGet => {
-            Object   => $ObjectRand,
+            Object   => $ObjectName[0],
             Format   => 'CSV',
-            Name     => $TemplateRandName2,
+            Name     => $TemplateName[1],
             ValidID  => 1,
             Comment  => 'This is a test!',
             CreateBy => 1,
@@ -208,22 +223,22 @@ my $TemplateChecks = [
     {
         Update => {
             ValidID => 2,
-            UserID  => $UserID1,
+            UserID  => $UserIDs[0],
         },
     },
 
     # the template one add-test before must be NOT updated (template update arguments NOT complete)
     {
         Update => {
-            Name   => $TemplateRandName2 . 'UPDATE1',
-            UserID => $UserID1,
+            Name   => $TemplateName[1] . 'UPDATE1',
+            UserID => $UserIDs[0],
         },
     },
 
     # the template one add-test before must be NOT updated (template update arguments NOT complete)
     {
         Update => {
-            Name    => $TemplateRandName2 . 'UPDATE2',
+            Name    => $TemplateName[1] . 'UPDATE2',
             ValidID => 2,
         },
     },
@@ -231,30 +246,30 @@ my $TemplateChecks = [
     # the template one add-test before must be updated (template update arguments are complete)
     {
         Update => {
-            Name    => $TemplateRandName2 . 'UPDATE3',
+            Name    => $TemplateName[1] . 'UPDATE3',
             Comment => 'This is a second test!',
             ValidID => 2,
-            UserID  => $UserID1,
+            UserID  => $UserIDs[0],
         },
         UpdateGet => {
-            Name     => $TemplateRandName2 . 'UPDATE3',
+            Name     => $TemplateName[1] . 'UPDATE3',
             ValidID  => 2,
             Comment  => 'This is a second test!',
             CreateBy => 1,
-            ChangeBy => $UserID1,
+            ChangeBy => $UserIDs[0],
         },
     },
 
     # the template one add-test before must be updated (template update arguments are complete)
     {
         Update => {
-            Name    => $TemplateRandName2 . 'UPDATE4',
+            Name    => $TemplateName[1] . 'UPDATE4',
             ValidID => 1,
             Comment => '',
             UserID  => 1,
         },
         UpdateGet => {
-            Name     => $TemplateRandName2 . 'UPDATE4',
+            Name     => $TemplateName[1] . 'UPDATE4',
             ValidID  => 1,
             Comment  => '',
             CreateBy => 1,
@@ -265,13 +280,13 @@ my $TemplateChecks = [
     # the template one add-test before must be updated (template update arguments are complete)
     {
         Update => {
-            Name    => $TemplateRandName2 . 'Update5',
+            Name    => $TemplateName[1] . 'Update5',
             ValidID => 1,
             Comment => 'This is a comment.',
             UserID  => 1,
         },
         UpdateGet => {
-            Name     => $TemplateRandName2 . 'Update5',
+            Name     => $TemplateName[1] . 'Update5',
             ValidID  => 1,
             Comment  => 'This is a comment.',
             CreateBy => 1,
@@ -282,16 +297,16 @@ my $TemplateChecks = [
     # this template must be inserted sucessfully (check string cleaner function)
     {
         Add => {
-            Object  => " \t \n \r " . $ObjectRand . " \t \n \r ",
+            Object  => " \t \n \r " . $ObjectName[0] . " \t \n \r ",
             Format  => " \t \n \r CSV \t \n \r ",
-            Name    => " \t \n \r " . $TemplateRandName3 . " \t \n \r ",
+            Name    => " \t \n \r " . $TemplateName[2] . " \t \n \r ",
             ValidID => 1,
             UserID  => 1,
         },
         AddGet => {
-            Object   => $ObjectRand,
+            Object   => $ObjectName[0],
             Format   => 'CSV',
-            Name     => $TemplateRandName3,
+            Name     => $TemplateName[2],
             ValidID  => 1,
             Comment  => '',
             CreateBy => 1,
@@ -302,12 +317,12 @@ my $TemplateChecks = [
     # the template one add-test before must be updated (check string cleaner function)
     {
         Update => {
-            Name    => " \t \n \r " . $TemplateRandName3 . "UPDATE1 \t \n \r ",
+            Name    => " \t \n \r " . $TemplateName[2] . "UPDATE1 \t \n \r ",
             ValidID => 1,
             UserID  => 1,
         },
         UpdateGet => {
-            Name     => $TemplateRandName3 . 'UPDATE1',
+            Name     => $TemplateName[2] . 'UPDATE1',
             ValidID  => 1,
             CreateBy => 1,
             ChangeBy => 1,
@@ -395,7 +410,7 @@ for my $Template ( @{$TemplateChecks} ) {
         # get template data to check the values after the update
         my $TemplateGet = $Self->{ImportExportObject}->TemplateGet(
             TemplateID => $LastAddedTemplateID,
-            UserID     => $Template->{Update}->{UserID} || 1,
+            UserID => $Template->{Update}->{UserID} || 1,
         );
 
         # check template data after update
@@ -420,7 +435,7 @@ continue {
 
 # get template list
 my $TemplateList2 = $Self->{ImportExportObject}->TemplateList(
-    Object => $ObjectRand,
+    Object => $ObjectName[0],
     UserID => 1,
 );
 
@@ -464,7 +479,7 @@ $Self->True(
 
 # get template list
 my $TemplateList3 = $Self->{ImportExportObject}->TemplateList(
-    Object => $ObjectRand,
+    Object => $ObjectName[0],
     UserID => 1,
 );
 
