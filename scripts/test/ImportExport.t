@@ -2,7 +2,7 @@
 # ImportExport.t - all general import export tests
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.t,v 1.12 2008-03-26 17:35:14 mh Exp $
+# $Id: ImportExport.t,v 1.13 2008-03-26 18:03:42 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -314,9 +314,8 @@ my $ItemData = [
 # run general tests
 # ------------------------------------------------------------ #
 
-my $TestCount  = 1;
-my $AddCounter = 0;
-my $LastAddedTemplateID;
+my $TestCount = 1;
+my @AddedTemplateIDs;
 
 TEMPLATE:
 for my $Item ( @{$ItemData} ) {
@@ -327,8 +326,7 @@ for my $Item ( @{$ItemData} ) {
         my $TemplateID = $Self->{ImportExportObject}->TemplateAdd( %{ $Item->{Add} } );
 
         if ($TemplateID) {
-            $LastAddedTemplateID = $TemplateID;
-            $AddCounter++;
+            push @AddedTemplateIDs, $TemplateID;
         }
 
         # check if template was added successfully or not
@@ -347,7 +345,7 @@ for my $Item ( @{$ItemData} ) {
 
         # get template data to check the values after template was added
         my $TemplateGet = $Self->{ImportExportObject}->TemplateGet(
-            TemplateID => $LastAddedTemplateID,
+            TemplateID => $AddedTemplateIDs[-1],
             UserID => $Item->{Add}->{UserID} || 1,
         );
 
@@ -364,7 +362,7 @@ for my $Item ( @{$ItemData} ) {
     if ( $Item->{Update} ) {
 
         # check last template id varaible
-        if ( !$LastAddedTemplateID ) {
+        if ( !$AddedTemplateIDs[-1] ) {
             $Self->False(
                 1,
                 "Test $TestCount: NO LAST ITEM ID GIVEN. Please add a template first."
@@ -375,14 +373,14 @@ for my $Item ( @{$ItemData} ) {
         # update the template
         my $UpdateSucess = $Self->{ImportExportObject}->TemplateUpdate(
             %{ $Item->{Update} },
-            TemplateID => $LastAddedTemplateID,
+            TemplateID => $AddedTemplateIDs[-1],
         );
 
         # check if template was updated successfully or not
         if ( $Item->{UpdateGet} ) {
             $Self->True(
                 $UpdateSucess,
-                "Test $TestCount: TemplateUpdate() - TemplateKey: $LastAddedTemplateID",
+                "Test $TestCount: TemplateUpdate() - TemplateKey: $AddedTemplateIDs[-1]",
             );
         }
         else {
@@ -397,7 +395,7 @@ for my $Item ( @{$ItemData} ) {
 
         # get template data to check the values after the update
         my $TemplateGet = $Self->{ImportExportObject}->TemplateGet(
-            TemplateID => $LastAddedTemplateID,
+            TemplateID => $AddedTemplateIDs[-1],
             UserID => $Item->{Update}->{UserID} || 1,
         );
 
@@ -460,7 +458,7 @@ my $TemplateListCount = scalar @{$TemplateList2} - scalar @{$TemplateList1All};
 
 # check correct number of new items
 $Self->True(
-    $TemplateListCount eq $AddCounter,
+    $TemplateListCount eq scalar @AddedTemplateIDs,
     "Test $TestCount: TemplateList() - correct number of new items",
 );
 
@@ -522,6 +520,27 @@ $Self->True(
 );
 
 $TestCount++;
+
+# ------------------------------------------------------------ #
+# TemplateDelete test 2 (delete all unittest templates)
+# ------------------------------------------------------------ #
+
+for my $TemplateID (@AddedTemplateIDs) {
+
+    # delete the template
+    my $Success = $Self->{ImportExportObject}->TemplateDelete(
+        TemplateID => $TemplateID,
+        UserID     => 1,
+    );
+
+    # check success
+    $Self->True(
+        $Success,
+        "Test $TestCount: TemplateDelete() TemplateID $TemplateID",
+    );
+
+    $TestCount++;
+}
 
 # ------------------------------------------------------------ #
 # ObjectList test 1 (check general functionality)
