@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.17 2008-03-26 08:37:23 martin Exp $
+# $Id: FAQ.pm,v 1.18 2008-03-26 20:55:53 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::CustomerGroup;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 =head1 NAME
 
@@ -914,7 +914,7 @@ sub FAQDelete {
     return if ! $Self->FAQHistoryDelete(%Param);
 
     # delete article
-    return $Self->{DBObject}->Prepare(
+    return $Self->{DBObject}->Do(
         SQL  => "DELETE FROM faq_item WHERE id = ?",
         Bind => [ \$Param{ItemID} ],
     );
@@ -1022,7 +1022,7 @@ sub FAQHistoryDelete {
             return 0;
         }
     }
-    return $Self->{DBObject}->Prepare(
+    return $Self->{DBObject}->Do(
         SQL  => "DELETE FROM faq_history WHERE item_id = ?",
         Bind => [ \$Param{ItemID} ],
     );
@@ -2563,6 +2563,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.17 $ $Date: 2008-03-26 08:37:23 $
+$Revision: 1.18 $ $Date: 2008-03-26 20:55:53 $
 
 =cut
