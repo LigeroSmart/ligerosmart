@@ -1,8 +1,8 @@
 # --
-# ImportExport.t - import export tests
+# ImportExport.t - all general import export tests
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.t,v 1.11 2008-03-26 12:26:33 mh Exp $
+# $Id: ImportExport.t,v 1.12 2008-03-26 17:35:14 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -61,70 +61,39 @@ my @UserIDs;
 # create needed random template names
 my @TemplateName;
 
-for my $Counter ( 1 .. 3 ) {
+for my $Counter ( 1 .. 5 ) {
 
     push @TemplateName, 'UnitTest' . int rand 1_000_000;
 }
 
 # create needed random object names
 my @ObjectName;
+push @ObjectName, 'UnitTest' . int rand 1_000_000;
 
-for my $Counter ( 1 .. 1 ) {
+# create needed format names
+my @FormatName = ('CSV');
 
-    push @ObjectName, 'UnitTest' . int rand 1_000_000;
-}
-
-# ------------------------------------------------------------ #
-# ObjectList() test
-# ------------------------------------------------------------ #
-
-# get object list
-my $ObjectList1 = $Self->{ImportExportObject}->ObjectList();
-
-# list must be a hash reference
-$Self->True(
-    ref $ObjectList1 eq 'HASH',
-    '#1 ObjectList() - hash reference',
+# get original template list for later checks (all elements)
+my $TemplateList1All = $Self->{ImportExportObject}->TemplateList(
+    UserID => 1,
 );
 
-# list must have valid content
-if ( ref $ObjectList1 eq 'HASH' ) {
-
-    my $Counter1 = 1;
-    for my $Key ( keys %{$ObjectList1} ) {
-        $Self->True(
-            $Key && $ObjectList1->{$Key} && !ref $ObjectList1->{$Key},
-            "#$Counter1 ObjectList() - valid content",
-        );
-        $Counter1++;
-    }
-}
-
-# ------------------------------------------------------------ #
-# TemplateList() test #1
-# ------------------------------------------------------------ #
-
-# get template list
-my $TemplateList1 = $Self->{ImportExportObject}->TemplateList(
+# get original template list for later checks (all elements)
+my $TemplateList1Object = $Self->{ImportExportObject}->TemplateList(
     Object => $ObjectName[0],
     UserID => 1,
 );
 
-# list must be an empty array reference
-$Self->True(
-    ref $TemplateList1 eq 'ARRAY' && scalar @{$TemplateList1} eq 0,
-    "#1 TemplateList() - empty array reference",
-);
-
 # ------------------------------------------------------------ #
-# TemplateAdd() tests
+# define general tests
 # ------------------------------------------------------------ #
 
-my $TemplateChecks = [
+my $ItemData = [
 
     # this template is NOT complete and must not be added
     {
         Add => {
+            Format  => $FormatName[0],
             Name    => $TemplateName[0],
             ValidID => 1,
             UserID  => 1,
@@ -135,6 +104,17 @@ my $TemplateChecks = [
     {
         Add => {
             Object  => $ObjectName[0],
+            Name    => $TemplateName[0],
+            ValidID => 1,
+            UserID  => 1,
+        },
+    },
+
+    # this template is NOT complete and must not be added
+    {
+        Add => {
+            Object  => $ObjectName[0],
+            Format  => $FormatName[0],
             ValidID => 1,
             UserID  => 1,
         },
@@ -144,6 +124,7 @@ my $TemplateChecks = [
     {
         Add => {
             Object => $ObjectName[0],
+            Format => $FormatName[0],
             Name   => $TemplateName[0],
             UserID => 1,
         },
@@ -153,16 +134,8 @@ my $TemplateChecks = [
     {
         Add => {
             Object  => $ObjectName[0],
+            Format  => $FormatName[0],
             Name    => $TemplateName[0],
-            ValidID => 1,
-        },
-    },
-
-    # this template is NOT complete and must not be added
-    {
-        Add => {
-            Object  => $ObjectName[0],
-            Format  => 'CSV',
             ValidID => 1,
         },
     },
@@ -171,14 +144,14 @@ my $TemplateChecks = [
     {
         Add => {
             Object  => $ObjectName[0],
-            Format  => 'CSV',
+            Format  => $FormatName[0],
             Name    => $TemplateName[0],
             ValidID => 1,
             UserID  => 1,
         },
         AddGet => {
             Object   => $ObjectName[0],
-            Format   => 'CSV',
+            Format   => $FormatName[0],
             Name     => $TemplateName[0],
             ValidID  => 1,
             Comment  => '',
@@ -191,7 +164,7 @@ my $TemplateChecks = [
     {
         Add => {
             Object  => $ObjectName[0],
-            Format  => 'CSV',
+            Format  => $FormatName[0],
             Name    => $TemplateName[0],
             ValidID => 1,
             UserID  => 1,
@@ -202,18 +175,18 @@ my $TemplateChecks = [
     {
         Add => {
             Object  => $ObjectName[0],
-            Format  => 'CSV',
+            Format  => $FormatName[0],
             Name    => $TemplateName[1],
             ValidID => 1,
-            Comment => 'This is a test!',
+            Comment => 'TestComment',
             UserID  => 1,
         },
         AddGet => {
             Object   => $ObjectName[0],
-            Format   => 'CSV',
+            Format   => $FormatName[0],
             Name     => $TemplateName[1],
             ValidID  => 1,
-            Comment  => 'This is a test!',
+            Comment  => 'TestComment',
             CreateBy => 1,
             ChangeBy => 1,
         },
@@ -247,14 +220,14 @@ my $TemplateChecks = [
     {
         Update => {
             Name    => $TemplateName[1] . 'UPDATE3',
-            Comment => 'This is a second test!',
+            Comment => 'TestComment UPDATE3',
             ValidID => 2,
             UserID  => $UserIDs[0],
         },
         UpdateGet => {
             Name     => $TemplateName[1] . 'UPDATE3',
             ValidID  => 2,
-            Comment  => 'This is a second test!',
+            Comment  => 'TestComment UPDATE3',
             CreateBy => 1,
             ChangeBy => $UserIDs[0],
         },
@@ -277,38 +250,22 @@ my $TemplateChecks = [
         },
     },
 
-    # the template one add-test before must be updated (template update arguments are complete)
-    {
-        Update => {
-            Name    => $TemplateName[1] . 'Update5',
-            ValidID => 1,
-            Comment => 'This is a comment.',
-            UserID  => 1,
-        },
-        UpdateGet => {
-            Name     => $TemplateName[1] . 'Update5',
-            ValidID  => 1,
-            Comment  => 'This is a comment.',
-            CreateBy => 1,
-            ChangeBy => 1,
-        },
-    },
-
     # this template must be inserted sucessfully (check string cleaner function)
     {
         Add => {
             Object  => " \t \n \r " . $ObjectName[0] . " \t \n \r ",
-            Format  => " \t \n \r CSV \t \n \r ",
+            Format  => " \t \n \r " . $FormatName[0] . " \t \n \r ",
             Name    => " \t \n \r " . $TemplateName[2] . " \t \n \r ",
             ValidID => 1,
+            Comment => " \t \n \r Test Comment \t \n \r ",
             UserID  => 1,
         },
         AddGet => {
             Object   => $ObjectName[0],
-            Format   => 'CSV',
+            Format   => $FormatName[0],
             Name     => $TemplateName[2],
             ValidID  => 1,
-            Comment  => '',
+            Comment  => 'Test Comment',
             CreateBy => 1,
             ChangeBy => 1,
         },
@@ -319,27 +276,55 @@ my $TemplateChecks = [
         Update => {
             Name    => " \t \n \r " . $TemplateName[2] . "UPDATE1 \t \n \r ",
             ValidID => 1,
+            Comment => " \t \n \r Test Comment UPDATE1 \t \n \r ",
             UserID  => 1,
         },
         UpdateGet => {
             Name     => $TemplateName[2] . 'UPDATE1',
             ValidID  => 1,
+            Comment  => 'Test Comment UPDATE1',
+            CreateBy => 1,
+            ChangeBy => 1,
+        },
+    },
+
+    # this template must be inserted sucessfully (unicode checks)
+    {
+        Add => {
+            Object  => ' ƕ Ƙ ' . $ObjectName[0] . ' Ƶ ƻ ',
+            Format  => ' Ǔ ǣ ' . $FormatName[0] . ' ǥ Ǯ ',
+            Name    => ' Ƿ Ȝ ' . $TemplateName[3] . ' Ȟ Ƞ ',
+            ValidID => 2,
+            Comment => ' Ѡ Ѥ TestComment5 Ϡ Ω ',
+            UserID  => 1,
+        },
+        AddGet => {
+            Object   => 'ƕƘ' . $ObjectName[0] . 'Ƶƻ',
+            Format   => 'Ǔǣ' . $FormatName[0] . 'ǥǮ',
+            Name     => 'Ƿ Ȝ ' . $TemplateName[3] . ' Ȟ Ƞ',
+            ValidID  => 2,
+            Comment  => 'Ѡ Ѥ TestComment5 Ϡ Ω',
             CreateBy => 1,
             ChangeBy => 1,
         },
     },
 ];
 
-my $IteratorCounter = 1;
-my $AddCounter      = 0;
-my $LastAddedTemplateID;
-TEMPLATE:
-for my $Template ( @{$TemplateChecks} ) {
+# ------------------------------------------------------------ #
+# run general tests
+# ------------------------------------------------------------ #
 
-    if ( $Template->{Add} ) {
+my $TestCount  = 1;
+my $AddCounter = 0;
+my $LastAddedTemplateID;
+
+TEMPLATE:
+for my $Item ( @{$ItemData} ) {
+
+    if ( $Item->{Add} ) {
 
         # add new template
-        my $TemplateID = $Self->{ImportExportObject}->TemplateAdd( %{ $Template->{Add} } );
+        my $TemplateID = $Self->{ImportExportObject}->TemplateAdd( %{ $Item->{Add} } );
 
         if ($TemplateID) {
             $LastAddedTemplateID = $TemplateID;
@@ -347,78 +332,81 @@ for my $Template ( @{$TemplateChecks} ) {
         }
 
         # check if template was added successfully or not
-        if ( $Template->{AddGet} ) {
+        if ( $Item->{AddGet} ) {
             $Self->True(
                 $TemplateID,
-                "#$IteratorCounter TemplateAdd() - TemplateKey: $TemplateID"
+                "Test $TestCount: TemplateAdd() - TemplateKey: $TemplateID"
             );
         }
         else {
-            $Self->False( $TemplateID, "#$IteratorCounter TemplateAdd()" );
+            $Self->False( $TemplateID, "Test $TestCount: TemplateAdd()" );
         }
     }
 
-    if ( $Template->{AddGet} ) {
+    if ( $Item->{AddGet} ) {
 
         # get template data to check the values after template was added
         my $TemplateGet = $Self->{ImportExportObject}->TemplateGet(
             TemplateID => $LastAddedTemplateID,
-            UserID => $Template->{Add}->{UserID} || 1,
+            UserID => $Item->{Add}->{UserID} || 1,
         );
 
         # check template data after creation of template
-        for my $TemplateAttribute ( keys %{ $Template->{AddGet} } ) {
+        for my $TemplateAttribute ( keys %{ $Item->{AddGet} } ) {
             $Self->Is(
                 $TemplateGet->{$TemplateAttribute} || '',
-                $Template->{AddGet}->{$TemplateAttribute} || '',
-                "#$IteratorCounter TemplateGet() - $TemplateAttribute",
+                $Item->{AddGet}->{$TemplateAttribute} || '',
+                "Test $TestCount: TemplateGet() - $TemplateAttribute",
             );
         }
     }
 
-    if ( $Template->{Update} ) {
+    if ( $Item->{Update} ) {
 
         # check last template id varaible
         if ( !$LastAddedTemplateID ) {
             $Self->False(
                 1,
-                "#$IteratorCounter NO LAST ITEM ID GIVEN. Please add a template first."
+                "Test $TestCount: NO LAST ITEM ID GIVEN. Please add a template first."
             );
             last TEMPLATE;
         }
 
         # update the template
         my $UpdateSucess = $Self->{ImportExportObject}->TemplateUpdate(
-            %{ $Template->{Update} },
+            %{ $Item->{Update} },
             TemplateID => $LastAddedTemplateID,
         );
 
         # check if template was updated successfully or not
-        if ( $Template->{UpdateGet} ) {
+        if ( $Item->{UpdateGet} ) {
             $Self->True(
                 $UpdateSucess,
-                "#$IteratorCounter TemplateUpdate() - TemplateKey: $LastAddedTemplateID",
+                "Test $TestCount: TemplateUpdate() - TemplateKey: $LastAddedTemplateID",
             );
         }
         else {
-            $Self->False( $UpdateSucess, "#$IteratorCounter TemplateUpdate()" );
+            $Self->False(
+                $UpdateSucess,
+                "Test $TestCount: TemplateUpdate()",
+            );
         }
     }
 
-    if ( $Template->{UpdateGet} ) {
+    if ( $Item->{UpdateGet} ) {
 
         # get template data to check the values after the update
         my $TemplateGet = $Self->{ImportExportObject}->TemplateGet(
             TemplateID => $LastAddedTemplateID,
-            UserID => $Template->{Update}->{UserID} || 1,
+            UserID => $Item->{Update}->{UserID} || 1,
         );
 
         # check template data after update
-        for my $TemplateAttribute ( keys %{ $Template->{UpdateGet} } ) {
+        for my $TemplateAttribute ( keys %{ $Item->{UpdateGet} } ) {
             $Self->Is(
                 $TemplateGet->{$TemplateAttribute} || '',
-                $Template->{UpdateGet}->{$TemplateAttribute} || '',
-                "#$IteratorCounter: TemplateGet() - $TemplateAttribute",
+                $Item->{UpdateGet}->{$TemplateAttribute} || '',
+                "Test $TestCount: TemplateGet() - $TemplateAttribute",
             );
         }
     }
@@ -426,67 +414,233 @@ for my $Template ( @{$TemplateChecks} ) {
 continue {
 
     # increment the counter
-    $IteratorCounter++;
+    $TestCount++;
 }
 
 # ------------------------------------------------------------ #
-# TemplateList() test #2
+# TemplateList test 1 (check array references)
 # ------------------------------------------------------------ #
 
-# get template list
+# list must be an empty array reference
+$Self->True(
+    ref $TemplateList1All eq 'ARRAY' && ref $TemplateList1Object eq 'ARRAY',
+    "Test $TestCount: TemplateList() - array references",
+);
+
+$TestCount++;
+
+# ------------------------------------------------------------ #
+# TemplateList test 2 (list must be empty)
+# ------------------------------------------------------------ #
+
+# list must be an empty list
+$Self->True(
+    scalar @{$TemplateList1Object} eq 0,
+    "Test $TestCount: TemplateList() - empty list",
+);
+
+$TestCount++;
+
+# ------------------------------------------------------------ #
+# TemplateList test 2 (check correct number of new items)
+# ------------------------------------------------------------ #
+
+# get template list with all elements
 my $TemplateList2 = $Self->{ImportExportObject}->TemplateList(
-    Object => $ObjectName[0],
     UserID => 1,
 );
 
 # list must be an array reference
 $Self->True(
-    ref $TemplateList2 eq 'ARRAY' && scalar @{$TemplateList2} eq $AddCounter,
-    "#2 TemplateList()",
+    ref $TemplateList2 eq 'ARRAY',
+    "Test $TestCount: TemplateList() - array reference",
 );
 
-# ------------------------------------------------------------ #
-# TemplateDelete() tests
-# ------------------------------------------------------------ #
+my $TemplateListCount = scalar @{$TemplateList2} - scalar @{$TemplateList1All};
 
-# delete the first template
-my $Success1 = $Self->{ImportExportObject}->TemplateDelete(
-    TemplateID => shift @{$TemplateList2},
-    UserID     => 1,
-);
-
-# list must be an empty array reference
+# check correct number of new items
 $Self->True(
-    $Success1,
-    "#1 TemplateDelete()",
+    $TemplateListCount eq $AddCounter,
+    "Test $TestCount: TemplateList() - correct number of new items",
 );
 
-# delete the last template
-my $Success2 = $Self->{ImportExportObject}->TemplateDelete(
-    TemplateID => $TemplateList2,
-    UserID     => 1,
-);
-
-# list must be an empty array reference
-$Self->True(
-    $Success2,
-    "#2 TemplateDelete()",
-);
+$TestCount++;
 
 # ------------------------------------------------------------ #
-# TemplateList() test #3
+# TemplateDelete test 1 (add one template and delete it)
 # ------------------------------------------------------------ #
 
-# get template list
-my $TemplateList3 = $Self->{ImportExportObject}->TemplateList(
+# get template list with all elements
+my $TemplateDelete1List1 = $Self->{ImportExportObject}->TemplateList(
     Object => $ObjectName[0],
     UserID => 1,
 );
 
-# list must be an empty array reference
-$Self->True(
-    ref $TemplateList3 eq 'ARRAY' && scalar @{$TemplateList3} eq 0,
-    "#3 TemplateList() - empty array reference",
+# add a test template
+my $TemplateDeleteID = $Self->{ImportExportObject}->TemplateAdd(
+    Object  => $ObjectName[0],
+    Format  => $FormatName[0],
+    Name    => $TemplateName[4],
+    ValidID => 1,
+    UserID  => 1,
 );
+
+# get template list with all elements
+my $TemplateDelete1List2 = $Self->{ImportExportObject}->TemplateList(
+    Object => $ObjectName[0],
+    UserID => 1,
+);
+
+# list must have one more element
+$Self->True(
+    scalar @{$TemplateDelete1List1} eq ( scalar @{$TemplateDelete1List2} ) - 1,
+    "Test $TestCount: TemplateDelete() - number of listed elements",
+);
+
+# delete the new template
+my $TemplateDelete1 = $Self->{ImportExportObject}->TemplateDelete(
+    TemplateID => $TemplateDeleteID,
+    UserID     => 1,
+);
+
+# list must be successfull
+$Self->True(
+    $TemplateDelete1,
+    "Test $TestCount: TemplateDelete()",
+);
+
+# get template list with all elements
+my $TemplateDelete1List3 = $Self->{ImportExportObject}->TemplateList(
+    Object => $ObjectName[0],
+    UserID => 1,
+);
+
+# list must have the original number of elements
+$Self->True(
+    scalar @{$TemplateDelete1List1} eq scalar @{$TemplateDelete1List3},
+    "Test $TestCount: TemplateDelete() - number of listed elements",
+);
+
+$TestCount++;
+
+# ------------------------------------------------------------ #
+# ObjectList test 1 (check general functionality)
+# ------------------------------------------------------------ #
+
+# define test list
+my $ObjectList1TestList = {
+    UnitTest1 => {
+        Module => 'Kernel::System::ImportExport::ObjectBackend::UnitTest1',
+        Name   => 'Unit Test 1',
+    },
+    UnitTest2 => {
+        Module => 'Kernel::System::ImportExport::ObjectBackend::UnitTest2',
+        Name   => 'Unit Test 2',
+    },
+};
+
+# get original object list
+my $ObjectListOrg = $Self->{ConfigObject}->Get('ImportExport::ObjectBackendRegistration');
+
+# set test list
+$Self->{ConfigObject}->Set(
+    Key   => 'ImportExport::ObjectBackendRegistration',
+    Value => $ObjectList1TestList,
+);
+
+# get object list
+my $ObjectList1 = $Self->{ImportExportObject}->ObjectList();
+
+# list must be a hash reference
+$Self->True(
+    ref $ObjectList1 eq 'HASH',
+    "Test $TestCount: ObjectList() - hash reference",
+);
+
+# check the list
+KEY:
+for my $Key ( keys %{$ObjectList1} ) {
+
+    if ( !$ObjectList1TestList->{$Key} ) {
+        $ObjectList1TestList->{Dummy} = 1;
+    }
+
+    next KEY if $ObjectList1->{$Key} ne $ObjectList1TestList->{$Key}->{Name};
+
+    delete $ObjectList1TestList->{$Key};
+}
+
+$Self->True(
+    !%{$ObjectList1TestList},
+    "Test $TestCount: ObjectList() - content is valid",
+);
+
+# restore original object list
+$Self->{ConfigObject}->Set(
+    Key   => 'ImportExport::ObjectBackendRegistration',
+    Value => $ObjectListOrg,
+);
+
+$TestCount++;
+
+# ------------------------------------------------------------ #
+# FormatList test 1 (check general functionality)
+# ------------------------------------------------------------ #
+
+# define test list
+my $FormatList1TestList = {
+    UnitTest1 => {
+        Module => 'Kernel::System::ImportExport::FormatBackend::UnitTest1',
+        Name   => 'Unit Test 1',
+    },
+    UnitTest2 => {
+        Module => 'Kernel::System::ImportExport::FormatBackend::UnitTest2',
+        Name   => 'Unit Test 2',
+    },
+};
+
+# get original format list
+my $FormatListOrg = $Self->{ConfigObject}->Get('ImportExport::FormatBackendRegistration');
+
+# set test list
+$Self->{ConfigObject}->Set(
+    Key   => 'ImportExport::FormatBackendRegistration',
+    Value => $FormatList1TestList,
+);
+
+# get format list
+my $FormatList1 = $Self->{ImportExportObject}->FormatList();
+
+# list must be a hash reference
+$Self->True(
+    ref $FormatList1 eq 'HASH',
+    "Test $TestCount: FormatList() - hash reference",
+);
+
+# check the list
+KEY:
+for my $Key ( keys %{$FormatList1} ) {
+
+    if ( !$FormatList1TestList->{$Key} ) {
+        $FormatList1TestList->{Dummy} = 1;
+    }
+
+    next KEY if $FormatList1->{$Key} ne $FormatList1TestList->{$Key}->{Name};
+
+    delete $FormatList1TestList->{$Key};
+}
+
+$Self->True(
+    !%{$FormatList1TestList},
+    "Test $TestCount: FormatList() - content is valid",
+);
+
+# restore original format list
+$Self->{ConfigObject}->Set(
+    Key   => 'ImportExport::FormatBackendRegistration',
+    Value => $FormatListOrg,
+);
+
+$TestCount++;
 
 1;
