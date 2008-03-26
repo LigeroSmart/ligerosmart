@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.27 2008-03-19 11:37:18 martin Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.28 2008-03-26 08:46:24 martin Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
     <Framework>2.2.x</Framework>
@@ -26,11 +26,15 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQ.dtl"></File>
         <File Permission="644" Location="Kernel/System/FAQ.pm"></File>
         <File Permission="644" Location="Kernel/System/LinkObject/FAQ.pm"></File>
+        <File Permission="644" Location="Kernel/cpan-lib/XML/RSS/SimpleGen.pm"></File>
         <File Permission="644" Location="scripts/test/FAQ.t"></File>
+        <File Permission="644" Location="scripts/test/sample/FAQ-Test1.pdf"></File>
+        <File Permission="644" Location="scripts/test/sample/FAQ-Test1.doc"></File>
         <File Permission="644" Location="var/httpd/htdocs/images/Standard/faq-category-small.png"></File>
         <File Permission="644" Location="var/httpd/htdocs/images/Standard/faq-item-small.png"></File>
         <File Permission="644" Location="var/httpd/htdocs/images/Standard/language.png"></File>
         <File Permission="644" Location="var/httpd/htdocs/images/Standard/category.png"></File>
+        <File Permission="644" Location="var/httpd/htdocs/images/Standard/rss.png"></File>
         <File Permission="755" Location="bin/cgi-bin/faq.pl"></File>
         <File Permission="755" Location="bin/fcgi-bin/faq.fpl"></File>
     </Filelist>
