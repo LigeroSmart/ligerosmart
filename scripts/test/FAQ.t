@@ -2,7 +2,7 @@
 # FAQ.t - FAQ tests
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.t,v 1.3 2008-03-05 23:46:12 martin Exp $
+# $Id: FAQ.t,v 1.4 2008-03-26 08:32:58 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -163,6 +163,60 @@ $Self->True(
     $FAQID2 || 0,
     "FAQAdd() - 2",
 );
+
+my $Home = $Self->{ConfigObject}->Get('Home');
+my @AttachmentTests = (
+    {
+        File => 'FAQ-Test1.pdf',
+        MD5  => '5ee767f3b68f24a9213e0bef82dc53e5',
+    },
+    {
+        File => 'FAQ-Test1.doc',
+        MD5  => '2e520036a0cda6a806a8838b1000d9d7',
+    },
+);
+for my $AttachmentTest ( @AttachmentTests ) {
+    my $ContentSCALARRef = $Self->{MainObject}->FileRead(
+        Location => $Home . '/scripts/test/sample/' . $AttachmentTest->{File},
+    );
+    my $Add = $Self->{FAQObject}->AttachmentAdd(
+        ItemID      => $FAQID2,
+        Content     => ${ $ContentSCALARRef },
+        ContentType => 'text/xml',
+        Filename    => $AttachmentTest->{File},
+    );
+    $Self->True(
+        $Add || 0,
+        "AttachmentAdd() - $AttachmentTest->{File}",
+    );
+    my %File = $Self->{FAQObject}->AttachmentGet(
+        ItemID => $FAQID2,
+        FileID => 1,
+    );
+    $Self->Is(
+        $File{Filename} || '',
+        $AttachmentTest->{File},
+        "AttachmentGet() - Filename $AttachmentTest->{File}",
+    );
+    my $MD5 = $Self->{MainObject}->MD5sum(
+        String => \$File{Content},
+    );
+    $Self->Is(
+        $MD5 || '',
+        $AttachmentTest->{MD5},
+        "AttachmentGet() - MD5 $AttachmentTest->{File}",
+    );
+
+    my $Delete = $Self->{FAQObject}->AttachmentDelete(
+        ItemID => $FAQID2,
+        FileID => 0,
+    );
+    $Self->True(
+        $Delete || 0,
+        "AttachmentDelete() - $AttachmentTest->{File}",
+    );
+
+}
 
 my @FAQIDs = $Self->{FAQObject}->FAQSearch(
     Number => '*',
