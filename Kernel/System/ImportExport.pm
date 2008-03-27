@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport.pm - all import and export functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pm,v 1.21 2008-03-26 17:34:31 mh Exp $
+# $Id: ImportExport.pm,v 1.22 2008-03-27 15:11:04 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.21 $) [1];
+$VERSION = qw($Revision: 1.22 $) [1];
 
 =head1 NAME
 
@@ -567,6 +567,15 @@ sub ObjectAttributesGet {
         UserID     => $Param{UserID},
     );
 
+    # check template data
+    if ( !$TemplateData || !$TemplateData->{Object} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Template with ID $Param{TemplateID} not complete!",
+        );
+        return;
+    }
+
     # load backend
     my $Backend = $Self->_LoadBackend(
         Module => "Kernel::System::ImportExport::ObjectBackend::$TemplateData->{Object}",
@@ -801,6 +810,15 @@ sub FormatAttributesGet {
         TemplateID => $Param{TemplateID},
         UserID     => $Param{UserID},
     );
+
+    # check template data
+    if ( !$TemplateData || !$TemplateData->{Format} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Template with ID $Param{TemplateID} not complete!",
+        );
+        return;
+    }
 
     # load backend
     my $Backend = $Self->_LoadBackend(
@@ -1386,6 +1404,15 @@ sub MappingObjectAttributesGet {
         UserID     => $Param{UserID},
     );
 
+    # check template data
+    if ( !$TemplateData || !$TemplateData->{Object} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Template with ID $Param{TemplateID} not complete!",
+        );
+        return;
+    }
+
     # load backend
     my $Backend = $Self->_LoadBackend(
         Module => "Kernel::System::ImportExport::ObjectBackend::$TemplateData->{Object}",
@@ -1594,6 +1621,15 @@ sub MappingFormatAttributesGet {
         TemplateID => $Param{TemplateID},
         UserID     => $Param{UserID},
     );
+
+    # check template data
+    if ( !$TemplateData || !$TemplateData->{Format} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Template with ID $Param{TemplateID} not complete!",
+        );
+        return;
+    }
 
     # load backend
     my $Backend = $Self->_LoadBackend(
@@ -1804,6 +1840,15 @@ sub SearchAttributesGet {
         UserID     => $Param{UserID},
     );
 
+    # check template data
+    if ( !$TemplateData || !$TemplateData->{Object} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Template with ID $Param{TemplateID} not complete!",
+        );
+        return;
+    }
+
     # load backend
     my $Backend = $Self->_LoadBackend(
         Module => "Kernel::System::ImportExport::ObjectBackend::$TemplateData->{Object}",
@@ -2013,6 +2058,15 @@ sub Export {
         UserID     => $Param{UserID},
     );
 
+    # check template data
+    if ( !$TemplateData || !$TemplateData->{Object} || !$TemplateData->{Format} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Template with ID $Param{TemplateID} not complete!",
+        );
+        return;
+    }
+
     # load object backend
     my $ObjectBackend = $Self->_LoadBackend(
         Module => "Kernel::System::ImportExport::ObjectBackend::$TemplateData->{Object}",
@@ -2092,6 +2146,15 @@ sub Import {
         TemplateID => $Param{TemplateID},
         UserID     => $Param{UserID},
     );
+
+    # check template data
+    if ( !$TemplateData || !$TemplateData->{Object} || !$TemplateData->{Format} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Template with ID $Param{TemplateID} not complete!",
+        );
+        return;
+    }
 
     # load object backend
     my $ObjectBackend = $Self->_LoadBackend(
@@ -2266,6 +2329,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.21 $ $Date: 2008-03-26 17:34:31 $
+$Revision: 1.22 $ $Date: 2008-03-27 15:11:04 $
 
 =cut
