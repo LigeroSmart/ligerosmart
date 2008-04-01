@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMCore.sopm,v 1.33 2008-03-29 21:53:22 mh Exp $</CVS>
+    <CVS>$Id: ITSMCore.sopm,v 1.34 2008-04-01 11:54:20 mh Exp $</CVS>
     <Name>ITSMCore</Name>
     <Version>0.0.0</Version>
     <Framework>2.2.6</Framework>
@@ -393,6 +393,48 @@
             }
         }
     </CodeInstall>
+    <CodeReinstall>
+        # change background color of standard theme
+        my $CssFile = $Self-&gt;{ConfigObject}-&gt;Get('Home') . "/Kernel/Output/HTML/Standard/css.dtl";
+        if (!-e $CssFile . ".save" &amp;&amp; open (IN, "&lt; $CssFile")) {
+
+            my $Content = '';
+            while (&lt;IN&gt;) {
+                if ($_ =~ /^body /) {
+                    $_ =~ s/background-color\:\#bbddff\;/background-color\:\#003399\;/;
+                }
+                $Content .= $_;
+            }
+            close (IN);
+
+            if (open (OUT, "&gt; $CssFile")) {
+                binmode(OUT);
+                print OUT $Content;
+                close (OUT);
+            }
+        }
+    </CodeReinstall>
+    <CodeUpgrade>
+        # change background color of standard theme
+        my $CssFile = $Self-&gt;{ConfigObject}-&gt;Get('Home') . "/Kernel/Output/HTML/Standard/css.dtl";
+        if (!-e $CssFile . ".save" &amp;&amp; open (IN, "&lt; $CssFile")) {
+
+            my $Content = '';
+            while (&lt;IN&gt;) {
+                if ($_ =~ /^body /) {
+                    $_ =~ s/background-color\:\#bbddff\;/background-color\:\#003399\;/;
+                }
+                $Content .= $_;
+            }
+            close (IN);
+
+            if (open (OUT, "&gt; $CssFile")) {
+                binmode(OUT);
+                print OUT $Content;
+                close (OUT);
+            }
+        }
+    </CodeUpgrade>
     <CodeUninstall>
         # change background color of standard theme back to original
         my $CssFile = $Self-&gt;{ConfigObject}-&gt;Get('Home') . "/Kernel/Output/HTML/Standard/css.dtl";
