@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ImportExport.sopm,v 1.13 2008-03-29 21:52:48 mh Exp $</CVS>
+    <CVS>$Id: ImportExport.sopm,v 1.14 2008-04-03 15:55:25 mh Exp $</CVS>
     <Name>ImportExport</Name>
     <Version>0.0.0</Version>
     <Framework>2.2.6</Framework>
@@ -11,6 +11,8 @@
     <Description Lang="de">Das ImportExport Paket.</Description>
     <Filelist>
         <File Permission="755" Location="bin/ImportExport.pl"/>
+        <File Permission="644" Location="Kernel/cpan-lib/Text/CSV.pm"/>
+        <File Permission="644" Location="Kernel/cpan-lib/Text/CSV_PP.pm"/>
         <File Permission="644" Location="Kernel/Config/Files/ImportExport.xml"/>
         <File Permission="644" Location="Kernel/Language/bg_ImportExport.pm"/>
         <File Permission="644" Location="Kernel/Language/cz_ImportExport.pm"/>
@@ -26,6 +28,32 @@
         <File Permission="644" Location="Kernel/System/ImportExport/FormatBackend/CSV.pm"/>
         <File Permission="644" Location="scripts/test/ImportExport.t"/>
         <File Permission="644" Location="scripts/test/ImportExportFormatCSV.t"/>
+        <File Permission="644" Location="scripts/test/sample/ImportExportFormatCSV001-MSExcel-Semicolon.csv"/>
+        <File Permission="644" Location="scripts/test/sample/ImportExportFormatCSV001-MSExcel-Tabulator.csv"/>
+        <File Permission="644" Location="scripts/test/sample/ImportExportFormatCSV001-OpenOffice-Colon.csv"/>
+        <File Permission="644" Location="scripts/test/sample/ImportExportFormatCSV001-OpenOffice-Semicolon.csv"/>
+        <File Permission="644" Location="scripts/test/sample/ImportExportFormatCSV001-OpenOffice-Tabulator.csv"/>
+        <File Permission="644" Location="scripts/test/sample/ImportExportFormatCSV002-MSExcel-Semicolon.csv"/>
+        <File Permission="644" Location="scripts/test/sample/ImportExportFormatCSV002-MSExcel-Tabulator.csv"/>
+        <File Permission="644" Location="scripts/test/sample/ImportExportFormatCSV002-OpenOffice-Colon.csv"/>
+        <File Permission="644" Location="scripts/test/sample/ImportExportFormatCSV002-OpenOffice-Semicolon.csv"/>
+        <File Permission="644" Location="scripts/test/sample/ImportExportFormatCSV002-OpenOffice-Tabulator.csv"/>
+        <File Permission="644" Location="scripts/test/sample/ImportExportFormatCSV003-MSExcel-Semicolon.csv"/>
+        <File Permission="644" Location="scripts/test/sample/ImportExportFormatCSV003-MSExcel-Tabulator.csv"/>
+        <File Permission="644" Location="scripts/test/sample/ImportExportFormatCSV003-OpenOffice-Colon.csv"/>
+        <File Permission="644" Location="scripts/test/sample/ImportExportFormatCSV003-OpenOffice-Semicolon.csv"/>
+        <File Permission="644" Location="scripts/test/sample/ImportExportFormatCSV003-OpenOffice-Tabulator.csv"/>
+        <File Permission="644" Location="scripts/test/sample/ImportExportFormatCSV004-MSExcel-Semicolon.csv"/>
+        <File Permission="644" Location="scripts/test/sample/ImportExportFormatCSV004-MSExcel-Tabulator.csv"/>
+        <File Permission="644" Location="scripts/test/sample/ImportExportFormatCSV004-OpenOffice-Colon.csv"/>
+        <File Permission="644" Location="scripts/test/sample/ImportExportFormatCSV004-OpenOffice-Semicolon.csv"/>
+        <File Permission="644" Location="scripts/test/sample/ImportExportFormatCSV004-OpenOffice-Tabulator.csv"/>
+        <File Permission="644" Location="scripts/test/sample/ImportExportFormatCSV005-MSExcel-Semicolon.csv"/>
+        <File Permission="644" Location="scripts/test/sample/ImportExportFormatCSV005-MSExcel-Tabulator.csv"/>
+        <File Permission="644" Location="scripts/test/sample/ImportExportFormatCSV005-OpenOffice-Colon.csv"/>
+        <File Permission="644" Location="scripts/test/sample/ImportExportFormatCSV005-OpenOffice-Semicolon.csv"/>
+        <File Permission="644" Location="scripts/test/sample/ImportExportFormatCSV005-OpenOffice-Tabulator.csv"/>
+        <File Permission="644" Location="scripts/test/sample/ImportExportFormatCSV006-OpenOffice-Semicolon.csv"/>
     </Filelist>
     <DatabaseInstall>
         <TableCreate Name="imexport_template">
