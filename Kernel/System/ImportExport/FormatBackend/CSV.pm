@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport/FormatBackend/CSV.pm - import/export backend for CSV
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: CSV.pm,v 1.15 2008-02-27 14:45:23 mh Exp $
+# $Id: CSV.pm,v 1.16 2008-04-03 15:51:12 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -14,10 +14,11 @@ package Kernel::System::ImportExport::FormatBackend::CSV;
 use strict;
 use warnings;
 
+use Kernel::System::FileTemp;
 use Kernel::System::ImportExport;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 =head1 NAME
 
@@ -33,7 +34,7 @@ All functions to import and export a csv format
 
 =item new()
 
-create a object
+create an object
 
     use Kernel::Config;
     use Kernel::System::DB;
@@ -74,14 +75,15 @@ sub new {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
-    if ( !$Self->{MainObject}->Require('Text::CSV_XS') ) {
+    if ( !$Self->{MainObject}->Require('Text::CSV') ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "CPAN module Text::CSV_XS is required to use the CSV import/export module!",
+            Message  => "CPAN module Text::CSV is required to use the CSV import/export module!",
         );
         return;
     }
 
+    $Self->{FileTempObject}     = Kernel::System::FileTemp->new( %{$Self} );
     $Self->{ImportExportObject} = Kernel::System::ImportExport->new( %{$Self} );
 
     return $Self;
@@ -168,7 +170,7 @@ get import data as 2D-array reference
 
     my $ImportData = $FormatBackend->ImportDataGet(
         TemplateID    => 123,
-        SourceContent => $ArrayRef,  # (optional)
+        SourceContent => $StringRef,  # (optional)
         UserID        => 1,
     );
 
@@ -188,8 +190,16 @@ sub ImportDataGet {
         }
     }
 
-    return [] if !$Param{SourceContent};
-    return [] if ref $Param{SourceContent} ne 'ARRAY';
+    return [] if !defined $Param{SourceContent};
+
+    # check source content
+    if ( ref $Param{SourceContent} ne 'SCALAR' ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'SourceContent must be a scalar reference',
+        );
+        return;
+    }
 
     # get format data
     my $FormatData = $Self->{ImportExportObject}->FormatDataGet(
@@ -197,9 +207,14 @@ sub ImportDataGet {
         UserID     => $Param{UserID},
     );
 
-    return if !$FormatData;
-    return if ref $FormatData ne 'HASH';
-    return if !$FormatData->{ColumnSeperator};
+    # check form data
+    if ( !$FormatData || ref $FormatData ne 'HASH' ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "No format data found for the tamplate id $Param{TemplateID}",
+        );
+        return;
+    }
 
     my %AvailableSeperators = (
         Tabulator => "\t",
@@ -208,28 +223,50 @@ sub ImportDataGet {
         Dot       => '.',
     );
 
+    $FormatData->{ColumnSeperator} ||= '';
     my $Seperator = $AvailableSeperators{ $FormatData->{ColumnSeperator} } || '';
 
+    # check the seperator
+    if ( !$Seperator ) {
+
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "No valid seperator found for the template id $Param{TemplateID}",
+        );
+        return;
+    }
+
     # create the parser object
-    my $ParseObject = Text::CSV_XS->new(
+    my $ParseObject = Text::CSV->new (
         {
-            binary   => 1,
-            sep_char => $Seperator,
+            quote_char          => '"',
+            escape_char         => '"',
+            sep_char            => $Seperator,
+            eol                 => '',
+            always_quote        => 0,
+            binary              => 1,
+            keep_meta_info      => 0,
+            allow_loose_quotes  => 0,
+            allow_loose_escapes => 0,
+            allow_whitespace    => 0,
+            blank_is_undef      => 0,
+            verbatim            => 0,
         }
     );
 
+    # create temp file and write source content
+    my ($FH, $Filename) = $Self->{FileTempObject}->TempFile();
+
+    print $FH ${ $Param{SourceContent} };
+
+    # rewind file handle
+    seek $FH, 0, 0;
+
+    # parse the content
     my @ImportData;
-    SOURCEROW:
-    for my $SourceRow ( @{ $Param{SourceContent} } ) {
-
-        next SOURCEROW if $SourceRow eq '';
-
-        # parse the line
-        $ParseObject->parse($SourceRow);
-
-        my @Row = $ParseObject->fields;
-
-        push @ImportData, \@Row;
+    ROW:
+    while ( my $Column = $ParseObject->getline( $FH ) ) {
+        push @ImportData, $Column;
     }
 
     return \@ImportData;
@@ -283,7 +320,7 @@ sub ExportDataSave {
     my $Seperator = $AvailableSeperators{ $FormatData->{ColumnSeperator} } || '';
 
     # create the parser object
-    my $ParseObject = Text::CSV_XS->new(
+    my $ParseObject = Text::CSV->new(
         {
             binary   => 1,
             sep_char => $Seperator,
@@ -311,6 +348,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.15 $ $Date: 2008-02-27 14:45:23 $
+$Revision: 1.16 $ $Date: 2008-04-03 15:51:12 $
 
 =cut
