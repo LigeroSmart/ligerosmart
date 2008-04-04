@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport/FormatBackend/CSV.pm - import/export backend for CSV
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: CSV.pm,v 1.17 2008-04-04 11:48:41 mh Exp $
+# $Id: CSV.pm,v 1.18 2008-04-04 15:39:23 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FileTemp;
 use Kernel::System::ImportExport;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 =head1 NAME
 
@@ -85,6 +85,14 @@ sub new {
 
     $Self->{FileTempObject}     = Kernel::System::FileTemp->new( %{$Self} );
     $Self->{ImportExportObject} = Kernel::System::ImportExport->new( %{$Self} );
+
+    # define available seperators
+    $Self->{AvailableSeperators} = {
+        Tabulator => "\t",
+        Semicolon => ';',
+        Colon     => ':',
+        Dot       => '.',
+    };
 
     return $Self;
 }
@@ -219,11 +227,11 @@ sub ImportDataGet {
         UserID     => $Param{UserID},
     );
 
-    # check form data
+    # check format data
     if ( !$FormatData || ref $FormatData ne 'HASH' ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "No format data found for the tamplate id $Param{TemplateID}",
+            Message  => "No format data found for the template id $Param{TemplateID}",
         );
         return;
     }
@@ -242,17 +250,9 @@ sub ImportDataGet {
         return;
     }
 
-    # define seperators
-    my %AvailableSeperators = (
-        Tabulator => "\t",
-        Semicolon => ';',
-        Colon     => ':',
-        Dot       => '.',
-    );
-
     # get charset
     $FormatData->{ColumnSeperator} ||= '';
-    my $Seperator = $AvailableSeperators{ $FormatData->{ColumnSeperator} } || '';
+    my $Seperator = $Self->{AvailableSeperators}->{ $FormatData->{ColumnSeperator} } || '';
 
     # check the seperator
     if ( !$Seperator ) {
@@ -335,7 +335,14 @@ sub ExportDataSave {
         }
     }
 
-    return if ref $Param{ExportDataRow} ne 'ARRAY';
+    # check source content
+    if ( ref $Param{ExportDataRow} ne 'ARRAY' ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'ExportDataRow must be an array reference',
+        );
+        return;
+    }
 
     # get format data
     my $FormatData = $Self->{ImportExportObject}->FormatDataGet(
@@ -343,24 +350,58 @@ sub ExportDataSave {
         UserID     => $Param{UserID},
     );
 
-    return if !$FormatData;
-    return if ref $FormatData ne 'HASH';
-    return if !$FormatData->{ColumnSeperator};
+    # check format data
+    if ( !$FormatData || ref $FormatData ne 'HASH' ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "No format data found for the template id $Param{TemplateID}",
+        );
+        return;
+    }
 
-    my %AvailableSeperators = (
-        Tabulator => "\t",
-        Semicolon => ';',
-        Colon     => ':',
-        Dot       => '.',
-    );
+    # get charset
+    my $Charset = $FormatData->{Charset} ||= '';
+    $Charset =~ s{ \s* (utf-8|utf8) \s* }{UTF-8}xmsi;
 
-    my $Seperator = $AvailableSeperators{ $FormatData->{ColumnSeperator} } || '';
+    # check the charset
+    if ( !$Charset ) {
+
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "No valid charset found for the template id $Param{TemplateID}",
+        );
+        return;
+    }
+
+    # get charset
+    $FormatData->{ColumnSeperator} ||= '';
+    my $Seperator = $Self->{AvailableSeperators}->{ $FormatData->{ColumnSeperator} } || '';
+
+    # check the seperator
+    if ( !$Seperator ) {
+
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "No valid seperator found for the template id $Param{TemplateID}",
+        );
+        return;
+    }
 
     # create the parser object
-    my $ParseObject = Text::CSV->new(
+    my $ParseObject = Text::CSV->new (
         {
-            binary   => 1,
-            sep_char => $Seperator,
+            quote_char          => '"',
+            escape_char         => '"',
+            sep_char            => $Seperator,
+            eol                 => '',
+            always_quote        => 0,
+            binary              => 1,
+            keep_meta_info      => 0,
+            allow_loose_quotes  => 0,
+            allow_loose_escapes => 0,
+            allow_whitespace    => 0,
+            blank_is_undef      => 0,
+            verbatim            => 0,
         }
     );
 
@@ -385,6 +426,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.17 $ $Date: 2008-04-04 11:48:41 $
+$Revision: 1.18 $ $Date: 2008-04-04 15:39:23 $
 
 =cut
