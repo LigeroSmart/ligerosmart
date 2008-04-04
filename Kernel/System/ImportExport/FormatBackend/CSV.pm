@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport/FormatBackend/CSV.pm - import/export backend for CSV
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: CSV.pm,v 1.16 2008-04-03 15:51:12 mh Exp $
+# $Id: CSV.pm,v 1.17 2008-04-04 11:48:41 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FileTemp;
 use Kernel::System::ImportExport;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 =head1 NAME
 
@@ -125,6 +125,18 @@ sub FormatAttributesGet {
                 PossibleNone => 1,
             },
         },
+        {
+            Key   => 'Charset',
+            Name  => 'Charset',
+            Input => {
+                Type         => 'Text',
+                ValueDefault => 'UTF-8',
+                Required     => 1,
+                Translation  => 0,
+                Size         => 20,
+                MaxLength    => 20,
+            },
+        },
     ];
 
     return $Attributes;
@@ -216,6 +228,21 @@ sub ImportDataGet {
         return;
     }
 
+    # get charset
+    my $Charset = $FormatData->{Charset} ||= '';
+    $Charset =~ s{ \s* (utf-8|utf8) \s* }{UTF-8}xmsi;
+
+    # check the charset
+    if ( !$Charset ) {
+
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "No valid charset found for the template id $Param{TemplateID}",
+        );
+        return;
+    }
+
+    # define seperators
     my %AvailableSeperators = (
         Tabulator => "\t",
         Semicolon => ';',
@@ -223,6 +250,7 @@ sub ImportDataGet {
         Dot       => '.',
     );
 
+    # get charset
     $FormatData->{ColumnSeperator} ||= '';
     my $Seperator = $AvailableSeperators{ $FormatData->{ColumnSeperator} } || '';
 
@@ -267,6 +295,15 @@ sub ImportDataGet {
     ROW:
     while ( my $Column = $ParseObject->getline( $FH ) ) {
         push @ImportData, $Column;
+    }
+
+    return \@ImportData if $Charset ne 'UTF-8';
+
+    # set the utf8 flags
+    for my $Row (@ImportData) {
+        for my $Cell ( @{$Row} ) {
+            Encode::_utf8_on( $Cell );
+        }
     }
 
     return \@ImportData;
@@ -348,6 +385,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.16 $ $Date: 2008-04-03 15:51:12 $
+$Revision: 1.17 $ $Date: 2008-04-04 11:48:41 $
 
 =cut
