@@ -2,7 +2,7 @@
 # ImportExportFormatCSV.t - all import export tests for the CSV format backend
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExportFormatCSV.t,v 1.3 2008-04-04 11:46:43 mh Exp $
+# $Id: ImportExportFormatCSV.t,v 1.4 2008-04-04 15:40:07 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -31,7 +31,7 @@ $Self->{Home} = $Self->{ConfigObject}->Get('Home');
 
 # add some test templates for later checks
 my @TemplateIDs;
-for ( 1 .. 20 ) {
+for ( 1 .. 30 ) {
 
     # add a test template for later checks
     my $TemplateID = $Self->{ImportExportObject}->TemplateAdd(
@@ -211,7 +211,7 @@ $TestCount++;
 # define general ImportDataGet tests
 # ------------------------------------------------------------ #
 
-my $TestData = [
+my $ImportDataTests = [
 
     # ImportDataGet doesn't contains all data (check required attributes)
     {
@@ -286,7 +286,7 @@ my $TestData = [
         },
     },
 
-    # no column seperator and charset is given (check return false)
+    # no column seperator and charset are given (check return false)
     {
         SourceImportData => {
             ImportDataGet => {
@@ -992,9 +992,9 @@ my $TestData = [
 # ------------------------------------------------------------ #
 
 TEST:
-for my $Test ( @{$TestData} ) {
+for my $Test ( @{$ImportDataTests} ) {
 
-    # check ImportDataUse attribute
+    # check SourceImportData attribute
     if ( !$Test->{SourceImportData} || ref $Test->{SourceImportData} ne 'HASH' ) {
 
         $Self->True(
@@ -1053,73 +1053,373 @@ for my $Test ( @{$TestData} ) {
             $ImportData,
             "Test $TestCount: ImportDataGet() - return false"
         );
-    }
-    else {
 
-        if ( ref $ImportData ne 'ARRAY' ) {
+        next TEST;
+    }
+
+    if ( ref $ImportData ne 'ARRAY' ) {
+
+        # check array reference
+        $Self->True(
+            0,
+            "Test $TestCount: ImportDataGet() - return value is an array reference",
+        );
+
+        next TEST;
+    }
+
+    # check number of rows
+    $Self->Is(
+        scalar @{$ImportData},
+        scalar @{$Test->{ReferenceImportData}},
+        "Test $TestCount: ImportDataGet() - same number of rows",
+    );
+
+    # check content of import data
+    my $CounterRow = 0;
+    ROW:
+    for my $ImportRow ( @{ $ImportData } ) {
+
+        # extract reference row
+        my $ReferenceRow = $Test->{ReferenceImportData}->[$CounterRow];
+
+        if ( ref $ImportRow ne 'ARRAY' || ref $ReferenceRow ne 'ARRAY' ) {
 
             # check array reference
             $Self->True(
                 0,
-                "Test $TestCount: ImportDataGet() - return value is an array reference",
+                "Test $TestCount: ImportDataGet() - import row and reference row matched",
             );
 
             next TEST;
         }
 
-        # check number of rows
+        # check number of columns
         $Self->Is(
-            scalar @{$ImportData},
-            scalar @{$Test->{ReferenceImportData}},
-            "Test $TestCount: ImportDataGet() - same number of rows",
+            scalar @{$ImportRow},
+            scalar @{$ReferenceRow},
+            "Test $TestCount: ImportDataGet() - same number of columns",
         );
 
-        # check content of import data
-        my $CounterRow = 0;
-        ROW:
-        for my $ImportRow ( @{ $ImportData } ) {
+        my $CounterColumn = 0;
+        for my $Cell ( @{$ImportRow} ) {
 
-            # extract reference row
-            my $ReferenceRow = $Test->{ReferenceImportData}->[$CounterRow];
-
-            if ( ref $ImportRow ne 'ARRAY' || ref $ReferenceRow ne 'ARRAY' ) {
-
-                # check array reference
-                $Self->True(
-                    0,
-                    "Test $TestCount: ImportDataGet() - import row and reference row matched",
-                );
-
-                next TEST;
-            }
-
-            # check number of columns
+            # check cell data
             $Self->Is(
-                scalar @{$ImportRow},
-                scalar @{$ReferenceRow},
-                "Test $TestCount: ImportDataGet() - same number of columns",
+                $Cell || '',
+                $ReferenceRow->[$CounterColumn] || '',
+                "Test $TestCount: ImportDataGet() ",
             );
 
-            my $CounterColumn = 0;
-            for my $Cell ( @{$ImportRow} ) {
-
-                # check cell data
-                $Self->Is(
-                    $Cell || '',
-                    $ReferenceRow->[$CounterColumn] || '',
-                    "Test $TestCount: ImportDataGet() ",
-                );
-
-                $CounterColumn++;
-            }
-
-            $CounterRow++;
+            $CounterColumn++;
         }
+
+        $CounterRow++;
     }
 }
 continue {
+    $TestCount++;
+}
 
-    # increment the counter
+# ------------------------------------------------------------ #
+# define general ExportDataSave tests
+# ------------------------------------------------------------ #
+
+my $ExportDataTests = [
+
+    # ExportDataSave doesn't contains all data (check required attributes)
+    {
+        SourceExportData => {
+            ExportDataSave => {
+                ExportDataRow => [ 'Dummy' ],
+                UserID        => 1,
+            },
+        },
+    },
+
+    # ExportDataSave doesn't contains all data (check required attributes)
+    {
+        SourceExportData => {
+            ExportDataSave => {
+                TemplateID => $TemplateIDs[20],
+                UserID     => 1,
+            },
+        },
+    },
+
+    # ExportDataSave doesn't contains all data (check required attributes)
+    {
+        SourceExportData => {
+            ExportDataSave => {
+                TemplateID    => $TemplateIDs[20],
+                ExportDataRow => [ 'Dummy' ],
+            },
+        },
+    },
+
+    # export data row must be an array reference (check return false)
+    {
+        SourceExportData => {
+            ExportDataSave => {
+                TemplateID    => $TemplateIDs[20],
+                ExportDataRow => '',
+                UserID        => 1,
+            },
+        },
+    },
+
+    # export data row must be an array reference (check return false)
+    {
+        SourceExportData => {
+            ExportDataSave => {
+                TemplateID    => $TemplateIDs[20],
+                ExportDataRow => {},
+                UserID        => 1,
+            },
+        },
+    },
+
+    # no existing template id is given (check return false)
+    {
+        SourceExportData => {
+            ExportDataSave => {
+                TemplateID    => $TemplateIDs[-1] + 1,
+                ExportDataRow => [ 'Dummy' ],
+                UserID        => 1,
+            },
+        },
+    },
+
+    # no column seperator and charset are given (check return false)
+    {
+        SourceExportData => {
+            ExportDataSave => {
+                TemplateID    => $TemplateIDs[21],
+                ExportDataRow => [ 'Dummy' ],
+                UserID        => 1,
+            },
+        },
+    },
+
+    # no column seperator is given (check return false)
+    {
+        SourceExportData => {
+            FormatData => {
+                Charset         => 'UTF-8',
+            },
+            ExportDataSave => {
+                TemplateID    => $TemplateIDs[21],
+                ExportDataRow => [ 'Dummy' ],
+                UserID        => 1,
+            },
+        },
+    },
+
+    # no charset is given (check return false)
+    {
+        SourceExportData => {
+            FormatData => {
+                ColumnSeperator => 'Dummy',
+            },
+            ExportDataSave => {
+                TemplateID    => $TemplateIDs[21],
+                ExportDataRow => [ 'Dummy' ],
+                UserID        => 1,
+            },
+        },
+    },
+
+    # invalid column seperator is given (check return false)
+    {
+        SourceExportData => {
+            FormatData => {
+                ColumnSeperator => 'Dummy',
+                Charset         => 'UTF-8',
+            },
+            ExportDataSave => {
+                TemplateID    => $TemplateIDs[21],
+                ExportDataRow => [ 'Dummy' ],
+                UserID        => 1,
+            },
+        },
+    },
+
+    # export data are one cells with empty strings (empty string must be returned)
+    {
+        SourceExportData => {
+            FormatData => {
+                ColumnSeperator => 'Semicolon',
+                Charset         => 'UTF-8',
+            },
+            ExportDataSave => {
+                TemplateID    => $TemplateIDs[22],
+                ExportDataRow => [ '' ],
+                UserID        => 1,
+            },
+        },
+        ReferenceDestinationContent => '',
+    },
+
+    # export data are three cells with empty strings (two seperators must be returned)
+    {
+        SourceExportData => {
+            FormatData => {
+                ColumnSeperator => 'Semicolon',
+                Charset         => 'UTF-8',
+            },
+            ExportDataSave => {
+                TemplateID    => $TemplateIDs[22],
+                ExportDataRow => [ '', '', '' ],
+                UserID        => 1,
+            },
+        },
+        ReferenceDestinationContent => ';;',
+    },
+
+    # export data are three cells with empty strings (two seperators must be returned)
+    {
+        SourceExportData => {
+            FormatData => {
+                ColumnSeperator => 'Tabulator',
+                Charset         => 'UTF-8',
+            },
+            ExportDataSave => {
+                TemplateID    => $TemplateIDs[22],
+                ExportDataRow => [ '', '', '' ],
+                UserID        => 1,
+            },
+        },
+        ReferenceDestinationContent => "\t\t",
+    },
+
+    # export data are three cells with empty strings (two seperators must be returned)
+    {
+        SourceExportData => {
+            FormatData => {
+                ColumnSeperator => 'Colon',
+                Charset         => 'UTF-8',
+            },
+            ExportDataSave => {
+                TemplateID    => $TemplateIDs[22],
+                ExportDataRow => [ '', '', '' ],
+                UserID        => 1,
+            },
+        },
+        ReferenceDestinationContent => '::',
+    },
+
+    # export data are three cells with empty strings (two seperators must be returned)
+    {
+        SourceExportData => {
+            FormatData => {
+                ColumnSeperator => 'Dot',
+                Charset         => 'UTF-8',
+            },
+            ExportDataSave => {
+                TemplateID    => $TemplateIDs[22],
+                ExportDataRow => [ '', '', '' ],
+                UserID        => 1,
+            },
+        },
+        ReferenceDestinationContent => '..',
+    },
+
+#    {
+#        SourceExportData => {
+#            FormatData => {
+#                ColumnSeperator => 'Semicolon',
+#                Charset         => 'UTF-8',
+#            },
+#            ExportDataSave => {
+#                TemplateID    => $TemplateIDs[11],
+#                ExportDataRow => [ 'Row1-Col1', 'Row1-Col2', 'Row1-Col3' ],
+#                UserID        => 1,
+#            },
+#        },
+#        ReferenceDestinationContent => 'Row1-Col1;Row1-Col2;Row1-Col3',
+#    },
+];
+
+# ------------------------------------------------------------ #
+# run general ExportDataSave tests
+# ------------------------------------------------------------ #
+
+TEST:
+for my $Test ( @{$ExportDataTests} ) {
+
+    # check SourceExportData attribute
+    if ( !$Test->{SourceExportData} || ref $Test->{SourceExportData} ne 'HASH' ) {
+
+        $Self->True(
+            0,
+            "Test $TestCount: No SourceExportData found for this test."
+        );
+
+        next TEST;
+    }
+
+    # set default ExportDataSave
+    if ( !$Test->{SourceExportData}->{ExportDataSave} ) {
+        $Test->{SourceExportData}->{ExportDataSave} = {};
+    }
+
+    # set the format data
+    if ( $Test->{SourceExportData}->{FormatData}
+        && ref $Test->{SourceExportData}->{FormatData} eq 'HASH'
+        && $Test->{SourceExportData}->{ExportDataSave}->{TemplateID}
+    ) {
+
+        # save format data
+        $Self->{ImportExportObject}->FormatDataSave(
+            TemplateID => $Test->{SourceExportData}->{ExportDataSave}->{TemplateID},
+            FormatData => $Test->{SourceExportData}->{FormatData},
+            UserID     => 1,
+        );
+    }
+
+    # get export data row
+    my $ExportString = $Self->{FormatBackendObject}->ExportDataSave(
+        %{ $Test->{SourceExportData}->{ExportDataSave} },
+    );
+
+    if ( !defined $Test->{ReferenceDestinationContent} ) {
+
+        $Self->True(
+            !defined $ExportString,
+            "Test $TestCount: ExportDataSave() - return false"
+        );
+
+        next TEST;
+    }
+
+    if ( !defined $ExportString ) {
+
+        $Self->True(
+            !defined $Test->{ReferenceDestinationContent},
+            "Test $TestCount: ExportDataSave() - return false"
+        );
+
+        next TEST;
+    }
+
+    if ( !$Test->{SourceExportData}->{ExportDataSave}->{ExportDataRow} ) {
+
+        $Self->True(
+            defined $ExportString,
+            "Test $TestCount: ExportDataSave() - return false"
+        );
+
+        next TEST;
+    }
+
+    # check the export string
+    $Self->Is(
+        $ExportString,
+        $Test->{ReferenceDestinationContent},
+        "Test $TestCount: ExportDataSave()",
+    );
+}
+continue {
     $TestCount++;
 }
 
