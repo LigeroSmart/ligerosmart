@@ -2,7 +2,7 @@
 # Kernel/Language/de_ImportExport.pm - the german translation of ImportExport
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: de_ImportExport.pm,v 1.14 2008-03-19 15:10:04 mh Exp $
+# $Id: de_ImportExport.pm,v 1.15 2008-04-04 11:47:08 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 sub Data {
     my ($Self) = @_;
@@ -37,6 +37,7 @@ sub Data {
     $Lang->{'Import information'}            = 'Import Informationen';
     $Lang->{'Column'}                        = 'Spalte';
     $Lang->{'Column Seperator'}              = 'Spaltentrenner';
+    $Lang->{'Charset'}                       = 'Zeichensatz';
     $Lang->{'Maximum number of one element'} = 'Maximale Anzahl eines Elements';
     $Lang->{'Only import changed datasets'}  = 'Nur geänderte Datensätze importieren';
     $Lang->{'Tabulator (TAB)'}               = 'Tabulator (TAB)';
