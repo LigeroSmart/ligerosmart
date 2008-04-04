@@ -3,7 +3,7 @@
 # ImportExport.pl - import/export script
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pl,v 1.5 2008-04-04 11:47:38 mh Exp $
+# $Id: ImportExport.pl,v 1.6 2008-04-04 15:41:58 mh Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ use Kernel::System::Log;
 use Kernel::System::Main;
 
 use vars qw($VERSION $RealBin);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 # get options
 my %Opts;
@@ -102,7 +102,7 @@ if ( !$TemplateData->{TemplateID} ) {
 # time to start
 if ( lc $Opts{a} eq 'import' ) {
 
-    my $SourceContent = \do { '' };
+    my $SourceContent = \do {''};
     if ( $Opts{i} ) {
 
         print STDOUT "Read File $Opts{i}.\n";
@@ -185,6 +185,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2008-04-04 11:47:38 $
+$Revision: 1.6 $ $Date: 2008-04-04 15:41:58 $
 
 =cut
