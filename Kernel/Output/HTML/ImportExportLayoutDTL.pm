@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ImportExportLayoutDTL.pm - layout backend module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExportLayoutDTL.pm,v 1.1 2008-02-06 17:46:58 mh Exp $
+# $Id: ImportExportLayoutDTL.pm,v 1.2 2008-04-04 10:21:59 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -31,7 +31,7 @@ All layout functions for display DTL code
 
 =item new()
 
-create a object
+create an object
 
     $BackendObject = Kernel::Output::HTML::ImportExportLayoutDTL->new(
         %Param,
@@ -106,6 +106,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2008-02-06 17:46:58 $
+$Revision: 1.2 $ $Date: 2008-04-04 10:21:59 $
 
 =cut
