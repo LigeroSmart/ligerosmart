@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport.pm - all import and export functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pm,v 1.22 2008-03-27 15:11:04 mh Exp $
+# $Id: ImportExport.pm,v 1.23 2008-04-04 10:19:24 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 =head1 NAME
 
@@ -33,7 +33,7 @@ All import and export functions.
 
 =item new()
 
-create a object
+create an object
 
     use Kernel::Config;
     use Kernel::System::DB;
@@ -2121,7 +2121,7 @@ import function
 
     my $ResultRef = $ImportExportObject->Import(
         TemplateID    => 123,
-        SourceContent => $ArrayRef,  # (optional)
+        SourceContent => $StringRef,  # (optional)
         UserID        => 1,
     );
 
@@ -2329,6 +2329,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.22 $ $Date: 2008-03-27 15:11:04 $
+$Revision: 1.23 $ $Date: 2008-04-04 10:19:24 $
 
 =cut
