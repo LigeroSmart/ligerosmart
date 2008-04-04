@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ImportExport.sopm,v 1.14 2008-04-03 15:55:25 mh Exp $</CVS>
+    <CVS>$Id: ImportExport.sopm,v 1.15 2008-04-04 11:45:55 mh Exp $</CVS>
     <Name>ImportExport</Name>
     <Version>0.0.0</Version>
     <Framework>2.2.6</Framework>
@@ -54,6 +54,8 @@
         <File Permission="644" Location="scripts/test/sample/ImportExportFormatCSV005-OpenOffice-Semicolon.csv"/>
         <File Permission="644" Location="scripts/test/sample/ImportExportFormatCSV005-OpenOffice-Tabulator.csv"/>
         <File Permission="644" Location="scripts/test/sample/ImportExportFormatCSV006-OpenOffice-Semicolon.csv"/>
+        <File Permission="644" Location="scripts/test/sample/ImportExportFormatCSV006-OpenOffice-Colon.csv"/>
+        <File Permission="644" Location="scripts/test/sample/ImportExportFormatCSV006-OpenOffice-Tabulator.csv"/>
     </Filelist>
     <DatabaseInstall>
         <TableCreate Name="imexport_template">
