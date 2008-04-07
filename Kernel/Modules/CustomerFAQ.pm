@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerFAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQ.pm,v 1.5 2008-03-26 08:42:27 martin Exp $
+# $Id: CustomerFAQ.pm,v 1.6 2008-04-07 08:15:45 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -16,7 +16,7 @@ use Kernel::System::FAQ;
 use Kernel::Modules::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 our @ISA = qw(Kernel::Modules::FAQ);
 
@@ -180,7 +180,7 @@ sub Run {
             $Self->{LayoutObject}->FatalError(Message => "Permission denied!");
         }
         $Self->GetItemView(
-            Links => 1,
+            Links => 0,
             Permission => $Permission,
         );
 
