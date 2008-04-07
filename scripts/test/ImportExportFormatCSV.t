@@ -2,7 +2,7 @@
 # ImportExportFormatCSV.t - all import export tests for the CSV format backend
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExportFormatCSV.t,v 1.4 2008-04-04 15:40:07 mh Exp $
+# $Id: ImportExportFormatCSV.t,v 1.5 2008-04-07 10:25:58 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -16,9 +16,11 @@ use utf8;
 use vars qw($Self);
 
 use Data::Dumper;
+use Kernel::System::Encode;
 use Kernel::System::ImportExport;
 use Kernel::System::ImportExport::FormatBackend::CSV;
 
+$Self->{EncodeObject}        = Kernel::System::Encode->new( %{$Self} );
 $Self->{ImportExportObject}  = Kernel::System::ImportExport->new( %{$Self} );
 $Self->{FormatBackendObject} = Kernel::System::ImportExport::FormatBackend::CSV->new( %{$Self} );
 
@@ -280,7 +282,7 @@ my $ImportDataTests = [
         SourceImportData => {
             ImportDataGet => {
                 TemplateID    => $TemplateIDs[-1] + 1,
-                SourceContent => \do { 'Dummy' },
+                SourceContent => \do {'Dummy'},
                 UserID        => 1,
             },
         },
@@ -291,7 +293,7 @@ my $ImportDataTests = [
         SourceImportData => {
             ImportDataGet => {
                 TemplateID    => $TemplateIDs[2],
-                SourceContent => \do { 'Dummy' },
+                SourceContent => \do {'Dummy'},
                 UserID        => 1,
             },
         },
@@ -301,11 +303,11 @@ my $ImportDataTests = [
     {
         SourceImportData => {
             FormatData => {
-                Charset         => 'UTF-8',
+                Charset => 'UTF-8',
             },
             ImportDataGet => {
                 TemplateID    => $TemplateIDs[2],
-                SourceContent => \do { 'Dummy' },
+                SourceContent => \do {'Dummy'},
                 UserID        => 1,
             },
         },
@@ -319,7 +321,7 @@ my $ImportDataTests = [
             },
             ImportDataGet => {
                 TemplateID    => $TemplateIDs[2],
-                SourceContent => \do { 'Dummy' },
+                SourceContent => \do {'Dummy'},
                 UserID        => 1,
             },
         },
@@ -334,7 +336,7 @@ my $ImportDataTests = [
             },
             ImportDataGet => {
                 TemplateID    => $TemplateIDs[2],
-                SourceContent => \do { 'Dummy' },
+                SourceContent => \do {'Dummy'},
                 UserID        => 1,
             },
         },
@@ -349,7 +351,7 @@ my $ImportDataTests = [
             },
             ImportDataGet => {
                 TemplateID    => $TemplateIDs[3],
-                SourceContent => \do { '' },
+                SourceContent => \do {''},
                 UserID        => 1,
             },
         },
@@ -365,12 +367,12 @@ my $ImportDataTests = [
             },
             ImportDataGet => {
                 TemplateID    => $TemplateIDs[4],
-                SourceContent => \do { '  ' },
+                SourceContent => \do {'  '},
                 UserID        => 1,
             },
         },
         ReferenceImportData => [
-            [ '  ' ],
+            ['  '],
         ],
     },
 
@@ -381,7 +383,7 @@ my $ImportDataTests = [
                 ColumnSeperator => 'Semicolon',
                 Charset         => 'ISO-8859-1',
             },
-            SourceFile => 'ImportExportFormatCSV001-MSExcel-Semicolon.csv',
+            SourceFile    => 'ImportExportFormatCSV001-MSExcel-Semicolon.csv',
             ImportDataGet => {
                 TemplateID    => $TemplateIDs[5],
                 SourceContent => 'SourceFile',
@@ -402,7 +404,7 @@ my $ImportDataTests = [
                 ColumnSeperator => 'Tabulator',
                 Charset         => 'ISO-8859-1',
             },
-            SourceFile => 'ImportExportFormatCSV001-MSExcel-Semicolon.csv',
+            SourceFile    => 'ImportExportFormatCSV001-MSExcel-Semicolon.csv',
             ImportDataGet => {
                 TemplateID    => $TemplateIDs[5],
                 SourceContent => 'SourceFile',
@@ -410,9 +412,9 @@ my $ImportDataTests = [
             },
         },
         ReferenceImportData => [
-            [ 'Row1-Col1;Row1-Col2;Row1-Col3' ],
-            [ 'Row2-Col1;Row2-Col2;Row2-Col3' ],
-            [ 'Row3-Col1;Row3-Col2;Row3-Col3' ],
+            ['Row1-Col1;Row1-Col2;Row1-Col3'],
+            ['Row2-Col1;Row2-Col2;Row2-Col3'],
+            ['Row3-Col1;Row3-Col2;Row3-Col3'],
         ],
     },
 
@@ -423,7 +425,7 @@ my $ImportDataTests = [
                 ColumnSeperator => 'Tabulator',
                 Charset         => 'ISO-8859-1',
             },
-            SourceFile => 'ImportExportFormatCSV001-MSExcel-Tabulator.csv',
+            SourceFile    => 'ImportExportFormatCSV001-MSExcel-Tabulator.csv',
             ImportDataGet => {
                 TemplateID    => $TemplateIDs[5],
                 SourceContent => 'SourceFile',
@@ -444,7 +446,7 @@ my $ImportDataTests = [
                 ColumnSeperator => 'Semicolon',
                 Charset         => 'ISO-8859-1',
             },
-            SourceFile => 'ImportExportFormatCSV001-MSExcel-Tabulator.csv',
+            SourceFile    => 'ImportExportFormatCSV001-MSExcel-Tabulator.csv',
             ImportDataGet => {
                 TemplateID    => $TemplateIDs[5],
                 SourceContent => 'SourceFile',
@@ -452,9 +454,9 @@ my $ImportDataTests = [
             },
         },
         ReferenceImportData => [
-            [ "Row1-Col1\tRow1-Col2\tRow1-Col3" ],
-            [ "Row2-Col1\tRow2-Col2\tRow2-Col3" ],
-            [ "Row3-Col1\tRow3-Col2\tRow3-Col3" ],
+            ["Row1-Col1\tRow1-Col2\tRow1-Col3"],
+            ["Row2-Col1\tRow2-Col2\tRow2-Col3"],
+            ["Row3-Col1\tRow3-Col2\tRow3-Col3"],
         ],
     },
 
@@ -465,7 +467,7 @@ my $ImportDataTests = [
                 ColumnSeperator => 'Semicolon',
                 Charset         => 'ISO-8859-1',
             },
-            SourceFile => 'ImportExportFormatCSV001-OpenOffice-Semicolon.csv',
+            SourceFile    => 'ImportExportFormatCSV001-OpenOffice-Semicolon.csv',
             ImportDataGet => {
                 TemplateID    => $TemplateIDs[5],
                 SourceContent => 'SourceFile',
@@ -486,7 +488,7 @@ my $ImportDataTests = [
                 ColumnSeperator => 'Tabulator',
                 Charset         => 'ISO-8859-1',
             },
-            SourceFile => 'ImportExportFormatCSV001-OpenOffice-Tabulator.csv',
+            SourceFile    => 'ImportExportFormatCSV001-OpenOffice-Tabulator.csv',
             ImportDataGet => {
                 TemplateID    => $TemplateIDs[5],
                 SourceContent => 'SourceFile',
@@ -507,7 +509,7 @@ my $ImportDataTests = [
                 ColumnSeperator => 'Colon',
                 Charset         => 'ISO-8859-1',
             },
-            SourceFile => 'ImportExportFormatCSV001-OpenOffice-Colon.csv',
+            SourceFile    => 'ImportExportFormatCSV001-OpenOffice-Colon.csv',
             ImportDataGet => {
                 TemplateID    => $TemplateIDs[5],
                 SourceContent => 'SourceFile',
@@ -528,7 +530,7 @@ my $ImportDataTests = [
                 ColumnSeperator => 'Semicolon',
                 Charset         => 'ISO-8859-1',
             },
-            SourceFile => 'ImportExportFormatCSV002-MSExcel-Semicolon.csv',
+            SourceFile    => 'ImportExportFormatCSV002-MSExcel-Semicolon.csv',
             ImportDataGet => {
                 TemplateID    => $TemplateIDs[6],
                 SourceContent => 'SourceFile',
@@ -536,7 +538,7 @@ my $ImportDataTests = [
             },
         },
         ReferenceImportData => [
-            [ "\nTest 1 - 1", "Test 1 - 2", "Test 1\n- 3", 'Test \n\t\r\s' ],
+            [ "\nTest 1 - 1", "Test 1 - 2",   "Test 1\n- 3",  'Test \n\t\r\s' ],
             [ "Test 2 \n- 1", "Te\nst 2 - 2", "Test 2 - 3\n", '' ],
         ],
     },
@@ -548,7 +550,7 @@ my $ImportDataTests = [
                 ColumnSeperator => 'Tabulator',
                 Charset         => 'ISO-8859-1',
             },
-            SourceFile => 'ImportExportFormatCSV002-MSExcel-Tabulator.csv',
+            SourceFile    => 'ImportExportFormatCSV002-MSExcel-Tabulator.csv',
             ImportDataGet => {
                 TemplateID    => $TemplateIDs[6],
                 SourceContent => 'SourceFile',
@@ -556,7 +558,7 @@ my $ImportDataTests = [
             },
         },
         ReferenceImportData => [
-            [ "\nTest 1 - 1", 'Test 1 - 2', "Test 1\n- 3", 'Test \n\t\r\s' ],
+            [ "\nTest 1 - 1", 'Test 1 - 2',   "Test 1\n- 3",  'Test \n\t\r\s' ],
             [ "Test 2 \n- 1", "Te\nst 2 - 2", "Test 2 - 3\n", '' ],
         ],
     },
@@ -568,7 +570,7 @@ my $ImportDataTests = [
                 ColumnSeperator => 'Semicolon',
                 Charset         => 'ISO-8859-1',
             },
-            SourceFile => 'ImportExportFormatCSV002-OpenOffice-Semicolon.csv',
+            SourceFile    => 'ImportExportFormatCSV002-OpenOffice-Semicolon.csv',
             ImportDataGet => {
                 TemplateID    => $TemplateIDs[6],
                 SourceContent => 'SourceFile',
@@ -576,7 +578,7 @@ my $ImportDataTests = [
             },
         },
         ReferenceImportData => [
-            [ "\nTest 1 - 1", "Test 1 - 2", "Test 1\n- 3", 'Test \n\t\r\s' ],
+            [ "\nTest 1 - 1", "Test 1 - 2",   "Test 1\n- 3",  'Test \n\t\r\s' ],
             [ "Test 2 \n- 1", "Te\nst 2 - 2", "Test 2 - 3\n", '' ],
         ],
     },
@@ -588,7 +590,7 @@ my $ImportDataTests = [
                 ColumnSeperator => 'Tabulator',
                 Charset         => 'ISO-8859-1',
             },
-            SourceFile => 'ImportExportFormatCSV002-OpenOffice-Tabulator.csv',
+            SourceFile    => 'ImportExportFormatCSV002-OpenOffice-Tabulator.csv',
             ImportDataGet => {
                 TemplateID    => $TemplateIDs[6],
                 SourceContent => 'SourceFile',
@@ -596,7 +598,7 @@ my $ImportDataTests = [
             },
         },
         ReferenceImportData => [
-            [ "\nTest 1 - 1", "Test 1 - 2", "Test 1\n- 3", 'Test \n\t\r\s' ],
+            [ "\nTest 1 - 1", "Test 1 - 2",   "Test 1\n- 3",  'Test \n\t\r\s' ],
             [ "Test 2 \n- 1", "Te\nst 2 - 2", "Test 2 - 3\n", '' ],
         ],
     },
@@ -608,7 +610,7 @@ my $ImportDataTests = [
                 ColumnSeperator => 'Colon',
                 Charset         => 'ISO-8859-1',
             },
-            SourceFile => 'ImportExportFormatCSV002-OpenOffice-Colon.csv',
+            SourceFile    => 'ImportExportFormatCSV002-OpenOffice-Colon.csv',
             ImportDataGet => {
                 TemplateID    => $TemplateIDs[6],
                 SourceContent => 'SourceFile',
@@ -616,7 +618,7 @@ my $ImportDataTests = [
             },
         },
         ReferenceImportData => [
-            [ "\nTest 1 - 1", "Test 1 - 2", "Test 1\n- 3", 'Test \n\t\r\s' ],
+            [ "\nTest 1 - 1", "Test 1 - 2",   "Test 1\n- 3",  'Test \n\t\r\s' ],
             [ "Test 2 \n- 1", "Te\nst 2 - 2", "Test 2 - 3\n", '' ],
         ],
     },
@@ -628,7 +630,7 @@ my $ImportDataTests = [
                 ColumnSeperator => 'Semicolon',
                 Charset         => 'ISO-8859-1',
             },
-            SourceFile => 'ImportExportFormatCSV003-MSExcel-Semicolon.csv',
+            SourceFile    => 'ImportExportFormatCSV003-MSExcel-Semicolon.csv',
             ImportDataGet => {
                 TemplateID    => $TemplateIDs[7],
                 SourceContent => 'SourceFile',
@@ -637,8 +639,8 @@ my $ImportDataTests = [
         },
         ReferenceImportData => [
             [ '  Test  ', '    ', 'Test  ' ],
-            [ '    Test', '', 'Test' ],
-            [ '', '', ' ' ],
+            [ '    Test', '',     'Test' ],
+            [ '',         '',     ' ' ],
         ],
     },
 
@@ -649,7 +651,7 @@ my $ImportDataTests = [
                 ColumnSeperator => 'Tabulator',
                 Charset         => 'ISO-8859-1',
             },
-            SourceFile => 'ImportExportFormatCSV003-MSExcel-Tabulator.csv',
+            SourceFile    => 'ImportExportFormatCSV003-MSExcel-Tabulator.csv',
             ImportDataGet => {
                 TemplateID    => $TemplateIDs[7],
                 SourceContent => 'SourceFile',
@@ -658,8 +660,8 @@ my $ImportDataTests = [
         },
         ReferenceImportData => [
             [ '  Test  ', '    ', 'Test  ' ],
-            [ '    Test', '', 'Test' ],
-            [ '', '', ' ' ],
+            [ '    Test', '',     'Test' ],
+            [ '',         '',     ' ' ],
         ],
     },
 
@@ -670,7 +672,7 @@ my $ImportDataTests = [
                 ColumnSeperator => 'Semicolon',
                 Charset         => 'ISO-8859-1',
             },
-            SourceFile => 'ImportExportFormatCSV003-OpenOffice-Semicolon.csv',
+            SourceFile    => 'ImportExportFormatCSV003-OpenOffice-Semicolon.csv',
             ImportDataGet => {
                 TemplateID    => $TemplateIDs[7],
                 SourceContent => 'SourceFile',
@@ -679,8 +681,8 @@ my $ImportDataTests = [
         },
         ReferenceImportData => [
             [ '  Test  ', '    ', 'Test  ' ],
-            [ '    Test', '', 'Test' ],
-            [ '', '', ' ' ],
+            [ '    Test', '',     'Test' ],
+            [ '',         '',     ' ' ],
         ],
     },
 
@@ -691,7 +693,7 @@ my $ImportDataTests = [
                 ColumnSeperator => 'Tabulator',
                 Charset         => 'ISO-8859-1',
             },
-            SourceFile => 'ImportExportFormatCSV003-OpenOffice-Tabulator.csv',
+            SourceFile    => 'ImportExportFormatCSV003-OpenOffice-Tabulator.csv',
             ImportDataGet => {
                 TemplateID    => $TemplateIDs[7],
                 SourceContent => 'SourceFile',
@@ -700,8 +702,8 @@ my $ImportDataTests = [
         },
         ReferenceImportData => [
             [ '  Test  ', '    ', 'Test  ' ],
-            [ '    Test', '', 'Test' ],
-            [ '', '', ' ' ],
+            [ '    Test', '',     'Test' ],
+            [ '',         '',     ' ' ],
         ],
     },
 
@@ -712,7 +714,7 @@ my $ImportDataTests = [
                 ColumnSeperator => 'Colon',
                 Charset         => 'ISO-8859-1',
             },
-            SourceFile => 'ImportExportFormatCSV003-OpenOffice-Colon.csv',
+            SourceFile    => 'ImportExportFormatCSV003-OpenOffice-Colon.csv',
             ImportDataGet => {
                 TemplateID    => $TemplateIDs[7],
                 SourceContent => 'SourceFile',
@@ -721,8 +723,8 @@ my $ImportDataTests = [
         },
         ReferenceImportData => [
             [ '  Test  ', '    ', 'Test  ' ],
-            [ '    Test', '', 'Test' ],
-            [ '', '', ' ' ],
+            [ '    Test', '',     'Test' ],
+            [ '',         '',     ' ' ],
         ],
     },
 
@@ -733,7 +735,7 @@ my $ImportDataTests = [
                 ColumnSeperator => 'Semicolon',
                 Charset         => 'ISO-8859-1',
             },
-            SourceFile => 'ImportExportFormatCSV004-MSExcel-Semicolon.csv',
+            SourceFile    => 'ImportExportFormatCSV004-MSExcel-Semicolon.csv',
             ImportDataGet => {
                 TemplateID    => $TemplateIDs[8],
                 SourceContent => 'SourceFile',
@@ -742,7 +744,7 @@ my $ImportDataTests = [
         },
         ReferenceImportData => [
             [ 'Test;:_°^!"§$%&/()=?´`*+Test', '><@~\'}{[]\\' ],
-            [ '"";;::..--__##', '' ],
+            [ '"";;::..--__##',                  '' ],
         ],
     },
 
@@ -753,7 +755,7 @@ my $ImportDataTests = [
                 ColumnSeperator => 'Tabulator',
                 Charset         => 'ISO-8859-1',
             },
-            SourceFile => 'ImportExportFormatCSV004-MSExcel-Tabulator.csv',
+            SourceFile    => 'ImportExportFormatCSV004-MSExcel-Tabulator.csv',
             ImportDataGet => {
                 TemplateID    => $TemplateIDs[8],
                 SourceContent => 'SourceFile',
@@ -762,7 +764,7 @@ my $ImportDataTests = [
         },
         ReferenceImportData => [
             [ 'Test;:_°^!"§$%&/()=?´`*+Test', '><@~\'}{[]\\' ],
-            [ '"";;::..--__##', '' ],
+            [ '"";;::..--__##',                  '' ],
         ],
     },
 
@@ -773,7 +775,7 @@ my $ImportDataTests = [
                 ColumnSeperator => 'Semicolon',
                 Charset         => 'ISO-8859-1',
             },
-            SourceFile => 'ImportExportFormatCSV004-OpenOffice-Semicolon.csv',
+            SourceFile    => 'ImportExportFormatCSV004-OpenOffice-Semicolon.csv',
             ImportDataGet => {
                 TemplateID    => $TemplateIDs[8],
                 SourceContent => 'SourceFile',
@@ -782,7 +784,7 @@ my $ImportDataTests = [
         },
         ReferenceImportData => [
             [ 'Test;:_°^!"§$%&/()=?´`*+Test', '><@~\'}{[]\\' ],
-            [ '"";;::..--__##', '' ],
+            [ '"";;::..--__##',                  '' ],
         ],
     },
 
@@ -793,7 +795,7 @@ my $ImportDataTests = [
                 ColumnSeperator => 'Tabulator',
                 Charset         => 'ISO-8859-1',
             },
-            SourceFile => 'ImportExportFormatCSV004-OpenOffice-Tabulator.csv',
+            SourceFile    => 'ImportExportFormatCSV004-OpenOffice-Tabulator.csv',
             ImportDataGet => {
                 TemplateID    => $TemplateIDs[8],
                 SourceContent => 'SourceFile',
@@ -802,7 +804,7 @@ my $ImportDataTests = [
         },
         ReferenceImportData => [
             [ 'Test;:_°^!"§$%&/()=?´`*+Test', '><@~\'}{[]\\' ],
-            [ '"";;::..--__##', '' ],
+            [ '"";;::..--__##',                  '' ],
         ],
     },
 
@@ -813,7 +815,7 @@ my $ImportDataTests = [
                 ColumnSeperator => 'Colon',
                 Charset         => 'ISO-8859-1',
             },
-            SourceFile => 'ImportExportFormatCSV004-OpenOffice-Colon.csv',
+            SourceFile    => 'ImportExportFormatCSV004-OpenOffice-Colon.csv',
             ImportDataGet => {
                 TemplateID    => $TemplateIDs[8],
                 SourceContent => 'SourceFile',
@@ -822,7 +824,7 @@ my $ImportDataTests = [
         },
         ReferenceImportData => [
             [ 'Test;:_°^!"§$%&/()=?´`*+Test', '><@~\'}{[]\\' ],
-            [ '"";;::..--__##', '' ],
+            [ '"";;::..--__##',                  '' ],
         ],
     },
 
@@ -833,7 +835,7 @@ my $ImportDataTests = [
                 ColumnSeperator => 'Semicolon',
                 Charset         => 'ISO-8859-1',
             },
-            SourceFile => 'ImportExportFormatCSV005-MSExcel-Semicolon.csv',
+            SourceFile    => 'ImportExportFormatCSV005-MSExcel-Semicolon.csv',
             ImportDataGet => {
                 TemplateID    => $TemplateIDs[9],
                 SourceContent => 'SourceFile',
@@ -853,7 +855,7 @@ my $ImportDataTests = [
                 ColumnSeperator => 'Tabulator',
                 Charset         => 'ISO-8859-1',
             },
-            SourceFile => 'ImportExportFormatCSV005-MSExcel-Tabulator.csv',
+            SourceFile    => 'ImportExportFormatCSV005-MSExcel-Tabulator.csv',
             ImportDataGet => {
                 TemplateID    => $TemplateIDs[9],
                 SourceContent => 'SourceFile',
@@ -873,7 +875,7 @@ my $ImportDataTests = [
                 ColumnSeperator => 'Semicolon',
                 Charset         => 'ISO-8859-1',
             },
-            SourceFile => 'ImportExportFormatCSV005-OpenOffice-Semicolon.csv',
+            SourceFile    => 'ImportExportFormatCSV005-OpenOffice-Semicolon.csv',
             ImportDataGet => {
                 TemplateID    => $TemplateIDs[9],
                 SourceContent => 'SourceFile',
@@ -893,7 +895,7 @@ my $ImportDataTests = [
                 ColumnSeperator => 'Tabulator',
                 Charset         => 'ISO-8859-1',
             },
-            SourceFile => 'ImportExportFormatCSV005-OpenOffice-Tabulator.csv',
+            SourceFile    => 'ImportExportFormatCSV005-OpenOffice-Tabulator.csv',
             ImportDataGet => {
                 TemplateID    => $TemplateIDs[9],
                 SourceContent => 'SourceFile',
@@ -913,7 +915,7 @@ my $ImportDataTests = [
                 ColumnSeperator => 'Colon',
                 Charset         => 'ISO-8859-1',
             },
-            SourceFile => 'ImportExportFormatCSV005-OpenOffice-Colon.csv',
+            SourceFile    => 'ImportExportFormatCSV005-OpenOffice-Colon.csv',
             ImportDataGet => {
                 TemplateID    => $TemplateIDs[9],
                 SourceContent => 'SourceFile',
@@ -933,7 +935,7 @@ my $ImportDataTests = [
                 ColumnSeperator => 'Semicolon',
                 Charset         => 'UTF-8',
             },
-            SourceFile => 'ImportExportFormatCSV006-OpenOffice-Semicolon.csv',
+            SourceFile    => 'ImportExportFormatCSV006-OpenOffice-Semicolon.csv',
             ImportDataGet => {
                 TemplateID    => $TemplateIDs[10],
                 SourceContent => 'SourceFile',
@@ -941,7 +943,7 @@ my $ImportDataTests = [
             },
         },
         ReferenceImportData => [
-            [ 'ʩ ʬ ʮ', ' ʡ ˤ Ό ' ],
+            [ 'ʩ ʬ ʮ',     ' ʡ ˤ Ό ' ],
             [ '  Η ϗ Ϡ  ', 'Ά Λ Ξ' ],
         ],
     },
@@ -953,7 +955,7 @@ my $ImportDataTests = [
                 ColumnSeperator => 'Tabulator',
                 Charset         => 'UTF-8',
             },
-            SourceFile => 'ImportExportFormatCSV006-OpenOffice-Tabulator.csv',
+            SourceFile    => 'ImportExportFormatCSV006-OpenOffice-Tabulator.csv',
             ImportDataGet => {
                 TemplateID    => $TemplateIDs[10],
                 SourceContent => 'SourceFile',
@@ -961,7 +963,7 @@ my $ImportDataTests = [
             },
         },
         ReferenceImportData => [
-            [ 'ʩ ʬ ʮ', ' ʡ ˤ Ό ' ],
+            [ 'ʩ ʬ ʮ',     ' ʡ ˤ Ό ' ],
             [ '  Η ϗ Ϡ  ', 'Ά Λ Ξ' ],
         ],
     },
@@ -973,7 +975,7 @@ my $ImportDataTests = [
                 ColumnSeperator => 'Colon',
                 Charset         => 'UTF-8',
             },
-            SourceFile => 'ImportExportFormatCSV006-OpenOffice-Colon.csv',
+            SourceFile    => 'ImportExportFormatCSV006-OpenOffice-Colon.csv',
             ImportDataGet => {
                 TemplateID    => $TemplateIDs[10],
                 SourceContent => 'SourceFile',
@@ -981,7 +983,7 @@ my $ImportDataTests = [
             },
         },
         ReferenceImportData => [
-            [ 'ʩ ʬ ʮ', ' ʡ ˤ Ό ' ],
+            [ 'ʩ ʬ ʮ',     ' ʡ ˤ Ό ' ],
             [ '  Η ϗ Ϡ  ', 'Ά Λ Ξ' ],
         ],
     },
@@ -1011,10 +1013,12 @@ for my $Test ( @{$ImportDataTests} ) {
     }
 
     # set source content
-    if ( $Test->{SourceImportData}->{SourceFile}
+    if (
+        $Test->{SourceImportData}->{SourceFile}
         && $Test->{SourceImportData}->{ImportDataGet}->{SourceContent}
         && $Test->{SourceImportData}->{ImportDataGet}->{SourceContent} eq 'SourceFile'
-    ) {
+        )
+    {
 
         my $SourceFile = $Test->{SourceImportData}->{SourceFile};
 
@@ -1029,10 +1033,12 @@ for my $Test ( @{$ImportDataTests} ) {
     }
 
     # set the format data
-    if ( $Test->{SourceImportData}->{FormatData}
+    if (
+        $Test->{SourceImportData}->{FormatData}
         && ref $Test->{SourceImportData}->{FormatData} eq 'HASH'
         && $Test->{SourceImportData}->{ImportDataGet}->{TemplateID}
-    ) {
+        )
+    {
 
         # save format data
         $Self->{ImportExportObject}->FormatDataSave(
@@ -1071,14 +1077,14 @@ for my $Test ( @{$ImportDataTests} ) {
     # check number of rows
     $Self->Is(
         scalar @{$ImportData},
-        scalar @{$Test->{ReferenceImportData}},
+        scalar @{ $Test->{ReferenceImportData} },
         "Test $TestCount: ImportDataGet() - same number of rows",
     );
 
     # check content of import data
     my $CounterRow = 0;
     ROW:
-    for my $ImportRow ( @{ $ImportData } ) {
+    for my $ImportRow ( @{$ImportData} ) {
 
         # extract reference row
         my $ReferenceRow = $Test->{ReferenceImportData}->[$CounterRow];
@@ -1131,7 +1137,7 @@ my $ExportDataTests = [
     {
         SourceExportData => {
             ExportDataSave => {
-                ExportDataRow => [ 'Dummy' ],
+                ExportDataRow => ['Dummy'],
                 UserID        => 1,
             },
         },
@@ -1152,7 +1158,7 @@ my $ExportDataTests = [
         SourceExportData => {
             ExportDataSave => {
                 TemplateID    => $TemplateIDs[20],
-                ExportDataRow => [ 'Dummy' ],
+                ExportDataRow => ['Dummy'],
             },
         },
     },
@@ -1184,7 +1190,7 @@ my $ExportDataTests = [
         SourceExportData => {
             ExportDataSave => {
                 TemplateID    => $TemplateIDs[-1] + 1,
-                ExportDataRow => [ 'Dummy' ],
+                ExportDataRow => ['Dummy'],
                 UserID        => 1,
             },
         },
@@ -1195,7 +1201,7 @@ my $ExportDataTests = [
         SourceExportData => {
             ExportDataSave => {
                 TemplateID    => $TemplateIDs[21],
-                ExportDataRow => [ 'Dummy' ],
+                ExportDataRow => ['Dummy'],
                 UserID        => 1,
             },
         },
@@ -1205,11 +1211,11 @@ my $ExportDataTests = [
     {
         SourceExportData => {
             FormatData => {
-                Charset         => 'UTF-8',
+                Charset => 'UTF-8',
             },
             ExportDataSave => {
                 TemplateID    => $TemplateIDs[21],
-                ExportDataRow => [ 'Dummy' ],
+                ExportDataRow => ['Dummy'],
                 UserID        => 1,
             },
         },
@@ -1223,7 +1229,7 @@ my $ExportDataTests = [
             },
             ExportDataSave => {
                 TemplateID    => $TemplateIDs[21],
-                ExportDataRow => [ 'Dummy' ],
+                ExportDataRow => ['Dummy'],
                 UserID        => 1,
             },
         },
@@ -1238,7 +1244,7 @@ my $ExportDataTests = [
             },
             ExportDataSave => {
                 TemplateID    => $TemplateIDs[21],
-                ExportDataRow => [ 'Dummy' ],
+                ExportDataRow => ['Dummy'],
                 UserID        => 1,
             },
         },
@@ -1253,11 +1259,11 @@ my $ExportDataTests = [
             },
             ExportDataSave => {
                 TemplateID    => $TemplateIDs[22],
-                ExportDataRow => [ '' ],
+                ExportDataRow => [''],
                 UserID        => 1,
             },
         },
-        ReferenceDestinationContent => '',
+        ReferenceDestinationContent => '""',
     },
 
     # export data are three cells with empty strings (two seperators must be returned)
@@ -1273,7 +1279,7 @@ my $ExportDataTests = [
                 UserID        => 1,
             },
         },
-        ReferenceDestinationContent => ';;',
+        ReferenceDestinationContent => '"";"";""',
     },
 
     # export data are three cells with empty strings (two seperators must be returned)
@@ -1289,7 +1295,7 @@ my $ExportDataTests = [
                 UserID        => 1,
             },
         },
-        ReferenceDestinationContent => "\t\t",
+        ReferenceDestinationContent => "\"\"\t\"\"\t\"\"",
     },
 
     # export data are three cells with empty strings (two seperators must be returned)
@@ -1305,7 +1311,7 @@ my $ExportDataTests = [
                 UserID        => 1,
             },
         },
-        ReferenceDestinationContent => '::',
+        ReferenceDestinationContent => '"":"":""',
     },
 
     # export data are three cells with empty strings (two seperators must be returned)
@@ -1321,23 +1327,360 @@ my $ExportDataTests = [
                 UserID        => 1,
             },
         },
-        ReferenceDestinationContent => '..',
+        ReferenceDestinationContent => '""."".""',
     },
 
-#    {
-#        SourceExportData => {
-#            FormatData => {
-#                ColumnSeperator => 'Semicolon',
-#                Charset         => 'UTF-8',
-#            },
-#            ExportDataSave => {
-#                TemplateID    => $TemplateIDs[11],
-#                ExportDataRow => [ 'Row1-Col1', 'Row1-Col2', 'Row1-Col3' ],
-#                UserID        => 1,
-#            },
-#        },
-#        ReferenceDestinationContent => 'Row1-Col1;Row1-Col2;Row1-Col3',
-#    },
+    # all required values are given (check the parsed content)
+    {
+        SourceExportData => {
+            FormatData => {
+                ColumnSeperator => 'Semicolon',
+                Charset         => 'ISO-8859-1',
+            },
+            ExportDataSave => {
+                TemplateID    => $TemplateIDs[23],
+                ExportDataRow => [ 'Row1-Col1', 'Row1-Col2', 'Row1-Col3' ],
+                UserID        => 1,
+            },
+        },
+        ReferenceDestinationContent => '"Row1-Col1";"Row1-Col2";"Row1-Col3"',
+    },
+
+    # all required values are given (check the parsed content)
+    {
+        SourceExportData => {
+            FormatData => {
+                ColumnSeperator => 'Tabulator',
+                Charset         => 'ISO-8859-1',
+            },
+            ExportDataSave => {
+                TemplateID    => $TemplateIDs[23],
+                ExportDataRow => [ 'Row1-Col1', 'Row1-Col2', 'Row1-Col3' ],
+                UserID        => 1,
+            },
+        },
+        ReferenceDestinationContent => "\"Row1-Col1\"\t\"Row1-Col2\"\t\"Row1-Col3\"",
+    },
+
+    # all required values are given (check the parsed content)
+    {
+        SourceExportData => {
+            FormatData => {
+                ColumnSeperator => 'Colon',
+                Charset         => 'ISO-8859-1',
+            },
+            ExportDataSave => {
+                TemplateID    => $TemplateIDs[23],
+                ExportDataRow => [ 'Row1-Col1', 'Row1-Col2', 'Row1-Col3' ],
+                UserID        => 1,
+            },
+        },
+        ReferenceDestinationContent => '"Row1-Col1":"Row1-Col2":"Row1-Col3"',
+    },
+
+    # all required values are given (check the parsed content)
+    {
+        SourceExportData => {
+            FormatData => {
+                ColumnSeperator => 'Dot',
+                Charset         => 'ISO-8859-1',
+            },
+            ExportDataSave => {
+                TemplateID    => $TemplateIDs[23],
+                ExportDataRow => [ 'Row1-Col1', 'Row1-Col2', 'Row1-Col3' ],
+                UserID        => 1,
+            },
+        },
+        ReferenceDestinationContent => '"Row1-Col1"."Row1-Col2"."Row1-Col3"',
+    },
+
+    # all required values are given (newline checks)
+    {
+        SourceExportData => {
+            FormatData => {
+                ColumnSeperator => 'Semicolon',
+                Charset         => 'ISO-8859-1',
+            },
+            ExportDataSave => {
+                TemplateID    => $TemplateIDs[24],
+                ExportDataRow => [ "\nTest 1", "Test \n 2", 'Test 3 \n\t\r\s', "Test 4\n" ],
+                UserID        => 1,
+            },
+        },
+        ReferenceDestinationContent => qq{"\nTest 1";"Test \n 2";"Test 3 \\n\\t\\r\\s";"Test 4\n"},
+    },
+
+    # all required values are given (newline checks)
+    {
+        SourceExportData => {
+            FormatData => {
+                ColumnSeperator => 'Tabulator',
+                Charset         => 'ISO-8859-1',
+            },
+            ExportDataSave => {
+                TemplateID    => $TemplateIDs[24],
+                ExportDataRow => [ "\nTest 1", "Test \n 2", 'Test 3 \n\t\r\s', "Test 4\n" ],
+                UserID        => 1,
+            },
+        },
+        ReferenceDestinationContent =>
+            qq{"\nTest 1"\t"Test \n 2"\t"Test 3 \\n\\t\\r\\s"\t"Test 4\n"},
+    },
+
+    # all required values are given (newline checks)
+    {
+        SourceExportData => {
+            FormatData => {
+                ColumnSeperator => 'Colon',
+                Charset         => 'ISO-8859-1',
+            },
+            ExportDataSave => {
+                TemplateID    => $TemplateIDs[24],
+                ExportDataRow => [ "\nTest 1", "Test \n 2", 'Test 3 \n\t\r\s', "Test 4\n" ],
+                UserID        => 1,
+            },
+        },
+        ReferenceDestinationContent => qq{"\nTest 1":"Test \n 2":"Test 3 \\n\\t\\r\\s":"Test 4\n"},
+    },
+
+    # all required values are given (newline checks)
+    {
+        SourceExportData => {
+            FormatData => {
+                ColumnSeperator => 'Dot',
+                Charset         => 'ISO-8859-1',
+            },
+            ExportDataSave => {
+                TemplateID    => $TemplateIDs[24],
+                ExportDataRow => [ "\nTest 1", "Test \n 2", 'Test 3 \n\t\r\s', "Test 4\n" ],
+                UserID        => 1,
+            },
+        },
+        ReferenceDestinationContent => qq{"\nTest 1"."Test \n 2"."Test 3 \\n\\t\\r\\s"."Test 4\n"},
+    },
+
+    # all required values are given (spaces checks)
+    {
+        SourceExportData => {
+            FormatData => {
+                ColumnSeperator => 'Semicolon',
+                Charset         => 'ISO-8859-1',
+            },
+            ExportDataSave => {
+                TemplateID    => $TemplateIDs[24],
+                ExportDataRow => [ '  Test  ', '    ', 'Test  ', '    Test', '', 'Test', '', ' ' ],
+                UserID        => 1,
+            },
+        },
+        ReferenceDestinationContent => '"  Test  ";"    ";"Test  ";"    Test";"";"Test";"";" "',
+    },
+
+    # all required values are given (spaces checks)
+    {
+        SourceExportData => {
+            FormatData => {
+                ColumnSeperator => 'Tabulator',
+                Charset         => 'ISO-8859-1',
+            },
+            ExportDataSave => {
+                TemplateID    => $TemplateIDs[24],
+                ExportDataRow => [ '  Test  ', '    ', 'Test  ', '    Test', '', 'Test', '', ' ' ],
+                UserID        => 1,
+            },
+        },
+        ReferenceDestinationContent =>
+            "\"  Test  \"\t\"    \"\t\"Test  \"\t\"    Test\"\t\"\"\t\"Test\"\t\"\"\t\" \"",
+    },
+
+    # all required values are given (spaces checks)
+    {
+        SourceExportData => {
+            FormatData => {
+                ColumnSeperator => 'Colon',
+                Charset         => 'ISO-8859-1',
+            },
+            ExportDataSave => {
+                TemplateID    => $TemplateIDs[24],
+                ExportDataRow => [ '  Test  ', '    ', 'Test  ', '    Test', '', 'Test', '', ' ' ],
+                UserID        => 1,
+            },
+        },
+        ReferenceDestinationContent => '"  Test  ":"    ":"Test  ":"    Test":"":"Test":"":" "',
+    },
+
+    # all required values are given (spaces checks)
+    {
+        SourceExportData => {
+            FormatData => {
+                ColumnSeperator => 'Dot',
+                Charset         => 'ISO-8859-1',
+            },
+            ExportDataSave => {
+                TemplateID    => $TemplateIDs[24],
+                ExportDataRow => [ '  Test  ', '    ', 'Test  ', '    Test', '', 'Test', '', ' ' ],
+                UserID        => 1,
+            },
+        },
+        ReferenceDestinationContent => '"  Test  "."    "."Test  "."    Test".""."Test".""." "',
+    },
+
+    # all required values are given (special character checks)
+    {
+        SourceExportData => {
+            FormatData => {
+                ColumnSeperator => 'Semicolon',
+                Charset         => 'ISO-8859-1',
+            },
+            ExportDataSave => {
+                TemplateID    => $TemplateIDs[25],
+                ExportDataRow => [
+                    'Test;:_^!"$%&/()=?`*+Test',
+                    '><@~\'}{[]\\',
+                    '',
+                    '"";;::..--__##'
+                ],
+                UserID => 1,
+            },
+        },
+        ReferenceDestinationContent =>
+            '"Test;:_^!""$%&/()=?`*+Test";"><@~\'}{[]\";"";""""";;::..--__##"'
+    },
+
+    # all required values are given (special character checks)
+    {
+        SourceExportData => {
+            FormatData => {
+                ColumnSeperator => 'Tabulator',
+                Charset         => 'ISO-8859-1',
+            },
+            ExportDataSave => {
+                TemplateID    => $TemplateIDs[25],
+                ExportDataRow => [
+                    'Test;:_^!"$%&/()=?`*+Test',
+                    '><@~\'}{[]\\',
+                    '',
+                    '"";;::..--__##'
+                ],
+                UserID => 1,
+            },
+        },
+        ReferenceDestinationContent =>
+            '"Test;:_^!""$%&/()=?`*+Test"'
+            . "\t"
+            . '"><@~\'}{[]\\"'
+            . "\t"
+            . '""'
+            . "\t"
+            . '""""";;::..--__##"',
+    },
+
+    # all required values are given (special character checks)
+    {
+        SourceExportData => {
+            FormatData => {
+                ColumnSeperator => 'Colon',
+                Charset         => 'ISO-8859-1',
+            },
+            ExportDataSave => {
+                TemplateID    => $TemplateIDs[25],
+                ExportDataRow => [
+                    'Test;:_^!"$%&/()=?`*+Test',
+                    '><@~\'}{[]\\',
+                    '',
+                    '"";;::..--__##'
+                ],
+                UserID => 1,
+            },
+        },
+        ReferenceDestinationContent =>
+            '"Test;:_^!""$%&/()=?`*+Test":"><@~\'}{[]\":"":""""";;::..--__##"',
+    },
+
+    # all required values are given (special character checks)
+    {
+        SourceExportData => {
+            FormatData => {
+                ColumnSeperator => 'Dot',
+                Charset         => 'ISO-8859-1',
+            },
+            ExportDataSave => {
+                TemplateID    => $TemplateIDs[25],
+                ExportDataRow => [
+                    'Test;:_^!"$%&/()=?`*+Test',
+                    '><@~\'}{[]\\',
+                    '',
+                    '"";;::..--__##'
+                ],
+                UserID => 1,
+            },
+        },
+        ReferenceDestinationContent =>
+            '"Test;:_^!""$%&/()=?`*+Test"."><@~\'}{[]\\"."".""""";;::..--__##"',
+    },
+
+    # all required values are given (UTF-8 checks)
+    {
+        SourceExportData => {
+            FormatData => {
+                ColumnSeperator => 'Semicolon',
+                Charset         => 'UTF-8',
+            },
+            ExportDataSave => {
+                TemplateID    => $TemplateIDs[26],
+                ExportDataRow => [ ' Ѫ Ѭ Ѳ', 'ѯ Ѵ ѿ', '҂ Ҋ Җ ' ],
+                UserID        => 1,
+            },
+        },
+        ReferenceDestinationContent => '" Ѫ Ѭ Ѳ";"ѯ Ѵ ѿ";"҂ Ҋ Җ "',
+    },
+
+    # all required values are given (UTF-8 checks)
+    {
+        SourceExportData => {
+            FormatData => {
+                ColumnSeperator => 'Tabulator',
+                Charset         => 'UTF-8',
+            },
+            ExportDataSave => {
+                TemplateID    => $TemplateIDs[26],
+                ExportDataRow => [ ' Ѫ Ѭ Ѳ', 'ѯ Ѵ ѿ', '҂ Ҋ Җ ' ],
+                UserID        => 1,
+            },
+        },
+        ReferenceDestinationContent => "\" Ѫ Ѭ Ѳ\"\t\"ѯ Ѵ ѿ\"\t\"҂ Ҋ Җ \"",
+    },
+
+    # all required values are given (UTF-8 checks)
+    {
+        SourceExportData => {
+            FormatData => {
+                ColumnSeperator => 'Colon',
+                Charset         => 'UTF-8',
+            },
+            ExportDataSave => {
+                TemplateID    => $TemplateIDs[26],
+                ExportDataRow => [ ' Ѫ Ѭ Ѳ', 'ѯ Ѵ ѿ', '҂ Ҋ Җ ' ],
+                UserID        => 1,
+            },
+        },
+        ReferenceDestinationContent => '" Ѫ Ѭ Ѳ":"ѯ Ѵ ѿ":"҂ Ҋ Җ "',
+    },
+
+    # all required values are given (UTF-8 checks)
+    {
+        SourceExportData => {
+            FormatData => {
+                ColumnSeperator => 'Dot',
+                Charset         => 'UTF-8',
+            },
+            ExportDataSave => {
+                TemplateID    => $TemplateIDs[26],
+                ExportDataRow => [ ' Ѫ Ѭ Ѳ', 'ѯ Ѵ ѿ', '҂ Ҋ Җ ' ],
+                UserID        => 1,
+            },
+        },
+        ReferenceDestinationContent => '" Ѫ Ѭ Ѳ"."ѯ Ѵ ѿ"."҂ Ҋ Җ "',
+    },
 ];
 
 # ------------------------------------------------------------ #
@@ -1364,10 +1707,12 @@ for my $Test ( @{$ExportDataTests} ) {
     }
 
     # set the format data
-    if ( $Test->{SourceExportData}->{FormatData}
+    if (
+        $Test->{SourceExportData}->{FormatData}
         && ref $Test->{SourceExportData}->{FormatData} eq 'HASH'
         && $Test->{SourceExportData}->{ExportDataSave}->{TemplateID}
-    ) {
+        )
+    {
 
         # save format data
         $Self->{ImportExportObject}->FormatDataSave(
