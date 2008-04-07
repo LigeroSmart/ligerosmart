@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport/FormatBackend/CSV.pm - import/export backend for CSV
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: CSV.pm,v 1.18 2008-04-04 15:39:23 mh Exp $
+# $Id: CSV.pm,v 1.19 2008-04-07 10:40:15 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,10 +15,9 @@ use strict;
 use warnings;
 
 use Kernel::System::FileTemp;
-use Kernel::System::ImportExport;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 =head1 NAME
 
@@ -56,9 +55,12 @@ create an object
         MainObject   => $MainObject,
     );
     my $BackendObject = Kernel::System::ImportExport::FormatBackend::CSV->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-        DBObject     => $DBObject,
+        ConfigObject       => $ConfigObject,
+        LogObject          => $LogObject,
+        DBObject           => $DBObject,
+        MainObject         => $MainObject,
+        EncodeObject       => $EncodeObject,
+        ImportExportObject => $ImportExportObject,
     );
 
 =cut
@@ -71,7 +73,8 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Object (qw(ConfigObject LogObject DBObject MainObject)) {
+    for my $Object (qw(ConfigObject LogObject DBObject MainObject EncodeObject ImportExportObject))
+    {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
@@ -83,8 +86,7 @@ sub new {
         return;
     }
 
-    $Self->{FileTempObject}     = Kernel::System::FileTemp->new( %{$Self} );
-    $Self->{ImportExportObject} = Kernel::System::ImportExport->new( %{$Self} );
+    $Self->{FileTempObject} = Kernel::System::FileTemp->new( %{$Self} );
 
     # define available seperators
     $Self->{AvailableSeperators} = {
@@ -265,13 +267,13 @@ sub ImportDataGet {
     }
 
     # create the parser object
-    my $ParseObject = Text::CSV->new (
+    my $ParseObject = Text::CSV->new(
         {
             quote_char          => '"',
             escape_char         => '"',
             sep_char            => $Seperator,
             eol                 => '',
-            always_quote        => 0,
+            always_quote        => 1,
             binary              => 1,
             keep_meta_info      => 0,
             allow_loose_quotes  => 0,
@@ -283,7 +285,7 @@ sub ImportDataGet {
     );
 
     # create temp file and write source content
-    my ($FH, $Filename) = $Self->{FileTempObject}->TempFile();
+    my ( $FH, $Filename ) = $Self->{FileTempObject}->TempFile();
 
     print $FH ${ $Param{SourceContent} };
 
@@ -293,7 +295,7 @@ sub ImportDataGet {
     # parse the content
     my @ImportData;
     ROW:
-    while ( my $Column = $ParseObject->getline( $FH ) ) {
+    while ( my $Column = $ParseObject->getline($FH) ) {
         push @ImportData, $Column;
     }
 
@@ -302,7 +304,7 @@ sub ImportDataGet {
     # set the utf8 flags
     for my $Row (@ImportData) {
         for my $Cell ( @{$Row} ) {
-            Encode::_utf8_on( $Cell );
+            $Self->{EncodeObject}->Encode( \$Cell );
         }
     }
 
@@ -388,13 +390,13 @@ sub ExportDataSave {
     }
 
     # create the parser object
-    my $ParseObject = Text::CSV->new (
+    my $ParseObject = Text::CSV->new(
         {
             quote_char          => '"',
             escape_char         => '"',
             sep_char            => $Seperator,
             eol                 => '',
-            always_quote        => 0,
+            always_quote        => 1,
             binary              => 1,
             keep_meta_info      => 0,
             allow_loose_quotes  => 0,
@@ -405,9 +407,24 @@ sub ExportDataSave {
         }
     );
 
-    return if !$ParseObject->combine( @{ $Param{ExportDataRow} } );
+    if ( !$ParseObject->combine( @{ $Param{ExportDataRow} } ) ) {
 
-    return $ParseObject->string;
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Can't combine the export data to a string!",
+        );
+        return;
+    }
+
+    # create the CSV string
+    my $String = $ParseObject->string;
+
+    return $String if $Charset ne 'UTF-8';
+
+    # set the utf8 flags
+    $Self->{EncodeObject}->Encode( \$String );
+
+    return $String;
 }
 
 1;
@@ -426,6 +443,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.18 $ $Date: 2008-04-04 15:39:23 $
+$Revision: 1.19 $ $Date: 2008-04-07 10:40:15 $
 
 =cut
