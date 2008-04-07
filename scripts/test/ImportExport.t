@@ -2,7 +2,7 @@
 # ImportExport.t - all general import export tests
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.t,v 1.13 2008-03-26 18:03:42 mh Exp $
+# $Id: ImportExport.t,v 1.14 2008-04-07 10:16:36 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,9 +15,11 @@ use utf8;
 
 use vars qw($Self);
 
+use Kernel::System::Encode;
 use Kernel::System::ImportExport;
 use Kernel::System::User;
 
+$Self->{EncodeObject}       = Kernel::System::Encode->new( %{$Self} );
 $Self->{ImportExportObject} = Kernel::System::ImportExport->new( %{$Self} );
 $Self->{UserObject}         = Kernel::System::User->new( %{$Self} );
 

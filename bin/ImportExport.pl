@@ -3,7 +3,7 @@
 # ImportExport.pl - import/export script
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pl,v 1.6 2008-04-04 15:41:58 mh Exp $
+# $Id: ImportExport.pl,v 1.7 2008-04-07 10:16:02 mh Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,12 +30,13 @@ use lib dirname $RealBin;
 use Getopt::Std;
 use Kernel::Config;
 use Kernel::System::DB;
+use Kernel::System::Encode;
 use Kernel::System::ImportExport;
 use Kernel::System::Log;
 use Kernel::System::Main;
 
 use vars qw($VERSION $RealBin);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 # get options
 my %Opts;
@@ -50,7 +51,7 @@ if ( $Opts{h} ) {
     print STDOUT "\n";
     print STDOUT "   examples:\n";
     print STDOUT "       ImportExport.pl -n 00004 -a import -i /tmp/import.csv\n";
-    print STDOUT "       ImportExport.pl -n 00004 -a import -o /tmp/export.csv\n";
+    print STDOUT "       ImportExport.pl -n 00004 -a export -o /tmp/export.csv\n";
 
     exit 1;
 }
@@ -83,6 +84,7 @@ $CommonObject{LogObject}    = Kernel::System::Log->new(
     LogPrefix => 'OTRS-ImportExport',
     %CommonObject,
 );
+$CommonObject{EncodeObject}       = Kernel::System::Encode->new(%CommonObject);
 $CommonObject{MainObject}         = Kernel::System::Main->new(%CommonObject);
 $CommonObject{DBObject}           = Kernel::System::DB->new(%CommonObject);
 $CommonObject{ImportExportObject} = Kernel::System::ImportExport->new(%CommonObject);
@@ -185,6 +187,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.6 $ $Date: 2008-04-04 15:41:58 $
+$Revision: 1.7 $ $Date: 2008-04-07 10:16:02 $
 
 =cut
