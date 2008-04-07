@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport.pm - all import and export functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pm,v 1.23 2008-04-04 10:19:24 mh Exp $
+# $Id: ImportExport.pm,v 1.24 2008-04-07 10:17:07 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.23 $) [1];
+$VERSION = qw($Revision: 1.24 $) [1];
 
 =head1 NAME
 
@@ -59,6 +59,7 @@ create an object
         LogObject    => $LogObject,
         DBObject     => $DBObject,
         MainObject   => $MainObject,
+        EncodeObject => $EncodeObject,
     );
 
 =cut
@@ -71,7 +72,7 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Object (qw(ConfigObject LogObject DBObject MainObject)) {
+    for my $Object (qw(ConfigObject LogObject DBObject MainObject EncodeObject)) {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
@@ -2243,6 +2244,7 @@ sub _LoadBackend {
     my $BackendObject = $Param{Module}->new(
         %{$Self},
         %Param,
+        ImportExportObject => $Self,
     );
 
     if ( !$BackendObject ) {
@@ -2329,6 +2331,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.23 $ $Date: 2008-04-04 10:19:24 $
+$Revision: 1.24 $ $Date: 2008-04-07 10:17:07 $
 
 =cut
