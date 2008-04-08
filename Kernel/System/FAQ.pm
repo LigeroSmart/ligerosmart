@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.19 2008-04-08 20:13:43 martin Exp $
+# $Id: FAQ.pm,v 1.20 2008-04-08 20:15:03 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::CustomerGroup;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 =head1 NAME
 
@@ -41,6 +41,7 @@ create a faq object
 
     use Kernel::Config;
     use Kernel::System::Log;
+    use Kernel::System::Main;
     use Kernel::System::DB;
     use Kernel::System::FAQ;
 
@@ -48,9 +49,14 @@ create a faq object
     my $LogObject    = Kernel::System::Log->new(
         ConfigObject => $ConfigObject,
     );
+    my $MainObject = Kernel::System::Main->new(
+        ConfigObject => $ConfigObject,
+        LogObject    => $LogObject,
+    }
     my $DBObject = Kernel::System::DB->new(
         ConfigObject => $ConfigObject,
         LogObject    => $LogObject,
+        MainObject   => $MainObject,
     );
     my $FAQObject = Kernel::System::FAQ->new(
         ConfigObject => $ConfigObject,
@@ -2563,6 +2569,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.19 $ $Date: 2008-04-08 20:13:43 $
+$Revision: 1.20 $ $Date: 2008-04-08 20:15:03 $
 
 =cut
