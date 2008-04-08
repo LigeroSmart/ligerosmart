@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicFAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQ.pm,v 1.3 2008-03-26 08:42:27 martin Exp $
+# $Id: PublicFAQ.pm,v 1.4 2008-04-08 20:15:34 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -16,7 +16,7 @@ use Kernel::System::FAQ;
 use Kernel::Modules::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 our @ISA = qw(Kernel::Modules::FAQ);
 
@@ -134,7 +134,7 @@ sub Run {
         my @IDs = $Self->{FAQObject}->FAQSearch(
             States => $States,
             Order  => $Type,
-            Sort   => 'ASC',
+            Sort   => 'down',
             Limit  => 20,
         );
 
