@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.18 2008-03-26 20:55:53 martin Exp $
+# $Id: FAQ.pm,v 1.19 2008-04-08 20:13:43 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::CustomerGroup;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 =head1 NAME
 
@@ -50,12 +50,12 @@ create a faq object
     );
     my $DBObject = Kernel::System::DB->new(
         ConfigObject => $ConfigObject,
-        LogObject => $LogObject,
+        LogObject    => $LogObject,
     );
     my $FAQObject = Kernel::System::FAQ->new(
         ConfigObject => $ConfigObject,
-        LogObject => $LogObject,
-        DBObject => $DBObject,
+        LogObject    => $LogObject,
+        DBObject     => $DBObject,
     );
 
 =cut
@@ -226,22 +226,18 @@ sub ItemVoteDataGet {
 add an article
 
     my $ItemID = $FAQObject->FAQAdd(
-        Number => '13402',
-        Title => 'Some Text',
+        Number     => '13402',
+        Title      => 'Some Text',
         CategoryID => 1,
-        StateID => 1,
+        StateID    => 1,
         LanguageID => 1,
-        Keywords => 'some keywords',
-        Field1 => 'Problem...',
-        Field2 => 'Solution...',
-        FreeKey1 => 'Software',
-        FreeText1 => 'Apache 3.4.2',
-        FreeKey2 => 'OS',
-        FreeText2 => 'OpenBSD 4.2.2',
-        # attachment options (not required)
-        Filename => $Filename,
-        Content => $Content,
-        ContentType => $ContentType,
+        Keywords   => 'some keywords',
+        Field1     => 'Problem...',
+        Field2     => 'Solution...',
+        FreeKey1   => 'Software',
+        FreeText1  => 'Apache 3.4.2',
+        FreeKey2   => 'OS',
+        FreeText2  => 'OpenBSD 4.2.2',
     );
 
 =cut
@@ -327,21 +323,17 @@ sub FAQAdd {
 update an article
 
     $FAQObject->FAQUpdate(
-        ItemID => 123,
+        ItemID     => 123,
         CategoryID => 1,
-        StateID => 1,
+        StateID    => 1,
         LanguageID => 1,
-        Title => 'Some Text',
-        Field1 => 'Problem...',
-        Field2 => 'Solution...',
-        FreeKey1 => 'Software',
-        FreeText1 => 'Apache 3.4.2',
-        FreeKey2 => 'OS',
-        FreeText2 => 'OpenBSD 4.2.2',
-        # attachment options (not required)
-        Filename => $Filename,
-        Content => $Content,
-        ContentType => $ContentType,
+        Title      => 'Some Text',
+        Field1     => 'Problem...',
+        Field2     => 'Solution...',
+        FreeKey1   => 'Software',
+        FreeText1  => 'Apache 3.4.2',
+        FreeKey2   => 'OS',
+        FreeText2  => 'OpenBSD 4.2.2',
     );
 
 =cut
@@ -637,10 +629,10 @@ add an article
 
     my $Ok = $FAQObject->VoteAdd(
         CreatedBy => 'Some Text',
-        ItemID => '123456',
-        IP => '54.43.30.1',
+        ItemID    => '123456',
+        IP        => '54.43.30.1',
         Interface => 'Some Text',
-        Rate => 100,
+        Rate      => 100,
     );
 
 =cut
@@ -689,9 +681,9 @@ sub VoteAdd {
 add an article
 
     my %VoteData = %{$FAQObject->VoteGet(
-        CreateBy => 'Some Text',
-        ItemID => '123456',
-        IP     => '127.0.0.1',
+        CreateBy  => 'Some Text',
+        ItemID    => '123456',
+        IP        => '127.0.0.1',
         Interface => 'Some Text',
     )};
 
@@ -735,7 +727,6 @@ sub VoteGet {
                 " item_id = $Param{ItemID}";
     }
     $SQL .= $Ext;
-    #$Self->{LogObject}->Log(Priority => 'error', Message => $SQL);
 
     $Self->{DBObject}->Prepare(SQL => $SQL);
     my %Data = ();
@@ -844,7 +835,9 @@ sub VoteDelete {
 
 delete an article
 
-    $Flag = $FAQObject->FAQDelete(ItemID => 1);
+    $Flag = $FAQObject->FAQDelete(
+        ItemID => 1,
+    );
 
 =cut
 
@@ -865,7 +858,7 @@ sub FAQDelete {
         ItemID => $Param{ItemID},
     );
     for my $FileID ( @Index ) {
-        return if ! $Self->AttachmentDelete( %Param, FileID => $FileID+1 );
+        return if ! $Self->AttachmentDelete( %Param, FileID => $FileID->{FileID} );
     }
 
     # delete votes
@@ -926,7 +919,7 @@ add an history to an article
 
     $Flag = $FAQObject->FAQHistoryAdd(
         ItemID => 1,
-        Name => 'Updated Article.',
+        Name   => 'Updated Article.',
     );
 
 =cut
@@ -1231,7 +1224,7 @@ sub CategoryGet {
 get all subcategory ids of of a category
 
     my %Category = $FAQObject->CategorySubCategorieIDList(
-        ParentID => 1,
+        ParentID   => 1,
         ItemStates => [1,2,3]
     );
 
@@ -1299,7 +1292,7 @@ sub CategorySubCategoryIDList {
 add a category
 
     my $ID = $FAQObject->CategoryAdd(
-        Name => 'Some Category',
+        Name    => 'Some Category',
         Comment => 'some comment ...',
     );
 
@@ -1358,8 +1351,8 @@ sub CategoryAdd {
 update a category
 
     $FAQObject->CategoryUpdate(
-        ID => 1,
-        Name => 'Some Category',
+        ID      => 1,
+        Name    => 'Some Category',
         Comment => 'some comment ...',
     );
 
@@ -1410,8 +1403,8 @@ sub CategoryUpdate {
 check a category
 
     $FAQObject->CategoryDuplicateCheck(
-        ID => 1, # or
-        Name => 'Some Name',
+        ID       => 1, # or
+        Name     => 'Some Name',
         ParentID => 1,
     );
 
@@ -1553,8 +1546,8 @@ sub StateList {
 update a state
 
     $FAQObject->StateUpdate(
-        ID => 1,
-        Name => 'public',
+        ID     => 1,
+        Name   => 'public',
         TypeID => 1,
     );
 
@@ -1589,8 +1582,8 @@ sub StateUpdate {
 add a state
 
     my $ID = $FAQObject->StateAdd(
-        ID => 1,
-        Name => 'public',
+        ID     => 1,
+        Name   => 'public',
         TypeID => 1,
     );
 
@@ -1666,7 +1659,7 @@ sub StateGet {
 get a state as hash
 
     my %State = $FAQObject->StateTypeGet(
-        ID => 1, # or
+        ID   => 1, # or
         Name => 'internal',
     );
 
@@ -1679,8 +1672,7 @@ sub StateTypeGet {
     my $SQL = "";
     my $Ext = "";
 
-    $SQL = "SELECT id, name ".
-        " FROM faq_state_type WHERE";
+    $SQL = "SELECT id, name FROM faq_state_type WHERE";
 
     if(defined($Param{ID})) {
         $Ext .= " id = ".$Self->{DBObject}->Quote($Param{ID}, 'Integer')
@@ -1696,7 +1688,7 @@ sub StateTypeGet {
     );
     while  (my @Row = $Self->{DBObject}->FetchrowArray()) {
         %Data = (
-            ID => $Row[0],
+            ID   => $Row[0],
             Name => $Row[1],
         );
     }
@@ -1736,7 +1728,7 @@ sub LanguageList {
 update a language
 
     $FAQObject->LanguageUpdate(
-        ID => 1,
+        ID   => 1,
         Name => 'Some Category',
     );
 
@@ -1772,7 +1764,7 @@ check a language
 
     $FAQObject->LanguageDuplicateCheck(
         Name => 'Some Name',
-        ID => 1, # for update
+        ID   => 1, # for update
     );
 
 =cut
@@ -1881,13 +1873,14 @@ sub LanguageGet {
 search in articles
 
     my @IDs = $FAQObject->FAQSearch(
-        Number => '*134*',
-        What => '*some text*',
+        Number  => '*134*',
+        Title   => '*some title*',
+        What    => '*some text*', # is searching in Number, Title, Keyword and Field1-6
         Keyword => '*webserver*',
-        States => ['public', 'internal'],
-        Order => 'Changed',
-        Sort => 'ASC',
-        Limit => 150,
+        States  => ['public', 'internal'],
+        Order   => 'Changed',   # Title|Language|State|Votes|Result|Created|Changed
+        Sort    => 'up',        # up|down
+        Limit   => 150,
     );
 
 =cut
@@ -1910,7 +1903,7 @@ sub FAQSearch {
         " LEFT JOIN faq_state s ON s.id = i.state_id".
         " WHERE";
     my $Ext = '';
-    for my $Key (qw(f_subject f_keywords f_field1 f_field2 f_field3 f_field4 f_field5 f_field6)) {
+    for my $Key (qw(f_number f_subject f_keywords f_field1 f_field2 f_field3 f_field4 f_field5 f_field6)) {
         if ($Ext) {
             $Ext .= ' OR ';
         }
@@ -2151,12 +2144,13 @@ sub _MakeTree {
 }
 
 =item SetCategoryGroup()
+
 set groups to a category
 
-        $FAQObject->SetCategoryGroup(
-            CategoryID => 3,
-            GroupIDs => [2,4,1,5,77],
-        );
+    $FAQObject->SetCategoryGroup(
+        CategoryID => 3,
+        GroupIDs   => [2,4,1,5,77],
+    );
 
 =cut
 
@@ -2193,6 +2187,7 @@ sub SetCategoryGroup {
 }
 
 =item GetCategoryGroup()
+
 get groups from a category
 
     $FAQObject->GetCategoryGroup(
@@ -2225,6 +2220,7 @@ sub GetCategoryGroup {
 }
 
 =item GetAllCategoryGroup()
+
 get all category-groups
 
     $FAQObject->GetAllCategoryGroup();
@@ -2247,11 +2243,12 @@ sub GetAllCategoryGroup {
 }
 
 =item GetUserCategories()
+
 get all category-groups
 
     my $Hashref = $FAQObject->GetUserCategories(
         UserID => '123456',
-        Type => 'rw'
+        Type   => 'rw'
     );
 
 =cut
@@ -2320,6 +2317,7 @@ sub _UserCategories {
 }
 
 =item GetCustomerCategories()
+
 get all category-groups
 
     my $Hashref = $FAQObject->GetCustomerCategories(
@@ -2366,6 +2364,7 @@ sub GetCustomerCategories {
 }
 
 =item CheckCategoryUserPermission()
+
 get userpermission from a category
 
     $FAQObject->CheckCategoryUserPermission(
@@ -2404,6 +2403,7 @@ sub CheckCategoryUserPermission {
 }
 
 =item CheckCategoryCustomerPermission()
+
 get userpermission from a category
 
     $FAQObject->CheckCategoryCustomerPermission(
@@ -2563,6 +2563,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.18 $ $Date: 2008-03-26 20:55:53 $
+$Revision: 1.19 $ $Date: 2008-04-08 20:13:43 $
 
 =cut
