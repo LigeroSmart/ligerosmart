@@ -2,7 +2,7 @@
 # ImportExportFormatCSV.t - all import export tests for the CSV format backend
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExportFormatCSV.t,v 1.5 2008-04-07 10:25:58 mh Exp $
+# $Id: ImportExportFormatCSV.t,v 1.6 2008-04-08 11:58:39 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -1772,7 +1772,7 @@ continue {
 # clean the system
 # ------------------------------------------------------------ #
 
-# delete the test template
+# delete the test templates
 $Self->{ImportExportObject}->TemplateDelete(
     TemplateID => \@TemplateIDs,
     UserID     => 1,
