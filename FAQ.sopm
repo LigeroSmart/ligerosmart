@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.28 2008-03-26 08:46:24 martin Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.29 2008-04-08 20:24:22 martin Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
     <Framework>2.2.x</Framework>
@@ -9,7 +9,7 @@
     <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
     <Description Lang="en">A FAQ/knowledge base.</Description>
     <Description Lang="de">Eine FAQ-/Wissensdatenbank.</Description>
-    <IntroInstallPost Title="Notice - Introduction" Lang="en">The FAQ/knowledge base will be found at the navigation bar and required "faq" group permissions to use it. To create new FAQ article you need to create categories and define the permission who can use categories.</IntroInstallPost>
+    <IntroInstallPost Title="Notice - Introduction" Lang="en">The FAQ/knowledge base will be found at the navigation bar and required "faq" group permissions to use it. To create new FAQ article you need to create categories and define the permission who can access categories.</IntroInstallPost>
     <IntroInstallPost Title="Hinweis - Einfuerhrung" Lang="de">Die FAQ/Knowledge Base ist in der Navigationsleiste zu finden. Es werden "faq" Gruppen-Rechte benötig um die FAQ benutzen zu können. Um FAQ Artikel erstellen zu können müssen zuerst Kategorien erstellt und die Berechtigungs-Gruppen dieser Kategorien definiert werden.</IntroInstallPost>
     <Filelist>
         <File Permission="644" Location="Kernel/Config/Files/FAQ.xml"></File>
