@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport/FormatBackend/CSV.pm - import/export backend for CSV
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: CSV.pm,v 1.20 2008-04-08 08:52:16 mh Exp $
+# $Id: CSV.pm,v 1.21 2008-04-09 09:27:04 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FileTemp;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 =head1 NAME
 
@@ -301,10 +301,10 @@ sub ImportDataGet {
 
     return \@ImportData if $Charset ne 'UTF-8';
 
-    # encode import data
+    # set utf8 flag
     for my $Row (@ImportData) {
         for my $Cell ( @{$Row} ) {
-            $Self->{EncodeObject}->Encode( \$Cell );
+            Encode::_utf8_on($Cell);
         }
     }
 
@@ -443,6 +443,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.20 $ $Date: 2008-04-08 08:52:16 $
+$Revision: 1.21 $ $Date: 2008-04-09 09:27:04 $
 
 =cut
