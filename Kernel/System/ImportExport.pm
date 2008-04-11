@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport.pm - all import and export functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pm,v 1.24 2008-04-07 10:17:07 mh Exp $
+# $Id: ImportExport.pm,v 1.25 2008-04-11 09:15:19 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.24 $) [1];
+$VERSION = qw($Revision: 1.25 $) [1];
 
 =head1 NAME
 
@@ -1047,7 +1047,7 @@ sub MappingList {
 
 add a new mapping data row
 
-    my $True = $ImportExportObject->MappingAdd(
+    my $MappingID = $ImportExportObject->MappingAdd(
         TemplateID => 123,
         UserID     => 1,
     );
@@ -1091,11 +1091,26 @@ sub MappingAdd {
     }
 
     # insert a new mapping data row
-    return $Self->{DBObject}->Do(
+    return if !$Self->{DBObject}->Do(
         SQL => "INSERT INTO imexport_mapping "
             . "(template_id, position) VALUES "
             . "($Param{TemplateID}, $NewPosition)"
     );
+
+    # find id of new mapping data row
+    $Self->{DBObject}->Prepare(
+        SQL => "SELECT id FROM imexport_mapping "
+            . "WHERE template_id = $Param{TemplateID} AND position = $NewPosition",
+        Limit => 1,
+    );
+
+    # fetch the result
+    my $MappingID;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $MappingID = $Row[0];
+    }
+
+    return $MappingID;
 }
 
 =item MappingDelete()
@@ -2331,6 +2346,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.24 $ $Date: 2008-04-07 10:17:07 $
+$Revision: 1.25 $ $Date: 2008-04-11 09:15:19 $
 
 =cut
