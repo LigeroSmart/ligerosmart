@@ -2,7 +2,7 @@
 # ImportExportFormatCSV.t - all import export tests for the CSV format backend
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExportFormatCSV.t,v 1.6 2008-04-08 11:58:39 mh Exp $
+# $Id: ImportExportFormatCSV.t,v 1.7 2008-04-14 15:02:21 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -1110,10 +1110,18 @@ for my $Test ( @{$ImportDataTests} ) {
         my $CounterColumn = 0;
         for my $Cell ( @{$ImportRow} ) {
 
+            # set content if values are undef
+            if ( !defined $Cell ) {
+                $Cell = 'UNDEF-unittest';
+            }
+            if ( !defined $ReferenceRow->[$CounterColumn] ) {
+                $ReferenceRow->[$CounterColumn] = 'UNDEF-unittest';
+            }
+
             # check cell data
             $Self->Is(
-                $Cell || '',
-                $ReferenceRow->[$CounterColumn] || '',
+                $Cell,
+                $ReferenceRow->[$CounterColumn],
                 "Test $TestCount: ImportDataGet() ",
             );
 
@@ -1250,7 +1258,7 @@ my $ExportDataTests = [
         },
     },
 
-    # export data are one cells with empty strings (empty string must be returned)
+    # export data are one cells with empty strings (one empty cell must be returned)
     {
         SourceExportData => {
             FormatData => {
@@ -1266,7 +1274,55 @@ my $ExportDataTests = [
         ReferenceDestinationContent => '""',
     },
 
-    # export data are three cells with empty strings (two seperators must be returned)
+    # export data are one cells with empty strings (one empty cell must be returned)
+    {
+        SourceExportData => {
+            FormatData => {
+                ColumnSeperator => 'Tabulator',
+                Charset         => 'UTF-8',
+            },
+            ExportDataSave => {
+                TemplateID    => $TemplateIDs[22],
+                ExportDataRow => [''],
+                UserID        => 1,
+            },
+        },
+        ReferenceDestinationContent => '""',
+    },
+
+    # export data are one cells with empty strings (one empty cell must be returned)
+    {
+        SourceExportData => {
+            FormatData => {
+                ColumnSeperator => 'Colon',
+                Charset         => 'UTF-8',
+            },
+            ExportDataSave => {
+                TemplateID    => $TemplateIDs[22],
+                ExportDataRow => [''],
+                UserID        => 1,
+            },
+        },
+        ReferenceDestinationContent => '""',
+    },
+
+    # export data are one cells with empty strings (one empty cell must be returned)
+    {
+        SourceExportData => {
+            FormatData => {
+                ColumnSeperator => 'Dot',
+                Charset         => 'UTF-8',
+            },
+            ExportDataSave => {
+                TemplateID    => $TemplateIDs[22],
+                ExportDataRow => [''],
+                UserID        => 1,
+            },
+        },
+        ReferenceDestinationContent => '""',
+    },
+
+    # export data are three cells with empty strings (three empty cells must be returned)
     {
         SourceExportData => {
             FormatData => {
@@ -1282,7 +1338,7 @@ my $ExportDataTests = [
         ReferenceDestinationContent => '"";"";""',
     },
 
-    # export data are three cells with empty strings (two seperators must be returned)
+    # export data are three cells with empty strings (three empty cells must be returned)
     {
         SourceExportData => {
             FormatData => {
@@ -1298,7 +1354,7 @@ my $ExportDataTests = [
         ReferenceDestinationContent => "\"\"\t\"\"\t\"\"",
     },
 
-    # export data are three cells with empty strings (two seperators must be returned)
+    # export data are three cells with empty strings (three empty cells must be returned)
     {
         SourceExportData => {
             FormatData => {
@@ -1314,7 +1370,7 @@ my $ExportDataTests = [
         ReferenceDestinationContent => '"":"":""',
     },
 
-    # export data are three cells with empty strings (two seperators must be returned)
+    # export data are three cells with empty strings (three empty cells must be returned)
     {
         SourceExportData => {
             FormatData => {
@@ -1328,6 +1384,70 @@ my $ExportDataTests = [
             },
         },
         ReferenceDestinationContent => '""."".""',
+    },
+
+    # export data are three cells with empty and undef content (three empty cells must be returned)
+    {
+        SourceExportData => {
+            FormatData => {
+                ColumnSeperator => 'Semicolon',
+                Charset         => 'UTF-8',
+            },
+            ExportDataSave => {
+                TemplateID    => $TemplateIDs[22],
+                ExportDataRow => [ undef, '', undef ],
+                UserID        => 1,
+            },
+        },
+        ReferenceDestinationContent => ';"";',
+    },
+
+    # export data are three cells with empty and undef content (three empty cells must be returned)
+    {
+        SourceExportData => {
+            FormatData => {
+                ColumnSeperator => 'Tabulator',
+                Charset         => 'UTF-8',
+            },
+            ExportDataSave => {
+                TemplateID    => $TemplateIDs[22],
+                ExportDataRow => [ undef, '', undef ],
+                UserID        => 1,
+            },
+        },
+        ReferenceDestinationContent => "\t\"\"\t",
+    },
+
+    # export data are three cells with empty and undef content (three empty cells must be returned)
+    {
+        SourceExportData => {
+            FormatData => {
+                ColumnSeperator => 'Colon',
+                Charset         => 'UTF-8',
+            },
+            ExportDataSave => {
+                TemplateID    => $TemplateIDs[22],
+                ExportDataRow => [ undef, '', undef ],
+                UserID        => 1,
+            },
+        },
+        ReferenceDestinationContent => ':"":',
+    },
+
+    # export data are three cells with empty and undef content (three empty cells must be returned)
+    {
+        SourceExportData => {
+            FormatData => {
+                ColumnSeperator => 'Dot',
+                Charset         => 'UTF-8',
+            },
+            ExportDataSave => {
+                TemplateID    => $TemplateIDs[22],
+                ExportDataRow => [ undef, '', undef ],
+                UserID        => 1,
+            },
+        },
+        ReferenceDestinationContent => '."".',
     },
 
     # all required values are given (check the parsed content)
