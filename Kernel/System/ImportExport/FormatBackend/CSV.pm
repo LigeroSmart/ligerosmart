@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport/FormatBackend/CSV.pm - import/export backend for CSV
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: CSV.pm,v 1.21 2008-04-09 09:27:04 mh Exp $
+# $Id: CSV.pm,v 1.22 2008-04-16 14:29:38 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FileTemp;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.21 $) [1];
+$VERSION = qw($Revision: 1.22 $) [1];
 
 =head1 NAME
 
@@ -337,7 +337,7 @@ sub ExportDataSave {
         }
     }
 
-    # check source content
+    # check export data row
     if ( ref $Param{ExportDataRow} ne 'ARRAY' ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
@@ -443,6 +443,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.21 $ $Date: 2008-04-09 09:27:04 $
+$Revision: 1.22 $ $Date: 2008-04-16 14:29:38 $
 
 =cut
