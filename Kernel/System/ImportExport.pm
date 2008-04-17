@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport.pm - all import and export functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pm,v 1.25 2008-04-11 09:15:19 mh Exp $
+# $Id: ImportExport.pm,v 1.26 2008-04-17 11:29:04 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.25 $) [1];
+$VERSION = qw($Revision: 1.26 $) [1];
 
 =head1 NAME
 
@@ -2128,6 +2128,16 @@ sub Export {
         $Result{Success}++;
     }
 
+    # log result
+    $Self->{LogObject}->Log(
+        Priority => 'notice',
+        Message  => "Export of $Result{Failed} records ($TemplateData->{Object}): failed!",
+    );
+    $Self->{LogObject}->Log(
+        Priority => 'notice',
+        Message  => "Export of $Result{Success} records ($TemplateData->{Object}): success!",
+    );
+
     return \%Result;
 }
 
@@ -2216,6 +2226,16 @@ sub Import {
 
         $Result{Success}++;
     }
+
+    # log result
+    $Self->{LogObject}->Log(
+        Priority => 'notice',
+        Message  => "Import of $Result{Failed} records ($TemplateData->{Object}): failed!",
+    );
+    $Self->{LogObject}->Log(
+        Priority => 'notice',
+        Message  => "Import of $Result{Success} records ($TemplateData->{Object}): success!",
+    );
 
     return \%Result;
 }
@@ -2346,6 +2366,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.25 $ $Date: 2008-04-11 09:15:19 $
+$Revision: 1.26 $ $Date: 2008-04-17 11:29:04 $
 
 =cut
