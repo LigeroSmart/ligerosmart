@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminImportExport.pm - admin frontend of import export module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.pm,v 1.18 2008-04-07 10:15:14 mh Exp $
+# $Id: AdminImportExport.pm,v 1.19 2008-04-17 11:28:24 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ImportExport;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1179,27 +1179,17 @@ sub Run {
         );
 
         $SourceFile{Content} ||= '';
-        my @SourceContent = split "\n", $SourceFile{Content};
 
         # import data
         my $Result = $Self->{ImportExportObject}->Import(
             TemplateID    => $TemplateData->{TemplateID},
-            SourceContent => \@SourceContent,
+            SourceContent => \$SourceFile{Content},
             UserID        => $Self->{UserID},
         );
 
-        return $Self->{LayoutObject}->FatalError( Message => 'Error occurred. Import impossible!' )
-            if !$Result;
-
-        # log result
-        $Self->{LogObject}->Log(
-            Priority => 'notice',
-            Message  => "$Result->{Failed} items exported not successful.",
-        );
-        $Self->{LogObject}->Log(
-            Priority => 'notice',
-            Message  => "$Result->{Success} items exported successful.",
-        );
+        return $Self->{LayoutObject}->FatalError(
+            Message => 'Error occurred. Import impossible! See Syslog for details.',
+        ) if !$Result;
 
         return $Self->{LayoutObject}->Redirect(
             OP =>
@@ -1231,18 +1221,9 @@ sub Run {
             UserID     => $Self->{UserID},
         );
 
-        return $Self->{LayoutObject}->FatalError( Message => 'Error occurred. Export impossible!' )
-            if !$Result;
-
-        # log result
-        $Self->{LogObject}->Log(
-            Priority => 'notice',
-            Message  => "$Result->{Failed} items exported not successful.",
-        );
-        $Self->{LogObject}->Log(
-            Priority => 'notice',
-            Message  => "$Result->{Success} items exported successful.",
-        );
+        return $Self->{LayoutObject}->FatalError(
+            Message => 'Error occurred. Export impossible! See Syslog for details.',
+        ) if !$Result;
 
         my $FileContent = join "\n", @{ $Result->{DestinationContent} };
 
