@@ -3,7 +3,7 @@
 # ImportExport.pl - import/export script
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pl,v 1.7 2008-04-07 10:16:02 mh Exp $
+# $Id: ImportExport.pl,v 1.8 2008-04-17 11:29:42 mh Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ use Kernel::System::Log;
 use Kernel::System::Main;
 
 use vars qw($VERSION $RealBin);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 # get options
 my %Opts;
@@ -119,7 +119,7 @@ if ( lc $Opts{a} eq 'import' ) {
         die "Can't read file $Opts{i}.\nImport aborted.\n" if !$SourceContent;
     }
 
-    print STDOUT "starting import process...\n";
+    print STDOUT "Import in process...\n";
 
     # import data
     my $Result = $CommonObject{ImportExportObject}->Import(
@@ -128,17 +128,17 @@ if ( lc $Opts{a} eq 'import' ) {
         UserID        => 1,
     );
 
-    die "Error occurred. Import impossible.\n" if !defined $Result;
+    die "\nError occurred. Import impossible! See Syslog for details.\n" if !defined $Result;
 
     print STDOUT "\n";
     print STDOUT "Success: $Result->{Success}\n";
     print STDOUT "Failed : $Result->{Failed}\n";
     print STDOUT "\n";
-    print STDOUT "Import completed.\n";
+    print STDOUT "Import complete.\n";
 }
 elsif ( lc $Opts{a} eq 'export' ) {
 
-    print STDOUT "starting export process...\n";
+    print STDOUT "Export in process...\n";
 
     # export data
     my $Result = $CommonObject{ImportExportObject}->Export(
@@ -146,7 +146,7 @@ elsif ( lc $Opts{a} eq 'export' ) {
         UserID     => 1,
     );
 
-    die "Error occurred. Export impossible.\n" if !defined $Result;
+    die "\nError occurred. Export impossible! See Syslog for details.\n" if !defined $Result;
 
     print STDOUT "\n";
     print STDOUT "Success: $Result->{Success}\n";
@@ -168,7 +168,7 @@ elsif ( lc $Opts{a} eq 'export' ) {
         print STDOUT "File $Opts{o} saved.\n";
     }
 
-    print STDOUT "Export completed.\n";
+    print STDOUT "Export complete.\n";
 }
 
 exit 0;
@@ -187,6 +187,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.7 $ $Date: 2008-04-07 10:16:02 $
+$Revision: 1.8 $ $Date: 2008-04-17 11:29:42 $
 
 =cut
