@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - all survey funtions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.pm,v 1.37 2008-04-04 10:33:28 mh Exp $
+# $Id: Survey.pm,v 1.38 2008-05-16 13:18:56 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::Email;
 use Kernel::System::Ticket;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.37 $) [1];
+$VERSION = qw($Revision: 1.38 $) [1];
 
 =head1 NAME
 
@@ -149,6 +149,7 @@ sub SurveyGet {
     # get all attributes of a survey
     $Self->{DBObject}->Prepare(
         SQL => "SELECT id, surveynumber, title, introduction, description,"
+            . " notification_sender, notification_subject, notification_body, "
             . " status, create_time, create_by, change_time, change_by "
             . " FROM survey WHERE id = $Param{SurveyID}",
         Limit => 1,
@@ -157,23 +158,38 @@ sub SurveyGet {
     # fetch the result
     my %Data;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $Data{SurveyID}     = $Row[0];
-        $Data{SurveyNumber} = $Row[1];
-        $Data{Title}        = $Row[2];
-        $Data{Introduction} = $Row[3];
-        $Data{Description}  = $Row[4];
-        $Data{Status}       = $Row[5];
-        $Data{CreateTime}   = $Row[6];
-        $Data{CreateBy}     = $Row[7];
-        $Data{ChangeTime}   = $Row[8];
-        $Data{ChangeBy}     = $Row[9];
+        $Data{SurveyID}            = $Row[0];
+        $Data{SurveyNumber}        = $Row[1];
+        $Data{Title}               = $Row[2];
+        $Data{Introduction}        = $Row[3];
+        $Data{Description}         = $Row[4];
+        $Data{NotificationSender}  = $Row[5];
+        $Data{NotificationSubject} = $Row[6];
+        $Data{NotificationBody}    = $Row[7];
+        $Data{Status}              = $Row[8];
+        $Data{CreateTime}          = $Row[9];
+        $Data{CreateBy}            = $Row[10];
+        $Data{ChangeTime}          = $Row[11];
+        $Data{ChangeBy}            = $Row[12];
     }
 
     if ( !%Data ) {
-        $Self->{LogObject}
-            ->Log( Priority => 'error', Message => "No such SurveyID $Param{SurveyID}!" );
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message => "No such SurveyID $Param{SurveyID}!",
+        );
         return;
     }
+
+    # set default values
+    $Data{NotificationSender}  ||= $Self->{ConfigObject}->Get('Survey::NotificationSender');
+    $Data{NotificationSubject} ||= $Self->{ConfigObject}->Get('Survey::NotificationSubject');
+    $Data{NotificationBody}    ||= $Self->{ConfigObject}->Get('Survey::NotificationBody');
+
+    # get queues
+    $Data{Queues} = $Self->SurveyQueueGet(
+        SurveyID => $Param{SurveyID},
+    );
 
     # added CreateBy
     my %CreateUserInfo = $Self->{UserObject}->GetUserData(
@@ -201,7 +217,7 @@ sub SurveyGet {
 to set a new survey status (Valid, Invalid, Master)
 
     $StatusSet = $SurveyObject->SurveyStatusSet(
-        SurveyID => 123,
+        SurveyID  => 123,
         NewStatus => 'Master'
     );
 
@@ -284,6 +300,11 @@ sub SurveyStatusSet {
         }
 
         # set new status
+        if ( $Param{NewStatus} eq 'Master' ) {
+            $Self->{DBObject}->Do(
+                SQL => "UPDATE survey SET status = 'Valid' WHERE status = 'Master'",
+            );
+        };
         if ( $Param{NewStatus} eq 'Valid' || $Param{NewStatus} eq 'Master' ) {
             $Self->{DBObject}->Do(
                 SQL => "UPDATE survey SET status = '$Param{NewStatus}' "
@@ -328,11 +349,15 @@ sub SurveyStatusSet {
 to update an existing survey
 
     $SurveyObject->SurveySave(
-        UserID => 1,
-        SurveyID => 4,
-        Title => 'A Title',
-        Introduction => 'The introduction of the survey',
-        Description => 'The internal description of the survey',
+        UserID              => 1,
+        SurveyID            => 4,
+        Title               => 'A Title',
+        Introduction        => 'The introduction of the survey',
+        Description         => 'The internal description of the survey',
+        NotificationSender  => 'quality@example.com',
+        NotificationSubject => 'Help us with your feedback!',
+        NotificationBody    => 'Dear customer...',
+        Queues              => [2, 5, 9],  # (optional) survey is valid for these queues
     );
 
 =cut
@@ -341,8 +366,11 @@ sub SurveySave {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(UserID SurveyID Title Introduction Description)) {
-        if ( !defined $Param{$Argument} ) {
+    for my $Argument (qw(
+        UserID SurveyID Title Introduction Description
+        NotificationSender NotificationSubject NotificationBody
+    )) {
+        if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!"
@@ -351,29 +379,48 @@ sub SurveySave {
         }
     }
 
+    # check queues
+    if ( $Param{Queues} && ref $Param{Queues} ne 'ARRAY' ) {
+        $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => 'Queues must be an array reference.',
+            );
+            return;
+    }
+
+    # set default value
+    $Param{Queues} ||= [];
+
     # quote
-    for my $Argument (qw(Title Introduction Description)) {
+    for my $Argument (qw(
+        Title Introduction Description
+        NotificationSender NotificationSubject NotificationBody
+    )) {
         $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument} );
     }
     for my $Argument (qw(UserID SurveyID)) {
         $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument}, 'Integer' );
     }
 
-    if ( $Param{Title} && $Param{Introduction} && $Param{Description} ) {
+    # update the survey
+    return if !$Self->{DBObject}->Do(
+        SQL => "UPDATE survey SET "
+            . "title = '$Param{Title}', "
+            . "introduction = '$Param{Introduction}', "
+            . "description = '$Param{Description}', "
+            . "notification_sender = '$Param{NotificationSender}', "
+            . "notification_subject = '$Param{NotificationSubject}', "
+            . "notification_body = '$Param{NotificationBody}', "
+            . "change_time = current_timestamp, "
+            . "change_by = $Param{UserID} "
+            . "WHERE id = $Param{SurveyID}"
+    );
 
-        # update the survey
-        return $Self->{DBObject}->Do(
-            SQL => "UPDATE survey SET "
-                . "title = '$Param{Title}', "
-                . "introduction = '$Param{Introduction}', "
-                . "description = '$Param{Description}', "
-                . "change_time = current_timestamp, "
-                . "change_by = $Param{UserID} "
-                . "WHERE id = $Param{SurveyID}"
-        );
-    }
-
-    return;
+    # insert new survey-queue relations
+    return $Self->SurveyQueueSave(
+        SurveyID => $Param{SurveyID},
+        QueueIDs => $Param{Queues},
+    );
 }
 
 =item SurveyNew()
@@ -381,10 +428,14 @@ sub SurveySave {
 to add a new survey
 
     my $SurveyID = $SurveyObject->SurveyNew(
-        UserID => 1,
-        Title => 'A Title',
-        Introduction => 'The introduction of the survey',
-        Description => 'The internal description of the survey',
+        UserID              => 1,
+        Title               => 'A Title',
+        Introduction        => 'The introduction of the survey',
+        Description         => 'The internal description of the survey',
+        NotificationSender  => 'quality@example.com',
+        NotificationSubject => 'Help us with your feedback!',
+        NotificationBody    => 'Dear customer...',
+        Queues              => [2, 5, 9],  # (optional) survey is valid for these queues
     );
 
 =cut
@@ -393,66 +444,81 @@ sub SurveyNew {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(UserID Title Introduction Description)) {
-        if ( !defined $Param{$Argument} ) {
+    for my $Argument (qw(
+        UserID Title Introduction Description
+        NotificationSender NotificationSubject NotificationBody
+    )) {
+        if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
     }
 
     # quote
-    for my $Argument (qw(Title Introduction Description)) {
+    for my $Argument (qw(
+        Title Introduction Description
+        NotificationSender NotificationSubject NotificationBody
+    )) {
         $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument} );
     }
     $Param{UserID} = $Self->{DBObject}->Quote( $Param{UserID}, 'Integer' );
 
-    if ( $Param{Title} && $Param{Introduction} && $Param{Description} ) {
+    # insert a new survey
+    $Self->{DBObject}->Do(
+        SQL => "INSERT INTO survey (title, introduction, description,"
+            . " notification_sender, notification_subject, notification_body,"
+            . " status, create_time, create_by, change_time, change_by"
+            . ") VALUES ("
+            . "'$Param{Title}', "
+            . "'$Param{Introduction}', "
+            . "'$Param{Description}', "
+            . "'$Param{NotificationSender}', "
+            . "'$Param{NotificationSubject}', "
+            . "'$Param{NotificationBody}', "
+            . "'New', "
+            . "current_timestamp, "
+            . "$Param{UserID}, "
+            . "current_timestamp, "
+            . "$Param{UserID})"
+    );
 
-        # insert a new survey
-        $Self->{DBObject}->Do(
-            SQL => "INSERT INTO survey (title, introduction, description,"
-                . " status, create_time, create_by, change_time, change_by) VALUES ("
-                . "'$Param{Title}', "
-                . "'$Param{Introduction}', "
-                . "'$Param{Description}', "
-                . "'New', "
-                . "current_timestamp, "
-                . "$Param{UserID}, "
-                . "current_timestamp, "
-                . "$Param{UserID})"
-        );
+    # get the id of the survey
+    $Self->{DBObject}->Prepare(
+        SQL => "SELECT id FROM survey WHERE "
+            . "title = '$Param{Title}' AND "
+            . "introduction = '$Param{Introduction}' AND "
+            . "description = '$Param{Description}' "
+            . "ORDER BY id DESC",
+        Limit => 1,
+    );
 
-        # get the id of the survey
-        $Self->{DBObject}->Prepare(
-            SQL => "SELECT id FROM survey WHERE "
-                . "title = '$Param{Title}' AND "
-                . "introduction = '$Param{Introduction}' AND "
-                . "description = '$Param{Description}' "
-                . "ORDER BY create_time DESC",
-            Limit => 1,
-        );
-
-        # fetch the result
-        my $SurveyID;
-        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-            $SurveyID = $Row[0];
-        }
-
-        # set the survey number
-        $Self->{DBObject}->Do(
-            SQL => "UPDATE survey SET "
-                . "surveynumber = '"
-                . ( $SurveyID + 10000 ) . "' "
-                . "WHERE id = $SurveyID"
-        );
-
-        return $SurveyID;
+    # fetch the result
+    my $SurveyID;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $SurveyID = $Row[0];
     }
 
-    return;
+    # set the survey number
+    $Self->{DBObject}->Do(
+        SQL => "UPDATE survey SET "
+            . "surveynumber = '"
+            . ( $SurveyID + 10000 ) . "' "
+            . "WHERE id = $SurveyID"
+    );
+
+    return $SurveyID if !$Param{Queues};
+    return $SurveyID if ref $Param{Queues} ne 'ARRAY';
+
+    # insert new survey-queue relations
+    $Self->SurveyQueueSave(
+        SurveyID => $SurveyID,
+        QueueIDs => $Param{Queues},
+    );
+
+    return $SurveyID;
 }
 
 =item QuestionList()
@@ -1680,15 +1746,19 @@ sub RequestSend {
     );
 
     # fetch the result
-    my $MasterID;
+    my $SurveyID;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $MasterID = $Row[0];
+        $SurveyID = $Row[0];
     }
 
-    return if !$MasterID;
+    return if !$SurveyID;
 
-    my $Subject = $Self->{ConfigObject}->Get('Survey::NotificationSubject');
-    my $Body    = $Self->{ConfigObject}->Get('Survey::NotificationBody');
+    # get the survey
+    my %Survey = $Self->SurveyGet(
+        SurveyID => $SurveyID,
+    );
+    my $Subject = $Survey{NotificationSubject};
+    my $Body    = $Survey{NotificationBody};
 
     # ticket data
     my %Ticket = $Self->{TicketObject}->TicketGet( TicketID => $Param{TicketID} );
@@ -1697,6 +1767,20 @@ sub RequestSend {
             $Subject =~ s/<OTRS_TICKET_$Data>/$Ticket{$Data}/gi;
             $Body    =~ s/<OTRS_TICKET_$Data>/$Ticket{$Data}/gi;
         }
+    }
+
+    # check if ticket is in a send queue
+    if ( $Survey{Queues} && ref $Survey{Queues} eq 'ARRAY' && @{ $Survey{Queues} } ) {
+        my $found;
+
+        QUEUE:
+        for my $QueueID ( @{ $Survey{Queues} } ) {
+            next QUEUE if $Ticket{QueueID} != $QueueID;
+            $found = 1;
+            last QUEUE;
+        }
+
+        return 1 if !$found;
     }
 
     # cleanup
@@ -1788,7 +1872,7 @@ sub RequestSend {
             . " (ticket_id, survey_id, valid_id, public_survey_key, send_to, send_time) "
             . " VALUES ("
             . "$Param{TicketID}, "
-            . "$MasterID, 1, '"
+            . "$SurveyID, 1, '"
             . $Self->{DBObject}->Quote($PublicSurveyKey) . "', '"
             . $Self->{DBObject}->Quote($To) . "', "
             . "current_timestamp)"
@@ -1804,8 +1888,8 @@ sub RequestSend {
 
     # send survey
     return $Self->{SendmailObject}->Send(
-        From => $Self->{ConfigObject}->Get('Survey::NotificationSender') || '',
-        To => $To,
+        From    => $Survey{NotificationSender},
+        To      => $To,
         Subject => $Subject,
         Type    => 'text/plain',
         Charset => $Self->{ConfigObject}->Get('DefaultCharset'),
@@ -1978,6 +2062,90 @@ sub PublicSurveyInvalidSet {
     );
 }
 
+=item SurveyQueueSave()
+
+add a survey_queue relation
+
+my $Result = $SurveyObject->SurveyQueueSave(
+    SurveyID => 3,
+    QueueIDs => [1, 7],
+);
+
+=cut
+
+sub SurveyQueueSave {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(SurveyID QueueIDs)) {
+        if (!$Param{$Argument}) {
+            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $Argument!");
+            return;
+        }
+    }
+
+    # quote
+    for my $QueueID ( @{ $Param{QueueIDs} } ) {
+        $QueueID = $Self->{DBObject}->Quote($QueueID, 'Integer');
+    }
+    $Param{SurveyID} = $Self->{DBObject}->Quote($Param{SurveyID}, 'Integer');
+
+    # remove all existing relations
+    $Self->{DBObject}->Do(
+        SQL => "DELETE FROM survey_queue WHERE survey_id = $Param{SurveyID}",
+    );
+
+    # add all survey_queue relations to database
+    for my $QueueID ( @{ $Param{QueueIDs} } ) {
+
+        # add survey_queue relation to database
+        return if !$Self->{DBObject}->Do(
+            SQL => "INSERT INTO survey_queue"
+                . " (survey_id, queue_id) VALUES"
+                . " ($Param{SurveyID}, $QueueID)",
+        );
+    };
+
+    return 1;
+}
+
+=item SurveyQueueGet()
+
+get a survey_queue relation as an array reference
+
+my $QueuesRef = $SurveyObject->SurveyQueueGet(
+    SurveyID => 3,
+);
+
+=cut
+
+sub SurveyQueueGet {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    if (!$Param{SurveyID}) {
+        $Self->{LogObject}->Log(Priority => 'error', Message => 'Need SurveyID!');
+        return;
+    }
+
+    # quote
+    $Param{SurveyID} = $Self->{DBObject}->Quote($Param{SurveyID}, 'Integer');
+
+    # get queue ids from database
+    $Self->{DBObject}->Prepare(
+        SQL => "SELECT queue_id FROM survey_queue"
+            . " WHERE survey_id = $Param{SurveyID} ORDER BY queue_id ASC",
+    );
+
+    # fetch the result
+    my @QueueList;
+    while (my @Row = $Self->{DBObject}->FetchrowArray()) {
+        push @QueueList, $Row[0];
+    }
+
+    return \@QueueList;
+}
+
 1;
 
 =back
@@ -1992,6 +2160,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.37 $ $Date: 2008-04-04 10:33:28 $
+$Revision: 1.38 $ $Date: 2008-05-16 13:18:56 $
 
 =cut

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: Survey.xml,v 1.8 2006-11-21 23:13:53 mh Exp $</CVS>
+    <CVS>$Id: Survey.xml,v 1.9 2008-05-16 13:18:55 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AgentSurvey" Required="0" Valid="1">
         <Description Lang="en">All parameters for the Survey object in the agent interface.</Description>
         <Description Lang="de">Alle Parameter des Befragungs-Objekts im Agent-Interface.</Description>
@@ -69,9 +69,9 @@
             <String Regex="">300</String>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="Survey::NotificationSender" Required="0" Valid="0">
-        <Description Lang="en">Sender for the notification email to customers about new survey.</Description>
-        <Description Lang="de">Sender für die Benachrichtigungsmail an Kunden bzgl. neue Umfragen.</Description>
+    <ConfigItem Name="Survey::NotificationSender" Required="1" Valid="1">
+        <Description Lang="en">Default sender for the notification email to customers about new survey.</Description>
+        <Description Lang="de">Default-Sender für die Benachrichtigungsmail an Kunden bzgl. neue Umfragen.</Description>
         <Group>Survey</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -79,8 +79,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Survey::NotificationSubject" Required="1" Valid="1">
-        <Description Lang="en">Subject for the notification email to customers about new survey.</Description>
-        <Description Lang="de">Betreff für die Benachrichtigungsmail an Kunden bzgl. neue Umfragen.</Description>
+        <Description Lang="en">Default subject for the notification email to customers about new survey.</Description>
+        <Description Lang="de">Default-Betreff für die Benachrichtigungsmail an Kunden bzgl. neue Umfragen.</Description>
         <Group>Survey</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -88,8 +88,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Survey::NotificationBody" Required="1" Valid="1">
-        <Description Lang="en">Body for the notification email to customers about new survey.</Description>
-        <Description Lang="de">Body für die Benachrichtigungsmail an Kunden bzgl. neue Umfragen.</Description>
+        <Description Lang="en">Default body for the notification email to customers about new survey.</Description>
+        <Description Lang="de">Default-Body für die Benachrichtigungsmail an Kunden bzgl. neue Umfragen.</Description>
         <Group>Survey</Group>
         <SubGroup>Core</SubGroup>
         <Setting>

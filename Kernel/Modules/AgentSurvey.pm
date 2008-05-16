@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurvey.pm - a survey module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurvey.pm,v 1.32 2008-01-23 17:43:25 mh Exp $
+# $Id: AgentSurvey.pm,v 1.33 2008-05-16 13:18:55 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.32 $) [1];
+$VERSION = qw($Revision: 1.33 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -90,7 +90,7 @@ sub Run {
         # get all attributes of the survey
         my %Survey = $Self->{SurveyObject}->SurveyGet( SurveyID => $SurveyID );
 
-        # konvert the textareas in html (\n --><br>)
+        # convert the textareas in html (\n --><br>)
         $Survey{Introduction} = $Self->{LayoutObject}->Ascii2Html(
             Text           => $Survey{Introduction},
             HTMLResultMode => 1,
@@ -112,10 +112,19 @@ sub Run {
         $Survey{SendRequest}     = $SendRequest;
         $Survey{RequestComplete} = $RequestComplete;
 
+        # get selected queues
+        my %Queues = $Self->{QueueObject}->GetAllQueues();
+        my @QueueList = map { $Queues{$_} } @{ $Survey{Queues} };
+        @QueueList = sort { lc $a cmp lc $b } @QueueList;
+        my $QueueListString = join q{, }, @QueueList;
+
         # print the main table.
         $Self->{LayoutObject}->Block(
             Name => 'Survey',
-            Data => {%Survey},
+            Data => {
+                %Survey,
+                QueueListString => $QueueListString,
+            },
         );
 
         # display stats if status Master, Valid or Invalid
@@ -127,7 +136,9 @@ sub Run {
         {
             $Self->{LayoutObject}->Block(
                 Name => 'SurveyEditStats',
-                Data => { SurveyID => $SurveyID },
+                Data => {
+                    SurveyID => $SurveyID,
+                },
             );
 
             # get all questions of the survey
@@ -162,8 +173,9 @@ sub Run {
                     else {
 
                         # get all answers of a question
-                        @AnswerList = $Self->{SurveyObject}
-                            ->AnswerList( QuestionID => $Question->{QuestionID} );
+                        @AnswerList = $Self->{SurveyObject}->AnswerList(
+                            QuestionID => $Question->{QuestionID},
+                        );
                     }
                     for my $Row (@AnswerList) {
                         my $CountVote = $Self->{SurveyObject}->CountVote(
@@ -317,10 +329,26 @@ sub Run {
         $Output .= $Self->{LayoutObject}->NavigationBar();
         my %Survey = $Self->{SurveyObject}->SurveyGet( SurveyID => $SurveyID );
 
+        # build queue selection
+        my %Queues = $Self->{QueueObject}->GetAllQueues();
+        my $QueueString = $Self->{LayoutObject}->BuildSelection(
+            Data         => \%Queues,
+            Name         => 'Queues',
+            SelectedID   => $Survey{Queues},
+            Size         => 6,
+            Multiple     => 1,
+            PossibleNone => 0,
+            Sort         => 'AlphanumericValue',
+            Translation  => 0,
+        );
+
         # print the main table.
         $Self->{LayoutObject}->Block(
             Name => 'SurveyEdit',
-            Data => {%Survey},
+            Data => {
+                %Survey,
+                QueueString => $QueueString,
+            },
         );
         my @List = $Self->{SurveyObject}->QuestionList( SurveyID => $SurveyID );
         if ( $Survey{Status} eq 'New' ) {
@@ -329,8 +357,10 @@ sub Run {
                     Name => 'SurveyEditQuestions',
                     Data => $Question,
                 );
-                my $AnswerCount
-                    = $Self->{SurveyObject}->AnswerCount( QuestionID => $Question->{QuestionID} );
+                my $AnswerCount = $Self->{SurveyObject}->AnswerCount(
+                    QuestionID => $Question->{QuestionID},
+                );
+
                 if ( $Question->{Type} eq 'Radio' || $Question->{Type} eq 'Checkbox' ) {
                     if ( $AnswerCount < 2 ) {
                         $Self->{LayoutObject}->Block(
@@ -377,10 +407,14 @@ sub Run {
     # survey save
     # ------------------------------------------------------------ #
     elsif ( $Self->{Subaction} eq 'SurveySave' ) {
-        my $SurveyID     = $Self->{ParamObject}->GetParam( Param => "SurveyID" );
-        my $Title        = $Self->{ParamObject}->GetParam( Param => "Title" );
-        my $Introduction = $Self->{ParamObject}->GetParam( Param => "Introduction" );
-        my $Description  = $Self->{ParamObject}->GetParam( Param => "Description" );
+        my $SurveyID            = $Self->{ParamObject}->GetParam( Param => "SurveyID" );
+        my $Title               = $Self->{ParamObject}->GetParam( Param => "Title" );
+        my $Introduction        = $Self->{ParamObject}->GetParam( Param => "Introduction" );
+        my $Description         = $Self->{ParamObject}->GetParam( Param => "Description" );
+        my $NotificationSender  = $Self->{ParamObject}->GetParam( Param => "NotificationSender" );
+        my $NotificationSubject = $Self->{ParamObject}->GetParam( Param => "NotificationSubject" );
+        my $NotificationBody    = $Self->{ParamObject}->GetParam( Param => "NotificationBody" );
+        my @Queues              = $Self->{ParamObject}->GetArray( Param => "Queues");
 
         # check if survey exists
         if (
@@ -390,13 +424,19 @@ sub Run {
         {
             return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
         }
-        if ( $Title && $Introduction && $Description ) {
+        if ( $Title && $Introduction && $Description && $NotificationSender
+            && $NotificationSubject && $NotificationBody
+        ) {
             $Self->{SurveyObject}->SurveySave(
-                SurveyID     => $SurveyID,
-                Title        => $Title,
-                Introduction => $Introduction,
-                Description  => $Description,
-                UserID       => $Self->{UserID},
+                SurveyID            => $SurveyID,
+                Title               => $Title,
+                Introduction        => $Introduction,
+                Description         => $Description,
+                NotificationSender  => $NotificationSender,
+                NotificationSubject => $NotificationSubject,
+                NotificationBody    => $NotificationBody,
+                Queues              => \@Queues,
+                UserID              => $Self->{UserID},
             );
             return $Self->{LayoutObject}->Redirect(
                 OP => "Action=$Self->{Action}&Subaction=Survey&SurveyID=$SurveyID#Question"
@@ -417,10 +457,31 @@ sub Run {
         $Output = $Self->{LayoutObject}->Header( Title => 'Survey Add' );
         $Output .= $Self->{LayoutObject}->NavigationBar();
 
+        my %Queues = $Self->{QueueObject}->GetAllQueues();
+        my $QueueString = $Self->{LayoutObject}->BuildSelection(
+            Data         => \%Queues,
+            Name         => 'Queues',
+            Size         => 6,
+            Multiple     => 1,
+            PossibleNone => 0,
+            Sort         => 'AlphanumericValue',
+            Translation  => 0,
+        );
+
         # print the main table.
-        $Self->{LayoutObject}->Block( Name => 'SurveyAdd' );
+        $Self->{LayoutObject}->Block(
+            Name => 'SurveyAdd',
+            Data => {
+                QueueString         => $QueueString,
+                NotificationSender  => $Self->{ConfigObject}->Get('Survey::NotificationSender'),
+                NotificationSubject => $Self->{ConfigObject}->Get('Survey::NotificationSubject'),
+                NotificationBody    => $Self->{ConfigObject}->Get('Survey::NotificationBody'),
+            },
+        );
+
         $Output .= $Self->{LayoutObject}->Output( TemplateFile => 'AgentSurvey' );
         $Output .= $Self->{LayoutObject}->Footer();
+
         return $Output;
     }
 
@@ -428,24 +489,37 @@ sub Run {
     # survey new
     # ------------------------------------------------------------ #
     elsif ( $Self->{Subaction} eq 'SurveyNew' ) {
-        my $Title        = $Self->{ParamObject}->GetParam( Param => "Title" );
-        my $Introduction = $Self->{ParamObject}->GetParam( Param => "Introduction" );
-        my $Description  = $Self->{ParamObject}->GetParam( Param => "Description" );
+        my $Title               = $Self->{ParamObject}->GetParam( Param => "Title" );
+        my $Introduction        = $Self->{ParamObject}->GetParam( Param => "Introduction" );
+        my $Description         = $Self->{ParamObject}->GetParam( Param => "Description" );
+        my $NotificationSender  = $Self->{ParamObject}->GetParam( Param => "NotificationSender" ) || '';
+        my $NotificationSubject = $Self->{ParamObject}->GetParam( Param => "NotificationSubject" );
+        my $NotificationBody    = $Self->{ParamObject}->GetParam( Param => "NotificationBody" );
+        my @Queues              = $Self->{ParamObject}->GetArray( Param => "Queues");
 
-        if ( $Title && $Introduction && $Description ) {
+        if ( $Title && $Introduction && $Description
+            && $NotificationSender && $NotificationSubject && $NotificationBody
+        ) {
+
             my $SurveyID = $Self->{SurveyObject}->SurveyNew(
-                Title        => $Title,
-                Introduction => $Introduction,
-                Description  => $Description,
-                UserID       => $Self->{UserID},
+                Title               => $Title,
+                Introduction        => $Introduction,
+                Description         => $Description,
+                NotificationSender  => $NotificationSender,
+                NotificationSubject => $NotificationSubject,
+                NotificationBody    => $NotificationBody,
+                Queues              => \@Queues,
+                UserID              => $Self->{UserID},
             );
-            return $Self->{LayoutObject}
-                ->Redirect( OP => "Action=$Self->{Action}&Subaction=Survey&SurveyID=$SurveyID" );
+
+            return $Self->{LayoutObject}->Redirect(
+                OP => "Action=$Self->{Action}&Subaction=Survey&SurveyID=$SurveyID",
+            );
         }
-        else {
-            return $Self->{LayoutObject}
-                ->Redirect( OP => "Action=$Self->{Action}&Subaction=SurveyAdd" );
-        }
+
+        return $Self->{LayoutObject}->Redirect(
+            OP => "Action=$Self->{Action}&Subaction=SurveyAdd",
+        );
     }
 
     # ------------------------------------------------------------ #

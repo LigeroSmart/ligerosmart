@@ -2,7 +2,7 @@
 # AgentSurvey.dtl - provides HTML form for AgentSurvey
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurvey.dtl,v 1.29 2008-01-28 15:30:03 mh Exp $
+# $Id: AgentSurvey.dtl,v 1.30 2008-05-16 13:18:55 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -106,8 +106,8 @@
               </tr>
               <tr>
                 <td class="contentkey" width="25">&nbsp;</td>
-                <td class="contentkey">&nbsp;</td>
-                <td class="contentkey">&nbsp;</td>
+                <td class="contentkey">$Text{"Queues"}:</td>
+                <td class="contentvalue">$Data{"QueueListString"}</td>
                 <td class="contentkey" width="25">&nbsp;</td>
               </tr>
               <tr>
@@ -118,7 +118,7 @@
               </tr>
               <tr>
                 <td class="contentkey" width="25">&nbsp;</td>
-                <td class="contentkey">&nbsp;</td>
+                <td class="contentkey" width="25%">&nbsp;</td>
                 <td class="contentkey">&nbsp;</td>
                 <td class="contentkey" width="25">&nbsp;</td>
               </tr>
@@ -338,6 +338,36 @@
                 </tr>
                 <tr>
                   <td class="contentkey" width="25">&nbsp;</td>
+                  <td class="contentkey">$Text{"Sender"}:</td>
+                  <td class="contentvalue"><input type="text" size="70" name="NotificationSender" value="$QData{"NotificationSender"}"></td>
+                  <td class="contentkey" width="25">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td class="contentkey" width="25">&nbsp;</td>
+                  <td class="contentkey">$Text{"Subject"}:</td>
+                  <td class="contentvalue"><input type="text" size="70" name="NotificationSubject" value="$QData{"NotificationSubject"}"></td>
+                  <td class="contentkey" width="25">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td class="contentkey" width="25">&nbsp;</td>
+                  <td class="contentkey">$Text{"Body"}:</td>
+                  <td class="contentvalue"><textarea name="NotificationBody" rows="12" cols="50">$QData{"NotificationBody"}</textarea></td>
+                  <td class="contentkey" width="25">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td class="contentkey" width="25">&nbsp;</td>
+                  <td class="contentkey">&nbsp;</td>
+                  <td class="contentkey">&nbsp;</td>
+                  <td class="contentkey" width="25">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td class="contentkey" width="25">&nbsp;</td>
+                  <td class="contentkey">$Text{"Queues"}:</td>
+                  <td class="contentvalue">$Data{"QueueString"}</td>
+                  <td class="contentkey" width="25">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td class="contentkey" width="25">&nbsp;</td>
                   <td class="contentkey">$Text{"Internal"}&nbsp;$Text{"Description"}:</td>
                   <td class="contentvalue"><textarea name="Description" rows="5" cols="50">$QData{"Description"}</textarea></td>
                   <td class="contentkey" width="25">&nbsp;</td>
@@ -525,6 +555,36 @@
                   <td class="contentkey" width="25">&nbsp;</td>
                   <td class="contentkey">&nbsp;</td>
                   <td class="contentkey">&nbsp;</td>
+                  <td class="contentkey" width="25">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td class="contentkey" width="25">&nbsp;</td>
+                  <td class="contentkey">$Text{"Sender"}:</td>
+                  <td class="contentvalue"><input type="text" size="70" name="NotificationSender" value="$QData{"NotificationSender"}"></td>
+                  <td class="contentkey" width="25">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td class="contentkey" width="25">&nbsp;</td>
+                  <td class="contentkey">$Text{"Subject"}:</td>
+                  <td class="contentvalue"><input type="text" size="70" name="NotificationSubject" value="$QData{"NotificationSubject"}"></td>
+                  <td class="contentkey" width="25">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td class="contentkey" width="25">&nbsp;</td>
+                  <td class="contentkey">$Text{"Body"}:</td>
+                  <td class="contentvalue"><textarea name="NotificationBody" rows="12" cols="50">$QData{"NotificationBody"}</textarea></td>
+                  <td class="contentkey" width="25">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td class="contentkey" width="25">&nbsp;</td>
+                  <td class="contentkey">&nbsp;</td>
+                  <td class="contentkey">&nbsp;</td>
+                  <td class="contentkey" width="25">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td class="contentkey" width="25">&nbsp;</td>
+                  <td class="contentkey">$Text{"Queues"}:</td>
+                  <td class="contentvalue">$Data{"QueueString"}</td>
                   <td class="contentkey" width="25">&nbsp;</td>
                 </tr>
                 <tr>
