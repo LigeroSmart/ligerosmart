@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurvey.pm - a survey module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurvey.pm,v 1.33 2008-05-16 13:18:55 ub Exp $
+# $Id: AgentSurvey.pm,v 1.34 2008-05-16 13:29:36 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.33 $) [1];
+$VERSION = qw($Revision: 1.34 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -303,10 +303,9 @@ sub Run {
         elsif ( defined($StatusSet) && $StatusSet eq 'StatusSet' ) {
             $Message = '&Message=StatusSet';
         }
-        return $Self->{LayoutObject}
-            ->Redirect(
+        return $Self->{LayoutObject}->Redirect(
             OP => "Action=$Self->{Action}&Subaction=Survey&SurveyID=$SurveyID$Message",
-            );
+        );
     }
 
     # ------------------------------------------------------------ #
@@ -330,7 +329,7 @@ sub Run {
         my %Survey = $Self->{SurveyObject}->SurveyGet( SurveyID => $SurveyID );
 
         # build queue selection
-        my %Queues = $Self->{QueueObject}->GetAllQueues();
+        my %Queues      = $Self->{QueueObject}->GetAllQueues();
         my $QueueString = $Self->{LayoutObject}->BuildSelection(
             Data         => \%Queues,
             Name         => 'Queues',
@@ -414,7 +413,7 @@ sub Run {
         my $NotificationSender  = $Self->{ParamObject}->GetParam( Param => "NotificationSender" );
         my $NotificationSubject = $Self->{ParamObject}->GetParam( Param => "NotificationSubject" );
         my $NotificationBody    = $Self->{ParamObject}->GetParam( Param => "NotificationBody" );
-        my @Queues              = $Self->{ParamObject}->GetArray( Param => "Queues");
+        my @Queues              = $Self->{ParamObject}->GetArray( Param => "Queues" );
 
         # check if survey exists
         if (
@@ -424,9 +423,14 @@ sub Run {
         {
             return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
         }
-        if ( $Title && $Introduction && $Description && $NotificationSender
+        if (
+            $Title
+            && $Introduction
+            && $Description
+            && $NotificationSender
             && $NotificationSubject && $NotificationBody
-        ) {
+            )
+        {
             $Self->{SurveyObject}->SurveySave(
                 SurveyID            => $SurveyID,
                 Title               => $Title,
@@ -443,10 +447,9 @@ sub Run {
             );
         }
         else {
-            return $Self->{LayoutObject}
-                ->Redirect(
+            return $Self->{LayoutObject}->Redirect(
                 OP => "Action=$Self->{Action}&Subaction=SurveyEdit&SurveyID=$SurveyID",
-                );
+            );
         }
     }
 
@@ -457,7 +460,7 @@ sub Run {
         $Output = $Self->{LayoutObject}->Header( Title => 'Survey Add' );
         $Output .= $Self->{LayoutObject}->NavigationBar();
 
-        my %Queues = $Self->{QueueObject}->GetAllQueues();
+        my %Queues      = $Self->{QueueObject}->GetAllQueues();
         my $QueueString = $Self->{LayoutObject}->BuildSelection(
             Data         => \%Queues,
             Name         => 'Queues',
@@ -489,17 +492,22 @@ sub Run {
     # survey new
     # ------------------------------------------------------------ #
     elsif ( $Self->{Subaction} eq 'SurveyNew' ) {
-        my $Title               = $Self->{ParamObject}->GetParam( Param => "Title" );
-        my $Introduction        = $Self->{ParamObject}->GetParam( Param => "Introduction" );
-        my $Description         = $Self->{ParamObject}->GetParam( Param => "Description" );
-        my $NotificationSender  = $Self->{ParamObject}->GetParam( Param => "NotificationSender" ) || '';
+        my $Title              = $Self->{ParamObject}->GetParam( Param => "Title" );
+        my $Introduction       = $Self->{ParamObject}->GetParam( Param => "Introduction" );
+        my $Description        = $Self->{ParamObject}->GetParam( Param => "Description" );
+        my $NotificationSender = $Self->{ParamObject}->GetParam( Param => "NotificationSender" )
+            || '';
         my $NotificationSubject = $Self->{ParamObject}->GetParam( Param => "NotificationSubject" );
         my $NotificationBody    = $Self->{ParamObject}->GetParam( Param => "NotificationBody" );
-        my @Queues              = $Self->{ParamObject}->GetArray( Param => "Queues");
+        my @Queues              = $Self->{ParamObject}->GetArray( Param => "Queues" );
 
-        if ( $Title && $Introduction && $Description
+        if (
+            $Title
+            && $Introduction
+            && $Description
             && $NotificationSender && $NotificationSubject && $NotificationBody
-        ) {
+            )
+        {
 
             my $SurveyID = $Self->{SurveyObject}->SurveyNew(
                 Title               => $Title,
@@ -563,8 +571,10 @@ sub Run {
         if (
             $Self->{SurveyObject}->ElementExists( ElementID => $SurveyID, Element => 'Survey' ) ne
             'Yes'
-            || $Self->{SurveyObject}
-            ->ElementExists( ElementID => $QuestionID, Element => 'Question' ) ne 'Yes'
+            || $Self->{SurveyObject}->ElementExists(
+                ElementID => $QuestionID,
+                Element   => 'Question'
+            ) ne 'Yes'
             )
         {
             return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
@@ -590,8 +600,10 @@ sub Run {
         if (
             $Self->{SurveyObject}->ElementExists( ElementID => $SurveyID, Element => 'Survey' ) ne
             'Yes'
-            || $Self->{SurveyObject}
-            ->ElementExists( ElementID => $QuestionID, Element => 'Question' ) ne 'Yes'
+            || $Self->{SurveyObject}->ElementExists(
+                ElementID => $QuestionID,
+                Element   => 'Question'
+            ) ne 'Yes'
             )
         {
             return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
@@ -617,8 +629,10 @@ sub Run {
         if (
             $Self->{SurveyObject}->ElementExists( ElementID => $SurveyID, Element => 'Survey' ) ne
             'Yes'
-            || $Self->{SurveyObject}
-            ->ElementExists( ElementID => $QuestionID, Element => 'Question' ) ne 'Yes'
+            || $Self->{SurveyObject}->ElementExists(
+                ElementID => $QuestionID,
+                Element   => 'Question'
+            ) ne 'Yes'
             )
         {
             return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
@@ -644,8 +658,10 @@ sub Run {
         if (
             $Self->{SurveyObject}->ElementExists( ElementID => $SurveyID, Element => 'Survey' ) ne
             'Yes'
-            || $Self->{SurveyObject}
-            ->ElementExists( ElementID => $QuestionID, Element => 'Question' ) ne 'Yes'
+            || $Self->{SurveyObject}->ElementExists(
+                ElementID => $QuestionID,
+                Element   => 'Question'
+            ) ne 'Yes'
             )
         {
             return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
@@ -654,7 +670,7 @@ sub Run {
         # output header
         $Output = $Self->{LayoutObject}->Header( Title => 'Question Edit' );
         $Output .= $Self->{LayoutObject}->NavigationBar();
-        my %Survey = $Self->{SurveyObject}->SurveyGet( SurveyID => $SurveyID );
+        my %Survey   = $Self->{SurveyObject}->SurveyGet( SurveyID     => $SurveyID );
         my %Question = $Self->{SurveyObject}->QuestionGet( QuestionID => $QuestionID );
 
         # print the main table.
@@ -738,8 +754,10 @@ sub Run {
         if (
             $Self->{SurveyObject}->ElementExists( ElementID => $SurveyID, Element => 'Survey' ) ne
             'Yes'
-            || $Self->{SurveyObject}
-            ->ElementExists( ElementID => $QuestionID, Element => 'Question' ) ne 'Yes'
+            || $Self->{SurveyObject}->ElementExists(
+                ElementID => $QuestionID,
+                Element   => 'Question'
+            ) ne 'Yes'
             )
         {
             return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
@@ -775,8 +793,10 @@ sub Run {
         if (
             $Self->{SurveyObject}->ElementExists( ElementID => $SurveyID, Element => 'Survey' ) ne
             'Yes'
-            || $Self->{SurveyObject}
-            ->ElementExists( ElementID => $QuestionID, Element => 'Question' ) ne 'Yes'
+            || $Self->{SurveyObject}->ElementExists(
+                ElementID => $QuestionID,
+                Element   => 'Question'
+            ) ne 'Yes'
             )
         {
             return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
@@ -808,8 +828,10 @@ sub Run {
         if (
             $Self->{SurveyObject}->ElementExists( ElementID => $SurveyID, Element => 'Survey' ) ne
             'Yes'
-            || $Self->{SurveyObject}
-            ->ElementExists( ElementID => $QuestionID, Element => 'Question' ) ne 'Yes'
+            || $Self->{SurveyObject}->ElementExists(
+                ElementID => $QuestionID,
+                Element   => 'Question'
+            ) ne 'Yes'
             || $Self->{SurveyObject}->ElementExists( ElementID => $AnswerID, Element => 'Answer' )
             ne 'Yes'
             )
@@ -839,8 +861,10 @@ sub Run {
         if (
             $Self->{SurveyObject}->ElementExists( ElementID => $SurveyID, Element => 'Survey' ) ne
             'Yes'
-            || $Self->{SurveyObject}
-            ->ElementExists( ElementID => $QuestionID, Element => 'Question' ) ne 'Yes'
+            || $Self->{SurveyObject}->ElementExists(
+                ElementID => $QuestionID,
+                Element   => 'Question'
+            ) ne 'Yes'
             || $Self->{SurveyObject}->ElementExists( ElementID => $AnswerID, Element => 'Answer' )
             ne 'Yes'
             )
@@ -870,8 +894,10 @@ sub Run {
         if (
             $Self->{SurveyObject}->ElementExists( ElementID => $SurveyID, Element => 'Survey' ) ne
             'Yes'
-            || $Self->{SurveyObject}
-            ->ElementExists( ElementID => $QuestionID, Element => 'Question' ) ne 'Yes'
+            || $Self->{SurveyObject}->ElementExists(
+                ElementID => $QuestionID,
+                Element   => 'Question'
+            ) ne 'Yes'
             || $Self->{SurveyObject}->ElementExists( ElementID => $AnswerID, Element => 'Answer' )
             ne 'Yes'
             )
@@ -901,8 +927,10 @@ sub Run {
         if (
             $Self->{SurveyObject}->ElementExists( ElementID => $SurveyID, Element => 'Survey' ) ne
             'Yes'
-            || $Self->{SurveyObject}
-            ->ElementExists( ElementID => $QuestionID, Element => 'Question' ) ne 'Yes'
+            || $Self->{SurveyObject}->ElementExists(
+                ElementID => $QuestionID,
+                Element   => 'Question'
+            ) ne 'Yes'
             || $Self->{SurveyObject}->ElementExists( ElementID => $AnswerID, Element => 'Answer' )
             ne 'Yes'
             )
@@ -940,8 +968,10 @@ sub Run {
         if (
             $Self->{SurveyObject}->ElementExists( ElementID => $SurveyID, Element => 'Survey' ) ne
             'Yes'
-            || $Self->{SurveyObject}
-            ->ElementExists( ElementID => $QuestionID, Element => 'Question' ) ne 'Yes'
+            || $Self->{SurveyObject}->ElementExists(
+                ElementID => $QuestionID,
+                Element   => 'Question'
+            ) ne 'Yes'
             || $Self->{SurveyObject}->ElementExists( ElementID => $AnswerID, Element => 'Answer' )
             ne 'Yes'
             )

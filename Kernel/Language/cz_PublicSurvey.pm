@@ -2,7 +2,7 @@
 # Kernel/Language/cz_PublicSurvey.pm - the czech language for PublicSurvey
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: cz_PublicSurvey.pm,v 1.2 2008-01-23 17:43:25 mh Exp $
+# $Id: cz_PublicSurvey.pm,v 1.3 2008-05-16 13:29:36 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,10 +15,10 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub Data {
-    my ($Self) = @_;
+    my $Self = shift;
 
     $Self->{Translation}->{'Survey'}    = 'Průzkum';
     $Self->{Translation}->{'Questions'} = 'Dotazy';

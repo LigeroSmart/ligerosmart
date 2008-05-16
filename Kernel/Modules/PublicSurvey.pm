@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicSurvey.pm - a survey module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicSurvey.pm,v 1.16 2008-01-23 17:43:25 mh Exp $
+# $Id: PublicSurvey.pm,v 1.17 2008-05-16 13:29:36 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -55,8 +55,9 @@ sub Run {
             my @QuestionList = $Self->{SurveyObject}->QuestionList( SurveyID => $Survey{SurveyID} );
             for my $Question (@QuestionList) {
                 if ( $Question->{Type} eq 'YesNo' ) {
-                    my $PublicSurveyVote1 = $Self->{ParamObject}
-                        ->GetParam( Param => "PublicSurveyVote1[$Question->{QuestionID}]" );
+                    my $PublicSurveyVote1 = $Self->{ParamObject}->GetParam(
+                        Param => "PublicSurveyVote1[$Question->{QuestionID}]"
+                    );
                     $Self->{SurveyObject}->PublicAnswerSave(
                         PublicSurveyKey => $PublicSurveyKey,
                         QuestionID      => $Question->{QuestionID},
@@ -64,8 +65,9 @@ sub Run {
                     );
                 }
                 elsif ( $Question->{Type} eq 'Radio' ) {
-                    my $PublicSurveyVote2 = $Self->{ParamObject}
-                        ->GetParam( Param => "PublicSurveyVote2[$Question->{QuestionID}]" );
+                    my $PublicSurveyVote2 = $Self->{ParamObject}->GetParam(
+                        Param => "PublicSurveyVote2[$Question->{QuestionID}]"
+                    );
                     $Self->{SurveyObject}->PublicAnswerSave(
                         PublicSurveyKey => $PublicSurveyKey,
                         QuestionID      => $Question->{QuestionID},
@@ -73,11 +75,13 @@ sub Run {
                     );
                 }
                 elsif ( $Question->{Type} eq 'Checkbox' ) {
-                    my @AnswerList = $Self->{SurveyObject}
-                        ->AnswerList( QuestionID => $Question->{QuestionID} );
+                    my @AnswerList = $Self->{SurveyObject}->AnswerList(
+                        QuestionID => $Question->{QuestionID}
+                    );
                     for my $Answer (@AnswerList) {
-                        my $PublicSurveyVote3 = $Self->{ParamObject}
-                            ->GetParam( Param => "PublicSurveyVote3[$Answer->{AnswerID}]" );
+                        my $PublicSurveyVote3 = $Self->{ParamObject}->GetParam(
+                            Param => "PublicSurveyVote3[$Answer->{AnswerID}]"
+                        );
                         if ( $PublicSurveyVote3 && $PublicSurveyVote3 eq 'Yes' ) {
                             $Self->{SurveyObject}->PublicAnswerSave(
                                 PublicSurveyKey => $PublicSurveyKey,
@@ -88,8 +92,9 @@ sub Run {
                     }
                 }
                 elsif ( $Question->{Type} eq 'Textarea' ) {
-                    my $PublicSurveyVote4 = $Self->{ParamObject}
-                        ->GetParam( Param => "PublicSurveyVote4[$Question->{QuestionID}]" );
+                    my $PublicSurveyVote4 = $Self->{ParamObject}->GetParam(
+                        Param => "PublicSurveyVote4[$Question->{QuestionID}]"
+                    );
                     $Self->{SurveyObject}->PublicAnswerSave(
                         PublicSurveyKey => $PublicSurveyKey,
                         QuestionID      => $Question->{QuestionID},
