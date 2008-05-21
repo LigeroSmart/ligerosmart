@@ -2,7 +2,7 @@
 # Kernel/Language/de_GeneralCatalog.pm - the german translation of GeneralCatalog
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: de_GeneralCatalog.pm,v 1.12 2008-03-19 15:06:42 mh Exp $
+# $Id: de_GeneralCatalog.pm,v 1.13 2008-05-21 08:36:37 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,10 +15,11 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub Data {
-    my ($Self) = @_;
+    my $Self = shift;
+
     my $Lang = $Self->{Translation};
 
     return if ref $Lang ne 'HASH';

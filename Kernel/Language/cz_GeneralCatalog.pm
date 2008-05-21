@@ -2,7 +2,7 @@
 # Kernel/Language/cz_GeneralCatalog.pm - the czech translation of GeneralCatalog
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: cz_GeneralCatalog.pm,v 1.5 2008-03-19 15:06:42 mh Exp $
+# $Id: cz_GeneralCatalog.pm,v 1.6 2008-05-21 08:36:37 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,10 +15,11 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub Data {
-    my ($Self) = @_;
+    my $Self = shift;
+
     my $Lang = $Self->{Translation};
 
     return if ref $Lang ne 'HASH';
