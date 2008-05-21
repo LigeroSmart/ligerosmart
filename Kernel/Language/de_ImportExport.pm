@@ -2,7 +2,7 @@
 # Kernel/Language/de_ImportExport.pm - the german translation of ImportExport
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: de_ImportExport.pm,v 1.16 2008-04-16 14:29:57 mh Exp $
+# $Id: de_ImportExport.pm,v 1.17 2008-05-21 09:13:15 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,10 +15,11 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 sub Data {
-    my ($Self) = @_;
+    my $Self = shift;
+
     my $Lang = $Self->{Translation};
 
     return if ref $Lang ne 'HASH';
