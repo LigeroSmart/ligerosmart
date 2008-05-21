@@ -2,7 +2,7 @@
 # Kernel/Language/bg_ITSMCore.pm - the bulgarian translation of ITSMCore
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: bg_ITSMCore.pm,v 1.6 2008-03-19 15:19:40 mh Exp $
+# $Id: bg_ITSMCore.pm,v 1.7 2008-05-21 08:39:26 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,10 +15,11 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub Data {
-    my ($Self) = @_;
+    my $Self = shift;
+
     my $Lang = $Self->{Translation};
 
     return if ref $Lang ne 'HASH';
