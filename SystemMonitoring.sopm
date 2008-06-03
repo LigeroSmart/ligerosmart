@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.1">
-    <CVS>$Id: SystemMonitoring.sopm,v 1.5 2007-10-10 12:10:29 bb Exp $</CVS>
+    <CVS>$Id: SystemMonitoring.sopm,v 1.6 2008-06-03 15:13:55 martin Exp $</CVS>
     <Name>SystemMonitoring</Name>
     <Version>0.0.0</Version>
-    <Framework>2.2.x</Framework>
-    <Vendor>OTRS GmbH</Vendor>
+    <Framework>2.3.x</Framework>
+    <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
     <Description Lang="en">Basic mail interface to System Monitoring Suites.</Description>
@@ -14,10 +14,6 @@
         <File Permission="644" Location="Kernel/Config/Files/SystemMonitoring.xml"></File>
         <File Permission="644" Location="doc/SystemMonitoring.txt"></File>
     </Filelist>
-    <IntroInstallPost Title="Using the SystemMonitoring Module" Lang="en">
-    For configuration instructions please refer to the information in doc/SystemMonitoring.txt
-    </IntroInstallPost>
-    <IntroInstallPost Title="Konfiguration des SystemMonitoring Moduls" Lang="de">
-    Eine Anleitung zur Konfiguration des SystemMonitoring Moduls findet sich in der Datei doc/SystemMonitoring.txt
-    </IntroInstallPost>
+    <IntroInstallPost Title="Using the SystemMonitoring Module" Lang="en">For configuration instructions please refer to the information in doc/SystemMonitoring.txt.</IntroInstallPost>
+    <IntroInstallPost Title="Konfiguration des SystemMonitoring Moduls" Lang="de">Eine Anleitung zur Konfiguration des SystemMonitoring Moduls findet sich in der Datei doc/SystemMonitoring.txt.</IntroInstallPost>
 </otrs_package>
