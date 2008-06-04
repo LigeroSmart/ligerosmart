@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: GeneralCatalog.sopm,v 1.17 2008-04-12 14:10:59 mh Exp $</CVS>
+    <CVS>$Id: GeneralCatalog.sopm,v 1.18 2008-06-04 08:06:48 mh Exp $</CVS>
     <Name>GeneralCatalog</Name>
     <Version>0.0.0</Version>
-    <Framework>2.2.6</Framework>
+    <Framework>2.2.7</Framework>
     <Framework>2.2.x CVS</Framework>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
