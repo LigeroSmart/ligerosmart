@@ -1,12 +1,12 @@
 #--
 # Kernel/System/TimeAccounting.pm - all time accounting functions
-# Copyright (C) 2001-2008 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.11 2008-01-22 07:48:06 tr Exp $
+# $Id: TimeAccounting.pm,v 1.12 2008-06-04 13:25:20 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 
 package Kernel::System::TimeAccounting;
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week);
 
@@ -35,7 +35,7 @@ All timeaccounting functions
 
 =item new()
 
-create a object
+create an object
 
     use Kernel::Config;
     use Kernel::System::Log;
@@ -46,15 +46,20 @@ create a object
     my $LogObject    = Kernel::System::Log->new(
         ConfigObject => $ConfigObject,
     );
+    my $MainObject = Kernel::System::Main->new(
+        ConfigObject => $ConfigObject,
+        LogObject    => $LogObject,
+    );
     my $DBObject = Kernel::System::DB->new(
         ConfigObject => $ConfigObject,
-        LogObject => $LogObject,
+        LogObject    => $LogObject,
+        MainObject   => $MainObject,
     );
     my $TimeAccountingObject = Kernel::System::TimeAccounting->new(
         ConfigObject => $ConfigObject,
-        LogObject => $LogObject,
-        DBObject => $DBObject,
-        UserID => 123,
+        LogObject    => $LogObject,
+        DBObject     => $DBObject,
+        UserID       => 123,
     );
 
 =cut
@@ -128,7 +133,7 @@ sub UserCurrentPeriodGet {
 
 =item UserReporting()
 
-returns a hash with informations about leavedays, overtimes,
+returns a hash with information about leavedays, overtimes,
 workinghours etc. of all users
 
     my %Data = $TimeAccountingObject->UserReporting(
@@ -286,7 +291,7 @@ returns a hash with the project data
 =cut
 
 sub ProjectSettingsGet {
-    my ($Self) = @_;
+    my $Self = shift;
 
     my %Data = ();
 
@@ -408,7 +413,7 @@ returns a hash with the action settings
 =cut
 
 sub ActionSettingsGet {
-    my ($Self) = @_;
+    my $Self = shift;
 
     my %Data = ();
 
@@ -522,7 +527,7 @@ returns a hash with the user data
 =cut
 
 sub UserGet {
-    my ($Self) = @_;
+    my $Self = shift;
 
     my %Data = ();
 
@@ -550,7 +555,7 @@ returns a hash with the user period data
 =cut
 
 sub UserSettingsGet {
-    my ($Self) = @_;
+    my $Self = shift;
 
     my %Data = ();
 
@@ -1211,10 +1216,10 @@ This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (GPL). If you
-did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.11 $ $Date: 2008-01-22 07:48:06 $
+$Revision: 1.12 $ $Date: 2008-06-04 13:25:20 $
 
 =cut
