@@ -2,7 +2,7 @@
 # Kernel/Modules/FAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.13 2008-03-26 08:42:27 martin Exp $
+# $Id: FAQ.pm,v 1.14 2008-06-09 11:38:16 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use Kernel::System::FAQ;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 sub new {
     my $Type = shift;
@@ -31,7 +31,7 @@ sub new {
         $Self->{$_} = $Param{$_};
     }
 
-    # check needed Opjects
+    # check needed Objects
     for (qw(ParamObject DBObject LayoutObject LogObject ConfigObject UserObject)) {
         $Self->{LayoutObject}->FatalError(Message => "Got no $_!") if (!$Self->{$_});
     }
@@ -673,14 +673,14 @@ sub GetItemSmallView {
     # FAQ path
     if ($Self->_GetFAQPath(CategoryID => $ItemData{CategoryID})) {
         $Self->{LayoutObject}->Block(
-            Name => 'FAQPathItemElement',
+            Name => 'FAQPathItemElementSmall',
             Data => \%ItemData,
         );
     }
     # item attachment
     if (defined($ItemData{Filename})) {
         $Self->{LayoutObject}->Block(
-            Name => 'FAQItemViewAttachment',
+            Name => 'FAQItemViewAttachmentSmall',
             Data => { %Param, %ItemData },
         );
     }
@@ -844,6 +844,9 @@ sub _GetItemFieldValues {
     }
     my $String = '';
     for my $Key (sort( { $ItemFields{$a}{Prio} <=> $ItemFields{$b}{Prio} } keys(%ItemFields))) {
+        if ($ItemFields{$Key}{Show} eq 'internal') {
+            next;
+        }
         my %StateTypeData = %{$Self->{FAQObject}->StateTypeGet(
             Name => $ItemFields{$Key}{Show}
         )};
