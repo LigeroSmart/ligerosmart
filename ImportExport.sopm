@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ImportExport.sopm,v 1.18 2008-06-04 08:07:01 mh Exp $</CVS>
+    <CVS>$Id: ImportExport.sopm,v 1.19 2008-06-13 13:33:20 ub Exp $</CVS>
     <Name>ImportExport</Name>
     <Version>0.0.0</Version>
-    <Framework>2.2.7</Framework>
-    <Framework>2.2.x CVS</Framework>
+    <Framework>2.3.x</Framework>
+    <Framework>2.3.x CVS</Framework>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
