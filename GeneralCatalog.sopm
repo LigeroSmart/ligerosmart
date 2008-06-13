@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: GeneralCatalog.sopm,v 1.19 2008-06-13 13:32:32 ub Exp $</CVS>
+    <CVS>$Id: GeneralCatalog.sopm,v 1.20 2008-06-13 16:18:25 ub Exp $</CVS>
     <Name>GeneralCatalog</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -36,7 +36,7 @@
                 <UniqueColumn Name="general_catalog_class"/>
                 <UniqueColumn Name="name"/>
             </Unique>
-            <ForeignKey ForeignTable="system_user">
+            <ForeignKey ForeignTable="users">
                 <Reference Local="create_by" Foreign="id"/>
                 <Reference Local="change_by" Foreign="id"/>
             </ForeignKey>
