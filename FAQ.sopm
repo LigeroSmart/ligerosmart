@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.30 2008-05-07 10:40:38 martin Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.31 2008-06-13 12:24:53 rk Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
-    <Framework>2.2.x</Framework>
+    <Framework>2.3.x</Framework>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
@@ -19,6 +19,7 @@
         <File Permission="644" Location="Kernel/Modules/AgentFAQ.pm"></File>
         <File Permission="644" Location="Kernel/Modules/CustomerFAQ.pm"></File>
         <File Permission="644" Location="Kernel/Modules/PublicFAQ.pm"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/LinkObjectFAQ.pm"></File>
         <File Permission="644" Location="Kernel/Output/HTML/LayoutFAQ.pm"></File>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/FAQ.dtl"></File>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQ.dtl"></File>

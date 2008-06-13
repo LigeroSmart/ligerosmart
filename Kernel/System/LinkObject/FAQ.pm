@@ -2,7 +2,7 @@
 # Kernel/System/LinkObject/FAQ.pm - to link faq objects
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.4 2008-03-02 23:00:44 martin Exp $
+# $Id: FAQ.pm,v 1.5 2008-06-13 12:24:53 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -12,106 +12,256 @@
 package Kernel::System::LinkObject::FAQ;
 
 use strict;
+use warnings;
+
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.4 $';
-$VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
+$VERSION = qw($Revision: 1.5 $) [1];
 
-sub Init {
-    my $Self = shift;
-    my %Param = @_;
+sub new {
+    my ( $Type, %Param ) = @_;
 
-    $Self->{FAQObject} = Kernel::System::FAQ->new(%{$Self});
+    # allocate new hash for object
+    my $Self = {};
+    bless( $Self, $Type );
 
-    return 1;
+    # check needed objects
+    for (qw(DBObject ConfigObject LogObject MainObject TimeObject LinkObject)) {
+        $Self->{$_} = $Param{$_} || die "Got no $_!";
+    }
+    $Self->{UserID} = 1;
+    $Self->{FAQObject} = Kernel::System::FAQ->new( %{$Self} );
+
+    return $Self;
 }
 
-sub FillDataMap {
+=item PossibleObjectsSelectList()
+
+return an array hash with selectable objects
+
+Return
+    @ObjectSelectList = (
+        {
+            Key   => 'FAQ',
+            Value => 'FAQ',
+        },
+    );
+
+    @ObjectSelectList = $LinkObject->PossibleObjectsSelectList();
+
+=cut
+
+sub PossibleObjectsSelectList {
     my $Self = shift;
-    my %Param = @_;
-    foreach (qw(ID)) {
-        if (!$Param{$_}) {
-            $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
+
+    # get object description
+    my %ObjectDescription = $Self->ObjectDescriptionGet(
+        UserID => 1,
+    );
+
+    # object select list
+    my @ObjectSelectList = (
+        {
+            Key   => $ObjectDescription{Object},
+            Value => $ObjectDescription{Realname},
+        },
+    );
+
+    return @ObjectSelectList;
+}
+
+=item ObjectDescriptionGet()
+
+return a hash of object description data
+
+    %ObjectDescription = $LinkObject->ObjectDescriptionGet(
+        UserID => 1,
+    );
+
+=cut
+
+sub ObjectDescriptionGet {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    if ( !$Param{UserID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need UserID!',
+        );
+        return;
+    }
+
+    # define object description
+    my %ObjectDescription = (
+        Object   => 'FAQ',
+        Realname => 'FAQ',
+        Overview => {
+            Normal => {
+                Key     => 'Number',
+                Value   => 'FAQ#',
+                Type    => 'Link',
+                Subtype => 'Compact',
+            },
+            Complex => [
+                {
+                    Key   => 'Number',
+                    Value => 'FAQ#',
+                    Type  => 'Link',
+                },
+                {
+                    Key   => 'Title',
+                    Value => 'Title',
+                    Type  => 'Text',
+                },
+                {
+                    Key   => 'LinkType',
+                    Value => 'Already linked as',
+                    Type  => 'LinkType',
+                },
+            ],
+        },
+    );
+
+    return %ObjectDescription;
+}
+
+=item ObjectSearchOptionsGet()
+
+return an array hash list with search options
+
+    @SearchOptions = $LinkObject->ObjectSearchOptionsGet();
+
+=cut
+
+sub ObjectSearchOptionsGet {
+    my ( $Self, %Param ) = @_;
+
+    # define search params
+    my @SearchOptions = (
+        {
+            Key   => 'Number',
+            Value => 'FAQ#',
+        },
+        {
+            Key   => 'Title',
+            Value => 'Title',
+        },
+        {
+            Key   => 'What',
+            Value => 'Fulltext',
+        },
+    );
+
+    return @SearchOptions;
+}
+
+=item ItemDescriptionGet()
+
+return a hash of item description data
+
+    %ItemDescription = $BackendObject->ItemDescriptionGet(
+        Key    => '123',
+        UserID => 1,
+    );
+
+=cut
+
+sub ItemDescriptionGet {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(Key UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
             return;
         }
     }
-    my %Article = $Self->{FAQObject}->FAQGet(
-        FAQID => $Param{ID},
+
+    # get faq
+    my %FAQ = $Self->{FAQObject}->FAQGet(
+        ItemID => $Param{Key},
     );
-    return (
-        Text => 'F:'.$Article{Number},
-        Number => $Article{Number},
-        Title  => $Article{Title},
-        ID => $Param{ID},
-        Object => 'FAQ',
-        FrontendDest => "Action=AgentFAQ&ItemID=",
+
+    return if !%FAQ;
+
+    # lookup the valid state id
+    my $ValidStateID = $Self->{LinkObject}->StateLookup(
+        Name   => 'Valid',
+        UserID => 1,
     );
+
+    # get link data
+    my $ExistingLinks = $Self->{LinkObject}->LinksGet(
+        Object  => 'FAQ',
+        Key     => $Param{Key},
+        StateID => $Param{StateID} || $ValidStateID,
+        UserID  => 1,
+    ) || {};
+
+    $FAQ{Number} ||= '';
+    $FAQ{Title} ||= '';
+
+    # define item description
+    my %ItemDescription = (
+        Identifier  => 'FAQ',
+        Description => {
+            Short  => "F:$FAQ{Number}",
+            Normal => "FAQ# $FAQ{Number}",
+            Long   => "FAQ# $FAQ{Number}: $FAQ{Title}",
+        },
+        ItemData => {
+            %FAQ,
+        },
+        LinkData => {
+            %{$ExistingLinks},
+        },
+    );
+
+    return %ItemDescription;
 }
 
-sub BackendLinkObject {
-    my $Self = shift;
-    my %Param = @_;
-    return 1;
-}
+=item ItemSearch()
 
-sub BackendUnlinkObject {
-    my $Self = shift;
-    my %Param = @_;
-    return 1;
-}
+return an array list of the search results
 
-sub LinkSearchParams {
-    my $Self = shift;
-    my %Param = @_;
-    return (
-        { Name => 'FAQNumber', Text => 'FAQ#'},
-        { Name => 'FAQTitle', Text => 'Title'},
-        { Name => 'FAQFulltext', Text => 'Fulltext'},
+    @ItemKeys = $LinkObject->ItemSearch(
+        SearchParams => $HashRef,  # (optional)
     );
-}
 
-sub LinkSearch {
-    my $Self = shift;
-    my %Param = @_;
-    my @ResultWithData = ();
-    my @Result = $Self->{FAQObject}->FAQSearch(
-        Number => $Param{FAQNumber},
-        Title => $Param{FAQTitle},
-        What => $Param{FAQFulltext},
-    );
-    foreach (@Result) {
-        my %Article = $Self->{FAQObject}->FAQGet(FAQID => $_);
-        push (@ResultWithData,
-            {
-                %Article,
-                ID => $Article{ItemID},
-            },
-        );
+=cut
+
+sub ItemSearch {
+    my ( $Self, %Param ) = @_;
+
+    # set default params
+    $Param{SearchParams} ||= {};
+
+    # set focus
+    if ( $Param{SearchParams}->{Title} ) {
+        $Param{SearchParams}->{Title} = '*' . $Param{SearchParams}->{Title} . '*';
     }
-    return @ResultWithData;
-}
-
-sub LinkItemData {
-    my $Self = shift;
-    my %Param = @_;
-    my %Article = $Self->{FAQObject}->FAQGet(
-        ItemID => $Param{ID},
-    );
-
-    my $Body = '';
-    foreach (1..10) {
-        if ($Article{"Field$_"}) {
-            $Body .= $Article{"Field$_"};
-        }
+    if ( $Param{SearchParams}->{Number} ) {
+        $Param{SearchParams}->{Number} = '*' . $Param{SearchParams}->{Number} . '*';
     }
 
-    return (
-        %Article,
-        ID => $Article{ItemID},
-        Body => $Body,
-        DetailLink => "Action=AgentFAQ&ItemID=$Param{ID}",
+    if ( $Param{SearchParams}->{Fulltext} ) {
+        $Param{SearchParams}->{Fulltext} = '*' . $Param{SearchParams}->{Fulltext} . '*';
+    }
+
+    # search the faqs
+    my @ItemKeys = $Self->{FAQObject}->FAQSearch(
+        %{ $Param{SearchParams} },
+        States  => ['public', 'internal'],
+        Order   => 'Created',
+        Sort    => 'down',
+        Limit   => 1000,
     );
+    return @ItemKeys;
 }
 
 1;

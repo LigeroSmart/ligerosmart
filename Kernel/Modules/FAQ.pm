@@ -2,7 +2,7 @@
 # Kernel/Modules/FAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.14 2008-06-09 11:38:16 rk Exp $
+# $Id: FAQ.pm,v 1.15 2008-06-13 12:24:53 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use Kernel::System::FAQ;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 sub new {
     my $Type = shift;
@@ -586,42 +586,88 @@ sub GetItemView {
         );
     }
     if ($Param{Links} && $Param{Links} == 1) {
-        # get linked objects
-        my %Links = $Self->{LinkObject}->AllLinkedObjects(
-            Object => 'FAQ',
-            ObjectID => $ItemData{ItemID},
+        # lookup the link state id
+        my $LinkStateID = $Self->{LinkObject}->StateLookup(
+            Name   => 'Valid',
             UserID => $Self->{UserID},
         );
-        $Self->{LayoutObject}->Block(
-            Name => "Links",
-            Data => {},
+
+        # get linked objects
+        my $ExistingLinks = $Self->{LinkObject}->LinksGet(
+            Object  => 'FAQ',
+            Key     => $GetParam{ItemID},
+            StateID => $LinkStateID,
+            UserID  => $Self->{UserID},
         );
-        my %LinkTypeBox = ();
-        for my $LinkType ( qw(Normal Parent Child) ) {
-            if ( ! $Links{$LinkType} ) {
-                next;
-            }
-            my %ObjectType = %{$Links{$LinkType}};
-            for my $Object (sort keys %ObjectType) {
-                my %Data = %{$ObjectType{$Object}};
-                for my $Item (sort keys %Data) {
-                    if ( !$LinkTypeBox{$LinkType} ) {
-                        $Self->{LayoutObject}->Block(
-                            Name => 'Link',
-                            Data => {
-                                %Param,
-                                LinkType => $LinkType,
-                            },
-                        );
-                        $LinkTypeBox{$LinkType} = 1;
-                    }
+
+        # prepare the output hash
+        for my $Object ( sort { lc $a cmp lc $b } keys %{$ExistingLinks} ) {
+
+            # get object description
+            my %ObjectDescription = $Self->{LinkObject}->ObjectDescriptionGet(
+                Object => $Object,
+                UserID => $Self->{UserID},
+            );
+
+            for my $Type ( sort { lc $a cmp lc $b } keys %{ $ExistingLinks->{$Object} } ) {
+
+                # lookup type id
+                my $TypeID = $Self->{LinkObject}->TypeLookup(
+                    Name   => $Type,
+                    UserID => $Self->{UserID},
+                );
+
+                # get type data
+                my %TypeData = $Self->{LinkObject}->TypeGet(
+                    TypeID => $TypeID,
+                    UserID => $Self->{UserID},
+                );
+
+                for my $Direction ( keys %{ $ExistingLinks->{$Object}->{$Type} } ) {
+
+                    my $LinkTypeName = $Direction eq 'Target' ? $TypeData{TargetName} : $TypeData{SourceName};
+
                     $Self->{LayoutObject}->Block(
-                        Name => 'LinkItem',
+                        Name => 'Link',
                         Data => {
-                            %{ $Data{$Item} },
-                            LinkType => $LinkType,
+                            %Param,
+                            LinkTypeName => $LinkTypeName,
                         },
                     );
+
+                    for my $ItemKey ( @{ $ExistingLinks->{$Object}->{$Type}->{$Direction} } ) {
+
+                        # get item description
+                        my %ItemDescription = $Self->{LinkObject}->ItemDescriptionGet(
+                            Object => $Object,
+                            Key    => $ItemKey,
+                            UserID => $Self->{UserID},
+                        );
+
+                        # extract cell value
+                        my $Content = $ItemDescription{ItemData}->{ $ObjectDescription{Overview}->{Normal}->{Key} } || '';
+
+                        my $LinkString = $Self->{LayoutObject}->LinkObjectContentStringCreate(
+                            SourceObject => {
+                                Object => 'FAQ',
+                                Key    => $Self->{ItemID},
+                            },
+                            TargetObject => {
+                                Object => $Object,
+                                Key    => $ItemKey,
+                            },
+                            TargetItemDescription => \%ItemDescription,
+                            ColumnData => $ObjectDescription{Overview}->{Normal},
+                            Content    => $Content,
+                        );
+
+                        $Self->{LayoutObject}->Block(
+                            Name => 'LinkItem',
+                            Data => {
+                                LinkString => $LinkString,
+                            },
+                        );
+                    }
                 }
             }
         }
@@ -685,20 +731,88 @@ sub GetItemSmallView {
         );
     }
     # get linked objects
-    my %Links = $Self->{LinkObject}->AllLinkedObjects(
-        Object => 'FAQ',
-        ObjectID => $ItemData{ItemID},
+    # lookup the link state id
+    my $LinkStateID = $Self->{LinkObject}->StateLookup(
+        Name   => 'Valid',
         UserID => $Self->{UserID},
     );
-    for my $LinkType (sort keys %Links) {
-        my %ObjectType = %{$Links{$LinkType}};
-        for my $Object (sort keys %ObjectType) {
-            my %Data = %{$ObjectType{$Object}};
-            for my $Item (sort keys %Data) {
+
+    # get linked objects
+    my $ExistingLinks = $Self->{LinkObject}->LinksGet(
+        Object  => 'FAQ',
+        Key     => $GetParam{ItemID},
+        StateID => $LinkStateID,
+        UserID  => $Self->{UserID},
+    );
+
+    # prepare the output hash
+    for my $Object ( sort { lc $a cmp lc $b } keys %{$ExistingLinks} ) {
+
+        # get object description
+        my %ObjectDescription = $Self->{LinkObject}->ObjectDescriptionGet(
+            Object => $Object,
+            UserID => $Self->{UserID},
+        );
+
+        for my $Type ( sort { lc $a cmp lc $b } keys %{ $ExistingLinks->{$Object} } ) {
+
+            # lookup type id
+            my $TypeID = $Self->{LinkObject}->TypeLookup(
+                Name   => $Type,
+                UserID => $Self->{UserID},
+            );
+
+            # get type data
+            my %TypeData = $Self->{LinkObject}->TypeGet(
+                TypeID => $TypeID,
+                UserID => $Self->{UserID},
+            );
+
+            for my $Direction ( keys %{ $ExistingLinks->{$Object}->{$Type} } ) {
+
+                my $LinkTypeName = $Direction eq 'Target' ? $TypeData{TargetName} : $TypeData{SourceName};
+
                 $Self->{LayoutObject}->Block(
-                    Name => "Link$LinkType",
-                    Data => $Data{$Item},
+                    Name => 'Link',
+                    Data => {
+                        %Param,
+                        LinkTypeName => $LinkTypeName,
+                    },
                 );
+
+                for my $ItemKey ( @{ $ExistingLinks->{$Object}->{$Type}->{$Direction} } ) {
+
+                    # get item description
+                    my %ItemDescription = $Self->{LinkObject}->ItemDescriptionGet(
+                        Object => $Object,
+                        Key    => $ItemKey,
+                        UserID => $Self->{UserID},
+                    );
+
+                    # extract cell value
+                    my $Content = $ItemDescription{ItemData}->{ $ObjectDescription{Overview}->{Normal}->{Key} } || '';
+
+                    my $LinkString = $Self->{LayoutObject}->LinkObjectContentStringCreate(
+                        SourceObject => {
+                            Object => 'FAQ',
+                            Key    => $Self->{ItemID},
+                        },
+                        TargetObject => {
+                            Object => $Object,
+                            Key    => $ItemKey,
+                        },
+                        TargetItemDescription => \%ItemDescription,
+                        ColumnData => $ObjectDescription{Overview}->{Normal},
+                        Content    => $Content,
+                    );
+
+                    $Self->{LayoutObject}->Block(
+                        Name => 'LinkItem',
+                        Data => {
+                            LinkString => $LinkString,
+                        },
+                    );
+                }
             }
         }
     }
@@ -753,32 +867,6 @@ sub GetItemPrint {
     $Self->_GetItemFields(
         ItemData => \%ItemData
     );
-    # links
-    if ($Param{Links} && $Param{Links} == 1) {
-        $Self->{LayoutObject}->Block(
-            Name => 'Links',
-            Data => {},
-        );
-        # get linked objects
-        my %Links = $Self->{LinkObject}->AllLinkedObjects(
-            Object => 'FAQ',
-            ObjectID => $ItemData{ItemID},
-            UserID => $Self->{UserID},
-        );
-        # links
-        for my $LinkType (sort keys %Links) {
-            my %ObjectType = %{$Links{$LinkType}};
-            for my $Object (sort keys %ObjectType) {
-                my %Data = %{$ObjectType{$Object}};
-                for my $Item (sort keys %Data) {
-                    $Self->{LayoutObject}->Block(
-                        Name => "Link$LinkType",
-                        Data => $Data{$Item},
-                    );
-                }
-            }
-        }
-    }
     return;
 }
 

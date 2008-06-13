@@ -2,7 +2,7 @@
 # AgentFAQ.dtl - provides HTML view for faq articles
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.dtl,v 1.16 2008-06-09 11:38:17 rk Exp $
+# $Id: AgentFAQ.dtl,v 1.17 2008-06-13 12:24:53 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -25,7 +25,7 @@
       <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=History&CategoryID=$Data{"CategoryID"}&ItemID=$Data{"ItemID"}">$Text{"History"}</a> -
       <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Print&CategoryID=$Data{"CategoryID"}&ItemID=$Data{"ItemID"}" target="print">$Text{"Print"}</a>
 <!-- dtl:block:FAQItemViewLinkDelete -->
-      - <a href="$Env{"Baselink"}Action=AgentLinkObject&SourceObject=FAQ&CategoryID=$Data{"CategoryID"}&SourceID=$Data{"ItemID"}">$Text{"Link"}</a> -
+      - <a href="$Env{"Baselink"}Action=AgentLinkObject&SourceObject=FAQ&CategoryID=$Data{"CategoryID"}&SourceKey=$Data{"ItemID"}">$Text{"Link"}</a> -
       <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Delete&CategoryID=$Data{"CategoryID"}&ItemID=$Data{"ItemID"}">$Text{"Delete"}</a>
 <!-- dtl:block:FAQItemViewLinkDelete -->
     </td>
@@ -132,17 +132,17 @@
           <td>&nbsp;</td>
         </tr>
 # object links
-        <tr>
-          <td class="contentkey">$Text{"Linked"}:</td>
-          <td class="contentvalue"></td>
+        <tr valign="top">
+          <td><b>$Text{"Linked"}:</b></td>
+          <td></td>
         </tr>
-
 <!-- dtl:block:Link -->
-        <tr>
-          <td class="contentkey">&nbsp;&nbsp;$Text{"$QData{"LinkType"}"}:</td>
-          <td class="contentvalue">
+        <tr valign="top">
+          <td>&nbsp;&nbsp;<b>$Text{"$QData{"LinkTypeName"}"}:</b></td>
+          <td>
 <!-- dtl:block:LinkItem -->
-            <a href="$Env{"Baselink"}$Data{"FrontendDest"}$QData{"ID"}" title="$QData{"Object"}: $QData{"Number"} $QData{"Title"}" $Data{"Css"}>$QData{"Text"}</a>
+            $Data{"LinkString"}
+#            <a href="$Env{"Baselink"}$Data{"FrontendDest"}$QData{"ID"}" title="$QData{"Title"}" $Data{"Css"}>$QData{"Text"}</a>
 <!-- dtl:block:LinkItem -->
           </td>
         </tr>

@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.20 2008-04-08 20:15:03 martin Exp $
+# $Id: FAQ.pm,v 1.21 2008-06-13 12:24:53 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::CustomerGroup;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 =head1 NAME
 
@@ -86,9 +86,9 @@ sub new {
 
 =item FAQGet()
 
-get an article
+get an faq
 
-    my %Article = $FAQObject->FAQGet(
+    my %FAQ = $FAQObject->FAQGet(
         ItemID => 1,
     );
 
@@ -2569,6 +2569,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.20 $ $Date: 2008-04-08 20:15:03 $
+$Revision: 1.21 $ $Date: 2008-06-13 12:24:53 $
 
 =cut
