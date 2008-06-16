@@ -2,7 +2,7 @@
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.38 2008-06-16 08:36:07 mh Exp $
+# $Id: GeneralCatalog.pm,v 1.39 2008-06-16 11:38:36 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,9 +15,10 @@ use strict;
 use warnings;
 
 use Kernel::System::Valid;
+use Kernel::System::CheckItem;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.38 $) [1];
+$VERSION = qw($Revision: 1.39 $) [1];
 
 =head1 NAME
 
@@ -60,6 +61,7 @@ create an object
         ConfigObject => $ConfigObject,
         LogObject    => $LogObject,
         DBObject     => $DBObject,
+        MainObject   => $MainObject,
     );
 
 =cut
@@ -72,10 +74,11 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Object (qw(DBObject ConfigObject LogObject)) {
+    for my $Object (qw(DBObject ConfigObject LogObject MainObject)) {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
     $Self->{ValidObject} = Kernel::System::Valid->new( %{$Self} );
+    $Self->{CheckItemObject} = Kernel::System::CheckItem->new(  %{$Self} );
 
     return $Self;
 }
@@ -131,9 +134,9 @@ sub ClassRename {
         }
     }
 
-    # cleanup given params (replace it with StringClean() in OTRS 2.3 and later)
+    # cleanup given params
     for my $Argument (qw(ClassOld ClassNew)) {
-        $Self->_StringClean(
+        $Self->{CheckItemObject}->StringClean(
             StringRef         => \$Param{$Argument},
             RemoveAllNewlines => 1,
             RemoveAllTabs     => 1,
@@ -234,7 +237,7 @@ sub ItemList {
         $CacheKey .= join q{####}, map {$_} @{ $Param{Functionality} };
 
         # create and add bind parameters
-        my @BindParams = map {$_} @{ $Param{Functionality} };
+        my @BindParams = map {\$_} @{ $Param{Functionality} };
         push @BIND, @BindParams;
 
         # add functionality string to sql string
@@ -451,9 +454,9 @@ sub ItemAdd {
         $Param{$Argument} = $Param{$Argument} || '';
     }
 
-    # cleanup given params (replace it with StringClean() in OTRS 2.3 and later)
+    # cleanup given params
     for my $Argument (qw(Class Functionality)) {
-        $Self->_StringClean(
+        $Self->{CheckItemObject}->StringClean(
             StringRef         => \$Param{$Argument},
             RemoveAllNewlines => 1,
             RemoveAllTabs     => 1,
@@ -461,7 +464,7 @@ sub ItemAdd {
         );
     }
     for my $Argument (qw(Name Comment)) {
-        $Self->_StringClean(
+        $Self->{CheckItemObject}->StringClean(
             StringRef         => \$Param{$Argument},
             RemoveAllNewlines => 1,
             RemoveAllTabs     => 1,
@@ -560,9 +563,9 @@ sub ItemUpdate {
         $Param{$Argument} = $Param{$Argument} || '';
     }
 
-    # cleanup given params (replace it with StringClean() in OTRS 2.3 and later)
+    # cleanup given params
     for my $Argument (qw(Class Functionality)) {
-        $Self->_StringClean(
+        $Self->{CheckItemObject}->StringClean(
             StringRef         => \$Param{$Argument},
             RemoveAllNewlines => 1,
             RemoveAllTabs     => 1,
@@ -570,7 +573,7 @@ sub ItemUpdate {
         );
     }
     for my $Argument (qw(Name Comment)) {
-        $Self->_StringClean(
+        $Self->{CheckItemObject}->StringClean(
             StringRef         => \$Param{$Argument},
             RemoveAllNewlines => 1,
             RemoveAllTabs     => 1,
@@ -671,60 +674,6 @@ sub ItemUpdate {
     );
 }
 
-=item _StringClean()
-
-DON'T USE THIS INTERNAL FUNCTION IN OTHER MODULES!
-
-This function can be replaced with Kernel::System::CheckItem::StringClean() in OTRS 2.3 and later!
-
-clean a given string
-
-    my $Error = $CheckItemObject->_StringClean(
-        StringRef         => \'String',
-        TrimLeft          => 0,  # (optional) default 1
-        TrimRight         => 0,  # (optional) default 1
-        RemoveAllNewlines => 1,  # (optional) default 0
-        RemoveAllTabs     => 1,  # (optional) default 0
-        RemoveAllSpaces   => 1,  # (optional) default 0
-    );
-
-=cut
-
-sub _StringClean {
-    my ( $Self, %Param ) = @_;
-
-    if ( !$Param{StringRef} || ref $Param{StringRef} ne 'SCALAR' ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => 'Need a scalar reference!'
-        );
-        return;
-    }
-
-    return 1 if !${ $Param{StringRef} };
-
-    # set default values
-    $Param{TrimLeft}  = defined $Param{TrimLeft}  ? $Param{TrimLeft}  : 1;
-    $Param{TrimRight} = defined $Param{TrimRight} ? $Param{TrimRight} : 1;
-
-    my %TrimAction = (
-        RemoveAllNewlines => qr{ [\n\r\f] }xms,
-        RemoveAllTabs     => qr{ \t       }xms,
-        RemoveAllSpaces   => qr{ [ ]      }xms,
-        TrimLeft          => qr{ \A \s+   }xms,
-        TrimRight         => qr{ \s+ \z   }xms,
-    );
-
-    ACTION:
-    for my $Action ( sort keys %TrimAction ) {
-        next ACTION if !$Param{$Action};
-
-        ${ $Param{StringRef} } =~ s{ $TrimAction{$Action} }{}xmsg;
-    }
-
-    return 1;
-}
-
 1;
 
 =back
@@ -741,6 +690,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.38 $ $Date: 2008-06-16 08:36:07 $
+$Revision: 1.39 $ $Date: 2008-06-16 11:38:36 $
 
 =cut
