@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMCore.sopm,v 1.39 2008-06-04 08:07:25 mh Exp $</CVS>
+    <CVS>$Id: ITSMCore.sopm,v 1.40 2008-06-16 15:48:23 ub Exp $</CVS>
     <Name>ITSMCore</Name>
     <Version>0.0.0</Version>
-    <Framework>2.2.7</Framework>
-    <Framework>2.2.x CVS</Framework>
+    <Framework>2.3.x</Framework>
+    <Framework>2.3.x CVS</Framework>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
     <Description Lang="en">The OTRS::ITSM core package.</Description>
     <Description Lang="de">Das OTRS::ITSM Core Paket.</Description>
     <PackageRequired Version="1.1.2">GeneralCatalog</PackageRequired>
-    <PackageRequired Version="1.1.2">LinkObject2</PackageRequired>
     <Filelist>
         <File Permission="644" Location="Kernel/Config/Files/FrameworkITSMCore.xml"/>
         <File Permission="644" Location="Kernel/Config/Files/ITSMCore.xml"/>
@@ -41,7 +40,7 @@
             <Column Name="create_by" Required="false" Type="INTEGER"/>
             <Column Name="change_time" Required="false" Type="DATE"/>
             <Column Name="change_by" Required="false" Type="INTEGER"/>
-            <ForeignKey ForeignTable="system_user">
+            <ForeignKey ForeignTable="users">
                 <Reference Local="create_by" Foreign="id"/>
                 <Reference Local="change_by" Foreign="id"/>
             </ForeignKey>
@@ -467,7 +466,6 @@
         REQUIRED OTRS PACKAGES
         &lt;ul&gt;
         &lt;li&gt;GeneralCatalog 1.1.2&lt;/li&gt;
-        &lt;li&gt;LinkObject 1.1.2&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         ATTENTION&lt;br&gt;
@@ -488,7 +486,6 @@
         BENÖTIGTE OTRS-PAKETE
         &lt;ul&gt;
         &lt;li&gt;GeneralCatalog 1.1.2&lt;/li&gt;
-        &lt;li&gt;LinkObject 1.1.2&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         ACHTUNG&lt;br&gt;
@@ -509,7 +506,6 @@
         REQUIRED OTRS PACKAGES
         &lt;ul&gt;
         &lt;li&gt;GeneralCatalog 1.1.2&lt;/li&gt;
-        &lt;li&gt;LinkObject 1.1.2&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         ATTENTION&lt;br&gt;
@@ -530,7 +526,6 @@
         BENÖTIGTE OTRS-PAKETE
         &lt;ul&gt;
         &lt;li&gt;GeneralCatalog 1.1.2&lt;/li&gt;
-        &lt;li&gt;LinkObject 1.1.2&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         ACHTUNG&lt;br&gt;
