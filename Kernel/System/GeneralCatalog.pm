@@ -2,7 +2,7 @@
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.36 2008-06-16 07:42:29 ub Exp $
+# $Id: GeneralCatalog.pm,v 1.37 2008-06-16 08:33:38 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.36 $) [1];
+$VERSION = qw($Revision: 1.37 $) [1];
 
 =head1 NAME
 
@@ -202,14 +202,22 @@ sub ItemList {
         return;
     }
 
+    # set default value
+    if ( !defined $Param{Valid} ) {
+        $Param{Valid} = 1;
+    }
+
     # create sql string
     my $SQL = 'SELECT id, name FROM general_catalog WHERE general_catalog_class = ? ';
     my @BIND = ( \$Param{Class} );
 
     # add valid string to sql string
-    if ( !defined $Param{Valid} || $Param{Valid} ) {
+    if ( $Param{Valid} ) {
         $SQL .= 'AND valid_id = 1 ';
     }
+
+    # create cache key
+    my $CacheKey = $Param{Class} . '####' . $Param{Valid} . '####';
 
     # add functionality to sql string
     if ( $Param{Functionality} ) {
@@ -220,8 +228,10 @@ sub ItemList {
         }
 
         # create functionality string
-        my $FunctionalityString = join q{, },
-            map { '?' } @{ $Param{Functionality} };
+        my $FunctionalityString = join q{, }, map { '?' } @{ $Param{Functionality} };
+
+        # add functionality list to cache key
+        $CacheKey .=  join q{####}, map { $_ } @{ $Param{Functionality} };
 
         # create and add bind parameters
         my @BindParams = map { $_ } @{ $Param{Functionality} };
@@ -231,9 +241,9 @@ sub ItemList {
         $SQL .= "AND functionality IN ($FunctionalityString)";
     }
 
-#    # check if result is already cached
-#    return $Self->{Cache}->{ItemList}->{$SQL}
-#        if $Self->{Cache}->{ItemList}->{$SQL};
+    # check if result is already cached
+    return $Self->{Cache}->{ItemList}->{$CacheKey}
+        if $Self->{Cache}->{ItemList}->{$CacheKey};
 
     # ask database
     $Self->{DBObject}->Prepare(
@@ -256,8 +266,8 @@ sub ItemList {
         return;
     }
 
-#    # cache the result
-#    $Self->{Cache}->{ItemList}->{$SQL} = \%Data;
+    # cache the result
+    $Self->{Cache}->{ItemList}->{$CacheKey} = \%Data;
 
     return \%Data;
 }
@@ -731,6 +741,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.36 $ $Date: 2008-06-16 07:42:29 $
+$Revision: 1.37 $ $Date: 2008-06-16 08:33:38 $
 
 =cut
