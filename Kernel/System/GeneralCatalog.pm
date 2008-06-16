@@ -2,7 +2,7 @@
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.37 2008-06-16 08:33:38 mh Exp $
+# $Id: GeneralCatalog.pm,v 1.38 2008-06-16 08:36:07 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.37 $) [1];
+$VERSION = qw($Revision: 1.38 $) [1];
 
 =head1 NAME
 
@@ -208,7 +208,7 @@ sub ItemList {
     }
 
     # create sql string
-    my $SQL = 'SELECT id, name FROM general_catalog WHERE general_catalog_class = ? ';
+    my $SQL  = 'SELECT id, name FROM general_catalog WHERE general_catalog_class = ? ';
     my @BIND = ( \$Param{Class} );
 
     # add valid string to sql string
@@ -228,13 +228,13 @@ sub ItemList {
         }
 
         # create functionality string
-        my $FunctionalityString = join q{, }, map { '?' } @{ $Param{Functionality} };
+        my $FunctionalityString = join q{, }, map {'?'} @{ $Param{Functionality} };
 
         # add functionality list to cache key
-        $CacheKey .=  join q{####}, map { $_ } @{ $Param{Functionality} };
+        $CacheKey .= join q{####}, map {$_} @{ $Param{Functionality} };
 
         # create and add bind parameters
-        my @BindParams = map { $_ } @{ $Param{Functionality} };
+        my @BindParams = map {$_} @{ $Param{Functionality} };
         push @BIND, @BindParams;
 
         # add functionality string to sql string
@@ -581,7 +581,7 @@ sub ItemUpdate {
     $Self->{DBObject}->Prepare(
         SQL => 'SELECT general_catalog_class, functionality FROM general_catalog '
             . 'WHERE id = ?',
-        Bind => [ \$Param{ItemID} ],
+        Bind  => [ \$Param{ItemID} ],
         Limit => 1,
     );
 
@@ -741,6 +741,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.37 $ $Date: 2008-06-16 08:33:38 $
+$Revision: 1.38 $ $Date: 2008-06-16 08:36:07 $
 
 =cut
