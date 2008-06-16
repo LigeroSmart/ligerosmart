@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMCore.xml,v 1.6 2008-02-21 12:33:42 mh Exp $</CVS>
+    <CVS>$Id: ITSMCore.xml,v 1.7 2008-06-16 17:45:13 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminTicketPriority" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminTicketPriority configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminTicketPriority Konfiguration im Admin-Bereich.</Description>
@@ -41,66 +41,263 @@
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="LinkObject2::Type###RelevantTo" Required="0" Valid="1">
+    <ConfigItem Name="LinkObject::Type###RelevantTo" Required="0" Valid="1">
         <Description Lang="en">Link type.</Description>
-        <Description Lang="de">Link Typ.</Description>
+        <Description Lang="de">Definiert den Linktyp 'RelevantTo'. Wird als SourceName und TargetName der gleiche Inhalt angegeben, entsteht ein ungerichteter Linktyp. Wird als SourceName und TargetName verschiedene Inhalt angegeben, entsteht ein gerichteter Linktyp.</Description>
         <Group>Framework</Group>
-        <SubGroup>Core::LinkObject2::Types</SubGroup>
+        <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="NormalName">Relevant to</Item>
-                <Item Key="ReverseName">Relevant to</Item>
+                <Item Key="SourceName">Relevant to</Item>
+                <Item Key="TargetName">Relevant to</Item>
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="LinkObject2::Type###Includes" Required="0" Valid="1">
+    <ConfigItem Name="LinkObject::Type###Includes" Required="0" Valid="1">
         <Description Lang="en">Link type.</Description>
-        <Description Lang="de">Link Typ.</Description>
+        <Description Lang="de">Definiert den Linktyp 'Includes'. Wird als SourceName und TargetName der gleiche Inhalt angegeben, entsteht ein ungerichteter Linktyp. Wird als SourceName und TargetName verschiedene Inhalt angegeben, entsteht ein gerichteter Linktyp.</Description>
         <Group>Framework</Group>
-        <SubGroup>Core::LinkObject2::Types</SubGroup>
+        <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="NormalName">Includes</Item>
-                <Item Key="ReverseName">Part of</Item>
+                <Item Key="SourceName">Includes</Item>
+                <Item Key="TargetName">Part of</Item>
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="LinkObject2::Type###DependsOn" Required="0" Valid="1">
+    <ConfigItem Name="LinkObject::Type###DependsOn" Required="0" Valid="1">
         <Description Lang="en">Link type.</Description>
-        <Description Lang="de">Link Typ.</Description>
+        <Description Lang="de">Definiert den Linktyp 'DependsOn'. Wird als SourceName und TargetName der gleiche Inhalt angegeben, entsteht ein ungerichteter Linktyp. Wird als SourceName und TargetName verschiedene Inhalt angegeben, entsteht ein gerichteter Linktyp.</Description>
         <Group>Framework</Group>
-        <SubGroup>Core::LinkObject2::Types</SubGroup>
+        <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="NormalName">Depends on</Item>
-                <Item Key="ReverseName">Required for</Item>
+                <Item Key="SourceName">Depends on</Item>
+                <Item Key="TargetName">Required for</Item>
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="LinkObject2::Type###ConnectedTo" Required="0" Valid="1">
+    <ConfigItem Name="LinkObject::Type###ConnectedTo" Required="0" Valid="1">
         <Description Lang="en">Link type.</Description>
-        <Description Lang="de">Link Typ.</Description>
+        <Description Lang="de">Definiert den Linktyp 'ConnectedTo'. Wird als SourceName und TargetName der gleiche Inhalt angegeben, entsteht ein ungerichteter Linktyp. Wird als SourceName und TargetName verschiedene Inhalt angegeben, entsteht ein gerichteter Linktyp.</Description>
         <Group>Framework</Group>
-        <SubGroup>Core::LinkObject2::Types</SubGroup>
+        <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="NormalName">Connected to</Item>
-                <Item Key="ReverseName">Connected to</Item>
+                <Item Key="SourceName">Connected to</Item>
+                <Item Key="TargetName">Connected to</Item>
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="LinkObject2::Type###AlternativeTo" Required="0" Valid="1">
+    <ConfigItem Name="LinkObject::Type###AlternativeTo" Required="0" Valid="1">
         <Description Lang="en">Link type.</Description>
-        <Description Lang="de">Link Typ.</Description>
+        <Description Lang="de">Definiert den Linktyp 'AlternativeTo'. Wird als SourceName und TargetName der gleiche Inhalt angegeben, entsteht ein ungerichteter Linktyp. Wird als SourceName und TargetName verschiedene Inhalt angegeben, entsteht ein gerichteter Linktyp.</Description>
         <Group>Framework</Group>
-        <SubGroup>Core::LinkObject2::Types</SubGroup>
+        <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="NormalName">Alternative to</Item>
-                <Item Key="ReverseName">Alternative to</Item>
+                <Item Key="SourceName">Alternative to</Item>
+                <Item Key="TargetName">Alternative to</Item>
             </Hash>
         </Setting>
     </ConfigItem>
+
+    <ConfigItem Name="LinkObject::PossibleLink###010" Required="0" Valid="1">
+        <Description Lang="en"></Description>
+        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'RelevantTo' mit anderen 'ITSMConfigItem'-Objekten verlinkt werden kann.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::LinkObject</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Object1">ITSMConfigItem</Item>
+                <Item Key="Object2">ITSMConfigItem</Item>
+                <Item Key="Type">RelevantTo</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+
+    <ConfigItem Name="LinkObject::PossibleLink###011" Required="0" Valid="1">
+        <Description Lang="en"></Description>
+        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'Includes' mit anderen 'ITSMConfigItem'-Objekten verlinkt werden kann.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::LinkObject</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Object1">ITSMConfigItem</Item>
+                <Item Key="Object2">ITSMConfigItem</Item>
+                <Item Key="Type">Includes</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+
+    <ConfigItem Name="LinkObject::PossibleLink###012" Required="0" Valid="1">
+        <Description Lang="en"></Description>
+        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'DependsOn' mit anderen 'ITSMConfigItem'-Objekten verlinkt werden kann.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::LinkObject</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Object1">ITSMConfigItem</Item>
+                <Item Key="Object2">ITSMConfigItem</Item>
+                <Item Key="Type">DependsOn</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+
+    <ConfigItem Name="LinkObject::PossibleLink###013" Required="0" Valid="1">
+        <Description Lang="en"></Description>
+        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'ConnectedTo' mit anderen 'ITSMConfigItem'-Objekten verlinkt werden kann.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::LinkObject</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Object1">ITSMConfigItem</Item>
+                <Item Key="Object2">ITSMConfigItem</Item>
+                <Item Key="Type">ConnectedTo</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+
+    <ConfigItem Name="LinkObject::PossibleLink###014" Required="0" Valid="1">
+        <Description Lang="en"></Description>
+        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'AlternativeTo' mit anderen 'ITSMConfigItem'-Objekten verlinkt werden kann.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::LinkObject</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Object1">ITSMConfigItem</Item>
+                <Item Key="Object2">ITSMConfigItem</Item>
+                <Item Key="Type">AlternativeTo</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+
+    <ConfigItem Name="LinkObject::PossibleLink###020" Required="0" Valid="1">
+        <Description Lang="en"></Description>
+        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'RelevantTo' mit anderen 'ITSMLocation'-Objekten verlinkt werden kann.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::LinkObject</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Object1">ITSMConfigItem</Item>
+                <Item Key="Object2">ITSMLocation</Item>
+                <Item Key="Type">RelevantTo</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+
+    <ConfigItem Name="LinkObject::PossibleLink###021" Required="0" Valid="1">
+        <Description Lang="en"></Description>
+        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'DependsOn' mit anderen 'ITSMLocation'-Objekten verlinkt werden kann.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::LinkObject</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Object1">ITSMConfigItem</Item>
+                <Item Key="Object2">ITSMLocation</Item>
+                <Item Key="Type">DependsOn</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+
+    <ConfigItem Name="LinkObject::PossibleLink###022" Required="0" Valid="1">
+        <Description Lang="en"></Description>
+        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'AlternativeTo' mit anderen 'ITSMLocation'-Objekten verlinkt werden kann.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::LinkObject</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Object1">ITSMConfigItem</Item>
+                <Item Key="Object2">ITSMLocation</Item>
+                <Item Key="Type">AlternativeTo</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+
+    <ConfigItem Name="LinkObject::PossibleLink###030" Required="0" Valid="1">
+        <Description Lang="en"></Description>
+        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'RelevantTo' mit anderen 'Ticket'-Objekten verlinkt werden kann.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::LinkObject</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Object1">ITSMConfigItem</Item>
+                <Item Key="Object2">Ticket</Item>
+                <Item Key="Type">RelevantTo</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+
+    <ConfigItem Name="LinkObject::PossibleLink###031" Required="0" Valid="1">
+        <Description Lang="en"></Description>
+        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'DependsOn' mit anderen 'Ticket'-Objekten verlinkt werden kann.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::LinkObject</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Object1">ITSMConfigItem</Item>
+                <Item Key="Object2">Ticket</Item>
+                <Item Key="Type">DependsOn</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+
+    <ConfigItem Name="LinkObject::PossibleLink###032" Required="0" Valid="1">
+        <Description Lang="en"></Description>
+        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'AlternativeTo' mit anderen 'Ticket'-Objekten verlinkt werden kann.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::LinkObject</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Object1">ITSMConfigItem</Item>
+                <Item Key="Object2">Ticket</Item>
+                <Item Key="Type">AlternativeTo</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+
+    <ConfigItem Name="LinkObject::PossibleLink###040" Required="0" Valid="1">
+        <Description Lang="en"></Description>
+        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'RelevantTo' mit anderen 'Service'-Objekten verlinkt werden kann.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::LinkObject</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Object1">ITSMConfigItem</Item>
+                <Item Key="Object2">Service</Item>
+                <Item Key="Type">RelevantTo</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+
+    <ConfigItem Name="LinkObject::PossibleLink###041" Required="0" Valid="1">
+        <Description Lang="en"></Description>
+        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'DependsOn' mit anderen 'Service'-Objekten verlinkt werden kann.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::LinkObject</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Object1">ITSMConfigItem</Item>
+                <Item Key="Object2">Service</Item>
+                <Item Key="Type">DependsOn</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+
+    <ConfigItem Name="LinkObject::PossibleLink###042" Required="0" Valid="1">
+        <Description Lang="en"></Description>
+        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'AlternativeTo' mit anderen 'Service'-Objekten verlinkt werden kann.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::LinkObject</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Object1">ITSMConfigItem</Item>
+                <Item Key="Object2">Service</Item>
+                <Item Key="Type">AlternativeTo</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+
     <ConfigItem Name="ITSMCore::IncidentLinkType" Required="1" Valid="1">
         <Description Lang="en">Set the type of link to be used to calculate the incident state.</Description>
         <Description Lang="de">Legt den Linktyp fest, der zur Berechnung des Vorfallstatus verwendet wird.</Description>
