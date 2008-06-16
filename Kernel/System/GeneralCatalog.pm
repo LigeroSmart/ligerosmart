@@ -2,7 +2,7 @@
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.35 2008-04-04 10:20:51 mh Exp $
+# $Id: GeneralCatalog.pm,v 1.36 2008-06-16 07:42:29 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.35 $) [1];
+$VERSION = qw($Revision: 1.36 $) [1];
 
 =head1 NAME
 
@@ -131,11 +131,6 @@ sub ClassRename {
         }
     }
 
-    # quote
-    for my $Argument (qw(ClassOld ClassNew)) {
-        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument} );
-    }
-
     # cleanup given params (replace it with StringClean() in OTRS 2.3 and later)
     for my $Argument (qw(ClassOld ClassNew)) {
         $Self->_StringClean(
@@ -150,7 +145,8 @@ sub ClassRename {
 
     # check if new class name already exists
     $Self->{DBObject}->Prepare(
-        SQL   => "SELECT id FROM general_catalog WHERE general_catalog_class = '$Param{ClassNew}'",
+        SQL   => 'SELECT id FROM general_catalog WHERE general_catalog_class = ?',
+        Bind  => [ \$Param{ClassNew} ],
         Limit => 1,
     );
 
@@ -176,8 +172,9 @@ sub ClassRename {
 
     # rename general catalog class
     return $Self->{DBObject}->Do(
-        SQL => "UPDATE general_catalog SET general_catalog_class = '$Param{ClassNew}' "
-            . "WHERE general_catalog_class = '$Param{ClassOld}'",
+        SQL => "UPDATE general_catalog SET general_catalog_class = ? "
+            . "WHERE general_catalog_class = ?",
+        Bind => [ \$Param{ClassNew}, \$Param{ClassOld} ],
     );
 }
 
@@ -205,12 +202,9 @@ sub ItemList {
         return;
     }
 
-    # quote
-    $Param{Class} = $Self->{DBObject}->Quote( $Param{Class} );
-    $Param{Valid} = $Self->{DBObject}->Quote( $Param{Valid}, 'Integer' );
-
     # create sql string
-    my $SQL = "SELECT id, name FROM general_catalog WHERE general_catalog_class = '$Param{Class}' ";
+    my $SQL = 'SELECT id, name FROM general_catalog WHERE general_catalog_class = ? ';
+    my @BIND = ( \$Param{Class} );
 
     # add valid string to sql string
     if ( !defined $Param{Valid} || $Param{Valid} ) {
@@ -225,20 +219,27 @@ sub ItemList {
             $Param{Functionality} = [ $Param{Functionality} ];
         }
 
-        # quote each element and create functionality string
-        my $FunctionalityString = join q{', '},
-            map { $Self->{DBObject}->Quote($_) } @{ $Param{Functionality} };
+        # create functionality string
+        my $FunctionalityString = join q{, },
+            map { '?' } @{ $Param{Functionality} };
+
+        # create and add bind parameters
+        my @BindParams = map { $_ } @{ $Param{Functionality} };
+        push @BIND, @BindParams;
 
         # add functionality string to sql string
-        $SQL .= "AND functionality IN ('$FunctionalityString')";
+        $SQL .= "AND functionality IN ($FunctionalityString)";
     }
 
-    # check if result is already cached
-    return $Self->{Cache}->{ItemList}->{$SQL}
-        if $Self->{Cache}->{ItemList}->{$SQL};
+#    # check if result is already cached
+#    return $Self->{Cache}->{ItemList}->{$SQL}
+#        if $Self->{Cache}->{ItemList}->{$SQL};
 
     # ask database
-    $Self->{DBObject}->Prepare( SQL => $SQL );
+    $Self->{DBObject}->Prepare(
+        SQL  => $SQL,
+        Bind => \@BIND,
+    );
 
     # fetch the result
     my %Data;
@@ -255,8 +256,8 @@ sub ItemList {
         return;
     }
 
-    # cache the result
-    $Self->{Cache}->{ItemList}->{$SQL} = \%Data;
+#    # cache the result
+#    $Self->{Cache}->{ItemList}->{$SQL} = \%Data;
 
     return \%Data;
 }
@@ -283,13 +284,11 @@ sub FunctionalityList {
         return;
     }
 
-    # quote
-    $Param{Class} = $Self->{DBObject}->Quote( $Param{Class} );
-
     # ask database
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT DISTINCT(functionality) FROM general_catalog "
-            . "WHERE general_catalog_class = '$Param{Class}' ORDER BY functionality"
+        SQL => 'SELECT DISTINCT(functionality) FROM general_catalog '
+            . 'WHERE general_catalog_class = ? ORDER BY functionality',
+        Bind => [ \$Param{Class} ],
     );
 
     # fetch the result
@@ -344,8 +343,9 @@ sub ItemGet {
     }
 
     # create sql string
-    my $SQL = "SELECT id, general_catalog_class, name, functionality, valid_id, comments, "
-        . "create_time, create_by, change_time, change_by FROM general_catalog WHERE ";
+    my $SQL = 'SELECT id, general_catalog_class, name, functionality, valid_id, comments, '
+        . 'create_time, create_by, change_time, change_by FROM general_catalog WHERE ';
+    my @BIND = ();
 
     # add options to sql string
     if ( $Param{Class} && $Param{Name} ) {
@@ -354,13 +354,9 @@ sub ItemGet {
         return $Self->{Cache}->{ItemGet}->{Class}->{ $Param{Class} }->{ $Param{Name} }
             if $Self->{Cache}->{ItemGet}->{Class}->{ $Param{Class} }->{ $Param{Name} };
 
-        # quote
-        for my $Argument (qw(Class Name)) {
-            $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument} );
-        }
-
         # add class and name to sql string
-        $SQL .= "general_catalog_class = '$Param{Class}' AND name = '$Param{Name}'";
+        $SQL .= 'general_catalog_class = ? AND name = ?';
+        push @BIND, ( \$Param{Class}, \$Param{Name} );
     }
     else {
 
@@ -368,16 +364,15 @@ sub ItemGet {
         return $Self->{Cache}->{ItemGet}->{ItemID}->{ $Param{ItemID} }
             if $Self->{Cache}->{ItemGet}->{ItemID}->{ $Param{ItemID} };
 
-        # quote
-        $Param{ItemID} = $Self->{DBObject}->Quote( $Param{ItemID}, 'Integer' );
-
         # add item id to sql string
-        $SQL .= "id = $Param{ItemID}";
+        $SQL .= 'id = ?';
+        push @BIND, \$Param{ItemID};
     }
 
     # ask database
     $Self->{DBObject}->Prepare(
         SQL   => $SQL,
+        Bind  => \@BIND,
         Limit => 1,
     );
 
@@ -446,14 +441,6 @@ sub ItemAdd {
         $Param{$Argument} = $Param{$Argument} || '';
     }
 
-    # quote
-    for my $Argument (qw(Class Name Functionality Comment)) {
-        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument} );
-    }
-    for my $Argument (qw(ValidID UserID)) {
-        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument}, 'Integer' );
-    }
-
     # cleanup given params (replace it with StringClean() in OTRS 2.3 and later)
     for my $Argument (qw(Class Functionality)) {
         $Self->_StringClean(
@@ -473,9 +460,9 @@ sub ItemAdd {
 
     # find exiting item with same name
     $Self->{DBObject}->Prepare(
-        SQL =>
-            "SELECT id FROM general_catalog "
-            . "WHERE general_catalog_class = '$Param{Class}' AND name = '$Param{Name}'",
+        SQL => 'SELECT id FROM general_catalog '
+            . 'WHERE general_catalog_class = ? AND name = ?',
+        Bind => [ \$Param{Class}, \$Param{Name} ],
         Limit => 1,
     );
 
@@ -503,15 +490,20 @@ sub ItemAdd {
         SQL => "INSERT INTO general_catalog "
             . "(general_catalog_class, name, functionality, valid_id, comments, "
             . "create_time, create_by, change_time, change_by) VALUES "
-            . "('$Param{Class}', '$Param{Name}', "
-            . "'$Param{Functionality}', $Param{ValidID}, '$Param{Comment}', "
-            . "current_timestamp, $Param{UserID}, current_timestamp, $Param{UserID})"
+            . "(?, ?, ?, ?, ?, current_timestamp, ?, current_timestamp, ?)",
+        Bind => [
+            \$Param{Class},         \$Param{Name},
+            \$Param{Functionality}, \$Param{ValidID},
+            \$Param{Comment},       \$Param{UserID},
+            \$Param{UserID},
+        ],
     );
 
     # find id of new item
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT id FROM general_catalog "
-            . "WHERE general_catalog_class = '$Param{Class}' AND name = '$Param{Name}'",
+        SQL => 'SELECT id FROM general_catalog '
+            . 'WHERE general_catalog_class = ? AND name = ?',
+        Bind => [ \$Param{Class}, \$Param{Name} ],
         Limit => 1,
     );
 
@@ -558,14 +550,6 @@ sub ItemUpdate {
         $Param{$Argument} = $Param{$Argument} || '';
     }
 
-    # quote
-    for my $Argument (qw(Name Functionality Comment)) {
-        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument} );
-    }
-    for my $Argument (qw(ItemID ValidID UserID)) {
-        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument}, 'Integer' );
-    }
-
     # cleanup given params (replace it with StringClean() in OTRS 2.3 and later)
     for my $Argument (qw(Class Functionality)) {
         $Self->_StringClean(
@@ -585,8 +569,9 @@ sub ItemUpdate {
 
     # get class of item
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT general_catalog_class, functionality FROM general_catalog "
-            . "WHERE id = $Param{ItemID}",
+        SQL => 'SELECT general_catalog_class, functionality FROM general_catalog '
+            . 'WHERE id = ?',
+        Bind => [ \$Param{ItemID} ],
         Limit => 1,
     );
 
@@ -606,14 +591,11 @@ sub ItemUpdate {
         return;
     }
 
-    # quote
-    $Class            = $Self->{DBObject}->Quote($Class);
-    $OldFunctionality = $Self->{DBObject}->Quote($OldFunctionality);
-
     # find exiting item with same name
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT id FROM general_catalog "
-            . "WHERE general_catalog_class = '$Class' AND name = '$Param{Name}'",
+        SQL => 'SELECT id FROM general_catalog '
+            . 'WHERE general_catalog_class = ? AND name = ?',
+        Bind => [ \$Class, \$Param{Name} ],
         Limit => 1,
     );
 
@@ -636,8 +618,9 @@ sub ItemUpdate {
 
     # count the functionality
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT COUNT(functionality) FROM general_catalog "
-            . "WHERE general_catalog_class = '$Class' AND functionality = '$OldFunctionality'",
+        SQL => 'SELECT COUNT(functionality) FROM general_catalog '
+            . 'WHERE general_catalog_class = ? AND functionality = ?',
+        Bind => [ \$Class, \$OldFunctionality ],
         Limit => 1,
     );
 
@@ -666,10 +649,15 @@ sub ItemUpdate {
 
     return $Self->{DBObject}->Do(
         SQL => "UPDATE general_catalog SET "
-            . "name = '$Param{Name}', functionality = '$Param{Functionality}',"
-            . "valid_id = $Param{ValidID}, comments = '$Param{Comment}', "
-            . "change_time = current_timestamp, change_by = $Param{UserID} "
-            . "WHERE id = $Param{ItemID}",
+            . "name = ?, functionality = ?,"
+            . "valid_id = ?, comments = ?, "
+            . "change_time = current_timestamp, change_by = ? "
+            . "WHERE id = ?",
+        Bind => [
+            \$Param{Name},    \$Param{Functionality},
+            \$Param{ValidID}, \$Param{Comment},
+            \$Param{UserID},  \$Param{ItemID},
+        ],
     );
 }
 
@@ -743,6 +731,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.35 $ $Date: 2008-04-04 10:20:51 $
+$Revision: 1.36 $ $Date: 2008-06-16 07:42:29 $
 
 =cut
