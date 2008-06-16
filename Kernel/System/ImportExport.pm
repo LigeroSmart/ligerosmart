@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport.pm - all import and export functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pm,v 1.26 2008-04-17 11:29:04 mh Exp $
+# $Id: ImportExport.pm,v 1.27 2008-06-16 11:39:45 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -14,8 +14,10 @@ package Kernel::System::ImportExport;
 use strict;
 use warnings;
 
+use Kernel::System::CheckItem;
+
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.26 $) [1];
+$VERSION = qw($Revision: 1.27 $) [1];
 
 =head1 NAME
 
@@ -75,6 +77,7 @@ sub new {
     for my $Object (qw(ConfigObject LogObject DBObject MainObject EncodeObject)) {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
+    $Self->{CheckItemObject} = Kernel::System::CheckItem->new(  %{$Self} );
 
     return $Self;
 }
@@ -103,27 +106,27 @@ sub TemplateList {
         return;
     }
 
-    # quote
-    for my $Argument (qw(Object Format)) {
-        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument} ) || '';
-    }
-    $Param{UserID} = $Self->{DBObject}->Quote( $Param{UserID}, 'Integer' );
-
     # create sql string
-    my $SQL = 'SELECT id FROM imexport_template WHERE 1=1 ';
+    my $SQL  = 'SELECT id FROM imexport_template WHERE 1=1 ';
+    my @BIND = ();
 
     if ( $Param{Object} ) {
-        $SQL .= "AND imexport_object = '$Param{Object}' ";
+        $SQL .= "AND imexport_object = ? ";
+        push @BIND, \$Param{Object};
     }
     if ( $Param{Format} ) {
-        $SQL .= "AND imexport_format = '$Param{Format}' ";
+        $SQL .= "AND imexport_format = ? ";
+        push @BIND, \$Param{Format};
     }
 
     # add order option
     $SQL .= 'ORDER BY id';
 
     # ask database
-    $Self->{DBObject}->Prepare( SQL => $SQL );
+    $Self->{DBObject}->Prepare(
+        SQL  => $SQL,
+        Bind => \@BIND,
+    );
 
     # fetch the result
     my @TemplateList;
@@ -172,9 +175,6 @@ sub TemplateGet {
         }
     }
 
-    # quote
-    $Param{TemplateID} = $Self->{DBObject}->Quote( $Param{TemplateID}, 'Integer' );
-
     # check if result is already cached
     return $Self->{Cache}->{TemplateGet}->{ $Param{TemplateID} }
         if $Self->{Cache}->{TemplateGet}->{ $Param{TemplateID} };
@@ -182,11 +182,12 @@ sub TemplateGet {
     # create sql string
     my $SQL = "SELECT id, imexport_object, imexport_format, name, valid_id, comments, "
         . "create_time, create_by, change_time, change_by FROM imexport_template WHERE "
-        . "id = $Param{TemplateID}";
+        . "id = ?";
 
     # ask database
     $Self->{DBObject}->Prepare(
         SQL   => $SQL,
+        Bind  => [ \$Param{TemplateID} ],
         Limit => 1,
     );
 
@@ -245,17 +246,9 @@ sub TemplateAdd {
     # set default values
     $Param{Comment} = $Param{Comment} || '';
 
-    # quote
-    for my $Argument (qw(Object Format Name Functionality Comment)) {
-        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument} );
-    }
-    for my $Argument (qw(ValidID UserID)) {
-        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument}, 'Integer' );
-    }
-
-    # cleanup given params (replace it with StringClean() in OTRS 2.3 and later)
+    # cleanup given params
     for my $Argument (qw(Object Format)) {
-        $Self->_StringClean(
+        $Self->{CheckItemObject}->StringClean(
             StringRef         => \$Param{$Argument},
             RemoveAllNewlines => 1,
             RemoveAllTabs     => 1,
@@ -263,7 +256,7 @@ sub TemplateAdd {
         );
     }
     for my $Argument (qw(Name Comment)) {
-        $Self->_StringClean(
+        $Self->{CheckItemObject}->StringClean(
             StringRef         => \$Param{$Argument},
             RemoveAllNewlines => 1,
             RemoveAllTabs     => 1,
@@ -273,7 +266,8 @@ sub TemplateAdd {
     # find exiting template with same name
     $Self->{DBObject}->Prepare(
         SQL => "SELECT id FROM imexport_template "
-            . "WHERE imexport_object = '$Param{Object}' AND name = '$Param{Name}'",
+            . "WHERE imexport_object = ? AND name = ?",
+        Bind  => [ \$Param{Object}, \$Param{Name} ],
         Limit => 1,
     );
 
@@ -298,15 +292,18 @@ sub TemplateAdd {
         SQL => "INSERT INTO imexport_template "
             . "(imexport_object, imexport_format, name, valid_id, comments, "
             . "create_time, create_by, change_time, change_by) VALUES "
-            . "('$Param{Object}', '$Param{Format}', "
-            . "'$Param{Name}', $Param{ValidID}, '$Param{Comment}', "
-            . "current_timestamp, $Param{UserID}, current_timestamp, $Param{UserID})"
+            . "(?, ?, ?, ?, ?, current_timestamp, ?, current_timestamp, ?)",
+        Bind => [
+            \$Param{Object},  \$Param{Format}, \$Param{Name}, \$Param{ValidID},
+            \$Param{Comment}, \$Param{UserID}, \$Param{UserID},
+        ],
     );
 
     # find id of new template
     $Self->{DBObject}->Prepare(
         SQL => "SELECT id FROM imexport_template "
-            . "WHERE imexport_object = '$Param{Object}' AND name = '$Param{Name}'",
+            . "WHERE imexport_object = ? AND name = ?",
+        Bind  => [ \$Param{Object}, \$Param{Name} ],
         Limit => 1,
     );
 
@@ -350,17 +347,9 @@ sub TemplateUpdate {
     # set default values
     $Param{Comment} = $Param{Comment} || '';
 
-    # quote
+    # cleanup given params
     for my $Argument (qw(Name Comment)) {
-        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument} );
-    }
-    for my $Argument (qw(TemplateID ValidID UserID)) {
-        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument}, 'Integer' );
-    }
-
-    # cleanup given params (replace it with StringClean() in OTRS 2.3 and later)
-    for my $Argument (qw(Name Comment)) {
-        $Self->_StringClean(
+        $Self->{CheckItemObject}->StringClean(
             StringRef         => \$Param{$Argument},
             RemoveAllNewlines => 1,
             RemoveAllTabs     => 1,
@@ -370,7 +359,8 @@ sub TemplateUpdate {
     # get the object of this template id
     $Self->{DBObject}->Prepare(
         SQL => "SELECT imexport_object FROM imexport_template "
-            . "WHERE id = $Param{TemplateID}",
+            . "WHERE id = ?",
+        Bind  => [ \$Param{TemplateID} ],
         Limit => 1,
     );
 
@@ -392,7 +382,8 @@ sub TemplateUpdate {
     # find exiting template with same name
     $Self->{DBObject}->Prepare(
         SQL => "SELECT id FROM imexport_template "
-            . "WHERE imexport_object = '$Object' AND name = '$Param{Name}'",
+            . "WHERE imexport_object = ? AND name = ?",
+        Bind  => [ \$Object, \$Param{Name} ],
         Limit => 1,
     );
 
@@ -418,10 +409,14 @@ sub TemplateUpdate {
 
     # update template
     return $Self->{DBObject}->Do(
-        SQL => "UPDATE imexport_template SET name = '$Param{Name}',"
-            . "valid_id = $Param{ValidID}, comments = '$Param{Comment}', "
-            . "change_time = current_timestamp, change_by = $Param{UserID} "
-            . "WHERE id = $Param{TemplateID}",
+        SQL => "UPDATE imexport_template SET name = ?,"
+            . "valid_id = ?, comments = ?, "
+            . "change_time = current_timestamp, change_by = ? "
+            . "WHERE id = ?",
+        Bind => [
+            \$Param{Name},   \$Param{ValidID}, \$Param{Comment},
+            \$Param{UserID}, \$Param{TemplateID},
+        ],
     );
 }
 
@@ -494,20 +489,19 @@ sub TemplateDelete {
         UserID     => $Param{UserID},
     );
 
-    # quote
-    for my $TemplateID ( @{ $Param{TemplateID} } ) {
-        $TemplateID = $Self->{DBObject}->Quote( $TemplateID, 'Integer' );
-    }
-
     # create the template id string
-    my $TemplateIDString = join ',', @{ $Param{TemplateID} };
+    my $TemplateIDString = join q{, }, map {'?'} @{ $Param{TemplateID} };
+
+    # create and add bind parameters
+    my @BIND = map {\$_} @{ $Param{TemplateID} };
 
     # reset cache
     delete $Self->{Cache}->{TemplateGet};
 
     # delete templates
     return $Self->{DBObject}->Do(
-        SQL => "DELETE FROM imexport_template WHERE id IN ( $TemplateIDString )",
+        SQL  => "DELETE FROM imexport_template WHERE id IN ( $TemplateIDString )",
+        Bind => \@BIND,
     );
 }
 
@@ -618,15 +612,14 @@ sub ObjectDataGet {
         }
     }
 
-    # quote
-    $Param{TemplateID} = $Self->{DBObject}->Quote( $Param{TemplateID}, 'Integer' );
-
     # create sql string
-    my $SQL = "SELECT data_key, data_value FROM imexport_object WHERE "
-        . "template_id = $Param{TemplateID}";
+    my $SQL = "SELECT data_key, data_value FROM imexport_object WHERE template_id = ?";
 
     # ask database
-    $Self->{DBObject}->Prepare( SQL => $SQL );
+    $Self->{DBObject}->Prepare(
+        SQL  => $SQL,
+        Bind => [ \$Param{TemplateID} ],
+    );
 
     # fetch the result
     my %ObjectData;
@@ -680,18 +673,17 @@ sub ObjectDataSave {
     DATAKEY:
     for my $DataKey ( keys %{ $Param{ObjectData} } ) {
 
-        # quote
-        my $QDataKey   = $Self->{DBObject}->Quote($DataKey);
-        my $QDataValue = $Self->{DBObject}->Quote( $Param{ObjectData}->{$DataKey} );
+        my $DataValue = $Param{ObjectData}->{$DataKey};
 
-        next DATAKEY if !defined $QDataKey;
-        next DATAKEY if !defined $QDataValue;
+        next DATAKEY if !defined $DataKey;
+        next DATAKEY if !defined $DataValue;
 
         # insert one row
         $Self->{DBObject}->Do(
             SQL => "INSERT INTO imexport_object "
                 . "(template_id, data_key, data_value) VALUES "
-                . "($Param{TemplateID}, '$QDataKey', '$QDataValue')"
+                . "(?, ?, ?)",
+            Bind => [ \$Param{TemplateID}, \$DataKey, \$DataValue ],
         );
     }
 
@@ -741,17 +733,16 @@ sub ObjectDataDelete {
         return;
     }
 
-    # quote
-    for my $TemplateID ( @{ $Param{TemplateID} } ) {
-        $TemplateID = $Self->{DBObject}->Quote( $TemplateID, 'Integer' );
-    }
-
     # create the template id string
-    my $TemplateIDString = join ',', @{ $Param{TemplateID} };
+    my $TemplateIDString = join q{, }, map {'?'} @{ $Param{TemplateID} };
+
+    # create and add bind parameters
+    my @BIND = map {\$_} @{ $Param{TemplateID} };
 
     # delete templates
     return $Self->{DBObject}->Do(
-        SQL => "DELETE FROM imexport_object WHERE template_id IN ( $TemplateIDString )",
+        SQL  => "DELETE FROM imexport_object WHERE template_id IN ( $TemplateIDString )",
+        Bind => \@BIND,
     );
 }
 
@@ -862,15 +853,14 @@ sub FormatDataGet {
         }
     }
 
-    # quote
-    $Param{TemplateID} = $Self->{DBObject}->Quote( $Param{TemplateID}, 'Integer' );
-
     # create sql string
-    my $SQL = "SELECT data_key, data_value FROM imexport_format WHERE "
-        . "template_id = $Param{TemplateID}";
+    my $SQL = "SELECT data_key, data_value FROM imexport_format WHERE template_id = ?";
 
     # ask database
-    $Self->{DBObject}->Prepare( SQL => $SQL );
+    $Self->{DBObject}->Prepare(
+        SQL  => $SQL,
+        Bind => [ \$Param{TemplateID} ],
+    );
 
     # fetch the result
     my %FormatData;
@@ -924,18 +914,17 @@ sub FormatDataSave {
     DATAKEY:
     for my $DataKey ( keys %{ $Param{FormatData} } ) {
 
-        # quote
-        my $QDataKey   = $Self->{DBObject}->Quote($DataKey);
-        my $QDataValue = $Self->{DBObject}->Quote( $Param{FormatData}->{$DataKey} );
+        my $DataValue = $Param{FormatData}->{$DataKey};
 
-        next DATAKEY if !defined $QDataKey;
-        next DATAKEY if !defined $QDataValue;
+        next DATAKEY if !defined $DataKey;
+        next DATAKEY if !defined $DataValue;
 
         # insert one row
         $Self->{DBObject}->Do(
             SQL => "INSERT INTO imexport_format "
                 . "(template_id, data_key, data_value) VALUES "
-                . "($Param{TemplateID}, '$QDataKey', '$QDataValue')"
+                . "(?, ?, ?)",
+            Bind => [ \$Param{TemplateID}, \$DataKey, \$DataValue ],
         );
     }
 
@@ -985,17 +974,16 @@ sub FormatDataDelete {
         return;
     }
 
-    # quote
-    for my $TemplateID ( @{ $Param{TemplateID} } ) {
-        $TemplateID = $Self->{DBObject}->Quote( $TemplateID, 'Integer' );
-    }
-
     # create the template id string
-    my $TemplateIDString = join ',', @{ $Param{TemplateID} };
+    my $TemplateIDString = join q{, }, map {'?'} @{ $Param{TemplateID} };
+
+    # create and add bind parameters
+    my @BIND = map {\$_} @{ $Param{TemplateID} };
 
     # delete templates
     return $Self->{DBObject}->Do(
-        SQL => "DELETE FROM imexport_format WHERE template_id IN ( $TemplateIDString )",
+        SQL  => "DELETE FROM imexport_format WHERE template_id IN ( $TemplateIDString )",
+        Bind => \@BIND,
     );
 }
 
@@ -1024,15 +1012,14 @@ sub MappingList {
         }
     }
 
-    # quote
-    $Param{TemplateID} = $Self->{DBObject}->Quote( $Param{TemplateID}, 'Integer' );
-
     # create sql string
-    my $SQL = "SELECT id FROM imexport_mapping WHERE "
-        . "template_id = $Param{TemplateID} ORDER BY position";
+    my $SQL = "SELECT id FROM imexport_mapping WHERE template_id = ? ORDER BY position";
 
     # ask database
-    $Self->{DBObject}->Prepare( SQL => $SQL );
+    $Self->{DBObject}->Prepare(
+        SQL  => $SQL,
+        Bind => [ \$Param{TemplateID} ],
+    );
 
     # fetch the result
     my @MappingList;
@@ -1068,15 +1055,10 @@ sub MappingAdd {
         }
     }
 
-    # quote
-    for my $Argument (qw(TemplateID UserID)) {
-        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument}, 'Integer' );
-    }
-
     # find maximum position
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT max(position) FROM imexport_mapping "
-            . "WHERE template_id = $Param{TemplateID}",
+        SQL   => "SELECT max(position) FROM imexport_mapping WHERE template_id = ?",
+        Bind  => [ \$Param{TemplateID} ],
         Limit => 1,
     );
 
@@ -1093,14 +1075,15 @@ sub MappingAdd {
     # insert a new mapping data row
     return if !$Self->{DBObject}->Do(
         SQL => "INSERT INTO imexport_mapping "
-            . "(template_id, position) VALUES "
-            . "($Param{TemplateID}, $NewPosition)"
+            . "(template_id, position) VALUES (?, ?)",
+        Bind => [ \$Param{TemplateID}, \$NewPosition ],
     );
 
     # find id of new mapping data row
     $Self->{DBObject}->Prepare(
         SQL => "SELECT id FROM imexport_mapping "
-            . "WHERE template_id = $Param{TemplateID} AND position = $NewPosition",
+            . "WHERE template_id = ? AND position = ?",
+        Bind  => [ \$Param{TemplateID}, \$NewPosition ],
         Limit => 1,
     );
 
@@ -1146,11 +1129,6 @@ sub MappingDelete {
         }
     }
 
-    # quote
-    for my $Argument (qw(TemplateID UserID)) {
-        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument}, 'Integer' );
-    }
-
     if ( defined $Param{MappingID} ) {
 
         # delete existing object mapping data
@@ -1165,12 +1143,10 @@ sub MappingDelete {
             UserID    => $Param{UserID},
         );
 
-        # quote
-        $Param{MappingID} = $Self->{DBObject}->Quote( $Param{MappingID}, 'Integer' );
-
         # delete one mapping row
         $Self->{DBObject}->Do(
-            SQL => "DELETE FROM imexport_mapping WHERE id = $Param{MappingID}",
+            SQL  => "DELETE FROM imexport_mapping WHERE id = ?",
+            Bind => [ \$Param{MappingID} ],
         );
 
         # rebuild mapping positions
@@ -1206,7 +1182,8 @@ sub MappingDelete {
 
         # delete all mapping rows of this template
         return $Self->{DBObject}->Do(
-            SQL => "DELETE FROM imexport_mapping WHERE template_id = $Param{TemplateID}",
+            SQL  => "DELETE FROM imexport_mapping WHERE template_id = ?",
+            Bind => [ \$Param{TemplateID} ],
         );
     }
 }
@@ -1245,16 +1222,14 @@ sub MappingUp {
 
     return 1 if $Param{MappingID} == $MappingList->[0];
 
-    # quote
-    for my $Argument (qw(MappingID TemplateID UserID)) {
-        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument}, 'Integer' );
-    }
-
     # get position
-    my $SQL = "SELECT position FROM imexport_mapping WHERE id = $Param{MappingID}";
+    my $SQL = "SELECT position FROM imexport_mapping WHERE id = ?";
 
     # ask database
-    $Self->{DBObject}->Prepare( SQL => $SQL );
+    $Self->{DBObject}->Prepare(
+        SQL  => $SQL,
+        Bind => [ \$Param{MappingID} ],
+    );
 
     # fetch the result
     my $Position;
@@ -1268,12 +1243,13 @@ sub MappingUp {
 
     # update positions
     $Self->{DBObject}->Do(
-        SQL => "UPDATE imexport_mapping SET position = $Position "
-            . "WHERE template_id = $Param{TemplateID} AND position = $PositionUpper",
+        SQL => "UPDATE imexport_mapping SET position = ? "
+            . "WHERE template_id = ? AND position = ?",
+        Bind => [ \$Position, \$Param{TemplateID}, \$PositionUpper ],
     );
     $Self->{DBObject}->Do(
-        SQL => "UPDATE imexport_mapping SET position = $PositionUpper "
-            . "WHERE id = $Param{MappingID}",
+        SQL => "UPDATE imexport_mapping SET position = ? WHERE id = ?",
+        Bind => [ \$PositionUpper, \$Param{MappingID} ],
     );
 
     return 1;
@@ -1313,16 +1289,14 @@ sub MappingDown {
 
     return 1 if $Param{MappingID} == $MappingList->[-1];
 
-    # quote
-    for my $Argument (qw(MappingID TemplateID UserID)) {
-        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument}, 'Integer' );
-    }
-
     # get position
-    my $SQL = "SELECT position FROM imexport_mapping WHERE id = $Param{MappingID}";
+    my $SQL = "SELECT position FROM imexport_mapping WHERE id = ";
 
     # ask database
-    $Self->{DBObject}->Prepare( SQL => $SQL );
+    $Self->{DBObject}->Prepare(
+        SQL  => $SQL,
+        Bind => [ \$Param{MappingID} ],
+    );
 
     # fetch the result
     my $Position;
@@ -1334,12 +1308,13 @@ sub MappingDown {
 
     # update positions
     $Self->{DBObject}->Do(
-        SQL => "UPDATE imexport_mapping SET position = $Position "
-            . "WHERE template_id = $Param{TemplateID} AND position = $PositionDown",
+        SQL => "UPDATE imexport_mapping SET position = ? "
+            . "WHERE template_id = ? AND position = ?",
+        Bind => [ \$Position, \$Param{TemplateID}, \$PositionDown ],
     );
     $Self->{DBObject}->Do(
-        SQL => "UPDATE imexport_mapping SET position = $PositionDown "
-            . "WHERE id = $Param{MappingID}",
+        SQL => "UPDATE imexport_mapping SET position = ? WHERE id = ?",
+        Bind => [ \$PositionDown, \$Param{MappingID} ],
     );
 
     return 1;
@@ -1380,8 +1355,8 @@ sub MappingPositionRebuild {
     my $Counter = 0;
     for my $MappingID ( @{$MappingList} ) {
         $Self->{DBObject}->Do(
-            SQL => "UPDATE imexport_mapping SET position = $Counter "
-                . "WHERE id = $MappingID",
+            SQL => "UPDATE imexport_mapping SET position = ? WHERE id = ?",
+            Bind => [ \$Counter, \$MappingID ],
         );
         $Counter++;
     }
@@ -1488,17 +1463,16 @@ sub MappingObjectDataDelete {
         return;
     }
 
-    # quote
-    for my $MappingID ( @{ $Param{MappingID} } ) {
-        $MappingID = $Self->{DBObject}->Quote( $MappingID, 'Integer' );
-    }
+    # create the template id string
+    my $MappingIDString = join q{, }, map {'?'} @{ $Param{MappingID} };
 
-    # create the mapping id string
-    my $MappingIDString = join ',', @{ $Param{MappingID} };
+    # create and add bind parameters
+    my @BIND = map {\$_} @{ $Param{MappingID} };
 
     # delete mapping object data
     return $Self->{DBObject}->Do(
-        SQL => "DELETE FROM imexport_mapping_object WHERE mapping_id IN ( $MappingIDString )",
+        SQL  => "DELETE FROM imexport_mapping_object WHERE mapping_id IN ( $MappingIDString )",
+        Bind => \@BIND,
     );
 }
 
@@ -1545,18 +1519,16 @@ sub MappingObjectDataSave {
     DATAKEY:
     for my $DataKey ( keys %{ $Param{MappingObjectData} } ) {
 
-        # quote
-        my $QDataKey   = $Self->{DBObject}->Quote($DataKey);
-        my $QDataValue = $Self->{DBObject}->Quote( $Param{MappingObjectData}->{$DataKey} );
+        my $DataValue = $Param{MappingObjectData}->{$DataKey};
 
-        next DATAKEY if !defined $QDataKey;
-        next DATAKEY if !defined $QDataValue;
+        next DATAKEY if !defined $DataKey;
+        next DATAKEY if !defined $DataValue;
 
         # insert one mapping object row
         $Self->{DBObject}->Do(
             SQL => "INSERT INTO imexport_mapping_object "
-                . "(mapping_id, data_key, data_value) VALUES "
-                . "($Param{MappingID}, '$QDataKey', '$QDataValue')"
+                . "(mapping_id, data_key, data_value) VALUES (?, ?, ?)",
+            Bind => [ \$Param{MappingID}, \$DataKey, \$DataValue ],
         );
     }
 
@@ -1588,15 +1560,14 @@ sub MappingObjectDataGet {
         }
     }
 
-    # quote
-    $Param{MappingID} = $Self->{DBObject}->Quote( $Param{MappingID}, 'Integer' );
-
     # create sql string
-    my $SQL = "SELECT data_key, data_value FROM imexport_mapping_object WHERE "
-        . "mapping_id = $Param{MappingID}";
+    my $SQL = "SELECT data_key, data_value FROM imexport_mapping_object WHERE mapping_id = ?";
 
     # ask database
-    $Self->{DBObject}->Prepare( SQL => $SQL );
+    $Self->{DBObject}->Prepare(
+        SQL  => $SQL,
+        Bind => [ \$Param{MappingID} ],
+    );
 
     # fetch the result
     my %MappingObjectData;
@@ -1706,17 +1677,16 @@ sub MappingFormatDataDelete {
         return;
     }
 
-    # quote
-    for my $MappingID ( @{ $Param{MappingID} } ) {
-        $MappingID = $Self->{DBObject}->Quote( $MappingID, 'Integer' );
-    }
+    # create the template id string
+    my $MappingIDString = join q{, }, map {'?'} @{ $Param{MappingID} };
 
-    # create the mapping id string
-    my $MappingIDString = join ',', @{ $Param{MappingID} };
+    # create and add bind parameters
+    my @BIND = map {\$_} @{ $Param{MappingID} };
 
     # delete mapping format data
     return $Self->{DBObject}->Do(
-        SQL => "DELETE FROM imexport_mapping_format WHERE mapping_id IN ( $MappingIDString )",
+        SQL  => "DELETE FROM imexport_mapping_format WHERE mapping_id IN ( $MappingIDString )",
+        Bind => \@BIND,
     );
 }
 
@@ -1763,18 +1733,16 @@ sub MappingFormatDataSave {
     DATAKEY:
     for my $DataKey ( keys %{ $Param{MappingFormatData} } ) {
 
-        # quote
-        my $QDataKey   = $Self->{DBObject}->Quote($DataKey);
-        my $QDataValue = $Self->{DBObject}->Quote( $Param{MappingFormatData}->{$DataKey} );
+        my $DataValue = $Param{MappingFormatData}->{$DataKey};
 
-        next DATAKEY if !defined $QDataKey;
-        next DATAKEY if !defined $QDataValue;
+        next DATAKEY if !defined $DataKey;
+        next DATAKEY if !defined $DataValue;
 
         # insert one mapping format row
         $Self->{DBObject}->Do(
             SQL => "INSERT INTO imexport_mapping_format "
-                . "(mapping_id, data_key, data_value) VALUES "
-                . "($Param{MappingID}, '$QDataKey', '$QDataValue')"
+                . "(mapping_id, data_key, data_value) VALUES (?, ?, ?)",
+            Bind => [ \$Param{MappingID}, \$DataKey, \$DataValue ],
         );
     }
 
@@ -1806,15 +1774,14 @@ sub MappingFormatDataGet {
         }
     }
 
-    # quote
-    $Param{MappingID} = $Self->{DBObject}->Quote( $Param{MappingID}, 'Integer' );
-
     # create sql string
-    my $SQL = "SELECT data_key, data_value FROM imexport_mapping_format WHERE "
-        . "mapping_id = $Param{MappingID}";
+    my $SQL = "SELECT data_key, data_value FROM imexport_mapping_format WHERE mapping_id = ?";
 
     # ask database
-    $Self->{DBObject}->Prepare( SQL => $SQL );
+    $Self->{DBObject}->Prepare(
+        SQL  => $SQL,
+        Bind => [ \$Param{MappingID} ],
+    );
 
     # fetch the result
     my %MappingFormatData;
@@ -1906,15 +1873,14 @@ sub SearchDataGet {
         }
     }
 
-    # quote
-    $Param{TemplateID} = $Self->{DBObject}->Quote( $Param{TemplateID}, 'Integer' );
-
     # create sql string
-    my $SQL = "SELECT data_key, data_value FROM imexport_search WHERE "
-        . "template_id = $Param{TemplateID}";
+    my $SQL = "SELECT data_key, data_value FROM imexport_search WHERE template_id = ?";
 
     # ask database
-    $Self->{DBObject}->Prepare( SQL => $SQL );
+    $Self->{DBObject}->Prepare(
+        SQL  => $SQL,
+        Bind => [ \$Param{TemplateID} ],
+    );
 
     # fetch the result
     my %SearchData;
@@ -1969,17 +1935,16 @@ sub SearchDataSave {
     for my $DataKey ( keys %{ $Param{SearchData} } ) {
 
         # quote
-        my $QDataKey   = $Self->{DBObject}->Quote($DataKey);
-        my $QDataValue = $Self->{DBObject}->Quote( $Param{SearchData}->{$DataKey} );
+        my $DataValue = $Param{SearchData}->{$DataKey};
 
-        next DATAKEY if !$QDataKey;
-        next DATAKEY if !$QDataValue;
+        next DATAKEY if !$DataKey;
+        next DATAKEY if !$DataValue;
 
         # insert one row
         $Self->{DBObject}->Do(
             SQL => "INSERT INTO imexport_search "
-                . "(template_id, data_key, data_value) VALUES "
-                . "($Param{TemplateID}, '$QDataKey', '$QDataValue')"
+                . "(template_id, data_key, data_value) VALUES (?, ?, ?)",
+            Bind => [ \$Param{TemplateID}, \$DataKey, \$DataValue ],
         );
     }
 
@@ -2029,17 +1994,16 @@ sub SearchDataDelete {
         return;
     }
 
-    # quote
-    for my $TemplateID ( @{ $Param{TemplateID} } ) {
-        $TemplateID = $Self->{DBObject}->Quote( $TemplateID, 'Integer' );
-    }
-
     # create the template id string
-    my $TemplateIDString = join ',', @{ $Param{TemplateID} };
+    my $TemplateIDString = join q{, }, map {'?'} @{ $Param{TemplateID} };
+
+    # create and add bind parameters
+    my @BIND = map {\$_} @{ $Param{TemplateID} };
 
     # delete templates
     return $Self->{DBObject}->Do(
         SQL => "DELETE FROM imexport_search WHERE template_id IN ( $TemplateIDString )",
+        Bind => \@BIND,
     );
 }
 
@@ -2296,60 +2260,6 @@ sub _LoadBackend {
     return $BackendObject;
 }
 
-=item _StringClean()
-
-DON'T USE THIS INTERNAL FUNCTION IN OTHER MODULES!
-
-This function can be replaced with Kernel::System::CheckItem::StringClean() in OTRS 2.3 and later!
-
-clean a given string
-
-    my $Error = $CheckItemObject->_StringClean(
-        StringRef         => \'String',
-        TrimLeft          => 0,  # (optional) default 1
-        TrimRight         => 0,  # (optional) default 1
-        RemoveAllNewlines => 1,  # (optional) default 0
-        RemoveAllTabs     => 1,  # (optional) default 0
-        RemoveAllSpaces   => 1,  # (optional) default 0
-    );
-
-=cut
-
-sub _StringClean {
-    my ( $Self, %Param ) = @_;
-
-    if ( !$Param{StringRef} || ref $Param{StringRef} ne 'SCALAR' ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => 'Need a scalar reference!'
-        );
-        return;
-    }
-
-    return 1 if !${ $Param{StringRef} };
-
-    # set default values
-    $Param{TrimLeft}  = defined $Param{TrimLeft}  ? $Param{TrimLeft}  : 1;
-    $Param{TrimRight} = defined $Param{TrimRight} ? $Param{TrimRight} : 1;
-
-    my %TrimAction = (
-        RemoveAllNewlines => qr{ [\n\r\f] }xms,
-        RemoveAllTabs     => qr{ \t       }xms,
-        RemoveAllSpaces   => qr{ [ ]      }xms,
-        TrimLeft          => qr{ \A \s+   }xms,
-        TrimRight         => qr{ \s+ \z   }xms,
-    );
-
-    ACTION:
-    for my $Action ( sort keys %TrimAction ) {
-        next ACTION if !$Param{$Action};
-
-        ${ $Param{StringRef} } =~ s{ $TrimAction{$Action} }{}xmsg;
-    }
-
-    return 1;
-}
-
 1;
 
 =back
@@ -2366,6 +2276,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.26 $ $Date: 2008-04-17 11:29:04 $
+$Revision: 1.27 $ $Date: 2008-06-16 11:39:45 $
 
 =cut
