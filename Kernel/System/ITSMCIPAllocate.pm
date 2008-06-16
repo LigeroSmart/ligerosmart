@@ -2,7 +2,7 @@
 # Kernel/System/ITSMCIPAllocate.pm - all criticality, impact and priority allocation functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMCIPAllocate.pm,v 1.9 2008-04-04 10:23:03 mh Exp $
+# $Id: ITSMCIPAllocate.pm,v 1.10 2008-06-16 16:10:50 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 =head1 NAME
 
@@ -94,9 +94,6 @@ sub AllocateList {
         return;
     }
 
-    # quote
-    $Param{UserID} = $Self->{DBObject}->Quote( $Param{UserID}, 'Integer' );
-
     # ask database
     $Self->{DBObject}->Prepare(
         SQL => 'SELECT criticality_id, impact_id, priority_id FROM cip_allocate',
@@ -158,34 +155,27 @@ sub AllocateUpdate {
         return;
     }
 
-    # quote
-    $Param{UserID} = $Self->{DBObject}->Quote( $Param{UserID}, 'Integer' );
-
     # delete old allocations
     $Self->{DBObject}->Do( SQL => 'DELETE FROM cip_allocate' );
 
     # insert new allocations
     for my $ImpactID ( keys %{ $Param{AllocateData} } ) {
 
-        # quote
-        $ImpactID = $Self->{DBObject}->Quote( $ImpactID, 'Integer' );
-
         for my $CriticalityID ( keys %{ $Param{AllocateData}->{$ImpactID} } ) {
 
             # extract priority
             my $PriorityID = $Param{AllocateData}->{$ImpactID}->{$CriticalityID};
-
-            # quote
-            $CriticalityID = $Self->{DBObject}->Quote( $CriticalityID, 'Integer' );
-            $PriorityID    = $Self->{DBObject}->Quote( $PriorityID,    'Integer' );
 
             # insert new allocation
             $Self->{DBObject}->Do(
                 SQL => "INSERT INTO cip_allocate "
                     . "(criticality_id, impact_id, priority_id, "
                     . "create_time, create_by, change_time, change_by) VALUES "
-                    . "($CriticalityID, $ImpactID, $PriorityID, "
-                    . "current_timestamp, $Param{UserID}, current_timestamp, $Param{UserID})"
+                    . "(?, ?, ?, current_timestamp, ?, current_timestamp, ?)",
+                Bind => [
+                    \$CriticalityID, \$ImpactID, \$PriorityID,
+                    \$Param{UserID}, \$Param{UserID},
+                ],
             );
         }
     }
@@ -218,15 +208,11 @@ sub PriorityAllocationGet {
         }
     }
 
-    # quote
-    for my $Argument (qw(CriticalityID ImpactID)) {
-        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument}, 'Integer' );
-    }
-
     # get priority id from db
     $Self->{DBObject}->Prepare(
         SQL => "SELECT priority_id FROM cip_allocate "
-            . "WHERE criticality_id = $Param{CriticalityID} AND impact_id = $Param{ImpactID}",
+            . "WHERE criticality_id = ? AND impact_id = ?",
+        Bind => [ \$Param{CriticalityID}, \$Param{ImpactID} ],
         Limit => 1,
     );
 
@@ -255,6 +241,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.9 $ $Date: 2008-04-04 10:23:03 $
+$Revision: 1.10 $ $Date: 2008-06-16 16:10:50 $
 
 =cut
