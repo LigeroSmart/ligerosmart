@@ -2,7 +2,7 @@
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.39 2008-06-16 11:38:36 ub Exp $
+# $Id: GeneralCatalog.pm,v 1.40 2008-06-16 12:07:52 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Valid;
 use Kernel::System::CheckItem;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.39 $) [1];
+$VERSION = qw($Revision: 1.40 $) [1];
 
 =head1 NAME
 
@@ -77,8 +77,8 @@ sub new {
     for my $Object (qw(DBObject ConfigObject LogObject MainObject)) {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
-    $Self->{ValidObject} = Kernel::System::Valid->new( %{$Self} );
-    $Self->{CheckItemObject} = Kernel::System::CheckItem->new(  %{$Self} );
+    $Self->{ValidObject}     = Kernel::System::Valid->new( %{$Self} );
+    $Self->{CheckItemObject} = Kernel::System::CheckItem->new( %{$Self} );
 
     return $Self;
 }
@@ -237,7 +237,7 @@ sub ItemList {
         $CacheKey .= join q{####}, map {$_} @{ $Param{Functionality} };
 
         # create and add bind parameters
-        my @BindParams = map {\$_} @{ $Param{Functionality} };
+        my @BindParams = map { \$_ } @{ $Param{Functionality} };
         push @BIND, @BindParams;
 
         # add functionality string to sql string
@@ -690,6 +690,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.39 $ $Date: 2008-06-16 11:38:36 $
+$Revision: 1.40 $ $Date: 2008-06-16 12:07:52 $
 
 =cut
