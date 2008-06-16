@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport.pm - all import and export functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pm,v 1.27 2008-06-16 11:39:45 ub Exp $
+# $Id: ImportExport.pm,v 1.28 2008-06-16 11:44:09 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::CheckItem;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.27 $) [1];
+$VERSION = qw($Revision: 1.28 $) [1];
 
 =head1 NAME
 
@@ -77,7 +77,7 @@ sub new {
     for my $Object (qw(ConfigObject LogObject DBObject MainObject EncodeObject)) {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
-    $Self->{CheckItemObject} = Kernel::System::CheckItem->new(  %{$Self} );
+    $Self->{CheckItemObject} = Kernel::System::CheckItem->new( %{$Self} );
 
     return $Self;
 }
@@ -267,7 +267,7 @@ sub TemplateAdd {
     $Self->{DBObject}->Prepare(
         SQL => "SELECT id FROM imexport_template "
             . "WHERE imexport_object = ? AND name = ?",
-        Bind  => [ \$Param{Object}, \$Param{Name} ],
+        Bind => [ \$Param{Object}, \$Param{Name} ],
         Limit => 1,
     );
 
@@ -294,7 +294,7 @@ sub TemplateAdd {
             . "create_time, create_by, change_time, change_by) VALUES "
             . "(?, ?, ?, ?, ?, current_timestamp, ?, current_timestamp, ?)",
         Bind => [
-            \$Param{Object},  \$Param{Format}, \$Param{Name}, \$Param{ValidID},
+            \$Param{Object}, \$Param{Format}, \$Param{Name}, \$Param{ValidID},
             \$Param{Comment}, \$Param{UserID}, \$Param{UserID},
         ],
     );
@@ -303,7 +303,7 @@ sub TemplateAdd {
     $Self->{DBObject}->Prepare(
         SQL => "SELECT id FROM imexport_template "
             . "WHERE imexport_object = ? AND name = ?",
-        Bind  => [ \$Param{Object}, \$Param{Name} ],
+        Bind => [ \$Param{Object}, \$Param{Name} ],
         Limit => 1,
     );
 
@@ -383,7 +383,7 @@ sub TemplateUpdate {
     $Self->{DBObject}->Prepare(
         SQL => "SELECT id FROM imexport_template "
             . "WHERE imexport_object = ? AND name = ?",
-        Bind  => [ \$Object, \$Param{Name} ],
+        Bind => [ \$Object, \$Param{Name} ],
         Limit => 1,
     );
 
@@ -414,7 +414,7 @@ sub TemplateUpdate {
             . "change_time = current_timestamp, change_by = ? "
             . "WHERE id = ?",
         Bind => [
-            \$Param{Name},   \$Param{ValidID}, \$Param{Comment},
+            \$Param{Name}, \$Param{ValidID}, \$Param{Comment},
             \$Param{UserID}, \$Param{TemplateID},
         ],
     );
@@ -493,7 +493,7 @@ sub TemplateDelete {
     my $TemplateIDString = join q{, }, map {'?'} @{ $Param{TemplateID} };
 
     # create and add bind parameters
-    my @BIND = map {\$_} @{ $Param{TemplateID} };
+    my @BIND = map { \$_ } @{ $Param{TemplateID} };
 
     # reset cache
     delete $Self->{Cache}->{TemplateGet};
@@ -737,7 +737,7 @@ sub ObjectDataDelete {
     my $TemplateIDString = join q{, }, map {'?'} @{ $Param{TemplateID} };
 
     # create and add bind parameters
-    my @BIND = map {\$_} @{ $Param{TemplateID} };
+    my @BIND = map { \$_ } @{ $Param{TemplateID} };
 
     # delete templates
     return $Self->{DBObject}->Do(
@@ -978,7 +978,7 @@ sub FormatDataDelete {
     my $TemplateIDString = join q{, }, map {'?'} @{ $Param{TemplateID} };
 
     # create and add bind parameters
-    my @BIND = map {\$_} @{ $Param{TemplateID} };
+    my @BIND = map { \$_ } @{ $Param{TemplateID} };
 
     # delete templates
     return $Self->{DBObject}->Do(
@@ -1083,7 +1083,7 @@ sub MappingAdd {
     $Self->{DBObject}->Prepare(
         SQL => "SELECT id FROM imexport_mapping "
             . "WHERE template_id = ? AND position = ?",
-        Bind  => [ \$Param{TemplateID}, \$NewPosition ],
+        Bind => [ \$Param{TemplateID}, \$NewPosition ],
         Limit => 1,
     );
 
@@ -1467,7 +1467,7 @@ sub MappingObjectDataDelete {
     my $MappingIDString = join q{, }, map {'?'} @{ $Param{MappingID} };
 
     # create and add bind parameters
-    my @BIND = map {\$_} @{ $Param{MappingID} };
+    my @BIND = map { \$_ } @{ $Param{MappingID} };
 
     # delete mapping object data
     return $Self->{DBObject}->Do(
@@ -1681,7 +1681,7 @@ sub MappingFormatDataDelete {
     my $MappingIDString = join q{, }, map {'?'} @{ $Param{MappingID} };
 
     # create and add bind parameters
-    my @BIND = map {\$_} @{ $Param{MappingID} };
+    my @BIND = map { \$_ } @{ $Param{MappingID} };
 
     # delete mapping format data
     return $Self->{DBObject}->Do(
@@ -1998,11 +1998,11 @@ sub SearchDataDelete {
     my $TemplateIDString = join q{, }, map {'?'} @{ $Param{TemplateID} };
 
     # create and add bind parameters
-    my @BIND = map {\$_} @{ $Param{TemplateID} };
+    my @BIND = map { \$_ } @{ $Param{TemplateID} };
 
     # delete templates
     return $Self->{DBObject}->Do(
-        SQL => "DELETE FROM imexport_search WHERE template_id IN ( $TemplateIDString )",
+        SQL  => "DELETE FROM imexport_search WHERE template_id IN ( $TemplateIDString )",
         Bind => \@BIND,
     );
 }
@@ -2276,6 +2276,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.27 $ $Date: 2008-06-16 11:39:45 $
+$Revision: 1.28 $ $Date: 2008-06-16 11:44:09 $
 
 =cut
