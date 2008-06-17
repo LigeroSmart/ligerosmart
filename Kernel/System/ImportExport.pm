@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport.pm - all import and export functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pm,v 1.28 2008-06-16 11:44:09 ub Exp $
+# $Id: ImportExport.pm,v 1.29 2008-06-17 10:35:08 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::CheckItem;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.28 $) [1];
+$VERSION = qw($Revision: 1.29 $) [1];
 
 =head1 NAME
 
@@ -358,8 +358,7 @@ sub TemplateUpdate {
 
     # get the object of this template id
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT imexport_object FROM imexport_template "
-            . "WHERE id = ?",
+        SQL => "SELECT imexport_object FROM imexport_template WHERE id = ?",
         Bind  => [ \$Param{TemplateID} ],
         Limit => 1,
     );
@@ -922,8 +921,7 @@ sub FormatDataSave {
         # insert one row
         $Self->{DBObject}->Do(
             SQL => "INSERT INTO imexport_format "
-                . "(template_id, data_key, data_value) VALUES "
-                . "(?, ?, ?)",
+                . "(template_id, data_key, data_value) VALUES (?, ?, ?)",
             Bind => [ \$Param{TemplateID}, \$DataKey, \$DataValue ],
         );
     }
@@ -2276,6 +2274,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.28 $ $Date: 2008-06-16 11:44:09 $
+$Revision: 1.29 $ $Date: 2008-06-17 10:35:08 $
 
 =cut
