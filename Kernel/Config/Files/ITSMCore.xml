@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMCore.xml,v 1.7 2008-06-16 17:45:13 ub Exp $</CVS>
+    <CVS>$Id: ITSMCore.xml,v 1.8 2008-06-17 12:04:28 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminTicketPriority" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminTicketPriority configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminTicketPriority Konfiguration im Admin-Bereich.</Description>
@@ -102,7 +102,7 @@
         </Setting>
     </ConfigItem>
 
-    <ConfigItem Name="LinkObject::PossibleLink###010" Required="0" Valid="1">
+    <ConfigItem Name="LinkObject::PossibleLink###3201" Required="0" Valid="1">
         <Description Lang="en"></Description>
         <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'RelevantTo' mit anderen 'ITSMConfigItem'-Objekten verlinkt werden kann.</Description>
         <Group>Framework</Group>
@@ -116,7 +116,7 @@
         </Setting>
     </ConfigItem>
 
-    <ConfigItem Name="LinkObject::PossibleLink###011" Required="0" Valid="1">
+    <ConfigItem Name="LinkObject::PossibleLink###3202" Required="0" Valid="1">
         <Description Lang="en"></Description>
         <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'Includes' mit anderen 'ITSMConfigItem'-Objekten verlinkt werden kann.</Description>
         <Group>Framework</Group>
@@ -130,7 +130,7 @@
         </Setting>
     </ConfigItem>
 
-    <ConfigItem Name="LinkObject::PossibleLink###012" Required="0" Valid="1">
+    <ConfigItem Name="LinkObject::PossibleLink###3203" Required="0" Valid="1">
         <Description Lang="en"></Description>
         <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'DependsOn' mit anderen 'ITSMConfigItem'-Objekten verlinkt werden kann.</Description>
         <Group>Framework</Group>
@@ -144,7 +144,7 @@
         </Setting>
     </ConfigItem>
 
-    <ConfigItem Name="LinkObject::PossibleLink###013" Required="0" Valid="1">
+    <ConfigItem Name="LinkObject::PossibleLink###3204" Required="0" Valid="1">
         <Description Lang="en"></Description>
         <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'ConnectedTo' mit anderen 'ITSMConfigItem'-Objekten verlinkt werden kann.</Description>
         <Group>Framework</Group>
@@ -158,7 +158,7 @@
         </Setting>
     </ConfigItem>
 
-    <ConfigItem Name="LinkObject::PossibleLink###014" Required="0" Valid="1">
+    <ConfigItem Name="LinkObject::PossibleLink###3205" Required="0" Valid="1">
         <Description Lang="en"></Description>
         <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'AlternativeTo' mit anderen 'ITSMConfigItem'-Objekten verlinkt werden kann.</Description>
         <Group>Framework</Group>
@@ -172,7 +172,7 @@
         </Setting>
     </ConfigItem>
 
-    <ConfigItem Name="LinkObject::PossibleLink###020" Required="0" Valid="1">
+    <ConfigItem Name="LinkObject::PossibleLink###3301" Required="0" Valid="1">
         <Description Lang="en"></Description>
         <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'RelevantTo' mit anderen 'ITSMLocation'-Objekten verlinkt werden kann.</Description>
         <Group>Framework</Group>
@@ -186,7 +186,7 @@
         </Setting>
     </ConfigItem>
 
-    <ConfigItem Name="LinkObject::PossibleLink###021" Required="0" Valid="1">
+    <ConfigItem Name="LinkObject::PossibleLink###3302" Required="0" Valid="1">
         <Description Lang="en"></Description>
         <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'DependsOn' mit anderen 'ITSMLocation'-Objekten verlinkt werden kann.</Description>
         <Group>Framework</Group>
@@ -200,7 +200,7 @@
         </Setting>
     </ConfigItem>
 
-    <ConfigItem Name="LinkObject::PossibleLink###022" Required="0" Valid="1">
+    <ConfigItem Name="LinkObject::PossibleLink###3303" Required="0" Valid="1">
         <Description Lang="en"></Description>
         <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'AlternativeTo' mit anderen 'ITSMLocation'-Objekten verlinkt werden kann.</Description>
         <Group>Framework</Group>
@@ -214,7 +214,7 @@
         </Setting>
     </ConfigItem>
 
-    <ConfigItem Name="LinkObject::PossibleLink###030" Required="0" Valid="1">
+    <ConfigItem Name="LinkObject::PossibleLink###3401" Required="0" Valid="1">
         <Description Lang="en"></Description>
         <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'RelevantTo' mit anderen 'Ticket'-Objekten verlinkt werden kann.</Description>
         <Group>Framework</Group>
@@ -228,7 +228,7 @@
         </Setting>
     </ConfigItem>
 
-    <ConfigItem Name="LinkObject::PossibleLink###031" Required="0" Valid="1">
+    <ConfigItem Name="LinkObject::PossibleLink###3402" Required="0" Valid="1">
         <Description Lang="en"></Description>
         <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'DependsOn' mit anderen 'Ticket'-Objekten verlinkt werden kann.</Description>
         <Group>Framework</Group>
@@ -242,7 +242,7 @@
         </Setting>
     </ConfigItem>
 
-    <ConfigItem Name="LinkObject::PossibleLink###032" Required="0" Valid="1">
+    <ConfigItem Name="LinkObject::PossibleLink###3403" Required="0" Valid="1">
         <Description Lang="en"></Description>
         <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'AlternativeTo' mit anderen 'Ticket'-Objekten verlinkt werden kann.</Description>
         <Group>Framework</Group>
@@ -256,7 +256,7 @@
         </Setting>
     </ConfigItem>
 
-    <ConfigItem Name="LinkObject::PossibleLink###040" Required="0" Valid="1">
+    <ConfigItem Name="LinkObject::PossibleLink###3101" Required="0" Valid="1">
         <Description Lang="en"></Description>
         <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'RelevantTo' mit anderen 'Service'-Objekten verlinkt werden kann.</Description>
         <Group>Framework</Group>
@@ -270,7 +270,7 @@
         </Setting>
     </ConfigItem>
 
-    <ConfigItem Name="LinkObject::PossibleLink###041" Required="0" Valid="1">
+    <ConfigItem Name="LinkObject::PossibleLink###3102" Required="0" Valid="1">
         <Description Lang="en"></Description>
         <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'DependsOn' mit anderen 'Service'-Objekten verlinkt werden kann.</Description>
         <Group>Framework</Group>
@@ -284,7 +284,7 @@
         </Setting>
     </ConfigItem>
 
-    <ConfigItem Name="LinkObject::PossibleLink###042" Required="0" Valid="1">
+    <ConfigItem Name="LinkObject::PossibleLink###3103" Required="0" Valid="1">
         <Description Lang="en"></Description>
         <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'AlternativeTo' mit anderen 'Service'-Objekten verlinkt werden kann.</Description>
         <Group>Framework</Group>

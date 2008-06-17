@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Framework">
-    <CVS>$Id: FrameworkITSMCore.xml,v 1.19 2008-06-04 08:07:25 mh Exp $</CVS>
+    <CVS>$Id: FrameworkITSMCore.xml,v 1.20 2008-06-17 12:04:28 ub Exp $</CVS>
     <CVS>$OldId: Framework.xml,v 1.149.2.1 2008/01/13 22:01:25 martin Exp $</CVS>
     <ConfigItem Name="ProductName" Required="1" Valid="1">
         <Description Lang="en">The name of the application that is shown in the frontend.</Description>
@@ -8,7 +8,7 @@
         <Group>Framework</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
-            <String Regex="">OTRS::ITSM 1.1.2</String>
+            <String Regex="">OTRS::ITSM 1.2</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Package::RepositoryList" Required="0" Valid="1">
@@ -18,7 +18,7 @@
         <SubGroup>Core::Package</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="http://ftp.otrs.org/pub/otrs/itsm/packages11/">[--OTRS::ITSM 1.1 Master--] http://ftp.otrs.org/</Item>
+                <Item Key="http://ftp.otrs.org/pub/otrs/itsm/packages12/">[--OTRS::ITSM 1.2 Master--] http://ftp.otrs.org/</Item>
             </Hash>
         </Setting>
     </ConfigItem>
