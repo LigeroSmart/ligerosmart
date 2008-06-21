@@ -2,7 +2,7 @@
 # Kernel/System/LinkObject/ITSMLocation.pm - to link location objects
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMLocation.pm,v 1.1 2008-06-21 12:33:09 ub Exp $
+# $Id: ITSMLocation.pm,v 1.2 2008-06-21 14:35:14 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMLocation;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -187,7 +187,9 @@ sub ObjectSearch {
     # set focus
     my %Search;
     for my $Argument (qw(Name Phone1 Email Address)) {
-        $Search{$Argument} = '*' . $Param{$Argument} . '*' if $Param{$Argument};
+        if ( $Param{SearchParams}->{$Argument} ) {
+            $Search{$Argument} = '*' . $Param{SearchParams}->{$Argument} . '*';
+        }
     }
 
     my @LocationList = $Self->{LocationObject}->LocationSearch(
