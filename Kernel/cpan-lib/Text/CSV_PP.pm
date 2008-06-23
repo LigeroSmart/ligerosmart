@@ -11,7 +11,7 @@ use strict;
 use vars qw($VERSION);
 use Carp ();
 
-$VERSION = '1.12';
+$VERSION = '1.14';
 
 sub PV  { 0 }
 sub IV  { 1 }
@@ -53,7 +53,6 @@ my $ERRORS = {
         3002 => "EHR - getline_hr () called before column_names ()",
         3003 => "EHR - bind_columns () and column_names () fields count mismatch",
         3004 => "EHR - bind_columns () only accepts refs to scalars",
-        3005 => "EHR - bind_columns () takes 254 refs max",
         3006 => "EHR - bind_columns () did not pass enough refs for parsed fields",
         3007 => "EHR - bind_columns needs refs to writeable scalars",
         3008 => "EHR - unexpected error in bound fields",
@@ -94,6 +93,20 @@ my %def_attr = (
 
 
 BEGIN {
+    if ( $] < 5.006 ) {
+        $INC{'bytes.pm'} = 1 unless $INC{'bytes.pm'}; # dummy
+        no strict 'refs';
+        *{"utf8::is_utf8"} = sub { 0; };
+    }
+    elsif ( $] < 5.008 ) {
+        no strict 'refs';
+        *{"utf8::is_utf8"} = sub { 0; };
+    }
+    elsif ( !defined &utf8::is_utf8 ) {
+       require Encode;
+       *utf8::is_utf8 = *Encode::is_utf8;
+    }
+
     eval q| require Scalar::Util |;
     if ( $@ ) {
         eval q| require B |;
@@ -182,24 +195,26 @@ sub error_diag {
     }
 
     return $context ? @diag : $diagobj;
-#    return $context ? (0 + $diagobj, "$diagobj") : $diagobj;
 }
 ################################################################################
 # string
 ################################################################################
-sub string {
-    $_[0]->{_STRING};
+*string = \&_string;
+sub _string {
+    defined $_[0]->{_STRING} ? ${ $_[0]->{_STRING} } : undef;
 }
 ################################################################################
 # fields
 ################################################################################
-sub fields {
+*fields = \&_fields;
+sub _fields {
     ref($_[0]->{_FIELDS}) ?  @{$_[0]->{_FIELDS}} : undef;
 }
 ################################################################################
 # combine
 ################################################################################
-sub combine {
+*combine = \&_combine;
+sub _combine {
     my ($self, @part) = @_;
 
     # at least one argument was given for "combining"...
@@ -227,6 +242,9 @@ sub combine {
             $column = '';
             next;
         }
+        elsif ( !$binary ) {
+            $binary = 1 if utf8::is_utf8 $column;
+        }
 
         if (!$binary and $column =~ /[^\x09\x20-\x7E]/) {
             # an argument contained an invalid character...
@@ -245,6 +263,7 @@ sub combine {
         }
 
         if($binary){
+            use bytes;
             $must_be_quoted++ if ( $column =~ s/\0/${esc}0/g || $column =~ /[\x00-\x1f\x7f-\xa0]/ );
         }
 
@@ -253,7 +272,7 @@ sub combine {
         }
     }
 
-    $self->{_STRING} = join($sep, @part) . $self->{eol};
+    $self->{_STRING} = \do { join($sep, @part) . $self->{eol} };
     $self->{_STATUS} = 1;
 
     return $self->{_STATUS};
@@ -263,7 +282,9 @@ sub combine {
 ################################################################################
 my %allow_eol = ("\r" => 1, "\r\n" => 1, "\n" => 1, "" => 1);
 
-sub parse {
+*parse = \&_parse;
+
+sub _parse {
     my ($self, $line) = @_;
 
     @{$self}{qw/_STRING _FIELDS _STATUS _ERROR_INPUT/} = ($line, undef, 0, $line);
@@ -317,6 +338,8 @@ sub parse {
 
     my $pos = 0;
 
+    my $utf8 = 1 if utf8::is_utf8( $line ); # if UTF8 marked, flag on.
+
     for my $col ($line =~ /$re_split/g) {
 
         if ($keep_meta_info) {
@@ -326,7 +349,7 @@ sub parse {
 
         $pos += length $col;
 
-        if (!$binary and $col =~ /[^\x09\x20-\x7E]/) { # Binary character, binary off
+        if ( ( !$binary and !$utf8 ) and $col =~ /[^\x09\x20-\x7E]/) { # Binary character, binary off
             if ( $col =~ $re_quoted ) {
                 $self->_set_error_diag(
                       $col =~ /\n([^\n]*)/ ? (2021, $pos - 1 - length $1)
@@ -342,6 +365,12 @@ sub parse {
                     : (2037, $pos - length $col) # Binary character in unquoted field, binary off
                 );
             }
+            $palatable = 0;
+            last;
+        }
+
+        if ( ($utf8 and !$binary) and  $col =~ /\n|\0/ ) { # \n still needs binary (Text::CSV_XS 0.51 compat)
+            $self->_set_error_diag(2021, $pos);
             $palatable = 0;
             last;
         }
@@ -486,9 +515,9 @@ sub print {
         Carp::croak("Expected fields to be an array ref");
     }
 
-    $self->combine(@$cols) or return '';
+    $self->_combine(@$cols) or return '';
 
-    $io->print( $self->string );
+    $io->print( $self->_string );
 }
 ################################################################################
 # getline
@@ -512,10 +541,10 @@ sub getline {
         $line =~ s/\Q$eol\E$//;
     }
 
-    $self->parse($line) or return;
+    $self->_parse($line) or return;
 
     if ( $self->{_BOUND_COLUMNS} ) {
-        my @vals  = $self->fields();
+        my @vals  = $self->_fields();
         my ( $max, $count ) = ( scalar @vals, 0 );
 
         if ( @{ $self->{_BOUND_COLUMNS} } < $max ) {
@@ -535,7 +564,7 @@ sub getline {
         return [];
     }
     else {
-        [ $self->fields() ];
+        [ $self->_fields() ];
     }
 
 }
@@ -591,10 +620,6 @@ sub bind_columns {
 
     if ( $self->{_COLUMN_NAMES} && @refs != @{$self->{_COLUMN_NAMES}} ) {
         $self->SetDiag( 3003 );
-    }
-
-    if ( @refs > 255 ) {
-        $self->SetDiag( 3005 );
     }
 
     if ( grep { ref $_ ne "SCALAR" } @refs ) { # why don't use grep?
@@ -694,7 +719,7 @@ BEGIN {
         |;
     }
 }
-#                \$_[0]->{$method} = \$_[1] if (defined \$_[1]);
+
 
 sub SetDiag {
     if ( defined $_[1] and $_[1] == 0 ) {
@@ -774,6 +799,14 @@ provides facilities for the composition and decomposition of
 comma-separated values. As its name suggests, L<Text::CSV_XS>
 is a XS module and Text::CSV_PP is a Puer Perl one.
 
+=head2 Unicode (UTF8)
+
+On parsing (both for C<getline ()> and C<parse ()>), if the source is
+marked being UTF8, then parsing that source will mark all fields that
+are marked binary will also be marked UTF8.
+
+On combining (C<print ()> and C<combine ()>), if any of the combining
+fields was marked UTF8, the resulting string will be marked UTF8.
 
 =head1 FUNCTIONS
 
@@ -1279,7 +1312,7 @@ To achieve this behavior with CSV_PP, the returned diagnostics is blessed object
 
  $csv->SetDiag (0);
 
-Use to reset the diagnosticts if you are dealing with errors.
+Use to reset the diagnostics if you are dealing with errors.
 
 =head1 DIAGNOSTICS
 
@@ -1342,8 +1375,6 @@ or the escape character, as that will invalidate all parsing rules.
 =item 3003 "EHR - bind_columns () and column_names () fields count mismatch"
 
 =item 3004 "EHR - bind_columns () only accepts refs to scalars"
-
-=item 3005 "EHR - bind_columns () takes 254 refs max"
 
 =item 3006 "EHR - bind_columns () did not pass enough refs for parsed fields"
 

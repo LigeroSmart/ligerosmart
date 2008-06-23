@@ -5,14 +5,14 @@ use strict;
 use Carp ();
 
 BEGIN {
-    $Text::CSV::VERSION = '1.04';
+    $Text::CSV::VERSION = '1.06';
     $Text::CSV::DEBUG   = 0;
 }
 
 # if use CSV_XS, requires version
 my $Module_XS  = 'Text::CSV_XS';
 my $Module_PP  = 'Text::CSV_PP';
-my $XS_Version = '0.43';
+my $XS_Version = '0.51';
 
 my $Is_Dynamic = 0;
 
@@ -60,69 +60,11 @@ unless ($Text::CSV::Worker) {
 }
 
 
-my $compile_dynamic_mode = sub {
-    my ($class, $worker) = @_;
-
-    local $^W;
-    no strict qw(refs);
-
-    for my $method (@PublicMethods) {
-        eval qq|
-            *{"$class\::$method"} = sub {
-                my \$self = shift;
-                \$self->{_MODULE} -> $method(\@_);
-            };
-        |;
-    }
-
-    *Text::CSV::new = \&_new_dynamic;
-};
-
 
 sub import {
     my ($class, $option) = @_;
-    if ($option and $option eq '-dynamic') {
-        $compile_dynamic_mode->($class => $Text::CSV::Worker);
-        $Is_Dynamic = 1;
-        $Text::CSV::DEBUG and  Carp::carp("Dynamic worker module mode."), "\n";
-    }
 }
 
-
-sub _new_dynamic {
-    my $proto  = shift;
-    my $class  = ref($proto) || $proto or return;
-    my $module = $Text::CSV::Worker;
-
-    if (ref $_[0] and $_[0]->{module}) {
-        $module = delete $_[0]->{module}; # Caution! deleted from original hashref too.
-
-        my $installed = $module . '.pm';
-        $installed =~ s{::}{/};
-
-        unless ($INC{ $installed }) { # Not yet installed
-            if ($module eq $Module_XS) {
-                _load_xs($Install_Only);
-            }
-            elsif ($module eq $Module_PP) {
-                _load_pp($Install_Only);
-            }
-            else {
-            }
-        }
-
-    }
-
-    if ( my $obj = $module->new(@_) ) {
-        my $self = bless {}, $class;
-        $self->{_MODULE} = $obj;
-        return $self;
-    }
-    else {
-        return;
-    }
-
-}
 
 
 sub new { # normal mode
@@ -133,15 +75,14 @@ sub new { # normal mode
         return eval qq| $Text::CSV::Worker\::new( \$proto ) |;
     }
 
-#    return $Text::CSV::Worker->new(@_);
-
-    if (ref $_[0] and $_[0]->{module}) {
-        Carp::croak("Can't set 'module' in non dynamic mode.");
-    }
+    #if (ref $_[0] and $_[0]->{module}) {
+    #    Carp::croak("Can't set 'module' in non dynamic mode.");
+    #}
 
     if ( my $obj = $Text::CSV::Worker->new(@_) ) {
         $obj->{_MODULE} = $Text::CSV::Worker;
         bless $obj, $class;
+        return $obj;
     }
     else {
         return;
@@ -180,7 +121,9 @@ sub AUTOLOAD {
     my $self = $_[0];
     my $attr = $Text::CSV::AUTOLOAD;
     $attr =~ s/.*:://;
-    return unless $attr =~ /^_/;
+
+    return if $attr =~ /^[A-Z]+$/;
+    Carp::croak( "Can't locate method $attr" ) unless $attr =~ /^_/;
 
     my $pkg = $Text::CSV::Worker;
 
@@ -325,6 +268,12 @@ The module accepts either strings or files as input and can utilize any
 user-specified characters as delimiters, separators, and escapes so it is
 perhaps better called ASV (anything separated values) rather than just CSV.
 
+=head1 VERSION
+
+    1.06
+
+This module is compatible with Text::CSV_XS B<0.51> or later.
+
 =head2 BINARY MODE
 
 The default behavior is to only accept ascii characters.
@@ -335,15 +284,18 @@ binary mode.
 
 See to L<Text::CSV_XS/Embedded newlines>.
 
+=head2 Unicode (UTF8)
+
+On parsing (both for C<getline ()> and C<parse ()>), if the source is
+marked being UTF8, then parsing that source will mark all fields that
+are marked binary will also be marked UTF8.
+
+On combining (C<print ()> and C<combine ()>), if any of the combining
+fields was marked UTF8, the resulting string will be marked UTF8.
+
 =head1 SPECIFICATION
 
 See to L<Text::CSV_XS/SPECIFICATION>.
-
-=head1 VERSION
-
-    1.04
-
-This module is compatible with Text::CSV_XS B<0.43>.
 
 =head1 FUNCTIONS
 
@@ -693,7 +645,7 @@ C<column_names ()> croaks on invalid arguments.
 
 =head2 bind_columns
 
-Takes a list of references to scalars (max 255) to store the fields fetched
+Takes a list of references to scalars to store the fields fetched
 C<getline ()> in. When you don't pass enough references to store the
 fetched fields in, C<getline ()> will fail. If you pass more than there are
 fields to return, the remaining references are left untouched.
@@ -857,7 +809,7 @@ of the failure.
 
  $csv->SetDiag (0);
 
-Use to reset the diagnosticts if you are dealing with errors.
+Use to reset the diagnostics if you are dealing with errors.
 
 =head2 Some methods are Text::CSV only.
 
