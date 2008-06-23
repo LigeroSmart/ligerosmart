@@ -2,7 +2,7 @@
 # AgentITSMLocationZoom.dtl - provides HTML form for AgentITSMLocationZoom
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMLocationZoom.dtl,v 1.1 2008-06-21 16:50:15 ub Exp $
+# $Id: AgentITSMLocationZoom.dtl,v 1.2 2008-06-23 13:51:37 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -65,39 +65,17 @@
           <td class="contentvalue">$Data{"Address"}</td>
         </tr>
       </table>
-<!-- dtl:block:Link -->
-<!-- dtl:block:LinkHorizontalRuler -->
+<!-- dtl:block:LinkTableComplex -->
       <hr size="2">
-<!-- dtl:block:LinkHorizontalRuler -->
       <br>
-      <table width="98%" align="center" border="0" cellspacing="0" cellpadding="3">
-        <colgroup>
-<!-- dtl:block:LinkColumnWidth -->
-        <col width="$QData{"Width"}">
-<!-- dtl:block:LinkColumnWidth -->
-        </colgroup>
+      <table width="98%" align="center" border="0" cellspacing="0" cellpadding="0">
         <tr>
-          <td colspan="$QData{"Colspan"}">
-            <b><i>$Text{"Related Objects"}: $Text{"$QData{"Blockname1"}"} $QData{"Blockname2"}</i></b>
+          <td>
+            $Data{"LinkTableStrg"}
           </td>
         </tr>
-        <tr>
-<!-- dtl:block:LinkHeaderColumn -->
-          <td class="contenthead">$Text{"$QData{"Content"}"}</td>
-<!-- dtl:block:LinkHeaderColumn -->
-        </tr>
-<!-- dtl:block:LinkRow -->
-        <tr class="contentbody">
-<!-- dtl:block:LinkRowColumn -->
-          <td class="$QData{"CssClass"}">$Data{"Content"}</td>
-<!-- dtl:block:LinkRowColumn -->
-        </tr>
-<!-- dtl:block:LinkRow -->
-        <tr>
-          <td class="contenthead" colspan="$QData{"Colspan"}">&nbsp;</td>
-        </tr>
       </table>
-<!-- dtl:block:Link -->
+<!-- dtl:block:LinkTableComplex -->
       <br>
     </td>
     <td width="25%" class="menu">
@@ -126,6 +104,10 @@
             </div>
           </td>
         </tr>
+# object links
+<!-- dtl:block:LinkTableSimple -->
+        $Data{"LinkTableStrg"}
+<!-- dtl:block:LinkTableSimple -->
       </table>
     </td>
   </tr>
