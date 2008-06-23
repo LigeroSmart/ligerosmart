@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport.pm - all import and export functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pm,v 1.29 2008-06-17 10:35:08 ub Exp $
+# $Id: ImportExport.pm,v 1.30 2008-06-23 18:46:41 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::CheckItem;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.29 $) [1];
+$VERSION = qw($Revision: 1.30 $) [1];
 
 =head1 NAME
 
@@ -107,15 +107,15 @@ sub TemplateList {
     }
 
     # create sql string
-    my $SQL  = 'SELECT id FROM imexport_template WHERE 1=1 ';
-    my @BIND = ();
+    my $SQL = 'SELECT id FROM imexport_template WHERE 1=1 ';
+    my @BIND;
 
     if ( $Param{Object} ) {
-        $SQL .= "AND imexport_object = ? ";
+        $SQL .= 'AND imexport_object = ? ';
         push @BIND, \$Param{Object};
     }
     if ( $Param{Format} ) {
-        $SQL .= "AND imexport_format = ? ";
+        $SQL .= 'AND imexport_format = ? ';
         push @BIND, \$Param{Format};
     }
 
@@ -169,7 +169,7 @@ sub TemplateGet {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -179,14 +179,10 @@ sub TemplateGet {
     return $Self->{Cache}->{TemplateGet}->{ $Param{TemplateID} }
         if $Self->{Cache}->{TemplateGet}->{ $Param{TemplateID} };
 
-    # create sql string
-    my $SQL = "SELECT id, imexport_object, imexport_format, name, valid_id, comments, "
-        . "create_time, create_by, change_time, change_by FROM imexport_template WHERE "
-        . "id = ?";
-
     # ask database
     $Self->{DBObject}->Prepare(
-        SQL   => $SQL,
+        SQL => 'SELECT id, imexport_object, imexport_format, name, valid_id, comments, '
+            . 'create_time, create_by, change_time, change_by FROM imexport_template WHERE id = ?',
         Bind  => [ \$Param{TemplateID} ],
         Limit => 1,
     );
@@ -237,14 +233,14 @@ sub TemplateAdd {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
     }
 
     # set default values
-    $Param{Comment} = $Param{Comment} || '';
+    $Param{Comment} ||= '';
 
     # cleanup given params
     for my $Argument (qw(Object Format)) {
@@ -265,9 +261,8 @@ sub TemplateAdd {
 
     # find exiting template with same name
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT id FROM imexport_template "
-            . "WHERE imexport_object = ? AND name = ?",
-        Bind => [ \$Param{Object}, \$Param{Name} ],
+        SQL   => 'SELECT id FROM imexport_template WHERE imexport_object = ? AND name = ?',
+        Bind  => [ \$Param{Object}, \$Param{Name} ],
         Limit => 1,
     );
 
@@ -289,10 +284,10 @@ sub TemplateAdd {
 
     # insert new template
     return if !$Self->{DBObject}->Do(
-        SQL => "INSERT INTO imexport_template "
-            . "(imexport_object, imexport_format, name, valid_id, comments, "
-            . "create_time, create_by, change_time, change_by) VALUES "
-            . "(?, ?, ?, ?, ?, current_timestamp, ?, current_timestamp, ?)",
+        SQL => 'INSERT INTO imexport_template '
+            . '(imexport_object, imexport_format, name, valid_id, comments, '
+            . 'create_time, create_by, change_time, change_by) VALUES '
+            . '(?, ?, ?, ?, ?, current_timestamp, ?, current_timestamp, ?)',
         Bind => [
             \$Param{Object}, \$Param{Format}, \$Param{Name}, \$Param{ValidID},
             \$Param{Comment}, \$Param{UserID}, \$Param{UserID},
@@ -301,9 +296,8 @@ sub TemplateAdd {
 
     # find id of new template
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT id FROM imexport_template "
-            . "WHERE imexport_object = ? AND name = ?",
-        Bind => [ \$Param{Object}, \$Param{Name} ],
+        SQL   => 'SELECT id FROM imexport_template WHERE imexport_object = ? AND name = ?',
+        Bind  => [ \$Param{Object}, \$Param{Name} ],
         Limit => 1,
     );
 
@@ -338,14 +332,14 @@ sub TemplateUpdate {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
     }
 
     # set default values
-    $Param{Comment} = $Param{Comment} || '';
+    $Param{Comment} ||= '';
 
     # cleanup given params
     for my $Argument (qw(Name Comment)) {
@@ -358,7 +352,7 @@ sub TemplateUpdate {
 
     # get the object of this template id
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT imexport_object FROM imexport_template WHERE id = ?",
+        SQL   => 'SELECT imexport_object FROM imexport_template WHERE id = ?',
         Bind  => [ \$Param{TemplateID} ],
         Limit => 1,
     );
@@ -372,17 +366,15 @@ sub TemplateUpdate {
     if ( !$Object ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message =>
-                "Can't update template! I can't find the template.",
+            Message  => "Can't update template! I can't find the template.",
         );
         return;
     }
 
     # find exiting template with same name
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT id FROM imexport_template "
-            . "WHERE imexport_object = ? AND name = ?",
-        Bind => [ \$Object, \$Param{Name} ],
+        SQL   => 'SELECT id FROM imexport_template WHERE imexport_object = ? AND name = ?',
+        Bind  => [ \$Object, \$Param{Name} ],
         Limit => 1,
     );
 
@@ -408,10 +400,10 @@ sub TemplateUpdate {
 
     # update template
     return $Self->{DBObject}->Do(
-        SQL => "UPDATE imexport_template SET name = ?,"
-            . "valid_id = ?, comments = ?, "
-            . "change_time = current_timestamp, change_by = ? "
-            . "WHERE id = ?",
+        SQL => 'UPDATE imexport_template SET name = ?,'
+            . 'valid_id = ?, comments = ?, '
+            . 'change_time = current_timestamp, change_by = ? '
+            . 'WHERE id = ?',
         Bind => [
             \$Param{Name}, \$Param{ValidID}, \$Param{Comment},
             \$Param{UserID}, \$Param{TemplateID},
@@ -445,7 +437,7 @@ sub TemplateDelete {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -605,18 +597,15 @@ sub ObjectDataGet {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
     }
 
-    # create sql string
-    my $SQL = "SELECT data_key, data_value FROM imexport_object WHERE template_id = ?";
-
     # ask database
     $Self->{DBObject}->Prepare(
-        SQL  => $SQL,
+        SQL  => 'SELECT data_key, data_value FROM imexport_object WHERE template_id = ?',
         Bind => [ \$Param{TemplateID} ],
     );
 
@@ -649,7 +638,7 @@ sub ObjectDataSave {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -679,9 +668,9 @@ sub ObjectDataSave {
 
         # insert one row
         $Self->{DBObject}->Do(
-            SQL => "INSERT INTO imexport_object "
-                . "(template_id, data_key, data_value) VALUES "
-                . "(?, ?, ?)",
+            SQL => 'INSERT INTO imexport_object '
+                . '(template_id, data_key, data_value) VALUES '
+                . '(?, ?, ?)',
             Bind => [ \$Param{TemplateID}, \$DataKey, \$DataValue ],
         );
     }
@@ -715,7 +704,7 @@ sub ObjectDataDelete {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -846,18 +835,15 @@ sub FormatDataGet {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
     }
 
-    # create sql string
-    my $SQL = "SELECT data_key, data_value FROM imexport_format WHERE template_id = ?";
-
     # ask database
     $Self->{DBObject}->Prepare(
-        SQL  => $SQL,
+        SQL  => 'SELECT data_key, data_value FROM imexport_format WHERE template_id = ?',
         Bind => [ \$Param{TemplateID} ],
     );
 
@@ -890,7 +876,7 @@ sub FormatDataSave {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -920,8 +906,8 @@ sub FormatDataSave {
 
         # insert one row
         $Self->{DBObject}->Do(
-            SQL => "INSERT INTO imexport_format "
-                . "(template_id, data_key, data_value) VALUES (?, ?, ?)",
+            SQL => 'INSERT INTO imexport_format '
+                . '(template_id, data_key, data_value) VALUES (?, ?, ?)',
             Bind => [ \$Param{TemplateID}, \$DataKey, \$DataValue ],
         );
     }
@@ -955,7 +941,7 @@ sub FormatDataDelete {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -1004,18 +990,15 @@ sub MappingList {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
     }
 
-    # create sql string
-    my $SQL = "SELECT id FROM imexport_mapping WHERE template_id = ? ORDER BY position";
-
     # ask database
     $Self->{DBObject}->Prepare(
-        SQL  => $SQL,
+        SQL  => 'SELECT id FROM imexport_mapping WHERE template_id = ? ORDER BY position',
         Bind => [ \$Param{TemplateID} ],
     );
 
@@ -1047,7 +1030,7 @@ sub MappingAdd {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -1055,7 +1038,7 @@ sub MappingAdd {
 
     # find maximum position
     $Self->{DBObject}->Prepare(
-        SQL   => "SELECT max(position) FROM imexport_mapping WHERE template_id = ?",
+        SQL   => 'SELECT max(position) FROM imexport_mapping WHERE template_id = ?',
         Bind  => [ \$Param{TemplateID} ],
         Limit => 1,
     );
@@ -1072,16 +1055,14 @@ sub MappingAdd {
 
     # insert a new mapping data row
     return if !$Self->{DBObject}->Do(
-        SQL => "INSERT INTO imexport_mapping "
-            . "(template_id, position) VALUES (?, ?)",
+        SQL => 'INSERT INTO imexport_mapping (template_id, position) VALUES (?, ?)',
         Bind => [ \$Param{TemplateID}, \$NewPosition ],
     );
 
     # find id of new mapping data row
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT id FROM imexport_mapping "
-            . "WHERE template_id = ? AND position = ?",
-        Bind => [ \$Param{TemplateID}, \$NewPosition ],
+        SQL   => 'SELECT id FROM imexport_mapping WHERE template_id = ? AND position = ?',
+        Bind  => [ \$Param{TemplateID}, \$NewPosition ],
         Limit => 1,
     );
 
@@ -1121,7 +1102,7 @@ sub MappingDelete {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -1143,7 +1124,7 @@ sub MappingDelete {
 
         # delete one mapping row
         $Self->{DBObject}->Do(
-            SQL  => "DELETE FROM imexport_mapping WHERE id = ?",
+            SQL  => 'DELETE FROM imexport_mapping WHERE id = ?',
             Bind => [ \$Param{MappingID} ],
         );
 
@@ -1180,7 +1161,7 @@ sub MappingDelete {
 
         # delete all mapping rows of this template
         return $Self->{DBObject}->Do(
-            SQL  => "DELETE FROM imexport_mapping WHERE template_id = ?",
+            SQL  => 'DELETE FROM imexport_mapping WHERE template_id = ?',
             Bind => [ \$Param{TemplateID} ],
         );
     }
@@ -1206,7 +1187,7 @@ sub MappingUp {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -1220,12 +1201,9 @@ sub MappingUp {
 
     return 1 if $Param{MappingID} == $MappingList->[0];
 
-    # get position
-    my $SQL = "SELECT position FROM imexport_mapping WHERE id = ?";
-
     # ask database
     $Self->{DBObject}->Prepare(
-        SQL  => $SQL,
+        SQL  => 'SELECT position FROM imexport_mapping WHERE id = ?',
         Bind => [ \$Param{MappingID} ],
     );
 
@@ -1241,12 +1219,11 @@ sub MappingUp {
 
     # update positions
     $Self->{DBObject}->Do(
-        SQL => "UPDATE imexport_mapping SET position = ? "
-            . "WHERE template_id = ? AND position = ?",
+        SQL => 'UPDATE imexport_mapping SET position = ? WHERE template_id = ? AND position = ?',
         Bind => [ \$Position, \$Param{TemplateID}, \$PositionUpper ],
     );
     $Self->{DBObject}->Do(
-        SQL => "UPDATE imexport_mapping SET position = ? WHERE id = ?",
+        SQL => 'UPDATE imexport_mapping SET position = ? WHERE id = ?',
         Bind => [ \$PositionUpper, \$Param{MappingID} ],
     );
 
@@ -1273,7 +1250,7 @@ sub MappingDown {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -1287,12 +1264,9 @@ sub MappingDown {
 
     return 1 if $Param{MappingID} == $MappingList->[-1];
 
-    # get position
-    my $SQL = "SELECT position FROM imexport_mapping WHERE id = ";
-
     # ask database
     $Self->{DBObject}->Prepare(
-        SQL  => $SQL,
+        SQL  => 'SELECT position FROM imexport_mapping WHERE id = ?',
         Bind => [ \$Param{MappingID} ],
     );
 
@@ -1306,12 +1280,11 @@ sub MappingDown {
 
     # update positions
     $Self->{DBObject}->Do(
-        SQL => "UPDATE imexport_mapping SET position = ? "
-            . "WHERE template_id = ? AND position = ?",
+        SQL => 'UPDATE imexport_mapping SET position = ? WHERE template_id = ? AND position = ?',
         Bind => [ \$Position, \$Param{TemplateID}, \$PositionDown ],
     );
     $Self->{DBObject}->Do(
-        SQL => "UPDATE imexport_mapping SET position = ? WHERE id = ?",
+        SQL => 'UPDATE imexport_mapping SET position = ? WHERE id = ?',
         Bind => [ \$PositionDown, \$Param{MappingID} ],
     );
 
@@ -1337,7 +1310,7 @@ sub MappingPositionRebuild {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -1353,7 +1326,7 @@ sub MappingPositionRebuild {
     my $Counter = 0;
     for my $MappingID ( @{$MappingList} ) {
         $Self->{DBObject}->Do(
-            SQL => "UPDATE imexport_mapping SET position = ? WHERE id = ?",
+            SQL => 'UPDATE imexport_mapping SET position = ? WHERE id = ?',
             Bind => [ \$Counter, \$MappingID ],
         );
         $Counter++;
@@ -1444,7 +1417,7 @@ sub MappingObjectDataDelete {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -1494,7 +1467,7 @@ sub MappingObjectDataSave {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -1524,8 +1497,8 @@ sub MappingObjectDataSave {
 
         # insert one mapping object row
         $Self->{DBObject}->Do(
-            SQL => "INSERT INTO imexport_mapping_object "
-                . "(mapping_id, data_key, data_value) VALUES (?, ?, ?)",
+            SQL => 'INSERT INTO imexport_mapping_object '
+                . '(mapping_id, data_key, data_value) VALUES (?, ?, ?)',
             Bind => [ \$Param{MappingID}, \$DataKey, \$DataValue ],
         );
     }
@@ -1552,18 +1525,15 @@ sub MappingObjectDataGet {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
     }
 
-    # create sql string
-    my $SQL = "SELECT data_key, data_value FROM imexport_mapping_object WHERE mapping_id = ?";
-
     # ask database
     $Self->{DBObject}->Prepare(
-        SQL  => $SQL,
+        SQL  => 'SELECT data_key, data_value FROM imexport_mapping_object WHERE mapping_id = ?',
         Bind => [ \$Param{MappingID} ],
     );
 
@@ -1658,7 +1628,7 @@ sub MappingFormatDataDelete {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -1708,7 +1678,7 @@ sub MappingFormatDataSave {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -1738,8 +1708,8 @@ sub MappingFormatDataSave {
 
         # insert one mapping format row
         $Self->{DBObject}->Do(
-            SQL => "INSERT INTO imexport_mapping_format "
-                . "(mapping_id, data_key, data_value) VALUES (?, ?, ?)",
+            SQL => 'INSERT INTO imexport_mapping_format '
+                . '(mapping_id, data_key, data_value) VALUES (?, ?, ?)',
             Bind => [ \$Param{MappingID}, \$DataKey, \$DataValue ],
         );
     }
@@ -1766,18 +1736,15 @@ sub MappingFormatDataGet {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
     }
 
-    # create sql string
-    my $SQL = "SELECT data_key, data_value FROM imexport_mapping_format WHERE mapping_id = ?";
-
     # ask database
     $Self->{DBObject}->Prepare(
-        SQL  => $SQL,
+        SQL  => 'SELECT data_key, data_value FROM imexport_mapping_format WHERE mapping_id = ?',
         Bind => [ \$Param{MappingID} ],
     );
 
@@ -1865,18 +1832,15 @@ sub SearchDataGet {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
     }
 
-    # create sql string
-    my $SQL = "SELECT data_key, data_value FROM imexport_search WHERE template_id = ?";
-
     # ask database
     $Self->{DBObject}->Prepare(
-        SQL  => $SQL,
+        SQL  => 'SELECT data_key, data_value FROM imexport_search WHERE template_id = ?',
         Bind => [ \$Param{TemplateID} ],
     );
 
@@ -1909,7 +1873,7 @@ sub SearchDataSave {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -1940,8 +1904,8 @@ sub SearchDataSave {
 
         # insert one row
         $Self->{DBObject}->Do(
-            SQL => "INSERT INTO imexport_search "
-                . "(template_id, data_key, data_value) VALUES (?, ?, ?)",
+            SQL => 'INSERT INTO imexport_search '
+                . '(template_id, data_key, data_value) VALUES (?, ?, ?)',
             Bind => [ \$Param{TemplateID}, \$DataKey, \$DataValue ],
         );
     }
@@ -1975,7 +1939,7 @@ sub SearchDataDelete {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -2024,7 +1988,7 @@ sub Export {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -2123,7 +2087,7 @@ sub Import {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -2219,7 +2183,7 @@ sub _LoadBackend {
     if ( !$Param{Module} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'Need Module!'
+            Message  => 'Need Module!',
         );
         return;
     }
@@ -2274,6 +2238,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.29 $ $Date: 2008-06-17 10:35:08 $
+$Revision: 1.30 $ $Date: 2008-06-23 18:46:41 $
 
 =cut
