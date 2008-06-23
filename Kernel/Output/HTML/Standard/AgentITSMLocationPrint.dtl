@@ -2,7 +2,7 @@
 # AgentITSMLocationPrint.dtl - provides HTML print view
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMLocationPrint.dtl,v 1.1 2008-06-21 16:50:15 ub Exp $
+# $Id: AgentITSMLocationPrint.dtl,v 1.2 2008-06-23 21:59:12 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -50,6 +50,31 @@
       </table>
     </td>
   </tr>
+<!-- dtl:block:Link -->
+  <tr>
+    <td class="contentkey">
+      $Text{"Linked-Object"}:
+      <table border="0" cellspacing="0" cellpadding="0" width="100%">
+        <tr>
+          <td width="50%" valign="top">
+            <table border="0" cellspacing="3" cellpadding="0" width="100%">
+<!-- dtl:block:LinkType -->
+              <tr valign="top">
+                <td class="contentkey" width="20%">$Text{"$Data{"LinkTypeName"}"}:</td>
+                <td class="contentvalue">
+<!-- dtl:block:LinkTypeRow -->
+                  $Data{"LinkStrg"}<br>
+<!-- dtl:block:LinkTypeRow -->
+                </td>
+              </tr>
+<!-- dtl:block:LinkType -->
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+<!-- dtl:block:Link -->
 </table>
 <table border="0" width="640" cellpadding="0" cellspacing="0" bgcolor="#000000" class="container">
   <tr>

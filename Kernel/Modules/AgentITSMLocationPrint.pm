@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMLocationPrint.pm - print layout for itsm location agent interface
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMLocationPrint.pm,v 1.1 2008-06-21 16:50:14 ub Exp $
+# $Id: AgentITSMLocationPrint.pm,v 1.2 2008-06-23 21:55:55 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,11 +15,12 @@ use strict;
 use warnings;
 
 use Kernel::System::GeneralCatalog;
-use Kernel::System::PDF;
 use Kernel::System::ITSMLocation;
+use Kernel::System::LinkObject;
+use Kernel::System::PDF;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -35,8 +36,9 @@ sub new {
         }
     }
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
-    $Self->{PDFObject}            = Kernel::System::PDF->new(%Param);
     $Self->{LocationObject}       = Kernel::System::ITSMLocation->new(%Param);
+    $Self->{LinkObject}           = Kernel::System::LinkObject->new(%Param);
+    $Self->{PDFObject}            = Kernel::System::PDF->new(%Param);
 
     return $Self;
 }
@@ -84,6 +86,28 @@ sub Run {
         UserID => $Location{ChangeBy},
         Cached => 1,
     );
+
+    # get linked objects
+    my $LinkListWithData = $Self->{LinkObject}->LinkListWithData(
+        Object => 'ITSMLocation',
+        Key    => $LocationID,
+        State  => 'Valid',
+        UserID => $Self->{UserID},
+    );
+
+    # get link type list
+    my %LinkTypeList = $Self->{LinkObject}->TypeList(
+        UserID => $Self->{UserID},
+    );
+
+    # get the link data
+    my %LinkData;
+    if ( $LinkListWithData && ref $LinkListWithData eq 'HASH' && %{$LinkListWithData} ) {
+        %LinkData = $Self->{LayoutObject}->LinkObjectTableCreate(
+            LinkListWithData => $LinkListWithData,
+            ViewMode         => 'SimpleRaw',
+        );
+    }
 
     # generate pdf output
     if ( $Self->{PDFObject} ) {
@@ -143,6 +167,15 @@ sub Run {
             Location => \%Location,
         );
 
+        # output linked objects
+        if (%LinkData) {
+            $Self->_PDFOutputLinkedObjects(
+                PageData     => \%Page,
+                LinkData     => \%LinkData,
+                LinkTypeList => \%LinkTypeList,
+            );
+        }
+
         # create file name
         my $Filename = $Self->{MainObject}->FilenameCleanUp(
             Filename => $Location{NameShort},
@@ -170,6 +203,45 @@ sub Run {
 
         # output header
         my $Output = $Self->{LayoutObject}->PrintHeader( Value => $Location{NameShort} );
+
+        if (%LinkData) {
+
+            # output link data
+            $Self->{LayoutObject}->Block(
+                Name => 'Link',
+            );
+
+            for my $LinkTypeLinkDirection ( sort { lc $a cmp lc $b } keys %LinkData ) {
+
+                # investigate link type name
+                my @LinkData = split q{::}, $LinkTypeLinkDirection;
+
+                # output link type data
+                $Self->{LayoutObject}->Block(
+                    Name => 'LinkType',
+                    Data => {
+                        LinkTypeName => $LinkTypeList{ $LinkData[0] }->{ $LinkData[1] . 'Name' },
+                    },
+                );
+
+                # extract object list
+                my $ObjectList = $LinkData{$LinkTypeLinkDirection};
+
+                for my $Object ( sort { lc $a cmp lc $b } keys %{$ObjectList} ) {
+
+                    for my $Item ( @{ $ObjectList->{$Object} } ) {
+
+                        # output link type data
+                        $Self->{LayoutObject}->Block(
+                            Name => 'LinkTypeRow',
+                            Data => {
+                                LinkStrg => $Item->{Title},
+                            },
+                        );
+                    }
+                }
+            }
+        }
 
         # transform location from ascii to html
         $Location{Address} = $Self->{LayoutObject}->Ascii2Html(
@@ -402,6 +474,105 @@ sub _PDFOutputDetailedInfos {
             FooterRight => $Param{Page}->{PageText} . ' ' . $Param{Page}->{PageCount}
         );
         $Param{Page}->{PageCount}++;
+    }
+
+    return 1;
+}
+
+sub _PDFOutputLinkedObjects {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for (qw(PageData LinkData LinkTypeList)) {
+        if ( !defined( $Param{$_} ) ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+            return;
+        }
+    }
+
+    my %Page     = %{ $Param{PageData} };
+    my %TypeList = %{ $Param{LinkTypeList} };
+    my %TableParam;
+    my $Row = 0;
+
+    for my $LinkTypeLinkDirection ( sort { lc $a cmp lc $b } keys %{ $Param{LinkData} } ) {
+
+        # investigate link type name
+        my @LinkData = split q{::}, $LinkTypeLinkDirection;
+        my $LinkTypeName = $TypeList{ $LinkData[0] }->{ $LinkData[1] . 'Name' };
+        $LinkTypeName = $Self->{LayoutObject}->{LanguageObject}->Get($LinkTypeName);
+
+        # define headline
+        $TableParam{CellData}[$Row][0]{Content} = $LinkTypeName . ':';
+        $TableParam{CellData}[$Row][0]{Font}    = 'ProportionalBold';
+        $TableParam{CellData}[$Row][1]{Content} = '';
+
+        # extract object list
+        my $ObjectList = $Param{LinkData}->{$LinkTypeLinkDirection};
+
+        for my $Object ( sort { lc $a cmp lc $b } keys %{$ObjectList} ) {
+
+            for my $Item ( @{ $ObjectList->{$Object} } ) {
+
+                $TableParam{CellData}[$Row][0]{Content} ||= '';
+                $TableParam{CellData}[$Row][1]{Content} = $Item->{Title} || '';
+            }
+            continue {
+                $Row++;
+            }
+        }
+    }
+
+    $TableParam{ColumnData}[0]{Width} = 80;
+    $TableParam{ColumnData}[1]{Width} = 431;
+
+    # set new position
+    $Self->{PDFObject}->PositionSet(
+        Move => 'relativ',
+        Y    => -15,
+    );
+
+    # output headline
+    $Self->{PDFObject}->Text(
+        Text     => $Self->{LayoutObject}->{LanguageObject}->Get('Linked Objects'),
+        Height   => 7,
+        Type     => 'Cut',
+        Font     => 'ProportionalBoldItalic',
+        FontSize => 7,
+        Color    => '#666666',
+    );
+
+    # set new position
+    $Self->{PDFObject}->PositionSet(
+        Move => 'relativ',
+        Y    => -4,
+    );
+
+    # table params
+    $TableParam{Type}            = 'Cut';
+    $TableParam{Border}          = 0;
+    $TableParam{FontSize}        = 6;
+    $TableParam{BackgroundColor} = '#DDDDDD';
+    $TableParam{Padding}         = 1;
+    $TableParam{PaddingTop}      = 3;
+    $TableParam{PaddingBottom}   = 3;
+
+    # output table
+    for ( $Page{PageCount} .. $Page{MaxPages} ) {
+
+        # output table (or a fragment of it)
+        %TableParam = $Self->{PDFObject}->Table( %TableParam, );
+
+        # stop output or output next page
+        if ( $TableParam{State} ) {
+            last;
+        }
+        else {
+            $Self->{PDFObject}->PageNew(
+                %Page, FooterRight => $Page{PageText} . ' ' . $Page{PageCount},
+            );
+            $Page{PageCount}++;
+        }
     }
 
     return 1;
