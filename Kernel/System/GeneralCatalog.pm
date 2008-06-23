@@ -2,7 +2,7 @@
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.40 2008-06-16 12:07:52 ub Exp $
+# $Id: GeneralCatalog.pm,v 1.41 2008-06-23 18:47:50 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Valid;
 use Kernel::System::CheckItem;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.40 $) [1];
+$VERSION = qw($Revision: 1.41 $) [1];
 
 =head1 NAME
 
@@ -128,7 +128,7 @@ sub ClassRename {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -175,8 +175,8 @@ sub ClassRename {
 
     # rename general catalog class
     return $Self->{DBObject}->Do(
-        SQL => "UPDATE general_catalog SET general_catalog_class = ? "
-            . "WHERE general_catalog_class = ?",
+        SQL => 'UPDATE general_catalog SET general_catalog_class = ? '
+            . 'WHERE general_catalog_class = ?',
         Bind => [ \$Param{ClassNew}, \$Param{ClassOld} ],
     );
 }
@@ -358,7 +358,7 @@ sub ItemGet {
     # create sql string
     my $SQL = 'SELECT id, general_catalog_class, name, functionality, valid_id, comments, '
         . 'create_time, create_by, change_time, change_by FROM general_catalog WHERE ';
-    my @BIND = ();
+    my @BIND;
 
     # add options to sql string
     if ( $Param{Class} && $Param{Name} ) {
@@ -443,7 +443,7 @@ sub ItemAdd {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -451,7 +451,7 @@ sub ItemAdd {
 
     # set default values
     for my $Argument (qw(Functionality Comment)) {
-        $Param{$Argument} = $Param{$Argument} || '';
+        $Param{$Argument} ||= '';
     }
 
     # cleanup given params
@@ -500,10 +500,10 @@ sub ItemAdd {
 
     # insert new item
     return if !$Self->{DBObject}->Do(
-        SQL => "INSERT INTO general_catalog "
-            . "(general_catalog_class, name, functionality, valid_id, comments, "
-            . "create_time, create_by, change_time, change_by) VALUES "
-            . "(?, ?, ?, ?, ?, current_timestamp, ?, current_timestamp, ?)",
+        SQL => 'INSERT INTO general_catalog '
+            . '(general_catalog_class, name, functionality, valid_id, comments, '
+            . 'create_time, create_by, change_time, change_by) VALUES '
+            . '(?, ?, ?, ?, ?, current_timestamp, ?, current_timestamp, ?)',
         Bind => [
             \$Param{Class},         \$Param{Name},
             \$Param{Functionality}, \$Param{ValidID},
@@ -552,7 +552,7 @@ sub ItemUpdate {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -560,7 +560,7 @@ sub ItemUpdate {
 
     # set default values
     for my $Argument (qw(Functionality Comment)) {
-        $Param{$Argument} = $Param{$Argument} || '';
+        $Param{$Argument} ||= '';
     }
 
     # cleanup given params
@@ -582,8 +582,7 @@ sub ItemUpdate {
 
     # get class of item
     $Self->{DBObject}->Prepare(
-        SQL => 'SELECT general_catalog_class, functionality FROM general_catalog '
-            . 'WHERE id = ?',
+        SQL   => 'SELECT general_catalog_class, functionality FROM general_catalog WHERE id = ?',
         Bind  => [ \$Param{ItemID} ],
         Limit => 1,
     );
@@ -606,9 +605,8 @@ sub ItemUpdate {
 
     # find exiting item with same name
     $Self->{DBObject}->Prepare(
-        SQL => 'SELECT id FROM general_catalog '
-            . 'WHERE general_catalog_class = ? AND name = ?',
-        Bind => [ \$Class, \$Param{Name} ],
+        SQL   => 'SELECT id FROM general_catalog WHERE general_catalog_class = ? AND name = ?',
+        Bind  => [ \$Class, \$Param{Name} ],
         Limit => 1,
     );
 
@@ -661,11 +659,11 @@ sub ItemUpdate {
     delete $Self->{Cache}->{ItemList};
 
     return $Self->{DBObject}->Do(
-        SQL => "UPDATE general_catalog SET "
-            . "name = ?, functionality = ?,"
-            . "valid_id = ?, comments = ?, "
-            . "change_time = current_timestamp, change_by = ? "
-            . "WHERE id = ?",
+        SQL => 'UPDATE general_catalog SET '
+            . 'name = ?, functionality = ?,'
+            . 'valid_id = ?, comments = ?, '
+            . 'change_time = current_timestamp, change_by = ? '
+            . 'WHERE id = ?',
         Bind => [
             \$Param{Name},    \$Param{Functionality},
             \$Param{ValidID}, \$Param{Comment},
@@ -690,6 +688,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.40 $ $Date: 2008-06-16 12:07:52 $
+$Revision: 1.41 $ $Date: 2008-06-23 18:47:50 $
 
 =cut
