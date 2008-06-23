@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LinkObjectITSMLocation.pm - layout backend module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: LinkObjectITSMLocation.pm,v 1.1 2008-06-21 16:50:14 ub Exp $
+# $Id: LinkObjectITSMLocation.pm,v 1.2 2008-06-23 17:55:18 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::State;
 use Kernel::System::GeneralCatalog;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -82,48 +82,74 @@ Return
         Headline  => [
             {
                 Content => 'Name',
-                Width   => 130,
+                Width   => 30,
             },
             {
-                Content => 'Title',
+                Content => 'Type',
             },
             {
-                Content => 'Created',
-                Width   => 110,
+                Content => 'Phone 1',
+            },
+            {
+                Content => 'E-Mail',
+            },
+            {
+                Content => 'Last Change',
             },
         ],
         ItemList => [
             [
                 {
-                    Type    => 'Link',
-                    Key     => $TicketID,
-                    Content => '123123123',
-                    Css     => 'style="text-decoration: line-through"',
+                    'Type'      => 'Link',
+                    'Key'       => '2',
+                    'Content'   => 'Headquarter Office',
+                    'Title'     => 'Headquarter Office'
+                    'Link'      => '$Env{"Baselink"}Action=AgentITSMLocationZoom&LocationID=2',
+                    'MaxLength' => 30,
                 },
                 {
-                    Type      => 'Text',
-                    Content   => 'The title',
-                    MaxLength => 50,
+                    'Type'      => 'Text',
+                    'Content'   => 'IT Facility',
+                    'Translate' => 1,
                 },
                 {
-                    Type    => 'TimeLong',
-                    Content => '2008-01-01 12:12:00',
+                    'Type'    => 'Text',
+                    'Content' => '+49 (0)1234 5678 9'
+                },
+                {
+                    'Type'    => 'Text',
+                    'Content' => 'test@test.com'
+                },
+                {
+                    'Type'    => 'TimeLong',
+                    'Content' => '2008-06-17 16:01:36'
                 },
             ],
             [
                 {
-                    Type    => 'Link',
-                    Key     => $TicketID,
-                    Content => '434234',
+                    'Type'      => 'Link',
+                    'Key'       => '3',
+                    'Content'   => 'Server Room',
+                    'Title'     => 'Server Room'
+                    'Link'      => '$Env{"Baselink"}Action=AgentITSMLocationZoom&LocationID=3',
+                    'MaxLength' => 30,
                 },
                 {
-                    Type      => 'Text',
-                    Content   => 'The title of ticket 2',
-                    MaxLength => 50,
+                    'Type'      => 'Text',
+                    'Content'   => 'Room',
+                    'Translate' => 1,
                 },
                 {
-                    Type    => 'TimeLong',
-                    Content => '2008-01-01 12:12:00',
+                    'Type'    => 'Text',
+                    'Content' => '+49 (0)987 654 32'
+                },
+                {
+                    'Type'    => 'Text',
+                    'Content' => 'test@test.com'
+                },
+                {
+                    'Type'    => 'TimeLong',
+                    'Content' => '2008-06-12 12:07:45'
                 },
             ],
         ],
@@ -180,27 +206,25 @@ sub TableCreateComplex {
 
         my @ItemColumns = (
             {
-                Type    => 'Link',
-                Key     => $LocationID,
-                Content => $Location->{Name},
-                Link    => '$Env{"Baselink"}Action=AgentITSMLocationZoom&LocationID=' . $LocationID,
-                MaxLength => 150,
+                Type      => 'Link',
+                Key       => $LocationID,
+                Content   => $Location->{Name},
+                Title     => $Location->{Name},
+                Link      => '$Env{"Baselink"}Action=AgentITSMLocationZoom&LocationID=' . $LocationID,
+                MaxLength => 30,
             },
             {
                 Type      => 'Text',
                 Content   => $TypeListRef->{ $Location->{TypeID} },
-                MaxLength => 50,
                 Translate => 1,
             },
             {
                 Type    => 'Text',
                 Content => $Location->{Phone1},
-                MaxLength => 30,
             },
             {
-                Type      => 'Text',
-                Content   => $Location->{Email},
-                MaxLength => 30,
+                Type    => 'Text',
+                Content => $Location->{Email},
             },
             {
                 Type    => 'TimeLong',
@@ -209,6 +233,7 @@ sub TableCreateComplex {
         );
 
         push @ItemList, \@ItemColumns;
+
     }
 
     return if !@ItemList;
@@ -220,7 +245,7 @@ sub TableCreateComplex {
         Headline  => [
             {
                 Content => 'Name',
-                Width   => 100,
+                Width   => 30,
             },
             {
                 Content => 'Type',
@@ -233,7 +258,6 @@ sub TableCreateComplex {
             },
             {
                 Content => 'Last Change',
-                Width   => 150,
             },
         ],
         ItemList => \@ItemList,
@@ -249,23 +273,22 @@ return a hash with the link output data
 Return
     %LinkOutputData = (
         Normal::Source => {
-            Ticket => [
+            ITSMLocation => [
                 {
                     Type    => 'Link',
-                    Content => 'T:55555',
-                    Css     => 'style="text-decoration: line-through"',
+                    Content => 'L:Marketing Office',
                 },
                 {
                     Type    => 'Link',
-                    Content => 'T:22222',
+                    Content => 'L:Headquarter Office',
                 },
             ],
         },
         ParentChild::Target => {
-            Ticket => [
+            ITSMLocation => [
                 {
                     Type    => 'Link',
-                    Content => 'T:77777',
+                    Content => 'L:Server Room',
                 },
             ],
         },
@@ -306,7 +329,7 @@ sub TableCreateSimple {
                 # define item data
                 my %Item = (
                     Type    => 'Link',
-                    Content => 'L: ' . $Location->{Name},
+                    Content => 'L:' . $Location->{Name},
                     Title   => "Location $Location->{Name}:",
                     Link    => '$Env{"Baselink"}Action=AgentITSMLocationZoom&LocationID=' . $LocationID,
                 );
@@ -351,8 +374,8 @@ return an array hash with selectable objects
 Return
     @SelectableObjectList = (
         {
-            Key   => 'Ticket',
-            Value => 'Ticket',
+            Key   => 'ITSMLocation',
+            Value => 'Location',
         },
     );
 
@@ -384,7 +407,7 @@ sub SelectableObjectList {
 
 =item SearchOptionList()
 
-return an array hash with selectable objects
+return an array hash with search options
 
 Return
     @SearchOptionList = (
@@ -519,6 +542,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2008-06-21 16:50:14 $
+$Revision: 1.2 $ $Date: 2008-06-23 17:55:18 $
 
 =cut
