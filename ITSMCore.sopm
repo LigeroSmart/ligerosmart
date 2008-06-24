@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMCore.sopm,v 1.40 2008-06-16 15:48:23 ub Exp $</CVS>
+    <CVS>$Id: ITSMCore.sopm,v 1.41 2008-06-24 10:55:20 ub Exp $</CVS>
     <Name>ITSMCore</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -15,16 +15,34 @@
         <File Permission="644" Location="Kernel/Config/Files/FrameworkITSMCore.xml"/>
         <File Permission="644" Location="Kernel/Config/Files/ITSMCore.xml"/>
         <File Permission="644" Location="Kernel/Language/bg_ITSMCore.pm"/>
+        <File Permission="644" Location="Kernel/Language/bg_ITSMLocation.pm"/>
         <File Permission="644" Location="Kernel/Language/cz_ITSMCore.pm"/>
+        <File Permission="644" Location="Kernel/Language/cz_ITSMLocation.pm"/>
         <File Permission="644" Location="Kernel/Language/de_ITSMCore.pm"/>
+        <File Permission="644" Location="Kernel/Language/de_ITSMLocation.pm"/>
         <File Permission="644" Location="Kernel/Modules/AdminITSMCIPAllocate.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AdminITSMLocation.pm"/>
         <File Permission="644" Location="Kernel/Modules/AdminTicketPriority.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentITSMLocation.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentITSMLocationPrint.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentITSMLocationZoom.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/ITSMLocationMenuGeneric.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/LinkObjectITSMLocation.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminITSMCIPAllocate.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminITSMLocation.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminTicketPriority.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMLocation.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMLocationPrint.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMLocationZoom.dtl"/>
         <File Permission="644" Location="Kernel/System/ITSMCIPAllocate.pm"/>
+        <File Permission="644" Location="Kernel/System/ITSMLocation.pm"/>
+        <File Permission="644" Location="Kernel/System/LinkObject/ITSMLocation.pm"/>
         <File Permission="644" Location="scripts/test/ITSMCIPAllocate.t"/>
+        <File Permission="644" Location="scripts/test/ITSMLocation.t"/>
         <File Permission="644" Location="var/httpd/htdocs/images/Standard/greenled.png"/>
         <File Permission="644" Location="var/httpd/htdocs/images/Standard/greenled-small.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/images/Standard/itsm_location.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/images/Standard/itsm_service.png"/>
         <File Permission="644" Location="var/httpd/htdocs/images/Standard/redled.png"/>
         <File Permission="644" Location="var/httpd/htdocs/images/Standard/redled-small.png"/>
         <File Permission="644" Location="var/httpd/htdocs/images/Standard/yellowled.png"/>
@@ -363,6 +381,112 @@
             <Data Key="change_time">current_timestamp</Data>
             <Data Key="change_by">1</Data>
         </Insert>
+
+        <TableCreate Name="location">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>
+            <Column Name="name" Required="true" Size="200" Type="VARCHAR"/>
+            <Column Name="type_id" Required="true" Type="INTEGER"/>
+            <Column Name="phone1" Required="false" Size="200" Type="VARCHAR"/>
+            <Column Name="phone2" Required="false" Size="200" Type="VARCHAR"/>
+            <Column Name="fax" Required="false" Size="200" Type="VARCHAR"/>
+            <Column Name="email" Required="false" Size="200" Type="VARCHAR"/>
+            <Column Name="address" Required="false" Size="500" Type="VARCHAR"/>
+            <Column Name="valid_id" Required="true" Type="SMALLINT"/>
+            <Column Name="comments" Required="false" Size="200" Type="VARCHAR"/>
+            <Column Name="create_time" Required="true" Type="DATE"/>
+            <Column Name="create_by" Required="true" Type="INTEGER"/>
+            <Column Name="change_time" Required="true" Type="DATE"/>
+            <Column Name="change_by" Required="true" Type="INTEGER"/>
+            <Unique>
+                <UniqueColumn Name="name"/>
+            </Unique>
+            <ForeignKey ForeignTable="users">
+                <Reference Local="create_by" Foreign="id"/>
+                <Reference Local="change_by" Foreign="id"/>
+            </ForeignKey>
+        </TableCreate>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Location::Type</Data>
+            <Data Key="name" Type="Quote">Building</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Location::Type</Data>
+            <Data Key="name" Type="Quote">Office</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Location::Type</Data>
+            <Data Key="name" Type="Quote">Floor</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Location::Type</Data>
+            <Data Key="name" Type="Quote">Room</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Location::Type</Data>
+            <Data Key="name" Type="Quote">Rack</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Location::Type</Data>
+            <Data Key="name" Type="Quote">Workplace</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Location::Type</Data>
+            <Data Key="name" Type="Quote">Outlet</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Location::Type</Data>
+            <Data Key="name" Type="Quote">IT Facility</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Location::Type</Data>
+            <Data Key="name" Type="Quote">Other</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+
     </DatabaseInstall>
     <DatabaseUpgrade>
         <TableAlter Name="cip_allocate" Version="1.0.1">
@@ -371,7 +495,37 @@
     </DatabaseUpgrade>
     <DatabaseUninstall>
         <TableDrop Name="cip_allocate"/>
+        <TableDrop Name="location"/>
     </DatabaseUninstall>
+
+    <CodeInstall>
+        require Kernel::System::Group;
+        $Self-&gt;{GroupObject} = Kernel::System::Group-&gt;new(%{$Self});
+
+        # add group itsm-location
+        $Self-&gt;{GroupObject}-&gt;GroupAdd(
+            Name    =&gt; 'itsm-location',
+            Comment =&gt; 'Group for ITSM Location mask access in the agent interface.',
+            ValidID =&gt; 1,
+            UserID  =&gt; 1,
+        );
+
+        # add user root to itsm-location admin group
+        $Self-&gt;{GroupObject}-&gt;GroupMemberAdd(
+            GID        =&gt; $Self-&gt;{GroupObject}-&gt;GetGroupIdByName(Group =&gt; 'itsm-location'),
+            UID        =&gt; 1,
+            Permission =&gt; {
+                ro        =&gt; 1,
+                move_into =&gt; 1,
+                create    =&gt; 1,
+                owner     =&gt; 1,
+                priority  =&gt; 1,
+                rw        =&gt; 1,
+            },
+            UserID =&gt; 1,
+        );
+    </CodeInstall>
+
     <CodeInstall>
         # change background color of standard theme
         my $CssFile = $Self-&gt;{ConfigObject}-&gt;Get('Home') . "/Kernel/Output/HTML/Standard/css.dtl";
