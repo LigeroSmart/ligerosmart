@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMCore.xml,v 1.12 2008-06-24 14:15:35 ub Exp $</CVS>
+    <CVS>$Id: ITSMCore.xml,v 1.13 2008-06-24 14:25:54 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminTicketPriority" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminTicketPriority configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminTicketPriority Konfiguration im Admin-Bereich.</Description>
@@ -101,7 +101,6 @@
             </Hash>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="LinkObject::PossibleLink###3201" Required="0" Valid="1">
         <Description Lang="en"></Description>
         <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'RelevantTo' mit anderen 'ITSMConfigItem'-Objekten verlinkt werden kann.</Description>
@@ -115,7 +114,6 @@
             </Hash>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="LinkObject::PossibleLink###3202" Required="0" Valid="1">
         <Description Lang="en"></Description>
         <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'Includes' mit anderen 'ITSMConfigItem'-Objekten verlinkt werden kann.</Description>
@@ -129,7 +127,6 @@
             </Hash>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="LinkObject::PossibleLink###3203" Required="0" Valid="1">
         <Description Lang="en"></Description>
         <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'DependsOn' mit anderen 'ITSMConfigItem'-Objekten verlinkt werden kann.</Description>
@@ -143,7 +140,6 @@
             </Hash>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="LinkObject::PossibleLink###3204" Required="0" Valid="1">
         <Description Lang="en"></Description>
         <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'ConnectedTo' mit anderen 'ITSMConfigItem'-Objekten verlinkt werden kann.</Description>
@@ -157,7 +153,6 @@
             </Hash>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="LinkObject::PossibleLink###3205" Required="0" Valid="1">
         <Description Lang="en"></Description>
         <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'AlternativeTo' mit anderen 'ITSMConfigItem'-Objekten verlinkt werden kann.</Description>
@@ -171,7 +166,6 @@
             </Hash>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="LinkObject::PossibleLink###3301" Required="0" Valid="1">
         <Description Lang="en"></Description>
         <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'RelevantTo' mit anderen 'ITSMLocation'-Objekten verlinkt werden kann.</Description>
@@ -185,7 +179,6 @@
             </Hash>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="LinkObject::PossibleLink###3302" Required="0" Valid="1">
         <Description Lang="en"></Description>
         <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'DependsOn' mit anderen 'ITSMLocation'-Objekten verlinkt werden kann.</Description>
@@ -199,7 +192,6 @@
             </Hash>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="LinkObject::PossibleLink###3303" Required="0" Valid="1">
         <Description Lang="en"></Description>
         <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'AlternativeTo' mit anderen 'ITSMLocation'-Objekten verlinkt werden kann.</Description>
@@ -213,7 +205,6 @@
             </Hash>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="LinkObject::PossibleLink###3401" Required="0" Valid="1">
         <Description Lang="en"></Description>
         <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'RelevantTo' mit anderen 'Ticket'-Objekten verlinkt werden kann.</Description>
@@ -227,7 +218,6 @@
             </Hash>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="LinkObject::PossibleLink###3402" Required="0" Valid="1">
         <Description Lang="en"></Description>
         <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'DependsOn' mit anderen 'Ticket'-Objekten verlinkt werden kann.</Description>
@@ -241,7 +231,6 @@
             </Hash>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="LinkObject::PossibleLink###3403" Required="0" Valid="1">
         <Description Lang="en"></Description>
         <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'AlternativeTo' mit anderen 'Ticket'-Objekten verlinkt werden kann.</Description>
@@ -255,7 +244,6 @@
             </Hash>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="LinkObject::PossibleLink###3101" Required="0" Valid="1">
         <Description Lang="en"></Description>
         <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'RelevantTo' mit anderen 'Service'-Objekten verlinkt werden kann.</Description>
@@ -269,7 +257,6 @@
             </Hash>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="LinkObject::PossibleLink###3102" Required="0" Valid="1">
         <Description Lang="en"></Description>
         <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'DependsOn' mit anderen 'Service'-Objekten verlinkt werden kann.</Description>
@@ -283,7 +270,6 @@
             </Hash>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="LinkObject::PossibleLink###3103" Required="0" Valid="1">
         <Description Lang="en"></Description>
         <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'AlternativeTo' mit anderen 'Service'-Objekten verlinkt werden kann.</Description>
@@ -297,7 +283,6 @@
             </Hash>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="ITSMCore::IncidentLinkType" Required="1" Valid="1">
         <Description Lang="en">Set the type of link to be used to calculate the incident state.</Description>
         <Description Lang="de">Legt den Linktyp fest, der zur Berechnung des Vorfallstatus verwendet wird.</Description>
