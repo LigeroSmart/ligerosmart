@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMCore.sopm,v 1.41 2008-06-24 10:55:20 ub Exp $</CVS>
+    <CVS>$Id: ITSMCore.sopm,v 1.42 2008-06-24 13:57:29 ub Exp $</CVS>
     <Name>ITSMCore</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -512,7 +512,7 @@
 
         # add user root to itsm-location admin group
         $Self-&gt;{GroupObject}-&gt;GroupMemberAdd(
-            GID        =&gt; $Self-&gt;{GroupObject}-&gt;GetGroupIdByName(Group =&gt; 'itsm-location'),
+            GID        =&gt; $Self-&gt;{GroupObject}-&gt;GroupLookup(Group =&gt; 'itsm-location'),
             UID        =&gt; 1,
             Permission =&gt; {
                 ro        =&gt; 1,
@@ -525,6 +525,33 @@
             UserID =&gt; 1,
         );
     </CodeInstall>
+    <CodeUpgrade>
+        require Kernel::System::Group;
+        $Self-&gt;{GroupObject} = Kernel::System::Group-&gt;new(%{$Self});
+
+        # add group itsm-location
+        $Self-&gt;{GroupObject}-&gt;GroupAdd(
+            Name    =&gt; 'itsm-location',
+            Comment =&gt; 'Group for ITSM Location mask access in the agent interface.',
+            ValidID =&gt; 1,
+            UserID  =&gt; 1,
+        );
+
+        # add user root to itsm-location admin group
+        $Self-&gt;{GroupObject}-&gt;GroupMemberAdd(
+            GID        =&gt; $Self-&gt;{GroupObject}-&gt;GroupLookup(Group =&gt; 'itsm-location'),
+            UID        =&gt; 1,
+            Permission =&gt; {
+                ro        =&gt; 1,
+                move_into =&gt; 1,
+                create    =&gt; 1,
+                owner     =&gt; 1,
+                priority  =&gt; 1,
+                rw        =&gt; 1,
+            },
+            UserID =&gt; 1,
+        );
+    </CodeUpgrade>
 
     <CodeInstall>
         # change background color of standard theme
