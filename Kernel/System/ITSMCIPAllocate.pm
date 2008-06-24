@@ -2,7 +2,7 @@
 # Kernel/System/ITSMCIPAllocate.pm - all criticality, impact and priority allocation functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMCIPAllocate.pm,v 1.10 2008-06-16 16:10:50 ub Exp $
+# $Id: ITSMCIPAllocate.pm,v 1.11 2008-06-24 10:56:19 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 =head1 NAME
 
@@ -168,10 +168,10 @@ sub AllocateUpdate {
 
             # insert new allocation
             $Self->{DBObject}->Do(
-                SQL => "INSERT INTO cip_allocate "
-                    . "(criticality_id, impact_id, priority_id, "
-                    . "create_time, create_by, change_time, change_by) VALUES "
-                    . "(?, ?, ?, current_timestamp, ?, current_timestamp, ?)",
+                SQL => 'INSERT INTO cip_allocate '
+                    . '(criticality_id, impact_id, priority_id, '
+                    . 'create_time, create_by, change_time, change_by) VALUES '
+                    . '(?, ?, ?, current_timestamp, ?, current_timestamp, ?)',
                 Bind => [
                     \$CriticalityID, \$ImpactID, \$PriorityID,
                     \$Param{UserID}, \$Param{UserID},
@@ -210,8 +210,8 @@ sub PriorityAllocationGet {
 
     # get priority id from db
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT priority_id FROM cip_allocate "
-            . "WHERE criticality_id = ? AND impact_id = ?",
+        SQL => 'SELECT priority_id FROM cip_allocate '
+            . 'WHERE criticality_id = ? AND impact_id = ?',
         Bind => [ \$Param{CriticalityID}, \$Param{ImpactID} ],
         Limit => 1,
     );
@@ -241,6 +241,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.10 $ $Date: 2008-06-16 16:10:50 $
+$Revision: 1.11 $ $Date: 2008-06-24 10:56:19 $
 
 =cut
