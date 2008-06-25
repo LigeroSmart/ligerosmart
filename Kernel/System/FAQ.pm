@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.22 2008-06-25 17:19:02 martin Exp $
+# $Id: FAQ.pm,v 1.23 2008-06-25 19:58:00 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::CustomerGroup;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 =head1 NAME
 
@@ -99,7 +99,7 @@ sub FAQGet {
     my %Param = @_;
 
     # Failures rename from ItemID to FAQID
-    if($Param{FAQID}) {
+    if ($Param{FAQID}) {
         $Param{ItemID} = $Param{FAQID};
     }
 
@@ -1903,11 +1903,10 @@ sub FAQSearch {
     }
 
     # sql
-    my $SQL = "SELECT i.id, count( v.item_id ) as votes, avg( v.rate ) as vrate".
-        " FROM faq_item i ".
-        " LEFT JOIN faq_voting v ON v.item_id = i.id".
-        " LEFT JOIN faq_state s ON s.id = i.state_id".
-        " WHERE";
+    my $SQL = 'SELECT i.id, count( v.item_id ) as votes, avg( v.rate ) as vrate'.
+        ' FROM faq_item i '.
+        ' LEFT JOIN faq_voting v ON v.item_id = i.id'.
+        ' LEFT JOIN faq_state s ON s.id = i.state_id';
     my $Ext = '';
     if ($Param{What} && $Param{What} ne '*' ) {
         $Ext .= $Self->{DBObject}->QueryCondition(
@@ -1941,41 +1940,41 @@ sub FAQSearch {
         $Ext .= " LOWER(i.f_subject) LIKE LOWER('".$Param{Title}."')";
     }
     if ($Param{LanguageIDs} && ref($Param{LanguageIDs}) eq 'ARRAY' && @{$Param{LanguageIDs}}) {
-        $Ext .= " AND i.f_language_id IN (";
+        $Ext .= ' AND i.f_language_id IN (';
         for my $LanguageID (@{$Param{LanguageIDs}}) {
-            $Ext .= $Self->{DBObject}->Quote($LanguageID, 'Integer').",";
+            $Ext .= $Self->{DBObject}->Quote($LanguageID, 'Integer').',';
         }
         $Ext = substr($Ext,0,-1);
-        $Ext .= ")";
+        $Ext .= ')';
     }
     if ($Param{CategoryIDs} && ref($Param{CategoryIDs}) eq 'ARRAY' && @{$Param{CategoryIDs}}) {
         if ( $Ext ) {
             $Ext .= ' AND';
         }
-        $Ext .= " (i.category_id IN  (";
+        $Ext .= ' (i.category_id IN  (';
         my $Counter=0;
         for my $CategoryID (@{$Param{CategoryIDs}}) {
-            $Ext .= $Self->{DBObject}->Quote($CategoryID, 'Integer').",";
+            $Ext .= $Self->{DBObject}->Quote($CategoryID, 'Integer').',';
             $Counter++;
             if(!($Counter%500)) {
                 $Ext = substr($Ext,0,-1);
-                $Ext .= ")";
-                $Ext .= " OR i.category_id IN  (";
+                $Ext .= ')';
+                $Ext .= ' OR i.category_id IN  (';
             }
         }
         $Ext = substr($Ext,0,-1);
-        $Ext .= "))";
+        $Ext .= '))';
     }
     if ($Param{States} && ref($Param{States}) eq 'HASH' && %{$Param{States}}) {
         if ( $Ext ) {
             $Ext .= ' AND';
         }
-        $Ext .= " s.type_id IN (";
+        $Ext .= ' s.type_id IN (';
         for my $StateID (keys(%{$Param{States}})) {
-            $Ext .= $Self->{DBObject}->Quote($StateID, 'Integer').",";
+            $Ext .= $Self->{DBObject}->Quote($StateID, 'Integer').',';
         }
         $Ext = substr($Ext,0,-1);
-        $Ext .= ")";
+        $Ext .= ')';
     }
     if ($Param{Keyword}) {
         if ( $Ext ) {
@@ -2000,45 +1999,48 @@ sub FAQSearch {
             $Ext .= " LOWER(i.f_keywords) LIKE LOWER('".$Param{Keyword}."')";
         }
     }
-    $Ext .= " GROUP BY i.id, i.f_subject, i.f_language_id, i.created, i.changed, s.name, v.item_id";
+    if ($Ext) {
+        $Ext = ' WHERE' . $Ext;
+    }
+    $Ext .= ' GROUP BY i.id, i.f_subject, i.f_language_id, i.created, i.changed, s.name, v.item_id';
     if ($Param{Order}) {
-        $Ext .= " ORDER BY ";
+        $Ext .= ' ORDER BY ';
 
         # title
         if ($Param{Order} eq 'Title') {
-            $Ext .= "i.f_subject";
+            $Ext .= 'i.f_subject';
         }
         # language
         elsif ($Param{Order} eq 'Language') {
-            $Ext .= "i.f_language_id";
+            $Ext .= 'i.f_language_id';
         }
         # state
         elsif ($Param{Order} eq 'State') {
-            $Ext .= "s.name";
+            $Ext .= 's.name';
         }
         # votes
         elsif ($Param{Order} eq 'Votes') {
-            $Ext .= "votes";
+            $Ext .= 'votes';
         }
         # rates
         elsif ($Param{Order} eq 'Result') {
-            $Ext .= "vrate";
+            $Ext .= 'vrate';
         }
         # changed
         elsif ($Param{Order} eq 'Created') {
-            $Ext .= "i.created";
+            $Ext .= 'i.created';
         }
         # created
         elsif ($Param{Order} eq 'Changed') {
-            $Ext .= "i.changed";
+            $Ext .= 'i.changed';
         }
 
         if ($Param{Sort}) {
             if ($Param{Sort} eq 'up') {
-                $Ext .= " ASC";
+                $Ext .= ' ASC';
             }
             elsif ($Param{Sort} eq 'down') {
-                $Ext .= " DESC";
+                $Ext .= ' DESC';
             }
         }
     }
@@ -2556,6 +2558,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.22 $ $Date: 2008-06-25 17:19:02 $
+$Revision: 1.23 $ $Date: 2008-06-25 19:58:00 $
 
 =cut
