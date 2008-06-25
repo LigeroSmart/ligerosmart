@@ -2,7 +2,7 @@
 # Kernel/System/LinkObject/FAQ.pm - to link faq objects
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.5 2008-06-13 12:24:53 rk Exp $
+# $Id: FAQ.pm,v 1.6 2008-06-25 19:56:38 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -36,143 +36,61 @@ sub new {
     return $Self;
 }
 
-=item PossibleObjectsSelectList()
+sub LinkListWithData {
+    my ( $Self, %Param ) = @_;
 
-return an array hash with selectable objects
+    # check needed stuff
+    for my $Argument (qw(LinkList UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
 
-Return
-    @ObjectSelectList = (
-        {
-            Key   => 'FAQ',
-            Value => 'FAQ',
-        },
-    );
+    # check link list
+    if ( ref $Param{LinkList} ne 'HASH' ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'LinkList must be a hash reference!',
+        );
+        return;
+    }
 
-    @ObjectSelectList = $LinkObject->PossibleObjectsSelectList();
+    for my $LinkType ( keys %{ $Param{LinkList} } ) {
 
-=cut
+        for my $Direction ( keys %{ $Param{LinkList}->{$LinkType} } ) {
 
-sub PossibleObjectsSelectList {
-    my $Self = shift;
+            for my $FAQID ( keys %{ $Param{LinkList}->{$LinkType}->{$Direction} } ) {
 
-    # get object description
-    my %ObjectDescription = $Self->ObjectDescriptionGet(
-        UserID => 1,
-    );
+                # get faq data
+                my %Data = $Self->{FAQObject}->FAQGet(
+                    FAQID  => $FAQID,
+                    UserID => $Param{UserID},
+                );
 
-    # object select list
-    my @ObjectSelectList = (
-        {
-            Key   => $ObjectDescription{Object},
-            Value => $ObjectDescription{Realname},
-        },
-    );
+                # remove id from hash if faq can not get
+                if ( !%Data ) {
+                    delete $Param{LinkList}->{$LinkType}->{$Direction}->{$FAQID};
+                    next;
+                }
 
-    return @ObjectSelectList;
+                # add faq data
+                $Param{LinkList}->{$LinkType}->{$Direction}->{$FAQID} = \%Data;
+            }
+        }
+    }
+
+    return 1;
 }
-
-=item ObjectDescriptionGet()
-
-return a hash of object description data
-
-    %ObjectDescription = $LinkObject->ObjectDescriptionGet(
-        UserID => 1,
-    );
-
-=cut
 
 sub ObjectDescriptionGet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => 'Need UserID!',
-        );
-        return;
-    }
-
-    # define object description
-    my %ObjectDescription = (
-        Object   => 'FAQ',
-        Realname => 'FAQ',
-        Overview => {
-            Normal => {
-                Key     => 'Number',
-                Value   => 'FAQ#',
-                Type    => 'Link',
-                Subtype => 'Compact',
-            },
-            Complex => [
-                {
-                    Key   => 'Number',
-                    Value => 'FAQ#',
-                    Type  => 'Link',
-                },
-                {
-                    Key   => 'Title',
-                    Value => 'Title',
-                    Type  => 'Text',
-                },
-                {
-                    Key   => 'LinkType',
-                    Value => 'Already linked as',
-                    Type  => 'LinkType',
-                },
-            ],
-        },
-    );
-
-    return %ObjectDescription;
-}
-
-=item ObjectSearchOptionsGet()
-
-return an array hash list with search options
-
-    @SearchOptions = $LinkObject->ObjectSearchOptionsGet();
-
-=cut
-
-sub ObjectSearchOptionsGet {
-    my ( $Self, %Param ) = @_;
-
-    # define search params
-    my @SearchOptions = (
-        {
-            Key   => 'Number',
-            Value => 'FAQ#',
-        },
-        {
-            Key   => 'Title',
-            Value => 'Title',
-        },
-        {
-            Key   => 'What',
-            Value => 'Fulltext',
-        },
-    );
-
-    return @SearchOptions;
-}
-
-=item ItemDescriptionGet()
-
-return a hash of item description data
-
-    %ItemDescription = $BackendObject->ItemDescriptionGet(
-        Key    => '123',
-        UserID => 1,
-    );
-
-=cut
-
-sub ItemDescriptionGet {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for my $Argument (qw(Key UserID)) {
+    for my $Argument (qw(Object Key UserID)) {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -184,59 +102,32 @@ sub ItemDescriptionGet {
 
     # get faq
     my %FAQ = $Self->{FAQObject}->FAQGet(
-        ItemID => $Param{Key},
+        FAQID  => $Param{Key},
+        UserID => 1,
     );
 
     return if !%FAQ;
 
-    # lookup the valid state id
-    my $ValidStateID = $Self->{LinkObject}->StateLookup(
-        Name   => 'Valid',
-        UserID => 1,
+    # create description
+    my %Description = (
+        Normal => "FAQ# $FAQ{Number}",
+        Long   => "FAQ# $FAQ{Number}: $FAQ{Name}",
     );
 
-    # get link data
-    my $ExistingLinks = $Self->{LinkObject}->LinksGet(
-        Object  => 'FAQ',
-        Key     => $Param{Key},
-        StateID => $Param{StateID} || $ValidStateID,
-        UserID  => 1,
-    ) || {};
-
-    $FAQ{Number} ||= '';
-    $FAQ{Title} ||= '';
-
-    # define item description
-    my %ItemDescription = (
-        Identifier  => 'FAQ',
-        Description => {
-            Short  => "F:$FAQ{Number}",
-            Normal => "FAQ# $FAQ{Number}",
-            Long   => "FAQ# $FAQ{Number}: $FAQ{Title}",
-        },
-        ItemData => {
-            %FAQ,
-        },
-        LinkData => {
-            %{$ExistingLinks},
-        },
-    );
-
-    return %ItemDescription;
+    return %Description;
 }
 
-=item ItemSearch()
-
-return an array list of the search results
-
-    @ItemKeys = $LinkObject->ItemSearch(
-        SearchParams => $HashRef,  # (optional)
-    );
-
-=cut
-
-sub ItemSearch {
+sub ObjectSearch {
     my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    if ( !$Param{UserID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need UserID!',
+        );
+        return;
+    }
 
     # set default params
     $Param{SearchParams} ||= {};
@@ -249,19 +140,102 @@ sub ItemSearch {
         $Param{SearchParams}->{Number} = '*' . $Param{SearchParams}->{Number} . '*';
     }
 
-    if ( $Param{SearchParams}->{Fulltext} ) {
-        $Param{SearchParams}->{Fulltext} = '*' . $Param{SearchParams}->{Fulltext} . '*';
+    if ( $Param{SearchParams}->{What} ) {
+        $Param{SearchParams}->{What} = '*' . $Param{SearchParams}->{What} . '*';
     }
 
     # search the faqs
-    my @ItemKeys = $Self->{FAQObject}->FAQSearch(
+    my @FAQIDs = $Self->{FAQObject}->FAQSearch(
         %{ $Param{SearchParams} },
-        States  => ['public', 'internal'],
-        Order   => 'Created',
-        Sort    => 'down',
-        Limit   => 1000,
+        Order => 'Created',
+        Sort  => 'down',
+        Limit => 60,
     );
-    return @ItemKeys;
+
+    my %SearchList;
+    for my $FAQID (@FAQIDs) {
+
+        # get ticket data
+        my %Data = $Self->{FAQObject}->FAQGet(
+            FAQID  => $FAQID,
+            UserID => $Param{UserID},
+        );
+
+        next if !%Data;
+
+        # add ticket data
+        $SearchList{NOTLINKED}->{Source}->{$FAQID} = \%Data;
+    }
+
+    return \%SearchList;
+}
+
+sub LinkAddPre {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(Key Type UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    return 1;
+}
+
+sub LinkAddPost {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(Key Type UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    return 1;
+}
+
+sub LinkDeletePre {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(Key Type UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    return 1;
+}
+
+sub LinkDeletePost {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(Key Type UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    return 1;
 }
 
 1;

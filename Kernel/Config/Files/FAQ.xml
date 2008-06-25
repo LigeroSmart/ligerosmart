@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.9 2008-06-13 12:24:53 rk Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.10 2008-06-25 19:52:15 martin Exp $</CVS>
     <ConfigItem Name="Ticket::Frontend::NoteTypes" Required="1" Valid="1">
         <Description Lang="en">Specify the different note types, that you want to use in your system.</Description>
         <Description Lang="de">Hier können die verschiedenen Notiz-Typen festgelegt werden, die innerhalb des Systems verwendet werden sollen.</Description>
@@ -318,9 +318,9 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="LinkObject::PossibleLink###101" Required="0" Valid="1">
-        <Description Lang="en"></Description>
-        <Description Lang="de">Definiert, dass ein 'FAQ'-Objekte mit dem Linktyp 'Normal' mit anderen 'Ticket'-Objekten verlinkt werden kann.</Description>
+    <ConfigItem Name="LinkObject::PossibleLink###8301" Required="0" Valid="1">
+        <Description Lang="en">This setting defines that a 'FAQ' object can be linked with other 'FAQ' objects using the 'Normal' link type.</Description>
+        <Description Lang="de">Definiert, dass ein 'FAQ'-Objekte mit dem Linktyp 'Normal' mit anderen 'FAQ'-Objekten verlinkt werden kann.</Description>
         <Group>Framework</Group>
         <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
@@ -331,9 +331,9 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="LinkObject::PossibleLink###102" Required="0" Valid="1">
-        <Description Lang="en"></Description>
-        <Description Lang="de">Definiert, dass ein 'FAQ'-Objekte mit dem Linktyp 'ParentChild' mit anderen 'Ticket'-Objekten verlinkt werden kann.</Description>
+    <ConfigItem Name="LinkObject::PossibleLink###8302" Required="0" Valid="1">
+        <Description Lang="en">This setting defines that a 'FAQ' object can be linked with other 'FAQ' objects using the 'ParentChild' link type.</Description>
+        <Description Lang="de">Definiert, dass ein 'FAQ'-Objekte mit dem Linktyp 'ParentChild' mit anderen 'FAQ'-Objekten verlinkt werden kann.</Description>
         <Group>Framework</Group>
         <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
@@ -344,8 +344,8 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="LinkObject::PossibleLink###103" Required="0" Valid="1">
-        <Description Lang="en"></Description>
+    <ConfigItem Name="LinkObject::PossibleLink###8303" Required="0" Valid="1">
+        <Description Lang="en">This setting defines that a 'FAQ' object can be linked with other 'Ticket' objects using the 'Normal' link type.</Description>
         <Description Lang="de">Definiert, dass ein 'FAQ'-Objekte mit dem Linktyp 'Normal' mit anderen 'Ticket'-Objekten verlinkt werden kann.</Description>
         <Group>Framework</Group>
         <SubGroup>Core::LinkObject</SubGroup>
@@ -357,8 +357,8 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="LinkObject::PossibleLink###104" Required="0" Valid="1">
-        <Description Lang="en"></Description>
+    <ConfigItem Name="LinkObject::PossibleLink###8304" Required="0" Valid="1">
+        <Description Lang="en">This setting defines that a 'FAQ' object can be linked with other 'Ticket' objects using the 'ParentChild' link type.</Description>
         <Description Lang="de">Definiert, dass ein 'FAQ'-Objekte mit dem Linktyp 'ParentChild' mit anderen 'Ticket'-Objekten verlinkt werden kann.</Description>
         <Group>Framework</Group>
         <SubGroup>Core::LinkObject</SubGroup>

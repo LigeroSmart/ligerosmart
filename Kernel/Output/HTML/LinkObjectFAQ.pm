@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LinkObjectFAQ.pm - layout backend module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: LinkObjectFAQ.pm,v 1.1 2008-06-13 12:25:43 rk Exp $
+# $Id: LinkObjectFAQ.pm,v 1.2 2008-06-25 19:53:38 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -14,30 +14,10 @@ package Kernel::Output::HTML::LinkObjectFAQ;
 use strict;
 use warnings;
 
+use Kernel::Output::HTML::Layout;
+
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
-
-=head1 NAME
-
-Kernel::Output::HTML::LinkObjectFAQ - layout backend module
-
-=head1 SYNOPSIS
-
-All layout functions of link object (faq)
-
-=over 4
-
-=cut
-
-=item new()
-
-create an object
-
-    $BackendObject = Kernel::Output::HTML::LinkObjectFAQ->new(
-        %Param,
-    );
-
-=cut
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -48,181 +28,281 @@ sub new {
 
     # check needed objects
     for my $Object (
-        qw(ConfigObject LogObject MainObject LayoutObject DBObject UserObject GroupObject ParamObject TimeObject)
+        qw(ConfigObject LogObject MainObject DBObject UserObject EncodeObject QueueObject GroupObject ParamObject TimeObject UserID)
         )
     {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
+    $Self->{LayoutObject} = Kernel::Output::HTML::Layout->new( %{$Self} );
+
+    # define needed variables
+    $Self->{ObjectData} = {
+        Object   => 'FAQ',
+        Realname => 'FAQ',
+    };
+
     return $Self;
 }
 
-=item OutputParamsFillUp()
-
-fill up output params
-
-    $Backend->OutputParamsFillUp(
-        ColumnData => $Hashref,
-    );
-
-=cut
-
-sub OutputParamsFillUp {
+sub TableCreateComplex {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(SourceObject TargetObject TargetItemDescription ColumnData)) {
-        if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Argument!",
-            );
-            return;
-        }
+    if ( !$Param{ObjectLinkListWithData} || ref $Param{ObjectLinkListWithData} ne 'HASH' ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need ObjectLinkListWithData!',
+        );
+        return;
     }
 
-    # extract output params and faq id
-    my $OutputParams = $Param{ColumnData}->{Output};
-    my $FAQID     = $Param{TargetItemDescription}->{ItemData}->{ItemID};
+    # convert the list
+    my %LinkList;
+    for my $LinkType ( keys %{ $Param{ObjectLinkListWithData} } ) {
 
-    # edit options of the link column
-    if ( $Param{ColumnData}->{Type} eq 'Checkbox' && $Param{ColumnData}->{Key} eq 'LinkTargetKeys' )
-    {
+        # extract link type List
+        my $LinkTypeList = $Param{ObjectLinkListWithData}->{$LinkType};
 
-        $OutputParams->{Name}    = $Param{ColumnData}->{Key};
-        $OutputParams->{Content} = $FAQID;
+        for my $Direction ( keys %{$LinkTypeList} ) {
 
-        return 1;
-    }
+            # extract direction list
+            my $DirectionList = $Param{ObjectLinkListWithData}->{$LinkType}->{$Direction};
 
-    # edit options of the link column
-    if (
-        $Param{ColumnData}->{Type}   eq 'Checkbox'
-        && $Param{ColumnData}->{Key} eq 'LinkDeleteIdentifier'
-        )
-    {
+            for my $FAQID ( keys %{$DirectionList} ) {
 
-        $OutputParams->{TemplateBlock} = 'Plain';
-        $OutputParams->{Content}       = '';
-
-        return 1 if !$Param{TargetItemDescription}->{LinkData};
-
-        # extract the link data and object id
-        my $LinkData = $Param{TargetItemDescription}->{LinkData};
-        my $Object = $Param{TargetObject}->{Object} || '';
-
-        return 1 if ref $LinkData            ne 'HASH';
-        return 1 if !%{$LinkData};
-        return 1 if !$LinkData->{$Object};
-        return 1 if ref $LinkData->{$Object} ne 'HASH';
-        return 1 if !%{ $LinkData->{$Object} };
-
-        # create the type list
-        my %AlreadyLinkedTypeList;
-        LINKTYPEID:
-        for my $Type ( keys %{ $LinkData->{$Object} } ) {
-
-            DIRECTION:
-            for my $Direction (qw(Source Target)) {
-
-                # extract data
-                my $Data = $LinkData->{$Object}->{$Type}->{$Direction} || [];
-
-                # investigate matched keys
-                my $MatchedKeys = scalar grep { $_ == $Param{SourceObject}->{Key} } @{$Data};
-
-                next DIRECTION if !$MatchedKeys;
-
-                my $Name = $Direction eq 'Source' ? 'TargetName' : 'SourceName';
-
-                $AlreadyLinkedTypeList{ $Param{TypeList}->{$Type}->{$Name} } = $Type;
+                $LinkList{$FAQID}->{Data} = $DirectionList->{$FAQID};
             }
         }
+    }
 
-        # sort link name list
-        my @CheckboxeStrings;
-        for my $LinkName ( sort { lc $a cmp lc $b } keys %AlreadyLinkedTypeList ) {
+    # create the item list
+    my @ItemList;
+    for my $FAQID ( sort { $a <=> $b } keys %LinkList ) {
 
-            # translate
-            my $LinkNameTranslated = $Self->{LayoutObject}->{LanguageObject}->Get($LinkName);
+        # extract faq data
+        my $FAQ = $LinkList{$FAQID}->{Data};
 
-            # output block
+        my @ItemColumns = (
+            {
+                Type    => 'Link',
+                Key     => $FAQID,
+                Content => $FAQ->{Number},
+                Link    => '$Env{"Baselink"}Action=AgentFAQ&FAQID=' . $FAQID,
+            },
+            {
+                Type      => 'Text',
+                Content   => $FAQ->{Title},
+                MaxLength => 50,
+            },
+            {
+                Type      => 'Text',
+                Content   => $FAQ->{State},
+                Translate => 1,
+            },
+            {
+                Type    => 'TimeLong',
+                Content => $FAQ->{Created},
+            },
+        );
+
+        push @ItemList, \@ItemColumns;
+    }
+
+    return if !@ItemList;
+
+    # block data
+    my $FAQHook   = $Self->{ConfigObject}->Get('FAQ::FAQHook');
+    my %BlockData = (
+        Object    => $Self->{ObjectData}->{Object},
+        Blockname => $Self->{ObjectData}->{Realname},
+        Headline  => [
+            {
+                Content => $FAQHook,
+                Width   => 130,
+            },
+            {
+                Content => 'Title',
+            },
+            {
+                Content => 'State',
+                Width   => 110,
+            },
+            {
+                Content => 'Created',
+                Width   => 130,
+            },
+        ],
+        ItemList => \@ItemList,
+    );
+
+    return %BlockData;
+}
+
+sub TableCreateSimple {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    if ( !$Param{ObjectLinkListWithData} || ref $Param{ObjectLinkListWithData} ne 'HASH' ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need ObjectLinkListWithData!',
+        );
+        return;
+    }
+
+    my $FAQHook = $Self->{ConfigObject}->Get('FAQ::FAQHook');
+    my %LinkOutputData;
+    for my $LinkType ( keys %{ $Param{ObjectLinkListWithData} } ) {
+
+        # extract link type List
+        my $LinkTypeList = $Param{ObjectLinkListWithData}->{$LinkType};
+
+        for my $Direction ( keys %{$LinkTypeList} ) {
+
+            # extract direction list
+            my $DirectionList = $Param{ObjectLinkListWithData}->{$LinkType}->{$Direction};
+
+            my @ItemList;
+            for my $FAQID ( sort { $a <=> $b } keys %{$DirectionList} ) {
+
+                # extract tickt data
+                my $FAQ = $DirectionList->{$FAQID};
+
+                # define item data
+                my %Item = (
+                    Type    => 'Link',
+                    Content => 'F:' . $FAQ->{Number},
+                    Title   => "$FAQHook$FAQ->{Number}: $FAQ->{Title}",
+                    Link    => '$Env{"Baselink"}Action=AgentFAQ&FAQID=' . $FAQID,
+                );
+                push @ItemList, \%Item;
+            }
+            # add item list to link output data
+            $LinkOutputData{ $LinkType . '::' . $Direction }->{FAQ} = \@ItemList;
+        }
+    }
+
+    return %LinkOutputData;
+}
+
+sub ContentStringCreate {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    if ( !$Param{ContentData} ) {
+        $Self->{LogObject}->Log( Priority => 'error', Message => 'Need ContentData!' );
+        return;
+    }
+
+    return;
+}
+
+sub SelectableObjectList {
+    my ( $Self, %Param ) = @_;
+
+    my $Selected;
+    if ( $Param{Selected} && $Param{Selected} eq $Self->{ObjectData}->{Object} ) {
+        $Selected = 1;
+    }
+
+    # object select list
+    my @ObjectSelectList = (
+        {
+            Key      => $Self->{ObjectData}->{Object},
+            Value    => $Self->{ObjectData}->{Realname},
+            Selected => $Selected,
+        },
+    );
+
+    return @ObjectSelectList;
+}
+
+sub SearchOptionList {
+    my ( $Self, %Param ) = @_;
+
+    # search option list
+    my $FAQHook          = $Self->{ConfigObject}->Get('FAQ::FAQHook');
+    my @SearchOptionList = (
+        {
+            Key  => 'Number',
+            Name => $FAQHook,
+            Type => 'Text',
+        },
+        {
+            Key   => 'Title',
+            Title => 'Title',
+            Type  => 'Text',
+        },
+        {
+            Key  => 'What',
+            Name => 'Fulltext',
+            Type => 'Text',
+        },
+    );
+
+    # add formkey
+    for my $Row (@SearchOptionList) {
+        $Row->{FormKey} = 'SEARCH::' . $Row->{Key};
+    }
+
+    # add form data and input string
+    ROW:
+    for my $Row (@SearchOptionList) {
+
+        # prepare text input fields
+        if ( $Row->{Type} eq 'Text' ) {
+
+            # get form data
+            $Row->{FormData} = $Self->{ParamObject}->GetParam( Param => $Row->{FormKey} );
+
+            # parse the input text block
             $Self->{LayoutObject}->Block(
-                Name => 'Checkbox',
+                Name => 'InputText',
                 Data => {
-                    Name    => $Param{ColumnData}->{Key},
-                    Content => $FAQID . '::' . $AlreadyLinkedTypeList{$LinkName},
-                    Title   => $LinkNameTranslated,
+                    Key => $Row->{FormKey},
+                    Value => $Row->{FormData} || '',
                 },
             );
 
-            # create output content
-            my $CheckboxString = $Self->{LayoutObject}->Output(
-                TemplateFile => $Param{ColumnData}->{Output}->{TemplateFile},
+            # add the input string
+            $Row->{InputStrg} = $Self->{LayoutObject}->Output(
+                TemplateFile => 'LinkObject',
             );
 
-            push @CheckboxeStrings, $CheckboxString;
+            next ROW;
         }
 
-        return 1 if !@CheckboxeStrings;
+        # prepare list boxes
+        if ( $Row->{Type} eq 'List' ) {
 
-        # create the content string
-        $OutputParams->{Content} = join '<br>', @CheckboxeStrings;
+            # get form data
+            my @FormData = $Self->{ParamObject}->GetArray( Param => $Row->{FormKey} );
+            $Row->{FormData} = \@FormData;
 
-        return 1;
+            my %ListData;
+            if ( $Row->{Key} eq 'StateIDs' ) {
+
+                # get state list
+                %ListData = $Self->{StateObject}->StateList(
+                    UserID => $Self->{UserID},
+                );
+            }
+
+            # add the input string
+            $Row->{InputStrg} = $Self->{LayoutObject}->BuildSelection(
+                Data       => \%ListData,
+                Name       => $Row->{FormKey},
+                SelectedID => $Row->{FormData},
+                Size       => 3,
+                Multiple   => 1,
+            );
+
+            next ROW;
+        }
     }
 
-    # edit options of the link column
-    if ( $Param{ColumnData}->{Type} eq 'Link' && $Param{ColumnData}->{Key} eq 'Number' ) {
-
-        $OutputParams->{Link}  = '$Env{"Baselink"}Action=AgentFAQ&ItemID=' . $FAQID;
-        $OutputParams->{Title} = $Param{TargetItemDescription}->{Description}->{Long} || '';
-
-        return 1 if !$Param{ColumnData}->{Subtype};
-        return 1 if $Param{ColumnData}->{Subtype} ne 'Compact';
-        return 1 if !$Param{TargetItemDescription}->{Description}->{Short};
-
-        $OutputParams->{Content} = $Param{TargetItemDescription}->{Description}->{Short};
-
-        return 1;
-    }
-
-    # edit options of the title column
-    if ( $Param{ColumnData}->{Type} eq 'Text' && $Param{ColumnData}->{Key} eq 'Title' ) {
-
-        $OutputParams->{MaxLength} = 40;
-
-        return 1;
-    }
-
-    # edit options of the state column
-    if ( $Param{ColumnData}->{Type} eq 'Text' && $Param{ColumnData}->{Key} eq 'State' ) {
-
-        $OutputParams->{TemplateBlock} = 'TextTranslate';
-        $OutputParams->{MaxLength}     = 20;
-
-        return 1;
-    }
-
-    return 1;
+    return @SearchOptionList;
 }
 
 1;
-
-=back
-
-=head1 TERMS AND CONDITIONS
-
-This software is part of the OTRS project (http://otrs.org/).
-
-This software comes with ABSOLUTELY NO WARRANTY. For details, see
-the enclosed file COPYING for license information (GPL). If you
-did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
-
-=cut
-
-=head1 VERSION
-
-$Revision: 1.1 $ $Date: 2008-06-13 12:25:43 $
-
-=cut
