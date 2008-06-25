@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.pm,v 1.12 2008-03-26 08:42:27 martin Exp $
+# $Id: AgentFAQ.pm,v 1.13 2008-06-25 20:08:44 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::Group;
 use Kernel::System::Valid;
 
 use vars qw($VERSION @ISA);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 @ISA = qw(Kernel::Modules::FAQ);
 
@@ -816,17 +816,26 @@ sub Run {
         }
 
         # db action
-        my %ItemData = $Self->{FAQObject}->FAQGet(ItemID => $ParamData{ItemID}, UserID => $Self->{UserID});
+        my %ItemData = $Self->{FAQObject}->FAQGet(
+            ItemID => $ParamData{ItemID},
+            UserID => $Self->{UserID},
+        );
         if (!%ItemData) {
             return $Self->{LayoutObject}->ErrorScreen();
         }
 
-        if ($Self->{FAQObject}->FAQDelete(%ItemData)) {
-            return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=Explorer&CategoryID=$ParamData{CategoryID}");
-        }
-        else {
+        my $Delete = $Self->{FAQObject}->FAQDelete(
+            %ItemData,
+            UserID => $Self->{UserID},
+        );
+
+        if (!$Delete) {
             return $Self->{LayoutObject}->ErrorScreen();
         }
+
+        return $Self->{LayoutObject}->Redirect(
+            OP => "Action=$Self->{Action}&Subaction=Explorer&CategoryID=$ParamData{CategoryID}",
+        );
     }
 
     # ---------------------------------------------------------- #

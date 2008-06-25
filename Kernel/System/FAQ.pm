@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.23 2008-06-25 19:58:00 martin Exp $
+# $Id: FAQ.pm,v 1.24 2008-06-25 20:08:14 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::CustomerGroup;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.23 $) [1];
+$VERSION = qw($Revision: 1.24 $) [1];
 
 =head1 NAME
 
@@ -843,6 +843,7 @@ delete an article
 
     $Flag = $FAQObject->FAQDelete(
         ItemID => 1,
+        UserID => 123,
     );
 
 =cut
@@ -852,7 +853,7 @@ sub FAQDelete {
     my %Param = @_;
 
     # check needed stuff
-    for (qw(ItemID)) {
+    for (qw(ItemID UserID)) {
         if (!$Param{$_}) {
             $Self->{LogObject}->Log(Priority => 'error', Message => "Need $_!");
             return;
@@ -875,39 +876,18 @@ sub FAQDelete {
         }
     }
 
-    # delete ticket links
+    # delete faq links
     my $LinkObject = Kernel::System::LinkObject->new(
         %Param,
         %{$Self},
         TicketObject => $Self,
     );
-    $LinkObject->LoadBackend( Module => 'FAQ' );
 
-    # get linked objects and ids, then delete links
-    my %Links = $LinkObject->AllLinkedObjects(
-        Object   => 'FAQ',
-        ObjectID => $Param{ItemID},
-        UserID   => $Param{UserID},
+    $LinkObject->LinkDeleteAll(
+        Object => 'FAQ',
+        Key    => $Param{ItemID},
+        UserID => $Param{UserID},
     );
-    for my $LinkType ( qw(Normal Parent Child) ) {
-        if ( ! $Links{$LinkType} ) {
-            next;
-        }
-        my %ObjectType = %{ $Links{$LinkType} };
-        for my $Object ( sort keys %ObjectType ) {
-            my %Data = %{ $ObjectType{$Object} };
-            for my $Item ( sort keys %Data ) {
-                $LinkObject->UnlinkObject(
-                    LinkType    => $LinkType,
-                    LinkID1     => $Data{$Item}->{ID},
-                    LinkObject1 => $Object,
-                    LinkID2     => $Param{ItemID},
-                    LinkObject2 => 'FAQ',
-                    UserID      => $Param{UserID},
-                );
-            }
-        }
-    }
 
     # delete history
     return if ! $Self->FAQHistoryDelete(%Param);
@@ -2558,6 +2538,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.23 $ $Date: 2008-06-25 19:58:00 $
+$Revision: 1.24 $ $Date: 2008-06-25 20:08:14 $
 
 =cut

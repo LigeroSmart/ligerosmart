@@ -2,7 +2,7 @@
 # FAQ.t - FAQ tests
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.t,v 1.4 2008-03-26 08:32:58 martin Exp $
+# $Id: FAQ.t,v 1.5 2008-06-25 20:08:14 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -292,6 +292,7 @@ for my $VoteID ( @VoteIDs ) {
 
 my $FAQDelete = $Self->{FAQObject}->FAQDelete(
     ItemID => $FAQID,
+    UserID => 1,
 );
 $Self->True(
     $FAQDelete || 0,
@@ -300,6 +301,7 @@ $Self->True(
 
 my $FAQDelete2 = $Self->{FAQObject}->FAQDelete(
     ItemID => $FAQID2,
+    UserID => 1,
 );
 $Self->True(
     $FAQDelete2 || 0,
