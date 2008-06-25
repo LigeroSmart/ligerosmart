@@ -2,7 +2,7 @@
 # Kernel/System/ITSMLocation.pm - all itsm location function
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMLocation.pm,v 1.2 2008-06-18 17:39:29 ub Exp $
+# $Id: ITSMLocation.pm,v 1.3 2008-06-25 09:19:31 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Valid;
 use Kernel::System::CheckItem;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
@@ -160,7 +160,7 @@ sub LocationList {
         }
     }
 
-    # delete invalid locations an childs
+    # delete invalid locations and childs
     LOCATIONID:
     for my $LocationID ( keys %LocationList ) {
         INVALIDID:
@@ -219,16 +219,12 @@ sub LocationGet {
         }
     }
 
-    # quote
-    for my $Argument (qw(LocationID UserID)) {
-        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument}, 'Integer' );
-    }
-
     # get location from database
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT id, name, type_id, phone1, phone2, fax, email, address, "
-            . "valid_id, comments, create_time, create_by, change_time, change_by "
-            . "FROM location WHERE id = $Param{LocationID}",
+        SQL => 'SELECT id, name, type_id, phone1, phone2, fax, email, address, '
+            . 'valid_id, comments, create_time, create_by, change_time, change_by '
+            . 'FROM location WHERE id = ?',
+        Bind => [ \$Param{LocationID} ],
         Limit => 1,
     );
 
@@ -300,12 +296,10 @@ sub LocationLookup {
 
     if ( $Param{LocationID} ) {
 
-        # quote
-        $Param{LocationID} = $Self->{DBObject}->Quote( $Param{LocationID}, 'Integer' );
-
         # lookup
         $Self->{DBObject}->Prepare(
-            SQL   => "SELECT name FROM location WHERE id = $Param{LocationID}",
+            SQL   => 'SELECT name FROM location WHERE id = ?',
+            Bind  => [ \$Param{LocationID} ],
             Limit => 1,
         );
 
@@ -319,12 +313,10 @@ sub LocationLookup {
     }
     else {
 
-        # quote
-        $Param{Name} = $Self->{DBObject}->Quote( $Param{Name} );
-
         # lookup
         $Self->{DBObject}->Prepare(
-            SQL   => "SELECT id FROM location WHERE name = '$Param{Name}'",
+            SQL   => 'SELECT id FROM location WHERE name = ?',
+            Bind  => [ \$Param{Name} ],
             Limit => 1,
         );
 
@@ -377,14 +369,6 @@ sub LocationAdd {
         $Param{$Argument} = $Param{$Argument} || '';
     }
 
-    # quote
-    for my $Argument (qw(Name Phone1 Phone2 Fax Email Address Comment)) {
-        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument} );
-    }
-    for my $Argument (qw(TypeID ValidID UserID)) {
-        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument}, 'Integer' );
-    }
-
     # cleanup given params
     for my $Argument (qw(Name Phone1 Phone2 Fax Comment)) {
         $Self->{CheckItemObject}->StringClean(
@@ -419,16 +403,14 @@ sub LocationAdd {
     if ( $Param{ParentID} ) {
         my $ParentName = $Self->LocationLookup( LocationID => $Param{ParentID} );
         if ($ParentName) {
-            $Param{FullName} = $Self->{DBObject}->Quote($ParentName) . '::' . $Param{Name};
+            $Param{FullName} = $ParentName . '::' . $Param{Name};
         }
-
-        # quote
-        $Param{ParentID} = $Self->{DBObject}->Quote( $Param{ParentID}, 'Integer' );
     }
 
     # find existing location
     $Self->{DBObject}->Prepare(
-        SQL   => "SELECT id FROM location WHERE name = '$Param{FullName}'",
+        SQL   => 'SELECT id FROM location WHERE name = ?',
+        Bind  => [ \$Param{FullName} ],
         Limit => 1,
     );
 
@@ -449,20 +431,24 @@ sub LocationAdd {
 
     # insert new location
     my $Success = $Self->{DBObject}->Do(
-        SQL => "INSERT INTO location "
-            . "(name, type_id, phone1, phone2, fax, email, address, valid_id, "
-            . "comments, create_time, create_by, change_time, change_by) VALUES "
-            . "('$Param{FullName}', $Param{TypeID}, '$Param{Phone1}', "
-            . "'$Param{Phone2}', '$Param{Fax}', "
-            . "'$Param{Email}', '$Param{Address}', $Param{ValidID}, '$Param{Comment}', "
-            . "current_timestamp, $Param{UserID}, current_timestamp, $Param{UserID})"
+        SQL => 'INSERT INTO location '
+            . '(name, type_id, phone1, phone2, fax, email, address, valid_id, '
+            . 'comments, create_time, create_by, change_time, change_by) VALUES '
+            . '(?, ?, ?, ?, ?, ?, ?, ?, ?, current_timestamp, ?, current_timestamp, ?)',
+        Bind => [
+            \$Param{FullName}, \$Param{TypeID},  \$Param{Phone1},
+            \$Param{Phone2},   \$Param{Fax},     \$Param{Email},
+            \$Param{Address},  \$Param{ValidID}, \$Param{Comment},
+            \$Param{UserID},   \$Param{UserID},
+        ],
     );
 
     return if !$Success;
 
     # ask database
     $Self->{DBObject}->Prepare(
-        SQL   => "SELECT id FROM location WHERE name = '$Param{FullName}'",
+        SQL   => 'SELECT id FROM location WHERE name = ?',
+        Bind  => [ \$Param{FullName} ],
         Limit => 1,
     );
 
@@ -515,14 +501,6 @@ sub LocationUpdate {
         $Param{$Argument} = $Param{$Argument} || '';
     }
 
-    # quote
-    for my $Argument (qw(Name Phone1 Phone2 Fax Email Address Comment)) {
-        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument} );
-    }
-    for my $Argument (qw(LocationID TypeID ValidID UserID)) {
-        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument}, 'Integer' );
-    }
-
     # cleanup given params
     for my $Argument (qw(Name Phone1 Phone2 Fax Comment)) {
         $Self->{CheckItemObject}->StringClean(
@@ -565,7 +543,7 @@ sub LocationUpdate {
         );
 
         if ($ParentName) {
-            $Param{FullName} = $Self->{DBObject}->Quote($ParentName) . '::' . $Param{Name};
+            $Param{FullName} = $ParentName . '::' . $Param{Name};
         }
 
         # check, if selected parent was a child of this location
@@ -576,14 +554,12 @@ sub LocationUpdate {
             );
             return;
         }
-
-        # quote
-        $Param{ParentID} = $Self->{DBObject}->Quote( $Param{ParentID}, 'Integer' );
     }
 
     # find existing location
     $Self->{DBObject}->Prepare(
-        SQL   => "SELECT id FROM location WHERE name = '$Param{FullName}'",
+        SQL   => 'SELECT id FROM location WHERE name = ?',
+        Bind  => [ \$Param{FullName} ],
         Limit => 1,
     );
 
@@ -605,19 +581,23 @@ sub LocationUpdate {
 
     # update location
     $Self->{DBObject}->Do(
-        SQL => "UPDATE location SET name = '$Param{FullName}', type_id = $Param{TypeID}, "
-            . "phone1 = '$Param{Phone1}', phone2 = '$Param{Phone2}', fax = '$Param{Fax}', "
-            . "email = '$Param{Email}', address = '$Param{Address}', valid_id = $Param{ValidID}, "
-            . "comments = '$Param{Comment}', "
-            . "change_time = current_timestamp, change_by = $Param{UserID} "
-            . "WHERE id = $Param{LocationID}"
+        SQL => 'UPDATE location SET '
+            . 'name = ?, type_id = ?, phone1 = ?, phone2 = ?, fax = ?, email = ?, '
+            . 'address = ?, valid_id = ?, comments = ?, change_time = current_timestamp, '
+            . 'change_by = ? WHERE id = ?',
+        Bind => [
+            \$Param{FullName}, \$Param{TypeID},  \$Param{Phone1},
+            \$Param{Phone2},   \$Param{Fax},     \$Param{Email},
+            \$Param{Address},  \$Param{ValidID}, \$Param{Comment},
+            \$Param{UserID},   \$Param{LocationID},
+        ],
     );
 
     # find all childs
     $Self->{DBObject}->Prepare(
         SQL => "SELECT id, name FROM location WHERE name LIKE '"
             . $Self->{DBObject}->Quote($OldLocationName)
-            . "::%'"
+            . "::%'",
     );
 
     # fetch the result
@@ -633,7 +613,8 @@ sub LocationUpdate {
     for my $Child (@Childs) {
         $Child->{Name} =~ s/^($OldLocationName)::/$Param{FullName}::/;
         $Self->{DBObject}->Do(
-            SQL => "UPDATE location SET name = '$Child->{Name}' WHERE id = $Child->{LocationID}"
+            SQL => 'UPDATE location SET name = ? WHERE id = ?',
+            Bind => [ \$Child->{Name}, \$Child->{LocationID} ],
         );
     }
 
@@ -681,7 +662,7 @@ sub LocationSearch {
     # quote
     $Param{UserID} = $Self->{DBObject}->Quote( $Param{UserID}, 'Integer' );
 
-    my $SQL = "SELECT id FROM location WHERE 1 = 1 ";
+    my $SQL = 'SELECT id FROM location WHERE 1 = 1 ';
 
     if ( $Param{Valid} ) {
 
@@ -708,8 +689,11 @@ sub LocationSearch {
 
         next ELEMENT if !$Param{$Element};
 
-        # prepare like string
-        $Self->_PrepareLikeString( \$Param{$Element} );
+        # replace * with %
+        $Param{$Element} =~ s{ \*+ }{%}xmsg;
+
+        # quote like string
+        $Param{$Element} = $Self->{DBObject}->Quote( $Param{$Element}, 'Like' );
 
         $SQL .= "AND LOWER($Elements{$Element}) LIKE LOWER('$Param{$Element}') ";
     }
@@ -731,31 +715,6 @@ sub LocationSearch {
     return @LocationList;
 }
 
-=item _PrepareLikeString()
-
-internal function to prepare like strings
-
-    $ConfigItemObject->_PrepareLikeString( $StringRef );
-
-=cut
-
-sub _PrepareLikeString {
-    my ( $Self, $Value ) = @_;
-
-    return if !$Value;
-    return if ref $Value ne 'SCALAR';
-
-    # replace * with %
-    ${$Value} =~ s{ \*+ }{%}xmsg;
-
-    # Hotfix for MSSQL bug# 2227
-    return if $Self->{DBObject}->GetDatabaseFunction('Type') ne 'mssql';
-
-    ${$Value} =~ s{ \[ }{[[]}xmsg;
-
-    return;
-}
-
 1;
 
 =back
@@ -772,6 +731,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2008-06-18 17:39:29 $
+$Revision: 1.3 $ $Date: 2008-06-25 09:19:31 $
 
 =cut
