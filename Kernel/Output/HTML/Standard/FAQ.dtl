@@ -2,7 +2,7 @@
 # FAQ.dtl - provides HTML view for faq articles
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.dtl,v 1.9 2008-03-26 08:38:22 martin Exp $
+# $Id: FAQ.dtl,v 1.10 2008-06-25 17:22:30 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -240,16 +240,19 @@
               <input type="hidden" name="Submit" value="yes">
               <table border="0" cellspacing="0" cellpadding="3">
                 <tr>
+                  <td class="contentkey">$Text{"Fulltext"}: </td>
+                  <td class="contentvalue" colspan="3"> <input type="text" name="What" value="$QData{"What"}" size="50" maxlength="50"></td>
+                </tr>
+                <tr>
+                  <td colspan="4" class="contentkey"><hr width="100%"/></td>
+                </tr>
+                <tr>
                   <td width="25%" class="contentkey">$Text{"Number"}: </td>
                   <td width="75%" class="contentvalue" colspan="3"> <input type="text" name="Number" value="$QData{"Number"}" size="50" maxlength="50"></td>
                 </tr>
                 <tr>
                   <td class="contentkey">$Text{"Title"}: </td>
                   <td class="contentvalue" colspan="3"> <input type="text" name="Title" value="$QData{"Title"}" size="50" maxlength="50"></td>
-                </tr>
-                <tr>
-                  <td class="contentkey">$Text{"Fulltext"}: </td>
-                  <td class="contentvalue" colspan="3"> <input type="text" name="What" value="$QData{"What"}" size="50" maxlength="50"></td>
                 </tr>
                 <tr>
                   <td class="contentkey">$Text{"Keyword"}: </td>
@@ -308,6 +311,9 @@
           <td class="$QData{"CssRow"}">($TimeLong{"$Data{"Changed"}"})</td>
         </tr>
 <!-- dtl:block:SearchResultRow -->
+        <tr class="contentfooter">
+          <td colspan="6" class="contentkey">&nbsp;</td>
+        </tr>
       </table>
     </td>
   </tr>
