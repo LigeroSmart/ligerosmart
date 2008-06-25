@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMCore.sopm,v 1.42 2008-06-24 13:57:29 ub Exp $</CVS>
+    <CVS>$Id: ITSMCore.sopm,v 1.43 2008-06-25 09:06:01 mh Exp $</CVS>
     <Name>ITSMCore</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
     <Framework>2.3.x CVS</Framework>
+    <PackageRequired Version="1.1.2">GeneralCatalog</PackageRequired>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
     <Description Lang="en">The OTRS::ITSM core package.</Description>
     <Description Lang="de">Das OTRS::ITSM Core Paket.</Description>
-    <PackageRequired Version="1.1.2">GeneralCatalog</PackageRequired>
     <Filelist>
         <File Permission="644" Location="Kernel/Config/Files/FrameworkITSMCore.xml"/>
         <File Permission="644" Location="Kernel/Config/Files/ITSMCore.xml"/>
@@ -39,14 +39,8 @@
         <File Permission="644" Location="Kernel/System/LinkObject/ITSMLocation.pm"/>
         <File Permission="644" Location="scripts/test/ITSMCIPAllocate.t"/>
         <File Permission="644" Location="scripts/test/ITSMLocation.t"/>
-        <File Permission="644" Location="var/httpd/htdocs/images/Standard/greenled.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/images/Standard/greenled-small.png"/>
         <File Permission="644" Location="var/httpd/htdocs/images/Standard/itsm_location.png"/>
         <File Permission="644" Location="var/httpd/htdocs/images/Standard/itsm_service.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/images/Standard/redled.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/images/Standard/redled-small.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/images/Standard/yellowled.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/images/Standard/yellowled-small.png"/>
     </Filelist>
     <DatabaseInstall>
         <TableCreate Name="cip_allocate">
@@ -66,322 +60,6 @@
                 <Reference Local="priority_id" Foreign="id"/>
             </ForeignKey>
         </TableCreate>
-        <Insert Table="general_catalog">
-            <Data Key="general_catalog_class" Type="Quote">ITSM::Core::Criticality</Data>
-            <Data Key="name" Type="Quote">1 very low</Data>
-            <Data Key="valid_id">1</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
-        <Insert Table="general_catalog">
-            <Data Key="general_catalog_class" Type="Quote">ITSM::Core::Criticality</Data>
-            <Data Key="name" Type="Quote">2 low</Data>
-            <Data Key="valid_id">1</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
-        <Insert Table="general_catalog">
-            <Data Key="general_catalog_class" Type="Quote">ITSM::Core::Criticality</Data>
-            <Data Key="name" Type="Quote">3 normal</Data>
-            <Data Key="valid_id">1</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
-        <Insert Table="general_catalog">
-            <Data Key="general_catalog_class" Type="Quote">ITSM::Core::Criticality</Data>
-            <Data Key="name" Type="Quote">4 high</Data>
-            <Data Key="valid_id">1</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
-        <Insert Table="general_catalog">
-            <Data Key="general_catalog_class" Type="Quote">ITSM::Core::Criticality</Data>
-            <Data Key="name" Type="Quote">5 very high</Data>
-            <Data Key="valid_id">1</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
-        <Insert Table="general_catalog">
-            <Data Key="general_catalog_class" Type="Quote">ITSM::Core::Impact</Data>
-            <Data Key="name" Type="Quote">1 very low</Data>
-            <Data Key="valid_id">1</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
-        <Insert Table="general_catalog">
-            <Data Key="general_catalog_class" Type="Quote">ITSM::Core::Impact</Data>
-            <Data Key="name" Type="Quote">2 low</Data>
-            <Data Key="valid_id">1</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
-        <Insert Table="general_catalog">
-            <Data Key="general_catalog_class" Type="Quote">ITSM::Core::Impact</Data>
-            <Data Key="name" Type="Quote">3 normal</Data>
-            <Data Key="valid_id">1</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
-        <Insert Table="general_catalog">
-            <Data Key="general_catalog_class" Type="Quote">ITSM::Core::Impact</Data>
-            <Data Key="name" Type="Quote">4 high</Data>
-            <Data Key="valid_id">1</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
-        <Insert Table="general_catalog">
-            <Data Key="general_catalog_class" Type="Quote">ITSM::Core::Impact</Data>
-            <Data Key="name" Type="Quote">5 very high</Data>
-            <Data Key="valid_id">1</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
-        <Insert Table="cip_allocate">
-            <Data Key="criticality_id">1</Data>
-            <Data Key="impact_id">6</Data>
-            <Data Key="priority_id">1</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
-        <Insert Table="cip_allocate">
-            <Data Key="criticality_id">1</Data>
-            <Data Key="impact_id">7</Data>
-            <Data Key="priority_id">1</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
-        <Insert Table="cip_allocate">
-            <Data Key="criticality_id">1</Data>
-            <Data Key="impact_id">8</Data>
-            <Data Key="priority_id">2</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
-        <Insert Table="cip_allocate">
-            <Data Key="criticality_id">1</Data>
-            <Data Key="impact_id">9</Data>
-            <Data Key="priority_id">2</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
-        <Insert Table="cip_allocate">
-            <Data Key="criticality_id">1</Data>
-            <Data Key="impact_id">10</Data>
-            <Data Key="priority_id">3</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
-        <Insert Table="cip_allocate">
-            <Data Key="criticality_id">2</Data>
-            <Data Key="impact_id">6</Data>
-            <Data Key="priority_id">1</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
-        <Insert Table="cip_allocate">
-            <Data Key="criticality_id">2</Data>
-            <Data Key="impact_id">7</Data>
-            <Data Key="priority_id">2</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
-        <Insert Table="cip_allocate">
-            <Data Key="criticality_id">2</Data>
-            <Data Key="impact_id">8</Data>
-            <Data Key="priority_id">2</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
-        <Insert Table="cip_allocate">
-            <Data Key="criticality_id">2</Data>
-            <Data Key="impact_id">9</Data>
-            <Data Key="priority_id">3</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
-        <Insert Table="cip_allocate">
-            <Data Key="criticality_id">2</Data>
-            <Data Key="impact_id">10</Data>
-            <Data Key="priority_id">4</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
-        <Insert Table="cip_allocate">
-            <Data Key="criticality_id">3</Data>
-            <Data Key="impact_id">6</Data>
-            <Data Key="priority_id">2</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
-        <Insert Table="cip_allocate">
-            <Data Key="criticality_id">3</Data>
-            <Data Key="impact_id">7</Data>
-            <Data Key="priority_id">2</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
-        <Insert Table="cip_allocate">
-            <Data Key="criticality_id">3</Data>
-            <Data Key="impact_id">8</Data>
-            <Data Key="priority_id">3</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
-        <Insert Table="cip_allocate">
-            <Data Key="criticality_id">3</Data>
-            <Data Key="impact_id">9</Data>
-            <Data Key="priority_id">4</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
-        <Insert Table="cip_allocate">
-            <Data Key="criticality_id">3</Data>
-            <Data Key="impact_id">10</Data>
-            <Data Key="priority_id">4</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
-        <Insert Table="cip_allocate">
-            <Data Key="criticality_id">4</Data>
-            <Data Key="impact_id">6</Data>
-            <Data Key="priority_id">2</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
-        <Insert Table="cip_allocate">
-            <Data Key="criticality_id">4</Data>
-            <Data Key="impact_id">7</Data>
-            <Data Key="priority_id">3</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
-        <Insert Table="cip_allocate">
-            <Data Key="criticality_id">4</Data>
-            <Data Key="impact_id">8</Data>
-            <Data Key="priority_id">4</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
-        <Insert Table="cip_allocate">
-            <Data Key="criticality_id">4</Data>
-            <Data Key="impact_id">9</Data>
-            <Data Key="priority_id">4</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
-        <Insert Table="cip_allocate">
-            <Data Key="criticality_id">4</Data>
-            <Data Key="impact_id">10</Data>
-            <Data Key="priority_id">5</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
-        <Insert Table="cip_allocate">
-            <Data Key="criticality_id">5</Data>
-            <Data Key="impact_id">6</Data>
-            <Data Key="priority_id">3</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
-        <Insert Table="cip_allocate">
-            <Data Key="criticality_id">5</Data>
-            <Data Key="impact_id">7</Data>
-            <Data Key="priority_id">4</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
-        <Insert Table="cip_allocate">
-            <Data Key="criticality_id">5</Data>
-            <Data Key="impact_id">8</Data>
-            <Data Key="priority_id">4</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
-        <Insert Table="cip_allocate">
-            <Data Key="criticality_id">5</Data>
-            <Data Key="impact_id">9</Data>
-            <Data Key="priority_id">5</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
-        <Insert Table="cip_allocate">
-            <Data Key="criticality_id">5</Data>
-            <Data Key="impact_id">10</Data>
-            <Data Key="priority_id">5</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
-
         <TableCreate Name="location">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>
             <Column Name="name" Required="true" Size="200" Type="VARCHAR"/>
@@ -405,6 +83,321 @@
                 <Reference Local="change_by" Foreign="id"/>
             </ForeignKey>
         </TableCreate>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Core::Criticality</Data>
+            <Data Key="name" Type="Quote">1 very low</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Core::Criticality</Data>
+            <Data Key="name" Type="Quote">2 low</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Core::Criticality</Data>
+            <Data Key="name" Type="Quote">3 normal</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Core::Criticality</Data>
+            <Data Key="name" Type="Quote">4 high</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Core::Criticality</Data>
+            <Data Key="name" Type="Quote">5 very high</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Core::Impact</Data>
+            <Data Key="name" Type="Quote">1 very low</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Core::Impact</Data>
+            <Data Key="name" Type="Quote">2 low</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Core::Impact</Data>
+            <Data Key="name" Type="Quote">3 normal</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Core::Impact</Data>
+            <Data Key="name" Type="Quote">4 high</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Core::Impact</Data>
+            <Data Key="name" Type="Quote">5 very high</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="cip_allocate">
+            <Data Key="criticality_id">1</Data>
+            <Data Key="impact_id">6</Data>
+            <Data Key="priority_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="cip_allocate">
+            <Data Key="criticality_id">1</Data>
+            <Data Key="impact_id">7</Data>
+            <Data Key="priority_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="cip_allocate">
+            <Data Key="criticality_id">1</Data>
+            <Data Key="impact_id">8</Data>
+            <Data Key="priority_id">2</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="cip_allocate">
+            <Data Key="criticality_id">1</Data>
+            <Data Key="impact_id">9</Data>
+            <Data Key="priority_id">2</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="cip_allocate">
+            <Data Key="criticality_id">1</Data>
+            <Data Key="impact_id">10</Data>
+            <Data Key="priority_id">3</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="cip_allocate">
+            <Data Key="criticality_id">2</Data>
+            <Data Key="impact_id">6</Data>
+            <Data Key="priority_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="cip_allocate">
+            <Data Key="criticality_id">2</Data>
+            <Data Key="impact_id">7</Data>
+            <Data Key="priority_id">2</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="cip_allocate">
+            <Data Key="criticality_id">2</Data>
+            <Data Key="impact_id">8</Data>
+            <Data Key="priority_id">2</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="cip_allocate">
+            <Data Key="criticality_id">2</Data>
+            <Data Key="impact_id">9</Data>
+            <Data Key="priority_id">3</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="cip_allocate">
+            <Data Key="criticality_id">2</Data>
+            <Data Key="impact_id">10</Data>
+            <Data Key="priority_id">4</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="cip_allocate">
+            <Data Key="criticality_id">3</Data>
+            <Data Key="impact_id">6</Data>
+            <Data Key="priority_id">2</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="cip_allocate">
+            <Data Key="criticality_id">3</Data>
+            <Data Key="impact_id">7</Data>
+            <Data Key="priority_id">2</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="cip_allocate">
+            <Data Key="criticality_id">3</Data>
+            <Data Key="impact_id">8</Data>
+            <Data Key="priority_id">3</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="cip_allocate">
+            <Data Key="criticality_id">3</Data>
+            <Data Key="impact_id">9</Data>
+            <Data Key="priority_id">4</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="cip_allocate">
+            <Data Key="criticality_id">3</Data>
+            <Data Key="impact_id">10</Data>
+            <Data Key="priority_id">4</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="cip_allocate">
+            <Data Key="criticality_id">4</Data>
+            <Data Key="impact_id">6</Data>
+            <Data Key="priority_id">2</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="cip_allocate">
+            <Data Key="criticality_id">4</Data>
+            <Data Key="impact_id">7</Data>
+            <Data Key="priority_id">3</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="cip_allocate">
+            <Data Key="criticality_id">4</Data>
+            <Data Key="impact_id">8</Data>
+            <Data Key="priority_id">4</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="cip_allocate">
+            <Data Key="criticality_id">4</Data>
+            <Data Key="impact_id">9</Data>
+            <Data Key="priority_id">4</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="cip_allocate">
+            <Data Key="criticality_id">4</Data>
+            <Data Key="impact_id">10</Data>
+            <Data Key="priority_id">5</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="cip_allocate">
+            <Data Key="criticality_id">5</Data>
+            <Data Key="impact_id">6</Data>
+            <Data Key="priority_id">3</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="cip_allocate">
+            <Data Key="criticality_id">5</Data>
+            <Data Key="impact_id">7</Data>
+            <Data Key="priority_id">4</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="cip_allocate">
+            <Data Key="criticality_id">5</Data>
+            <Data Key="impact_id">8</Data>
+            <Data Key="priority_id">4</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="cip_allocate">
+            <Data Key="criticality_id">5</Data>
+            <Data Key="impact_id">9</Data>
+            <Data Key="priority_id">5</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="cip_allocate">
+            <Data Key="criticality_id">5</Data>
+            <Data Key="impact_id">10</Data>
+            <Data Key="priority_id">5</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::Location::Type</Data>
             <Data Key="name" Type="Quote">Building</Data>
@@ -486,7 +479,6 @@
             <Data Key="change_time">current_timestamp</Data>
             <Data Key="change_by">1</Data>
         </Insert>
-
     </DatabaseInstall>
     <DatabaseUpgrade>
         <TableAlter Name="cip_allocate" Version="1.0.1">
@@ -497,62 +489,6 @@
         <TableDrop Name="cip_allocate"/>
         <TableDrop Name="location"/>
     </DatabaseUninstall>
-
-    <CodeInstall>
-        require Kernel::System::Group;
-        $Self-&gt;{GroupObject} = Kernel::System::Group-&gt;new(%{$Self});
-
-        # add group itsm-location
-        $Self-&gt;{GroupObject}-&gt;GroupAdd(
-            Name    =&gt; 'itsm-location',
-            Comment =&gt; 'Group for ITSM Location mask access in the agent interface.',
-            ValidID =&gt; 1,
-            UserID  =&gt; 1,
-        );
-
-        # add user root to itsm-location admin group
-        $Self-&gt;{GroupObject}-&gt;GroupMemberAdd(
-            GID        =&gt; $Self-&gt;{GroupObject}-&gt;GroupLookup(Group =&gt; 'itsm-location'),
-            UID        =&gt; 1,
-            Permission =&gt; {
-                ro        =&gt; 1,
-                move_into =&gt; 1,
-                create    =&gt; 1,
-                owner     =&gt; 1,
-                priority  =&gt; 1,
-                rw        =&gt; 1,
-            },
-            UserID =&gt; 1,
-        );
-    </CodeInstall>
-    <CodeUpgrade>
-        require Kernel::System::Group;
-        $Self-&gt;{GroupObject} = Kernel::System::Group-&gt;new(%{$Self});
-
-        # add group itsm-location
-        $Self-&gt;{GroupObject}-&gt;GroupAdd(
-            Name    =&gt; 'itsm-location',
-            Comment =&gt; 'Group for ITSM Location mask access in the agent interface.',
-            ValidID =&gt; 1,
-            UserID  =&gt; 1,
-        );
-
-        # add user root to itsm-location admin group
-        $Self-&gt;{GroupObject}-&gt;GroupMemberAdd(
-            GID        =&gt; $Self-&gt;{GroupObject}-&gt;GroupLookup(Group =&gt; 'itsm-location'),
-            UID        =&gt; 1,
-            Permission =&gt; {
-                ro        =&gt; 1,
-                move_into =&gt; 1,
-                create    =&gt; 1,
-                owner     =&gt; 1,
-                priority  =&gt; 1,
-                rw        =&gt; 1,
-            },
-            UserID =&gt; 1,
-        );
-    </CodeUpgrade>
-
     <CodeInstall>
         # change background color of standard theme
         my $CssFile = $Self-&gt;{ConfigObject}-&gt;Get('Home') . "/Kernel/Output/HTML/Standard/css.dtl";
@@ -573,6 +509,32 @@
                 close (OUT);
             }
         }
+
+        require Kernel::System::Group;
+        $Self-&gt;{GroupObject} = Kernel::System::Group-&gt;new(%{$Self});
+
+        # add group itsm-location
+        $Self-&gt;{GroupObject}-&gt;GroupAdd(
+            Name    =&gt; 'itsm-location',
+            Comment =&gt; 'Group for ITSM Location mask access in the agent interface.',
+            ValidID =&gt; 1,
+            UserID  =&gt; 1,
+        );
+
+        # add user root to itsm-location admin group
+        $Self-&gt;{GroupObject}-&gt;GroupMemberAdd(
+            GID        =&gt; $Self-&gt;{GroupObject}-&gt;GroupLookup(Group =&gt; 'itsm-location'),
+            UID        =&gt; 1,
+            Permission =&gt; {
+                ro        =&gt; 1,
+                move_into =&gt; 1,
+                create    =&gt; 1,
+                owner     =&gt; 1,
+                priority  =&gt; 1,
+                rw        =&gt; 1,
+            },
+            UserID =&gt; 1,
+        );
     </CodeInstall>
     <CodeReinstall>
         # change background color of standard theme
@@ -615,6 +577,32 @@
                 close (OUT);
             }
         }
+
+        require Kernel::System::Group;
+        $Self-&gt;{GroupObject} = Kernel::System::Group-&gt;new(%{$Self});
+
+        # add group itsm-location
+        $Self-&gt;{GroupObject}-&gt;GroupAdd(
+            Name    =&gt; 'itsm-location',
+            Comment =&gt; 'Group for ITSM Location mask access in the agent interface.',
+            ValidID =&gt; 1,
+            UserID  =&gt; 1,
+        );
+
+        # add user root to itsm-location admin group
+        $Self-&gt;{GroupObject}-&gt;GroupMemberAdd(
+            GID        =&gt; $Self-&gt;{GroupObject}-&gt;GroupLookup(Group =&gt; 'itsm-location'),
+            UID        =&gt; 1,
+            Permission =&gt; {
+                ro        =&gt; 1,
+                move_into =&gt; 1,
+                create    =&gt; 1,
+                owner     =&gt; 1,
+                priority  =&gt; 1,
+                rw        =&gt; 1,
+            },
+            UserID =&gt; 1,
+        );
     </CodeUpgrade>
     <CodeUninstall>
         # change background color of standard theme back to original
