@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LinkObjectITSMLocation.pm - layout backend module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: LinkObjectITSMLocation.pm,v 1.3 2008-06-23 21:46:09 ub Exp $
+# $Id: LinkObjectITSMLocation.pm,v 1.4 2008-06-27 08:30:09 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::State;
 use Kernel::System::GeneralCatalog;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 =head1 NAME
 
@@ -240,8 +240,8 @@ sub TableCreateComplex {
 
     # block data
     my %BlockData = (
-        Object    => 'ITSMLocation',
-        Blockname => 'ITSMLocation',
+        Object    => $Self->{ObjectData}->{Object},
+        Blockname => $Self->{ObjectData}->{Realname},
         Headline  => [
             {
                 Content => 'Name',
@@ -542,6 +542,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2008-06-23 21:46:09 $
+$Revision: 1.4 $ $Date: 2008-06-27 08:30:09 $
 
 =cut
