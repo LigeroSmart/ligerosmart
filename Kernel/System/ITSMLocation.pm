@@ -2,7 +2,7 @@
 # Kernel/System/ITSMLocation.pm - all itsm location function
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMLocation.pm,v 1.3 2008-06-25 09:19:31 ub Exp $
+# $Id: ITSMLocation.pm,v 1.4 2008-06-27 08:25:37 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Valid;
 use Kernel::System::CheckItem;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 =head1 NAME
 
@@ -703,8 +703,14 @@ sub LocationSearch {
         $SQL .= "AND type_id IN (" . join( ', ', @{ $Param{TypeIDs} } ) . ") ";
     }
 
+    # add default sort order
+    $SQL .= ' ORDER BY name ASC';
+
     # search locations in db
-    $Self->{DBObject}->Prepare( SQL => $SQL );
+    $Self->{DBObject}->Prepare(
+        SQL   => $SQL,
+        Limit => $Param{Limit},
+    );
 
     # fetch the result
     my @LocationList;
@@ -731,6 +737,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2008-06-25 09:19:31 $
+$Revision: 1.4 $ $Date: 2008-06-27 08:25:37 $
 
 =cut
