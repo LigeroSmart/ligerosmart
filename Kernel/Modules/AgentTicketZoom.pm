@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.pm,v 1.1.1.1 2008-06-30 08:58:42 ub Exp $
+# $Id: AgentTicketZoom.pm,v 1.2 2008-06-30 16:20:16 ub Exp $
 # $OldId: AgentTicketZoom.pm,v 1.58 2008/06/26 11:02:08 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -24,7 +24,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1.1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -559,10 +559,7 @@ sub MaskAgentZoom {
 #            for my $Count ( 1 .. 16 ) {
             COUNT:
             for my $Count ( 1 .. 16 ) {
-                next COUNT if $Count == 13;
-                next COUNT if $Count == 14;
-                next COUNT if $Count == 15;
-                next COUNT if $Count == 16;
+                next COUNT if ( ($Count >= 13) && ($Count <= 16) );
 # ---
                 if ( $Param{ 'TicketFreeText' . $Count } ) {
                     $Self->{LayoutObject}->Block(
