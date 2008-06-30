@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.0">
+    <CVS>$Id: ITSMIncidentProblemManagement.sopm,v 1.1 2008-06-30 20:52:09 ub Exp $</CVS>
+    <Name>ITSMIncidentProblemManagement</Name>
+    <Version>0.0.0</Version>
+    <Framework>2.3.x</Framework>
+    <Framework>2.3.x CVS</Framework>
+    <Vendor>OTRS AG</Vendor>
+    <URL>http://otrs.org/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <Description Lang="en">The OTRS::ITSM incident problem management package.</Description>
+    <Description Lang="de">Das OTRS::ITSM Incident Problem management Paket.</Description>
+    <PackageRequired Version="1.1.91">GeneralCatalog</PackageRequired>
+    <PackageRequired Version="1.1.91">ITSMCore</PackageRequired>
+    <Filelist>
+        <File Permission="644" Location="Kernel/Config/Files/ITSMTicket.xml"/>
+        <File Permission="644" Location="Kernel/Config/Files/TicketITSMTicket.xml"/>
+        <File Permission="644" Location="Kernel/Language/bg_ITSMTicket.pm"/>
+        <File Permission="644" Location="Kernel/Language/cz_ITSMTicket.pm"/>
+        <File Permission="644" Location="Kernel/Language/de_ITSMTicket.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentTicketEmail.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentTicketPhone.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/TicketMenuAddtlITSMField.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/TicketMenuDecision.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketEmail.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketPhone.dtl"/>
+    </Filelist>
+    <DatabaseInstall>
+        <Insert Table="ticket_state">
+            <Data Key="name" Type="Quote">closed with workaround</Data>
+            <Data Key="comments" Type="Quote">ticket is closed with workaround</Data>
+            <Data Key="type_id">3</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+    </DatabaseInstall>
+    <DatabaseInstall>
+        <Insert Table="ticket_type">
+            <Data Key="name" Type="Quote">Incident</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="ticket_type">
+            <Data Key="name" Type="Quote">Incident::ServiceRequest</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="ticket_type">
+            <Data Key="name" Type="Quote">Incident::Disaster</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="ticket_type">
+            <Data Key="name" Type="Quote">Problem</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="ticket_type">
+            <Data Key="name" Type="Quote">Problem::KnownError</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="ticket_type">
+            <Data Key="name" Type="Quote">Problem::PendingRfC</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+    </DatabaseInstall>
+    <IntroInstallPre Title="Install Information" Lang="en">
+        &lt;br&gt;
+        WELCOME&lt;br&gt;
+        &lt;br&gt;
+        You are about to install the OTRS module ITSMIncidentProblemManagement.&lt;br&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        REQUIRED OTRS PACKAGES
+        &lt;ul&gt;
+        &lt;li&gt;GeneralCatalog 1.1.91&lt;/li&gt;
+        &lt;li&gt;ITSMCore 1.1.91&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;br&gt;
+        ATTENTION&lt;br&gt;
+        &lt;br&gt;
+        Make sure your database accepts packages over 5 MB in size. A MySQL database for example accepts packages up to 1 MB by default. In this case, the value for max_allowed_packet must be increased. The recommended maximum size accepted is 20 MB.&lt;br&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+    </IntroInstallPre>
+    <IntroInstallPre Title="Installation Information" Lang="de">
+        &lt;br&gt;
+        WILLKOMMEN&lt;br&gt;
+        &lt;br&gt;
+        Sie sind im Begriff das OTRS-Modul ITSMIncidentProblemManagement zu installieren.&lt;br&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        BENÖTIGTE OTRS-PAKETE
+        &lt;ul&gt;
+        &lt;li&gt;GeneralCatalog 1.1.91&lt;/li&gt;
+        &lt;li&gt;ITSMCore 1.1.91&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;br&gt;
+        ACHTUNG&lt;br&gt;
+        &lt;br&gt;
+        Vergewissern Sie sich, dass ihre Datenbank Pakete mit einer Größe von mehr als 5 MB akzeptiert. Eine MySQL Datenbank akzeptiert beispielsweise standartmäßig Pakete mit einer Größe von maximal 1 MB. In diesem Fall muss der Wert für max_allowed_packet erhöht werden. Empfohlen werden 20 MB.&lt;br&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+    </IntroInstallPre>
+    <IntroUpgradePre Title="Upgrade Information" Lang="en">
+        &lt;br&gt;
+        WELCOME&lt;br&gt;
+        &lt;br&gt;
+        You are about to upgrade the OTRS module ITSMIncidentProblemManagement.&lt;br&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        REQUIRED OTRS PACKAGES
+        &lt;ul&gt;
+        &lt;li&gt;GeneralCatalog 1.1.91&lt;/li&gt;
+        &lt;li&gt;ITSMCore 1.1.91&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;br&gt;
+        ATTENTION&lt;br&gt;
+        &lt;br&gt;
+        Make sure your database accepts packages over 5 MB in size. A MySQL database for example accepts packages up to 1 MB by default. In this case, the value for max_allowed_packet must be increased. The recommended maximum size accepted is 20 MB.&lt;br&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+    </IntroUpgradePre>
+    <IntroUpgradePre Title="Upgrade Information" Lang="de">
+        &lt;br&gt;
+        WILLKOMMEN&lt;br&gt;
+        &lt;br&gt;
+        Sie sind im Begriff das OTRS-Modul ITSMIncidentProblemManagement zu aktualisieren.&lt;br&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        BENÖTIGTE OTRS-PAKETE
+        &lt;ul&gt;
+        &lt;li&gt;GeneralCatalog 1.1.91&lt;/li&gt;
+        &lt;li&gt;ITSMCore 1.1.91&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;br&gt;
+        ACHTUNG&lt;br&gt;
+        &lt;br&gt;
+        Vergewissern Sie sich, dass ihre Datenbank Pakete mit einer Größe von mehr als 5 MB akzeptiert. Eine MySQL Datenbank akzeptiert beispielsweise standartmäßig Pakete mit einer Größe von maximal 1 MB. In diesem Fall muss der Wert für max_allowed_packet erhöht werden. Empfohlen werden 20 MB.&lt;br&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+    </IntroUpgradePre>
+</otrs_package>
