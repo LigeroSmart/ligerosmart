@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LinkObjectFAQ.pm - layout backend module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: LinkObjectFAQ.pm,v 1.3 2008-06-27 16:46:06 mh Exp $
+# $Id: LinkObjectFAQ.pm,v 1.4 2008-07-01 07:35:13 rk Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -88,7 +88,7 @@ sub TableCreateComplex {
                 Type    => 'Link',
                 Key     => $FAQID,
                 Content => $FAQ->{Number},
-                Link    => '$Env{"Baselink"}Action=AgentFAQ&FAQID=' . $FAQID,
+                Link    => '$Env{"Baselink"}Action=AgentFAQ&ItemID=' . $FAQID,
             },
             {
                 Type      => 'Text',
@@ -174,7 +174,7 @@ sub TableCreateSimple {
                     Type    => 'Link',
                     Content => 'F:' . $FAQ->{Number},
                     Title   => "$FAQHook$FAQ->{Number}: $FAQ->{Title}",
-                    Link    => '$Env{"Baselink"}Action=AgentFAQ&FAQID=' . $FAQID,
+                    Link    => '$Env{"Baselink"}Action=AgentFAQ&ItemID=' . $FAQID,
                 );
                 push @ItemList, \%Item;
             }
