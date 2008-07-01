@@ -2,7 +2,7 @@
 # AgentTicketEmail.dtl - provides HTML form for agent email
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketEmail.dtl,v 1.2 2008-07-01 09:26:59 ub Exp $
+# $Id: AgentTicketEmail.dtl,v 1.3 2008-07-01 12:17:17 ub Exp $
 # $OldId: AgentTicketEmail.dtl,v 1.35 2008/05/15 09:41:53 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -152,8 +152,8 @@ function clear_field() {
 # ---
 # ITSM
 # ---
-          <input type="hidden" name="ImpactRC" value="0">
-          <input type="hidden" name="PriorityRC" value="0">
+          <input type="hidden" name="ImpactRC" value="0"/>
+          <input type="hidden" name="PriorityRC" value="0"/>
 # ---
           <input type="hidden" name="OwnerAll" value="$QData{"OwnerAll"}"/>
           <input type="hidden" name="ResponsibleAll" value="$QData{"ResponsibleAll"}"/>
