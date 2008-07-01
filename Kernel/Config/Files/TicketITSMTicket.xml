@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<otrs_config version="1.0" init="Application">
+    <CVS>$Id: TicketITSMTicket.xml,v 1.1 2008-07-01 09:14:24 ub Exp $</CVS>
+    <CVS>$OldId: Ticket.xml,v 1.147.2.7 2008/03/16 19:21:51 martin Exp $</CVS>
+    <ConfigItem Name="Ticket::Type" Required="1" Valid="1">
+        <Description Lang="en">If ticket type feature is enabled, you can define ticket types for tickets (e. g. incident, problem, change, ...).</Description>
+        <Description Lang="de">Wenn das Ticket-Typ Featues aktiviert ist, können Ticket Typen pro Ticket gesetzt werden (z. B. incident, problem, change, ...).</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Core::Ticket</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="TicketFreeKey13" Required="0" Valid="1">
+        <Description Lang="en">Define the free key field 13 for tickets. With this setting you can define a new ticket attribute.</Description>
+        <Description Lang="de">Definition des FreiSchlüsselFeldes 13 für Tickets. Hierüber können zusätzliche Ticketattribute definiert werden.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Core::TicketFreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="CriticalityID">CriticalityID</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="TicketFreeText13" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 13 for tickets. With this setting you can define a new ticket attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 13 für Tickets. Hierüber können zusätzliche Ticketattribute definiert werden.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Core::TicketFreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">DO NOT ACTIVATE TicketFreeText13. GENERAL CATALOG IS USED.</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="TicketFreeKey14" Required="0" Valid="1">
+        <Description Lang="en">Define the free key field 14 for tickets. With this setting you can define a new ticket attribute.</Description>
+        <Description Lang="de">Definition des FreiSchlüsselFeldes 14 für Tickets. Hierüber können zusätzliche Ticketattribute definiert werden.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Core::TicketFreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="ImpactID">ImpactID</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="TicketFreeText14" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 14 for tickets. With this setting you can define a new ticket attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 14 für Tickets. Hierüber können zusätzliche Ticketattribute definiert werden.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Core::TicketFreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">DO NOT ACTIVATE TicketFreeText14. GENERAL CATALOG IS USED.</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="TicketFreeText14::DefaultSelection" Required="0" Valid="1">
+        <Description Lang="en">The default selection of FreeTextField 14 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 14 wenn mehrere Optionen definiert sind.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Core::TicketFreeText</SubGroup>
+        <Setting>
+            <String Regex="">3 normal</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="TicketFreeKey15" Required="0" Valid="1">
+        <Description Lang="en">Define the free key field 15 for tickets. With this setting you can define a new ticket attribute.</Description>
+        <Description Lang="de">Definition des FreiSchlüsselFeldes 15 für Tickets. Hierüber können zusätzliche Ticketattribute definiert werden.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Core::TicketFreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Review Required">Review Required</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="TicketFreeText15" Required="0" Valid="1">
+        <Description Lang="en">Define the FreeTextField 15 for tickets. With this setting you can define a new ticket attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 15 für Tickets. Hierüber können zusätzliche Ticketattribute definiert werden.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Core::TicketFreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="TicketFreeText15::DefaultSelection" Required="0" Valid="1">
+        <Description Lang="en">The default selection of FreeTextField 15 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 15 wenn mehrere Optionen definiert sind.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Core::TicketFreeText</SubGroup>
+        <Setting>
+            <String Regex="">No</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="TicketFreeKey16" Required="0" Valid="1">
+        <Description Lang="en">Define the free key field 16 for tickets. With this setting you can define a new ticket attribute.</Description>
+        <Description Lang="de">Definition des FreiSchlüsselFeldes 16 für Tickets. Hierüber können zusätzliche Ticketattribute definiert werden.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Core::TicketFreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Decision Result">Decision Result</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="TicketFreeText16" Required="0" Valid="1">
+        <Description Lang="en">Define the FreeTextField 16 for tickets. With this setting you can define a new ticket attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 16 für Tickets. Hierüber können zusätzliche Ticketattribute definiert werden.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Core::TicketFreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Pending">Pending</Item>
+                <Item Key="Pre-approved">Pre-approved</Item>
+                <Item Key="Approved">Approved</Item>
+                <Item Key="Postponed">Postponed</Item>
+                <Item Key="Rejected">Rejected</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="TicketFreeText16::DefaultSelection" Required="0" Valid="1">
+        <Description Lang="en">The default selection of FreeTextField 16 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 16 wenn mehrere Optionen definiert sind.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Core::TicketFreeText</SubGroup>
+        <Setting>
+            <String Regex="">Pending</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="TicketFreeTimeKey3" Required="1" Valid="1">
+        <Description Lang="en">Define the key of TicketFreeTime field 3.</Description>
+        <Description Lang="de">Definition des Schluessels von TicketFreeTime Feld 3.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Core::TicketFreeTime</SubGroup>
+        <Setting>
+            <String>Repair Start Time</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="TicketFreeTimePeriod3" Required="0" Valid="1">
+        <Description Lang="en">Define the period, which can selected in TicketFreeTime field 3.</Description>
+        <Description Lang="de">Definition der Zeitspanne, die im TicketFreeTime Feld 3 selektiert werden kann.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Core::TicketFreeTime</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="YearPeriodPast">5</Item>
+                <Item Key="YearPeriodFuture">5</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="TicketFreeTimeKey4" Required="1" Valid="1">
+        <Description Lang="en">Define the key of TicketFreeTime field 4.</Description>
+        <Description Lang="de">Definition des Schluessels von TicketFreeTime Feld 4.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Core::TicketFreeTime</SubGroup>
+        <Setting>
+            <String>Recovery Start Time</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="TicketFreeTimePeriod4" Required="0" Valid="1">
+        <Description Lang="en">Define the period, which can selected in TicketFreeTime field 4.</Description>
+        <Description Lang="de">Definition der Zeitspanne, die im TicketFreeTime Feld 4 selektiert werden kann.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Core::TicketFreeTime</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="YearPeriodPast">5</Item>
+                <Item Key="YearPeriodFuture">5</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="TicketFreeTimeKey5" Required="1" Valid="1">
+        <Description Lang="en">Define the key of TicketFreeTime field 5.</Description>
+        <Description Lang="de">Definition des Schluessels von TicketFreeTime Feld 5.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Core::TicketFreeTime</SubGroup>
+        <Setting>
+            <String>Decision Date</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="TicketFreeTimePeriod5" Required="0" Valid="1">
+        <Description Lang="en">Define the period, which can selected in TicketFreeTime field 5.</Description>
+        <Description Lang="de">Definition der Zeitspanne, die im TicketFreeTime Feld 5 selektiert werden kann.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Core::TicketFreeTime</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="YearPeriodPast">5</Item>
+                <Item Key="YearPeriodFuture">5</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="TicketFreeTimeKey6" Required="1" Valid="1">
+        <Description Lang="en">Define the key of TicketFreeTime field 6.</Description>
+        <Description Lang="de">Definition des Schluessels von TicketFreeTime Feld 6.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Core::TicketFreeTime</SubGroup>
+        <Setting>
+            <String>Due Date</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="TicketFreeTimeDiff6" Required="0" Valid="1">
+        <Description Lang="en">Define the difference (in seconds) of the defaultvalue in TicketFreeTime field 6.</Description>
+        <Description Lang="de">Definition des Unterschieds (in Sekunden) des Defaultwerts von TicketFreeTime Feld 6.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Core::TicketFreeTime</SubGroup>
+        <Setting>
+            <String>259200</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="TicketFreeTimePeriod6" Required="0" Valid="1">
+        <Description Lang="en">Define the period, which can selected in TicketFreeTime field 6.</Description>
+        <Description Lang="de">Definition der Zeitspanne, die im TicketFreeTime Feld 6 selektiert werden kann.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Core::TicketFreeTime</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="YearPeriodPast">1</Item>
+                <Item Key="YearPeriodFuture">9</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentTicketFreeText" Required="0" Valid="0">
+        <Description Lang="en">Frontend module registration for the AgentTicketFreeText object in the agent interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration des AgentTicketFreeText-Objekts im Agent-Interface.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Description>Ticket FreeText</Description>
+                <Title>Free Fields</Title>
+                <NavBarName>Ticket</NavBarName>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketClose###TicketFreeText" Required="0" Valid="1">
+        <Description Lang="en">Shown ticket free text options. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
+        <Description Lang="de">Angezeigte Ticket-Frei-Text-Felder. Mögliche Einstellungen: 0 = Deaktiviert, 1 = Aktiviert, 2 = Aktiviert und Pflichtfeld.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewClose</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="1">0</Item>
+                <Item Key="2">0</Item>
+                <Item Key="3">0</Item>
+                <Item Key="4">0</Item>
+                <Item Key="5">0</Item>
+                <Item Key="6">0</Item>
+                <Item Key="7">0</Item>
+                <Item Key="8">0</Item>
+                <Item Key="9">0</Item>
+                <Item Key="10">0</Item>
+                <Item Key="11">0</Item>
+                <Item Key="12">0</Item>
+                <Item Key="13">0</Item>
+                <Item Key="14">0</Item>
+                <Item Key="15">1</Item>
+                <Item Key="16">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketCompose###TicketFreeText" Required="0" Valid="1">
+        <Description Lang="en">Shown ticket free text options. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
+        <Description Lang="de">Angezeigte Ticket-Frei-Text-Felder. Mögliche Einstellungen: 0 = Deaktiviert, 1 = Aktiviert, 2 = Aktiviert und Pflichtfeld.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewCompose</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="1">0</Item>
+                <Item Key="2">0</Item>
+                <Item Key="3">0</Item>
+                <Item Key="4">0</Item>
+                <Item Key="5">0</Item>
+                <Item Key="6">0</Item>
+                <Item Key="7">0</Item>
+                <Item Key="8">0</Item>
+                <Item Key="9">0</Item>
+                <Item Key="10">0</Item>
+                <Item Key="11">0</Item>
+                <Item Key="12">0</Item>
+                <Item Key="13">0</Item>
+                <Item Key="14">0</Item>
+                <Item Key="15">1</Item>
+                <Item Key="16">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketEmail###TicketFreeTime" Required="0" Valid="1">
+        <Description Lang="en">Shown free time options.</Description>
+        <Description Lang="de">Gezeigte Frei-Zeit-Felder.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewEmailNew</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="1">0</Item>
+                <Item Key="2">0</Item>
+                <Item Key="3">0</Item>
+                <Item Key="4">0</Item>
+                <Item Key="5">0</Item>
+                <Item Key="6">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketPhone###TicketFreeTime" Required="0" Valid="1">
+        <Description Lang="en">Shown free time options.</Description>
+        <Description Lang="de">Gezeigte Frei-Zeit-Felder.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewPhoneNew</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="1">0</Item>
+                <Item Key="2">0</Item>
+                <Item Key="3">0</Item>
+                <Item Key="4">0</Item>
+                <Item Key="5">0</Item>
+                <Item Key="6">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketPriority###TicketType" Required="0" Valid="1">
+        <Description Lang="en">If you want to set the ticket type (Ticket::Type needs to be activated).</Description>
+        <Description Lang="de">Wenn der Ticket-Typ gesetzt werden soll (Ticket::Type muss aktiv sein).</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewPriority</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketPriority###Service" Required="0" Valid="1">
+        <Description Lang="en">If you want to set the service (Ticket::Service needs to be activated).</Description>
+        <Description Lang="de">Wenn der Service gesetzt werden soll (Ticket::Service muss aktiv sein).</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewPriority</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketSearch###TicketFreeText" Required="0" Valid="1">
+        <Description Lang="en">Shown ticket free text options.</Description>
+        <Description Lang="de">Gezeigte Ticket-Frei-Text-Felder.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewSearch</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="1">0</Item>
+                <Item Key="2">0</Item>
+                <Item Key="3">0</Item>
+                <Item Key="4">0</Item>
+                <Item Key="5">0</Item>
+                <Item Key="6">0</Item>
+                <Item Key="7">0</Item>
+                <Item Key="8">0</Item>
+                <Item Key="9">0</Item>
+                <Item Key="10">0</Item>
+                <Item Key="11">0</Item>
+                <Item Key="12">0</Item>
+                <Item Key="13">0</Item>
+                <Item Key="14">0</Item>
+                <Item Key="15">1</Item>
+                <Item Key="16">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketSearch###TicketFreeTime" Required="0" Valid="1">
+        <Description Lang="en">Shown free time options.</Description>
+        <Description Lang="de">Gezeigte Frei-Zeit-Felder.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewSearch</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="1">0</Item>
+                <Item Key="2">0</Item>
+                <Item Key="3">1</Item>
+                <Item Key="4">1</Item>
+                <Item Key="5">1</Item>
+                <Item Key="6">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::MenuModule###310-FreeText" Required="0" Valid="0">
+        <Description Lang="en">Module to show free text link in menu.</Description>
+        <Description Lang="de">Link für "Freifelder" im Menü der Ticketansicht anzeigen.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::MenuModule</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::TicketMenuGeneric</Item>
+                <Item Key="Name">Free Fields</Item>
+                <Item Key="Description">Change the ticket free fields!</Item>
+                <Item Key="Action">AgentTicketFreeText</Item>
+                <Item Key="Link">Action=AgentTicketFreeText&amp;TicketID=$QData{"TicketID"}</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::MenuModule###320-Link" Required="0" Valid="0">
+        <Description Lang="en">Module to show a link to link a ticket with another object.</Description>
+        <Description Lang="de">Über dieses Modul wird ein Link im Menü der Ticketansicht angezeigt, mit dem ein Ticket mit einem anderen Objekt verknüpft werden kann.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::MenuModule</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::TicketMenuGeneric</Item>
+                <Item Key="Name">Link</Item>
+                <Item Key="Description">Link this ticket to an other objects!</Item>
+                <Item Key="Action">AgentLinkObject</Item>
+                <Item Key="Link">Action=AgentLinkObject&amp;SourceObject=Ticket&amp;SourceID=$QData{"TicketID"}</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+</otrs_config>

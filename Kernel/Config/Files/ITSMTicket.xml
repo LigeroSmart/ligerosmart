@@ -1,0 +1,669 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<otrs_config version="1.0" init="Config">
+    <CVS>$Id: ITSMTicket.xml,v 1.1 2008-07-01 09:14:24 ub Exp $</CVS>
+    <ConfigItem Name="Frontend::Module###AgentTicketAddtlITSMField" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AgentTicketAddtlITSMField object in the agent interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration des AgentTicketAddtlITSMField-Objekts im Agent-Interface.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Description>Additional ITSM Ticket Fields</Description>
+                <Title>Additional ITSM Fields</Title>
+                <NavBarName>Ticket</NavBarName>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentTicketDecision" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AgentTicketDecision object in the agent interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration des AgentTicketDecision-Objekts im Agent-Interface.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Description>Ticket Decision</Description>
+                <Title>Decision</Title>
+                <NavBarName>Ticket</NavBarName>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::MenuModule###315-AddtlITSMField" Required="0" Valid="1">
+        <Description Lang="en">Module to show additional ITSM field link in menu.</Description>
+        <Description Lang="de">Über dieses Modul wird der Zusätzliche ITSM Felder-Link in der Linkleiste der Ticketansicht angezeigt.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::MenuModule</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::TicketMenuAddtlITSMField</Item>
+                <Item Key="Name">Additional ITSM Fields</Item>
+                <Item Key="Description">Change the ITSM fields!</Item>
+                <Item Key="Action">AgentTicketAddtlITSMField</Item>
+                <Item Key="Link">Action=AgentTicketAddtlITSMField&amp;TicketID=$QData{"TicketID"}</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::MenuModule###320-Link" Required="0" Valid="1">
+        <Description Lang="en">Module to show a link to link a ticket with another object.</Description>
+        <Description Lang="de">Über dieses Modul wird ein Link im Menü der Ticketansicht angezeigt, mit dem ein Ticket mit einem anderen Objekt verknüpft werden kann.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::MenuModule</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::TicketMenuGeneric</Item>
+                <Item Key="Name">Link</Item>
+                <Item Key="Description">Link this ticket to an other objects!</Item>
+                <Item Key="Action">AgentLinkObject</Item>
+                <Item Key="Link">Action=AgentLinkObject&amp;SourceObject=Ticket&amp;SourceKey=$QData{"TicketID"}</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::MenuModule###420-Decision" Required="0" Valid="1">
+        <Description Lang="en">Module to show decision link in menu.</Description>
+        <Description Lang="de">Über dieses Modul wird der Entscheidung-Link in der Linkleiste der Ticketansicht angezeigt.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::MenuModule</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::TicketMenuDecision</Item>
+                <Item Key="Name">Decision</Item>
+                <Item Key="Description">Add a decision note!</Item>
+                <Item Key="Action">AgentTicketDecision</Item>
+                <Item Key="Link">Action=AgentTicketDecision&amp;TicketID=$QData{"TicketID"}</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###Permission" Required="1" Valid="1">
+        <Description Lang="en">Required permissions to use this option.</Description>
+        <Description Lang="de">Benötigte Rechte zur Bearbeitung des Tickets.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
+        <Setting>
+            <String Regex="">rw</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###RequiredLock" Required="0" Valid="1">
+        <Description Lang="en">A ticket lock is required. In case the ticket isn't locked, the ticket gets locked and the current agent will be set automatically as ticket owner.</Description>
+        <Description Lang="de">Eine Ticket-Sperre wird benötigt. Wenn Ticket nicht gesperrt ist, wird das Ticket automatisch gesperrt und der Agent als Besitzer gesetzt.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###TicketType" Required="0" Valid="1">
+        <Description Lang="en">If you want to set the ticket type (Ticket::Type needs to be activated).</Description>
+        <Description Lang="de">Wenn der Ticket-Typ gesetzt werden soll (Ticket::Type muss aktiv sein).</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###Service" Required="0" Valid="1">
+        <Description Lang="en">If you want to set the service (Ticket::Service needs to be activated).</Description>
+        <Description Lang="de">Wenn der Service gesetzt werden soll (Ticket::Service muss aktiv sein).</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###Owner" Required="0" Valid="1">
+        <Description Lang="en">If you want to set the owner.</Description>
+        <Description Lang="de">Wenn der Besitzer gesetzt werden soll.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###Responsible" Required="0" Valid="1">
+        <Description Lang="en">If you want to set the responsible agent.</Description>
+        <Description Lang="de">Wenn der Verantwortliche gesetzt werden soll.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###State" Required="0" Valid="1">
+        <Description Lang="en">Would you like to set the state of a ticket if a note is added by an agent?</Description>
+        <Description Lang="de">Soll der Status eines Tickets gesetzt werden können, wenn eine Notiz durch einen Agent angelegt wird?</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###StateType" Required="1" Valid="1">
+        <Description Lang="en">Default next states after adding a note.</Description>
+        <Description Lang="de">Nächstmögliche Status nach dem Hinzufügen einer Notiz.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
+        <Setting>
+            <Array>
+                <Item>open</Item>
+                <Item>closed</Item>
+                <Item>pending reminder</Item>
+                <Item>pending auto</Item>
+            </Array>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###StateDefault" Required="0" Valid="0">
+        <Description Lang="en">Default next state after an email ticket.</Description>
+        <Description Lang="de">Standardmäßig ausgewählter nächster Status.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
+        <Setting>
+            <String Regex="">open</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###Note" Required="0" Valid="1">
+        <Description Lang="en">Show note fields.</Description>
+        <Description Lang="de">Eingabemöglichkeit für Notiz.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###Subject" Required="0" Valid="1">
+        <Description Lang="en">Default note subject.</Description>
+        <Description Lang="de">Standardtext im Betreff einer Notiz.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
+        <Setting>
+            <String Regex="">$Text{"Note"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###Body" Required="0" Valid="1">
+        <Description Lang="en">Default note text.</Description>
+        <Description Lang="de">Standardtext im Textfeld einer Notiz.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
+        <Setting>
+            <TextArea></TextArea>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###InvolvedAgent" Required="0" Valid="0">
+        <Description Lang="en">Show selection of involved agents?</Description>
+        <Description Lang="de">Auswahl der involvierten Agents anzeigen?</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###InformAgent" Required="0" Valid="0">
+        <Description Lang="en">Show selection of agents to inform?</Description>
+        <Description Lang="de">Auswahl der zu informierenden Agents anzeigen?</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###ArticleTypeDefault" Required="0" Valid="1">
+        <Description Lang="en">Default note type.</Description>
+        <Description Lang="de">Voreingestellter Notiztyp.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
+        <Setting>
+            <String Regex="">note-internal</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###ArticleTypes" Required="0" Valid="1">
+        <Description Lang="en">Specify the different note types that you want to use in your system.</Description>
+        <Description Lang="de">Hier können die verschiedenen Notiz-Typen festgelegt werden, die innerhalb des Systems verwendet werden sollen.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="note-internal">1</Item>
+                <Item Key="note-external">1</Item>
+                <Item Key="note-report">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###Priority" Required="0" Valid="0">
+        <Description Lang="en">Show priority options.</Description>
+        <Description Lang="de">Möglichkeit eine Priorität auszuwählen.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###PriorityDefault" Required="0" Valid="0">
+        <Description Lang="en">Default priority options.</Description>
+        <Description Lang="de">Default Auswahl der Priorität.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
+        <Setting>
+            <String Regex="">3 normal</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###Title" Required="0" Valid="1">
+        <Description Lang="en">Show title fields.</Description>
+        <Description Lang="de">Eingabemöglichkeit für Title.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###TicketFreeText" Required="0" Valid="1">
+        <Description Lang="en">Shown ticket free text options.</Description>
+        <Description Lang="de">Gezeigte Ticket-Frei-Text-Felder.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="1">0</Item>
+                <Item Key="2">0</Item>
+                <Item Key="3">0</Item>
+                <Item Key="4">0</Item>
+                <Item Key="5">0</Item>
+                <Item Key="6">0</Item>
+                <Item Key="7">0</Item>
+                <Item Key="8">0</Item>
+                <Item Key="9">0</Item>
+                <Item Key="10">0</Item>
+                <Item Key="11">0</Item>
+                <Item Key="12">0</Item>
+                <Item Key="13">0</Item>
+                <Item Key="14">0</Item>
+                <Item Key="15">0</Item>
+                <Item Key="16">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###TicketFreeTime" Required="0" Valid="1">
+        <Description Lang="en">Shown free time options.</Description>
+        <Description Lang="de">Gezeigte Frei-Zeit-Felder.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="1">0</Item>
+                <Item Key="2">0</Item>
+                <Item Key="3">1</Item>
+                <Item Key="4">1</Item>
+                <Item Key="5">0</Item>
+                <Item Key="6">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###ArticleFreeText" Required="0" Valid="1">
+        <Description Lang="en">Shown article free text options.</Description>
+        <Description Lang="de">Gezeigte Artikel-Frei-Text-Felder.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="1">0</Item>
+                <Item Key="2">0</Item>
+                <Item Key="3">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###HistoryType" Required="0" Valid="1">
+        <Description Lang="en">History type for this action.</Description>
+        <Description Lang="de">Historientyp für diese Aktion.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
+        <Setting>
+            <String Regex="">AddNote</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###HistoryComment" Required="0" Valid="1">
+        <Description Lang="en">History comment for this action.</Description>
+        <Description Lang="de">Historienkommentar für diese Aktion.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
+        <Setting>
+            <String Regex="">%%FreeText</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###Permission" Required="1" Valid="1">
+        <Description Lang="en">Required permissions to use this option.</Description>
+        <Description Lang="de">Benötigte Rechte zur Bearbeitung des Tickets.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
+        <Setting>
+            <String Regex="">rw</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###RequiredLock" Required="0" Valid="1">
+        <Description Lang="en">A ticket lock is required. In case the ticket isn't locked, the tickets get locked and the current agent will be set automatically as ticket owner.</Description>
+        <Description Lang="de">Eine Ticket-Sperre wird benötigt bzw. wenn Ticket nicht gesperrt ist, wird das Ticket automatisch gesperrt und der Agent als Besitzer gesetzt.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###TicketType" Required="0" Valid="1">
+        <Description Lang="en">If you want to set the ticket type (Ticket::Type needs to be activated).</Description>
+        <Description Lang="de">Wenn der Ticket-Typ gesetzt werden soll (Ticket::Type muss aktiv sein).</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###Service" Required="0" Valid="1">
+        <Description Lang="en">If you want to set the service (Ticket::Service needs to be activated).</Description>
+        <Description Lang="de">Wenn der Service gesetzt werden soll (Ticket::Service muss aktiv sein).</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###Owner" Required="0" Valid="1">
+        <Description Lang="en">If you want to set the owner.</Description>
+        <Description Lang="de">Wenn der Besitzer gesetzt werden soll.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###Responsible" Required="0" Valid="1">
+        <Description Lang="en">If you want to set the responsible.</Description>
+        <Description Lang="de">Wenn der Verantwortliche gesetzt werden soll.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###State" Required="0" Valid="1">
+        <Description Lang="en">Would you like to set the state of a ticket if a note is created by an agent?</Description>
+        <Description Lang="de">Soll der Status eines Tickets gesetzt werden können, wenn eine Notiz durch einen Agent angelegt wird?</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###StateType" Required="1" Valid="1">
+        <Description Lang="en">Default next states after adding a note.</Description>
+        <Description Lang="de">Nächstmögliche Status nach dem Hinzufügen einer Notiz.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
+        <Setting>
+            <Array>
+                <Item>open</Item>
+                <Item>closed</Item>
+                <Item>pending reminder</Item>
+                <Item>pending auto</Item>
+            </Array>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###StateDefault" Required="0" Valid="0">
+        <Description Lang="en">Default next state after an email ticket.</Description>
+        <Description Lang="de">Standardmäßig ausgewählter nächster Status.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
+        <Setting>
+            <String Regex="">open</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###Note" Required="0" Valid="1">
+        <Description Lang="en">Show note fields.</Description>
+        <Description Lang="de">Eingabemöglichkeit für Notiz.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###Subject" Required="0" Valid="1">
+        <Description Lang="en">Default note subject.</Description>
+        <Description Lang="de">Standardtext im Betreff einer Notiz.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
+        <Setting>
+            <String Regex="">$Text{"Decision"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###Body" Required="0" Valid="1">
+        <Description Lang="en">Default note text.</Description>
+        <Description Lang="de">Standardtext im Textfeld einer Notiz.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
+        <Setting>
+            <TextArea>$Text{"Reason"}:</TextArea>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###InvolvedAgent" Required="0" Valid="0">
+        <Description Lang="en">Show selection of involved agents?</Description>
+        <Description Lang="de">Auswahl der involvierten Agents anzeigen?</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###InformAgent" Required="0" Valid="0">
+        <Description Lang="en">Show selection of agents to inform?</Description>
+        <Description Lang="de">Auswahl der zu informierenden Agents anzeigen?</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###ArticleTypeDefault" Required="0" Valid="1">
+        <Description Lang="en">Default note type.</Description>
+        <Description Lang="de">Voreingestellter Notiztyp.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
+        <Setting>
+            <String Regex="">note-internal</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###ArticleTypes" Required="0" Valid="1">
+        <Description Lang="en">Specify the different note types, that you want to use in your system.</Description>
+        <Description Lang="de">Hier können die verschiedenen Notiz-Typen festgelegt werden, die innerhalb des Systems verwendet werden sollen.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="note-internal">1</Item>
+                <Item Key="note-external">1</Item>
+                <Item Key="note-report">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###Priority" Required="0" Valid="0">
+        <Description Lang="en">Show priority options.</Description>
+        <Description Lang="de">Möglichkeit der Auswahl für die Priorität.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###PriorityDefault" Required="0" Valid="0">
+        <Description Lang="en">Default priority options.</Description>
+        <Description Lang="de">Default Auswahl der Priorität.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
+        <Setting>
+            <String Regex="">3 normal</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###Title" Required="0" Valid="1">
+        <Description Lang="en">Show title fields.</Description>
+        <Description Lang="de">Eingabemöglichkeit für Title.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###TicketFreeText" Required="0" Valid="1">
+        <Description Lang="en">Shown ticket free text options.</Description>
+        <Description Lang="de">Gezeigte Ticket-Frei-Text-Felder.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="1">0</Item>
+                <Item Key="2">0</Item>
+                <Item Key="3">0</Item>
+                <Item Key="4">0</Item>
+                <Item Key="5">0</Item>
+                <Item Key="6">0</Item>
+                <Item Key="7">0</Item>
+                <Item Key="8">0</Item>
+                <Item Key="9">0</Item>
+                <Item Key="10">0</Item>
+                <Item Key="11">0</Item>
+                <Item Key="12">0</Item>
+                <Item Key="13">0</Item>
+                <Item Key="14">0</Item>
+                <Item Key="15">0</Item>
+                <Item Key="16">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###TicketFreeTime" Required="0" Valid="1">
+        <Description Lang="en">Shown free time options.</Description>
+        <Description Lang="de">Gezeigte Frei-Zeit-Felder.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="1">0</Item>
+                <Item Key="2">0</Item>
+                <Item Key="3">0</Item>
+                <Item Key="4">0</Item>
+                <Item Key="5">1</Item>
+                <Item Key="6">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###ArticleFreeText" Required="0" Valid="1">
+        <Description Lang="en">Shown article free text options.</Description>
+        <Description Lang="de">Gezeigte Artikel-Frei-Text-Felder.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="1">0</Item>
+                <Item Key="2">0</Item>
+                <Item Key="3">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###HistoryType" Required="0" Valid="1">
+        <Description Lang="en">History type for this action.</Description>
+        <Description Lang="de">Historientyp für diese Aktion.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
+        <Setting>
+            <String Regex="">AddNote</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###HistoryComment" Required="0" Valid="1">
+        <Description Lang="en">History comment for this action.</Description>
+        <Description Lang="de">Historienkommentar für diese Aktion.</Description>
+        <Group>ITSM</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
+        <Setting>
+            <String Regex="">%%Note</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Stats::DynamicObjectRegistration###ITSMTicketFirstLevelSolutionRate" Required="0" Valid="1">
+        <Description Lang="en">Here you can decide if the stats module may generate stats about itsm ticket first level solution rate stuff.</Description>
+        <Description Lang="de">Hier können Sie festlegen, ob das Statistik-Modul auch Statistiken über ITSM-Ticket-Erstlösungsrate Dinge generieren darf.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::Stats</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::System::Stats::Dynamic::ITSMTicketFirstLevelSolutionRate</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Stats::DynamicObjectRegistration###ITSMTicketSolutionTimeAverage" Required="0" Valid="1">
+        <Description Lang="en">Here you can decide if the stats module may generate stats about itsm ticket solution average stuff.</Description>
+        <Description Lang="de">Hier können Sie festlegen, ob das Statistik-Modul auch Statistiken über ITSM-Ticket-Lösungszeit-Durchscnitt Dinge generieren darf.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::Stats</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::System::Stats::Dynamic::ITSMTicketSolutionTimeAverage</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+</otrs_config>
