@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketPhone.pm - to handle phone calls
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.pm,v 1.1 2008-06-30 17:12:26 ub Exp $
+# $Id: AgentTicketPhone.pm,v 1.2 2008-07-01 09:26:59 ub Exp $
 # $OldId: AgentTicketPhone.pm,v 1.77 2008/06/30 15:03:49 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -31,7 +31,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1107,6 +1107,19 @@ sub Run {
                     %GetParam,
                 );
             }
+# ---
+# ITSM
+# ---
+            # TODO change this to new link object!
+            #
+            # move existing link data from temp table to the production table
+            #$Self->{LinkObject2}->LinkMoveFromTempToProduction(
+            #    Class         => 'Ticket',
+            #    TempKey       => $Self->{FormID},
+            #    ProductionKey => $TicketID,
+            #    UserID        => $Self->{UserID},
+            #);
+# ---
 
             # get redirect screen
             my $NextScreen = $Self->{UserCreateNextMask}
