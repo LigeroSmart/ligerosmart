@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ImportExport.sopm,v 1.21 2008-06-25 08:39:54 mh Exp $</CVS>
+    <CVS>$Id: ImportExport.sopm,v 1.22 2008-07-02 18:57:54 mh Exp $</CVS>
     <Name>ImportExport</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
-    <Framework>2.3.x CVS</Framework>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
@@ -136,44 +135,4 @@
         <TableDrop Name="imexport_mapping_format"/>
         <TableDrop Name="imexport_search"/>
     </DatabaseUninstall>
-    <IntroInstallPre Title="Install Information" Lang="en">
-        &lt;br&gt;
-        WELCOME&lt;br&gt;
-        &lt;br&gt;
-        You are about to install the OTRS module ImportExport.&lt;br&gt;
-        &lt;br&gt;
-        &lt;br&gt;
-        ((enjoy))&lt;br&gt;
-        &lt;br&gt;
-    </IntroInstallPre>
-    <IntroInstallPre Title="Installation Information" Lang="de">
-        &lt;br&gt;
-        WILLKOMMEN&lt;br&gt;
-        &lt;br&gt;
-        Sie sind im Begriff das OTRS-Modul ImportExport zu installieren.&lt;br&gt;
-        &lt;br&gt;
-        &lt;br&gt;
-        ((enjoy))&lt;br&gt;
-        &lt;br&gt;
-    </IntroInstallPre>
-    <IntroUpgradePre Title="Upgrade Information" Lang="en">
-        &lt;br&gt;
-        WELCOME&lt;br&gt;
-        &lt;br&gt;
-        You are about to upgrade the OTRS module ImportExport.&lt;br&gt;
-        &lt;br&gt;
-        &lt;br&gt;
-        ((enjoy))&lt;br&gt;
-        &lt;br&gt;
-    </IntroUpgradePre>
-    <IntroUpgradePre Title="Upgrade Information" Lang="de">
-        &lt;br&gt;
-        WILLKOMMEN&lt;br&gt;
-        &lt;br&gt;
-        Sie sind im Begriff das OTRS-Modul ImportExport zu aktualisieren.&lt;br&gt;
-        &lt;br&gt;
-        &lt;br&gt;
-        ((enjoy))&lt;br&gt;
-        &lt;br&gt;
-    </IntroUpgradePre>
 </otrs_package>
