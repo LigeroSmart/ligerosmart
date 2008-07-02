@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketQueue.pm - the queue view of all tickets
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketQueue.pm,v 1.1 2008-07-02 19:45:41 ub Exp $
+# $Id: AgentTicketQueue.pm,v 1.2 2008-07-02 22:30:16 ub Exp $
 # $OldId: AgentTicketQueue.pm,v 1.51 2008/07/02 10:23:00 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -25,7 +25,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -498,8 +498,8 @@ sub ShowTicket {
 # ---
 # ITSM
 # ---
-        # disable ticket free text 13 and 14
-        if ( $Count == 13 || $Count == 14 ) {
+        # disable ticket free text 13 to 16
+        if ( $Count >= 13 && $Count <= 16 ) {
             next;
         }
 # ---
@@ -554,6 +554,14 @@ sub ShowTicket {
 
     # ticket free time
     for my $Count ( 1 .. 6 ) {
+# ---
+# ITSM
+# ---
+        # disable ticket free time 3 to 6
+        if ( $Count >= 3 && $Count <= 6 ) {
+            next;
+        }
+# ---
         if ( $Article{ 'TicketFreeTime' . $Count } ) {
             $Self->{LayoutObject}->Block(
                 Name => 'TicketFreeTime' . $Count,
