@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMServiceZoom.pm - the OTRS::ITSM Service zoom module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMServiceZoom.pm,v 1.1 2008-07-02 12:36:13 mh Exp $
+# $Id: AgentITSMServiceZoom.pm,v 1.2 2008-07-02 14:10:08 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::Service;
 use Kernel::System::SLA;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -108,47 +108,47 @@ sub Run {
         }
     }
 
-#    my $OutputHorizontalRuler = 0;
-#
-#    # get sla list
-#    my %SLAList = $Self->{SLAObject}->SLAList(
-#        ServiceID => $ServiceID,
-#        UserID    => $Self->{UserID},
-#    );
-#    if (%SLAList) {
-#        $OutputHorizontalRuler = 1;
-#
-#        # get sla type list
-#        my $SLATypeList = $Self->{GeneralCatalogObject}->ItemList(
-#            Class => 'ITSM::SLA::Type',
-#        );
-#
-#        # output row
-#        $Self->{LayoutObject}->Block( Name => 'SLA' );
-#
-#        my $CssClass = '';
-#        for my $SLAID ( sort { $SLAList{$a} cmp $SLAList{$b} } keys %SLAList ) {
-#
-#            # set output object
-#            $CssClass = $CssClass eq 'searchpassive' ? 'searchactive' : 'searchpassive';
-#
-#            # get service data
-#            my %SLA = $Self->{SLAObject}->SLAGet(
-#                SLAID  => $SLAID,
-#                UserID => $Self->{UserID},
-#            );
-#
-#            # output row
-#            $Self->{LayoutObject}->Block(
-#                Name => 'SLARow',
-#                Data => {
-#                    %SLA,
-#                    Type     => $SLATypeList->{ $SLA{TypeID} },
-#                    CssClass => $CssClass,
-#                },
-#            );
-#        }
-#    }
+    my $OutputHorizontalRuler = 0;
+
+    # get sla list
+    my %SLAList = $Self->{SLAObject}->SLAList(
+        ServiceID => $ServiceID,
+        UserID    => $Self->{UserID},
+    );
+    if (%SLAList) {
+        $OutputHorizontalRuler = 1;
+
+        # get sla type list
+        my $SLATypeList = $Self->{GeneralCatalogObject}->ItemList(
+            Class => 'ITSM::SLA::Type',
+        );
+
+        # output row
+        $Self->{LayoutObject}->Block( Name => 'SLA' );
+
+        my $CssClass = '';
+        for my $SLAID ( sort { $SLAList{$a} cmp $SLAList{$b} } keys %SLAList ) {
+
+            # set output object
+            $CssClass = $CssClass eq 'searchpassive' ? 'searchactive' : 'searchpassive';
+
+            # get service data
+            my %SLA = $Self->{SLAObject}->SLAGet(
+                SLAID  => $SLAID,
+                UserID => $Self->{UserID},
+            );
+
+            # output row
+            $Self->{LayoutObject}->Block(
+                Name => 'SLARow',
+                Data => {
+                    %SLA,
+                    Type     => $SLATypeList->{ $SLA{TypeID} },
+                    CssClass => $CssClass,
+                },
+            );
+        }
+    }
 
     # get linked objects
     my $LinkListWithData = $Self->{LinkObject}->LinkListWithData(
@@ -174,6 +174,15 @@ sub Run {
             Data => {
                 LinkTableStrg => $LinkTableStrg,
             },
+        );
+
+        $OutputHorizontalRuler = 1;
+    }
+
+    # output horizontal ruler
+    if ($OutputHorizontalRuler) {
+        $Self->{LayoutObject}->Block(
+            Name => 'HorizontalRuler',
         );
     }
 

@@ -2,7 +2,7 @@
 # AgentITSMServiceZoom.dtl - provides HTML form for AgentITSMServiceZoom
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMServiceZoom.dtl,v 1.1 2008-07-02 12:36:13 mh Exp $
+# $Id: AgentITSMServiceZoom.dtl,v 1.2 2008-07-02 14:09:44 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -49,8 +49,11 @@
           <td class="contentvalue">$Text{"$QData{"Criticality"}"}</td>
         </tr>
       </table>
-<!-- dtl:block:SLA -->
+<!-- dtl:block:HorizontalRuler -->
+      <hr size="2">
+<!-- dtl:block:HorizontalRuler -->
       <br>
+<!-- dtl:block:SLA -->
       <table width="100%" border="0" cellspacing="0" cellpadding="0">
         <tr>
           <td align="center">
@@ -63,7 +66,7 @@
               <tr class="contenthead">
                 <td class="contentkey">$Text{"SLA"}</td>
                 <td class="contentkey">$Text{"Type"}</td>
-                <td class="contentkey" width="150">$Text{"Last Change"}</td>
+                <td class="contentkey" width="150">$Text{"Changed"}</td>
               </tr>
 <!-- dtl:block:SLARow -->
               <tr class="contentbody">
@@ -83,13 +86,9 @@
           </td>
         </tr>
       </table>
-<!-- dtl:block:SLA -->
-
-
-
-<!-- dtl:block:LinkTableComplex -->
-      <hr size="2">
       <br>
+<!-- dtl:block:SLA -->
+<!-- dtl:block:LinkTableComplex -->
       <table width="98%" align="center" border="0" cellspacing="0" cellpadding="0">
         <tr>
           <td>
@@ -97,8 +96,8 @@
           </td>
         </tr>
       </table>
-<!-- dtl:block:LinkTableComplex -->
       <br>
+<!-- dtl:block:LinkTableComplex -->
     </td>
     <td width="25%" class="menu">
       <table border="0" cellspacing="1" cellpadding="0" width="100%">
