@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketPhone.pm - to handle phone calls
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.pm,v 1.2 2008-07-01 09:26:59 ub Exp $
+# $Id: AgentTicketPhone.pm,v 1.3 2008-07-02 09:57:44 ub Exp $
 # $OldId: AgentTicketPhone.pm,v 1.77 2008/06/30 15:03:49 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -31,7 +31,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1378,7 +1378,7 @@ sub _GetServices {
 
     my %Service = ();
 
-    # get priority
+    # get services
     if ( ( $Param{QueueID} || $Param{TicketID} ) && $Param{CustomerUserID} ) {
         %Service = $Self->{TicketObject}->TicketServiceList(
             %Param,
@@ -1394,7 +1394,7 @@ sub _GetSLAs {
 
     my %SLA = ();
 
-    # get priority
+    # get slas
     if ( $Param{ServiceID} ) {
         %SLA = $Self->{TicketObject}->TicketSLAList(
             %Param,
@@ -1465,7 +1465,7 @@ sub _GetTos {
         }
     }
 
-    # adde empty selection
+    # add empty selection
     $NewTos{''} = '-';
     return \%NewTos;
 }
@@ -1889,15 +1889,15 @@ sub _MaskPhoneNew {
         SelectedID => $Param{ImpactID},
         OnChange => "document.compose.ExpandCustomerName.value='3'; document.compose.PriorityRC.value='1'; document.compose.submit(); return false;",
         Ajax => {
-                Update => [
-                    'PriorityID',
-                ],
-                Depend => [
-                    'TicketFreeText14',
-                    'ServiceID',
-                ],
-                Subaction => 'AJAXUpdate',
-            },
+            Update => [
+                'PriorityID',
+            ],
+            Depend => [
+                'TicketFreeText14',
+                'ServiceID',
+            ],
+            Subaction => 'AJAXUpdate',
+        },
     );
     if ($Param{PriorityIDFromImpact}) {
         $Param{PriorityID} = $Param{PriorityIDFromImpact};
