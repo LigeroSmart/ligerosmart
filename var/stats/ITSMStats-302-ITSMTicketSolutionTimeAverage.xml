@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<otrs_stats>
+<Cache>0</Cache>
+<Description>Average solution time per Ticket-Type and Sevice for all tickets ever created.
+
+X-Axis: Ticket-Type
+Y-Axis: Service
+
+Restrictions:
+    -a closed state</Description>
+<File></File>
+<Format>CSV</Format>
+<Format>Print</Format>
+<Object>ITSMTicketSolutionTimeAverage</Object>
+<ObjectModule>Kernel::System::Stats::Dynamic::ITSMTicketSolutionTimeAverage</ObjectModule>
+<Permission>stats</Permission>
+<StatType>dynamic</StatType>
+<SumCol>0</SumCol>
+<SumRow>0</SumRow>
+<Title>Average solution time per Ticket-Type and Sevice for all tickets ever created.</Title>
+<UseAsRestriction Element="StateIDs" Fixed="1">
+<SelectedValues>2</SelectedValues>
+<SelectedValues>10</SelectedValues>
+</UseAsRestriction>
+<UseAsValueSeries Element="ServiceIDs" Fixed="1">
+</UseAsValueSeries>
+<UseAsXvalue Element="TypeIDs" Fixed="1">
+</UseAsXvalue>
+<Valid>1</Valid>
+</otrs_stats>

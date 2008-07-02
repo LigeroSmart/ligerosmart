@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.0">
+    <CVS>$Id: ITSMServiceLevelManagement.sopm,v 1.1.1.1 2008-07-02 16:21:01 mh Exp $</CVS>
+    <Name>ITSMServiceLevelManagement</Name>
+    <Version>0.0.0</Version>
+    <Framework>2.3.x</Framework>
+    <Framework>2.3.x CVS</Framework>
+    <PackageRequired Version="1.1.91">ITSMCore</PackageRequired>
+    <Vendor>OTRS AG</Vendor>
+    <URL>http://otrs.org/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <Description Lang="en">The OTRS::ITSM Service Level Management package.</Description>
+    <Description Lang="de">Das OTRS::ITSM Service Level Management Paket.</Description>
+    <Filelist>
+        <File Permission="644" Location="Kernel/Config/Files/FrameworkITSMStats.xml"/>
+        <File Permission="644" Location="var/stats/ITSMStats-001-Ticket.xml"/>
+        <File Permission="644" Location="var/stats/ITSMStats-002-Ticket.xml"/>
+        <File Permission="644" Location="var/stats/ITSMStats-003-Ticket.xml"/>
+        <File Permission="644" Location="var/stats/ITSMStats-004-Ticket.xml"/>
+        <File Permission="644" Location="var/stats/ITSMStats-005-Ticket.xml"/>
+        <File Permission="644" Location="var/stats/ITSMStats-006-Ticket.xml"/>
+        <File Permission="644" Location="var/stats/ITSMStats-007-Ticket.xml"/>
+        <File Permission="644" Location="var/stats/ITSMStats-008-Ticket.xml"/>
+        <File Permission="644" Location="var/stats/ITSMStats-009-Ticket.xml"/>
+        <File Permission="644" Location="var/stats/ITSMStats-010-Ticket.xml"/>
+        <File Permission="644" Location="var/stats/ITSMStats-011-Ticket.xml"/>
+        <File Permission="644" Location="var/stats/ITSMStats-012-Ticket.xml"/>
+        <File Permission="644" Location="var/stats/ITSMStats-013-Ticket.xml"/>
+        <File Permission="644" Location="var/stats/ITSMStats-014-Ticket.xml"/>
+        <File Permission="644" Location="var/stats/ITSMStats-015-Ticket.xml"/>
+        <File Permission="644" Location="var/stats/ITSMStats-016-Ticket.xml"/>
+        <File Permission="644" Location="var/stats/ITSMStats-100-ITSMConfigItem.xml"/>
+        <File Permission="644" Location="var/stats/ITSMStats-101-ITSMConfigItem.xml"/>
+        <File Permission="644" Location="var/stats/ITSMStats-102-ITSMConfigItem.xml"/>
+        <File Permission="644" Location="var/stats/ITSMStats-103-ITSMConfigItem.xml"/>
+        <File Permission="644" Location="var/stats/ITSMStats-200-ITSMTicketFirstLevelSolutionRate.xml"/>
+        <File Permission="644" Location="var/stats/ITSMStats-201-ITSMTicketFirstLevelSolutionRate.xml"/>
+        <File Permission="644" Location="var/stats/ITSMStats-202-ITSMTicketFirstLevelSolutionRate.xml"/>
+        <File Permission="644" Location="var/stats/ITSMStats-203-ITSMTicketFirstLevelSolutionRate.xml"/>
+        <File Permission="644" Location="var/stats/ITSMStats-204-ITSMTicketFirstLevelSolutionRate.xml"/>
+        <File Permission="644" Location="var/stats/ITSMStats-205-ITSMTicketFirstLevelSolutionRate.xml"/>
+        <File Permission="644" Location="var/stats/ITSMStats-206-ITSMTicketFirstLevelSolutionRate.xml"/>
+        <File Permission="644" Location="var/stats/ITSMStats-207-ITSMTicketFirstLevelSolutionRate.xml"/>
+        <File Permission="644" Location="var/stats/ITSMStats-208-ITSMTicketFirstLevelSolutionRate.xml"/>
+        <File Permission="644" Location="var/stats/ITSMStats-209-ITSMTicketFirstLevelSolutionRate.xml"/>
+        <File Permission="644" Location="var/stats/ITSMStats-300-ITSMTicketSolutionTimeAverage.xml"/>
+        <File Permission="644" Location="var/stats/ITSMStats-301-ITSMTicketSolutionTimeAverage.xml"/>
+        <File Permission="644" Location="var/stats/ITSMStats-302-ITSMTicketSolutionTimeAverage.xml"/>
+        <File Permission="644" Location="var/stats/ITSMStats-303-ITSMTicketSolutionTimeAverage.xml"/>
+        <File Permission="644" Location="var/stats/ITSMStats-304-ITSMTicketSolutionTimeAverage.xml"/>
+        <File Permission="644" Location="var/stats/ITSMStats-305-ITSMTicketSolutionTimeAverage.xml"/>
+        <File Permission="644" Location="var/stats/ITSMStats-306-ITSMTicketSolutionTimeAverage.xml"/>
+        <File Permission="644" Location="var/stats/ITSMStats-307-ITSMTicketSolutionTimeAverage.xml"/>
+        <File Permission="644" Location="var/stats/ITSMStats-308-ITSMTicketSolutionTimeAverage.xml"/>
+        <File Permission="644" Location="var/stats/ITSMStats-309-ITSMTicketSolutionTimeAverage.xml"/>
+    </Filelist>
+    <CodeInstall>
+        my $ModuleName = 'ITSMStats';
+
+        # load required modules
+        require Kernel::System::CSV;
+        require Kernel::System::Group;
+        require Kernel::System::Stats;
+        require Kernel::System::Time;
+        require Kernel::System::User;
+
+        # add user id
+        $Self-&gt;{UserID} = 1;
+
+        # create needed objects
+        $Self-&gt;{CSVObject}   = Kernel::System::CSV-&gt;new( %{$Self} );
+        $Self-&gt;{GroupObject} = Kernel::System::Group-&gt;new( %{$Self} );
+        $Self-&gt;{TimeObject} = Kernel::System::Time-&gt;new( %{$Self} );
+        $Self-&gt;{UserObject} = Kernel::System::User-&gt;new( %{$Self} );
+        $Self-&gt;{StatsObject} = Kernel::System::Stats-&gt;new( %{$Self} );
+
+        # start AutomaticSampleImport if no stats are installed
+        $Self-&gt;{StatsObject}-&gt;GetStatsList();
+
+        # read temporary directory
+        my $StatsTempDir = $Self-&gt;{ConfigObject}-&gt;Get('Home') . '/var/stats/';
+
+        # get list of stats files
+        my @StatsFileList = glob $StatsTempDir . $ModuleName . '-*.xml';
+
+        # import the stats
+        my $InstalledPostfix = '.installed';
+        FILE:
+        for my $File ( sort @StatsFileList ) {
+
+            next FILE if -e $File . $InstalledPostfix;
+
+            # read file content
+            my $XMLContentRef = $Self-&gt;{MainObject}-&gt;FileRead(
+                Location =&gt; $File,
+            );
+
+            # import stat
+            my $StatID = $Self-&gt;{StatsObject}-&gt;Import(
+                Content =&gt; ${$XMLContentRef},
+            );
+
+            next FILE if !$StatID;
+
+            # write installed file with stat id
+            $Self-&gt;{MainObject}-&gt;FileWrite(
+                Content  =&gt; \$StatID,
+                Location =&gt; $File . $InstalledPostfix,
+            );
+        }
+    </CodeInstall>
+    <CodeUpgrade>
+        my $ModuleName = 'ITSMStats';
+
+        # load required modules
+        require Kernel::System::CSV;
+        require Kernel::System::Group;
+        require Kernel::System::Stats;
+        require Kernel::System::Time;
+        require Kernel::System::User;
+
+        # add user id
+        $Self-&gt;{UserID} = 1;
+
+        # create needed objects
+        $Self-&gt;{CSVObject}   = Kernel::System::CSV-&gt;new( %{$Self} );
+        $Self-&gt;{GroupObject} = Kernel::System::Group-&gt;new( %{$Self} );
+        $Self-&gt;{TimeObject} = Kernel::System::Time-&gt;new( %{$Self} );
+        $Self-&gt;{UserObject} = Kernel::System::User-&gt;new( %{$Self} );
+        $Self-&gt;{StatsObject} = Kernel::System::Stats-&gt;new( %{$Self} );
+
+        # start AutomaticSampleImport if no stats are installed
+        $Self-&gt;{StatsObject}-&gt;GetStatsList();
+
+        # read temporary directory
+        my $StatsTempDir = $Self-&gt;{ConfigObject}-&gt;Get('Home') . '/var/stats/';
+
+        # get list of stats files
+        my @StatsFileList = glob $StatsTempDir . $ModuleName . '-*.xml';
+
+        # import the stats
+        my $InstalledPostfix = '.installed';
+        FILE:
+        for my $File ( sort @StatsFileList ) {
+
+            next FILE if -e $File . $InstalledPostfix;
+
+            # read file content
+            my $XMLContentRef = $Self-&gt;{MainObject}-&gt;FileRead(
+                Location =&gt; $File,
+            );
+
+            # import stat
+            my $StatID = $Self-&gt;{StatsObject}-&gt;Import(
+                Content =&gt; ${$XMLContentRef},
+            );
+
+            next FILE if !$StatID;
+
+            # write installed file with stat id
+            $Self-&gt;{MainObject}-&gt;FileWrite(
+                Content  =&gt; \$StatID,
+                Location =&gt; $File . $InstalledPostfix,
+            );
+        }
+    </CodeUpgrade>
+    <CodeReinstall>
+        my $ModuleName = 'ITSMStats';
+
+        # load required modules
+        require Kernel::System::CSV;
+        require Kernel::System::Group;
+        require Kernel::System::Stats;
+        require Kernel::System::Time;
+        require Kernel::System::User;
+
+        # add user id
+        $Self-&gt;{UserID} = 1;
+
+        # create needed objects
+        $Self-&gt;{CSVObject}   = Kernel::System::CSV-&gt;new( %{$Self} );
+        $Self-&gt;{GroupObject} = Kernel::System::Group-&gt;new( %{$Self} );
+        $Self-&gt;{TimeObject} = Kernel::System::Time-&gt;new( %{$Self} );
+        $Self-&gt;{UserObject} = Kernel::System::User-&gt;new( %{$Self} );
+        $Self-&gt;{StatsObject} = Kernel::System::Stats-&gt;new( %{$Self} );
+
+        # start AutomaticSampleImport if no stats are installed
+        $Self-&gt;{StatsObject}-&gt;GetStatsList();
+
+        # read temporary directory
+        my $StatsTempDir = $Self-&gt;{ConfigObject}-&gt;Get('Home') . '/var/stats/';
+
+        # get list of stats files
+        my @StatsFileList = glob $StatsTempDir . $ModuleName . '-*.xml';
+
+        # import the stats
+        my $InstalledPostfix = '.installed';
+        FILE:
+        for my $File ( sort @StatsFileList ) {
+
+            next FILE if -e $File . $InstalledPostfix;
+
+            # read file content
+            my $XMLContentRef = $Self-&gt;{MainObject}-&gt;FileRead(
+                Location =&gt; $File,
+            );
+
+            # import stat
+            my $StatID = $Self-&gt;{StatsObject}-&gt;Import(
+                Content =&gt; ${$XMLContentRef},
+            );
+
+            next FILE if !$StatID;
+
+            # write installed file with stat id
+            $Self-&gt;{MainObject}-&gt;FileWrite(
+                Content  =&gt; \$StatID,
+                Location =&gt; $File . $InstalledPostfix,
+            );
+        }
+    </CodeReinstall>
+    <CodeUninstall>
+        my $ModuleName = 'ITSMStats';
+
+        # load required modules
+        require Kernel::System::CSV;
+        require Kernel::System::Group;
+        require Kernel::System::Stats;
+        require Kernel::System::Time;
+        require Kernel::System::User;
+
+        # add user id
+        $Self-&gt;{UserID} = 1;
+
+        # create needed objects
+        $Self-&gt;{CSVObject}   = Kernel::System::CSV-&gt;new( %{$Self} );
+        $Self-&gt;{GroupObject} = Kernel::System::Group-&gt;new( %{$Self} );
+        $Self-&gt;{TimeObject} = Kernel::System::Time-&gt;new( %{$Self} );
+        $Self-&gt;{UserObject} = Kernel::System::User-&gt;new( %{$Self} );
+        $Self-&gt;{StatsObject} = Kernel::System::Stats-&gt;new( %{$Self} );
+
+        # read temporary directory
+        my $StatsTempDir = $Self-&gt;{ConfigObject}-&gt;Get('Home') . '/var/stats/';
+
+        # get list of stats files
+        my @StatsFileList = glob $StatsTempDir . $ModuleName . '-*.xml.installed';
+
+        # import the stats
+        for my $File (@StatsFileList) {
+
+            # read file content
+            my $StatIDRef = $Self-&gt;{MainObject}-&gt;FileRead(
+                Location =&gt; $File,
+            );
+
+            # delete stat
+            $Self-&gt;{StatsObject}-&gt;StatsDelete(
+                StatID =&gt; ${$StatIDRef},
+            );
+
+            # delete installed file
+            $Self-&gt;{MainObject}-&gt;FileDelete(
+                Location =&gt; $File,
+            );
+        }
+    </CodeUninstall>
+    <IntroInstallPre Title="Install Information" Lang="en">
+        &lt;br&gt;
+        WELCOME&lt;br&gt;
+        &lt;br&gt;
+        You are about to install the OTRS module ITSMServiceLevelManagement.&lt;br&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        REQUIRED OTRS PACKAGES
+        &lt;ul&gt;
+        &lt;li&gt;ITSMCore 1.1.91&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;br&gt;
+        ATTENTION&lt;br&gt;
+        &lt;br&gt;
+        Make sure your database accepts packages over 5 MB in size. A MySQL database for example accepts packages up to 1 MB by default. In this case, the value for max_allowed_packet must be increased. The recommended maximum size accepted is 20 MB.&lt;br&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+    </IntroInstallPre>
+    <IntroInstallPre Title="Installation Information" Lang="de">
+        &lt;br&gt;
+        WILLKOMMEN&lt;br&gt;
+        &lt;br&gt;
+        Sie sind im Begriff das OTRS-Modul ITSMServiceLevelManagement zu installieren.&lt;br&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        BENÖTIGTE OTRS-PAKETE
+        &lt;ul&gt;
+        &lt;li&gt;ITSMCore 1.1.91&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;br&gt;
+        ACHTUNG&lt;br&gt;
+        &lt;br&gt;
+        Vergewissern Sie sich, dass ihre Datenbank Pakete mit einer Größe von mehr als 5 MB akzeptiert. Eine MySQL Datenbank akzeptiert beispielsweise standartmäßig Pakete mit einer Größe von maximal 1 MB. In diesem Fall muss der Wert für max_allowed_packet erhöht werden. Empfohlen werden 20 MB.&lt;br&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+    </IntroInstallPre>
+    <IntroUpgradePre Title="Upgrade Information" Lang="en">
+        &lt;br&gt;
+        WELCOME&lt;br&gt;
+        &lt;br&gt;
+        You are about to upgrade the OTRS module ITSMServiceLevelManagement.&lt;br&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        REQUIRED OTRS PACKAGES
+        &lt;ul&gt;
+        &lt;li&gt;ITSMCore 1.1.91&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;br&gt;
+        ATTENTION&lt;br&gt;
+        &lt;br&gt;
+        Make sure your database accepts packages over 5 MB in size. A MySQL database for example accepts packages up to 1 MB by default. In this case, the value for max_allowed_packet must be increased. The recommended maximum size accepted is 20 MB.&lt;br&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+    </IntroUpgradePre>
+    <IntroUpgradePre Title="Upgrade Information" Lang="de">
+        &lt;br&gt;
+        WILLKOMMEN&lt;br&gt;
+        &lt;br&gt;
+        Sie sind im Begriff das OTRS-Modul ITSMServiceLevelManagement zu aktualisieren.&lt;br&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        BENÖTIGTE OTRS-PAKETE
+        &lt;ul&gt;
+        &lt;li&gt;ITSMCore 1.1.91&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;br&gt;
+        ACHTUNG&lt;br&gt;
+        &lt;br&gt;
+        Vergewissern Sie sich, dass ihre Datenbank Pakete mit einer Größe von mehr als 5 MB akzeptiert. Eine MySQL Datenbank akzeptiert beispielsweise standartmäßig Pakete mit einer Größe von maximal 1 MB. In diesem Fall muss der Wert für max_allowed_packet erhöht werden. Empfohlen werden 20 MB.&lt;br&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+    </IntroUpgradePre>
+</otrs_package>

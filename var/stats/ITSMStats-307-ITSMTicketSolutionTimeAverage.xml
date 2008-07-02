@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<otrs_stats>
+<Cache>0</Cache>
+<Description>Average soltuion time of tickets created in the last month per Ticket-Type and Priority.
+
+X-Axis: Ticket-Type
+Y-Axis: Priority
+
+Restrictions:
+    -created in a specific time period
+    -a closed state</Description>
+<File></File>
+<Format>CSV</Format>
+<Format>Print</Format>
+<Object>ITSMTicketSolutionTimeAverage</Object>
+<ObjectModule>Kernel::System::Stats::Dynamic::ITSMTicketSolutionTimeAverage</ObjectModule>
+<Permission>stats</Permission>
+<StatType>dynamic</StatType>
+<SumCol>0</SumCol>
+<SumRow>0</SumRow>
+<Title>Average soltuion time of tickets created in the last month per Ticket-Type and Priority.</Title>
+<UseAsRestriction Element="StateIDs" Fixed="1">
+<SelectedValues>2</SelectedValues>
+<SelectedValues>10</SelectedValues>
+</UseAsRestriction>
+<UseAsRestriction Element="CreateTime" Fixed="0" TimeStart="2006-01-01 00:00:00" TimeStop="2007-12-31 23:59:59">
+</UseAsRestriction>
+<UseAsValueSeries Element="PriorityIDs" Fixed="1">
+</UseAsValueSeries>
+<UseAsXvalue Element="TypeIDs" Fixed="1">
+</UseAsXvalue>
+<Valid>1</Valid>
+</otrs_stats>
