@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMIncidentProblemManagement.sopm,v 1.1 2008-06-30 20:52:09 ub Exp $</CVS>
+    <CVS>$Id: ITSMIncidentProblemManagement.sopm,v 1.2 2008-07-02 10:23:10 ub Exp $</CVS>
     <Name>ITSMIncidentProblemManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -19,11 +19,15 @@
         <File Permission="644" Location="Kernel/Language/cz_ITSMTicket.pm"/>
         <File Permission="644" Location="Kernel/Language/de_ITSMTicket.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentTicketEmail.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentTicketNote.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentTicketPhone.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentTicketZoom.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/TicketMenuAddtlITSMField.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/TicketMenuDecision.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketEmail.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketNote.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketPhone.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketZoom.dtl"/>
     </Filelist>
     <DatabaseInstall>
         <Insert Table="ticket_state">
