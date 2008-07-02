@@ -1,0 +1,56 @@
+# --
+# AgentITSMService.dtl - provides HTML form for AgentITSMService
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# --
+# $Id: AgentITSMService.dtl,v 1.1 2008-07-02 15:26:56 mh Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# --
+
+<!-- dtl:block:Overview -->
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+  <tr>
+    <td class="mainhead">
+      $Env{"Box0"}$Text{"Overview"}: $Text{"Service"}$Env{"Box1"}
+    </td>
+  </tr>
+  <tr>
+    <td class="mainbody" align="center">
+      <br>
+      <table border="0" width="800" cellspacing="0" cellpadding="3">
+        <tr class="contenthead">
+          <td class="contentkey" width="20">&nbsp;</td>
+          <td class="contentkey">$Text{"Service"}</td>
+          <td class="contentkey">$Text{"Type"}</td>
+          <td class="contentkey">$Text{"Criticality"}</td>
+          <td class="contentkey" width="150">$Text{"Last Change"}</td>
+        </tr>
+<!-- dtl:block:OverviewRow -->
+        <tr class="contentbody">
+          <td class="$QData{"CssClass"}" align="right">
+            <img border="0" src="$Env{"Images"}$QData{"CurInciSignal"}.png" title="$Quote{"$Text{"$Data{"CurInciState"}"}"}" alt="$Quote{"$Text{"$Data{"CurInciState"}"}"}">
+          </td>
+          <td class="$QData{"CssClass"}">
+<!-- dtl:block:OverviewRowSpace -->
+            &nbsp;&nbsp;&nbsp;&nbsp;
+<!-- dtl:block:OverviewRowSpace -->
+            <a href="$Env{"Baselink"}Action=AgentITSMServiceZoom&ServiceID=$QData{"ServiceID"}">
+            $QData{"Name"}
+            </a>
+          </td>
+          <td class="$QData{"CssClass"}">$Text{"$QData{"Type"}"}</td>
+          <td class="$QData{"CssClass"}">$Text{"$QData{"Criticality"}"}</td>
+          <td class="$QData{"CssClass"}" width="150">$TimeLong{"$QData{"ChangeTime"}"}</td>
+        </tr>
+<!-- dtl:block:OverviewRow -->
+        <tr class="contentfooter">
+          <td colspan="5">&nbsp;</td>
+        </tr>
+      </table>
+      <br>
+    </td>
+  </tr>
+</table>
+<!-- dtl:block:Overview -->
