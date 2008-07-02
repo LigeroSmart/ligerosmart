@@ -1,0 +1,101 @@
+# --
+# AgentITSMSLAPrint.dtl - provides HTML print view
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# --
+# $Id: AgentITSMSLAPrint.dtl,v 1.1 2008-07-02 16:05:12 mh Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# --
+
+<table border="0" cellspacing="1" cellpadding="0" width="100%">
+  <tr>
+    <td class="mainhead">$Text{"SLA"}</td>
+  </tr>
+</table>
+<table border="0" cellspacing="1" cellpadding="10" width="100%">
+  <tr>
+    <td class="contentkey">
+      $Text{"SLA-Info"}:
+      <table border="0" cellspacing="3" cellpadding="0" width="100%">
+        <tr>
+          <td class="contentkey" width="20%">$Text{"SLA"}:</td>
+          <td class="contentvalue" width="30%">$QData{"Name"}</td>
+          <td class="contentkey" width="20%">$Text{"Created"}:</td>
+          <td class="contentvalue" width="30%">$TimeLong{"$Data{"CreateTime"}"}</td>
+        </tr>
+        <tr>
+          <td class="contentkey"></td>
+          <td class="contentvalue"></td>
+          <td class="contentkey">$Text{"Created by"}:</td>
+          <td class="contentvalue">$QData{"CreateByUserLogin"} ($QData{"CreateByUserFirstname"} $QData{"CreateByUserLastname"})</td>
+        </tr>
+        <tr>
+          <td class="contentkey"></td>
+          <td class="contentvalue"></td>
+          <td class="contentkey">$Text{"Last changed"}:</td>
+          <td class="contentvalue">$TimeLong{"$Data{"ChangeTime"}"}</td>
+        </tr>
+        <tr>
+          <td class="contentkey"></td>
+          <td class="contentvalue"></td>
+          <td class="contentkey">$Text{"Last changed by"}:</td>
+          <td class="contentvalue">$QData{"ChangeByUserLogin"} ($QData{"ChangeByUserFirstname"} $QData{"ChangeByUserLastname"})</td>
+        </tr>
+        <tr>
+          <td class="contentkey">&nbsp;</td>
+          <td colspan="3" class="contentvalue">&nbsp;</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<table border="0" width="640" cellpadding="0" cellspacing="0" bgcolor="#000000" class="container">
+  <tr>
+    <td>
+      <table border="0" width="640" cellpadding="10" cellspacing="1" bgcolor="#ffffff">
+        <tr>
+          <td>
+            <table border="0" width="100%" cellspacing="0" cellpadding="3">
+              <tr bgcolor="#ffffff">
+                <td valign="top" width="100%" class="small">
+                  <table border="0" width="100%" cellspacing="0" cellpadding="1">
+                    <tr>
+                      <td class="contentkey">$Text{"SLA"}:</td>
+                      <td class="contentvalue">$QData{"Name"}</td>
+                    </tr>
+                    <tr>
+                      <td class="contentkey">$Text{"Type"}:</td>
+                      <td class="contentvalue">$Text{"$QData{"Type"}"}</td>
+                    </tr>
+                    <tr>
+                      <td class="contentkey">$Text{"Calendar"}:</td>
+                      <td class="contentvalue">$Text{"$QData{"CalendarName"}"}</td>
+                    </tr>
+                    <tr>
+                      <td class="contentkey">$Text{"First Response Time"}:</td>
+                      <td class="contentvalue">$QData{"FirstResponseTime"} $Text{"minutes"}</td>
+                    </tr>
+                    <tr>
+                      <td class="contentkey">$Text{"Update Time"}:</td>
+                      <td class="contentvalue">$QData{"UpdateTime"} $Text{"minutes"}</td>
+                    </tr>
+                    <tr>
+                      <td class="contentkey">$Text{"Solution Time"}:</td>
+                      <td class="contentvalue">$QData{"SolutionTime"} $Text{"minutes"}</td>
+                    </tr>
+                    <tr>
+                      <td class="contentkey">$Text{"Minimum Time Between Incidents"}:</td>
+                      <td class="contentvalue">$QData{"MinTimeBetweenIncidents"} $Text{"minutes"}</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
