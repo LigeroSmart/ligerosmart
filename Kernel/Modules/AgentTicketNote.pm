@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketNote.pm - to add notes to a ticket
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketNote.pm,v 1.1 2008-07-02 10:19:53 ub Exp $
+# $Id: AgentTicketNote.pm,v 1.2 2008-07-02 11:02:26 ub Exp $
 # $OldId: AgentTicketNote.pm,v 1.49 2008/07/02 10:18:36 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -26,7 +26,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -757,7 +757,6 @@ sub Run {
                 %GetParam,
                 Action => $Self->{Action},
                 UserID => $Self->{UserID},
-                #TicketID => $Ticket{TicketID},
                 TicketID => $Self->{TicketID},
             );
         }
