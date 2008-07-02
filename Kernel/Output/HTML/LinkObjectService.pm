@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LinkObjectService.pm - layout backend module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: LinkObjectService.pm,v 1.1 2008-07-02 12:35:24 mh Exp $
+# $Id: LinkObjectService.pm,v 1.2 2008-07-02 14:10:57 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -108,7 +108,7 @@ Return
                 {
                     Type      => 'Link',
                     Content   => 'Service Bla',
-                    Link      => 'Action=AgentServiceZoom&ServiceID=123',
+                    Link      => 'Action=AgentITSMServiceZoom&ServiceID=123',
                     MaxLength => 70,
                 },
                 {
@@ -136,7 +136,7 @@ Return
                 {
                     Type      => 'Link',
                     Content   => 'Service Bla',
-                    Link      => 'Action=AgentServiceZoom&ServiceID=321',
+                    Link      => 'Action=AgentITSMServiceZoom&ServiceID=321',
                     MaxLength => 70,
                 },
                 {
@@ -215,7 +215,7 @@ sub TableCreateComplex {
             {
                 Type      => 'Link',
                 Content   => $Service->{NameShort},
-                Link      => '$Env{"Baselink"}Action=AgentServiceZoom&ServiceID=' . $ServiceID,
+                Link      => '$Env{"Baselink"}Action=AgentITSMServiceZoom&ServiceID=' . $ServiceID,
                 MaxLength => 70,
             },
             {
@@ -340,7 +340,7 @@ sub TableCreateSimple {
                     Type      => 'Link',
                     Content   => "S:$Service->{NameShort}",
                     Title     => "Service: $Service->{Name}",
-                    Link      => '$Env{"Baselink"}Action=AgentServiceZoom&ServiceID=' . $ServiceID,
+                    Link      => '$Env{"Baselink"}Action=AgentITSMServiceZoom&ServiceID=' . $ServiceID,
                     MaxLength => 20,
                 );
 
@@ -522,6 +522,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2008-07-02 12:35:24 $
+$Revision: 1.2 $ $Date: 2008-07-02 14:10:57 $
 
 =cut
