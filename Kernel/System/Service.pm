@@ -2,7 +2,7 @@
 # Kernel/System/Service.pm - all service function
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: Service.pm,v 1.1 2008-06-18 17:03:39 ub Exp $
+# $Id: Service.pm,v 1.2 2008-07-02 12:25:19 mh Exp $
 # $OldId: Service.pm,v 1.28 2008/06/18 10:15:20 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -15,18 +15,18 @@ package Kernel::System::Service;
 use strict;
 use warnings;
 
+use Kernel::System::CheckItem;
+use Kernel::System::Valid;
 # ---
 # ITSM
 # ---
 use Kernel::System::GeneralCatalog;
-use Kernel::System::LinkObject2;
+use Kernel::System::LinkObject;
 use Kernel::System::Time;
 # ---
-use Kernel::System::CheckItem;
-use Kernel::System::Valid;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -86,15 +86,15 @@ sub new {
     for (qw(DBObject ConfigObject LogObject MainObject)) {
         $Self->{$_} = $Param{$_} || die "Got no $_!";
     }
+    $Self->{CheckItemObject} = Kernel::System::CheckItem->new( %{$Self} );
+    $Self->{ValidObject}     = Kernel::System::Valid->new( %{$Self} );
 # ---
 # ITSM
 # ---
     $Self->{TimeObject}           = Kernel::System::Time->new( %{$Self} );
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
-    $Self->{LinkObject2}          = Kernel::System::LinkObject2->new( %{$Self} );
+    $Self->{LinkObject}           = Kernel::System::LinkObject->new( %{$Self} );
 # ---
-    $Self->{CheckItemObject} = Kernel::System::CheckItem->new( %{$Self} );
-    $Self->{ValidObject}     = Kernel::System::Valid->new( %{$Self} );
 
     return $Self;
 }
@@ -201,7 +201,9 @@ Return
 # ITSM
 # ---
     $ServiceData{TypeID}
+    $ServiceData{Type}
     $ServiceData{CriticalityID}
+    $ServiceData{Criticality}
     $ServiceData{CurInciStateID}
     $ServiceData{CurInciState}
     $ServiceData{CurInciStateType}
@@ -252,7 +254,7 @@ sub ServiceGet {
 # ---
 # ITSM
 # ---
-        $ServiceData{TypeID} = $Row[8];
+        $ServiceData{TypeID}        = $Row[8];
         $ServiceData{CriticalityID} = $Row[9];
 # ---
     }
@@ -336,49 +338,65 @@ sub ServiceGet {
         $ServiceData{CriticalityID} = $CriticalityKeyList[0];
     }
 
-    # check if ITSMConfigItem package is installed
-    if ( !$Self->{ConfigItemObject} ) {
+    # get service type list
+    my $ServiceTypeList = $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::Service::Type',
+    );
+    $ServiceData{Type} = $ServiceTypeList->{ $ServiceData{TypeID} } || '';
 
-        die "Can't find ITSMConfigItem package! Please install all ITSM packages."
-            if !$Self->{MainObject}->Require('Kernel::System::ITSMConfigItem');
-
-        $Self->{ConfigItemObject} = Kernel::System::ITSMConfigItem->new( %{$Self} );
-    }
-
-    # get the incident link type
-    my $LinkType = $Self->{ConfigObject}->Get('ITSMCore::IncidentLinkType');
+    # get criticality list
+    my $CriticalityList = $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::Core::Criticality',
+    );
+    $ServiceData{Criticality} = $CriticalityList->{ $ServiceData{CriticalityID} } || '';
 
     # set default incident type
     $ServiceData{CurInciStateType} = 'operational';
 
-    # find all linked config items
-    my $LinkedConfigItemIDs = $Self->{LinkObject2}->PartnerKeyList(
-        SourceClass  => 'Service',
-        SourceKey    => $ServiceData{ServiceID},
-        PartnerClass => 'ITSMConfigItem',
-        LinkType     => $LinkType,
-    );
+    # get ITSM module directory
+    my $ConfigItemModule = $Self->{ConfigObject}->Get('Home') . '/Kernel/System/ITSMConfigItem.pm';
 
-    # investigate the current incident state of each config item
-    CONFIGITEMID:
-    for my $ConfigItemID ( @{$LinkedConfigItemIDs} ) {
+    # check if ITSMConfigurationManagement package is installed
+    if ( -e $ConfigItemModule ) {
 
-        # get config item
-        my $ConfigItemData = $Self->{ConfigItemObject}->ConfigItemGet(
-            ConfigItemID => $ConfigItemID,
+        die "Can't load ITSMConfigItem.pm!"
+            if !$Self->{MainObject}->Require('Kernel::System::ITSMConfigItem');
+
+        # create new instance
+        $Self->{ConfigItemObject} = Kernel::System::ITSMConfigItem->new( %{$Self} );
+
+        # get the incident link type
+        my $LinkType = $Self->{ConfigObject}->Get('ITSMCore::IncidentLinkType');
+
+        # find all linked config items
+        my $LinkedConfigItemIDs = $Self->{LinkObject2}->PartnerKeyList(
+            SourceClass  => 'Service',
+            SourceKey    => $ServiceData{ServiceID},
+            PartnerClass => 'ITSMConfigItem',
+            LinkType     => $LinkType,
         );
 
-        next CONFIGITEMID if $ConfigItemData->{CurDeplStateType} ne 'productive';
-        next CONFIGITEMID if $ConfigItemData->{CurInciStateType} eq 'operational';
+        # investigate the current incident state of each config item
+        CONFIGITEMID:
+        for my $ConfigItemID ( @{$LinkedConfigItemIDs} ) {
 
-        if ( $ConfigItemData->{CurInciStateType} eq 'warning' ) {
-            $ServiceData{CurInciStateType} = 'warning';
-            next CONFIGITEMID;
-        }
+            # get config item
+            my $ConfigItemData = $Self->{ConfigItemObject}->ConfigItemGet(
+                ConfigItemID => $ConfigItemID,
+            );
 
-        if ( $ConfigItemData->{CurInciStateType} eq 'incident' ) {
-            $ServiceData{CurInciStateType} = 'incident';
-            last CONFIGITEMID;
+            next CONFIGITEMID if $ConfigItemData->{CurDeplStateType} ne 'productive';
+            next CONFIGITEMID if $ConfigItemData->{CurInciStateType} eq 'operational';
+
+            if ( $ConfigItemData->{CurInciStateType} eq 'warning' ) {
+                $ServiceData{CurInciStateType} = 'warning';
+                next CONFIGITEMID;
+            }
+
+            if ( $ConfigItemData->{CurInciStateType} eq 'incident' ) {
+                $ServiceData{CurInciStateType} = 'incident';
+                last CONFIGITEMID;
+            }
         }
     }
 
@@ -444,7 +462,7 @@ sub ServiceGet {
 
     # get the incident state list of this type
     my $InciStateList = $Self->{GeneralCatalogObject}->ItemList(
-        Class         => 'ITSM::ConfigItem::IncidentState',
+        Class         => 'ITSM::Core::IncidentState',
         Functionality => $ServiceData{CurInciStateType},
     );
 
@@ -550,7 +568,7 @@ add a service
 # ---
 # ITSM
 # ---
-        TypeID => 2,
+        TypeID        => 2,
         CriticalityID => 1,
 # ---
     );
@@ -635,14 +653,16 @@ sub ServiceAdd {
 #        Bind => [
 #            \$Param{FullName}, \$Param{ValidID}, \$Param{Comment},
 #            \$Param{UserID}, \$Param{UserID},
+#        ],
         SQL => 'INSERT INTO service '
-            . '(name, valid_id, comments, create_time, create_by, change_time, change_by, type_id, criticality_id) '
+            . '(name, valid_id, comments, create_time, create_by, change_time, change_by, '
+            . 'type_id, criticality_id) '
             . 'VALUES (?, ?, ?, current_timestamp, ?, current_timestamp, ?, ?, ?)',
         Bind => [
             \$Param{FullName}, \$Param{ValidID}, \$Param{Comment},
             \$Param{UserID}, \$Param{UserID}, \$Param{TypeID}, \$Param{CriticalityID},
-# ---
         ],
+# ---
     );
 
     # get service id
@@ -677,7 +697,7 @@ update a existing service
 # ---
 # ITSM
 # ---
-        TypeID => 2,
+        TypeID        => 2,
         CriticalityID => 1,
 # ---
     );
@@ -781,14 +801,15 @@ sub ServiceUpdate {
 #        Bind => [
 #            \$Param{FullName}, \$Param{ValidID}, \$Param{Comment},
 #            \$Param{UserID}, \$Param{ServiceID},
+#        ],
         SQL => 'UPDATE service SET name = ?, valid_id = ?, comments = ?, '
             . ' change_time = current_timestamp, change_by = ?, type_id = ?, criticality_id = ?'
             . ' WHERE id = ?',
         Bind => [
             \$Param{FullName}, \$Param{ValidID}, \$Param{Comment},
             \$Param{UserID}, \$Param{TypeID}, \$Param{CriticalityID}, \$Param{ServiceID},
-# ---
         ],
+# ---
     );
 
     # find all childs
@@ -827,7 +848,7 @@ return service ids as an array
 # ---
 # ITSM
 # ---
-        TypeIDs => 2,
+        TypeIDs        => 2,
         CriticalityIDs => 1,
 # ---
     );
@@ -1109,6 +1130,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2008-06-18 17:03:39 $
+$Revision: 1.2 $ $Date: 2008-07-02 12:25:19 $
 
 =cut
