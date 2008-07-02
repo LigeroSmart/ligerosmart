@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketNote.pm - to add notes to a ticket
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketNote.pm,v 1.2 2008-07-02 11:02:26 ub Exp $
-# $OldId: AgentTicketNote.pm,v 1.49 2008/07/02 10:18:36 ub Exp $
+# $Id: AgentTicketNote.pm,v 1.3 2008-07-02 13:43:51 ub Exp $
+# $OldId: AgentTicketNote.pm,v 1.50 2008/07/02 13:39:05 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -359,7 +359,7 @@ sub Run {
         # check required FreeTextField (if configured)
         for ( 1 .. 16 ) {
             if (
-                $Self->{Config}->{'TicketFreeText'}->{$_} == 2
+                $Self->{Config}->{TicketFreeText}->{$_} == 2
                 && $GetParam{"TicketFreeText$_"} eq ''
                 )
             {
@@ -374,7 +374,7 @@ sub Run {
             && !$GetParam{ServiceID}
             )
         {
-            $Error{"Service invalid"} = '* invalid';
+            $Error{'Service invalid'} = '* invalid';
         }
 
         # attachment delete
@@ -392,7 +392,7 @@ sub Run {
         if ( $GetParam{AttachmentUpload} ) {
             $Error{AttachmentUpload} = 1;
             my %UploadStuff = $Self->{ParamObject}->GetUploadAll(
-                Param  => "file_upload",
+                Param  => 'file_upload',
                 Source => 'string',
             );
             $Self->{UploadCachObject}->FormIDAddFile(
@@ -649,29 +649,29 @@ sub Run {
         # set ticket free time
         for ( 1 .. 6 ) {
             if (
-                defined( $GetParam{ "TicketFreeTime" . $_ . "Year" } )
-                && defined( $GetParam{ "TicketFreeTime" . $_ . "Month" } )
-                && defined( $GetParam{ "TicketFreeTime" . $_ . "Day" } )
-                && defined( $GetParam{ "TicketFreeTime" . $_ . "Hour" } )
-                && defined( $GetParam{ "TicketFreeTime" . $_ . "Minute" } )
+                defined( $GetParam{ 'TicketFreeTime' . $_ . 'Year' } )
+                && defined( $GetParam{ 'TicketFreeTime' . $_ . 'Month' } )
+                && defined( $GetParam{ 'TicketFreeTime' . $_ . 'Day' } )
+                && defined( $GetParam{ 'TicketFreeTime' . $_ . 'Hour' } )
+                && defined( $GetParam{ 'TicketFreeTime' . $_ . 'Minute' } )
                 )
             {
                 my %Time;
-                $Time{ "TicketFreeTime" . $_ . "Year" }    = 0;
-                $Time{ "TicketFreeTime" . $_ . "Month" }   = 0;
-                $Time{ "TicketFreeTime" . $_ . "Day" }     = 0;
-                $Time{ "TicketFreeTime" . $_ . "Hour" }    = 0;
-                $Time{ "TicketFreeTime" . $_ . "Minute" }  = 0;
-                $Time{ "TicketFreeTime" . $_ . "Secunde" } = 0;
+                $Time{ 'TicketFreeTime' . $_ . 'Year' }    = 0;
+                $Time{ 'TicketFreeTime' . $_ . 'Month' }   = 0;
+                $Time{ 'TicketFreeTime' . $_ . 'Day' }     = 0;
+                $Time{ 'TicketFreeTime' . $_ . 'Hour' }    = 0;
+                $Time{ 'TicketFreeTime' . $_ . 'Minute' }  = 0;
+                $Time{ 'TicketFreeTime' . $_ . 'Secunde' } = 0;
 
-                if ( $GetParam{ "TicketFreeTime" . $_ . "Used" } ) {
+                if ( $GetParam{ 'TicketFreeTime' . $_ . 'Used' } ) {
                     %Time = $Self->{LayoutObject}->TransfromDateSelection(
-                        %GetParam, Prefix => "TicketFreeTime" . $_
+                        %GetParam, Prefix => 'TicketFreeTime' . $_
                     );
                 }
                 $Self->{TicketObject}->TicketFreeTimeSet(
                     %Time,
-                    Prefix   => "TicketFreeTime",
+                    Prefix   => 'TicketFreeTime',
                     TicketID => $Self->{TicketID},
                     Counter  => $_,
                     UserID   => $Self->{UserID},
@@ -895,7 +895,7 @@ sub _Mask {
             Action => $Self->{Action},
             UserID => $Self->{UserID},
         );
-        $Param{'TypeStrg'} = $Self->{LayoutObject}->BuildSelection(
+        $Param{TypeStrg} = $Self->{LayoutObject}->BuildSelection(
             Data         => \%Type,
             Name         => 'TypeID',
             SelectedID   => $Param{TypeID},
@@ -922,7 +922,7 @@ sub _Mask {
                 UserID         => $Self->{UserID},
             );
         }
-        $Param{'ServiceStrg'} = $Self->{LayoutObject}->BuildSelection(
+        $Param{ServiceStrg} = $Self->{LayoutObject}->BuildSelection(
             Data         => \%Service,
             Name         => 'ServiceID',
             SelectedID   => $Param{ServiceID},
@@ -996,7 +996,7 @@ sub _Mask {
                 UserID => $Self->{UserID},
             );
         }
-        $Param{'SLAStrg'} = $Self->{LayoutObject}->BuildSelection(
+        $Param{SLAStrg} = $Self->{LayoutObject}->BuildSelection(
             Data         => \%SLA,
             Name         => 'SLAID',
             SelectedID   => $Param{SLAID},
@@ -1118,7 +1118,7 @@ sub _Mask {
         }
 
         # build string
-        $Param{'OldOwnerStrg'} = $Self->{LayoutObject}->OptionStrgHashRef(
+        $Param{OldOwnerStrg} = $Self->{LayoutObject}->OptionStrgHashRef(
             Data       => \%UserHash,
             SelectedID => $OldOwnerSelectedID,
             Name       => 'OldOwnerID',
@@ -1195,7 +1195,7 @@ sub _Mask {
         }
 
         # build next states string
-        $Param{'StateStrg'} = $Self->{LayoutObject}->OptionStrgHashRef(
+        $Param{StateStrg} = $Self->{LayoutObject}->OptionStrgHashRef(
             Data => \%StateList,
             Name => 'NewStateID',
             %State,
@@ -1286,7 +1286,7 @@ sub _Mask {
         else {
             $Priority{SelectedID} = $Param{NewPriorityID};
         }
-        $Param{'PriorityStrg'} = $Self->{LayoutObject}->OptionStrgHashRef(
+        $Param{PriorityStrg} = $Self->{LayoutObject}->OptionStrgHashRef(
             Data => \%PriorityList,
             Name => 'NewPriorityID',
             %Priority,
@@ -1323,7 +1323,7 @@ sub _Mask {
             for ( keys %MemberList ) {
                 $ShownUsers{$_} = $AllGroupsMembers{$_};
             }
-            $Param{'OptionStrg'} = $Self->{LayoutObject}->OptionStrgHashRef(
+            $Param{OptionStrg} = $Self->{LayoutObject}->OptionStrgHashRef(
                 Data               => \%ShownUsers,
                 SelectedIDRefArray => $Self->{InformUserID},
                 Name               => 'InformUserID',
@@ -1348,7 +1348,7 @@ sub _Mask {
                         . "$User->{UserFirstname} ($User->{UserLogin})";
                 }
             }
-            $Param{'InvolvedAgentStrg'} = $Self->{LayoutObject}->OptionStrgHashRef(
+            $Param{InvolvedAgentStrg} = $Self->{LayoutObject}->OptionStrgHashRef(
                 Data               => \%UserHash,
                 SelectedIDRefArray => $Self->{InvolvedUserID},
                 Name               => 'InvolvedUserID',
@@ -1402,7 +1402,7 @@ sub _Mask {
                 delete $NoteTypes{$_};
             }
         }
-        $Param{'ArticleTypeStrg'} = $Self->{LayoutObject}->OptionStrgHashRef(
+        $Param{ArticleTypeStrg} = $Self->{LayoutObject}->OptionStrgHashRef(
             Data => \%NoteTypes,
             Name => 'ArticleTypeID',
             %ArticleType,
@@ -1427,7 +1427,7 @@ sub _Mask {
 
     # ticket free text
     for my $Count ( 1 .. 16 ) {
-        if ( $Self->{Config}->{'TicketFreeText'}->{$Count} ) {
+        if ( $Self->{Config}->{TicketFreeText}->{$Count} ) {
             $Self->{LayoutObject}->Block(
                 Name => 'TicketFreeText',
                 Data => {
@@ -1462,7 +1462,7 @@ sub _Mask {
 
     # article free text
     for my $Count ( 1 .. 3 ) {
-        if ( $Self->{Config}->{'ArticleFreeText'}->{$Count} ) {
+        if ( $Self->{Config}->{ArticleFreeText}->{$Count} ) {
             $Self->{LayoutObject}->Block(
                 Name => 'ArticleFreeText',
                 Data => {
