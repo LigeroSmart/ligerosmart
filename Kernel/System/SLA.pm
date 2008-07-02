@@ -2,7 +2,7 @@
 # Kernel/System/SLA.pm - all sla function
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: SLA.pm,v 1.1 2008-06-19 12:39:32 ub Exp $
+# $Id: SLA.pm,v 1.2 2008-07-02 12:23:23 mh Exp $
 # $OldId: SLA.pm,v 1.30 2008/06/19 11:08:23 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -17,9 +17,14 @@ use warnings;
 
 use Kernel::System::CheckItem;
 use Kernel::System::Valid;
+# ---
+# ITSM
+# ---
+use Kernel::System::GeneralCatalog;
+# ---
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -81,6 +86,11 @@ sub new {
     }
     $Self->{CheckItemObject} = Kernel::System::CheckItem->new( %{$Self} );
     $Self->{ValidObject}     = Kernel::System::Valid->new( %{$Self} );
+# ---
+# ITSM
+# ---
+    $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
+# ---
 
     return $Self;
 }
@@ -176,6 +186,7 @@ Return
 # ITSM
 # ---
     $SLAData{TypeID}
+    $SLAData{Type}
     $SLAData{MinTimeBetweenIncidents}
 # ---
 
@@ -291,6 +302,11 @@ sub SLAGet {
         $SLAData{TypeID} = $SLATypeKeyList[0];
     }
 
+    # get sla type list
+    my $SLATypeList = $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::SLA::Type',
+    );
+    $SLAData{Type} = $SLATypeList->{ $SLAData{TypeID} } || '';
 # ---
 
     # get all service ids
@@ -513,6 +529,7 @@ sub SLAAdd {
 #            \$Param{FirstResponseNotify}, \$Param{UpdateTime}, \$Param{UpdateNotify},
 #            \$Param{SolutionTime}, \$Param{SolutionNotify}, \$Param{ValidID}, \$Param{Comment},
 #            \$Param{UserID}, \$Param{UserID},
+#        ],
         SQL => 'INSERT INTO sla '
             . '(name, calendar_name, first_response_time, first_response_notify, '
             . 'update_time, update_notify, solution_time, solution_notify, '
@@ -524,8 +541,8 @@ sub SLAAdd {
             \$Param{FirstResponseNotify}, \$Param{UpdateTime}, \$Param{UpdateNotify},
             \$Param{SolutionTime}, \$Param{SolutionNotify}, \$Param{ValidID}, \$Param{Comment},
             \$Param{UserID}, \$Param{UserID}, \$Param{TypeID}, \$Param{MinTimeBetweenIncidents},
-# ---
         ],
+# ---
     );
 
     # get sla id
@@ -694,6 +711,7 @@ sub SLAUpdate {
 #            \$Param{FirstResponseNotify}, \$Param{UpdateTime}, \$Param{UpdateNotify},
 #            \$Param{SolutionTime}, \$Param{SolutionNotify}, \$Param{ValidID}, \$Param{Comment},
 #            \$Param{UserID}, \$Param{SLAID},
+#        ],
         SQL => 'UPDATE sla SET name = ?, calendar_name = ?, '
             . 'first_response_time = ?, first_response_notify = ?, '
             . 'update_time = ?, update_notify = ?, solution_time = ?, solution_notify = ?, '
@@ -705,8 +723,8 @@ sub SLAUpdate {
             \$Param{FirstResponseNotify}, \$Param{UpdateTime}, \$Param{UpdateNotify},
             \$Param{SolutionTime}, \$Param{SolutionNotify}, \$Param{ValidID}, \$Param{Comment},
             \$Param{UserID}, \$Param{TypeID}, \$Param{MinTimeBetweenIncidents}, \$Param{SLAID},
-# ---
         ],
+# ---
     );
 
     # remove all existing allocations
@@ -744,6 +762,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2008-06-19 12:39:32 $
+$Revision: 1.2 $ $Date: 2008-07-02 12:23:23 $
 
 =cut

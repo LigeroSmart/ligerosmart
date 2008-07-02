@@ -2,7 +2,7 @@
 # SLA.t - SLA tests
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: SLA.t,v 1.1 2008-06-19 12:39:32 ub Exp $
+# $Id: SLA.t,v 1.2 2008-07-02 12:20:40 mh Exp $
 # $OldId: SLA.t,v 1.9 2008/05/10 10:28:18 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -80,7 +80,7 @@ for my $Counter ( 1 .. 3 ) {
 # ---
 # ITSM
 # ---
-        TypeID => 1,
+        TypeID        => 1,
         CriticalityID => 1,
 # ---
     );

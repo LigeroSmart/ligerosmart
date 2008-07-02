@@ -2,7 +2,7 @@
 # AdminSLA.dtl - provides HTML form for AdminSLA
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminSLA.dtl,v 1.1 2008-06-19 14:46:30 ub Exp $
+# $Id: AdminSLA.dtl,v 1.2 2008-07-02 12:22:07 mh Exp $
 # $OldId: AdminSLA.dtl,v 1.10 2008/04/02 08:59:22 ot Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -140,9 +140,7 @@
 # ITSM
 # ---
                 <tr>
-                  <td class="contentkey">
-                    $Text{"Minimum Time Between Incidents"} ($Text{"minutes"}):
-                  </td>
+                  <td class="contentkey">$Text{"Minimum Time Between Incidents"} ($Text{"minutes"}): </td>
                   <td class="contentvalue">
                     <input type="text" name="MinTimeBetweenIncidents" value="$QData{"MinTimeBetweenIncidents"}" size="10" maxlength="15">
                   </td>
