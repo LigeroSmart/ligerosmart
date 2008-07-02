@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMCore.sopm,v 1.46 2008-06-28 12:08:23 mh Exp $</CVS>
+    <CVS>$Id: ITSMCore.sopm,v 1.47 2008-07-02 13:13:45 mh Exp $</CVS>
     <Name>ITSMCore</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -14,15 +14,43 @@
     <Filelist>
         <File Permission="644" Location="Kernel/Config/Files/FrameworkITSMCore.xml"/>
         <File Permission="644" Location="Kernel/Config/Files/ITSMCore.xml"/>
+        <File Permission="644" Location="Kernel/Config/Files/ITSMService.xml"/>
+        <File Permission="644" Location="Kernel/Config/Files/TicketITSMService.xml"/>
         <File Permission="644" Location="Kernel/Language/bg_ITSMCore.pm"/>
+        <File Permission="644" Location="Kernel/Language/bg_ITSMService.pm"/>
         <File Permission="644" Location="Kernel/Language/cz_ITSMCore.pm"/>
+        <File Permission="644" Location="Kernel/Language/cz_ITSMService.pm"/>
         <File Permission="644" Location="Kernel/Language/de_ITSMCore.pm"/>
+        <File Permission="644" Location="Kernel/Language/de_ITSMService.pm"/>
         <File Permission="644" Location="Kernel/Modules/AdminITSMCIPAllocate.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AdminTicketPriority.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AdminService.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AdminSLA.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentITSMService.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentITSMServicePrint.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentITSMServiceZoom.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentITSMSLAPrint.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentITSMSLAZoom.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/ITSMServiceMenuGeneric.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/ITSMSLAMenuGeneric.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/LinkObjectService.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/LinkObjectSLA.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminITSMCIPAllocate.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminTicketPriority.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminService.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminSLA.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMService.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMServicePrint.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMServiceZoom.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMSLAPrint.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMSLAZoom.dtl"/>
+        <File Permission="644" Location="Kernel/System/LinkObject/Service.pm"/>
+        <File Permission="644" Location="Kernel/System/LinkObject/SLA.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMCIPAllocate.pm"/>
+        <File Permission="644" Location="Kernel/System/Service.pm"/>
+        <File Permission="644" Location="Kernel/System/SLA.pm"/>
+        <File Permission="644" Location="scripts/test/CustomerUserService.t"/>
         <File Permission="644" Location="scripts/test/ITSMCIPAllocate.t"/>
+        <File Permission="644" Location="scripts/test/Service.t"/>
+        <File Permission="644" Location="scripts/test/SLA.t"/>
         <File Permission="644" Location="var/httpd/htdocs/images/Standard/itsm_service.png"/>
     </Filelist>
     <DatabaseInstall>
@@ -43,6 +71,14 @@
                 <Reference Local="priority_id" Foreign="id"/>
             </ForeignKey>
         </TableCreate>
+        <TableAlter Name="service">
+            <ColumnAdd Name="type_id" Required="false" Type="INTEGER"/>
+            <ColumnAdd Name="criticality_id" Required="false" Type="INTEGER"/>
+        </TableAlter>
+        <TableAlter Name="sla">
+            <ColumnAdd Name="type_id" Required="false" Type="INTEGER"/>
+            <ColumnAdd Name="min_time_bet_incidents" Required="false" Type="INTEGER"/>
+        </TableAlter>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::Core::Criticality</Data>
             <Data Key="name" Type="Quote">1 very low</Data>
@@ -353,6 +389,198 @@
             <Data Key="criticality_id">5</Data>
             <Data Key="impact_id">10</Data>
             <Data Key="priority_id">5</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Service::Type</Data>
+            <Data Key="name" Type="Quote">End User Service</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Service::Type</Data>
+            <Data Key="name" Type="Quote">Front End</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Service::Type</Data>
+            <Data Key="name" Type="Quote">Back End</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Service::Type</Data>
+            <Data Key="name" Type="Quote">IT Management</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Service::Type</Data>
+            <Data Key="name" Type="Quote">Reporting</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Service::Type</Data>
+            <Data Key="name" Type="Quote">IT Operational</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Service::Type</Data>
+            <Data Key="name" Type="Quote">Demonstration</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Service::Type</Data>
+            <Data Key="name" Type="Quote">Project</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Service::Type</Data>
+            <Data Key="name" Type="Quote">Training</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Service::Type</Data>
+            <Data Key="name" Type="Quote">Underpinning Contract</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Service::Type</Data>
+            <Data Key="name" Type="Quote">Other</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::SLA::Type</Data>
+            <Data Key="name" Type="Quote">Availability</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::SLA::Type</Data>
+            <Data Key="name" Type="Quote">Response Time</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::SLA::Type</Data>
+            <Data Key="name" Type="Quote">Recovery Time</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::SLA::Type</Data>
+            <Data Key="name" Type="Quote">Resolution Rate</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::SLA::Type</Data>
+            <Data Key="name" Type="Quote">Transactions</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::SLA::Type</Data>
+            <Data Key="name" Type="Quote">Errors</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::SLA::Type</Data>
+            <Data Key="name" Type="Quote">Other</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Core::IncidentState</Data>
+            <Data Key="name" Type="Quote">Operational</Data>
+            <Data Key="functionality" Type="Quote">operational</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Core::IncidentState</Data>
+            <Data Key="name" Type="Quote">Warning</Data>
+            <Data Key="functionality" Type="Quote">warning</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Core::IncidentState</Data>
+            <Data Key="name" Type="Quote">Incident</Data>
+            <Data Key="functionality" Type="Quote">incident</Data>
+            <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
             <Data Key="change_time">current_timestamp</Data>
@@ -366,6 +594,14 @@
     </DatabaseUpgrade>
     <DatabaseUninstall>
         <TableDrop Name="cip_allocate"/>
+        <TableAlter Name="service">
+            <ColumnDrop Name="type_id"/>
+            <ColumnDrop Name="criticality_id"/>
+        </TableAlter>
+        <TableAlter Name="sla">
+            <ColumnDrop Name="type_id"/>
+            <ColumnDrop Name="min_time_bet_incidents"/>
+        </TableAlter>
     </DatabaseUninstall>
     <CodeInstall>
         # change background color of standard theme
@@ -387,6 +623,32 @@
                 close (OUT);
             }
         }
+
+        require Kernel::System::Group;
+        $Self-&gt;{GroupObject} = Kernel::System::Group-&gt;new(%{$Self});
+
+        # add group itsm-service
+        $Self-&gt;{GroupObject}-&gt;GroupAdd(
+            Name    =&gt; 'itsm-service',
+            Comment =&gt; 'Group for ITSM Service mask access in the agent interface.',
+            ValidID =&gt; 1,
+            UserID  =&gt; 1,
+        );
+
+        # add user root to itsm-service admin group
+        $Self-&gt;{GroupObject}-&gt;GroupMemberAdd(
+            GID        =&gt; $Self-&gt;{GroupObject}-&gt;GetGroupIdByName(Group =&gt; 'itsm-service'),
+            UID        =&gt; 1,
+            Permission =&gt; {
+                ro        =&gt; 1,
+                move_into =&gt; 1,
+                create    =&gt; 1,
+                owner     =&gt; 1,
+                priority  =&gt; 1,
+                rw        =&gt; 1,
+            },
+            UserID =&gt; 1,
+        );
     </CodeInstall>
     <CodeReinstall>
         # change background color of standard theme
@@ -429,6 +691,32 @@
                 close (OUT);
             }
         }
+
+        require Kernel::System::Group;
+        $Self-&gt;{GroupObject} = Kernel::System::Group-&gt;new(%{$Self});
+
+        # add group itsm-service
+        $Self-&gt;{GroupObject}-&gt;GroupAdd(
+            Name    =&gt; 'itsm-service',
+            Comment =&gt; 'Group for ITSM Service mask access in the agent interface.',
+            ValidID =&gt; 1,
+            UserID  =&gt; 1,
+        );
+
+        # add user root to itsm-service admin group
+        $Self-&gt;{GroupObject}-&gt;GroupMemberAdd(
+            GID        =&gt; $Self-&gt;{GroupObject}-&gt;GetGroupIdByName(Group =&gt; 'itsm-service'),
+            UID        =&gt; 1,
+            Permission =&gt; {
+                ro        =&gt; 1,
+                move_into =&gt; 1,
+                create    =&gt; 1,
+                owner     =&gt; 1,
+                priority  =&gt; 1,
+                rw        =&gt; 1,
+            },
+            UserID =&gt; 1,
+        );
     </CodeUpgrade>
     <CodeUninstall>
         # change background color of standard theme back to original
