@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMService.pm - the german translation of ITSMService
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: de_ITSMService.pm,v 1.1 2008-06-21 12:45:18 ub Exp $
+# $Id: de_ITSMService.pm,v 1.2 2008-07-02 14:11:33 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -24,6 +24,8 @@ sub Data {
 
     return if ref $Lang ne 'HASH';
 
+    $Lang->{'Incident State'}                 = 'Vorfallsstatus';
+    $Lang->{'Current Incident State'}         = 'Aktueller Vorfallsstatus';
     $Lang->{'Current State'}                  = 'Aktueller Status';
     $Lang->{'Service-Area'}                   = 'Service-Bereich';
     $Lang->{'Minimum Time Between Incidents'} = 'Mindestzeit zwischen Incidents';

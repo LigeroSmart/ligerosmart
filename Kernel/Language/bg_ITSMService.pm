@@ -2,7 +2,7 @@
 # Kernel/Language/bg_ITSMService.pm - the bulgarian translation of ITSMService
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: bg_ITSMService.pm,v 1.1 2008-06-21 12:45:18 ub Exp $
+# $Id: bg_ITSMService.pm,v 1.2 2008-07-02 14:11:33 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -24,6 +24,8 @@ sub Data {
 
     return if ref $Lang ne 'HASH';
 
+    $Lang->{'Incident State'}                 = '';
+    $Lang->{'Current Incident State'}         = '';
     $Lang->{'Current State'}                  = '';
     $Lang->{'Service-Area'}                   = '';
     $Lang->{'Minimum Time Between Incidents'} = 'Минимално време между инцидентите';
