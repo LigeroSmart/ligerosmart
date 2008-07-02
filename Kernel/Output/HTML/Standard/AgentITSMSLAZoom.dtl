@@ -1,0 +1,99 @@
+# --
+# AgentITSMSLAZoom.dtl - provides HTML form for AgentITSMSLAZoom
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# --
+# $Id: AgentITSMSLAZoom.dtl,v 1.1 2008-07-02 15:50:58 mh Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# --
+
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+  <tr>
+    <td class="mainhead">
+      $Env{"Box0"}$Text{"Zoom"}: $Text{"SLA"}$Env{"Box1"}
+    </td>
+  </tr>
+</table>
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+  <tr>
+    <td width="75%" class="menu">
+<!-- dtl:block:Menu -->
+<!-- dtl:block:MenuItemSplit -->
+      -
+<!-- dtl:block:MenuItemSplit -->
+<!-- dtl:block:MenuItem -->
+      <a href="$Env{"Baselink"}$Data{"Link"}" $Data{"LinkParam"} onmouseover="window.status='$JSText{"$QData{"Name"}"}'; return true;" onmouseout="window.status='';" class="menuitem">$Text{"$QData{"Name"}"}</a>
+<!-- dtl:block:MenuItem -->
+<!-- dtl:block:Menu -->
+    </td>
+    <td align="right" width="25%" class="menu"></td>
+  </tr>
+</table>
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+  <tr>
+    <td class="mainbody" align="center">
+      <br>
+      <table border="0" width="100%" cellspacing="0" cellpadding="1">
+        <tr>
+          <td width="20%" class="contentkey">$Text{"SLA"}: </td>
+          <td class="contentvalue">$QData{"Name"}</td>
+        </tr>
+        <tr>
+          <td width="20%" class="contentkey">$Text{"Type"}: </td>
+          <td class="contentvalue">$Text{"$QData{"Type"}"}</td>
+        </tr>
+        <tr>
+          <td width="20%" class="contentkey">$Text{"Calendar"}: </td>
+          <td class="contentvalue">$Text{"$QData{"CalendarName"}"}</td>
+        </tr>
+        <tr>
+          <td width="20%" class="contentkey">$Text{"First Response Time"}: </td>
+          <td class="contentvalue">$QData{"FirstResponseTime"} $Text{"minutes"}</td>
+        </tr>
+        <tr>
+          <td width="20%" class="contentkey">$Text{"Update Time"}: </td>
+          <td class="contentvalue">$QData{"UpdateTime"} $Text{"minutes"}</td>
+        </tr>
+        <tr>
+          <td width="20%" class="contentkey">$Text{"Solution Time"}: </td>
+          <td class="contentvalue">$QData{"SolutionTime"} $Text{"minutes"}</td>
+        </tr>
+        <tr>
+          <td width="20%" class="contentkey">$Text{"Minimum Time Between Incidents"}: </td>
+          <td class="contentvalue">$QData{"MinTimeBetweenIncidents"} $Text{"minutes"}</td>
+        </tr>
+      </table>
+      <br>
+    </td>
+    <td width="25%" class="menu">
+      <table border="0" cellspacing="1" cellpadding="0" width="100%">
+        <tr>
+          <td class="mainkey">$Text{"Created"}:</td>
+          <td class="mainvalue">$TimeLong{"$Data{"CreateTime"}"}</td>
+        </tr>
+        <tr>
+          <td class="mainkey">$Text{"Created by"}:</td>
+          <td>
+            <div title="$QData{"CreateUserLogin"} ($Quote{"$Data{"CreateUserFirstname"} $Data{"CreateUserLastname"}"})">
+            $QData{"CreateUserLogin","15"} ($Quote{"$Data{"CreateUserFirstname"} $Data{"CreateUserLastname"}","15"})
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="mainkey">$Text{"Last changed"}:</td>
+          <td class="mainvalue">$TimeLong{"$Data{"ChangeTime"}"}</td>
+        </tr>
+        <tr>
+          <td class="mainkey">$Text{"Last changed by"}:</td>
+          <td>
+            <div title="$QData{"ChangeUserLogin"} ($Quote{"$Data{"ChangeUserFirstname"} $Data{"ChangeUserLastname"}"})">
+            $QData{"ChangeUserLogin","15"} ($Quote{"$Data{"ChangeUserFirstname"} $Data{"ChangeUserLastname"}","15"})
+            </div>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
