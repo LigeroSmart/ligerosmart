@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: TicketITSMTicket.xml,v 1.1 2008-07-01 09:14:24 ub Exp $</CVS>
+    <CVS>$Id: TicketITSMTicket.xml,v 1.2 2008-07-02 10:05:40 ub Exp $</CVS>
     <CVS>$OldId: Ticket.xml,v 1.147.2.7 2008/03/16 19:21:51 martin Exp $</CVS>
     <ConfigItem Name="Ticket::Type" Required="1" Valid="1">
         <Description Lang="en">If ticket type feature is enabled, you can define ticket types for tickets (e. g. incident, problem, change, ...).</Description>
@@ -418,6 +418,15 @@
                 <Item Key="Action">AgentLinkObject</Item>
                 <Item Key="Link">Action=AgentLinkObject&amp;SourceObject=Ticket&amp;SourceID=$QData{"TicketID"}</Item>
             </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketNote###PriorityDefault" Required="1" Valid="1">
+        <Description Lang="en">Default priority options.</Description>
+        <Description Lang="de">Default Auswahl der Priorität.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewNote</SubGroup>
+        <Setting>
+            <String Regex="">3 normal</String>
         </Setting>
     </ConfigItem>
 </otrs_config>
