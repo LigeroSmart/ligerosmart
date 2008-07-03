@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.pm,v 1.13 2008-06-25 20:08:44 martin Exp $
+# $Id: AgentFAQ.pm,v 1.14 2008-07-03 21:44:12 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::Group;
 use Kernel::System::Valid;
 
 use vars qw($VERSION @ISA);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 @ISA = qw(Kernel::Modules::FAQ);
 
@@ -131,9 +131,24 @@ sub Run {
     );
 
     # ---------------------------------------------------------- #
+    # deliver OpenSearchDescription
+    # ---------------------------------------------------------- #
+    if ( $Self->{Subaction} eq 'OpenSearchDescription' ) {
+        my $Output = $Self->{LayoutObject}->Output(
+            TemplateFile => 'AgentFAQOpenSearchDescription',
+            Data         => {%Param},
+        );
+        return $Self->{LayoutObject}->Attachment(
+            Filename    => 'OpenSearchDescription.xml',
+            ContentType => "text/xml",
+            Content     => $Output,
+            Type        => 'inline',
+        );
+    }
+    # ---------------------------------------------------------- #
     # language add
     # ---------------------------------------------------------- #
-    if ($Self->{Subaction} eq 'Language') {
+    elsif ($Self->{Subaction} eq 'Language') {
 
         # permission check
         if (!$Self->{AccessRw}) {
