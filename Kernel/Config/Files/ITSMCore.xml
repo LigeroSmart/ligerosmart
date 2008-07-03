@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMCore.xml,v 1.16 2008-07-03 15:10:38 mh Exp $</CVS>
+    <CVS>$Id: ITSMCore.xml,v 1.17 2008-07-03 15:47:40 mh Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -21,7 +21,7 @@
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMCore::IncidentLinkType" Required="1" Valid="1">
+    <ConfigItem Name="ITSM::Core::IncidentLinkType" Required="1" Valid="1">
         <Description Lang="en">Set the type of link to be used to calculate the incident state.</Description>
         <Description Lang="de">Legt den Linktyp fest, der zur Berechnung des Vorfallstatus verwendet wird.</Description>
         <Group>ITSM Core</Group>
