@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMCore.sopm,v 1.48 2008-07-02 19:03:29 mh Exp $</CVS>
+    <CVS>$Id: ITSMCore.sopm,v 1.49 2008-07-03 07:22:05 mh Exp $</CVS>
     <Name>ITSMCore</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -32,7 +32,6 @@
         <File Permission="644" Location="Kernel/Output/HTML/ITSMServiceMenuGeneric.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ITSMSLAMenuGeneric.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/LinkObjectService.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/LinkObjectSLA.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminITSMCIPAllocate.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminService.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminSLA.dtl"/>
@@ -42,7 +41,6 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMSLAPrint.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMSLAZoom.dtl"/>
         <File Permission="644" Location="Kernel/System/LinkObject/Service.pm"/>
-        <File Permission="644" Location="Kernel/System/LinkObject/SLA.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMCIPAllocate.pm"/>
         <File Permission="644" Location="Kernel/System/Service.pm"/>
         <File Permission="644" Location="Kernel/System/SLA.pm"/>
