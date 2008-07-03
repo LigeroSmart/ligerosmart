@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMCore.xml,v 1.15 2008-07-02 12:30:42 mh Exp $</CVS>
+    <CVS>$Id: ITSMCore.xml,v 1.16 2008-07-03 15:10:38 mh Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMCIPAllocate Konfiguration im Admin-Bereich.</Description>
-        <Group>ITSM</Group>
+        <Group>ITSM Core</Group>
         <SubGroup>Frontend::Admin::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
@@ -19,6 +19,15 @@
                     <Prio>430</Prio>
                 </NavBarModule>
             </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMCore::IncidentLinkType" Required="1" Valid="1">
+        <Description Lang="en">Set the type of link to be used to calculate the incident state.</Description>
+        <Description Lang="de">Legt den Linktyp fest, der zur Berechnung des Vorfallstatus verwendet wird.</Description>
+        <Group>ITSM Core</Group>
+        <SubGroup>Core::ITSMCore</SubGroup>
+        <Setting>
+            <String Regex="">DependsOn</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="LinkObject::Type###AlternativeTo" Required="1" Valid="1">
@@ -222,15 +231,6 @@
                 <Item Key="Object2">Service</Item>
                 <Item Key="Type">RelevantTo</Item>
             </Hash>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMCore::IncidentLinkType" Required="1" Valid="1">
-        <Description Lang="en">Set the type of link to be used to calculate the incident state.</Description>
-        <Description Lang="de">Legt den Linktyp fest, der zur Berechnung des Vorfallstatus verwendet wird.</Description>
-        <Group>ITSM</Group>
-        <SubGroup>Core::ITSMCore</SubGroup>
-        <Setting>
-            <String Regex="">DependsOn</String>
         </Setting>
     </ConfigItem>
 </otrs_config>

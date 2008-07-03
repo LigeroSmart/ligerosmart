@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMService.xml,v 1.1 2008-07-02 12:39:53 mh Exp $</CVS>
+    <CVS>$Id: ITSMService.xml,v 1.2 2008-07-03 15:10:57 mh Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AgentITSMService" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AgentITSMService object in the agent interface.</Description>
         <Description Lang="de">Frontendmodul-Registration des AgentITSMService-Objekts im Agent-Interface.</Description>
-        <Group>ITSM</Group>
+        <Group>ITSM Core</Group>
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
@@ -40,7 +40,7 @@
     <ConfigItem Name="Frontend::Module###AgentITSMServiceZoom" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AgentITSMServiceZoom object in the agent interface.</Description>
         <Description Lang="de">Frontendmodul-Registration des AgentITSMServiceZoom-Objekts im Agent-Interface.</Description>
-        <Group>ITSM</Group>
+        <Group>ITSM Core</Group>
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
@@ -54,7 +54,7 @@
     <ConfigItem Name="Frontend::Module###AgentITSMServicePrint" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AgentITSMServicePrint object in the agent interface.</Description>
         <Description Lang="de">Frontendmodul-Registration des AgentITSMServicePrint-Objekts im Agent-Interface.</Description>
-        <Group>ITSM</Group>
+        <Group>ITSM Core</Group>
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
@@ -68,7 +68,7 @@
     <ConfigItem Name="Frontend::Module###AgentITSMSLAZoom" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AgentITSMSLAZoom object in the agent interface.</Description>
         <Description Lang="de">Frontendmodul-Registration des AgentITSMSLAZoom-Objekts im Agent-Interface.</Description>
-        <Group>ITSM</Group>
+        <Group>ITSM Core</Group>
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
@@ -82,7 +82,7 @@
     <ConfigItem Name="Frontend::Module###AgentITSMSLAPrint" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AgentITSMSLAPrint object in the agent interface.</Description>
         <Description Lang="de">Frontendmodul-Registration des AgentITSMSLAPrint-Objekts im Agent-Interface.</Description>
-        <Group>ITSM</Group>
+        <Group>ITSM Core</Group>
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
@@ -96,7 +96,7 @@
     <ConfigItem Name="ITSMService::Frontend::MenuModule###000-Back" Required="0" Valid="1">
         <Description Lang="en">Module to show back link in service menu.</Description>
         <Description Lang="de">Über dieses Modul wird der Zurück-Link in der Linkleiste der Service-Ansicht angezeigt.</Description>
-        <Group>ITSM</Group>
+        <Group>ITSM Core</Group>
         <SubGroup>Frontend::Agent::ITSMService::MenuModule</SubGroup>
         <Setting>
             <Hash>
@@ -111,7 +111,7 @@
     <ConfigItem Name="ITSMService::Frontend::MenuModule###100-Print" Required="0" Valid="1">
         <Description Lang="en">Module to show print link in service menu.</Description>
         <Description Lang="de">Über dieses Modul wird der Drucken-Link in der Linkleiste der Service-Ansicht angezeigt.</Description>
-        <Group>ITSM</Group>
+        <Group>ITSM Core</Group>
         <SubGroup>Frontend::Agent::ITSMService::MenuModule</SubGroup>
         <Setting>
             <Hash>
@@ -127,7 +127,7 @@
     <ConfigItem Name="ITSMService::Frontend::MenuModule###200-Link" Required="0" Valid="1">
         <Description Lang="en">Module to show the link link in service menu.</Description>
         <Description Lang="de">Über dieses Modul wird der Verknüpfen-Link in der Linkleiste der Service-Ansicht angezeigt.</Description>
-        <Group>ITSM</Group>
+        <Group>ITSM Core</Group>
         <SubGroup>Frontend::Agent::ITSMService::MenuModule</SubGroup>
         <Setting>
             <Hash>
@@ -142,7 +142,7 @@
     <ConfigItem Name="ITSMSLA::Frontend::MenuModule###000-Back" Required="0" Valid="1">
         <Description Lang="en">Module to show back link in sla menu.</Description>
         <Description Lang="de">Über dieses Modul wird der Zurück-Link in der Linkleiste der SLA-Ansicht angezeigt.</Description>
-        <Group>ITSM</Group>
+        <Group>ITSM Core</Group>
         <SubGroup>Frontend::Agent::ITSMSLA::MenuModule</SubGroup>
         <Setting>
             <Hash>
@@ -157,7 +157,7 @@
     <ConfigItem Name="ITSMSLA::Frontend::MenuModule###100-Print" Required="0" Valid="1">
         <Description Lang="en">Module to show print link in sla menu.</Description>
         <Description Lang="de">Über dieses Modul wird der Drucken-Link in der Linkleiste der SLA-Ansicht angezeigt.</Description>
-        <Group>ITSM</Group>
+        <Group>ITSM Core</Group>
         <SubGroup>Frontend::Agent::ITSMSLA::MenuModule</SubGroup>
         <Setting>
             <Hash>
