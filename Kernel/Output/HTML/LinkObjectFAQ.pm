@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LinkObjectFAQ.pm - layout backend module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: LinkObjectFAQ.pm,v 1.4 2008-07-01 07:35:13 rk Exp $
+# $Id: LinkObjectFAQ.pm,v 1.5 2008-07-05 15:07:19 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -111,9 +111,9 @@ sub TableCreateComplex {
 
     return if !@ItemList;
 
-    # block data
-    my $FAQHook   = $Self->{ConfigObject}->Get('FAQ::FAQHook');
-    my %BlockData = (
+    # define the block data
+    my $FAQHook = $Self->{ConfigObject}->Get('FAQ::FAQHook');
+    my %Block   = (
         Object    => $Self->{ObjectData}->{Object},
         Blockname => $Self->{ObjectData}->{Realname},
         Headline  => [
@@ -136,7 +136,7 @@ sub TableCreateComplex {
         ItemList => \@ItemList,
     );
 
-    return %BlockData;
+    return ( \%Block );
 }
 
 sub TableCreateSimple {
