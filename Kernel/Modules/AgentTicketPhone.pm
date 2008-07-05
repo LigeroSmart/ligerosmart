@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketPhone.pm - to handle phone calls
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.pm,v 1.4 2008-07-02 10:14:26 ub Exp $
+# $Id: AgentTicketPhone.pm,v 1.5 2008-07-05 20:47:57 mh Exp $
 # $OldId: AgentTicketPhone.pm,v 1.78 2008/07/02 10:11:21 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -31,7 +31,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -57,8 +57,8 @@ sub new {
 # ITSM
 # ---
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
-    $Self->{CIPAllocateObject} = Kernel::System::ITSMCIPAllocate->new(%Param);
-    $Self->{ServiceObject} = Kernel::System::Service->new(%Param);
+    $Self->{CIPAllocateObject}    = Kernel::System::ITSMCIPAllocate->new(%Param);
+    $Self->{ServiceObject}        = Kernel::System::Service->new(%Param);
 # ---
 
     # get form id
@@ -93,15 +93,15 @@ sub Run {
     {
         $GetParam{$_} = $Self->{ParamObject}->GetParam( Param => $_ );
     }
-
 # ---
 # ITSM
 # ---
+
     # get needed stuff
-    $GetParam{ImpactID} = $Self->{ParamObject}->GetParam(Param => "TicketFreeText14");
-    $GetParam{ImpactRC} = $Self->{ParamObject}->GetParam(Param => "ImpactRC");
-    $GetParam{PriorityRC} = $Self->{ParamObject}->GetParam(Param => "PriorityRC");
-    $GetParam{ElementChanged} = $Self->{ParamObject}->GetParam(Param => "ElementChanged") || '';
+    $GetParam{ImpactID}       = $Self->{ParamObject}->GetParam(Param => 'TicketFreeText14');
+    $GetParam{ImpactRC}       = $Self->{ParamObject}->GetParam(Param => 'ImpactRC');
+    $GetParam{PriorityRC}     = $Self->{ParamObject}->GetParam(Param => 'PriorityRC');
+    $GetParam{ElementChanged} = $Self->{ParamObject}->GetParam(Param => 'ElementChanged') || '';
 
     # check if impact needs to be recalculated
     if ( $GetParam{ElementChanged} eq 'ServiceID' ) {
@@ -109,44 +109,53 @@ sub Run {
     }
 
     # check if priority needs to be recalculated
-    if ($GetParam{ElementChanged} eq 'TicketFreeText14') {
+    if ( $GetParam{ElementChanged} eq 'TicketFreeText14' ) {
         $GetParam{PriorityRC} = 1;
     }
 
     my %Service;
     my $ImpactList = {};
     $ImpactList->{''} = '-';
-    if ($GetParam{ServiceID}) {
+    if ( $GetParam{ServiceID} ) {
+
         # get service
         %Service = $Self->{ServiceObject}->ServiceGet(
             ServiceID => $GetParam{ServiceID},
-            UserID => $Self->{UserID},
+            UserID    => $Self->{UserID},
         );
 
         # get impact list
         $ImpactList = $Self->{GeneralCatalogObject}->ItemList(
             Class => 'ITSM::Core::Impact',
         );
+
         # recalculate impact
-        if ($GetParam{ImpactRC}) {
+        if ( $GetParam{ImpactRC} ) {
+
+            # get default selection
+            my $DefaultSelection = $Self->{ConfigObject}->Get('TicketFreeText14::DefaultSelection');
+
             # get default impact id
-            my %ImpactListReverse = reverse(%{$ImpactList});
-            $GetParam{ImpactID} = $ImpactListReverse{$Self->{ConfigObject}->Get('TicketFreeText14::DefaultSelection')};
+            my %ImpactListReverse = reverse %{$ImpactList};
+            $GetParam{ImpactID}   = $ImpactListReverse{$DefaultSelection};
             $GetParam{PriorityRC} = 1;
         }
+
         # recalculate priority
-        if ($GetParam{PriorityRC}) {
+        if ( $GetParam{PriorityRC} ) {
+
             # get priority
             $GetParam{PriorityIDFromImpact} = $Self->{CIPAllocateObject}->PriorityAllocationGet(
                 CriticalityID => $Service{CriticalityID},
-                ImpactID => $GetParam{ImpactID},
+                ImpactID      => $GetParam{ImpactID},
             );
         }
-        if ($GetParam{PriorityIDFromImpact}) {
+        if ( $GetParam{PriorityIDFromImpact} ) {
             $GetParam{PriorityID} = $GetParam{PriorityIDFromImpact};
         }
     }
 # ---
+
     # get ticket free text params
     for ( 1 .. 16 ) {
         $GetParam{"TicketFreeKey$_"} = $Self->{ParamObject}->GetParam( Param => "TicketFreeKey$_" );
@@ -381,7 +390,7 @@ sub Run {
 # ---
 # ITSM
 # ---
-            Impacts => $ImpactList,
+            Impacts  => $ImpactList,
             ImpactID => $GetParam{ImpactID},
 # ---
             Priorities => $Self->_GetPriorities( QueueID => $Self->{QueueID} || 1 ),
@@ -716,7 +725,7 @@ sub Run {
 # ---
 # ITSM
 # ---
-                Impacts => $ImpactList,
+                Impacts  => $ImpactList,
                 ImpactID => $GetParam{ImpactID},
 # ---
                 Priorities              => $Self->_GetPriorities( QueueID => $NewQueueID || 1 ),
@@ -889,22 +898,22 @@ sub Run {
 # ---
 # ITSM
 # ---
-        if ($GetParam{ServiceID} && $Service{CriticalityID}) {
+        if ( $GetParam{ServiceID} && $Service{CriticalityID} ) {
             $Self->{TicketObject}->TicketFreeTextSet(
                 TicketID => $TicketID,
-                Key => 'CriticalityID',
-                Value => $Service{CriticalityID},
-                Counter => 13,
-                UserID => $Self->{UserID},
+                Key      => 'CriticalityID',
+                Value    => $Service{CriticalityID},
+                Counter  => 13,
+                UserID   => $Self->{UserID},
             );
         }
-        if ($GetParam{ImpactID}) {
+        if ( $GetParam{ImpactID} ) {
             $Self->{TicketObject}->TicketFreeTextSet(
                 TicketID => $TicketID,
-                Key => 'ImpactID',
-                Value => $GetParam{ImpactID},
-                Counter => 14,
-                UserID => $Self->{UserID},
+                Key      => 'ImpactID',
+                Value    => $GetParam{ImpactID},
+                Counter  => 14,
+                UserID   => $Self->{UserID},
             );
         }
 # ---
@@ -1110,15 +1119,68 @@ sub Run {
 # ---
 # ITSM
 # ---
-            # TODO change this to new link object!
-            #
-            # move existing link data from temp table to the production table
-            #$Self->{LinkObject2}->LinkMoveFromTempToProduction(
-            #    Class         => 'Ticket',
-            #    TempKey       => $Self->{FormID},
-            #    ProductionKey => $TicketID,
-            #    UserID        => $Self->{UserID},
-            #);
+
+            #get the temporarily links
+            my $TempLinkList = $Self->{LinkObject}->LinkList(
+                Object    => 'Ticket',
+                Key       => $Self->{FormID},
+                State     => 'Temporary',
+                UserID   => $Self->{UserID},
+            );
+
+            if ( $TempLinkList && ref $TempLinkList eq 'HASH' && %{$TempLinkList} ) {
+
+                for my $TargetObjectOrg ( keys %{$TempLinkList} ) {
+
+                    # extract typelist
+                    my $TypeList = $TempLinkList->{$TargetObjectOrg};
+
+                    for my $Type ( keys %{$TypeList} ) {
+
+                        # extract direction list
+                        my $DirectionList = $TypeList->{$Type};
+
+                        for my $Direction ( keys %{$DirectionList} ) {
+
+                            for my $TargetKeyOrg ( keys %{ $DirectionList->{$Direction} } ) {
+
+                                # delete the temp link
+                                $Self->{LinkObject}->LinkDelete(
+                                    Object1 => 'Ticket',
+                                    Key1    => $Self->{FormID},
+                                    Object2 => $TargetObjectOrg,
+                                    Key2    => $TargetKeyOrg,
+                                    Type    => $Type,
+                                    UserID  => $Self->{UserID},
+                                );
+
+                                my $SourceObject = $TargetObjectOrg;
+                                my $SourceKey    = $TargetKeyOrg;
+                                my $TargetObject = 'Ticket';
+                                my $TargetKey    = $TicketID;
+
+                                if ( $Direction eq 'Target' ) {
+                                    $SourceObject = 'Ticket';
+                                    $SourceKey    = $TicketID;
+                                    $TargetObject = $TargetObjectOrg;
+                                    $TargetKey    = $TargetKeyOrg;
+                                }
+
+                                # add the permanently link
+                                my $Success = $Self->{LinkObject}->LinkAdd(
+                                    SourceObject => $SourceObject,
+                                    SourceKey    => $SourceKey,
+                                    TargetObject => $TargetObject,
+                                    TargetKey    => $TargetKey,
+                                    Type         => $Type,
+                                    State        => 'Valid',
+                                    UserID       => $Self->{UserID},
+                                );
+                            }
+                        }
+                    }
+                }
+            }
 # ---
 
             # get redirect screen
@@ -1882,13 +1944,14 @@ sub _MaskPhoneNew {
 # ---
 # ITSM
 # ---
+
     # create impact string
     $Param{'ImpactStrg'} = $Self->{LayoutObject}->BuildSelection(
-        Data => $Param{Impacts},
-        Name => 'TicketFreeText14',
+        Data       => $Param{Impacts},
+        Name       => 'TicketFreeText14',
         SelectedID => $Param{ImpactID},
-        OnChange => "document.compose.ExpandCustomerName.value='3'; document.compose.PriorityRC.value='1'; document.compose.submit(); return false;",
-        Ajax => {
+        OnChange   => "document.compose.ExpandCustomerName.value='3'; document.compose.PriorityRC.value='1'; document.compose.submit(); return false;",
+        Ajax       => {
             Update => [
                 'PriorityID',
             ],
@@ -1899,7 +1962,7 @@ sub _MaskPhoneNew {
             Subaction => 'AJAXUpdate',
         },
     );
-    if ($Param{PriorityIDFromImpact}) {
+    if ( $Param{PriorityIDFromImpact} ) {
         $Param{PriorityID} = $Param{PriorityIDFromImpact};
     }
 # ---
