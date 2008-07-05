@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMIncidentProblemManagement.sopm,v 1.5 2008-07-02 22:14:11 ub Exp $</CVS>
+    <CVS>$Id: ITSMIncidentProblemManagement.sopm,v 1.6 2008-07-05 21:04:08 mh Exp $</CVS>
     <Name>ITSMIncidentProblemManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -128,7 +128,6 @@
         &lt;li&gt;ITSMCore 1.1.91&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
-        &lt;br&gt;
         ((enjoy))&lt;br&gt;
         &lt;br&gt;
     </IntroInstallPre>
@@ -143,7 +142,6 @@
         &lt;ul&gt;
         &lt;li&gt;ITSMCore 1.1.91&lt;/li&gt;
         &lt;/ul&gt;
-        &lt;br&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
         &lt;br&gt;
@@ -160,7 +158,6 @@
         &lt;li&gt;ITSMCore 1.1.91&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
-        &lt;br&gt;
         ((enjoy))&lt;br&gt;
         &lt;br&gt;
     </IntroUpgradePre>
@@ -175,7 +172,6 @@
         &lt;ul&gt;
         &lt;li&gt;ITSMCore 1.1.91&lt;/li&gt;
         &lt;/ul&gt;
-        &lt;br&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
         &lt;br&gt;
