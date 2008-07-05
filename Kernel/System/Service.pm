@@ -2,7 +2,7 @@
 # Kernel/System/Service.pm - all service function
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: Service.pm,v 1.3 2008-07-03 15:47:40 mh Exp $
+# $Id: Service.pm,v 1.4 2008-07-05 18:01:35 mh Exp $
 # $OldId: Service.pm,v 1.28 2008/06/18 10:15:20 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -26,7 +26,7 @@ use Kernel::System::Time;
 # ---
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 =head1 NAME
 
@@ -359,31 +359,25 @@ sub ServiceGet {
     # check if ITSMConfigurationManagement package is installed
     if ( -e $ConfigItemModule ) {
 
-        die "Can't load ITSMConfigItem.pm!"
-            if !$Self->{MainObject}->Require('Kernel::System::ITSMConfigItem');
-
-        # create new instance
-        $Self->{ConfigItemObject} = Kernel::System::ITSMConfigItem->new( %{$Self} );
-
         # get the incident link type
         my $LinkType = $Self->{ConfigObject}->Get('ITSM::Core::IncidentLinkType');
 
         # find all linked config items
-        my $LinkedConfigItemIDs = $Self->{LinkObject2}->PartnerKeyList(
-            SourceClass  => 'Service',
-            SourceKey    => $ServiceData{ServiceID},
-            PartnerClass => 'ITSMConfigItem',
-            LinkType     => $LinkType,
+        my %LinkedConfigItemIDs = $Self->{LinkObject}->LinkKeyListWithData(
+            Object1   => 'Service',
+            Key1      => $ServiceData{ServiceID},
+            Object2   => 'ITSMConfigItem',
+            State     => 'Valid',
+            Type      => $LinkType,
+            UserID    => $Param{UserID},
         );
 
         # investigate the current incident state of each config item
         CONFIGITEMID:
-        for my $ConfigItemID ( @{$LinkedConfigItemIDs} ) {
+        for my $ConfigItemID ( keys %LinkedConfigItemIDs ) {
 
-            # get config item
-            my $ConfigItemData = $Self->{ConfigItemObject}->ConfigItemGet(
-                ConfigItemID => $ConfigItemID,
-            );
+            # extract config item data
+            my $ConfigItemData = $LinkedConfigItemIDs{$ConfigItemID};
 
             next CONFIGITEMID if $ConfigItemData->{CurDeplStateType} ne 'productive';
             next CONFIGITEMID if $ConfigItemData->{CurInciStateType} eq 'operational';
@@ -1130,6 +1124,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2008-07-03 15:47:40 $
+$Revision: 1.4 $ $Date: 2008-07-05 18:01:35 $
 
 =cut
