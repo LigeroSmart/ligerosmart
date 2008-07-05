@@ -2,7 +2,7 @@
 # Kernel/System/LinkObject/Service.pm - to link service objects
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: Service.pm,v 1.1 2008-07-02 12:35:24 mh Exp $
+# $Id: Service.pm,v 1.2 2008-07-05 20:47:01 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -128,6 +128,14 @@ sub ObjectDescriptionGet {
         }
     }
 
+    # create description
+    my %Description = (
+        Normal => 'Service',
+        Long   => 'Service',
+    );
+
+    return %Description if $Param{Mode} && $Param{Mode} eq 'Temporary';
+
     # get service
     my %Service = $Self->{ServiceObject}->ServiceGet(
         ServiceID => $Param{Key},
@@ -137,7 +145,7 @@ sub ObjectDescriptionGet {
     return if !%Service;
 
     # create description
-    my %Description = (
+    %Description = (
         Normal => "Service '$Service{NameShort}'",
         Long   => "Service '$Service{Name}'",
     );
@@ -224,6 +232,7 @@ link add pre event module
         SourceObject => 'Service',
         SourceKey    => 321,
         Type         => 'Normal',
+        State        => 'Valid',
         UserID       => 1,
     );
 
@@ -234,6 +243,7 @@ link add pre event module
         TargetObject => 'Service',
         TargetKey    => 321,
         Type         => 'Normal',
+        State        => 'Valid',
         UserID       => 1,
     );
 
@@ -243,7 +253,7 @@ sub LinkAddPre {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(Key Type UserID)) {
+    for my $Argument (qw(Key Type State UserID)) {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -252,6 +262,8 @@ sub LinkAddPre {
             return;
         }
     }
+
+    return 1 if $Param{State} eq 'Temporary';
 
     return 1;
 }
@@ -265,6 +277,7 @@ link add pre event module
         SourceObject => 'Service',
         SourceKey    => 321,
         Type         => 'Normal',
+        State        => 'Valid',
         UserID       => 1,
     );
 
@@ -275,6 +288,7 @@ link add pre event module
         TargetObject => 'Service',
         TargetKey    => 321,
         Type         => 'Normal',
+        State        => 'Valid',
         UserID       => 1,
     );
 
@@ -284,7 +298,7 @@ sub LinkAddPost {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(Key Type UserID)) {
+    for my $Argument (qw(Key Type State UserID)) {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -293,6 +307,8 @@ sub LinkAddPost {
             return;
         }
     }
+
+    return 1 if $Param{State} eq 'Temporary';
 
     return 1;
 }
@@ -306,6 +322,7 @@ link delete pre event module
         SourceObject => 'Service',
         SourceKey    => 321,
         Type         => 'Normal',
+        State        => 'Valid',
         UserID       => 1,
     );
 
@@ -316,6 +333,7 @@ link delete pre event module
         TargetObject => 'Service',
         TargetKey    => 321,
         Type         => 'Normal',
+        State        => 'Valid',
         UserID       => 1,
     );
 
@@ -325,7 +343,7 @@ sub LinkDeletePre {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(Key Type UserID)) {
+    for my $Argument (qw(Key Type State UserID)) {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -334,6 +352,8 @@ sub LinkDeletePre {
             return;
         }
     }
+
+    return 1 if $Param{State} eq 'Temporary';
 
     return 1;
 }
@@ -347,6 +367,7 @@ link delete post event module
         SourceObject => 'Service',
         SourceKey    => 321,
         Type         => 'Normal',
+        State        => 'Valid',
         UserID       => 1,
     );
 
@@ -357,6 +378,7 @@ link delete post event module
         TargetObject => 'Service',
         TargetKey    => 321,
         Type         => 'Normal',
+        State        => 'Valid',
         UserID       => 1,
     );
 
@@ -366,7 +388,7 @@ sub LinkDeletePost {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(Key Type UserID)) {
+    for my $Argument (qw(Key Type State UserID)) {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -375,6 +397,8 @@ sub LinkDeletePost {
             return;
         }
     }
+
+    return 1 if $Param{State} eq 'Temporary';
 
     return 1;
 }
