@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LinkObjectService.pm - layout backend module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: LinkObjectService.pm,v 1.2 2008-07-02 14:10:57 mh Exp $
+# $Id: LinkObjectService.pm,v 1.3 2008-07-05 15:52:31 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
@@ -69,11 +69,11 @@ sub new {
 
 =item TableCreateComplex()
 
-return a hash with the block data
+return an array with the block data
 
 Return
 
-    %BlockData = (
+    @BlockData = (
         Object    => 'Service',
         Blockname => 'Service',
         Headline  => [
@@ -157,7 +157,7 @@ Return
         ],
     );
 
-    %BlockData = $LinkObject->TableCreateComplex(
+    @BlockData = $LinkObject->TableCreateComplex(
         ObjectLinkListWithData => $ObjectLinkListRef,
     );
 
@@ -239,8 +239,8 @@ sub TableCreateComplex {
 
     return if !@ItemList;
 
-    # block data
-    my %BlockData  = (
+    # define the block data
+    my %Block = (
         Object    => $Self->{ObjectData}->{Object},
         Blockname => $Self->{ObjectData}->{Realname},
         Headline  => [
@@ -267,7 +267,7 @@ sub TableCreateComplex {
         ItemList => \@ItemList,
     );
 
-    return %BlockData;
+    return ( \%Block );
 }
 
 =item TableCreateSimple()
@@ -522,6 +522,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2008-07-02 14:10:57 $
+$Revision: 1.3 $ $Date: 2008-07-05 15:52:31 $
 
 =cut
