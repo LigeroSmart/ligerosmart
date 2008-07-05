@@ -2,7 +2,7 @@
 # Kernel/System/LinkObject/FAQ.pm - to link faq objects
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.7 2008-06-30 09:46:29 rk Exp $
+# $Id: FAQ.pm,v 1.8 2008-07-05 20:45:40 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -101,6 +101,14 @@ sub ObjectDescriptionGet {
         }
     }
 
+    # create description
+    my %Description = (
+        Normal => 'FAQ',
+        Long   => 'FAQ',
+    );
+
+    return %Description if $Param{Mode} && $Param{Mode} eq 'Temporary';
+
     # get faq
     my %FAQ = $Self->{FAQObject}->FAQGet(
         FAQID  => $Param{Key},
@@ -110,7 +118,7 @@ sub ObjectDescriptionGet {
     return if !%FAQ;
 
     # create description
-    my %Description = (
+    %Description = (
         Normal => "FAQ# $FAQ{Number}",
         Long   => "FAQ# $FAQ{Number}: $FAQ{Name}",
     );
@@ -140,7 +148,6 @@ sub ObjectSearch {
     if ( $Param{SearchParams}->{Number} ) {
         $Param{SearchParams}->{Number} = '*' . $Param{SearchParams}->{Number} . '*';
     }
-
     if ( $Param{SearchParams}->{What} ) {
         $Param{SearchParams}->{What} = '*' . $Param{SearchParams}->{What} . '*';
     }
@@ -175,7 +182,7 @@ sub LinkAddPre {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(Key Type UserID)) {
+    for my $Argument (qw(Key Type State UserID)) {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -184,6 +191,8 @@ sub LinkAddPre {
             return;
         }
     }
+
+    return 1 if $Param{State} eq 'Temporary';
 
     return 1;
 }
@@ -192,7 +201,7 @@ sub LinkAddPost {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(Key Type UserID)) {
+    for my $Argument (qw(Key Type State UserID)) {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -201,6 +210,8 @@ sub LinkAddPost {
             return;
         }
     }
+
+    return 1 if $Param{State} eq 'Temporary';
 
     return 1;
 }
@@ -209,7 +220,7 @@ sub LinkDeletePre {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(Key Type UserID)) {
+    for my $Argument (qw(Key Type State UserID)) {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -218,6 +229,8 @@ sub LinkDeletePre {
             return;
         }
     }
+
+    return 1 if $Param{State} eq 'Temporary';
 
     return 1;
 }
@@ -226,7 +239,7 @@ sub LinkDeletePost {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(Key Type UserID)) {
+    for my $Argument (qw(Key Type State UserID)) {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -235,6 +248,8 @@ sub LinkDeletePost {
             return;
         }
     }
+
+    return 1 if $Param{State} eq 'Temporary';
 
     return 1;
 }
