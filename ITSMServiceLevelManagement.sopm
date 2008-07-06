@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMServiceLevelManagement.sopm,v 1.3 2008-07-05 21:05:12 mh Exp $</CVS>
+    <CVS>$Id: ITSMServiceLevelManagement.sopm,v 1.4 2008-07-06 09:30:39 mh Exp $</CVS>
     <Name>ITSMServiceLevelManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -274,6 +274,7 @@
         REQUIRED OTRS PACKAGES
         &lt;ul&gt;
         &lt;li&gt;ITSMCore 1.1.91&lt;/li&gt;
+        &lt;li&gt;ITSMConfigurationManagement 1.1.91&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
@@ -289,6 +290,7 @@
         BENÖTIGTE OTRS-PAKETE
         &lt;ul&gt;
         &lt;li&gt;ITSMCore 1.1.91&lt;/li&gt;
+        &lt;li&gt;ITSMConfigurationManagement 1.1.91&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
@@ -304,6 +306,7 @@
         REQUIRED OTRS PACKAGES
         &lt;ul&gt;
         &lt;li&gt;ITSMCore 1.1.91&lt;/li&gt;
+        &lt;li&gt;ITSMConfigurationManagement 1.1.91&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
@@ -319,6 +322,7 @@
         BENÖTIGTE OTRS-PAKETE
         &lt;ul&gt;
         &lt;li&gt;ITSMCore 1.1.91&lt;/li&gt;
+        &lt;li&gt;ITSMConfigurationManagement 1.1.91&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
