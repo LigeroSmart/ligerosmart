@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMCore.sopm,v 1.50 2008-07-03 08:24:39 ub Exp $</CVS>
+    <CVS>$Id: ITSMCore.sopm,v 1.51 2008-07-06 09:28:52 mh Exp $</CVS>
     <Name>ITSMCore</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -584,11 +584,6 @@
             <Data Key="change_by">1</Data>
         </Insert>
     </DatabaseInstall>
-    <DatabaseUpgrade>
-        <TableAlter Name="cip_allocate" Version="1.0.1">
-            <ColumnChange NameOld="priority_id" NameNew="priority_id" Required="true" Type="SMALLINT"/>
-        </TableAlter>
-    </DatabaseUpgrade>
     <DatabaseUninstall>
         <TableDrop Name="cip_allocate"/>
         <TableAlter Name="service">
