@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketQueue.pm - the queue view of all tickets
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketQueue.pm,v 1.2 2008-07-02 22:30:16 ub Exp $
-# $OldId: AgentTicketQueue.pm,v 1.51 2008/07/02 10:23:00 martin Exp $
+# $Id: AgentTicketQueue.pm,v 1.3 2008-07-07 07:05:38 mh Exp $
+# $OldId: AgentTicketQueue.pm,v 1.53 2008/07/05 18:40:27 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -115,15 +115,6 @@ sub Run {
     if ( $Self->{UserRefreshTime} ) {
         $Refresh = 60 * $Self->{UserRefreshTime};
     }
-    $Self->{LayoutObject}->Block(
-        Name => 'MetaLink',
-        Data => {
-            Rel   => 'search',
-            Type  => 'application/opensearchdescription+xml',
-            Title => '$Quote{"$Config{"ProductName"}"} ($Quote{"$Config{"Ticket::Hook"}"})',
-            Href  => '$Env{"Baselink"}Action=AgentTicketSearch&Subaction=OpenSearchDescription',
-        },
-    );
     my $Output = $Self->{LayoutObject}->Header( Refresh => $Refresh, );
 
     # build NavigationBar
@@ -165,53 +156,53 @@ sub Run {
     my @ViewableTickets = ();
     my $SortBy          = $Self->{Config}->{'SortBy::Default'} || 'Age';
     my %SortOptions     = (
-        Owner            => 'st.user_id',
-        CustomerID       => 'st.customer_id',
-        State            => 'st.ticket_state_id',
-        Ticket           => 'st.tn',
-        Title            => 'st.title',
-        Queue            => 'sq.name',
-        Priority         => 'st.ticket_priority_id',
-        Age              => 'st.create_time_unix',
+        Owner                  => 'st.user_id',
+        CustomerID             => 'st.customer_id',
+        State                  => 'st.ticket_state_id',
+        Ticket                 => 'st.tn',
+        Title                  => 'st.title',
+        Queue                  => 'sq.name',
+        Priority               => 'st.ticket_priority_id',
+        Age                    => 'st.create_time_unix',
         TicketEscalation       => 'st.escalation_time',
         EscalationTime         => 'st.escalation_time',
         EscalationUpdateTime   => 'st.escalation_update_time',
         EscalationResponseTime => 'st.escalation_response_time',
         EscalationSolutionTime => 'st.escalation_solution_time',
-        TicketFreeTime1  => 'st.freetime1',
-        TicketFreeTime2  => 'st.freetime2',
-        TicketFreeKey1   => 'st.freekey1',
-        TicketFreeText1  => 'st.freetext1',
-        TicketFreeKey2   => 'st.freekey2',
-        TicketFreeText2  => 'st.freetext2',
-        TicketFreeKey3   => 'st.freekey3',
-        TicketFreeText3  => 'st.freetext3',
-        TicketFreeKey4   => 'st.freekey4',
-        TicketFreeText4  => 'st.freetext4',
-        TicketFreeKey5   => 'st.freekey5',
-        TicketFreeText5  => 'st.freetext5',
-        TicketFreeKey6   => 'st.freekey6',
-        TicketFreeText6  => 'st.freetext6',
-        TicketFreeKey7   => 'st.freekey7',
-        TicketFreeText7  => 'st.freetext7',
-        TicketFreeKey8   => 'st.freekey8',
-        TicketFreeText8  => 'st.freetext8',
-        TicketFreeKey9   => 'st.freekey9',
-        TicketFreeText9  => 'st.freetext9',
-        TicketFreeKey10  => 'st.freekey10',
-        TicketFreeText10 => 'st.freetext10',
-        TicketFreeKey11  => 'st.freekey11',
-        TicketFreeText11 => 'st.freetext11',
-        TicketFreeKey12  => 'st.freekey12',
-        TicketFreeText12 => 'st.freetext12',
-        TicketFreeKey13  => 'st.freekey13',
-        TicketFreeText13 => 'st.freetext13',
-        TicketFreeKey14  => 'st.freekey14',
-        TicketFreeText14 => 'st.freetext14',
-        TicketFreeKey15  => 'st.freekey15',
-        TicketFreeText15 => 'st.freetext15',
-        TicketFreeKey16  => 'st.freekey16',
-        TicketFreeText16 => 'st.freetext16',
+        TicketFreeTime1        => 'st.freetime1',
+        TicketFreeTime2        => 'st.freetime2',
+        TicketFreeKey1         => 'st.freekey1',
+        TicketFreeText1        => 'st.freetext1',
+        TicketFreeKey2         => 'st.freekey2',
+        TicketFreeText2        => 'st.freetext2',
+        TicketFreeKey3         => 'st.freekey3',
+        TicketFreeText3        => 'st.freetext3',
+        TicketFreeKey4         => 'st.freekey4',
+        TicketFreeText4        => 'st.freetext4',
+        TicketFreeKey5         => 'st.freekey5',
+        TicketFreeText5        => 'st.freetext5',
+        TicketFreeKey6         => 'st.freekey6',
+        TicketFreeText6        => 'st.freetext6',
+        TicketFreeKey7         => 'st.freekey7',
+        TicketFreeText7        => 'st.freetext7',
+        TicketFreeKey8         => 'st.freekey8',
+        TicketFreeText8        => 'st.freetext8',
+        TicketFreeKey9         => 'st.freekey9',
+        TicketFreeText9        => 'st.freetext9',
+        TicketFreeKey10        => 'st.freekey10',
+        TicketFreeText10       => 'st.freetext10',
+        TicketFreeKey11        => 'st.freekey11',
+        TicketFreeText11       => 'st.freetext11',
+        TicketFreeKey12        => 'st.freekey12',
+        TicketFreeText12       => 'st.freetext12',
+        TicketFreeKey13        => 'st.freekey13',
+        TicketFreeText13       => 'st.freetext13',
+        TicketFreeKey14        => 'st.freekey14',
+        TicketFreeText14       => 'st.freetext14',
+        TicketFreeKey15        => 'st.freekey15',
+        TicketFreeText15       => 'st.freetext15',
+        TicketFreeKey16        => 'st.freekey16',
+        TicketFreeText16       => 'st.freetext16',
     );
 
     my $Order = $Self->{Config}->{'Order::Default'} || 'Up';
