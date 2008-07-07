@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.25 2008-07-07 11:00:30 mh Exp $
+# $Id: FAQ.pm,v 1.26 2008-07-07 11:02:29 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::CustomerGroup;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.25 $) [1];
+$VERSION = qw($Revision: 1.26 $) [1];
 
 =head1 NAME
 
@@ -175,8 +175,10 @@ sub FAQGet {
             StateTypeName => $Row[29],
             Result        => sprintf(
                 "%0."
-                    . $Self->{ConfigObject}
-                    ->Get("FAQ::Explorer::ItemList::VotingResultDecimalPlaces") . "f",
+                    . $Self->{ConfigObject}->Get(
+                    "FAQ::Explorer::ItemList::VotingResultDecimalPlaces"
+                    )
+                    . "f",
                 $VoteData{Result} || 0
             ),
             Votes => $VoteData{Votes},
@@ -2601,6 +2603,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.25 $ $Date: 2008-07-07 11:00:30 $
+$Revision: 1.26 $ $Date: 2008-07-07 11:02:29 $
 
 =cut

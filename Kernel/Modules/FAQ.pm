@@ -2,7 +2,7 @@
 # Kernel/Modules/FAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.17 2008-07-07 11:00:30 mh Exp $
+# $Id: FAQ.pm,v 1.18 2008-07-07 11:02:29 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::FAQ;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -82,8 +82,10 @@ sub GetExplorer {
     # db action
     my %CategoryData = ();
     if ( $GetParam{CategoryID} ) {
-        %CategoryData = $Self->{FAQObject}
-            ->CategoryGet( CategoryID => $GetParam{CategoryID}, UserID => $Self->{UserID} );
+        %CategoryData = $Self->{FAQObject}->CategoryGet(
+            CategoryID => $GetParam{CategoryID},
+            UserID     => $Self->{UserID}
+        );
         if ( !%CategoryData ) {
             return $Self->{LayoutObject}->ErrorScreen();
         }

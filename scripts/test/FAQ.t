@@ -2,7 +2,7 @@
 # FAQ.t - FAQ tests
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.t,v 1.5 2008-06-25 20:08:14 martin Exp $
+# $Id: FAQ.t,v 1.6 2008-07-07 11:00:30 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -11,24 +11,24 @@
 
 use Kernel::System::FAQ;
 
-$Self->{FAQObject} = Kernel::System::FAQ->new(%{$Self}, UserID => 1);
+$Self->{FAQObject} = Kernel::System::FAQ->new( %{$Self}, UserID => 1 );
 
 my $FAQID = $Self->{FAQObject}->FAQAdd(
-    Title => 'Some Text',
+    Title      => 'Some Text',
     CategoryID => 1,
-    StateID => 1,
+    StateID    => 1,
     LanguageID => 1,
-    Keywords => 'some keywords',
-    Field1 => 'Problem...',
-    Field2 => 'Solution...',
-    FreeKey1 => 'Software',
-    FreeText1 => 'Apache 3.4.2',
-    FreeKey2 => 'OS',
-    FreeText2 => 'OpenBSD 4.2.2',
-    FreeKey3 => 'Key3',
-    FreeText3 => 'Value3',
-    FreeKey4 => 'Key4',
-    FreeText4 => 'Value4',
+    Keywords   => 'some keywords',
+    Field1     => 'Problem...',
+    Field2     => 'Solution...',
+    FreeKey1   => 'Software',
+    FreeText1  => 'Apache 3.4.2',
+    FreeKey2   => 'OS',
+    FreeText2  => 'OpenBSD 4.2.2',
+    FreeKey3   => 'Key3',
+    FreeText3  => 'Value3',
+    FreeKey4   => 'Key4',
+    FreeText4  => 'Value4',
 );
 
 $Self->True(
@@ -41,48 +41,48 @@ my %FAQ = $Self->{FAQObject}->FAQGet(
 );
 
 my %FAQTest = (
-    Title => 'Some Text',
+    Title      => 'Some Text',
     CategoryID => 1,
-    StateID => 1,
+    StateID    => 1,
     LanguageID => 1,
-    Keywords => 'some keywords',
-    Field1 => 'Problem...',
-    Field2 => 'Solution...',
-    FreeKey1 => 'Software',
-    FreeText1 => 'Apache 3.4.2',
-    FreeKey2 => 'OS',
-    FreeText2 => 'OpenBSD 4.2.2',
-    FreeKey3 => 'Key3',
-    FreeText3 => 'Value3',
-    FreeKey4 => 'Key4',
-    FreeText4 => 'Value4',
+    Keywords   => 'some keywords',
+    Field1     => 'Problem...',
+    Field2     => 'Solution...',
+    FreeKey1   => 'Software',
+    FreeText1  => 'Apache 3.4.2',
+    FreeKey2   => 'OS',
+    FreeText2  => 'OpenBSD 4.2.2',
+    FreeKey3   => 'Key3',
+    FreeText3  => 'Value3',
+    FreeKey4   => 'Key4',
+    FreeText4  => 'Value4',
 );
 
 for my $Test ( sort keys %FAQTest ) {
     $Self->Is(
-        $FAQ{$Test} || 0,
+        $FAQ{$Test}     || 0,
         $FAQTest{$Test} || '',
         "FAQGet() - $Test",
     );
 }
 
 my $FAQUpdate = $Self->{FAQObject}->FAQUpdate(
-    ItemID => $FAQID,
+    ItemID     => $FAQID,
     CategoryID => 1,
-    StateID => 2,
+    StateID    => 2,
     LanguageID => 2,
-    Title => 'Some Text2',
-    Keywords => 'some keywords2',
-    Field1 => 'Problem...2',
-    Field2 => 'Solution...2',
-    FreeKey1 => 'Software2',
-    FreeText1 => 'Apache 3.4.22',
-    FreeKey2 => 'OS2',
-    FreeText2 => 'OpenBSD 4.2.22',
-    FreeKey3 => 'Key32',
-    FreeText3 => 'Value32',
-    FreeKey4 => 'Key42',
-    FreeText4 => 'Value42',
+    Title      => 'Some Text2',
+    Keywords   => 'some keywords2',
+    Field1     => 'Problem...2',
+    Field2     => 'Solution...2',
+    FreeKey1   => 'Software2',
+    FreeText1  => 'Apache 3.4.22',
+    FreeKey2   => 'OS2',
+    FreeText2  => 'OpenBSD 4.2.22',
+    FreeKey3   => 'Key32',
+    FreeText3  => 'Value32',
+    FreeKey4   => 'Key42',
+    FreeText4  => 'Value42',
 );
 
 %FAQ = $Self->{FAQObject}->FAQGet(
@@ -90,37 +90,37 @@ my $FAQUpdate = $Self->{FAQObject}->FAQUpdate(
 );
 
 %FAQTest = (
-    Title => 'Some Text2',
+    Title      => 'Some Text2',
     CategoryID => 1,
-    StateID => 2,
+    StateID    => 2,
     LanguageID => 2,
-    Keywords => 'some keywords2',
-    Field1 => 'Problem...2',
-    Field2 => 'Solution...2',
-    FreeKey1 => 'Software2',
-    FreeText1 => 'Apache 3.4.22',
-    FreeKey2 => 'OS2',
-    FreeText2 => 'OpenBSD 4.2.22',
-    FreeKey3 => 'Key32',
-    FreeText3 => 'Value32',
-    FreeKey4 => 'Key42',
-    FreeText4 => 'Value42',
+    Keywords   => 'some keywords2',
+    Field1     => 'Problem...2',
+    Field2     => 'Solution...2',
+    FreeKey1   => 'Software2',
+    FreeText1  => 'Apache 3.4.22',
+    FreeKey2   => 'OS2',
+    FreeText2  => 'OpenBSD 4.2.22',
+    FreeKey3   => 'Key32',
+    FreeText3  => 'Value32',
+    FreeKey4   => 'Key42',
+    FreeText4  => 'Value42',
 );
 
 for my $Test ( sort keys %FAQTest ) {
     $Self->Is(
         $FAQTest{$Test} || '',
-        $FAQ{$Test} || 0,
+        $FAQ{$Test}     || 0,
         "FAQGet() - $Test",
     );
 }
 
 my $Ok = $Self->{FAQObject}->VoteAdd(
     CreatedBy => 'Some Text',
-    ItemID => $FAQID,
-    IP => '54.43.30.1',
+    ItemID    => $FAQID,
+    IP        => '54.43.30.1',
     Interface => '2',
-    Rate => 100,
+    Rate      => 100,
 );
 
 $Self->True(
@@ -129,9 +129,9 @@ $Self->True(
 );
 
 my $Vote = $Self->{FAQObject}->VoteGet(
-    CreateBy => 'Some Text',
-    ItemID => $FAQID,
-    IP => '54.43.30.1',
+    CreateBy  => 'Some Text',
+    ItemID    => $FAQID,
+    IP        => '54.43.30.1',
     Interface => '2',
 );
 
@@ -142,21 +142,21 @@ $Self->Is(
 );
 
 my $FAQID2 = $Self->{FAQObject}->FAQAdd(
-    Title => 'Title',
+    Title      => 'Title',
     CategoryID => 1,
-    StateID => 1,
+    StateID    => 1,
     LanguageID => 1,
-    Keywords => '',
-    Field1 => 'Problem1...',
-    Field2 => 'Solution1...',
-    FreeKey1 => 'Software1',
-    FreeText1 => 'Apache 3.4.2',
-    FreeKey2 => 'OS',
-    FreeText2 => 'OpenBSD 4.2.2',
-    FreeKey3 => 'Key3',
-    FreeText3 => 'Value3',
-    FreeKey4 => 'Key4',
-    FreeText4 => 'Value4',
+    Keywords   => '',
+    Field1     => 'Problem1...',
+    Field2     => 'Solution1...',
+    FreeKey1   => 'Software1',
+    FreeText1  => 'Apache 3.4.2',
+    FreeKey2   => 'OS',
+    FreeText2  => 'OpenBSD 4.2.2',
+    FreeKey3   => 'Key3',
+    FreeText3  => 'Value3',
+    FreeKey4   => 'Key4',
+    FreeText4  => 'Value4',
 );
 
 $Self->True(
@@ -164,7 +164,7 @@ $Self->True(
     "FAQAdd() - 2",
 );
 
-my $Home = $Self->{ConfigObject}->Get('Home');
+my $Home            = $Self->{ConfigObject}->Get('Home');
 my @AttachmentTests = (
     {
         File => 'FAQ-Test1.pdf',
@@ -175,13 +175,13 @@ my @AttachmentTests = (
         MD5  => '2e520036a0cda6a806a8838b1000d9d7',
     },
 );
-for my $AttachmentTest ( @AttachmentTests ) {
+for my $AttachmentTest (@AttachmentTests) {
     my $ContentSCALARRef = $Self->{MainObject}->FileRead(
         Location => $Home . '/scripts/test/sample/' . $AttachmentTest->{File},
     );
     my $Add = $Self->{FAQObject}->AttachmentAdd(
         ItemID      => $FAQID2,
-        Content     => ${ $ContentSCALARRef },
+        Content     => ${$ContentSCALARRef},
         ContentType => 'text/xml',
         Filename    => $AttachmentTest->{File},
     );
@@ -219,18 +219,18 @@ for my $AttachmentTest ( @AttachmentTests ) {
 }
 
 my @FAQIDs = $Self->{FAQObject}->FAQSearch(
-    Number => '*',
-    What => '*s*',
+    Number  => '*',
+    What    => '*s*',
     Keyword => 'some*',
-    States => ['public', 'internal'],
-    Order => 'Votes',
-    Sort => 'ASC',
-    Limit => 150,
+    States  => [ 'public', 'internal' ],
+    Order   => 'Votes',
+    Sort    => 'ASC',
+    Limit   => 150,
 );
 
-my $FAQSearchFound = 0;
+my $FAQSearchFound  = 0;
 my $FAQSearchFound2 = 0;
-for my $FAQIDSearch ( @FAQIDs ) {
+for my $FAQIDSearch (@FAQIDs) {
     if ( $FAQIDSearch eq $FAQID ) {
         $FAQSearchFound = 1;
     }
@@ -249,17 +249,17 @@ $Self->False(
 
 @FAQIDs = $Self->{FAQObject}->FAQSearch(
     Number => '*',
-    Title => 'tITLe',
-    What  => 'l',
-    States => ['public', 'internal'],
-    Order => 'Created',
-    Sort => 'ASC',
-    Limit => 150,
+    Title  => 'tITLe',
+    What   => 'l',
+    States => [ 'public', 'internal' ],
+    Order  => 'Created',
+    Sort   => 'ASC',
+    Limit  => 150,
 );
 
-$FAQSearchFound = 0;
+$FAQSearchFound  = 0;
 $FAQSearchFound2 = 0;
-for my $FAQIDSearch ( @FAQIDs ) {
+for my $FAQIDSearch (@FAQIDs) {
     if ( $FAQIDSearch eq $FAQID ) {
         $FAQSearchFound = 1;
     }
@@ -276,11 +276,13 @@ $Self->True(
     "FAQSearch() - $FAQID2",
 );
 
-my @VoteIDs = @{$Self->{FAQObject}->VoteSearch(
-    ItemID => $FAQID,
-)};
+my @VoteIDs = @{
+    $Self->{FAQObject}->VoteSearch(
+        ItemID => $FAQID,
+        )
+    };
 
-for my $VoteID ( @VoteIDs ) {
+for my $VoteID (@VoteIDs) {
     my $VoteDelete = $Self->{FAQObject}->VoteDelete(
         VoteID => 1,
     );

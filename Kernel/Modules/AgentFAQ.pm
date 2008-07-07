@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.pm,v 1.15 2008-07-07 11:00:30 mh Exp $
+# $Id: AgentFAQ.pm,v 1.16 2008-07-07 11:02:29 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::Group;
 use Kernel::System::Valid;
 
 use vars qw($VERSION @ISA);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 @ISA = qw(Kernel::Modules::FAQ);
 
@@ -197,16 +197,18 @@ sub Run {
         # db action
         if ( !$Self->{FAQObject}->LanguageDuplicateCheck( Name => $ParamData{Name} ) ) {
             if ( $Self->{FAQObject}->LanguageAdd( %ParamData, UserID => $Self->{UserID} ) ) {
-                return $Self->{LayoutObject}
-                    ->Redirect( OP => "Action=AgentFAQ&Subaction=Language" );
+                return $Self->{LayoutObject}->Redirect(
+                    OP => "Action=AgentFAQ&Subaction=Language"
+                );
             }
             else {
                 return $Self->{LayoutObject}->ErrorScreen();
             }
         }
         else {
-            $Self->{LayoutObject}
-                ->FatalError( Message => "Language '$ParamData{Name}' already exists!" );
+            $Self->{LayoutObject}->FatalError(
+                Message => "Language '$ParamData{Name}' already exists!"
+            );
         }
 
     }
@@ -282,23 +284,27 @@ sub Run {
 
         # duplicate check
         if (
-            !$Self->{FAQObject}
-            ->LanguageDuplicateCheck( Name => $ParamData{Name}, ID => $ParamData{ID} )
+            !$Self->{FAQObject}->LanguageDuplicateCheck(
+                Name => $ParamData{Name},
+                ID   => $ParamData{ID}
+            )
             )
         {
 
             # db action
             if ( !$Self->{FAQObject}->LanguageUpdate( %ParamData, UserID => $Self->{UserID} ) ) {
-                return $Self->{LayoutObject}
-                    ->Redirect( OP => "Action=AgentFAQ&Subaction=Language" );
+                return $Self->{LayoutObject}->Redirect(
+                    OP => "Action=AgentFAQ&Subaction=Language"
+                );
             }
             else {
                 return $Self->{LayoutObject}->ErrorScreen();
             }
         }
         else {
-            $Self->{LayoutObject}
-                ->FatalError( Message => "Language '$ParamData{Name}' already exists!" );
+            $Self->{LayoutObject}->FatalError(
+                Message => "Language '$ParamData{Name}' already exists!"
+            );
         }
 
     }
@@ -428,16 +434,18 @@ sub Run {
                     CategoryID => $ParamData{CategoryID},
                     GroupIDs   => \@PermissionGroups,
                 );
-                return $Self->{LayoutObject}
-                    ->Redirect( OP => "Action=AgentFAQ&Subaction=Category" );
+                return $Self->{LayoutObject}->Redirect(
+                    OP => "Action=AgentFAQ&Subaction=Category"
+                );
             }
             else {
                 return $Self->{LayoutObject}->ErrorScreen();
             }
         }
         else {
-            $Self->{LayoutObject}
-                ->FatalError( Message => "Category '$ParamData{Name}' already exists!" );
+            $Self->{LayoutObject}->FatalError(
+                Message => "Category '$ParamData{Name}' already exists!"
+            );
         }
     }
 
@@ -522,8 +530,10 @@ sub Run {
 
         # duplicate check
         if (
-            !$Self->{FAQObject}
-            ->CategoryDuplicateCheck( Name => $ParamData{Name}, ParentID => $ParamData{ParentID} )
+            !$Self->{FAQObject}->CategoryDuplicateCheck(
+                Name     => $ParamData{Name},
+                ParentID => $ParamData{ParentID}
+            )
             )
         {
             my $CategoryID
@@ -537,16 +547,18 @@ sub Run {
                     CategoryID => $CategoryID,
                     GroupIDs   => \@PermissionGroups,
                 );
-                return $Self->{LayoutObject}
-                    ->Redirect( OP => "Action=AgentFAQ&Subaction=Category" );
+                return $Self->{LayoutObject}->Redirect(
+                    OP => "Action=AgentFAQ&Subaction=Category"
+                );
             }
             else {
                 return $Self->{LayoutObject}->ErrorScreen();
             }
         }
         else {
-            $Self->{LayoutObject}
-                ->FatalError( Message => "Category '$ParamData{Name}' already exists!" );
+            $Self->{LayoutObject}->FatalError(
+                Message => "Category '$ParamData{Name}' already exists!"
+            );
         }
     }
 
@@ -1109,8 +1121,9 @@ sub Run {
         if ( !defined( $Param{Nav} ) ) {
             $Param{Nav} = '';
         }
-        return $Self->{LayoutObject}
-            ->Redirect( OP => "Action=$Self->{Action}&Subaction=Explorer&Nav=" . $Param{Nav} );
+        return $Self->{LayoutObject}->Redirect(
+            OP => "Action=$Self->{Action}&Subaction=Explorer&Nav=" . $Param{Nav}
+        );
     }
 
     # DEFAULT OUTPUT
