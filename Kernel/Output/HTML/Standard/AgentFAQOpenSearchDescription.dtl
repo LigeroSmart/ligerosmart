@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
-<ShortName>$Quote{"$Config{"ProductName"}"} ($Quote{"$Config{"FAQ::FAQHook"}"})</ShortName>
-<Description>$Quote{"$Config{"ProductName"}"} ($Quote{"$Config{"FAQ::FAQHook"}"})</Description>
+<ShortName>$Quote{"$Config{"ProductName"}"} ($Quote{"$Config{"FAQ::FAQHook"}"} &amp; $Text{"Fulltext"})</ShortName>
+<Description>$Quote{"$Config{"ProductName"}"} ($Quote{"$Config{"FAQ::FAQHook"}"} &amp; $Text{"Fulltext"})</Description>
 <InputEncoding>$Env{"UserCharset"}</InputEncoding>
 <Url type="text/html" template="$Config{"HttpType"}://$Env{"HTTP_HOST"}$Env{"Baselink"}Action=AgentFAQ&amp;Subaction=Search&amp;Submit=yes&amp;QuickSearch=1&amp;What={searchTerms}" />
 <Image height="16" width="16" type="image/x-icon">$Config{"HttpType"}://$Env{"HTTP_HOST"}$Env{"Images"}product.ico</Image>
