@@ -1,12 +1,12 @@
 # --
 # Kernel/Language/de_AgentTimeAccounting.pm - the de language for AgentTimeAccounting
-# Copyright (C) 2001-2008 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: de_AgentTimeAccounting.pm,v 1.6 2008-01-22 07:48:06 tr Exp $
+# $Id: de_AgentTimeAccounting.pm,v 1.7 2008-07-07 06:28:28 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 
 package Kernel::Language::de_AgentTimeAccounting;
@@ -105,7 +105,7 @@ sub Data {
         'If you use action misc, please give an explanation in the field remark' =>
             'Wenn Sie Aktion Sonstiges auswählen, geben Sie eine Beschreibung um Feld Anmerkung an.',
 
-        #actually the following should be included in file de.pm, however they're not so I put'em here...
+        # FIXME actually the following should be included in file de.pm, however they're not so I put'em here...
         'Mon'      => 'Mo',
         'Tue'      => 'Di',
         'Wed'      => 'Mi',
@@ -118,7 +118,7 @@ sub Data {
         'March'    => 'März',
         'May'      => 'Mai',
         'June'     => 'Juni',
-        'July'     => 'Januar',
+        'July'     => 'Juli',
         'October'  => 'Oktober',
         'December' => 'Dezember',
     };
