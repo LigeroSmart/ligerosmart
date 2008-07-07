@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketPhone.pm - to handle phone calls
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.pm,v 1.5 2008-07-05 20:47:57 mh Exp $
+# $Id: AgentTicketPhone.pm,v 1.6 2008-07-07 23:41:45 ub Exp $
 # $OldId: AgentTicketPhone.pm,v 1.78 2008/07/02 10:11:21 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -31,7 +31,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -99,17 +99,13 @@ sub Run {
 
     # get needed stuff
     $GetParam{ImpactID}       = $Self->{ParamObject}->GetParam(Param => 'TicketFreeText14');
-    $GetParam{ImpactRC}       = $Self->{ParamObject}->GetParam(Param => 'ImpactRC');
     $GetParam{PriorityRC}     = $Self->{ParamObject}->GetParam(Param => 'PriorityRC');
     $GetParam{ElementChanged} = $Self->{ParamObject}->GetParam(Param => 'ElementChanged') || '';
 
-    # check if impact needs to be recalculated
-    if ( $GetParam{ElementChanged} eq 'ServiceID' ) {
-        $GetParam{ImpactRC} = 1;
-    }
-
     # check if priority needs to be recalculated
-    if ( $GetParam{ElementChanged} eq 'TicketFreeText14' ) {
+    if (   $GetParam{ElementChanged} eq 'ServiceID'
+        || $GetParam{ElementChanged} eq 'TicketFreeText14'
+    ) {
         $GetParam{PriorityRC} = 1;
     }
 
@@ -129,8 +125,8 @@ sub Run {
             Class => 'ITSM::Core::Impact',
         );
 
-        # recalculate impact
-        if ( $GetParam{ImpactRC} ) {
+        # recalculate impact if impact is not set until now
+        if ( !$GetParam{ImpactID} ) {
 
             # get default selection
             my $DefaultSelection = $Self->{ConfigObject}->Get('TicketFreeText14::DefaultSelection');
@@ -1812,7 +1808,7 @@ sub _MaskPhoneNew {
 # ITSM
 # ---
 #                "document.compose.ExpandCustomerName.value='3'; document.compose.submit(); return false;",
-                "document.compose.ExpandCustomerName.value='3'; document.compose.ImpactRC.value='1'; document.compose.submit(); return false;",
+                "document.compose.ExpandCustomerName.value='3'; document.compose.PriorityRC.value='1'; document.compose.submit(); return false;",
 # ---
             Ajax => {
                 Update => [
