@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicFAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQ.pm,v 1.4 2008-04-08 20:15:34 martin Exp $
+# $Id: PublicFAQ.pm,v 1.5 2008-07-07 11:00:30 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -12,22 +12,23 @@
 package Kernel::Modules::PublicFAQ;
 
 use strict;
+use warnings;
+
 use Kernel::System::FAQ;
 use Kernel::Modules::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 our @ISA = qw(Kernel::Modules::FAQ);
 
 sub new {
-    my $Type = shift;
-    my %Param = @_;
+    my ( $Type, %Param ) = @_;
 
     # allocate new hash for object
     # ********************************************************** #
     my $Self = new Kernel::Modules::FAQ(%Param);
-    bless ($Self, $Type);
+    bless( $Self, $Type );
 
     # interface settings
     # ********************************************************** #
@@ -41,92 +42,93 @@ sub new {
     # check needed Objects
     # ********************************************************** #
     for (qw()) {
-        $Self->{LayoutObject}->FatalError(Message => "Got no $_!") if (!$Self->{$_});
+        $Self->{LayoutObject}->FatalError( Message => "Got no $_!" ) if ( !$Self->{$_} );
     }
 
     return $Self;
 }
 
 sub Run {
-    my $Self = shift;
-    my %Param = @_;
+    my ( $Self, %Param ) = @_;
 
     # Paramter
-    my @Params = ();
+    my @Params   = ();
     my %GetParam = ();
     my %Frontend = ();
 
     # Output
-    my $Output = '';
-    my $Header = '';
-    my $HeaderTitle =  '';
-    my $HeaderType =  '';
-    my $Navigation = '';
-    my $Notify = '';
-    my $Content = '';
-    my $Footer = '';
-    my $FooterType =  '';
+    my $Output      = '';
+    my $Header      = '';
+    my $HeaderTitle = '';
+    my $HeaderType  = '';
+    my $Navigation  = '';
+    my $Notify      = '';
+    my $Content     = '';
+    my $Footer      = '';
+    my $FooterType  = '';
 
-    my $DefaultHeader = '';
+    my $DefaultHeader     = '';
     my $DefaultNavigation = '';
-    my $DefaultContent = '';
-    my $DefaultFooter = '';
+    my $DefaultContent    = '';
+    my $DefaultFooter     = '';
 
     # ---------------------------------------------------------- #
     # explorer
     # ---------------------------------------------------------- #
-    if ($Self->{Subaction} eq 'Explorer') {
+    if ( $Self->{Subaction} eq 'Explorer' ) {
+
         # add rss feed link
         $Self->{LayoutObject}->Block(
             Name => 'MetaLink',
             Data => {
-                Rel => 'alternate',
-                Type => 'application/rss+xml',
+                Rel   => 'alternate',
+                Type  => 'application/rss+xml',
                 Title => '$Text{"FAQ News (new created)"}',
-                Href => '$Env{"Baselink"}Action=$Env{"Action"}&Subaction=rss&Type=Created',
+                Href  => '$Env{"Baselink"}Action=$Env{"Action"}&Subaction=rss&Type=Created',
             },
         );
         $Self->{LayoutObject}->Block(
             Name => 'MetaLink',
             Data => {
-                Rel => 'alternate',
-                Type => 'application/rss+xml',
+                Rel   => 'alternate',
+                Type  => 'application/rss+xml',
                 Title => '$Text{"FAQ News (recently changed)"}',
-                Href => '$Env{"Baselink"}Action=$Env{"Action"}&Subaction=rss&Type=Changed',
+                Href  => '$Env{"Baselink"}Action=$Env{"Action"}&Subaction=rss&Type=Changed',
             },
         );
         $HeaderTitle = 'Explorer';
-        $Header = $Self->{LayoutObject}->CustomerHeader(
-            Type => $HeaderType,
+        $Header      = $Self->{LayoutObject}->CustomerHeader(
+            Type  => $HeaderType,
             Title => $HeaderTitle
         );
         $Self->GetExplorer();
         $Content = $Self->{LayoutObject}->Output(
             TemplateFile => 'FAQ',
-            Data => {%Frontend , %GetParam }
+            Data => { %Frontend, %GetParam }
         );
     }
 
     # ---------------------------------------------------------- #
     # search a item
     # ---------------------------------------------------------- #
-    elsif ($Self->{Subaction} eq 'Search') {
+    elsif ( $Self->{Subaction} eq 'Search' ) {
         $HeaderTitle = 'Search';
-        $Header = $Self->{LayoutObject}->CustomerHeader(
-            Type => $HeaderType,
+        $Header      = $Self->{LayoutObject}->CustomerHeader(
+            Type  => $HeaderType,
             Title => $HeaderTitle
         );
         $Self->GetItemSearch();
         $Content = $Self->{LayoutObject}->Output(
             TemplateFile => 'FAQ',
-            Data => {%Frontend , %GetParam }
+            Data => { %Frontend, %GetParam }
         );
     }
+
     # ---------------------------------------------------------- #
     # rss
     # ---------------------------------------------------------- #
-    elsif ($Self->{Subaction} eq 'rss') {
-        my $Type   = $Self->{ParamObject}->GetParam(Param => 'Type') || 'Changed';
+    elsif ( $Self->{Subaction} eq 'rss' ) {
+        my $Type = $Self->{ParamObject}->GetParam( Param => 'Type' ) || 'Changed';
         my $States = $Self->{FAQObject}->StateTypeList(
             Types => ['public']
         );
@@ -140,16 +142,16 @@ sub Run {
 
         # generate rss feed
         use XML::RSS::SimpleGen;
-        rss_new( "http://".$ENV{HTTP_HOST} );
+        rss_new( "http://" . $ENV{HTTP_HOST} );
         my $Title = $Self->{ConfigObject}->Get('Product') . ' FAQ';
-        rss_title( $Title );
+        rss_title($Title);
 
-        for my $ItemID ( @IDs ) {
+        for my $ItemID (@IDs) {
             my %Article = $Self->{FAQObject}->FAQGet(
                 ItemID => $ItemID,
             );
             my $Preview = '';
-            for my $Count ( 1..2 ) {
+            for my $Count ( 1 .. 2 ) {
                 if ( $Article{"Field$Count"} ) {
                     $Preview .= $Article{"Field$Count"};
                 }
@@ -173,7 +175,7 @@ sub Run {
         my $Output = rss_as_string();
 
         if ( !$Output ) {
-            return $Self->{LayoutObject}->FatalError(Message => "Can't create RSS file!");
+            return $Self->{LayoutObject}->FatalError( Message => "Can't create RSS file!" );
         }
         return $Self->{LayoutObject}->Attachment(
             Content     => $Output,
@@ -185,41 +187,43 @@ sub Run {
     # ---------------------------------------------------------- #
     # download item
     # ---------------------------------------------------------- #
-    elsif ($Self->{Subaction} eq 'Download') {
+    elsif ( $Self->{Subaction} eq 'Download' ) {
+
         # get param
-        my $ItemID  = $Self->{ParamObject}->GetParam(Param => 'ItemID');
-        my $FileID  = $Self->{ParamObject}->GetParam(Param => 'FileID');
+        my $ItemID = $Self->{ParamObject}->GetParam( Param => 'ItemID' );
+        my $FileID = $Self->{ParamObject}->GetParam( Param => 'FileID' );
+
         # db action
-        my %ItemData = $Self->{FAQObject}->FAQGet(ItemID => $ItemID);
-        if (!%ItemData) {
-            return $Self->{LayoutObject}->FatalError(Message => "No FAQ found!");
+        my %ItemData = $Self->{FAQObject}->FAQGet( ItemID => $ItemID );
+        if ( !%ItemData ) {
+            return $Self->{LayoutObject}->FatalError( Message => "No FAQ found!" );
         }
-        if ($ItemData{StateTypeName} eq 'public') {
+        if ( $ItemData{StateTypeName} eq 'public' ) {
             my %File = $Self->{FAQObject}->AttachmentGet(
                 ItemID => $ItemID,
                 FileID => $FileID,
             );
-            if (!%File) {
-                return $Self->{LayoutObject}->FatalError(Message => "No File found!");
+            if ( !%File ) {
+                return $Self->{LayoutObject}->FatalError( Message => "No File found!" );
             }
             return $Self->{LayoutObject}->Attachment(%File);
         }
         else {
-            return $Self->{LayoutObject}->FatalError(Message => "Permission denied!");
+            return $Self->{LayoutObject}->FatalError( Message => "Permission denied!" );
         }
     }
 
     # ---------------------------------------------------------- #
     # item print
     # ---------------------------------------------------------- #
-    elsif ($Self->{Subaction} eq 'Print' && $Self->{ParamObject}->GetParam(Param => 'ItemID')) {
+    elsif ( $Self->{Subaction} eq 'Print' && $Self->{ParamObject}->GetParam( Param => 'ItemID' ) ) {
         $Header = $Self->{LayoutObject}->PrintHeader(
             Title => $Self->{ItemData}{Subject}
         );
         $Self->GetItemPrint();
         $Content = $Self->{LayoutObject}->Output(
             TemplateFile => 'FAQ',
-            Data => { %Frontend , %GetParam }
+            Data => { %Frontend, %GetParam }
         );
         $Footer = $Self->{LayoutObject}->PrintFooter();
     }
@@ -227,16 +231,16 @@ sub Run {
     # ---------------------------------------------------------- #
     # item view
     # ---------------------------------------------------------- #
-    elsif ($Self->{ParamObject}->GetParam(Param => 'ItemID')) {
+    elsif ( $Self->{ParamObject}->GetParam( Param => 'ItemID' ) ) {
         $Self->GetItemView();
         $HeaderTitle = $Self->{ItemData}{Number};
-        $Header = $Self->{LayoutObject}->CustomerHeader(
-            Type => $HeaderType,
+        $Header      = $Self->{LayoutObject}->CustomerHeader(
+            Type  => $HeaderType,
             Title => $HeaderTitle
         );
         $Content = $Self->{LayoutObject}->Output(
             TemplateFile => 'FAQ',
-            Data => {%Frontend , %GetParam }
+            Data => { %Frontend, %GetParam }
         );
     }
 
@@ -244,33 +248,33 @@ sub Run {
     # redirect to explorer
     # ---------------------------------------------------------- #
     else {
-        return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=Explorer");
+        return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}&Subaction=Explorer" );
     }
 
     # DEFAULT OUTPUT
     $DefaultHeader = $Self->{LayoutObject}->CustomerHeader(
-        Type => $HeaderType,
+        Type  => $HeaderType,
         Title => $HeaderTitle
     );
 
     $DefaultContent = $Self->{LayoutObject}->Output(
         TemplateFile => 'PublicFAQ',
-        Data => { %Frontend , %GetParam }
+        Data => { %Frontend, %GetParam }
     );
-    $DefaultFooter = $Self->{LayoutObject}->CustomerFooter(Type => $FooterType);
+    $DefaultFooter = $Self->{LayoutObject}->CustomerFooter( Type => $FooterType );
 
     # OUTPUT
     $Output .= $Header || $DefaultHeader;
-    if(!$Notify) {
-        for my $Notify (@{$Self->{Notify}}) {
+    if ( !$Notify ) {
+        for my $Notify ( @{ $Self->{Notify} } ) {
             $Output .= $Self->{LayoutObject}->Notify(
                 Priority => $Notify->[0],
-                Info => $Notify->[1],
+                Info     => $Notify->[1],
             );
         }
     }
     $Output .= $Content || $DefaultContent;
-    $Output .= $Footer || $DefaultFooter;
+    $Output .= $Footer  || $DefaultFooter;
 
     return $Output;
 }

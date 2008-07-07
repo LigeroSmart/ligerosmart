@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerFAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQ.pm,v 1.6 2008-04-07 08:15:45 martin Exp $
+# $Id: CustomerFAQ.pm,v 1.7 2008-07-07 11:00:30 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -12,22 +12,23 @@
 package Kernel::Modules::CustomerFAQ;
 
 use strict;
+use warnings;
+
 use Kernel::System::FAQ;
 use Kernel::Modules::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 our @ISA = qw(Kernel::Modules::FAQ);
 
 sub new {
-    my $Type = shift;
-    my %Param = @_;
+    my ( $Type, %Param ) = @_;
 
     # allocate new hash for object
     # ********************************************************** #
     my $Self = new Kernel::Modules::FAQ(%Param);
-    bless ($Self, $Type);
+    bless( $Self, $Type );
 
     # interface settings
     # ********************************************************** #
@@ -35,132 +36,138 @@ sub new {
         Name => 'external'
     );
     $Self->{InterfaceStates} = $Self->{FAQObject}->StateTypeList(
-        Types => ['external','public']
+        Types => [ 'external', 'public' ]
     );
+
     # check needed Objects
     # ********************************************************** #
-    foreach (qw(UserObject)) {
-        $Self->{LayoutObject}->FatalError(Message => "Got no $_!") if (!$Self->{$_});
+    for (qw(UserObject)) {
+        $Self->{LayoutObject}->FatalError( Message => "Got no $_!" ) if ( !$Self->{$_} );
     }
 
     return $Self;
 }
 
 sub Run {
-    my $Self = shift;
-    my %Param = @_;
+    my ( $Self, %Param ) = @_;
 
     # Paramter
-    my @Params = ();
+    my @Params   = ();
     my %GetParam = ();
     my %Frontend = ();
 
     # Output
-    my $Output = '';
-    my $Header = '';
-    my $HeaderTitle =  '';
-    my $HeaderType =  '';
-    my $Navigation = '';
-    my $Notify = '';
-    my $Content = '';
-    my $Footer = '';
-    my $FooterType =  '';
+    my $Output      = '';
+    my $Header      = '';
+    my $HeaderTitle = '';
+    my $HeaderType  = '';
+    my $Navigation  = '';
+    my $Notify      = '';
+    my $Content     = '';
+    my $Footer      = '';
+    my $FooterType  = '';
 
-    my $DefaultHeader = '';
+    my $DefaultHeader     = '';
     my $DefaultNavigation = '';
-    my $DefaultContent = '';
-    my $DefaultFooter = '';
+    my $DefaultContent    = '';
+    my $DefaultFooter     = '';
 
     # navigation ON/OFF
     # ********************************************************** #
-    if ($GetParam{Nav}) {
+    if ( $GetParam{Nav} ) {
         $HeaderType = 'Small';
     }
     else {
         $HeaderType = '';
     }
+
     # store nav param
     $Self->{SessionObject}->UpdateSessionID(
         SessionID => $Self->{SessionID},
-        Key => 'LastFAQNav',
-        Value => $HeaderType,
+        Key       => 'LastFAQNav',
+        Value     => $HeaderType,
     );
 
     # ---------------------------------------------------------- #
     # explorer
     # ---------------------------------------------------------- #
-    if ($Self->{Subaction} eq 'Explorer') {
+    if ( $Self->{Subaction} eq 'Explorer' ) {
         $Self->GetExplorer(
-            Mode => 'Customer',
+            Mode         => 'Customer',
             CustomerUser => $Self->{UserLogin},
         );
         $HeaderTitle = 'Explorer';
-        $Header = $Self->{LayoutObject}->CustomerHeader(
-            Type => $HeaderType,
+        $Header      = $Self->{LayoutObject}->CustomerHeader(
+            Type  => $HeaderType,
             Title => $HeaderTitle
         );
         $Content = $Self->{LayoutObject}->Output(
             TemplateFile => 'FAQ',
-            Data => { %Frontend , %GetParam }
+            Data => { %Frontend, %GetParam }
         );
     }
+
     # ---------------------------------------------------------- #
     # search a item
     # ---------------------------------------------------------- #
-    elsif ($Self->{Subaction} eq 'Search') {
+    elsif ( $Self->{Subaction} eq 'Search' ) {
         $HeaderTitle = 'Search';
-        $Header = $Self->{LayoutObject}->CustomerHeader(
-            Type => $HeaderType,
+        $Header      = $Self->{LayoutObject}->CustomerHeader(
+            Type  => $HeaderType,
             Title => $HeaderTitle
         );
         $Self->GetItemSearch(
-            Mode => 'Customer',
+            Mode         => 'Customer',
             CustomerUser => $Self->{UserLogin},
         );
 
         $Content = $Self->{LayoutObject}->Output(
             TemplateFile => 'FAQ',
-            Data => {%Frontend , %GetParam }
+            Data => { %Frontend, %GetParam }
         );
     }
+
     # ---------------------------------------------------------- #
     # download item
     # ---------------------------------------------------------- #
-    elsif ($Self->{Subaction} eq 'Download') {
+    elsif ( $Self->{Subaction} eq 'Download' ) {
+
         # get param
-        my $ItemID  = $Self->{ParamObject}->GetParam(Param => 'ItemID');
-        my $FileID  = $Self->{ParamObject}->GetParam(Param => 'FileID');
+        my $ItemID = $Self->{ParamObject}->GetParam( Param => 'ItemID' );
+        my $FileID = $Self->{ParamObject}->GetParam( Param => 'FileID' );
+
         # db action
-        my %ItemData = $Self->{FAQObject}->FAQGet(ItemID => $ItemID);
-        if (!%ItemData) {
-            return $Self->{LayoutObject}->FatalError(Message => "No FAQ found!");
+        my %ItemData = $Self->{FAQObject}->FAQGet( ItemID => $ItemID );
+        if ( !%ItemData ) {
+            return $Self->{LayoutObject}->FatalError( Message => "No FAQ found!" );
         }
-        if ($ItemData{StateTypeName} eq 'external' || $ItemData{StateTypeName} eq 'public') {
+        if ( $ItemData{StateTypeName} eq 'external' || $ItemData{StateTypeName} eq 'public' ) {
             my %File = $Self->{FAQObject}->AttachmentGet(
                 ItemID => $ItemID,
                 FileID => $FileID,
             );
-            if (!%File) {
-                return $Self->{LayoutObject}->FatalError(Message => "No File found!");
+            if ( !%File ) {
+                return $Self->{LayoutObject}->FatalError( Message => "No File found!" );
             }
             return $Self->{LayoutObject}->Attachment(%File);
         }
         else {
-            return $Self->{LayoutObject}->FatalError(Message => "Permission denied!");
+            return $Self->{LayoutObject}->FatalError( Message => "Permission denied!" );
         }
     }
+
     # ---------------------------------------------------------- #
     # item print
     # ---------------------------------------------------------- #
-    elsif ($Self->{Subaction} eq 'Print' && $Self->{ParamObject}->GetParam(Param => 'ItemID')) {
+    elsif ( $Self->{Subaction} eq 'Print' && $Self->{ParamObject}->GetParam( Param => 'ItemID' ) ) {
         $Self->GetItemPrint();
         $Header = $Self->{LayoutObject}->PrintHeader(
             Title => $Self->{ItemData}{Subject}
         );
         $Navigation = ' ';
-        $Content = $Self->{LayoutObject}->Output(
+        $Content    = $Self->{LayoutObject}->Output(
             TemplateFile => 'FAQ',
-            Data => {%Frontend , %GetParam }
+            Data => { %Frontend, %GetParam }
         );
         $Footer = $Self->{LayoutObject}->PrintFooter();
     }
@@ -168,30 +175,30 @@ sub Run {
     # ---------------------------------------------------------- #
     # item view
     # ---------------------------------------------------------- #
-    elsif ($Self->{ParamObject}->GetParam(Param => 'ItemID')) {
+    elsif ( $Self->{ParamObject}->GetParam( Param => 'ItemID' ) ) {
         my %FAQArticle = $Self->{FAQObject}->FAQGet(
-            FAQID => $Self->{ParamObject}->GetParam(Param => 'ItemID'),
+            FAQID => $Self->{ParamObject}->GetParam( Param => 'ItemID' ),
         );
         my $Permission = $Self->{FAQObject}->CheckCategoryCustomerPermission(
             CustomerUser => $Self->{UserLogin},
-            CategoryID => $FAQArticle{CategoryID},
+            CategoryID   => $FAQArticle{CategoryID},
         );
-        if ($Permission eq '') {
-            $Self->{LayoutObject}->FatalError(Message => "Permission denied!");
+        if ( $Permission eq '' ) {
+            $Self->{LayoutObject}->FatalError( Message => "Permission denied!" );
         }
         $Self->GetItemView(
-            Links => 0,
+            Links      => 0,
             Permission => $Permission,
         );
 
         $HeaderTitle = $Self->{ItemData}{Number};
-        $Header = $Self->{LayoutObject}->CustomerHeader(
-            Type => $HeaderType,
+        $Header      = $Self->{LayoutObject}->CustomerHeader(
+            Type  => $HeaderType,
             Title => $HeaderTitle
         );
         $Content = $Self->{LayoutObject}->Output(
             TemplateFile => 'FAQ',
-            Data => {%Frontend , %GetParam }
+            Data => { %Frontend, %GetParam }
         );
     }
 
@@ -199,34 +206,34 @@ sub Run {
     # redirect to explorer
     # ---------------------------------------------------------- #
     else {
-        return $Self->{LayoutObject}->Redirect(OP => "Action=$Self->{Action}&Subaction=Explorer");
+        return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}&Subaction=Explorer" );
     }
 
     # DEFAULT OUTPUT
     $DefaultHeader = $Self->{LayoutObject}->CustomerHeader(
-        Type => $HeaderType,
+        Type  => $HeaderType,
         Title => $HeaderTitle
     );
     $DefaultNavigation = $Self->{LayoutObject}->CustomerNavigationBar();
-    $DefaultContent = $Self->{LayoutObject}->Output(
+    $DefaultContent    = $Self->{LayoutObject}->Output(
         TemplateFile => 'CustomerFAQ',
-        Data => { %Frontend , %GetParam }
+        Data => { %Frontend, %GetParam }
     );
-    $DefaultFooter = $Self->{LayoutObject}->CustomerFooter(Type => $FooterType);
+    $DefaultFooter = $Self->{LayoutObject}->CustomerFooter( Type => $FooterType );
 
     # OUTPUT
-    $Output .= $Header || $DefaultHeader;
+    $Output .= $Header     || $DefaultHeader;
     $Output .= $Navigation || $DefaultNavigation;
-    if(!$Notify) {
-        foreach my $Notify (@{$Self->{Notify}}) {
+    if ( !$Notify ) {
+        for my $Notify ( @{ $Self->{Notify} } ) {
             $Output .= $Self->{LayoutObject}->Notify(
                 Priority => $Notify->[0],
-                Info => $Notify->[1],
+                Info     => $Notify->[1],
             );
         }
     }
     $Output .= $Content || $DefaultContent;
-    $Output .= $Footer || $DefaultFooter;
+    $Output .= $Footer  || $DefaultFooter;
 
     return $Output;
 }

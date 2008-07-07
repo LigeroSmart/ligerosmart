@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LinkObjectFAQ.pm - layout backend module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: LinkObjectFAQ.pm,v 1.5 2008-07-05 15:07:19 mh Exp $
+# $Id: LinkObjectFAQ.pm,v 1.6 2008-07-07 11:00:30 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -178,6 +178,7 @@ sub TableCreateSimple {
                 );
                 push @ItemList, \%Item;
             }
+
             # add item list to link output data
             $LinkOutputData{ $LinkType . '::' . $Direction }->{FAQ} = \@ItemList;
         }
