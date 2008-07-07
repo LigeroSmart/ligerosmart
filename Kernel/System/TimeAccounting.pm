@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.12 2008-06-04 13:25:20 tr Exp $
+# $Id: TimeAccounting.pm,v 1.13 2008-07-07 06:26:08 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week);
 
@@ -296,8 +296,9 @@ sub ProjectSettingsGet {
     my %Data = ();
 
     # db select
-    $Self->{DBObject}
-        ->Prepare( SQL => "SELECT id, project, description, status FROM time_accounting_project", );
+    $Self->{DBObject}->Prepare(
+        SQL => 'SELECT id, project, description, status FROM time_accounting_project',
+    );
 
     # fetch Data
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
@@ -349,9 +350,7 @@ sub ProjectSettingsInsert {
         . $Param{ProjectStatus} . "')";
 
     # db insert
-    if ( !$Self->{DBObject}->Do( SQL => $SQL ) ) {
-        return;
-    }
+    return if !$Self->{DBObject}->Do( SQL => $SQL );
     return 1;
 }
 
@@ -396,9 +395,7 @@ sub ProjectSettingsUpdate {
                 . $ProjectID . "'";
 
             # db insert
-            if ( !$Self->{DBObject}->Do( SQL => $SQL ) ) {
-                return;
-            }
+            return if !$Self->{DBObject}->Do( SQL => $SQL );
         }
     }
     return 1;
@@ -463,9 +460,7 @@ sub ActionSettingsInsert {
         . $Param{ActionStatus} . "')";
 
     # db insert
-    if ( !$Self->{DBObject}->Do( SQL => $SQL ) ) {
-        return;
-    }
+    return !$Self->{DBObject}->Do( SQL => $SQL );
     return 1;
 }
 
@@ -490,7 +485,6 @@ update action data in the db
 sub ActionSettingsUpdate {
     my ( $Self, %Param ) = @_;
 
-    my $SQL = '';
     for my $ActionID ( sort keys %Param ) {
         if ( $Param{$ActionID}{Action} ) {
 
@@ -500,7 +494,7 @@ sub ActionSettingsUpdate {
             }
 
             # build sql
-            $SQL
+            my $SQL
                 = "UPDATE time_accounting_action "
                 . "SET action = '"
                 . $Param{$ActionID}{Action}
@@ -510,9 +504,7 @@ sub ActionSettingsUpdate {
                 . $ActionID . "'";
 
             # db insert
-            if ( !$Self->{DBObject}->Do( SQL => $SQL ) ) {
-                return;
-            }
+            return if !$Self->{DBObject}->Do( SQL => $SQL );
         }
     }
     return 1;
@@ -649,9 +641,7 @@ sub UserSettingsInsert {
             . " ('$Param{UserID}', '$Param{Description}')";
 
         # db insert
-        if ( !$Self->{DBObject}->Do( SQL => $SQL ) ) {
-            return;
-        }
+        return if !$Self->{DBObject}->Do( SQL => $SQL );
     }
     return 1;
 }
@@ -728,11 +718,10 @@ sub UserSettingsUpdate {
             . $Param{$UserID}{UserID} . "'";
 
         # db insert
-        if ( !$Self->{DBObject}->Do( SQL => $SQL ) ) {
-            return;
-        }
+        return if !$Self->{DBObject}->Do( SQL => $SQL );
+
         for (qw(UserID Description ShowOvertime CreateProject)) {
-            delete( $Param{$UserID}{$_} );
+            delete $Param{$UserID}{$_};
         }
         for my $Period ( keys %{ $Param{$UserID} } ) {
 
@@ -1059,7 +1048,6 @@ delets working units in the db
 sub WorkingUnitsDelete {
     my ( $Self, %Param ) = @_;
 
-    my $SQL = '';
     for (qw(Year Month Day)) {
         $Param{$_} = $Self->{DBObject}->Quote( $Param{$_} ) || '';
         if ( !$Param{$_} ) {
@@ -1071,11 +1059,9 @@ sub WorkingUnitsDelete {
     my $Date = sprintf( "%04d-%02d-%02d", $Param{Year}, $Param{Month}, $Param{Day} );
 
     # delete old working units
-    $SQL = "DELETE FROM time_accounting_table "
+    my $SQL = "DELETE FROM time_accounting_table "
         . "WHERE time_start LIKE '$Date%' AND user_id = '$Self->{UserID}'";
-    if ( !$Self->{DBObject}->Do( SQL => $SQL ) ) {
-        return;
-    }
+    return if !$Self->{DBObject}->Do( SQL => $SQL );
     return 1;
 }
 
@@ -1220,6 +1206,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.12 $ $Date: 2008-06-04 13:25:20 $
+$Revision: 1.13 $ $Date: 2008-07-07 06:26:08 $
 
 =cut
