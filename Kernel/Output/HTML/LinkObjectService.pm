@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LinkObjectService.pm - layout backend module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: LinkObjectService.pm,v 1.3 2008-07-05 15:52:31 mh Exp $
+# $Id: LinkObjectService.pm,v 1.4 2008-07-07 11:26:50 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 =head1 NAME
 
@@ -219,13 +219,13 @@ sub TableCreateComplex {
                 MaxLength => 70,
             },
             {
-                Type    => 'Text',
-                Content => $Service->{Type},
+                Type      => 'Text',
+                Content   => $Service->{Type},
                 Translate => 1,
             },
             {
-                Type    => 'Text',
-                Content => $Service->{Criticality},
+                Type      => 'Text',
+                Content   => $Service->{Criticality},
                 Translate => 1,
             },
             {
@@ -330,17 +330,22 @@ sub TableCreateSimple {
             my $DirectionList = $Param{ObjectLinkListWithData}->{$LinkType}->{$Direction};
 
             my @ItemList;
-            for my $ServiceID ( sort { lc $DirectionList->{$a}->{NameShort} cmp lc $DirectionList->{$b}->{NameShort} } keys %{$DirectionList} ) {
+            for my $ServiceID (
+                sort {
+                    lc $DirectionList->{$a}->{NameShort} cmp lc $DirectionList->{$b}->{NameShort}
+                } keys %{$DirectionList}
+                )
+            {
 
                 # extract service data
                 my $Service = $DirectionList->{$ServiceID};
 
                 # define item data
                 my %Item = (
-                    Type      => 'Link',
-                    Content   => "S:$Service->{NameShort}",
-                    Title     => "Service: $Service->{Name}",
-                    Link      => '$Env{"Baselink"}Action=AgentITSMServiceZoom&ServiceID=' . $ServiceID,
+                    Type    => 'Link',
+                    Content => "S:$Service->{NameShort}",
+                    Title   => "Service: $Service->{Name}",
+                    Link => '$Env{"Baselink"}Action=AgentITSMServiceZoom&ServiceID=' . $ServiceID,
                     MaxLength => 20,
                 );
 
@@ -397,7 +402,7 @@ sub ContentStringCreate {
             . 'title="$Text{"$QData{"CurInciState"}"}" alt="$Text{"$QData{"CurInciState"}"}">',
         Data => {
             CurInciSignal => $CurInciSignal,
-            CurInciState  => $Content->{Content} || '',
+            CurInciState => $Content->{Content} || '',
         },
     );
 
@@ -522,6 +527,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2008-07-05 15:52:31 $
+$Revision: 1.4 $ $Date: 2008-07-07 11:26:50 $
 
 =cut
