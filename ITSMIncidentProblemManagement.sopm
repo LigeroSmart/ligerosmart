@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMIncidentProblemManagement.sopm,v 1.9 2008-07-10 14:33:14 mh Exp $</CVS>
+    <CVS>$Id: ITSMIncidentProblemManagement.sopm,v 1.10 2008-07-10 14:56:44 ub Exp $</CVS>
     <Name>ITSMIncidentProblemManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -53,8 +53,8 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerTicketZoom.dtl"/>
         <File Permission="644" Location="Kernel/System/Stats/Dynamic/ITSMTicketFirstLevelSolutionRate.pm"/>
         <File Permission="644" Location="Kernel/System/Stats/Dynamic/ITSMTicketSolutionTimeAverage.pm"/>
-        <File Permission="644" Location="var/packagesetup/ITSMIncidentProblemManagement/CodeInstallPost.pm"/>
-        <File Permission="644" Location="var/packagesetup/ITSMIncidentProblemManagement/CodeUninstallPre.pm"/>
+        <File Permission="644" Location="var/packagesetup/ITSMIncidentProblemManagement/CodeInstall.pm"/>
+        <File Permission="644" Location="var/packagesetup/ITSMIncidentProblemManagement/CodeUninstall.pm"/>
         <File Permission="644" Location="var/packagesetup/ITSMIncidentProblemManagement/SetupHelper.pm"/>
     </Filelist>
     <DatabaseInstall>
@@ -120,7 +120,7 @@
     <CodeInstall Type="post">
 
         # define code file name
-        my $File = 'CodeInstallPost';
+        my $File = 'CodeInstall';
 
         # create the package name
         my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content} . '::' . $File;
@@ -155,7 +155,7 @@
     <CodeUninstall Type="pre">
 
         # define code file name
-        my $File = 'CodeUninstallPre';
+        my $File = 'CodeUninstall';
 
         # create the package name
         my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content} . '::' . $File;
