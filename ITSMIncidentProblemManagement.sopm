@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMIncidentProblemManagement.sopm,v 1.10 2008-07-10 14:56:44 ub Exp $</CVS>
+    <CVS>$Id: ITSMIncidentProblemManagement.sopm,v 1.11 2008-07-10 15:15:08 mh Exp $</CVS>
     <Name>ITSMIncidentProblemManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -57,7 +57,7 @@
         <File Permission="644" Location="var/packagesetup/ITSMIncidentProblemManagement/CodeUninstall.pm"/>
         <File Permission="644" Location="var/packagesetup/ITSMIncidentProblemManagement/SetupHelper.pm"/>
     </Filelist>
-    <DatabaseInstall>
+    <DatabaseInstall Type="pre">
         <Insert Table="ticket_state">
             <Data Key="name" Type="Quote">closed with workaround</Data>
             <Data Key="comments" Type="Quote">ticket is closed with workaround</Data>
@@ -187,7 +187,7 @@
         }
 
     </CodeUninstall>
-    <IntroInstallPre Title="Install Information" Lang="en">
+    <IntroInstall Type="pre" Title="Install Information" Lang="en">
         &lt;br&gt;
         WELCOME&lt;br&gt;
         &lt;br&gt;
@@ -201,8 +201,8 @@
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
         &lt;br&gt;
-    </IntroInstallPre>
-    <IntroInstallPre Title="Installation Information" Lang="de">
+    </IntroInstall>
+    <IntroInstall Type="pre" Title="Installation Information" Lang="de">
         &lt;br&gt;
         WILLKOMMEN&lt;br&gt;
         &lt;br&gt;
@@ -216,8 +216,8 @@
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
         &lt;br&gt;
-    </IntroInstallPre>
-    <IntroUpgradePre Title="Upgrade Information" Lang="en">
+    </IntroInstall>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="en">
         &lt;br&gt;
         WELCOME&lt;br&gt;
         &lt;br&gt;
@@ -231,8 +231,8 @@
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
         &lt;br&gt;
-    </IntroUpgradePre>
-    <IntroUpgradePre Title="Upgrade Information" Lang="de">
+    </IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="de">
         &lt;br&gt;
         WILLKOMMEN&lt;br&gt;
         &lt;br&gt;
@@ -246,5 +246,5 @@
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
         &lt;br&gt;
-    </IntroUpgradePre>
+    </IntroUpgrade>
 </otrs_package>
