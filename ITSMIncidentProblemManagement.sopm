@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMIncidentProblemManagement.sopm,v 1.8 2008-07-10 14:04:32 ub Exp $</CVS>
+    <CVS>$Id: ITSMIncidentProblemManagement.sopm,v 1.9 2008-07-10 14:33:14 mh Exp $</CVS>
     <Name>ITSMIncidentProblemManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -122,14 +122,14 @@
         # define code file name
         my $File = 'CodeInstallPost';
 
-        # create the path to the code file
-        my $CodeModule = 'var/packagesetup/' . $Param{Structure}-&gt;{Name}-&gt;{Content} . '/' . $File;
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content} . '::' . $File;
 
         # load the module
         if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
 
             # create new instance
-            my $CodeObject = "var::packagesetup::$Param{Structure}-&gt;{Name}-&gt;{Content}::$File"-&gt;new( %{$Self} );
+            my $CodeObject = $CodeModule-&gt;new( %{$Self} );
 
             if ($CodeObject) {
 
@@ -157,14 +157,14 @@
         # define code file name
         my $File = 'CodeUninstallPre';
 
-        # create the path to the code file
-        my $CodeModule = 'var/packagesetup/' . $Param{Structure}-&gt;{Name}-&gt;{Content} . '/' . $File;
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content} . '::' . $File;
 
         # load the module
         if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
 
             # create new instance
-            my $CodeObject = "var::packagesetup::$Param{Structure}-&gt;{Name}-&gt;{Content}::$File"-&gt;new( %{$Self} );
+            my $CodeObject = $CodeModule-&gt;new( %{$Self} );
 
             if ($CodeObject) {
 
