@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMIncidentProblemManagement.sopm,v 1.6 2008-07-05 21:04:08 mh Exp $</CVS>
+    <CVS>$Id: ITSMIncidentProblemManagement.sopm,v 1.7 2008-07-10 12:44:02 ub Exp $</CVS>
     <Name>ITSMIncidentProblemManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -53,6 +53,9 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerTicketZoom.dtl"/>
         <File Permission="644" Location="Kernel/System/Stats/Dynamic/ITSMTicketFirstLevelSolutionRate.pm"/>
         <File Permission="644" Location="Kernel/System/Stats/Dynamic/ITSMTicketSolutionTimeAverage.pm"/>
+        <File Permission="644" Location="var/packagesetup/ITSMIncidentProblemManagement/CodeInstallPost.pm"/>
+        <File Permission="644" Location="var/packagesetup/ITSMIncidentProblemManagement/CodeUninstallPre.pm"/>
+        <File Permission="644" Location="var/packagesetup/ITSMIncidentProblemManagement/SetupHelper.pm"/>
     </Filelist>
     <DatabaseInstall>
         <Insert Table="ticket_state">
@@ -65,8 +68,6 @@
             <Data Key="change_time">current_timestamp</Data>
             <Data Key="change_by">1</Data>
         </Insert>
-    </DatabaseInstall>
-    <DatabaseInstall>
         <Insert Table="ticket_type">
             <Data Key="name" Type="Quote">Incident</Data>
             <Data Key="valid_id">1</Data>
@@ -116,6 +117,76 @@
             <Data Key="change_by">1</Data>
         </Insert>
     </DatabaseInstall>
+    <CodeInstall Type="post">
+
+        # define code file name
+        my $File = 'CodeInstallPost';
+
+        # create the path to the code file
+        my $CodeModule = 'var/packagesetup/' . $Param{Structure}-&gt;{Name}-&gt;{Content} . '/' . $File;
+
+        # load the module
+        if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
+
+            # create new instance
+            my $CodeObject = "$Param{Structure}-&gt;{Name}-&gt;{Content}::$File"-&gt;new( %{$Self} );
+
+            if ($CodeObject) {
+
+                # start run methode
+                if ( !$CodeObject-&gt;Run(%{$Self}) ) {
+                    $Self-&gt;{LogObject}-&gt;Log(
+                        Priority =&gt; 'error',
+                        Message  =&gt; "Could not call method Run() on $CodeModule.pm."
+                    );
+                }
+            }
+
+            # error handling
+            else {
+                $Self-&gt;{LogObject}-&gt;Log(
+                    Priority =&gt; 'error',
+                    Message  =&gt; "Could not call method new() on $CodeModule.pm."
+                );
+            }
+        }
+
+    </CodeInstall>
+    <CodeUninstall Type="pre">
+
+        # define code file name
+        my $File = 'CodeUninstallPre';
+
+        # create the path to the code file
+        my $CodeModule = 'var/packagesetup/' . $Param{Structure}-&gt;{Name}-&gt;{Content} . '/' . $File;
+
+        # load the module
+        if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
+
+            # create new instance
+            my $CodeObject = "$Param{Structure}-&gt;{Name}-&gt;{Content}::$File"-&gt;new( %{$Self} );
+
+            if ($CodeObject) {
+
+                # start run methode
+                if ( !$CodeObject-&gt;Run(%{$Self}) ) {
+                    $Self-&gt;{LogObject}-&gt;Log(
+                        Priority =&gt; 'error',
+                        Message  =&gt; "Could not call method Run() on $CodeModule.pm."
+                    );
+                }
+            }
+
+            # error handling
+            else {
+                $Self-&gt;{LogObject}-&gt;Log(
+                    Priority =&gt; 'error',
+                    Message  =&gt; "Could not call method new() on $CodeModule.pm."
+                );
+            }
+        }
+
+    </CodeUninstall>
     <IntroInstallPre Title="Install Information" Lang="en">
         &lt;br&gt;
         WELCOME&lt;br&gt;
