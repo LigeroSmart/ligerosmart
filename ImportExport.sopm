@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ImportExport.sopm,v 1.22 2008-07-02 18:57:54 mh Exp $</CVS>
+    <CVS>$Id: ImportExport.sopm,v 1.23 2008-07-10 15:25:41 mh Exp $</CVS>
     <Name>ImportExport</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -55,7 +55,7 @@
         <File Permission="644" Location="scripts/test/sample/ImportExportFormatCSV006-OpenOffice-Colon.csv"/>
         <File Permission="644" Location="scripts/test/sample/ImportExportFormatCSV006-OpenOffice-Tabulator.csv"/>
     </Filelist>
-    <DatabaseInstall>
+    <DatabaseInstall Type="post">
         <TableCreate Name="imexport_template">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
             <Column Name="imexport_object" Required="true" Size="100" Type="VARCHAR"/>
@@ -126,7 +126,7 @@
             </Index>
         </TableCreate>
     </DatabaseInstall>
-    <DatabaseUninstall>
+    <DatabaseUninstall Type="pre">
         <TableDrop Name="imexport_template"/>
         <TableDrop Name="imexport_object"/>
         <TableDrop Name="imexport_format"/>
