@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMServiceLevelManagement.sopm,v 1.6 2008-07-11 08:04:46 ub Exp $</CVS>
+    <CVS>$Id: ITSMServiceLevelManagement.sopm,v 1.7 2008-07-11 13:09:22 mh Exp $</CVS>
     <Name>ITSMServiceLevelManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -53,19 +53,15 @@
         <File Permission="644" Location="var/stats/ITSMStats-307-ITSMTicketSolutionTimeAverage.xml"/>
         <File Permission="644" Location="var/stats/ITSMStats-308-ITSMTicketSolutionTimeAverage.xml"/>
         <File Permission="644" Location="var/stats/ITSMStats-309-ITSMTicketSolutionTimeAverage.xml"/>
-        <File Permission="644" Location="var/packagesetup/ITSMServiceLevelManagement/CodeInstall.pm"/>
-        <File Permission="644" Location="var/packagesetup/ITSMServiceLevelManagement/CodeReinstall.pm"/>
-        <File Permission="644" Location="var/packagesetup/ITSMServiceLevelManagement/CodeUninstall.pm"/>
-        <File Permission="644" Location="var/packagesetup/ITSMServiceLevelManagement/CodeUpgrade.pm"/>
-        <File Permission="644" Location="var/packagesetup/ITSMServiceLevelManagement/SetupHelper.pm"/>
+        <File Permission="644" Location="var/packagesetup/ITSMServiceLevelManagement.pm"/>
     </Filelist>
     <CodeInstall Type="post">
 
-        # define code file name
-        my $File = 'CodeInstall';
+        # define function name
+        my $FunctionName = 'CodeInstall';
 
         # create the package name
-        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content} . '::' . $File;
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
 
         # load the module
         if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
@@ -75,11 +71,11 @@
 
             if ($CodeObject) {
 
-                # start run methode
-                if ( !$CodeObject-&gt;Run(%{$Self}) ) {
+                # start methode
+                if ( !$CodeObject-&gt;$FunctionName(%{$Self}) ) {
                     $Self-&gt;{LogObject}-&gt;Log(
                         Priority =&gt; 'error',
-                        Message  =&gt; "Could not call method Run() on $CodeModule.pm."
+                        Message  =&gt; "Could not call method $FunctionName() on $CodeModule.pm."
                     );
                 }
             }
@@ -96,11 +92,11 @@
     </CodeInstall>
     <CodeUpgrade Type="post">
 
-        # define code file name
-        my $File = 'CodeUpgrade';
+        # define function name
+        my $FunctionName = 'CodeUpgrade';
 
         # create the package name
-        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content} . '::' . $File;
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
 
         # load the module
         if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
@@ -110,11 +106,11 @@
 
             if ($CodeObject) {
 
-                # start run methode
-                if ( !$CodeObject-&gt;Run(%{$Self}) ) {
+                # start methode
+                if ( !$CodeObject-&gt;$FunctionName(%{$Self}) ) {
                     $Self-&gt;{LogObject}-&gt;Log(
                         Priority =&gt; 'error',
-                        Message  =&gt; "Could not call method Run() on $CodeModule.pm."
+                        Message  =&gt; "Could not call method $FunctionName() on $CodeModule.pm."
                     );
                 }
             }
@@ -131,11 +127,11 @@
     </CodeUpgrade>
     <CodeReinstall Type="post">
 
-        # define code file name
-        my $File = 'CodeReinstall';
+        # define function name
+        my $FunctionName = 'CodeReinstall';
 
         # create the package name
-        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content} . '::' . $File;
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
 
         # load the module
         if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
@@ -145,11 +141,11 @@
 
             if ($CodeObject) {
 
-                # start run methode
-                if ( !$CodeObject-&gt;Run(%{$Self}) ) {
+                # start methode
+                if ( !$CodeObject-&gt;$FunctionName(%{$Self}) ) {
                     $Self-&gt;{LogObject}-&gt;Log(
                         Priority =&gt; 'error',
-                        Message  =&gt; "Could not call method Run() on $CodeModule.pm."
+                        Message  =&gt; "Could not call method $FunctionName() on $CodeModule.pm."
                     );
                 }
             }
@@ -166,11 +162,11 @@
     </CodeReinstall>
     <CodeUninstall Type="pre">
 
-        # define code file name
-        my $File = 'CodeUninstall';
+        # define function name
+        my $FunctionName = 'CodeUninstall';
 
         # create the package name
-        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content} . '::' . $File;
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
 
         # load the module
         if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
@@ -180,11 +176,11 @@
 
             if ($CodeObject) {
 
-                # start run methode
-                if ( !$CodeObject-&gt;Run(%{$Self}) ) {
+                # start methode
+                if ( !$CodeObject-&gt;$FunctionName(%{$Self}) ) {
                     $Self-&gt;{LogObject}-&gt;Log(
                         Priority =&gt; 'error',
-                        Message  =&gt; "Could not call method Run() on $CodeModule.pm."
+                        Message  =&gt; "Could not call method $FunctionName() on $CodeModule.pm."
                     );
                 }
             }
