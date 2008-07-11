@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMServiceLevelManagement.sopm,v 1.5 2008-07-10 15:26:34 mh Exp $</CVS>
+    <CVS>$Id: ITSMServiceLevelManagement.sopm,v 1.6 2008-07-11 08:04:46 ub Exp $</CVS>
     <Name>ITSMServiceLevelManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -53,216 +53,151 @@
         <File Permission="644" Location="var/stats/ITSMStats-307-ITSMTicketSolutionTimeAverage.xml"/>
         <File Permission="644" Location="var/stats/ITSMStats-308-ITSMTicketSolutionTimeAverage.xml"/>
         <File Permission="644" Location="var/stats/ITSMStats-309-ITSMTicketSolutionTimeAverage.xml"/>
+        <File Permission="644" Location="var/packagesetup/ITSMServiceLevelManagement/CodeInstall.pm"/>
+        <File Permission="644" Location="var/packagesetup/ITSMServiceLevelManagement/CodeReinstall.pm"/>
+        <File Permission="644" Location="var/packagesetup/ITSMServiceLevelManagement/CodeUninstall.pm"/>
+        <File Permission="644" Location="var/packagesetup/ITSMServiceLevelManagement/CodeUpgrade.pm"/>
+        <File Permission="644" Location="var/packagesetup/ITSMServiceLevelManagement/SetupHelper.pm"/>
     </Filelist>
     <CodeInstall Type="post">
-        my $ModuleName = 'ITSMStats';
 
-        # load required modules
-        require Kernel::System::CSV;
-        require Kernel::System::Group;
-        require Kernel::System::Stats;
-        require Kernel::System::Time;
-        require Kernel::System::User;
+        # define code file name
+        my $File = 'CodeInstall';
 
-        # add user id
-        $Self-&gt;{UserID} = 1;
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content} . '::' . $File;
 
-        # create needed objects
-        $Self-&gt;{CSVObject}   = Kernel::System::CSV-&gt;new( %{$Self} );
-        $Self-&gt;{GroupObject} = Kernel::System::Group-&gt;new( %{$Self} );
-        $Self-&gt;{TimeObject} = Kernel::System::Time-&gt;new( %{$Self} );
-        $Self-&gt;{UserObject} = Kernel::System::User-&gt;new( %{$Self} );
-        $Self-&gt;{StatsObject} = Kernel::System::Stats-&gt;new( %{$Self} );
+        # load the module
+        if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
 
-        # start AutomaticSampleImport if no stats are installed
-        $Self-&gt;{StatsObject}-&gt;GetStatsList();
+            # create new instance
+            my $CodeObject = $CodeModule-&gt;new( %{$Self} );
 
-        # read temporary directory
-        my $StatsTempDir = $Self-&gt;{ConfigObject}-&gt;Get('Home') . '/var/stats/';
+            if ($CodeObject) {
 
-        # get list of stats files
-        my @StatsFileList = glob $StatsTempDir . $ModuleName . '-*.xml';
+                # start run methode
+                if ( !$CodeObject-&gt;Run(%{$Self}) ) {
+                    $Self-&gt;{LogObject}-&gt;Log(
+                        Priority =&gt; 'error',
+                        Message  =&gt; "Could not call method Run() on $CodeModule.pm."
+                    );
+                }
+            }
 
-        # import the stats
-        my $InstalledPostfix = '.installed';
-        FILE:
-        for my $File ( sort @StatsFileList ) {
-
-            next FILE if -e $File . $InstalledPostfix;
-
-            # read file content
-            my $XMLContentRef = $Self-&gt;{MainObject}-&gt;FileRead(
-                Location =&gt; $File,
-            );
-
-            # import stat
-            my $StatID = $Self-&gt;{StatsObject}-&gt;Import(
-                Content =&gt; ${$XMLContentRef},
-            );
-
-            next FILE if !$StatID;
-
-            # write installed file with stat id
-            $Self-&gt;{MainObject}-&gt;FileWrite(
-                Content  =&gt; \$StatID,
-                Location =&gt; $File . $InstalledPostfix,
-            );
+            # error handling
+            else {
+                $Self-&gt;{LogObject}-&gt;Log(
+                    Priority =&gt; 'error',
+                    Message  =&gt; "Could not call method new() on $CodeModule.pm."
+                );
+            }
         }
+
     </CodeInstall>
     <CodeUpgrade Type="post">
-        my $ModuleName = 'ITSMStats';
 
-        # load required modules
-        require Kernel::System::CSV;
-        require Kernel::System::Group;
-        require Kernel::System::Stats;
-        require Kernel::System::Time;
-        require Kernel::System::User;
+        # define code file name
+        my $File = 'CodeUpgrade';
 
-        # add user id
-        $Self-&gt;{UserID} = 1;
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content} . '::' . $File;
 
-        # create needed objects
-        $Self-&gt;{CSVObject}   = Kernel::System::CSV-&gt;new( %{$Self} );
-        $Self-&gt;{GroupObject} = Kernel::System::Group-&gt;new( %{$Self} );
-        $Self-&gt;{TimeObject} = Kernel::System::Time-&gt;new( %{$Self} );
-        $Self-&gt;{UserObject} = Kernel::System::User-&gt;new( %{$Self} );
-        $Self-&gt;{StatsObject} = Kernel::System::Stats-&gt;new( %{$Self} );
+        # load the module
+        if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
 
-        # start AutomaticSampleImport if no stats are installed
-        $Self-&gt;{StatsObject}-&gt;GetStatsList();
+            # create new instance
+            my $CodeObject = $CodeModule-&gt;new( %{$Self} );
 
-        # read temporary directory
-        my $StatsTempDir = $Self-&gt;{ConfigObject}-&gt;Get('Home') . '/var/stats/';
+            if ($CodeObject) {
 
-        # get list of stats files
-        my @StatsFileList = glob $StatsTempDir . $ModuleName . '-*.xml';
+                # start run methode
+                if ( !$CodeObject-&gt;Run(%{$Self}) ) {
+                    $Self-&gt;{LogObject}-&gt;Log(
+                        Priority =&gt; 'error',
+                        Message  =&gt; "Could not call method Run() on $CodeModule.pm."
+                    );
+                }
+            }
 
-        # import the stats
-        my $InstalledPostfix = '.installed';
-        FILE:
-        for my $File ( sort @StatsFileList ) {
-
-            next FILE if -e $File . $InstalledPostfix;
-
-            # read file content
-            my $XMLContentRef = $Self-&gt;{MainObject}-&gt;FileRead(
-                Location =&gt; $File,
-            );
-
-            # import stat
-            my $StatID = $Self-&gt;{StatsObject}-&gt;Import(
-                Content =&gt; ${$XMLContentRef},
-            );
-
-            next FILE if !$StatID;
-
-            # write installed file with stat id
-            $Self-&gt;{MainObject}-&gt;FileWrite(
-                Content  =&gt; \$StatID,
-                Location =&gt; $File . $InstalledPostfix,
-            );
+            # error handling
+            else {
+                $Self-&gt;{LogObject}-&gt;Log(
+                    Priority =&gt; 'error',
+                    Message  =&gt; "Could not call method new() on $CodeModule.pm."
+                );
+            }
         }
+
     </CodeUpgrade>
     <CodeReinstall Type="post">
-        my $ModuleName = 'ITSMStats';
 
-        # load required modules
-        require Kernel::System::CSV;
-        require Kernel::System::Group;
-        require Kernel::System::Stats;
-        require Kernel::System::Time;
-        require Kernel::System::User;
+        # define code file name
+        my $File = 'CodeReinstall';
 
-        # add user id
-        $Self-&gt;{UserID} = 1;
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content} . '::' . $File;
 
-        # create needed objects
-        $Self-&gt;{CSVObject}   = Kernel::System::CSV-&gt;new( %{$Self} );
-        $Self-&gt;{GroupObject} = Kernel::System::Group-&gt;new( %{$Self} );
-        $Self-&gt;{TimeObject} = Kernel::System::Time-&gt;new( %{$Self} );
-        $Self-&gt;{UserObject} = Kernel::System::User-&gt;new( %{$Self} );
-        $Self-&gt;{StatsObject} = Kernel::System::Stats-&gt;new( %{$Self} );
+        # load the module
+        if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
 
-        # start AutomaticSampleImport if no stats are installed
-        $Self-&gt;{StatsObject}-&gt;GetStatsList();
+            # create new instance
+            my $CodeObject = $CodeModule-&gt;new( %{$Self} );
 
-        # read temporary directory
-        my $StatsTempDir = $Self-&gt;{ConfigObject}-&gt;Get('Home') . '/var/stats/';
+            if ($CodeObject) {
 
-        # get list of stats files
-        my @StatsFileList = glob $StatsTempDir . $ModuleName . '-*.xml';
+                # start run methode
+                if ( !$CodeObject-&gt;Run(%{$Self}) ) {
+                    $Self-&gt;{LogObject}-&gt;Log(
+                        Priority =&gt; 'error',
+                        Message  =&gt; "Could not call method Run() on $CodeModule.pm."
+                    );
+                }
+            }
 
-        # import the stats
-        my $InstalledPostfix = '.installed';
-        FILE:
-        for my $File ( sort @StatsFileList ) {
-
-            next FILE if -e $File . $InstalledPostfix;
-
-            # read file content
-            my $XMLContentRef = $Self-&gt;{MainObject}-&gt;FileRead(
-                Location =&gt; $File,
-            );
-
-            # import stat
-            my $StatID = $Self-&gt;{StatsObject}-&gt;Import(
-                Content =&gt; ${$XMLContentRef},
-            );
-
-            next FILE if !$StatID;
-
-            # write installed file with stat id
-            $Self-&gt;{MainObject}-&gt;FileWrite(
-                Content  =&gt; \$StatID,
-                Location =&gt; $File . $InstalledPostfix,
-            );
+            # error handling
+            else {
+                $Self-&gt;{LogObject}-&gt;Log(
+                    Priority =&gt; 'error',
+                    Message  =&gt; "Could not call method new() on $CodeModule.pm."
+                );
+            }
         }
+
     </CodeReinstall>
     <CodeUninstall Type="pre">
-        my $ModuleName = 'ITSMStats';
 
-        # load required modules
-        require Kernel::System::CSV;
-        require Kernel::System::Group;
-        require Kernel::System::Stats;
-        require Kernel::System::Time;
-        require Kernel::System::User;
+        # define code file name
+        my $File = 'CodeUninstall';
 
-        # add user id
-        $Self-&gt;{UserID} = 1;
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content} . '::' . $File;
 
-        # create needed objects
-        $Self-&gt;{CSVObject}   = Kernel::System::CSV-&gt;new( %{$Self} );
-        $Self-&gt;{GroupObject} = Kernel::System::Group-&gt;new( %{$Self} );
-        $Self-&gt;{TimeObject} = Kernel::System::Time-&gt;new( %{$Self} );
-        $Self-&gt;{UserObject} = Kernel::System::User-&gt;new( %{$Self} );
-        $Self-&gt;{StatsObject} = Kernel::System::Stats-&gt;new( %{$Self} );
+        # load the module
+        if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
 
-        # read temporary directory
-        my $StatsTempDir = $Self-&gt;{ConfigObject}-&gt;Get('Home') . '/var/stats/';
+            # create new instance
+            my $CodeObject = $CodeModule-&gt;new( %{$Self} );
 
-        # get list of stats files
-        my @StatsFileList = glob $StatsTempDir . $ModuleName . '-*.xml.installed';
+            if ($CodeObject) {
 
-        # import the stats
-        for my $File (@StatsFileList) {
+                # start run methode
+                if ( !$CodeObject-&gt;Run(%{$Self}) ) {
+                    $Self-&gt;{LogObject}-&gt;Log(
+                        Priority =&gt; 'error',
+                        Message  =&gt; "Could not call method Run() on $CodeModule.pm."
+                    );
+                }
+            }
 
-            # read file content
-            my $StatIDRef = $Self-&gt;{MainObject}-&gt;FileRead(
-                Location =&gt; $File,
-            );
-
-            # delete stat
-            $Self-&gt;{StatsObject}-&gt;StatsDelete(
-                StatID =&gt; ${$StatIDRef},
-            );
-
-            # delete installed file
-            $Self-&gt;{MainObject}-&gt;FileDelete(
-                Location =&gt; $File,
-            );
+            # error handling
+            else {
+                $Self-&gt;{LogObject}-&gt;Log(
+                    Priority =&gt; 'error',
+                    Message  =&gt; "Could not call method new() on $CodeModule.pm."
+                );
+            }
         }
+
     </CodeUninstall>
     <IntroInstall Type="pre" Title="Install Information" Lang="en">
         &lt;br&gt;
