@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMCore.sopm,v 1.52 2008-07-10 15:59:42 ub Exp $</CVS>
+    <CVS>$Id: ITSMCore.sopm,v 1.53 2008-07-12 15:51:48 mh Exp $</CVS>
     <Name>ITSMCore</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -49,8 +49,9 @@
         <File Permission="644" Location="scripts/test/Service.t"/>
         <File Permission="644" Location="scripts/test/SLA.t"/>
         <File Permission="644" Location="var/httpd/htdocs/images/Standard/itsm_service.png"/>
+        <File Permission="644" Location="var/packagesetup/ITSMCore.pm"/>
     </Filelist>
-    <DatabaseInstall>
+    <DatabaseInstall Type="post">
         <TableCreate Name="cip_allocate">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
             <Column Name="criticality_id" Required="true" Type="INTEGER"/>
@@ -392,6 +393,36 @@
             <Data Key="change_by">1</Data>
         </Insert>
         <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Core::IncidentState</Data>
+            <Data Key="name" Type="Quote">Operational</Data>
+            <Data Key="functionality" Type="Quote">operational</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Core::IncidentState</Data>
+            <Data Key="name" Type="Quote">Warning</Data>
+            <Data Key="functionality" Type="Quote">warning</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Core::IncidentState</Data>
+            <Data Key="name" Type="Quote">Incident</Data>
+            <Data Key="functionality" Type="Quote">incident</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::Service::Type</Data>
             <Data Key="name" Type="Quote">End User Service</Data>
             <Data Key="valid_id">1</Data>
@@ -553,38 +584,8 @@
             <Data Key="change_time">current_timestamp</Data>
             <Data Key="change_by">1</Data>
         </Insert>
-        <Insert Table="general_catalog">
-            <Data Key="general_catalog_class" Type="Quote">ITSM::Core::IncidentState</Data>
-            <Data Key="name" Type="Quote">Operational</Data>
-            <Data Key="functionality" Type="Quote">operational</Data>
-            <Data Key="valid_id">1</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
-        <Insert Table="general_catalog">
-            <Data Key="general_catalog_class" Type="Quote">ITSM::Core::IncidentState</Data>
-            <Data Key="name" Type="Quote">Warning</Data>
-            <Data Key="functionality" Type="Quote">warning</Data>
-            <Data Key="valid_id">1</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
-        <Insert Table="general_catalog">
-            <Data Key="general_catalog_class" Type="Quote">ITSM::Core::IncidentState</Data>
-            <Data Key="name" Type="Quote">Incident</Data>
-            <Data Key="functionality" Type="Quote">incident</Data>
-            <Data Key="valid_id">1</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
     </DatabaseInstall>
-    <DatabaseUninstall>
+    <DatabaseUninstall Type="pre">
         <TableDrop Name="cip_allocate"/>
         <TableAlter Name="service">
             <ColumnDrop Name="type_id"/>
@@ -595,143 +596,147 @@
             <ColumnDrop Name="min_time_bet_incidents"/>
         </TableAlter>
     </DatabaseUninstall>
-    <CodeInstall>
-        # change background color of standard theme
-        my $CssFile = $Self-&gt;{ConfigObject}-&gt;Get('Home') . "/Kernel/Output/HTML/Standard/css.dtl";
-        if (!-e $CssFile . ".save" &amp;&amp; open (IN, "&lt; $CssFile")) {
+    <CodeInstall Type="post">
 
-            my $Content = '';
-            while (&lt;IN&gt;) {
-                if ($_ =~ /^body /) {
-                    $_ =~ s/background-color\:\#bbddff\;/background-color\:\#003399\;/;
+        # define function name
+        my $FunctionName = 'CodeInstall';
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+
+        # load the module
+        if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
+
+            # create new instance
+            my $CodeObject = $CodeModule-&gt;new( %{$Self} );
+
+            if ($CodeObject) {
+
+                # start methode
+                if ( !$CodeObject-&gt;$FunctionName(%{$Self}) ) {
+                    $Self-&gt;{LogObject}-&gt;Log(
+                        Priority =&gt; 'error',
+                        Message  =&gt; "Could not call method $FunctionName() on $CodeModule.pm."
+                    );
                 }
-                $Content .= $_;
             }
-            close (IN);
 
-            if (open (OUT, "&gt; $CssFile")) {
-                binmode(OUT);
-                print OUT $Content;
-                close (OUT);
+            # error handling
+            else {
+                $Self-&gt;{LogObject}-&gt;Log(
+                    Priority =&gt; 'error',
+                    Message  =&gt; "Could not call method new() on $CodeModule.pm."
+                );
             }
         }
 
-        require Kernel::System::Group;
-        $Self-&gt;{GroupObject} = Kernel::System::Group-&gt;new(%{$Self});
-
-        # add group itsm-service
-        $Self-&gt;{GroupObject}-&gt;GroupAdd(
-            Name    =&gt; 'itsm-service',
-            Comment =&gt; 'Group for ITSM Service mask access in the agent interface.',
-            ValidID =&gt; 1,
-            UserID  =&gt; 1,
-        );
-
-        # add user root to itsm-service admin group
-        $Self-&gt;{GroupObject}-&gt;GroupMemberAdd(
-            GID        =&gt; $Self-&gt;{GroupObject}-&gt;GroupLookup(Group =&gt; 'itsm-service'),
-            UID        =&gt; 1,
-            Permission =&gt; {
-                ro        =&gt; 1,
-                move_into =&gt; 1,
-                create    =&gt; 1,
-                owner     =&gt; 1,
-                priority  =&gt; 1,
-                rw        =&gt; 1,
-            },
-            UserID =&gt; 1,
-        );
     </CodeInstall>
-    <CodeReinstall>
-        # change background color of standard theme
-        my $CssFile = $Self-&gt;{ConfigObject}-&gt;Get('Home') . "/Kernel/Output/HTML/Standard/css.dtl";
-        if (!-e $CssFile . ".save" &amp;&amp; open (IN, "&lt; $CssFile")) {
+    <CodeReinstall Type="post">
 
-            my $Content = '';
-            while (&lt;IN&gt;) {
-                if ($_ =~ /^body /) {
-                    $_ =~ s/background-color\:\#bbddff\;/background-color\:\#003399\;/;
+        # define function name
+        my $FunctionName = 'CodeReinstall';
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+
+        # load the module
+        if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
+
+            # create new instance
+            my $CodeObject = $CodeModule-&gt;new( %{$Self} );
+
+            if ($CodeObject) {
+
+                # start methode
+                if ( !$CodeObject-&gt;$FunctionName(%{$Self}) ) {
+                    $Self-&gt;{LogObject}-&gt;Log(
+                        Priority =&gt; 'error',
+                        Message  =&gt; "Could not call method $FunctionName() on $CodeModule.pm."
+                    );
                 }
-                $Content .= $_;
             }
-            close (IN);
 
-            if (open (OUT, "&gt; $CssFile")) {
-                binmode(OUT);
-                print OUT $Content;
-                close (OUT);
+            # error handling
+            else {
+                $Self-&gt;{LogObject}-&gt;Log(
+                    Priority =&gt; 'error',
+                    Message  =&gt; "Could not call method new() on $CodeModule.pm."
+                );
             }
         }
+
     </CodeReinstall>
-    <CodeUpgrade>
-        # change background color of standard theme
-        my $CssFile = $Self-&gt;{ConfigObject}-&gt;Get('Home') . "/Kernel/Output/HTML/Standard/css.dtl";
-        if (!-e $CssFile . ".save" &amp;&amp; open (IN, "&lt; $CssFile")) {
+    <CodeUpgrade Type="post">
 
-            my $Content = '';
-            while (&lt;IN&gt;) {
-                if ($_ =~ /^body /) {
-                    $_ =~ s/background-color\:\#bbddff\;/background-color\:\#003399\;/;
+        # define function name
+        my $FunctionName = 'CodeUpgrade';
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+
+        # load the module
+        if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
+
+            # create new instance
+            my $CodeObject = $CodeModule-&gt;new( %{$Self} );
+
+            if ($CodeObject) {
+
+                # start methode
+                if ( !$CodeObject-&gt;$FunctionName(%{$Self}) ) {
+                    $Self-&gt;{LogObject}-&gt;Log(
+                        Priority =&gt; 'error',
+                        Message  =&gt; "Could not call method $FunctionName() on $CodeModule.pm."
+                    );
                 }
-                $Content .= $_;
             }
-            close (IN);
 
-            if (open (OUT, "&gt; $CssFile")) {
-                binmode(OUT);
-                print OUT $Content;
-                close (OUT);
+            # error handling
+            else {
+                $Self-&gt;{LogObject}-&gt;Log(
+                    Priority =&gt; 'error',
+                    Message  =&gt; "Could not call method new() on $CodeModule.pm."
+                );
             }
         }
 
-        require Kernel::System::Group;
-        $Self-&gt;{GroupObject} = Kernel::System::Group-&gt;new(%{$Self});
-
-        # add group itsm-service
-        $Self-&gt;{GroupObject}-&gt;GroupAdd(
-            Name    =&gt; 'itsm-service',
-            Comment =&gt; 'Group for ITSM Service mask access in the agent interface.',
-            ValidID =&gt; 1,
-            UserID  =&gt; 1,
-        );
-
-        # add user root to itsm-service admin group
-        $Self-&gt;{GroupObject}-&gt;GroupMemberAdd(
-            GID        =&gt; $Self-&gt;{GroupObject}-&gt;GroupLookup(Group =&gt; 'itsm-service'),
-            UID        =&gt; 1,
-            Permission =&gt; {
-                ro        =&gt; 1,
-                move_into =&gt; 1,
-                create    =&gt; 1,
-                owner     =&gt; 1,
-                priority  =&gt; 1,
-                rw        =&gt; 1,
-            },
-            UserID =&gt; 1,
-        );
     </CodeUpgrade>
-    <CodeUninstall>
-        # change background color of standard theme back to original
-        my $CssFile = $Self-&gt;{ConfigObject}-&gt;Get('Home') . "/Kernel/Output/HTML/Standard/css.dtl";
-        if (!-e $CssFile . ".save" &amp;&amp; open (IN, "&lt; $CssFile")) {
+    <CodeUninstall Type="pre">
 
-            my $Content = '';
-            while (&lt;IN&gt;) {
-                if ($_ =~ /^body /) {
-                    $_ =~ s/background-color\:\#003399\;/background-color\:\#bbddff\;/;
+        # define function name
+        my $FunctionName = 'CodeUninstall';
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+
+        # load the module
+        if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
+
+            # create new instance
+            my $CodeObject = $CodeModule-&gt;new( %{$Self} );
+
+            if ($CodeObject) {
+
+                # start methode
+                if ( !$CodeObject-&gt;$FunctionName(%{$Self}) ) {
+                    $Self-&gt;{LogObject}-&gt;Log(
+                        Priority =&gt; 'error',
+                        Message  =&gt; "Could not call method $FunctionName() on $CodeModule.pm."
+                    );
                 }
-                $Content .= $_;
             }
-            close (IN);
 
-            if (open (OUT, "&gt; $CssFile")) {
-                binmode(OUT);
-                print OUT $Content;
-                close (OUT);
+            # error handling
+            else {
+                $Self-&gt;{LogObject}-&gt;Log(
+                    Priority =&gt; 'error',
+                    Message  =&gt; "Could not call method new() on $CodeModule.pm."
+                );
             }
         }
+
     </CodeUninstall>
-    <IntroInstallPre Title="Install Information" Lang="en">
+    <IntroInstall Type="pre" Title="Install Information" Lang="en">
         &lt;br&gt;
         WELCOME&lt;br&gt;
         &lt;br&gt;
@@ -750,8 +755,8 @@
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
         &lt;br&gt;
-    </IntroInstallPre>
-    <IntroInstallPre Title="Installation Information" Lang="de">
+    </IntroInstall>
+    <IntroInstall Type="pre" Title="Installation Information" Lang="de">
         &lt;br&gt;
         WILLKOMMEN&lt;br&gt;
         &lt;br&gt;
@@ -770,8 +775,8 @@
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
         &lt;br&gt;
-    </IntroInstallPre>
-    <IntroUpgradePre Title="Upgrade Information" Lang="en">
+    </IntroInstall>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="en">
         &lt;br&gt;
         WELCOME&lt;br&gt;
         &lt;br&gt;
@@ -790,8 +795,8 @@
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
         &lt;br&gt;
-    </IntroUpgradePre>
-    <IntroUpgradePre Title="Upgrade Information" Lang="de">
+    </IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="de">
         &lt;br&gt;
         WILLKOMMEN&lt;br&gt;
         &lt;br&gt;
@@ -810,5 +815,5 @@
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
         &lt;br&gt;
-    </IntroUpgradePre>
+    </IntroUpgrade>
 </otrs_package>
