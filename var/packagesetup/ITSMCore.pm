@@ -2,7 +2,7 @@
 # ITSMCore.pm - code to excecute during package installation
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMCore.pm,v 1.2 2008-07-14 12:13:05 mh Exp $
+# $Id: ITSMCore.pm,v 1.3 2008-07-14 13:24:35 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Priority;
 use Kernel::System::Valid;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
@@ -370,12 +370,15 @@ sub _GroupAdd {
     }
 
     # get valid list
-    my %ValidList = $Self->{ValidObject}->ValidList();
+    my %ValidList = $Self->{ValidObject}->ValidList(
+        UserID => 1,
+    );
     my %ValidListReverse = reverse %ValidList;
 
     # check if group already exists
     my $GroupID = $Self->{GroupObject}->GroupLookup(
-        Group => $Param{Name},
+        Group  => $Param{Name},
+        UserID => 1,
     );
 
     # reactivate the group
@@ -383,13 +386,15 @@ sub _GroupAdd {
 
         # get current group data
         my %GroupData = $Self->{GroupObject}->GroupGet(
-            ID => $GroupID,
+            ID     => $GroupID,
+            UserID => 1,
         );
 
         # reactivate group
         $Self->{GroupObject}->GroupUpdate(
             %GroupData,
             ValidID => $ValidListReverse{valid},
+            UserID  => 1,
         );
 
         return 1;
@@ -486,6 +491,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2008-07-14 12:13:05 $
+$Revision: 1.3 $ $Date: 2008-07-14 13:24:35 $
 
 =cut
