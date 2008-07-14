@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMCore.sopm,v 1.54 2008-07-14 12:13:05 mh Exp $</CVS>
+    <CVS>$Id: ITSMCore.sopm,v 1.55 2008-07-14 12:59:39 mh Exp $</CVS>
     <Name>ITSMCore</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -61,12 +61,16 @@
             <Column Name="create_by" Required="false" Type="INTEGER"/>
             <Column Name="change_time" Required="false" Type="DATE"/>
             <Column Name="change_by" Required="false" Type="INTEGER"/>
-            <ForeignKey ForeignTable="users">
-                <Reference Local="create_by" Foreign="id"/>
-                <Reference Local="change_by" Foreign="id"/>
+            <ForeignKey ForeignTable="general_catalog">
+                <Reference Local="criticality_id" Foreign="id"/>
+                <Reference Local="impact_id" Foreign="id"/>
             </ForeignKey>
             <ForeignKey ForeignTable="ticket_priority">
                 <Reference Local="priority_id" Foreign="id"/>
+            </ForeignKey>
+            <ForeignKey ForeignTable="users">
+                <Reference Local="create_by" Foreign="id"/>
+                <Reference Local="change_by" Foreign="id"/>
             </ForeignKey>
         </TableCreate>
         <TableAlter Name="service">
