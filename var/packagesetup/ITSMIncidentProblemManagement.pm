@@ -2,7 +2,7 @@
 # ITSMIncidentProblemManagement.pm - code to excecute during package installation
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMIncidentProblemManagement.pm,v 1.2 2008-07-11 14:04:36 ub Exp $
+# $Id: ITSMIncidentProblemManagement.pm,v 1.3 2008-07-14 14:40:05 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::Type;
 use Kernel::System::Valid;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
@@ -71,7 +71,6 @@ sub new {
     for my $Object (qw(ConfigObject LogObject MainObject TimeObject DBObject XMLObject)) {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
-
     $Self->{StateObject} = Kernel::System::State->new( %{$Self} );
     $Self->{TypeObject}  = Kernel::System::Type->new( %{$Self} );
     $Self->{ValidObject} = Kernel::System::Valid->new( %{$Self} );
@@ -282,6 +281,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2008-07-11 14:04:36 $
+$Revision: 1.3 $ $Date: 2008-07-14 14:40:05 $
 
 =cut
