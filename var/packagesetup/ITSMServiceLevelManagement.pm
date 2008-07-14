@@ -2,7 +2,7 @@
 # ITSMServiceLevelManagement.pm - code to excecute during package installation
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMServiceLevelManagement.pm,v 1.11 2008-07-14 19:00:30 mh Exp $
+# $Id: ITSMServiceLevelManagement.pm,v 1.12 2008-07-14 19:30:51 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::Stats;
 use Kernel::System::User;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 =head1 NAME
 
@@ -89,7 +89,6 @@ sub new {
     $Self->{CSVObject}    = Kernel::System::CSV->new( %{$Self} );
     $Self->{GroupObject}  = Kernel::System::Group->new( %{$Self} );
     $Self->{UserObject}   = Kernel::System::User->new( %{$Self} );
-    $Self->{StatsObject}  = Kernel::System::Stats->new( %{$Self} );
 
     # add module name
     $Self->{ModuleName} = 'ITSMStats';
@@ -176,8 +175,11 @@ installs stats
 sub _StatsInstall {
     my ( $Self, %Param ) = @_;
 
+    # create new instance of the stats object (mod_perl workaround)
+    my $StatsObject = Kernel::System::Stats->new( %{$Self} );
+
     # start AutomaticSampleImport if no stats are installed
-    $Self->{StatsObject}->GetStatsList();
+    $StatsObject->GetStatsList();
 
     # read temporary directory
     my $StatsTempDir = $Self->{ConfigObject}->Get('Home') . '/var/stats/';
@@ -199,7 +201,7 @@ sub _StatsInstall {
         );
 
         # import stat
-        my $StatID = $Self->{StatsObject}->Import(
+        my $StatID = $StatsObject->Import(
             Content => ${$XMLContentRef},
         );
 
@@ -226,6 +228,9 @@ uninstalls stats
 sub _StatsUninstall {
     my ( $Self, %Param ) = @_;
 
+    # create new instance of the stats object (mod_perl workaround)
+    my $StatsObject = Kernel::System::Stats->new( %{$Self} );
+
     # read temporary directory
     my $StatsTempDir = $Self->{ConfigObject}->Get('Home') . '/var/stats/';
 
@@ -241,7 +246,7 @@ sub _StatsUninstall {
         );
 
         # delete stat
-        $Self->{StatsObject}->StatsDelete(
+        $StatsObject->StatsDelete(
             StatID => ${$StatIDRef},
         );
 
@@ -270,6 +275,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.11 $ $Date: 2008-07-14 19:00:30 $
+$Revision: 1.12 $ $Date: 2008-07-14 19:30:51 $
 
 =cut
