@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: GeneralCatalog.sopm,v 1.22 2008-07-10 15:25:18 mh Exp $</CVS>
+    <CVS>$Id: GeneralCatalog.sopm,v 1.23 2008-07-14 12:38:14 mh Exp $</CVS>
     <Name>GeneralCatalog</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -41,15 +41,6 @@
             </ForeignKey>
         </TableCreate>
     </DatabaseInstall>
-    <DatabaseUpgrade Type="post">
-        <TableAlter Name="general_catalog" Version="0.9.2">
-            <ColumnChange NameOld="functionality" NameNew="functionality" Required="false" Size="100" Type="VARCHAR"/>
-            <ColumnChange NameOld="comments" NameNew="comments" Required="false" Size="200" Type="VARCHAR"/>
-        </TableAlter>
-        <TableAlter Name="general_catalog" Version="0.9.5">
-            <ColumnChange NameOld="class" NameNew="general_catalog_class" Required="true" Size="100" Type="VARCHAR"/>
-        </TableAlter>
-    </DatabaseUpgrade>
     <DatabaseUninstall Type="pre">
         <TableDrop Name="general_catalog"/>
     </DatabaseUninstall>
