@@ -2,7 +2,7 @@
 # ITSMServiceLevelManagement.pm - code to excecute during package installation
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMServiceLevelManagement.pm,v 1.10 2008-07-14 18:09:48 mh Exp $
+# $Id: ITSMServiceLevelManagement.pm,v 1.11 2008-07-14 19:00:30 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -21,17 +21,8 @@ use Kernel::System::Group;
 use Kernel::System::Stats;
 use Kernel::System::User;
 
-use Kernel::System::Time;
-use Kernel::System::Main;
-use Kernel::System::DB;
-use Kernel::System::Log;
-use Kernel::System::CheckItem;
-use Kernel::System::Stats;
-use Kernel::System::Group;
-use Kernel::System::User;
-
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 =head1 NAME
 
@@ -80,35 +71,25 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    my $Self2 = {};
     for my $Object (qw(ConfigObject LogObject MainObject TimeObject DBObject XMLObject)) {
-        $Self2->{$Object} = $Param{$Object} || die "Got no $Object!";
+        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
     # create needed sysconfig object
-    $Self2->{SysConfigObject} = Kernel::System::Config->new( %{$Self2} );
+    $Self->{SysConfigObject} = Kernel::System::Config->new( %{$Self} );
 
     # rebuild ZZZ* files
-    $Self2->{SysConfigObject}->WriteDefault();
-
-die();
+    $Self->{SysConfigObject}->WriteDefault();
 
     # add user id
     $Self->{UserID} = 1;
 
     # create needed objects
     $Self->{ConfigObject} = Kernel::Config->new();
-    $Self->{LogObject}    = Kernel::System::Log->new(
-        %{$Self},
-        LogPrefix => 'OTRS-SendStats',
-    );
-    $Self->{CSVObject}   = Kernel::System::CSV->new( %{$Self} );
-    $Self->{TimeObject}  = Kernel::System::Time->new( %{$Self} );
-    $Self->{MainObject}  = Kernel::System::Main->new( %{$Self} );
-    $Self->{DBObject}    = Kernel::System::DB->new( %{$Self} );
-    $Self->{GroupObject} = Kernel::System::Group->new( %{$Self} );
-    $Self->{UserObject}  = Kernel::System::User->new( %{$Self} );
-    $Self->{StatsObject} = Kernel::System::Stats->new( %{$Self} );
+    $Self->{CSVObject}    = Kernel::System::CSV->new( %{$Self} );
+    $Self->{GroupObject}  = Kernel::System::Group->new( %{$Self} );
+    $Self->{UserObject}   = Kernel::System::User->new( %{$Self} );
+    $Self->{StatsObject}  = Kernel::System::Stats->new( %{$Self} );
 
     # add module name
     $Self->{ModuleName} = 'ITSMStats';
@@ -289,6 +270,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.10 $ $Date: 2008-07-14 18:09:48 $
+$Revision: 1.11 $ $Date: 2008-07-14 19:00:30 $
 
 =cut
