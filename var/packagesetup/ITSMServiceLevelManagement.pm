@@ -2,7 +2,7 @@
 # ITSMServiceLevelManagement.pm - code to excecute during package installation
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMServiceLevelManagement.pm,v 1.12 2008-07-14 19:30:51 mh Exp $
+# $Id: ITSMServiceLevelManagement.pm,v 1.13 2008-07-14 20:15:07 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::Stats;
 use Kernel::System::User;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 =head1 NAME
 
@@ -81,6 +81,15 @@ sub new {
     # rebuild ZZZ* files
     $Self->{SysConfigObject}->WriteDefault();
 
+    # load the new config (mod_perl workaround)
+    PREFIX:
+    for my $Prefix (@INC) {
+        my $File = $Prefix . '/Kernel/Config/Files/ZZZAAuto.pm';
+        next PREFIX if !-f $File;
+        do $File;
+        last PREFIX;
+    }
+
     # add user id
     $Self->{UserID} = 1;
 
@@ -89,6 +98,7 @@ sub new {
     $Self->{CSVObject}    = Kernel::System::CSV->new( %{$Self} );
     $Self->{GroupObject}  = Kernel::System::Group->new( %{$Self} );
     $Self->{UserObject}   = Kernel::System::User->new( %{$Self} );
+    $Self->{StatsObject}  = Kernel::System::Stats->new( %{$Self} );
 
     # add module name
     $Self->{ModuleName} = 'ITSMStats';
@@ -175,11 +185,8 @@ installs stats
 sub _StatsInstall {
     my ( $Self, %Param ) = @_;
 
-    # create new instance of the stats object (mod_perl workaround)
-    my $StatsObject = Kernel::System::Stats->new( %{$Self} );
-
     # start AutomaticSampleImport if no stats are installed
-    $StatsObject->GetStatsList();
+    $Self->{StatsObject}->GetStatsList();
 
     # read temporary directory
     my $StatsTempDir = $Self->{ConfigObject}->Get('Home') . '/var/stats/';
@@ -201,7 +208,7 @@ sub _StatsInstall {
         );
 
         # import stat
-        my $StatID = $StatsObject->Import(
+        my $StatID = $Self->{StatsObject}->Import(
             Content => ${$XMLContentRef},
         );
 
@@ -228,9 +235,6 @@ uninstalls stats
 sub _StatsUninstall {
     my ( $Self, %Param ) = @_;
 
-    # create new instance of the stats object (mod_perl workaround)
-    my $StatsObject = Kernel::System::Stats->new( %{$Self} );
-
     # read temporary directory
     my $StatsTempDir = $Self->{ConfigObject}->Get('Home') . '/var/stats/';
 
@@ -246,7 +250,7 @@ sub _StatsUninstall {
         );
 
         # delete stat
-        $StatsObject->StatsDelete(
+        $Self->{StatsObject}->StatsDelete(
             StatID => ${$StatIDRef},
         );
 
@@ -275,6 +279,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.12 $ $Date: 2008-07-14 19:30:51 $
+$Revision: 1.13 $ $Date: 2008-07-14 20:15:07 $
 
 =cut
