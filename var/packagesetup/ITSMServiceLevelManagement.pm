@@ -2,7 +2,7 @@
 # ITSMServiceLevelManagement.pm - code to excecute during package installation
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMServiceLevelManagement.pm,v 1.5 2008-07-14 16:35:30 mh Exp $
+# $Id: ITSMServiceLevelManagement.pm,v 1.6 2008-07-14 17:20:48 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Stats;
 use Kernel::System::User;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 =head1 NAME
 
@@ -83,12 +83,18 @@ sub new {
     # add user id
     $Self->{UserID} = 1;
 
+    sleep 1;
+    delete $Self->{ConfigObject};
+
     # create needed objects
     $Self->{ConfigObject} = Kernel::Config->new();
     $Self->{CSVObject}    = Kernel::System::CSV->new( %{$Self} );
     $Self->{GroupObject}  = Kernel::System::Group->new( %{$Self} );
     $Self->{UserObject}   = Kernel::System::User->new( %{$Self} );
-    $Self->{StatsObject}  = Kernel::System::Stats->new( %{$Self} );
+    $Self->{StatsObject}  = Kernel::System::Stats->new(
+        %{$Self},
+        ConfigObject => $Self->{ConfigObject},
+    );
 
     # add module name
     $Self->{ModuleName} = 'ITSMStats';
@@ -269,6 +275,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2008-07-14 16:35:30 $
+$Revision: 1.6 $ $Date: 2008-07-14 17:20:48 $
 
 =cut
