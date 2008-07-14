@@ -2,7 +2,7 @@
 # ITSMServiceLevelManagement.pm - code to excecute during package installation
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMServiceLevelManagement.pm,v 1.4 2008-07-14 15:28:30 mh Exp $
+# $Id: ITSMServiceLevelManagement.pm,v 1.5 2008-07-14 16:35:30 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,11 +18,10 @@ use Kernel::System::Config;
 use Kernel::System::CSV;
 use Kernel::System::Group;
 use Kernel::System::Stats;
-use Kernel::System::Time;
 use Kernel::System::User;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 =head1 NAME
 
@@ -75,16 +74,21 @@ sub new {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
+    # create needed sysconfig object
+    $Self->{SysConfigObject} = Kernel::System::Config->new( %{$Self} );
+
+    # rebuild ZZZ* files
+    $Self->{SysConfigObject}->WriteDefault();
+
     # add user id
     $Self->{UserID} = 1;
 
     # create needed objects
-    $Self->{CSVObject}       = Kernel::System::CSV->new( %{$Self} );
-    $Self->{GroupObject}     = Kernel::System::Group->new( %{$Self} );
-    $Self->{TimeObject}      = Kernel::System::Time->new( %{$Self} );
-    $Self->{UserObject}      = Kernel::System::User->new( %{$Self} );
-    $Self->{StatsObject}     = Kernel::System::Stats->new( %{$Self} );
-    $Self->{SysConfigObject} = Kernel::System::Config->new( %{$Self} );
+    $Self->{ConfigObject} = Kernel::Config->new();
+    $Self->{CSVObject}    = Kernel::System::CSV->new( %{$Self} );
+    $Self->{GroupObject}  = Kernel::System::Group->new( %{$Self} );
+    $Self->{UserObject}   = Kernel::System::User->new( %{$Self} );
+    $Self->{StatsObject}  = Kernel::System::Stats->new( %{$Self} );
 
     # add module name
     $Self->{ModuleName} = 'ITSMStats';
@@ -173,9 +177,6 @@ sub _StatsInstall {
 
     # start AutomaticSampleImport if no stats are installed
     $Self->{StatsObject}->GetStatsList();
-
-    # rebuild ZZZ* files
-    return if !$Self->{SysConfigObject}->WriteDefault();
 
     # read temporary directory
     my $StatsTempDir = $Self->{ConfigObject}->Get('Home') . '/var/stats/';
@@ -268,6 +269,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2008-07-14 15:28:30 $
+$Revision: 1.5 $ $Date: 2008-07-14 16:35:30 $
 
 =cut
