@@ -2,7 +2,7 @@
 # ITSMCore.pm - code to excecute during package installation
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMCore.pm,v 1.1 2008-07-12 15:51:27 mh Exp $
+# $Id: ITSMCore.pm,v 1.2 2008-07-14 12:13:05 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -14,11 +14,14 @@ package var::packagesetup::ITSMCore;
 use strict;
 use warnings;
 
+use Kernel::System::GeneralCatalog;
 use Kernel::System::Group;
+use Kernel::System::ITSMCIPAllocate;
+use Kernel::System::Priority;
 use Kernel::System::Valid;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -70,8 +73,11 @@ sub new {
     for my $Object (qw(ConfigObject LogObject MainObject TimeObject DBObject XMLObject)) {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
-    $Self->{GroupObject} = Kernel::System::Group->new( %{$Self} );
-    $Self->{ValidObject} = Kernel::System::Valid->new( %{$Self} );
+    $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
+    $Self->{GroupObject}          = Kernel::System::Group->new( %{$Self} );
+    $Self->{CIPAllocateObject}    = Kernel::System::ITSMCIPAllocate->new( %{$Self} );
+    $Self->{PriorityObject}       = Kernel::System::Priority->new( %{$Self} );
+    $Self->{ValidObject}          = Kernel::System::Valid->new( %{$Self} );
 
     return $Self;
 }
@@ -86,6 +92,15 @@ run the code install part
 
 sub CodeInstall {
     my ( $Self, %Param ) = @_;
+
+    # change background color to the ITSM blue
+    $Self->_BackgroundColorChange(
+        OldColor => 'bbddff',
+        NewColor => '003399',
+    );
+
+    # set default CIP matrix
+    $Self->_CIPDefaultMartixSet();
 
     # add the group itsm-service
     $Self->_GroupAdd(
@@ -107,6 +122,15 @@ run the code reinstall part
 sub CodeReinstall {
     my ( $Self, %Param ) = @_;
 
+    # change background color to the ITSM blue
+    $Self->_BackgroundColorChange(
+        OldColor => 'bbddff',
+        NewColor => '003399',
+    );
+
+    # set default CIP matrix
+    $Self->_CIPDefaultMartixSet();
+
     # add the group itsm-service
     $Self->_GroupAdd(
         Name        => 'itsm-service',
@@ -127,6 +151,9 @@ run the code upgrade part
 sub CodeUpgrade {
     my ( $Self, %Param ) = @_;
 
+    # set default CIP matrix
+    $Self->_CIPDefaultMartixSet();
+
     return 1;
 }
 
@@ -141,9 +168,177 @@ run the code uninstall part
 sub CodeUninstall {
     my ( $Self, %Param ) = @_;
 
+    # restore the original background
+    $Self->_BackgroundColorChange(
+        OldColor => '003399',
+        NewColor => 'bbddff',
+    );
+
     # deactivate the group itsm-service
     $Self->_GroupDeactivate(
         Name => 'itsm-service',
+    );
+
+    return 1;
+}
+
+=item _BackgroundColorChange()
+
+change the backround color
+
+    my $Result = $CodeObject->_BackgroundColorChange(
+        OldColor => 'bbddff',
+        NewColor => '003399',
+    );
+
+=cut
+
+sub _BackgroundColorChange {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(OldColor NewColor)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # define the css file
+    my $CssFile = $Self->{ConfigObject}->Get('Home') . '/Kernel/Output/HTML/Standard/css.dtl';
+
+    return 1 if -e $CssFile . '.save';
+
+    # read file content
+    my $Content = $Self->{MainObject}->FileRead(
+        Location        => $CssFile,
+        Mode            => 'binmode',
+        Result          => 'SCALAR',
+        DisableWarnings => 1,
+    );
+
+    return if !$Content;
+    return if ref $Content ne 'SCALAR';
+    return if !${$Content};
+
+    # change background color
+    ${$Content} =~ s{
+        background-color\:\#$Param{OldColor}\;
+    }{background-color\:\#$Param{NewColor}\;}xms;
+
+    # write new content to file
+    $Self->{MainObject}->FileWrite(
+        Location => $CssFile,
+        Content  => $Content,
+        Mode     => 'binmode',
+    );
+
+    return 1;
+}
+
+=item _CIPDefaultMartixSet()
+
+set the default CIP matrix
+
+    my $Result = $CodeObject->_CIPDefaultMartixSet();
+
+=cut
+
+sub _CIPDefaultMartixSet {
+    my ( $Self, %Param ) = @_;
+
+    # get current allocation list
+    my $List = $Self->{CIPAllocateObject}->AllocateList(
+        UserID => 1,
+    );
+
+    return if !$List;
+    return if ref $List ne 'HASH';
+
+    # set no matrix if already defined
+    return if %{$List};
+
+    # define the allocations
+    my %Allocation;
+    $Allocation{'1 very low'}->{'1 very low'}   = '1 very low';
+    $Allocation{'1 very low'}->{'2 low'}        = '1 very low';
+    $Allocation{'1 very low'}->{'3 normal'}     = '2 low';
+    $Allocation{'1 very low'}->{'4 high'}       = '2 low';
+    $Allocation{'1 very low'}->{'5 very high'}  = '3 normal';
+    $Allocation{'2 low'}->{'1 very low'}        = '1 very low';
+    $Allocation{'2 low'}->{'2 low'}             = '2 low';
+    $Allocation{'2 low'}->{'3 normal'}          = '2 low';
+    $Allocation{'2 low'}->{'4 high'}            = '3 normal';
+    $Allocation{'2 low'}->{'5 very high'}       = '4 high';
+    $Allocation{'3 normal'}->{'1 very low'}     = '2 low';
+    $Allocation{'3 normal'}->{'2 low'}          = '2 low';
+    $Allocation{'3 normal'}->{'3 normal'}       = '3 normal';
+    $Allocation{'3 normal'}->{'4 high'}         = '4 high';
+    $Allocation{'3 normal'}->{'5 very high'}    = '4 high';
+    $Allocation{'4 high'}->{'1 very low'}       = '2 low';
+    $Allocation{'4 high'}->{'2 low'}            = '3 normal';
+    $Allocation{'4 high'}->{'3 normal'}         = '4 high';
+    $Allocation{'4 high'}->{'4 high'}           = '4 high';
+    $Allocation{'4 high'}->{'5 very high'}      = '5 very high';
+    $Allocation{'5 very high'}->{'1 very low'}  = '3 normal';
+    $Allocation{'5 very high'}->{'2 low'}       = '4 high';
+    $Allocation{'5 very high'}->{'3 normal'}    = '4 high';
+    $Allocation{'5 very high'}->{'4 high'}      = '5 very high';
+    $Allocation{'5 very high'}->{'5 very high'} = '5 very high';
+
+    # get impact list
+    my $ImpactList = $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::Core::Impact',
+    );
+    my %ImpactListReverse = reverse %{$ImpactList};
+
+    # get criticality list
+    my $CriticalityList = $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::Core::Criticality',
+    );
+    my %CriticalityListReverse = reverse %{$CriticalityList};
+
+    # get priority list
+    my %PriorityList = $Self->{PriorityObject}->PriorityList(
+        UserID => 1,
+    );
+    my %PriorityListReverse = reverse %PriorityList;
+
+    # create the allocation matrix
+    my %AllocationMatrix;
+    IMPACT:
+    for my $Impact ( keys %Allocation ) {
+
+        next IMPACT if !$ImpactListReverse{$Impact};
+
+        # extract impact id
+        my $ImpactID = $ImpactListReverse{$Impact};
+
+        CRITICALITY:
+        for my $Criticality ( keys %{ $Allocation{$Impact} } ) {
+
+            next CRITICALITY if !$CriticalityListReverse{$Criticality};
+
+            # extract priority
+            my $Priority = $Allocation{$Impact}->{$Criticality};
+
+            next CRITICALITY if !$PriorityListReverse{$Priority};
+
+            # extract criticality id and priority id
+            my $CriticalityID = $CriticalityListReverse{$Criticality};
+            my $PriorityID    = $PriorityListReverse{$Priority};
+
+            $AllocationMatrix{$ImpactID}->{$CriticalityID} = $PriorityID;
+        }
+    }
+
+    # save the matrix
+    $Self->{CIPAllocateObject}->AllocateUpdate(
+        AllocateData => \%AllocationMatrix,
+        UserID       => 1,
     );
 
     return 1;
@@ -275,73 +470,6 @@ sub _GroupDeactivate {
     return 1;
 }
 
-=item _BackgroundColorSet()
-
-sets the itsm backround color
-
-    my $Result = $CodeObject->_BackgroundColorSet();
-
-=cut
-
-sub _BackgroundColorSet {
-    my ( $Self, %Param ) = @_;
-
-    # define the css file
-    my $CssFile = $Self->{ConfigObject}->Get('Home') . '/Kernel/Output/HTML/Standard/css.dtl';
-
-    if (!-e $CssFile . ".save" && open my $FH, '<', $CssFile) {
-
-        my $Content = '';
-        while (<$FH>) {
-            if ($_ =~ /^body /) {
-                $_ =~ s/background-color\:\#bbddff\;/background-color\:\#003399\;/;
-            }
-            $Content .= $_;
-        }
-        close $FH;
-
-        if (open my $Out, '>', $CssFile) {
-            binmode $Out;
-            print $Out $Content;
-            close $Out;
-        }
-    }
-
-    return 1;
-}
-
-=item _BackgroundColorRestore()
-
-restore the original backround color
-
-    my $Result = $CodeObject->_BackgroundColorRestore();
-
-=cut
-
-sub _BackgroundColorRestore {
-    my ( $Self, %Param ) = @_;
-
-    # change background color of standard theme back to original
-    my $CssFile = $Self->{ConfigObject}->Get('Home') . "/Kernel/Output/HTML/Standard/css.dtl";
-    if (!-e $CssFile . ".save" && open (IN, "< $CssFile")) {
-
-        my $Content = '';
-        while (<IN>) {
-            if ($_ =~ /^body /) {
-                $_ =~ s/background-color\:\#003399\;/background-color\:\#bbddff\;/;
-            }
-            $Content .= $_;
-        }
-        close (IN);
-
-        if (open (OUT, "> $CssFile")) {
-            binmode(OUT);
-            print OUT $Content;
-            close (OUT);
-        }
-    }
-}
-
 1;
 
 =back
@@ -358,6 +486,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2008-07-12 15:51:27 $
+$Revision: 1.2 $ $Date: 2008-07-14 12:13:05 $
 
 =cut
