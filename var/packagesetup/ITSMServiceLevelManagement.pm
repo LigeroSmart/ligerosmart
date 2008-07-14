@@ -2,7 +2,7 @@
 # ITSMServiceLevelManagement.pm - code to excecute during package installation
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMServiceLevelManagement.pm,v 1.8 2008-07-14 17:49:44 mh Exp $
+# $Id: ITSMServiceLevelManagement.pm,v 1.9 2008-07-14 17:57:04 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -31,7 +31,7 @@ use Kernel::System::Group;
 use Kernel::System::User;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 =head1 NAME
 
@@ -86,7 +86,7 @@ sub new {
     }
 
     # create needed sysconfig object
-    $Self2->{SysConfigObject} = Kernel::System::Config->new( %{$Self} );
+    $Self2->{SysConfigObject} = Kernel::System::Config->new( %{$Self2} );
 
     # rebuild ZZZ* files
     $Self2->{SysConfigObject}->WriteDefault();
@@ -287,6 +287,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.8 $ $Date: 2008-07-14 17:49:44 $
+$Revision: 1.9 $ $Date: 2008-07-14 17:57:04 $
 
 =cut
