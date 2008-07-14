@@ -2,7 +2,7 @@
 # ITSMCore.pm - code to excecute during package installation
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMCore.pm,v 1.3 2008-07-14 13:24:35 mh Exp $
+# $Id: ITSMCore.pm,v 1.4 2008-07-14 13:43:11 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Priority;
 use Kernel::System::Valid;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 =head1 NAME
 
@@ -410,9 +410,15 @@ sub _GroupAdd {
         );
     }
 
+    # lookup the new group id
+    my $NewGroupID = $Self->{GroupObject}->GroupLookup(
+        Group  => $Param{Name},
+        UserID => 1,
+    );
+
     # add user root to the group
     $Self->{GroupObject}->GroupMemberAdd(
-        GID        => $Self->{GroupObject}->GroupLookup(Group => $Param{Name}),
+        GID        => $NewGroupID,
         UID        => 1,
         Permission => {
             ro        => 1,
@@ -458,7 +464,7 @@ sub _GroupDeactivate {
     return if !$GroupID;
 
     # get valid list
-    my %ValidList = $Self->{ValidObject}->ValidList();
+    my %ValidList        = $Self->{ValidObject}->ValidList();
     my %ValidListReverse = reverse %ValidList;
 
     # get current group data
@@ -491,6 +497,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2008-07-14 13:24:35 $
+$Revision: 1.4 $ $Date: 2008-07-14 13:43:11 $
 
 =cut
