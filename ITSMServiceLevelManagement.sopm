@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMServiceLevelManagement.sopm,v 1.8 2008-07-13 13:22:42 mh Exp $</CVS>
+    <CVS>$Id: ITSMServiceLevelManagement.sopm,v 1.9 2008-07-14 14:46:22 mh Exp $</CVS>
     <Name>ITSMServiceLevelManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
     <PackageRequired Version="1.1.91">ITSMCore</PackageRequired>
-    <PackageRequired Version="1.1.91">ITSMConfigurationManagement</PackageRequired>
-    <PackageRequired Version="1.1.91">ITSMIncidentProblemManagement</PackageRequired>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
@@ -206,7 +204,6 @@
         REQUIRED OTRS PACKAGES
         &lt;ul&gt;
         &lt;li&gt;ITSMCore 1.1.91&lt;/li&gt;
-        &lt;li&gt;ITSMConfigurationManagement 1.1.91&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
@@ -222,7 +219,6 @@
         BENÖTIGTE OTRS-PAKETE
         &lt;ul&gt;
         &lt;li&gt;ITSMCore 1.1.91&lt;/li&gt;
-        &lt;li&gt;ITSMConfigurationManagement 1.1.91&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
@@ -238,7 +234,6 @@
         REQUIRED OTRS PACKAGES
         &lt;ul&gt;
         &lt;li&gt;ITSMCore 1.1.91&lt;/li&gt;
-        &lt;li&gt;ITSMConfigurationManagement 1.1.91&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
@@ -254,7 +249,6 @@
         BENÖTIGTE OTRS-PAKETE
         &lt;ul&gt;
         &lt;li&gt;ITSMCore 1.1.91&lt;/li&gt;
-        &lt;li&gt;ITSMConfigurationManagement 1.1.91&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
