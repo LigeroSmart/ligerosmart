@@ -2,7 +2,7 @@
 # Survey.t - Survey tests
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.t,v 1.1 2008-07-15 19:27:24 martin Exp $
+# $Id: Survey.t,v 1.2 2008-07-15 20:11:01 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -22,6 +22,9 @@ my %SurveyData = (
     Title        => 'A Title',
     Introduction => 'The introduction of the survey',
     Description  => 'The internal description of the survey',
+    NotificationSender  => 'quality@example.com',
+    NotificationSubject => 'Help us with your feedback!',
+    NotificationBody    => 'Dear customer...',
 );
 my $SurveyID = $Self->{SurveyObject}->SurveyNew(
     UserID       => 1,
