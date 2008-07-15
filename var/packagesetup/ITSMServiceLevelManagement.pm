@@ -2,7 +2,7 @@
 # ITSMServiceLevelManagement.pm - code to excecute during package installation
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMServiceLevelManagement.pm,v 1.13 2008-07-14 20:15:07 mh Exp $
+# $Id: ITSMServiceLevelManagement.pm,v 1.14 2008-07-15 07:24:25 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::Stats;
 use Kernel::System::User;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 =head1 NAME
 
@@ -81,13 +81,22 @@ sub new {
     # rebuild ZZZ* files
     $Self->{SysConfigObject}->WriteDefault();
 
-    # load the new config (mod_perl workaround)
-    PREFIX:
-    for my $Prefix (@INC) {
-        my $File = $Prefix . '/Kernel/Config/Files/ZZZAAuto.pm';
-        next PREFIX if !-f $File;
-        do $File;
-        last PREFIX;
+    # define the ZZZ files
+    my @ZZZFiles = (
+        'ZZZAAuto.pm',
+        'ZZZAuto.pm',
+    );
+
+    # reload the ZZZ files (mod_perl workaround)
+    for my $ZZZFile (@ZZZFiles) {
+
+        PREFIX:
+        for my $Prefix (@INC) {
+            my $File = $Prefix . '/Kernel/Config/Files/' . $ZZZFile;
+            next PREFIX if !-f $File;
+            do $File;
+            last PREFIX;
+        }
     }
 
     # add user id
@@ -279,6 +288,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.13 $ $Date: 2008-07-14 20:15:07 $
+$Revision: 1.14 $ $Date: 2008-07-15 07:24:25 $
 
 =cut
