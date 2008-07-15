@@ -2,7 +2,7 @@
 # ITSMIncidentProblemManagement.pm - code to excecute during package installation
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMIncidentProblemManagement.pm,v 1.3 2008-07-14 14:40:05 mh Exp $
+# $Id: ITSMIncidentProblemManagement.pm,v 1.4 2008-07-15 07:30:15 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::Type;
 use Kernel::System::Valid;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 =head1 NAME
 
@@ -119,6 +119,57 @@ sub CodeInstall {
             Valid     => 1,
         );
     }
+
+    # install stats
+    $Self->_StatsInstall();
+
+    return 1;
+}
+
+=item CodeReinstall()
+
+run the code reinstall part
+
+    my $Result = $CodeObject->CodeReinstall();
+
+=cut
+
+sub CodeReinstall {
+    my ( $Self, %Param ) = @_;
+
+    # set new ticket states to valid
+    {
+        my @StateNames = (
+            'closed with workaround',
+        );
+
+        # set states to valid
+        $Self->_SetStateValid(
+            StateNames => \@StateNames,
+            Valid      => 1,
+        );
+    }
+
+    # set new ticket types to valid
+    {
+        my @TypeNames = (
+            'Incident',
+            'Incident::ServiceRequest',
+            'Incident::Disaster',
+            'Problem',
+            'Problem::KnownError',
+            'Problem::PendingRfC',
+        );
+
+        # set types to valid
+        $Self->_SetTypeValid(
+            TypeNames => \@TypeNames,
+            Valid     => 1,
+        );
+    }
+
+    # install stats
+    $Self->_StatsInstall();
 
     return 1;
 }
@@ -265,6 +316,30 @@ sub _SetTypeValid {
     return 1;
 }
 
+=item _StatsInstall()
+
+installs stats
+
+    my $Result = $CodeObject->_StatsInstall();
+
+=cut
+
+sub _StatsInstall {
+    my ( $Self, %Param ) = @_;
+
+    my $ModuleName = 'var::packagesetup::ITSMServiceLevelManagement';
+
+    return 1 if !$Self->{MainObject}->Require($ModuleName);
+
+    # create new instance
+    my $CodeObject = $ModuleName->new( %{$Self} );
+
+    # install the stats
+    $CodeObject->_StatsInstall();
+
+    return 1;
+}
+
 1;
 
 =back
@@ -281,6 +356,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2008-07-14 14:40:05 $
+$Revision: 1.4 $ $Date: 2008-07-15 07:30:15 $
 
 =cut
