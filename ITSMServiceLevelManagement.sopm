@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMServiceLevelManagement.sopm,v 1.10 2008-07-15 10:26:07 ub Exp $</CVS>
+    <CVS>$Id: ITSMServiceLevelManagement.sopm,v 1.11 2008-07-15 14:55:17 ub Exp $</CVS>
     <Name>ITSMServiceLevelManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
-    <PackageRequired Version="1.1.91">ITSMCore</PackageRequired>
+    <PackageRequired Version="1.1.92">ITSMCore</PackageRequired>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
@@ -203,7 +203,7 @@
         &lt;br&gt;
         REQUIRED OTRS PACKAGES
         &lt;ul&gt;
-        &lt;li&gt;ITSMCore 1.1.91&lt;/li&gt;
+        &lt;li&gt;ITSMCore 1.1.92&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
@@ -218,7 +218,7 @@
         &lt;br&gt;
         BENÖTIGTE OTRS-PAKETE
         &lt;ul&gt;
-        &lt;li&gt;ITSMCore 1.1.91&lt;/li&gt;
+        &lt;li&gt;ITSMCore 1.1.92&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
@@ -233,7 +233,7 @@
         &lt;br&gt;
         REQUIRED OTRS PACKAGES
         &lt;ul&gt;
-        &lt;li&gt;ITSMCore 1.1.91&lt;/li&gt;
+        &lt;li&gt;ITSMCore 1.1.92&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
@@ -248,7 +248,7 @@
         &lt;br&gt;
         BENÖTIGTE OTRS-PAKETE
         &lt;ul&gt;
-        &lt;li&gt;ITSMCore 1.1.91&lt;/li&gt;
+        &lt;li&gt;ITSMCore 1.1.92&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
