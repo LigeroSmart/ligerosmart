@@ -2,7 +2,7 @@
 # ITSMCore.pm - code to excecute during package installation
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMCore.pm,v 1.5 2008-07-14 13:45:19 mh Exp $
+# $Id: ITSMCore.pm,v 1.6 2008-07-15 09:15:16 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Priority;
 use Kernel::System::Valid;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 =head1 NAME
 
@@ -100,7 +100,7 @@ sub CodeInstall {
     );
 
     # set default CIP matrix
-    $Self->_CIPDefaultMartixSet();
+    $Self->_CIPDefaultMatrixSet();
 
     # add the group itsm-service
     $Self->_GroupAdd(
@@ -129,7 +129,7 @@ sub CodeReinstall {
     );
 
     # set default CIP matrix
-    $Self->_CIPDefaultMartixSet();
+    $Self->_CIPDefaultMatrixSet();
 
     # add the group itsm-service
     $Self->_GroupAdd(
@@ -152,7 +152,7 @@ sub CodeUpgrade {
     my ( $Self, %Param ) = @_;
 
     # set default CIP matrix
-    $Self->_CIPDefaultMartixSet();
+    $Self->_CIPDefaultMatrixSet();
 
     return 1;
 }
@@ -239,15 +239,15 @@ sub _BackgroundColorChange {
     return 1;
 }
 
-=item _CIPDefaultMartixSet()
+=item _CIPDefaultMatrixSet()
 
 set the default CIP matrix
 
-    my $Result = $CodeObject->_CIPDefaultMartixSet();
+    my $Result = $CodeObject->_CIPDefaultMatrixSet();
 
 =cut
 
-sub _CIPDefaultMartixSet {
+sub _CIPDefaultMatrixSet {
     my ( $Self, %Param ) = @_;
 
     # get current allocation list
@@ -501,6 +501,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2008-07-14 13:45:19 $
+$Revision: 1.6 $ $Date: 2008-07-15 09:15:16 $
 
 =cut
