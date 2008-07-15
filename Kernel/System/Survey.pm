@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - all survey funtions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.pm,v 1.39 2008-05-16 13:29:36 ub Exp $
+# $Id: Survey.pm,v 1.40 2008-07-15 19:28:13 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::Email;
 use Kernel::System::Ticket;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.39 $) [1];
+$VERSION = qw($Revision: 1.40 $) [1];
 
 =head1 NAME
 
@@ -1768,7 +1768,6 @@ sub RequestSend {
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $SurveyID = $Row[0];
     }
-
     return if !$SurveyID;
 
     # get the survey
@@ -1842,7 +1841,6 @@ sub RequestSend {
             = $Self->{TicketObject}->ArticleLastCustomerArticle( TicketID => $Param{TicketID} );
         $To = $Article{From};
     }
-
     return if !$To;
 
     # check if not survey should be send
@@ -1851,11 +1849,12 @@ sub RequestSend {
         && $To =~ /$Self->{ConfigObject}->Get('Survey::SendNoSurveyRegExp')/i
         )
     {
-        return 1;
+        return;
     }
 
     # check if a survey is sent in the last time
-    if ( $Self->{ConfigObject}->Get('Survey::SendPeriod') ) {
+    my $SendPeriod = $Self->{ConfigObject}->Get('Survey::SendPeriod');
+    if ( $SendPeriod ) {
         my $LastSentTime = 0;
 
         # get send time
@@ -1871,20 +1870,15 @@ sub RequestSend {
         }
 
         if ($LastSentTime) {
+            my $Now = $Self->{TimeObject}->SystemTime();
             $LastSentTime = $Self->{TimeObject}->TimeStamp2SystemTime( String => $LastSentTime );
-            if (
-                (
-                    $LastSentTime
-                    + ( $Self->{ConfigObject}->Get('Survey::SendPeriod') * 60 * 60 * 24 )
-                ) > $Self->{TimeObject}->SystemTime()
-                )
-            {
-                return 1;
+            if ( ( $LastSentTime + $SendPeriod * 60 * 60 * 24 ) > $Now ) {
+                return;
             }
         }
     }
-
     # insert request
+#    my $TimeStamp = $Self->{TimeObject}->CurrentTimestamp();
     $Self->{DBObject}->Do(
         SQL => "INSERT INTO survey_request "
             . " (ticket_id, survey_id, valid_id, public_survey_key, send_to, send_time) "
@@ -1894,6 +1888,7 @@ sub RequestSend {
             . $Self->{DBObject}->Quote($PublicSurveyKey) . "', '"
             . $Self->{DBObject}->Quote($To) . "', "
             . "current_timestamp)"
+#            . "'$TimeStamp')"
     );
 
     # log action on ticket
@@ -2178,6 +2173,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.39 $ $Date: 2008-05-16 13:29:36 $
+$Revision: 1.40 $ $Date: 2008-07-15 19:28:13 $
 
 =cut
