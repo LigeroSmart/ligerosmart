@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMServiceLevelManagement.sopm,v 1.11 2008-07-15 14:55:17 ub Exp $</CVS>
+    <CVS>$Id: ITSMServiceLevelManagement.sopm,v 1.12 2008-07-18 13:55:23 ub Exp $</CVS>
     <Name>ITSMServiceLevelManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -60,7 +60,7 @@
         my $FunctionName = 'CodeInstall';
 
         # create the package name
-        my $CodeModule = 'var::packagesetup::' . 'ITSMServiceLevelManagement';
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
 
         # load the module
         if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
@@ -95,7 +95,7 @@
         my $FunctionName = 'CodeUpgrade';
 
         # create the package name
-        my $CodeModule = 'var::packagesetup::' . 'ITSMServiceLevelManagement';
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
 
         # load the module
         if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
@@ -130,7 +130,7 @@
         my $FunctionName = 'CodeReinstall';
 
         # create the package name
-        my $CodeModule = 'var::packagesetup::' . 'ITSMServiceLevelManagement';
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
 
         # load the module
         if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
@@ -165,7 +165,7 @@
         my $FunctionName = 'CodeUninstall';
 
         # create the package name
-        my $CodeModule = 'var::packagesetup::' . 'ITSMServiceLevelManagement';
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
 
         # load the module
         if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
