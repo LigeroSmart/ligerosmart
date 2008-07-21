@@ -2,7 +2,7 @@
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.41 2008-06-23 18:47:50 mh Exp $
+# $Id: GeneralCatalog.pm,v 1.42 2008-07-21 18:46:44 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Valid;
 use Kernel::System::CheckItem;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.41 $) [1];
+$VERSION = qw($Revision: 1.42 $) [1];
 
 =head1 NAME
 
@@ -415,7 +415,7 @@ sub ItemGet {
 
     # cache the result
     $Self->{Cache}->{ItemGet}->{Class}->{ $ItemData{Class} }->{ $ItemData{Name} } = \%ItemData;
-    $Self->{Cache}->{ItemGet}->{ItemID}->{ $Param{ItemID} } = \%ItemData;
+    $Self->{Cache}->{ItemGet}->{ItemID}->{ $Param{ItemID} } = \%ItemData if $Param{ItemID};
 
     return \%ItemData;
 }
@@ -688,6 +688,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.41 $ $Date: 2008-06-23 18:47:50 $
+$Revision: 1.42 $ $Date: 2008-07-21 18:46:44 $
 
 =cut
