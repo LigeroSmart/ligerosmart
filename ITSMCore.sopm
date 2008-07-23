@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMCore.sopm,v 1.58 2008-07-18 13:53:12 ub Exp $</CVS>
+    <CVS>$Id: ITSMCore.sopm,v 1.59 2008-07-23 16:02:38 mh Exp $</CVS>
     <Name>ITSMCore</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -516,6 +516,7 @@
 
     </CodeUninstall>
     <IntroInstall Type="pre" Title="Install Information" Lang="en">
+
         &lt;br&gt;
         WELCOME&lt;br&gt;
         &lt;br&gt;
@@ -534,8 +535,10 @@
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
         &lt;br&gt;
+
     </IntroInstall>
     <IntroInstall Type="pre" Title="Installation Information" Lang="de">
+
         &lt;br&gt;
         WILLKOMMEN&lt;br&gt;
         &lt;br&gt;
@@ -554,8 +557,10 @@
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
         &lt;br&gt;
+
     </IntroInstall>
     <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="en">
+
         &lt;br&gt;
         WELCOME&lt;br&gt;
         &lt;br&gt;
@@ -574,8 +579,10 @@
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
         &lt;br&gt;
+
     </IntroUpgrade>
     <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="de">
+
         &lt;br&gt;
         WILLKOMMEN&lt;br&gt;
         &lt;br&gt;
@@ -594,5 +601,6 @@
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
         &lt;br&gt;
+
     </IntroUpgrade>
 </otrs_package>
