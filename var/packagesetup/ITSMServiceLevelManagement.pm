@@ -2,7 +2,7 @@
 # ITSMServiceLevelManagement.pm - code to excecute during package installation
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMServiceLevelManagement.pm,v 1.15 2008-07-23 07:04:05 mh Exp $
+# $Id: ITSMServiceLevelManagement.pm,v 1.16 2008-07-23 15:28:17 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::Stats;
 use Kernel::System::User;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 =head1 NAME
 
@@ -99,18 +99,18 @@ sub new {
         }
     }
 
-    # add user id
-    $Self->{UserID} = 1;
-
     # create needed objects
     $Self->{ConfigObject} = Kernel::Config->new();
     $Self->{CSVObject}    = Kernel::System::CSV->new( %{$Self} );
     $Self->{GroupObject}  = Kernel::System::Group->new( %{$Self} );
     $Self->{UserObject}   = Kernel::System::User->new( %{$Self} );
-    $Self->{StatsObject}  = Kernel::System::Stats->new( %{$Self} );
+    $Self->{StatsObject}  = Kernel::System::Stats->new(
+        %{$Self},
+        UserID => 1,
+    );
 
-    # add module name
-    $Self->{ModuleName} = 'ITSMStats';
+    # define file prefix
+    $Self->{FilePrefix} = 'ITSMStats';
 
     return $Self;
 }
@@ -127,7 +127,9 @@ sub CodeInstall {
     my ( $Self, %Param ) = @_;
 
     # install stats
-    $Self->_StatsInstall();
+    $Self->{StatsObject}->StatsInstall(
+        FilePrefix => $Self->{FilePrefix},
+    );
 
     return 1;
 }
@@ -144,7 +146,9 @@ sub CodeReinstall {
     my ( $Self, %Param ) = @_;
 
     # install stats
-    $Self->_StatsInstall();
+    $Self->{StatsObject}->StatsInstall(
+        FilePrefix => $Self->{FilePrefix},
+    );
 
     return 1;
 }
@@ -161,7 +165,9 @@ sub CodeUpgrade {
     my ( $Self, %Param ) = @_;
 
     # install stats
-    $Self->_StatsInstall();
+    $Self->{StatsObject}->StatsInstall(
+        FilePrefix => $Self->{FilePrefix},
+    );
 
     return 1;
 }
@@ -178,119 +184,9 @@ sub CodeUninstall {
     my ( $Self, %Param ) = @_;
 
     # uninstall stats
-    $Self->_StatsUninstall();
-
-    return 1;
-}
-
-=item _StatsInstall()
-
-installs stats
-
-    my $Result = $CodeObject->_StatsInstall();
-
-=cut
-
-sub _StatsInstall {
-    my ( $Self, %Param ) = @_;
-
-    # start AutomaticSampleImport if no stats are installed
-    $Self->{StatsObject}->GetStatsList();
-
-    # cleanup stats
-    $Self->_StatsCleanUp();
-
-    # read temporary directory
-    my $StatsTempDir = $Self->{ConfigObject}->Get('Home') . '/var/stats/';
-
-    # get list of stats files
-    my @StatsFileList = glob $StatsTempDir . $Self->{ModuleName} . '-*.xml';
-
-    # import the stats
-    my $InstalledPostfix = '.installed';
-    FILE:
-    for my $File ( sort @StatsFileList ) {
-
-        next FILE if !-f $File;
-        next FILE if -e $File . $InstalledPostfix;
-
-        # read file content
-        my $XMLContentRef = $Self->{MainObject}->FileRead(
-            Location => $File,
-        );
-
-        # import stat
-        my $StatID = $Self->{StatsObject}->Import(
-            Content => ${$XMLContentRef},
-        );
-
-        next FILE if !$StatID;
-
-        # write installed file with stat id
-        $Self->{MainObject}->FileWrite(
-            Content  => \$StatID,
-            Location => $File . $InstalledPostfix,
-        );
-    }
-
-    return 1;
-}
-
-=item _StatsUninstall()
-
-uninstalls stats
-
-    my $Result = $CodeObject->_StatsUninstall();
-
-=cut
-
-sub _StatsUninstall {
-    my ( $Self, %Param ) = @_;
-
-    # read temporary directory
-    my $StatsTempDir = $Self->{ConfigObject}->Get('Home') . '/var/stats/';
-
-    # get list of installed stats files
-    my @StatsFileList = glob $StatsTempDir . $Self->{ModuleName} . '-*.xml.installed';
-
-    # delete the stats
-    for my $File (@StatsFileList) {
-
-        # read file content
-        my $StatIDRef = $Self->{MainObject}->FileRead(
-            Location => $File,
-        );
-
-        # delete stat
-        $Self->{StatsObject}->StatsDelete(
-            StatID => ${$StatIDRef},
-        );
-
-        # delete installed file
-        $Self->{MainObject}->FileDelete(
-            Location => $File,
-        );
-    }
-
-    # cleanup stats
-    $Self->_StatsCleanUp();
-
-    return 1;
-}
-
-=item _StatsCleanUp()
-
-cleanup installed stats
-
-    my $Result = $CodeObject->_StatsCleanUp();
-
-=cut
-
-sub _StatsCleanUp {
-    my ( $Self, %Param ) = @_;
-
-    # remove all inconsistence stats
-    $Self->{StatsObject}->StatsCleanUp();
+    $Self->{StatsObject}->StatsUninstall(
+        FilePrefix => $Self->{FilePrefix},
+    );
 
     return 1;
 }
@@ -311,6 +207,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.15 $ $Date: 2008-07-23 07:04:05 $
+$Revision: 1.16 $ $Date: 2008-07-23 15:28:17 $
 
 =cut
