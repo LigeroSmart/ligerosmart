@@ -2,7 +2,7 @@
 # ITSMServiceLevelManagement.pm - code to excecute during package installation
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMServiceLevelManagement.pm,v 1.14 2008-07-15 07:24:25 mh Exp $
+# $Id: ITSMServiceLevelManagement.pm,v 1.15 2008-07-23 07:04:05 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::Stats;
 use Kernel::System::User;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 =head1 NAME
 
@@ -197,6 +197,9 @@ sub _StatsInstall {
     # start AutomaticSampleImport if no stats are installed
     $Self->{StatsObject}->GetStatsList();
 
+    # cleanup stats
+    $Self->_StatsCleanUp();
+
     # read temporary directory
     my $StatsTempDir = $Self->{ConfigObject}->Get('Home') . '/var/stats/';
 
@@ -269,6 +272,26 @@ sub _StatsUninstall {
         );
     }
 
+    # cleanup stats
+    $Self->_StatsCleanUp();
+
+    return 1;
+}
+
+=item _StatsCleanUp()
+
+cleanup installed stats
+
+    my $Result = $CodeObject->_StatsCleanUp();
+
+=cut
+
+sub _StatsCleanUp {
+    my ( $Self, %Param ) = @_;
+
+    # remove all inconsistence stats
+    $Self->{StatsObject}->StatsCleanUp();
+
     return 1;
 }
 
@@ -288,6 +311,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.14 $ $Date: 2008-07-15 07:24:25 $
+$Revision: 1.15 $ $Date: 2008-07-23 07:04:05 $
 
 =cut
