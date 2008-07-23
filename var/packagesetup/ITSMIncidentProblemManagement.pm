@@ -2,7 +2,7 @@
 # ITSMIncidentProblemManagement.pm - code to excecute during package installation
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMIncidentProblemManagement.pm,v 1.4 2008-07-15 07:30:15 mh Exp $
+# $Id: ITSMIncidentProblemManagement.pm,v 1.5 2008-07-23 15:28:39 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -14,12 +14,18 @@ package var::packagesetup::ITSMIncidentProblemManagement;
 use strict;
 use warnings;
 
+use Kernel::Config;
+use Kernel::System::Config;
+use Kernel::System::CSV;
+use Kernel::System::Group;
 use Kernel::System::State;
+use Kernel::System::Stats;
 use Kernel::System::Type;
+use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 =head1 NAME
 
@@ -71,9 +77,46 @@ sub new {
     for my $Object (qw(ConfigObject LogObject MainObject TimeObject DBObject XMLObject)) {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
-    $Self->{StateObject} = Kernel::System::State->new( %{$Self} );
-    $Self->{TypeObject}  = Kernel::System::Type->new( %{$Self} );
-    $Self->{ValidObject} = Kernel::System::Valid->new( %{$Self} );
+
+    # create needed sysconfig object
+    $Self->{SysConfigObject} = Kernel::System::Config->new( %{$Self} );
+
+    # rebuild ZZZ* files
+    $Self->{SysConfigObject}->WriteDefault();
+
+    # define the ZZZ files
+    my @ZZZFiles = (
+        'ZZZAAuto.pm',
+        'ZZZAuto.pm',
+    );
+
+    # reload the ZZZ files (mod_perl workaround)
+    for my $ZZZFile (@ZZZFiles) {
+
+        PREFIX:
+        for my $Prefix (@INC) {
+            my $File = $Prefix . '/Kernel/Config/Files/' . $ZZZFile;
+            next PREFIX if !-f $File;
+            do $File;
+            last PREFIX;
+        }
+    }
+
+    # create needed objects
+    $Self->{ConfigObject} = Kernel::Config->new();
+    $Self->{CSVObject}    = Kernel::System::CSV->new( %{$Self} );
+    $Self->{GroupObject}  = Kernel::System::Group->new( %{$Self} );
+    $Self->{UserObject}   = Kernel::System::User->new( %{$Self} );
+    $Self->{StateObject}  = Kernel::System::State->new( %{$Self} );
+    $Self->{TypeObject}   = Kernel::System::Type->new( %{$Self} );
+    $Self->{ValidObject}  = Kernel::System::Valid->new( %{$Self} );
+    $Self->{StatsObject}  = Kernel::System::Stats->new(
+        %{$Self},
+        UserID => 1,
+    );
+
+    # define file prefix for stats
+    $Self->{FilePrefix} = 'ITSMStats';
 
     return $Self;
 }
@@ -121,7 +164,9 @@ sub CodeInstall {
     }
 
     # install stats
-    $Self->_StatsInstall();
+    $Self->{StatsObject}->StatsInstall(
+        FilePrefix => $Self->{FilePrefix},
+    );
 
     return 1;
 }
@@ -169,7 +214,9 @@ sub CodeReinstall {
     }
 
     # install stats
-    $Self->_StatsInstall();
+    $Self->{StatsObject}->StatsInstall(
+        FilePrefix => $Self->{FilePrefix},
+    );
 
     return 1;
 }
@@ -316,30 +363,6 @@ sub _SetTypeValid {
     return 1;
 }
 
-=item _StatsInstall()
-
-installs stats
-
-    my $Result = $CodeObject->_StatsInstall();
-
-=cut
-
-sub _StatsInstall {
-    my ( $Self, %Param ) = @_;
-
-    my $ModuleName = 'var::packagesetup::ITSMServiceLevelManagement';
-
-    return 1 if !$Self->{MainObject}->Require($ModuleName);
-
-    # create new instance
-    my $CodeObject = $ModuleName->new( %{$Self} );
-
-    # install the stats
-    $CodeObject->_StatsInstall();
-
-    return 1;
-}
-
 1;
 
 =back
@@ -356,6 +379,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2008-07-15 07:30:15 $
+$Revision: 1.5 $ $Date: 2008-07-23 15:28:39 $
 
 =cut
