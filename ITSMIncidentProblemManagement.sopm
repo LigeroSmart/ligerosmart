@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMIncidentProblemManagement.sopm,v 1.17 2008-07-18 13:54:42 ub Exp $</CVS>
+    <CVS>$Id: ITSMIncidentProblemManagement.sopm,v 1.18 2008-07-23 06:58:44 mh Exp $</CVS>
     <Name>ITSMIncidentProblemManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -220,64 +220,76 @@
         }
 
     </CodeUninstall>
+    <CodeUninstall Type="post">
+
+        my $ModuleName = 'var::packagesetup::ITSMServiceLevelManagement';
+
+        if ( $Self-&gt;{MainObject}-&gt;Require($ModuleName) ) {
+
+            # create new instance
+            my $CodeObject = $ModuleName-&gt;new( %{$Self} );
+
+            # cleanup the stats list
+            if ($CodeObject) {
+                $CodeObject-&gt;_StatsCleanUp();
+            }
+        }
+
+    </CodeUninstall>
     <IntroInstall Type="pre" Title="Install Information" Lang="en">
-        &lt;br&gt;
-        WELCOME&lt;br&gt;
-        &lt;br&gt;
-        You are about to install the OTRS module ITSMIncidentProblemManagement.&lt;br&gt;
-        &lt;br&gt;
-        &lt;br&gt;
+
+        WELCOME
+
+        You are about to install the OTRS module ITSMIncidentProblemManagement.
+
+
         REQUIRED OTRS PACKAGES
-        &lt;ul&gt;
-        &lt;li&gt;ITSMCore 1.1.92&lt;/li&gt;
-        &lt;/ul&gt;
-        &lt;br&gt;
-        ((enjoy))&lt;br&gt;
-        &lt;br&gt;
+            -ITSMCore 1.1.92
+
+
+        ((enjoy))
+
     </IntroInstall>
     <IntroInstall Type="pre" Title="Installation Information" Lang="de">
-        &lt;br&gt;
-        WILLKOMMEN&lt;br&gt;
-        &lt;br&gt;
-        Sie sind im Begriff das OTRS-Modul ITSMIncidentProblemManagement zu installieren.&lt;br&gt;
-        &lt;br&gt;
-        &lt;br&gt;
+
+        WILLKOMMEN
+
+        Sie sind im Begriff das OTRS-Modul ITSMIncidentProblemManagement zu installieren.
+
+
         BENÖTIGTE OTRS-PAKETE
-        &lt;ul&gt;
-        &lt;li&gt;ITSMCore 1.1.92&lt;/li&gt;
-        &lt;/ul&gt;
-        &lt;br&gt;
-        ((enjoy))&lt;br&gt;
-        &lt;br&gt;
+            -ITSMCore 1.1.92
+
+
+        ((enjoy))
+
     </IntroInstall>
     <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="en">
-        &lt;br&gt;
-        WELCOME&lt;br&gt;
-        &lt;br&gt;
-        You are about to upgrade the OTRS module ITSMIncidentProblemManagement.&lt;br&gt;
-        &lt;br&gt;
-        &lt;br&gt;
+
+        WELCOME
+
+        You are about to upgrade the OTRS module ITSMIncidentProblemManagement.
+
+
         REQUIRED OTRS PACKAGES
-        &lt;ul&gt;
-        &lt;li&gt;ITSMCore 1.1.92&lt;/li&gt;
-        &lt;/ul&gt;
-        &lt;br&gt;
-        ((enjoy))&lt;br&gt;
-        &lt;br&gt;
+            -ITSMCore 1.1.92
+
+
+        ((enjoy))
+
     </IntroUpgrade>
     <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="de">
-        &lt;br&gt;
-        WILLKOMMEN&lt;br&gt;
-        &lt;br&gt;
-        Sie sind im Begriff das OTRS-Modul ITSMIncidentProblemManagement zu aktualisieren.&lt;br&gt;
-        &lt;br&gt;
-        &lt;br&gt;
+
+        WILLKOMMEN
+
+        Sie sind im Begriff das OTRS-Modul ITSMIncidentProblemManagement zu aktualisieren.
+
+
         BENÖTIGTE OTRS-PAKETE
-        &lt;ul&gt;
-        &lt;li&gt;ITSMCore 1.1.92&lt;/li&gt;
-        &lt;/ul&gt;
-        &lt;br&gt;
-        ((enjoy))&lt;br&gt;
-        &lt;br&gt;
+            -ITSMCore 1.1.92
+
+
+        ((enjoy))
+
     </IntroUpgrade>
 </otrs_package>
