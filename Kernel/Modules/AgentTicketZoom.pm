@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.pm,v 1.2 2008-06-30 16:20:16 ub Exp $
-# $OldId: AgentTicketZoom.pm,v 1.58 2008/06/26 11:02:08 martin Exp $
+# $Id: AgentTicketZoom.pm,v 1.3 2008-07-24 13:02:14 ub Exp $
+# $OldId: AgentTicketZoom.pm,v 1.61 2008/07/21 11:28:26 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -408,7 +408,7 @@ sub MaskAgentZoom {
         }
         $Self->{LayoutObject}->Block(
             Name => 'Body',
-            Data => { %Param, %Article, Body => $Article{"BodyHTML"}, %AclAction },
+            Data => { %Param, %Article, Body => $Article{"BodyHTML"}, %AclAction, },
         );
 
         # show article tree
@@ -523,7 +523,8 @@ sub MaskAgentZoom {
             # customer info string
             if ( $Self->{ConfigObject}->Get('Ticket::Frontend::CustomerInfoZoom') ) {
                 $Param{CustomerTable} = $Self->{LayoutObject}->AgentCustomerViewTable(
-                    Data => { %Param, %{ $Param{CustomerData} }, },
+                    Data   => $Param{CustomerData},
+                    Ticket => \%Param,
                     Max => $Self->{ConfigObject}->Get('Ticket::Frontend::CustomerInfoZoomMaxSize'),
                 );
                 $Self->{LayoutObject}->Block(
@@ -718,31 +719,35 @@ sub MaskAgentZoom {
                     }
                     my $ZoomAttachmentDisplayCount
                         = $Self->{ConfigObject}->Get('Ticket::ZoomAttachmentDisplayCount');
-                    for my $Count ( 1 .. ( $ZoomAttachmentDisplayCount + 1 ) ) {
-                        if ( $Article{Atms}->{$Count} ) {
-                            if ( $Count > $ZoomAttachmentDisplayCount ) {
-                                $Self->{LayoutObject}->Block(
-                                    Name => 'TreeItemAttachmentMore',
-                                    Data => {
-                                        %Article,
-                                        %{ $Article{Atms}->{$Count} },
-                                        FileID => $Count,
-                                        Target => $Target,
-                                    },
-                                );
-                            }
-                            elsif ( $Article{Atms}->{$Count} ) {
-                                $Self->{LayoutObject}->Block(
-                                    Name => 'TreeItemAttachment',
-                                    Data => {
-                                        %Article,
-                                        %{ $Article{Atms}->{$Count} },
-                                        FileID => $Count,
-                                        Target => $Target,
-                                    },
-                                );
-                            }
+                    my $CountShown = 0;
+                    for my $Count ( 1 .. ( $ZoomAttachmentDisplayCount + 2 ) ) {
+                        next if !$Article{Atms}->{$Count};
+                        $CountShown++;
+
+                        # show more logo
+                        if ( $CountShown > $ZoomAttachmentDisplayCount ) {
+                            $Self->{LayoutObject}->Block(
+                                Name => 'TreeItemAttachmentMore',
+                                Data => {
+                                    %Article,
+                                    %{ $Article{Atms}->{$Count} },
+                                    FileID => $Count,
+                                    Target => $Target,
+                                },
+                            );
+                            last;
                         }
+
+                        # show attachment logo
+                        $Self->{LayoutObject}->Block(
+                            Name => 'TreeItemAttachment',
+                            Data => {
+                                %Article,
+                                %{ $Article{Atms}->{$Count} },
+                                FileID => $Count,
+                                Target => $Target,
+                            },
+                        );
                     }
                 }
             }
