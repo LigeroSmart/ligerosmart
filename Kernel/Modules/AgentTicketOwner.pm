@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketOwner.pm - set ticket owner
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketOwner.pm,v 1.1 2008-07-02 16:28:27 ub Exp $
-# $OldId: AgentTicketOwner.pm,v 1.43 2008/07/02 13:39:05 ub Exp $
+# $Id: AgentTicketOwner.pm,v 1.2 2008-07-24 12:57:33 ub Exp $
+# $OldId: AgentTicketOwner.pm,v 1.44 2008/07/18 18:41:15 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -731,7 +731,11 @@ sub Run {
                     %GetParam,
                 );
             }
-            return $Self->{LayoutObject}->Redirect( OP => $Self->{LastScreenOverview} );
+
+            # redirect to last screen overview on closed tickets
+            if ( $StateData{TypeName} =~ /^close/i ) {
+                return $Self->{LayoutObject}->Redirect( OP => $Self->{LastScreenOverview} );
+            }
         }
 
         # redirect
