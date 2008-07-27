@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport/FormatBackend/CSV.pm - import/export backend for CSV
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: CSV.pm,v 1.22 2008-04-16 14:29:38 mh Exp $
+# $Id: CSV.pm,v 1.23 2008-07-27 18:33:12 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -14,10 +14,8 @@ package Kernel::System::ImportExport::FormatBackend::CSV;
 use strict;
 use warnings;
 
-use Kernel::System::FileTemp;
-
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 =head1 NAME
 
@@ -85,8 +83,6 @@ sub new {
         );
         return;
     }
-
-    $Self->{FileTempObject} = Kernel::System::FileTemp->new( %{$Self} );
 
     # define available seperators
     $Self->{AvailableSeperators} = {
@@ -284,9 +280,11 @@ sub ImportDataGet {
         }
     );
 
-    # create temp file and write source content
-    my ( $FH, $Filename ) = $Self->{FileTempObject}->TempFile();
+    # create an in memory temp file and open it
+    my $FileContent;
+    open my $FH, '+<', \$FileContent;
 
+    # write source content
     print $FH ${ $Param{SourceContent} };
 
     # rewind file handle
@@ -294,10 +292,12 @@ sub ImportDataGet {
 
     # parse the content
     my @ImportData;
-    ROW:
     while ( my $Column = $ParseObject->getline($FH) ) {
         push @ImportData, $Column;
     }
+
+    # close the in memory file handle
+    close $FH;
 
     return \@ImportData if $Charset ne 'UTF-8';
 
@@ -443,6 +443,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.22 $ $Date: 2008-04-16 14:29:38 $
+$Revision: 1.23 $ $Date: 2008-07-27 18:33:12 $
 
 =cut
