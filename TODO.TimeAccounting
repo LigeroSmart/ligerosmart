@@ -1,12 +1,12 @@
 # --
 # TODO - todo list of TimeAccounting
-# Copyright (C) 2003-2007 OTRS GmbH, http://otrs.com/
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: TODO.TimeAccounting,v 1.21 2007-01-09 07:39:38 tr Exp $
+# $Id: TODO.TimeAccounting,v 1.22 2008-07-28 10:03:20 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 
 TimeAccounting 1.0
@@ -37,6 +37,17 @@ TimeAccounting 1.0
 - Kernel/System/TimeAccounting.pm sub UserSettingsInsert: create two separate functions for the
   db-insert in time_accounting_user and time_accounting_user_period. Maybe the update function too.
 - check all functions for a better functionallity
+- use bind for sql statements
+
+
+Performance
+- Cache often used SQL-functions
+- to evaluate the overview of one user - the user data of all user is
+  requested
+- SELECT user_id, preference_period, date_start, date_end, weekly_hours, leave_days, overtime, status
+  FROM time_accounting_user_period
+  WHERE date_start <= '2007-04-28 00:00:00' AND date_end >='2007-04-28 00:00:00'
+  -> integrate user_id in where-clause
 
 2.2 (OTRS)
 
