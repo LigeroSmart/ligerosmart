@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.13 2008-07-07 06:26:08 tr Exp $
+# $Id: TimeAccounting.pm,v 1.14 2008-07-28 10:05:43 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week);
 
@@ -39,6 +39,7 @@ create an object
 
     use Kernel::Config;
     use Kernel::System::Log;
+    use Kernel::System::Main;
     use Kernel::System::DB;
     use Kernel::System::TimeAccounting;
 
@@ -76,6 +77,9 @@ sub new {
         $Self->{$_} = $Param{$_} || die "Got no $_!";
     }
 
+    $Self->{TimeVacationDays}        = $Self->{ConfigObject}->Get('TimeVacationDays');
+    $Self->{TimeVacationDaysOneTime} = $Self->{ConfigObject}->Get('TimeVacationDaysOneTime');
+
     return $Self;
 }
 
@@ -94,7 +98,6 @@ returns a hash with the user of the current period data
 sub UserCurrentPeriodGet {
     my ( $Self, %Param ) = @_;
 
-    my %Data = ();
     for (qw(Year Month Day)) {
         $Param{$_} = $Self->{DBObject}->Quote( $Param{$_} ) || '';
         if ( !$Param{$_} ) {
@@ -106,7 +109,13 @@ sub UserCurrentPeriodGet {
 
     my $Date = sprintf( "%04d-%02d-%02d", $Param{Year}, $Param{Month}, $Param{Day} ) . " 00:00:00";
 
+    # Caching
+    if ( $Self->{'Cache::UserCurrentPeriodGet'}{ $Date } ) {
+        return %{$Self->{'Cache::UserCurrentPeriodGet'}{ $Date }};
+    }
+
     # db select
+    my %Data = ();
     $Self->{DBObject}->Prepare( SQL =>
             "SELECT user_id, preference_period, date_start, date_end, weekly_hours, leave_days, overtime, status FROM time_accounting_user_period "
             . "WHERE date_start <= '"
@@ -117,16 +126,20 @@ sub UserCurrentPeriodGet {
 
     # fetch Data
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-
-        $Data{ $Row[0] }{UserID}      = $Row[0];
-        $Data{ $Row[0] }{Period}      = $Row[1];
-        $Data{ $Row[0] }{DateStart}   = substr( $Row[2], 0, 10 );
-        $Data{ $Row[0] }{DateEnd}     = substr( $Row[3], 0, 10 );
-        $Data{ $Row[0] }{WeeklyHours} = $Row[4];
-        $Data{ $Row[0] }{LeaveDays}   = $Row[5];
-        $Data{ $Row[0] }{Overtime}    = $Row[6];
-        $Data{ $Row[0] }{UserStatus}  = $Row[7];
+        my $UserRef = {
+            UserID      => $Row[0],
+            Period      => $Row[1],
+            DateStart   => substr( $Row[2], 0, 10 ),
+            DateEnd     => substr( $Row[3], 0, 10 ),
+            WeeklyHours => $Row[4],
+            LeaveDays   => $Row[5],
+            Overtime    => $Row[6],
+            UserStatus  => $Row[7],
+        };
+        $Data{ $Row[0] } = $UserRef;
     }
+
+    $Self->{'Cache::UserCurrentPeriodGet'}{ $Date } = \%Data;
 
     return %Data;
 }
@@ -302,9 +315,10 @@ sub ProjectSettingsGet {
 
     # fetch Data
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $Data{Project}{ $Row[0] }            = $Row[1];
-        $Data{ProjectDescription}{ $Row[0] } = $Row[2];
-        $Data{ProjectStatus}{ $Row[0] }      = $Row[3];
+        my $ID = $Row[0];
+        $Data{Project}{ $ID }            = $Row[1];
+        $Data{ProjectDescription}{ $ID } = $Row[2];
+        $Data{ProjectStatus}{ $ID }      = $Row[3];
     }
     return %Data;
 }
@@ -524,8 +538,8 @@ sub UserGet {
     my %Data = ();
 
     # db select
-    $Self->{DBObject}->Prepare( SQL =>
-            "SELECT user_id, description, show_overtime, create_project FROM time_accounting_user",
+    $Self->{DBObject}->Prepare(
+        SQL => 'SELECT user_id, description, show_overtime, create_project FROM time_accounting_user',
     );
 
     # fetch Data
@@ -584,8 +598,8 @@ insert new user data in the db
 sub UserSettingsInsert {
     my ( $Self, %Param ) = @_;
 
-    my $ID  = '';
-    my $SQL = '';
+    # delete cache
+    delete $Self->{'Cache::UserCurrentPeriodGet'};
 
     $Param{WeeklyHours} = $Self->{ConfigObject}->Get('TimeAccounting::DefaultUserWeeklyHours')
         || '40';
@@ -608,7 +622,7 @@ sub UserSettingsInsert {
     }
 
     # build sql
-    $SQL
+    my $SQL
         = "INSERT INTO time_accounting_user_period (user_id, preference_period, date_start, date_end,"
         . " weekly_hours, leave_days, overtime, status)"
         . " VALUES"
@@ -616,9 +630,7 @@ sub UserSettingsInsert {
         . " '$Param{WeeklyHours}', '$Param{LeaveDays}', '$Param{Overtime}', '$Param{UserStatus}')";
 
     # db insert
-    if ( !$Self->{DBObject}->Do( SQL => $SQL ) ) {
-        return;
-    }
+    return if !$Self->{DBObject}->Do( SQL => $SQL );
 
     # Split the following code in a seperate function!
 
@@ -690,6 +702,10 @@ update user data in the db
 
 sub UserSettingsUpdate {
     my ( $Self, %Param ) = @_;
+
+    # delete cache
+    delete $Self->{'Cache::UserCurrentPeriodGet'};
+
     for my $UserID ( sort keys %Param ) {
         for (qw(UserID Description)) {
             $Param{$UserID}{$_} = $Self->{DBObject}->Quote( $Param{$UserID}{$_} ) || '';
@@ -752,9 +768,7 @@ sub UserSettingsUpdate {
                 . $Period . "'";
 
             # db insert
-            if ( !$Self->{DBObject}->Do( SQL => $SQL ) ) {
-                return;
-            }
+            return if !$Self->{DBObject}->Do( SQL => $SQL );
         }
     }
     return 1;
@@ -781,19 +795,15 @@ sub WorkingUnitsCompletnessCheck {
     my ( $Sec, $Min, $Hour, $Day, $Month, $Year )
         = $Self->{TimeObject}->SystemTime2Date( SystemTime => $Self->{TimeObject}->SystemTime(), );
 
-    $Param{UserID} = $Self->{DBObject}->Quote( $Param{UserID} ) || '';
-
-    if ( !$Param{UserID} ) {
-        $Param{UserID} = $Self->{UserID};
-    }
+    my $UserID = $Self->{DBObject}->Quote( $Param{UserID} ) || $Self->{UserID};
 
     $Self->{DBObject}->Prepare( SQL =>
-            "SELECT DISTINCT time_start FROM time_accounting_table WHERE user_id = '$Param{UserID}'",
+            "SELECT DISTINCT time_start FROM time_accounting_table WHERE user_id = '$UserID'",
     );
 
     # fetch Data
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        if ( $Row[0] =~ /^(\d+)-(\d+)-(\d+)(.+?)/ ) {
+        if ( $Row[0] =~ /^(\d+)-(\d+)-(\d+)/ ) {
             $CompleteWorkingDays{$1}{$2}{$3} = 1;
         }
     }
@@ -814,7 +824,7 @@ sub WorkingUnitsCompletnessCheck {
     my $MonthEnd        = $Month;
     my $DayEnd          = $Day;
 
-    if ( $UserCurrentPeriod{ $Param{UserID} }{DateStart} =~ /^(\d+)-(\d+)-(\d+)/ ) {
+    if ( $UserCurrentPeriod{ $UserID }{DateStart} =~ /^(\d+)-(\d+)-(\d+)/ ) {
         $YearStart  = $1;
         $MonthStart = $2;
         $DayStart   = $3;
@@ -890,6 +900,7 @@ sub WorkingUnitsCompletnessCheck {
             }
         }
     }
+
     return %Data;
 }
 
@@ -973,7 +984,6 @@ insert working units in the db
 sub WorkingUnitsInsert {
     my ( $Self, %Param ) = @_;
 
-    my $SQL = '';
     for (qw(Year Month Day)) {
         $Param{$_} = $Self->{DBObject}->Quote( $Param{$_} ) || '';
         if ( !$Param{$_} ) {
@@ -1017,7 +1027,7 @@ sub WorkingUnitsInsert {
         }
 
         # build sql
-        $SQL
+        my $SQL
             = "INSERT INTO time_accounting_table (user_id, project_id, action_id, remark,"
             . " time_start, time_end, period, created )"
             . " VALUES"
@@ -1026,9 +1036,7 @@ sub WorkingUnitsInsert {
             . " current_timestamp)";
 
         # db insert
-        if ( !$Self->{DBObject}->Do( SQL => $SQL ) ) {
-            return;
-        }
+        return if !$Self->{DBObject}->Do( SQL => $SQL );
     }
     return 1;
 }
@@ -1086,40 +1094,41 @@ sub VacationCheck {
     my $VacationName = '';
 
     # check required params
+    TIMESCALE:
     for (qw(Year Month Day)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "VacationCheck: Need $_!"
-            );
-            return;
-        }
-    }
-    $Param{Month} = sprintf( "%02d", $Param{Month} );
-    $Param{Day}   = sprintf( "%02d", $Param{Day} );
+        next TIMESCALE if $Param{$_};
 
-    my $TimeVacationDays        = $Self->{ConfigObject}->Get('TimeVacationDays');
-    my $TimeVacationDaysOneTime = $Self->{ConfigObject}->Get('TimeVacationDaysOneTime');
-    if ( defined( $TimeVacationDays->{ $Param{Month} }->{ $Param{Day} } ) ) {
-        return $TimeVacationDays->{ $Param{Month} }->{ $Param{Day} };
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "VacationCheck: Need $_!"
+        );
+        return;
+    }
+    my $Year  = $Param{Year};
+    my $Month = sprintf( "%02d", $Param{Month} );
+    my $Day   = sprintf( "%02d", $Param{Day} );
+
+    if ( defined( $Self->{TimeVacationDays}->{ $Month }->{ $Day } ) ) {
+        return $Self->{TimeVacationDays}->{ $Month }->{ $Day };
     }
     elsif (
-        defined( $TimeVacationDaysOneTime->{ $Param{Year} }->{ $Param{Month} }->{ $Param{Day} } ) )
+        defined( $Self->{TimeVacationDaysOneTime}->{ $Year }->{ $Month }->{ $Day } ) )
     {
-        return $TimeVacationDaysOneTime->{ $Param{Year} }->{ $Param{Month} }->{ $Param{Day} };
+        return $Self->{TimeVacationDaysOneTime}->{ $Year }->{ $Month }->{ $Day };
     }
-    elsif ( defined( $TimeVacationDays->{ int( $Param{Month} ) }->{ int( $Param{Day} ) } ) ) {
-        return $TimeVacationDays->{ int( $Param{Month} ) }->{ int( $Param{Day} ) };
+
+    $Month = int $Month;
+    $Day   = int $Day;
+    if ( defined( $Self->{TimeVacationDays}->{ $Month }->{ $Day } ) ) {
+        return $Self->{TimeVacationDays}->{ $Month }->{ $Day };
     }
     elsif (
         defined(
-            $TimeVacationDaysOneTime->{ $Param{Year} }->{ int( $Param{Month} ) }
-                ->{ int( $Param{Day} ) }
+            $Self->{TimeVacationDaysOneTime}->{ $Year }->{ $Month }->{ $Day }
         )
         )
     {
-        return $TimeVacationDaysOneTime->{ $Param{Year} }->{ int( $Param{Month} ) }
-            ->{ int( $Param{Day} ) };
+        return $Self->{TimeVacationDaysOneTime}->{ $Year }->{ $Month }->{ $Day };
     }
     return;
 }
@@ -1206,6 +1215,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.13 $ $Date: 2008-07-07 06:26:08 $
+$Revision: 1.14 $ $Date: 2008-07-28 10:05:43 $
 
 =cut
