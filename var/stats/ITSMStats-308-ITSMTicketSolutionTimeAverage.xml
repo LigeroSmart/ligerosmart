@@ -2,7 +2,7 @@
 
 <otrs_stats>
 <Cache>0</Cache>
-<Description>Average soltuion time of tickets created in the last month per Ticket-Type and Queue.
+<Description>Average solution time of tickets created in the last month per Ticket-Type and Queue.
 
 X-Axis: Ticket-Type
 Y-Axis: Queue
@@ -19,7 +19,7 @@ Restrictions:
 <StatType>dynamic</StatType>
 <SumCol>0</SumCol>
 <SumRow>0</SumRow>
-<Title>Average soltuion time of tickets created in the last month per Ticket-Type and Queue.</Title>
+<Title>Average solution time of tickets created in the last month per Ticket-Type and Queue.</Title>
 <UseAsRestriction Element="StateIDs" Fixed="1">
 <SelectedValues>2</SelectedValues>
 <SelectedValues>10</SelectedValues>
