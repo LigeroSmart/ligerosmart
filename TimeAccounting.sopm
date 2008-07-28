@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: TimeAccounting.sopm,v 1.15 2008-06-04 13:25:20 tr Exp $</CVS>
+    <CVS>$Id: TimeAccounting.sopm,v 1.16 2008-07-28 10:03:50 tr Exp $</CVS>
     <Name>TimeAccounting</Name>
     <Version>0.0.0</Version>
     <Framework>2.1.x</Framework>
@@ -57,6 +57,9 @@
             <Column Name="time_end"          Required="true"  Type="DATE"/>
             <Column Name="period"            Required="false" Type="DECIMAL" Size="10,3"/>
             <Column Name="created"           Required="true"  Type="DATE"/>
+            <Index Name="time_accounting_table_user_id">
+                <IndexColumn Name="user_id"/>
+            </Index>
         </TableCreate>
         <TableCreate Name="time_accounting_user_period">
             <Column Name="id"                Required="true"  Type="BIGINT" PrimaryKey="true" AutoIncrement="true"/>
