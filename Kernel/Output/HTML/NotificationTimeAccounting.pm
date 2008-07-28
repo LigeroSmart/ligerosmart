@@ -1,12 +1,12 @@
 # --
 # Kernel/Output/HTML/NotificationTimeAccounting.pm
-# Copyright (C) 2001-2008 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: NotificationTimeAccounting.pm,v 1.4 2008-01-22 07:48:06 tr Exp $
+# $Id: NotificationTimeAccounting.pm,v 1.5 2008-07-28 10:04:51 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 
 package Kernel::Output::HTML::NotificationTimeAccounting;
@@ -18,7 +18,7 @@ use Kernel::System::TimeAccounting;
 use Kernel::System::Time;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -56,9 +56,6 @@ sub Run {
                 Info     => 'Please insert your working hours!',
                 Priority => 'Error'
             );
-        }
-        else {
-            return '';
         }
     }
     return '';

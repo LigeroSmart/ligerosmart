@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.20 2008-06-04 13:25:20 tr Exp $
+# $Id: AgentTimeAccounting.pm,v 1.21 2008-07-28 10:04:25 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -49,23 +49,26 @@ sub PreRun {
     return 1 if !$Self->{AccessRo};
 
     my ( $Sec, $Min, $Hour, $Day, $Month, $Year )
-        = $Self->{TimeObject}->SystemTime2Date( SystemTime => $Self->{TimeObject}->SystemTime(), );
+        = $Self->{TimeObject}->SystemTime2Date( SystemTime => $Self->{TimeObject}->SystemTime() );
+
     my %User = $Self->{TimeAccountingObject}->UserCurrentPeriodGet(
         Year  => $Year,
         Month => $Month,
         Day   => $Day,
     );
-    if ( $User{ $Self->{UserID} } ) {
-        my %IncompleteWorkingDays = $Self->{TimeAccountingObject}->WorkingUnitsCompletnessCheck();
 
-        # redirect if incomplete working day are out of range
-        if (   $IncompleteWorkingDays{EnforceInsert}
-            && $Self->{Action} ne 'AgentTimeAccounting'
-            && $Self->{Action} ne 'AgentCalendarSmall' )
-        {
-            return $Self->{LayoutObject}
-                ->Redirect( OP => "Action=AgentTimeAccounting&Subaction=Edit" );
-        }
+    return if !$User{ $Self->{UserID}};
+
+    my %IncompleteWorkingDays = $Self->{TimeAccountingObject}->WorkingUnitsCompletnessCheck();
+
+    # redirect if incomplete working day are out of range
+    if (   $IncompleteWorkingDays{EnforceInsert}
+        && $Self->{Action} ne 'AgentTimeAccounting'
+        && $Self->{Action} ne 'AgentCalendarSmall' )
+    {
+        return $Self->{LayoutObject}->Redirect(
+            OP => 'Action=AgentTimeAccounting&Subaction=Edit'
+        );
     }
     return;
 }
@@ -100,9 +103,7 @@ sub Run {
         }
 
         # permission check
-        if ( !$Self->{AccessRo} ) {
-            return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' );
-        }
+        return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' ) if !$Self->{AccessRo};
 
         # Check Date
         if ( !$Param{Year} || !$Param{Month} || !$Param{Day} ) {
@@ -248,18 +249,19 @@ sub Run {
                 }
             }
             if ( $CheckboxCheck > 1 ) {
-                $Param{RequiredDescription} = "You can only select one checkbox element!";
+                $Param{RequiredDescription} = 'You can only select one checkbox element!';
             }
+
             $Data{Year}  = $Param{Year};
             $Data{Month} = $Param{Month};
             $Data{Day}   = $Param{Day};
+
             if ( !$Self->{TimeAccountingObject}->WorkingUnitsInsert(%Data) ) {
                 return $Self->{LayoutObject}
                     ->ErrorScreen( Message => 'Can\'t insert Working Units!' );
             }
-            else {
-                $Param{SuccessfulInsert} = 1;
-            }
+
+            $Param{SuccessfulInsert} = 1;
         }
 
         # Show Working Units
@@ -332,13 +334,13 @@ sub Run {
                 $Param{ID} = $WorkingUnitID;
 
                 # get option fields
-                $Frontend{'ActionOption'} = $Self->{LayoutObject}->OptionStrgHashRef(
+                $Frontend{ActionOption} = $Self->{LayoutObject}->OptionStrgHashRef(
                     Data                => \%ActionList,
                     SelectedID          => $Data{$WorkingUnitID}{ActionID} || '',
                     Name                => "ActionID[$WorkingUnitID]",
                     LanguageTranslation => 0,
                 );
-                $Frontend{'ProjectOption'} = $Self->{LayoutObject}->OptionStrgHashRef(
+                $Frontend{ProjectOption} = $Self->{LayoutObject}->OptionStrgHashRef(
                     Data                => \%ProjectList,
                     SelectedID          => $Data{$WorkingUnitID}{ProjectID} || '',
                     Name                => "ProjectID[$WorkingUnitID]",
@@ -611,7 +613,7 @@ sub Run {
         $Param{Weekday_to_Text} = $WeekdayArray[ $Param{Weekday} - 1 ];
 
         # build output
-        $Output = $Self->{LayoutObject}->Header( Title => "Edit" );
+        $Output = $Self->{LayoutObject}->Header( Title => 'Edit' );
         if ( !$IncompleteWorkingDays{EnforceInsert} ) {
             $Output .= $Self->{LayoutObject}->NavigationBar();
             $Self->{LayoutObject}->Block(
@@ -645,9 +647,7 @@ sub Run {
     elsif ( $Self->{Subaction} eq 'View' ) {
 
         # permission check
-        if ( !$Self->{AccessRo} ) {
-            return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' );
-        }
+        return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' ) if !$Self->{AccessRo};
 
         # get params
         for (qw(Day Month Year UserID)) {
@@ -1789,7 +1789,7 @@ sub Run {
     # ---------------------------------------------------------- #
     # show error screen
     # ---------------------------------------------------------- #
-    return $Self->{LayoutObject}->ErrorScreen( Message => "Invalid Subaction process!" );
+    return $Self->{LayoutObject}->ErrorScreen( Message => 'Invalid Subaction process!' );
 }
 
 1;
