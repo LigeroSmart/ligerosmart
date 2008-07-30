@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - all survey funtions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.pm,v 1.40 2008-07-15 19:28:13 martin Exp $
+# $Id: Survey.pm,v 1.41 2008-07-30 16:52:01 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,9 +18,10 @@ use Digest::MD5;
 use Kernel::System::CustomerUser;
 use Kernel::System::Email;
 use Kernel::System::Ticket;
+use Mail::Address;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.40 $) [1];
+$VERSION = qw($Revision: 1.41 $) [1];
 
 =head1 NAME
 
@@ -1768,6 +1769,7 @@ sub RequestSend {
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $SurveyID = $Row[0];
     }
+
     return if !$SurveyID;
 
     # get the survey
@@ -1815,8 +1817,9 @@ sub RequestSend {
     # get customer data and replace it with <OTRS_CUSTOMER_DATA_...
     my %CustomerUser = ();
     if ( $Ticket{CustomerUserID} ) {
-        %CustomerUser
-            = $Self->{CustomerUserObject}->CustomerUserDataGet( User => $Ticket{CustomerUserID} );
+        %CustomerUser = $Self->{CustomerUserObject}->CustomerUserDataGet(
+            User => $Ticket{CustomerUserID},
+        );
 
         # replace customer stuff with tags
         for my $Data ( keys %CustomerUser ) {
@@ -1835,32 +1838,41 @@ sub RequestSend {
     $Subject =~ s/<OTRS_PublicSurveyKey>/$PublicSurveyKey/gi;
     $Body    =~ s/<OTRS_PublicSurveyKey>/$PublicSurveyKey/gi;
 
-    my $To = $CustomerUser{UserEmail};
-    if ( !$To ) {
-        my %Article
-            = $Self->{TicketObject}->ArticleLastCustomerArticle( TicketID => $Param{TicketID} );
-        $To = $Article{From};
+    my $ToString = $CustomerUser{UserEmail};
+
+    if ( !$ToString ) {
+        my %Article = $Self->{TicketObject}->ArticleLastCustomerArticle(
+            TicketID => $Param{TicketID},
+        );
+        $ToString = $Article{From};
     }
+
+    # parse the to string
+    my $To;
+    for my $ToParser ( Mail::Address->parse($ToString) ) {
+        $To = $ToParser->address();
+    }
+
     return if !$To;
 
+    # konvert to lower cases
+    $To = lc $To;
+
     # check if not survey should be send
-    if (
-        $Self->{ConfigObject}->Get('Survey::SendNoSurveyRegExp')
-        && $To =~ /$Self->{ConfigObject}->Get('Survey::SendNoSurveyRegExp')/i
-        )
-    {
-        return;
-    }
+    return if $Self->{ConfigObject}->Get('Survey::SendNoSurveyRegExp')
+            && $To =~ m{ $Self->{ConfigObject}->Get('Survey::SendNoSurveyRegExp') }xmsi;
+
+    # quote
+    $To = $Self->{DBObject}->Quote($To);
 
     # check if a survey is sent in the last time
     my $SendPeriod = $Self->{ConfigObject}->Get('Survey::SendPeriod');
-    if ( $SendPeriod ) {
+    if ($SendPeriod) {
         my $LastSentTime = 0;
 
         # get send time
         $Self->{DBObject}->Prepare(
-            SQL => "SELECT send_time FROM survey_request WHERE send_to = '"
-                . $Self->{DBObject}->Quote($To) . "'",
+            SQL   => "SELECT send_time FROM survey_request WHERE LOWER(send_to) = '$To'",
             Limit => 1,
         );
 
@@ -1872,23 +1884,21 @@ sub RequestSend {
         if ($LastSentTime) {
             my $Now = $Self->{TimeObject}->SystemTime();
             $LastSentTime = $Self->{TimeObject}->TimeStamp2SystemTime( String => $LastSentTime );
-            if ( ( $LastSentTime + $SendPeriod * 60 * 60 * 24 ) > $Now ) {
-                return;
-            }
+
+            return if ( $LastSentTime + $SendPeriod * 60 * 60 * 24 ) > $Now;
         }
     }
+
     # insert request
-#    my $TimeStamp = $Self->{TimeObject}->CurrentTimestamp();
     $Self->{DBObject}->Do(
         SQL => "INSERT INTO survey_request "
             . " (ticket_id, survey_id, valid_id, public_survey_key, send_to, send_time) "
             . " VALUES ("
             . "$Param{TicketID}, "
             . "$SurveyID, 1, '"
-            . $Self->{DBObject}->Quote($PublicSurveyKey) . "', '"
-            . $Self->{DBObject}->Quote($To) . "', "
-            . "current_timestamp)"
-#            . "'$TimeStamp')"
+            . $Self->{DBObject}->Quote($PublicSurveyKey) . "', "
+            . "'$To', "
+            . "current_timestamp)",
     );
 
     # log action on ticket
@@ -2173,6 +2183,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.40 $ $Date: 2008-07-15 19:28:13 $
+$Revision: 1.41 $ $Date: 2008-07-30 16:52:01 $
 
 =cut
