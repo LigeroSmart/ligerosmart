@@ -2,7 +2,7 @@
 # Survey.t - Survey tests
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.t,v 1.2 2008-07-15 20:11:01 martin Exp $
+# $Id: Survey.t,v 1.3 2008-07-30 16:47:00 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -13,21 +13,21 @@ use Kernel::System::User;
 use Kernel::System::Survey;
 use Kernel::System::Ticket;
 
-$Self->{UserObject} = Kernel::System::User->new( %{$Self} );
+$Self->{UserObject}   = Kernel::System::User->new( %{$Self} );
 $Self->{TicketObject} = Kernel::System::Ticket->new( %{$Self} );
 $Self->{SurveyObject} = Kernel::System::Survey->new( %{$Self} );
 
 # create servey
 my %SurveyData = (
-    Title        => 'A Title',
-    Introduction => 'The introduction of the survey',
-    Description  => 'The internal description of the survey',
+    Title               => 'A Title',
+    Introduction        => 'The introduction of the survey',
+    Description         => 'The internal description of the survey',
     NotificationSender  => 'quality@example.com',
     NotificationSubject => 'Help us with your feedback!',
     NotificationBody    => 'Dear customer...',
 );
 my $SurveyID = $Self->{SurveyObject}->SurveyNew(
-    UserID       => 1,
+    UserID => 1,
     %SurveyData,
 );
 $Self->True(
@@ -35,23 +35,23 @@ $Self->True(
     "SurveyNew()",
 );
 
-for (1..3) {
+for ( 1 .. 3 ) {
     my $QuestionAdd = $Self->{SurveyObject}->QuestionAdd(
-        UserID => 1,
+        UserID   => 1,
         SurveyID => $SurveyID,
         Question => 'The Question',
-        Type => 'Radio',
+        Type     => 'Radio',
     );
 }
 my @List = $Self->{SurveyObject}->QuestionList(
     SurveyID => $SurveyID,
 );
 for my $Question (@List) {
-    for (1..3) {
+    for ( 1 .. 3 ) {
         $Self->{SurveyObject}->AnswerAdd(
-            UserID => 1,
+            UserID     => 1,
             QuestionID => $Question->{QuestionID},
-            Answer => 'The Answer',
+            Answer     => 'The Answer',
         );
     }
 }
@@ -70,7 +70,7 @@ my %SurveyGet = $Self->{SurveyObject}->SurveyGet(
     SurveyID => $SurveyID,
 );
 
-for my $Key (sort keys %SurveyGet) {
+for my $Key ( sort keys %SurveyGet ) {
     next if !defined $SurveyData{$Key};
     $Self->Is(
         $SurveyGet{$Key},
@@ -93,18 +93,18 @@ my @Tests = (
             UserID       => 1,
         },
         Article => {
-            ArticleType => 'email-external',
-            SenderType  => 'customer',
-            From        => 'Some Customer <some@example.com>',
-            To          => 'Some To <to@example.com>',
-            Subject     => 'Some Subject',
-            Body        => 'the message text',
+            ArticleType    => 'email-external',
+            SenderType     => 'customer',
+            From           => 'Some Customer <some@example.com>',
+            To             => 'Some To <to@example.com>',
+            Subject        => 'Some Subject',
+            Body           => 'the message text',
             MessageID      => '<asdasdasd.123@example.com>',
             ContentType    => 'text/plain; charset=ISO-8859-15',
             HistoryType    => 'OwnerUpdate',
             HistoryComment => 'Some free text!',
             UserID         => 1,
-            NoAgentNotify  => 1,    # if you don't want to send agent notifications
+            NoAgentNotify => 1,    # if you don't want to send agent notifications
         },
         Result => [
             1,
@@ -124,18 +124,18 @@ my @Tests = (
             UserID       => 1,
         },
         Article => {
-            ArticleType => 'email-external',
-            SenderType  => 'customer',
-            From        => 'Some Customer <SOME@example.com>',
-            To          => 'Some To <to@example.com>',
-            Subject     => 'Some Subject',
-            Body        => 'the message text',
+            ArticleType    => 'email-external',
+            SenderType     => 'customer',
+            From           => 'Some Customer <SOME@example.com>',
+            To             => 'Some To <to@example.com>',
+            Subject        => 'Some Subject',
+            Body           => 'the message text',
             MessageID      => '<asdasdasd.123@example.com>',
             ContentType    => 'text/plain; charset=ISO-8859-15',
             HistoryType    => 'OwnerUpdate',
             HistoryComment => 'Some free text!',
             UserID         => 1,
-            NoAgentNotify  => 1,    # if you don't want to send agent notifications
+            NoAgentNotify => 1,    # if you don't want to send agent notifications
         },
         Result => [
             0,
@@ -155,18 +155,18 @@ my @Tests = (
             UserID       => 1,
         },
         Article => {
-            ArticleType => 'email-external',
-            SenderType  => 'customer',
-            From        => 'SOME@example.com',
-            To          => 'Some To <to@example.com>',
-            Subject     => 'Some Subject',
-            Body        => 'the message text',
+            ArticleType    => 'email-external',
+            SenderType     => 'customer',
+            From           => 'SOME@example.com',
+            To             => 'Some To <to@example.com>',
+            Subject        => 'Some Subject',
+            Body           => 'the message text',
             MessageID      => '<asdasdasd.123@example.com>',
             ContentType    => 'text/plain; charset=ISO-8859-15',
             HistoryType    => 'OwnerUpdate',
             HistoryComment => 'Some free text!',
             UserID         => 1,
-            NoAgentNotify  => 1,    # if you don't want to send agent notifications
+            NoAgentNotify => 1,    # if you don't want to send agent notifications
         },
         Result => [
             0,
@@ -180,7 +180,7 @@ for my $Test (@Tests) {
         %{ $Test->{Ticket} },
     );
     my $ArticleID = $Self->{TicketObject}->ArticleCreate(
-        TicketID    => $TicketID,
+        TicketID => $TicketID,
         %{ $Test->{Article} },
     );
 
