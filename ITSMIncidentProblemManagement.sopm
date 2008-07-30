@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMIncidentProblemManagement.sopm,v 1.21 2008-07-30 17:33:39 ub Exp $</CVS>
+    <CVS>$Id: ITSMIncidentProblemManagement.sopm,v 1.22 2008-07-30 22:29:44 ub Exp $</CVS>
     <Name>ITSMIncidentProblemManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -251,7 +251,7 @@
         &lt;b&gt;WELCOME&lt;/b&gt;
         &lt;br&gt;
         &lt;br&gt;
-        You are about to install the OTRS module ITSMIncidentProblemManagement.&lt;br&gt;
+        You are about to install the OTRS package ITSMIncidentProblemManagement.&lt;br&gt;
         &lt;br&gt;
         &lt;br&gt;
         &lt;b&gt;REQUIRED OTRS PACKAGES&lt;/b&gt;
@@ -269,7 +269,7 @@
         &lt;b&gt;WILLKOMMEN&lt;/b&gt;
         &lt;br&gt;
         &lt;br&gt;
-        Sie sind im Begriff das OTRS-Modul ITSMIncidentProblemManagement zu installieren.&lt;br&gt;
+        Sie sind im Begriff das OTRS-Paket ITSMIncidentProblemManagement zu installieren.&lt;br&gt;
         &lt;br&gt;
         &lt;br&gt;
         &lt;b&gt;BENÖTIGTE OTRS-PAKETE&lt;/b&gt;
@@ -287,7 +287,7 @@
         &lt;b&gt;WELCOME&lt;/b&gt;
         &lt;br&gt;
         &lt;br&gt;
-        You are about to upgrade the OTRS module ITSMIncidentProblemManagement.&lt;br&gt;
+        You are about to upgrade the OTRS package ITSMIncidentProblemManagement.&lt;br&gt;
         &lt;br&gt;
         &lt;br&gt;
         &lt;b&gt;REQUIRED OTRS PACKAGES&lt;/b&gt;
@@ -305,7 +305,7 @@
         &lt;b&gt;WILLKOMMEN&lt;/b&gt;
         &lt;br&gt;
         &lt;br&gt;
-        Sie sind im Begriff das OTRS-Modul ITSMIncidentProblemManagement zu aktualisieren.&lt;br&gt;
+        Sie sind im Begriff das OTRS-Paket ITSMIncidentProblemManagement zu aktualisieren.&lt;br&gt;
         &lt;br&gt;
         &lt;br&gt;
         &lt;b&gt;BENÖTIGTE OTRS-PAKETE&lt;/b&gt;
@@ -317,6 +317,22 @@
         &lt;br&gt;
 
     </IntroUpgrade>
+    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="en">
+
+        &lt;br&gt;
+        &lt;b&gt;ATTENTION&lt;/b&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        If you uninstall this package, the ticket types and states that were added during installation will be deactivated.
+        They can be activated again in the admin area.
+        &lt;br&gt;
+        The statistics that are associated with this package, will no longer be available if the package is uninstalled.
+        &lt;br&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+
+    </IntroUninstall>
     <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="de">
 
         &lt;br&gt;
