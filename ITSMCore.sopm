@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMCore.sopm,v 1.61 2008-07-30 17:28:51 ub Exp $</CVS>
+    <CVS>$Id: ITSMCore.sopm,v 1.62 2008-07-30 22:27:59 ub Exp $</CVS>
     <Name>ITSMCore</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -521,7 +521,7 @@
         &lt;b&gt;WELCOME&lt;/b&gt;
         &lt;br&gt;
         &lt;br&gt;
-        You are about to install the OTRS module ITSMCore.&lt;br&gt;
+        You are about to install the OTRS package ITSMCore.&lt;br&gt;
         &lt;br&gt;
         &lt;br&gt;
         &lt;b&gt;REQUIRED OTRS PACKAGES&lt;/b&gt;
@@ -545,7 +545,7 @@
         &lt;b&gt;WILLKOMMEN&lt;/b&gt;
         &lt;br&gt;
         &lt;br&gt;
-        Sie sind im Begriff das OTRS-Modul ITSMCore zu installieren.&lt;br&gt;
+        Sie sind im Begriff das OTRS-Paket ITSMCore zu installieren.&lt;br&gt;
         &lt;br&gt;
         &lt;br&gt;
         &lt;b&gt;BENÖTIGTE OTRS-PAKETE&lt;/b&gt;
@@ -557,6 +557,22 @@
         &lt;br&gt;
         &lt;br&gt;
         Vergewissern Sie sich, dass ihre Datenbank Pakete mit einer Größe von mehr als 5 MB akzeptiert. Eine MySQL Datenbank akzeptiert beispielsweise standardmäßig Pakete mit einer Größe von maximal 1 MB. In diesem Fall muss der Wert für max_allowed_packet erhöht werden. Empfohlen werden 20 MB.&lt;br&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+
+    </IntroInstall>
+    <IntroInstall Type="post" Title="Installation Information" Lang="en">
+
+        &lt;br&gt;
+        &lt;b&gt;NOTICE&lt;/b&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        In order to grant users access to the service menu, you need to add them as member to the group 'itsm-service'.
+        &lt;br&gt;
+        &lt;br&gt;
+        The menu items that were added by this package will be visible after you log-in to the system again.
         &lt;br&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
@@ -585,7 +601,7 @@
         &lt;b&gt;WELCOME&lt;/b&gt;
         &lt;br&gt;
         &lt;br&gt;
-        You are about to upgrade the OTRS module ITSMCore.&lt;br&gt;
+        You are about to upgrade the OTRS package ITSMCore.&lt;br&gt;
         &lt;br&gt;
         &lt;br&gt;
         &lt;b&gt;REQUIRED OTRS PACKAGES&lt;/b&gt;
@@ -609,7 +625,7 @@
         &lt;b&gt;WILLKOMMEN&lt;/b&gt;
         &lt;br&gt;
         &lt;br&gt;
-        Sie sind im Begriff das OTRS-Modul ITSMCore zu aktualisieren.&lt;br&gt;
+        Sie sind im Begriff das OTRS-Paket ITSMCore zu aktualisieren.&lt;br&gt;
         &lt;br&gt;
         &lt;br&gt;
         &lt;b&gt;BENÖTIGTE OTRS-PAKETE&lt;/b&gt;
@@ -627,6 +643,24 @@
         &lt;br&gt;
 
     </IntroUpgrade>
+    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="en">
+
+        &lt;br&gt;
+        &lt;b&gt;ATTENTION&lt;/b&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        If you uninstall this package, all database tables that were created during installation will be deleted.
+        All data from these tables will be irrevocably lost!
+        &lt;br&gt;
+        &lt;br&gt;
+        The group 'itsm-service' that was created during package installation will be deactivated.
+        You can activate this group again in the admin area.
+        &lt;br&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+
+    </IntroUninstall>
     <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="de">
 
         &lt;br&gt;
