@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMIncidentProblemManagement.sopm,v 1.20 2008-07-27 19:29:53 mh Exp $</CVS>
+    <CVS>$Id: ITSMIncidentProblemManagement.sopm,v 1.21 2008-07-30 17:33:39 ub Exp $</CVS>
     <Name>ITSMIncidentProblemManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -248,12 +248,13 @@
     <IntroInstall Type="pre" Title="Install Information" Lang="en">
 
         &lt;br&gt;
-        WELCOME&lt;br&gt;
+        &lt;b&gt;WELCOME&lt;/b&gt;
+        &lt;br&gt;
         &lt;br&gt;
         You are about to install the OTRS module ITSMIncidentProblemManagement.&lt;br&gt;
         &lt;br&gt;
         &lt;br&gt;
-        REQUIRED OTRS PACKAGES
+        &lt;b&gt;REQUIRED OTRS PACKAGES&lt;/b&gt;
         &lt;ul&gt;
         &lt;li&gt;ITSMCore 1.1.93&lt;/li&gt;
         &lt;/ul&gt;
@@ -265,12 +266,13 @@
     <IntroInstall Type="pre" Title="Installation Information" Lang="de">
 
         &lt;br&gt;
-        WILLKOMMEN&lt;br&gt;
+        &lt;b&gt;WILLKOMMEN&lt;/b&gt;
+        &lt;br&gt;
         &lt;br&gt;
         Sie sind im Begriff das OTRS-Modul ITSMIncidentProblemManagement zu installieren.&lt;br&gt;
         &lt;br&gt;
         &lt;br&gt;
-        BENÖTIGTE OTRS-PAKETE
+        &lt;b&gt;BENÖTIGTE OTRS-PAKETE&lt;/b&gt;
         &lt;ul&gt;
         &lt;li&gt;ITSMCore 1.1.93&lt;/li&gt;
         &lt;/ul&gt;
@@ -282,12 +284,13 @@
     <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="en">
 
         &lt;br&gt;
-        WELCOME&lt;br&gt;
+        &lt;b&gt;WELCOME&lt;/b&gt;
+        &lt;br&gt;
         &lt;br&gt;
         You are about to upgrade the OTRS module ITSMIncidentProblemManagement.&lt;br&gt;
         &lt;br&gt;
         &lt;br&gt;
-        REQUIRED OTRS PACKAGES
+        &lt;b&gt;REQUIRED OTRS PACKAGES&lt;/b&gt;
         &lt;ul&gt;
         &lt;li&gt;ITSMCore 1.1.93&lt;/li&gt;
         &lt;/ul&gt;
@@ -299,12 +302,13 @@
     <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="de">
 
         &lt;br&gt;
-        WILLKOMMEN&lt;br&gt;
+        &lt;b&gt;WILLKOMMEN&lt;/b&gt;
+        &lt;br&gt;
         &lt;br&gt;
         Sie sind im Begriff das OTRS-Modul ITSMIncidentProblemManagement zu aktualisieren.&lt;br&gt;
         &lt;br&gt;
         &lt;br&gt;
-        BENÖTIGTE OTRS-PAKETE
+        &lt;b&gt;BENÖTIGTE OTRS-PAKETE&lt;/b&gt;
         &lt;ul&gt;
         &lt;li&gt;ITSMCore 1.1.93&lt;/li&gt;
         &lt;/ul&gt;
@@ -313,4 +317,20 @@
         &lt;br&gt;
 
     </IntroUpgrade>
+    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="de">
+
+        &lt;br&gt;
+        &lt;b&gt;ACHTUNG&lt;/b&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        Bei der Deinstallation werden die von diesem Paket angelegten Ticket-Typen und -Status deaktiviert.
+        Diese können jederzeit im Admin-Bereich wieder aktiviert werden.
+        &lt;br&gt;
+        Nach der Deinstallation sind die zu diesem Paket zugehörigen Statistiken nicht mehr verfügbar.
+        &lt;br&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+
+    </IntroUninstall>
 </otrs_package>
