@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMIncidentProblemManagement.sopm,v 1.22 2008-07-30 22:29:44 ub Exp $</CVS>
+    <CVS>$Id: ITSMIncidentProblemManagement.sopm,v 1.23 2008-07-31 08:25:46 ub Exp $</CVS>
     <Name>ITSMIncidentProblemManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -326,6 +326,7 @@
         If you uninstall this package, the ticket types and states that were added during installation will be deactivated.
         They can be activated again in the admin area.
         &lt;br&gt;
+        &lt;br&gt;
         The statistics that are associated with this package, will no longer be available if the package is uninstalled.
         &lt;br&gt;
         &lt;br&gt;
@@ -341,6 +342,7 @@
         &lt;br&gt;
         Bei der Deinstallation werden die von diesem Paket angelegten Ticket-Typen und -Status deaktiviert.
         Diese können jederzeit im Admin-Bereich wieder aktiviert werden.
+        &lt;br&gt;
         &lt;br&gt;
         Nach der Deinstallation sind die zu diesem Paket zugehörigen Statistiken nicht mehr verfügbar.
         &lt;br&gt;
