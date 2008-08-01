@@ -2,7 +2,7 @@
 # Kernel/System/SLA.pm - all sla function
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: SLA.pm,v 1.2 2008-07-02 12:23:23 mh Exp $
+# $Id: SLA.pm,v 1.3 2008-08-01 16:14:55 mh Exp $
 # $OldId: SLA.pm,v 1.30 2008/06/19 11:08:23 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -24,7 +24,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
@@ -268,39 +268,6 @@ sub SLAGet {
 # ---
 # ITSM
 # ---
-
-    # WORKAROUND: set empty type_id in the sla table
-    if ( !$SLAData{TypeID} ) {
-
-        use Kernel::System::GeneralCatalog;
-
-        my $GeneralCatalogObject = Kernel::System::GeneralCatalog->new( %{$Self} );
-
-        # get sla type list
-        my $SLATypeList = $GeneralCatalogObject->ItemList(
-            Class => 'ITSM::SLA::Type',
-        );
-
-        # error handling
-        if ( !%{$SLATypeList} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Can't find any item in general catalog class ITSM::SLA::Type!",
-            );
-            return;
-        }
-
-        my @SLATypeKeyList = sort keys %{$SLATypeList};
-
-        # update type_id
-        $Self->{DBObject}->Do(
-            SQL => "UPDATE sla "
-                . "SET type_id = $SLATypeKeyList[0] "
-                . "WHERE type_id = 0 OR type_id IS NULL",
-        );
-
-        $SLAData{TypeID} = $SLATypeKeyList[0];
-    }
 
     # get sla type list
     my $SLATypeList = $Self->{GeneralCatalogObject}->ItemList(
@@ -762,6 +729,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2008-07-02 12:23:23 $
+$Revision: 1.3 $ $Date: 2008-08-01 16:14:55 $
 
 =cut
