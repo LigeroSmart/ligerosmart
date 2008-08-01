@@ -2,7 +2,7 @@
 # ITSMCore.pm - code to excecute during package installation
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMCore.pm,v 1.6 2008-07-15 09:15:16 ub Exp $
+# $Id: ITSMCore.pm,v 1.7 2008-08-01 16:15:57 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Priority;
 use Kernel::System::Valid;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 =head1 NAME
 
@@ -108,6 +108,9 @@ sub CodeInstall {
         Description => 'Group for ITSM Service mask access in the agent interface.',
     );
 
+    # fillup empty type_id rows
+    $Self->_FillupEmptyTypeID();
+
     return 1;
 }
 
@@ -137,6 +140,9 @@ sub CodeReinstall {
         Description => 'Group for ITSM Service mask access in the agent interface.',
     );
 
+    # fillup empty type_id rows
+    $Self->_FillupEmptyTypeID();
+
     return 1;
 }
 
@@ -153,6 +159,9 @@ sub CodeUpgrade {
 
     # set default CIP matrix
     $Self->_CIPDefaultMatrixSet();
+
+    # fillup empty type_id rows
+    $Self->_FillupEmptyTypeID();
 
     return 1;
 }
@@ -485,6 +494,42 @@ sub _GroupDeactivate {
     return 1;
 }
 
+=item _FillupEmptyTypeID()
+
+fillup empty entries in the type_id column
+
+    my $Result = $CodeObject->_FillupEmptyTypeID();
+
+=cut
+
+sub _FillupEmptyTypeID {
+    my ( $Self, %Param ) = @_;
+
+    # get sla type list
+    my $SLATypeList = $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::SLA::Type',
+    );
+
+    # error handling
+    if ( !$SLATypeList || ref $SLATypeList ne 'HASH' || !%{$SLATypeList} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Can't find any item in general catalog class ITSM::SLA::Type!",
+        );
+        return;
+    }
+
+    # sort ids
+    my @SLATypeKeyList = sort keys %{$SLATypeList};
+
+    # update type_id
+    return $Self->{DBObject}->Do(
+        SQL => "UPDATE sla "
+            . "SET type_id = $SLATypeKeyList[0] "
+            . "WHERE type_id = 0 OR type_id IS NULL",
+    );
+}
+
 1;
 
 =back
@@ -501,6 +546,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.6 $ $Date: 2008-07-15 09:15:16 $
+$Revision: 1.7 $ $Date: 2008-08-01 16:15:57 $
 
 =cut
