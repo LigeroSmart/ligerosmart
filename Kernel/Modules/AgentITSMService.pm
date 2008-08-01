@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMService.pm - the OTRS::ITSM Service module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMService.pm,v 1.1 2008-07-02 15:26:56 mh Exp $
+# $Id: AgentITSMService.pm,v 1.2 2008-08-01 12:08:38 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -136,8 +136,14 @@ sub Run {
         Value     => "Action=$Self->{Action}",
     );
 
+    # investigate refresh
+    my $Refresh = $Self->{UserRefreshTime} ? 60 * $Self->{UserRefreshTime} : undef;
+
     # output header
-    my $Output = $Self->{LayoutObject}->Header();
+    my $Output = $Self->{LayoutObject}->Header(
+        Title   => 'Overview',
+        Refresh => $Refresh,
+    );
     $Output .= $Self->{LayoutObject}->NavigationBar();
 
     # generate output
