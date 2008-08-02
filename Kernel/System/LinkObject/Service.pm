@@ -2,7 +2,7 @@
 # Kernel/System/LinkObject/Service.pm - to link service objects
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: Service.pm,v 1.3 2008-07-07 11:26:50 mh Exp $
+# $Id: Service.pm,v 1.4 2008-08-02 15:05:33 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -200,7 +200,7 @@ sub ObjectSearch {
     my @ServiceIDs = $Self->{ServiceObject}->ServiceSearch(
         %{ $Param{SearchParams} },
         %Search,
-        Limit  => 100,
+        Limit  => 50,
         UserID => $Param{UserID},
     );
 
