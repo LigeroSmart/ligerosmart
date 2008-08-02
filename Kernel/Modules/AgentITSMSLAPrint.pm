@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMSLAPrint.pm - print layout for itsm sla agent interface
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMSLAPrint.pm,v 1.1 2008-07-02 16:05:12 mh Exp $
+# $Id: AgentITSMSLAPrint.pm,v 1.2 2008-08-02 13:43:02 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -14,12 +14,11 @@ package Kernel::Modules::AgentITSMSLAPrint;
 use strict;
 use warnings;
 
-use Kernel::System::GeneralCatalog;
 use Kernel::System::PDF;
 use Kernel::System::SLA;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -34,9 +33,8 @@ sub new {
             $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
         }
     }
-    $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
-    $Self->{PDFObject}            = Kernel::System::PDF->new(%Param);
-    $Self->{SLAObject}            = Kernel::System::SLA->new(%Param);
+    $Self->{PDFObject} = Kernel::System::PDF->new(%Param);
+    $Self->{SLAObject} = Kernel::System::SLA->new(%Param);
 
     return $Self;
 }

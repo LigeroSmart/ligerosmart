@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMServiceZoom.pm - the OTRS::ITSM Service zoom module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMServiceZoom.pm,v 1.2 2008-07-02 14:10:08 mh Exp $
+# $Id: AgentITSMServiceZoom.pm,v 1.3 2008-08-02 13:43:02 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -14,13 +14,12 @@ package Kernel::Modules::AgentITSMServiceZoom;
 use strict;
 use warnings;
 
-use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 use Kernel::System::Service;
 use Kernel::System::SLA;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -35,10 +34,9 @@ sub new {
             $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
         }
     }
-    $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
-    $Self->{LinkObject}           = Kernel::System::LinkObject->new(%Param);
-    $Self->{ServiceObject}        = Kernel::System::Service->new(%Param);
-    $Self->{SLAObject}            = Kernel::System::SLA->new(%Param);
+    $Self->{LinkObject}    = Kernel::System::LinkObject->new(%Param);
+    $Self->{ServiceObject} = Kernel::System::Service->new(%Param);
+    $Self->{SLAObject}     = Kernel::System::SLA->new(%Param);
 
     return $Self;
 }
@@ -68,18 +66,6 @@ sub Run {
             Comment => 'Please contact the admin.',
         );
     }
-
-    # get service type list
-    my $ServiceTypeList = $Self->{GeneralCatalogObject}->ItemList(
-        Class => 'ITSM::Service::Type',
-    );
-    $Service{Type} = $ServiceTypeList->{ $Service{TypeID} };
-
-    # get criticality list
-    my $CriticalityList = $Self->{GeneralCatalogObject}->ItemList(
-        Class => 'ITSM::Core::Criticality',
-    );
-    $Service{Criticality} = $CriticalityList->{ $Service{CriticalityID} };
 
     # run config item menu modules
     if ( ref $Self->{ConfigObject}->Get('ITSMService::Frontend::MenuModule') eq 'HASH' ) {
@@ -118,11 +104,6 @@ sub Run {
     if (%SLAList) {
         $OutputHorizontalRuler = 1;
 
-        # get sla type list
-        my $SLATypeList = $Self->{GeneralCatalogObject}->ItemList(
-            Class => 'ITSM::SLA::Type',
-        );
-
         # output row
         $Self->{LayoutObject}->Block( Name => 'SLA' );
 
@@ -143,7 +124,6 @@ sub Run {
                 Name => 'SLARow',
                 Data => {
                     %SLA,
-                    Type     => $SLATypeList->{ $SLA{TypeID} },
                     CssClass => $CssClass,
                 },
             );

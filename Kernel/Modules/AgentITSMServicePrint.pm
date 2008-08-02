@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMServicePrint.pm - print layout for itsm service agent interface
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMServicePrint.pm,v 1.1 2008-07-02 15:54:06 mh Exp $
+# $Id: AgentITSMServicePrint.pm,v 1.2 2008-08-02 13:43:02 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -14,13 +14,12 @@ package Kernel::Modules::AgentITSMServicePrint;
 use strict;
 use warnings;
 
-use Kernel::System::GeneralCatalog;
 use Kernel::System::PDF;
 use Kernel::System::Service;
 use Kernel::System::SLA;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -35,10 +34,9 @@ sub new {
             $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
         }
     }
-    $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
-    $Self->{PDFObject}            = Kernel::System::PDF->new(%Param);
-    $Self->{ServiceObject}        = Kernel::System::Service->new(%Param);
-    $Self->{SLAObject}            = Kernel::System::SLA->new(%Param);
+    $Self->{PDFObject}     = Kernel::System::PDF->new(%Param);
+    $Self->{ServiceObject} = Kernel::System::Service->new(%Param);
+    $Self->{SLAObject}     = Kernel::System::SLA->new(%Param);
 
     return $Self;
 }
@@ -74,18 +72,6 @@ sub Run {
         ServiceID => $Service{ServiceID},
         UserID    => $Self->{UserID},
     );
-
-    # get service type list
-    my $ServiceTypeList = $Self->{GeneralCatalogObject}->ItemList(
-        Class => 'ITSM::Service::Type',
-    );
-    $Service{Type} = $ServiceTypeList->{ $Service{TypeID} };
-
-    # get criticality list
-    my $CriticalityList = $Self->{GeneralCatalogObject}->ItemList(
-        Class => 'ITSM::Core::Criticality',
-    );
-    $Service{Criticality} = $CriticalityList->{ $Service{CriticalityID} };
 
     # get user data (create by)
     my %CreateBy = $Self->{UserObject}->GetUserData(

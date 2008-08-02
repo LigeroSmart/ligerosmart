@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMSLAZoom.pm - the OTRS::ITSM SLA zoom module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMSLAZoom.pm,v 1.2 2008-07-02 16:04:37 mh Exp $
+# $Id: AgentITSMSLAZoom.pm,v 1.3 2008-08-02 13:43:02 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -14,11 +14,10 @@ package Kernel::Modules::AgentITSMSLAZoom;
 use strict;
 use warnings;
 
-use Kernel::System::GeneralCatalog;
 use Kernel::System::SLA;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -33,8 +32,7 @@ sub new {
             $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
         }
     }
-    $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
-    $Self->{SLAObject}            = Kernel::System::SLA->new(%Param);
+    $Self->{SLAObject} = Kernel::System::SLA->new(%Param);
 
     return $Self;
 }
@@ -126,7 +124,10 @@ sub Run {
     # generate output
     $Output .= $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentITSMSLAZoom',
-        Data => { %Param, %SLA },
+        Data => {
+            %Param,
+            %SLA,
+        },
     );
     $Output .= $Self->{LayoutObject}->Footer();
 
