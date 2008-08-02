@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMServiceZoom.pm - the OTRS::ITSM Service zoom module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMServiceZoom.pm,v 1.3 2008-08-02 13:43:02 mh Exp $
+# $Id: AgentITSMServiceZoom.pm,v 1.4 2008-08-02 14:56:24 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::Service;
 use Kernel::System::SLA;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -105,7 +105,9 @@ sub Run {
         $OutputHorizontalRuler = 1;
 
         # output row
-        $Self->{LayoutObject}->Block( Name => 'SLA' );
+        $Self->{LayoutObject}->Block(
+            Name => 'SLA',
+        );
 
         my $CssClass = '';
         for my $SLAID ( sort { $SLAList{$a} cmp $SLAList{$b} } keys %SLAList ) {
