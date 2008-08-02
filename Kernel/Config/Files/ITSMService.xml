@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMService.xml,v 1.3 2008-08-02 12:35:56 mh Exp $</CVS>
+    <CVS>$Id: ITSMService.xml,v 1.4 2008-08-02 14:02:06 mh Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AgentITSMService" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AgentITSMService object in the agent interface.</Description>
         <Description Lang="de">Frontendmodul-Registration des AgentITSMService-Objekts im Agent-Interface.</Description>
@@ -100,7 +100,7 @@
                 <GroupRo>itsm-service</GroupRo>
                 <Description>SLA Zoom</Description>
                 <Title>Zoom</Title>
-                <NavBarName>SLA</NavBarName>
+                <NavBarName>Service</NavBarName>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -114,7 +114,7 @@
                 <GroupRo>itsm-service</GroupRo>
                 <Description>SLA Print</Description>
                 <Title>Print</Title>
-                <NavBarName>SLA</NavBarName>
+                <NavBarName>Service</NavBarName>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
