@@ -2,7 +2,7 @@
 # ITSMCore.pm - code to excecute during package installation
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMCore.pm,v 1.7 2008-08-01 16:15:57 mh Exp $
+# $Id: ITSMCore.pm,v 1.8 2008-08-02 11:44:36 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Priority;
 use Kernel::System::Valid;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 =head1 NAME
 
@@ -108,8 +108,14 @@ sub CodeInstall {
         Description => 'Group for ITSM Service mask access in the agent interface.',
     );
 
-    # fillup empty type_id rows
-    $Self->_FillupEmptyTypeID();
+    # fillup empty type_id rows in service table
+    $Self->_FillupEmptyServiceTypeID();
+
+    # fillup empty criticality_id rows in service table
+    $Self->_FillupEmptyServiceCriticalityID();
+
+    # fillup empty type_id rows in sla table
+    $Self->_FillupEmptySLATypeID();
 
     return 1;
 }
@@ -140,8 +146,14 @@ sub CodeReinstall {
         Description => 'Group for ITSM Service mask access in the agent interface.',
     );
 
-    # fillup empty type_id rows
-    $Self->_FillupEmptyTypeID();
+    # fillup empty type_id rows in service table
+    $Self->_FillupEmptyServiceTypeID();
+
+    # fillup empty criticality_id rows in service table
+    $Self->_FillupEmptyServiceCriticalityID();
+
+    # fillup empty type_id rows in sla table
+    $Self->_FillupEmptySLATypeID();
 
     return 1;
 }
@@ -160,8 +172,14 @@ sub CodeUpgrade {
     # set default CIP matrix
     $Self->_CIPDefaultMatrixSet();
 
-    # fillup empty type_id rows
-    $Self->_FillupEmptyTypeID();
+    # fillup empty type_id rows in service table
+    $Self->_FillupEmptyServiceTypeID();
+
+    # fillup empty criticality_id rows in service table
+    $Self->_FillupEmptyServiceCriticalityID();
+
+    # fillup empty type_id rows in sla table
+    $Self->_FillupEmptySLATypeID();
 
     return 1;
 }
@@ -494,15 +512,87 @@ sub _GroupDeactivate {
     return 1;
 }
 
-=item _FillupEmptyTypeID()
+=item _FillupEmptyServiceTypeID()
 
-fillup empty entries in the type_id column
+fillup empty entries in the type_id column of the service table
 
-    my $Result = $CodeObject->_FillupEmptyTypeID();
+    my $Result = $CodeObject->_FillupEmptyServiceTypeID();
 
 =cut
 
-sub _FillupEmptyTypeID {
+sub _FillupEmptyServiceTypeID {
+    my ( $Self, %Param ) = @_;
+
+    # get service type list
+    my $ServiceTypeList = $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::Service::Type',
+    );
+
+    # error handling
+    if ( $ServiceTypeList || ref $ServiceTypeList ne 'HASH' || !%{$ServiceTypeList} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Can't find any item in general catalog class ITSM::Service::Type!",
+        );
+        return;
+    }
+
+    # sort ids
+    my @ServiceTypeKeyList = sort keys %{$ServiceTypeList};
+
+    # update type_id
+    return $Self->{DBObject}->Do(
+        SQL => "UPDATE service "
+            . "SET type_id = $ServiceTypeKeyList[0] "
+            . "WHERE type_id = 0 OR type_id IS NULL",
+    );
+}
+
+=item _FillupEmptyServiceCriticalityID()
+
+fillup empty entries in the criticality_id column of the service table
+
+    my $Result = $CodeObject->_FillupEmptyServiceCriticalityID();
+
+=cut
+
+sub _FillupEmptyServiceCriticalityID {
+    my ( $Self, %Param ) = @_;
+
+    # get criticality list
+    my $CriticalityList = $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::Core::Criticality',
+    );
+
+    # error handling
+    if ( $CriticalityList || ref $CriticalityList ne 'HASH' || !%{$CriticalityList} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Can't find any item in general catalog class ITSM::Core::Criticality!",
+        );
+        return;
+    }
+
+    # sort ids
+    my @CriticalityKeyList = sort keys %{$CriticalityList};
+
+    # update criticality_id
+    return $Self->{DBObject}->Do(
+        SQL => "UPDATE service "
+            . "SET criticality_id = $CriticalityKeyList[0] "
+            . "WHERE criticality_id = 0 OR criticality_id IS NULL",
+    );
+}
+
+=item _FillupEmptySLATypeID()
+
+fillup empty entries in the type_id column of the sla table
+
+    my $Result = $CodeObject->_FillupEmptySLATypeID();
+
+=cut
+
+sub _FillupEmptySLATypeID {
     my ( $Self, %Param ) = @_;
 
     # get sla type list
@@ -546,6 +636,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.7 $ $Date: 2008-08-01 16:15:57 $
+$Revision: 1.8 $ $Date: 2008-08-02 11:44:36 $
 
 =cut

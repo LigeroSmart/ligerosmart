@@ -2,7 +2,7 @@
 # Kernel/System/Service.pm - all service function
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: Service.pm,v 1.4 2008-07-05 18:01:35 mh Exp $
+# $Id: Service.pm,v 1.5 2008-08-02 11:44:36 mh Exp $
 # $OldId: Service.pm,v 1.28 2008/06/18 10:15:20 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -26,7 +26,7 @@ use Kernel::System::Time;
 # ---
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 =head1 NAME
 
@@ -280,63 +280,6 @@ sub ServiceGet {
 # ---
 # ITSM
 # ---
-    # WORKAROUND: set empty type_id in the service table
-    if ( !$ServiceData{TypeID} ) {
-
-        # get service type list
-        my $ServiceTypeList = $Self->{GeneralCatalogObject}->ItemList(
-            Class => 'ITSM::Service::Type',
-        );
-
-        # error handling
-        if ( !%{$ServiceTypeList} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Can't find any item in general catalog class ITSM::Service::Type!",
-            );
-            return;
-        }
-
-        my @ServiceTypeKeyList = sort keys %{$ServiceTypeList};
-
-        # update type_id
-        $Self->{DBObject}->Do(
-            SQL => "UPDATE service "
-                . "SET type_id = $ServiceTypeKeyList[0] "
-                . "WHERE type_id = 0 OR type_id IS NULL",
-        );
-
-        $ServiceData{TypeID} = $ServiceTypeKeyList[0];
-    }
-
-    # WORKAROUND: set empty criticality_id in the service table
-    if ( !$ServiceData{CriticalityID} ) {
-
-        # get criticality list
-        my $CriticalityList = $Self->{GeneralCatalogObject}->ItemList(
-            Class => 'ITSM::Core::Criticality',
-        );
-
-        # error handling
-        if ( !%{$CriticalityList} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Can't find any item in general catalog class ITSM::Core::Criticality!",
-            );
-            return;
-        }
-
-        my @CriticalityKeyList = sort keys %{$CriticalityList};
-
-        # update criticality_id
-        $Self->{DBObject}->Do(
-            SQL => "UPDATE service "
-                . "SET criticality_id = $CriticalityKeyList[0] "
-                . "WHERE criticality_id = 0 OR criticality_id IS NULL",
-        );
-
-        $ServiceData{CriticalityID} = $CriticalityKeyList[0];
-    }
 
     # get service type list
     my $ServiceTypeList = $Self->{GeneralCatalogObject}->ItemList(
@@ -1124,6 +1067,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2008-07-05 18:01:35 $
+$Revision: 1.5 $ $Date: 2008-08-02 11:44:36 $
 
 =cut
