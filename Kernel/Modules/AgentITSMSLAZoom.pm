@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMSLAZoom.pm - the OTRS::ITSM SLA zoom module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMSLAZoom.pm,v 1.4 2008-08-02 13:44:20 mh Exp $
+# $Id: AgentITSMSLAZoom.pm,v 1.5 2008-08-02 15:01:11 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -14,10 +14,11 @@ package Kernel::Modules::AgentITSMSLAZoom;
 use strict;
 use warnings;
 
+use Kernel::System::Service;
 use Kernel::System::SLA;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -32,7 +33,8 @@ sub new {
             $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
         }
     }
-    $Self->{SLAObject} = Kernel::System::SLA->new(%Param);
+    $Self->{ServiceObject} = Kernel::System::Service->new(%Param);
+    $Self->{SLAObject}     = Kernel::System::SLA->new(%Param);
 
     return $Self;
 }
@@ -96,6 +98,56 @@ sub Run {
             else {
                 return $Self->{LayoutObject}->FatalError();
             }
+        }
+    }
+
+    if ( $SLA{ServiceIDs} && ref $SLA{ServiceIDs} eq 'ARRAY' && @{ $SLA{ServiceIDs} } ) {
+
+        # output row
+        $Self->{LayoutObject}->Block(
+            Name => 'Service',
+        );
+
+        # create service list
+        my %ServiceList;
+        for my $ServiceID ( @{ $SLA{ServiceIDs} } ) {
+
+            # get service data
+            my %Service = $Self->{ServiceObject}->ServiceGet(
+                ServiceID => $ServiceID,
+                UserID    => $Self->{UserID},
+            );
+
+            # add service to hash
+            $ServiceList{$ServiceID} = \%Service;
+        }
+
+        # set incident signal
+        my %InciSignals = (
+            operational => 'greenled',
+            warning     => 'yellowled',
+            incident    => 'redled',
+        );
+
+        my $CssClass = '';
+        for my $ServiceID (
+            sort { $ServiceList{$a}->{Name} cmp $ServiceList{$b}->{Name} }
+            keys %ServiceList
+            )
+        {
+
+            # set output object
+            $CssClass = $CssClass eq 'searchpassive' ? 'searchactive' : 'searchpassive';
+
+            # output row
+            $Self->{LayoutObject}->Block(
+                Name => 'ServiceRow',
+                Data => {
+                    %{ $ServiceList{$ServiceID} },
+                    CurInciSignal => $InciSignals{ $ServiceList{$ServiceID}->{CurInciStateType} },
+                    CssClass      => $CssClass,
+                },
+            );
         }
     }
 

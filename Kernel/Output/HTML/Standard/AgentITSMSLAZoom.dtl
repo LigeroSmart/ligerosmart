@@ -2,7 +2,7 @@
 # AgentITSMSLAZoom.dtl - provides HTML form for AgentITSMSLAZoom
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMSLAZoom.dtl,v 1.1 2008-07-02 15:50:58 mh Exp $
+# $Id: AgentITSMSLAZoom.dtl,v 1.2 2008-08-02 15:01:11 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -65,6 +65,48 @@
           <td class="contentvalue">$QData{"MinTimeBetweenIncidents"} $Text{"minutes"}</td>
         </tr>
       </table>
+<!-- dtl:block:Service -->
+      <hr size="2">
+      <br>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td align="center">
+            <table width="98%" border="0" cellspacing="0" cellpadding="3">
+              <tr>
+                <td colspan="4">
+                  <b><i>$Text{"Associated Services"}</i></b>
+                </td>
+              </tr>
+              <tr class="contenthead">
+                <td class="contentkey" width="20">&nbsp;</td>
+                <td class="contentkey">$Text{"Service"}</td>
+                <td class="contentkey">$Text{"Type"}</td>
+                <td class="contentkey">$Text{"Criticality"}</td>
+                <td class="contentkey" width="150">$Text{"Changed"}</td>
+              </tr>
+<!-- dtl:block:ServiceRow -->
+              <tr class="contentbody">
+                <td class="$QData{"CssClass"}" align="right">
+                  <img border="0" src="$Env{"Images"}$QData{"CurInciSignal"}.png" title="$Quote{"$Text{"$Data{"CurInciState"}"}"}" alt="$Quote{"$Text{"$Data{"CurInciState"}"}"}">
+                </td>
+                <td class="$QData{"CssClass"}">
+                  <a href="$Env{"Baselink"}Action=AgentITSMServiceZoom&ServiceID=$QData{"ServiceID"}">
+                  $QData{"Name"}
+                  </a>
+                </td>
+                <td class="$QData{"CssClass"}">$Text{"$QData{"Type"}"}</td>
+                <td class="$QData{"CssClass"}">$Text{"$QData{"Criticality"}"}</td>
+                <td class="$QData{"CssClass"}" width="150">$TimeLong{"$QData{"ChangeTime"}"}</td>
+              </tr>
+<!-- dtl:block:ServiceRow -->
+              <tr class="contentfooter">
+                <td colspan="5">&nbsp;</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+<!-- dtl:block:Service -->
       <br>
     </td>
     <td width="25%" class="menu">
