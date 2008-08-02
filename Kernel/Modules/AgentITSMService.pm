@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMService.pm - the OTRS::ITSM Service module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMService.pm,v 1.2 2008-08-01 12:08:38 mh Exp $
+# $Id: AgentITSMService.pm,v 1.3 2008-08-02 12:37:13 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -14,11 +14,10 @@ package Kernel::Modules::AgentITSMService;
 use strict;
 use warnings;
 
-use Kernel::System::GeneralCatalog;
 use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -33,8 +32,7 @@ sub new {
             $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
         }
     }
-    $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
-    $Self->{ServiceObject}        = Kernel::System::Service->new(%Param);
+    $Self->{ServiceObject} = Kernel::System::Service->new(%Param);
 
     return $Self;
 }
@@ -46,14 +44,6 @@ sub Run {
     $Self->{LayoutObject}->Block(
         Name => 'Overview',
         Data => {%Param},
-    );
-
-    # get type list
-    my $TypeList = $Self->{GeneralCatalogObject}->ItemList( Class => 'ITSM::Service::Type' );
-
-    # get criticality list
-    my $CriticalityList = $Self->{GeneralCatalogObject}->ItemList(
-        Class => 'ITSM::Core::Criticality',
     );
 
     # get service list
@@ -94,8 +84,6 @@ sub Run {
                 Data => {
                     %Service,
                     Name          => $Service{NameShort},
-                    Type          => $TypeList->{ $Service{TypeID} },
-                    Criticality   => $CriticalityList->{ $Service{CriticalityID} },
                     CurInciSignal => $InciSignals{ $Service{CurInciStateType} },
                     CssClass      => $CssClass,
                 },
@@ -119,9 +107,7 @@ sub Run {
                 Name => 'OverviewRow',
                 Data => {
                     %Service,
-                    Name          => $Service{NameShort},
-                    Type          => $TypeList->{ $Service{TypeID} },
-                    Criticality   => $CriticalityList->{ $Service{CriticalityID} },
+                    Name          => $Service{Name},
                     CurInciSignal => $InciSignals{ $Service{CurInciStateType} },
                     CssClass      => $CssClass,
                 },
