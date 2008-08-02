@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMCore.pm - the german translation of ITSMCore
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: de_ITSMCore.pm,v 1.12 2008-07-02 12:27:54 mh Exp $
+# $Id: de_ITSMCore.pm,v 1.13 2008-08-02 14:54:53 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -35,6 +35,31 @@ sub Data {
     $Lang->{'Required for'}                        = 'Benötigt für';
     $Lang->{'Connected to'}                        = 'Verbunden mit';
     $Lang->{'Alternative to'}                      = 'Alternativ zu';
+    $Lang->{'Incident State'}                      = 'Vorfallsstatus';
+    $Lang->{'Current Incident State'}              = 'Aktueller Vorfallsstatus';
+    $Lang->{'Current State'}                       = 'Aktueller Status';
+    $Lang->{'Service-Area'}                        = 'Service-Bereich';
+    $Lang->{'Minimum Time Between Incidents'}      = 'Mindestzeit zwischen Incidents';
+    $Lang->{'Associated Services'}                 = 'Zugehörige Services';
+    $Lang->{'Associated SLAs'}                     = 'Zugehörige SLAs';
+    $Lang->{'Back End'}                            = 'Backend';
+    $Lang->{'Demonstration'}                       = 'Demonstration';
+    $Lang->{'End User Service'}                    = 'Anwender-Service';
+    $Lang->{'Front End'}                           = 'Frontend';
+    $Lang->{'IT Management'}                       = 'IT Management';
+    $Lang->{'IT Operational'}                      = 'IT Betrieb';
+    $Lang->{'Other'}                               = 'Sonstiges';
+    $Lang->{'Project'}                             = 'Projekt';
+    $Lang->{'Reporting'}                           = 'Reporting';
+    $Lang->{'Training'}                            = 'Training';
+    $Lang->{'Underpinning Contract'}               = 'Underpinning Contract';
+    $Lang->{'Availability'}                        = 'Verfügbarkeit';
+    $Lang->{'Errors'}                              = 'Fehler';
+    $Lang->{'Other'}                               = 'Sonstiges';
+    $Lang->{'Recovery Time'}                       = 'Wiederherstellungszeit';
+    $Lang->{'Resolution Rate'}                     = 'Lösungszeit';
+    $Lang->{'Response Time'}                       = 'Reaktionszeit';
+    $Lang->{'Transactions'}                        = 'Transaktionen';
 
     return 1;
 }

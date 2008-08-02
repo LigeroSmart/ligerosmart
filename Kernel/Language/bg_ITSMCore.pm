@@ -2,7 +2,7 @@
 # Kernel/Language/bg_ITSMCore.pm - the bulgarian translation of ITSMCore
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: bg_ITSMCore.pm,v 1.8 2008-07-02 12:27:54 mh Exp $
+# $Id: bg_ITSMCore.pm,v 1.9 2008-08-02 14:54:53 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -35,6 +35,31 @@ sub Data {
     $Lang->{'Required for'}                        = 'Необходим за';
     $Lang->{'Connected to'}                        = 'Свързан с';
     $Lang->{'Alternative to'}                      = 'Алтернативен на';
+    $Lang->{'Incident State'}                      = '';
+    $Lang->{'Current Incident State'}              = '';
+    $Lang->{'Current State'}                       = '';
+    $Lang->{'Service-Area'}                        = '';
+    $Lang->{'Minimum Time Between Incidents'}      = 'Минимално време между инцидентите';
+    $Lang->{'Associated Services'}                 = '';
+    $Lang->{'Associated SLAs'}                     = 'Свързани SLA договори';
+    $Lang->{'Back End'}                            = 'Основна система/BackEnd';
+    $Lang->{'Demonstration'}                       = 'Демонстрация';
+    $Lang->{'End User Service'}                    = 'Услуги за крайни потребители';
+    $Lang->{'Front End'}                           = 'Клиентска система/FrontEnd';
+    $Lang->{'IT Management'}                       = 'Управление на ИТ';
+    $Lang->{'IT Operational'}                      = 'ИТ Операции';
+    $Lang->{'Other'}                               = 'Други';
+    $Lang->{'Project'}                             = 'Проект';
+    $Lang->{'Reporting'}                           = 'Отчетност';
+    $Lang->{'Training'}                            = 'Обучение';
+    $Lang->{'Underpinning Contract'}               = 'Основен договор';
+    $Lang->{'Availability'}                        = 'Достъпност';
+    $Lang->{'Errors'}                              = 'Грешки';
+    $Lang->{'Other'}                               = 'Други';
+    $Lang->{'Recovery Time'}                       = 'Време за възстановяване';
+    $Lang->{'Resolution Rate'}                     = 'Време за разрешаване';
+    $Lang->{'Response Time'}                       = 'Време за отговор';
+    $Lang->{'Transactions'}                        = 'Сделки/транзакции';
 
     return 1;
 }

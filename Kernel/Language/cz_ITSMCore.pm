@@ -2,7 +2,7 @@
 # Kernel/Language/cz_ITSMCore.pm - the czech translation of ITSMCore
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: cz_ITSMCore.pm,v 1.7 2008-07-02 12:27:54 mh Exp $
+# $Id: cz_ITSMCore.pm,v 1.8 2008-08-02 14:54:53 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -35,6 +35,31 @@ sub Data {
     $Lang->{'Required for'}                        = ' Požadovaný';
     $Lang->{'Connected to'}                        = 'Spojen s';
     $Lang->{'Alternative to'}                      = 'Alternativní';
+    $Lang->{'Incident State'}                      = '';
+    $Lang->{'Current Incident State'}              = '';
+    $Lang->{'Current State'}                       = '';
+    $Lang->{'Service-Area'}                        = '';
+    $Lang->{'Minimum Time Between Incidents'}      = 'Minimální čas mezi incidenty';
+    $Lang->{'Associated Services'}                 = '';
+    $Lang->{'Associated SLAs'}                     = 'Přidružené SLA smliuvy';
+    $Lang->{'Back End'}                            = 'Základní schéma/BackEnd';
+    $Lang->{'Demonstration'}                       = 'Demonstrace';
+    $Lang->{'End User Service'}                    = 'Služby koncových uživatelů';
+    $Lang->{'Front End'}                           = 'Zákaznický systém/FrontEnd';
+    $Lang->{'IT Management'}                       = 'Řízení IT';
+    $Lang->{'IT Operational'}                      = 'IT Operace';
+    $Lang->{'Other'}                               = 'Další';
+    $Lang->{'Project'}                             = 'Projekt';
+    $Lang->{'Reporting'}                           = 'Zpravodajství';
+    $Lang->{'Training'}                            = 'Školení';
+    $Lang->{'Underpinning Contract'}               = 'Základní smlouva';
+    $Lang->{'Availability'}                        = 'Dostupnost';
+    $Lang->{'Errors'}                              = 'Chyby';
+    $Lang->{'Other'}                               = 'Další';
+    $Lang->{'Recovery Time'}                       = 'Doba obnovení';
+    $Lang->{'Resolution Rate'}                     = 'Doba řešení';
+    $Lang->{'Response Time'}                       = 'Doba odpovědi';
+    $Lang->{'Transactions'}                        = 'Obchody/transakce';
 
     return 1;
 }
