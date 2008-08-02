@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMCore.sopm,v 1.63 2008-08-02 12:35:56 mh Exp $</CVS>
+    <CVS>$Id: ITSMCore.sopm,v 1.64 2008-08-02 14:51:20 mh Exp $</CVS>
     <Name>ITSMCore</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -16,11 +16,8 @@
         <File Permission="644" Location="Kernel/Config/Files/ITSMService.xml"/>
         <File Permission="644" Location="Kernel/Config/Files/TicketITSMService.xml"/>
         <File Permission="644" Location="Kernel/Language/bg_ITSMCore.pm"/>
-        <File Permission="644" Location="Kernel/Language/bg_ITSMService.pm"/>
         <File Permission="644" Location="Kernel/Language/cz_ITSMCore.pm"/>
-        <File Permission="644" Location="Kernel/Language/cz_ITSMService.pm"/>
         <File Permission="644" Location="Kernel/Language/de_ITSMCore.pm"/>
-        <File Permission="644" Location="Kernel/Language/de_ITSMService.pm"/>
         <File Permission="644" Location="Kernel/Modules/AdminITSMCIPAllocate.pm"/>
         <File Permission="644" Location="Kernel/Modules/AdminService.pm"/>
         <File Permission="644" Location="Kernel/Modules/AdminSLA.pm"/>
