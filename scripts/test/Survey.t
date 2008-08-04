@@ -2,12 +2,18 @@
 # Survey.t - Survey tests
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.t,v 1.3 2008-07-30 16:47:00 mh Exp $
+# $Id: Survey.t,v 1.4 2008-08-04 16:59:21 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
+
+use strict;
+use warnings;
+use utf8;
+
+use vars qw($Self);
 
 use Kernel::System::User;
 use Kernel::System::Survey;
@@ -17,14 +23,23 @@ $Self->{UserObject}   = Kernel::System::User->new( %{$Self} );
 $Self->{TicketObject} = Kernel::System::Ticket->new( %{$Self} );
 $Self->{SurveyObject} = Kernel::System::Survey->new( %{$Self} );
 
-# create servey
+# save original sendmail config
+my $SendmailModule = $Self->{ConfigObject}->Get('SendmailModule');
+
+# set config to not send emails
+$Self->{ConfigObject}->Set(
+    Key   => 'SendmailModule',
+    Value => 'Kernel::System::Email::DoNotSendEmail',
+);
+
+# create survey
 my %SurveyData = (
     Title               => 'A Title',
     Introduction        => 'The introduction of the survey',
     Description         => 'The internal description of the survey',
     NotificationSender  => 'quality@example.com',
-    NotificationSubject => 'Help us with your feedback!',
-    NotificationBody    => 'Dear customer...',
+    NotificationSubject => 'Help us with your feedback! ÄÖÜ',
+    NotificationBody    => 'Dear customer... äöü',
 );
 my $SurveyID = $Self->{SurveyObject}->SurveyNew(
     UserID => 1,
@@ -184,34 +199,48 @@ for my $Test (@Tests) {
         %{ $Test->{Article} },
     );
 
-    my $RequestSend = $Self->{SurveyObject}->RequestSend(
+    my ( $HeaderRef, $BodyRef ) = $Self->{SurveyObject}->RequestSend(
         TicketID => $TicketID,
     );
+
     if ( $Test->{Result}->[0] ) {
         $Self->True(
-            $RequestSend,
+            ${ $HeaderRef },
             "RequestSend()",
+        );
+
+        ${ $HeaderRef } =~ m{ ^ Subject: [ ] ( .+? ) \n \S+: [ ] }xms;
+        $Self->Is(
+            $1,
+            'Help us with your feedback! =?UTF-8?Q?=C3=84=C3=96=C3=9C?=',
+            "Test special characters in email subject",
+        );
+
+        $Self->Is(
+            ${ $BodyRef },
+            "Dear customer... =C3=A4=C3=B6=C3=BC=\n",
+            "Test special characters in email body",
         );
     }
     else {
         $Self->False(
-            $RequestSend,
+            ${ $HeaderRef },
             "RequestSend()",
         );
     }
 
-    $RequestSend = $Self->{SurveyObject}->RequestSend(
+    ( $HeaderRef, $BodyRef ) = $Self->{SurveyObject}->RequestSend(
         TicketID => $TicketID,
     );
     if ( $Test->{Result}->[1] ) {
         $Self->True(
-            $RequestSend,
+            ${ $HeaderRef },
             "RequestSend()",
         );
     }
     else {
         $Self->False(
-            $RequestSend,
+            ${ $HeaderRef },
             "RequestSend()",
         );
     }
@@ -224,6 +253,12 @@ for my $Test (@Tests) {
 
 $Self->{DBObject}->Do(
     SQL => "DELETE FROM survey_request WHERE send_to LIKE '\%some\@example.com\%'",
+);
+
+# restore original sendmail config
+$Self->{ConfigObject}->Set(
+    Key   => 'SendmailModule',
+    Value => $SendmailModule,
 );
 
 1;
