@@ -2,7 +2,7 @@
 # Kernel/Modules/FAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.18 2008-07-07 11:02:29 mh Exp $
+# $Id: FAQ.pm,v 1.19 2008-08-05 09:33:31 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::FAQ;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -726,18 +726,11 @@ sub GetItemSmallView {
     }
 
     # get linked objects
-    # lookup the link state id
-    my $LinkStateID = $Self->{LinkObject}->StateLookup(
-        Name   => 'Valid',
+    my $ExistingLinks = $Self->{LinkObject}->LinkList(
+        Object => 'FAQ',
+        Key    => $GetParam{ItemID},
+        State  => 'Valid',
         UserID => $Self->{UserID},
-    );
-
-    # get linked objects
-    my $ExistingLinks = $Self->{LinkObject}->LinksGet(
-        Object  => 'FAQ',
-        Key     => $GetParam{ItemID},
-        StateID => $LinkStateID,
-        UserID  => $Self->{UserID},
     );
 
     # prepare the output hash
