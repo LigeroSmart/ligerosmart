@@ -2,7 +2,7 @@
 # Kernel/Language/de_AgentSurvey.pm - the de language for AgentSurvey
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: de_AgentSurvey.pm,v 1.14 2008-08-06 07:11:03 ub Exp $
+# $Id: de_AgentSurvey.pm,v 1.15 2008-08-06 14:54:27 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -42,6 +42,18 @@ sub Data {
     $Self->{Translation}->{'List'}              = 'Liste';
     $Self->{Translation}->{'Textarea'}          = 'Freitext';
     $Self->{Translation}->{'A Survey Module'}   = 'Ein Umfrage-Modul';
+    $Self->{Translation}->{'Survey Title is required!'}
+        = '';
+    $Self->{Translation}->{'Survey Introduction is required!'}
+        = 'Bitte geben Sie einen Einleitungstext ein!';
+    $Self->{Translation}->{'Survey Description is required!'}
+        = 'Bitte geben Sie eine Interne Beschreibung ein!';
+    $Self->{Translation}->{'Survey NotificationSender is required!'}
+        = 'Bitte geben Sie eine Absender-Adresse ein!';
+    $Self->{Translation}->{'Survey NotificationSubject is required!'}
+        = 'Bitte geben Sie einen Betreff ein!';
+    $Self->{Translation}->{'Survey NotificationBody is required!'}
+        = 'Bitte geben Sie einen Text ein!';
 
     return 1;
 }
