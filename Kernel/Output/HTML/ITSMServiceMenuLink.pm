@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ITSMServiceMenuLink.pm
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMServiceMenuLink.pm,v 1.1 2008-08-06 07:39:57 ub Exp $
+# $Id: ITSMServiceMenuLink.pm,v 1.2 2008-08-06 10:42:09 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -40,6 +40,35 @@ sub Run {
         $Self->{LogObject}->Log( Priority => 'error', Message => 'Need Service!' );
         return;
     }
+
+    # get groups
+    my $GroupsRw
+        = $Self->{ConfigObject}->Get('Frontend::Module')->{ $Param{Config}->{Action} }->{Group}
+        || [];
+
+    # set access
+    my $Access = 1;
+
+    # check permission
+    if ( $Param{Config}->{Action} &&  @{$GroupsRw} ) {
+
+        # set access
+        $Access = 0;
+
+        # find read write groups
+        RWGROUP:
+        for my $RwGroup ( @{$GroupsRw} ) {
+
+            next RWGROUP if !$Self->{LayoutObject}->{"UserIsGroup[$RwGroup]"};
+            next RWGROUP if $Self->{LayoutObject}->{"UserIsGroup[$RwGroup]"} ne 'Yes';
+
+            # set access
+            $Access = 1;
+            last RWGROUP;
+        }
+    }
+
+    return $Param{Counter} if !$Access;
 
     # check if services can be linked with other objects
     my %PossibleObjects = $Self->{LinkObject}->PossibleObjectsList(
