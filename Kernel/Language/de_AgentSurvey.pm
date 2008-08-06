@@ -2,7 +2,7 @@
 # Kernel/Language/de_AgentSurvey.pm - the de language for AgentSurvey
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: de_AgentSurvey.pm,v 1.13 2008-05-16 13:29:36 ub Exp $
+# $Id: de_AgentSurvey.pm,v 1.14 2008-08-06 07:11:03 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -41,6 +41,7 @@ sub Data {
     $Self->{Translation}->{'YesNo'}             = 'JaNein';
     $Self->{Translation}->{'List'}              = 'Liste';
     $Self->{Translation}->{'Textarea'}          = 'Freitext';
+    $Self->{Translation}->{'A Survey Module'}   = 'Ein Umfrage-Modul';
 
     return 1;
 }
