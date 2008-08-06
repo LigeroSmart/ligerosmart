@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMService.xml,v 1.4 2008-08-02 14:02:06 mh Exp $</CVS>
+    <CVS>$Id: ITSMService.xml,v 1.5 2008-08-06 07:39:57 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AgentITSMService" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AgentITSMService object in the agent interface.</Description>
         <Description Lang="de">Frontendmodul-Registration des AgentITSMService-Objekts im Agent-Interface.</Description>
@@ -156,7 +156,7 @@
         <SubGroup>Frontend::Agent::ITSMService::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMServiceMenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMServiceMenuLink</Item>
                 <Item Key="Name">Link</Item>
                 <Item Key="Description">Link</Item>
                 <Item Key="Action">AgentLinkObject</Item>

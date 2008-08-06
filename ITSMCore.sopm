@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMCore.sopm,v 1.64 2008-08-02 14:51:20 mh Exp $</CVS>
+    <CVS>$Id: ITSMCore.sopm,v 1.65 2008-08-06 07:39:57 ub Exp $</CVS>
     <Name>ITSMCore</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -28,6 +28,7 @@
         <File Permission="644" Location="Kernel/Modules/AgentITSMSLAPrint.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMSLAZoom.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ITSMServiceMenuGeneric.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/ITSMServiceMenuLink.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ITSMSLAMenuGeneric.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/LinkObjectService.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminITSMCIPAllocate.dtl"/>
