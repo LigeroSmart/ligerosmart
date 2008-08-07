@@ -3,7 +3,7 @@
 # ImportExport.pl - import/export script
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pl,v 1.8 2008-04-17 11:29:42 mh Exp $
+# $Id: ImportExport.pl,v 1.9 2008-08-07 10:54:27 mh Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,7 +25,8 @@ use warnings;
 
 use File::Basename;
 use FindBin qw($RealBin);
-use lib dirname $RealBin;
+use lib dirname($RealBin);
+use lib dirname($RealBin) . '/Kernel/cpan-lib';
 
 use Getopt::Std;
 use Kernel::Config;
@@ -36,7 +37,7 @@ use Kernel::System::Log;
 use Kernel::System::Main;
 
 use vars qw($VERSION $RealBin);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 # get options
 my %Opts;
@@ -187,6 +188,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.8 $ $Date: 2008-04-17 11:29:42 $
+$Revision: 1.9 $ $Date: 2008-08-07 10:54:27 $
 
 =cut
