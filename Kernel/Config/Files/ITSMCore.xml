@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMCore.xml,v 1.17 2008-07-03 15:47:40 mh Exp $</CVS>
+    <CVS>$Id: ITSMCore.xml,v 1.18 2008-08-07 14:32:13 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -229,6 +229,84 @@
             <Hash>
                 <Item Key="Object1">ITSMConfigItem</Item>
                 <Item Key="Object2">Service</Item>
+                <Item Key="Type">RelevantTo</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="LinkObject::PossibleLink###3260" Required="0" Valid="1">
+        <Description Lang="en">This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ' objects using the 'Normal' link type.</Description>
+        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekte mit dem Linktyp 'Normal' mit 'FAQ'-Objekten verlinkt werden kann.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::LinkObject</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Object1">ITSMConfigItem</Item>
+                <Item Key="Object2">FAQ</Item>
+                <Item Key="Type">Normal</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="LinkObject::PossibleLink###3261" Required="0" Valid="1">
+        <Description Lang="en">This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ' objects using the 'ParentChild' link type.</Description>
+        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekte mit dem Linktyp 'ParentChild' mit 'FAQ'-Objekten verlinkt werden kann.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::LinkObject</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Object1">ITSMConfigItem</Item>
+                <Item Key="Object2">FAQ</Item>
+                <Item Key="Type">ParentChild</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="LinkObject::PossibleLink###3262" Required="0" Valid="1">
+        <Description Lang="en">This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ' objects using the 'RelevantTo' link type.</Description>
+        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekte mit dem Linktyp 'RelevantTo' mit 'FAQ'-Objekten verlinkt werden kann.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::LinkObject</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Object1">ITSMConfigItem</Item>
+                <Item Key="Object2">FAQ</Item>
+                <Item Key="Type">RelevantTo</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="LinkObject::PossibleLink###3280" Required="0" Valid="1">
+        <Description Lang="en">This setting defines that a 'Service' object can be linked with 'FAQ' objects using the 'Normal' link type.</Description>
+        <Description Lang="de">Definiert, dass ein 'Service'-Objekte mit dem Linktyp 'Normal' mit 'FAQ'-Objekten verlinkt werden kann.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::LinkObject</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Object1">Service</Item>
+                <Item Key="Object2">FAQ</Item>
+                <Item Key="Type">Normal</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="LinkObject::PossibleLink###3281" Required="0" Valid="1">
+        <Description Lang="en">This setting defines that a 'Service' object can be linked with 'FAQ' objects using the 'ParentChild' link type.</Description>
+        <Description Lang="de">Definiert, dass ein 'Service'-Objekte mit dem Linktyp 'ParentChild' mit 'FAQ'-Objekten verlinkt werden kann.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::LinkObject</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Object1">Service</Item>
+                <Item Key="Object2">FAQ</Item>
+                <Item Key="Type">ParentChild</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="LinkObject::PossibleLink###3282" Required="0" Valid="1">
+        <Description Lang="en">This setting defines that a 'Service' object can be linked with 'FAQ' objects using the 'RelevantTo' link type.</Description>
+        <Description Lang="de">Definiert, dass ein 'Service'-Objekte mit dem Linktyp 'RelevantTo' mit 'FAQ'-Objekten verlinkt werden kann.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::LinkObject</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Object1">Service</Item>
+                <Item Key="Object2">FAQ</Item>
                 <Item Key="Type">RelevantTo</Item>
             </Hash>
         </Setting>
