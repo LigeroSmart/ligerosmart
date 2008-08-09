@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Framework">
-    <CVS>$Id: FrameworkITSMCore.xml,v 1.25 2008-07-27 19:29:04 mh Exp $</CVS>
+    <CVS>$Id: FrameworkITSMCore.xml,v 1.26 2008-08-09 12:17:51 ub Exp $</CVS>
     <CVS>$OldId: Framework.xml,v 1.175 2008/06/28 12:54:21 mh Exp $</CVS>
     <ConfigItem Name="ProductName" Required="1" Valid="1">
         <Description Lang="en">The name of the application that is shown in the frontend.</Description>
@@ -8,7 +8,7 @@
         <Group>Framework</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
-            <String Regex="">OTRS::ITSM 1.2.0 Beta 3</String>
+            <String Regex="">OTRS::ITSM 1.2.0 RC1</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="LinkObject::ViewMode" Required="1" Valid="1">
