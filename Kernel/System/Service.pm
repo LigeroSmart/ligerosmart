@@ -2,7 +2,7 @@
 # Kernel/System/Service.pm - all service function
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: Service.pm,v 1.5 2008-08-02 11:44:36 mh Exp $
+# $Id: Service.pm,v 1.6 2008-08-09 09:53:36 ub Exp $
 # $OldId: Service.pm,v 1.28 2008/06/18 10:15:20 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -26,7 +26,7 @@ use Kernel::System::Time;
 # ---
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 =head1 NAME
 
@@ -345,17 +345,12 @@ sub ServiceGet {
 
         # prepare name
         my $Name = $ServiceData{Name};
-        $Name = $Self->{DBObject}->Quote( $Name );
-
-        # Hotfix for MSSQL bug# 2227
-        if ( $Self->{DBObject}->GetDatabaseFunction('Type') ne 'mssql' ) {
-            $Name =~ s{ \[ }{[[]}xmsg;
-        }
+        $Name = $Self->{DBObject}->Quote( $Name, 'Like' );
 
         # get list of all valid childs
         $Self->{DBObject}->Prepare(
             SQL => "SELECT id, name FROM service "
-                . "WHERE name LIKE '$ServiceData{Name}::%' AND valid_id IN ($ValidIDString)",
+                . "WHERE name LIKE '$Name: not supported by cvs2svn $ValidIDString)",
         );
 
         # find length of childs prefix
@@ -1067,6 +1062,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2008-08-02 11:44:36 $
+$Revision: 1.6 $ $Date: 2008-08-09 09:53:36 $
 
 =cut
