@@ -2,7 +2,7 @@
 # Kernel/System/Service.pm - all service function
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: Service.pm,v 1.6 2008-08-09 09:53:36 ub Exp $
+# $Id: Service.pm,v 1.7 2008-08-09 09:56:33 ub Exp $
 # $OldId: Service.pm,v 1.28 2008/06/18 10:15:20 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -26,7 +26,7 @@ use Kernel::System::Time;
 # ---
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 =head1 NAME
 
@@ -1062,6 +1062,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.6 $ $Date: 2008-08-09 09:53:36 $
+$Revision: 1.7 $ $Date: 2008-08-09 09:56:33 $
 
 =cut
