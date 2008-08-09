@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMSLA.pm - the OTRS::ITSM SLA module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMSLA.pm,v 1.2 2008-08-02 13:44:20 mh Exp $
+# $Id: AgentITSMSLA.pm,v 1.3 2008-08-09 12:01:03 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::SLA;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -72,13 +72,6 @@ sub Run {
             },
         );
     }
-
-    # set last screen view
-    $Self->{SessionObject}->UpdateSessionID(
-        SessionID => $Self->{SessionID},
-        Key       => 'ITSMSLALastScreenOverview',
-        Value     => "Action=$Self->{Action}",
-    );
 
     # investigate refresh
     my $Refresh = $Self->{UserRefreshTime} ? 60 * $Self->{UserRefreshTime} : undef;
