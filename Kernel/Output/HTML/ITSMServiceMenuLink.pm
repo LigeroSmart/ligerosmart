@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ITSMServiceMenuLink.pm
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMServiceMenuLink.pm,v 1.2 2008-08-06 10:42:09 ub Exp $
+# $Id: ITSMServiceMenuLink.pm,v 1.3 2008-08-11 07:49:09 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -25,7 +25,10 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Object (qw(ConfigObject LogObject DBObject LayoutObject ServiceObject LinkObject UserID)) {
+    for my $Object (
+        qw(ConfigObject LogObject DBObject LayoutObject ServiceObject LinkObject UserID)
+        )
+    {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
@@ -50,7 +53,7 @@ sub Run {
     my $Access = 1;
 
     # check permission
-    if ( $Param{Config}->{Action} &&  @{$GroupsRw} ) {
+    if ( $Param{Config}->{Action} && @{$GroupsRw} ) {
 
         # set access
         $Access = 0;
