@@ -2,7 +2,7 @@
 # Kernel/Language/cz_ImportExport.pm - the czech translation of ImportExport
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: cz_ImportExport.pm,v 1.4 2008-05-21 09:13:15 mh Exp $
+# $Id: cz_ImportExport.pm,v 1.5 2008-08-11 07:44:52 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -24,7 +24,27 @@ sub Data {
 
     return if ref $Lang ne 'HASH';
 
-    $Lang->{'Import/Export'} = 'Import/Export';
+    $Lang->{'Import/Export'}              = '';
+    $Lang->{'Import/Export Management'}   = '';
+    $Lang->{'Add mapping template'}       = '';
+    $Lang->{'Start Import'}               = '';
+    $Lang->{'Start Export'}               = '';
+    $Lang->{'Step'}                       = '';
+    $Lang->{'Edit common information'}    = '';
+    $Lang->{'Edit object information'}    = '';
+    $Lang->{'Edit format information'}    = '';
+    $Lang->{'Edit mapping information'}   = '';
+    $Lang->{'Edit search information'}    = '';
+    $Lang->{'Import information'}         = '';
+    $Lang->{'Column'}                     = '';
+    $Lang->{'Restrict export per search'} = '';
+    $Lang->{'Source File'}                = '';
+    $Lang->{'Column Seperator'}           = '';
+    $Lang->{'Tabulator (TAB)'}            = '';
+    $Lang->{'Semicolon (;)'}              = '';
+    $Lang->{'Colon (:)'}                  = '';
+    $Lang->{'Dot (.)'}                    = '';
+    $Lang->{'Charset'}                    = '';
 
     return 1;
 }
