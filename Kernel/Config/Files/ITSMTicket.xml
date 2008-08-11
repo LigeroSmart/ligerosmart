@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMTicket.xml,v 1.5 2008-08-11 08:56:42 mh Exp $</CVS>
+    <CVS>$Id: ITSMTicket.xml,v 1.6 2008-08-11 09:34:04 mh Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AgentTicketAddtlITSMField" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AgentTicketAddtlITSMField object in the agent interface.</Description>
         <Description Lang="de">Frontendmodul-Registration des AgentTicketAddtlITSMField-Objekts im Agent-Interface.</Description>
@@ -153,7 +153,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###StateDefault" Required="0" Valid="0">
-        <Description Lang="en">Default next state after an email ticket.</Description>
+        <Description Lang="en">Default next state.</Description>
         <Description Lang="de">Standardmäßig ausgewählter nächster Status.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
@@ -192,8 +192,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###InvolvedAgent" Required="0" Valid="0">
-        <Description Lang="en">Show selection of involved agents?</Description>
-        <Description Lang="de">Auswahl der involvierten Agents anzeigen?</Description>
+        <Description Lang="en">Show selection of involved agents.</Description>
+        <Description Lang="de">Auswahl der involvierten Agents anzeigen.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
         <Setting>
@@ -204,8 +204,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###InformAgent" Required="0" Valid="0">
-        <Description Lang="en">Show selection of agents to inform?</Description>
-        <Description Lang="de">Auswahl der zu informierenden Agents anzeigen?</Description>
+        <Description Lang="en">Show selection of agents to inform (all agents with note permissions on the queue/ticket).</Description>
+        <Description Lang="de">Auswahl der zu informierenden Agents anzeigen (alle Agenten mit "notiz" Rechten am Ticket/Queue).</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
         <Setting>
@@ -271,8 +271,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###TicketFreeText" Required="0" Valid="1">
-        <Description Lang="en">Shown ticket free text options.</Description>
-        <Description Lang="de">Gezeigte Ticket-Frei-Text-Felder.</Description>
+        <Description Lang="en">Shown ticket free text options. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
+        <Description Lang="de">Angezeigte Ticket-Frei-Text-Felder. Mögliche Einstellungen: 0 = Deaktiviert, 1 = Aktiviert, 2 = Aktiviert und Pflichtfeld.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
         <Setting>
@@ -297,8 +297,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###TicketFreeTime" Required="0" Valid="1">
-        <Description Lang="en">Shown free time options.</Description>
-        <Description Lang="de">Gezeigte Frei-Zeit-Felder.</Description>
+        <Description Lang="en">Shown ticket free time options. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
+        <Description Lang="de">Angezeigte Ticket-Frei-Time-Felder. Mögliche Einstellungen: 0 = Deaktiviert, 1 = Aktiviert, 2 = Aktiviert und Pflichtfeld.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
         <Setting>
@@ -439,7 +439,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###StateDefault" Required="0" Valid="0">
-        <Description Lang="en">Default next state after an email ticket.</Description>
+        <Description Lang="en">Default next state.</Description>
         <Description Lang="de">Standardmäßig ausgewählter nächster Status.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
@@ -478,8 +478,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###InvolvedAgent" Required="0" Valid="0">
-        <Description Lang="en">Show selection of involved agents?</Description>
-        <Description Lang="de">Auswahl der involvierten Agents anzeigen?</Description>
+        <Description Lang="en">Show selection of involved agents.</Description>
+        <Description Lang="de">Auswahl der involvierten Agents anzeigen.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
         <Setting>
@@ -490,8 +490,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###InformAgent" Required="0" Valid="0">
-        <Description Lang="en">Show selection of agents to inform?</Description>
-        <Description Lang="de">Auswahl der zu informierenden Agents anzeigen?</Description>
+        <Description Lang="en">Show selection of agents to inform (all agents with note permissions on the queue/ticket).</Description>
+        <Description Lang="de">Auswahl der zu informierenden Agents anzeigen (alle Agenten mit "notiz" Rechten am Ticket/Queue).</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
         <Setting>
@@ -557,8 +557,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###TicketFreeText" Required="0" Valid="1">
-        <Description Lang="en">Shown ticket free text options.</Description>
-        <Description Lang="de">Gezeigte Ticket-Frei-Text-Felder.</Description>
+        <Description Lang="en">Shown ticket free text options. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
+        <Description Lang="de">Angezeigte Ticket-Frei-Text-Felder. Mögliche Einstellungen: 0 = Deaktiviert, 1 = Aktiviert, 2 = Aktiviert und Pflichtfeld.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
         <Setting>
@@ -583,8 +583,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###TicketFreeTime" Required="0" Valid="1">
-        <Description Lang="en">Shown free time options.</Description>
-        <Description Lang="de">Gezeigte Frei-Zeit-Felder.</Description>
+        <Description Lang="en">Shown ticket free time options. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
+        <Description Lang="de">Angezeigte Ticket-Frei-Time-Felder. Mögliche Einstellungen: 0 = Deaktiviert, 1 = Aktiviert, 2 = Aktiviert und Pflichtfeld.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
         <Setting>
