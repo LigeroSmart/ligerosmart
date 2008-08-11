@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: TicketITSMTicket.xml,v 1.6 2008-07-03 09:34:18 ub Exp $</CVS>
-    <CVS>$OldId: Ticket.xml,v 1.147.2.7 2008/03/16 19:21:51 martin Exp $</CVS>
+    <CVS>$Id: TicketITSMTicket.xml,v 1.7 2008-08-11 08:56:15 mh Exp $</CVS>
+    <CVS>$OldId: Ticket.xml,v 1.198 2008/08/03 14:58:53 martin Exp $</CVS>
     <ConfigItem Name="Ticket::Type" Required="1" Valid="1">
         <Description Lang="en">If ticket type feature is enabled, you can define ticket types for tickets (e. g. incident, problem, change, ...).</Description>
         <Description Lang="de">Wenn das Ticket-Typ Featues aktiviert ist, können Ticket Typen pro Ticket gesetzt werden (z. B. incident, problem, change, ...).</Description>
@@ -293,8 +293,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketEmail###TicketFreeTime" Required="0" Valid="1">
-        <Description Lang="en">Shown free time options.</Description>
-        <Description Lang="de">Gezeigte Frei-Zeit-Felder.</Description>
+        <Description Lang="en">Shown ticket free time options. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
+        <Description Lang="de">Angezeigte Ticket-Frei-Time-Felder. Mögliche Einstellungen: 0 = Deaktiviert, 1 = Aktiviert, 2 = Aktiviert und Pflichtfeld.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewEmailNew</SubGroup>
         <Setting>
@@ -309,8 +309,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketPhone###TicketFreeTime" Required="0" Valid="1">
-        <Description Lang="en">Shown free time options.</Description>
-        <Description Lang="de">Gezeigte Frei-Zeit-Felder.</Description>
+        <Description Lang="en">Shown ticket free time options. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
+        <Description Lang="de">Angezeigte Ticket-Frei-Time-Felder. Mögliche Einstellungen: 0 = Deaktiviert, 1 = Aktiviert, 2 = Aktiviert und Pflichtfeld.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewPhoneNew</SubGroup>
         <Setting>
@@ -375,8 +375,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketSearch###TicketFreeTime" Required="0" Valid="1">
-        <Description Lang="en">Shown free time options.</Description>
-        <Description Lang="de">Gezeigte Frei-Zeit-Felder.</Description>
+        <Description Lang="en">Shown ticket free time options. Possible settings: 0 = Disabled, 1 = Enabled.</Description>
+        <Description Lang="de">Angezeigte Ticket-Frei-Time-Felder. Mögliche Einstellungen: 0 = Deaktiviert, 1 = Aktiviert.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewSearch</SubGroup>
         <Setting>
@@ -402,21 +402,6 @@
                 <Item Key="Description">Change the ticket free fields!</Item>
                 <Item Key="Action">AgentTicketFreeText</Item>
                 <Item Key="Link">Action=AgentTicketFreeText&amp;TicketID=$QData{"TicketID"}</Item>
-            </Hash>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="Ticket::Frontend::MenuModule###320-Link" Required="0" Valid="0">
-        <Description Lang="en">Module to show a link to link a ticket with another object.</Description>
-        <Description Lang="de">Über dieses Modul wird ein Link im Menü der Ticketansicht angezeigt, mit dem ein Ticket mit einem anderen Objekt verknüpft werden kann.</Description>
-        <Group>Ticket</Group>
-        <SubGroup>Frontend::Agent::Ticket::MenuModule</SubGroup>
-        <Setting>
-            <Hash>
-                <Item Key="Module">Kernel::Output::HTML::TicketMenuGeneric</Item>
-                <Item Key="Name">Link</Item>
-                <Item Key="Description">Link this ticket to an other objects!</Item>
-                <Item Key="Action">AgentLinkObject</Item>
-                <Item Key="Link">Action=AgentLinkObject&amp;SourceObject=Ticket&amp;SourceID=$QData{"TicketID"}</Item>
             </Hash>
         </Setting>
     </ConfigItem>
