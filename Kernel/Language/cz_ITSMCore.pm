@@ -2,7 +2,7 @@
 # Kernel/Language/cz_ITSMCore.pm - the czech translation of ITSMCore
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: cz_ITSMCore.pm,v 1.8 2008-08-02 14:54:53 mh Exp $
+# $Id: cz_ITSMCore.pm,v 1.9 2008-08-11 07:48:37 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -40,6 +40,8 @@ sub Data {
     $Lang->{'Current State'}                       = '';
     $Lang->{'Service-Area'}                        = '';
     $Lang->{'Minimum Time Between Incidents'}      = 'Minimální čas mezi incidenty';
+    $Lang->{'Service Overview'}                    = '';
+    $Lang->{'SLA Overview'}                        = '';
     $Lang->{'Associated Services'}                 = '';
     $Lang->{'Associated SLAs'}                     = 'Přidružené SLA smliuvy';
     $Lang->{'Back End'}                            = 'Základní schéma/BackEnd';
