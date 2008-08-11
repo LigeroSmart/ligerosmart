@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Framework">
-    <CVS>$Id: FrameworkITSMStats.xml,v 1.1.1.1 2008-07-02 16:21:02 mh Exp $</CVS>
-    <CVS>$OldId: Framework.xml,v 1.175 2008/06/28 12:54:21 mh Exp $</CVS>
+    <CVS>$Id: FrameworkITSMStats.xml,v 1.2 2008-08-11 08:58:49 mh Exp $</CVS>
+    <CVS>$OldId: Framework.xml,v 1.185 2008/07/31 20:34:21 martin Exp $</CVS>
     <ConfigItem Name="Stats::TimeType" Required="1" Valid="1">
         <Description Lang="en">Selection of the time type which should be shown.</Description>
         <Description Lang="de">Auswahl, welche Darstellung für das Zeitelement verwendet werden soll.</Description>
