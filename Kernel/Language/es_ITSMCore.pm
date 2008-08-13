@@ -2,7 +2,7 @@
 # Kernel/Language/es_ITSMCore.pm - the spanish translation of ITSMCore
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: es_ITSMCore.pm,v 1.1 2008-08-09 13:43:04 mh Exp $
+# $Id: es_ITSMCore.pm,v 1.2 2008-08-13 14:20:12 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub Data {
     my $Self = shift;
