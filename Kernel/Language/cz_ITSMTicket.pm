@@ -1,8 +1,9 @@
 # --
 # Kernel/Language/cz_ITSMTicket.pm - the czech translation of ITSMTicket
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2007-2008 Milen Koutev
 # --
-# $Id: cz_ITSMTicket.pm,v 1.2 2008-08-13 14:26:27 mh Exp $
+# $Id: cz_ITSMTicket.pm,v 1.3 2008-08-14 11:49:53 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub Data {
     my $Self = shift;
