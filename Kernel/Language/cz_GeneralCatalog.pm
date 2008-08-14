@@ -1,8 +1,9 @@
 # --
 # Kernel/Language/cz_GeneralCatalog.pm - the czech translation of GeneralCatalog
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2007-2008 Milen Koutev
 # --
-# $Id: cz_GeneralCatalog.pm,v 1.7 2008-08-13 14:19:21 mh Exp $
+# $Id: cz_GeneralCatalog.pm,v 1.8 2008-08-14 11:00:47 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub Data {
     my $Self = shift;
