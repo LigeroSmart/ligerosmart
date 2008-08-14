@@ -1,8 +1,9 @@
 # --
 # Kernel/Language/pl_ImportExport.pm - the polish translation of ImportExport
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2008 Maciej Loszajc
 # --
-# $Id: pl_ImportExport.pm,v 1.2 2008-08-13 14:19:46 mh Exp $
+# $Id: pl_ImportExport.pm,v 1.3 2008-08-14 11:13:39 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub Data {
     my $Self = shift;
