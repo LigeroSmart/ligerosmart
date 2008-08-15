@@ -2,7 +2,7 @@
 # ITSMIncidentProblemManagement.pm - code to excecute during package installation
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMIncidentProblemManagement.pm,v 1.5 2008-07-23 15:28:39 mh Exp $
+# $Id: ITSMIncidentProblemManagement.pm,v 1.6 2008-08-15 11:56:59 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 =head1 NAME
 
@@ -58,7 +58,7 @@ create an object
         ConfigObject => $ConfigObject,
         LogObject    => $LogObject,
     );
-    my $CodeObject = ITSMIncidentProblemManagement->new(
+    my $CodeObject = var::packagesetup::ITSMIncidentProblemManagement->new(
         ConfigObject => $ConfigObject,
         LogObject    => $LogObject,
         MainObject   => $MainObject,
@@ -379,6 +379,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2008-07-23 15:28:39 $
+$Revision: 1.6 $ $Date: 2008-08-15 11:56:59 $
 
 =cut
