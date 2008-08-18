@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMCore.sopm,v 1.71 2008-08-15 14:47:31 mh Exp $</CVS>
+    <CVS>$Id: ITSMCore.sopm,v 1.72 2008-08-18 07:15:44 mh Exp $</CVS>
     <Name>ITSMCore</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
-    <PackageRequired Version="1.1.94">GeneralCatalog</PackageRequired>
+    <PackageRequired Version="1.2.1">GeneralCatalog</PackageRequired>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
@@ -530,7 +530,7 @@
         &lt;br&gt;
         &lt;b&gt;REQUIRED OTRS PACKAGES&lt;/b&gt;
         &lt;ul&gt;
-        &lt;li&gt;GeneralCatalog 1.1.94&lt;/li&gt;
+        &lt;li&gt;GeneralCatalog 1.2.1&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         &lt;b&gt;ATTENTION&lt;/b&gt;
@@ -554,7 +554,7 @@
         &lt;br&gt;
         &lt;b&gt;BENÖTIGTE OTRS-PAKETE&lt;/b&gt;
         &lt;ul&gt;
-        &lt;li&gt;GeneralCatalog 1.1.94&lt;/li&gt;
+        &lt;li&gt;GeneralCatalog 1.2.1&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         &lt;b&gt;ACHTUNG&lt;/b&gt;
@@ -610,7 +610,7 @@
         &lt;br&gt;
         &lt;b&gt;REQUIRED OTRS PACKAGES&lt;/b&gt;
         &lt;ul&gt;
-        &lt;li&gt;GeneralCatalog 1.1.94&lt;/li&gt;
+        &lt;li&gt;GeneralCatalog 1.2.1&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         &lt;/b&gt;ATTENTION&lt;/b&gt;
@@ -634,7 +634,7 @@
         &lt;br&gt;
         &lt;b&gt;BENÖTIGTE OTRS-PAKETE&lt;/b&gt;
         &lt;ul&gt;
-        &lt;li&gt;GeneralCatalog 1.1.94&lt;/li&gt;
+        &lt;li&gt;GeneralCatalog 1.2.1&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         &lt;b&gt;ACHTUNG&lt;/b&gt;
