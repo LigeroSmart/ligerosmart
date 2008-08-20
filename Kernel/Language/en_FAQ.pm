@@ -1,44 +1,50 @@
 # --
-# Kernel/Language/en_FAQ.pm - provides en language translation
+# Kernel/Language/en_FAQ.pm - the english translation of FAQ
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: en_FAQ.pm,v 1.4 2008-07-07 11:00:30 mh Exp $
+# $Id: en_FAQ.pm,v 1.5 2008-08-20 12:02:26 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
+
 package Kernel::Language::en_FAQ;
 
 use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub Data {
     my $Self = shift;
 
-    my $Translation = $Self->{Translation};
+    my $Lang = $Self->{Translation};
 
-    return if ref $Translation ne 'HASH';
+    return if ref $Lang ne 'HASH';
 
-    # $$START$$
+    $Lang->{'You have already voted!'}                      = 'You have already vote!';
+    $Lang->{'No rate selected!'}                            = 'No rate selected!';
+    $Lang->{'Thanks for vote!'}                             = '';
+    $Lang->{'Votes'}                                        = '';
+    $Lang->{'LatestChangedItems'}                           = 'latest changed article';
+    $Lang->{'LatestCreatedItems'}                           = 'latest created article';
+    $Lang->{'ArticleVotingQuestion'}                        = 'Did this article help?';
+    $Lang->{'SubCategoryOf'}                                = 'Unterkategorie von';
+    $Lang->{'QuickSearch'}                                  = 'Quick Search';
+    $Lang->{'DetailSearch'}                                 = 'Detail Search';
+    $Lang->{'Categories'}                                   = '';
+    $Lang->{'SubCategories'}                                = 'Subcategories';
+    $Lang->{'A category should have a name!'}               = '';
+    $Lang->{'A category should have a comment!'}            = '';
+    $Lang->{'FAQ News (new created)'}                       = '';
+    $Lang->{'FAQ News (recently changed)'}                  = '';
+    $Lang->{'No category accesable. To create an article you need have at lease access to min. one category. Please check your group/category permission under -category menu-!'} = '';
+    $Lang->{'Agent Groups which can access this category.'} = '';
+    $Lang->{'A category need min. one permission group!'}   = '';
+    $Lang->{'Will be shown as comment in Explore.'}         = '';
 
-    # own translations
-    $Translation->{Votes}                     = 'Votes';
-    $Translation->{LatestChangedItems}        = 'latest changed article';
-    $Translation->{LatestCreatedItems}        = 'latest created article';
-    $Translation->{ArticleVotingQuestion}     = 'Did this article help?';
-    $Translation->{QuickSearch}               = 'Quick Search';
-    $Translation->{DetailSearch}              = 'Detail Search';
-    $Translation->{'You have already voted!'} = 'You have already vote!';
-    $Translation->{'No rate selected!'}       = 'No rate selected!';
-    $Translation->{'Thanks for vote!'}        = 'Thanks for vote!';
-    $Translation->{Categories}                = 'Categories';
-    $Translation->{SubCategories}             = 'Subcategories';
-
-    # $$STOP$$
     return 1;
 }
 
