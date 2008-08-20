@@ -1,64 +1,46 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.33 2008-07-03 21:44:34 martin Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.34 2008-08-20 12:02:54 mh Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
-    <Description Lang="en">A FAQ/knowledge base.</Description>
-    <Description Lang="de">Eine FAQ-/Wissensdatenbank.</Description>
-    <IntroInstallPost Title="Notice - Introduction" Lang="en">The FAQ/knowledge base will be found at the navigation bar and required "faq" group permissions to use it. To create new FAQ article you need to create categories and define the permission who can access categories.</IntroInstallPost>
-    <IntroInstallPost Title="Hinweis - Einfuehrung" Lang="de">Die FAQ/Knowledge Base ist in der Navigationsleiste zu finden. Es werden "faq" Gruppen-Rechte benötig um die FAQ benutzen zu können. Um FAQ Artikel erstellen zu können müssen zuerst Kategorien erstellt und die Berechtigungs-Gruppen dieser Kategorien definiert werden.</IntroInstallPost>
+    <Description Lang="en">The FAQ/knowledge base.</Description>
+    <Description Lang="de">Die FAQ-/Wissensdatenbank.</Description>
     <Filelist>
-        <File Permission="644" Location="Kernel/Config/Files/FAQ.xml"></File>
-        <File Permission="644" Location="Kernel/Language/de_FAQ.pm"></File>
-        <File Permission="644" Location="Kernel/Language/en_FAQ.pm"></File>
-        <File Permission="644" Location="Kernel/Modules/FAQ.pm"></File>
-        <File Permission="644" Location="Kernel/Modules/AgentFAQ.pm"></File>
-        <File Permission="644" Location="Kernel/Modules/CustomerFAQ.pm"></File>
-        <File Permission="644" Location="Kernel/Modules/PublicFAQ.pm"></File>
-        <File Permission="644" Location="Kernel/Output/HTML/LinkObjectFAQ.pm"></File>
-        <File Permission="644" Location="Kernel/Output/HTML/HeaderMetaFAQSearch.pm"></File>
-        <File Permission="644" Location="Kernel/Output/HTML/LayoutFAQ.pm"></File>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/FAQ.dtl"></File>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQ.dtl"></File>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQOpenSearchDescription.dtl"></File>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQ.dtl"></File>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQ.dtl"></File>
-        <File Permission="644" Location="Kernel/System/FAQ.pm"></File>
-        <File Permission="644" Location="Kernel/System/LinkObject/FAQ.pm"></File>
-        <File Permission="644" Location="Kernel/cpan-lib/XML/RSS/SimpleGen.pm"></File>
-        <File Permission="644" Location="scripts/test/FAQ.t"></File>
-        <File Permission="644" Location="scripts/test/sample/FAQ-Test1.pdf"></File>
-        <File Permission="644" Location="scripts/test/sample/FAQ-Test1.doc"></File>
-        <File Permission="644" Location="var/httpd/htdocs/images/Standard/faq-category-small.png"></File>
-        <File Permission="644" Location="var/httpd/htdocs/images/Standard/faq-item-small.png"></File>
-        <File Permission="644" Location="var/httpd/htdocs/images/Standard/language.png"></File>
-        <File Permission="644" Location="var/httpd/htdocs/images/Standard/category.png"></File>
-        <File Permission="644" Location="var/httpd/htdocs/images/Standard/rss.png"></File>
-        <File Permission="755" Location="bin/cgi-bin/faq.pl"></File>
-        <File Permission="755" Location="bin/fcgi-bin/faq.fpl"></File>
+        <File Permission="644" Location="Kernel/Config/Files/FAQ.xml"/>
+        <File Permission="644" Location="Kernel/Language/de_FAQ.pm"/>
+        <File Permission="644" Location="Kernel/Language/en_FAQ.pm"/>
+        <File Permission="644" Location="Kernel/Language/es_FAQ.pm"/>
+        <File Permission="644" Location="Kernel/Modules/FAQ.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentFAQ.pm"/>
+        <File Permission="644" Location="Kernel/Modules/CustomerFAQ.pm"/>
+        <File Permission="644" Location="Kernel/Modules/PublicFAQ.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/LinkObjectFAQ.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/HeaderMetaFAQSearch.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/LayoutFAQ.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/FAQ.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQ.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQOpenSearchDescription.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQ.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQ.dtl"/>
+        <File Permission="644" Location="Kernel/System/FAQ.pm"/>
+        <File Permission="644" Location="Kernel/System/LinkObject/FAQ.pm"/>
+        <File Permission="644" Location="Kernel/cpan-lib/XML/RSS/SimpleGen.pm"/>
+        <File Permission="644" Location="scripts/test/FAQ.t"/>
+        <File Permission="644" Location="scripts/test/sample/FAQ-Test1.pdf"/>
+        <File Permission="644" Location="scripts/test/sample/FAQ-Test1.doc"/>
+        <File Permission="644" Location="var/httpd/htdocs/images/Standard/faq-category-small.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/images/Standard/faq-item-small.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/images/Standard/language.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/images/Standard/category.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/images/Standard/rss.png"/>
+        <File Permission="755" Location="bin/cgi-bin/faq.pl"/>
+        <File Permission="755" Location="bin/fcgi-bin/faq.fpl"/>
     </Filelist>
-    <CodeInstall>
-        # add faq group
-        require Kernel::System::Group;
-        $Self-&gt;{GroupObject} = Kernel::System::Group-&gt;new(%{$Self});
-        $Self-&gt;{GroupObject}-&gt;GroupAdd(
-            Name =&gt; 'faq',
-            Comment =&gt; 'faq database users',
-            ValidID =&gt; 1,
-            UserID =&gt; 1,
-        );
-        $Self-&gt;{GroupObject}-&gt;GroupAdd(
-            Name =&gt; 'faq_admin',
-            Comment =&gt; 'faq admin users',
-            ValidID =&gt; 1,
-            UserID =&gt; 1,
-        );
-    </CodeInstall>
-    <DatabaseInstall>
+    <DatabaseInstall Type="post">
         <TableCreate Name="faq_language">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="SMALLINT"/>
             <Column Name="name" Required="true" Size="200" Type="VARCHAR"/>
@@ -208,7 +190,7 @@
             <Column Name="created" Required="false" Type="DATE"/>
         </TableCreate>
     </DatabaseInstall>
-    <DatabaseUpgrade>
+    <DatabaseUpgrade Type="post">
         <TableCreate Name="faq_category_group" Version="1.1.3">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>
             <Column Name="category_id" Required="true" Size="200" Type="INTEGER"/>
@@ -219,7 +201,7 @@
             <Column Name="changed_by" Required="false" Type="INTEGER"/>
         </TableCreate>
     </DatabaseUpgrade>
-    <DatabaseUninstall>
+    <DatabaseUninstall Type="pre">
         <TableDrop Name="faq_category"/>
         <TableDrop Name="faq_category_group"/>
         <TableDrop Name="faq_item"/>
@@ -230,4 +212,91 @@
         <TableDrop Name="faq_attachment"/>
         <TableDrop Name="faq_voting"/>
     </DatabaseUninstall>
+    <CodeInstall Type="post">
+
+        require Kernel::System::Group;
+
+        $Self-&gt;{GroupObject} = Kernel::System::Group-&gt;new(%{$Self});
+
+        # add faq groups
+        $Self-&gt;{GroupObject}-&gt;GroupAdd(
+            Name    =&gt; 'faq',
+            Comment =&gt; 'faq database users',
+            ValidID =&gt; 1,
+            UserID  =&gt; 1,
+        );
+        $Self-&gt;{GroupObject}-&gt;GroupAdd(
+            Name    =&gt; 'faq_admin',
+            Comment =&gt; 'faq admin users',
+            ValidID =&gt; 1,
+            UserID  =&gt; 1,
+        );
+
+    </CodeInstall>
+    <IntroInstall Type="post" Title="Installation Information" Lang="en">
+
+        &lt;br&gt;
+        &lt;b&gt;NOTICE&lt;/b&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        In order to grant users access to the faq menu, you need to add them as member to the group 'faq'.
+        &lt;br&gt;
+        &lt;br&gt;
+        The menu items that were added by this package will be visible after you log-in to the system again.
+        &lt;br&gt;
+        &lt;br&gt;
+        To create new FAQ article you need to create categories and define the permission who can access categories.
+        &lt;br&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+
+    </IntroInstall>
+    <IntroInstall Type="post" Title="Installation Information" Lang="de">
+
+        &lt;br&gt;
+        &lt;b&gt;HINWEIS&lt;/b&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        Um Benutzern Zugriff auf das FAQ-Menü zu gewähren, müssen diese Mitglied der neuen Gruppe 'faq' sein.
+        &lt;br&gt;
+        &lt;br&gt;
+        Die von diesem Paket hinzugefügten Menü-Punkte sind erst nach einem erneuten Anmeldevorgang im System sichtbar.
+        &lt;br&gt;
+        &lt;br&gt;
+        Um FAQ Artikel erstellen zu können müssen zuerst Kategorien erstellt und die Berechtigungs-Gruppen dieser Kategorien definiert werden.
+        &lt;br&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+
+    </IntroInstall>
+    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="en">
+
+        &lt;br&gt;
+        &lt;b&gt;ATTENTION&lt;/b&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        If you uninstall this package, all database tables that were created during installation will be deleted.
+        All data from these tables will be irrevocably lost!
+        &lt;br&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+
+    </IntroUninstall>
+    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="de">
+
+        &lt;br&gt;
+        &lt;b&gt;ACHTUNG&lt;/b&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        Bei der Deinstallation werden die von diesem Paket angelegten Datenbank-Tabellen gelöscht.
+        Alle darin enthaltenen Daten gehen unwiderruflich verloren!
+        &lt;br&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+
+    </IntroUninstall>
 </otrs_package>
