@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # Copyright (C) 2008 Aquiles Cohen
 # --
-# $Id: es_ImportExport.pm,v 1.3 2008-08-14 11:13:39 mh Exp $
+# $Id: es_ImportExport.pm,v 1.4 2008-08-20 11:01:23 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -26,10 +26,10 @@ sub Data {
     return if ref $Lang ne 'HASH';
 
     $Lang->{'Import/Export'}              = 'Importar/Exportar';
-    $Lang->{'Import/Export Management'}   = 'Administración de Importación/Exportación';
+    $Lang->{'Import/Export Management'}   = 'Gestión de Importación/Exportación';
     $Lang->{'Add mapping template'}       = 'Añadir mapeado de plantilla';
-    $Lang->{'Start Import'}               = 'Iniciar Importar';
-    $Lang->{'Start Export'}               = 'Iniciar Exportar';
+    $Lang->{'Start Import'}               = 'Iniciar Importación';
+    $Lang->{'Start Export'}               = 'Iniciar Exportación';
     $Lang->{'Step'}                       = 'Paso';
     $Lang->{'Edit common information'}    = 'Editar información común';
     $Lang->{'Edit object information'}    = 'Editar información de objeto';
