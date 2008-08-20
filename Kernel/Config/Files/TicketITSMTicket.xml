@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: TicketITSMTicket.xml,v 1.7 2008-08-11 08:56:15 mh Exp $</CVS>
-    <CVS>$OldId: Ticket.xml,v 1.198 2008/08/03 14:58:53 martin Exp $</CVS>
+    <CVS>$Id: TicketITSMTicket.xml,v 1.8 2008-08-20 10:45:08 mh Exp $</CVS>
+    <CVS>$OldId: Ticket.xml,v 1.199 2008/08/20 09:13:13 tr Exp $</CVS>
     <ConfigItem Name="Ticket::Type" Required="1" Valid="1">
         <Description Lang="en">If ticket type feature is enabled, you can define ticket types for tickets (e. g. incident, problem, change, ...).</Description>
         <Description Lang="de">Wenn das Ticket-Typ Featues aktiviert ist, können Ticket Typen pro Ticket gesetzt werden (z. B. incident, problem, change, ...).</Description>
