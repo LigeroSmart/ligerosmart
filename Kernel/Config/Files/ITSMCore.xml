@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMCore.xml,v 1.18 2008-08-07 14:32:13 ub Exp $</CVS>
+    <CVS>$Id: ITSMCore.xml,v 1.19 2008-08-20 10:43:55 mh Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -92,7 +92,7 @@
     </ConfigItem>
     <ConfigItem Name="LinkObject::PossibleLink###3200" Required="0" Valid="1">
         <Description Lang="en">This setting defines that a 'ITSMConfigItem' object can be linked with other 'ITSMConfigItem' objects using the 'AlternativeTo' link type.</Description>
-        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekte mit dem Linktyp 'AlternativeTo' mit anderen 'ITSMConfigItem'-Objekten verlinkt werden kann.</Description>
+        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'AlternativeTo' mit anderen 'ITSMConfigItem'-Objekten verlinkt werden kann.</Description>
         <Group>Framework</Group>
         <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
@@ -105,7 +105,7 @@
     </ConfigItem>
     <ConfigItem Name="LinkObject::PossibleLink###3201" Required="0" Valid="1">
         <Description Lang="en">This setting defines that a 'ITSMConfigItem' object can be linked with other 'ITSMConfigItem' objects using the 'ConnectedTo' link type.</Description>
-        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekte mit dem Linktyp 'ConnectedTo' mit anderen 'ITSMConfigItem'-Objekten verlinkt werden kann.</Description>
+        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'ConnectedTo' mit anderen 'ITSMConfigItem'-Objekten verlinkt werden kann.</Description>
         <Group>Framework</Group>
         <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
@@ -118,7 +118,7 @@
     </ConfigItem>
     <ConfigItem Name="LinkObject::PossibleLink###3202" Required="0" Valid="1">
         <Description Lang="en">This setting defines that a 'ITSMConfigItem' object can be linked with other 'ITSMConfigItem' objects using the 'DependsOn' link type.</Description>
-        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekte mit dem Linktyp 'DependsOn' mit anderen 'ITSMConfigItem'-Objekten verlinkt werden kann.</Description>
+        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'DependsOn' mit anderen 'ITSMConfigItem'-Objekten verlinkt werden kann.</Description>
         <Group>Framework</Group>
         <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
@@ -131,7 +131,7 @@
     </ConfigItem>
     <ConfigItem Name="LinkObject::PossibleLink###3203" Required="0" Valid="1">
         <Description Lang="en">This setting defines that a 'ITSMConfigItem' object can be linked with other 'ITSMConfigItem' objects using the 'Includes' link type.</Description>
-        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekte mit dem Linktyp 'Includes' mit anderen 'ITSMConfigItem'-Objekten verlinkt werden kann.</Description>
+        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'Includes' mit anderen 'ITSMConfigItem'-Objekten verlinkt werden kann.</Description>
         <Group>Framework</Group>
         <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
@@ -144,7 +144,7 @@
     </ConfigItem>
     <ConfigItem Name="LinkObject::PossibleLink###3204" Required="0" Valid="1">
         <Description Lang="en">This setting defines that a 'ITSMConfigItem' object can be linked with other 'ITSMConfigItem' objects using the 'RelevantTo' link type.</Description>
-        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekte mit dem Linktyp 'RelevantTo' mit anderen 'ITSMConfigItem'-Objekten verlinkt werden kann.</Description>
+        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'RelevantTo' mit anderen 'ITSMConfigItem'-Objekten verlinkt werden kann.</Description>
         <Group>Framework</Group>
         <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
@@ -157,7 +157,7 @@
     </ConfigItem>
     <ConfigItem Name="LinkObject::PossibleLink###3220" Required="0" Valid="1">
         <Description Lang="en">This setting defines that a 'ITSMConfigItem' object can be linked with 'Ticket' objects using the 'AlternativeTo' link type.</Description>
-        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekte mit dem Linktyp 'AlternativeTo' mit 'Ticket'-Objekten verlinkt werden kann.</Description>
+        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'AlternativeTo' mit 'Ticket'-Objekten verlinkt werden kann.</Description>
         <Group>Framework</Group>
         <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
@@ -170,7 +170,7 @@
     </ConfigItem>
     <ConfigItem Name="LinkObject::PossibleLink###3221" Required="0" Valid="1">
         <Description Lang="en">This setting defines that a 'ITSMConfigItem' object can be linked with 'Ticket' objects using the 'DependsOn' link type.</Description>
-        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekte mit dem Linktyp 'DependsOn' mit 'Ticket'-Objekten verlinkt werden kann.</Description>
+        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'DependsOn' mit 'Ticket'-Objekten verlinkt werden kann.</Description>
         <Group>Framework</Group>
         <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
@@ -183,7 +183,7 @@
     </ConfigItem>
     <ConfigItem Name="LinkObject::PossibleLink###3222" Required="0" Valid="1">
         <Description Lang="en">This setting defines that a 'ITSMConfigItem' object can be linked with 'Ticket' objects using the 'RelevantTo' link type.</Description>
-        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekte mit dem Linktyp 'RelevantTo' mit 'Ticket'-Objekten verlinkt werden kann.</Description>
+        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'RelevantTo' mit 'Ticket'-Objekten verlinkt werden kann.</Description>
         <Group>Framework</Group>
         <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
@@ -196,7 +196,7 @@
     </ConfigItem>
     <ConfigItem Name="LinkObject::PossibleLink###3240" Required="0" Valid="1">
         <Description Lang="en">This setting defines that a 'ITSMConfigItem' object can be linked with 'Service' objects using the 'AlternativeTo' link type.</Description>
-        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekte mit dem Linktyp 'AlternativeTo' mit 'Service'-Objekten verlinkt werden kann.</Description>
+        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'AlternativeTo' mit 'Service'-Objekten verlinkt werden kann.</Description>
         <Group>Framework</Group>
         <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
@@ -209,7 +209,7 @@
     </ConfigItem>
     <ConfigItem Name="LinkObject::PossibleLink###3241" Required="0" Valid="1">
         <Description Lang="en">This setting defines that a 'ITSMConfigItem' object can be linked with 'Service' objects using the 'DependsOn' link type.</Description>
-        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekte mit dem Linktyp 'DependsOn' mit 'Service'-Objekten verlinkt werden kann.</Description>
+        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'DependsOn' mit 'Service'-Objekten verlinkt werden kann.</Description>
         <Group>Framework</Group>
         <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
@@ -222,7 +222,7 @@
     </ConfigItem>
     <ConfigItem Name="LinkObject::PossibleLink###3242" Required="0" Valid="1">
         <Description Lang="en">This setting defines that a 'ITSMConfigItem' object can be linked with 'Service' objects using the 'RelevantTo' link type.</Description>
-        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekte mit dem Linktyp 'RelevantTo' mit 'Service'-Objekten verlinkt werden kann.</Description>
+        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'RelevantTo' mit 'Service'-Objekten verlinkt werden kann.</Description>
         <Group>Framework</Group>
         <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
@@ -235,7 +235,7 @@
     </ConfigItem>
     <ConfigItem Name="LinkObject::PossibleLink###3260" Required="0" Valid="1">
         <Description Lang="en">This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ' objects using the 'Normal' link type.</Description>
-        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekte mit dem Linktyp 'Normal' mit 'FAQ'-Objekten verlinkt werden kann.</Description>
+        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'Normal' mit 'FAQ'-Objekten verlinkt werden kann.</Description>
         <Group>Framework</Group>
         <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
@@ -248,7 +248,7 @@
     </ConfigItem>
     <ConfigItem Name="LinkObject::PossibleLink###3261" Required="0" Valid="1">
         <Description Lang="en">This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ' objects using the 'ParentChild' link type.</Description>
-        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekte mit dem Linktyp 'ParentChild' mit 'FAQ'-Objekten verlinkt werden kann.</Description>
+        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'ParentChild' mit 'FAQ'-Objekten verlinkt werden kann.</Description>
         <Group>Framework</Group>
         <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
@@ -261,7 +261,7 @@
     </ConfigItem>
     <ConfigItem Name="LinkObject::PossibleLink###3262" Required="0" Valid="1">
         <Description Lang="en">This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ' objects using the 'RelevantTo' link type.</Description>
-        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekte mit dem Linktyp 'RelevantTo' mit 'FAQ'-Objekten verlinkt werden kann.</Description>
+        <Description Lang="de">Definiert, dass ein 'ITSMConfigItem'-Objekt mit dem Linktyp 'RelevantTo' mit 'FAQ'-Objekten verlinkt werden kann.</Description>
         <Group>Framework</Group>
         <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
@@ -274,7 +274,7 @@
     </ConfigItem>
     <ConfigItem Name="LinkObject::PossibleLink###3280" Required="0" Valid="1">
         <Description Lang="en">This setting defines that a 'Service' object can be linked with 'FAQ' objects using the 'Normal' link type.</Description>
-        <Description Lang="de">Definiert, dass ein 'Service'-Objekte mit dem Linktyp 'Normal' mit 'FAQ'-Objekten verlinkt werden kann.</Description>
+        <Description Lang="de">Definiert, dass ein 'Service'-Objekt mit dem Linktyp 'Normal' mit 'FAQ'-Objekten verlinkt werden kann.</Description>
         <Group>Framework</Group>
         <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
@@ -287,7 +287,7 @@
     </ConfigItem>
     <ConfigItem Name="LinkObject::PossibleLink###3281" Required="0" Valid="1">
         <Description Lang="en">This setting defines that a 'Service' object can be linked with 'FAQ' objects using the 'ParentChild' link type.</Description>
-        <Description Lang="de">Definiert, dass ein 'Service'-Objekte mit dem Linktyp 'ParentChild' mit 'FAQ'-Objekten verlinkt werden kann.</Description>
+        <Description Lang="de">Definiert, dass ein 'Service'-Objekt mit dem Linktyp 'ParentChild' mit 'FAQ'-Objekten verlinkt werden kann.</Description>
         <Group>Framework</Group>
         <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
@@ -300,7 +300,7 @@
     </ConfigItem>
     <ConfigItem Name="LinkObject::PossibleLink###3282" Required="0" Valid="1">
         <Description Lang="en">This setting defines that a 'Service' object can be linked with 'FAQ' objects using the 'RelevantTo' link type.</Description>
-        <Description Lang="de">Definiert, dass ein 'Service'-Objekte mit dem Linktyp 'RelevantTo' mit 'FAQ'-Objekten verlinkt werden kann.</Description>
+        <Description Lang="de">Definiert, dass ein 'Service'-Objekt mit dem Linktyp 'RelevantTo' mit 'FAQ'-Objekten verlinkt werden kann.</Description>
         <Group>Framework</Group>
         <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
