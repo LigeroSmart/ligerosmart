@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMTicket.pm - the german translation of ITSMTicket
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: de_ITSMTicket.pm,v 1.1 2008-06-30 20:36:11 ub Exp $
+# $Id: de_ITSMTicket.pm,v 1.2 2008-08-25 17:05:31 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -36,6 +36,8 @@ sub Data {
     $Lang->{'Change ITSM fields of ticket'} = 'Ändern der ITSM Felder des Tickets';
     $Lang->{'Repair Start Time'}            = 'Reparatur Startzeit';
     $Lang->{'Recovery Start Time'}          = 'Wiederherstellung Startzeit';
+    $Lang->{'Change the ITSM fields!'}      = 'Ändern der ITSM-Felder!';
+    $Lang->{'Add a decision!'}              = 'Hinzufügen einer Entscheidung!';
 
     return 1;
 }

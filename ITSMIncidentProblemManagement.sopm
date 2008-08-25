@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMIncidentProblemManagement.sopm,v 1.30 2008-08-18 07:16:12 mh Exp $</CVS>
+    <CVS>$Id: ITSMIncidentProblemManagement.sopm,v 1.31 2008-08-25 17:04:46 mh Exp $</CVS>
     <Name>ITSMIncidentProblemManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -36,8 +36,6 @@
         <File Permission="644" Location="Kernel/Modules/AgentTicketZoom.pm"/>
         <File Permission="644" Location="Kernel/Modules/CustomerTicketPrint.pm"/>
         <File Permission="644" Location="Kernel/Modules/CustomerTicketZoom.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/TicketMenuAddtlITSMField.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/TicketMenuDecision.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketAddtlITSMField.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketClose.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketDecision.dtl"/>

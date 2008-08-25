@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMTicket.xml,v 1.6 2008-08-11 09:34:04 mh Exp $</CVS>
+    <CVS>$Id: ITSMTicket.xml,v 1.7 2008-08-25 17:05:10 mh Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AgentTicketAddtlITSMField" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AgentTicketAddtlITSMField object in the agent interface.</Description>
         <Description Lang="de">Frontendmodul-Registration des AgentTicketAddtlITSMField-Objekts im Agent-Interface.</Description>
@@ -34,7 +34,7 @@
         <SubGroup>Frontend::Agent::Ticket::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::TicketMenuAddtlITSMField</Item>
+                <Item Key="Module">Kernel::Output::HTML::TicketMenuGeneric</Item>
                 <Item Key="Name">Additional ITSM Fields</Item>
                 <Item Key="Description">Change the ITSM fields!</Item>
                 <Item Key="Action">AgentTicketAddtlITSMField</Item>
@@ -49,9 +49,9 @@
         <SubGroup>Frontend::Agent::Ticket::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::TicketMenuDecision</Item>
+                <Item Key="Module">Kernel::Output::HTML::TicketMenuGeneric</Item>
                 <Item Key="Name">Decision</Item>
-                <Item Key="Description">Add a decision note!</Item>
+                <Item Key="Description">Add a decision!</Item>
                 <Item Key="Action">AgentTicketDecision</Item>
                 <Item Key="Link">Action=AgentTicketDecision&amp;TicketID=$QData{"TicketID"}</Item>
             </Hash>

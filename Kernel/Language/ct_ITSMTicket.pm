@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # Copyright (C) 2008 Sistemes OTIC (ibsalut) - Antonio Linde
 # --
-# $Id: ct_ITSMTicket.pm,v 1.2 2008-08-14 11:49:53 mh Exp $
+# $Id: ct_ITSMTicket.pm,v 1.3 2008-08-25 17:05:31 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -37,6 +37,8 @@ sub Data {
     $Lang->{'Change ITSM fields of ticket'} = 'Caviar Camps ITSM addicionals del tiquet';
     $Lang->{'Repair Start Time'}            = 'Temps d\'inici de la reparació';
     $Lang->{'Recovery Start Time'}          = 'Temps d\'inici de la recuperació';
+    $Lang->{'Change the ITSM fields!'}      = '';
+    $Lang->{'Add a decision!'}              = '';
 
     return 1;
 }
