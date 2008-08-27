@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.14 2008-07-28 10:05:43 tr Exp $
+# $Id: TimeAccounting.pm,v 1.15 2008-08-27 10:55:02 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week);
 
@@ -474,7 +474,7 @@ sub ActionSettingsInsert {
         . $Param{ActionStatus} . "')";
 
     # db insert
-    return !$Self->{DBObject}->Do( SQL => $SQL );
+    return if !$Self->{DBObject}->Do( SQL => $SQL );
     return 1;
 }
 
@@ -1215,6 +1215,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.14 $ $Date: 2008-07-28 10:05:43 $
+$Revision: 1.15 $ $Date: 2008-08-27 10:55:02 $
 
 =cut

@@ -1,13 +1,16 @@
 # --
 # scripts/test/TimeAccounting.t - TimeAccounting testscript
-# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.t,v 1.2 2007-10-30 10:48:30 tr Exp $
+# $Id: TimeAccounting.t,v 1.3 2008-08-27 10:55:02 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
+
+use strict;
+use warnings;
 
 # A benchmark test script
 #use Kernel::System::TimeAccounting;
