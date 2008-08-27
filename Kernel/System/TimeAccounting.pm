@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.15 2008-08-27 10:55:02 tr Exp $
+# $Id: TimeAccounting.pm,v 1.16 2008-08-27 12:14:27 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week);
 
@@ -706,20 +706,24 @@ sub UserSettingsUpdate {
     # delete cache
     delete $Self->{'Cache::UserCurrentPeriodGet'};
 
+    USERID:
     for my $UserID ( sort keys %Param ) {
+
+        if (!defined $Param{$UserID}{1}{DateStart} &&  !defined $Param{$UserID}{1}{DateEnd}) {
+            $Self->{LogObject}
+                ->Log( Priority => 'error', Message => "UserSettingUpdate: There are no data for user id $UserID!" );
+            next USERID;
+        }
+
         for (qw(UserID Description)) {
             $Param{$UserID}{$_} = $Self->{DBObject}->Quote( $Param{$UserID}{$_} ) || '';
         }
 
         #set default for ShowOverTime...
-        if ( !defined( $Param{$UserID}{ShowOvertime} ) ) {
-            $Param{$UserID}{ShowOvertime} = 0;
-        }
+        $Param{$UserID}{ShowOvertime} ||= 0;
 
         #set default for CreateProject...
-        if ( !defined( $Param{$UserID}{CreateProject} ) ) {
-            $Param{$UserID}{CreateProject} = 0;
-        }
+        $Param{$UserID}{CreateProject} ||= 0;
 
         # build sql
         my $SQL
@@ -739,6 +743,7 @@ sub UserSettingsUpdate {
         for (qw(UserID Description ShowOvertime CreateProject)) {
             delete $Param{$UserID}{$_};
         }
+
         for my $Period ( keys %{ $Param{$UserID} } ) {
 
             # db quote
@@ -1215,6 +1220,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.15 $ $Date: 2008-08-27 10:55:02 $
+$Revision: 1.16 $ $Date: 2008-08-27 12:14:27 $
 
 =cut

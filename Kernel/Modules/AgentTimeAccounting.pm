@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.21 2008-07-28 10:04:25 tr Exp $
+# $Id: AgentTimeAccounting.pm,v 1.22 2008-08-27 12:14:27 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.21 $) [1];
+$VERSION = qw($Revision: 1.22 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -87,7 +87,6 @@ sub Run {
     # edit the time accounting elements
     # ---------------------------------------------------------- #
     if ( $Self->{Subaction} eq 'Edit' ) {
-        my $Output      = '';
         my %Frontend    = ();
         my %ProjectList = ();
         my %ActionList  = ();
@@ -181,9 +180,9 @@ sub Run {
         # Edit Working Units
         if ( $Param{Status} ) {
             if ( $Param{Delete} ) {
-                $Output .= $Self->{LayoutObject}->Header( Title => "Delete" );
-                $Output .= $Self->{LayoutObject}->NavigationBar();
-                $Output .= $Self->{LayoutObject}->Output(
+                my $Output = $Self->{LayoutObject}->Header( Title => 'Delete' );
+                $Output   .= $Self->{LayoutObject}->NavigationBar();
+                $Output   .= $Self->{LayoutObject}->Output(
                     Data         => { %Param, %Frontend },
                     TemplateFile => 'AgentTimeAccountingDelete'
                 );
@@ -376,22 +375,6 @@ sub Run {
                     $Param{EndTime}   = '';
                 }
 
-#                foreach (qw(Start End)) {
-#                    if ($Data{$WorkingUnitID}{$_ . "Time"} && $Data{$WorkingUnitID}{$_ . "Time"} eq '00:00:00') {
-#                        $Param{$_ . "Hour"} = '00';
-#                        $Param{$_ . "Minute"} = '00';
-#                    }
-#                    elsif ($Data{$WorkingUnitID}{$_ . "Time"}) {
-#                        $Param{$_. "Hour"}   = substr($Data{$WorkingUnitID}{$_}, 0, 2) || '';
-#                        $Param{$_. "Minute"} = substr($Data{$WorkingUnitID}{$_}, 3, 2) || '';
-#                    }
-#                    $Param{$_ . "Time"} = BuildTimeSelection(
-#                        Hour   => $Param{$_. "Hour"},
-#                        Minute => $Param{$_. "Minute"}
-#                        Prefix => $_,
-#                        Format => 'TimeInputFormat',
-#                    );
-#                }
                 for (qw(StartTime EndTime)) {
                     if ( $Data{$WorkingUnitID}{$_} && $Data{$WorkingUnitID}{$_} eq '00:00' ) {
                         $Param{$_} = '';
@@ -613,7 +596,7 @@ sub Run {
         $Param{Weekday_to_Text} = $WeekdayArray[ $Param{Weekday} - 1 ];
 
         # build output
-        $Output = $Self->{LayoutObject}->Header( Title => 'Edit' );
+        my $Output = $Self->{LayoutObject}->Header( Title => 'Edit' );
         if ( !$IncompleteWorkingDays{EnforceInsert} ) {
             $Output .= $Self->{LayoutObject}->NavigationBar();
             $Self->{LayoutObject}->Block(
@@ -1086,13 +1069,11 @@ sub Run {
     # settings for handling time accounting
     # ---------------------------------------------------------- #
     elsif ( $Self->{Subaction} eq 'Setting' ) {
-        my $Output     = '';
         my %Frontend   = ();
         my %Action     = ();
         my %StatusList = ();
-        my %User       = ();
         my %Data       = ();
-        my %UserBasics = ();
+
         for (qw(ActionAction ActionUser NewAction NewUser)) {
             $Param{$_} = $Self->{ParamObject}->GetParam( Param => $_ );
         }
@@ -1146,7 +1127,8 @@ sub Run {
             }
         }
         else {
-            %User = $Self->{TimeAccountingObject}->UserSettingsGet();
+            my %User = $Self->{TimeAccountingObject}->UserSettingsGet();
+
             my %LastPeriod = ();
             for my $UserID ( keys %User ) {
                 $LastPeriod{$UserID} = 0;
@@ -1167,9 +1149,14 @@ sub Run {
                     }
                 }
             }
+
             if ( $Param{ActionUser} || $Param{NewUser} ) {
-                %UserBasics = $Self->{TimeAccountingObject}->UserGet();
+
+                my %UserBasics = $Self->{TimeAccountingObject}->UserGet();
+
+                USERID:
                 for my $UserID ( keys %User ) {
+
                     for (qw(ShowOvertime CreateProject)) {
                         $Data{$UserID}{$_}
                             = $Self->{ParamObject}->GetParam( Param => $_ . '[' . $UserID . ']' );
@@ -1189,6 +1176,13 @@ sub Run {
 
                     $Data{$UserID}{UserID} = $UserID;
                     for my $Period ( keys %{ $User{$UserID} } ) {
+
+                        # the following is because of deactivate user
+                        if ( !defined $Self->{ParamObject}->GetParam( Param => 'DateStart[' . $UserID . '][' . $Period . ']')) {
+                            delete $Data{$UserID};
+                            next USERID;
+                        }
+
                         for (qw(WeeklyHours LeaveDays UserStatus DateStart DateEnd Overtime)) {
                             $Data{$UserID}{$Period}{$_} = $Self->{ParamObject}
                                 ->GetParam( Param => $_ . '[' . $UserID . '][' . $Period . ']' );
@@ -1197,6 +1191,7 @@ sub Run {
                         $LastPeriod{$UserID} = $Period;
                     }
                 }
+
                 if ( !$Self->{TimeAccountingObject}->UserSettingsUpdate(%Data) ) {
                     return $Self->{LayoutObject}
                         ->ErrorScreen( Message => 'Can\'t update user data!' );
@@ -1253,7 +1248,7 @@ sub Run {
             $Param{Action}   = $Action{$ActionID}{Action};
             $Param{ActionID} = $ActionID;
 
-            $Frontend{'StatusOption'} = $Self->{LayoutObject}->OptionStrgHashRef(
+            $Frontend{StatusOption} = $Self->{LayoutObject}->OptionStrgHashRef(
                 Data       => \%StatusList,
                 SelectedID => $Action{$ActionID}{ActionStatus} || '',
                 Name       => "ActionStatus[$Param{ActionID}]",
@@ -1266,8 +1261,8 @@ sub Run {
         }
 
         # Show user data
-        %User       = $Self->{TimeAccountingObject}->UserSettingsGet();
-        %UserBasics = $Self->{TimeAccountingObject}->UserGet();
+        my %User       = $Self->{TimeAccountingObject}->UserSettingsGet();
+        my %UserBasics = $Self->{TimeAccountingObject}->UserGet();
         my %ShownUsers = $Self->{UserObject}->UserList( Type => 'Long', Valid => 1 );
         for my $UserID ( sort { $ShownUsers{$a} cmp $ShownUsers{$b} } keys %ShownUsers ) {
             if ( $User{$UserID} ) {
@@ -1284,10 +1279,10 @@ sub Run {
                 }
 
                 if ( $UserBasics{$UserID}{ShowOvertime} ) {
-                    $UserBasics{$UserID}{ShowOvertime} = "checked";
+                    $UserBasics{$UserID}{ShowOvertime} = 'checked';
                 }
                 if ( $UserBasics{$UserID}{CreateProject} ) {
-                    $UserBasics{$UserID}{CreateProject} = "checked";
+                    $UserBasics{$UserID}{CreateProject} = 'checked';
                 }
 
                 $Self->{LayoutObject}->Block(
@@ -1309,7 +1304,7 @@ sub Run {
                     $Param{DateEnd}     = $User{$UserID}{$Period}{DateEnd};
                     $Param{Period}      = $Period;
 
-                    $Frontend{'StatusOption'} = $Self->{LayoutObject}->OptionStrgHashRef(
+                    $Frontend{StatusOption} = $Self->{LayoutObject}->OptionStrgHashRef(
                         Data       => \%StatusList,
                         SelectedID => $User{$UserID}{$Period}{UserStatus} || '',
                         Name       => "UserStatus[$UserID][$Period]",
@@ -1325,10 +1320,10 @@ sub Run {
 
         if (%ShownUsers) {
             $ShownUsers{''}            = '';
-            $Frontend{'NewUserOption'} = $Self->{LayoutObject}->OptionStrgHashRef(
+            $Frontend{NewUserOption} = $Self->{LayoutObject}->OptionStrgHashRef(
                 Data                => \%ShownUsers,
                 SelectedID          => '',
-                Name                => "NewUserID",
+                Name                => 'NewUserID',
                 LanguageTranslation => 0,
             );
             $Self->{LayoutObject}->Block(
@@ -1338,7 +1333,7 @@ sub Run {
         }
 
         # build output
-        $Output = $Self->{LayoutObject}->Header( Title => "Setting" );
+        my $Output = $Self->{LayoutObject}->Header( Title => 'Setting' );
         $Output .= $Self->{LayoutObject}->NavigationBar();
         $Output .= $Self->{LayoutObject}->Output(
             Data         => { %Param, %Frontend },
@@ -1423,7 +1418,7 @@ sub Run {
             $Param{ProjectDescription} = $Project{ProjectDescription}{$ProjectID};
             $Param{ProjectID}          = $ProjectID;
 
-            $Frontend{'StatusOption'} = $Self->{LayoutObject}->OptionStrgHashRef(
+            $Frontend{StatusOption} = $Self->{LayoutObject}->OptionStrgHashRef(
                 Data       => \%StatusList,
                 SelectedID => $Project{ProjectStatus}{$ProjectID} || '',
                 Name       => "ProjectStatus[$Param{ProjectID}]",
@@ -1436,7 +1431,7 @@ sub Run {
         }
 
         # build output
-        $Output = $Self->{LayoutObject}->Header( Title => "Setting" );
+        $Output = $Self->{LayoutObject}->Header( Title => 'Setting' );
         $Output .= $Self->{LayoutObject}->NavigationBar();
         $Output .= $Self->{LayoutObject}->Output(
             Data         => { %Param, %Frontend },
@@ -1493,7 +1488,7 @@ sub Run {
             }
         }
 
-        $Frontend{'MonthOption'} = $Self->{LayoutObject}->OptionElement(
+        $Frontend{MonthOption} = $Self->{LayoutObject}->OptionElement(
             Data => \%Month,
             Name => "Month",
         );
@@ -1505,7 +1500,7 @@ sub Run {
         for ( my $ID = 2005; $ID <= 2008; $ID++ ) {
             $Year{$ID} = $ID;
         }
-        $Frontend{'YearOption'} = $Self->{LayoutObject}->OptionStrgHashRef(
+        $Frontend{YearOption} = $Self->{LayoutObject}->OptionStrgHashRef(
             Data                => \%Year,
             SelectedID          => $Param{Year} || '',
             Name                => "Year",
@@ -1671,7 +1666,6 @@ sub Run {
     # time accounting project reporting
     # ---------------------------------------------------------- #
     elsif ( $Self->{Subaction} eq 'ProjectReporting' ) {
-        my $Output   = '';
         my %Frontend = ();
 
         # permission check
@@ -1776,13 +1770,13 @@ sub Run {
         $Param{TotalAll} = sprintf( "%.2f", $Param{TotalAll} );
 
         # build output
-        $Output .= $Self->{LayoutObject}->Header( Title => "ProjectReporting" );
-        $Output .= $Self->{LayoutObject}->NavigationBar();
-        $Output .= $Self->{LayoutObject}->Output(
+        my $Output = $Self->{LayoutObject}->Header( Title => 'ProjectReporting' );
+        $Output   .= $Self->{LayoutObject}->NavigationBar();
+        $Output   .= $Self->{LayoutObject}->Output(
             Data         => { %Param, %Frontend },
             TemplateFile => 'AgentTimeAccountingProjectReporting'
         );
-        $Output .= $Self->{LayoutObject}->Footer();
+        $Output   .= $Self->{LayoutObject}->Footer();
         return $Output;
     }
 
