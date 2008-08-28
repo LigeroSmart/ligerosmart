@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: TimeAccounting.sopm,v 1.18 2008-08-27 12:14:26 tr Exp $</CVS>
+    <CVS>$Id: TimeAccounting.sopm,v 1.19 2008-08-28 14:18:25 tr Exp $</CVS>
     <Name>TimeAccounting</Name>
     <Version>0.0.0</Version>
     <Framework>2.1.x</Framework>
@@ -26,19 +26,6 @@
         <File Permission="644" Location="Kernel/Output/HTML/NotificationTimeAccounting.pm"/>
         <File Permission="644" Location="var/httpd/htdocs/images/Standard/time_accounting.png"/>
     </Filelist>
-    <CodeInstall>
-        # load group object
-        require Kernel::System::Group;
-        $Self-&gt;{GroupObject} = Kernel::System::Group-&gt;new(%{$Self});
-
-        # add group
-        $Self-&gt;{GroupObject}-&gt;GroupAdd(
-            Name =&gt; 'time_accounting',
-            Comment =&gt; 'Group for all time accounting user.',
-            ValidID =&gt; 1,
-            UserID =&gt; 1,
-        );
-    </CodeInstall>
     <DatabaseInstall>
         <TableCreate Name="time_accounting_action">
             <Column Name="id"                Required="true"  Type="BIGINT" PrimaryKey="true" AutoIncrement="true"/>
@@ -91,4 +78,111 @@
         <TableDrop Name="time_accounting_user"/>
         <TableDrop Name="time_accounting_user_period"/>
     </DatabaseUninstall>
+    <IntroInstall Type="pre" Title="Install Information" Lang="en">
+
+        &lt;br&gt;
+        &lt;b&gt;WELCOME&lt;/b&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        You are about to install the OTRS package TimeAccounting.&lt;br&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        &lt;b&gt;REQUIRED OTRS PACKAGES&lt;/b&gt;
+        &lt;ul&gt;
+        &lt;li&gt;no dependencies&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+
+    </IntroInstall>
+    <IntroInstall Type="pre" Title="Installation Information" Lang="de">
+
+        &lt;br&gt;
+        &lt;b&gt;WILLKOMMEN&lt;/b&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        Sie sind im Begriff das OTRS-Paket TimeAccounting (Zeiterfassung) zu installieren.&lt;br&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        &lt;b&gt;BENÖTIGTE OTRS-PAKETE&lt;/b&gt;
+        &lt;ul&gt;
+        &lt;li&gt;keine Abhängigkeiten&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+
+    </IntroInstall>
+    <IntroInstall Type="post" Title="Installation Information" Lang="en">
+
+        &lt;br&gt;
+        &lt;b&gt;NOTICE&lt;/b&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        In order to grant users access to the time accounting module, you need to add them as member to the group 'time_accounting'.
+        &lt;br&gt;
+        &lt;br&gt;
+        The menu items that were added by this package will be visible after you log-in to the system again.
+        &lt;br&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+
+    </IntroInstall>
+    <IntroInstall Type="post" Title="Installation Information" Lang="de">
+
+        &lt;br&gt;
+        &lt;b&gt;HINWEIS&lt;/b&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        Um Benutzern Zugriff auf die Zeiterfassung zu gewähren, müssen diese Mitglied der neuen Gruppe 'time_accounting' sein.
+        &lt;br&gt;
+        &lt;br&gt;
+        Die von diesem Paket hinzugefügten Menü-Punkte sind erst nach einem erneuten Anmeldevorgang im System sichtbar.
+        &lt;br&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+
+    </IntroInstall>
+    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="en">
+
+        &lt;br&gt;
+        &lt;b&gt;ATTENTION&lt;/b&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        If you uninstall this package, all database tables that were created during installation will be deleted.
+        All data from these tables will be irrevocably lost!
+        &lt;br&gt;
+        &lt;br&gt;
+        The group 'time_accounting' that was created during package installation will be deactivated.
+        You can activate this group again in the admin area.
+        &lt;br&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+
+    </IntroUninstall>
+    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="de">
+
+        &lt;br&gt;
+        &lt;b&gt;ACHTUNG&lt;/b&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        Bei der Deinstallation werden die von diesem Paket angelegten Datenbank-Tabellen gelöscht.
+        Alle darin enthaltenen Daten gehen unwiderruflich verloren!
+        &lt;br&gt;
+        &lt;br&gt;
+        Die von diesem Paket angelegte Gruppe 'time_accounting' wird deaktiviert.
+        Sie kann jederzeit im Admin-Bereich wieder aktiviert werden.
+        &lt;br&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+
+    </IntroUninstall>
+
 </otrs_package>
