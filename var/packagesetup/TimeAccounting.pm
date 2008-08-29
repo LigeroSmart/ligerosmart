@@ -2,7 +2,7 @@
 # TimeAccounting.pm - code to excecute during package installation
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.2 2008-08-28 14:33:55 tr Exp $
+# $Id: TimeAccounting.pm,v 1.3 2008-08-29 05:48:42 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Group;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
@@ -40,6 +40,9 @@ create an object
     use Kernel::Config;
     use Kernel::System::Log;
     use Kernel::System::Main;
+    use Kernel::System::Time;
+    use Kernel::System::DB;
+    use Kernel::System::XML;
 
     my $ConfigObject = Kernel::Config->new();
     my $LogObject    = Kernel::System::Log->new(
@@ -49,10 +52,28 @@ create an object
         ConfigObject => $ConfigObject,
         LogObject    => $LogObject,
     );
+    my $TimeObject = Kernel::System::Time->new(
+        ConfigObject => $ConfigObject,
+        LogObject    => $LogObject,
+    );
+    my $DBObject = Kernel::System::DB->new(
+        ConfigObject => $ConfigObject,
+        LogObject    => $LogObject,
+        MainObject   => $MainObject,
+    );
+    my $XMLObject = Kernel::System::XML->new(
+        ConfigObject => $ConfigObject,
+        LogObject    => $LogObject,
+        DBObject     => $DBObject,
+        MainObject   => $MainObject,
+    );
     my $CodeObject = var::packagesetup::TimeAccounting->new(
         ConfigObject => $ConfigObject,
         LogObject    => $LogObject,
         MainObject   => $MainObject,
+        TimeObject   => $TimeObject,
+        DBObject     => $DBObject,
+        XMLObject    => $XMLObject,
     );
 
 =cut
@@ -65,7 +86,7 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Object (qw(ConfigObject LogObject MainObject)) {
+    for my $Object (qw(ConfigObject LogObject MainObject TimeObject DBObject XMLObject)) {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
     $Self->{GroupObject}          = Kernel::System::Group->new( %{$Self} );
@@ -269,6 +290,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2008-08-28 14:33:55 $
+$Revision: 1.3 $ $Date: 2008-08-29 05:48:42 $
 
 =cut
