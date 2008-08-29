@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LinkObjectFAQ.pm - layout backend module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: LinkObjectFAQ.pm,v 1.6 2008-07-07 11:00:30 mh Exp $
+# $Id: LinkObjectFAQ.pm,v 1.7 2008-08-29 15:40:47 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -28,7 +28,8 @@ sub new {
 
     # check needed objects
     for my $Object (
-        qw(ConfigObject LogObject MainObject DBObject UserObject EncodeObject QueueObject GroupObject ParamObject TimeObject UserID)
+        qw(ConfigObject LogObject MainObject DBObject UserObject EncodeObject
+        QueueObject GroupObject ParamObject TimeObject LanguageObject UserLanguage UserID)
         )
     {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
