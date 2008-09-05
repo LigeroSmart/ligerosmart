@@ -1,8 +1,8 @@
 # --
-# ITSMCIPAllocate.t - general catalog tests
+# ITSMCIPAllocate.t - criticality, impact priority tests
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMCIPAllocate.t,v 1.6 2008-03-06 17:02:24 mh Exp $
+# $Id: ITSMCIPAllocate.t,v 1.7 2008-09-05 13:44:45 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
