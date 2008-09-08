@@ -1,6 +1,6 @@
 Return-Path: <nagios@example.com>
-To: otrs@otrs.com
-Subject: ** PROBLEM alert 1 - test host is DOWN **
+To: otrs@example.com
+Subject: ** PROBLEM alert 1 - delphin host is DOWN **
 Message-Id: <20070317231546.0DFD55DC00F@h53795.example.com>
 Date: Sun, 18 Mar 2007 00:15:46 +0100 (CET)
 From: nagios@example.com
@@ -11,10 +11,10 @@ Mime-Version: 1.0
 Notification Type: PROBLEM
 Host: delphin
 State: DOWN for 0d 0h 0m 0s
-Address: 81.92.6.126
+Address: 127.1.1.1
 Info:
 
-CRITICAL - Time to live exceeded (81.92.6.126)
+CRITICAL - Time to live exceeded (127.1.1.1)
 
 Date/Time: Sun Mar 18 00:18:30 CET 2007
 

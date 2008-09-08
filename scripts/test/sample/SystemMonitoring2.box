@@ -1,6 +1,6 @@
 Return-Path: <nagios@example.com>
-To: otrs@otrs.com
-Subject: ** RECOVERY alert 2 - test host is UP **
+To: otrs@example.com
+Subject: ** RECOVERY alert 2 - delphin host is UP **
 Message-Id: <20070317231946.0DFD55DC00F@h53795.example.com>
 Date: Sun, 18 Mar 2007 00:19:46 +0100 (CET)
 From: nagios@example.com
@@ -11,7 +11,7 @@ Mime-Version: 1.0
 Notification Type: RECOVERY
 Host: delphin
 State: UP for 0d 0h 0m 0s
-Address: 81.92.6.126
+Address: 172.1.1.1
 Info:
 
 PING OK - Packet loss = 0%, RTA = 15.09 ms
