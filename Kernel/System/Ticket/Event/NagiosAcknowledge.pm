@@ -2,7 +2,7 @@
 # Kernel/System/Ticket/Event/NagiosAcknowledge.pm - acknowlege nagios tickets
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: NagiosAcknowledge.pm,v 1.4 2008-09-08 22:02:22 martin Exp $
+# $Id: NagiosAcknowledge.pm,v 1.5 2008-09-08 23:01:07 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -81,6 +81,9 @@ sub Run {
         $Ticket{$Key} =~ s/;//g;
         $Data =~ s/<$Key>/$Ticket{$Key}/g;
     }
+
+    # replace config tags
+    $Data =~ s{<CONFIG_(.+?)>}{$Self->{ConfigObject}->Get($1)}egx;
 
     # replace login
     $Data =~ s/<LOGIN>/$User{UserLogin}/g;
