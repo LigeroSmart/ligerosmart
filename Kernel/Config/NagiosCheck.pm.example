@@ -1,0 +1,75 @@
+# --
+# Example Configfile for otrs.NagiosCheck - OTRS Nagios checker
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# --
+# $Id: NagiosCheck.pm.example,v 1.1 2008-09-08 20:15:29 martin Exp $
+# --
+# For possible search options see:
+# http://dev.otrs.org/cvs/Kernel/System/Ticket.html -> TicketSearch()
+# Examples see below
+# --
+
+%Config = (
+   Search => {
+
+       # tickets created in the last 120 minutes
+       TicketCreateTimeNewerMinutes => 120,
+
+       # ticket number as STRING or as ARRAYREF
+#        TicketNumber => '%123546%',
+#        TicketNumber => ['%123546%', '%123666%'],
+
+       # ticket queues
+#        Queues   => ['system queue', 'other queue'],
+
+       # ticket types
+#        Types   => ['normal', 'change', 'incident'],
+
+       # ticket priorities
+#        Priorities  => ['1 very low', '2 low', '3 normal'],
+
+       # ticket services
+#        Services   => ['Service A', 'Service B'],
+
+       # ticket locks
+#        Locks   => ['unlock'],
+
+       # ticket customers
+#        CustomerID => '123',
+#        CustomerID => ['123', 'ABC'],
+
+       # 1..16 free text fields
+#        TicketFreeKey1  => 'Product',
+#        TicketFreeText1 => 'adasd',
+
+       # or with multi options as array ref or string possible
+#        TicketFreeKey2  => ['Product', 'Product2'],
+#        TicketFreeText2 => ['Browser', 'Sound', 'Mouse'],
+   },
+
+# Declaration of treshholds
+# min_warn_treshhold > Number of tickets -> WARNING
+# max_warn_treshhold < Number of tickets -> WARNING
+# min_crit_treshhold > Number of tickets -> ALARM
+# max_warn_treshhold < Number of tickets -> ALARM
+
+   min_warn_treshhold => 5,
+   max_warn_treshhold => 10,
+   min_crit_treshhold => 2,
+   max_crit_treshhold => 20,
+
+# Information used by Nagios
+# Name of check shown in Nagios Status Information
+   checkname => 'OTRS Checker',
+
+# Text shown in Status Information if everything is ok
+   OK_TXT    => 'enjoy   tickets:',
+
+# Text shown in Status Information if warning threshhold reached
+   WARN_TXT  => 'number of tickets:',
+
+# Text shown in Status Information if critical threshhold reached
+   CRIT_TXT  => 'critical number of tickets:',
+
+);
+
