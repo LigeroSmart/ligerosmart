@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: SystemMonitoring.xml,v 1.2 2008-09-08 20:15:29 martin Exp $</CVS>
+    <CVS>$Id: SystemMonitoring.xml,v 1.3 2008-09-08 21:49:45 martin Exp $</CVS>
     <ConfigItem Name="PostMaster::PreFilterModule###1-SystemMonitoring" Required="0" Valid="1">
         <Description Lang="en">Basic mail interface to System Monitoring Suites.</Description>
         <Description Lang="de">Einfache Email Schnittstelle zu System Monitoring Suites.</Description>
@@ -40,7 +40,7 @@
         <Group>Nagios</Group>
         <SubGroup>Acknowledge</SubGroup>
         <Setting>
-            <String Regex="">ACKNOWLEDGE_HOST_PROBLEM;&lt;HOST_NAME&gt;;1;1;1;jb;&lt;TicketNumber&gt; https://otrsserver/otrs/index.pl?Action=AgentTicketZoom&amp;TicketID=&lt;TicketID&gt; &lt;UNIXTIME&gt;</String>
+            <String Regex="">[&lt;UNIXTIME&gt;] ACKNOWLEDGE_HOST_PROBLEM;&lt;HOST_NAME&gt;;1;1;1;&lt;LOGIN&gt;;&lt;TicketNumber&gt; https://otrsserver/otrs/index.pl?Action=AgentTicketZoom&amp;TicketID=&lt;TicketID&gt;</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Nagios::Acknowledge::NamedPipe::Service" Required="0" Valid="1">
@@ -49,7 +49,7 @@
         <Group>Nagios</Group>
         <SubGroup>Acknowledge</SubGroup>
         <Setting>
-            <String Regex="">ACKNOWLEDGE_SRV_PROBLEM;&lt;HOST_NAME&gt;;&lt;SERVICE_NAME&gt;;1;1;1;jb;&lt;TicketNumber&gt; https://otrsserver/otrs/index.pl?Action=AgentTicketZoom&amp;TicketID=&lt;TicketID&gt; &lt;UNIXTIME&gt;</String>
+            <String Regex="">[&lt;UNIXTIME&gt;] ACKNOWLEDGE_SRV_PROBLEM;&lt;HOST_NAME&gt;;&lt;SERVICE_NAME&gt;;1;1;1;&lt;LOGIN&gt;;&lt;TicketNumber&gt; https://otrsserver/otrs/index.pl?Action=AgentTicketZoom&amp;TicketID=&lt;TicketID&gt;</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::EventModulePost###9-NagiosAcknowledge" Required="0" Valid="0">
