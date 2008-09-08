@@ -2,7 +2,7 @@
 # Kernel/System/Ticket/Event/NagiosAcknowledge.pm - acknowlege nagios tickets
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: NagiosAcknowledge.pm,v 1.1 2008-09-08 20:15:29 martin Exp $
+# $Id: NagiosAcknowledge.pm,v 1.2 2008-09-08 20:33:56 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -68,7 +68,7 @@ sub Run {
 
     # replace ticket tags
     for my $Key ( keys %Ticket ) {
-        next if defined !$Ticket{$Key};
+        next if !defined $Ticket{$Key};
 
         # strip not allowd chars
         $Ticket{$Key} =~ s/'//g;
@@ -82,12 +82,13 @@ sub Run {
     # replace OUTPUTSTRING
     $CMD =~ s/<OUTPUTSTRING>/$Data/g;
 
-    system ( $Data );
+print STDERR "$CMD\n";
+    system ( $CMD );
 
     $Self->{TicketObject}->HistoryAdd(
         TicketID     => $Param{TicketID},
         HistoryType  => 'Misc',
-        Name         => "Send Acknowledge to Nagios",
+        Name         => "Sent Acknowledge to Nagios",
         CreateUserID => 1 || $Param{UserID},
     );
 
