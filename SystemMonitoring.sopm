@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.1">
-    <CVS>$Id: SystemMonitoring.sopm,v 1.7 2008-09-08 20:15:29 martin Exp $</CVS>
+    <CVS>$Id: SystemMonitoring.sopm,v 1.8 2008-09-08 22:48:55 martin Exp $</CVS>
     <Name>SystemMonitoring</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -16,6 +16,9 @@
         <File Permission="644" Location="Kernel/Config/Files/SystemMonitoring.xml"/>
         <File Permission="644" Location="Kernel/Config/NagiosCheck.pm.example"/>
         <File Permission="644" Location="doc/SystemMonitoring.txt"/>
+        <File Permission="644" Location="scripts/test/SystemMonitoring.t"/>
+        <File Permission="644" Location="scripts/test/sample/SystemMonitoring1.box"/>
+        <File Permission="644" Location="scripts/test/sample/SystemMonitoring2.box"/>
     </Filelist>
     <IntroInstallPost Title="Using the SystemMonitoring Module" Lang="en">For configuration instructions please refer to the information in doc/SystemMonitoring.txt.</IntroInstallPost>
     <IntroInstallPost Title="Konfiguration des SystemMonitoring Moduls" Lang="de">Eine Anleitung zur Konfiguration des SystemMonitoring Moduls findet sich in der Datei doc/SystemMonitoring.txt.</IntroInstallPost>
