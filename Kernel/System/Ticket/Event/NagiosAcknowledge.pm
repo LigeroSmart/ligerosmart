@@ -2,7 +2,7 @@
 # Kernel/System/Ticket/Event/NagiosAcknowledge.pm - acknowlege nagios tickets
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: NagiosAcknowledge.pm,v 1.3 2008-09-08 21:49:45 martin Exp $
+# $Id: NagiosAcknowledge.pm,v 1.4 2008-09-08 22:02:22 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -89,7 +89,7 @@ sub Run {
     $Data =~ s/<HOST_NAME>/$Ticket{TicketFreeText1}/g;
 
     # replace time stamp
-    $Data =~ s/<HOST_SERVICE>/$Ticket{TicketFreeText2}/g;
+    $Data =~ s/<SERVICE_NAME>/$Ticket{TicketFreeText2}/g;
 
     # replace time stamp
     my $Time = time();
