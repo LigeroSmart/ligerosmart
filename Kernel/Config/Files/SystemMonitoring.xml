@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: SystemMonitoring.xml,v 1.7 2008-09-08 23:10:54 martin Exp $</CVS>
+    <CVS>$Id: SystemMonitoring.xml,v 1.8 2008-09-09 16:10:12 martin Exp $</CVS>
     <ConfigItem Name="PostMaster::PreFilterModule###1-SystemMonitoring" Required="0" Valid="1">
         <Description Lang="en">Basic mail interface to System Monitoring Suites.</Description>
         <Description Lang="de">Einfache Email Schnittstelle zu System Monitoring Suites.</Description>
@@ -28,8 +28,8 @@
     <ConfigItem Name="Nagios::Acknowledge::CMD" Required="0" Valid="1">
         <Description Lang="en">Named pipe acknowledge command.</Description>
         <Description Lang="de">Named pipe Acknowledge Befehl.</Description>
-        <Group>Nagios</Group>
-        <SubGroup>Acknowledge</SubGroup>
+        <Group>SystemMonitoring</Group>
+        <SubGroup>Nagios::Acknowledge</SubGroup>
         <Setting>
             <String Regex="">echo '&lt;OUTPUTSTRING&gt;' > /usr/local/nagios/var/rw/nagios.cmd</String>
         </Setting>
@@ -37,8 +37,8 @@
     <ConfigItem Name="Nagios::Acknowledge::NamedPipe::Host" Required="0" Valid="1">
         <Description Lang="en">Named pipe acknowledge format for host.</Description>
         <Description Lang="de">Named pipe Acknowledge Format für Host.</Description>
-        <Group>Nagios</Group>
-        <SubGroup>Acknowledge</SubGroup>
+        <Group>SystemMonitoring</Group>
+        <SubGroup>Nagios::Acknowledge</SubGroup>
         <Setting>
             <String Regex="">[&lt;UNIXTIME&gt;] ACKNOWLEDGE_HOST_PROBLEM;&lt;HOST_NAME&gt;;1;1;1;&lt;LOGIN&gt;;&lt;a href="&lt;CONFIG_HttpType&gt;://&lt;CONFIG_FQDN&gt;/&lt;CONFIG_ScriptAlias&gt;index.pl?Action=AgentTicketZoom&amp;TicketID=&lt;TicketID&gt;"&gt;&lt;CONFIG_Ticket::Hook&gt;&lt;TicketNumber&gt;&lt;/a&gt;</String>
         </Setting>
@@ -46,8 +46,8 @@
     <ConfigItem Name="Nagios::Acknowledge::NamedPipe::Service" Required="0" Valid="1">
         <Description Lang="en">Named pipe acknowledge format for service.</Description>
         <Description Lang="de">Named pipe Acknowledge Format für Service.</Description>
-        <Group>Nagios</Group>
-        <SubGroup>Acknowledge</SubGroup>
+        <Group>SystemMonitoring</Group>
+        <SubGroup>Nagios::Acknowledge</SubGroup>
         <Setting>
             <String Regex="">[&lt;UNIXTIME&gt;] ACKNOWLEDGE_SVC_PROBLEM;&lt;HOST_NAME&gt;;&lt;SERVICE_NAME&gt;;1;1;1;&lt;LOGIN&gt;;&lt;a href="&lt;CONFIG_HttpType&gt;://&lt;CONFIG_FQDN&gt;/&lt;CONFIG_ScriptAlias&gt;index.pl?Action=AgentTicketZoom&amp;TicketID=&lt;TicketID&gt;"&gt;&lt;CONFIG_Ticket::Hook&gt;&lt;TicketNumber&gt;&lt;/a&gt;</String>
         </Setting>
@@ -55,8 +55,8 @@
     <ConfigItem Name="Ticket::EventModulePost###9-NagiosAcknowledge" Required="0" Valid="0">
         <Description Lang="en">Ticket event module to send an acknowlage to Nagios.</Description>
         <Description Lang="de">Ticket Event Modul für automatisches senden eines Acknowlage an Nagios.</Description>
-        <Group>Nagios</Group>
-        <SubGroup>Acknowledge</SubGroup>
+        <Group>SystemMonitoring</Group>
+        <SubGroup>Nagios::Acknowledge</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::Ticket::Event::NagiosAcknowledge</Item>
