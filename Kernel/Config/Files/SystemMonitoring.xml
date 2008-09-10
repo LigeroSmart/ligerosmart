@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: SystemMonitoring.xml,v 1.8 2008-09-09 16:10:12 martin Exp $</CVS>
+    <CVS>$Id: SystemMonitoring.xml,v 1.9 2008-09-10 19:56:47 martin Exp $</CVS>
     <ConfigItem Name="PostMaster::PreFilterModule###1-SystemMonitoring" Required="0" Valid="1">
         <Description Lang="en">Basic mail interface to System Monitoring Suites.</Description>
         <Description Lang="de">Einfache Email Schnittstelle zu System Monitoring Suites.</Description>
@@ -25,7 +25,20 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="Nagios::Acknowledge::CMD" Required="0" Valid="1">
+    <ConfigItem Name="Nagios::Acknowledge::Type" Required="0" Valid="1">
+        <Description Lang="en">Define Nagios acknowledge type.</Description>
+        <Description Lang="de">.</Description>
+        <Group>SystemMonitoring</Group>
+        <SubGroup>Nagios::Acknowledge</SubGroup>
+        <Setting>
+            <Option SelectedID="">
+                <Item Key="">-</Item>
+                <Item Key="pipe">pipe</Item>
+                <Item Key="http">http</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Nagios::Acknowledge::NamedPipe::CMD" Required="0" Valid="1">
         <Description Lang="en">Named pipe acknowledge command.</Description>
         <Description Lang="de">Named pipe Acknowledge Befehl.</Description>
         <Group>SystemMonitoring</Group>
@@ -62,6 +75,33 @@
                 <Item Key="Module">Kernel::System::Ticket::Event::NagiosAcknowledge</Item>
                 <Item Key="Event">TicketLockUpdate</Item>
             </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Nagios::Acknowledge::HTTP::URL" Required="0" Valid="1">
+        <Description Lang="en">The http acknowledge url.</Description>
+        <Description Lang="de">Die http Acknowledge URL.</Description>
+        <Group>SystemMonitoring</Group>
+        <SubGroup>Nagios::Acknowledge</SubGroup>
+        <Setting>
+            <String Regex="">http://nagios.example.com/nagios/cgi-bin/cmd.cgi?cmd_typ=34&amp;host=&lt;HOST_NAME&gt;&amp;service=&lt;SERVICE_NAME&gt;</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Nagios::Acknowledge::HTTP::User" Required="0" Valid="1">
+        <Description Lang="en">The http acknowledge user.</Description>
+        <Description Lang="de">Die http Acknowledge Benutzer.</Description>
+        <Group>SystemMonitoring</Group>
+        <SubGroup>Nagios::Acknowledge</SubGroup>
+        <Setting>
+            <String Regex="">John</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Nagios::Acknowledge::HTTP::Password" Required="0" Valid="1">
+        <Description Lang="en">The http acknowledge password.</Description>
+        <Description Lang="de">Die http Acknowledge Passwort.</Description>
+        <Group>SystemMonitoring</Group>
+        <SubGroup>Nagios::Acknowledge</SubGroup>
+        <Setting>
+            <String Regex="">some_pass</String>
         </Setting>
     </ConfigItem>
 </otrs_config>

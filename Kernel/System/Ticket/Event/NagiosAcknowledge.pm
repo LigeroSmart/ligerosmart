@@ -2,7 +2,7 @@
 # Kernel/System/Ticket/Event/NagiosAcknowledge.pm - acknowlege nagios tickets
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: NagiosAcknowledge.pm,v 1.5 2008-09-08 23:01:07 martin Exp $
+# $Id: NagiosAcknowledge.pm,v 1.6 2008-09-10 19:56:47 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -13,9 +13,10 @@ package Kernel::System::Ticket::Event::NagiosAcknowledge;
 
 use strict;
 use warnings;
+use LWP::UserAgent;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -46,6 +47,10 @@ sub Run {
         }
     }
 
+    # check if acknowledge is active
+    my $Type = $Self->{ConfigObject}->Get('Nagios::Acknowledge::Type');
+    return 1 if !$Type;
+
     # check if it's a Nagios related ticket
     my %Ticket = $Self->{TicketObject}->TicketGet( TicketID => $Param{TicketID} );
     if ( !$Ticket{TicketFreeText1} ) {
@@ -62,8 +67,62 @@ sub Run {
         Cached => 1, # not required -> 0|1 (default 0)
     );
 
+    my $Return;
+    if ( $Type eq 'pipe' ) {
+        $Return = $Self->_Pipe(
+            Ticket => \%Ticket,
+            User   => \%User,
+        );
+    }
+    elsif ( $Type eq 'http' ) {
+        $Return = $Self->_HTTP(
+            Ticket => \%Ticket,
+            User   => \%User,
+        );
+    }
+    else {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Unknown Nagios acknowledge type ($Type)!",
+        );
+        return 1;
+    }
+
+    if ( $Return ) {
+        $Self->{TicketObject}->HistoryAdd(
+            TicketID     => $Param{TicketID},
+            HistoryType  => 'Misc',
+            Name         => "Sent Acknowledge to Nagios ($Type).",
+            CreateUserID => $Param{UserID},
+        );
+        return 1;
+    }
+    else {
+        $Self->{TicketObject}->HistoryAdd(
+            TicketID     => $Param{TicketID},
+            HistoryType  => 'Misc',
+            Name         => "Was not able to send Acknowledge to Nagios ($Type)!",
+            CreateUserID => $Param{UserID},
+        );
+        return;
+    }
+}
+
+sub _Pipe {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for (qw(Ticket User)) {
+        if ( !$Param{$_} ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+            return;
+        }
+    }
+    my %Ticket = %{ $Param{Ticket} };
+    my %User   = %{ $Param{User} };
+
     # send acknowledge to nagios
-    my $CMD = $Self->{ConfigObject}->Get( 'Nagios::Acknowledge::CMD' );
+    my $CMD = $Self->{ConfigObject}->Get( 'Nagios::Acknowledge::NamedPipe::CMD' );
     my $Data;
     if ( $Ticket{TicketFreeText2} !~ /^host$/i) {
         $Data = $Self->{ConfigObject}->Get( 'Nagios::Acknowledge::NamedPipe::Service' );
@@ -104,14 +163,48 @@ sub Run {
 #print STDERR "$CMD\n";
     system ( $CMD );
 
-    $Self->{TicketObject}->HistoryAdd(
-        TicketID     => $Param{TicketID},
-        HistoryType  => 'Misc',
-        Name         => "Sent Acknowledge to Nagios",
-        CreateUserID => $Param{UserID},
-    );
-
     return 1;
 }
 
+sub _HTTP {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for (qw(Ticket User)) {
+        if ( !$Param{$_} ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+            return;
+        }
+    }
+    my %Ticket = %{ $Param{Ticket} };
+    my %User   = %{ $Param{User} };
+
+    my $URL  = $Self->{ConfigObject}->Get('Nagios::Acknowledge::HTTP::URL');
+    my $User = $Self->{ConfigObject}->Get('Nagios::Acknowledge::HTTP::User');
+    my $Pw   = $Self->{ConfigObject}->Get('Nagios::Acknowledge::HTTP::Password');
+
+    # replace host
+    $URL =~ s/<HOST_NAME>/$Ticket{TicketFreeText1}/g;
+
+    # replace time stamp
+    $URL =~ s/<SERVICE_NAME>/$Ticket{TicketFreeText2}/g;
+
+    my $UserAgent = LWP::UserAgent->new();
+    $UserAgent->timeout( 15 );
+
+    my $Request = HTTP::Request->new( GET => $URL );
+    $Request->authorization_basic( $User, $Pw );
+    my $Response = $UserAgent->request($Request);
+#    my $Response = $UserAgent->get( $URL );
+    if ( !$Response->is_success() ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Can't request $URL: " . $Response->status_line(),
+        );
+        return;
+    }
+#    return $Response->content();
+
+    return 1;
+}
 1;
