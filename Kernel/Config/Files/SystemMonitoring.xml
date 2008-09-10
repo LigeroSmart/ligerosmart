@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: SystemMonitoring.xml,v 1.9 2008-09-10 19:56:47 martin Exp $</CVS>
+    <CVS>$Id: SystemMonitoring.xml,v 1.10 2008-09-10 22:02:13 martin Exp $</CVS>
     <ConfigItem Name="PostMaster::PreFilterModule###1-SystemMonitoring" Required="0" Valid="1">
         <Description Lang="en">Basic mail interface to System Monitoring Suites.</Description>
         <Description Lang="de">Einfache Email Schnittstelle zu System Monitoring Suites.</Description>
@@ -65,7 +65,7 @@
             <String Regex="">[&lt;UNIXTIME&gt;] ACKNOWLEDGE_SVC_PROBLEM;&lt;HOST_NAME&gt;;&lt;SERVICE_NAME&gt;;1;1;1;&lt;LOGIN&gt;;&lt;a href="&lt;CONFIG_HttpType&gt;://&lt;CONFIG_FQDN&gt;/&lt;CONFIG_ScriptAlias&gt;index.pl?Action=AgentTicketZoom&amp;TicketID=&lt;TicketID&gt;"&gt;&lt;CONFIG_Ticket::Hook&gt;&lt;TicketNumber&gt;&lt;/a&gt;</String>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="Ticket::EventModulePost###9-NagiosAcknowledge" Required="0" Valid="0">
+    <ConfigItem Name="Ticket::EventModulePost###9-NagiosAcknowledge" Required="0" Valid="1">
         <Description Lang="en">Ticket event module to send an acknowlage to Nagios.</Description>
         <Description Lang="de">Ticket Event Modul für automatisches senden eines Acknowlage an Nagios.</Description>
         <Group>SystemMonitoring</Group>
@@ -83,7 +83,7 @@
         <Group>SystemMonitoring</Group>
         <SubGroup>Nagios::Acknowledge</SubGroup>
         <Setting>
-            <String Regex="">http://nagios.example.com/nagios/cgi-bin/cmd.cgi?cmd_typ=34&amp;host=&lt;HOST_NAME&gt;&amp;service=&lt;SERVICE_NAME&gt;</String>
+            <String Regex="">http://nagios.example.com/nagios/cgi-bin/cmd.cgi?cmd_typ=&lt;CMD_TYP&gt;&amp;host=&lt;HOST_NAME&gt;&amp;service=&lt;SERVICE_NAME&gt;&amp;sticky_ack=on&amp;send_notification=on&amp;persistent=on&amp;com_data=&lt;TicketNumber&gt;&amp;btnSubmit=Commit</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Nagios::Acknowledge::HTTP::User" Required="0" Valid="1">

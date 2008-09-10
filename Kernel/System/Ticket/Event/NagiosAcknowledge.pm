@@ -2,7 +2,7 @@
 # Kernel/System/Ticket/Event/NagiosAcknowledge.pm - acknowlege nagios tickets
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: NagiosAcknowledge.pm,v 1.6 2008-09-10 19:56:47 martin Exp $
+# $Id: NagiosAcknowledge.pm,v 1.7 2008-09-10 22:02:13 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -16,7 +16,7 @@ use warnings;
 use LWP::UserAgent;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -183,11 +183,31 @@ sub _HTTP {
     my $User = $Self->{ConfigObject}->Get('Nagios::Acknowledge::HTTP::User');
     my $Pw   = $Self->{ConfigObject}->Get('Nagios::Acknowledge::HTTP::Password');
 
+    if ( $Ticket{TicketFreeText2} !~ /^host$/i) {
+        $URL =~ s/<CMD_TYP>/34/g;
+    }
+    else {
+        $URL =~ s/<CMD_TYP>/33/g;
+    }
+
     # replace host
     $URL =~ s/<HOST_NAME>/$Ticket{TicketFreeText1}/g;
 
     # replace time stamp
     $URL =~ s/<SERVICE_NAME>/$Ticket{TicketFreeText2}/g;
+    # replace ticket tags
+
+    for my $Key ( keys %Ticket ) {
+        next if !defined $Ticket{$Key};
+
+        # strip not allowd chars
+        $Ticket{$Key} =~ s/'//g;
+        $Ticket{$Key} =~ s/;//g;
+        $URL =~ s/<$Key>/$Ticket{$Key}/g;
+    }
+
+    # replace config tags
+    $URL =~ s{<CONFIG_(.+?)>}{$Self->{ConfigObject}->Get($1)}egx;
 
     my $UserAgent = LWP::UserAgent->new();
     $UserAgent->timeout( 15 );
