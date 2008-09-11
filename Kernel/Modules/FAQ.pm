@@ -2,7 +2,7 @@
 # Kernel/Modules/FAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.19 2008-08-05 09:33:31 mh Exp $
+# $Id: FAQ.pm,v 1.20 2008-09-11 18:22:29 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::FAQ;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -725,87 +725,6 @@ sub GetItemSmallView {
         );
     }
 
-    # get linked objects
-    my $ExistingLinks = $Self->{LinkObject}->LinkList(
-        Object => 'FAQ',
-        Key    => $GetParam{ItemID},
-        State  => 'Valid',
-        UserID => $Self->{UserID},
-    );
-
-    # prepare the output hash
-    for my $Object ( sort { lc $a cmp lc $b } keys %{$ExistingLinks} ) {
-
-        # get object description
-        my %ObjectDescription = $Self->{LinkObject}->ObjectDescriptionGet(
-            Object => $Object,
-            UserID => $Self->{UserID},
-        );
-
-        for my $Type ( sort { lc $a cmp lc $b } keys %{ $ExistingLinks->{$Object} } ) {
-
-            # lookup type id
-            my $TypeID = $Self->{LinkObject}->TypeLookup(
-                Name   => $Type,
-                UserID => $Self->{UserID},
-            );
-
-            # get type data
-            my %TypeData = $Self->{LinkObject}->TypeGet(
-                TypeID => $TypeID,
-                UserID => $Self->{UserID},
-            );
-
-            for my $Direction ( keys %{ $ExistingLinks->{$Object}->{$Type} } ) {
-
-                my $LinkTypeName
-                    = $Direction eq 'Target' ? $TypeData{TargetName} : $TypeData{SourceName};
-
-                $Self->{LayoutObject}->Block(
-                    Name => 'Link',
-                    Data => {
-                        %Param,
-                        LinkTypeName => $LinkTypeName,
-                    },
-                );
-
-                for my $ItemKey ( @{ $ExistingLinks->{$Object}->{$Type}->{$Direction} } ) {
-
-                    # get item description
-                    my %ItemDescription = $Self->{LinkObject}->ItemDescriptionGet(
-                        Object => $Object,
-                        Key    => $ItemKey,
-                        UserID => $Self->{UserID},
-                    );
-
-                    # extract cell value
-                    my $Content = $ItemDescription{ItemData}
-                        ->{ $ObjectDescription{Overview}->{Normal}->{Key} } || '';
-
-                    my $LinkString = $Self->{LayoutObject}->LinkObjectContentStringCreate(
-                        SourceObject => {
-                            Object => 'FAQ',
-                            Key    => $Self->{ItemID},
-                        },
-                        TargetObject => {
-                            Object => $Object,
-                            Key    => $ItemKey,
-                        },
-                        TargetItemDescription => \%ItemDescription,
-                        ColumnData            => $ObjectDescription{Overview}->{Normal},
-                        Content               => $Content,
-                    );
-
-                    $Self->{LayoutObject}->Block(
-                        Name => 'LinkItem',
-                        Data => {
-                            LinkString => $LinkString,
-                        },
-                    );
-                }
-            }
-        }
-    }
     return;
 }
 
