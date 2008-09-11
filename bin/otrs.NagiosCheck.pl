@@ -3,7 +3,7 @@
 # otrs.NagiosCheck.pl - OTRS Nagios checker
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: otrs.NagiosCheck.pl,v 1.1 2008-09-08 20:15:29 martin Exp $
+# $Id: otrs.NagiosCheck.pl,v 1.2 2008-09-11 18:34:15 martin Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 use File::Basename;
 use FindBin qw($RealBin);
@@ -129,5 +129,5 @@ for my $Type (qw(crit_treshhold warn_treshhold)) {
 }
 
 # return ok
-print "$Config{checkname} OK $Config{OK_TXT} $TicketCount\n";
+print "$Config{checkname} OK $Config{OK_TXT} $TicketCount|tickets=$TicketCount\n";
 exit 0;
