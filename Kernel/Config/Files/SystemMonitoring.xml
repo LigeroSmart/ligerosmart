@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: SystemMonitoring.xml,v 1.11 2008-09-10 22:13:45 martin Exp $</CVS>
+    <CVS>$Id: SystemMonitoring.xml,v 1.12 2008-09-11 18:36:15 martin Exp $</CVS>
     <ConfigItem Name="PostMaster::PreFilterModule###1-SystemMonitoring" Required="0" Valid="1">
         <Description Lang="en">Basic mail interface to System Monitoring Suites.</Description>
         <Description Lang="de">Einfache Email Schnittstelle zu System Monitoring Suites.</Description>
@@ -67,7 +67,7 @@
     </ConfigItem>
     <ConfigItem Name="Ticket::EventModulePost###9-NagiosAcknowledge" Required="0" Valid="1">
         <Description Lang="en">Ticket event module to send an acknowlage to Nagios.</Description>
-        <Description Lang="de">Ticket Event Modul für automatisches senden eines Acknowlage an Nagios.</Description>
+        <Description Lang="de">Ticket Event Modul für automatisches senden eines Acknowledge an Nagios.</Description>
         <Group>SystemMonitoring</Group>
         <SubGroup>Nagios::Acknowledge</SubGroup>
         <Setting>
