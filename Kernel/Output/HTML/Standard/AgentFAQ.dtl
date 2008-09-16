@@ -2,7 +2,7 @@
 # AgentFAQ.dtl - provides HTML view for faq articles
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.dtl,v 1.19 2008-09-16 11:13:16 ub Exp $
+# $Id: AgentFAQ.dtl,v 1.20 2008-09-16 12:18:58 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -128,7 +128,7 @@
           <td class="contentkey">$Text{"Keywords"}:</td>
           <td class="contentvalue">
 <!-- dtl:block:Keywords -->
-            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Search&Submit=yes&Keyword=$QData{"Keyword"}" title="$QData{"Keyword"}">$QData{"Keyword"}</a>
+            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Search&Submit=yes&Keyword=$LQData{"Keyword"}" title="$QData{"Keyword"}">$QData{"Keyword"}</a>
 <!-- dtl:block:Keywords -->
           </td>
         </tr>
