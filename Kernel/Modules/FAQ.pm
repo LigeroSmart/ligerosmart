@@ -2,7 +2,7 @@
 # Kernel/Modules/FAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.21 2008-09-16 11:13:16 ub Exp $
+# $Id: FAQ.pm,v 1.22 2008-09-16 21:06:01 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::FAQ;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.21 $) [1];
+$VERSION = qw($Revision: 1.22 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -177,6 +177,15 @@ sub GetExplorer {
     if ( exists( $ShowLastCreate{ $Self->{Interface}{Name} } ) ) {
         $Self->_GetExplorerLastCreateItems(
             CategoryID   => $GetParam{CategoryID},
+            Mode         => $Param{Mode},
+            CustomerUser => $Param{CustomerUser},
+        );
+    }
+
+    # top 10 faq items
+    my %ShowTop10 = %{ $Self->{ConfigObject}->Get('FAQ::Explorer::Top10::Show') };
+    if ( exists( $ShowTop10{ $Self->{Interface}{Name} } ) ) {
+        $Self->_GetExplorerTop10Items(
             Mode         => $Param{Mode},
             CustomerUser => $Param{CustomerUser},
         );
@@ -480,6 +489,40 @@ sub _GetExplorerLastCreateItems {
             $Self->{LayoutObject}->Block(
                 Name => 'ExplorerLatestCreateFAQItemRow',
                 Data => {%Data},
+            );
+        }
+        return 1;
+    }
+    return 0;
+}
+
+sub _GetExplorerTop10Items {
+    my ( $Self, %Param ) = @_;
+
+    if ( $Self->{ConfigObject}->Get('FAQ::Explorer::Top10::Show') ) {
+
+        # show top 10 block
+        $Self->{LayoutObject}->Block(
+            Name => 'ExplorerTop10'
+        );
+
+        # get the top 10 articles
+        my @Top10ItemIDs = $Self->{FAQObject}->FAQTop10Get(
+            Interface => $Self->{Interface}{Name},
+            Limit     => $Self->{ConfigObject}->Get('FAQ::Explorer::Top10::Limit'),
+        );
+
+        # show each top 10 entry
+        my $Number;
+        for my $ItemID ( @Top10ItemIDs ) {
+            $Number++;
+            my %Data = $Self->{FAQObject}->FAQGet( ItemID => $ItemID );
+            $Self->{LayoutObject}->Block(
+                Name => 'ExplorerTop10FAQItemRow',
+                Data => {
+                    %Data,
+                    Number => $Number,
+                },
             );
         }
         return 1;

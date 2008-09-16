@@ -2,7 +2,7 @@
 # Kernel/Language/de_FAQ.pm - the german translation of FAQ
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: de_FAQ.pm,v 1.7 2008-08-20 12:13:06 mh Exp $
+# $Id: de_FAQ.pm,v 1.8 2008-09-16 21:06:01 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -30,6 +30,7 @@ sub Data {
     $Lang->{'Votes'}                   = 'Bewertungen';
     $Lang->{'LatestChangedItems'}      = 'zuletzt geänderte Artikel';
     $Lang->{'LatestCreatedItems'}      = 'zuletzt erstellte Artikel';
+    $Lang->{'Top10Items'}              = 'Top 10 Artikel';
     $Lang->{'ArticleVotingQuestion'}   = 'Wie gut wurde mit diesem Artikel Ihre Frage beantwortet?';
     $Lang->{'SubCategoryOf'}           = 'Unterkategorie von';
     $Lang->{'QuickSearch'}             = 'Schnellsuche';

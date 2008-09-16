@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.28 2008-09-16 15:18:05 ub Exp $
+# $Id: FAQ.pm,v 1.29 2008-09-16 21:06:01 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::CustomerGroup;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.28 $) [1];
+$VERSION = qw($Revision: 1.29 $) [1];
 
 =head1 NAME
 
@@ -2646,7 +2646,8 @@ sub FAQLogAdd {
     my $SystemTime = $Self->{TimeObject}->SystemTime();
 
     # define time period where reloads will not be logged (10 minutes)
-    my $ReloadBlockTime = 10 * 60;
+#    my $ReloadBlockTime = 10 * 60;
+    my $ReloadBlockTime = 1;
 
     # subtract ReloadBlockTime
     $SystemTime = $SystemTime - $ReloadBlockTime;
@@ -2686,6 +2687,47 @@ sub FAQLogAdd {
     return 1;
 }
 
+=item FAQTop10Get()
+
+returns an array with the top 10 faq article ids
+
+    my @Top10IDs = $FAQObject->FAQTop10Get(
+        Interface => 'public',
+        Limit     => 10,
+    );
+
+=cut
+
+sub FAQTop10Get {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for (qw(Interface)) {
+        if ( !$Param{$_} ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+            return;
+        }
+    }
+
+    # get the top 10 article ids from database
+    $Self->{DBObject}->Prepare(
+        SQL => 'SELECT item_id, count(item_id) '
+            . 'FROM faq_log '
+            . 'GROUP BY item_id '
+            . 'ORDER BY 2 DESC ',
+         Bind  => [],
+        Limit => $Param{Limit} || 10,
+    );
+
+    my @Result;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        push @Result, $Row[0];
+    }
+
+    return @Result;
+
+}
+
 1;
 
 =back
@@ -2701,6 +2743,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.28 $ $Date: 2008-09-16 15:18:05 $
+$Revision: 1.29 $ $Date: 2008-09-16 21:06:01 $
 
 =cut

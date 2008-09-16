@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # Copyright (C) 2008 Aquiles Cohen
 # --
-# $Id: es_FAQ.pm,v 1.3 2008-08-25 17:30:05 mh Exp $
+# $Id: es_FAQ.pm,v 1.4 2008-09-16 21:06:01 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -31,6 +31,7 @@ sub Data {
     $Lang->{'Votes'}                             = 'Votos';
     $Lang->{'LatestChangedItems'}                = 'ultimo articulo modificado';
     $Lang->{'LatestCreatedItems'}                = 'ultimos articulo creado';
+    $Lang->{'Top10Items'}                        = 'Top 10 articulos';
     $Lang->{'ArticleVotingQuestion'}             = 'Lo ayudo este articulo?';
     $Lang->{'SubCategoryOf'}                     = 'Sub Categoria de';
     $Lang->{'QuickSearch'}                       = 'Busqueda rápida';

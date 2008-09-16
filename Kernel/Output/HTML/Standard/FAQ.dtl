@@ -2,7 +2,7 @@
 # FAQ.dtl - provides HTML view for faq articles
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.dtl,v 1.12 2008-09-16 12:18:58 ub Exp $
+# $Id: FAQ.dtl,v 1.13 2008-09-16 21:06:01 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -519,6 +519,27 @@
       </table>
 <!-- dtl:block:ExplorerLatestChange -->
 
+<!-- dtl:block:ExplorerTop10 -->
+      <table border="0" width="100%" cellspacing="0" cellpadding="2">
+        <tr>
+          <td><h3>$Text{"Top10Items"}</h3></td>
+<!-- dtl:block:ExplorerTop10Rss -->
+          <td valign="top" align="right"><a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=rss&Type=Changed" title="$Text{"FAQ News (recently changed)"}"><img src="$Env{"Images"}/rss.png" border="0"></a></td>
+<!-- dtl:block:ExplorerTop10Rss -->
+        </tr>
+      </table>
+      <table>
+<!-- dtl:block:ExplorerTop10FAQItemRow -->
+        <tr>
+          <td valign="top"><img src="$Env{"Images"}$Config{"FAQ::Item::Icon"}">$Data{"Number"}</td>
+          <td><a href="$Env{"Baselink"}Action=$Env{"Action"}&CategoryID=$QData{"CategoryID"}&ItemID=$QData{"ItemID"}" title="$QData{"Title"} ($QData{"CategoryName"})">$QData{"Title","40"} ($QData{"CategoryName","40"})</a>
+            <br/>
+            <i class="small">($QData{"Language"}) $TimeShort{"$Data{"Changed"}"}</i>
+          </td>
+        </tr>
+<!-- dtl:block:ExplorerTop10FAQItemRow -->
+      </table>
+<!-- dtl:block:ExplorerTop10 -->
 
     </td>
   </tr>
