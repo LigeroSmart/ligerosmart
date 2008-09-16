@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.12 2008-09-16 20:10:40 ub Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.13 2008-09-16 20:11:48 ub Exp $</CVS>
     <ConfigItem Name="Ticket::Frontend::NoteTypes" Required="1" Valid="1">
         <Description Lang="en">Specify the different note types, that you want to use in your system.</Description>
         <Description Lang="de">Hier können die verschiedenen Notiz-Typen festgelegt werden, die innerhalb des Systems verwendet werden sollen.</Description>
@@ -222,6 +222,32 @@
             <String>3</String>
         </Setting>
     </ConfigItem>
+
+
+    <ConfigItem Name="FAQ::Explorer::Top10::Show" Required="1" Valid="1">
+        <Description Lang="en">Show top 10 items in defined interfaces.</Description>
+        <Description Lang="de">Interfaces in denen das Top 10 Feature angezeigt werden soll.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Core::Explorer</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="internal">internal (agent)</Item>
+                <Item Key="external">external (customer)</Item>
+                <Item Key="public">public (public)</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Explorer::Top10::Limit" Required="1" Valid="1">
+        <Description Lang="en">Number of shown items in the top 10 feature.</Description>
+        <Description Lang="de">Anzahl der anzuzeigenden Artikel im Top 10 Feature.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Core::Explorer</SubGroup>
+        <Setting>
+            <String>10</String>
+        </Setting>
+    </ConfigItem>
+
+
     <ConfigItem Name="FAQ::FAQHook" Required="1" Valid="1">
         <Description Lang="en">Default hook for FAQ.</Description>
         <Description Lang="de">Standard Bezeichner für eine FAQ.</Description>
