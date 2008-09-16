@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.34 2008-08-20 12:02:54 mh Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.35 2008-09-16 13:38:24 ub Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -189,6 +189,17 @@
             <Column Name="rate" Required="true" Type="INTEGER"/>
             <Column Name="created" Required="false" Type="DATE"/>
         </TableCreate>
+        <TableCreate Name="faq_log">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
+            <Column Name="item_id" Required="true" Type="INTEGER"/>
+            <Column Name="interface" Required="true" Size="80" Type="VARCHAR"/>
+            <Column Name="ip" Required="false" Size="200" Type="VARCHAR"/>
+            <Column Name="user_agent" Required="false" Size="200" Type="VARCHAR"/>
+            <Column Name="created" Required="true" Type="DATE"/>
+            <Index Name="item_id">
+                <IndexColumn Name="item_id"/>
+            </Index>
+        </TableCreate>
     </DatabaseInstall>
     <DatabaseUpgrade Type="post">
         <TableCreate Name="faq_category_group" Version="1.1.3">
@@ -199,6 +210,17 @@
             <Column Name="created_by" Required="false" Type="INTEGER"/>
             <Column Name="changed" Required="false" Type="DATE"/>
             <Column Name="changed_by" Required="false" Type="INTEGER"/>
+        </TableCreate>
+        <TableCreate Name="faq_log" Version="1.5.1">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
+            <Column Name="item_id" Required="true" Type="INTEGER"/>
+            <Column Name="interface" Required="true" Size="80" Type="VARCHAR"/>
+            <Column Name="ip" Required="false" Size="200" Type="VARCHAR"/>
+            <Column Name="user_agent" Required="false" Size="200" Type="VARCHAR"/>
+            <Column Name="created" Required="true" Type="DATE"/>
+            <Index Name="item_id">
+                <IndexColumn Name="item_id"/>
+            </Index>
         </TableCreate>
     </DatabaseUpgrade>
     <DatabaseUninstall Type="pre">
@@ -211,6 +233,7 @@
         <TableDrop Name="faq_state_type"/>
         <TableDrop Name="faq_attachment"/>
         <TableDrop Name="faq_voting"/>
+        <TableDrop Name="faq_log"/>
     </DatabaseUninstall>
     <CodeInstall Type="post">
 
