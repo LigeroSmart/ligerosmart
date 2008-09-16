@@ -3,7 +3,7 @@
 # otrs.NagiosCheck.pl - OTRS Nagios checker
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: otrs.NagiosCheck.pl,v 1.3 2008-09-11 22:47:28 jb Exp $
+# $Id: otrs.NagiosCheck.pl,v 1.4 2008-09-16 20:36:56 jb Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 use File::Basename;
 use FindBin qw($RealBin);
@@ -105,11 +105,12 @@ for my $Type (qw(crit_treshhold warn_treshhold)) {
     if ( defined $Config{ 'min_' . $Type } ) {
         if ( $Config{ 'min_' . $Type } >= $TicketCount ) {
             if ( $Type =~ /^crit_/ ) {
-                print "$Config{checkname} CRITICAL $Config{CRIT_TXT} $TicketCount|tickets=$TicketCount\n";
+                print "$Config{checkname} CRITICAL $Config{CRIT_TXT} $TicketCount|tickets=$TicketCount;$Config{min_warn_treshhold}:$Config{max_warn_treshhold};$Config{min_crit_treshhold}:$Config{max_crit_treshhold}\n";
                 exit 2;
             }
             elsif ( $Type =~ /^warn_/ ) {
-                print "$Config{checkname} WARNING $Config{WARN_TXT} $TicketCount|tickets=$TicketCount\n";
+                print "$Config{checkname} WARNING $Config{WARN_TXT} $TicketCount|tickets=$TicketCount;$Config{min_warn_treshhold}:$Config{max_warn_treshhold};$
+Config{min_crit_treshhold}:$Config{max_crit_treshhold}\n";
                 exit 1;
             }
         }
@@ -117,11 +118,13 @@ for my $Type (qw(crit_treshhold warn_treshhold)) {
     if ( defined $Config{ 'max_' . $Type } ) {
         if ( $Config{ 'max_' . $Type } <= $TicketCount ) {
             if ( $Type =~ /^crit_/ ) {
-                print "$Config{checkname} CRITICAL $Config{CRIT_TXT} $TicketCount|tickets=$TicketCount\n";
+                print "$Config{checkname} CRITICAL $Config{CRIT_TXT} $TicketCount|tickets=$TicketCount;$Config{min_warn_treshhold}:$Config{max_warn_treshhold};$
+Config{min_crit_treshhold}:$Config{max_crit_treshhold}\n";
                 exit 2;
             }
             elsif ( $Type =~ /^warn_/ ) {
-                print "$Config{checkname} WARNING $Config{WARN_TXT} $TicketCount|tickets=$TicketCount\n";
+                print "$Config{checkname} WARNING $Config{WARN_TXT} $TicketCount|tickets=$TicketCount;$Config{min_warn_treshhold}:$Config{max_warn_treshhold};$
+Config{min_crit_treshhold}:$Config{max_crit_treshhold}\n";
                 exit 1;
             }
         }
@@ -129,6 +132,6 @@ for my $Type (qw(crit_treshhold warn_treshhold)) {
 }
 
 # return ok
-#print "$Config{checkname} OK $Config{OK_TXT} $TicketCount\n";
-print "$Config{checkname} OK $Config{OK_TXT} $TicketCount|tickets=$TicketCount\n";
+print "$Config{checkname} OK $Config{OK_TXT} $TicketCount|tickets=$TicketCount;$Config{min_warn_treshhold}:$Config{max_warn_treshhold};$
+Config{min_crit_treshhold}:$Config{max_crit_treshhold}\n";
 exit 0;
