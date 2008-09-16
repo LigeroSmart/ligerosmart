@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.11 2008-07-03 21:44:12 martin Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.12 2008-09-16 20:10:40 ub Exp $</CVS>
     <ConfigItem Name="Ticket::Frontend::NoteTypes" Required="1" Valid="1">
         <Description Lang="en">Specify the different note types, that you want to use in your system.</Description>
         <Description Lang="de">Hier können die verschiedenen Notiz-Typen festgelegt werden, die innerhalb des Systems verwendet werden sollen.</Description>
@@ -33,7 +33,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Item::Voting::Rates" Required="1" Valid="1">
-        <Description Lang="en">Rates for voting. Key must be in procent.</Description>
+        <Description Lang="en">Rates for voting. Key must be in percent.</Description>
         <Description Lang="de">Gewichtung für die Bewertung. Der Key muss in Prozent angegeben werden.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Item::Voting</SubGroup>
@@ -82,7 +82,7 @@
     </ConfigItem>
     <ConfigItem Name="FAQ::Explorer::ItemList::VotingResultDecimalPlaces" Required="1" Valid="1">
         <Description Lang="en">Decimal places of the voting result.</Description>
-        <Description Lang="de">Dezimalstellen des Ergebnises bei der Artikelbewertung.</Description>
+        <Description Lang="de">Dezimalstellen des Ergebnisses bei der Artikelbewertung.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Explorer</SubGroup>
         <Setting>
@@ -155,7 +155,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Explorer::LastChange::Show" Required="1" Valid="1">
-        <Description Lang="en">Show last change items.</Description>
+        <Description Lang="en">Show last change items in defined interfaces.</Description>
         <Description Lang="de">Interfaces in denen das LastChange Feature angezeigt werden soll.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Explorer</SubGroup>
@@ -189,7 +189,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Explorer::LastCreate::Show" Required="1" Valid="1">
-        <Description Lang="en">Number of shown items in last created.</Description>
+        <Description Lang="en">Show last created items in defined interfaces.</Description>
         <Description Lang="de">Interfaces in denen das LastCreate Feature angezeigt werden soll.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Explorer</SubGroup>
@@ -214,8 +214,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Explorer::LastCreate::Limit" Required="1" Valid="1">
-        <Description Lang="en">Shown items in last created.</Description>
-        <Description Lang="de">Anzahl der zu anzeigenden Artikel in zuletzt erstellte.</Description>
+        <Description Lang="en">Number of shown items in last created.</Description>
+        <Description Lang="de">Anzahl der anzuzeigenden Artikel in zuletzt erstellte Artikel.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Explorer</SubGroup>
         <Setting>
