@@ -2,7 +2,7 @@
 # Kernel/Modules/FAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.20 2008-09-11 18:22:29 mh Exp $
+# $Id: FAQ.pm,v 1.21 2008-09-16 11:13:16 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::FAQ;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -530,8 +530,10 @@ sub GetItemView {
     );
 
     # html quoting
+    KEY:
     for my $Key (qw (Field1 Field2 Field3 Field4 Field5 Field6)) {
         if ( $Self->{ConfigObject}->Get('FAQ::Item::HTML') ) {
+            next KEY if !$ItemData{Key};
             my @Array = split /pre>/, $ItemData{$Key};
             my $Text = '';
             for (@Array) {
@@ -628,6 +630,19 @@ sub GetItemView {
         $Self->_GetItemVoting(
             ItemData => \%ItemData
         );
+    }
+
+    # show keywords as search links
+    if ( $ItemData{Keywords} ) {
+        my @Keywords = split /\s+/, $ItemData{Keywords};
+        for my $Keyword ( @Keywords ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'Keywords',
+                Data => {
+                    Keyword => $Keyword,
+                },
+            );
+        }
     }
 
     if ( $Param{Links} && $Param{Links} == 1 ) {
