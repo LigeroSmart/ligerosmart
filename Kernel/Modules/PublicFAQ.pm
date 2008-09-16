@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicFAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQ.pm,v 1.5 2008-07-07 11:00:30 mh Exp $
+# $Id: PublicFAQ.pm,v 1.6 2008-09-16 15:18:05 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::Modules::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 our @ISA = qw(Kernel::Modules::FAQ);
 
@@ -241,6 +241,12 @@ sub Run {
         $Content = $Self->{LayoutObject}->Output(
             TemplateFile => 'FAQ',
             Data => { %Frontend, %GetParam }
+        );
+
+        # log access to this FAQ item
+        $Self->{FAQObject}->FAQLogAdd(
+            ItemID    => $Self->{ParamObject}->GetParam( Param => 'ItemID' ),
+            Interface => $Self->{Interface}{Name},
         );
     }
 

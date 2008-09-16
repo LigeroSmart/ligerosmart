@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.pm,v 1.16 2008-07-07 11:02:29 mh Exp $
+# $Id: AgentFAQ.pm,v 1.17 2008-09-16 15:18:05 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::Group;
 use Kernel::System::Valid;
 
 use vars qw($VERSION @ISA);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 @ISA = qw(Kernel::Modules::FAQ);
 
@@ -1105,6 +1105,12 @@ sub Run {
             $Self->GetItemView(
                 Links      => 1,
                 Permission => $Permission,
+            );
+
+            # log access to this FAQ item
+            $Self->{FAQObject}->FAQLogAdd(
+                ItemID    => $Self->{ParamObject}->GetParam( Param => 'ItemID' ),
+                Interface => $Self->{Interface}{Name},
             );
         }
         $HeaderTitle = $Self->{ItemData}{Number};

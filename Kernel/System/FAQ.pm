@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.27 2008-08-27 08:00:52 martin Exp $
+# $Id: FAQ.pm,v 1.28 2008-09-16 15:18:05 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::CustomerGroup;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.27 $) [1];
+$VERSION = qw($Revision: 1.28 $) [1];
 
 =head1 NAME
 
@@ -2616,6 +2616,76 @@ sub PublicCategorySearch {
     return \@List;
 }
 
+=item FAQLogAdd()
+
+adds accessed FAQ article to the access log table
+
+    my $Success = $FAQObject->FAQLogAdd(
+        ItemID    => '123456',
+        Interface => 'internal',
+    );
+
+=cut
+
+sub FAQLogAdd {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for (qw(ItemID Interface)) {
+        if ( !$Param{$_} ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+            return;
+        }
+    }
+
+    # get environment variables
+    my $IP        = $ENV{'REMOTE_ADDR'}     || '';
+    my $UserAgent = $ENV{'HTTP_USER_AGENT'} || '';
+
+    # get current system time
+    my $SystemTime = $Self->{TimeObject}->SystemTime();
+
+    # define time period where reloads will not be logged (10 minutes)
+    my $ReloadBlockTime = 10 * 60;
+
+    # subtract ReloadBlockTime
+    $SystemTime = $SystemTime - $ReloadBlockTime;
+
+    # convert to timesstamp
+    my $TimeStamp = $Self->{TimeObject}->SystemTime2TimeStamp(
+        SystemTime => $SystemTime,
+    );
+
+    # check if a log entry exists newer than the ReloadBlockTime
+    $Self->{DBObject}->Prepare(
+        SQL => 'SELECT id FROM faq_log '
+            . 'WHERE item_id = ? AND ip = ? '
+            . 'AND user_agent = ? AND created > ? ',
+        Bind  => [ \$Param{ItemID}, \$IP, \$UserAgent, \$TimeStamp ],
+        Limit => 1,
+    );
+
+    # fetch the result
+    my $AlreadyExists = 0;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $AlreadyExists = 1;
+    }
+
+    return if $AlreadyExists;
+
+    # insert new log entry
+    return if !$Self->{DBObject}->Do(
+        SQL => 'INSERT INTO faq_log '
+            . '(item_id, interface, ip, user_agent, created) VALUES '
+            . '(?, ?, ?, ?, current_timestamp)',
+        Bind => [
+            \$Param{ItemID}, \$Param{Interface}, \$IP, \$UserAgent,
+        ],
+    );
+
+    return 1;
+}
+
 1;
 
 =back
@@ -2631,6 +2701,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.27 $ $Date: 2008-08-27 08:00:52 $
+$Revision: 1.28 $ $Date: 2008-09-16 15:18:05 $
 
 =cut
