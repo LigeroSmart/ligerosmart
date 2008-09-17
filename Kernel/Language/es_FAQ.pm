@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # Copyright (C) 2008 Aquiles Cohen
 # --
-# $Id: es_FAQ.pm,v 1.5 2008-09-17 11:56:00 ub Exp $
+# $Id: es_FAQ.pm,v 1.6 2008-09-17 12:42:21 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -42,6 +42,7 @@ sub Data {
     $Lang->{'A category should have a comment!'} = 'Cada categoria debe tener un comentario';
     $Lang->{'FAQ News (new created)'}            = 'Noticias FAQ (creado nuevo)';
     $Lang->{'FAQ News (recently changed)'}       = 'Noticias FAQ (Recientemente modificado)';
+    $Lang->{'FAQ News (Top 10)'}                 = 'Noticias FAQ (Top 10)';
     $Lang->{
         'No category accesable. To create an article you need have at lease access to min. one category. Please check your group/category permission under -category menu-!'
         }

@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicFAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQ.pm,v 1.6 2008-09-16 15:18:05 ub Exp $
+# $Id: PublicFAQ.pm,v 1.7 2008-09-17 12:42:21 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::Modules::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 our @ISA = qw(Kernel::Modules::FAQ);
 
@@ -96,6 +96,15 @@ sub Run {
                 Href  => '$Env{"Baselink"}Action=$Env{"Action"}&Subaction=rss&Type=Changed',
             },
         );
+        $Self->{LayoutObject}->Block(
+            Name => 'MetaLink',
+            Data => {
+                Rel   => 'alternate',
+                Type  => 'application/rss+xml',
+                Title => '$Text{"FAQ News (Top 10)"}',
+                Href  => '$Env{"Baselink"}Action=$Env{"Action"}&Subaction=rss&Type=Top10',
+            },
+        );
         $HeaderTitle = 'Explorer';
         $Header      = $Self->{LayoutObject}->CustomerHeader(
             Type  => $HeaderType,
@@ -133,12 +142,22 @@ sub Run {
             Types => ['public']
         );
 
-        my @IDs = $Self->{FAQObject}->FAQSearch(
-            States => $States,
-            Order  => $Type,
-            Sort   => 'down',
-            Limit  => 20,
-        );
+        my @IDs;
+        if ( $Type eq 'Top10' ) {
+            # get the top 10 articles
+            @IDs = $Self->{FAQObject}->FAQTop10Get(
+                Interface => $Self->{Interface}{Name},
+                Limit     => $Self->{ConfigObject}->Get('FAQ::Explorer::Top10::Limit'),
+            );
+        }
+        else {
+            @IDs = $Self->{FAQObject}->FAQSearch(
+                States => $States,
+                Order  => $Type,
+                Sort   => 'down',
+                Limit  => 20,
+            );
+        }
 
         # generate rss feed
         use XML::RSS::SimpleGen;

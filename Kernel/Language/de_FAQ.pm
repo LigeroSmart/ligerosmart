@@ -2,7 +2,7 @@
 # Kernel/Language/de_FAQ.pm - the german translation of FAQ
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: de_FAQ.pm,v 1.9 2008-09-17 11:55:59 ub Exp $
+# $Id: de_FAQ.pm,v 1.10 2008-09-17 12:42:21 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -41,6 +41,7 @@ sub Data {
     $Lang->{'A category should have a comment!'} = 'Eine Kategorien sollte einen Kommentar haben!';
     $Lang->{'FAQ News (new created)'}            = 'FAQ News (neu erstellte)';
     $Lang->{'FAQ News (recently changed)'}       = 'FAQ News (zuletzt geänderte)';
+    $Lang->{'FAQ News (Top 10)'}                 = 'FAQ News (Top 10)';
     $Lang->{
         'No category accesable. To create an article you need have at lease access to min. one category. Please check your group/category permission under -category menu-!'
         }

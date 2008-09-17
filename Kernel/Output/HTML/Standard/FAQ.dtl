@@ -2,7 +2,7 @@
 # FAQ.dtl - provides HTML view for faq articles
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.dtl,v 1.14 2008-09-17 11:57:39 ub Exp $
+# $Id: FAQ.dtl,v 1.15 2008-09-17 12:42:21 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -524,7 +524,7 @@
         <tr>
           <td><h3>$Text{"Top10Items"}</h3></td>
 <!-- dtl:block:ExplorerTop10Rss -->
-          <td valign="top" align="right"><a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=rss&Type=Changed" title="$Text{"FAQ News (recently changed)"}"><img src="$Env{"Images"}/rss.png" border="0"></a></td>
+          <td valign="top" align="right"><a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=rss&Type=Top10" title="$Text{"FAQ News (Top 10)"}"><img src="$Env{"Images"}/rss.png" border="0"></a></td>
 <!-- dtl:block:ExplorerTop10Rss -->
         </tr>
       </table>
