@@ -2,7 +2,7 @@
 # FAQ.dtl - provides HTML view for faq articles
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.dtl,v 1.15 2008-09-17 12:42:21 ub Exp $
+# $Id: FAQ.dtl,v 1.16 2008-09-17 15:50:45 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -137,8 +137,8 @@
 
         <input type="hidden" name="Action" value="$Env{"Action"}">
         <input type="hidden" name="Subaction" value="Vote">
-        <input type="hidden" name="CategoryID" value="$Data{"CategoryID"}">
-        <input type="hidden" name="ItemID" value="$Data{"ItemID"}">
+        <input type="hidden" name="CategoryID" value="$QData{"CategoryID"}">
+        <input type="hidden" name="ItemID" value="$QData{"ItemID"}">
       </form>
 <!-- dtl:block:VoteForm -->
 
@@ -464,11 +464,11 @@
         <input type="hidden" name="Submit" value="yes">
 
 <!-- dtl:block:ExplorerQuickSearchCategory -->
-        <input type="hidden" name="CategoryIDs" value="$Data{"CategoryID"}">
+        <input type="hidden" name="CategoryIDs" value="$QData{"CategoryID"}">
 <!-- dtl:block:ExplorerQuickSearchCategory -->
 
         <input type="hidden" name="QuickSearch" value="1">
-        <input type="hidden" name="CategoryIDs" value="$Data{"CategoryID"}">
+        <input type="hidden" name="CategoryIDs" value="$QData{"CategoryID"}">
         <input type="text" name="What" value="$QData{"What"}" size="30" maxlength="50"><input class="button" type="submit" value="$Text{"Search"}">
       </form>
 <!-- dtl:block:ExplorerQuickSearch -->

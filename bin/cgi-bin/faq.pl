@@ -3,7 +3,7 @@
 # faq.pl - the global CGI handle file for OTRS
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: faq.pl,v 1.2 2008-07-07 11:00:30 mh Exp $
+# $Id: faq.pl,v 1.3 2008-09-17 15:50:45 ub Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -29,16 +29,12 @@ use strict;
 use warnings;
 
 use vars qw($VERSION @INC);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
-# --
 # 0=off;1=on;
-# --
 my $Debug = 0;
 
-# --
 # check @INC for mod_perl (add lib path for "require module"!)
-# --
 push( @INC, "$Bin/../..", "$Bin/../../Kernel/cpan-lib" );
 
 print "location: public.pl?Action=PublicFAQ\n";

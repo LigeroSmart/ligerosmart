@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutFAQ.pm - provides generic agent HTML output
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutFAQ.pm,v 1.3 2008-07-07 11:00:30 mh Exp $
+# $Id: LayoutFAQ.pm,v 1.4 2008-09-17 15:50:45 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub AgentFAQCategoryListOption {
 
@@ -42,11 +42,11 @@ sub AgentFAQCategoryListOption {
 
     my %CategoryList = %{ $Param{CategoryList} };
 
-   #if (!($Param{CategoryList} && ref($Param{CategoryList}) eq 'HASH' && %{$Param{CategoryList}})) {
-   #    return $Self->FatalError(
-   #        Message => 'Need CategoryList as hash ref '
-   #    );
-   #}
+#    if (!($Param{CategoryList} && ref($Param{CategoryList}) eq 'HASH' && %{$Param{CategoryList}})) {
+#        return $Self->FatalError(
+#            Message => 'Need CategoryList as hash ref '
+#        );
+#    }
 
     # build tree list
     $Output .= '<select name="' . $Param{Name} . "\" $Size $Multiple $OnChangeSubmit>";
