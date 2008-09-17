@@ -2,7 +2,7 @@
 # Kernel/Modules/FAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.22 2008-09-16 21:06:01 ub Exp $
+# $Id: FAQ.pm,v 1.23 2008-09-17 11:56:58 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::FAQ;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -185,10 +185,7 @@ sub GetExplorer {
     # top 10 faq items
     my %ShowTop10 = %{ $Self->{ConfigObject}->Get('FAQ::Explorer::Top10::Show') };
     if ( exists( $ShowTop10{ $Self->{Interface}{Name} } ) ) {
-        $Self->_GetExplorerTop10Items(
-            Mode         => $Param{Mode},
-            CustomerUser => $Param{CustomerUser},
-        );
+        $Self->_GetExplorerTop10Items();
     }
 }
 
@@ -996,7 +993,7 @@ sub _GetItemVoting {
                 Interface => $Self->{Interface}{ID},
                 Rate      => $GetParam{Rate},
             );
-            push( @{ $Self->{Notify} }, [ 'Info', 'Thanks for vote!' ] );
+            push( @{ $Self->{Notify} }, [ 'Info', 'Thanks for your vote!' ] );
             return;
 
         }
