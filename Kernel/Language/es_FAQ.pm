@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # Copyright (C) 2008 Aquiles Cohen
 # --
-# $Id: es_FAQ.pm,v 1.4 2008-09-16 21:06:01 ub Exp $
+# $Id: es_FAQ.pm,v 1.5 2008-09-17 11:56:00 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -27,7 +27,7 @@ sub Data {
 
     $Lang->{'You have already voted!'}           = 'Usted ya ha votado!';
     $Lang->{'No rate selected!'}                 = 'No selecciono puntaje!';
-    $Lang->{'Thanks for vote!'}                  = 'Gracias por su voto!';
+    $Lang->{'Thanks for your vote!'}             = 'Gracias por su voto!';
     $Lang->{'Votes'}                             = 'Votos';
     $Lang->{'LatestChangedItems'}                = 'ultimo articulo modificado';
     $Lang->{'LatestCreatedItems'}                = 'ultimos articulo creado';
@@ -50,7 +50,7 @@ sub Data {
         = 'Los grupos agentes pueden acceder a esta categoría';
     $Lang->{'A category need min. one permission group!'}
         = 'Una categoria necesita minimo un permiso de grupo!';
-    $Lang->{'Will be shown as comment in Explore.'} = 'Seran mostrados como comentarios en Explore';
+    $Lang->{'Will be shown as comment in Explorer.'} = 'Seran mostrados como comentarios en Explorer.';
 
     return 1;
 }

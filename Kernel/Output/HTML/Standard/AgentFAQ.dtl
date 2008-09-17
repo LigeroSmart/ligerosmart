@@ -2,7 +2,7 @@
 # AgentFAQ.dtl - provides HTML view for faq articles
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.dtl,v 1.20 2008-09-16 12:18:58 ub Exp $
+# $Id: AgentFAQ.dtl,v 1.21 2008-09-17 11:55:59 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -837,7 +837,7 @@ function submit_compose() {
                         <td class="contentbody">$Data{"CategoryOption"}</td>
                       </tr>
                       <tr>
-                        <td class="contentkey">$Text{"Comment"}:<br/><i class="small">($Text{"Will be shown as comment in Explore."})</i> </td>
+                        <td class="contentkey">$Text{"Comment"}:<br/><i class="small">($Text{"Will be shown as comment in Explorer."})</i> </td>
                         <td class="contentvalue"> <input type="text" name="Comment" value="$QData{"Comment"}" size="50" maxlength="80"></td>
                       </tr>
                       <tr>

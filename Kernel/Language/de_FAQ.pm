@@ -2,7 +2,7 @@
 # Kernel/Language/de_FAQ.pm - the german translation of FAQ
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: de_FAQ.pm,v 1.8 2008-09-16 21:06:01 ub Exp $
+# $Id: de_FAQ.pm,v 1.9 2008-09-17 11:55:59 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -26,7 +26,7 @@ sub Data {
 
     $Lang->{'You have already voted!'} = 'Sie haben bereits bewertet!';
     $Lang->{'No rate selected!'}       = 'Keine Bewertung auswählt!';
-    $Lang->{'Thanks for vote!'}        = 'Danke für Ihre Bewertungen!';
+    $Lang->{'Thanks for your vote!'}   = 'Danke für Ihre Bewertungen!';
     $Lang->{'Votes'}                   = 'Bewertungen';
     $Lang->{'LatestChangedItems'}      = 'zuletzt geänderte Artikel';
     $Lang->{'LatestCreatedItems'}      = 'zuletzt erstellte Artikel';
@@ -49,7 +49,7 @@ sub Data {
         = 'Agenten Gruppe welche auf diese Kategorie Zugriff hat.';
     $Lang->{'A category need min. one permission group!'}
         = 'Eine Kategorie muss min. eine Berechtigung-Gruppe haben.';
-    $Lang->{'Will be shown as comment in Explore.'} = 'Wird im Explorer als Kommentar angezeigt.';
+    $Lang->{'Will be shown as comment in Explorer.'} = 'Wird im Explorer als Kommentar angezeigt.';
 
     return 1;
 }
