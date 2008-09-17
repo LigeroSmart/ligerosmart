@@ -1,12 +1,12 @@
 # --
 # AgentTimeAccountingEdit.dtl - provides HTML form for time accounting edit
-# Copyright (C) 2003-2007 OTRS GmbH, http://otrs.com/
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingEdit.dtl,v 1.7 2007-06-05 14:18:12 tr Exp $
+# $Id: AgentTimeAccountingEdit.dtl,v 1.8 2008-09-17 10:22:57 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
   <tr>
@@ -21,7 +21,7 @@
 <!-- dtl:block:CreateProject -->
       -
       <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=ProjectSetting" class="menuitem">
-      $Text{"ProjectSetting"}
+      $Text{"Project settings"}
       </a>
 <!-- dtl:block:CreateProject -->
     </td>
@@ -90,9 +90,9 @@
                 <input type="hidden" name="Action"    value="$Env{"Action"}">
                 <input type="hidden" name="Subaction" value="Edit">
                 <input type="hidden" name="Status"    value="Action">
-                <input type="hidden" name="Year"      value="$Data{"Year"}">
-                <input type="hidden" name="Month"     value="$Data{"Month"}">
-                <input type="hidden" name="Day"       value="$Data{"Day"}">
+                <input type="hidden" name="Year"      value="$QData{"Year"}">
+                <input type="hidden" name="Month"     value="$QData{"Month"}">
+                <input type="hidden" name="Day"       value="$QData{"Day"}">
                 <tr>
                   <td class="contenthead">
                     $Text{"Date"}: $Text{"$QData{"Weekday_to_Text"}"} $QData{"Year"}-$QData{"Month"}-$QData{"Day"}
