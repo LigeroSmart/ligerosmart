@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.29 2008-09-16 21:06:01 ub Exp $
+# $Id: FAQ.pm,v 1.30 2008-09-17 11:58:44 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::CustomerGroup;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.29 $) [1];
+$VERSION = qw($Revision: 1.30 $) [1];
 
 =head1 NAME
 
@@ -2646,8 +2646,7 @@ sub FAQLogAdd {
     my $SystemTime = $Self->{TimeObject}->SystemTime();
 
     # define time period where reloads will not be logged (10 minutes)
-#    my $ReloadBlockTime = 10 * 60;
-    my $ReloadBlockTime = 1;
+    my $ReloadBlockTime = 10 * 60;
 
     # subtract ReloadBlockTime
     $SystemTime = $SystemTime - $ReloadBlockTime;
@@ -2709,13 +2708,32 @@ sub FAQTop10Get {
         }
     }
 
+    # prepare SQL
+    my $SQL = 'SELECT item_id, count(item_id) FROM faq_log ';
+
+    # filter results
+    if ( ( $Param{Interface} eq 'public' ) || ( $Param{Interface} eq 'external' ) ) {
+
+        $SQL .= ', faq_item, faq_state, faq_state_type '
+            . 'WHERE faq_log.item_id = faq_item.id '
+            . 'AND faq_item.state_id = faq_state.id '
+            . 'AND faq_state.type_id = faq_state_type.id '
+            . "AND ( ( faq_state_type.name = 'public' ) ";
+
+        if ( $Param{Interface} eq 'external' ) {
+            $SQL .= "OR ( faq_state_type.name = 'external' ) ";
+        }
+
+        $SQL .= ') ';
+    }
+
+    # complete SQL statement
+    $SQL .= 'GROUP BY item_id '
+        . 'ORDER BY 2 DESC ';
+
     # get the top 10 article ids from database
     $Self->{DBObject}->Prepare(
-        SQL => 'SELECT item_id, count(item_id) '
-            . 'FROM faq_log '
-            . 'GROUP BY item_id '
-            . 'ORDER BY 2 DESC ',
-         Bind  => [],
+        SQL => $SQL,
         Limit => $Param{Limit} || 10,
     );
 
@@ -2725,7 +2743,6 @@ sub FAQTop10Get {
     }
 
     return @Result;
-
 }
 
 1;
@@ -2743,6 +2760,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.29 $ $Date: 2008-09-16 21:06:01 $
+$Revision: 1.30 $ $Date: 2008-09-17 11:58:44 $
 
 =cut
