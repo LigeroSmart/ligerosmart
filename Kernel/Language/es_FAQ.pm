@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # Copyright (C) 2008 Aquiles Cohen
 # --
-# $Id: es_FAQ.pm,v 1.6 2008-09-17 12:42:21 ub Exp $
+# $Id: es_FAQ.pm,v 1.7 2008-09-17 12:51:45 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -44,12 +44,12 @@ sub Data {
     $Lang->{'FAQ News (recently changed)'}       = 'Noticias FAQ (Recientemente modificado)';
     $Lang->{'FAQ News (Top 10)'}                 = 'Noticias FAQ (Top 10)';
     $Lang->{
-        'No category accesable. To create an article you need have at lease access to min. one category. Please check your group/category permission under -category menu-!'
+        'No category accessible. To create an article you need access to at least one category. Please check your group/category permission under -category menu-!'
         }
         = 'No se puede acceder a ninguna categoría. Para crear un articulo usted debe tener acceso a mínimo una categoría. Por favor revise sus permisos de grupo/categoría en el -menú categoría-!';
-    $Lang->{'Agent Groups which can access this category.'}
+    $Lang->{'Agent groups which can access this category.'}
         = 'Los grupos agentes pueden acceder a esta categoría';
-    $Lang->{'A category need min. one permission group!'}
+    $Lang->{'A category needs min. one permission group!'}
         = 'Una categoria necesita minimo un permiso de grupo!';
     $Lang->{'Will be shown as comment in Explorer.'} = 'Seran mostrados como comentarios en Explorer.';
 

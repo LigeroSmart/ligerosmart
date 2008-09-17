@@ -2,7 +2,7 @@
 # Kernel/Language/en_FAQ.pm - the english translation of FAQ
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: en_FAQ.pm,v 1.10 2008-09-17 12:42:21 ub Exp $
+# $Id: en_FAQ.pm,v 1.11 2008-09-17 12:51:45 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -43,10 +43,10 @@ sub Data {
     $Lang->{'FAQ News (recently changed)'}       = '';
     $Lang->{'FAQ News (Top 10)'}                 = '';
     $Lang->{
-        'No category accesable. To create an article you need have at lease access to min. one category. Please check your group/category permission under -category menu-!'
+        'No category accessible. To create an article you need access to at least one category. Please check your group/category permission under -category menu-!'
         } = '';
-    $Lang->{'Agent Groups which can access this category.'} = '';
-    $Lang->{'A category need min. one permission group!'}   = '';
+    $Lang->{'Agent groups which can access this category.'} = '';
+    $Lang->{'A category needs min. one permission group!'}   = '';
     $Lang->{'Will be shown as comment in Explorer.'}         = '';
 
     return 1;
