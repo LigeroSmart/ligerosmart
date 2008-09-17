@@ -2,7 +2,7 @@
 # FAQ.dtl - provides HTML view for faq articles
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.dtl,v 1.13 2008-09-16 21:06:01 ub Exp $
+# $Id: FAQ.dtl,v 1.14 2008-09-17 11:57:39 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -531,7 +531,8 @@
       <table>
 <!-- dtl:block:ExplorerTop10FAQItemRow -->
         <tr>
-          <td valign="top"><img src="$Env{"Images"}$Config{"FAQ::Item::Icon"}">$Data{"Number"}</td>
+          <td>$Data{"Number"}.</td>
+          <td valign="top"><img src="$Env{"Images"}$Config{"FAQ::Item::Icon"}"></td>
           <td><a href="$Env{"Baselink"}Action=$Env{"Action"}&CategoryID=$QData{"CategoryID"}&ItemID=$QData{"ItemID"}" title="$QData{"Title"} ($QData{"CategoryName"})">$QData{"Title","40"} ($QData{"CategoryName","40"})</a>
             <br/>
             <i class="small">($QData{"Language"}) $TimeShort{"$Data{"Changed"}"}</i>
