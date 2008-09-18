@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.30 2008-09-17 11:58:44 ub Exp $
+# $Id: FAQ.pm,v 1.31 2008-09-18 18:00:21 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::CustomerGroup;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.30 $) [1];
+$VERSION = qw($Revision: 1.31 $) [1];
 
 =head1 NAME
 
@@ -2709,22 +2709,28 @@ sub FAQTop10Get {
     }
 
     # prepare SQL
-    my $SQL = 'SELECT item_id, count(item_id) FROM faq_log ';
+    my @Bind;
+    my $SQL = 'SELECT item_id, count(item_id), faq_state_type.name '
+        . 'FROM faq_log, faq_item, faq_state, faq_state_type '
+        . 'WHERE faq_log.item_id = faq_item.id '
+        . 'AND faq_item.state_id = faq_state.id '
+        . 'AND faq_state.type_id = faq_state_type.id ';
 
-    # filter results
+    # filter results for public and customer interface
     if ( ( $Param{Interface} eq 'public' ) || ( $Param{Interface} eq 'external' ) ) {
 
-        $SQL .= ', faq_item, faq_state, faq_state_type '
-            . 'WHERE faq_log.item_id = faq_item.id '
-            . 'AND faq_item.state_id = faq_state.id '
-            . 'AND faq_state.type_id = faq_state_type.id '
-            . "AND ( ( faq_state_type.name = 'public' ) ";
+        $SQL .= "AND ( ( faq_state_type.name = 'public' ) ";
 
         if ( $Param{Interface} eq 'external' ) {
             $SQL .= "OR ( faq_state_type.name = 'external' ) ";
         }
-
         $SQL .= ') ';
+    }
+
+    # filter results for defined time period
+    if ( $Param{StartDate} && $Param{EndDate} ) {
+        $SQL .= 'AND faq_log.created >= ? AND faq_log.created <= ? ';
+        push @Bind, ( \$Param{StartDate}, \$Param{EndDate} );
     }
 
     # complete SQL statement
@@ -2733,16 +2739,21 @@ sub FAQTop10Get {
 
     # get the top 10 article ids from database
     $Self->{DBObject}->Prepare(
-        SQL => $SQL,
-        Limit => $Param{Limit} || 10,
+        SQL   => $SQL,
+        Bind  => \@Bind,
+        Limit => $Param{Limit},
     );
 
     my @Result;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        push @Result, $Row[0];
+        push @Result, {
+            ItemID    => $Row[0],
+            Count     => $Row[1],
+            Interface => $Row[2],
+        };
     }
 
-    return @Result;
+    return \@Result;
 }
 
 1;
@@ -2760,6 +2771,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.30 $ $Date: 2008-09-17 11:58:44 $
+$Revision: 1.31 $ $Date: 2008-09-18 18:00:21 $
 
 =cut

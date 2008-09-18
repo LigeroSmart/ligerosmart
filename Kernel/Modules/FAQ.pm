@@ -2,7 +2,7 @@
 # Kernel/Modules/FAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.26 2008-09-18 12:13:12 ub Exp $
+# $Id: FAQ.pm,v 1.27 2008-09-18 18:00:21 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::FAQ;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.26 $) [1];
+$VERSION = qw($Revision: 1.27 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -510,21 +510,22 @@ sub _GetExplorerTop10Items {
         }
 
         # get the top 10 articles
-        my @Top10ItemIDs = $Self->{FAQObject}->FAQTop10Get(
+        my $Top10ItemIDsRef = $Self->{FAQObject}->FAQTop10Get(
             Interface => $Self->{Interface}{Name},
-            Limit     => $Self->{ConfigObject}->Get('FAQ::Explorer::Top10::Limit'),
+            Limit     => $Self->{ConfigObject}->Get('FAQ::Explorer::Top10::Limit') || 10,
         );
 
         # show each top 10 entry
         my $Number;
-        for my $ItemID ( @Top10ItemIDs ) {
+        for my $ItemIDRef ( @{ $Top10ItemIDsRef } ) {
             $Number++;
-            my %Data = $Self->{FAQObject}->FAQGet( ItemID => $ItemID );
+            my %Data = $Self->{FAQObject}->FAQGet( ItemID => $ItemIDRef->{ItemID} );
             $Self->{LayoutObject}->Block(
                 Name => 'ExplorerTop10FAQItemRow',
                 Data => {
                     %Data,
                     Number => $Number,
+                    Count  => $ItemIDRef->{Count},
                 },
             );
         }
