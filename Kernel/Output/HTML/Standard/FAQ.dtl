@@ -2,7 +2,7 @@
 # FAQ.dtl - provides HTML view for faq articles
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.dtl,v 1.16 2008-09-17 15:50:45 ub Exp $
+# $Id: FAQ.dtl,v 1.17 2008-09-18 10:47:02 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -29,7 +29,10 @@
     <td width="75%" class="mainbody">
 
 <!-- dtl:block:FAQPathCategoryElement -->
-      $Config{"FAQ::Explorer::Path::Seperator"} <b><a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Explorer&CategoryID=$Data{"CategoryID"}">$QData{"Name"}</a></b>
+      $Config{"FAQ::Explorer::Path::Seperator"}
+      <b>
+      <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Explorer&CategoryID=$Data{"CategoryID"}">$QData{"Name"}</a>
+      </b>
 <!-- dtl:block:FAQPathCategoryElement -->
 
       <h1>$QData{"Title"}</h1>
@@ -48,7 +51,11 @@
                   <table cellspacing="0" cellpadding="0">
 <!-- dtl:block:FAQItemViewAttachmentRow -->
                     <tr>
-                      <td><a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Download&ItemID=$QData{"ItemID"}&FileID=$QData{"FileID"}">$QData{"Filename"}</a></td>
+                      <td>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Download&ItemID=$QData{"ItemID"}&FileID=$QData{"FileID"}">
+                        $QData{"Filename"}
+                        </a>
+                      </td>
                       <td align="right">&nbsp;&nbsp; $QData{"Filesize"}</td>
                     </tr>
 <!-- dtl:block:FAQItemViewAttachmentRow -->
@@ -354,7 +361,12 @@
 
 
 <!-- dtl:block:FAQPathCategoryElement -->
-      $Config{"FAQ::Explorer::Path::Seperator"} <b><a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=$Env{"Subaction"}&CategoryID=$Data{"CategoryID"}">$QData{"Name"}</a></b>
+      $Config{"FAQ::Explorer::Path::Seperator"}
+      <b>
+      <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=$Env{"Subaction"}&CategoryID=$Data{"CategoryID"}">
+      $QData{"Name"}
+      </a>
+      </b>
 <!-- dtl:block:FAQPathCategoryElement -->
 
 <!-- dtl:block:ExplorerTitle -->
@@ -434,7 +446,13 @@
 
 <!-- dtl:block:ExplorerFAQItemRow -->
         <tr class="contentbody">
-          <td class="$QData{"CssRow"}"><img src="$Env{"Images"}$Config{"FAQ::Item::Icon"}" style="vertical-align:middle;">&nbsp;<a href="$Env{"Baselink"}Action=$Env{"Action"}&CategoryID=$QData{"CategoryID"}&ItemID=$QData{"ItemID"}" title="$QData{"Title"}">$QData{"Title","60"}</a></td>
+          <td class="$QData{"CssRow"}">
+            <img src="$Env{"Images"}$Config{"FAQ::Item::Icon"}" style="vertical-align:middle;">
+            &nbsp;
+            <a href="$Env{"Baselink"}Action=$Env{"Action"}&CategoryID=$QData{"CategoryID"}&ItemID=$QData{"ItemID"}" title="$QData{"Title"}">
+            $QData{"Title","60"}
+            </a>
+          </td>
           <td class="$QData{"CssRow"}">$QData{"Language"}</td>
           <td class="$QData{"CssRow"}">$QData{"State"}</td>
           <td class="$QData{"CssRow"}" style="$Data{"CssColumnVotingResult"}">$QData{"Result"}</td>
@@ -479,7 +497,9 @@
         <tr>
           <td><h3>$Text{"LatestCreatedItems"}</h3></td>
 <!-- dtl:block:ExplorerLatestCreateRss -->
-          <td valign="top" align="right"><a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=rss&Type=Created" title="$Text{"FAQ News (new created)"}"><img src="$Env{"Images"}/rss.png" border="0"></a></td>
+          <td valign="top" align="right">
+            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=rss&Type=Created" title="$Text{"FAQ News (new created)"}"><img src="$Env{"Images"}/rss.png" border="0"></a>
+          </td>
 <!-- dtl:block:ExplorerLatestCreateRss -->
         </tr>
       </table>
@@ -487,7 +507,10 @@
 <!-- dtl:block:ExplorerLatestCreateFAQItemRow -->
         <tr>
           <td valign="top"><img src="$Env{"Images"}$Config{"FAQ::Item::Icon"}"></td>
-          <td><a href="$Env{"Baselink"}Action=$Env{"Action"}&CategoryID=$QData{"CategoryID"}&ItemID=$QData{"ItemID"}" title="$QData{"Title"} ($QData{"CategoryName"})">$QData{"Title","40"} ($QData{"CategoryName","40"})</a>
+          <td>
+            <a href="$Env{"Baselink"}Action=$Env{"Action"}&CategoryID=$QData{"CategoryID"}&ItemID=$QData{"ItemID"}" title="$QData{"Title"} ($QData{"CategoryName"})">
+            $QData{"Title","40"} ($QData{"CategoryName","40"})
+            </a>
             <br/>
             <i class="small">($QData{"Language"}) $TimeShort{"$Data{"Created"}"}</i>
           </td>
@@ -502,7 +525,11 @@
         <tr>
           <td><h3>$Text{"LatestChangedItems"}</h3></td>
 <!-- dtl:block:ExplorerLatestChangeRss -->
-          <td valign="top" align="right"><a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=rss&Type=Changed" title="$Text{"FAQ News (recently changed)"}"><img src="$Env{"Images"}/rss.png" border="0"></a></td>
+          <td valign="top" align="right">
+            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=rss&Type=Changed" title="$Text{"FAQ News (recently changed)"}">
+            <img src="$Env{"Images"}/rss.png" border="0">
+            </a>
+          </td>
 <!-- dtl:block:ExplorerLatestChangeRss -->
         </tr>
       </table>
@@ -510,7 +537,10 @@
 <!-- dtl:block:ExplorerLatestChangeFAQItemRow -->
         <tr>
           <td valign="top"><img src="$Env{"Images"}$Config{"FAQ::Item::Icon"}"></td>
-          <td><a href="$Env{"Baselink"}Action=$Env{"Action"}&CategoryID=$QData{"CategoryID"}&ItemID=$QData{"ItemID"}" title="$QData{"Title"} ($QData{"CategoryName"})">$QData{"Title","40"} ($QData{"CategoryName","40"})</a>
+          <td>
+            <a href="$Env{"Baselink"}Action=$Env{"Action"}&CategoryID=$QData{"CategoryID"}&ItemID=$QData{"ItemID"}" title="$QData{"Title"} ($QData{"CategoryName"})">
+            $QData{"Title","40"} ($QData{"CategoryName","40"})
+            </a>
             <br/>
             <i class="small">($QData{"Language"}) $TimeShort{"$Data{"Changed"}"}</i>
           </td>
@@ -524,7 +554,11 @@
         <tr>
           <td><h3>$Text{"Top10Items"}</h3></td>
 <!-- dtl:block:ExplorerTop10Rss -->
-          <td valign="top" align="right"><a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=rss&Type=Top10" title="$Text{"FAQ News (Top 10)"}"><img src="$Env{"Images"}/rss.png" border="0"></a></td>
+          <td valign="top" align="right">
+            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=rss&Type=Top10" title="$Text{"FAQ News (Top 10)"}">
+            <img src="$Env{"Images"}/rss.png" border="0">
+            </a>
+          </td>
 <!-- dtl:block:ExplorerTop10Rss -->
         </tr>
       </table>
@@ -533,7 +567,10 @@
         <tr>
           <td>$Data{"Number"}.</td>
           <td valign="top"><img src="$Env{"Images"}$Config{"FAQ::Item::Icon"}"></td>
-          <td><a href="$Env{"Baselink"}Action=$Env{"Action"}&CategoryID=$QData{"CategoryID"}&ItemID=$QData{"ItemID"}" title="$QData{"Title"} ($QData{"CategoryName"})">$QData{"Title","40"} ($QData{"CategoryName","40"})</a>
+          <td>
+            <a href="$Env{"Baselink"}Action=$Env{"Action"}&CategoryID=$QData{"CategoryID"}&ItemID=$QData{"ItemID"}" title="$QData{"Title"} ($QData{"CategoryName"})">
+            $QData{"Title","40"} ($QData{"CategoryName","40"})
+            </a>
             <br/>
             <i class="small">($QData{"Language"}) $TimeShort{"$Data{"Changed"}"}</i>
           </td>

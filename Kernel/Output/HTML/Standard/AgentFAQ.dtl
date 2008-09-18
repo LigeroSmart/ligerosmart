@@ -2,7 +2,7 @@
 # AgentFAQ.dtl - provides HTML view for faq articles
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.dtl,v 1.22 2008-09-17 15:50:45 ub Exp $
+# $Id: AgentFAQ.dtl,v 1.23 2008-09-18 10:47:02 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -38,11 +38,21 @@
 
 
 <!-- dtl:block:FAQPathCategoryElement -->
-      $Config{"FAQ::Explorer::Path::Seperator"} <b><a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Explorer&CategoryID=$Data{"CategoryID"}">$QData{"Name"}</a></b>
+      $Config{"FAQ::Explorer::Path::Seperator"}
+      <b>
+      <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Explorer&CategoryID=$Data{"CategoryID"}">
+      $QData{"Name"}
+      </a>
+      </b>
 <!-- dtl:block:FAQPathCategoryElement -->
 
 <!-- dtl:block:FAQPathItemElement -->
-      $Config{"FAQ::Explorer::Path::Seperator"} <b><a href="$Env{"Baselink"}Action=$Env{"Action"}&CategoryID=$QData{"CategoryID"}&ItemID=$QData{"ItemID"}">$QData{"Title"}</a></b>
+      $Config{"FAQ::Explorer::Path::Seperator"}
+      <b>
+      <a href="$Env{"Baselink"}Action=$Env{"Action"}&CategoryID=$QData{"CategoryID"}&ItemID=$QData{"ItemID"}">
+      $QData{"Title"}
+      </a>
+      </b>
 <!-- dtl:block:FAQPathItemElement -->
 
 
@@ -62,7 +72,11 @@
                   <table cellspacing="0" cellpadding="0">
 <!-- dtl:block:FAQItemViewAttachmentRow -->
                     <tr>
-                      <td><a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Download&ItemID=$QData{"ItemID"}&FileID=$QData{"FileID"}">$QData{"Filename"}</a></td>
+                      <td>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Download&ItemID=$QData{"ItemID"}&FileID=$QData{"FileID"}">
+                        $QData{"Filename"}
+                        </a>
+                      </td>
                       <td align="right">&nbsp;&nbsp; $QData{"Filesize"}</td>
                     </tr>
 <!-- dtl:block:FAQItemViewAttachmentRow -->
@@ -264,11 +278,21 @@ function updateMessage()
 
 
 <!-- dtl:block:FAQPathCategoryElement -->
-        $Config{"FAQ::Explorer::Path::Seperator"} <b><a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Explorer&CategoryID=$Data{"CategoryID"}">$QData{"Name"}</a></b>
+        $Config{"FAQ::Explorer::Path::Seperator"}
+        <b>
+        <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Explorer&CategoryID=$Data{"CategoryID"}">
+        $QData{"Name"}
+        </a>
+        </b>
 <!-- dtl:block:FAQPathCategoryElement -->
 
 <!-- dtl:block:FAQPathItemElementSmall -->
-        $Config{"FAQ::Explorer::Path::Seperator"} <b><a href="$Env{"Baselink"}Action=$Env{"Action"}&CategoryID=$QData{"CategoryID"}&ItemID=$QData{"ItemID"}">$QData{"Title"}</a></b>
+        $Config{"FAQ::Explorer::Path::Seperator"}
+        <b>
+        <a href="$Env{"Baselink"}Action=$Env{"Action"}&CategoryID=$QData{"CategoryID"}&ItemID=$QData{"ItemID"}">
+        $QData{"Title"}
+        </a>
+        </b>
 <!-- dtl:block:FAQPathItemElementSmall -->
 
 
@@ -473,7 +497,7 @@ function submit_compose()
 <!--
 
 if ( !document.compose.CategoryID.options[0] ) {
-    alert('$JSText{"No category accesable. To create an article you need have at lease access to min. one category. Please check your group/category permission under -category menu-!"}');
+    alert('$JSText{"No category accessible. To create an article you need access to at least one category. Please check your group/category permission under -category menu-!"}');
 }
 
 //-->
@@ -551,7 +575,11 @@ function submit_compose()
                       <table cellspacing="0" cellpadding="0" width="400">
 <!-- dtl:block:UpdateAttachment -->
                         <tr>
-                          <td><a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Download&ItemID=$QData{"ItemID"}&FileID=$QData{"FileID"}">$QData{"Filename"}</a></td>
+                          <td>
+                            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Download&ItemID=$QData{"ItemID"}&FileID=$QData{"FileID"}">
+                              $QData{"Filename"}
+                            </a>
+                          </td>
                           <td>$QData{"Filesize"}</td>
                           <td align="right">
                             <input class="button" type="submit" name="AttachmentDelete$QData{"FileID"}" value="$Text{"Delete"}">
@@ -736,7 +764,9 @@ function submit_compose()
         <input type="hidden" name="ID" value="$QData{"ID"}">
         <table border="0" width="100%" align="center" cellspacing="0" cellpadding="4">
           <tr>
-            <td class="contenthead">$Text{"$Data{"Headline"}"} <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Language">$Text{"$Data{"AddLink"}"}</a></td>
+            <td class="contenthead">$Text{"$Data{"Headline"}"}
+              <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Language">$Text{"$Data{"AddLink"}"}</a>
+            </td>
           </tr>
           <tr>
             <td class="contentbody">
