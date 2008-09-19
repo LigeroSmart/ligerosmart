@@ -2,7 +2,7 @@
 # Survey.t - Survey tests
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.t,v 1.4 2008-08-04 16:59:21 ub Exp $
+# $Id: Survey.t,v 1.5 2008-09-19 14:04:43 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -188,9 +188,51 @@ my @Tests = (
             0,
         ],
     },
+    {
+        'Survey::SendPeriod' => 1 / 24 / 60,
+        Sleep  => 80,
+        Ticket => {
+            Title        => 'Some Ticket Title',
+            Queue        => 'Raw',
+            Lock         => 'unlock',
+            Priority     => '3 normal',
+            State        => 'closed successful',
+            CustomerNo   => '123465',
+            CustomerUser => 'customer@example.com',
+            OwnerID      => 1,
+            UserID       => 1,
+        },
+        Article => {
+            ArticleType    => 'email-external',
+            SenderType     => 'customer',
+            From           => 'SOME@example.com',
+            To             => 'Some To <to@example.com>',
+            Subject        => 'Some Subject',
+            Body           => 'the message text',
+            MessageID      => '<asdasdasd.123@example.com>',
+            ContentType    => 'text/plain; charset=ISO-8859-15',
+            HistoryType    => 'OwnerUpdate',
+            HistoryComment => 'Some free text!',
+            UserID         => 1,
+            NoAgentNotify => 1,    # if you don't want to send agent notifications
+        },
+        Result => [
+            0,
+            0,
+        ],
+    },
 );
 
 for my $Test (@Tests) {
+    if ( $Test->{'Survey::SendPeriod'} ) {
+        $Self->{ConfigObject}->Set(
+            Key   => 'Survey::SendPeriod',
+            Value => $Test->{'Survey::SendPeriod'},
+        );
+    }
+    if ( $Test->{Sleep} ) {
+        sleep $Test->{Sleep};
+    }
     my $TicketID = $Self->{TicketObject}->TicketCreate(
         %{ $Test->{Ticket} },
     );
