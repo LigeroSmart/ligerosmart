@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # Copyright (C) 2008 Aquiles Cohen
 # --
-# $Id: es_FAQ.pm,v 1.7 2008-09-17 12:51:45 ub Exp $
+# $Id: es_FAQ.pm,v 1.8 2008-09-19 12:09:07 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -43,6 +43,12 @@ sub Data {
     $Lang->{'FAQ News (new created)'}            = 'Noticias FAQ (creado nuevo)';
     $Lang->{'FAQ News (recently changed)'}       = 'Noticias FAQ (Recientemente modificado)';
     $Lang->{'FAQ News (Top 10)'}                 = 'Noticias FAQ (Top 10)';
+    $Lang->{'StartDay'}                          = 'Start day';
+    $Lang->{'StartMonth'}                        = 'Start month';
+    $Lang->{'StartYear'}                         = 'Start year';
+    $Lang->{'EndDay'}                            = 'End day';
+    $Lang->{'EndMonth'}                          = 'End month';
+    $Lang->{'EndYear'}                           = 'End year';
     $Lang->{
         'No category accessible. To create an article you need access to at least one category. Please check your group/category permission under -category menu-!'
         }
