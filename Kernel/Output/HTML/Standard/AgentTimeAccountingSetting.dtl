@@ -2,7 +2,7 @@
 # AgentTimeAccountingSetting.dtl - provides HTML form for time accounting settings
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingSetting.dtl,v 1.7 2008-09-18 15:13:31 shb Exp $
+# $Id: AgentTimeAccountingSetting.dtl,v 1.8 2008-09-19 05:45:47 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -84,7 +84,7 @@
   <tr>
     <td class="menu">
       <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=ProjectSetting" class="menuitem">
-      $Text{"ProjectSetting"}
+      $Text{"Project settings"}
       </a>
     </td>
   </tr>
