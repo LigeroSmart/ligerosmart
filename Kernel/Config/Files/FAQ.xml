@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.14 2008-09-16 21:06:01 ub Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.15 2008-09-19 16:56:29 ub Exp $</CVS>
     <ConfigItem Name="Ticket::Frontend::NoteTypes" Required="1" Valid="1">
         <Description Lang="en">Specify the different note types, that you want to use in your system.</Description>
         <Description Lang="de">Hier können die verschiedenen Notiz-Typen festgelegt werden, die innerhalb des Systems verwendet werden sollen.</Description>
@@ -260,6 +260,18 @@
         <SubGroup>Core</SubGroup>
         <Setting>
             <String>internal (agent)</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::WYSIWYGEditor" Required="1" Valid="1">
+        <Description Lang="en">Show WYSIWYG editor in agent interface.</Description>
+        <Description Lang="de">Anzeige eines WYSIWYG Editors im Agenten-Interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Core</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Item::Field1" Required="1" Valid="1">
