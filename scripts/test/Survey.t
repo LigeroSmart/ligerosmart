@@ -2,7 +2,7 @@
 # Survey.t - Survey tests
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.t,v 1.5 2008-09-19 14:04:43 martin Exp $
+# $Id: Survey.t,v 1.6 2008-09-19 14:35:12 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -189,8 +189,41 @@ my @Tests = (
         ],
     },
     {
-        'Survey::SendPeriod' => 1 / 24 / 60,
         Sleep  => 80,
+        'Survey::SendPeriod' => 1 / 24 / 60,
+        Ticket => {
+            Title        => 'Some Ticket Title',
+            Queue        => 'Raw',
+            Lock         => 'unlock',
+            Priority     => '3 normal',
+            State        => 'closed successful',
+            CustomerNo   => '123465',
+            CustomerUser => 'customer@example.com',
+            OwnerID      => 1,
+            UserID       => 1,
+        },
+        Article => {
+            ArticleType    => 'email-external',
+            SenderType     => 'customer',
+            From           => 'SOME@example.com',
+            To             => 'Some To <to@example.com>',
+            Subject        => 'Some Subject',
+            Body           => 'the message text',
+            MessageID      => '<asdasdasd.123@example.com>',
+            ContentType    => 'text/plain; charset=ISO-8859-15',
+            HistoryType    => 'OwnerUpdate',
+            HistoryComment => 'Some free text!',
+            UserID         => 1,
+            NoAgentNotify => 1,    # if you don't want to send agent notifications
+        },
+        Result => [
+            0,
+            1,
+        ],
+    },
+    {
+        Sleep  => 30,
+        'Survey::SendPeriod' => 1 / 24 / 60,
         Ticket => {
             Title        => 'Some Ticket Title',
             Queue        => 'Raw',
