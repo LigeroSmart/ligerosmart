@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - all survey funtions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.pm,v 1.41 2008-07-30 16:52:01 mh Exp $
+# $Id: Survey.pm,v 1.42 2008-09-19 14:09:37 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Ticket;
 use Mail::Address;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.41 $) [1];
+$VERSION = qw($Revision: 1.42 $) [1];
 
 =head1 NAME
 
@@ -1790,16 +1790,16 @@ sub RequestSend {
 
     # check if ticket is in a send queue
     if ( $Survey{Queues} && ref $Survey{Queues} eq 'ARRAY' && @{ $Survey{Queues} } ) {
-        my $found;
+        my $Found;
 
         QUEUE:
         for my $QueueID ( @{ $Survey{Queues} } ) {
             next QUEUE if $Ticket{QueueID} != $QueueID;
-            $found = 1;
+            $Found = 1;
             last QUEUE;
         }
 
-        return 1 if !$found;
+        return if !$Found;
     }
 
     # cleanup
@@ -1859,8 +1859,10 @@ sub RequestSend {
     $To = lc $To;
 
     # check if not survey should be send
-    return if $Self->{ConfigObject}->Get('Survey::SendNoSurveyRegExp')
-            && $To =~ m{ $Self->{ConfigObject}->Get('Survey::SendNoSurveyRegExp') }xmsi;
+    my $SendNoSurveyRegExp = $Self->{ConfigObject}->Get('Survey::SendNoSurveyRegExp');
+    if ( $SendNoSurveyRegExp && $To =~ /$SendNoSurveyRegExp/i ) {
+        return;
+    }
 
     # quote
     $To = $Self->{DBObject}->Quote($To);
@@ -1872,7 +1874,8 @@ sub RequestSend {
 
         # get send time
         $Self->{DBObject}->Prepare(
-            SQL   => "SELECT send_time FROM survey_request WHERE LOWER(send_to) = '$To'",
+            SQL   => "SELECT send_time FROM survey_request WHERE LOWER(send_to) = '$To' "
+                . "ORDER BY send_time DESC",
             Limit => 1,
         );
 
@@ -1906,7 +1909,7 @@ sub RequestSend {
         TicketID     => $Param{TicketID},
         CreateUserID => 1,
         HistoryType  => 'Misc',
-        Name         => "Sent customer survey to $To.",
+        Name         => "Sent customer survey to '$To'.",
     );
 
     # send survey
@@ -2183,6 +2186,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.41 $ $Date: 2008-07-30 16:52:01 $
+$Revision: 1.42 $ $Date: 2008-09-19 14:09:37 $
 
 =cut
