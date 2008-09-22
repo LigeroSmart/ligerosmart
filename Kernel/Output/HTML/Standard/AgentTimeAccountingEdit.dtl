@@ -2,7 +2,7 @@
 # AgentTimeAccountingEdit.dtl - provides HTML form for time accounting edit
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingEdit.dtl,v 1.11 2008-09-22 21:54:20 shb Exp $
+# $Id: AgentTimeAccountingEdit.dtl,v 1.12 2008-09-22 21:59:12 shb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -11,7 +11,7 @@
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
   <tr>
     <td colspan="3" class="mainhead">
-      $Env{"Box0"}$Text{"Edit Time Accounting"}$Env{"Box1"}
+      $Env{"Box0"}$Text{"Edit time record"}$Env{"Box1"}
     </td>
   </tr>
 <!-- dtl:block:Overview -->
