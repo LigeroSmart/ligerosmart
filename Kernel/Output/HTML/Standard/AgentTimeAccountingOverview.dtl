@@ -2,7 +2,7 @@
 # AgentTimeAccountingOverview.dtl - provides HTML form for time accounting overview
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingOverview.dtl,v 1.9 2008-09-22 16:38:16 shb Exp $
+# $Id: AgentTimeAccountingOverview.dtl,v 1.10 2008-09-22 22:17:02 shb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -97,7 +97,7 @@
           <td colspan="2">&nbsp;</td>
         </tr>
         <tr class="contenthead">
-          <td colspan="2">$Text{"Diseased"}:</td>
+          <td colspan="2">$Text{"Sick days"}:</td>
         </tr>
         <tr class="contentbody">
           <td class="contentkey">&nbsp;$Text{"Diseased this month"}:</td>
