@@ -2,7 +2,7 @@
 # AgentTimeAccountingSetting.dtl - provides HTML form for time accounting settings
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingSetting.dtl,v 1.16 2008-09-22 19:40:10 shb Exp $
+# $Id: AgentTimeAccountingSetting.dtl,v 1.17 2008-09-22 19:55:48 shb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -160,7 +160,7 @@
                         <td>$Text{"Period end"}<span class="required">*</span></td>
                         <td>$Text{"Days of vacation"}<span class="required">*</span></td>
                         <td>$Text{"Hours per week"}</td>
-                        <td>$Text{"Overtime"}</td>
+                        <td>$Text{"Authorized overtime"}</td>
                         <td>$Text{"Status"}<span class="required">*</span></td>
                       </tr>
 <!-- dtl:block:Period -->

@@ -2,7 +2,7 @@
 # Kernel/Language/de_AgentTimeAccounting.pm - the de language for AgentTimeAccounting
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: de_AgentTimeAccounting.pm,v 1.18 2008-09-22 19:40:10 shb Exp $
+# $Id: de_AgentTimeAccounting.pm,v 1.19 2008-09-22 19:55:48 shb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -71,6 +71,7 @@ sub Data {
         'LeaveDay'                                 => 'Urlaub',
         'Diseased'                                 => 'Erkrankt',
         'Task'                                     => 'Tätigkeit',
+        'Authorized overtime'                      => 'autorisierte Überstunden',
         'Overtime'                                 => 'Überstunden',
         'Total'                                    => 'Summe',
         'Overview of '                             => 'Übersicht - ',
