@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.32 2008-09-19 12:06:57 ub Exp $
+# $Id: FAQ.pm,v 1.33 2008-09-22 15:51:16 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::CustomerGroup;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.32 $) [1];
+$VERSION = qw($Revision: 1.33 $) [1];
 
 =head1 NAME
 
@@ -122,7 +122,7 @@ sub FAQGet {
         " i.free_key1, i.free_value1, i.free_key2, i.free_value2, " .
         " i.free_key3, i.free_value3, i.free_key4, i.free_value4, " .
         " i.created, i.created_by, i.changed, i.changed_by, " .
-        " i.category_id, i.state_id, c.name, s.name, l.name, i.f_keywords, i.f_number, st.id, st.name "
+        " i.category_id, i.state_id, c.name, s.name, l.name, i.f_keywords, i.approval_id, i.f_number, st.id, st.name "
         .
         " FROM faq_item i, faq_category c, faq_state s, faq_state_type st, faq_language l " .
         " WHERE " .
@@ -170,9 +170,10 @@ sub FAQGet {
             State         => $Row[24],
             Language      => $Row[25],
             Keywords      => $Row[26],
-            Number        => $Row[27],
-            StateTypeID   => $Row[28],
-            StateTypeName => $Row[29],
+            ApprovalID    => $Row[27],
+            Number        => $Row[28],
+            StateTypeID   => $Row[29],
+            StateTypeName => $Row[30],
             Result        => sprintf(
                 "%0."
                     . $Self->{ConfigObject}->Get(
@@ -281,19 +282,24 @@ sub FAQAdd {
         $Param{Number} = $Self->{ConfigObject}->Get('SystemID') . rand(100);
     }
 
+    # set default approval id to not approved
+    if ( !$Param{ApprovalID} ) {
+        $Param{ApprovalID} = 0;
+    }
+
     return if !$Self->{DBObject}->Do(
         SQL => "INSERT INTO faq_item (f_number, f_name, f_language_id, f_subject, " .
-            " category_id, state_id, f_keywords, " .
+            " category_id, state_id, f_keywords, approval_id, " .
             " f_field1, f_field2, f_field3, f_field4, f_field5, f_field6, " .
             " free_key1, free_value1, free_key2, free_value2, " .
             " free_key3, free_value3, free_key4, free_value4, " .
             " created, created_by, changed, changed_by)" .
             " VALUES " .
-            " (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " .
+            " (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " .
             " ?, ?, ?, ?, current_timestamp, ?, current_timestamp, ?)",
         Bind => [
             \$Param{Number}, \$Param{Name}, \$Param{LanguageID}, \$Param{Title},
-            \$Param{CategoryID}, \$Param{StateID},   \$Param{Keywords},
+            \$Param{CategoryID}, \$Param{StateID},   \$Param{Keywords}, \$Param{ApprovalID},
             \$Param{Field1},     \$Param{Field2},    \$Param{Field3},
             \$Param{Field4},     \$Param{Field5},    \$Param{Field6},
             \$Param{FreeKey1},   \$Param{FreeText1}, \$Param{FreeKey2}, \$Param{FreeText2},
@@ -2756,6 +2762,42 @@ sub FAQTop10Get {
     return \@Result;
 }
 
+=item FAQApprovalUpdate()
+
+update the approval state of an article
+
+    $FAQObject->FAQApprovalUpdate(
+        ItemID     => 123,
+        ApprovalID => 1,    # 0: not approved, 1: approved
+    );
+
+=cut
+
+sub FAQApprovalUpdate {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for (qw(ItemID)) {
+        if ( !$Param{$_} ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+            return;
+        }
+    }
+    if ( !defined $Param{ApprovalID} ) {
+        $Self->{LogObject}->Log( Priority => 'error', Message => "Need ApprovalID!" );
+        return;
+    }
+
+    return if !$Self->{DBObject}->Do(
+        SQL => "UPDATE faq_item SET approval_id = ? WHERE id = ?",
+        Bind => [
+            \$Param{ApprovalID}, \$Param{ItemID},
+        ],
+    );
+
+    return 1;
+}
+
 1;
 
 =back
@@ -2771,6 +2813,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.32 $ $Date: 2008-09-19 12:06:57 $
+$Revision: 1.33 $ $Date: 2008-09-22 15:51:16 $
 
 =cut

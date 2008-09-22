@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.37 2008-09-22 11:24:10 ub Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.38 2008-09-22 15:51:16 ub Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -91,21 +91,6 @@
             <Data Key="name" Type="Quote">public (all)</Data>
             <Data Key="type_id">3</Data>
         </Insert>
-        <TableCreate Name="faq_approval">
-            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="SMALLINT"/>
-            <Column Name="name" Required="true" Size="200" Type="VARCHAR"/>
-            <Unique Name="faq_approval_name">
-                <UniqueColumn Name="name"/>
-            </Unique>
-        </TableCreate>
-        <Insert Table="faq_approval">
-            <Data Key="id">1</Data>
-            <Data Key="name" Type="Quote">approved</Data>
-        </Insert>
-        <Insert Table="faq_approval">
-            <Data Key="id">2</Data>
-            <Data Key="name" Type="Quote">not approved</Data>
-        </Insert>
         <TableCreate Name="faq_category">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>
             <Column Name="parent_id" Required="true" Type="INTEGER"/>
@@ -164,9 +149,6 @@
             <Column Name="created_by" Required="true" Type="INTEGER"/>
             <Column Name="changed" Required="true" Type="DATE"/>
             <Column Name="changed_by" Required="true" Type="INTEGER"/>
-            <ForeignKey ForeignTable="faq_approval">
-                <Reference Local="approval_id" Foreign="id"/>
-            </ForeignKey>
         </TableCreate>
         <TableCreate Name="faq_history">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>
@@ -242,26 +224,8 @@
                 <IndexColumn Name="item_id"/>
             </Index>
         </TableCreate>
-        <TableCreate Name="faq_approval" Version="1.4.91">
-            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="SMALLINT"/>
-            <Column Name="name" Required="true" Size="200" Type="VARCHAR"/>
-            <Unique Name="faq_approval_name">
-                <UniqueColumn Name="name"/>
-            </Unique>
-        </TableCreate>
-        <Insert Table="faq_approval">
-            <Data Key="id">1</Data>
-            <Data Key="name" Type="Quote">approved</Data>
-        </Insert>
-        <Insert Table="faq_approval">
-            <Data Key="id">2</Data>
-            <Data Key="name" Type="Quote">not approved</Data>
-        </Insert>
         <TableAlter Name="faq_item" Version="1.4.91">
             <ColumnAdd Name="approval_id" Required="true" Default="1" Type="SMALLINT"/>
-             <ForeignKey ForeignTable="faq_approval">
-                <Reference Local="approval_id" Foreign="id"/>
-            </ForeignKey>
         </TableAlter>
     </DatabaseUpgrade>
     <DatabaseUninstall Type="pre">
@@ -275,7 +239,6 @@
         <TableDrop Name="faq_attachment"/>
         <TableDrop Name="faq_voting"/>
         <TableDrop Name="faq_log"/>
-        <TableDrop Name="faq_approval"/>
     </DatabaseUninstall>
     <CodeInstall Type="post">
 
@@ -296,7 +259,12 @@
             ValidID =&gt; 1,
             UserID  =&gt; 1,
         );
-
+        $Self-&gt;{GroupObject}-&gt;GroupAdd(
+            Name    =&gt; 'faq_approval',
+            Comment =&gt; 'faq users who can approve faq articles',
+            ValidID =&gt; 1,
+            UserID  =&gt; 1,
+        );
     </CodeInstall>
     <IntroInstall Type="post" Title="Installation Information" Lang="en">
 

@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.pm,v 1.18 2008-09-19 16:56:29 ub Exp $
+# $Id: AgentFAQ.pm,v 1.19 2008-09-22 15:51:16 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::Group;
 use Kernel::System::Valid;
 
 use vars qw($VERSION @ISA);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 @ISA = qw(Kernel::Modules::FAQ);
 
@@ -722,6 +722,33 @@ sub Run {
             Data => { %ItemData, %Frontend },
         );
 
+        # show approval field
+        if ( $Self->{ConfigObject}->Get('FAQ::ApprovalRequired') ) {
+
+            # check permission
+            my %Groups = reverse $Self->{GroupObject}->GroupMemberList(
+                UserID => $Self->{UserID},
+                Type   => 'ro',
+                Result => 'HASH',
+            );
+
+            if ( exists $Groups{'faq_approval'} ) {
+                my %Data;
+                $Data{ApprovalOption} = $Self->{LayoutObject}->OptionStrgHashRef(
+                    Data => {
+                        0 => 'No',
+                        1 => 'Yes',
+                    },
+                    Name       => 'ApprovalID',
+                    SelectedID => $ItemData{ApprovalID},
+                );
+                $Self->{LayoutObject}->Block(
+                    Name => 'UpdateApproval',
+                    Data => { %Data },
+                );
+            }
+        }
+
         # add attachments
         my @AttachmentIndex = $Self->{FAQObject}->AttachmentIndex(
             ItemID => $ParamData{ItemID},
@@ -752,7 +779,6 @@ sub Run {
         @Params = qw(ItemID Title CategoryID StateID LanguageID);
 
         # permission check
-
         if ( !$Self->{AccessRw} ) {
             return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' );
         }
@@ -760,7 +786,7 @@ sub Run {
         # check parameters
         my %ParamData      = ();
         my @RequiredParams = qw(Title CategoryID);
-        my @Params = qw(ItemID StateID LanguageID Field1 Field2 Field3 Field4 Field5 Field6 Keywords
+        my @Params = qw(ItemID StateID LanguageID Field1 Field2 Field3 Field4 Field5 Field6 Keywords ApprovalID
             AttachmentUpload AttachmentDelete0 AttachmentDelete1 AttachmentDelete2 AttachmentDelete3 AttachmentDelete4
             AttachmentDelete5 AttachmentDelete6 AttachmentDelete7 AttachmentDelete8
             AttachmentDelete9 AttachmentDelete10 AttachmentDelete11 AttachmentDelete12
@@ -810,6 +836,27 @@ sub Run {
 
         if ( !$Update ) {
             return $Self->{LayoutObject}->ErrorScreen();
+        }
+
+        # update approval
+        if ( $Self->{ConfigObject}->Get('FAQ::ApprovalRequired') ) {
+
+            # check permission
+            my %Groups = reverse $Self->{GroupObject}->GroupMemberList(
+                UserID => $Self->{UserID},
+                Type   => 'ro',
+                Result => 'HASH',
+            );
+            if ( exists $Groups{'faq_approval'} ) {
+                $Update = $Self->{FAQObject}->FAQApprovalUpdate(
+                    ItemID     => $ParamData{ItemID},
+                    ApprovalID => $ParamData{ApprovalID},
+                    UserID => $Self->{UserID},
+                );
+                if ( !$Update ) {
+                    return $Self->{LayoutObject}->ErrorScreen();
+                }
+            }
         }
 
         if ($Redirect) {

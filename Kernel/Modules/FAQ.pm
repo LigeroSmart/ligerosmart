@@ -2,7 +2,7 @@
 # Kernel/Modules/FAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.27 2008-09-18 18:00:21 ub Exp $
+# $Id: FAQ.pm,v 1.28 2008-09-22 15:51:16 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::FAQ;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.27 $) [1];
+$VERSION = qw($Revision: 1.28 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -622,6 +622,9 @@ sub GetItemView {
         UserID => $ItemData{ChangedBy},
     );
     $Frontend{ChangedByLogin} = $UserInfo{UserLogin};
+
+    # approval state
+    $Frontend{Approval} = $ItemData{ApprovalID} ? 'Yes' : 'No';
 
     # item view
     $Frontend{CssColumnVotingResult} = 'color:'
