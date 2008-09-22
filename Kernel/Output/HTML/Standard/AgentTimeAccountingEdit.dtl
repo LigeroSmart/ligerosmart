@@ -2,7 +2,7 @@
 # AgentTimeAccountingEdit.dtl - provides HTML form for time accounting edit
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingEdit.dtl,v 1.10 2008-09-22 19:13:49 shb Exp $
+# $Id: AgentTimeAccountingEdit.dtl,v 1.11 2008-09-22 21:54:20 shb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -106,8 +106,8 @@
                         <td>$Text{"Project"}<span class="required">*</span></td>
                         <td>$Text{"Task"}<span class="required">*</span></td>
                         <td>$Text{"Remark"}</td>
-                        <td>$Text{"Starttime"}<span class="$QData{"ClassTime"}">*</span></td>
-                        <td>$Text{"Endtime"}<span class="$QData{"ClassTime"}">*</span></td>
+                        <td>$Text{"Start"} (HH:MM)<span class="$QData{"ClassTime"}">*</span></td>
+                        <td>$Text{"End"} (HH:MM)<span class="$QData{"ClassTime"}">*</span></td>
                         <td>$Text{"Period"}<span class="footnote">$QData{"PeriodNote"}</span></td>
                       </tr>
 <!-- dtl:block:Unit -->

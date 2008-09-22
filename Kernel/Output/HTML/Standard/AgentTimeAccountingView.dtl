@@ -2,7 +2,7 @@
 # AgentTimeAccountingView.dtl - provides HTML for view inserts of one day
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingView.dtl,v 1.5 2008-09-22 19:13:49 shb Exp $
+# $Id: AgentTimeAccountingView.dtl,v 1.6 2008-09-22 21:54:20 shb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -83,8 +83,8 @@
                       <td>$Text{"Project"}</td>
                       <td>$Text{"Task"}</td>
                       <td>$Text{"Remark"}</td>
-                      <td>$Text{"Starttime"}</td>
-                      <td>$Text{"Endtime"}</td>
+                      <td>$Text{"Start"}</td>
+                      <td>$Text{"End"}</td>
                       <td>$Text{"Period"}</td>
                     </tr>
 <!-- dtl:block:Unit -->

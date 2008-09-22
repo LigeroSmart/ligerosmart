@@ -2,7 +2,7 @@
 # Kernel/Language/de_AgentTimeAccounting.pm - the de language for AgentTimeAccounting
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: de_AgentTimeAccounting.pm,v 1.19 2008-09-22 19:55:48 shb Exp $
+# $Id: de_AgentTimeAccounting.pm,v 1.20 2008-09-22 21:54:20 shb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -61,8 +61,8 @@ sub Data {
         'Allow project creation'                   => 'Projekt erstellen',
         'Add time period'                          => 'Neue Nutzereinstellung',
         'Remark'                                   => 'Anmerkung',
-        'Starttime'                                => 'Beginn',
-        'Endtime'                                  => 'Ende',
+        'Start'                                    => 'Beginn',
+        'End'                                      => 'Ende',
         'Period begin'                             => 'Datum Beginn',
         'Period end'                               => 'Datum Ende',
         'Period'                                   => 'Dauer',
