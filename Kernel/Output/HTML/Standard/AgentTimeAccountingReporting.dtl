@@ -2,7 +2,7 @@
 # AgentTimeAccountingReporting.dtl - provides HTML form for time accounting reporting
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingReporting.dtl,v 1.10 2008-09-22 22:33:23 shb Exp $
+# $Id: AgentTimeAccountingReporting.dtl,v 1.11 2008-09-22 22:41:51 shb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -70,7 +70,7 @@
                 <td>$Text{"Working Hours"}</td>
                 <td>$Text{"Overtime"}</td>
                 <td>$Text{"Vacation"}</td>
-                <td>$Text{"Sick days"}</td>
+                <td>$Text{"Sick leave"}</td>
                 <td>$Text{"Overtime"}</td>
                 <td>$Text{"LeaveDay Remaining"}</td>
               </tr>
