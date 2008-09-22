@@ -2,7 +2,7 @@
 # AgentTimeAccountingEdit.dtl - provides HTML form for time accounting edit
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingEdit.dtl,v 1.9 2008-09-22 16:38:16 shb Exp $
+# $Id: AgentTimeAccountingEdit.dtl,v 1.10 2008-09-22 19:13:49 shb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -145,7 +145,7 @@
                       <tr class="contentkey">
                         <td colspan="4">
 <!-- dtl:block:OtherTimes -->
-                          <input type="checkbox" value="-2" name="LeaveDay" $Data{"LeaveDay"}>$Text{"Leave Day"}&nbsp;
+                          <input type="checkbox" value="-2" name="LeaveDay" $Data{"LeaveDay"}>$Text{"On vacation"}&nbsp;
                           <input type="checkbox" value="-1" name="Diseased" $Data{"Diseased"}>$Text{"Diseased"}&nbsp;
                           <input type="checkbox" value="-3" name="Overtime" $Data{"Overtime"}>$Text{"Overtime"}
 <!-- dtl:block:OtherTimes -->

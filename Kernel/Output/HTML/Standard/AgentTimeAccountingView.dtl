@@ -2,7 +2,7 @@
 # AgentTimeAccountingView.dtl - provides HTML for view inserts of one day
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingView.dtl,v 1.4 2008-09-22 16:38:16 shb Exp $
+# $Id: AgentTimeAccountingView.dtl,v 1.5 2008-09-22 19:13:49 shb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -110,7 +110,7 @@
 <!-- dtl:block:OtherTimes -->
                     <tr class="contentkey" align="center">
                       <td colspan="6">
-                        <input type="checkbox" value="-2" name="LeaveDay" $Data{"LeaveDay"} disabled>$Text{"Leave Day"}&nbsp;
+                        <input type="checkbox" value="-2" name="LeaveDay" $Data{"LeaveDay"} disabled>$Text{"Vacation"}&nbsp;
                         <input type="checkbox" value="-1" name="Diseased" $Data{"Diseased"} disabled>$Text{"Diseased"}&nbsp;
                         <input type="checkbox" value="-3" name="Overtime" $Data{"Overtime"} disabled>$Text{"Overtime"}
                         &nbsp;
