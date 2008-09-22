@@ -2,7 +2,7 @@
 # AgentTimeAccountingSetting.dtl - provides HTML form for time accounting settings
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingSetting.dtl,v 1.11 2008-09-22 16:45:17 shb Exp $
+# $Id: AgentTimeAccountingSetting.dtl,v 1.12 2008-09-22 17:37:11 shb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -37,7 +37,7 @@
               <table border="0" cellspacing="0" cellpadding="3" align="center">
                 <tr  class="contentkey">
                   <td>$Text{"Project"}<span class="required">*</span></td>
-                  <td>$Text{"Description"}</td>
+                  <td>$Text{"Comments"}</td>
                   <td>$Text{"Status"}<span class="required">*</span></td>
                 </tr>
 <!-- dtl:block:Project -->
@@ -140,7 +140,7 @@
                   <td class="contentkey" colspan="3">$QData{"User"}</td>
                 </tr>
                 <tr>
-                  <td class="contentkey">$Text{"Description"}:</td>
+                  <td class="contentkey">$Text{"Comments"}:</td>
                   <td class="contentvalue">
                     $Data{"Description"}
                     <textarea rows="1" name="Description[$QData{"UserID"}]" cols="40"></textarea>
@@ -156,8 +156,8 @@
                   <td colspan="3">
                     <table border="0" cellspacing="0" cellpadding="3" align="center" width="100%">
                       <tr class="contentkey">
-                        <td>$Text{"Startdate"}<span class="required">*</span></td>
-                        <td>$Text{"Enddate"}<span class="required">*</span></td>
+                        <td>$Text{"Period begin"}<span class="required">*</span></td>
+                        <td>$Text{"Period end"}<span class="required">*</span></td>
                         <td>$Text{"Leave Day"}<span class="required">*</span></td>
                         <td>$Text{"Weekly Hours"}</td>
                         <td>$Text{"Overtime"}</td>

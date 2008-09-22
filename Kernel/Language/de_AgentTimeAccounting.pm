@@ -2,7 +2,7 @@
 # Kernel/Language/de_AgentTimeAccounting.pm - the de language for AgentTimeAccounting
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: de_AgentTimeAccounting.pm,v 1.13 2008-09-22 16:45:17 shb Exp $
+# $Id: de_AgentTimeAccounting.pm,v 1.14 2008-09-22 17:37:11 shb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -26,6 +26,7 @@ sub Data {
 
         #new translations...
         'Date'                                     => 'Datum',
+        'Comments'                                 => 'Kommentare',
         'until'                                    => 'bis',
         'WorkingHours'                             => 'Arbeitsstunden',
         'Working Hours'                            => 'Arbeitsstunden',
@@ -41,7 +42,7 @@ sub Data {
         'TimeAccounting'                           => 'Zeiterfassung',
         'Time Accounting Overview per Month'       => 'Monatsübersicht Zeiterfassung',
         'Edit Time Accounting'                     => 'Zeiterfassung bearbeiten',
-        'Edit time accounting preferences'          => 'Zeiterfassungseinstellungen bearbeiten',
+        'Edit time accounting preferences'         => 'Zeiterfassungseinstellungen bearbeiten',
         'User Reporting'                           => 'Nutzerberichte',
         'Project Reporting'                        => 'Projektberichte',
         'Time Preporting'                          => 'Zeitberichte',
@@ -54,16 +55,16 @@ sub Data {
         'Projects'                                 => 'Projekte',
         'Total'                                    => 'Summe',
         'Reporting'                                => 'Berichtswesen',
-        'Task settings'                           => 'Aktionseinstellungen',
-        'User settings'                             => 'Nutzereinstellungen',
+        'Task settings'                            => 'Aktionseinstellungen',
+        'User settings'                            => 'Nutzereinstellungen',
         'Show Overtime'                            => 'Überstunden anzeigen',
         'Create Project'                           => 'Projekt erstellen',
         'New user setting'                         => 'Neue Nutzereinstellung',
         'Remark'                                   => 'Anmerkung',
         'Starttime'                                => 'Beginn',
         'Endtime'                                  => 'Ende',
-        'Startdate'                                => 'Datum Beginn',
-        'Enddate'                                  => 'Datum Ende',
+        'Period begin'                             => 'Datum Beginn',
+        'Period end'                               => 'Datum Ende',
         'Period'                                   => 'Dauer',
         'Leave Day'                                => 'Urlaubstag',
         'LeaveDay'                                 => 'Urlaub',
