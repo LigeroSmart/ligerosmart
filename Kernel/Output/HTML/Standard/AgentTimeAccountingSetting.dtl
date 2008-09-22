@@ -2,7 +2,7 @@
 # AgentTimeAccountingSetting.dtl - provides HTML form for time accounting settings
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingSetting.dtl,v 1.13 2008-09-22 19:13:49 shb Exp $
+# $Id: AgentTimeAccountingSetting.dtl,v 1.14 2008-09-22 19:21:47 shb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -188,7 +188,7 @@
                 </tr>
                 <tr>
                   <td class="contentvalue" colspan="3">
-                    <input class="button" type="submit" value="$Text{"New user setting"}"  name="NewUserSetting[$QData{"UserID"}]">
+                    <input class="button" type="submit" value="$Text{"Add time period"}"  name="NewUserSetting[$QData{"UserID"}]">
                   </td>
                 </tr>
                 <tr>
