@@ -2,7 +2,7 @@
 # AgentTimeAccountingOverview.dtl - provides HTML form for time accounting overview
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingOverview.dtl,v 1.10 2008-09-22 22:17:02 shb Exp $
+# $Id: AgentTimeAccountingOverview.dtl,v 1.11 2008-09-22 22:33:23 shb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -79,18 +79,18 @@
         </tr>
 <!-- dtl:block:Overtime -->
         <tr class="contenthead">
-          <td colspan="2">$Text{"Leave Days"}:</td>
+          <td colspan="2">$Text{"Vacation"}:</td>
         </tr>
         <tr class="contentbody">
-          <td class="contentkey">&nbsp;$Text{"LeaveDay this month"}:</td>
+          <td class="contentkey">&nbsp;$Text{"Vacation taken (this month)"}:</td>
           <td class="contentvalue" align="right">$QData{"LeaveDay"}</td>
         </tr>
         <tr class="contentbody">
-          <td class="contentkey">&nbsp;$Text{"LeaveDayTotal"}:</td>
+          <td class="contentkey">&nbsp;$Text{"Vacation taken (total)"}:</td>
           <td class="contentvalue" align="right">$QData{"LeaveDayTotal"}</td>
         </tr>
         <tr class="contenthead">
-          <td>$Text{"LeaveDay remaining"}:</td>
+          <td>$Text{"Remaining vacation"}:</td>
           <td align="right">$QData{"LeaveDayRemaining"}</td>
         </tr>
         <tr>

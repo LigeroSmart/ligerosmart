@@ -2,7 +2,7 @@
 # Kernel/Language/de_AgentTimeAccounting.pm - the de language for AgentTimeAccounting
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: de_AgentTimeAccounting.pm,v 1.22 2008-09-22 22:17:02 shb Exp $
+# $Id: de_AgentTimeAccounting.pm,v 1.23 2008-09-22 22:33:23 shb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -33,15 +33,15 @@ sub Data {
         'Hours per week'                           => 'Wochenstunden',
         'this month'                               => 'dieser Monat',
         'Overtime total'                           => 'Summe Überstunden',
-        'Leave Days'                               => 'Tage abwesend',
-        'LeaveDay this month'                      => 'Urlaubstage (dieser Monat)',
-        'LeaveDayTotal'                            => 'Urlaubstage (Summe)',
-        'LeaveDay remaining'                       => 'Urlaubstage (verbleibend)',
+        'Vacation'                                 => 'Tage abwesend',
+        'Vacation taken (this month)'              => 'Urlaubstage (dieser Monat)',
+        'Vacation taken (total)'                   => 'Urlaubstage (Summe)',
+        'Remaining vacation'                       => 'Urlaubstage (verbleibend)',
         'Diseased this month'                      => 'Erkrankt (dieser Monat)',
         'DiseasedTotal'                            => 'Erkrankt (Summe)',
         'TimeAccounting'                           => 'Zeiterfassung',
         'Time Accounting Overview per Month'       => 'Monatsübersicht Zeiterfassung',
-        'Edit time record'                     => 'Zeiterfassung bearbeiten',
+        'Edit time record'                         => 'Zeiterfassung bearbeiten',
         'Edit time accounting preferences'         => 'Zeiterfassungseinstellungen bearbeiten',
         'User Reporting'                           => 'Nutzerberichte',
         'Project Reporting'                        => 'Projektberichte',
