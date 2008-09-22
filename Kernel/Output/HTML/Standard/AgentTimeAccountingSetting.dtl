@@ -2,7 +2,7 @@
 # AgentTimeAccountingSetting.dtl - provides HTML form for time accounting settings
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingSetting.dtl,v 1.9 2008-09-22 16:13:54 shb Exp $
+# $Id: AgentTimeAccountingSetting.dtl,v 1.10 2008-09-22 16:38:16 shb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -102,7 +102,7 @@
             <td class="contentbody">
               <table border="0" cellspacing="0" cellpadding="3" align="center">
                 <tr>
-                  <td class="contentkey">$Text{"Action"}<span class="required">*</span></td>
+                  <td class="contentkey">$Text{"Task"}<span class="required">*</span></td>
                   <td class="contentkey">$Text{"Status"}<span class="required">*</span></td>
                 </tr>
 <!-- dtl:block:Action -->

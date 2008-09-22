@@ -1,12 +1,12 @@
 # --
 # AgentTimeAccountingOverview.dtl - provides HTML form for time accounting overview
-# Copyright (C) 2003-2007 OTRS GmbH, http://otrs.com/
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingOverview.dtl,v 1.8 2007-06-05 14:18:38 tr Exp $
+# $Id: AgentTimeAccountingOverview.dtl,v 1.9 2008-09-22 16:38:16 shb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
   <tr>
@@ -130,7 +130,7 @@
               </tr>
               <tr class="contentkey">
                 <td>$Text{"Project"}</td>
-                <td>$Text{"Action"}</td>
+                <td>$Text{"Task"}</td>
                 <td>$Text{"Hours"}</td>
                 <td>$Text{"Hours"}</td>
               </tr>
