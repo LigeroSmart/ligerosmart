@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.15 2008-09-19 16:56:29 ub Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.16 2008-09-22 11:24:10 ub Exp $</CVS>
     <ConfigItem Name="Ticket::Frontend::NoteTypes" Required="1" Valid="1">
         <Description Lang="en">Specify the different note types, that you want to use in your system.</Description>
         <Description Lang="de">Hier können die verschiedenen Notiz-Typen festgelegt werden, die innerhalb des Systems verwendet werden sollen.</Description>
@@ -269,6 +269,18 @@
         <SubGroup>Core</SubGroup>
         <Setting>
             <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::ApprovalRequired" Required="1" Valid="1">
+        <Description Lang="en">New FAQ articles need approval before they get published.</Description>
+        <Description Lang="de">Neue FAQ Artikel benötigen eine Freigabe vor der Veröffentlichung.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Core</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
                 <Item Key="0">No</Item>
                 <Item Key="1">Yes</Item>
             </Option>
