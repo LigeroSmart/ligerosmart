@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.22 2008-08-27 12:14:27 tr Exp $
+# $Id: AgentTimeAccounting.pm,v 1.23 2008-09-23 08:52:38 shb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -400,21 +400,21 @@ sub Run {
                     && $Param{Diseased} )
                 {
                     $Param{ReadOnlyDescription}
-                        = 'Are you sure, that you worked while you are Diseased?';
+                        = 'Are you sure, that you worked while you were on sick leave?';
                 }
                 elsif ($Data{$WorkingUnitID}{ProjectID}
                     && $Data{$WorkingUnitID}{ActionID}
                     && $Param{LeaveDay} )
                 {
                     $Param{ReadOnlyDescription}
-                        = 'Are you sure, that you worked while you have a leave day?';
+                        = 'Are you sure, that you worked while you were on vacation?';
                 }
                 elsif ($Data{$WorkingUnitID}{ProjectID}
                     && $Data{$WorkingUnitID}{ActionID}
                     && $Param{Overtime} )
                 {
                     $Param{ReadOnlyDescription}
-                        = 'Are you sure, that you worked while you have overtime?';
+                        = 'Are you sure, that you worked while you were on overtime leave?';
                 }
                 if ( $Data{$WorkingUnitID}{ProjectID} && !$Data{$WorkingUnitID}{ActionID} ) {
                     $Param{UnitRequiredDescription}
@@ -886,9 +886,9 @@ sub Run {
 
             my $WorkingHours = 0;
             my %OtherTime    = ();
-            $OtherTime{'-1'} = 'Diseased';
-            $OtherTime{'-2'} = 'LeaveDay';
-            $OtherTime{'-3'} = 'Overtime';
+            $OtherTime{'-1'} = 'Sick leave';
+            $OtherTime{'-2'} = 'Vacation';
+            $OtherTime{'-3'} = 'Overtime leave';
             for my $ID ( keys %Data ) {
                 $WorkingHours += $Data{$ID}{Period};
                 if ( $Data{$ID}{ProjectID} == -1 ) {

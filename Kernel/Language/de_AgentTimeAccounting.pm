@@ -2,7 +2,7 @@
 # Kernel/Language/de_AgentTimeAccounting.pm - the de language for AgentTimeAccounting
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: de_AgentTimeAccounting.pm,v 1.24 2008-09-22 22:41:51 shb Exp $
+# $Id: de_AgentTimeAccounting.pm,v 1.25 2008-09-23 08:52:38 shb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -68,7 +68,6 @@ sub Data {
         'Period'                                   => 'Dauer',
         'Days of vacation'                         => 'Urlaubstage',
         'On vacation'                              => 'im Urlaub',
-        'LeaveDay'                                 => 'Urlaub',
         'Sick day'                                 => 'Erkrankt',
         'Sick leave'                               => 'Erkrankt',
         'On sick leave'                            => 'Erkrankt',
@@ -92,11 +91,11 @@ sub Data {
             'Nicht speicherbar - Dauer (ergibt sich aus Start- und Endzeit) ist nicht angegeben!',
         'Can\'t save settings, because Period is not given given!' =>
             'Nicht speicherbar - Dauer (ergibt sich aus Start- und Endzeit) ist nicht angegeben!',
-        'Are you sure, that you worked while you are Diseased?' =>
+        'Are you sure, that you worked while you were on sick leave?' =>
             'Sie waren krank und haben gearbeitet? Wir brauchen mehr solche Mitarbeiter.',
-        'Are you sure, that you worked while you have a leave day?' =>
+        'Are you sure, that you worked while you were on vacation?' =>
             'Sie hatten Urlaub und haben gearbeitet? Wir brauchen mehr solche Mitarbeiter.',
-        'Are you sure, that you worked while you have overtime?' =>
+        'Are you sure, that you worked while you were on overtime leave?' =>
             'Haben Sie während der Überstunden auch gearbeitet?',
         'Can\'t save settings, because a day has only 24 hours!' => 'Ein Tag hat nur 24 Stunden!',
         'Can\'t delete Working Units!'      => 'Kann Arbeitsstunden nicht löschen!',
