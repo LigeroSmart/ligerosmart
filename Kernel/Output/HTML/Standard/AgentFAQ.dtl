@@ -2,7 +2,7 @@
 # AgentFAQ.dtl - provides HTML view for faq articles
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.dtl,v 1.25 2008-09-22 15:51:16 ub Exp $
+# $Id: AgentFAQ.dtl,v 1.26 2008-09-23 20:50:02 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -495,6 +495,11 @@ function submit_compose()
                 <td class="contentkey">$Text{"Language"}: </td>
                 <td class="contentvalue"> $Data{"LanguageOption"} </td>
               </tr>
+<!-- dtl:block:AddApproval -->
+                    <td class="contentkey">$Text{"Approval"}: </td>
+                    <td class="contentvalue"> $Data{"ApprovalOption"} </td>
+                  </tr>
+<!-- dtl:block:AddApproval -->
               <tr>
                 <td class="contentkey">$Text{"Attachment"}:</td>
                 <td class="contentvalue"><input name="file_upload" type="file" size="40" class="fixed">&nbsp;<a name="attachment"></a></td>

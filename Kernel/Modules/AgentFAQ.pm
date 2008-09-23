@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.pm,v 1.21 2008-09-23 10:27:54 ub Exp $
+# $Id: AgentFAQ.pm,v 1.22 2008-09-23 20:49:35 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::Group;
 use Kernel::System::Valid;
 
 use vars qw($VERSION @ISA);
-$VERSION = qw($Revision: 1.21 $) [1];
+$VERSION = qw($Revision: 1.22 $) [1];
 
 @ISA = qw(Kernel::Modules::FAQ);
 
@@ -603,6 +603,33 @@ sub Run {
             Data => { %Param, %Frontend },
         );
 
+        # show approval field
+        if ( $Self->{ConfigObject}->Get('FAQ::ApprovalRequired') ) {
+
+            # check permission
+            my %Groups = reverse $Self->{GroupObject}->GroupMemberList(
+                UserID => $Self->{UserID},
+                Type   => 'ro',
+                Result => 'HASH',
+            );
+
+            if ( exists $Groups{ $Self->{ConfigObject}->Get('FAQ::ApprovalGroup') } ) {
+                my %Data;
+                $Data{ApprovalOption} = $Self->{LayoutObject}->OptionStrgHashRef(
+                    Name => 'Approved',
+                    Data => {
+                        0 => 'No',
+                        1 => 'Yes',
+                    },
+                    SelectedID => 0,
+                );
+                $Self->{LayoutObject}->Block(
+                    Name => 'AddApproval',
+                    Data => { %Data },
+                );
+            }
+        }
+
         # fields
         $Self->_GetItemFields(
             ItemData => {}
@@ -626,7 +653,7 @@ sub Run {
         my %ParamData      = ();
         my @RequiredParams = qw(CategoryID Title);
         my @Params
-            = qw(StateID LanguageID Field1 Field2 Field3 Field4 Field5 Field6 Keywords Title);
+            = qw(StateID LanguageID Field1 Field2 Field3 Field4 Field5 Field6 Keywords Title Approved);
         for (@RequiredParams) {
             $ParamData{$_} = $Self->{ParamObject}->GetParam( Param => $_ );
             if ( !$ParamData{$_} ) {
@@ -640,7 +667,7 @@ sub Run {
         # insert item
         my $ItemID = $Self->{FAQObject}->FAQAdd(
             %ParamData,
-            UserID => $Self->{UserID}
+            UserID => $Self->{UserID},
         );
 
         if ( !$ItemID ) {
@@ -735,11 +762,11 @@ sub Run {
             if ( exists $Groups{ $Self->{ConfigObject}->Get('FAQ::ApprovalGroup') } ) {
                 my %Data;
                 $Data{ApprovalOption} = $Self->{LayoutObject}->OptionStrgHashRef(
+                    Name => 'Approved',
                     Data => {
                         0 => 'No',
                         1 => 'Yes',
                     },
-                    Name       => 'Approved',
                     SelectedID => $ItemData{Approved},
                 );
                 $Self->{LayoutObject}->Block(
@@ -847,15 +874,16 @@ sub Run {
                 Type   => 'ro',
                 Result => 'HASH',
             );
-            if ( exists $Groups{ $Self->{ConfigObject}->Get('FAQ::ApprovalGroup') } ) {
-                $Update = $Self->{FAQObject}->FAQApprovalUpdate(
-                    ItemID     => $ParamData{ItemID},
-                    Approved   => $ParamData{Approved},
-                    UserID     => $Self->{UserID},
-                );
-                if ( !$Update ) {
-                    return $Self->{LayoutObject}->ErrorScreen();
-                }
+            if ( !exists $Groups{ $Self->{ConfigObject}->Get('FAQ::ApprovalGroup') } ) {
+                $ParamData{Approved} = 0;
+            }
+            $Update = $Self->{FAQObject}->FAQApprovalUpdate(
+                ItemID     => $ParamData{ItemID},
+                Approved   => $ParamData{Approved},
+                UserID     => $Self->{UserID},
+            );
+            if ( !$Update ) {
+                return $Self->{LayoutObject}->ErrorScreen();
             }
         }
 
