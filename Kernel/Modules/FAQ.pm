@@ -2,7 +2,7 @@
 # Kernel/Modules/FAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.30 2008-09-23 21:15:25 ub Exp $
+# $Id: FAQ.pm,v 1.31 2008-09-23 21:32:45 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::FAQ;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.30 $) [1];
+$VERSION = qw($Revision: 1.31 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -633,9 +633,6 @@ sub GetItemView {
     );
     $Frontend{ChangedByLogin} = $UserInfo{UserLogin};
 
-    # approval state
-    $Frontend{Approval} = $ItemData{Approved} ? 'Yes' : 'No';
-
     # item view
     $Frontend{CssColumnVotingResult} = 'color:'
         . $Self->{LayoutObject}->GetFAQItemVotingRateColor( Rate => $ItemData{Result} ) . ';';
@@ -651,6 +648,15 @@ sub GetItemView {
         $Self->{LayoutObject}->Block(
             Name => 'FAQItemViewLinkDelete',
             Data => { %Param, %ItemData, %Frontend },
+        );
+    }
+
+    # approval state
+    if ( $Self->{ConfigObject}->Get('FAQ::ApprovalRequired') ) {
+        $Frontend{Approval} = $ItemData{Approved} ? 'Yes' : 'No';
+        $Self->{LayoutObject}->Block(
+            Name => 'ViewApproval',
+            Data => { %Frontend },
         );
     }
 
