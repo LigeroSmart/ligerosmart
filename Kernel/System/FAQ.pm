@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.33 2008-09-22 15:51:16 ub Exp $
+# $Id: FAQ.pm,v 1.34 2008-09-23 00:33:00 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::CustomerGroup;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.33 $) [1];
+$VERSION = qw($Revision: 1.34 $) [1];
 
 =head1 NAME
 
@@ -122,7 +122,7 @@ sub FAQGet {
         " i.free_key1, i.free_value1, i.free_key2, i.free_value2, " .
         " i.free_key3, i.free_value3, i.free_key4, i.free_value4, " .
         " i.created, i.created_by, i.changed, i.changed_by, " .
-        " i.category_id, i.state_id, c.name, s.name, l.name, i.f_keywords, i.approval_id, i.f_number, st.id, st.name "
+        " i.category_id, i.state_id, c.name, s.name, l.name, i.f_keywords, i.approved, i.f_number, st.id, st.name "
         .
         " FROM faq_item i, faq_category c, faq_state s, faq_state_type st, faq_language l " .
         " WHERE " .
@@ -170,7 +170,7 @@ sub FAQGet {
             State         => $Row[24],
             Language      => $Row[25],
             Keywords      => $Row[26],
-            ApprovalID    => $Row[27],
+            Approved      => $Row[27],
             Number        => $Row[28],
             StateTypeID   => $Row[29],
             StateTypeName => $Row[30],
@@ -282,14 +282,14 @@ sub FAQAdd {
         $Param{Number} = $Self->{ConfigObject}->Get('SystemID') . rand(100);
     }
 
-    # set default approval id to not approved
-    if ( !$Param{ApprovalID} ) {
-        $Param{ApprovalID} = 0;
+    # set default to not approved
+    if ( !$Param{Approved} ) {
+        $Param{Approved} = 0;
     }
 
     return if !$Self->{DBObject}->Do(
         SQL => "INSERT INTO faq_item (f_number, f_name, f_language_id, f_subject, " .
-            " category_id, state_id, f_keywords, approval_id, " .
+            " category_id, state_id, f_keywords, approved, " .
             " f_field1, f_field2, f_field3, f_field4, f_field5, f_field6, " .
             " free_key1, free_value1, free_key2, free_value2, " .
             " free_key3, free_value3, free_key4, free_value4, " .
@@ -299,7 +299,7 @@ sub FAQAdd {
             " ?, ?, ?, ?, current_timestamp, ?, current_timestamp, ?)",
         Bind => [
             \$Param{Number}, \$Param{Name}, \$Param{LanguageID}, \$Param{Title},
-            \$Param{CategoryID}, \$Param{StateID},   \$Param{Keywords}, \$Param{ApprovalID},
+            \$Param{CategoryID}, \$Param{StateID},   \$Param{Keywords}, \$Param{Approved},
             \$Param{Field1},     \$Param{Field2},    \$Param{Field3},
             \$Param{Field4},     \$Param{Field5},    \$Param{Field6},
             \$Param{FreeKey1},   \$Param{FreeText1}, \$Param{FreeKey2}, \$Param{FreeText2},
@@ -556,6 +556,7 @@ return an attachment index of an article
 
     my @Index = $FAQObject->AttachmentIndex(
         ItemID => 123,
+        inline => 1, .....
     );
 
 =cut
@@ -1916,14 +1917,15 @@ sub LanguageGet {
 search in articles
 
     my @IDs = $FAQObject->FAQSearch(
-        Number  => '*134*',
-        Title   => '*some title*',
-        What    => '*some text*', # is searching in Number, Title, Keyword and Field1-6
-        Keyword => '*webserver*',
-        States  => ['public', 'internal'],
-        Order   => 'Changed',     # Title|Language|State|Votes|Result|Created|Changed
-        Sort    => 'up',          # up|down
-        Limit   => 150,
+        Number    => '*134*',
+        Title     => '*some title*',
+        What      => '*some text*', # is searching in Number, Title, Keyword and Field1-6
+        Keyword   => '*webserver*',
+        States    => ['public', 'internal'],
+        Order     => 'Changed',     # Title|Language|State|Votes|Result|Created|Changed
+        Sort      => 'up',          # up|down
+        Limit     => 150,
+        Interface => 'public',      # public|external|internal (default internal)
     );
 
 =cut
@@ -1937,6 +1939,11 @@ sub FAQSearch {
             $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
             return;
         }
+    }
+
+    # set default
+    if ( !$Param{Interface} ) {
+        $Param{Interface} = 'internal';
     }
 
     # sql
@@ -2040,6 +2047,15 @@ sub FAQSearch {
             $Ext .= " LOWER(i.f_keywords) LIKE LOWER('" . $Param{Keyword} . "')";
         }
     }
+
+    # show only approved faq articles for public and customer interface
+    if ( ( $Param{Interface} eq 'public' ) || ( $Param{Interface} eq 'external' ) ) {
+        if ($Ext) {
+            $Ext .= ' AND';
+        }
+        $Ext .= ' i.approved = 1';
+    }
+
     if ($Ext) {
         $Ext = ' WHERE' . $Ext;
     }
@@ -2716,7 +2732,7 @@ sub FAQTop10Get {
 
     # prepare SQL
     my @Bind;
-    my $SQL = 'SELECT item_id, count(item_id), faq_state_type.name '
+    my $SQL = 'SELECT item_id, count(item_id), faq_state_type.name, approved '
         . 'FROM faq_log, faq_item, faq_state, faq_state_type '
         . 'WHERE faq_log.item_id = faq_item.id '
         . 'AND faq_item.state_id = faq_state.id '
@@ -2731,6 +2747,8 @@ sub FAQTop10Get {
             $SQL .= "OR ( faq_state_type.name = 'external' ) ";
         }
         $SQL .= ') ';
+
+        $SQL .= 'AND approved = 1 ';
     }
 
     # filter results for defined time period
@@ -2768,7 +2786,7 @@ update the approval state of an article
 
     $FAQObject->FAQApprovalUpdate(
         ItemID     => 123,
-        ApprovalID => 1,    # 0: not approved, 1: approved
+        Approved   => 1,    # 0|1 (default 0)
     );
 
 =cut
@@ -2783,15 +2801,15 @@ sub FAQApprovalUpdate {
             return;
         }
     }
-    if ( !defined $Param{ApprovalID} ) {
-        $Self->{LogObject}->Log( Priority => 'error', Message => "Need ApprovalID!" );
+    if ( !defined $Param{Approved} ) {
+        $Self->{LogObject}->Log( Priority => 'error', Message => "Need Approved param!" );
         return;
     }
 
     return if !$Self->{DBObject}->Do(
-        SQL => "UPDATE faq_item SET approval_id = ? WHERE id = ?",
+        SQL => "UPDATE faq_item SET approved = ? WHERE id = ?",
         Bind => [
-            \$Param{ApprovalID}, \$Param{ItemID},
+            \$Param{Approved}, \$Param{ItemID},
         ],
     );
 
@@ -2813,6 +2831,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.33 $ $Date: 2008-09-22 15:51:16 $
+$Revision: 1.34 $ $Date: 2008-09-23 00:33:00 $
 
 =cut

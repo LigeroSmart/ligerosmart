@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerFAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQ.pm,v 1.8 2008-09-16 15:18:05 ub Exp $
+# $Id: CustomerFAQ.pm,v 1.9 2008-09-23 00:33:00 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::Modules::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 our @ISA = qw(Kernel::Modules::FAQ);
 
@@ -33,10 +33,10 @@ sub new {
     # interface settings
     # ********************************************************** #
     $Self->{Interface} = $Self->{FAQObject}->StateTypeGet(
-        Name => 'external'
+        Name => 'external',
     );
     $Self->{InterfaceStates} = $Self->{FAQObject}->StateTypeList(
-        Types => [ 'external', 'public' ]
+        Types => [ 'external', 'public' ],
     );
 
     # check needed Objects
@@ -141,6 +141,12 @@ sub Run {
         if ( !%ItemData ) {
             return $Self->{LayoutObject}->FatalError( Message => "No FAQ found!" );
         }
+
+        # permission check
+        if ( !$ItemData{Approved} ) {
+            return $Self->{LayoutObject}->FatalError( Message => "Permission denied!" );
+        }
+
         if ( $ItemData{StateTypeName} eq 'external' || $ItemData{StateTypeName} eq 'public' ) {
             my %File = $Self->{FAQObject}->AttachmentGet(
                 ItemID => $ItemID,
@@ -160,6 +166,17 @@ sub Run {
     # item print
     # ---------------------------------------------------------- #
     elsif ( $Self->{Subaction} eq 'Print' && $Self->{ParamObject}->GetParam( Param => 'ItemID' ) ) {
+        my %FAQArticle = $Self->{FAQObject}->FAQGet(
+            FAQID => $Self->{ParamObject}->GetParam( Param => 'ItemID' ),
+        );
+        my $Permission = $Self->{FAQObject}->CheckCategoryCustomerPermission(
+            CustomerUser => $Self->{UserLogin},
+            CategoryID   => $FAQArticle{CategoryID},
+        );
+        if ( $Permission eq ''  || !$FAQArticle{Approved} ) {
+            $Self->{LayoutObject}->FatalError( Message => "Permission denied!" );
+        }
+
         $Self->GetItemPrint();
         $Header = $Self->{LayoutObject}->PrintHeader(
             Title => $Self->{ItemData}{Subject}
@@ -183,9 +200,10 @@ sub Run {
             CustomerUser => $Self->{UserLogin},
             CategoryID   => $FAQArticle{CategoryID},
         );
-        if ( $Permission eq '' ) {
+        if ( $Permission eq ''  || !$FAQArticle{Approved} ) {
             $Self->{LayoutObject}->FatalError( Message => "Permission denied!" );
         }
+
         $Self->GetItemView(
             Links      => 0,
             Permission => $Permission,

@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.pm,v 1.19 2008-09-22 15:51:16 ub Exp $
+# $Id: AgentFAQ.pm,v 1.20 2008-09-23 00:33:00 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::Group;
 use Kernel::System::Valid;
 
 use vars qw($VERSION @ISA);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 @ISA = qw(Kernel::Modules::FAQ);
 
@@ -732,15 +732,15 @@ sub Run {
                 Result => 'HASH',
             );
 
-            if ( exists $Groups{'faq_approval'} ) {
+            if ( exists $Groups{ $Self->{ConfigObject}->Get('FAQ::ApprovalGroup') } ) {
                 my %Data;
                 $Data{ApprovalOption} = $Self->{LayoutObject}->OptionStrgHashRef(
                     Data => {
                         0 => 'No',
                         1 => 'Yes',
                     },
-                    Name       => 'ApprovalID',
-                    SelectedID => $ItemData{ApprovalID},
+                    Name       => 'Approved',
+                    SelectedID => $ItemData{Approved},
                 );
                 $Self->{LayoutObject}->Block(
                     Name => 'UpdateApproval',
@@ -786,7 +786,7 @@ sub Run {
         # check parameters
         my %ParamData      = ();
         my @RequiredParams = qw(Title CategoryID);
-        my @Params = qw(ItemID StateID LanguageID Field1 Field2 Field3 Field4 Field5 Field6 Keywords ApprovalID
+        my @Params = qw(ItemID StateID LanguageID Field1 Field2 Field3 Field4 Field5 Field6 Keywords Approved
             AttachmentUpload AttachmentDelete0 AttachmentDelete1 AttachmentDelete2 AttachmentDelete3 AttachmentDelete4
             AttachmentDelete5 AttachmentDelete6 AttachmentDelete7 AttachmentDelete8
             AttachmentDelete9 AttachmentDelete10 AttachmentDelete11 AttachmentDelete12
@@ -847,11 +847,11 @@ sub Run {
                 Type   => 'ro',
                 Result => 'HASH',
             );
-            if ( exists $Groups{'faq_approval'} ) {
+            if ( exists $Groups{ $Self->{ConfigObject}->Get('FAQ::ApprovalGroup') } ) {
                 $Update = $Self->{FAQObject}->FAQApprovalUpdate(
                     ItemID     => $ParamData{ItemID},
-                    ApprovalID => $ParamData{ApprovalID},
-                    UserID => $Self->{UserID},
+                    Approved   => $ParamData{Approved},
+                    UserID     => $Self->{UserID},
                 );
                 if ( !$Update ) {
                     return $Self->{LayoutObject}->ErrorScreen();

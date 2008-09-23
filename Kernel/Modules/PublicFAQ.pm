@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicFAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQ.pm,v 1.7 2008-09-17 12:42:21 ub Exp $
+# $Id: PublicFAQ.pm,v 1.8 2008-09-23 00:33:00 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::Modules::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 our @ISA = qw(Kernel::Modules::FAQ);
 
@@ -33,10 +33,10 @@ sub new {
     # interface settings
     # ********************************************************** #
     $Self->{Interface} = $Self->{FAQObject}->StateTypeGet(
-        Name => 'public'
+        Name => 'public',
     );
     $Self->{InterfaceStates} = $Self->{FAQObject}->StateTypeList(
-        Types => ['public']
+        Types => ['public'],
     );
 
     # check needed Objects
@@ -145,17 +145,19 @@ sub Run {
         my @IDs;
         if ( $Type eq 'Top10' ) {
             # get the top 10 articles
-            @IDs = $Self->{FAQObject}->FAQTop10Get(
+            my $Top10ItemIDsRef = $Self->{FAQObject}->FAQTop10Get(
                 Interface => $Self->{Interface}{Name},
                 Limit     => $Self->{ConfigObject}->Get('FAQ::Explorer::Top10::Limit'),
             );
+            @IDs = map { $_->{ItemID} } @{ $Top10ItemIDsRef };
         }
         else {
             @IDs = $Self->{FAQObject}->FAQSearch(
-                States => $States,
-                Order  => $Type,
-                Sort   => 'down',
-                Limit  => 20,
+                States    => $States,
+                Order     => $Type,
+                Sort      => 'down',
+                Interface => $Self->{Interface}{Name},
+                Limit     => 20,
             );
         }
 

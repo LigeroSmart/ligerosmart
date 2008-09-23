@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.16 2008-09-22 11:24:10 ub Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.17 2008-09-23 00:33:00 ub Exp $</CVS>
     <ConfigItem Name="Ticket::Frontend::NoteTypes" Required="1" Valid="1">
         <Description Lang="en">Specify the different note types, that you want to use in your system.</Description>
         <Description Lang="de">Hier können die verschiedenen Notiz-Typen festgelegt werden, die innerhalb des Systems verwendet werden sollen.</Description>
@@ -284,6 +284,24 @@
                 <Item Key="0">No</Item>
                 <Item Key="1">Yes</Item>
             </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::ApprovalGroup" Required="1" Valid="1">
+        <Description Lang="en">Group for the approval of FAQ articles.</Description>
+        <Description Lang="de">Gruppe für die Freigabe von FAQ Artikeln.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Core</SubGroup>
+        <Setting>
+            <String>faq_approval</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::ApprovalQueue" Required="1" Valid="1">
+        <Description Lang="en">Queue for the approval of FAQ articles.</Description>
+        <Description Lang="de">Queue für die Freigabe von FAQ Artikeln.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Core</SubGroup>
+        <Setting>
+            <String>FAQ_Approval</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Item::Field1" Required="1" Valid="1">
@@ -586,7 +604,7 @@
     </ConfigItem>
     <ConfigItem Name="Frontend::HeaderMetaModule###3-FAQSearch" Required="0" Valid="1">
         <Description Lang="en">Module to generate html OpenSearch profile for short faq search.</Description>
-        <Description Lang="de">Modul zum generieren des HTML "OpenSearch" Profiles schnelle FAQ-Suchen über das Browser-Suchfeld anbieten zu können.</Description>
+        <Description Lang="de">Modul zum Generieren des HTML "OpenSearch" Profils zur FAQ-Suche über das Browser-Suchfeld.</Description>
         <Group>Framework</Group>
         <SubGroup>Frontend::Agent::ModuleMetaHead</SubGroup>
         <Setting>

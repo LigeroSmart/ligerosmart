@@ -2,7 +2,7 @@
 # Kernel/Modules/FAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.28 2008-09-22 15:51:16 ub Exp $
+# $Id: FAQ.pm,v 1.29 2008-09-23 00:33:00 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::FAQ;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.28 $) [1];
+$VERSION = qw($Revision: 1.29 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -295,6 +295,7 @@ sub _GetExplorerItemList {
         States      => $Self->{InterfaceStates},
         Order       => $Param{Order},
         Sort        => $Param{Sort},
+        Interface   => $Self->{Interface}{Name},
         Limit       => 300,
     );
 
@@ -381,7 +382,8 @@ sub _GetExplorerLastChangeItems {
                     States      => $Self->{InterfaceStates},
                     Order       => 'Changed',
                     Sort        => 'down',
-                    Limit       => $Self->{ConfigObject}->Get('FAQ::Explorer::LastChange::Limit')
+                    Interface   => $Self->{Interface}{Name},
+                    Limit       => $Self->{ConfigObject}->Get('FAQ::Explorer::LastChange::Limit'),
                 );
             }
         }
@@ -390,10 +392,11 @@ sub _GetExplorerLastChangeItems {
                 Name => 'ExplorerLatestChange'
             );
             @ItemIDs = $Self->{FAQObject}->FAQSearch(
-                States => $Self->{InterfaceStates},
-                Order  => 'Changed',
-                Sort   => 'down',
-                Limit  => $Self->{ConfigObject}->Get('FAQ::Explorer::LastChange::Limit')
+                States    => $Self->{InterfaceStates},
+                Order     => 'Changed',
+                Sort      => 'down',
+                Interface => $Self->{Interface}{Name},
+                Limit     => $Self->{ConfigObject}->Get('FAQ::Explorer::LastChange::Limit'),
             );
         }
         for (@ItemIDs) {
@@ -462,7 +465,8 @@ sub _GetExplorerLastCreateItems {
                     States      => $Self->{InterfaceStates},
                     Order       => 'Created',
                     Sort        => 'down',
-                    Limit       => $Self->{ConfigObject}->Get('FAQ::Explorer::LastCreate::Limit')
+                    Interface   => $Self->{Interface}{Name},
+                    Limit       => $Self->{ConfigObject}->Get('FAQ::Explorer::LastCreate::Limit'),
                 );
             }
         }
@@ -471,10 +475,11 @@ sub _GetExplorerLastCreateItems {
                 Name => 'ExplorerLatestCreate'
             );
             @ItemIDs = $Self->{FAQObject}->FAQSearch(
-                States => $Self->{InterfaceStates},
-                Order  => 'Created',
-                Sort   => 'down',
-                Limit  => $Self->{ConfigObject}->Get('FAQ::Explorer::LastCreate::Limit')
+                States    => $Self->{InterfaceStates},
+                Order     => 'Created',
+                Sort      => 'down',
+                Interface => $Self->{Interface}{Name},
+                Limit     => $Self->{ConfigObject}->Get('FAQ::Explorer::LastCreate::Limit'),
             );
         }
 
@@ -483,7 +488,7 @@ sub _GetExplorerLastCreateItems {
             my %Data = $Self->{FAQObject}->FAQGet( ItemID => $_ );
             $Self->{LayoutObject}->Block(
                 Name => 'ExplorerLatestCreateFAQItemRow',
-                Data => {%Data},
+                Data => { %Data },
             );
         }
         return 1;
@@ -610,7 +615,12 @@ sub GetItemView {
 
     # permission check
     if ( !exists( $Self->{InterfaceStates}{ $ItemData{StateTypeID} } ) ) {
-        return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' );
+        return $Self->{LayoutObject}->NoPermission( WithHeader => 'no' );
+    }
+    if ( ( $Self->{Interface}{Name} eq 'public' ) || ( $Self->{Interface}{Name} eq 'external' ) ) {
+        if ( !$ItemData{Approved} ) {
+            return $Self->{LayoutObject}->NoPermission( WithHeader => 'no' );
+        }
     }
 
     # user info
@@ -624,7 +634,7 @@ sub GetItemView {
     $Frontend{ChangedByLogin} = $UserInfo{UserLogin};
 
     # approval state
-    $Frontend{Approval} = $ItemData{ApprovalID} ? 'Yes' : 'No';
+    $Frontend{Approval} = $ItemData{Approved} ? 'Yes' : 'No';
 
     # item view
     $Frontend{CssColumnVotingResult} = 'color:'
@@ -816,8 +826,10 @@ sub GetItemPrint {
     }
 
     # html quoting
+    KEY:
     for my $Key (qw (Field1 Field2 Field3 Field4 Field5 Field6)) {
         if ( $Self->{ConfigObject}->Get('FAQ::Item::HTML') ) {
+            next KEY if !$ItemData{Key};
             $ItemData{$Key} =~ s/\n/\<br\>/g;
         }
         else {
@@ -1134,8 +1146,9 @@ sub GetItemSearch {
         my @ItemIDs = $Self->{FAQObject}->FAQSearch(
             %Param,
             %GetParam,
-            States => $Self->{InterfaceStates},
-            Limit  => 25,
+            States    => $Self->{InterfaceStates},
+            Interface => $Self->{Interface}{Name},
+            Limit     => 25,
         );
         $Self->{LayoutObject}->Block(
             Name => 'SearchResult',

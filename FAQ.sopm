@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.38 2008-09-22 15:51:16 ub Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.39 2008-09-23 00:29:38 ub Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -129,7 +129,7 @@
             <Column Name="f_language_id" Required="true" Type="SMALLINT"/>
             <Column Name="state_id" Required="true" Type="SMALLINT"/>
             <Column Name="category_id" Required="true" Type="SMALLINT"/>
-            <Column Name="approval_id" Required="true" Default="1" Type="SMALLINT"/>
+            <Column Name="approved" Required="true" Default="1" Type="SMALLINT"/>
             <Column Name="f_keywords" Required="false" Size="400" Type="VARCHAR"/>
             <Column Name="f_field1" Required="false" Size="20000" Type="VARCHAR"/>
             <Column Name="f_field2" Required="false" Size="20000" Type="VARCHAR"/>
@@ -225,7 +225,7 @@
             </Index>
         </TableCreate>
         <TableAlter Name="faq_item" Version="1.4.91">
-            <ColumnAdd Name="approval_id" Required="true" Default="1" Type="SMALLINT"/>
+            <ColumnAdd Name="approved" Required="true" Default="1" Type="SMALLINT"/>
         </TableAlter>
     </DatabaseUpgrade>
     <DatabaseUninstall Type="pre">
@@ -259,12 +259,6 @@
             ValidID =&gt; 1,
             UserID  =&gt; 1,
         );
-        $Self-&gt;{GroupObject}-&gt;GroupAdd(
-            Name    =&gt; 'faq_approval',
-            Comment =&gt; 'faq users who can approve faq articles',
-            ValidID =&gt; 1,
-            UserID  =&gt; 1,
-        );
     </CodeInstall>
     <IntroInstall Type="post" Title="Installation Information" Lang="en">
 
@@ -279,6 +273,10 @@
         &lt;br&gt;
         &lt;br&gt;
         To create new FAQ article you need to create categories and define the permission who can access categories.
+        &lt;br&gt;
+        &lt;br&gt;
+        If you are using the FAQ approval feature, you need to create a group and and to define a queue.
+        You will find further information in the sysconfig in FAQ -> Core.
         &lt;br&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
@@ -298,6 +296,10 @@
         &lt;br&gt;
         &lt;br&gt;
         Um FAQ Artikel erstellen zu können müssen zuerst Kategorien erstellt und die Berechtigungs-Gruppen dieser Kategorien definiert werden.
+        &lt;br&gt;
+        &lt;br&gt;
+        Wenn Sie das FAQ-Freigabe-Feature verwenden möchten, müssen Sie eine Gruppe dafür anlegen und eine Queue definieren.
+        Weitere Informationen finden Sie in der Sysconfig unter FAQ -> Core.
         &lt;br&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
