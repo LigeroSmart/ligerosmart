@@ -2,7 +2,7 @@
 # Kernel/Modules/FAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.29 2008-09-23 00:33:00 ub Exp $
+# $Id: FAQ.pm,v 1.30 2008-09-23 21:15:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::FAQ;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.29 $) [1];
+$VERSION = qw($Revision: 1.30 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -80,7 +80,7 @@ sub GetExplorer {
     if ( $GetParam{CategoryID} ) {
         %CategoryData = $Self->{FAQObject}->CategoryGet(
             CategoryID => $GetParam{CategoryID},
-            UserID     => $Self->{UserID}
+            UserID     => $Self->{UserID},
         );
         if ( !%CategoryData ) {
             return $Self->{LayoutObject}->ErrorScreen();
@@ -104,7 +104,7 @@ sub GetExplorer {
             Name => 'ExplorerTitle',
             Data => {
                 Name    => $CategoryData{Name},
-                Comment => $CategoryData{Comment}
+                Comment => $CategoryData{Comment},
             },
         );
     }
@@ -113,7 +113,7 @@ sub GetExplorer {
             Name => 'ExplorerTitle',
             Data => {
                 Name    => $Self->{ConfigObject}->Get('FAQ::Default::RootCategoryName'),
-                Comment => $Self->{ConfigObject}->Get('FAQ::Default::RootCategoryComment')
+                Comment => $Self->{ConfigObject}->Get('FAQ::Default::RootCategoryComment'),
             },
         );
     }
@@ -147,7 +147,7 @@ sub GetExplorer {
     $Self->_GetExplorerItemList(
         CategoryID => $GetParam{CategoryID},
         Order      => $GetParam{Order} || 'Title',
-        Sort       => $GetParam{Sort} || 'up'
+        Sort       => $GetParam{Sort} || 'up',
     );
 
     # quicksearch
@@ -194,7 +194,7 @@ sub _GetFAQPath {
         Name => 'FAQPathCategoryElement',
         Data => {
             'Name'       => $Self->{ConfigObject}->Get('FAQ::Default::RootCategoryName'),
-            'CategoryID' => '0'
+            'CategoryID' => '0',
         },
     );
 
@@ -256,11 +256,11 @@ sub _GetExplorerCategoryList {
         for (@CategoryIDs) {
             my %Data = $Self->{FAQObject}->CategoryGet( CategoryID => $_ );
             $Data{CategoryNumber} = $Self->{FAQObject}->CategoryCount(
-                ParentIDs => [$_]
+                ParentIDs => [$_],
             );
             $Data{ArticleNumber} = $Self->{FAQObject}->FAQCount(
                 CategoryIDs => [$_],
-                ItemStates  => $Self->{InterfaceStates}
+                ItemStates  => $Self->{InterfaceStates},
             );
 
             # css configuration
@@ -302,7 +302,7 @@ sub _GetExplorerItemList {
     if (@ItemIDs) {
         $Self->{LayoutObject}->Block(
             Name => 'ExplorerFAQItemList',
-            Data => {%Param}
+            Data => { %Param },
         );
         for (@ItemIDs) {
             my %Frontend = ();
@@ -368,7 +368,7 @@ sub _GetExplorerLastChangeItems {
                 push( @CategoryIDs, @SubCategoryIDs );
             }
             $Self->{LayoutObject}->Block(
-                Name => 'ExplorerLatestChange'
+                Name => 'ExplorerLatestChange',
             );
             if ( $Param{Mode} =~ /public/i ) {
                 $Self->{LayoutObject}->Block(
@@ -503,7 +503,7 @@ sub _GetExplorerTop10Items {
 
         # show top 10 block
         $Self->{LayoutObject}->Block(
-            Name => 'ExplorerTop10'
+            Name => 'ExplorerTop10',
         );
 
         # show RSS feed
@@ -554,7 +554,7 @@ sub _GetExplorerQuickSearch {
         # dtl block
         $Self->{LayoutObject}->Block(
             Name => 'ExplorerQuickSearch',
-            Data => { CategoryID => $Param{CategoryID} }
+            Data => { CategoryID => $Param{CategoryID} },
         );
         return 1;
     }
@@ -681,14 +681,14 @@ sub GetItemView {
 
     # item fields
     $Self->_GetItemFields(
-        ItemData => \%ItemData
+        ItemData => \%ItemData,
     );
 
     # item voting
     my %ShowItemVoting = %{ $Self->{ConfigObject}->Get('FAQ::Item::Voting::Show') };
     if ( exists( $ShowItemVoting{ $Self->{Interface}{Name} } ) ) {
         $Self->_GetItemVoting(
-            ItemData => \%ItemData
+            ItemData => \%ItemData,
         );
     }
 
@@ -856,7 +856,7 @@ sub GetItemPrint {
 
     # fields
     $Self->_GetItemFields(
-        ItemData => \%ItemData
+        ItemData => \%ItemData,
     );
     return;
 }
@@ -933,9 +933,9 @@ sub _GetItemFieldValues {
         }
         my %StateTypeData = %{
             $Self->{FAQObject}->StateTypeGet(
-                Name => $ItemFields{$Key}{Show}
-                )
-            };
+                Name => $ItemFields{$Key}{Show},
+            )
+        };
 
         # show yes /no
         if ( exists( $Self->{InterfaceStates}{ $StateTypeData{ID} } ) ) {
@@ -958,7 +958,7 @@ sub _GetItemVoting {
     my %ItemData = %{ $Param{ItemData} };
 
     $Self->{LayoutObject}->Block(
-        Name => "Voting"
+        Name => "Voting",
     );
     my %VoteData = %{
         $Self->{FAQObject}->VoteGet(
@@ -966,8 +966,8 @@ sub _GetItemVoting {
             ItemID    => $ItemData{ItemID},
             Interface => $Self->{Interface}{ID},
             IP        => $ENV{'REMOTE_ADDR'},
-            )
-        };
+        )
+    };
 
     my $Flag = 0;
 
@@ -1022,7 +1022,7 @@ sub _GetItemVoting {
         else {
             push( @{ $Self->{Notify} }, [ 'Error', 'No rate selected!' ] );
             $Self->GetItemVotingForm(
-                ItemData => $Param{ItemData}
+                ItemData => $Param{ItemData},
             );
 
             return;
@@ -1031,7 +1031,7 @@ sub _GetItemVoting {
 
     # form
     $Self->_GetItemVotingForm(
-        ItemData => $Param{ItemData}
+        ItemData => $Param{ItemData},
     );
 
     return;
@@ -1048,7 +1048,7 @@ sub _GetItemVotingForm {
     }
     $Self->{LayoutObject}->Block(
         Name => 'VoteForm',
-        Data => { %Param, %{ $Param{ItemData} } }
+        Data => { %Param, %{ $Param{ItemData} } },
     );
 
     my %VotingRates = %{ $Self->{ConfigObject}->Get('FAQ::Item::Voting::Rates') };
@@ -1095,8 +1095,8 @@ sub GetItemSearch {
                     CustomerUser => $Param{CustomerUser},
                     UserID       => $Param{User},
                     Mode         => $Param{Mode},
-                    )
-                };
+                )
+            };
             push( @{ $GetParam{CategoryIDs} }, @SubCategoryIDs );
         }
     }
@@ -1113,13 +1113,13 @@ sub GetItemSearch {
     if ( $Param{Mode} && $Param{Mode} eq 'Agent' ) {
         $Categories = $Self->{FAQObject}->GetUserCategories(
             UserID => $Self->{UserID},
-            Type   => 'rw'
+            Type   => 'rw',
         );
     }
     elsif ( $Param{Mode} && $Param{Mode} eq 'Customer' ) {
         $Categories = $Self->{FAQObject}->GetCustomerCategories(
             CustomerUser => $Param{CustomerUser},
-            Type         => 'rw'
+            Type         => 'rw',
         );
     }
     else {

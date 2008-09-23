@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.pm,v 1.22 2008-09-23 20:49:35 ub Exp $
+# $Id: AgentFAQ.pm,v 1.23 2008-09-23 21:15:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::Group;
 use Kernel::System::Valid;
 
 use vars qw($VERSION @ISA);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 @ISA = qw(Kernel::Modules::FAQ);
 
@@ -1047,7 +1047,7 @@ sub Run {
         );
         $Content = $Self->{LayoutObject}->Output(
             TemplateFile => 'FAQ',
-            Data => { %Frontend, %GetParam }
+            Data => { %Frontend, %GetParam },
         );
     }
 
@@ -1104,7 +1104,7 @@ sub Run {
 
             $Self->{LayoutObject}->Block(
                 Name => 'HistoryRow',
-                Data => {%Frontend}
+                Data => {%Frontend},
             );
 
         }
@@ -1125,12 +1125,12 @@ sub Run {
     elsif ( $Self->{Subaction} eq 'Print' && $Self->{ParamObject}->GetParam( Param => 'ItemID' ) ) {
         $Self->GetItemPrint( Links => 1 );
         $Header = $Self->{LayoutObject}->PrintHeader(
-            Title => $Self->{ItemData}{Subject}
+            Title => $Self->{ItemData}{Subject},
         );
         $Navigation = ' ';
         $Content    = $Self->{LayoutObject}->Output(
             TemplateFile => 'FAQ',
-            Data => { %Frontend, %GetParam }
+            Data => { %Frontend, %GetParam },
         );
         $Footer = $Self->{LayoutObject}->PrintFooter();
     }
@@ -1143,11 +1143,11 @@ sub Run {
         $HeaderTitle = 'Explorer';
         $Header      = $Self->{LayoutObject}->Header(
             Type  => $HeaderType,
-            Title => $HeaderTitle
+            Title => $HeaderTitle,
         );
         $Content = $Self->{LayoutObject}->Output(
             TemplateFile => 'FAQ',
-            Data => { %Frontend, %GetParam }
+            Data => { %Frontend, %GetParam },
         );
 
     }
@@ -1191,7 +1191,7 @@ sub Run {
         $HeaderTitle = $Self->{ItemData}{Number};
         $Header      = $Self->{LayoutObject}->Header(
             Type  => $HeaderType,
-            Title => $HeaderTitle
+            Title => $HeaderTitle,
         );
     }
 
@@ -1218,12 +1218,12 @@ sub Run {
     # DEFAULT OUTPUT
     $DefaultHeader = $Self->{LayoutObject}->Header(
         Type  => $HeaderType,
-        Title => $HeaderTitle
+        Title => $HeaderTitle,
     );
     $DefaultNavigation = $Self->{LayoutObject}->NavigationBar();
     $DefaultContent    = $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentFAQ',
-        Data => { %Frontend, %GetParam }
+        Data => { %Frontend, %GetParam },
     );
     $DefaultFooter = $Self->{LayoutObject}->Footer( Type => $FooterType );
 

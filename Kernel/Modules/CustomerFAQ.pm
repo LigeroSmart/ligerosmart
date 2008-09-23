@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerFAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQ.pm,v 1.9 2008-09-23 00:33:00 ub Exp $
+# $Id: CustomerFAQ.pm,v 1.10 2008-09-23 21:15:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::Modules::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 our @ISA = qw(Kernel::Modules::FAQ);
 
@@ -99,11 +99,11 @@ sub Run {
         $HeaderTitle = 'Explorer';
         $Header      = $Self->{LayoutObject}->CustomerHeader(
             Type  => $HeaderType,
-            Title => $HeaderTitle
+            Title => $HeaderTitle,
         );
         $Content = $Self->{LayoutObject}->Output(
             TemplateFile => 'FAQ',
-            Data => { %Frontend, %GetParam }
+            Data => { %Frontend, %GetParam },
         );
     }
 
@@ -114,7 +114,7 @@ sub Run {
         $HeaderTitle = 'Search';
         $Header      = $Self->{LayoutObject}->CustomerHeader(
             Type  => $HeaderType,
-            Title => $HeaderTitle
+            Title => $HeaderTitle,
         );
         $Self->GetItemSearch(
             Mode         => 'Customer',
@@ -123,7 +123,7 @@ sub Run {
 
         $Content = $Self->{LayoutObject}->Output(
             TemplateFile => 'FAQ',
-            Data => { %Frontend, %GetParam }
+            Data => { %Frontend, %GetParam },
         );
     }
 
@@ -179,12 +179,12 @@ sub Run {
 
         $Self->GetItemPrint();
         $Header = $Self->{LayoutObject}->PrintHeader(
-            Title => $Self->{ItemData}{Subject}
+            Title => $Self->{ItemData}{Subject},
         );
         $Navigation = ' ';
         $Content    = $Self->{LayoutObject}->Output(
             TemplateFile => 'FAQ',
-            Data => { %Frontend, %GetParam }
+            Data => { %Frontend, %GetParam },
         );
         $Footer = $Self->{LayoutObject}->PrintFooter();
     }
@@ -212,11 +212,11 @@ sub Run {
         $HeaderTitle = $Self->{ItemData}{Number};
         $Header      = $Self->{LayoutObject}->CustomerHeader(
             Type  => $HeaderType,
-            Title => $HeaderTitle
+            Title => $HeaderTitle,
         );
         $Content = $Self->{LayoutObject}->Output(
             TemplateFile => 'FAQ',
-            Data => { %Frontend, %GetParam }
+            Data => { %Frontend, %GetParam },
         );
 
         # log access to this FAQ item
@@ -241,7 +241,7 @@ sub Run {
     $DefaultNavigation = $Self->{LayoutObject}->CustomerNavigationBar();
     $DefaultContent    = $Self->{LayoutObject}->Output(
         TemplateFile => 'CustomerFAQ',
-        Data => { %Frontend, %GetParam }
+        Data => { %Frontend, %GetParam },
     );
     $DefaultFooter = $Self->{LayoutObject}->CustomerFooter( Type => $FooterType );
 

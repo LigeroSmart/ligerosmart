@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicFAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQ.pm,v 1.8 2008-09-23 00:33:00 ub Exp $
+# $Id: PublicFAQ.pm,v 1.9 2008-09-23 21:15:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::Modules::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 our @ISA = qw(Kernel::Modules::FAQ);
 
@@ -108,12 +108,12 @@ sub Run {
         $HeaderTitle = 'Explorer';
         $Header      = $Self->{LayoutObject}->CustomerHeader(
             Type  => $HeaderType,
-            Title => $HeaderTitle
+            Title => $HeaderTitle,
         );
         $Self->GetExplorer();
         $Content = $Self->{LayoutObject}->Output(
             TemplateFile => 'FAQ',
-            Data => { %Frontend, %GetParam }
+            Data => { %Frontend, %GetParam },
         );
     }
 
@@ -124,12 +124,12 @@ sub Run {
         $HeaderTitle = 'Search';
         $Header      = $Self->{LayoutObject}->CustomerHeader(
             Type  => $HeaderType,
-            Title => $HeaderTitle
+            Title => $HeaderTitle,
         );
         $Self->GetItemSearch();
         $Content = $Self->{LayoutObject}->Output(
             TemplateFile => 'FAQ',
-            Data => { %Frontend, %GetParam }
+            Data => { %Frontend, %GetParam },
         );
     }
 
@@ -139,7 +139,7 @@ sub Run {
     elsif ( $Self->{Subaction} eq 'rss' ) {
         my $Type = $Self->{ParamObject}->GetParam( Param => 'Type' ) || 'Changed';
         my $States = $Self->{FAQObject}->StateTypeList(
-            Types => ['public']
+            Types => ['public'],
         );
 
         my @IDs;
@@ -239,12 +239,12 @@ sub Run {
     # ---------------------------------------------------------- #
     elsif ( $Self->{Subaction} eq 'Print' && $Self->{ParamObject}->GetParam( Param => 'ItemID' ) ) {
         $Header = $Self->{LayoutObject}->PrintHeader(
-            Title => $Self->{ItemData}{Subject}
+            Title => $Self->{ItemData}{Subject},
         );
         $Self->GetItemPrint();
         $Content = $Self->{LayoutObject}->Output(
             TemplateFile => 'FAQ',
-            Data => { %Frontend, %GetParam }
+            Data => { %Frontend, %GetParam },
         );
         $Footer = $Self->{LayoutObject}->PrintFooter();
     }
@@ -257,11 +257,11 @@ sub Run {
         $HeaderTitle = $Self->{ItemData}{Number};
         $Header      = $Self->{LayoutObject}->CustomerHeader(
             Type  => $HeaderType,
-            Title => $HeaderTitle
+            Title => $HeaderTitle,
         );
         $Content = $Self->{LayoutObject}->Output(
             TemplateFile => 'FAQ',
-            Data => { %Frontend, %GetParam }
+            Data => { %Frontend, %GetParam },
         );
 
         # log access to this FAQ item
@@ -281,12 +281,12 @@ sub Run {
     # DEFAULT OUTPUT
     $DefaultHeader = $Self->{LayoutObject}->CustomerHeader(
         Type  => $HeaderType,
-        Title => $HeaderTitle
+        Title => $HeaderTitle,
     );
 
     $DefaultContent = $Self->{LayoutObject}->Output(
         TemplateFile => 'PublicFAQ',
-        Data => { %Frontend, %GetParam }
+        Data => { %Frontend, %GetParam },
     );
     $DefaultFooter = $Self->{LayoutObject}->CustomerFooter( Type => $FooterType );
 
