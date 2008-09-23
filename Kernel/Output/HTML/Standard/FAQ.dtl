@@ -2,7 +2,7 @@
 # FAQ.dtl - provides HTML view for faq articles
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.dtl,v 1.18 2008-09-18 18:00:57 ub Exp $
+# $Id: FAQ.dtl,v 1.19 2008-09-23 21:50:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -192,6 +192,12 @@
           <td class="contentkey">$Text{"Keywords"}: </td>
           <td class="contentvalue"> $Quote{"$Data{"Keywords"}"}</td>
         </tr>
+<!-- dtl:block:PrintApproval -->
+        <tr>
+          <td class="contentkey">$Text{"Approval"}:</td>
+          <td class="contentvalue"> <div title="$Text{"$QData{"Approval"}"}">$Text{"$QData{"Approval"}"}</div></td>
+        </tr>
+<!-- dtl:block:PrintApproval -->
         <tr>
           <td class="contentkey">$Text{"Votes"}: </td>
           <td class="contentvalue"> $QData{"Votes"}</td>

@@ -2,7 +2,7 @@
 # Kernel/Modules/FAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.31 2008-09-23 21:32:45 ub Exp $
+# $Id: FAQ.pm,v 1.32 2008-09-23 21:50:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::FAQ;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.31 $) [1];
+$VERSION = qw($Revision: 1.32 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -859,6 +859,16 @@ sub GetItemPrint {
         Name => 'Print',
         Data => \%ItemData,
     );
+
+    # approval state
+    if ( $Self->{ConfigObject}->Get('FAQ::ApprovalRequired') && $Self->{Interface}{Name} eq 'internal' ) {
+        my %Data;
+        $Data{Approval} = $ItemData{Approved} ? 'Yes' : 'No';
+        $Self->{LayoutObject}->Block(
+            Name => 'PrintApproval',
+            Data => { %Data },
+        );
+    }
 
     # fields
     $Self->_GetItemFields(
