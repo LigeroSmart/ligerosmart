@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.pm,v 1.24 2008-09-24 20:41:17 ub Exp $
+# $Id: AgentFAQ.pm,v 1.25 2008-09-24 20:46:42 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::Valid;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION @ISA);
-$VERSION = qw($Revision: 1.24 $) [1];
+$VERSION = qw($Revision: 1.25 $) [1];
 
 @ISA = qw(Kernel::Modules::FAQ);
 
@@ -1215,7 +1215,7 @@ sub Run {
         $Self->{LayoutObject}->Block(
             Name => 'WYSIWYGEditor',
             Data => {
-                'FormID' => $Self->{UploadCacheObject}->FormIDCreate(),
+                FormID => $Self->{UploadCacheObject}->FormIDCreate(),
             },
         );
     }
