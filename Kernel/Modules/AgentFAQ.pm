@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.pm,v 1.23 2008-09-23 21:15:25 ub Exp $
+# $Id: AgentFAQ.pm,v 1.24 2008-09-24 20:41:17 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -20,9 +20,10 @@ use Kernel::Modules::FAQ;
 use Kernel::System::User;
 use Kernel::System::Group;
 use Kernel::System::Valid;
+use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION @ISA);
-$VERSION = qw($Revision: 1.23 $) [1];
+$VERSION = qw($Revision: 1.24 $) [1];
 
 @ISA = qw(Kernel::Modules::FAQ);
 
@@ -48,9 +49,11 @@ sub new {
     for (qw(SessionObject)) {
         $Self->{LayoutObject}->FatalError( Message => "Got no $_!" ) if ( !$Self->{$_} );
     }
-    $Self->{ValidObject} = Kernel::System::Valid->new(%Param);
-    $Self->{UserObject}  = Kernel::System::User->new(%Param);
-    $Self->{GroupObject} = Kernel::System::Group->new(%Param);
+    $Self->{ValidObject}       = Kernel::System::Valid->new(%Param);
+    $Self->{UserObject}        = Kernel::System::User->new(%Param);
+    $Self->{GroupObject}       = Kernel::System::Group->new(%Param);
+    $Self->{UploadCacheObject} = Kernel::System::Web::UploadCache->new(%Param);
+
     return $Self;
 }
 
@@ -1211,7 +1214,9 @@ sub Run {
     if ( $Self->{ConfigObject}->Get('FAQ::WYSIWYGEditor') ) {
         $Self->{LayoutObject}->Block(
             Name => 'WYSIWYGEditor',
-            Data => {},
+            Data => {
+                'FormID' => $Self->{UploadCacheObject}->FormIDCreate(),
+            },
         );
     }
 

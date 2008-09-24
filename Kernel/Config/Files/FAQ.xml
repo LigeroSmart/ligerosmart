@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.20 2008-09-24 10:14:29 ub Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.21 2008-09-24 20:40:55 ub Exp $</CVS>
     <ConfigItem Name="Ticket::Frontend::NoteTypes" Required="1" Valid="1">
         <Description Lang="en">Specify the different note types, that you want to use in your system.</Description>
         <Description Lang="de">Hier können die verschiedenen Notiz-Typen festgelegt werden, die innerhalb des Systems verwendet werden sollen.</Description>
@@ -656,4 +656,19 @@ Your OTRS Notification Master
             </Hash>
         </Setting>
     </ConfigItem>
+
+    <ConfigItem Name="Frontend::Module###PictureUpload" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the PictureUpload object in the agent interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration des PictureUpload-Objekts im Agenten-Interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Description>Ticket picture upload module</Description>
+                <Title>Picture-Upload</Title>
+                <NavBarName>Ticket</NavBarName>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+
 </otrs_config>
