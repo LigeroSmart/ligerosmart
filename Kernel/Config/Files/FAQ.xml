@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.19 2008-09-23 20:58:12 ub Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.20 2008-09-24 10:14:29 ub Exp $</CVS>
     <ConfigItem Name="Ticket::Frontend::NoteTypes" Required="1" Valid="1">
         <Description Lang="en">Specify the different note types, that you want to use in your system.</Description>
         <Description Lang="de">Hier können die verschiedenen Notiz-Typen festgelegt werden, die innerhalb des Systems verwendet werden sollen.</Description>
@@ -266,7 +266,7 @@
         <Description Lang="en">Show WYSIWYG editor in agent interface.</Description>
         <Description Lang="de">Anzeige eines WYSIWYG Editors im Agenten-Interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core</SubGroup>
+        <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
             <Option SelectedID="1">
                 <Item Key="0">No</Item>
@@ -278,7 +278,7 @@
         <Description Lang="en">New FAQ articles need approval before they get published.</Description>
         <Description Lang="de">Neue FAQ Artikel benötigen eine Freigabe vor der Veröffentlichung.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core</SubGroup>
+        <SubGroup>Core::Approval</SubGroup>
         <Setting>
             <Option SelectedID="0">
                 <Item Key="0">No</Item>
@@ -290,7 +290,7 @@
         <Description Lang="en">Group for the approval of FAQ articles.</Description>
         <Description Lang="de">Gruppe für die Freigabe von FAQ Artikeln.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core</SubGroup>
+        <SubGroup>Core::Approval</SubGroup>
         <Setting>
             <String>faq_approval</String>
         </Setting>
@@ -299,7 +299,7 @@
         <Description Lang="en">Queue for the approval of FAQ articles.</Description>
         <Description Lang="de">Queue für die Freigabe von FAQ Artikeln.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core</SubGroup>
+        <SubGroup>Core::Approval</SubGroup>
         <Setting>
             <String>FAQ_Approval</String>
         </Setting>
@@ -309,7 +309,7 @@
         <Description Lang="en">Ticket subject for approval of FAQ article.</Description>
         <Description Lang="de">Betreff des Tickets zur Freigabe eines FAQ Artikels.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core</SubGroup>
+        <SubGroup>Core::Approval</SubGroup>
         <Setting>
             <String>FAQ approval required for FAQ# &lt;OTRS_FAQ_NUMBER&gt;</String>
         </Setting>
@@ -318,7 +318,7 @@
         <Description Lang="en">Ticket body for approval of FAQ article.</Description>
         <Description Lang="de">Body des Tickets zur Freigabe eines FAQ Artikels.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core</SubGroup>
+        <SubGroup>Core::Approval</SubGroup>
         <Setting>
             <TextArea>Hi,
 
@@ -341,7 +341,7 @@ Your OTRS Notification Master
         <Description Lang="en">Default priority of tickets for the approval of FAQ articles.</Description>
         <Description Lang="de">Standard Priorität von Tickets für die Freigabe von FAQ Artikeln.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core</SubGroup>
+        <SubGroup>Core::Approval</SubGroup>
         <Setting>
             <String>3 normal</String>
         </Setting>
