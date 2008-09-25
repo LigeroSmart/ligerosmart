@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.43 2008-09-25 13:25:47 ub Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.44 2008-09-25 13:35:03 ub Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -462,7 +462,7 @@
         &lt;br&gt;
         &lt;br&gt;
         If you are using the FAQ approval feature, you need to create a group and and to define a queue.
-        You will find further information in the sysconfig in FAQ -> Core.
+        You will find further information in the sysconfig in FAQ -> Core::Approval.
         &lt;br&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
@@ -485,7 +485,7 @@
         &lt;br&gt;
         &lt;br&gt;
         Wenn Sie das FAQ-Freigabe-Feature verwenden möchten, müssen Sie eine Gruppe dafür anlegen und eine Queue definieren.
-        Weitere Informationen finden Sie in der Sysconfig unter FAQ -> Core.
+        Weitere Informationen finden Sie in der Sysconfig unter FAQ -> Core::Approval.
         &lt;br&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
