@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - all survey funtions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.pm,v 1.42 2008-09-19 14:09:37 martin Exp $
+# $Id: Survey.pm,v 1.43 2008-09-25 01:14:25 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Ticket;
 use Mail::Address;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.42 $) [1];
+$VERSION = qw($Revision: 1.43 $) [1];
 
 =head1 NAME
 
@@ -1853,6 +1853,7 @@ sub RequestSend {
         $To = $ToParser->address();
     }
 
+    # return if no to is found
     return if !$To;
 
     # konvert to lower cases
@@ -1883,7 +1884,6 @@ sub RequestSend {
         while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
             $LastSentTime = $Row[0];
         }
-
         if ($LastSentTime) {
             my $Now = $Self->{TimeObject}->SystemTime();
             $LastSentTime = $Self->{TimeObject}->TimeStamp2SystemTime( String => $LastSentTime );
@@ -2186,6 +2186,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.42 $ $Date: 2008-09-19 14:09:37 $
+$Revision: 1.43 $ $Date: 2008-09-25 01:14:25 $
 
 =cut
