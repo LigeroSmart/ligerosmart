@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.40 2008-09-25 11:47:01 ub Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.41 2008-09-25 13:06:20 ub Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -78,6 +78,8 @@
         <File Permission="644" Location="var/httpd/htdocs/yui/build/fonts/fonts-min.css"/>
         <File Permission="644" Location="var/httpd/htdocs/yui/build/menu/menu-min.js"/>
         <File Permission="644" Location="var/httpd/htdocs/yui/build/yahoo-dom-event/yahoo-dom-event.js"/>
+        <File Permission="644" Location="var/packagesetup/FAQ.pm"/>
+        <File Permission="644" Location="var/stats/FAQ-FAQAccess.xml"/>
     </Filelist>
     <DatabaseInstall Type="post">
         <TableCreate Name="faq_language">
@@ -280,24 +282,170 @@
     </DatabaseUninstall>
     <CodeInstall Type="post">
 
-        require Kernel::System::Group;
+        # define function name
+        my $FunctionName = 'CodeInstall';
 
-        $Self-&gt;{GroupObject} = Kernel::System::Group-&gt;new(%{$Self});
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
 
-        # add faq groups
-        $Self-&gt;{GroupObject}-&gt;GroupAdd(
-            Name    =&gt; 'faq',
-            Comment =&gt; 'faq database users',
-            ValidID =&gt; 1,
-            UserID  =&gt; 1,
-        );
-        $Self-&gt;{GroupObject}-&gt;GroupAdd(
-            Name    =&gt; 'faq_admin',
-            Comment =&gt; 'faq admin users',
-            ValidID =&gt; 1,
-            UserID  =&gt; 1,
-        );
+        # load the module
+        if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
+
+            # create new instance
+            my $CodeObject = $CodeModule-&gt;new( %{$Self} );
+
+            if ($CodeObject) {
+
+                # start methode
+                if ( !$CodeObject-&gt;$FunctionName(%{$Self}) ) {
+                    $Self-&gt;{LogObject}-&gt;Log(
+                        Priority =&gt; 'error',
+                        Message  =&gt; "Could not call method $FunctionName() on $CodeModule.pm."
+                    );
+                }
+            }
+
+            # error handling
+            else {
+                $Self-&gt;{LogObject}-&gt;Log(
+                    Priority =&gt; 'error',
+                    Message  =&gt; "Could not call method new() on $CodeModule.pm."
+                );
+            }
+        }
+
     </CodeInstall>
+    <CodeUpgrade Type="post">
+
+        # define function name
+        my $FunctionName = 'CodeUpgrade';
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+
+        # load the module
+        if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
+
+            # create new instance
+            my $CodeObject = $CodeModule-&gt;new( %{$Self} );
+
+            if ($CodeObject) {
+
+                # start methode
+                if ( !$CodeObject-&gt;$FunctionName(%{$Self}) ) {
+                    $Self-&gt;{LogObject}-&gt;Log(
+                        Priority =&gt; 'error',
+                        Message  =&gt; "Could not call method $FunctionName() on $CodeModule.pm."
+                    );
+                }
+            }
+
+            # error handling
+            else {
+                $Self-&gt;{LogObject}-&gt;Log(
+                    Priority =&gt; 'error',
+                    Message  =&gt; "Could not call method new() on $CodeModule.pm."
+                );
+            }
+        }
+
+    </CodeUpgrade>
+    <CodeReinstall Type="post">
+
+        # define function name
+        my $FunctionName = 'CodeReinstall';
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+
+        # load the module
+        if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
+
+            # create new instance
+            my $CodeObject = $CodeModule-&gt;new( %{$Self} );
+
+            if ($CodeObject) {
+
+                # start methode
+                if ( !$CodeObject-&gt;$FunctionName(%{$Self}) ) {
+                    $Self-&gt;{LogObject}-&gt;Log(
+                        Priority =&gt; 'error',
+                        Message  =&gt; "Could not call method $FunctionName() on $CodeModule.pm."
+                    );
+                }
+            }
+
+            # error handling
+            else {
+                $Self-&gt;{LogObject}-&gt;Log(
+                    Priority =&gt; 'error',
+                    Message  =&gt; "Could not call method new() on $CodeModule.pm."
+                );
+            }
+        }
+
+    </CodeReinstall>
+    <CodeUninstall Type="pre">
+
+        # define function name
+        my $FunctionName = 'CodeUninstall';
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+
+        # load the module
+        if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
+
+            # create new instance
+            my $CodeObject = $CodeModule-&gt;new( %{$Self} );
+
+            if ($CodeObject) {
+
+                # start methode
+                if ( !$CodeObject-&gt;$FunctionName(%{$Self}) ) {
+                    $Self-&gt;{LogObject}-&gt;Log(
+                        Priority =&gt; 'error',
+                        Message  =&gt; "Could not call method $FunctionName() on $CodeModule.pm."
+                    );
+                }
+            }
+
+            # error handling
+            else {
+                $Self-&gt;{LogObject}-&gt;Log(
+                    Priority =&gt; 'error',
+                    Message  =&gt; "Could not call method new() on $CodeModule.pm."
+                );
+            }
+        }
+
+    </CodeUninstall>
+    <IntroInstall Type="pre" Title="Install Information" Lang="en">
+
+        &lt;br&gt;
+        &lt;b&gt;WELCOME&lt;/b&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        You are about to install the OTRS package FAQ.&lt;br&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+
+    </IntroInstall>
+    <IntroInstall Type="pre" Title="Installation Information" Lang="de">
+
+        &lt;br&gt;
+        &lt;b&gt;WILLKOMMEN&lt;/b&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        Sie sind im Begriff das OTRS-Paket FAQ zu installieren.&lt;br&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+
+    </IntroInstall>
     <IntroInstall Type="post" Title="Installation Information" Lang="en">
 
         &lt;br&gt;
@@ -344,6 +492,32 @@
         &lt;br&gt;
 
     </IntroInstall>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="en">
+
+        &lt;br&gt;
+        &lt;b&gt;WELCOME&lt;/b&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        You are about to upgrade the OTRS package FAQ.&lt;br&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+
+    </IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="de">
+
+        &lt;br&gt;
+        &lt;b&gt;WILLKOMMEN&lt;/b&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        Sie sind im Begriff das OTRS-Paket FAQ zu aktualisieren.&lt;br&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+
+    </IntroUpgrade>
     <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="en">
 
         &lt;br&gt;
@@ -352,6 +526,10 @@
         &lt;br&gt;
         If you uninstall this package, all database tables that were created during installation will be deleted.
         All data from these tables will be irrevocably lost!
+        &lt;br&gt;
+        &lt;br&gt;
+        The groups 'faq' and 'faq_admin' that were created during package installation will be deactivated.
+        You can activate these groups again in the admin area.
         &lt;br&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
@@ -366,6 +544,10 @@
         &lt;br&gt;
         Bei der Deinstallation werden die von diesem Paket angelegten Datenbank-Tabellen gelöscht.
         Alle darin enthaltenen Daten gehen unwiderruflich verloren!
+        &lt;br&gt;
+        &lt;br&gt;
+        Die von diesem Paket angelegten Gruppen 'faq' und 'faq_admin' erden deaktiviert.
+        Sie können jederzeit im Admin-Bereich wieder aktiviert werden.
         &lt;br&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
