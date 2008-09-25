@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.37 2008-09-25 08:10:31 ub Exp $
+# $Id: FAQ.pm,v 1.38 2008-09-25 14:05:58 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.37 $) [1];
+$VERSION = qw($Revision: 1.38 $) [1];
 
 =head1 NAME
 
@@ -2695,7 +2695,8 @@ sub FAQLogAdd {
     my $SystemTime = $Self->{TimeObject}->SystemTime();
 
     # define time period where reloads will not be logged (10 minutes)
-    my $ReloadBlockTime = 10 * 60;
+#    my $ReloadBlockTime = 10 * 60;
+    my $ReloadBlockTime = 1;
 
     # subtract ReloadBlockTime
     $SystemTime = $SystemTime - $ReloadBlockTime;
@@ -3070,6 +3071,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.37 $ $Date: 2008-09-25 08:10:31 $
+$Revision: 1.38 $ $Date: 2008-09-25 14:05:58 $
 
 =cut
