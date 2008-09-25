@@ -2,7 +2,7 @@
 # Survey.t - Survey tests
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.t,v 1.7 2008-09-25 01:10:20 martin Exp $
+# $Id: Survey.t,v 1.8 2008-09-25 01:13:47 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -96,7 +96,7 @@ for my $Key ( sort keys %SurveyGet ) {
 
 my @Tests = (
     {
-        Name   => '1# try',
+        Name   => '#1 try',
         'Survey::SendPeriod' => 100,
         Ticket => {
             Title        => 'Some Ticket Title',
