@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.41 2008-09-25 13:06:20 ub Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.42 2008-09-25 13:17:12 ub Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -546,7 +546,7 @@
         Alle darin enthaltenen Daten gehen unwiderruflich verloren!
         &lt;br&gt;
         &lt;br&gt;
-        Die von diesem Paket angelegten Gruppen 'faq' und 'faq_admin' erden deaktiviert.
+        Die von diesem Paket angelegten Gruppen 'faq' und 'faq_admin' werden deaktiviert.
         Sie können jederzeit im Admin-Bereich wieder aktiviert werden.
         &lt;br&gt;
         &lt;br&gt;
