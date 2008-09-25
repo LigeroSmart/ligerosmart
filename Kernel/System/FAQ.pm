@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.35 2008-09-23 20:50:49 ub Exp $
+# $Id: FAQ.pm,v 1.36 2008-09-25 08:09:47 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -21,9 +21,10 @@ use Kernel::System::Group;
 use Kernel::System::CustomerGroup;
 use Kernel::System::LinkObject;
 use Kernel::System::Ticket;
+use Kernel::System::Web::UploadCache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.35 $) [1];
+$VERSION = qw($Revision: 1.36 $) [1];
 
 =head1 NAME
 
@@ -86,6 +87,7 @@ sub new {
     $Self->{UserObject}          = Kernel::System::User->new(%Param);
     $Self->{EncodeObject}        = Kernel::System::Encode->new(%Param);
     $Self->{TicketObject}        = Kernel::System::Ticket->new(%Param);
+    $Self->{UploadCacheObject}   = Kernel::System::Web::UploadCache->new(%Param);
 
     return $Self;
 }
@@ -435,7 +437,7 @@ add article attachments
 
     my $Ok = $FAQObject->AttachmentAdd(
         ItemID      => 123,
-        Content     => $Content
+        Content     => $Content,
         ContentType => 'text/xml',
         Filename    => 'somename.xml',
     );
@@ -2942,6 +2944,118 @@ sub FAQApprovalTicketCreate {
     return;
 }
 
+=item FAQPictureUploadAdd()
+
+stores uploaded pictures as faq attachments
+
+    $FAQObject->FAQPictureUploadAdd(
+        ItemID => 12,
+        FormID => 12345,
+        Field1 => 'some text',
+        Field2 => 'some text',
+        Field3 => 'some text',
+        Field4 => 'some text',
+        Field5 => 'some text',
+        Field6 => 'some text',
+    );
+
+=cut
+
+sub FAQPictureUploadAdd {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for (qw(ItemID FormID)) {
+        if ( !$Param{$_} ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+            return;
+        }
+    }
+
+    # get uploaded pictures from upload cache
+    my @AttachmentData = $Self->{UploadCacheObject}->FormIDGetAllFilesData(
+        FormID => $Param{FormID},
+    );
+
+    my %Filenames;
+    ATTACHMENT:
+    for my $Attachment ( @AttachmentData ) {
+
+        # store picture as attachment of faq article
+        my $Ok = $Self->AttachmentAdd(
+            ItemID      => $Param{ItemID},
+            Content     => $Attachment->{Content},
+            ContentType => $Attachment->{ContentType},
+            Filename    => $Attachment->{Filename},
+        );
+        if ( !$Ok ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Could not store attachment '$Attachment->{Filename}'"
+                    . " with FAQ Item# '$Param{ItemID}'!",
+            );
+        }
+    }
+
+    # get all attachments for this faq article
+    my @AttachmentIndex = $Self->AttachmentIndex(
+        ItemID => $Param{ItemID},
+    );
+
+    # rewrite url to picture if it was successfully stored
+    ATTACHMENT:
+    for my $Attachment ( @AttachmentIndex ) {
+
+        # picture url in upload cache
+        my $Search = "Action=PictureUpload .+ FormID=$Param{FormID} .+ "
+            . "Filename=$Attachment->{Filename}";
+
+        # picture url in faq atttachment
+        my $Replace = "Action=AgentFAQ&amp;amp;Subaction=Download&amp;amp;"
+            . "ItemID=$Param{ItemID}&amp;amp;FileID=$Attachment->{FileID}";
+
+        # rewrite picture urls
+        FIELD:
+        for my $Number ( 1..6 ) {
+            next FIELD if !$Param{"Field$Number"};
+            $Param{"Field$Number"} =~ s{$Search}{$Replace}xms;
+        }
+    }
+
+    # get faq article data
+    my %FAQ = $Self->FAQGet(
+        ItemID => $Param{ItemID},
+    );
+
+    # update FAQ article
+    my $Ok = $Self->FAQUpdate(
+        ItemID     => $Param{ItemID},
+        CategoryID => $FAQ{CategoryID},
+        StateID    => $FAQ{StateID},
+        LanguageID => $FAQ{LanguageID},
+        Title      => $FAQ{Title},
+        Field1     => $Param{Field1},
+        Field2     => $Param{Field2},
+        Field3     => $Param{Field3},
+        Field4     => $Param{Field4},
+        Field5     => $Param{Field5},
+        Field6     => $Param{Field6},
+    );
+    if ( !$Ok ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Could not update FAQ Item# '$Param{ItemID}'!",
+        );
+    }
+
+    # delete all attachments from upload cache for this FormID
+    $Self->{UploadCacheObject}->FormIDRemove(
+        FormID => $Param{FormID},
+    );
+
+    return $Ok;
+}
+
 1;
 
 =back
@@ -2957,6 +3071,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.35 $ $Date: 2008-09-23 20:50:49 $
+$Revision: 1.36 $ $Date: 2008-09-25 08:09:47 $
 
 =cut

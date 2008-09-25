@@ -2,7 +2,7 @@
 # AgentFAQ.dtl - provides HTML view for faq articles
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.dtl,v 1.28 2008-09-24 20:43:31 ub Exp $
+# $Id: AgentFAQ.dtl,v 1.29 2008-09-25 08:08:30 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -40,7 +40,7 @@
             handleSubmit : true,
         });
         myEditor._defaultToolbar.titlebar = false;
-        yuiImgUploader(myEditor, '$Env{"Baselink"}', 'file_name', '$QData{"FormID"}Field' + i);
+        yuiImgUploader(myEditor, '$Env{"Baselink"}', 'file_name', '$QData{"FormID"}');
         myEditor.render();
     }
 </script>
@@ -488,6 +488,7 @@ function submit_compose()
             <input type="hidden" name="Action" value="$Env{"Action"}">
             <input type="hidden" name="Subaction" value="AddAction">
             <input type="hidden" name="ItemID" value="$QData{"ItemID"}">
+            <input type="hidden" name="FormID" value="$QData{"FormID"}">
             <table border="0" cellspacing="0" cellpadding="3">
               <tr>
                 <td class="contentkey">$Text{"Title"}: </td>
@@ -598,6 +599,7 @@ function submit_compose()
                 <input type="hidden" name="Action" value="$Env{"Action"}">
                 <input type="hidden" name="Subaction" value="UpdateAction">
                 <input type="hidden" name="ItemID" value="$QData{"ItemID"}">
+                <input type="hidden" name="FormID" value="$QData{"FormID"}">
                 <table border="0" cellspacing="0" cellpadding="3">
                   <tr>
                     <td class="contentkey">$Text{"Title"}: </td>

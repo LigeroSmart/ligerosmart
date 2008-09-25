@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.pm,v 1.25 2008-09-24 20:46:42 ub Exp $
+# $Id: AgentFAQ.pm,v 1.26 2008-09-25 08:07:42 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::Valid;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION @ISA);
-$VERSION = qw($Revision: 1.25 $) [1];
+$VERSION = qw($Revision: 1.26 $) [1];
 
 @ISA = qw(Kernel::Modules::FAQ);
 
@@ -601,6 +601,8 @@ sub Run {
             Selected => $Self->{ConfigObject}->Get('FAQ::Default::State') || 'internal (agent)',
         );
 
+        $Frontend{FormID} = $Self->{UploadCacheObject}->FormIDCreate();
+
         $Self->{LayoutObject}->Block(
             Name => 'Add',
             Data => { %Param, %Frontend },
@@ -656,7 +658,7 @@ sub Run {
         my %ParamData      = ();
         my @RequiredParams = qw(CategoryID Title);
         my @Params
-            = qw(StateID LanguageID Field1 Field2 Field3 Field4 Field5 Field6 Keywords Title Approved);
+            = qw(StateID LanguageID Field1 Field2 Field3 Field4 Field5 Field6 Keywords Title Approved FormID);
         for (@RequiredParams) {
             $ParamData{$_} = $Self->{ParamObject}->GetParam( Param => $_ );
             if ( !$ParamData{$_} ) {
@@ -687,6 +689,21 @@ sub Run {
                 ItemID => $ItemID,
                 %UploadStuff,
             );
+        }
+
+        # store uploaded pictures as faq attachments
+        if ( $Self->{ConfigObject}->Get('FAQ::WYSIWYGEditor') ) {
+            my $Ok = $Self->{FAQObject}->FAQPictureUploadAdd(
+                ItemID => $ItemID,
+                %ParamData,
+            );
+            if ( !$Ok ) {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "Could not store uploaded pictures as faq attachments"
+                        . "for FAQ Item# '$Param{ItemID}'!",
+                );
+            }
         }
 
         return $Self->{LayoutObject}->Redirect(
@@ -747,6 +764,9 @@ sub Run {
             Name       => 'StateID',
             SelectedID => $ItemData{StateID},
         );
+
+        $Frontend{FormID} = $Self->{UploadCacheObject}->FormIDCreate();
+
         $Self->{LayoutObject}->Block(
             Name => 'Update',
             Data => { %ItemData, %Frontend },
@@ -816,7 +836,7 @@ sub Run {
         # check parameters
         my %ParamData      = ();
         my @RequiredParams = qw(Title CategoryID);
-        my @Params = qw(ItemID StateID LanguageID Field1 Field2 Field3 Field4 Field5 Field6 Keywords Approved
+        my @Params = qw(ItemID StateID LanguageID Field1 Field2 Field3 Field4 Field5 Field6 Keywords Approved FormID
             AttachmentUpload AttachmentDelete0 AttachmentDelete1 AttachmentDelete2 AttachmentDelete3 AttachmentDelete4
             AttachmentDelete5 AttachmentDelete6 AttachmentDelete7 AttachmentDelete8
             AttachmentDelete9 AttachmentDelete10 AttachmentDelete11 AttachmentDelete12
@@ -866,6 +886,20 @@ sub Run {
 
         if ( !$Update ) {
             return $Self->{LayoutObject}->ErrorScreen();
+        }
+
+        # store uploaded pictures as faq attachments
+        if ( $Self->{ConfigObject}->Get('FAQ::WYSIWYGEditor') ) {
+            my $Ok = $Self->{FAQObject}->FAQPictureUploadAdd(
+                %ParamData,
+            );
+            if ( !$Ok ) {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "Could not store uploaded pictures as faq attachments"
+                        . " for FAQ Item# '$ParamData{ItemID}'!",
+                );
+            }
         }
 
         # update approval
@@ -1215,7 +1249,7 @@ sub Run {
         $Self->{LayoutObject}->Block(
             Name => 'WYSIWYGEditor',
             Data => {
-                FormID => $Self->{UploadCacheObject}->FormIDCreate(),
+                FormID => $Frontend{FormID},
             },
         );
     }
