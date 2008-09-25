@@ -2,7 +2,7 @@
 # Survey.t - Survey tests
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.t,v 1.6 2008-09-19 14:35:12 martin Exp $
+# $Id: Survey.t,v 1.7 2008-09-25 01:10:20 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -96,6 +96,8 @@ for my $Key ( sort keys %SurveyGet ) {
 
 my @Tests = (
     {
+        Name   => '1# try',
+        'Survey::SendPeriod' => 100,
         Ticket => {
             Title        => 'Some Ticket Title',
             Queue        => 'Raw',
@@ -127,6 +129,8 @@ my @Tests = (
         ],
     },
     {
+        Name   => '#2 try',
+        'Survey::SendPeriod' => 100,
         Ticket => {
             Title        => 'Some Ticket Title',
             Queue        => 'Raw',
@@ -158,6 +162,8 @@ my @Tests = (
         ],
     },
     {
+        Name   => '#3 try',
+        'Survey::SendPeriod' => 100,
         Ticket => {
             Title        => 'Some Ticket Title',
             Queue        => 'Raw',
@@ -189,6 +195,7 @@ my @Tests = (
         ],
     },
     {
+        Name   => '#4 try',
         Sleep  => 80,
         'Survey::SendPeriod' => 1 / 24 / 60,
         Ticket => {
@@ -217,11 +224,12 @@ my @Tests = (
             NoAgentNotify => 1,    # if you don't want to send agent notifications
         },
         Result => [
-            0,
             1,
+            0,
         ],
     },
     {
+        Name   => '#5 try',
         Sleep  => 30,
         'Survey::SendPeriod' => 1 / 24 / 60,
         Ticket => {
@@ -274,49 +282,54 @@ for my $Test (@Tests) {
         %{ $Test->{Article} },
     );
 
+    # send survey first time
     my ( $HeaderRef, $BodyRef ) = $Self->{SurveyObject}->RequestSend(
         TicketID => $TicketID,
     );
 
+    # check if survey got sent
     if ( $Test->{Result}->[0] ) {
         $Self->True(
             ${ $HeaderRef },
-            "RequestSend()",
+            "$Test->{Name} RequestSend() - survey got sent",
         );
 
         ${ $HeaderRef } =~ m{ ^ Subject: [ ] ( .+? ) \n \S+: [ ] }xms;
         $Self->Is(
             $1,
             'Help us with your feedback! =?UTF-8?Q?=C3=84=C3=96=C3=9C?=',
-            "Test special characters in email subject",
+            "$Test->{Name} Test special characters in email subject",
         );
 
         $Self->Is(
             ${ $BodyRef },
             "Dear customer... =C3=A4=C3=B6=C3=BC=\n",
-            "Test special characters in email body",
+            "$Test->{Name} Test special characters in email body",
         );
     }
     else {
         $Self->False(
             ${ $HeaderRef },
-            "RequestSend()",
+            "$Test->{Name} RequestSend() - no survey got sent",
         );
     }
 
+    # send survey second time
     ( $HeaderRef, $BodyRef ) = $Self->{SurveyObject}->RequestSend(
         TicketID => $TicketID,
     );
+
+    # check if survey got sent
     if ( $Test->{Result}->[1] ) {
         $Self->True(
             ${ $HeaderRef },
-            "RequestSend()",
+            "$Test->{Name} 2 RequestSend() - survey got sent",
         );
     }
     else {
         $Self->False(
             ${ $HeaderRef },
-            "RequestSend()",
+            "$Test->{Name} 2 RequestSend() - no survey got sent",
         );
     }
 
@@ -327,7 +340,7 @@ for my $Test (@Tests) {
 }
 
 $Self->{DBObject}->Do(
-    SQL => "DELETE FROM survey_request WHERE send_to LIKE '\%some\@example.com\%'",
+    SQL => "DELETE FROM survey_request WHERE send_to LIKE '\%\@example.com\%'",
 );
 
 # restore original sendmail config
