@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.39 2008-09-23 00:29:38 ub Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.40 2008-09-25 11:47:01 ub Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -14,32 +14,70 @@
         <File Permission="644" Location="Kernel/Language/de_FAQ.pm"/>
         <File Permission="644" Location="Kernel/Language/en_FAQ.pm"/>
         <File Permission="644" Location="Kernel/Language/es_FAQ.pm"/>
-        <File Permission="644" Location="Kernel/Modules/FAQ.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentFAQ.pm"/>
         <File Permission="644" Location="Kernel/Modules/CustomerFAQ.pm"/>
+        <File Permission="644" Location="Kernel/Modules/FAQ.pm"/>
+        <File Permission="644" Location="Kernel/Modules/PictureUpload.pm"/>
         <File Permission="644" Location="Kernel/Modules/PublicFAQ.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/LinkObjectFAQ.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/HeaderMetaFAQSearch.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/LayoutFAQ.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/FAQ.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/LinkObjectFAQ.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQ.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQOpenSearchDescription.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQ.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/FAQ.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/Header.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQ.dtl"/>
         <File Permission="644" Location="Kernel/System/FAQ.pm"/>
         <File Permission="644" Location="Kernel/System/LinkObject/FAQ.pm"/>
         <File Permission="644" Location="Kernel/System/Stats/Static/FAQStats.pm"/>
         <File Permission="644" Location="Kernel/cpan-lib/XML/RSS/SimpleGen.pm"/>
+        <File Permission="755" Location="bin/cgi-bin/faq.pl"/>
+        <File Permission="755" Location="bin/fcgi-bin/faq.fpl"/>
         <File Permission="644" Location="scripts/test/FAQ.t"/>
-        <File Permission="644" Location="scripts/test/sample/FAQ-Test1.pdf"/>
         <File Permission="644" Location="scripts/test/sample/FAQ-Test1.doc"/>
+        <File Permission="644" Location="scripts/test/sample/FAQ-Test1.pdf"/>
+        <File Permission="644" Location="var/httpd/htdocs/images/Standard/category.png"/>
         <File Permission="644" Location="var/httpd/htdocs/images/Standard/faq-category-small.png"/>
         <File Permission="644" Location="var/httpd/htdocs/images/Standard/faq-item-small.png"/>
         <File Permission="644" Location="var/httpd/htdocs/images/Standard/language.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/images/Standard/category.png"/>
         <File Permission="644" Location="var/httpd/htdocs/images/Standard/rss.png"/>
-        <File Permission="755" Location="bin/cgi-bin/faq.pl"/>
-        <File Permission="755" Location="bin/fcgi-bin/faq.fpl"/>
+        <File Permission="644" Location="var/httpd/htdocs/yui/image-uploader.js"/>
+        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/asc.gif"/>
+        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/blankimage.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/desc.gif"/>
+        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/dt-arrow-dn.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/dt-arrow-up.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/editor-knob.gif"/>
+        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/editor-sprite-active.gif"/>
+        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/editor-sprite.gif"/>
+        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/header_background.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/layout_sprite.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/menu-button-arrow-disabled.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/menu-button-arrow.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/menubaritem_submenuindicator_disabled.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/menubaritem_submenuindicator.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/menuitem_checkbox_disabled.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/menuitem_checkbox.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/menuitem_submenuindicator_disabled.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/menuitem_submenuindicator.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/skin.css"/>
+        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/split-button-arrow-active.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/split-button-arrow-disabled.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/split-button-arrow-focus.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/split-button-arrow-hover.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/split-button-arrow.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/sprite.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/transparent.gif"/>
+        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/wait.gif"/>
+        <File Permission="644" Location="var/httpd/htdocs/yui/build/button/button-min.js"/>
+        <File Permission="644" Location="var/httpd/htdocs/yui/build/connection/connection-min.js"/>
+        <File Permission="644" Location="var/httpd/htdocs/yui/build/container/container_core-min.js"/>
+        <File Permission="644" Location="var/httpd/htdocs/yui/build/editor/editor-beta-min.js"/>
+        <File Permission="644" Location="var/httpd/htdocs/yui/build/element/element-beta-min.js"/>
+        <File Permission="644" Location="var/httpd/htdocs/yui/build/fonts/fonts-min.css"/>
+        <File Permission="644" Location="var/httpd/htdocs/yui/build/menu/menu-min.js"/>
+        <File Permission="644" Location="var/httpd/htdocs/yui/build/yahoo-dom-event/yahoo-dom-event.js"/>
     </Filelist>
     <DatabaseInstall Type="post">
         <TableCreate Name="faq_language">
