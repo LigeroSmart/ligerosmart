@@ -2,7 +2,7 @@
 # AgentTimeAccountingSetting.dtl - provides HTML form for time accounting settings
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingSetting.dtl,v 1.18 2008-09-26 14:15:47 shb Exp $
+# $Id: AgentTimeAccountingSetting.dtl,v 1.19 2008-09-26 14:20:14 shb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -12,7 +12,7 @@
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
   <tr>
     <td class="mainhead">
-      $Env{"Box0"}$Text{"Edit time accounting project preferences"}$Env{"Box1"}
+      $Env{"Box0"}$Text{"Edit time accounting project settings"}$Env{"Box1"}
     </td>
   </tr>
   <tr>
@@ -78,7 +78,7 @@
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
   <tr>
     <td class="mainhead">
-      $Env{"Box0"}$Text{"Edit time accounting preferences"}$Env{"Box1"}
+      $Env{"Box0"}$Text{"Edit time accounting settings"}$Env{"Box1"}
     </td>
   </tr>
   <tr>

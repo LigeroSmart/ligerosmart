@@ -2,7 +2,7 @@
 # Kernel/Language/de_AgentTimeAccounting.pm - the de language for AgentTimeAccounting
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: de_AgentTimeAccounting.pm,v 1.30 2008-09-26 14:15:47 shb Exp $
+# $Id: de_AgentTimeAccounting.pm,v 1.31 2008-09-26 14:20:14 shb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -42,7 +42,7 @@ sub Data {
         'TimeAccounting'                           => 'Zeiterfassung',
         'Time Accounting Overview per Month'       => 'Monatsübersicht Zeiterfassung',
         'Edit time record'                         => 'Zeiterfassung bearbeiten',
-        'Edit time accounting preferences'         => 'Zeiterfassungseinstellungen bearbeiten',
+        'Edit time accounting settings'         => 'Zeiterfassungseinstellungen bearbeiten',
         'User Reporting'                           => 'Nutzerberichte',
         'Project Reporting'                        => 'Projektberichte',
         'Time Preporting'                          => 'Zeitberichte',
@@ -107,7 +107,7 @@ sub Data {
         'You have to insert a start and an end time or a period' =>
             'Sie müssen Beginn- und Endezeit angeben.',
         'You can only select one checkbox element!' => 'Sie können nur eine Checkbox markieren!',
-        'Edit time accounting project preferences' =>
+        'Edit time accounting project settings' =>
             'Zeiterfassung: Bearbeitung der Projektkonfiguration',
         'Project settings' => 'Projektkonfiguration',
         ''                => '',
