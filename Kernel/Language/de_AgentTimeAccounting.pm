@@ -2,7 +2,7 @@
 # Kernel/Language/de_AgentTimeAccounting.pm - the de language for AgentTimeAccounting
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: de_AgentTimeAccounting.pm,v 1.26 2008-09-26 11:44:13 shb Exp $
+# $Id: de_AgentTimeAccounting.pm,v 1.27 2008-09-26 11:53:36 shb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -107,7 +107,7 @@ sub Data {
             'Zeiterfassung: Bearbeitung der Projektkonfiguration',
         'Project Setting' => 'Projektkonfiguration',
         ''                => '',
-        'If you use action misc, please give an explanation in the field remark' =>
+        'If you select "Miscellaneous (misc)" the task, please explain this in the remarks field' =>
             'Wenn Sie Aktion Sonstiges auswählen, geben Sie eine Beschreibung um Feld Anmerkung an.',
 
         # FIXME actually the following should be included in file de.pm, however they're not so I put'em here...
