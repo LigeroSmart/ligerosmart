@@ -2,7 +2,7 @@
 # Kernel/Modules/PictureUpload.pm - get picture uploads
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: PictureUpload.pm,v 1.1 2008-09-24 20:44:25 ub Exp $
+# $Id: PictureUpload.pm,v 1.2 2008-09-26 13:13:57 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -14,10 +14,11 @@ package Kernel::Modules::PictureUpload;
 use strict;
 use warnings;
 
+use URI::Escape;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -56,7 +57,17 @@ sub Run {
 
     # show existing file
     my $Filename = $Self->{ParamObject}->GetParam( Param => 'Filename' );
+
     if ( $Filename ) {
+
+        # uri escape filename
+        if ( $Self->{ConfigObject}->Get('DefaultCharset') eq 'utf-8') {
+            $Filename = uri_escape_utf8( $Filename )  ;
+        }
+        else {
+            $Filename = uri_escape( $Filename );
+        }
+
         # display picture in HTML editor
         my @AttachmentData = $Self->{UploadCacheObject}->FormIDGetAllFilesData(
             FormID => $Self->{FormID},
@@ -81,6 +92,14 @@ sub Run {
     if ( !%File ) {
         $Output .= "{status:'Got no File!'}";
         return $Output;
+    }
+
+    # uri escape filename
+    if ( $Self->{ConfigObject}->Get('DefaultCharset') eq 'utf-8') {
+        $File{Filename} = uri_escape_utf8( $File{Filename} )  ;
+    }
+    else {
+        $File{Filename} = uri_escape( $File{Filename} );
     }
 
     # check image type
