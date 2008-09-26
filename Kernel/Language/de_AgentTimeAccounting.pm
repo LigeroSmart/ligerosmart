@@ -2,7 +2,7 @@
 # Kernel/Language/de_AgentTimeAccounting.pm - the de language for AgentTimeAccounting
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: de_AgentTimeAccounting.pm,v 1.29 2008-09-26 14:10:27 shb Exp $
+# $Id: de_AgentTimeAccounting.pm,v 1.30 2008-09-26 14:15:47 shb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -109,7 +109,7 @@ sub Data {
         'You can only select one checkbox element!' => 'Sie können nur eine Checkbox markieren!',
         'Edit time accounting project preferences' =>
             'Zeiterfassung: Bearbeitung der Projektkonfiguration',
-        'Project Setting' => 'Projektkonfiguration',
+        'Project settings' => 'Projektkonfiguration',
         ''                => '',
         'If you select "Miscellaneous (misc)" the task, please explain this in the remarks field' =>
             'Wenn Sie Aktion Sonstiges auswählen, geben Sie eine Beschreibung um Feld Anmerkung an.',

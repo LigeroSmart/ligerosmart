@@ -2,7 +2,7 @@
 # AgentTimeAccountingSetting.dtl - provides HTML form for time accounting settings
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingSetting.dtl,v 1.17 2008-09-22 19:55:48 shb Exp $
+# $Id: AgentTimeAccountingSetting.dtl,v 1.18 2008-09-26 14:15:47 shb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -30,7 +30,7 @@
         <input type="hidden" name="Subaction" value="ProjectSetting">
         <table border="0" width="700" align="center" cellspacing="0" cellpadding="4">
           <tr>
-            <td class="contenthead">$Text{"Project Setting"}</td>
+            <td class="contenthead">$Text{"Project settings"}</td>
           </tr>
           <tr>
             <td class="contentbody">
