@@ -2,7 +2,7 @@
 # Kernel/Modules/FAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.33 2008-09-25 08:09:47 ub Exp $
+# $Id: FAQ.pm,v 1.34 2008-09-26 14:38:47 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::FAQ;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.33 $) [1];
+$VERSION = qw($Revision: 1.34 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1036,7 +1036,7 @@ sub _GetItemVoting {
         }
         else {
             push( @{ $Self->{Notify} }, [ 'Error', 'No rate selected!' ] );
-            $Self->GetItemVotingForm(
+            $Self->_GetItemVotingForm(
                 ItemData => $Param{ItemData},
             );
 
