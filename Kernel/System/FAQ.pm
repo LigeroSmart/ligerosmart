@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.38 2008-09-25 14:05:58 ub Exp $
+# $Id: FAQ.pm,v 1.39 2008-09-26 13:12:05 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.38 $) [1];
+$VERSION = qw($Revision: 1.39 $) [1];
 
 =head1 NAME
 
@@ -300,15 +300,15 @@ sub FAQAdd {
     }
 
     return if !$Self->{DBObject}->Do(
-        SQL => "INSERT INTO faq_item (f_number, f_name, f_language_id, f_subject, " .
-            " category_id, state_id, f_keywords, approved, " .
-            " f_field1, f_field2, f_field3, f_field4, f_field5, f_field6, " .
-            " free_key1, free_value1, free_key2, free_value2, " .
-            " free_key3, free_value3, free_key4, free_value4, " .
-            " created, created_by, changed, changed_by)" .
-            " VALUES " .
-            " (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " .
-            " ?, ?, ?, ?, current_timestamp, ?, current_timestamp, ?)",
+        SQL => 'INSERT INTO faq_item (f_number, f_name, f_language_id, f_subject, ' .
+            ' category_id, state_id, f_keywords, approved, ' .
+            ' f_field1, f_field2, f_field3, f_field4, f_field5, f_field6, ' .
+            ' free_key1, free_value1, free_key2, free_value2, ' .
+            ' free_key3, free_value3, free_key4, free_value4, ' .
+            ' created, created_by, changed, changed_by)' .
+            ' VALUES ' .
+            ' (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ' .
+            ' ?, ?, ?, ?, current_timestamp, ?, current_timestamp, ?)',
         Bind => [
             \$Param{Number},     \$Param{Name},      \$Param{LanguageID}, \$Param{Title},
             \$Param{CategoryID}, \$Param{StateID},   \$Param{Keywords},   \$Param{Approved},
@@ -317,7 +317,7 @@ sub FAQAdd {
             \$Param{FreeKey1},   \$Param{FreeText1}, \$Param{FreeKey2},   \$Param{FreeText2},
             \$Param{FreeKey3},   \$Param{FreeText3}, \$Param{FreeKey4},   \$Param{FreeText4},
             \$Self->{UserID},    \$Self->{UserID},
-        ],
+        ]
     );
 
     # db quote
@@ -3022,24 +3022,9 @@ sub FAQPictureUploadAdd {
         }
     }
 
-    # get faq article data
-    my %FAQ = $Self->FAQGet(
-        ItemID => $Param{ItemID},
-    );
-
     # update FAQ article
     my $Ok = $Self->FAQUpdate(
-        ItemID     => $Param{ItemID},
-        CategoryID => $FAQ{CategoryID},
-        StateID    => $FAQ{StateID},
-        LanguageID => $FAQ{LanguageID},
-        Title      => $FAQ{Title},
-        Field1     => $Param{Field1},
-        Field2     => $Param{Field2},
-        Field3     => $Param{Field3},
-        Field4     => $Param{Field4},
-        Field5     => $Param{Field5},
-        Field6     => $Param{Field6},
+        %Param,
     );
     if ( !$Ok ) {
         $Self->{LogObject}->Log(
@@ -3071,6 +3056,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.38 $ $Date: 2008-09-25 14:05:58 $
+$Revision: 1.39 $ $Date: 2008-09-26 13:12:05 $
 
 =cut
