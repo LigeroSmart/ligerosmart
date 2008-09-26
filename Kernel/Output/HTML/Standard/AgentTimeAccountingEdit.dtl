@@ -2,7 +2,7 @@
 # AgentTimeAccountingEdit.dtl - provides HTML form for time accounting edit
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingEdit.dtl,v 1.13 2008-09-22 22:17:02 shb Exp $
+# $Id: AgentTimeAccountingEdit.dtl,v 1.14 2008-09-26 11:44:13 shb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -184,7 +184,7 @@
                   <td>
                     <div class="required">* $Text{"Required Field"}</div>
 <!-- dtl:block:FootNote -->
-                    <div class="footnote">* $Text{"You have to insert Start- and Endtime or a Period"}</div>
+                    <div class="footnote">* $Text{"You have to insert a start and an end time or a period"}</div>
 <!-- dtl:block:FootNote -->
                     <div class="footnote">* $Text{"If you use action misc, please give an explanation in the field remark"}</div>
                   </td>

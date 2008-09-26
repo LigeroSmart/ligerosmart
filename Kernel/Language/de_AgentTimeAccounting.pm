@@ -2,7 +2,7 @@
 # Kernel/Language/de_AgentTimeAccounting.pm - the de language for AgentTimeAccounting
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: de_AgentTimeAccounting.pm,v 1.25 2008-09-23 08:52:38 shb Exp $
+# $Id: de_AgentTimeAccounting.pm,v 1.26 2008-09-26 11:44:13 shb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -100,7 +100,7 @@ sub Data {
         'Can\'t save settings, because a day has only 24 hours!' => 'Ein Tag hat nur 24 Stunden!',
         'Can\'t delete Working Units!'      => 'Kann Arbeitsstunden nicht löschen!',
         'Please insert your working hours!' => 'Bitte tragen Sie Ihre Arbeitszeiten ein!',
-        'You have to insert Start- and Endtime or a Period' =>
+        'You have to insert a start and an end time or a period' =>
             'Sie müssen Beginn- und Endezeit angeben.',
         'You can only select one checkbox element!' => 'Sie können nur eine Checkbox markieren!',
         'Edit time accounting project preferences' =>
