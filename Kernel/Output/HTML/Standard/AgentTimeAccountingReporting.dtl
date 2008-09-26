@@ -2,7 +2,7 @@
 # AgentTimeAccountingReporting.dtl - provides HTML form for time accounting reporting
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingReporting.dtl,v 1.11 2008-09-22 22:41:51 shb Exp $
+# $Id: AgentTimeAccountingReporting.dtl,v 1.12 2008-09-26 12:19:58 shb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -62,8 +62,8 @@
             <table border="1" width="100%" align="center" cellspacing="2" cellpadding="2">
               <tr class="contentkey">
                 <td>&nbsp;</td>
-                <td colspan="4">$Text{"per Month"}</td>
-                <td colspan="2">$Text{"Total"}</td>
+                <td colspan="4">$Text{"Monthly total"}</td>
+                <td colspan="2">$Text{"Lifetime total"}</td>
               </tr>
               <tr class="contentkey">
                 <td>$Text{"User"}</td>
@@ -120,8 +120,8 @@
             <table border="1" width="100%" align="center">
               <tr class="contentkey">
                 <td colspan="2">&nbsp;</td>
-                <td>$Text{"per Month"}</td>
-                <td>$Text{"Total"}</td>
+                <td>$Text{"Monthly total"}</td>
+                <td>$Text{"Lifetime total"}</td>
               </tr>
               <tr class="contentkey">
                 <td>$Text{"Project"}</td>
