@@ -2,7 +2,7 @@
 # AgentFAQ.dtl - provides HTML view for faq articles
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.dtl,v 1.30 2008-09-26 17:42:10 ub Exp $
+# $Id: AgentFAQ.dtl,v 1.31 2008-09-28 20:06:48 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,33 +19,37 @@
 <script type="text/javascript" src="$Env{"Images"}../../yui/build/element/element-beta-min.js"></script>
 
 <!-- Needed for Menus, Buttons and Overlays used in the Toolbar -->
-<script src="$Env{"Images"}../../yui/build/container/container_core-min.js"></script>
-<script src="$Env{"Images"}../../yui/build/menu/menu-min.js"></script>
-<script src="$Env{"Images"}../../yui/build/button/button-min.js"></script>
+<script type="text/javascript" src="$Env{"Images"}../../yui/build/container/container_core-min.js"></script>
+<script type="text/javascript" src="$Env{"Images"}../../yui/build/menu/menu-min.js"></script>
+<script type="text/javascript" src="$Env{"Images"}../../yui/build/button/button-min.js"></script>
 
 <!-- Source file for Rich Text Editor-->
-<script src="$Env{"Images"}../../yui/build/editor/editor-beta-min.js"></script>
+<script type="text/javascript" src="$Env{"Images"}../../yui/build/editor/editor-beta-min.js"></script>
 
 <!-- Source file for Connection Manager (Required for yuiImageUploader) -->
-<script src="$Env{"Images"}../../yui/build/connection/connection-min.js"></script>
+<script type="text/javascript" src="$Env{"Images"}../../yui/build/connection/connection-min.js"></script>
 
 <!-- Source file for ImageUploader-->
-<script src="$Env{"Images"}../../yui/image-uploader.js"></script>
+<script type="text/javascript" src="$Env{"Images"}../../yui/image-uploader.js"></script>
 
 
 <!-- Show Rich Text Editor-->
-<script>
-    for (var i = 1; i <= 6; i++) {
+<script type="text/javascript">
 
-        var myEditor = new YAHOO.widget.Editor( 'Field' + i, {
-              height: '300px',
-              width : '700px',
-              handleSubmit: true,
-              dompath: false,
-              animate: false,
-              toolbar: {
+(function() {
+    var Dom = YAHOO.util.Dom,
+        Event = YAHOO.util.Event;
+
+    function GetConfig() {
+        return {
+            height: '300px',
+            width : '550px',
+            handleSubmit: true,
+            dompath: false,
+            animate: false,
+            toolbar: {
+              //  titlebar: '',
                 collapse: false,
-                //titlebar: 'Text Editing Tools',
                 grouplabels: false,
                 draggable: false,
                 buttonType: 'advanced',
@@ -74,15 +78,15 @@
                             { type: 'push', label: 'Bold CTRL + SHIFT + B', value: 'bold' },
                             { type: 'push', label: 'Italic CTRL + SHIFT + I', value: 'italic' },
                             { type: 'push', label: 'Underline CTRL + SHIFT + U', value: 'underline' },
-                            //{ type: 'separator' },
-                            //{ type: 'push', label: 'Subscript', value: 'subscript', disabled: true },
-                            //{ type: 'push', label: 'Superscript', value: 'superscript', disabled: true },
                             { type: 'separator' },
+                         //   { type: 'push', label: 'Subscript', value: 'subscript', disabled: true },
+                         //   { type: 'push', label: 'Superscript', value: 'superscript', disabled: true },
+                         //   { type: 'separator' },
                             { type: 'color', label: 'Font Color', value: 'forecolor', disabled: true },
                             { type: 'color', label: 'Background Color', value: 'backcolor', disabled: true },
-                            //{ type: 'separator' },
-                            //{ type: 'push', label: 'Remove Formatting', value: 'removeformat', disabled: true },
-                            //{ type: 'push', label: 'Show/Hide Hidden Elements', value: 'hiddenelements' }
+                            { type: 'separator' }
+                         //   { type: 'push', label: 'Remove Formatting', value: 'removeformat', disabled: true },
+                         //   { type: 'push', label: 'Show/Hide Hidden Elements', value: 'hiddenelements' }
                         ]
                     },
                     { type: 'separator' },
@@ -127,12 +131,37 @@
                         ]
                     }
                 ]
-              }
-        });
+            }
+        };
+    };
 
-        yuiImgUploader(myEditor, '$Env{"Baselink"}', 'file_name', '$QData{"FormID"}');
-        myEditor.render();
-    }
+    Event.onDOMReady(function() {
+        var myEditor1 = new YAHOO.widget.Editor( 'Field1', GetConfig() );
+        yuiImgUploader(myEditor1, '$Env{"Baselink"}', 'file_name', '$QData{"FormID"}');
+        myEditor1.render();
+
+        var myEditor2 = new YAHOO.widget.Editor( 'Field2', GetConfig() );
+        yuiImgUploader(myEditor2, '$Env{"Baselink"}', 'file_name', '$QData{"FormID"}');
+        myEditor2.render();
+
+        var myEditor3 = new YAHOO.widget.Editor( 'Field3', GetConfig() );
+        yuiImgUploader(myEditor3, '$Env{"Baselink"}', 'file_name', '$QData{"FormID"}');
+        myEditor3.render();
+
+        var myEditor4 = new YAHOO.widget.Editor( 'Field4', GetConfig() );
+        yuiImgUploader(myEditor4, '$Env{"Baselink"}', 'file_name', '$QData{"FormID"}');
+        myEditor4.render();
+
+        var myEditor5 = new YAHOO.widget.Editor( 'Field5', GetConfig() );
+        yuiImgUploader(myEditor5, '$Env{"Baselink"}', 'file_name', '$QData{"FormID"}');
+        myEditor5.render();
+
+        var myEditor6 = new YAHOO.widget.Editor( 'Field6', GetConfig() );
+        yuiImgUploader(myEditor6, '$Env{"Baselink"}', 'file_name', '$QData{"FormID"}');
+        myEditor6.render();
+    });
+})();
+
 </script>
 
 <!-- dtl:block:WYSIWYGEditor -->
