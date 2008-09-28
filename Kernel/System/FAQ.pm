@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.41 2008-09-26 21:19:24 ub Exp $
+# $Id: FAQ.pm,v 1.42 2008-09-28 21:23:41 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.41 $) [1];
+$VERSION = qw($Revision: 1.42 $) [1];
 
 =head1 NAME
 
@@ -440,6 +440,7 @@ add article attachments
         Content     => $Content,
         ContentType => 'text/xml',
         Filename    => 'somename.xml',
+        Inline      => 1,   (0|1, default 0)
     );
 
 =cut
@@ -453,6 +454,11 @@ sub AttachmentAdd {
             $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
             return;
         }
+    }
+
+    # set default
+    if ( !$Param{Inline} ) {
+        $Param{Inline} = 0;
     }
 
     # get attachment size
@@ -481,12 +487,12 @@ sub AttachmentAdd {
     # write attachment to db
     return $Self->{DBObject}->Do(
         SQL => "INSERT INTO faq_attachment " .
-            " (faq_id, filename, content_type, content_size, content, " .
+            " (faq_id, filename, content_type, content_size, content, inline, " .
             " created, created_by, changed, changed_by) VALUES " .
-            " (?, ?, ?, ?, ?, current_timestamp, ?, current_timestamp, ?)",
+            " (?, ?, ?, ?, ?, ?, current_timestamp, ?, current_timestamp, ?)",
         Bind => [
-            \$Param{ItemID}, \$Param{Filename}, \$Param{ContentType}, \$Param{Filesize},
-            \$Param{Content}, \$Self->{UserID}, \$Self->{UserID},
+            \$Param{ItemID},  \$Param{Filename}, \$Param{ContentType}, \$Param{Filesize},
+            \$Param{Content}, \$Param{Inline},   \$Self->{UserID}, \$Self->{UserID},
         ],
     );
 }
@@ -584,6 +590,7 @@ return an attachment index of an article
 
     my @Index = $FAQObject->AttachmentIndex(
         ItemID => 123,
+        ShowInline => 0,   ( 0|1, default 1)
     );
 
 =cut
@@ -603,9 +610,19 @@ sub AttachmentIndex {
     for (qw(ItemID)) {
         $Param{$_} = $Self->{DBObject}->Quote( $Param{$_}, 'Integer' );
     }
+
+    # define SQL
+    my $SQL = "SELECT filename, content_type, content_size FROM "
+            . "faq_attachment WHERE faq_id = $Param{ItemID} ";
+
+    # do not show inline attachments
+    if ( defined $Param{ShowInline} && !$Param{ShowInline} ) {
+        $SQL .= 'AND inline = 0 ';
+    }
+    $SQL .= 'ORDER BY created',
+
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT filename, content_type, content_size FROM "
-            . "faq_attachment WHERE faq_id = $Param{ItemID} ORDER BY created",
+        SQL => $SQL,
         Limit => 100,
     );
     my @Index = ();
@@ -2986,6 +3003,7 @@ sub FAQPictureUploadAdd {
             Content     => $Attachment->{Content},
             ContentType => $Attachment->{ContentType},
             Filename    => $Attachment->{Filename},
+            Inline      => 1,
         );
         if ( !$Ok ) {
             $Self->{LogObject}->Log(
@@ -3060,6 +3078,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.41 $ $Date: 2008-09-26 21:19:24 $
+$Revision: 1.42 $ $Date: 2008-09-28 21:23:41 $
 
 =cut

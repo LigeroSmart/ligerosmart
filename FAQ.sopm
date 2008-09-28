@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.45 2008-09-26 13:20:38 ub Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.46 2008-09-28 21:23:41 ub Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -215,6 +215,7 @@
             <Column Name="content_size" Required="false" Size="30" Type="VARCHAR"/>
             <Column Name="content_type" Required="false" Size="250" Type="VARCHAR"/>
             <Column Name="content" Required="true" Type="LONGBLOB"/>
+            <Column Name="inline" Required="true" Default="0" Type="SMALLINT"/>
             <Column Name="created" Required="true" Type="DATE"/>
             <Column Name="created_by" Required="true" Type="INTEGER"/>
             <Column Name="changed" Required="true" Type="DATE"/>
@@ -267,6 +268,9 @@
         </TableCreate>
         <TableAlter Name="faq_item" Version="1.4.91">
             <ColumnAdd Name="approved" Required="true" Default="1" Type="SMALLINT"/>
+        </TableAlter>
+        <TableAlter Name="faq_attachment" Version="1.4.93">
+            <ColumnAdd Name="inline" Required="true" Default="0" Type="SMALLINT"/>
         </TableAlter>
     </DatabaseUpgrade>
     <DatabaseUninstall Type="pre">
