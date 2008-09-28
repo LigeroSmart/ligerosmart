@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.pm,v 1.26 2008-09-25 08:07:42 ub Exp $
+# $Id: AgentFAQ.pm,v 1.27 2008-09-28 20:09:12 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::Valid;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION @ISA);
-$VERSION = qw($Revision: 1.26 $) [1];
+$VERSION = qw($Revision: 1.27 $) [1];
 
 @ISA = qw(Kernel::Modules::FAQ);
 
@@ -667,6 +667,51 @@ sub Run {
         }
         for (@Params) {
             $ParamData{$_} = $Self->{ParamObject}->GetParam( Param => $_ );
+        }
+
+        #
+        # workaround for IE
+        # (IE is sending the add form more than once if YUI editor is enabled)
+        #
+        # get the current system time
+        my $CurrentTime = $Self->{TimeObject}->SystemTime();
+
+        # search faq articles with same title and keywords
+        my @IDs = $Self->{FAQObject}->FAQSearch(
+            Title     => $ParamData{Title},
+            Keyword   => $ParamData{Keywords},
+            Order     => 'Changed',
+            Sort      => 'down',
+            Limit     => 1,
+        );
+        if ( @IDs ) {
+            my $ItemID = $IDs[0];
+            # get faq data
+            my %FAQ = $Self->{FAQObject}->FAQGet(
+                ItemID => $ItemID,
+            );
+            # check if data is the same
+            if (   ( $FAQ{Title}      eq $ParamData{Title} )
+                && ( $FAQ{Keywords}   eq $ParamData{Keywords} )
+                && ( $FAQ{CategoryID} eq $ParamData{CategoryID} )
+                && ( $FAQ{StateID}    eq $ParamData{StateID} )
+                && ( $FAQ{LanguageID} eq $ParamData{LanguageID} )
+            ){
+                # convert faq change time to system time format
+                my $FAQChangeTime = $Self->{TimeObject}->TimeStamp2SystemTime(
+                    String => $FAQ{Changed},
+                );
+
+                # calculate time difference in seconds
+                my $TimeDiff = $CurrentTime - $FAQChangeTime;
+
+                # do not add article if the same article was created in the last 10 seconds
+                if ( $TimeDiff < 10 ) {
+                    return $Self->{LayoutObject}->Redirect(
+                        OP => "Action=$Self->{Action}&Subaction=View&ItemID=$ItemID",
+                    );
+                }
+            }
         }
 
         # insert item
