@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.48 2008-09-29 14:07:10 ub Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.49 2008-09-29 14:30:34 ub Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -269,7 +269,7 @@
         <TableAlter Name="faq_item" Version="1.4.91">
             <ColumnAdd Name="approved" Required="true" Default="1" Type="SMALLINT"/>
         </TableAlter>
-        <TableAlter Name="faq_attachment" Version="1.4.94">
+        <TableAlter Name="faq_attachment" Version="1.4.95">
             <ColumnAdd Name="inlineattachment" Required="true" Default="0" Type="SMALLINT"/>
         </TableAlter>
     </DatabaseUpgrade>
