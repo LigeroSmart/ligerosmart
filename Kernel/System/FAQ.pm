@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.47 2008-09-29 14:07:11 ub Exp $
+# $Id: FAQ.pm,v 1.48 2008-09-29 15:43:45 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.47 $) [1];
+$VERSION = qw($Revision: 1.48 $) [1];
 
 =head1 NAME
 
@@ -529,18 +529,20 @@ sub AttachmentGet {
         Encode => [ 1, 1, 1, 0 ],
         Limit => 1,
     );
-    my @Row = $Self->{DBObject}->FetchrowArray();
 
-    # decode attachment if it's a postgresql backend and not BLOB
-    if ( !$Self->{DBObject}->GetDatabaseFunction('DirectBlob') ) {
-        $Row[3] = decode_base64( $Row[3] );
+    my %File;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+
+        # decode attachment if it's a postgresql backend and not BLOB
+        if ( !$Self->{DBObject}->GetDatabaseFunction('DirectBlob') ) {
+            $Row[3] = decode_base64( $Row[3] );
+        }
+
+        $File{Filename}    = $Row[0];
+        $File{ContentType} = $Row[1];
+        $File{Filesize}    = $Row[2];
+        $File{Content}     = $Row[3];
     }
-    my %File = (
-        Filename    => $Row[0],
-        ContentType => $Row[1],
-        Filesize    => $Row[2],
-        Content     => $Row[3],
-    );
 
     return %File;
 }
@@ -3065,6 +3067,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.47 $ $Date: 2008-09-29 14:07:11 $
+$Revision: 1.48 $ $Date: 2008-09-29 15:43:45 $
 
 =cut
