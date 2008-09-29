@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.43 2008-09-29 00:01:12 ub Exp $
+# $Id: FAQ.pm,v 1.44 2008-09-29 00:02:48 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.43 $) [1];
+$VERSION = qw($Revision: 1.44 $) [1];
 
 =head1 NAME
 
@@ -542,7 +542,6 @@ sub AttachmentGet {
             Filesize    => $Row[2],
             Content     => $Row[3],
         );
-        $Self->{LogObject}->Dumper( '', 'Filename', $File{Filename} );
     }
     return %File;
 }
@@ -3086,6 +3085,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.43 $ $Date: 2008-09-29 00:01:12 $
+$Revision: 1.44 $ $Date: 2008-09-29 00:02:48 $
 
 =cut
