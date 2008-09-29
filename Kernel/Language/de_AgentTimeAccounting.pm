@@ -2,7 +2,7 @@
 # Kernel/Language/de_AgentTimeAccounting.pm - the de language for AgentTimeAccounting
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: de_AgentTimeAccounting.pm,v 1.37 2008-09-29 14:20:01 shb Exp $
+# $Id: de_AgentTimeAccounting.pm,v 1.38 2008-09-29 14:28:25 shb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -28,7 +28,7 @@ sub Data {
         'Date'                                     => 'Datum',
         'Comments'                                 => 'Kommentare',
         'until'                                    => 'bis',
-        'WorkingHours'                             => 'Arbeitsstunden',
+        'Total hours worked'                             => 'Arbeitsstunden',
         'Working Hours'                            => 'Arbeitsstunden',
         'Hours per week'                           => 'Wochenstunden',
         'this month'                               => 'dieser Monat',

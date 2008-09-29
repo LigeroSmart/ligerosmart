@@ -2,7 +2,7 @@
 # AgentTimeAccountingOverview.dtl - provides HTML form for time accounting overview
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingOverview.dtl,v 1.17 2008-09-29 14:20:01 shb Exp $
+# $Id: AgentTimeAccountingOverview.dtl,v 1.18 2008-09-29 14:28:25 shb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -52,7 +52,7 @@
         </tr>
 <!-- dtl:block:Row -->
         <tr>
-          <td colspan="3" class="contenthead" align="left">$Text{"WorkingHours"}:</td>
+          <td colspan="3" class="contenthead" align="left">$Text{"Total hours worked"}:</td>
           <td class="contenthead" align="right">$QData{"WorkingHours"}</td>
         </tr>
       </table>
