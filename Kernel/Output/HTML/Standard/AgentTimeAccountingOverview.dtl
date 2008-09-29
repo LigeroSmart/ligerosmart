@@ -2,7 +2,7 @@
 # AgentTimeAccountingOverview.dtl - provides HTML form for time accounting overview
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingOverview.dtl,v 1.13 2008-09-26 12:19:58 shb Exp $
+# $Id: AgentTimeAccountingOverview.dtl,v 1.14 2008-09-29 13:23:22 shb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -114,7 +114,7 @@
       <br>
       <table class="contentbody" border="0" width="50%" cellpadding="3" cellspacing="0" align="center">
         <tr>
-          <td class="contenthead">$Text{"Project Reporting"}:
+          <td class="contenthead">$Text{"Users project overview"}:
             <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Overview&Year=$LQData{"Year"}&Month=$LQData{"Month"}&ProjectStatusShow=$LQData{"ProjectStatusShow"}&UserID=$LQData{"UserID"}">
             ($Text{"Show"} $Text{"$QData{"ProjectStatusShow"}"} $Text{"Projects"})
             </a>

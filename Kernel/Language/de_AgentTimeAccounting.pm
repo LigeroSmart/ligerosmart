@@ -2,7 +2,7 @@
 # Kernel/Language/de_AgentTimeAccounting.pm - the de language for AgentTimeAccounting
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: de_AgentTimeAccounting.pm,v 1.31 2008-09-26 14:20:14 shb Exp $
+# $Id: de_AgentTimeAccounting.pm,v 1.32 2008-09-29 13:23:22 shb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -43,15 +43,16 @@ sub Data {
         'Time Accounting Overview per Month'       => 'Monatsübersicht Zeiterfassung',
         'Edit time record'                         => 'Zeiterfassung bearbeiten',
         'Edit time accounting settings'         => 'Zeiterfassungseinstellungen bearbeiten',
-        'User Reporting'                           => 'Nutzerberichte',
-        'Project Reporting'                        => 'Projektberichte',
+        'User reports'                           => 'Nutzerberichte',
+        'Project reports'                        => 'Projektberichte',
         'Time Preporting'                          => 'Zeitberichte',
         'LeaveDay Remaining'                       => 'Verbleibende Urlaubstage',
         'Monthly total'                                => 'pro Monat',
         'Monthly'                                => 'pro Monat',
         'Hours'                                    => 'Stunden',
-        'Time selection'                           => 'Auswahl Datum',
-        'Incomplete Days'                          => 'nicht ausgefüllte Tage',
+        'Date navigation'                           => 'Auswahl Datum',
+        'Month navigation'                           => 'Auswahl Datum',
+        'Days without entries'                          => 'nicht ausgefüllte Tage',
         'Project'                                  => 'Projekt',
         'Projects'                                 => 'Projekte',
         'Grand total'                                    => 'Summe',

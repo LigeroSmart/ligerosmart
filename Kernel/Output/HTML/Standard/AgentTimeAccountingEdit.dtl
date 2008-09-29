@@ -2,7 +2,7 @@
 # AgentTimeAccountingEdit.dtl - provides HTML form for time accounting edit
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingEdit.dtl,v 1.16 2008-09-26 14:10:28 shb Exp $
+# $Id: AgentTimeAccountingEdit.dtl,v 1.17 2008-09-29 13:23:22 shb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -38,7 +38,7 @@
                 <input type="hidden" name="Action"    value="$Env{"Action"}">
                 <input type="hidden" name="Subaction" value="Edit">
                 <tr>
-                  <td colspan="2" class="contenthead">$Text{"Time selection"}</td>
+                  <td colspan="2" class="contenthead">$Text{"Date navigation"}</td>
                 </tr>
                 <tr class="contentvalue">
                   <td>
@@ -66,7 +66,7 @@
 <!-- dtl:block:IncompleteText -->
                 <tr class="contentvalue">
                   <td colspan="2">
-                    $Text{"Incomplete Days"}:
+                    $Text{"Days without entries"}:
 <!-- dtl:block:IncompleteWorkingDays -->
                     &nbsp;
                     <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Edit&Year=$LQData{"Year"}&Month=$LQData{"Month"}&Day=$LQData{"Day"}">

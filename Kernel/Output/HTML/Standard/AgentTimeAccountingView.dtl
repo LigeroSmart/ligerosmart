@@ -2,7 +2,7 @@
 # AgentTimeAccountingView.dtl - provides HTML for view inserts of one day
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingView.dtl,v 1.7 2008-09-26 14:10:28 shb Exp $
+# $Id: AgentTimeAccountingView.dtl,v 1.8 2008-09-29 13:23:22 shb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -36,7 +36,7 @@
                 <input type="hidden" name="Subaction" value="View">
                 <input type="hidden" name="UserID"    value="$QData{"UserID"}">
                 <tr class="contenthead">
-                  <td colspan="2">$Text{"Time selection"}</td>
+                  <td colspan="2">$Text{"Date navigation"}</td>
                 </tr>
                 <tr>
                   <td>
