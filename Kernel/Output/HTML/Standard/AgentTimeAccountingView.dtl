@@ -2,7 +2,7 @@
 # AgentTimeAccountingView.dtl - provides HTML for view inserts of one day
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingView.dtl,v 1.8 2008-09-29 13:23:22 shb Exp $
+# $Id: AgentTimeAccountingView.dtl,v 1.9 2008-09-29 14:20:01 shb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -11,7 +11,7 @@
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
   <tr>
     <td colspan="3" class="mainhead">
-      $Env{"Box0"}$Text{"View Time Accounting"}$Env{"Box1"}
+      $Env{"Box0"}$Text{"View time record"}$Env{"Box1"}
     </td>
   </tr>
   <tr>
