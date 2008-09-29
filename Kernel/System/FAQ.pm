@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.42 2008-09-28 21:23:41 ub Exp $
+# $Id: FAQ.pm,v 1.43 2008-09-29 00:01:12 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.42 $) [1];
+$VERSION = qw($Revision: 1.43 $) [1];
 
 =head1 NAME
 
@@ -542,6 +542,7 @@ sub AttachmentGet {
             Filesize    => $Row[2],
             Content     => $Row[3],
         );
+        $Self->{LogObject}->Dumper( '', 'Filename', $File{Filename} );
     }
     return %File;
 }
@@ -612,14 +613,9 @@ sub AttachmentIndex {
     }
 
     # define SQL
-    my $SQL = "SELECT filename, content_type, content_size FROM "
-            . "faq_attachment WHERE faq_id = $Param{ItemID} ";
-
-    # do not show inline attachments
-    if ( defined $Param{ShowInline} && !$Param{ShowInline} ) {
-        $SQL .= 'AND inline = 0 ';
-    }
-    $SQL .= 'ORDER BY created',
+    my $SQL = "SELECT filename, content_type, content_size, inline FROM "
+            . "faq_attachment WHERE faq_id = $Param{ItemID} "
+            . "ORDER BY created";
 
     $Self->{DBObject}->Prepare(
         SQL => $SQL,
@@ -627,7 +623,19 @@ sub AttachmentIndex {
     );
     my @Index = ();
     my $ID    = 0;
+    ATTACHMENT:
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+
+        my $Filename    = $Row[0];
+        my $ContentType = $Row[1];
+        my $Filesize    = $Row[2];
+        my $Inline      = $Row[3];
+
+        # do not show inline attachments
+        if ( defined $Param{ShowInline} && !$Param{ShowInline} && $Inline ) {
+            $ID++;
+            next ATTACHMENT;
+        }
 
         # human readable file size
         my $FileSizeRaw = $Row[2];
@@ -3078,6 +3086,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.42 $ $Date: 2008-09-28 21:23:41 $
+$Revision: 1.43 $ $Date: 2008-09-29 00:01:12 $
 
 =cut
