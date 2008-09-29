@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.45 2008-09-29 09:26:20 ub Exp $
+# $Id: FAQ.pm,v 1.46 2008-09-29 14:02:22 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.45 $) [1];
+$VERSION = qw($Revision: 1.46 $) [1];
 
 =head1 NAME
 
@@ -82,12 +82,12 @@ sub new {
     for (qw(DBObject ConfigObject LogObject MainObject TimeObject UserID)) {
         $Self->{$_} = $Param{$_} || die "Got no $_!";
     }
-    $Self->{GroupObject}         = Kernel::System::Group->new(%Param);
-    $Self->{CustomerGroupObject} = Kernel::System::CustomerGroup->new(%Param);
-    $Self->{UserObject}          = Kernel::System::User->new(%Param);
-    $Self->{EncodeObject}        = Kernel::System::Encode->new(%Param);
-    $Self->{TicketObject}        = Kernel::System::Ticket->new(%Param);
-    $Self->{UploadCacheObject}   = Kernel::System::Web::UploadCache->new(%Param);
+    $Self->{GroupObject}         = Kernel::System::Group->new( %{$Self} );
+    $Self->{CustomerGroupObject} = Kernel::System::CustomerGroup->new( %{$Self} );
+    $Self->{UserObject}          = Kernel::System::User->new( %{$Self} );
+    $Self->{EncodeObject}        = Kernel::System::Encode->new( %{$Self} );
+    $Self->{TicketObject}        = Kernel::System::Ticket->new( %{$Self} );
+    $Self->{UploadCacheObject}   = Kernel::System::Web::UploadCache->new( %{$Self} );
 
     return $Self;
 }
@@ -727,7 +727,6 @@ sub VoteAdd {
         " current_timestamp " .
         " )";
 
-    #$Self->{LogObject}->Log(Priority => 'error', Message => $SQL);
     if ( $Self->{DBObject}->Do( SQL => $SQL ) ) {
         return 1;
     }
@@ -3066,6 +3065,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.45 $ $Date: 2008-09-29 09:26:20 $
+$Revision: 1.46 $ $Date: 2008-09-29 14:02:22 $
 
 =cut
