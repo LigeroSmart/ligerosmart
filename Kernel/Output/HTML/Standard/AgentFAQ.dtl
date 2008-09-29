@@ -2,7 +2,7 @@
 # AgentFAQ.dtl - provides HTML view for faq articles
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.dtl,v 1.32 2008-09-29 14:26:56 ub Exp $
+# $Id: AgentFAQ.dtl,v 1.33 2008-09-29 14:45:01 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -651,18 +651,18 @@ function submit_compose()
                 <td colspan="2"><hr></td>
               </tr>
 <!-- dtl:block:FAQItemField -->
-                </table>
-              </td>
-            </tr>
-            <tr>
-              <td class="contentfooter"><input accesskey="g" class="button" type="submit" value="$Text{"Submit"}" onclick="return submit_compose();"></td>
-            </tr>
-          </table>
-        </form>
-        <br>
-      </td>
-    </tr>
-  </table>
+            </table>
+        </td>
+      </tr>
+      <tr>
+        <td class="contentfooter"><input accesskey="g" class="button" type="submit" value="$Text{"Submit"}" onclick="return submit_compose();"></td>
+      </tr>
+    </table>
+    </form>
+    <br>
+  </td>
+</tr>
+</table>
 # check, min one category should be accessible
 <script language="JavaScript" type="text/javascript">
 <!--
