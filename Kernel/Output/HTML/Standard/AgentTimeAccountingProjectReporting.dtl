@@ -2,7 +2,7 @@
 # AgentTimeAccountingProjectReporting.dtl - provides HTML form for time accounting reporting
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingProjectReporting.dtl,v 1.4 2008-09-29 13:23:22 shb Exp $
+# $Id: AgentTimeAccountingProjectReporting.dtl,v 1.5 2008-09-29 13:40:52 shb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -12,7 +12,7 @@
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
   <tr>
     <td class="mainhead">
-      $Env{"Box0"}$Text{"Time Project Preporting"}: $QData{"Project"} $Env{"Box1"}
+      $Env{"Box0"}$Text{"Project time reporting"}: $QData{"Project"} $Env{"Box1"}
     </td>
   </tr>
   <tr>
