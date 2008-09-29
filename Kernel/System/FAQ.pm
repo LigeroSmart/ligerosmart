@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.44 2008-09-29 00:02:48 ub Exp $
+# $Id: FAQ.pm,v 1.45 2008-09-29 09:26:20 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.44 $) [1];
+$VERSION = qw($Revision: 1.45 $) [1];
 
 =head1 NAME
 
@@ -478,7 +478,7 @@ sub AttachmentAdd {
         }
     }
 
-    # encode attachemnt if it's a postgresql backend!!!
+    # encode attachment if it's a postgresql backend!!!
     if ( !$Self->{DBObject}->GetDatabaseFunction('DirectBlob') ) {
         $Self->{EncodeObject}->EncodeOutput( \$Param{Content} );
         $Param{Content} = encode_base64( $Param{Content} );
@@ -519,30 +519,29 @@ sub AttachmentGet {
         }
     }
 
-    # db quote
-    for (qw(ItemID FileID)) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_}, 'Integer' );
-    }
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT filename, content_type, content_size, content FROM "
-            . "faq_attachment WHERE faq_id = $Param{ItemID} ORDER BY created",
+        SQL => 'SELECT filename, content_type, content_size, content '
+            . 'FROM faq_attachment '
+            . 'WHERE id = ? '
+            . 'AND faq_id = ? '
+            . 'ORDER BY created',
+        Bind => [ \$Param{FileID},  \$Param{ItemID} ],
         Encode => [ 1, 1, 1, 0 ],
-        Limit => $Param{FileID} + 1,
+        Limit => 1,
     );
-    my %File = ();
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    my @Row = $Self->{DBObject}->FetchrowArray();
 
-        # decode attachment if it's a postgresql backend and not BLOB
-        if ( !$Self->{DBObject}->GetDatabaseFunction('DirectBlob') ) {
-            $Row[3] = decode_base64( $Row[3] );
-        }
-        %File = (
-            Filename    => $Row[0],
-            ContentType => $Row[1],
-            Filesize    => $Row[2],
-            Content     => $Row[3],
-        );
+    # decode attachment if it's a postgresql backend and not BLOB
+    if ( !$Self->{DBObject}->GetDatabaseFunction('DirectBlob') ) {
+        $Row[3] = decode_base64( $Row[3] );
     }
+    my %File = (
+        Filename    => $Row[0],
+        ContentType => $Row[1],
+        Filesize    => $Row[2],
+        Content     => $Row[3],
+    );
+
     return %File;
 }
 
@@ -567,21 +566,12 @@ sub AttachmentDelete {
             return;
         }
     }
-    my @Index = $Self->AttachmentIndex(
-        ItemID => $Param{ItemID},
+
+    return $Self->{DBObject}->Do(
+        SQL => 'DELETE FROM faq_attachment '
+            . 'WHERE id = ? AND faq_id = ? ',
+        Bind => [ \$Param{FileID}, \$Param{ItemID} ],
     );
-    if ( $Index[ $Param{FileID} ] ) {
-        return $Self->{DBObject}->Do(
-            SQL =>
-                'DELETE FROM faq_attachment WHERE faq_id = ? AND filename = ? AND content_size = ?',
-            Bind => [
-                \$Param{ItemID},
-                \$Index[ $Param{FileID} ]->{Filename},
-                \$Index[ $Param{FileID} ]->{FilesizeRaw}
-            ],
-        );
-    }
-    return;
 }
 
 =item AttachmentIndex()
@@ -606,58 +596,49 @@ sub AttachmentIndex {
         }
     }
 
-    # db quote
-    for (qw(ItemID)) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_}, 'Integer' );
-    }
-
-    # define SQL
-    my $SQL = "SELECT filename, content_type, content_size, inline FROM "
-            . "faq_attachment WHERE faq_id = $Param{ItemID} "
-            . "ORDER BY created";
-
     $Self->{DBObject}->Prepare(
-        SQL => $SQL,
+        SQL => 'SELECT id, filename, content_type, content_size, inline FROM '
+            . 'faq_attachment WHERE faq_id = ? '
+            . 'ORDER BY created',
+        Bind => [ \$Param{ItemID} ],
         Limit => 100,
     );
     my @Index = ();
-    my $ID    = 0;
     ATTACHMENT:
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
 
-        my $Filename    = $Row[0];
-        my $ContentType = $Row[1];
-        my $Filesize    = $Row[2];
-        my $Inline      = $Row[3];
+        my $ID          = $Row[0];
+        my $Filename    = $Row[1];
+        my $ContentType = $Row[2];
+        my $Filesize    = $Row[3];
+        my $Inline      = $Row[4];
 
         # do not show inline attachments
         if ( defined $Param{ShowInline} && !$Param{ShowInline} && $Inline ) {
-            $ID++;
             next ATTACHMENT;
         }
 
         # human readable file size
-        my $FileSizeRaw = $Row[2];
-        if ( $Row[2] ) {
-            if ( $Row[2] > ( 1024 * 1024 ) ) {
-                $Row[2] = sprintf "%.1f MBytes", ( $Row[2] / ( 1024 * 1024 ) );
+        my $FileSizeRaw = $Filesize;
+        if ( $Filesize ) {
+            if ( $Filesize > ( 1024 * 1024 ) ) {
+                $Filesize = sprintf "%.1f MBytes", ( $Filesize / ( 1024 * 1024 ) );
             }
-            elsif ( $Row[2] > 1024 ) {
-                $Row[2] = sprintf "%.1f KBytes", ( ( $Row[2] / 1024 ) );
+            elsif ( $Filesize > 1024 ) {
+                $Filesize = sprintf "%.1f KBytes", ( ( $Filesize / 1024 ) );
             }
             else {
-                $Row[2] = $Row[2] . ' Bytes';
+                $Filesize = $Filesize . ' Bytes';
             }
         }
 
         push @Index, {
-            Filename    => $Row[0],
-            ContentType => $Row[1],
-            Filesize    => $Row[2],
-            FilesizeRaw => $FileSizeRaw,
             FileID      => $ID,
+            Filename    => $Filename,
+            ContentType => $ContentType,
+            Filesize    => $Filesize,
+            FilesizeRaw => $FileSizeRaw,
         };
-        $ID++;
     }
     return @Index;
 }
@@ -3085,6 +3066,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.44 $ $Date: 2008-09-29 00:02:48 $
+$Revision: 1.45 $ $Date: 2008-09-29 09:26:20 $
 
 =cut

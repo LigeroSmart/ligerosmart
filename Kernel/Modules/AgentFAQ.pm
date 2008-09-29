@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.pm,v 1.27 2008-09-28 20:09:12 ub Exp $
+# $Id: AgentFAQ.pm,v 1.28 2008-09-29 09:26:20 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::Valid;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION @ISA);
-$VERSION = qw($Revision: 1.27 $) [1];
+$VERSION = qw($Revision: 1.28 $) [1];
 
 @ISA = qw(Kernel::Modules::FAQ);
 
@@ -881,11 +881,8 @@ sub Run {
         # check parameters
         my %ParamData      = ();
         my @RequiredParams = qw(Title CategoryID);
-        my @Params = qw(ItemID StateID LanguageID Field1 Field2 Field3 Field4 Field5 Field6 Keywords Approved FormID
-            AttachmentUpload AttachmentDelete0 AttachmentDelete1 AttachmentDelete2 AttachmentDelete3 AttachmentDelete4
-            AttachmentDelete5 AttachmentDelete6 AttachmentDelete7 AttachmentDelete8
-            AttachmentDelete9 AttachmentDelete10 AttachmentDelete11 AttachmentDelete12
-            AttachmentDelete13 AttachmentDelete14 AttachmentDelete15 AttachmentDelete16);
+        my @Params = qw(ItemID StateID LanguageID Field1 Field2 Field3 Field4 Field5 Field6 Keywords
+            Approved FormID AttachmentUpload);
 
         for (@RequiredParams) {
             $ParamData{$_} = $Self->{ParamObject}->GetParam( Param => $_ );
@@ -900,12 +897,19 @@ sub Run {
         my $Redirect = 1;
 
         # attachment delete
-        for ( 0 .. 16 ) {
-            if ( $ParamData{"AttachmentDelete$_"} ) {
+        my @AttachmentIndex = $Self->{FAQObject}->AttachmentIndex(
+            ItemID => $ParamData{ItemID},
+        );
+        for my $Attachment ( @AttachmentIndex ) {
+            my $FileID = $Attachment->{FileID};
+            $ParamData{"AttachmentDelete$FileID"} = $Self->{ParamObject}->GetParam(
+                Param => "AttachmentDelete$FileID",
+            );
+            if ( $ParamData{"AttachmentDelete$FileID"} ) {
                 $Redirect = 0;
                 $Self->{FAQObject}->AttachmentDelete(
                     ItemID => $ParamData{ItemID},
-                    FileID => $_,
+                    FileID => $FileID,
                 );
             }
         }
