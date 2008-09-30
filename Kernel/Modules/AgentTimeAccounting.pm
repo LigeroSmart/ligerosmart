@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.23 2008-09-23 08:52:38 shb Exp $
+# $Id: AgentTimeAccounting.pm,v 1.24 2008-09-30 11:41:18 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.23 $) [1];
+$VERSION = qw($Revision: 1.24 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -234,7 +234,7 @@ sub Run {
                 }
             }
             my $CheckboxCheck = 0;
-            for (qw(LeaveDay Diseased Overtime)) {
+            for (qw(LeaveDay Sick Overtime)) {
                 $Param{$_} = $Self->{ParamObject}->GetParam( Param => $_ );
                 if ( $Param{$_} ) {
                     $WorkingUnitID++;
@@ -319,7 +319,7 @@ sub Run {
         for ( $WorkingUnitID = 1; $WorkingUnitID < $WorkingUnitIDMax; $WorkingUnitID++ ) {
             if ( $Data{$WorkingUnitID}{ProjectID} && $Data{$WorkingUnitID}{ProjectID} == -1 ) {
                 if ( $Data{$WorkingUnitID}{ActionID} == -1 ) {
-                    $Param{Diseased} = 'checked';
+                    $Param{Sick} = 'checked';
                 }
                 elsif ( $Data{$WorkingUnitID}{ActionID} == -2 ) {
                     $Param{LeaveDay} = 'checked';
@@ -397,7 +397,7 @@ sub Run {
                 # Validity checks start
                 if (   $Data{$WorkingUnitID}{ProjectID}
                     && $Data{$WorkingUnitID}{ActionID}
-                    && $Param{Diseased} )
+                    && $Param{Sick} )
                 {
                     $Param{ReadOnlyDescription}
                         = 'Are you sure, that you worked while you were on sick leave?';
@@ -418,11 +418,11 @@ sub Run {
                 }
                 if ( $Data{$WorkingUnitID}{ProjectID} && !$Data{$WorkingUnitID}{ActionID} ) {
                     $Param{UnitRequiredDescription}
-                        = 'Can\'t save settings, because of missing Action!';
+                        = 'Can\'t save settings, because of missing task!';
                 }
                 if ( !$Data{$WorkingUnitID}{ProjectID} && $Data{$WorkingUnitID}{ActionID} ) {
                     $Param{UnitRequiredDescription}
-                        = 'Can\'t save settings, because of missing Project!';
+                        = 'Can\'t save settings, because of missing project!';
                 }
                 if (   $Data{$WorkingUnitID}{StartTime}
                     && $Data{$WorkingUnitID}{StartTime} ne '00:00'
@@ -693,7 +693,7 @@ sub Run {
         for my $ID ( keys %Data ) {
             if ( $Data{$ID}{ProjectID} && $Data{$ID}{ProjectID} == -1 ) {
                 if ( $Data{$ID}{ActionID} == -1 ) {
-                    $Param{Diseased} = 'checked';
+                    $Param{Sick} = 'checked';
                 }
                 elsif ( $Data{$ID}{ActionID} == -2 ) {
                     $Param{LeaveDay} = 'checked';
@@ -728,11 +728,11 @@ sub Run {
                 Data => { Total => sprintf( "%.2f", $Param{Total} ) }
             );
         }
-        if ( $Param{Diseased} || $Param{LeaveDay} || $Param{Overtime} ) {
+        if ( $Param{Sick} || $Param{LeaveDay} || $Param{Overtime} ) {
             $Self->{LayoutObject}->Block(
                 Name => 'OtherTimes',
                 Data => {
-                    Diseased => $Param{Diseased},
+                    Sick => $Param{Sick},
                     LeaveDay => $Param{LeaveDay},
                     Overtime => $Param{Overtime},
                 }
@@ -917,7 +917,7 @@ sub Run {
         for (
             qw(TargetState TargetStateTotal WorkingHoursTotal WorkingHours
             Overtime OvertimeTotal OvertimeUntil LeaveDay LeaveDayTotal
-            LeaveDayRemaining Diseased DiseasedTotal DiseasedRemaining)
+            LeaveDayRemaining Sick SickTotal SickRemaining)
             )
         {
             if ( !$UserReport{ $Param{UserID} }{$_} ) {
@@ -1521,7 +1521,7 @@ sub Run {
         my %UserBasics = $Self->{TimeAccountingObject}->UserGet();
         for my $UserID ( sort { $ShownUsers{$a} cmp $ShownUsers{$b} } keys %ShownUsers ) {
             if ( $UserReport{$UserID} ) {
-                for (qw(LeaveDay Overtime WorkingHours Diseased LeaveDayRemaining OvertimeTotal)) {
+                for (qw(LeaveDay Overtime WorkingHours Sick LeaveDayRemaining OvertimeTotal)) {
                     $Param{$_} = sprintf( "%.2f", $UserReport{$UserID}{$_} );
                     $Param{ 'Total' . $_ } += $Param{$_};
                 }
@@ -1542,7 +1542,7 @@ sub Run {
         }
         for (
             qw(TotalLeaveDay TotalOvertime TotalWorkingHours
-            TotalDiseased TotalLeaveDayRemaining TotalOvertimeTotal)
+            TotalSick TotalLeaveDayRemaining TotalOvertimeTotal)
             )
         {
             $Param{$_} = sprintf( "%.2f", $Param{$_} );

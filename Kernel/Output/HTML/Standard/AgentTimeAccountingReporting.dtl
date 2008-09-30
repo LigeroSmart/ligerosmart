@@ -2,7 +2,7 @@
 # AgentTimeAccountingReporting.dtl - provides HTML form for time accounting reporting
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingReporting.dtl,v 1.15 2008-09-29 13:31:11 shb Exp $
+# $Id: AgentTimeAccountingReporting.dtl,v 1.16 2008-09-30 11:41:19 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -84,7 +84,7 @@
                 <td align="right">$QData{"WorkingHours"}</td>
                 <td align="right">&nbsp;$QData{"Overtime"}</td>
                 <td align="right">$QData{"LeaveDay"}</td>
-                <td align="right">$QData{"Diseased"}</td>
+                <td align="right">$QData{"Sick"}</td>
                 <td align="right">&nbsp;$QData{"OvertimeTotal"}</td>
                 <td align="right">$QData{"LeaveDayRemaining"}</td>
               </tr>
@@ -94,7 +94,7 @@
                 <td align="right">$QData{"TotalWorkingHours"}</td>
                 <td align="right">$QData{"TotalOvertime"}</td>
                 <td align="right">$QData{"TotalLeaveDay"}</td>
-                <td align="right">$QData{"TotalDiseased"}</td>
+                <td align="right">$QData{"TotalSick"}</td>
                 <td align="right">$QData{"TotalOvertimeTotal"}</td>
                 <td align="right">$QData{"TotalLeaveDayRemaining"}</td>
               </tr>

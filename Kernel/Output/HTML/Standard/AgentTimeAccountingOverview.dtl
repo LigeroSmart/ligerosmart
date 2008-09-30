@@ -2,7 +2,7 @@
 # AgentTimeAccountingOverview.dtl - provides HTML form for time accounting overview
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingOverview.dtl,v 1.18 2008-09-29 14:28:25 shb Exp $
+# $Id: AgentTimeAccountingOverview.dtl,v 1.19 2008-09-30 11:41:19 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -101,11 +101,11 @@
         </tr>
         <tr class="contentbody">
           <td class="contentkey">&nbsp;$Text{"Sick leave taken (this month)"}:</td>
-          <td class="contentvalue" align="right">$QData{"Diseased"}</td>
+          <td class="contentvalue" align="right">$QData{"Sick"}</td>
         </tr>
         <tr class="contentbody">
           <td class="contentkey">&nbsp;$Text{"Sick leave taken (total)"}:</td>
-          <td class="contentvalue" align="right">$QData{"DiseasedTotal"}</td>
+          <td class="contentvalue" align="right">$QData{"SickTotal"}</td>
         </tr>
         <tr class="contentfooter">
           <td colspan="2">&nbsp;</td>

@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.16 2008-08-27 12:14:27 tr Exp $
+# $Id: TimeAccounting.pm,v 1.17 2008-09-30 11:41:19 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week);
 
@@ -191,11 +191,11 @@ sub UserReporting {
             $DayStart   = $3;
         }
         $Data{$UserID}{LeaveDay}         = 0;
-        $Data{$UserID}{Diseased}         = 0;
+        $Data{$UserID}{Sick}         = 0;
         $Data{$UserID}{Overtime}         = 0;
         $Data{$UserID}{TargetState}      = 0;
         $Data{$UserID}{LeaveDayTotal}    = 0;
-        $Data{$UserID}{DiseasedTotal}    = 0;
+        $Data{$UserID}{SickTotal}    = 0;
         $Data{$UserID}{OvertimeTotal}    = 0;
         $Data{$UserID}{TargetStateTotal} = 0;
 
@@ -235,7 +235,7 @@ sub UserReporting {
                     );
                     my $WorkingHours = 0;
                     my $LeaveDay     = 0;
-                    my $Diseased     = 0;
+                    my $Sick     = 0;
                     my $Overtime     = 0;
                     my $TargetState  = 0;
                     for ( keys %WorkingUnit ) {
@@ -246,8 +246,8 @@ sub UserReporting {
                                 $LeaveDay = 1;
                             }
                             elsif ( $WorkingUnit{$_}{ActionID} == -1 ) {
-                                $Data{$UserID}{DiseasedTotal}++;
-                                $Diseased = 1;
+                                $Data{$UserID}{SickTotal}++;
+                                $Sick = 1;
                             }
                             elsif ( $WorkingUnit{$_}{ActionID} == -3 ) {
                                 $Data{$UserID}{OvertimeTotal}++;
@@ -266,7 +266,7 @@ sub UserReporting {
                     if (   $Weekday != 6
                         && $Weekday != 7
                         && !$VacationCheck
-                        && !$Diseased
+                        && !$Sick
                         && !$LeaveDay )
                     {
                         $Data{$UserID}{TargetStateTotal}
@@ -278,7 +278,7 @@ sub UserReporting {
                         $Data{$UserID}{TargetState}  += $TargetState;
                         $Data{$UserID}{WorkingHours} += $WorkingHours;
                         $Data{$UserID}{LeaveDay}     += $LeaveDay;
-                        $Data{$UserID}{Diseased}     += $Diseased;
+                        $Data{$UserID}{Sick}     += $Sick;
                     }
                 }
             }
@@ -1220,6 +1220,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.16 $ $Date: 2008-08-27 12:14:27 $
+$Revision: 1.17 $ $Date: 2008-09-30 11:41:19 $
 
 =cut

@@ -2,7 +2,7 @@
 # AgentTimeAccountingEdit.dtl - provides HTML form for time accounting edit
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingEdit.dtl,v 1.17 2008-09-29 13:23:22 shb Exp $
+# $Id: AgentTimeAccountingEdit.dtl,v 1.18 2008-09-30 11:41:19 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -52,11 +52,11 @@
                           $QData{"Year"}-$QData{"Month"}-$QData{"Day"}&nbsp;
                         </td>
                         <td>
-                          <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Edit&Year=$LQData{"YearBack"}&Month=$LQData{"MonthBack"}&Day=$LQData{"DayBack"}"><img border="0" src="$Env{"Images"}left-big.png" alt="$Text{"back"}"></a>
+                          <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Edit&Year=$LQData{"YearBack"}&Month=$LQData{"MonthBack"}&Day=$LQData{"DayBack"}"><img border="0" src="$Env{"Images"}left-big.png" alt="$Text{"One day back"}"></a>
                           &nbsp;
                         </td>
                         <td>
-                          <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Edit&Year=$LQData{"YearNext"}&Month=$LQData{"MonthNext"}&Day=$LQData{"DayNext"}"><img border="0" src="$Env{"Images"}right-big.png" alt="$Text{"next"}"></a>
+                          <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Edit&Year=$LQData{"YearNext"}&Month=$LQData{"MonthNext"}&Day=$LQData{"DayNext"}"><img border="0" src="$Env{"Images"}right-big.png" alt="$Text{"Next day"}"></a>
                           &nbsp;
                         </td>
                       </tr>
@@ -146,7 +146,7 @@
                         <td colspan="4">
 <!-- dtl:block:OtherTimes -->
                           <input type="checkbox" value="-2" name="LeaveDay" $Data{"LeaveDay"}>$Text{"On vacation"}&nbsp;
-                          <input type="checkbox" value="-1" name="Diseased" $Data{"Diseased"}>$Text{"On sick leave"}&nbsp;
+                          <input type="checkbox" value="-1" name="Sick" $Data{"Sick"}>$Text{"On sick leave"}&nbsp;
                           <input type="checkbox" value="-3" name="Overtime" $Data{"Overtime"}>$Text{"On overtime leave"}
 <!-- dtl:block:OtherTimes -->
                           &nbsp;

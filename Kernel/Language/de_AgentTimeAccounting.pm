@@ -2,7 +2,7 @@
 # Kernel/Language/de_AgentTimeAccounting.pm - the de language for AgentTimeAccounting
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: de_AgentTimeAccounting.pm,v 1.38 2008-09-29 14:28:25 shb Exp $
+# $Id: de_AgentTimeAccounting.pm,v 1.39 2008-09-30 11:41:18 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -24,7 +24,8 @@ sub Data {
         'Setting'        => 'Konfiguration',
         'Project settings' => 'Projektkonfigurationen',
 
-        #new translations...
+        'Next day'                                 => 'Nächster Tag',
+        'One day back'                             => 'Einen Tag zurück',
         'Date'                                     => 'Datum',
         'Comments'                                 => 'Kommentare',
         'until'                                    => 'bis',
@@ -35,7 +36,7 @@ sub Data {
         'Overtime leave taken (total)'             => 'Überstunden (dieser Monat)',
         'Overtime leave taken (this month)'        => 'Überstunden (Summe)',
         'Remaining overtime leave'                 => 'Überstunden (Verbleibend)',
-        'Vacation'                                 => 'Tage abwesend',
+        'Vacation'                                 => 'Urlaub',
         'Vacation taken (this month)'              => 'Urlaubstage (dieser Monat)',
         'Vacation taken (total)'                   => 'Urlaubstage (Summe)',
         'Remaining vacation'                       => 'Urlaubstage (verbleibend)',
@@ -65,7 +66,7 @@ sub Data {
         'Lifetime'                                    => 'Summe',
         'Lifetime total'                                    => 'Summe',
         'Reporting'                                => 'Berichtswesen',
-        'Task settings'                            => 'Aktionseinstellungen',
+        'Task settings'                            => 'Tätigkeitseinstellungen',
         'User settings'                            => 'Nutzereinstellungen',
         'Show Overtime'                            => 'Überstunden anzeigen',
         'Allow project creation'                   => 'Projekt erstellen',
@@ -90,9 +91,9 @@ sub Data {
         'TimeAccounting of'                        => 'Zeiterfassung vom',
         'Successful insert!'                       => 'Erfolgreich eingefügt!',
         'Do you really want to delete this Object' => 'Wollen Sie diesen Eintrag wirklich löschen',
-        'Can\'t insert Working Units!'             => 'Kann Arbeitsstunden nicht einfügen!',
-        'Can\'t save settings, because of missing Action!' => 'Nicht speicherbar - Aktion fehlt!',
-        'Can\'t save settings, because of missing Project!' =>
+        'Can\'t insert Working Units!'             => 'Kann die Arbeitsstunden nicht einfügen!',
+        'Can\'t save settings, because of missing action!' => 'Nicht speicherbar - Tätigkeit fehlt!',
+        'Can\'t save settings, because of missing project!' =>
             'Nicht speicherbar - Projektangabe fehlt!',
         'Can\'t save settings, because the Period is bigger than the interval between Starttime and Endtime!'
             => 'Nicht speicherbar - Dauer ist größer als der Zeitraum zwischen Beginn und Ende!',
@@ -112,14 +113,13 @@ sub Data {
         'Can\'t delete Working Units!'      => 'Kann Arbeitsstunden nicht löschen!',
         'Please insert your working hours!' => 'Bitte tragen Sie Ihre Arbeitszeiten ein!',
         'You have to insert a start and an end time or a period' =>
-            'Sie müssen Beginn- und Endezeit angeben.',
+            'Sie müssen Beginn- und Endezeit oder die Dauer angeben.',
         'You can only select one checkbox element!' => 'Sie können nur eine Checkbox markieren!',
         'Edit time accounting project settings' =>
             'Zeiterfassung: Bearbeitung der Projektkonfiguration',
         'Project settings' => 'Projektkonfiguration',
-        ''                => '',
         'If you select "Miscellaneous (misc)" the task, please explain this in the remarks field' =>
-            'Wenn Sie Aktion Sonstiges auswählen, geben Sie eine Beschreibung um Feld Anmerkung an.',
+            'Wenn Sie als Tätigkeit Sonstiges auswählen, geben Sie bitte eine Beschreibung um Feld Anmerkung an.',
 
         # FIXME actually the following should be included in file de.pm, however they're not so I put'em here...
         'Mon'      => 'Mo',

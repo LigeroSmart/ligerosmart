@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: TimeAccounting.xml,v 1.7 2007-05-11 14:37:05 tr Exp $</CVS>
+    <CVS>$Id: TimeAccounting.xml,v 1.8 2008-09-30 11:41:18 tr Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AgentTimeAccounting" Required="0" Valid="1">
         <Description Lang="en">FrontendModuleRegistration for TimeAccountingModule  to define the registration settings in the program and to set rights and positions of icons in the navigation bar.</Description>
         <Description Lang="de">FrontendModulRegistration für das ZeiterfassungsModul.  Hier
@@ -40,7 +40,7 @@ können die Rechte und die Positionen der Icons in der Navigationsleiste gesetzt 
                 </NavBar>
                 <NavBar>
                 <GroupRo>time_accounting</GroupRo>
-                    <Description>TimeRecord-Edit</Description>
+                    <Description>Edit time record</Description>
                     <Name>Edit</Name>
                     <Image>new.png</Image>
                     <Link>Action=AgentTimeAccounting&amp;Subaction=Edit</Link>
@@ -52,7 +52,7 @@ können die Rechte und die Positionen der Icons in der Navigationsleiste gesetzt 
                 </NavBar>
                 <NavBar>
                 <Group>time_accounting</Group>
-                    <Description>Reporting</Description>
+                    <Description>Project time reporting</Description>
                     <Name>Reporting</Name>
                     <Image>reporting.png</Image>
                     <Link>Action=AgentTimeAccounting&amp;Subaction=Reporting</Link>
@@ -64,7 +64,7 @@ können die Rechte und die Positionen der Icons in der Navigationsleiste gesetzt 
                 </NavBar>
                 <NavBar>
                     <Group>time_accounting</Group>
-                    <Description>Setting</Description>
+                    <Description>Edit time accounting settings</Description>
                     <Name>Setting</Name>
                     <Image>module_setting.png</Image>
                     <Link>Action=AgentTimeAccounting&amp;Subaction=Setting</Link>

@@ -2,7 +2,7 @@
 # AgentTimeAccountingView.dtl - provides HTML for view inserts of one day
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingView.dtl,v 1.9 2008-09-29 14:20:01 shb Exp $
+# $Id: AgentTimeAccountingView.dtl,v 1.10 2008-09-30 11:41:19 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -50,11 +50,11 @@
                           $QData{"Date"}&nbsp;
                         </td>
                         <td>
-                          <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=View&Year=$QData{"YearBack"}&Month=$QData{"MonthBack"}&Day=$QData{"DayBack"}&UserID=$QData{"UserID"}"><img border="0" src="$Env{"Images"}left-big.png" alt="$Text{"back"}"></a>
+                          <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=View&Year=$QData{"YearBack"}&Month=$QData{"MonthBack"}&Day=$QData{"DayBack"}&UserID=$QData{"UserID"}"><img border="0" src="$Env{"Images"}left-big.png" alt="$Text{"One day back"}"></a>
                           &nbsp;
                         </td>
                         <td>
-                          <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=View&Year=$QData{"YearNext"}&Month=$QData{"MonthNext"}&Day=$QData{"DayNext"}&UserID=$QData{"UserID"}"><img border="0" src="$Env{"Images"}right-big.png" alt="$Text{"next"}"></a>
+                          <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=View&Year=$QData{"YearNext"}&Month=$QData{"MonthNext"}&Day=$QData{"DayNext"}&UserID=$QData{"UserID"}"><img border="0" src="$Env{"Images"}right-big.png" alt="$Text{"Next day"}"></a>
                           &nbsp;
                         </td>
                       </tr>
@@ -111,7 +111,7 @@
                     <tr class="contentkey" align="center">
                       <td colspan="6">
                         <input type="checkbox" value="-2" name="LeaveDay" $Data{"LeaveDay"} disabled>$Text{"On vacation"}&nbsp;
-                        <input type="checkbox" value="-1" name="Diseased" $Data{"Diseased"} disabled>$Text{"On sick leave"}&nbsp;
+                        <input type="checkbox" value="-1" name="Sick" $Data{"Sick"} disabled>$Text{"On sick leave"}&nbsp;
                         <input type="checkbox" value="-3" name="Overtime" $Data{"Overtime"} disabled>$Text{"On overtime leave"}
                         &nbsp;
                       </td>
