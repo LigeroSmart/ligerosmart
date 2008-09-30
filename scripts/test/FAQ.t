@@ -2,7 +2,7 @@
 # FAQ.t - FAQ tests
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.t,v 1.6 2008-07-07 11:00:30 mh Exp $
+# $Id: FAQ.t,v 1.7 2008-09-30 12:35:33 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -189,9 +189,12 @@ for my $AttachmentTest (@AttachmentTests) {
         $Add || 0,
         "AttachmentAdd() - $AttachmentTest->{File}",
     );
+    my @AttachmentIndex = $Self->{FAQObject}->AttachmentIndex(
+        ItemID => $FAQID2,
+    );
     my %File = $Self->{FAQObject}->AttachmentGet(
         ItemID => $FAQID2,
-        FileID => 1,
+        FileID => $AttachmentIndex[0]->{FileID},
     );
     $Self->Is(
         $File{Filename} || '',
@@ -209,7 +212,7 @@ for my $AttachmentTest (@AttachmentTests) {
 
     my $Delete = $Self->{FAQObject}->AttachmentDelete(
         ItemID => $FAQID2,
-        FileID => 0,
+        FileID => $AttachmentIndex[0]->{FileID},
     );
     $Self->True(
         $Delete || 0,
