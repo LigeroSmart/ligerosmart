@@ -2,7 +2,7 @@
 # Kernel/Modules/FAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.35 2008-09-28 21:23:41 ub Exp $
+# $Id: FAQ.pm,v 1.36 2008-10-07 11:37:02 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::FAQ;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.35 $) [1];
+$VERSION = qw($Revision: 1.36 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -579,37 +579,23 @@ sub GetItemView {
         ItemID => $GetParam{ItemID},
         UserID => $Self->{UserID},
     );
+    if ( !%ItemData ) {
+        return $Self->{LayoutObject}->ErrorScreen();
+    }
 
     # html quoting
     KEY:
     for my $Key (qw (Field1 Field2 Field3 Field4 Field5 Field6)) {
-        if ( $Self->{ConfigObject}->Get('FAQ::Item::HTML') ) {
-            next KEY if !$ItemData{Key};
-            my @Array = split /pre>/, $ItemData{$Key};
-            my $Text = '';
-            for (@Array) {
-                if ( $_ =~ /(.*)\<\/$/ ) {
-                    $Text .= 'pre>' . $_ . 'pre>';
-                }
-                else {
-                    $_ =~ s/\n/\<br\>/g;
-                    $Text .= $_;
-                }
-            }
-            $ItemData{$Key} = $Text;
-        }
-        else {
-            $ItemData{$Key} = $Self->{LayoutObject}->Ascii2Html(
-                NewLine        => 0,
-                Text           => $ItemData{$Key},
-                VMax           => 5000,
-                HTMLResultMode => 1,
-                LinkFeature    => 1,
-            );
-        }
-    }
-    if ( !%ItemData ) {
-        return $Self->{LayoutObject}->ErrorScreen();
+        next KEY if !$ItemData{$Key};
+        next KEY if $Self->{ConfigObject}->Get('FAQ::Item::HTML');
+
+        $ItemData{$Key} = $Self->{LayoutObject}->Ascii2Html(
+            NewLine        => 0,
+            Text           => $ItemData{$Key},
+            VMax           => 5000,
+            HTMLResultMode => 1,
+            LinkFeature    => 1,
+        );
     }
 
     # permission check
@@ -834,8 +820,8 @@ sub GetItemPrint {
     # html quoting
     KEY:
     for my $Key (qw (Field1 Field2 Field3 Field4 Field5 Field6)) {
+        next KEY if !$ItemData{$Key};
         if ( $Self->{ConfigObject}->Get('FAQ::Item::HTML') ) {
-            next KEY if !$ItemData{Key};
             $ItemData{$Key} =~ s/\n/\<br\>/g;
         }
         else {
