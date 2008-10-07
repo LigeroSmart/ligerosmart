@@ -2,7 +2,7 @@
 # AgentFAQ.dtl - provides HTML view for faq articles
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.dtl,v 1.35 2008-10-07 12:26:15 ub Exp $
+# $Id: AgentFAQ.dtl,v 1.36 2008-10-07 13:52:04 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -508,7 +508,7 @@ function updateMessage()
           <tr>
             <td colspan="2">
               <input type="hidden" name="Title" value="$QData{"Title"}">
-              <textarea name="Body" rows="14" cols="$Config{"Ticket::Frontend::TextAreaEmail"}" wrap="$Env{"BrowserWrap"}">$Data{"ItemFieldValues"}</textarea>
+              <textarea name="Body" rows="14" cols="$Config{"Ticket::Frontend::TextAreaEmail"}" wrap="off">$Data{"ItemFieldValues"}</textarea>
             </td>
           </tr>
           <tr>
