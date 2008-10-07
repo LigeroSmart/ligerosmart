@@ -2,7 +2,7 @@
 # AgentFAQ.dtl - provides HTML view for faq articles
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.dtl,v 1.34 2008-10-07 11:37:36 ub Exp $
+# $Id: AgentFAQ.dtl,v 1.35 2008-10-07 12:26:15 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -42,8 +42,8 @@
 
     function GetConfig() {
         return {
-            height: '300px',
-            width : '550px',
+            height: '650px',
+            width : '850px',
             handleSubmit: true,
             dompath: false,
             animate: false,
