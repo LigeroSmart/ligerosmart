@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.48 2008-09-29 15:43:45 mh Exp $
+# $Id: FAQ.pm,v 1.49 2008-10-07 09:34:46 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.48 $) [1];
+$VERSION = qw($Revision: 1.49 $) [1];
 
 =head1 NAME
 
@@ -2062,18 +2062,12 @@ sub FAQSearch {
         $Param{Keyword} = "\%$Param{Keyword}\%";
         $Param{Keyword} =~ s/\*/%/g;
         $Param{Keyword} =~ s/%%/%/g;
-        $Param{Keyword} = $Self->{DBObject}->Quote( $Param{Keyword} );
+        $Param{Keyword} = $Self->{DBObject}->Quote($Param{Keyword}, 'Like');
 
-        # prepared for OTRS 2.3.x
-        #        $Param{Keyword} = $Self->{DBObject}->Quote($Param{Keyword}, 'Like');
-        #        if ( $Self->{DBObject}->GetDatabaseFunction('NoLowerInLargeText') ) {
-        if ( $Self->{DBObject}->GetDatabaseFunction('Type') eq 'mssql' ) {
+        if ( $Self->{DBObject}->GetDatabaseFunction('NoLowerInLargeText') ) {
             $Ext .= " i.f_keywords LIKE '" . $Param{Keyword} . "'";
         }
-
-        # prepared for OTRS 2.3.x
-        #        elsif ( $Self->{DBObject}->GetDatabaseFunction('LcaseLikeInLargeText') ) {
-        elsif ( $Self->{DBObject}->GetDatabaseFunction('Type') eq 'db2' ) {
+        elsif ( $Self->{DBObject}->GetDatabaseFunction('LcaseLikeInLargeText') ) {
             $Ext .= " LCASE(i.f_keywords) LIKE LCASE('" . $Param{Keyword} . "')";
         }
         else {
@@ -3067,6 +3061,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.48 $ $Date: 2008-09-29 15:43:45 $
+$Revision: 1.49 $ $Date: 2008-10-07 09:34:46 $
 
 =cut
