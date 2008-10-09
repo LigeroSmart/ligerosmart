@@ -2,7 +2,7 @@
 # FAQ.pm - code to excecute during package installation
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.1 2008-09-25 13:16:07 ub Exp $
+# $Id: FAQ.pm,v 1.2 2008-10-09 08:10:40 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -21,9 +21,10 @@ use Kernel::System::Group;
 use Kernel::System::Stats;
 use Kernel::System::User;
 use Kernel::System::Valid;
+use Kernel::System::FAQ;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -130,6 +131,10 @@ sub new {
         %{$Self},
         UserID => 1,
     );
+    $Self->{FAQObject}    = Kernel::System::FAQ->new(
+        %{$Self},
+        UserID => 1,
+    );
 
     # define file prefix
     $Self->{FilePrefix} = 'FAQ';
@@ -217,6 +222,26 @@ sub CodeUpgrade {
     return 1;
 }
 
+=item CodeUpgradeSpecial()
+
+run special code upgrade part
+
+    my $Result = $CodeObject->CodeUpgradeSpecial();
+
+=cut
+
+sub CodeUpgradeSpecial {
+    my ( $Self, %Param ) = @_;
+
+    # convert \n to <br> for existing articles
+    $Self->_ConvertNewlines();
+
+    # start normal code upgrade
+    $Self->CodeUpgrade();
+
+    return 1;
+}
+
 =item CodeUninstall()
 
 run the code uninstall part
@@ -242,6 +267,59 @@ sub CodeUninstall {
     $Self->{StatsObject}->StatsUninstall(
         FilePrefix => $Self->{FilePrefix},
     );
+
+    return 1;
+}
+
+=item _ConvertNewlines()
+
+coverts all \n into <br> for Fields 1-6 in all existing FAQ articles
+
+    my $Result = $CodeObject->_ConvertNewlines();
+
+=cut
+
+sub _ConvertNewlines {
+    my ( $Self, %Param ) = @_;
+
+    # only convert \n to <br> if HTML view is enabled
+    return if !$Self->{ConfigObject}->Get('FAQ::Item::HTML');
+
+    # get all FAQ IDs
+    my @FAQIDs;
+    $Self->{DBObject}->Prepare(
+        SQL => "SELECT id FROM faq_item",
+    );
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        push( @FAQIDs, $Row[0] );
+    }
+
+    ID:
+    for my $ItemID ( @FAQIDs ) {
+
+        # get FAQ data
+        my %FAQ = $Self->{FAQObject}->FAQGet(
+            ItemID => $ItemID,
+        );
+
+        # get FAQ article fields 1-6
+        my $FoundNewline;
+        KEY:
+        for my $Key (qw (Field1 Field2 Field3 Field4 Field5 Field6)) {
+            next KEY if !$FAQ{$Key};
+
+            # replace \n with <br>
+            $FAQ{$Key} =~ s/\n/<br>/g;
+
+            $FoundNewline = 1;
+        }
+        next ID if !$FoundNewline;
+
+        # update FAQ data
+        $Self->{FAQObject}->FAQUpdate(
+            %FAQ,
+        );
+    }
 
     return 1;
 }
@@ -403,6 +481,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2008-09-25 13:16:07 $
+$Revision: 1.2 $ $Date: 2008-10-09 08:10:40 $
 
 =cut
