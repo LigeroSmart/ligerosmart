@@ -2,7 +2,7 @@
 # Kernel/System/Ticket/Event/NagiosAcknowledge.pm - acknowlege nagios tickets
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: NagiosAcknowledge.pm,v 1.7 2008-09-10 22:02:13 martin Exp $
+# $Id: NagiosAcknowledge.pm,v 1.8 2008-10-09 21:58:30 jb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -16,7 +16,7 @@ use warnings;
 use LWP::UserAgent;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -32,6 +32,10 @@ sub new {
     {
         $Self->{$_} = $Param{$_} || die "Got no $_!";
     }
+
+    # get correct FreeFields
+    $Self->{Fhost} = $Self->{ConfigObject}->Get( 'Nagios::Acknowledge::FreeField::Host' );
+    $Self->{Fservice} = $Self->{ConfigObject}->Get( 'Nagios::Acknowledge::FreeField::Service' );
 
     return $Self;
 }
@@ -53,7 +57,7 @@ sub Run {
 
     # check if it's a Nagios related ticket
     my %Ticket = $Self->{TicketObject}->TicketGet( TicketID => $Param{TicketID} );
-    if ( !$Ticket{TicketFreeText1} ) {
+    if ( !$Ticket{$Self->{Fhost}} ) {
         $Self->{LogObject}->Log( Priority => 'debug', Message => "No Nagios Ticket!" );
         return 1;
     }
@@ -124,7 +128,7 @@ sub _Pipe {
     # send acknowledge to nagios
     my $CMD = $Self->{ConfigObject}->Get( 'Nagios::Acknowledge::NamedPipe::CMD' );
     my $Data;
-    if ( $Ticket{TicketFreeText2} !~ /^host$/i) {
+    if ( $Ticket{$Self->{Fservice}} !~ /^host$/i) {
         $Data = $Self->{ConfigObject}->Get( 'Nagios::Acknowledge::NamedPipe::Service' );
     }
     else {
@@ -148,10 +152,10 @@ sub _Pipe {
     $Data =~ s/<LOGIN>/$User{UserLogin}/g;
 
     # replace host
-    $Data =~ s/<HOST_NAME>/$Ticket{TicketFreeText1}/g;
+    $Data =~ s/<HOST_NAME>/$Ticket{$Self->{Fhost}}/g;
 
     # replace time stamp
-    $Data =~ s/<SERVICE_NAME>/$Ticket{TicketFreeText2}/g;
+    $Data =~ s/<SERVICE_NAME>/$Ticket{$Self->{Fservice}}/g;
 
     # replace time stamp
     my $Time = time();
@@ -160,7 +164,7 @@ sub _Pipe {
     # replace OUTPUTSTRING
     $CMD =~ s/<OUTPUTSTRING>/$Data/g;
 
-#print STDERR "$CMD\n";
+#print STDOUT "$CMD\n";
     system ( $CMD );
 
     return 1;
@@ -183,7 +187,7 @@ sub _HTTP {
     my $User = $Self->{ConfigObject}->Get('Nagios::Acknowledge::HTTP::User');
     my $Pw   = $Self->{ConfigObject}->Get('Nagios::Acknowledge::HTTP::Password');
 
-    if ( $Ticket{TicketFreeText2} !~ /^host$/i) {
+    if ( $Ticket{$Self->{Fservice}} !~ /^host$/i) {
         $URL =~ s/<CMD_TYP>/34/g;
     }
     else {
@@ -191,10 +195,10 @@ sub _HTTP {
     }
 
     # replace host
-    $URL =~ s/<HOST_NAME>/$Ticket{TicketFreeText1}/g;
+    $URL =~ s/<HOST_NAME>/$Ticket{$Self->{Fhost}}/g;
 
     # replace time stamp
-    $URL =~ s/<SERVICE_NAME>/$Ticket{TicketFreeText2}/g;
+    $URL =~ s/<SERVICE_NAME>/$Ticket{$Self->{Fservice}}/g;
     # replace ticket tags
 
     for my $Key ( keys %Ticket ) {
@@ -215,7 +219,6 @@ sub _HTTP {
     my $Request = HTTP::Request->new( GET => $URL );
     $Request->authorization_basic( $User, $Pw );
     my $Response = $UserAgent->request($Request);
-#    my $Response = $UserAgent->get( $URL );
     if ( !$Response->is_success() ) {
         $Self->{LogObject}->Log(
             Priority => 'error',

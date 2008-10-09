@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: SystemMonitoring.xml,v 1.12 2008-09-11 18:36:15 martin Exp $</CVS>
+    <CVS>$Id: SystemMonitoring.xml,v 1.13 2008-10-09 21:59:44 jb Exp $</CVS>
     <ConfigItem Name="PostMaster::PreFilterModule###1-SystemMonitoring" Required="0" Valid="1">
         <Description Lang="en">Basic mail interface to System Monitoring Suites.</Description>
         <Description Lang="de">Einfache Email Schnittstelle zu System Monitoring Suites.</Description>
@@ -23,6 +23,24 @@
                 <Item Key="SenderType">system</Item>
                 <Item Key="ArticleType">note-report</Item>
             </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Nagios::Acknowledge::FreeField::Host" Required="1" Valid="1">
+        <Description Lang="en">Name of TicketFreeField for Host.</Description>
+        <Description Lang="de">Name des Ticket Frei Feldes: Host.</Description>
+        <Group>SystemMonitoring</Group>
+        <SubGroup>Nagios::Acknowledge</SubGroup>
+        <Setting>
+            <String Regex="">TicketFreeText1</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Nagios::Acknowledge::FreeField::Service" Required="1" Valid="1">
+        <Description Lang="en">Name of TicketFreeField for Service.</Description>
+        <Description Lang="de">Name des Ticket Frei Feldes: Service.</Description>
+        <Group>SystemMonitoring</Group>
+        <SubGroup>Nagios::Acknowledge</SubGroup>
+        <Setting>
+            <String Regex="">TicketFreeText2</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Nagios::Acknowledge::Type" Required="0" Valid="1">
@@ -65,7 +83,7 @@
             <String Regex="">[&lt;UNIXTIME&gt;] ACKNOWLEDGE_SVC_PROBLEM;&lt;HOST_NAME&gt;;&lt;SERVICE_NAME&gt;;1;1;1;&lt;LOGIN&gt;;&lt;a href="&lt;CONFIG_HttpType&gt;://&lt;CONFIG_FQDN&gt;/&lt;CONFIG_ScriptAlias&gt;index.pl?Action=AgentTicketZoom&amp;TicketID=&lt;TicketID&gt;"&gt;&lt;CONFIG_Ticket::Hook&gt;&lt;TicketNumber&gt;&lt;/a&gt;</String>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="Ticket::EventModulePost###9-NagiosAcknowledge" Required="0" Valid="1">
+    <ConfigItem Name="Ticket::EventModulePost###9-NagiosAcknowledge" Required="1" Valid="1">
         <Description Lang="en">Ticket event module to send an acknowlage to Nagios.</Description>
         <Description Lang="de">Ticket Event Modul für automatisches senden eines Acknowledge an Nagios.</Description>
         <Group>SystemMonitoring</Group>
