@@ -2,7 +2,7 @@
 # Kernel/Modules/FAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.37 2008-10-09 07:39:25 ub Exp $
+# $Id: FAQ.pm,v 1.38 2008-10-09 10:45:13 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::FAQ;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.37 $) [1];
+$VERSION = qw($Revision: 1.38 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -776,6 +776,12 @@ sub GetItemSmallView {
     $Frontend{CssColumnVotingResult} = 'color:'
         . $Self->{LayoutObject}->GetFAQItemVotingRateColor( Rate => $ItemData{Result} ) . ';';
     $Frontend{ItemFieldValues} = $Self->_GetItemFieldValues( ItemData => \%ItemData );
+
+    # convert html to plain text
+    $Frontend{ItemFieldValuesPlainText} = $Self->{FAQObject}->HTML2Text(
+        HTMLString => $Frontend{ItemFieldValues},
+    );
+
     $Self->{LayoutObject}->Block(
         Name => 'ViewSmall',
         Data => { %Param, %ItemData, %Frontend },
