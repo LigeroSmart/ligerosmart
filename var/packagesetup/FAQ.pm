@@ -2,7 +2,7 @@
 # FAQ.pm - code to excecute during package installation
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.2 2008-10-09 08:10:40 ub Exp $
+# $Id: FAQ.pm,v 1.3 2008-10-09 08:16:46 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Valid;
 use Kernel::System::FAQ;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
@@ -309,7 +309,7 @@ sub _ConvertNewlines {
             next KEY if !$FAQ{$Key};
 
             # replace \n with <br>
-            $FAQ{$Key} =~ s/\n/<br>/g;
+            $FAQ{$Key} =~ s/\n/<br\/>\n/g;
 
             $FoundNewline = 1;
         }
@@ -481,6 +481,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2008-10-09 08:10:40 $
+$Revision: 1.3 $ $Date: 2008-10-09 08:16:46 $
 
 =cut
