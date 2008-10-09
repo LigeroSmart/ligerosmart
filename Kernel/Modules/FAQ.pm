@@ -2,7 +2,7 @@
 # Kernel/Modules/FAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.36 2008-10-07 11:37:02 ub Exp $
+# $Id: FAQ.pm,v 1.37 2008-10-09 07:39:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::FAQ;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.36 $) [1];
+$VERSION = qw($Revision: 1.37 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -686,6 +686,11 @@ sub GetItemView {
 
     # show keywords as search links
     if ( $ItemData{Keywords} ) {
+
+        # replace commas and semicolons
+        $ItemData{Keywords} =~ s/,/ /g;
+        $ItemData{Keywords} =~ s/;/ /g;
+
         my @Keywords = split /\s+/, $ItemData{Keywords};
         for my $Keyword ( @Keywords ) {
             $Self->{LayoutObject}->Block(
