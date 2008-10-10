@@ -1,7 +1,0 @@
-Here are two example mails as they may have been sent by a Nagios
-System.
-
-For testing purposes you can pipe them to bin/PostMaster.pl and check
-if your OTRS behaves as exspected.
-
-
