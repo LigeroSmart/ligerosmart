@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.pm,v 1.28 2008-09-29 09:26:20 ub Exp $
+# $Id: AgentFAQ.pm,v 1.29 2008-10-10 14:02:04 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::Valid;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION @ISA);
-$VERSION = qw($Revision: 1.28 $) [1];
+$VERSION = qw($Revision: 1.29 $) [1];
 
 @ISA = qw(Kernel::Modules::FAQ);
 
@@ -994,7 +994,6 @@ sub Run {
         @Params = qw(ItemID);
 
         # permission check
-
         if ( !$Self->{AccessRw} ) {
             return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' );
         }
