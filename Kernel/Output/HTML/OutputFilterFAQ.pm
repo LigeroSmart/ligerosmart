@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/OutputFilterFAQ.pm - Output filter for FAQ module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: OutputFilterFAQ.pm,v 1.1 2008-10-10 13:16:23 ub Exp $
+# $Id: OutputFilterFAQ.pm,v 1.2 2008-10-10 13:49:37 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -14,7 +14,7 @@ package Kernel::Output::HTML::OutputFilterFAQ;
 use strict;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.1 $';
+$VERSION = '$Revision: 1.2 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -41,11 +41,15 @@ sub Run {
     return if !${ $Param{Data} };
     return if !$Param{TemplateFile};
 
+    # check permission
+    return if !$Self->{LayoutObject}->{EnvRef}->{'UserIsGroupRo[faq]'};
+
     # get allowed template names
     my $ValidTemplates = $Self->{ConfigObject}->Get('Frontend::Output::FilterElementPre')
         ->{FAQ}
         ->{Templates};
 
+    # check template name
     return if !$ValidTemplates->{ $Param{TemplateFile} };
 
     # add javascript function
@@ -68,8 +72,7 @@ END
     my $Search1 = '<!-- [ ] dtl:block:SpellCheck [ ] --> .+?';
     my $Search2 = '</td>';
     $Replace    = <<'END';
-                    <dtl if ($Env{"UserIsGroupRo[faq]"} eq "Yes") { $Data{"FAQLink"} = "$Env{"Box0"}<a href="" onclick="FAQSubmit(); return false;" onmouseover="window.status='$JSText{"FAQ"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Env{"Images"}help-small.png">$Text{"FAQ"}</a>$Env{"Box1"}"; }>
-                    $Data{"FAQLink"}
+  $Env{"Box0"}<a href="" onclick="FAQSubmit(); return false;" onmouseover="window.status='$JSText{"FAQ"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Env{"Images"}help-small.png">$Text{"FAQ"}</a>$Env{"Box1"}
                   </td>
 END
     ${$Param{Data}} =~ s{ ($Search1) $Search2 }{$1$Replace}ixms;
