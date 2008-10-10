@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.51 2008-10-09 08:11:17 ub Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.52 2008-10-10 13:17:40 ub Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -22,6 +22,7 @@
         <File Permission="644" Location="Kernel/Output/HTML/HeaderMetaFAQSearch.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/LayoutFAQ.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/LinkObjectFAQ.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/OutputFilterFAQ.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQ.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQOpenSearchDescription.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQ.dtl"/>

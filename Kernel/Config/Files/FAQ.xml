@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.22 2008-09-25 08:06:43 ub Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.23 2008-10-10 13:15:56 ub Exp $</CVS>
     <ConfigItem Name="Ticket::Frontend::NoteTypes" Required="1" Valid="1">
         <Description Lang="en">Specify the different note types, that you want to use in your system.</Description>
         <Description Lang="de">Hier können die verschiedenen Notiz-Typen festgelegt werden, die innerhalb des Systems verwendet werden sollen.</Description>
@@ -656,7 +656,6 @@ Your OTRS Notification Master
             </Hash>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="Frontend::Module###PictureUpload" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the PictureUpload object in the agent interface.</Description>
         <Description Lang="de">Frontendmodul-Registration des PictureUpload-Objekts im Agenten-Interface.</Description>
@@ -669,5 +668,27 @@ Your OTRS Notification Master
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
-
+    <ConfigItem Name="Frontend::Output::FilterElementPre###FAQ" Required="0" Valid="1">
+        <Description Lang="en">Defines where the 'Insert FAQ' link will be displayed.</Description>
+        <Description Lang="de">Definiert wo der Link 'FAQ einfügen' angezeigt werden soll.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::OutputFilterFAQ</Item>
+                <Item Key="Debug">0</Item>
+                <Item Key="Templates">
+                    <Hash>
+                        <Item Key="AgentTicketNote">1</Item>
+                        <Item Key="AgentTicketClose">0</Item>
+                        <Item Key="AgentTicketFreeText">0</Item>
+                        <Item Key="AgentTicketOwner">0</Item>
+                        <Item Key="AgentTicketPending">0</Item>
+                        <Item Key="AgentTicketPriority">0</Item>
+                        <Item Key="AgentTicketResponsible">0</Item>>
+                    </Hash>
+                </Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
 </otrs_config>
