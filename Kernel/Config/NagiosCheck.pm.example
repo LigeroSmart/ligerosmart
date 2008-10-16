@@ -2,7 +2,7 @@
 # Example Configfile for otrs.NagiosCheck - OTRS Nagios checker
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: NagiosCheck.pm.example,v 1.1 2008-09-08 20:15:29 martin Exp $
+# $Id: NagiosCheck.pm.example,v 1.2 2008-10-16 23:07:29 jb Exp $
 # --
 # For possible search options see:
 # http://dev.otrs.org/cvs/Kernel/System/Ticket.html -> TicketSearch()
@@ -47,16 +47,16 @@
 #        TicketFreeText2 => ['Browser', 'Sound', 'Mouse'],
    },
 
-# Declaration of treshholds
-# min_warn_treshhold > Number of tickets -> WARNING
-# max_warn_treshhold < Number of tickets -> WARNING
-# min_crit_treshhold > Number of tickets -> ALARM
-# max_warn_treshhold < Number of tickets -> ALARM
+# Declaration of tresholds
+# min_warn_treshold > Number of tickets -> WARNING
+# max_warn_treshold < Number of tickets -> WARNING
+# min_crit_treshold > Number of tickets -> ALARM
+# max_warn_treshold < Number of tickets -> ALARM
 
-   min_warn_treshhold => 5,
-   max_warn_treshhold => 10,
-   min_crit_treshhold => 2,
-   max_crit_treshhold => 20,
+   min_warn_treshold => 5,
+   max_warn_treshold => 10,
+   min_crit_treshold => 2,
+   max_crit_treshold => 20,
 
 # Information used by Nagios
 # Name of check shown in Nagios Status Information
