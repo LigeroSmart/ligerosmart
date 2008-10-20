@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.52 2008-10-09 17:50:54 ub Exp $
+# $Id: FAQ.pm,v 1.53 2008-10-20 09:13:31 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.52 $) [1];
+$VERSION = qw($Revision: 1.53 $) [1];
 
 =head1 NAME
 
@@ -1990,12 +1990,23 @@ sub FAQSearch {
         ' LEFT JOIN faq_state s ON s.id = i.state_id';
     my $Ext = '';
     if ( $Param{What} && $Param{What} ne '*' ) {
+        my @SearchFields = ( 'i.f_number', 'i.f_subject', 'i.f_keywords' );
+        if ( $Param{Interface} eq 'internal' ) {
+            push @SearchFields, (
+                'i.f_field1', 'i.f_field2', 'i.f_field3',
+                'i.f_field4', 'i.f_field5', 'i.f_field6',
+            );
+        }
+        else {
+            NUMBER:
+            for my $Number ( 1 .. 6 ) {
+                next NUMBER if !$Self->{ConfigObject}->Get("FAQ::Item::Field$Number");
+                next NUMBER if $Self->{ConfigObject}->Get("FAQ::Item::Field$Number")->{Show} eq 'internal';
+                push @SearchFields, "i.f_field$Number";
+            }
+        }
         $Ext .= $Self->{DBObject}->QueryCondition(
-            Key => [
-                'i.f_number', 'i.f_subject', 'i.f_keywords', 'i.f_field1',
-                'i.f_field2', 'i.f_field3', 'i.f_field4', 'i.f_field5', 'i.f_field6',
-
-            ],
+            Key => \@SearchFields,
             Value        => $Param{What},
             SearchPrefix => '*',
             SearchSuffix => '*',
@@ -3464,6 +3475,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.52 $ $Date: 2008-10-09 17:50:54 $
+$Revision: 1.53 $ $Date: 2008-10-20 09:13:31 $
 
 =cut
