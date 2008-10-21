@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.54 2008-10-21 14:51:54 ub Exp $
+# $Id: FAQ.pm,v 1.55 2008-10-21 15:02:18 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.54 $) [1];
+$VERSION = qw($Revision: 1.55 $) [1];
 
 =head1 NAME
 
@@ -2800,7 +2800,7 @@ sub FAQTop10Get {
     }
 
     # complete SQL statement
-    $SQL .= 'GROUP BY item_id '
+    $SQL .= 'GROUP BY item_id, faq_state_type.name, approved  '
         . 'ORDER BY 2 DESC ';
 
     # get the top 10 article ids from database
@@ -3475,6 +3475,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.54 $ $Date: 2008-10-21 14:51:54 $
+$Revision: 1.55 $ $Date: 2008-10-21 15:02:18 $
 
 =cut
