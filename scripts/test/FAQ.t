@@ -2,7 +2,7 @@
 # FAQ.t - FAQ tests
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.t,v 1.7 2008-09-30 12:35:33 ub Exp $
+# $Id: FAQ.t,v 1.8 2008-10-21 13:52:14 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -294,6 +294,46 @@ for my $VoteID (@VoteIDs) {
         "VoteDelete()",
     );
 }
+
+# add FAQ article to log
+my $Success = $Self->{FAQObject}->FAQLogAdd(
+    ItemID    => $FAQID,
+    Interface => 'internal',
+);
+$Self->True(
+    $Success,
+    "FAQLogAdd() - $FAQID",
+);
+
+# try to add same FAQ article to log again (must return false)
+$Success = $Self->{FAQObject}->FAQLogAdd(
+    ItemID    => $FAQID,
+    Interface => 'internal',
+);
+$Self->False(
+    $Success,
+    "FAQLogAdd() - $FAQID",
+);
+
+# add another FAQ article to log
+$Success = $Self->{FAQObject}->FAQLogAdd(
+    ItemID    => $FAQID2,
+    Interface => 'internal',
+);
+$Self->True(
+    $Success,
+    "FAQLogAdd() - $FAQID2",
+);
+
+# get FAQ Top10
+my @Top10IDs = $Self->{FAQObject}->FAQTop10Get(
+    Interface => 'internal',
+    Limit     => 10,
+);
+$Self->True(
+    scalar @Top10IDs,
+    "FAQTop10Get()",
+);
 
 my $FAQDelete = $Self->{FAQObject}->FAQDelete(
     ItemID => $FAQID,
