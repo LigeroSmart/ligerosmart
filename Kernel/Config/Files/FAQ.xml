@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.23 2008-10-10 13:15:56 ub Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.24 2008-10-22 11:28:08 ub Exp $</CVS>
     <ConfigItem Name="Ticket::Frontend::NoteTypes" Required="1" Valid="1">
         <Description Lang="en">Specify the different note types, that you want to use in your system.</Description>
         <Description Lang="de">Hier können die verschiedenen Notiz-Typen festgelegt werden, die innerhalb des Systems verwendet werden sollen.</Description>
@@ -685,7 +685,7 @@ Your OTRS Notification Master
                         <Item Key="AgentTicketOwner">0</Item>
                         <Item Key="AgentTicketPending">0</Item>
                         <Item Key="AgentTicketPriority">0</Item>
-                        <Item Key="AgentTicketResponsible">0</Item>>
+                        <Item Key="AgentTicketResponsible">0</Item>
                     </Hash>
                 </Item>
             </Hash>
