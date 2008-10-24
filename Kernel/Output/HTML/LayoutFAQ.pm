@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutFAQ.pm - provides generic agent HTML output
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutFAQ.pm,v 1.4 2008-09-17 15:50:45 ub Exp $
+# $Id: LayoutFAQ.pm,v 1.5 2008-10-24 15:46:28 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub AgentFAQCategoryListOption {
 
@@ -114,7 +114,7 @@ sub AgentFAQCategoryListOptionElement {
 sub GetFAQItemVotingRateColor {
     my ( $Self, %Param ) = @_;
 
-    if ( !$Param{Rate} ) {
+    if ( !defined $Param{Rate} ) {
         return $Self->FatalError(
             Message => 'Need rate!'
         );
