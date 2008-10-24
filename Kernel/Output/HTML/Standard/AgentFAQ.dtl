@@ -2,7 +2,7 @@
 # AgentFAQ.dtl - provides HTML view for faq articles
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.dtl,v 1.39 2008-10-20 09:24:04 ub Exp $
+# $Id: AgentFAQ.dtl,v 1.40 2008-10-24 18:17:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -137,27 +137,27 @@
 
     Event.onDOMReady(function() {
         var myEditor1 = new YAHOO.widget.Editor( 'Field1', GetConfig() );
-        yuiImgUploader(myEditor1, '$Env{"Baselink"}', 'file_name', '$QData{"FormID"}');
+        yuiImgUploader(myEditor1, '$Env{"Baselink"}', 'file_name', '$QData{"FormID"}', '$Data{"SessionName"}', '$Data{"SessionID"}');
         myEditor1.render();
 
         var myEditor2 = new YAHOO.widget.Editor( 'Field2', GetConfig() );
-        yuiImgUploader(myEditor2, '$Env{"Baselink"}', 'file_name', '$QData{"FormID"}');
+        yuiImgUploader(myEditor2, '$Env{"Baselink"}', 'file_name', '$QData{"FormID"}', '$Data{"SessionName"}', '$Data{"SessionID"}');
         myEditor2.render();
 
         var myEditor3 = new YAHOO.widget.Editor( 'Field3', GetConfig() );
-        yuiImgUploader(myEditor3, '$Env{"Baselink"}', 'file_name', '$QData{"FormID"}');
+        yuiImgUploader(myEditor3, '$Env{"Baselink"}', 'file_name', '$QData{"FormID"}', '$Data{"SessionName"}', '$Data{"SessionID"}');
         myEditor3.render();
 
         var myEditor4 = new YAHOO.widget.Editor( 'Field4', GetConfig() );
-        yuiImgUploader(myEditor4, '$Env{"Baselink"}', 'file_name', '$QData{"FormID"}');
+        yuiImgUploader(myEditor4, '$Env{"Baselink"}', 'file_name', '$QData{"FormID"}', '$Data{"SessionName"}', '$Data{"SessionID"}');
         myEditor4.render();
 
         var myEditor5 = new YAHOO.widget.Editor( 'Field5', GetConfig() );
-        yuiImgUploader(myEditor5, '$Env{"Baselink"}', 'file_name', '$QData{"FormID"}');
+        yuiImgUploader(myEditor5, '$Env{"Baselink"}', 'file_name', '$QData{"FormID"}', '$Data{"SessionName"}', '$Data{"SessionID"}');
         myEditor5.render();
 
         var myEditor6 = new YAHOO.widget.Editor( 'Field6', GetConfig() );
-        yuiImgUploader(myEditor6, '$Env{"Baselink"}', 'file_name', '$QData{"FormID"}');
+        yuiImgUploader(myEditor6, '$Env{"Baselink"}', 'file_name', '$QData{"FormID"}', '$Data{"SessionName"}', '$Data{"SessionID"}');
         myEditor6.render();
     });
 })();

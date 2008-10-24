@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.pm,v 1.29 2008-10-10 14:02:04 ub Exp $
+# $Id: AgentFAQ.pm,v 1.30 2008-10-24 18:17:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::Valid;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION @ISA);
-$VERSION = qw($Revision: 1.29 $) [1];
+$VERSION = qw($Revision: 1.30 $) [1];
 
 @ISA = qw(Kernel::Modules::FAQ);
 
@@ -1294,10 +1294,19 @@ sub Run {
 
     # prepare WYSIWYG editor
     if ( $Self->{ConfigObject}->Get('FAQ::WYSIWYGEditor') ) {
+
+        # check if session data is needed for URL
+        my %SessionData;
+        if ( !$Self->{LayoutObject}->{SessionIDCookie} ) {
+            $SessionData{SessionName} = $Self->{LayoutObject}->{SessionName};
+            $SessionData{SessionID}   = $Self->{LayoutObject}->{SessionID};
+        }
+
         $Self->{LayoutObject}->Block(
             Name => 'WYSIWYGEditor',
             Data => {
                 FormID => $Frontend{FormID},
+                %SessionData,
             },
         );
     }
