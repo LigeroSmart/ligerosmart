@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.55 2008-10-21 15:02:18 ub Exp $
+# $Id: FAQ.pm,v 1.56 2008-10-27 22:57:53 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.55 $) [1];
+$VERSION = qw($Revision: 1.56 $) [1];
 
 =head1 NAME
 
@@ -998,7 +998,7 @@ sub FAQHistoryAdd {
 
 =item FAQHistoryGet()
 
-get a array with hachref (Name, Created) with history of an article back
+get an array with hashref (Name, Created) with history of an article back
 
     my @Data = @{$FAQObject->FAQHistoryGet(
         ItemID => 1,
@@ -2848,15 +2848,34 @@ sub FAQApprovalUpdate {
         return;
     }
 
+    # update database
     return if !$Self->{DBObject}->Do(
-        SQL => "UPDATE faq_item SET approved = ? WHERE id = ?",
+        SQL => 'UPDATE faq_item '
+            . 'SET approved = ?, '
+            . 'changed = current_timestamp, '
+            . 'changed_by = ? '
+            . 'WHERE id = ?',
         Bind => [
-            \$Param{Approved}, \$Param{ItemID},
+            \$Param{Approved}, \$Self->{UserID}, \$Param{ItemID},
         ],
     );
 
     # create new approval ticket
     if ( $Self->{ConfigObject}->Get('FAQ::ApprovalRequired') && !$Param{Approved} ) {
+
+        # get current system time
+        my $SystemTime = $Self->{TimeObject}->SystemTime();
+
+        # convert last change time to system time format
+        my $LastChangedTime = $Self->{TimeObject}->TimeStamp2SystemTime(
+            String => $Param{LastChange},
+        );
+
+        # define wait time (5 minutes)
+        my $WaitTime = 5 * 60;
+
+        # no approval ticket if last change was less than 5 minutes ago
+        return 1 if ( $SystemTime - $LastChangedTime < $WaitTime );
 
         my %Data = $Self->FAQGet(
             ItemID => $Param{ItemID},
@@ -3475,6 +3494,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.55 $ $Date: 2008-10-21 15:02:18 $
+$Revision: 1.56 $ $Date: 2008-10-27 22:57:53 $
 
 =cut

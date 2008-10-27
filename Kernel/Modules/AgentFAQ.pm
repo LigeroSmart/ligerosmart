@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQ.pm - faq module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.pm,v 1.30 2008-10-24 18:17:25 ub Exp $
+# $Id: AgentFAQ.pm,v 1.31 2008-10-27 22:57:53 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::Valid;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION @ISA);
-$VERSION = qw($Revision: 1.30 $) [1];
+$VERSION = qw($Revision: 1.31 $) [1];
 
 @ISA = qw(Kernel::Modules::FAQ);
 
@@ -896,6 +896,11 @@ sub Run {
 
         my $Redirect = 1;
 
+        # get faq data
+        my %ItemData = $Self->{FAQObject}->FAQGet(
+            ItemID => $ParamData{ItemID},
+        );
+
         # attachment delete
         my @AttachmentIndex = $Self->{FAQObject}->AttachmentIndex(
             ItemID => $ParamData{ItemID},
@@ -966,6 +971,7 @@ sub Run {
             $Update = $Self->{FAQObject}->FAQApprovalUpdate(
                 ItemID     => $ParamData{ItemID},
                 Approved   => $ParamData{Approved},
+                LastChange => $ItemData{Changed},
                 UserID     => $Self->{UserID},
             );
             if ( !$Update ) {
@@ -1012,7 +1018,6 @@ sub Run {
         }
 
         # db action
-
         my %ItemData
             = $Self->{FAQObject}->FAQGet( ItemID => $ParamData{ItemID}, UserID => $Self->{UserID} );
         if ( !%ItemData ) {
@@ -1020,7 +1025,6 @@ sub Run {
         }
 
         # dtl
-
         $Self->{LayoutObject}->Block(
             Name => 'Delete',
             Data => {%ItemData},
