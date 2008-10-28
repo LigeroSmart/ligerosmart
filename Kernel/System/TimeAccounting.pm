@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.18 2008-10-01 06:00:28 tr Exp $
+# $Id: TimeAccounting.pm,v 1.19 2008-10-28 19:55:11 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week);
 
@@ -118,11 +118,7 @@ sub UserCurrentPeriodGet {
     my %Data = ();
     $Self->{DBObject}->Prepare( SQL =>
             "SELECT user_id, preference_period, date_start, date_end, weekly_hours, leave_days, overtime, status FROM time_accounting_user_period "
-            . "WHERE date_start <= '"
-            . $Date
-            . "' AND date_end  >='"
-            . $Date
-            . "'", );
+            . "WHERE date_start <= '$Date' AND date_end  >='$Date'", );
 
     # fetch Data
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
@@ -168,64 +164,45 @@ sub UserReporting {
             return;
         }
     }
-    if ( !$Param{Day} ) {
-        $Param{Day} = Days_in_Month( $Param{Year}, $Param{Month} );
-    }
+
+    $Param{Day} ||= Days_in_Month( $Param{Year}, $Param{Month} );
 
     my %UserCurrentPeriod = $Self->UserCurrentPeriodGet(%Param);
     my $YearStart         = 0;
     my $MonthStart        = 0;
     my $DayStart          = 0;
-    my $MonthStartPoint   = 0;
-    my $DayStartPoint     = 0;
-    my $MonthEndPoint     = 0;
-    my $DayEndPoint       = 0;
     my $YearEnd           = $Param{Year};
     my $MonthEnd          = $Param{Month};
     my $DayEnd            = $Param{Day};
-    for my $UserID ( keys %UserCurrentPeriod ) {
 
+    for my $UserID ( keys %UserCurrentPeriod ) {
         if ( $UserCurrentPeriod{$UserID}{DateStart} =~ /^(\d+)-(\d+)-(\d+)/ ) {
             $YearStart  = $1;
             $MonthStart = $2;
             $DayStart   = $3;
         }
         $Data{$UserID}{LeaveDay}         = 0;
-        $Data{$UserID}{Sick}         = 0;
+        $Data{$UserID}{Sick}             = 0;
         $Data{$UserID}{Overtime}         = 0;
         $Data{$UserID}{TargetState}      = 0;
         $Data{$UserID}{LeaveDayTotal}    = 0;
-        $Data{$UserID}{SickTotal}    = 0;
+        $Data{$UserID}{SickTotal}        = 0;
         $Data{$UserID}{OvertimeTotal}    = 0;
         $Data{$UserID}{TargetStateTotal} = 0;
 
         my $Counter = 0;
         for ( my $Year = $YearStart; $Year <= $YearEnd; $Year++ ) {
-            if ( $Year == $YearStart ) {
-                $MonthStartPoint = $MonthStart;
-            }
-            else {
-                $MonthStartPoint = 1;
-            }
-            if ( $Year == $YearEnd ) {
-                $MonthEndPoint = $MonthEnd;
-            }
-            else {
-                $MonthEndPoint = 12;
-            }
+
+            my $MonthStartPoint = $Year == $YearStart ? $MonthStart : 1;
+
+            my $MonthEndPoint = $Year == $YearEnd ? $MonthEnd : 12;
+
             for ( my $Month = $MonthStartPoint; $Month <= $MonthEndPoint; $Month++ ) {
-                if ( $Year == $YearStart && $Month == $MonthStart ) {
-                    $DayStartPoint = $DayStart;
-                }
-                else {
-                    $DayStartPoint = 1;
-                }
-                if ( $Year == $YearEnd && $Month == $MonthEnd ) {
-                    $DayEndPoint = $DayEnd;
-                }
-                else {
-                    $DayEndPoint = Days_in_Month( $Year, $Month );
-                }
+
+                my $DayStartPoint = $Year == $YearStart && $Month == $MonthStart ? $DayStart : 1;
+
+                my $DayEndPoint = $Year == $YearEnd && $Month == $MonthEnd ? $DayEnd : Days_in_Month( $Year, $Month );
+
                 for ( my $Day = $DayStartPoint; $Day <= $DayEndPoint; $Day++ ) {
                     my %WorkingUnit = $Self->WorkingUnitsGet(
                         Year   => $Year,
@@ -278,7 +255,7 @@ sub UserReporting {
                         $Data{$UserID}{TargetState}  += $TargetState;
                         $Data{$UserID}{WorkingHours} += $WorkingHours;
                         $Data{$UserID}{LeaveDay}     += $LeaveDay;
-                        $Data{$UserID}{Sick}     += $Sick;
+                        $Data{$UserID}{Sick}         += $Sick;
                     }
                 }
             }
@@ -358,10 +335,7 @@ sub ProjectSettingsInsert {
 
     my $SQL
         = "INSERT INTO time_accounting_project (project, description, status) "
-        . "VALUES " . "('"
-        . $Param{Project} . "', '"
-        . $Param{ProjectDescription} . "', '"
-        . $Param{ProjectStatus} . "')";
+        . "VALUES ('$Param{Project}', '$Param{ProjectDescription}', '$Param{ProjectStatus}')";
 
     # db insert
     return if !$Self->{DBObject}->Do( SQL => $SQL );
@@ -429,7 +403,7 @@ sub ActionSettingsGet {
     my %Data = ();
 
     # db select
-    $Self->{DBObject}->Prepare( SQL => "SELECT id, action, status FROM time_accounting_action", );
+    $Self->{DBObject}->Prepare( SQL => 'SELECT id, action, status FROM time_accounting_action', );
 
     # fetch Data
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
@@ -469,9 +443,7 @@ sub ActionSettingsInsert {
     # build sql
     my $SQL
         = "INSERT INTO time_accounting_action (action, status)"
-        . " VALUES" . " ('"
-        . $Param{Action} . "' , '"
-        . $Param{ActionStatus} . "')";
+        . " VALUES ('$Param{Action}' , '$Param{ActionStatus}')";
 
     # db insert
     return if !$Self->{DBObject}->Do( SQL => $SQL );
@@ -566,8 +538,9 @@ sub UserSettingsGet {
     my %Data = ();
 
     # db select
-    $Self->{DBObject}->Prepare( SQL =>
-            "SELECT user_id, preference_period, date_start, date_end, weekly_hours, leave_days, overtime, status FROM time_accounting_user_period",
+    $Self->{DBObject}->Prepare(
+        SQL =>  'SELECT user_id, preference_period, date_start, date_end, weekly_hours, leave_days, overtime, status ' .
+                'FROM time_accounting_user_period',
     );
 
     # fetch Data
@@ -639,7 +612,7 @@ sub UserSettingsInsert {
 
     # build sql
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT user_id FROM time_accounting_user WHERE user_id = '" . $Param{UserID} . "'",
+        SQL => "SELECT user_id FROM time_accounting_user WHERE user_id = '$Param{UserID}'",
     );
 
     # fetch Data
@@ -647,8 +620,7 @@ sub UserSettingsInsert {
         $UserID = $Row[0];
     }
     if ( !defined($UserID) ) {
-        $SQL
-            = "INSERT INTO time_accounting_user (user_id, description)"
+        $SQL = "INSERT INTO time_accounting_user (user_id, description)"
             . " VALUES"
             . " ('$Param{UserID}', '$Param{Description}')";
 
@@ -802,8 +774,8 @@ sub WorkingUnitsCompletnessCheck {
 
     my $UserID = $Self->{DBObject}->Quote( $Param{UserID} ) || $Self->{UserID};
 
-    $Self->{DBObject}->Prepare( SQL =>
-            "SELECT DISTINCT time_start FROM time_accounting_table WHERE user_id = '$UserID'",
+    $Self->{DBObject}->Prepare(
+        SQL => "SELECT DISTINCT time_start FROM time_accounting_table WHERE user_id = '$UserID'",
     );
 
     # fetch Data
@@ -812,11 +784,13 @@ sub WorkingUnitsCompletnessCheck {
             $CompleteWorkingDays{$1}{$2}{$3} = 1;
         }
     }
+
     my %UserCurrentPeriod = $Self->UserCurrentPeriodGet(
         Year  => $Year,
         Month => $Month,
         Day   => $Day,
     );
+
     my $WorkingDays     = 0;
     my $YearStart       = 0;
     my $MonthStart      = 0;
@@ -930,9 +904,8 @@ sub WorkingUnitsGet {
     for ( keys %Param ) {
         $Param{$_} = $Self->{DBObject}->Quote( $Param{$_} ) || '';
     }
-    if ( !$Param{UserID} ) {
-        $Param{UserID} = $Self->{UserID};
-    }
+
+    $Param{UserID} ||= $Self->{UserID};
 
     my $Date = sprintf( "%04d-%02d-%02d", $Param{Year}, $Param{Month}, $Param{Day} );
     $Self->{DBObject}
@@ -949,12 +922,8 @@ sub WorkingUnitsGet {
             $Data{$WorkingUnitID}{ActionID}  = $Row[2];
             $Data{$WorkingUnitID}{Remark}    = $Row[3];
             $Data{$WorkingUnitID}{StartTime} = $2;
-            if ( defined( $Row[6] ) ) {
-                $Data{$WorkingUnitID}{Period} = sprintf( "%.2f", $Row[6] );
-            }
-            else {
-                $Data{$WorkingUnitID}{Period} = 0;
-            }
+
+            $Data{$WorkingUnitID}{Period} = defined( $Row[6] ) ? sprintf( "%.2f", $Row[6] ) : 0;
 
             $Data{$WorkingUnitID}{Date} = $1;
             if ( $Row[5] =~ /^(.+?)\s(\d+:\d+):(\d+)/ ) {
@@ -1074,6 +1043,7 @@ sub WorkingUnitsDelete {
     # delete old working units
     my $SQL = "DELETE FROM time_accounting_table "
         . "WHERE time_start LIKE '$Date%' AND user_id = '$Self->{UserID}'";
+
     return if !$Self->{DBObject}->Do( SQL => $SQL );
     return 1;
 }
@@ -1205,7 +1175,6 @@ sub ProjectActionReporting {
         $Data{PerMonth}{ $Row[0] }{ $Row[1] }{Hours} += $Row[2];
     }
     return %Data;
-
 }
 
 1;
@@ -1222,6 +1191,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.18 $ $Date: 2008-10-01 06:00:28 $
+$Revision: 1.19 $ $Date: 2008-10-28 19:55:11 $
 
 =cut
