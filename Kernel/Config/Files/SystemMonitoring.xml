@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: SystemMonitoring.xml,v 1.13 2008-10-09 21:59:44 jb Exp $</CVS>
+    <CVS>$Id: SystemMonitoring.xml,v 1.14 2008-10-29 21:07:15 jb Exp $</CVS>
     <ConfigItem Name="PostMaster::PreFilterModule###1-SystemMonitoring" Required="0" Valid="1">
-        <Description Lang="en">Basic mail interface to System Monitoring Suites.</Description>
-        <Description Lang="de">Einfache Email Schnittstelle zu System Monitoring Suites.</Description>
+        <Description Lang="en">Basic mail interface to System Monitoring Suites. Use this block if the filter should run AFTER PostMasterFilter.</Description>
+        <Description Lang="de">Einfache Email Schnittstelle zu System Monitoring Suites. Diesen Block nutzen, wenn dieser Filter NACH den PostMasterFiltern genutzt werden soll.</Description>
         <Group>SystemMonitoring</Group>
         <SubGroup>Core::PostMaster</SubGroup>
         <Setting>
@@ -22,6 +22,32 @@
                 <Item Key="FreeTextService">2</Item>
                 <Item Key="SenderType">system</Item>
                 <Item Key="ArticleType">note-report</Item>
+                <Item Key="FreeTextState">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="PostMaster::PreFilterModule###0001-SystemMonitoring" Required="0" Valid="0">
+        <Description Lang="en">Basic mail interface to System Monitoring Suites. Use this block if the filter should run BEFORE PostMasterFilter.</Description>
+        <Description Lang="de">Einfache Email Schnittstelle zu System Monitoring Suites. Diesen Block nutzen, wenn dieser Filter VOR den PostMasterFiltern genutzt werden soll.</Description>
+        <Group>SystemMonitoring</Group>
+        <SubGroup>Core::PostMaster</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::System::PostMaster::Filter::SystemMonitoring</Item>
+                <Item Key="FromAddressRegExp">nagios@example.com</Item>
+                <Item Key="StateRegExp">\s*State:\s+(\S+)</Item>
+                <Item Key="HostRegExp">\s*Host:\s+(.*)\s*</Item>
+                <Item Key="ServiceRegExp">\s*Service:\s+(.*)\s*</Item>
+                <Item Key="NewTicketRegExp">CRITICAL|DOWN</Item>
+                <Item Key="CloseTicketRegExp">OK|UP</Item>
+                <Item Key="CloseActionState">closed successful</Item>
+                <Item Key="ClosePendingTime">172800</Item>
+                <Item Key="DefaultService">Host</Item>
+                <Item Key="FreeTextHost">1</Item>
+                <Item Key="FreeTextService">2</Item>
+                <Item Key="SenderType">system</Item>
+                <Item Key="ArticleType">note-report</Item>
+                <Item Key="FreeTextState">1</Item>
             </Hash>
         </Setting>
     </ConfigItem>
