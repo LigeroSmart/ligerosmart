@@ -3,7 +3,7 @@
 # FAQImport.pl.pl - FAQ import script
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQImport.pl,v 1.1 2008-10-09 17:51:28 ub Exp $
+# $Id: FAQImport.pl,v 1.2 2008-10-29 19:04:39 ub Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ use Kernel::System::Group;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION $RealBin);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 # get options
 my %Opts;
@@ -149,7 +149,7 @@ for my $RowRef ( @{$DataRef} ) {
         # get the category id
         $CommonObject{DBObject}->Prepare(
             SQL => 'SELECT id FROM faq_category '
-               . 'WHERE valid_id = 1 AND name = ? AND parent_id = ?',
+                . 'WHERE valid_id = 1 AND name = ? AND parent_id = ?',
             Bind  => [ \$Category, \$ParentID ],
             Limit => 1,
         );
@@ -223,6 +223,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2008-10-09 17:51:28 $
+$Revision: 1.2 $ $Date: 2008-10-29 19:04:39 $
 
 =cut
