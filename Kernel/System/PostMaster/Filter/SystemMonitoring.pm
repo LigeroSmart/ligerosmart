@@ -2,7 +2,7 @@
 # Kernel/System/PostMaster/Filter/SystemMonitoring.pm - Basic System Monitoring Interface
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: SystemMonitoring.pm,v 1.2 2008-10-29 21:39:28 martin Exp $
+# $Id: SystemMonitoring.pm,v 1.3 2008-10-29 21:45:18 jb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -13,7 +13,7 @@ use strict;
 use warnings;
 use vars qw($VERSION);
 
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -43,6 +43,7 @@ sub new {
         FreeTextService   => '2',
         SenderType        => 'system',
         ArticleType       => 'note-report',
+        FreeTextState     => '1',
     };
     return $Self;
 }
@@ -114,6 +115,13 @@ sub Run {
                     = $Self->{Config}{SenderType};
                 $Param{GetParam}->{'X-OTRS-FollowUp-ArticleType'}
                     = $Self->{Config}{ArticleType};
+
+                # Set Article Free Field for State
+                $Param{GetParam}->{'X-OTRS-FollowUp-ArticleKey'
+                        . $Self->{Config}{ 'FreeTextState' } } = 'State';
+                $Param{GetParam}->{'X-OTRS-FollowUp-ArticleValue'
+                        . $Self->{Config}{ 'FreeTextState' } } = $Self->{State};
+
                 if ( $Self->{State} =~ /$Self->{Config}{CloseTicketRegExp}/ )
                 {
 
@@ -144,6 +152,13 @@ sub Run {
                             . $Self->{Config}{ 'FreeText' . $_ } }
                         = $Self->{$_};
                 }
+
+                # Set Article Free Field for State
+                $Param{GetParam}->{'X-OTRS-ArticleKey'
+                        . $Self->{Config}{ 'FreeTextState' } } = 'State';
+                $Param{GetParam}->{'X-OTRS-ArticleValue'
+                        . $Self->{Config}{ 'FreeTextState' } } = $Self->{State};
+
                 $Param{GetParam}->{'X-OTRS-SenderType'}
                     = $Self->{Config}{SenderType};
                 $Param{GetParam}->{'X-OTRS-ArticleType'}
