@@ -1,38 +1,19 @@
 # --
 # Kernel/System/PostMaster/Filter/SystemMonitoring.pm - Basic System Monitoring Interface
-# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: SystemMonitoring.pm,v 1.1.1.1 2007-10-04 13:34:41 bb Exp $
+# $Id: SystemMonitoring.pm,v 1.2 2008-10-29 21:39:28 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 package Kernel::System::PostMaster::Filter::SystemMonitoring;
 use strict;
 use warnings;
 use vars qw($VERSION);
 
-$VERSION = qw($Revision: 1.1.1.1 $) [1];
-
-=head1 NAME
-
-Kernel::System::PostMaster::Filter::SystemMonitoring - Basic System Monitoring Interface
-
-=head1 SYNOPSIS
-
-This module implemets a basic interface to System Monitoring
-Suites. It works by receiving email messages sent by the Monitoring
-Suite. New tickets are created in case of component failures. Once a
-ticket has been opened messages regarding the effected component are
-attached to this ticket. When the component recovers, the ticket state
-can be changed or the ticket can be closed.
-
-Once a open ticket for a given Host/Service combination exists, all
-mails concerning this particular combination will be attached to the
-ticket until it's closed.
-
-=cut
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -66,9 +47,6 @@ sub new {
     return $Self;
 }
 
-# ---------------------------------------------------- #
-# The actual filter...                                 #
-# ---------------------------------------------------- #
 sub Run {
     my $Self       = shift;
     my %Param      = @_;
@@ -158,7 +136,7 @@ sub Run {
             }
             elsif ( $Self->{State} =~ /$Self->{Config}{NewTicketRegExp}/ ) {
 
-    # Create Ticket Condition -> Create new Ticket and record Host and Service
+                # Create Ticket Condition -> Create new Ticket and record Host and Service
                 for (qw ( Host Service )) {
                     $Param{GetParam}->{ 'X-OTRS-TicketKey'
                             . $Self->{Config}{ 'FreeText' . $_ } } = $_;
@@ -197,145 +175,3 @@ sub Run {
 }
 
 1;
-
-# ---------------------------------------------------- #
-# More documentation...                                #
-# ---------------------------------------------------- #
-
-=head1 CONFIGURATION OPTIONS
-
-To allow flexible integration between OTRS and a System Monitoring
-Suite the following configuration options are available. The default
-values (as shown below) should be suitable for a standard Nagios
-installation.
-
-=over
-
-=item * C<FromAddressRegExp>
-
-Only mails matching this C<From:> address will be considered for this
-filter.  You need to adjust this setting to the from address your
-System Monitoring Suite uses for outgoing mails.
-
-Default: C<'sysmon@mysystem.com'>
-
-=item * C<StateRegExp>
-
-Regular Expression to extract C<State>
-
-Default: C<'\s*State:\s+(\S+)'>
-
-=item * C<NewTicketRegExp>
-
-Regular expression for extracted C<State> to trigger new ticket
-
-Default: C<'CRITICAL|DOWN'>
-
-=item * C<CloseTicketRegExp>
-
-Regular expression for extracted C<State> to trigger ticket transition
-to C<CloseActionState>
-
-Default: C<'OK|UP'>
-
-=item * C<CloseActionState>
-
-New status for ticket when service recoveres. This can be either C<OLD> in
-which case the old status stays, or the name of the new status. Please note,
-that this state needs to be configured in your OTRS installation as valid
-state. If the state you set here does not exist, the ticket state will not be
-altered.
-
-Default: C<'closed successful'>
-
-=item * C<ClosePendingTime>
-
-Pending time in seconds for 'Pending...' status time. (Ignored for other status
-types). Please note that this setting will be ignored by OTRS versions older than
-2.2. On these systems the pending time already associated with the ticket will be
-used, which may have in surprising effects. It's recommended not to use 'Pending...'
-states with OTRS prior to 2.2.
-
-Default: C<60*60*24*2>  (2 days)
-
-=item * C<HostRegExp>
-
-Regular expression to extract C<Host>
-
-Default: C<'\s*Address:\s+(\d+\.\d+\.\d+\.\d+)\s*'>
-
-=item * C<FreeTextHost>
-
-Free text field index to store C<Host>
-
-Default: C<'1'>
-
-=item * C<ServiceRegExp>
-
-Regular expression to extract C<Service>
-
-Default: C<'\s*Service:\s+(.*)\s*'>
-
-=item * C<DefaultService>
-
-Default for C<Service>; used if no service can be extracted, i.e. if host
-goes DOWN/UP
-
-Default: C<'Host'>
-
-=item * C<FreeTexyService>
-
-Free text field index to store service
-
-Default: C<'2'>
-
-=item * C<SenderType>
-
-Sender type used for creating tickets and attaching notes
-
-Default: C<system>
-
-=item * C<ArticleType>
-
-Article type used to attach follow up emails to existing tickets
-
-Default: C<note-report>
-
-=back
-
-=head1 CONTROL FLOW
-
-The following diagram illustrates how mails are handled by this module
-and in which cases they trigger which action. Pretty much all checks are
-configable using the regular expressions given by the parameters listed
-above.
-
- Mail matches 'FromAddress'?
- |
- +-> NO  -> Continue with regular mail processing
- |
- +-> YES -> Does a ticket with matching Host/Service combination
-            already exist in OTRS?
-            |
-            +-> NO  -> Does 'State:' match 'NewTicketRegExp'?
-            |          |
-            |          +-> NO  -> Stop processing this mail
-            |          |          (silent drop)
-            |          |
-            |          +-> YES -> Create new ticket, record Host
-            |                     and Service, attach mail
-            |
-            +-> YES -> Attach mail to ticket
-                    -> Does 'State:' match 'CloseTicketRegExp'?
-                       |
-                       +-> NO  -> Continue with regular mail processing
-                       |
-                       +-> YES -> Change ticket type as configured in
-                                  'CloseActionState'
-
-Besides of a few additional sanity checks this is how the
-SystemMonitoring modul treats incoming mails. By changing the regular
-expressions it should be possible to adopt it to different monitoring
-systems.
-
-=cut
