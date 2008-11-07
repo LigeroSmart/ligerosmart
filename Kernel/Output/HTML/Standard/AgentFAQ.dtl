@@ -2,7 +2,7 @@
 # AgentFAQ.dtl - provides HTML view for faq articles
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.dtl,v 1.42 2008-11-07 09:24:14 ub Exp $
+# $Id: AgentFAQ.dtl,v 1.43 2008-11-07 10:29:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -997,7 +997,7 @@ function submit_compose() {
         return false;
     }
     else if ( document.compose.PermissionGroups.selectedIndex == -1 ) {
-        alert('$JSText{"A category need min. one permission group!"}');
+        alert('$JSText{"A category needs min. one permission group!"}');
         return false;
     }
     return true;
