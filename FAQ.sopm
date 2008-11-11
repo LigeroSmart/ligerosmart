@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.55 2008-11-07 09:23:21 ub Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.56 2008-11-11 10:13:48 ub Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -470,6 +470,12 @@
         You are about to install the OTRS package FAQ.&lt;br&gt;
         &lt;br&gt;
         &lt;br&gt;
+        &lt;b&gt;ATTENTION&lt;/b&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        Make sure your database accepts packages over 5 MB in size. A MySQL database for example accepts packages up to 1 MB by default. In this case, the value for max_allowed_packet must be increased. The recommended maximum size accepted is 20 MB.&lt;br&gt;
+        &lt;br&gt;
+        &lt;br&gt;
         ((enjoy))&lt;br&gt;
         &lt;br&gt;
 
@@ -481,6 +487,12 @@
         &lt;br&gt;
         &lt;br&gt;
         Sie sind im Begriff das OTRS-Paket FAQ zu installieren.&lt;br&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        &lt;b&gt;ACHTUNG&lt;/b&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        Vergewissern Sie sich, dass ihre Datenbank Pakete mit einer Größe von mehr als 5 MB akzeptiert. Eine MySQL Datenbank akzeptiert beispielsweise standardmäßig Pakete mit einer Größe von maximal 1 MB. In diesem Fall muss der Wert für max_allowed_packet erhöht werden. Empfohlen werden 20 MB.&lt;br&gt;
         &lt;br&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
@@ -506,12 +518,6 @@
         You will find further information in the sysconfig in FAQ -> Core::Approval.
         &lt;br&gt;
         &lt;br&gt;
-        &lt;b&gt;ATTENTION&lt;/b&gt;
-        &lt;br&gt;
-        &lt;br&gt;
-        Make sure your database accepts packages over 5 MB in size. A MySQL database for example accepts packages up to 1 MB by default. In this case, the value for max_allowed_packet must be increased. The recommended maximum size accepted is 20 MB.&lt;br&gt;
-        &lt;br&gt;
-        &lt;br&gt;
         ((enjoy))&lt;br&gt;
         &lt;br&gt;
 
@@ -533,12 +539,6 @@
         &lt;br&gt;
         Wenn Sie das FAQ-Freigabe-Feature verwenden möchten, müssen Sie eine Gruppe dafür anlegen und eine Queue definieren.
         Weitere Informationen finden Sie in der Sysconfig unter FAQ -> Core::Approval.
-        &lt;br&gt;
-        &lt;br&gt;
-        &lt;b&gt;ACHTUNG&lt;/b&gt;
-        &lt;br&gt;
-        &lt;br&gt;
-        Vergewissern Sie sich, dass ihre Datenbank Pakete mit einer Größe von mehr als 5 MB akzeptiert. Eine MySQL Datenbank akzeptiert beispielsweise standardmäßig Pakete mit einer Größe von maximal 1 MB. In diesem Fall muss der Wert für max_allowed_packet erhöht werden. Empfohlen werden 20 MB.&lt;br&gt;
         &lt;br&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
