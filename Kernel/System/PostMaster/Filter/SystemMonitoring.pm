@@ -2,7 +2,7 @@
 # Kernel/System/PostMaster/Filter/SystemMonitoring.pm - Basic System Monitoring Interface
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: SystemMonitoring.pm,v 1.4 2008-11-10 20:11:50 jb Exp $
+# $Id: SystemMonitoring.pm,v 1.5 2008-11-17 16:44:15 jb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -13,7 +13,7 @@ use strict;
 use warnings;
 use vars qw($VERSION);
 
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -72,13 +72,12 @@ sub Run {
                 $line =~ /$Self->{Config}{$_.'RegExp'}/
                     && ( $Self->{$_} = $1 );
             }
+    }
     for my $line ( split /\n/, $Param{GetParam}->{Body} ) {
             for (qw ( State Host Service )) {
                 $line =~ /$Self->{Config}{$_.'RegExp'}/
                     && ( $Self->{$_} = $1 );
             }
-    }
-
     }
 
         # We need State and Host to proceed
