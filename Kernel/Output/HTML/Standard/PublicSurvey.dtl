@@ -2,7 +2,7 @@
 # PublicSurvey.dtl - provides HTML form for PublicSurvey
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicSurvey.dtl,v 1.12 2008-01-28 15:30:03 mh Exp $
+# $Id: PublicSurvey.dtl,v 1.13 2008-11-21 10:45:21 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -77,7 +77,7 @@
                     <table border="0" width="100%" cellspacing="0">
                       <tr>
                         <td width="50" class="contentkey" align="right">
-                          <input type="radio" name="PublicSurveyVote1[$QData{"QuestionID"}]" value="Yes" checked>
+                          <input type="radio" name="PublicSurveyVote1[$QData{"QuestionID"}]" value="Yes">
                         </td>
                         <td class="contentkey">$Text{"Yes"}</td>
                       </tr>
@@ -107,14 +107,6 @@
                   <td class="contentkey" width="25">&nbsp;</td>
                   <td class="contentkey">
                     <table border="0" width="100%" cellspacing="0">
-<!-- dtl:block:PublicAnswerRadiobChecked -->
-                      <tr>
-                        <td width="50" align="right">
-                          <input type="radio" name="PublicSurveyVote2[$QData{"QuestionID"}]" value="$QData{"AnswerID"}" checked>
-                        </td>
-                        <td>$QData{"Answer"}</td>
-                      </tr>
-<!-- dtl:block:PublicAnswerRadiobChecked -->
 <!-- dtl:block:PublicAnswerRadiob -->
                       <tr>
                         <td width="50" align="right">

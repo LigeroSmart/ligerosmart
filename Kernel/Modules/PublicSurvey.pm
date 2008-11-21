@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicSurvey.pm - a survey module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicSurvey.pm,v 1.17 2008-05-16 13:29:36 ub Exp $
+# $Id: PublicSurvey.pm,v 1.18 2008-11-21 10:45:21 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -49,7 +49,7 @@ sub Run {
     # public survey vote
     # ------------------------------------------------------------ #
     if ( $Self->{Subaction} eq 'PublicSurveyVote' ) {
-        my $PublicSurveyKey = $Self->{ParamObject}->GetParam( Param => "PublicSurveyKey" );
+        my $PublicSurveyKey = $Self->{ParamObject}->GetParam( Param => 'PublicSurveyKey' );
         my %Survey = $Self->{SurveyObject}->PublicSurveyGet( PublicSurveyKey => $PublicSurveyKey );
         if ( $Survey{SurveyID} ) {
             my @QuestionList = $Self->{SurveyObject}->QuestionList( SurveyID => $Survey{SurveyID} );
@@ -119,7 +119,7 @@ sub Run {
     # ------------------------------------------------------------ #
     # show survey
     # ------------------------------------------------------------ #
-    my $PublicSurveyKey = $Self->{ParamObject}->GetParam( Param => "PublicSurveyKey" );
+    my $PublicSurveyKey = $Self->{ParamObject}->GetParam( Param => 'PublicSurveyKey' );
     $Output = $Self->{LayoutObject}->CustomerHeader( Title => 'Survey' );
     my %Survey = $Self->{SurveyObject}->PublicSurveyGet( PublicSurveyKey => $PublicSurveyKey );
     $Survey{Introduction} = $Self->{LayoutObject}->Ascii2Html(
@@ -146,23 +146,14 @@ sub Run {
                     Name => 'PublicAnswerRadio',
                     Data => $Question,
                 );
-                my @AnswerList
-                    = $Self->{SurveyObject}->AnswerList( QuestionID => $Question->{QuestionID} );
-                my $Counter = 0;
+                my @AnswerList = $Self->{SurveyObject}->AnswerList(
+                    QuestionID => $Question->{QuestionID},
+                );
                 for my $Answer (@AnswerList) {
-                    if ( !$Counter ) {
-                        $Self->{LayoutObject}->Block(
-                            Name => 'PublicAnswerRadiobChecked',
-                            Data => $Answer,
-                        );
-                    }
-                    else {
-                        $Self->{LayoutObject}->Block(
-                            Name => 'PublicAnswerRadiob',
-                            Data => $Answer,
-                        );
-                    }
-                    $Counter++;
+                    $Self->{LayoutObject}->Block(
+                        Name => 'PublicAnswerRadiob',
+                        Data => $Answer,
+                    );
                 }
             }
             elsif ( $Question->{Type} eq 'Checkbox' ) {
@@ -170,8 +161,9 @@ sub Run {
                     Name => 'PublicAnswerCheckbox',
                     Data => $Question,
                 );
-                my @AnswerList
-                    = $Self->{SurveyObject}->AnswerList( QuestionID => $Question->{QuestionID} );
+                my @AnswerList = $Self->{SurveyObject}->AnswerList(
+                    QuestionID => $Question->{QuestionID},
+                );
                 for my $Answer (@AnswerList) {
                     $Self->{LayoutObject}->Block(
                         Name => 'PublicAnswerCheckboxb',
