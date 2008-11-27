@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketPrint.pm - print layout for agent interface
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPrint.pm,v 1.1 2008-07-02 18:59:07 ub Exp $
-# $OldId: AgentTicketPrint.pm,v 1.56 2008/06/24 08:04:01 mh Exp $
+# $Id: AgentTicketPrint.pm,v 1.2 2008-11-27 15:01:21 mh Exp $
+# $OldId: AgentTicketPrint.pm,v 1.56.2.2 2008/11/26 14:14:01 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -43,6 +43,9 @@ sub new {
             $Self->{LayoutObject}->FatalError( Message => "Got no $_!" );
         }
     }
+
+    # get config settings
+    $Self->{ZoomExpandSort} = $Self->{ConfigObject}->Get('Ticket::Frontend::ZoomExpandSort');
 
     $Self->{CustomerUserObject} = Kernel::System::CustomerUser->new(%Param);
     $Self->{LinkObject}         = Kernel::System::LinkObject->new(%Param);
@@ -142,6 +145,11 @@ sub Run {
         if (@NewArticleBox) {
             @ArticleBox = @NewArticleBox;
         }
+    }
+
+    # resort article order
+    if ( $Self->{ZoomExpandSort} eq 'reverse' ) {
+        @ArticleBox = reverse(@ArticleBox);
     }
 
     $Ticket{TicketTimeUnits} = $Self->{TicketObject}->TicketAccountedTimeGet(
