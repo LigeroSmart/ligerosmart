@@ -2,7 +2,7 @@
 # Kernel/Language/de_AgentTimeAccounting.pm - the de language for AgentTimeAccounting
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: de_AgentTimeAccounting.pm,v 1.39 2008-09-30 11:41:18 tr Exp $
+# $Id: de_AgentTimeAccounting.pm,v 1.40 2008-11-27 15:29:54 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -33,10 +33,12 @@ sub Data {
         'Working Hours'                            => 'Arbeitsstunden',
         'Hours per week'                           => 'Wochenstunden',
         'this month'                               => 'dieser Monat',
-        'Overtime leave taken (total)'             => 'Überstunden (dieser Monat)',
-        'Overtime leave taken (this month)'        => 'Überstunden (Summe)',
-        'Remaining overtime leave'                 => 'Überstunden (Verbleibend)',
+        'Overtime (Hours)'                         => 'Überstunden (in Stunden)',
+        'Overtime (total)'                         => 'Überstunden (dieser Monat)',
+        'Overtime (this month)'                    => 'Überstunden (Summe)',
+        'Remaining overtime leave'                 => 'Überstunden (verbleibend)',
         'Vacation'                                 => 'Urlaub',
+        'Vacation (Days)'                          => 'Urlaub (in Tagen)',
         'Vacation taken (this month)'              => 'Urlaubstage (dieser Monat)',
         'Vacation taken (total)'                   => 'Urlaubstage (Summe)',
         'Remaining vacation'                       => 'Urlaubstage (verbleibend)',
@@ -80,6 +82,7 @@ sub Data {
         'Days of vacation'                         => 'Urlaubstage',
         'On vacation'                              => 'im Urlaub',
         'Sick day'                                 => 'Erkrankt',
+        'Sick leave (Days)'                        => 'Erkrankt (in Tagen)'   ,
         'Sick leave'                               => 'Erkrankt',
         'On sick leave'                            => 'Erkrankt',
         'Task'                                     => 'Tätigkeit',
