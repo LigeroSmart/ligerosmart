@@ -2,8 +2,8 @@
 # Kernel/Modules/AdminSLA.pm - admin frontend to manage slas
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminSLA.pm,v 1.3 2008-07-02 12:22:44 mh Exp $
-# $OldId: AdminSLA.pm,v 1.16 2008/05/10 10:28:18 mh Exp $
+# $Id: AdminSLA.pm,v 1.4 2008-11-27 14:08:03 mh Exp $
+# $OldId: AdminSLA.pm,v 1.16.2.2 2008/11/16 18:17:53 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -114,7 +114,7 @@ sub Run {
 
         # generate CalendarOptionStrg
         my %CalendarList;
-        for ( 1 .. 20 ) {
+        for ( '', 1 .. 50 ) {
             if ( $Self->{ConfigObject}->Get("TimeVacationDays::Calendar$_") ) {
                 $CalendarList{$_} = "Calendar $_ - "
                     . $Self->{ConfigObject}->Get( "TimeZone::Calendar" . $_ . "Name" );
