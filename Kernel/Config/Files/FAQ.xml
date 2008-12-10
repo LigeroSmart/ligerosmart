@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.24 2008-10-22 11:28:08 ub Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.25 2008-12-10 08:19:16 tr Exp $</CVS>
     <ConfigItem Name="Ticket::Frontend::NoteTypes" Required="1" Valid="1">
         <Description Lang="en">Specify the different note types, that you want to use in your system.</Description>
         <Description Lang="de">Hier können die verschiedenen Notiz-Typen festgelegt werden, die innerhalb des Systems verwendet werden sollen.</Description>
@@ -691,4 +691,29 @@ Your OTRS Notification Master
             </Hash>
         </Setting>
     </ConfigItem>
+<!-- Please activate this on FRAMEWORK 2.4 OTRS 2.4
+    <ConfigItem Name="Frontend::Output::OutputFilterTextAutoLink###FAQ" Required="0" Valid="0">
+        <Description Lang="en">A filter for html output to add links behind a defined string. The element Image allows two input kinds. At once the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possiblity is to insert the link to the image.</Description>
+        <Description Lang="de">Ein Filter zur automatischen Generierung von FAQ-Links, wenn ein Hinweis auf einen FAQ-Artikel identifiziert wird. Das Element Image erlaubt zwei Eingabeformen: Erstens der Name eines Icons (z. B. faq.png). In diesem Fall wird auf das Graphikverzeichnis des OTRS zugegriffen. Als zweite Möglichkeit kann man aber auch den direkten Link zur Graphik angeben (z. B. http://otrs.org/faq.png).</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::Web</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="RegExp">
+                    <Array>
+                        <Item>(FAQ)[#\s]*?1(\d{4})</Item>
+                    </Array>
+                </Item>
+                <Item Key="URL1">
+                    <Hash>
+                        <Item Key="Description">FAQ</Item>
+                        <Item Key="URL">http://localhost/otrs/index.pl?Action=AgentFAQ&amp;ItemID=&lt;MATCH2&gt;</Item>
+                        <Item Key="Image">help-small.png</Item>
+                        <Item Key="Target">_blank</Item>
+                    </Hash>
+                </Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+-->
 </otrs_config>
