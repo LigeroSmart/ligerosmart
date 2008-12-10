@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.25 2008-12-10 08:19:16 tr Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.26 2008-12-10 08:36:02 tr Exp $</CVS>
     <ConfigItem Name="Ticket::Frontend::NoteTypes" Required="1" Valid="1">
         <Description Lang="en">Specify the different note types, that you want to use in your system.</Description>
         <Description Lang="de">Hier können die verschiedenen Notiz-Typen festgelegt werden, die innerhalb des Systems verwendet werden sollen.</Description>
@@ -707,7 +707,7 @@ Your OTRS Notification Master
                 <Item Key="URL1">
                     <Hash>
                         <Item Key="Description">FAQ</Item>
-                        <Item Key="URL">http://localhost/otrs/index.pl?Action=AgentFAQ&amp;ItemID=&lt;MATCH2&gt;</Item>
+                        <Item Key="URL">/otrs/index.pl?Action=AgentFAQ&amp;ItemID=&lt;MATCH2&gt;</Item>
                         <Item Key="Image">help-small.png</Item>
                         <Item Key="Target">_blank</Item>
                     </Hash>
