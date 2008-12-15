@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketPhone.pm - to handle phone calls
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.pm,v 1.6 2008-07-07 23:41:45 ub Exp $
-# $OldId: AgentTicketPhone.pm,v 1.78 2008/07/02 10:11:21 ub Exp $
+# $Id: AgentTicketPhone.pm,v 1.7 2008-12-15 11:41:42 mh Exp $
+# $OldId: AgentTicketPhone.pm,v 1.78.2.1 2008/12/04 12:49:09 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -31,7 +31,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1200,6 +1200,13 @@ sub Run {
         if ( $Dest =~ /^(\d{1,100})\|\|.+?$/ ) {
             $QueueID = $1;
         }
+
+        # get list type
+        my $TreeView = 0;
+        if ( $Self->{ConfigObject}->Get('Ticket::Frontend::ListType') eq 'tree' ) {
+            $TreeView = 1;
+        }
+
         my $Users = $Self->_GetUsers(
             QueueID  => $QueueID,
             AllUsers => $GetParam{OwnerAll},
@@ -1308,6 +1315,7 @@ sub Run {
                     SelectedID   => $GetParam{ServiceID},
                     PossibleNone => 1,
                     Translation  => 1,
+                    TreeView     => $TreeView,
                     Max          => 100,
                 },
                 {
@@ -1635,7 +1643,7 @@ sub _MaskPhoneNew {
                     'TicketFreeText16',
                 ],
                 Subaction => 'AJAXUpdate',
-                }
+            },
         );
     }
     else {
