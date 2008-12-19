@@ -2,7 +2,7 @@
 # AgentTicketAddtlITSMField.dtl - provides HTML form for free text mask
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketAddtlITSMField.dtl,v 1.1 2008-07-02 17:06:31 ub Exp $
+# $Id: AgentTicketAddtlITSMField.dtl,v 1.2 2008-12-19 14:40:20 ub Exp $
 # $OldId: AgentTicketFreeText.dtl,v 1.25 2008/07/02 16:08:05 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -103,7 +103,7 @@ function change_selected(sel) {
 # ITSM
 # ---
 #      $Env{"Box0"}$Text{"Change free text of ticket"}: $Data{"TicketNumber"}$Env{"Box1"}
-      <       $Env{"Box0"}$Text{"Change ITSM fields of ticket"}: $Data{"TicketNumber"}$Env{"Box1"}
+      $Env{"Box0"}$Text{"Change ITSM fields of ticket"}: $Data{"TicketNumber"}$Env{"Box1"}
 # ---
     </td>
   </tr>
