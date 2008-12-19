@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketAddtlITSMField.pm - additional itsm fields for ticket
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketAddtlITSMField.pm,v 1.2 2008-07-24 12:54:41 ub Exp $
+# $Id: AgentTicketAddtlITSMField.pm,v 1.3 2008-12-19 14:41:39 ub Exp $
 # $OldId: AgentTicketFreeText.pm,v 1.39 2008/07/18 18:41:15 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -31,7 +31,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -770,6 +770,49 @@ sub Run {
             );
         }
 
+        # get free text config options
+        my @TicketFreeTextConfig = ();
+        for ( 1 .. 16 ) {
+            my $ConfigKey = $Self->{TicketObject}->TicketFreeTextGet(
+                TicketID => $Self->{TicketID},
+                Type     => "TicketFreeKey$_",
+                Action   => $Self->{Action},
+                QueueID  =>  $Ticket{QueueID} || 0,
+                UserID   => $Self->{UserID},
+            );
+            if ($ConfigKey) {
+                push(
+                    @TicketFreeTextConfig,
+                    {
+                        Name        => "TicketFreeKey$_",
+                        Data        => $ConfigKey,
+                        SelectedID  => $GetParam{"TicketFreeKey$_"},
+                        Translation => 0,
+                        Max         => 100,
+                    }
+                );
+            }
+            my $ConfigValue = $Self->{TicketObject}->TicketFreeTextGet(
+                TicketID => $Self->{TicketID},
+                Type     => "TicketFreeText$_",
+                Action   => $Self->{Action},
+                QueueID  =>  $Ticket{QueueID} || 0,
+                UserID   => $Self->{UserID},
+            );
+            if ($ConfigValue) {
+                push(
+                    @TicketFreeTextConfig,
+                    {
+                        Name        => "TicketFreeText$_",
+                        Data        => $ConfigValue,
+                        SelectedID  => $GetParam{"TicketFreeText$_"},
+                        Translation => 0,
+                        Max         => 100,
+                    }
+                );
+            }
+        }
+
         my $JSON = $Self->{LayoutObject}->BuildJSON(
             [
                 {
@@ -795,6 +838,7 @@ sub Run {
                     Translation => 1,
                     Max         => 100,
                 },
+                @TicketFreeTextConfig,
             ],
         );
         return $Self->{LayoutObject}->Attachment(
