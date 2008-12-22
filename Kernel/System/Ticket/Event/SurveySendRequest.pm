@@ -2,7 +2,7 @@
 # Kernel/System/Ticket/Event/SurveySendRequest.pm - send survey requests
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: SurveySendRequest.pm,v 1.10 2008-01-23 17:43:26 mh Exp $
+# $Id: SurveySendRequest.pm,v 1.11 2008-12-22 10:01:29 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -54,12 +54,17 @@ sub Run {
         }
     }
 
-    return if $Param{Event} ne 'TicketStateUpdate';
-
     # get ticket data
     my %Ticket = $Self->{TicketObject}->TicketGet( TicketID => $Param{TicketID} );
 
-    return if $Ticket{StateType} ne 'closed';
+    # return if ticket is not closed
+    return 1 if $Ticket{StateType} ne 'closed';
+
+    # send also survey request on ticket creation (on first article)
+    if ( $Param{Event} eq 'ArticleCreate' ) {
+        my @ArticleIndex = $Self->{TicketObject}->ArticleIndex( TicketID => $Param{TicketID} );
+        return 1 if scalar @ArticleIndex != 1;
+    }
 
     # send request
     $Self->{SurveyObject}->RequestSend( TicketID => $Param{TicketID} );
