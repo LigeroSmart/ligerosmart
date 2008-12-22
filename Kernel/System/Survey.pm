@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - all survey funtions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.pm,v 1.43 2008-09-25 01:14:25 martin Exp $
+# $Id: Survey.pm,v 1.44 2008-12-22 10:02:09 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Ticket;
 use Mail::Address;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.43 $) [1];
+$VERSION = qw($Revision: 1.44 $) [1];
 
 =head1 NAME
 
@@ -1730,7 +1730,7 @@ sub ElementExists {
 
 =item RequestSend()
 
-to send a request to a customer
+to send a request to a customer (if master survey is set)
 
     $SurveyObject->RequestSend(
         TicketID => 123,
@@ -1750,9 +1750,6 @@ sub RequestSend {
         return;
     }
 
-    # quote
-    $Param{TicketID} = $Self->{DBObject}->Quote( $Param{TicketID}, 'Integer' );
-
     # create PublicSurveyKey
     my $md5 = Digest::MD5->new();
     $md5->add( $Self->{TimeObject}->SystemTime() . int( rand(999999999) ) );
@@ -1770,6 +1767,7 @@ sub RequestSend {
         $SurveyID = $Row[0];
     }
 
+    # return, no master survey found
     return if !$SurveyID;
 
     # get the survey
@@ -1782,7 +1780,7 @@ sub RequestSend {
     # ticket data
     my %Ticket = $Self->{TicketObject}->TicketGet( TicketID => $Param{TicketID} );
     for my $Data ( keys %Ticket ) {
-        if ( defined( $Ticket{$Data} ) ) {
+        if ( defined $Ticket{$Data} ) {
             $Subject =~ s/<OTRS_TICKET_$Data>/$Ticket{$Data}/gi;
             $Body    =~ s/<OTRS_TICKET_$Data>/$Ticket{$Data}/gi;
         }
@@ -1893,15 +1891,13 @@ sub RequestSend {
     }
 
     # insert request
+    $Param{TicketID} = $Self->{DBObject}->Quote( $Param{TicketID}, 'Integer' );
     $Self->{DBObject}->Do(
         SQL => "INSERT INTO survey_request "
             . " (ticket_id, survey_id, valid_id, public_survey_key, send_to, send_time) "
-            . " VALUES ("
-            . "$Param{TicketID}, "
-            . "$SurveyID, 1, '"
+            . " VALUES ($Param{TicketID}, $SurveyID, 1, '"
             . $Self->{DBObject}->Quote($PublicSurveyKey) . "', "
-            . "'$To', "
-            . "current_timestamp)",
+            . "'$To', current_timestamp)",
     );
 
     # log action on ticket
@@ -2186,6 +2182,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.43 $ $Date: 2008-09-25 01:14:25 $
+$Revision: 1.44 $ $Date: 2008-12-22 10:02:09 $
 
 =cut
