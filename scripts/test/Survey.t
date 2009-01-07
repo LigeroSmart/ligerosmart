@@ -1,8 +1,8 @@
 # --
 # Survey.t - Survey tests
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.t,v 1.8 2008-09-25 01:13:47 martin Exp $
+# $Id: Survey.t,v 1.9 2009-01-07 23:21:29 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -103,7 +103,7 @@ my @Tests = (
             Queue        => 'Raw',
             Lock         => 'unlock',
             Priority     => '3 normal',
-            State        => 'closed successful',
+            State        => 'open',
             CustomerNo   => '123465',
             CustomerUser => 'customer@example.com',
             OwnerID      => 1,
@@ -136,7 +136,7 @@ my @Tests = (
             Queue        => 'Raw',
             Lock         => 'unlock',
             Priority     => '3 normal',
-            State        => 'closed successful',
+            State        => 'open',
             CustomerNo   => '123465',
             CustomerUser => 'customer@example.com',
             OwnerID      => 1,
@@ -169,7 +169,7 @@ my @Tests = (
             Queue        => 'Raw',
             Lock         => 'unlock',
             Priority     => '3 normal',
-            State        => 'closed successful',
+            State        => 'open',
             CustomerNo   => '123465',
             CustomerUser => 'customer@example.com',
             OwnerID      => 1,
@@ -203,7 +203,7 @@ my @Tests = (
             Queue        => 'Raw',
             Lock         => 'unlock',
             Priority     => '3 normal',
-            State        => 'closed successful',
+            State        => 'open',
             CustomerNo   => '123465',
             CustomerUser => 'customer@example.com',
             OwnerID      => 1,
@@ -237,7 +237,7 @@ my @Tests = (
             Queue        => 'Raw',
             Lock         => 'unlock',
             Priority     => '3 normal',
-            State        => 'closed successful',
+            State        => 'open',
             CustomerNo   => '123465',
             CustomerUser => 'customer@example.com',
             OwnerID      => 1,
@@ -247,6 +247,38 @@ my @Tests = (
             ArticleType    => 'email-external',
             SenderType     => 'customer',
             From           => 'SOME@example.com',
+            To             => 'Some To <to@example.com>',
+            Subject        => 'Some Subject',
+            Body           => 'the message text',
+            MessageID      => '<asdasdasd.123@example.com>',
+            ContentType    => 'text/plain; charset=ISO-8859-15',
+            HistoryType    => 'OwnerUpdate',
+            HistoryComment => 'Some free text!',
+            UserID         => 1,
+            NoAgentNotify => 1,    # if you don't want to send agent notifications
+        },
+        Result => [
+            0,
+            0,
+        ],
+    },
+    {
+        Name   => '#6 try',
+        Ticket => {
+            Title        => 'Some Ticket Title',
+            Queue        => 'Raw',
+            Lock         => 'unlock',
+            Priority     => '3 normal',
+            State        => 'open',
+            CustomerNo   => '123465',
+            CustomerUser => 'customer@example.com',
+            OwnerID      => 1,
+            UserID       => 1,
+        },
+        Article => {
+            ArticleType    => 'email-external',
+            SenderType     => 'customer',
+            From           => 'My Name',
             To             => 'Some To <to@example.com>',
             Subject        => 'Some Subject',
             Body           => 'the message text',
