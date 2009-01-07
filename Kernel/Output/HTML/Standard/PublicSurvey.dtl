@@ -1,8 +1,8 @@
 # --
 # PublicSurvey.dtl - provides HTML form for PublicSurvey
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicSurvey.dtl,v 1.13 2008-11-21 10:45:21 martin Exp $
+# $Id: PublicSurvey.dtl,v 1.14 2009-01-07 23:37:10 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -10,6 +10,31 @@
 # --
 
 <!-- dtl:block:PublicSurvey -->
+<script language="JavaScript" type="text/javascript">
+<!--
+function submit_compose() {
+    for (i=0;i<3;i++) {
+        for (ii=0;ii<100;ii++) {
+            if ( document.compose['PublicSurveyVote' + i + '[' + ii + ']'] ) {
+                var Ok = 0;
+                FieldName = document.compose['PublicSurveyVote' + i + '[' + ii + ']'];
+                for (F=0;F<FieldName.length;F++) {
+                    if ( FieldName[F].checked ) {
+                        Ok = 1;
+                    }
+                }
+                if ( !Ok ) {
+                    alert('$JSText{"Need to select question:"}' + i );
+                    return false;
+                }
+            }
+        }
+    }
+    return true;
+}
+//-->
+</script>
+
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
   <tr>
     <td class="mainhead">
@@ -18,7 +43,7 @@
   </tr>
   <tr>
     <td class="mainbody">
-      <br>
+      <br/>
       <table border="0" width="700" align="center" cellspacing="0" cellpadding="4">
         <tr>
           <td colspan="4" class="contenthead">
@@ -46,11 +71,11 @@
           </td>
         </tr>
       </table>
-      <br>
+      <br/>
       <form action="$Env{"CGIHandle"}" method="post" name="compose">
-        <input type="hidden" name="Action" value="$Env{"Action"}">
-        <input type="hidden" name="Subaction" value="PublicSurveyVote">
-        <input type="hidden" name="PublicSurveyKey" value="$QData{"PublicSurveyKey"}">
+        <input type="hidden" name="Action" value="$Env{"Action"}" />
+        <input type="hidden" name="Subaction" value="PublicSurveyVote" />
+        <input type="hidden" name="PublicSurveyKey" value="$QData{"PublicSurveyKey"}" />
         <table border="0" width="700" align="center" cellspacing="0" cellpadding="4">
           <tr>
             <td colspan="4" class="contenthead">$Text{"Questions"}
@@ -77,13 +102,13 @@
                     <table border="0" width="100%" cellspacing="0">
                       <tr>
                         <td width="50" class="contentkey" align="right">
-                          <input type="radio" name="PublicSurveyVote1[$QData{"QuestionID"}]" value="Yes">
+                          <input type="radio" name="PublicSurveyVote1[$QData{"QuestionID"}]" value="Yes" />
                         </td>
                         <td class="contentkey">$Text{"Yes"}</td>
                       </tr>
                       <tr>
                         <td width="50" class="contentkey" align="right">
-                          <input type="radio" name="PublicSurveyVote1[$QData{"QuestionID"}]" value="No">
+                          <input type="radio" name="PublicSurveyVote1[$QData{"QuestionID"}]" value="No" />
                         </td>
                         <td class="contentkey">$Text{"No"}</td>
                       </tr>
@@ -110,7 +135,7 @@
 <!-- dtl:block:PublicAnswerRadiob -->
                       <tr>
                         <td width="50" align="right">
-                          <input type="radio" name="PublicSurveyVote2[$QData{"QuestionID"}]" value="$QData{"AnswerID"}">
+                          <input type="radio" name="PublicSurveyVote2[$QData{"QuestionID"}]" value="$QData{"AnswerID"}" />
                         </td>
                         <td>$QData{"Answer"}</td>
                       </tr>
@@ -138,7 +163,7 @@
 <!-- dtl:block:PublicAnswerCheckboxb -->
                       <tr>
                         <td width="50" align="right">
-                          <input type="checkbox" name="PublicSurveyVote3[$QData{"AnswerID"}]" value="Yes">
+                          <input type="checkbox" name="PublicSurveyVote3[$QData{"AnswerID"}]" value="Yes" />
                         </td>
                         <td>$QData{"Answer"}</td>
                       </tr>
@@ -185,13 +210,13 @@
           </tr>
           <tr>
             <td class="contentfooter">
-              <input class="button" type="reset" value="$Text{"Reset"}">&nbsp;
-              <input class="button" type="submit" value="$Text{"Finish"}">
+              <input class="button" type="reset" value="$Text{"Reset"}" />&nbsp;
+              <input class="button" type="submit" value="$Text{"Finish"}" onclick="return submit_compose();" />
             </td>
           </tr>
         </table>
       </form>
-      <br>
+      <br/>
     </td>
   </tr>
 </table>
@@ -206,7 +231,7 @@
   </tr>
   <tr>
     <td class="mainbody">
-      <br>
+      <br/>
       <table border="0" width="700" align="center" cellspacing="0" cellpadding="4">
         <tr>
           <td colspan="4" class="contenthead">
@@ -234,7 +259,7 @@
           </td>
         </tr>
       </table>
-      <br>
+      <br/>
     </td>
   </tr>
 </table>
@@ -249,7 +274,7 @@
   </tr>
   <tr>
     <td class="mainbody">
-      <br>
+      <br/>
       <table border="0" width="700" align="center" cellspacing="0" cellpadding="4">
         <tr>
           <td colspan="4" class="contenthead">
@@ -277,7 +302,7 @@
           </td>
         </tr>
       </table>
-      <br>
+      <br/>
     </td>
   </tr>
 </table>
