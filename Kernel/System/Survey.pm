@@ -1,8 +1,8 @@
 # --
 # Kernel/System/Survey.pm - all survey funtions
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.pm,v 1.44 2008-12-22 10:02:09 martin Exp $
+# $Id: Survey.pm,v 1.45 2009-01-07 23:26:37 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Ticket;
 use Mail::Address;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.44 $) [1];
+$VERSION = qw($Revision: 1.45 $) [1];
 
 =head1 NAME
 
@@ -58,7 +58,7 @@ create an object
     );
     my $MainObject = Kernel::System::Main->new(
         ConfigObject => $ConfigObject,
-        LogObject => $LogObject,
+        LogObject    => $LogObject,
     );
     my $DBObject = Kernel::System::DB->new(
         ConfigObject => $ConfigObject,
@@ -67,16 +67,16 @@ create an object
     );
     my $UserObject = Kernel::System::User->new(
         ConfigObject => $ConfigObject,
-        LogObject => $LogObject,
-        DBObject => $DBObject,
+        LogObject    => $LogObject,
+        DBObject     => $DBObject,
     );
     my $SurveyObject = Kernel::System::Survey->new(
         ConfigObject => $ConfigObject,
-        LogObject => $LogObject,
-        TimeObject => $TimeObject,
-        DBObject => $DBObject,
-        MainObject => $MainObject,
-        UserObject => $UserObject,
+        LogObject    => $LogObject,
+        TimeObject   => $TimeObject,
+        DBObject     => $DBObject,
+        MainObject   => $MainObject,
+        UserObject   => $UserObject,
     );
 
 =cut
@@ -1139,8 +1139,7 @@ sub AnswerDelete {
     # delete answer
     return $Self->{DBObject}->Do(
         SQL => "DELETE FROM survey_answer WHERE "
-            . "id = $Param{AnswerID} AND "
-            . "question_id = $Param{QuestionID}"
+            . "id = $Param{AnswerID} AND question_id = $Param{QuestionID}"
     );
 }
 
@@ -1854,6 +1853,9 @@ sub RequestSend {
     # return if no to is found
     return if !$To;
 
+    # check if it's a valid email addedss (min is needed)
+    return if $To !~ /@/;
+
     # konvert to lower cases
     $To = lc $To;
 
@@ -2182,6 +2184,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.44 $ $Date: 2008-12-22 10:02:09 $
+$Revision: 1.45 $ $Date: 2009-01-07 23:26:37 $
 
 =cut
