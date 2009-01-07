@@ -1,8 +1,8 @@
 # --
 # Kernel/Language/de_PublicSurvey.pm - the de language for PublicSurvey
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: de_PublicSurvey.pm,v 1.9 2008-05-16 13:29:36 ub Exp $
+# $Id: de_PublicSurvey.pm,v 1.10 2009-01-07 23:36:02 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -24,6 +24,7 @@ sub Data {
     $Self->{Translation}->{'Questions'} = 'Fragen';
     $Self->{Translation}->{'Question'}  = 'Frage';
     $Self->{Translation}->{'Finish'}    = 'Fertigstellen';
+    $Self->{Translation}->{'Need to select question:'}  = 'Folgende Frage muss ausgefüllt werden:';
     $Self->{Translation}->{'finished'}  = 'fertiggestellt';
     $Self->{Translation}->{'This Survey-Key is invalid!'}
         = 'Dieser Umfrage-Schlüssel ist nicht (mehr) gültig!';
