@@ -1,8 +1,8 @@
 #--
 # Kernel/System/TimeAccounting.pm - all time accounting functions
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.19 2008-10-28 19:55:11 tr Exp $
+# $Id: TimeAccounting.pm,v 1.20 2009-01-14 07:37:14 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,11 +15,9 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week);
-
-#use Kernel::System::CalendarEvent;
 
 =head1 NAME#
 
@@ -41,6 +39,7 @@ create an object
     use Kernel::System::Log;
     use Kernel::System::Main;
     use Kernel::System::DB;
+    use Kernel::System::Time;
     use Kernel::System::TimeAccounting;
 
     my $ConfigObject = Kernel::Config->new();
@@ -55,6 +54,10 @@ create an object
         ConfigObject => $ConfigObject,
         LogObject    => $LogObject,
         MainObject   => $MainObject,
+    );
+    my $TimeObject = Kernel::System::Time->new(
+        ConfigObject => $ConfigObject,
+        LogObject    => $LogObject,
     );
     my $TimeAccountingObject = Kernel::System::TimeAccounting->new(
         ConfigObject => $ConfigObject,
@@ -1191,6 +1194,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.19 $ $Date: 2008-10-28 19:55:11 $
+$Revision: 1.20 $ $Date: 2009-01-14 07:37:14 $
 
 =cut
