@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.20 2009-01-14 07:37:14 tr Exp $
+# $Id: TimeAccounting.pm,v 1.21 2009-01-14 07:58:40 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week);
 
@@ -1118,7 +1118,7 @@ returns a hash with the hours dependent project and action data
     my %ProjectData = $TimeAccountingObject->ProjectActionReporting(
         Year  => 2005,
         Month => 7,
-        UserID => 123,
+        UserID => 123, # optional; no UserID means 'of all user'
     );
 
 =cut
@@ -1177,6 +1177,7 @@ sub ProjectActionReporting {
         next if !$Row[2];
         $Data{PerMonth}{ $Row[0] }{ $Row[1] }{Hours} += $Row[2];
     }
+
     return %Data;
 }
 
@@ -1194,6 +1195,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.20 $ $Date: 2009-01-14 07:37:14 $
+$Revision: 1.21 $ $Date: 2009-01-14 07:58:40 $
 
 =cut
