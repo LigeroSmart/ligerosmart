@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.21 2009-01-14 07:58:40 tr Exp $
+# $Id: TimeAccounting.pm,v 1.22 2009-01-16 10:04:19 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.21 $) [1];
+$VERSION = qw($Revision: 1.22 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week);
 
@@ -317,17 +317,9 @@ insert new project data in the db
 sub ProjectSettingsInsert {
     my ( $Self, %Param ) = @_;
 
-    if ( !$Param{Project} ) {
-        $Param{Project} = $Self->{ConfigObject}->Get('TimeAccounting::DefaultProjectName') || '';
-    }
-    if ( !$Param{ProjectStatus} ) {
-        $Param{ProjectStatus} = $Self->{ConfigObject}->Get('TimeAccounting::DefaultProjectStatus')
-            || '0';
-    }
-
-    if ( !$Param{ProjectDescription} ) {
-        $Param{ProjectDescription} = '';
-    }
+    $Param{Project} ||= $Self->{ConfigObject}->Get('TimeAccounting::DefaultProjectName') || '';
+    $Param{ProjectStatus} ||= $Self->{ConfigObject}->Get('TimeAccounting::DefaultProjectStatus') || '0';
+    $Param{ProjectDescription} ||= '';
 
     # db quote
     for ( keys %Param ) {
@@ -365,29 +357,30 @@ update project data in the db
 
 sub ProjectSettingsUpdate {
     my ( $Self, %Param ) = @_;
+
+    PROJECTID:
     for my $ProjectID ( sort keys %Param ) {
-        if ( $Param{$ProjectID}{Project} ) {
+        next if !$Param{$ProjectID}{Project};
 
-            # db quote
-            for ( keys %{ $Param{$ProjectID} } ) {
-                $Param{$ProjectID}{$_} = $Self->{DBObject}->Quote( $Param{$ProjectID}{$_} ) || '';
-            }
-
-            # build sql
-            my $SQL
-                = "UPDATE time_accounting_project "
-                . "SET project = '"
-                . $Param{$ProjectID}{Project}
-                . "', status = '"
-                . $Param{$ProjectID}{ProjectStatus}
-                . "', description = '"
-                . $Param{$ProjectID}{ProjectDescription} . "' "
-                . "WHERE id = '"
-                . $ProjectID . "'";
-
-            # db insert
-            return if !$Self->{DBObject}->Do( SQL => $SQL );
+        # db quote
+        for ( keys %{ $Param{$ProjectID} } ) {
+            $Param{$ProjectID}{$_} = $Self->{DBObject}->Quote( $Param{$ProjectID}{$_} ) || '';
         }
+
+        # build sql
+        my $SQL
+            = "UPDATE time_accounting_project "
+            . "SET project = '"
+            . $Param{$ProjectID}{Project}
+            . "', status = '"
+            . $Param{$ProjectID}{ProjectStatus}
+            . "', description = '"
+            . $Param{$ProjectID}{ProjectDescription} . "' "
+            . "WHERE id = '"
+            . $ProjectID . "'";
+
+        # db insert
+        return if !$Self->{DBObject}->Do( SQL => $SQL );
     }
     return 1;
 }
@@ -435,13 +428,8 @@ sub ActionSettingsInsert {
         $Param{$_} = $Self->{DBObject}->Quote( $Param{$_} ) || '';
     }
 
-    if ( !$Param{Action} ) {
-        $Param{Action} = $Self->{ConfigObject}->Get('TimeAccounting::DefaultActionName') || '';
-    }
-    if ( !$Param{ActionStatus} ) {
-        $Param{ActionStatus} = $Self->{ConfigObject}->Get('TimeAccounting::DefaultActionStatus')
-            || '0';
-    }
+    $Param{Action} ||= $Self->{ConfigObject}->Get('TimeAccounting::DefaultActionName') || '';
+    $Param{ActionStatus} ||= $Self->{ConfigObject}->Get('TimeAccounting::DefaultActionStatus') || '0';
 
     # build sql
     my $SQL
@@ -622,7 +610,7 @@ sub UserSettingsInsert {
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $UserID = $Row[0];
     }
-    if ( !defined($UserID) ) {
+    if ( !defined $UserID ) {
         $SQL = "INSERT INTO time_accounting_user (user_id, description)"
             . " VALUES"
             . " ('$Param{UserID}', '$Param{Description}')";
@@ -1195,6 +1183,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.21 $ $Date: 2009-01-14 07:58:40 $
+$Revision: 1.22 $ $Date: 2009-01-16 10:04:19 $
 
 =cut

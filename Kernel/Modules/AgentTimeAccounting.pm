@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.24 2008-09-30 11:41:18 tr Exp $
+# $Id: AgentTimeAccounting.pm,v 1.25 2009-01-16 10:04:19 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.24 $) [1];
+$VERSION = qw($Revision: 1.25 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1669,20 +1669,14 @@ sub Run {
         my %Frontend = ();
 
         # permission check
-        if ( !$Self->{AccessRo} ) {
-            return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' );
-        }
+        return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' )if !$Self->{AccessRo};
 
         # get params
-        for (qw(ProjectID)) {
-            $Param{$_} = $Self->{ParamObject}->GetParam( Param => $_ );
-        }
+        $Param{ProjectID} = $Self->{ParamObject}->GetParam( Param => 'ProjectID' );
 
         # check needed params
-        for (qw(ProjectID)) {
-            if ( !$Param{$_} ) {
-                return $Self->{LayoutObject}->ErrorScreen( Message => "ProjectReporting: Need $_" );
-            }
+        if ( !$Param{ProjectID} ) {
+            return $Self->{LayoutObject}->ErrorScreen( Message => 'ProjectReporting: Need ProjectID' );
         }
 
         my %Action  = $Self->{TimeAccountingObject}->ActionSettingsGet();
