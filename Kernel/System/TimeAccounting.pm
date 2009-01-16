@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.22 2009-01-16 10:04:19 tr Exp $
+# $Id: TimeAccounting.pm,v 1.23 2009-01-16 12:46:05 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week);
 
@@ -237,7 +237,7 @@ sub UserReporting {
                     }
 
                     $Data{$UserID}{WorkingHoursTotal} += $WorkingHours;
-                    my $VacationCheck = $Self->VacationCheck(
+                    my $VacationCheck = $Self->{TimeObject}->VacationCheck(
                         Year  => $Year,
                         Month => $Month,
                         Day   => $Day,
@@ -828,7 +828,7 @@ sub WorkingUnitsCompletnessCheck {
             }
             my $MonthString = sprintf( "%02d", $Month );
             for ( my $Day = $DayStartPoint; $Day <= $DayEndPoint; $Day++ ) {
-                my $VacationCheck = $Self->VacationCheck(
+                my $VacationCheck = $Self->{TimeObject}->VacationCheck(
                     Year  => $Year,
                     Month => $Month,
                     Day   => $Day,
@@ -1039,66 +1039,6 @@ sub WorkingUnitsDelete {
     return 1;
 }
 
-# FRAMEWORK-2.1: this function should be included in the timeobject
-
-=item VacationCheck()
-
-check if the selected day is a vacation (it doesn't matter if you
-insert 01 or 1 for month or day in the function or in the SysConfig)
-
-    $TimeAccountingObject->VacationCheck(
-        Year  => '2005',
-        Month => '7', || 07
-        Day   => '13',
-    );
-
-=cut
-
-sub VacationCheck {
-    my ( $Self, %Param ) = @_;
-
-    my $VacationName = '';
-
-    # check required params
-    TIMESCALE:
-    for (qw(Year Month Day)) {
-        next TIMESCALE if $Param{$_};
-
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "VacationCheck: Need $_!"
-        );
-        return;
-    }
-    my $Year  = $Param{Year};
-    my $Month = sprintf( "%02d", $Param{Month} );
-    my $Day   = sprintf( "%02d", $Param{Day} );
-
-    if ( defined( $Self->{TimeVacationDays}->{ $Month }->{ $Day } ) ) {
-        return $Self->{TimeVacationDays}->{ $Month }->{ $Day };
-    }
-    elsif (
-        defined( $Self->{TimeVacationDaysOneTime}->{ $Year }->{ $Month }->{ $Day } ) )
-    {
-        return $Self->{TimeVacationDaysOneTime}->{ $Year }->{ $Month }->{ $Day };
-    }
-
-    $Month = int $Month;
-    $Day   = int $Day;
-    if ( defined( $Self->{TimeVacationDays}->{ $Month }->{ $Day } ) ) {
-        return $Self->{TimeVacationDays}->{ $Month }->{ $Day };
-    }
-    elsif (
-        defined(
-            $Self->{TimeVacationDaysOneTime}->{ $Year }->{ $Month }->{ $Day }
-        )
-        )
-    {
-        return $Self->{TimeVacationDaysOneTime}->{ $Year }->{ $Month }->{ $Day };
-    }
-    return;
-}
-
 =item ProjectActionReporting()
 
 returns a hash with the hours dependent project and action data
@@ -1183,6 +1123,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.22 $ $Date: 2009-01-16 10:04:19 $
+$Revision: 1.23 $ $Date: 2009-01-16 12:46:05 $
 
 =cut

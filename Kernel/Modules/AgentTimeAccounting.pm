@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.25 2009-01-16 10:04:19 tr Exp $
+# $Id: AgentTimeAccounting.pm,v 1.26 2009-01-16 12:46:05 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.25 $) [1];
+$VERSION = qw($Revision: 1.26 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -579,7 +579,7 @@ sub Run {
             }
         }
 
-        my $VacationCheck = $Self->{TimeAccountingObject}->VacationCheck(
+        my $VacationCheck = $Self->{TimeObject}->VacationCheck(
             Year  => $Param{Year},
             Month => $Param{Month},
             Day   => $Param{Day},
@@ -739,7 +739,7 @@ sub Run {
             );
         }
 
-        my $Vacation = $Self->{TimeAccountingObject}->VacationCheck(
+        my $Vacation = $Self->{TimeObject}->VacationCheck(
             Year  => $Param{Year},
             Month => $Param{Month},
             Day   => $Param{Day},
@@ -857,7 +857,7 @@ sub Run {
         for ( my $Day = 1; $Day <= $DaysOfMonth; $Day++ ) {
             $Param{Day} = sprintf( "%02d", $Day );
             $Param{Weekday} = Day_of_Week( $Param{Year}, $Param{Month}, $Day ) - 1;
-            my $VacationCheck = $Self->{TimeAccountingObject}->VacationCheck(
+            my $VacationCheck = $Self->{TimeObject}->VacationCheck(
                 Year  => $Param{Year},
                 Month => $Param{Month},
                 Day   => $Day,
