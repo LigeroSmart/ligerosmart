@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: TimeAccounting.xml,v 1.8 2008-09-30 11:41:18 tr Exp $</CVS>
+    <CVS>$Id: TimeAccounting.xml,v 1.9 2009-01-16 10:18:54 tr Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AgentTimeAccounting" Required="0" Valid="1">
         <Description Lang="en">FrontendModuleRegistration for TimeAccountingModule  to define the registration settings in the program and to set rights and positions of icons in the navigation bar.</Description>
         <Description Lang="de">FrontendModulRegistration für das ZeiterfassungsModul.  Hier
@@ -79,7 +79,7 @@ können die Rechte und die Positionen der Icons in der Navigationsleiste gesetzt 
     </ConfigItem>
     <ConfigItem Name="TimeAccounting::DefaultProjectName" Required="1" Valid="1">
         <Description Lang="en">Default name for new projects.</Description>
-        <Description Lang="de">Initialer Projectname beim erstellen eines neuen Projekt in der Zeiterfassung.</Description>
+        <Description Lang="de">Initialer Projektname beim Erstellen eines neuen Projekts in der Zeiterfassung.</Description>
         <Group>TimeAccounting</Group>
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
@@ -152,7 +152,7 @@ können die Rechte und die Positionen der Icons in der Navigationsleiste gesetzt 
         <Group>TimeAccounting</Group>
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
-            <String Regex="">2008-01-01</String>
+            <String Regex="">2010-01-01</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="TimeAccounting::DefaultUserDateEnd" Required="1" Valid="1">
@@ -161,7 +161,7 @@ können die Rechte und die Positionen der Icons in der Navigationsleiste gesetzt 
         <Group>TimeAccounting</Group>
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
-            <String Regex="">2008-12-31</String>
+            <String Regex="">2010-12-31</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="TimeAccounting::DefaultUserStatus" Required="1" Valid="1">
