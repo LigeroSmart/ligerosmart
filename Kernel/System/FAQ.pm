@@ -1,8 +1,8 @@
 # --
 # Kernel/System/FAQ.pm - all faq funktions
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.56 2008-10-27 22:57:53 ub Exp $
+# $Id: FAQ.pm,v 1.57 2009-01-21 16:56:58 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.56 $) [1];
+$VERSION = qw($Revision: 1.57 $) [1];
 
 =head1 NAME
 
@@ -2863,20 +2863,6 @@ sub FAQApprovalUpdate {
     # create new approval ticket
     if ( $Self->{ConfigObject}->Get('FAQ::ApprovalRequired') && !$Param{Approved} ) {
 
-        # get current system time
-        my $SystemTime = $Self->{TimeObject}->SystemTime();
-
-        # convert last change time to system time format
-        my $LastChangedTime = $Self->{TimeObject}->TimeStamp2SystemTime(
-            String => $Param{LastChange},
-        );
-
-        # define wait time (5 minutes)
-        my $WaitTime = 5 * 60;
-
-        # no approval ticket if last change was less than 5 minutes ago
-        return 1 if ( $SystemTime - $LastChangedTime < $WaitTime );
-
         my %Data = $Self->FAQGet(
             ItemID => $Param{ItemID},
         );
@@ -3494,6 +3480,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.56 $ $Date: 2008-10-27 22:57:53 $
+$Revision: 1.57 $ $Date: 2009-01-21 16:56:58 $
 
 =cut
