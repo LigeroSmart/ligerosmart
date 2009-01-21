@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: TimeAccounting.xml,v 1.10 2009-01-21 10:43:19 tr Exp $</CVS>
+    <CVS>$Id: TimeAccounting.xml,v 1.11 2009-01-21 15:37:15 tr Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AgentTimeAccounting" Required="0" Valid="1">
         <Description Lang="en">FrontendModuleRegistration for TimeAccountingModule  to define the registration settings in the program and to set rights and positions of icons in the navigation bar.</Description>
         <Description Lang="de">FrontendModulRegistration für das ZeiterfassungsModul.  Hier
@@ -248,7 +248,7 @@ können die Rechte und die Positionen der Icons in der Navigationsleiste gesetzt 
     </ConfigItem>
     <ConfigItem Name="TimeAccounting::Project2RemarkRegExp" Required="0" Valid="1">
         <Description Lang="en">For which projects is a remark required. If the RegExp match on the project, you have to insert a remark too. The RegExp use the smx parameter.</Description>
-        <Description Lang="de">Legt fest, bei welchen Projekten ein Anmerkung mit eingetragen werden muss. Bei allen Projekten, bei dennen diese RegExp matched, muss auch eine Anmerkung eingetragen werden (die RegExp arbeitet mit den smx-Parametern).</Description>
+        <Description Lang="de">Innerhalb dieser Konfigurationsoption kann eine RegExp definiert werden, die festlegt, bei welchen Projekten eine Bemerkung eingetragen werden muss (die RegExp arbeitet mit smx-Parametern).</Description>
         <Group>TimeAccounting</Group>
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
