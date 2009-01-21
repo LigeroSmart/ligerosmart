@@ -2,7 +2,7 @@
 # Kernel/Language/de_AgentTimeAccounting.pm - the de language for AgentTimeAccounting
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: de_AgentTimeAccounting.pm,v 1.41 2009-01-21 10:43:19 tr Exp $
+# $Id: de_AgentTimeAccounting.pm,v 1.42 2009-01-21 11:09:27 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -124,7 +124,8 @@ sub Data {
         'Project settings' => 'Projektkonfiguration',
         'If you select "Miscellaneous (misc)" the task, please explain this in the remarks field' =>
             'Wenn Sie als Tätigkeit Sonstiges auswählen, geben Sie bitte eine Beschreibung um Feld Anmerkung an.',
-        'Please add a remark with more than 8 characters!'     => 'Bitte geben Sie eine Anmerkung ein die länger als 8 Zeichen ist!',
+        'Please add a remark with more than 8 characters!' =>
+            'Bitte geben Sie eine Anmerkung ein die länger als 8 Zeichen ist!',
 
 # FIXME actually the following should be included in file de.pm, however they're not so I put'em here...
         'Mon'      => 'Mo',

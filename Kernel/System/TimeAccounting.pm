@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.24 2009-01-21 10:43:19 tr Exp $
+# $Id: TimeAccounting.pm,v 1.25 2009-01-21 11:09:27 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.24 $) [1];
+$VERSION = qw($Revision: 1.25 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week);
 
@@ -204,17 +204,17 @@ sub UserReporting {
         $Data{$UserID}{TargetStateTotal} = 0;
 
         my $Counter = 0;
-        for my $Year ( $YearStart..$YearEnd ) {
+        for my $Year ( $YearStart .. $YearEnd ) {
             my $MonthStartPoint = $Year == $YearStart ? $MonthStart : 1;
             my $MonthEndPoint   = $Year == $YearEnd   ? $MonthEnd   : 12;
 
-            for my $Month ( $MonthStartPoint..$MonthEndPoint ) {
+            for my $Month ( $MonthStartPoint .. $MonthEndPoint ) {
 
                 my $DayStartPoint = $Year == $YearStart && $Month == $MonthStart ? $DayStart : 1;
-                my $DayEndPoint   = $Year == $YearEnd
+                my $DayEndPoint = $Year == $YearEnd
                     && $Month == $MonthEnd ? $DayEnd : Days_in_Month( $Year, $Month );
 
-                for my $Day ( $DayStartPoint..$DayEndPoint ) {
+                for my $Day ( $DayStartPoint .. $DayEndPoint ) {
                     my %WorkingUnit = $Self->WorkingUnitsGet(
                         Year   => $Year,
                         Month  => $Month,
@@ -296,12 +296,12 @@ returns a hash with the project data
 =cut
 
 sub ProjectSettingsGet {
-    my ($Self, %Param) = @_;
+    my ( $Self, %Param ) = @_;
 
     my %Data  = ();
     my $Where = '';
 
-    if ($Param{Status}) {
+    if ( $Param{Status} ) {
         $Where = ' WHERE status = ';
         $Where .= $Param{Status} eq 'invalid' ? '0' : '1';
     }
@@ -826,8 +826,8 @@ sub WorkingUnitsCompletnessCheck {
     my $UserID = $Param{UserID} || $Self->{UserID};
 
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT DISTINCT time_start FROM time_accounting_table WHERE user_id = ?",
-        Bind => [\$UserID],
+        SQL  => "SELECT DISTINCT time_start FROM time_accounting_table WHERE user_id = ?",
+        Bind => [ \$UserID ],
     );
 
     # fetch Data
@@ -859,18 +859,18 @@ sub WorkingUnitsCompletnessCheck {
 
     my $Calendar = { $Self->UserGet( UserID => $UserID ) }->{Calendar};
 
-    for my $Year ( $YearStart..$YearEnd) {
+    for my $Year ( $YearStart .. $YearEnd ) {
 
         my $MonthStartPoint = $Year == $YearStart ? $MonthStart : 1;
         my $MonthEndPoint   = $Year == $YearEnd   ? $MonthEnd   : 12;
 
-        for my $Month ( $MonthStartPoint..$MonthEndPoint) {
+        for my $Month ( $MonthStartPoint .. $MonthEndPoint ) {
             my $DayStartPoint = $Year == $YearStart && $Month == $MonthStart ? $DayStart : 1;
             my $DayEndPoint = $Year == $YearEnd
                 && $Month == $MonthEnd ? $DayEnd : Days_in_Month( $Year, $Month );
             my $MonthString = sprintf( "%02d", $Month );
 
-            for my $Day ( $DayStartPoint..$DayEndPoint ) {
+            for my $Day ( $DayStartPoint .. $DayEndPoint ) {
                 my $VacationCheck = $Self->{TimeObject}->VacationCheck(
                     Year     => $Year,
                     Month    => $Month,
@@ -1040,6 +1040,7 @@ sub WorkingUnitsInsert {
         my $EndTime   = $Date . " " . $Param{$WorkingUnitID}{EndTime};
 
         for my $Element (qw(ProjectID ActionID Period)) {
+
             # '' does not work in integer field of postgres
             if (
                 ( !defined( $Param{$WorkingUnitID}{$Element} ) )
@@ -1095,7 +1096,7 @@ sub WorkingUnitsDelete {
     # delete old working units
     my $SQL = "DELETE FROM time_accounting_table "
         . "WHERE time_start <= '$Date 23:59:59' AND time_start >= '$Date 00:00:00' "
-            . " AND user_id = '$Self->{UserID}'";
+        . " AND user_id = '$Self->{UserID}'";
 
     return if !$Self->{DBObject}->Do( SQL => $SQL );
     return 1;
@@ -1201,8 +1202,8 @@ sub ProjectTotalHours {
 
     # db select
     my $Total = 0;
-    my $SQL  = 'SELECT SUM(period) FROM time_accounting_table WHERE project_id = ?';
-    my $Bind = [ \$Param{ProjectID} ];
+    my $SQL   = 'SELECT SUM(period) FROM time_accounting_table WHERE project_id = ?';
+    my $Bind  = [ \$Param{ProjectID} ];
     return if !$Self->{DBObject}->Prepare( SQL => $SQL, Bind => $Bind );
 
     # fetch Data
@@ -1313,8 +1314,9 @@ sub LastProjectsOfUser {
     # db select
     # I don't use distinct because of ORDER BY problems of postgre sql
     my %Projects = ();
-    my $SQL  = 'SELECT project_id FROM time_accounting_table WHERE user_id = ? AND project_id <> -1 ORDER BY time_start DESC';
-    my $Bind = [ \$Self->{UserID} ];
+    my $SQL
+        = 'SELECT project_id FROM time_accounting_table WHERE user_id = ? AND project_id <> -1 ORDER BY time_start DESC';
+    my $Bind  = [ \$Self->{UserID} ];
     my $Limit = 40;
     return if !$Self->{DBObject}->Prepare( SQL => $SQL, Bind => $Bind, Limit => $Limit );
 
@@ -1322,7 +1324,7 @@ sub LastProjectsOfUser {
     my $Counter = 0;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $Counter++;
-        if ($Counter < 7) {
+        if ( $Counter < 7 ) {
             $Projects{ $Row[0] } = 1;
         }
     }
@@ -1344,6 +1346,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.24 $ $Date: 2009-01-21 10:43:19 $
+$Revision: 1.25 $ $Date: 2009-01-21 11:09:27 $
 
 =cut

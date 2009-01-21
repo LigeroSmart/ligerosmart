@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.27 2009-01-21 10:43:19 tr Exp $
+# $Id: AgentTimeAccounting.pm,v 1.28 2009-01-21 11:09:27 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.27 $) [1];
+$VERSION = qw($Revision: 1.28 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -89,10 +89,10 @@ sub Run {
     # edit the time accounting elements
     # ---------------------------------------------------------- #
     if ( $Self->{Subaction} eq 'Edit' ) {
-        my %Frontend    = ();
-        my %ActionList  = ();
-        my %Data        = ();
-        my %Action      = $Self->{TimeAccountingObject}->ActionSettingsGet();
+        my %Frontend   = ();
+        my %ActionList = ();
+        my %Data       = ();
+        my %Action     = $Self->{TimeAccountingObject}->ActionSettingsGet();
         my ( $Sec, $Min, $Hour, $Day, $Month, $Year )
             = $Self->{TimeObject}->SystemTime2Date(
             SystemTime => $Self->{TimeObject}->SystemTime(),
@@ -188,8 +188,8 @@ sub Run {
             # the value is need after the for loop
 
             WORKINGUNITID:
-            for my $WorkingUnitID ( 1..10 ) {
-                $WorkingUnitIDLast =  $WorkingUnitID;
+            for my $WorkingUnitID ( 1 .. 10 ) {
+                $WorkingUnitIDLast = $WorkingUnitID;
                 for (qw(ProjectID ActionID Remark StartTime EndTime Period)) {
                     $Param{$_} = $Self->{ParamObject}->GetParam(
                         Param => $_ . '[' . $WorkingUnitID . ']'
@@ -893,7 +893,7 @@ sub Run {
             UserID => $Param{UserID},
         );
 
-        for my $Day ( 1..$DaysOfMonth ) {
+        for my $Day ( 1 .. $DaysOfMonth ) {
             $Param{Day} = sprintf( "%02d", $Day );
             $Param{Weekday} = Day_of_Week( $Param{Year}, $Param{Month}, $Day ) - 1;
             my $VacationCheck = $Self->{TimeObject}->VacationCheck(
@@ -1118,7 +1118,7 @@ sub Run {
         );
 
         if ( $Param{ActionAction} || $Param{NewAction} ) {
-            my %Action = $Self->{TimeAccountingObject}->ActionSettingsGet();
+            my %Action      = $Self->{TimeAccountingObject}->ActionSettingsGet();
             my $ActionEmpty = 0;
             my %ActionCheck = ();
             for my $ActionID ( keys %Action ) {
@@ -1212,8 +1212,9 @@ sub Run {
 
                         # the following is because of deactivate user
                         if (
-                            !defined $Self->{ParamObject}
-                            ->GetParam( Param => 'DateStart[' . $UserID . '][' . $Period . ']' )
+                            !defined $Self->{ParamObject}->GetParam(
+                                Param => 'DateStart[' . $UserID . '][' . $Period . ']'
+                            )
                             )
                         {
                             delete $Data{$UserID};
@@ -1281,7 +1282,7 @@ sub Run {
         );
 
         # Show action data
-        my %Action = $Self->{TimeAccountingObject}->ActionSettingsGet();
+        my %Action      = $Self->{TimeAccountingObject}->ActionSettingsGet();
         my $ActionEmpty = 0;
         my %SortAction  = ();
         for my $ActionID ( keys %Action ) {
@@ -1504,7 +1505,7 @@ sub Run {
     # time accounting reporting
     # ---------------------------------------------------------- #
     elsif ( $Self->{Subaction} eq 'Reporting' ) {
-        my %Frontend   = ();
+        my %Frontend = ();
         my %ShownUsers = $Self->{UserObject}->UserList( Type => 'Long', Valid => 0 );
         my ( $Sec, $Min, $Hour, $CurrentDay, $Month, $Year )
             = $Self->{TimeObject}->SystemTime2Date(
@@ -1538,7 +1539,7 @@ sub Run {
         $Param{Month_to_Text} = $MonthArray[ $Param{Month} ];
 
         my %Month = ();
-        for my $ID ( 1..12 ) {
+        for my $ID ( 1 .. 12 ) {
             $Month{ sprintf( "%02d", $ID ) }{Value}    = $MonthArray[$ID];
             $Month{ sprintf( "%02d", $ID ) }{Position} = $ID;
             if ( $Param{Month} == $ID ) {
@@ -1555,7 +1556,7 @@ sub Run {
 
         # FIXME the range should be created automatically
         # Further, here I can use the map function
-        for my $ID ( 2005..$Year ) {
+        for my $ID ( 2005 .. $Year ) {
             $Year{$ID} = $ID;
         }
 
@@ -1732,8 +1733,9 @@ sub Run {
 
         # check needed params
         if ( !$Param{ProjectID} ) {
-            return $Self->{LayoutObject}
-                ->ErrorScreen( Message => 'ProjectReporting: Need ProjectID' );
+            return $Self->{LayoutObject}->ErrorScreen(
+                Message => 'ProjectReporting: Need ProjectID'
+            );
         }
 
         my %Action  = $Self->{TimeAccountingObject}->ActionSettingsGet();
@@ -1822,7 +1824,7 @@ sub Run {
         $Param{TotalAll} = sprintf( "%.2f", $Param{TotalAll} );
 
         my @ProjectHistoryArray = $Self->{TimeAccountingObject}->ProjectHistory(
-            ProjectID  => $Param{ProjectID},
+            ProjectID => $Param{ProjectID},
         );
         for my $Row (@ProjectHistoryArray) {
             $Self->{LayoutObject}->Block(
@@ -1833,21 +1835,21 @@ sub Run {
                     Remark => $Row->{Remark} || '--',
                     Period => $Row->{Period},
                     Date   => $Row->{Date},
-                }
+                    }
             );
         }
 
         # show the total sum of hours at the end of the history list
         # I also can use $Param{TotalAll}
         my $ProjectTotalHours = $Self->{TimeAccountingObject}->ProjectTotalHours(
-            ProjectID  => $Param{ProjectID},
+            ProjectID => $Param{ProjectID},
         );
 
         $Self->{LayoutObject}->Block(
             Name => 'HistoryTotal',
             Data => {
                 HistoryTotal => $ProjectTotalHours || 0,
-            }
+                }
         );
 
         # build output
@@ -1892,7 +1894,7 @@ sub _FirstUserRedirect {
 }
 
 sub _ProjectList {
-    my ($Self, %Param) = @_;
+    my ( $Self, %Param ) = @_;
 
     # check needed param
     if ( !$Param{WorkingUnitID} ) {
@@ -1918,7 +1920,7 @@ sub _ProjectList {
     my @LastProjects = $Self->{TimeAccountingObject}->LastProjectsOfUser();
 
     # add the favorits
-    my %Last = map {$_ => 1} @LastProjects;
+    my %Last = map { $_ => 1 } @LastProjects;
 
     PROJECTID:
     for my $ProjectID (
@@ -1928,7 +1930,7 @@ sub _ProjectList {
     {
         next PROJECTID if !$Last{$ProjectID};
         my %Hash = (
-            Key =>   $ProjectID,
+            Key   => $ProjectID,
             Value => $Project{Project}{$ProjectID},
         );
         push @List, \%Hash;
@@ -1951,10 +1953,10 @@ sub _ProjectList {
         )
     {
         my %Hash = (
-            Key =>   $ProjectID,
+            Key   => $ProjectID,
             Value => $Project{Project}{$ProjectID},
         );
-        if ( $Param{SelectedID} && $Param{SelectedID} eq $ProjectID) {
+        if ( $Param{SelectedID} && $Param{SelectedID} eq $ProjectID ) {
             $Hash{Selected} = 1;
         }
 
@@ -1976,17 +1978,17 @@ sub _Project2RemarkRegExp {
     my $Self = shift;
 
     my @Projects2Remark = ();
-    my %ProjectData = $Self->{TimeAccountingObject}->ProjectSettingsGet(
+    my %ProjectData     = $Self->{TimeAccountingObject}->ProjectSettingsGet(
         Status => 'valid',
     );
 
     return '' if !$Self->{ConfigObject}->Get('TimeAccounting::Project2RemarkRegExp');
 
-    my $Project2RemarkRegExp = $Self->{ConfigObject}->Get('TimeAccounting::Project2RemarkRegExp') ;
+    my $Project2RemarkRegExp = $Self->{ConfigObject}->Get('TimeAccounting::Project2RemarkRegExp');
 
-    for my $ProjectID (keys %{$ProjectData{Project}}) {
-        if ($ProjectData{Project}{$ProjectID} =~ m{$Project2RemarkRegExp}smx) {
-            push @Projects2Remark , $ProjectID;
+    for my $ProjectID ( keys %{ $ProjectData{Project} } ) {
+        if ( $ProjectData{Project}{$ProjectID} =~ m{$Project2RemarkRegExp}smx ) {
+            push @Projects2Remark, $ProjectID;
         }
     }
 
