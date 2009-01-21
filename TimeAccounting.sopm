@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: TimeAccounting.sopm,v 1.21 2008-08-29 05:48:42 tr Exp $</CVS>
+    <CVS>$Id: TimeAccounting.sopm,v 1.22 2009-01-21 10:43:19 tr Exp $</CVS>
     <Name>TimeAccounting</Name>
     <Version>0.0.0</Version>
-    <Framework>2.3.x</Framework>
+    <Framework>2.3.4</Framework>
+    <Framework>2.3.5</Framework>
+    <Framework>2.3.6</Framework>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
@@ -68,6 +70,7 @@
             <Column Name="description"       Required="true"  Type="VARCHAR" Size="1020"/>
             <Column Name="show_overtime"     Required="false" Type="INTEGER"/>
             <Column Name="create_project"    Required="false" Type="INTEGER"/>
+            <Column Name="calendar"          Required="false" Type="INTEGER"/>
         </TableCreate>
     </DatabaseInstall>
     <DatabaseUninstall>
@@ -77,6 +80,11 @@
         <TableDrop Name="time_accounting_user"/>
         <TableDrop Name="time_accounting_user_period"/>
     </DatabaseUninstall>
+    <DatabaseUpgrade>
+        <TableAlter Name="time_accounting_user" Version="1.2.2">
+            <ColumnAdd Name="calendar" Required="false" Type="INTEGER"/>
+        </TableAlter>
+    </DatabaseUpgrade>
     <CodeInstall Type="post">
 
         # define function name

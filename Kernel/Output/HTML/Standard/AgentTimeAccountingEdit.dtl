@@ -1,13 +1,51 @@
 # --
 # AgentTimeAccountingEdit.dtl - provides HTML form for time accounting edit
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingEdit.dtl,v 1.18 2008-09-30 11:41:19 tr Exp $
+# $Id: AgentTimeAccountingEdit.dtl,v 1.19 2009-01-21 10:43:19 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
+<script language="JavaScript" type="text/javascript">
+<!--
+function submit_compose() {
+    for (var Counter = 1;Counter < 10; Counter++) {
+        var Remark  = 'Remark['    + Counter + ']';
+        var Project = 'ProjectID[' + Counter + ']';
+
+        if ( document.compose.elements[Project].value ) {
+
+            var RemarkCheck = project_remark_check(Project);
+
+            if (   document.compose.elements[Project].value
+                && RemarkCheck
+                &&  (!document.compose.elements[Remark].value
+                        || document.compose.elements[Remark].value.length < 8
+                    )
+            ) {
+                alert('$JSText{"Please add a remark with more than 8 characters!"}');
+                document.compose.elements[Remark].focus();
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+function project_remark_check(Project) {
+
+    var reg = /^($QData{"RemarkRegExp"})$/;
+
+    if ( reg.test(document.compose.elements[Project].value) == false ) {
+        return false;
+    }
+    return true;
+}
+
+//-->
+</script>
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
   <tr>
     <td colspan="3" class="mainhead">
@@ -34,7 +72,7 @@
         <tr>
           <td>
             <table class="contentbody" border="0" width="100%" cellspacing="0" cellpadding="4">
-              <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
+              <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose2">
                 <input type="hidden" name="Action"    value="$Env{"Action"}">
                 <input type="hidden" name="Subaction" value="Edit">
                 <tr>
@@ -86,7 +124,7 @@
             </table>
             <br>
             <table border="0" width="100%" cellspacing="0" cellpadding="4">
-              <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data">
+              <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
                 <input type="hidden" name="Action"    value="$Env{"Action"}">
                 <input type="hidden" name="Subaction" value="Edit">
                 <input type="hidden" name="Status"    value="Action">
@@ -177,7 +215,7 @@
                   <td class="contentfooter">
                     <input class="button" style="display:none;" type="submit" value="$Text{"Submit"}" >
                     <input class="button" type="submit" value="$Text{"Delete"}" name="Delete">
-                    <input class="button" accesskey="g" type="submit" value="$Text{"Submit"}">
+                    <input class="button" accesskey="g" type="submit" value="$Text{"Submit"}" onclick="return submit_compose();">
                   </td>
                 </tr>
                 <tr>

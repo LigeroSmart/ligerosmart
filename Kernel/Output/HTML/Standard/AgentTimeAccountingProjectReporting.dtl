@@ -1,8 +1,8 @@
 # --
 # AgentTimeAccountingProjectReporting.dtl - provides HTML form for time accounting reporting
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingProjectReporting.dtl,v 1.5 2008-09-29 13:40:52 shb Exp $
+# $Id: AgentTimeAccountingProjectReporting.dtl,v 1.6 2009-01-21 10:43:19 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -12,7 +12,7 @@
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
   <tr>
     <td class="mainhead">
-      $Env{"Box0"}$Text{"Project time reporting"}: $QData{"Project"} $Env{"Box1"}
+      $Env{"Box0"}$Text{"Project report"}: $QData{"Project"} $Env{"Box1"}
     </td>
   </tr>
   <tr>
@@ -23,45 +23,10 @@
   <tr>
     <td class="mainbody">
       <br>
-#      <table class="contentbody" border="0" width="50%" cellpadding="3" cellspacing="0" align="center">
-#        <tr>
-#          <td colspan="2" class="contenthead" >$Text{"Month navigation"}</td>
-#        </tr>
-#        <tr class="contentvalue">
-#          <td>
-#            <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
-#              <input type="hidden" name="Action"    value="$Env{"Action"}">
-#              <input type="hidden" name="Subaction" value="Reporting">
-#              $Data{"MonthOption"}
-#              $Data{"YearOption"}
-#              <input class="button" accesskey="g" type="submit" value="$Text{"Submit"}">
-#            </form>
-#          </td>
-#          <td>
-#            <table>
-#              <tr>
-#                <td>
-#                  $Text{"$QData{"Month_to_Text"}"} $QData{"Year"}
-#                </td>
-#                <td>
-#                  <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Reporting&Year=$QData{"YearBack"}&Month=$QData{"MonthBack"}"><img border="0" src="$Env{"Images"}left-big.png" alt="$Text{"One day back"}"></a>
-#                </td>
-#                <td>
-#                  <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Reporting&Year=$QData{"YearNext"}&Month=$QData{"MonthNext"}"><img border="0" src="$Env{"Images"}right-big.png" alt="$Text{"Next day"}"></a>
-#                </td>
-#              </tr>
-#            </table>
-#          </td>
-#        </tr>
-#        <tr>
-#          <td colspan="2" class="contentfooter">&nbsp;</td>
-#        </tr>
-#      </table>
-#      <br>
       <table class="contentbody" border="0" width="50%" cellpadding="3" cellspacing="0" align="center">
         <tr>
           <td class="contenthead">
-            $Text{"Project reports"}: $QData{"Project"}
+            $Text{"Project report"}: $QData{"Project"}
           </td>
         </tr>
         <tr>
@@ -88,6 +53,45 @@
                 <td class="contentkey" align="right">$QData{"Total"}</td>
 <!-- dtl:block:UserTotal -->
                 <td class="contentkey" align="right">$QData{"TotalAll"}</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td class="contentfooter">&nbsp;</td>
+        </tr>
+      </table>
+      <br>
+      <table class="contentbody" border="0" width="50%" cellpadding="3" cellspacing="0" align="center">
+        <tr>
+          <td class="contenthead">
+            $Text{"History"}: $QData{"Project"}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <table border="1" width="100%" align="center">
+              <tr class="contentkey">
+                <td>$Text{"Date"}</td>
+                <td>$Text{"User"}</td>
+                <td>$Text{"Task"}</td>
+                <td>$Text{"Remark"}</td>
+                <td>$Text{"Period"}</td>
+              </tr>
+<!-- dtl:block:Row -->
+              <tr>
+                <td class="contentvalue">$QData{"Date"}</td>
+                <td class="contentvalue">$QData{"User"}</td>
+                <td class="contentvalue">$QData{"Action"}</td>
+                <td class="contentvalue">$QData{"Remark"}</td>
+                <td class="contentvalue" align="right">$QData{"Period"}</td>
+              </tr>
+<!-- dtl:block:Row -->
+              <tr>
+<!-- dtl:block:HistoryTotal -->
+                <td colspan="4" class="contentkey">$Text{"Total"}</td>
+                <td class="contentkey" align="right">$QData{"HistoryTotal"}</td>
+<!-- dtl:block:HistoryTotal -->
               </tr>
             </table>
           </td>

@@ -1,15 +1,18 @@
 # --
 # TODO - todo list of TimeAccounting
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: TODO.TimeAccounting,v 1.22 2008-07-28 10:03:20 tr Exp $
+# $Id: TODO.TimeAccounting,v 1.23 2009-01-21 10:43:19 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 
-TimeAccounting 1.0
+TimeAccounting 1.3
+- Insert Unit tests.
+- change the workingunit handling from hash to array
+- insert a complete project-task-remark-relationship handling
 - delete form: use buttons instead of links
 - Make description in projectsettings to an requiredfield
 - insert a help/description text in projectsetting dtl

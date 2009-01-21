@@ -1,8 +1,8 @@
 # --
 # Kernel/Language/de_AgentTimeAccounting.pm - the de language for AgentTimeAccounting
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: de_AgentTimeAccounting.pm,v 1.40 2008-11-27 15:29:54 tr Exp $
+# $Id: de_AgentTimeAccounting.pm,v 1.41 2009-01-21 10:43:19 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,13 +15,13 @@ use strict;
 use warnings;
 
 sub Data {
-    my ($Self) = @_;
+    my $Self = shift;
 
     $Self->{Translation} = {
         %{ $Self->{Translation} },
 
         # Template: AgentTimeAccounting
-        'Setting'        => 'Konfiguration',
+        'Setting'          => 'Konfiguration',
         'Project settings' => 'Projektkonfigurationen',
 
         'Next day'                                 => 'Nächster Tag',
@@ -29,7 +29,7 @@ sub Data {
         'Date'                                     => 'Datum',
         'Comments'                                 => 'Kommentare',
         'until'                                    => 'bis',
-        'Total hours worked'                             => 'Arbeitsstunden',
+        'Total hours worked'                       => 'Arbeitsstunden',
         'Working Hours'                            => 'Arbeitsstunden',
         'Hours per week'                           => 'Wochenstunden',
         'this month'                               => 'dieser Monat',
@@ -43,30 +43,30 @@ sub Data {
         'Vacation taken (total)'                   => 'Urlaubstage (Summe)',
         'Remaining vacation'                       => 'Urlaubstage (verbleibend)',
         'Sick leave taken (this month)'            => 'Erkrankt (dieser Monat)',
-        'Sick leave taken (total)'                            => 'Erkrankt (Summe)',
+        'Sick leave taken (total)'                 => 'Erkrankt (Summe)',
         'TimeAccounting'                           => 'Zeiterfassung',
-        'Time reporting monthly overview'       => 'Monatsübersicht Zeiterfassung',
+        'Time reporting monthly overview'          => 'Monatsübersicht Zeiterfassung',
         'Edit time record'                         => 'Zeiterfassung bearbeiten',
-        'Edit time accounting settings'         => 'Zeiterfassungseinstellungen bearbeiten',
-        'User reports'                           => 'Nutzerberichte',
-        'User\'s project overview'                  => 'Nutzerberichte',
-        'Project reports'                        => 'Projektberichte',
-        'Time reporting'                          => 'Zeitberichte',
-        'Project time reporting'                   => 'Zeitberichte',
+        'Edit time accounting settings'            => 'Zeiterfassungseinstellungen bearbeiten',
+        'User reports'                             => 'Nutzerberichte',
+        'User\'s project overview'                 => 'Nutzerberichte',
+        'Project report'                           => 'Projektbericht',
+        'Project reports'                          => 'Projektberichte',
+        'Time reporting'                           => 'Zeitberichte',
         'LeaveDay Remaining'                       => 'Verbleibende Urlaubstage',
-        'Monthly total'                                => 'pro Monat',
-        'View time record'                                => 'Zeitrekord ansicht',
-        'View of '                                => 'Ansicht von',
-        'Monthly'                                => 'pro Monat',
+        'Monthly total'                            => 'pro Monat',
+        'View time record'                         => 'Zeitrekord ansicht',
+        'View of '                                 => 'Ansicht von',
+        'Monthly'                                  => 'pro Monat',
         'Hours'                                    => 'Stunden',
-        'Date navigation'                           => 'Auswahl Datum',
-        'Month navigation'                           => 'Auswahl Datum',
-        'Days without entries'                          => 'nicht ausgefüllte Tage',
+        'Date navigation'                          => 'Auswahl Datum',
+        'Month navigation'                         => 'Auswahl Datum',
+        'Days without entries'                     => 'nicht ausgefüllte Tage',
         'Project'                                  => 'Projekt',
         'Projects'                                 => 'Projekte',
-        'Grand total'                                    => 'Summe',
-        'Lifetime'                                    => 'Summe',
-        'Lifetime total'                                    => 'Summe',
+        'Grand total'                              => 'Summe',
+        'Lifetime'                                 => 'Summe',
+        'Lifetime total'                           => 'Summe',
         'Reporting'                                => 'Berichtswesen',
         'Task settings'                            => 'Tätigkeitseinstellungen',
         'User settings'                            => 'Nutzereinstellungen',
@@ -82,20 +82,21 @@ sub Data {
         'Days of vacation'                         => 'Urlaubstage',
         'On vacation'                              => 'im Urlaub',
         'Sick day'                                 => 'Erkrankt',
-        'Sick leave (Days)'                        => 'Erkrankt (in Tagen)'   ,
+        'Sick leave (Days)'                        => 'Erkrankt (in Tagen)',
         'Sick leave'                               => 'Erkrankt',
         'On sick leave'                            => 'Erkrankt',
         'Task'                                     => 'Tätigkeit',
         'Authorized overtime'                      => 'autorisierte Überstunden',
-        'On overtime leave'                                 => 'Überstunden',
-        'Overtime leave'                                 => 'Überstunden',
+        'On overtime leave'                        => 'Überstunden',
+        'Overtime leave'                           => 'Überstunden',
         'Total'                                    => 'Summe',
         'Overview of '                             => 'Übersicht - ',
         'TimeAccounting of'                        => 'Zeiterfassung vom',
         'Successful insert!'                       => 'Erfolgreich eingefügt!',
         'Do you really want to delete this Object' => 'Wollen Sie diesen Eintrag wirklich löschen',
         'Can\'t insert Working Units!'             => 'Kann die Arbeitsstunden nicht einfügen!',
-        'Can\'t save settings, because of missing action!' => 'Nicht speicherbar - Tätigkeit fehlt!',
+        'Can\'t save settings, because of missing task!' =>
+            'Nicht speicherbar - Tätigkeit fehlt!',
         'Can\'t save settings, because of missing project!' =>
             'Nicht speicherbar - Projektangabe fehlt!',
         'Can\'t save settings, because the Period is bigger than the interval between Starttime and Endtime!'
@@ -123,8 +124,9 @@ sub Data {
         'Project settings' => 'Projektkonfiguration',
         'If you select "Miscellaneous (misc)" the task, please explain this in the remarks field' =>
             'Wenn Sie als Tätigkeit Sonstiges auswählen, geben Sie bitte eine Beschreibung um Feld Anmerkung an.',
+        'Please add a remark with more than 8 characters!'     => 'Bitte geben Sie eine Anmerkung ein die länger als 8 Zeichen ist!',
 
-        # FIXME actually the following should be included in file de.pm, however they're not so I put'em here...
+# FIXME actually the following should be included in file de.pm, however they're not so I put'em here...
         'Mon'      => 'Mo',
         'Tue'      => 'Di',
         'Wed'      => 'Mi',
