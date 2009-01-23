@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.58 2009-01-23 17:53:03 ub Exp $
+# $Id: FAQ.pm,v 1.59 2009-01-23 18:04:21 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.58 $) [1];
+$VERSION = qw($Revision: 1.59 $) [1];
 
 =head1 NAME
 
@@ -2226,17 +2226,17 @@ sub GetCategoryTree {
     my $CategoryTree = {};
 
     # check all parent ids
-    for my $ParentID ( sort { $a <=> $b } keys %{ $Param{CategoryMap} } ) {
+    for my $ParentID ( sort { $a <=> $b } keys %CategoryMap ) {
 
-        # get subcategories and names fpr this parent id
-        while( my ($CategoryID, $CategoryName) = each( %{ $Param{CategoryMap}->{$ParentID} } ) ) {
+        # get subcategories and names for this parent id
+        while( my ($CategoryID, $CategoryName) = each( %{ $CategoryMap{$ParentID} } ) ) {
 
             # prepend parents category name
             if ( $CategoryTree->{$ParentID} ) {
                 $CategoryName = $CategoryTree->{$ParentID} . '::' . $CategoryName;
             }
 
-            # add category to Tree
+            # add category to tree
             $CategoryTree->{$CategoryID} = $CategoryName;
         }
     }
@@ -3472,6 +3472,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.58 $ $Date: 2009-01-23 17:53:03 $
+$Revision: 1.59 $ $Date: 2009-01-23 18:04:21 $
 
 =cut
