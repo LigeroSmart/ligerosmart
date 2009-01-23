@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.57 2009-01-21 16:56:58 ub Exp $
+# $Id: FAQ.pm,v 1.58 2009-01-23 17:53:03 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.57 $) [1];
+$VERSION = qw($Revision: 1.58 $) [1];
 
 =head1 NAME
 
@@ -2214,45 +2214,37 @@ sub GetCategoryTree {
     if ( $Valid ) {
         $SQL .= ' WHERE valid_id = 1';
     }
-    $SQL .= ' ORDER BY name';
-    $Self->{DBObject}->Prepare( SQL => $SQL );
-    my @Data;
+    $Self->{DBObject}->Prepare(
+        SQL => $SQL,
+    );
+
+    my %CategoryMap = ();
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        push( @Data, \@Row );
-    }
-    my %Hash = ();
-    for my $Row (@Data) {
-        my @RowData = @{$Row};
-        $Hash{ $RowData[1] }->{ $RowData[0] } = $RowData[2];
+        $CategoryMap{ $Row[1] }->{ $Row[0] } = $Row[2];
     }
 
-    # return tree
-    my $Categories = $Self->_MakeTree( ParentID => 0, Parent => '', Hash => \%Hash, Tree => {}, );
-    if ( !$Categories ) {
-        $Categories = {};
+    my $CategoryTree = {};
+
+    # check all parent ids
+    for my $ParentID ( sort { $a <=> $b } keys %{ $Param{CategoryMap} } ) {
+
+        # get subcategories and names fpr this parent id
+        while( my ($CategoryID, $CategoryName) = each( %{ $Param{CategoryMap}->{$ParentID} } ) ) {
+
+            # prepend parents category name
+            if ( $CategoryTree->{$ParentID} ) {
+                $CategoryName = $CategoryTree->{$ParentID} . '::' . $CategoryName;
+            }
+
+            # add category to Tree
+            $CategoryTree->{$CategoryID} = $CategoryName;
+        }
     }
 
     # cache
-    $Self->{Cache}->{GetCategoryTree}->{$Valid} = $Categories;
+    $Self->{Cache}->{GetCategoryTree}->{$Valid} = $CategoryTree;
 
-    return $Categories;
-}
-
-sub _MakeTree {
-    my ( $Self, %Param ) = @_;
-
-    for my $ID ( keys( %{ $Param{Hash}->{ $Param{ParentID} } } ) ) {
-        $Param{Tree}->{$ID} = $Param{Parent} . $Param{Hash}->{ $Param{ParentID} }{$ID};
-        if ( defined( $Param{Hash}->{$ID} ) ) {
-            $Self->_MakeTree(
-                ParentID => $ID,
-                Hash     => $Param{Hash},
-                Tree     => $Param{Tree},
-                Parent   => $Param{Tree}->{$ID} . '::',
-                )
-        }
-    }
-    return $Param{Tree};
+    return $CategoryTree;
 }
 
 =item SetCategoryGroup()
@@ -3480,6 +3472,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.57 $ $Date: 2009-01-21 16:56:58 $
+$Revision: 1.58 $ $Date: 2009-01-23 17:53:03 $
 
 =cut
