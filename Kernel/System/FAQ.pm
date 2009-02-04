@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.59 2009-01-23 18:04:21 ub Exp $
+# $Id: FAQ.pm,v 1.60 2009-02-04 00:06:29 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.59 $) [1];
+$VERSION = qw($Revision: 1.60 $) [1];
 
 =head1 NAME
 
@@ -1206,10 +1206,6 @@ sub CategorySearch {
         $Ext .= ")";
     }
 
-    #if (defined($Param{ValidID})) {
-    #    $Ext .= " AND valid_id = '".$Self->{DBObject}->Quote($Param{ValidID}, 'Integer')."' ";
-    #}
-
     # ORDER BY
     if ( $Param{Order} ) {
         $Ext .= " ORDER BY ";
@@ -1292,7 +1288,7 @@ sub CategoryGet {
 
 get all subcategory ids of of a category
 
-    my %Category = $FAQObject->CategorySubCategorieIDList(
+    my %Category = $FAQObject->CategorySubCategoryIDList(
         ParentID   => 1,
         ItemStates => [1,2,3]
     );
@@ -1320,8 +1316,8 @@ sub CategorySubCategoryIDList {
                 Order    => 'Created',
                 Sort     => 'down',
                 UserID   => $Param{UserID},
-                )
-            };
+            )
+        };
     }
     elsif ( $Param{Mode} && $Param{Mode} eq 'Customer' ) {
 
@@ -2344,7 +2340,7 @@ sub GetAllCategoryGroup {
     }
 
     # get groups
-    my $SQL = "SELECT group_id, category_id FROM faq_category_group";
+    my $SQL = 'SELECT group_id, category_id FROM faq_category_group';
     $Self->{DBObject}->Prepare( SQL => $SQL );
     my %Groups = ();
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
@@ -2394,51 +2390,51 @@ sub GetUserCategories {
         %UserGroups = %{ $Self->{Cache}->{GetUserCategories}->{GroupMemberList} };
     }
 
-    my %Hash = ();
-    $Self->_UserCategories(
+    my $UserCategories = $Self->_UserCategories(
         Categories     => $Categories,
         CategoryGroups => $CategoryGroups,
         UserGroups     => \%UserGroups,
-        ParentID       => 0,
-        NewHash        => \%Hash,
     );
-    return \%Hash;
+
+    return $UserCategories;
 }
 
 sub _UserCategories {
     my ( $Self, %Param ) = @_;
 
-    my %Hash = ();
-    for my $CategoryID ( keys %{ $Param{Categories}->{ $Param{ParentID} } } ) {
+    my %UserCategories = ();
 
-        # check category groups
-        if ( defined( $Param{CategoryGroups}->{$CategoryID} ) ) {
+    PARENTID:
+    for my $ParentID ( sort { $a <=> $b } keys %{ $Param{Categories} }  ) {
+
+        my %SubCategories = ();
+
+        CATEGORYID:
+        for my $CategoryID ( keys %{ $Param{Categories}->{ $ParentID } } ) {
+
+            # check category groups
+            next CATEGORYID if !defined $Param{CategoryGroups}->{$CategoryID};
 
             # check user groups
+            GROUPID:
             for my $GroupID ( keys %{ $Param{CategoryGroups}->{$CategoryID} } ) {
-                if ( defined( $Param{UserGroups}->{$GroupID} ) ) {
 
-                    # add category to new hash
-                    $Hash{$CategoryID} = $Param{Categories}->{ $Param{ParentID} }{$CategoryID};
-                    last;
+                next GROUPID if !defined $Param{UserGroups}->{$GroupID};
+
+                # add category
+                $SubCategories{$CategoryID} = $Param{Categories}->{$ParentID}{$CategoryID};
+
+                # add empty hash if category has no subcategories
+                if ( !$UserCategories{$CategoryID} ) {
+                    $UserCategories{$CategoryID} = {};
                 }
+
+                last GROUPID;
             }
         }
-        else {
-            next;
-        }
-
-        # recursion
-        $Self->_UserCategories(
-            Categories     => $Param{Categories},
-            CategoryGroups => $Param{CategoryGroups},
-            UserGroups     => $Param{UserGroups},
-            ParentID       => $CategoryID,
-            NewHash        => $Param{NewHash},
-        );
+        $UserCategories{ $ParentID } = \%SubCategories;
     }
-    $Param{NewHash}->{ $Param{ParentID} } = \%Hash;
-    return;
+    return \%UserCategories;
 }
 
 =item GetCustomerCategories()
@@ -2466,26 +2462,19 @@ sub GetCustomerCategories {
     my $Categories = $Self->CategoryList( Valid => 1 );
     my $CategoryGroups = $Self->GetAllCategoryGroup();
 
-    #    my %UserGroups = $Self->{GroupObject}->GroupMemberList(
-    #        UserID => $Param{UserID},
-    #        Type => $Param{Type},
-    #        Result => 'HASH',
-    #    );
-
     my %UserGroups = $Self->{CustomerGroupObject}->GroupMemberList(
         UserID => $Param{CustomerUser},
         Type   => 'ro',
         Result => 'HASH',
     );
-    my %Hash = ();
-    $Self->_UserCategories(
+
+    my $CustomerCategories = $Self->_UserCategories(
         Categories     => $Categories,
         CategoryGroups => $CategoryGroups,
         UserGroups     => \%UserGroups,
-        ParentID       => 0,
-        NewHash        => \%Hash,
     );
-    return \%Hash;
+
+    return $CustomerCategories;
 }
 
 =item CheckCategoryUserPermission()
@@ -2509,11 +2498,11 @@ sub CheckCategoryUserPermission {
             return;
         }
     }
+    my $Hash = $Self->GetUserCategories(
+        UserID => $Param{UserID},
+        Type   => 'ro'
+    );
     for my $Permission (qw(rw ro)) {
-        my $Hash = $Self->GetUserCategories(
-            UserID => $Param{UserID},
-            Type   => 'ro'
-        );
         for my $ParentID ( keys %{$Hash} ) {
             my $CategoryHash = $Hash->{$ParentID};
             for my $CategoryID ( keys %{$CategoryHash} ) {
@@ -2568,8 +2557,9 @@ sub CheckCategoryCustomerPermission {
 
 get the category search as hash
 
-    my @CategorieIDs = @{$FAQObject->AgentCategorySearch(
-        Name => "Name"
+    my @CategoryIDs = @{$FAQObject->AgentCategorySearch(
+        UserID   => 1,
+        ParentID => 3,   # (optional, default 0)
     )};
 
 =cut
@@ -2577,7 +2567,7 @@ get the category search as hash
 sub AgentCategorySearch {
     my ( $Self, %Param ) = @_;
 
-    my @List = ();
+    my @CategoryIDs = ();
 
     # check needed stuff
     for (qw(UserID)) {
@@ -2586,16 +2576,18 @@ sub AgentCategorySearch {
             return;
         }
     }
+
     if ( !defined( $Param{ParentID} ) ) {
         $Param{ParentID} = 0;
     }
-    my $Hashref = $Self->GetUserCategories(
+    my $Categories = $Self->GetUserCategories(
         UserID => $Param{UserID},
         Type   => 'ro'
     );
-    my %CategoryHash = %{ $Hashref->{ $Param{ParentID} } };
-    @List = sort { $CategoryHash{$a} cmp $CategoryHash{$b} } ( keys %CategoryHash );
-    return \@List;
+
+    @CategoryIDs = sort { $Categories->{$a} <=> $Categories->{$b} } ( keys %{ $Categories->{ $Param{ParentID} } } );
+
+    return \@CategoryIDs;
 }
 
 =item CustomerCategorySearch()
@@ -3472,6 +3464,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.59 $ $Date: 2009-01-23 18:04:21 $
+$Revision: 1.60 $ $Date: 2009-02-04 00:06:29 $
 
 =cut
