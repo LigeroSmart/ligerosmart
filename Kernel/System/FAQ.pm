@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.60 2009-02-04 00:06:29 ub Exp $
+# $Id: FAQ.pm,v 1.61 2009-02-04 23:01:27 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.60 $) [1];
+$VERSION = qw($Revision: 1.61 $) [1];
 
 =head1 NAME
 
@@ -776,19 +776,19 @@ sub VoteGet {
 
     # public
     if ( $Param{Interface} eq '3' ) {
-        $Ext .= " ip LIKE '$Param{IP}' AND" .
+        $Ext .= " ip = '$Param{IP}' AND" .
             " item_id = $Param{ItemID}";
 
         # customer
     }
     elsif ( $Param{Interface} eq '2' ) {
-        $Ext .= " created_by LIKE '$Param{CreateBy}' AND" .
+        $Ext .= " created_by = '$Param{CreateBy}' AND" .
             " item_id = $Param{ItemID}";
 
         # internal
     }
     elsif ( $Param{Interface} eq '1' ) {
-        $Ext .= " created_by LIKE '$Param{CreateBy}' AND" .
+        $Ext .= " created_by = '$Param{CreateBy}' AND" .
             " item_id = $Param{ItemID}";
     }
     $SQL .= $Ext;
@@ -805,11 +805,9 @@ sub VoteGet {
             Rate      => $Row[5],
         );
     }
-    if ( !%Data ) {
 
-#$Self->{LogObject}->Log(Priority => 'error', Message => "No voting for this faq article! Kernel::System::FAQ::VoteGet()");
-        return {};
-    }
+    return {} if !%Data;
+
     return \%Data;
 }
 
@@ -1158,8 +1156,13 @@ sub CategoryList {
 
 get the category search as hash
 
-    my @CategorieIDs = @{$FAQObject->CategorySearch(
-        Name => "Name"
+    my @CategoryIDs = @{$FAQObject->CategorySearch(
+        Name        => 'Test',
+        ParentID    => 3,
+        ParentIDs   => [ 1, 3, 8],
+        CategoryIDs => [ 2, 5, 7 ],
+        Order       => 'Name',
+        Sort        => 'down',
     )};
 
 =cut
@@ -1290,7 +1293,6 @@ get all subcategory ids of of a category
 
     my %Category = $FAQObject->CategorySubCategoryIDList(
         ParentID   => 1,
-        ItemStates => [1,2,3]
     );
 
 =cut
@@ -1299,67 +1301,60 @@ sub CategorySubCategoryIDList {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(ParentID ItemStates)) {
+    for (qw(ParentID)) {
         if ( !defined( $Param{$_} ) ) {
             $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
             return [];
         }
     }
-    my @SubCategoryIDs = ();
+
+    my $Categories =  {};
+
     if ( $Param{Mode} && $Param{Mode} eq 'Agent' ) {
 
-        # add subcategoryids
-        @SubCategoryIDs = @{
-            $Self->AgentCategorySearch(
-                ParentID => $Param{ParentID},
-                States   => $Param{ItemStates},
-                Order    => 'Created',
-                Sort     => 'down',
-                UserID   => $Param{UserID},
-            )
-        };
+        # get agents categories
+        $Categories = $Self->GetUserCategories(
+            UserID => $Param{UserID},
+            Type   => 'ro'
+        );
     }
     elsif ( $Param{Mode} && $Param{Mode} eq 'Customer' ) {
 
-        # add subcategoryids
-        @SubCategoryIDs = @{
-            $Self->CustomerCategorySearch(
-                ParentID     => $Param{ParentID},
-                States       => $Param{ItemStates},
-                Order        => 'Created',
-                Sort         => 'down',
-                CustomerUser => $Param{CustomerUser},
-                )
-            };
+        # get customer categories
+        $Categories = $Self->GetCustomerCategories(
+            CustomerUser => $Param{CustomerUser},
+            Type         => 'ro',
+        );
     }
     else {
+        # get all categories
+        $Categories = $Self->CategoryList(
+            Valid => 1,
+        );
+    }
 
-        # add subcategoryids
-        @SubCategoryIDs = @{
-            $Self->CategorySearch(
-                ParentID => $Param{ParentID},
-                States   => $Param{ItemStates},
-                Order    => 'Created',
-                Sort     => 'down',
-                )
-            };
+    my @SubCategoryIDs = ();
+    my @TempSubCategoryIDs = keys %{ $Categories->{ $Param{ParentID} } };
+    SUBCATEGORYID:
+    while ( @TempSubCategoryIDs ) {
+
+        # get next subcategory id
+        my $SubCategoryID = shift @TempSubCategoryIDs;
+
+        # add to result
+        push @SubCategoryIDs, $SubCategoryID;
+
+        # check if subcategory has own subcategories
+        next SUBCATEGORYID if !$Categories->{ $SubCategoryID };
+
+        # add new subcategories
+        push @TempSubCategoryIDs, keys %{ $Categories->{ $SubCategoryID } };
     }
-    my @Result = @SubCategoryIDs;
-    for my $SubCategoryID (@SubCategoryIDs) {
-        my @Temp = @{
-            $Self->CategorySubCategoryIDList(
-                ParentID     => $SubCategoryID,
-                ItemStates   => $Param{ItemStates},
-                Mode         => $Param{Mode},
-                CustomerUser => $Param{CustomerUser},
-                UserID       => $Param{UserID},
-                )
-            };
-        if (@Temp) {
-            push( @Result, @Temp );
-        }
-    }
-    return \@Result;
+
+    # sort subcategories numerically
+    @SubCategoryIDs = sort { ${a} <=> ${b} } @SubCategoryIDs;
+
+    return \@SubCategoryIDs;
 }
 
 =item CategoryAdd()
@@ -1580,7 +1575,7 @@ sub StateTypeList {
         my @States = @{ $Param{Types} };
         $Ext = " WHERE";
         for my $State (@States) {
-            $Ext .= " name LIKE '" . $Self->{DBObject}->Quote($State) . "' OR";
+            $Ext .= " name = '" . $Self->{DBObject}->Quote($State) . "' OR";
         }
         $Ext = substr( $Ext, 0, -3 );
     }
@@ -1753,7 +1748,7 @@ sub StateTypeGet {
         $Ext .= " id = " . $Self->{DBObject}->Quote( $Param{ID}, 'Integer' )
     }
     elsif ( defined( $Param{Name} ) ) {
-        $Ext .= " name LIKE '" . $Self->{DBObject}->Quote( $Param{Name} ) . "'"
+        $Ext .= " name = '" . $Self->{DBObject}->Quote( $Param{Name} ) . "'"
     }
     $SQL .= $Ext;
 
@@ -2186,7 +2181,7 @@ sub FAQPathListGet {
 
 get all categories as tree
 
-    my $Hash = $FAQObject->GetCategoryTree(
+    my $CategoryTree = $FAQObject->GetCategoryTree(
         Valid => 0, # if 1 then check valid category
     );
 
@@ -2567,8 +2562,6 @@ get the category search as hash
 sub AgentCategorySearch {
     my ( $Self, %Param ) = @_;
 
-    my @CategoryIDs = ();
-
     # check needed stuff
     for (qw(UserID)) {
         if ( !$Param{$_} ) {
@@ -2585,7 +2578,7 @@ sub AgentCategorySearch {
         Type   => 'ro'
     );
 
-    @CategoryIDs = sort { $Categories->{$a} <=> $Categories->{$b} } ( keys %{ $Categories->{ $Param{ParentID} } } );
+    my @CategoryIDs = sort { $Categories->{$a} <=> $Categories->{$b} } ( keys %{ $Categories->{ $Param{ParentID} } } );
 
     return \@CategoryIDs;
 }
@@ -2594,16 +2587,15 @@ sub AgentCategorySearch {
 
 get the category search as hash
 
-    my @CategorieIDs = @{$FAQObject->CustomerCategorySearch(
-        Name => "Name"
+    my @CategoryIDs = @{$FAQObject->CustomerCategorySearch(
+        CustomerUser  => 'tt',
+        ParentID      => 3,   # (optional, default 0)
     )};
 
 =cut
 
 sub CustomerCategorySearch {
     my ( $Self, %Param ) = @_;
-
-    my @List = ();
 
     # check needed stuff
     for (qw(CustomerUser)) {
@@ -2615,13 +2607,14 @@ sub CustomerCategorySearch {
     if ( !defined( $Param{ParentID} ) ) {
         $Param{ParentID} = 0;
     }
-    my $Hashref = $Self->GetCustomerCategories(
+    my $Categories = $Self->GetCustomerCategories(
         CustomerUser => $Param{CustomerUser},
         Type         => 'ro',
     );
-    my %CategoryHash = %{ $Hashref->{ $Param{ParentID} } };
-    @List = sort { $CategoryHash{$a} cmp $CategoryHash{$b} } ( keys %CategoryHash );
-    return \@List;
+
+    my @CategoryIDs = sort { $Categories->{$a} <=> $Categories->{$b} } ( keys %{ $Categories->{ $Param{ParentID} } } );
+
+    return \@CategoryIDs;
 }
 
 =item PublicCategorySearch()
@@ -2629,7 +2622,7 @@ sub CustomerCategorySearch {
 get the category search as hash
 
     my @CategorieIDs = @{$FAQObject->PublicCategorySearch(
-        Name => "Name"
+        ParentID      => 3,   # (optional, default 0)
     )};
 
 =cut
@@ -3464,6 +3457,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.60 $ $Date: 2009-02-04 00:06:29 $
+$Revision: 1.61 $ $Date: 2009-02-04 23:01:27 $
 
 =cut
