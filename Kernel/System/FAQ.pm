@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.62 2009-02-04 23:07:09 ub Exp $
+# $Id: FAQ.pm,v 1.63 2009-02-05 00:58:09 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.62 $) [1];
+$VERSION = qw($Revision: 1.63 $) [1];
 
 =head1 NAME
 
@@ -1311,7 +1311,6 @@ sub CategorySubCategoryIDList {
     my $Categories =  {};
 
     if ( $Param{Mode} && $Param{Mode} eq 'Agent' ) {
-
         # get agents categories
         $Categories = $Self->GetUserCategories(
             UserID => $Param{UserID},
@@ -1319,7 +1318,6 @@ sub CategorySubCategoryIDList {
         );
     }
     elsif ( $Param{Mode} && $Param{Mode} eq 'Customer' ) {
-
         # get customer categories
         $Categories = $Self->GetCustomerCategories(
             CustomerUser => $Param{CustomerUser},
@@ -2578,7 +2576,8 @@ sub AgentCategorySearch {
         Type   => 'ro'
     );
 
-    my @CategoryIDs = sort { $Categories->{$a} <=> $Categories->{$b} } ( keys %{ $Categories->{ $Param{ParentID} } } );
+    my %Category = %{ $Categories->{ $Param{ParentID} } };
+    my @CategoryIDs = sort { $Category{$a} cmp $Category{$b} } ( keys %Category );
 
     return \@CategoryIDs;
 }
@@ -2612,7 +2611,8 @@ sub CustomerCategorySearch {
         Type         => 'ro',
     );
 
-    my @CategoryIDs = sort { $Categories->{$a} <=> $Categories->{$b} } ( keys %{ $Categories->{ $Param{ParentID} } } );
+    my %Category = %{ $Categories->{ $Param{ParentID} } };
+    my @CategoryIDs = sort { $Category{$a} cmp $Category{$b} } ( keys %Category );
 
     return \@CategoryIDs;
 }
@@ -3457,6 +3457,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.62 $ $Date: 2009-02-04 23:07:09 $
+$Revision: 1.63 $ $Date: 2009-02-05 00:58:09 $
 
 =cut
