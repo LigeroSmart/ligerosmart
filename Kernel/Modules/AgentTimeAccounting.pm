@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.28 2009-01-21 11:09:27 tr Exp $
+# $Id: AgentTimeAccounting.pm,v 1.29 2009-02-10 11:30:04 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.28 $) [1];
+$VERSION = qw($Revision: 1.29 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -188,7 +188,7 @@ sub Run {
             # the value is need after the for loop
 
             WORKINGUNITID:
-            for my $WorkingUnitID ( 1 .. 10 ) {
+            for my $WorkingUnitID ( 1 .. 16 ) {
                 $WorkingUnitIDLast = $WorkingUnitID;
                 for (qw(ProjectID ActionID Remark StartTime EndTime Period)) {
                     $Param{$_} = $Self->{ParamObject}->GetParam(
@@ -305,182 +305,198 @@ sub Run {
             );
         }
 
-        # build units
-        my $WorkingUnitIDMax = 10;
-        my $WorkingUnitID    = 0;
-        $Param{Total} = 0;
-        for ( $WorkingUnitID = 1; $WorkingUnitID < $WorkingUnitIDMax; $WorkingUnitID++ ) {
-            if ( $Data{$WorkingUnitID}{ProjectID} && $Data{$WorkingUnitID}{ProjectID} == -1 ) {
-                if ( $Data{$WorkingUnitID}{ActionID} == -1 ) {
-                    $Param{Sick} = 'checked';
-                }
-                elsif ( $Data{$WorkingUnitID}{ActionID} == -2 ) {
-                    $Param{LeaveDay} = 'checked';
-                }
-                elsif ( $Data{$WorkingUnitID}{ActionID} == -3 ) {
-                    $Param{Overtime} = 'checked';
-                }
-                $WorkingUnitIDMax++;
+        # get sick, leave day and overtime
+        WORKINGUNITID:
+        for my $WorkingUnitID (keys %Data) {
+            next WORKINGUNITID if !$Data{$WorkingUnitID}{ProjectID};
+            next WORKINGUNITID if $Data{$WorkingUnitID}{ProjectID} != -1;
+
+            if ( $Data{$WorkingUnitID}{ActionID} == -1 ) {
+                $Param{Sick} = 'checked';
             }
-            else {
-                $Param{ID} = $WorkingUnitID;
+            elsif ( $Data{$WorkingUnitID}{ActionID} == -2 ) {
+                $Param{LeaveDay} = 'checked';
+            }
+            elsif ( $Data{$WorkingUnitID}{ActionID} == -3 ) {
+                $Param{Overtime} = 'checked';
+            }
 
-                # get option fields
-                $Frontend{ActionOption} = $Self->{LayoutObject}->BuildSelection(
-                    Data        => \%ActionList,
-                    SelectedID  => $Data{$WorkingUnitID}{ActionID} || '',
-                    Name        => "ActionID[$WorkingUnitID]",
-                    Translation => 0,
-                    Max         => 35,
-                );
+            delete $Data{$WorkingUnitID};
+        }
 
-                $Frontend{ProjectOption} = $Self->_ProjectList(
-                    WorkingUnitID => $WorkingUnitID,
-                    SelectedID    => $Data{$WorkingUnitID}{ProjectID},
-                );
+        # build a working unit array
+        my @Units = ( undef );
+        for my $WorkingUnitID (sort keys %Data) {
+            push @Units, $Data{$WorkingUnitID};
+        }
 
-                $Param{Remark} = $Data{$WorkingUnitID}{Remark} || '';
-                if ( $Data{$WorkingUnitID}{ProjectID} && $Data{$WorkingUnitID}{ActionID} ) {
-                    if ( $Data{$WorkingUnitID}{Period} ) {
-                        if ( $Data{$WorkingUnitID}{Period} > 0 ) {
-                            $Param{Period} = $Data{$WorkingUnitID}{Period};
-                            $Param{Total} += $Param{Period};
-                        }
-                        elsif ( $Data{$WorkingUnitID}{Period} == 0 ) {
-                            $Param{UnitRequiredDescription}
-                                = 'Can\'t save settings, because Period is not given given!';
-                        }
+        my $ShowAllInputFields = scalar @Units > 9 ? 1 : 0;
 
-                        else {
-                            $Param{UnitRequiredDescription}
-                                = 'Can\'t save settings, because Starttime is older than Endtime!';
-                        }
+        # build units
+        $Param{Total} = 0;
+        for my $ID ( 1..16 ) {
+            $Param{ID} = $ID;
+            my $UnitRef = $Units[$ID];
+
+            # get option fields
+            $Frontend{ActionOption} = $Self->{LayoutObject}->BuildSelection(
+                Data        => \%ActionList,
+                SelectedID  => $UnitRef->{ActionID} || '',
+                Name        => "ActionID[$ID]",
+                Translation => 0,
+                Max         => 35,
+            );
+
+            $Frontend{ProjectOption} = $Self->_ProjectList(
+                WorkingUnitID => $ID,
+                SelectedID    => $UnitRef->{ProjectID},
+            );
+
+            $Param{Remark} = $UnitRef->{Remark} || '';
+            if ( $UnitRef->{ProjectID} && $UnitRef->{ActionID} ) {
+                if ( $UnitRef->{Period} ) {
+                    if ( $UnitRef->{Period} > 0 ) {
+                        $Param{Period} = $UnitRef->{Period};
+                        $Param{Total} += $Param{Period};
                     }
-                    else {
-                        $Param{Period} = '';
+                    elsif ( $UnitRef->{Period} == 0 ) {
                         $Param{UnitRequiredDescription}
-                            = 'Can\'t save settings, because of missing period!';
+                            = 'Can\'t save settings, because Period is not given given!';
+                    }
+
+                    else {
+                        $Param{UnitRequiredDescription}
+                            = 'Can\'t save settings, because Starttime is older than Endtime!';
                     }
                 }
                 else {
-                    $Param{Period}    = $Data{$WorkingUnitID}{Period} || '';
-                    $Param{StartTime} = '';
-                    $Param{EndTime}   = '';
-                }
-
-                for (qw(StartTime EndTime)) {
-                    if ( $Data{$WorkingUnitID}{$_} && $Data{$WorkingUnitID}{$_} eq '00:00' ) {
-                        $Param{$_} = '';
-                    }
-                    else {
-                        $Param{$_} = $Data{$WorkingUnitID}{$_};
-                    }
-                }
-
-                $Self->{LayoutObject}->Block(
-                    Name => 'Unit',
-                    Data => { %Param, %Frontend },
-                );
-
-                $Self->{LayoutObject}->Block(
-                    Name => $Param{PeriodBlock},
-                    Data => { %Param, %Frontend },
-                );
-
-                # Validity checks start
-                if (
-                    $Data{$WorkingUnitID}{ProjectID}
-                    && $Data{$WorkingUnitID}{ActionID}
-                    && $Param{Sick}
-                    )
-                {
-                    $Param{ReadOnlyDescription}
-                        = 'Are you sure, that you worked while you were on sick leave?';
-                }
-                elsif (
-                    $Data{$WorkingUnitID}{ProjectID}
-                    && $Data{$WorkingUnitID}{ActionID}
-                    && $Param{LeaveDay}
-                    )
-                {
-                    $Param{ReadOnlyDescription}
-                        = 'Are you sure, that you worked while you were on vacation?';
-                }
-                elsif (
-                    $Data{$WorkingUnitID}{ProjectID}
-                    && $Data{$WorkingUnitID}{ActionID}
-                    && $Param{Overtime}
-                    )
-                {
-                    $Param{ReadOnlyDescription}
-                        = 'Are you sure, that you worked while you were on overtime leave?';
-                }
-                if ( $Data{$WorkingUnitID}{ProjectID} && !$Data{$WorkingUnitID}{ActionID} ) {
+                    $Param{Period} = '';
                     $Param{UnitRequiredDescription}
-                        = 'Can\'t save settings, because of missing task!';
+                        = 'Can\'t save settings, because of missing period!';
                 }
-                if ( !$Data{$WorkingUnitID}{ProjectID} && $Data{$WorkingUnitID}{ActionID} ) {
-                    $Param{UnitRequiredDescription}
-                        = 'Can\'t save settings, because of missing project!';
+            }
+            else {
+                $Param{Period}    = $UnitRef->{Period} || '';
+                $Param{StartTime} = '';
+                $Param{EndTime}   = '';
+            }
+
+            for (qw(StartTime EndTime)) {
+                if ( $UnitRef->{$_} && $UnitRef->{$_} eq '00:00' ) {
+                    $Param{$_} = '';
                 }
-                if (
-                    $Data{$WorkingUnitID}{StartTime}
-                    && $Data{$WorkingUnitID}{StartTime} ne '00:00'
-                    && $Data{$WorkingUnitID}{EndTime}
-                    && $Data{$WorkingUnitID}{EndTime} ne '00:00'
-                    )
-                {
-                    if ( $Data{$WorkingUnitID}{StartTime} =~ /^(\d+):(\d+)/ ) {
-                        my $StartTime = $1 * 60 + $2;
-                        if ( $Data{$WorkingUnitID}{EndTime} =~ /^(\d+):(\d+)/ ) {
-                            my $EndTime = $1 * 60 + $2;
-                            if (
-                                $Data{$WorkingUnitID}{Period}
-                                > ( $EndTime - $StartTime ) / 60 + 0.01
-                                )
-                            {
-                                $Param{UnitRequiredDescription}
-                                    = 'Can\'t save settings, because the Period is bigger'
-                                    . ' than the interval between Starttime and Endtime!';
-                            }
-                            if ( $EndTime > 60 * 24 || $StartTime > 60 * 24 ) {
-                                $Param{UnitRequiredDescription}
-                                    = 'Can\'t save settings, because a day has only 24 hours!';
-                            }
+                else {
+                    $Param{$_} = $UnitRef->{$_};
+                }
+            }
+
+            # Define if the input fields are visible or not
+            $Param{Visibility} = $ShowAllInputFields || $ID < 9 ? 'visible' : 'collapse' ;
+
+            $Self->{LayoutObject}->Block(
+                Name => 'Unit',
+                Data => { %Param, %Frontend },
+            );
+
+            $Self->{LayoutObject}->Block(
+                Name => $Param{PeriodBlock},
+                Data => { %Param, %Frontend },
+            );
+
+            # Validity checks start
+            if (
+                $UnitRef->{ProjectID}
+                && $UnitRef->{ActionID}
+                && $Param{Sick}
+                )
+            {
+                $Param{ReadOnlyDescription}
+                    = 'Are you sure, that you worked while you were on sick leave?';
+            }
+            elsif (
+                $UnitRef->{ProjectID}
+                && $UnitRef->{ActionID}
+                && $Param{LeaveDay}
+                )
+            {
+                $Param{ReadOnlyDescription}
+                    = 'Are you sure, that you worked while you were on vacation?';
+            }
+            elsif (
+                $UnitRef->{ProjectID}
+                && $UnitRef->{ActionID}
+                && $Param{Overtime}
+                )
+            {
+                $Param{ReadOnlyDescription}
+                    = 'Are you sure, that you worked while you were on overtime leave?';
+            }
+            if ( $UnitRef->{ProjectID} && !$UnitRef->{ActionID} ) {
+                $Param{UnitRequiredDescription}
+                    = 'Can\'t save settings, because of missing task!';
+            }
+            if ( !$UnitRef->{ProjectID} && $UnitRef->{ActionID} ) {
+                $Param{UnitRequiredDescription}
+                    = 'Can\'t save settings, because of missing project!';
+            }
+            if (
+                $UnitRef->{StartTime}
+                && $UnitRef->{StartTime} ne '00:00'
+                && $UnitRef->{EndTime}
+                && $UnitRef->{EndTime} ne '00:00'
+                )
+            {
+                if ( $UnitRef->{StartTime} =~ /^(\d+):(\d+)/ ) {
+                    my $StartTime = $1 * 60 + $2;
+                    if ( $UnitRef->{EndTime} =~ /^(\d+):(\d+)/ ) {
+                        my $EndTime = $1 * 60 + $2;
+                        if (
+                            $UnitRef->{Period}
+                            > ( $EndTime - $StartTime ) / 60 + 0.01
+                            )
+                        {
+                            $Param{UnitRequiredDescription}
+                                = 'Can\'t save settings, because the Period is bigger'
+                                . ' than the interval between Starttime and Endtime!';
+                        }
+                        if ( $EndTime > 60 * 24 || $StartTime > 60 * 24 ) {
+                            $Param{UnitRequiredDescription}
+                                = 'Can\'t save settings, because a day has only 24 hours!';
                         }
                     }
                 }
-
-                if ( $Param{UnitRequiredDescription} ) {
-                    $Self->{LayoutObject}->Block(
-                        Name => 'UnitRequired',
-                        Data => { Description => $Param{UnitRequiredDescription} },
-                    );
-                    if (
-                        !$Self->{TimeAccountingObject}->WorkingUnitsDelete(
-                            Year  => $Param{Year},
-                            Month => $Param{Month},
-                            Day   => $Param{Day},
-                        )
-                        )
-                    {
-                        return $Self->{LayoutObject}->ErrorScreen(
-                            Message => 'Can\'t delete Working Units!'
-                        );
-                    }
-                    $Param{UnitRequiredDescription}     = '';
-                    $Param{UnitRequiredDescriptionTrue} = 1;
-                }
-                if ( $Param{UnitReadOnlyDescription} ) {
-                    $Self->{LayoutObject}->Block(
-                        Name => 'UnitReadonly',
-                        Data => { Description => $Param{UnitReadOnlyDescription} },
-                    );
-                    $Param{UnitReadOnlyDescription} = '';
-                }
-
-                # Validity checks end
             }
+
+            if ( $Param{UnitRequiredDescription} ) {
+                $Self->{LayoutObject}->Block(
+                    Name => 'UnitRequired',
+                    Data => { Description => $Param{UnitRequiredDescription} },
+                );
+                if (
+                    !$Self->{TimeAccountingObject}->WorkingUnitsDelete(
+                        Year  => $Param{Year},
+                        Month => $Param{Month},
+                        Day   => $Param{Day},
+                    )
+                    )
+                {
+                    return $Self->{LayoutObject}->ErrorScreen(
+                        Message => 'Can\'t delete Working Units!'
+                    );
+                }
+                $Param{UnitRequiredDescription}     = '';
+                $Param{UnitRequiredDescriptionTrue} = 1;
+            }
+            if ( $Param{UnitReadOnlyDescription} ) {
+                $Self->{LayoutObject}->Block(
+                    Name => 'UnitReadonly',
+                    Data => { Description => $Param{UnitReadOnlyDescription} },
+                );
+                $Param{UnitReadOnlyDescription} = '';
+            }
+
+            # Validity checks end
+
         }
 
         if (
@@ -619,6 +635,8 @@ sub Run {
         # projects
         $Param{RemarkRegExp} = $Self->_Project2RemarkRegExp();
 
+        $Param{LinkVisibility} = $ShowAllInputFields ? 'collapse' : 'visible' ;
+
         # build output
         my $Output = $Self->{LayoutObject}->Header( Title => 'Edit' );
         if ( !$IncompleteWorkingDays{EnforceInsert} ) {
@@ -719,14 +737,15 @@ sub Run {
 
         ID:
         for my $ID ( keys %Data ) {
-            if ( $Data{$ID}{ProjectID} && $Data{$ID}{ProjectID} == -1 ) {
-                if ( $Data{$ID}{ActionID} == -1 ) {
+            my $UnitRef = $Data{$ID};
+            if ( $UnitRef->{ProjectID} && $UnitRef->{ProjectID} == -1 ) {
+                if ( $UnitRef->{ActionID} == -1 ) {
                     $Param{Sick} = 'checked';
                 }
-                elsif ( $Data{$ID}{ActionID} == -2 ) {
+                elsif ( $UnitRef->{ActionID} == -2 ) {
                     $Param{LeaveDay} = 'checked';
                 }
-                elsif ( $Data{$ID}{ActionID} == -3 ) {
+                elsif ( $UnitRef->{ActionID} == -3 ) {
                     $Param{Overtime} = 'checked';
                 }
                 next ID;
@@ -741,16 +760,16 @@ sub Run {
             $Self->{LayoutObject}->Block(
                 Name => 'Unit',
                 Data => {
-                    Project   => $Project{Project}{ $Data{$ID}{ProjectID} },
-                    Action    => $Action{ $Data{$ID}{ActionID} }{Action},
-                    Remark    => $Data{$ID}{Remark},
-                    StartTime => $Data{$ID}{StartTime},
-                    EndTime   => $Data{$ID}{EndTime},
-                    Period    => $Data{$ID}{Period},
+                    Project   => $Project{Project}{ $UnitRef->{ProjectID} },
+                    Action    => $Action{ $UnitRef->{ActionID} }{Action},
+                    Remark    => $UnitRef->{Remark},
+                    StartTime => $UnitRef->{StartTime},
+                    EndTime   => $UnitRef->{EndTime},
+                    Period    => $UnitRef->{Period},
                     }
             );
 
-            $Param{Total} += $Data{$ID}{Period};
+            $Param{Total} += $UnitRef->{Period};
         }
         if ($Flag) {
             $Self->{LayoutObject}->Block(

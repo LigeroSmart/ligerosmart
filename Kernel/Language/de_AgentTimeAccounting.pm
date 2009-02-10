@@ -2,7 +2,7 @@
 # Kernel/Language/de_AgentTimeAccounting.pm - the de language for AgentTimeAccounting
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: de_AgentTimeAccounting.pm,v 1.42 2009-01-21 11:09:27 tr Exp $
+# $Id: de_AgentTimeAccounting.pm,v 1.43 2009-02-10 11:30:04 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -93,6 +93,7 @@ sub Data {
         'Overview of '                             => 'Übersicht - ',
         'TimeAccounting of'                        => 'Zeiterfassung vom',
         'Successful insert!'                       => 'Erfolgreich eingefügt!',
+        'More input fields'                        => 'Weitere Eingabefelder',
         'Do you really want to delete this Object' => 'Wollen Sie diesen Eintrag wirklich löschen',
         'Can\'t insert Working Units!'             => 'Kann die Arbeitsstunden nicht einfügen!',
         'Can\'t save settings, because of missing task!' =>

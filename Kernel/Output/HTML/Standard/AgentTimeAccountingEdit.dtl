@@ -2,7 +2,7 @@
 # AgentTimeAccountingEdit.dtl - provides HTML form for time accounting edit
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingEdit.dtl,v 1.19 2009-01-21 10:43:19 tr Exp $
+# $Id: AgentTimeAccountingEdit.dtl,v 1.20 2009-02-10 11:30:04 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -42,6 +42,22 @@ function project_remark_check(Project) {
         return false;
     }
     return true;
+}
+
+// This funciton make the invisible input fields (9 - 16) visible
+
+function MoreInputFields() {
+    if (document.getElementById) {
+        document.getElementById("MoreFields[9]").style.visibility = "visible";
+        document.getElementById("MoreFields[10]").style.visibility = "visible";
+        document.getElementById("MoreFields[11]").style.visibility = "visible";
+        document.getElementById("MoreFields[12]").style.visibility = "visible";
+        document.getElementById("MoreFields[13]").style.visibility = "visible";
+        document.getElementById("MoreFields[14]").style.visibility = "visible";
+        document.getElementById("MoreFields[15]").style.visibility = "visible";
+        document.getElementById("MoreFields[16]").style.visibility = "visible";
+        document.getElementById("Link").style.visibility = "collapse";
+    }
 }
 
 //-->
@@ -149,12 +165,10 @@ function project_remark_check(Project) {
                         <td>$Text{"Period"}<span class="footnote">$QData{"PeriodNote"}</span></td>
                       </tr>
 <!-- dtl:block:Unit -->
-                      <tr class="contentvalue">
+                      <tr class="contentvalue" id="MoreFields[$QData{"ID"}]"  style="visibility:$QData{"Visibility"}">
                         <td>$Data{"ProjectOption"}</td>
                         <td>$Data{"ActionOption"}</td>
                         <td><input type="text" name="Remark[$QData{"ID"}]"    value="$QData{"Remark"}"    size="35"></td>
-#                        <td>$Data{"StartTime"}"</td>
-#                        <td>$Data{"EndTime"}"</td>
                         <td><input type="text" name="StartTime[$QData{"ID"}]" value="$QData{"StartTime"}" size="7"></td>
                         <td><input type="text" name="EndTime[$QData{"ID"}]"   value="$QData{"EndTime"}"   size="7"></td>
 <!-- dtl:block:UnitInputPeriod -->
@@ -180,11 +194,18 @@ function project_remark_check(Project) {
 <!-- dtl:block:UnitReadonly -->
 <!-- dtl:block:Unit -->
 <!-- dtl:block:UnitBlock -->
-                      <tr class="contentkey">
-                        <td colspan="4">
+                      <tr class="contentvalue" id="Link">
+                        <td colspan="5">
+                          <a href="javascript:MoreInputFields()" style="visibility:$QData{"LinkVisibility"}">
+                          <img border="0" src="$Env{"Images"}down-big.png" alt="$Text{"More input fields"}">
+                          </a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="contentkey" colspan="4">
 <!-- dtl:block:OtherTimes -->
                           <input type="checkbox" value="-2" name="LeaveDay" $Data{"LeaveDay"}>$Text{"On vacation"}&nbsp;
-                          <input type="checkbox" value="-1" name="Sick" $Data{"Sick"}>$Text{"On sick leave"}&nbsp;
+                          <input type="checkbox" value="-1" name="Sick"     $Data{"Sick"}>$Text{"On sick leave"}&nbsp;
                           <input type="checkbox" value="-3" name="Overtime" $Data{"Overtime"}>$Text{"On overtime leave"}
 <!-- dtl:block:OtherTimes -->
                           &nbsp;
