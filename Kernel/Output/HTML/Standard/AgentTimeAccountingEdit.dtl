@@ -2,7 +2,7 @@
 # AgentTimeAccountingEdit.dtl - provides HTML form for time accounting edit
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingEdit.dtl,v 1.20 2009-02-10 11:30:04 tr Exp $
+# $Id: AgentTimeAccountingEdit.dtl,v 1.21 2009-02-14 13:04:14 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -193,7 +193,6 @@ function MoreInputFields() {
                       </tr>
 <!-- dtl:block:UnitReadonly -->
 <!-- dtl:block:Unit -->
-<!-- dtl:block:UnitBlock -->
                       <tr class="contentvalue" id="Link">
                         <td colspan="5">
                           <a href="javascript:MoreInputFields()" style="visibility:$QData{"LinkVisibility"}">
@@ -201,12 +200,13 @@ function MoreInputFields() {
                           </a>
                         </td>
                       </tr>
+<!-- dtl:block:UnitBlock -->
                       <tr>
                         <td class="contentkey" colspan="4">
 <!-- dtl:block:OtherTimes -->
-                          <input type="checkbox" value="-2" name="LeaveDay" $Data{"LeaveDay"}>$Text{"On vacation"}&nbsp;
-                          <input type="checkbox" value="-1" name="Sick"     $Data{"Sick"}>$Text{"On sick leave"}&nbsp;
-                          <input type="checkbox" value="-3" name="Overtime" $Data{"Overtime"}>$Text{"On overtime leave"}
+                          <input type="checkbox" value="1" name="LeaveDay" $Data{"LeaveDay"}>$Text{"On vacation"}&nbsp;
+                          <input type="checkbox" value="1" name="Sick"     $Data{"Sick"}>$Text{"On sick leave"}&nbsp;
+                          <input type="checkbox" value="1" name="Overtime" $Data{"Overtime"}>$Text{"On overtime leave"}
 <!-- dtl:block:OtherTimes -->
                           &nbsp;
                         </td>

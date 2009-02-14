@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.29 2009-02-10 11:30:04 tr Exp $
+# $Id: AgentTimeAccounting.pm,v 1.30 2009-02-14 13:04:14 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.29 $) [1];
+$VERSION = qw($Revision: 1.30 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -89,6 +89,9 @@ sub Run {
     # edit the time accounting elements
     # ---------------------------------------------------------- #
     if ( $Self->{Subaction} eq 'Edit' ) {
+        # permission check
+        return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' ) if !$Self->{AccessRo};
+
         my %Frontend   = ();
         my %ActionList = ();
         my %Data       = ();
@@ -102,9 +105,6 @@ sub Run {
         for (qw(Status Year Month Day Delete)) {
             $Param{$_} = $Self->{ParamObject}->GetParam( Param => $_ );
         }
-
-        # permission check
-        return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' ) if !$Self->{AccessRo};
 
         # Check Date
         if ( !$Param{Year} || !$Param{Month} || !$Param{Day} ) {
@@ -170,6 +170,8 @@ sub Run {
         ( $Param{YearNext}, $Param{MonthNext}, $Param{DayNext} )
             = Add_Delta_YMD( $Param{Year}, $Param{Month}, $Param{Day}, 0, 0, 1 );
 
+        my $ReduceTimeRef = $Self->{ConfigObject}->Get('TimeAccounting::ReduceTime');
+
         # Edit Working Units
         if ( $Param{Status} ) {
             if ( $Param{Delete} ) {
@@ -182,69 +184,56 @@ sub Run {
                 $Output .= $Self->{LayoutObject}->Footer();
                 return $Output;
             }
-            my $WorkingUnitIDLast = 0;
 
-            # REMARK: don't make "my $WorkingUnitID" in for function the
-            # the value is need after the for loop
-
-            WORKINGUNITID:
-            for my $WorkingUnitID ( 1 .. 16 ) {
-                $WorkingUnitIDLast = $WorkingUnitID;
+            ID:
+            for my $ID ( 1 .. 16 ) {
                 for (qw(ProjectID ActionID Remark StartTime EndTime Period)) {
-                    $Param{$_} = $Self->{ParamObject}->GetParam(
-                        Param => $_ . '[' . $WorkingUnitID . ']'
-                    );
+                    $Param{$_} = $Self->{ParamObject}->GetParam( Param => $_ . '[' . $ID . ']' );
                 }
 
-                next WORKINGUNITID if !$Param{ProjectID} && !$Param{ActionID};
+                next ID if !$Param{ProjectID} && !$Param{ActionID};
 
-                $Data{$WorkingUnitID}{ProjectID} = $Param{ProjectID};
-                $Data{$WorkingUnitID}{ActionID}  = $Param{ActionID};
-                $Data{$WorkingUnitID}{Remark}    = $Param{Remark};
-                $Data{$WorkingUnitID}{StartTime} = $Param{StartTime};
-                $Data{$WorkingUnitID}{EndTime}   = $Param{EndTime};
-                $Data{$WorkingUnitID}{Date}      = $Param{Date};
-                if ( $Param{Period} =~ /^(\d+),(\d+)/ ) {
-                    $Data{$WorkingUnitID}{Period} = $1 . "." . $2;
-                }
-                else {
-                    $Data{$WorkingUnitID}{Period} = $Param{Period};
+                # create a valid period
+                my $Period = $Param{Period};
+                if ( $Period =~ m{^ (\d+) , (\d+) }smx ) {
+                    $Period = $1 . "." . $2;
                 }
 
-                my %ReduceTime = ();
-                if ( $Self->{ConfigObject}->Get('TimeAccounting::ReduceTime') ) {
-                    %ReduceTime = %{ $Self->{ConfigObject}->Get('TimeAccounting::ReduceTime') };
-                }
+                my %WorkingUnit = (
+                    ProjectID => $Param{ProjectID},
+                    ActionID  => $Param{ActionID},
+                    Remark    => $Param{Remark},
+                    StartTime => $Param{StartTime},
+                    EndTime   => $Param{EndTime},
+                    Period    => $Period,
+                );
+
+                push @{$Data{WorkingUnits}} , \%WorkingUnit;
 
                 #if ($Param{StartTime} && $Param{EndTime} && !$Param{Period}) {
                 #overwrite Period when Start and Endtime is given...
-                next WORKINGUNITID if !$Param{StartTime} || !$Param{EndTime};
+                next ID if !$Param{StartTime} || !$Param{EndTime};
 
                 if ( $Param{StartTime} =~ /^(\d+):(\d+)/ ) {
                     my $StartTime = $1 * 60 + $2;
                     if ( $Param{EndTime} =~ /^(\d+):(\d+)/ ) {
                         my $EndTime = $1 * 60 + $2;
-                        if ( $ReduceTime{ $Action{ $Param{ActionID} }{Action} } ) {
-                            $Data{$WorkingUnitID}{Period} = ( $EndTime - $StartTime ) / 60
-                                * $ReduceTime{ $Action{ $Param{ActionID} }{Action} } / 100;
+                        if ( $ReduceTimeRef->{ $Action{ $Param{ActionID} }{Action} } ) {
+                            $WorkingUnit{Period} = ( $EndTime - $StartTime ) / 60
+                                * $ReduceTimeRef->{ $Action{ $Param{ActionID} }{Action} } / 100;
                         }
                         else {
-                            $Data{$WorkingUnitID}{Period} = ( $EndTime - $StartTime ) / 60;
+                            $WorkingUnit{Period} = ( $EndTime - $StartTime ) / 60;
                         }
                     }
                 }
             }
+
             my $CheckboxCheck = 0;
-            for (qw(LeaveDay Sick Overtime)) {
-                $Param{$_} = $Self->{ParamObject}->GetParam( Param => $_ );
-                if ( $Param{$_} ) {
-                    $WorkingUnitIDLast++;
-                    $Data{$WorkingUnitIDLast}{ProjectID} = '-1';
-                    $Data{$WorkingUnitIDLast}{ActionID}  = $Param{$_};
-                    $Data{$WorkingUnitIDLast}{Remark}    = '';
-                    $Data{$WorkingUnitIDLast}{StartTime} = '';
-                    $Data{$WorkingUnitIDLast}{EndTime}   = '';
-                    $Data{$WorkingUnitIDLast}{Period}    = 0;
+            for my $Element (qw(LeaveDay Sick Overtime)) {
+                my $Value = $Self->{ParamObject}->GetParam( Param => $Element );
+                if ( $Value ) {
+                    $Data{$Element} = 1;
                     $CheckboxCheck++;
                 }
             }
@@ -306,34 +295,20 @@ sub Run {
         }
 
         # get sick, leave day and overtime
-        WORKINGUNITID:
-        for my $WorkingUnitID (keys %Data) {
-            next WORKINGUNITID if !$Data{$WorkingUnitID}{ProjectID};
-            next WORKINGUNITID if $Data{$WorkingUnitID}{ProjectID} != -1;
+        $Param{Sick}     = $Data{Sick}     ? 'checked' : '';
+        $Param{LeaveDay} = $Data{LeaveDay} ? 'checked' : '';
+        $Param{Overtime} = $Data{Overtime} ? 'checked' : '';
 
-            if ( $Data{$WorkingUnitID}{ActionID} == -1 ) {
-                $Param{Sick} = 'checked';
-            }
-            elsif ( $Data{$WorkingUnitID}{ActionID} == -2 ) {
-                $Param{LeaveDay} = 'checked';
-            }
-            elsif ( $Data{$WorkingUnitID}{ActionID} == -3 ) {
-                $Param{Overtime} = 'checked';
-            }
-
-            delete $Data{$WorkingUnitID};
-        }
-
+        $Param{Total} = $Data{Total};
         # build a working unit array
         my @Units = ( undef );
-        for my $WorkingUnitID (sort keys %Data) {
-            push @Units, $Data{$WorkingUnitID};
+        if ($Data{WorkingUnits}) {
+            push @Units, @{$Data{WorkingUnits}}
         }
 
         my $ShowAllInputFields = scalar @Units > 9 ? 1 : 0;
 
         # build units
-        $Param{Total} = 0;
         for my $ID ( 1..16 ) {
             $Param{ID} = $ID;
             my $UnitRef = $Units[$ID];
@@ -357,7 +332,6 @@ sub Run {
                 if ( $UnitRef->{Period} ) {
                     if ( $UnitRef->{Period} > 0 ) {
                         $Param{Period} = $UnitRef->{Period};
-                        $Param{Total} += $Param{Period};
                     }
                     elsif ( $UnitRef->{Period} == 0 ) {
                         $Param{UnitRequiredDescription}
@@ -728,55 +702,43 @@ sub Run {
             UserID => $Param{UserID},
         );
 
-        $Param{Date} = sprintf( "%04d-%02d-%02d", $Param{Year}, $Param{Month}, $Param{Day} );
+        $Param{Date} = $Data{Date};
 
         # get project and action settings
         my %Project = $Self->{TimeAccountingObject}->ProjectSettingsGet();
         my %Action  = $Self->{TimeAccountingObject}->ActionSettingsGet();
-        my $Flag    = 0;
 
-        ID:
-        for my $ID ( keys %Data ) {
-            my $UnitRef = $Data{$ID};
-            if ( $UnitRef->{ProjectID} && $UnitRef->{ProjectID} == -1 ) {
-                if ( $UnitRef->{ActionID} == -1 ) {
-                    $Param{Sick} = 'checked';
-                }
-                elsif ( $UnitRef->{ActionID} == -2 ) {
-                    $Param{LeaveDay} = 'checked';
-                }
-                elsif ( $UnitRef->{ActionID} == -3 ) {
-                    $Param{Overtime} = 'checked';
-                }
-                next ID;
-            }
+        # get sick, leave day and overtime
+        $Param{Sick}     = $Data{Sick}     ? 'checked' : '';
+        $Param{LeaveDay} = $Data{LeaveDay} ? 'checked' : '';
+        $Param{Overtime} = $Data{Overtime} ? 'checked' : '';
 
-            # show working units
-            if ( !$Flag ) {
-                $Self->{LayoutObject}->Block( Name => 'UnitBlock', );
-                $Flag = 1;
-            }
+        # only show the unit block if there is some data
+        my $UnitsRef = $Data{WorkingUnits};
+        if ($UnitsRef->[0]) {
+            $Self->{LayoutObject}->Block( Name => 'UnitBlock', );
 
-            $Self->{LayoutObject}->Block(
-                Name => 'Unit',
-                Data => {
-                    Project   => $Project{Project}{ $UnitRef->{ProjectID} },
-                    Action    => $Action{ $UnitRef->{ActionID} }{Action},
-                    Remark    => $UnitRef->{Remark},
-                    StartTime => $UnitRef->{StartTime},
-                    EndTime   => $UnitRef->{EndTime},
-                    Period    => $UnitRef->{Period},
+            for my $UnitRef ( @{$UnitsRef} ) {
+
+                $Self->{LayoutObject}->Block(
+                    Name => 'Unit',
+                    Data => {
+                        Project   => $Project{Project}{ $UnitRef->{ProjectID} },
+                        Action    => $Action{ $UnitRef->{ActionID} }{Action},
+                        Remark    => $UnitRef->{Remark},
+                        StartTime => $UnitRef->{StartTime},
+                        EndTime   => $UnitRef->{EndTime},
+                        Period    => $UnitRef->{Period},
                     }
-            );
+                );
+            }
 
-            $Param{Total} += $UnitRef->{Period};
-        }
-        if ($Flag) {
             $Self->{LayoutObject}->Block(
                 Name => 'Total',
-                Data => { Total => sprintf( "%.2f", $Param{Total} ) }
+                Data => { Total => sprintf( "%.2f", $Data{Total} ) }
             );
         }
+
         if ( $Param{Sick} || $Param{LeaveDay} || $Param{Overtime} ) {
             $Self->{LayoutObject}->Block(
                 Name => 'OtherTimes',
@@ -943,19 +905,12 @@ sub Run {
                 UserID => $Param{UserID},
             );
 
-            my $WorkingHours = 0;
-            my %OtherTime    = ();
-            $OtherTime{'-1'} = 'Sick leave';
-            $OtherTime{'-2'} = 'Vacation';
-            $OtherTime{'-3'} = 'Overtime leave';
-            for my $ID ( keys %Data ) {
-                $WorkingHours += $Data{$ID}{Period};
-                if ( $Data{$ID}{ProjectID} == -1 ) {
-                    $Param{Comment} = $OtherTime{ $Data{$ID}{ActionID} };
-                }
-            }
+            $Param{Comment} = $Data{Sick}     ? 'Sick leave'
+                            : $Data{LeaveDay} ? 'On vacation'
+                            : $Data{Overtime} ? 'On overtime leave'
+                            :                    '';
 
-            $Param{WorkingHours} = $WorkingHours ? sprintf( "%.2f", $WorkingHours ) : '';
+            $Param{WorkingHours} = $Data{Total} ? sprintf( "%.2f", $Data{Total} ) : '';
 
             $Param{Weekday_to_Text} = $WeekdayArray[ $Param{Weekday} ];
             $Self->{LayoutObject}->Block(
@@ -1103,7 +1058,7 @@ sub Run {
         }
 
         # build output
-        $Output = $Self->{LayoutObject}->Header( Title => "Overview" );
+        $Output = $Self->{LayoutObject}->Header( Title => 'Overview' );
         $Output .= $Self->{LayoutObject}->NavigationBar();
         $Output .= $Self->{LayoutObject}->Output(
             Data => { %Param, %Frontend },

@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.25 2009-01-21 11:09:27 tr Exp $
+# $Id: TimeAccounting.pm,v 1.26 2009-02-14 13:04:14 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.25 $) [1];
+$VERSION = qw($Revision: 1.26 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week);
 
@@ -221,30 +221,26 @@ sub UserReporting {
                         Day    => $Day,
                         UserID => $UserID,
                     );
-                    my $WorkingHours = 0;
+
                     my $LeaveDay     = 0;
                     my $Sick         = 0;
                     my $Overtime     = 0;
                     my $TargetState  = 0;
-                    for ( keys %WorkingUnit ) {
-                        $WorkingHours += $WorkingUnit{$_}{Period};
-                        if ( $WorkingUnit{$_}{ProjectID} == -1 ) {
-                            if ( $WorkingUnit{$_}{ActionID} == -2 ) {
-                                $Data{$UserID}{LeaveDayTotal}++;
-                                $LeaveDay = 1;
-                            }
-                            elsif ( $WorkingUnit{$_}{ActionID} == -1 ) {
-                                $Data{$UserID}{SickTotal}++;
-                                $Sick = 1;
-                            }
-                            elsif ( $WorkingUnit{$_}{ActionID} == -3 ) {
-                                $Data{$UserID}{OvertimeTotal}++;
-                                $Overtime = 1;
-                            }
-                        }
+
+                    if ( $WorkingUnit{LeaveDay} ) {
+                        $Data{$UserID}{LeaveDayTotal}++;
+                        $LeaveDay = 1;
+                    }
+                    elsif ( $WorkingUnit{Sick} ) {
+                        $Data{$UserID}{SickTotal}++;
+                        $Sick = 1;
+                    }
+                    elsif ( $WorkingUnit{Overtime} ) {
+                        $Data{$UserID}{OvertimeTotal}++;
+                        $Overtime = 1;
                     }
 
-                    $Data{$UserID}{WorkingHoursTotal} += $WorkingHours;
+                    $Data{$UserID}{WorkingHoursTotal} += $WorkingUnit{Total};
                     my $VacationCheck = $Self->{TimeObject}->VacationCheck(
                         Year  => $Year,
                         Month => $Month,
@@ -266,7 +262,7 @@ sub UserReporting {
 
                     if ( $Month == $MonthEnd && $Year == $YearEnd ) {
                         $Data{$UserID}{TargetState}  += $TargetState;
-                        $Data{$UserID}{WorkingHours} += $WorkingHours;
+                        $Data{$UserID}{WorkingHours} += $WorkingUnit{Total};
                         $Data{$UserID}{LeaveDay}     += $LeaveDay;
                         $Data{$UserID}{Sick}         += $Sick;
                     }
@@ -940,8 +936,6 @@ returns a hash with the working units data
 sub WorkingUnitsGet {
     my ( $Self, %Param ) = @_;
 
-    my %Data          = ();
-    my $WorkingUnitID = 0;
     for ( keys %Param ) {
         $Param{$_} = $Self->{DBObject}->Quote( $Param{$_} ) || '';
     }
@@ -955,24 +949,45 @@ sub WorkingUnitsGet {
             . " AND user_id = '$Param{UserID}' ORDER by id",
     );
 
+    my %Data = (
+        Total => 0,
+        Date  => $Date,
+    );
+
     # fetch Data
+    ROW:
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        if ( $Row[4] =~ /^(.+?)\s(\d+:\d+):(\d+)/ ) {
-            $WorkingUnitID++;
-            $Data{$WorkingUnitID}{UserID}    = $Row[0];
-            $Data{$WorkingUnitID}{ProjectID} = $Row[1];
-            $Data{$WorkingUnitID}{ActionID}  = $Row[2];
-            $Data{$WorkingUnitID}{Remark}    = $Row[3];
-            $Data{$WorkingUnitID}{StartTime} = $2;
+        next ROW if $Row[4] !~ m{^ (.+?) \s (\d+:\d+) : (\d+) }smx;
 
-            $Data{$WorkingUnitID}{Period} = defined( $Row[6] ) ? sprintf( "%.2f", $Row[6] ) : 0;
+        # check if it is a special working unit
+        if ( $Row[1] == -1 ) {
+            my $ActionID = $Row[2];
 
-            $Data{$WorkingUnitID}{Date} = $1;
-            if ( $Row[5] =~ /^(.+?)\s(\d+:\d+):(\d+)/ ) {
-                $Data{$WorkingUnitID}{EndTime} = $2;
-            }
+            $Data{Sick}     = $ActionID == -1 ? 1 : 0;
+            $Data{LeaveDay} = $ActionID == -2 ? 1 : 0;
+            $Data{Overtime} = $ActionID == -3 ? 1 : 0;
+
+            next ROW;
         }
+        my $StartTime = $2;
+        my $EndTime = '';
+        if ($Row[5] =~ m{^(.+?)\s(\d+:\d+):(\d+)}smx) {
+            $EndTime = $2;
+        }
+
+        my %WorkingUnit = (
+            UserID    => $Row[0],
+            ProjectID => $Row[1],
+            ActionID  => $Row[2],
+            Remark    => $Row[3],
+            StartTime => $StartTime,
+            EndTime   => $EndTime,
+            Period    => defined( $Row[6] ) ? sprintf( "%.2f", $Row[6] ) : 0,
+        );
+        $Data{Total} += $WorkingUnit{Period};
+        push @{$Data{WorkingUnits}}, \%WorkingUnit;
     }
+
     return %Data;
 }
 
@@ -984,15 +999,20 @@ insert working units in the db
         Year  => '2005',
         Month => '07',
         Day   => '02',
-        1    => {
-            ProjectID => 1,
-            ActionID  => 23,
-            Remark    => 4,
-            StartTime => '7:30',
-            EndTime   => '11:00',
-            Period    => '8.5',
-        },
-        2 ......
+        LeaveDay => 1, || 0
+        Sick     => 1, || 0
+        Overtime => 1, || 0
+        WorkingUnits => [
+            {
+                ProjectID => 1,
+                ActionID  => 23,
+                Remark    => 'SomeText,
+                StartTime => '7:30',
+                EndTime   => '11:00',
+                Period    => '8.5',
+            },
+            { ...... },
+        ]
     );
 
 =cut
@@ -1012,52 +1032,58 @@ sub WorkingUnitsInsert {
     }
     my $Date = sprintf( "%04d-%02d-%02d", $Param{Year}, $Param{Month}, $Param{Day} );
 
-    if (
-        !$Self->WorkingUnitsDelete(
-            Year  => $Param{Year},
-            Month => $Param{Month},
-            Day   => $Param{Day},
-        )
-        )
-    {
+    # delete exiting data
+    if ( !$Self->WorkingUnitsDelete( %Param ) ) {
         $Self->{LogObject}->Log( Priority => 'error', Message => 'Can\'t delete Working Units!' );
         return;
     }
 
-    delete $Param{Year};
-    delete $Param{Month};
-    delete $Param{Day};
+    # add special time working units
+    my %SpecialAction = (
+        'Sick'     => '-1',
+        'LeaveDay' => '-2',
+        'Overtime' => '-3',
+    );
+
+    ELEMENT:
+    for my $Element (qw(LeaveDay Sick Overtime)) {
+        next ELEMENT if !$Param{$Element};
+
+        my %Unit = (
+            ProjectID => -1,
+            ActionID  => $SpecialAction{$Element},
+            Remark    => '',
+            StartTime => '',
+            EndTime   => '',
+            Period    => 0,
+        );
+
+        push @{$Param{WorkingUnits}}, \%Unit;
+    }
 
     #insert new working units
-    for my $WorkingUnitID ( sort keys %Param ) {
+    for my $UnitRef ( @{$Param{WorkingUnits}} ) {
 
         # db quote
-        for ( keys %{ $Param{$WorkingUnitID} } ) {
-            $Param{$WorkingUnitID}{$_} = $Self->{DBObject}->Quote( $Param{$WorkingUnitID}{$_} )
-                || '';
+        for ( keys %{ $UnitRef } ) {
+            $UnitRef->{$_} = $Self->{DBObject}->Quote( $UnitRef->{$_} ) || '';
         }
-        my $StartTime = $Date . " " . $Param{$WorkingUnitID}{StartTime};
-        my $EndTime   = $Date . " " . $Param{$WorkingUnitID}{EndTime};
 
-        for my $Element (qw(ProjectID ActionID Period)) {
+        my $StartTime = $Date . ' ' . $UnitRef->{StartTime};
+        my $EndTime   = $Date . ' ' . $UnitRef->{EndTime};
 
-            # '' does not work in integer field of postgres
-            if (
-                ( !defined( $Param{$WorkingUnitID}{$Element} ) )
-                || ( $Param{$WorkingUnitID}{$Element} eq '' )
-                )
-            {
-                $Param{$WorkingUnitID}{$Element} = 0;
-            }
-        }
+        # '' does not work in integer field of postgres
+        $UnitRef->{ProjectID} ||= 0;
+        $UnitRef->{ActionID}  ||= 0;
+        $UnitRef->{Period}    ||= 0;
 
         # build sql
         my $SQL
             = "INSERT INTO time_accounting_table (user_id, project_id, action_id, remark,"
             . " time_start, time_end, period, created )"
             . " VALUES"
-            . " ('$Self->{UserID}', '$Param{$WorkingUnitID}{ProjectID}', '$Param{$WorkingUnitID}{ActionID}',"
-            . " '$Param{$WorkingUnitID}{Remark}', '$StartTime', '$EndTime', $Param{$WorkingUnitID}{Period},"
+            . " ('$Self->{UserID}', '$UnitRef->{ProjectID}', '$UnitRef->{ActionID}',"
+            . " '$UnitRef->{Remark}', '$StartTime', '$EndTime', $UnitRef->{Period},"
             . " current_timestamp)";
 
         # db insert
@@ -1135,22 +1161,10 @@ sub ProjectActionReporting {
     }
 
     # hours per month
+    my $DaysInMonth = Days_in_Month( $Param{Year}, $Param{Month} );
     my $DateString = $Param{Year} . "-" . sprintf( "%02d", $Param{Month} );
 
-    my $SQL_Query_TimeStart = "time_start <= '$DateString-31 23:59:59'$IDSelect";
-
-    #tto: yes, I know there are some non-leap-years, ...
-    #...but com'on these few entries in the error log won't bother too much... :-)
-    if (
-        ( $Param{Month} == 2 )
-        || ( $Param{Month} == 4 )
-        || ( $Param{Month} == 6 )
-        || ( $Param{Month} == 9 )
-        || ( $Param{Month} == 11 )
-        )
-    {
-        $SQL_Query_TimeStart = "time_start <= '$DateString-30 23:59:59'$IDSelect";
-    }
+    my $SQL_Query_TimeStart = "time_start <= '$DateString-$DaysInMonth 23:59:59'$IDSelect";
 
     # Total hours
     $Self->{DBObject}->Prepare(
@@ -1346,6 +1360,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.25 $ $Date: 2009-01-21 11:09:27 $
+$Revision: 1.26 $ $Date: 2009-02-14 13:04:14 $
 
 =cut
