@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.30 2009-02-14 13:04:14 tr Exp $
+# $Id: AgentTimeAccounting.pm,v 1.31 2009-02-16 14:40:28 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.30 $) [1];
+$VERSION = qw($Revision: 1.31 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -178,7 +178,7 @@ sub Run {
                 my $Output = $Self->{LayoutObject}->Header( Title => 'Delete' );
                 $Output .= $Self->{LayoutObject}->NavigationBar();
                 $Output .= $Self->{LayoutObject}->Output(
-                    Data => { %Param, %Frontend },
+                    Data => %Param,
                     TemplateFile => 'AgentTimeAccountingDelete'
                 );
                 $Output .= $Self->{LayoutObject}->Footer();
@@ -809,8 +809,6 @@ sub Run {
     # overview about the users time accounting
     # ---------------------------------------------------------- #
     elsif ( $Self->{Subaction} eq 'Overview' ) {
-        my $Output   = '';
-        my %Frontend = ();
         my ( $Sec, $Min, $Hour, $CurrentDay, $Month, $Year )
             = $Self->{TimeObject}->SystemTime2Date(
             SystemTime => $Self->{TimeObject}->SystemTime(),
@@ -937,7 +935,7 @@ sub Run {
         if ( $UserData{ShowOvertime} ) {
             $Self->{LayoutObject}->Block(
                 Name => 'Overtime',
-                Data => { %Param, %Frontend },
+                Data => \%Param,
             );
         }
 
@@ -956,64 +954,55 @@ sub Run {
             $Param{ProjectStatusShow} = 'valid';
         }
 
-        my %Project = $Self->{TimeAccountingObject}->ProjectSettingsGet();
-        my %Action  = $Self->{TimeAccountingObject}->ActionSettingsGet();
-
         PROJECTID:
         for my $ProjectID (
-            sort { $Project{Project}{$a} cmp $Project{Project}{$b} }
-            keys %{ $Project{Project} }
+            sort { $ProjectData{$a}{Name} cmp $ProjectData{$b}{Name} }
+            keys %ProjectData
             )
         {
-            next PROJECTID if !$ProjectData{Total}{$ProjectID};
-            next PROJECTID if $ProjectID eq '-1';
+            my $ProjectRef = $ProjectData{ $ProjectID };
+            my $ActionsRef = $ProjectRef->{Actions};
 
             $Param{Project} = '';
             $Param{Class}   = 'contentvalue';
-            $Param{Status}  = $Project{ProjectStatus}{$ProjectID} ? '' : 'passiv';
+            $Param{Status}  = $ProjectRef->{Status} ? '' : 'passiv';
 
             my $Total      = 0;
             my $TotalTotal = 0;
 
             next PROJECTID if $Param{ProjectStatusShow} eq 'all' && $Param{Status};
 
-            # action sort wrapper - be careful its not simular with project!!
-            my %SortedActions = ();
-            for my $ActionID ( keys %{ $ProjectData{Total}{$ProjectID} } ) {
-                $SortedActions{$ActionID} = $Action{$ActionID}{Action};
-                $Param{RowSpan}++;
-            }
             for my $ActionID (
-                sort { $SortedActions{$a} cmp $SortedActions{$b} }
-                keys %SortedActions
+                sort { $ActionsRef->{$a}{Name} cmp $ActionsRef->{$b}{Name} }
+                keys %{$ActionsRef}
                 )
             {
-                $Param{Action} = $Action{$ActionID}{Action};
-                $Param{Hours}  = sprintf(
-                    "%.2f",
-                    $ProjectData{PerMonth}{$ProjectID}{$ActionID}{Hours} || 0
-                );
-                $Param{HoursTotal} = sprintf(
-                    "%.2f",
-                    $ProjectData{Total}{$ProjectID}{$ActionID}{Hours} || 0
-                );
+                my $ActionRef = $ActionsRef->{$ActionID};
+
+                $Param{Action} = $ActionRef->{Name};
+                $Param{Hours}  = sprintf( "%.2f", $ActionRef->{PerMonth} || 0 );
+                $Param{HoursTotal} = sprintf( "%.2f", $ActionRef->{Total} || 0 );
                 $Total      += $Param{Hours};
                 $TotalTotal += $Param{HoursTotal};
                 $Self->{LayoutObject}->Block(
                     Name => 'Action',
-                    Data => { %Param, %Frontend },
+                    Data => {%Param},
                 );
                 if ( !$Param{Project} ) {
-                    $Param{Project}            = $Project{Project}{$ProjectID};
-                    $Param{ProjectDescription} = $Self->{LayoutObject}->Ascii2Html(
-                        Text           => $Project{ProjectDescription}{$ProjectID},
+                    $Param{Project}            = $ProjectRef->{Name};
+                    my $ProjectDescription = $Self->{LayoutObject}->Ascii2Html(
+                        Text           => $ProjectRef->{Description},
                         HTMLResultMode => 1,
                         NewLine        => 50,
                     );
-                    $Param{RowSpan}++;
+
                     $Self->{LayoutObject}->Block(
                         Name => 'Project',
-                        Data => { %Param, %Frontend },
+                        Data => {
+                            RowSpan            => (1 + scalar keys %{$ActionsRef}),
+                            Status             => $Param{Status},
+                            ProjectDescription => $ProjectDescription,
+                        },
                     );
 
                     if ( $UserData{CreateProject} ) {
@@ -1023,7 +1012,7 @@ sub Run {
                         $Self->{LayoutObject}->Block(
                             Name => 'ProjectLink',
                             Data => {
-                                Project   => $Param{Project},
+                                Project   => $ProjectRef->{Name},
                                 ProjectID => $ProjectID,
                             },
                         );
@@ -1031,11 +1020,9 @@ sub Run {
                     else {
                         $Self->{LayoutObject}->Block(
                             Name => 'ProjectNoLink',
-                            Data => { Project => $Param{Project} },
+                            Data => { Project => $ProjectRef->{Name} },
                         );
                     }
-
-                    $Param{RowSpan} = 0;
                 }
             }
             $Param{Class}      = 'contentkey';
@@ -1046,7 +1033,7 @@ sub Run {
             $Param{TotalHoursTotal} += $TotalTotal;
             $Self->{LayoutObject}->Block(
                 Name => 'Action',
-                Data => { %Param, %Frontend },
+                Data => {%Param},
             );
             $Param{Class} = '';
         }
@@ -1058,10 +1045,10 @@ sub Run {
         }
 
         # build output
-        $Output = $Self->{LayoutObject}->Header( Title => 'Overview' );
+        my $Output = $Self->{LayoutObject}->Header( Title => 'Overview' );
         $Output .= $Self->{LayoutObject}->NavigationBar();
         $Output .= $Self->{LayoutObject}->Output(
-            Data => { %Param, %Frontend },
+            Data => \%Param,
             TemplateFile => 'AgentTimeAccountingOverview'
         );
         $Output .= $Self->{LayoutObject}->Footer();
@@ -1258,11 +1245,8 @@ sub Run {
         # Show action data
         my %Action      = $Self->{TimeAccountingObject}->ActionSettingsGet();
         my $ActionEmpty = 0;
-        my %SortAction  = ();
-        for my $ActionID ( keys %Action ) {
-            $SortAction{$ActionID} = $Action{$ActionID}{Action};
-        }
-        for my $ActionID ( sort { $SortAction{$a} cmp $SortAction{$b} } keys %SortAction ) {
+
+        for my $ActionID ( sort { $Action{$a}{Action} cmp $Action{$b}{Action} } keys %Action ) {
             $Param{Action}   = $Action{$ActionID}{Action};
             $Param{ActionID} = $ActionID;
 
@@ -1526,16 +1510,10 @@ sub Run {
             Name => 'Month',
         );
 
-        my %Year = ();
-
-        # FIXME the range should be created automatically
-        # Further, here I can use the map function
-        for my $ID ( 2005 .. $Year ) {
-            $Year{$ID} = $ID;
-        }
+        my @Year = (2005 .. $Year);
 
         $Frontend{YearOption} = $Self->{LayoutObject}->BuildSelection(
-            Data        => \%Year,
+            Data        => \@Year,
             SelectedID  => $Param{Year} || '',
             Name        => 'Year',
             Translation => 0,
@@ -1598,69 +1576,61 @@ sub Run {
             Month => $Param{Month},
         );
 
-        my %Project = $Self->{TimeAccountingObject}->ProjectSettingsGet();
-        my %Action  = $Self->{TimeAccountingObject}->ActionSettingsGet();
+        # REMARK:merge this projectreporting list with the list in overview
 
         PROJECTID:
         for my $ProjectID (
-            sort { $Project{Project}{$a} cmp $Project{Project}{$b} }
-            keys %{ $Project{Project} }
+            sort { $ProjectData{$a}{Name} cmp $ProjectData{$b}{Name} }
+            keys %ProjectData
             )
         {
-            next PROJECTID if !$ProjectData{Total}{$ProjectID};
-            next PROJECTID if $ProjectID eq '-1';
+            my $ProjectRef = $ProjectData{ $ProjectID };
+            my $ActionsRef = $ProjectRef->{Actions};
 
             $Param{Project} = '';
             $Param{Class}   = 'contentvalue';
-            $Param{Status}  = !$Project{ProjectStatus}{$ProjectID} ? 'passiv' : '';
+            $Param{Status}  = $ProjectRef->{Status} ? '' : 'passiv';
 
             my $Total      = 0;
             my $TotalTotal = 0;
 
             next PROJECTID if $Param{ProjectStatusShow} eq 'all' && $Param{Status};
 
-            # action sort wrapper - be careful its not simular with project!!
-            my %SortedActions = ();
-            for my $ActionID ( keys %{ $ProjectData{Total}{$ProjectID} } ) {
-                $SortedActions{$ActionID} = $Action{$ActionID}{Action};
-                $Param{RowSpan}++;
-            }
             for my $ActionID (
-                sort { $SortedActions{$a} cmp $SortedActions{$b} }
-                keys %SortedActions
+                sort { $ActionsRef->{$a}{Name} cmp $ActionsRef->{$b}{Name} }
+                keys %{$ActionsRef}
                 )
             {
+                my $ActionRef = $ActionsRef->{$ActionID};
 
-                $Param{Action} = $Action{$ActionID}{Action};
-                $Param{Hours}  = sprintf(
-                    "%.2f",
-                    $ProjectData{PerMonth}{$ProjectID}{$ActionID}{Hours} || 0
-                );
-                $Param{HoursTotal} = sprintf(
-                    "%.2f",
-                    $ProjectData{Total}{$ProjectID}{$ActionID}{Hours} || 0
-                );
+                $Param{Action} = $ActionRef->{Name};
+                $Param{Hours}  = sprintf( "%.2f", $ActionRef->{PerMonth} || 0 );
+                $Param{HoursTotal} = sprintf( "%.2f", $ActionRef->{Total} || 0 );
                 $Total      += $Param{Hours};
                 $TotalTotal += $Param{HoursTotal};
-
                 $Self->{LayoutObject}->Block(
                     Name => 'Action',
-                    Data => { %Param, %Frontend },
+                    Data => {%Param},
                 );
+
                 if ( !$Param{Project} ) {
-                    $Param{Project}            = $Project{Project}{$ProjectID};
-                    $Param{ProjectID}          = $ProjectID;
-                    $Param{ProjectDescription} = $Self->{LayoutObject}->Ascii2Html(
-                        Text           => $Project{ProjectDescription}{$ProjectID},
+                    $Param{Project}            = $ProjectRef->{Name};
+                    my $ProjectDescription = $Self->{LayoutObject}->Ascii2Html(
+                        Text           => $ProjectRef->{Description},
                         HTMLResultMode => 1,
                         NewLine        => 50,
                     );
-                    $Param{RowSpan}++;
+
                     $Self->{LayoutObject}->Block(
                         Name => 'Project',
-                        Data => { %Param, %Frontend },
+                        Data => {
+                            RowSpan            => (1 + scalar keys %{$ActionsRef}),
+                            Status             => $Param{Status},
+                            ProjectDescription => $ProjectDescription,
+                            Project            => $ProjectRef->{Name},
+                            ProjectID          => $ProjectID,
+                        },
                     );
-                    $Param{RowSpan} = 0;
                 }
             }
 
@@ -1730,15 +1700,16 @@ sub Run {
         for my $UserID ( keys %ShownUsers ) {
 
             # Overview per project and action
+            # REMARK: This is the wrong function to get this information
             %ProjectData = $Self->{TimeAccountingObject}->ProjectActionReporting(
                 Year   => $Year,
                 Month  => $Month,
                 UserID => $UserID,
             );
-            if ( $ProjectData{Total}{ $Param{ProjectID} } ) {
-                for my $ActionID ( keys %{ $ProjectData{Total}{ $Param{ProjectID} } } ) {
-                    $ProjectTime{$ActionID}{$UserID}
-                        = $ProjectData{Total}{ $Param{ProjectID} }{$ActionID};
+            if ( $ProjectData{ $Param{ProjectID} }) {
+                my $ActionsRef = $ProjectData{ $Param{ProjectID} }{Actions};
+                for my $ActionID ( keys %{ $ActionsRef } ) {
+                    $ProjectTime{$ActionID}{$UserID}{Hours} = $ActionsRef->{$ActionID}{Total};
                 }
             }
             else {

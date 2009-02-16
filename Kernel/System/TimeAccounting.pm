@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.26 2009-02-14 13:04:14 tr Exp $
+# $Id: TimeAccounting.pm,v 1.27 2009-02-16 14:40:28 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.26 $) [1];
+$VERSION = qw($Revision: 1.27 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week);
 
@@ -1169,24 +1169,37 @@ sub ProjectActionReporting {
     # Total hours
     $Self->{DBObject}->Prepare(
         SQL =>
-            "SELECT project_id, action_id, period FROM time_accounting_table WHERE $SQL_Query_TimeStart",
+            "SELECT project_id, action_id, period FROM time_accounting_table WHERE project_id != -1 AND $SQL_Query_TimeStart",
     );
 
     # fetch Data
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         next if !$Row[2];
-        $Data{Total}{ $Row[0] }{ $Row[1] }{Hours} += $Row[2];
+        $Data{ $Row[0] }{Actions}{ $Row[1] }{Total} += $Row[2];
     }
 
     $Self->{DBObject}->Prepare(
         SQL => "SELECT project_id, action_id, period FROM time_accounting_table"
-            . " WHERE time_start >= '$DateString-01 00:00:00' AND $SQL_Query_TimeStart",
+            . " WHERE project_id != -1 AND time_start >= '$DateString-01 00:00:00' AND $SQL_Query_TimeStart",
     );
 
     # fetch Data
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         next if !$Row[2];
-        $Data{PerMonth}{ $Row[0] }{ $Row[1] }{Hours} += $Row[2];
+        $Data{ $Row[0] }{Actions}{ $Row[1] }{PerMonth} += $Row[2];
+    }
+
+    # add readable components
+    my %Project = $Self->ProjectSettingsGet();
+    my %Action  = $Self->ActionSettingsGet();
+    for my $ProjectID ( keys %Data) {
+        $Data{$ProjectID}{Name}   = $Project{Project}{$ProjectID};
+        $Data{$ProjectID}{Status} = $Project{ProjectStatus}{$ProjectID};
+        $Data{$ProjectID}{Description} = $Project{ProjectDescription}{$ProjectID};
+        my $ActionsRef = $Data{ $ProjectID }{Actions};
+        for my $ActionID ( keys %{$ActionsRef}) {
+            $Data{ $ProjectID }{Actions}{$ActionID}{Name} = $Action{ $ActionID }{Action};
+        }
     }
 
     return %Data;
@@ -1360,6 +1373,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.26 $ $Date: 2009-02-14 13:04:14 $
+$Revision: 1.27 $ $Date: 2009-02-16 14:40:28 $
 
 =cut
