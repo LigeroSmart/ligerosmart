@@ -1,0 +1,215 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+    "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
+<!-- $Id: FAQ.xml,v 1.1 2009-02-17 16:23:48 martin Exp $ -->
+
+<book lang='de'>
+
+
+<bookinfo>
+<title>$Name</title>
+<edition>$Description Version $Version</edition>
+
+<copyright>
+<year>$YearStamp</year>
+<holder>$Vendor, $URL</holder>
+</copyright>
+
+<date>$DateStamp</date>
+
+<legalnotice>
+    <para>$License</para>
+    <para>This work is copyrighted by $Vendor, Norsk-Data-Str. 1, 61352 Bad Homburg, Germany.</para>
+    <para>Build Date: $DateStamp</para>
+</legalnotice>
+
+</bookinfo>
+
+<preface id="preface" >
+    <title>Vorwort</title>
+    <para>Das FAQ Modul ist eine OTRS Erweiterung welche eine FAQ- bzw. Wissensdatenbank zur Verfügung stellt.</para>
+    <para>Somit kann man die Möglichkeit schaffen, schneller Wissen innerhalb der Agenten oder über ein öffentliches Web-Interface an Kunden zu transferieren. Effektiv Zeit zu sparen.</para>
+    <para>Bei Fragen betreffend dieses Dokumentes, kontaktieren Sie Ihren Kommerziellen-Support (support@otrs.com) für weitere Informationen.</para>
+</preface>
+
+<chapter>
+    <title>Funktionsliste</title>
+    <sect1>
+        <title>FAQ Explorer</title>
+        <para>Intuitive Navigation und flexible Abbildung von Themenhierarchien innerhalb des FAQ Explorers um Übersichtlich durch die Datenbank zu gelangen.</para>
+    </sect1>
+    <sect1>
+        <title>WYSIWYG Editor</title>
+        <para>Ein WYSIWYG Editor dient zur Formatierung von Artikeln und Einfügen von Screenshots oder Bildmaterial.</para>
+    </sect1>
+    <sect1>
+        <title>FAQ Artikel</title>
+        <para>FAQ Artikel mit verschiedenen Attributen wie "Symptom", "Problembeschreibung", "Lösungsweg", "Titel", "Nummer", "Sprache", "Category", "Keywords", "Status", "Erstellt" und "Verändert".</para>
+    </sect1>
+    <sect1>
+        <title>FAQ Anhänge</title>
+        <para>Zu eine, FAQ-Artikel können Anhänge hinzugefügt werden welche auch im Kunden-Interface verfübgar sind (z. B. PDF-Dateien für Anleitungen).</para>
+    </sect1>
+    <sect1>
+        <title>Oberflächen für Agenten und Kunden</title>
+        <para>Über den FAQ-Status kann gesteuert werden, in welchen Oberflächen der FAQ-Artikel sichtbar ist. "intern" nur für Agenten in der Agenten-Oberflächen, "external" zusätzlich im geschützten Kunden-Bereich und "public" für den nicht geschützten  Kunden-Bereich.</para>
+    </sect1>
+    <sect1>
+        <title>Komfortable Verschlagwortung / Clickable Keywords</title>
+        <para>Komfortable Verschlagwortung zur Anzeige alternativer Artikel über anklickbare Schlagworte.</para>
+    </sect1>
+    <sect1>
+        <title>Verknüpfung mit Objekten</title>
+        <para>Verknüpfung von FAQ Artikeln mit anderen Objekten wie mit Tickets, FAQ Artikeln oder Configuration Items (der CMDB) möglich.</para>
+    </sect1>
+    <sect1>
+        <title>Volltext- und Schnellsuche</title>
+        <para>Volltext- und Schnellsuche innerhalb der gesamten Wissendatenbank möglich. Zusätzlich können auch die OTRS-Operatoren für "AND" oder "OR" Verknüpfungen verwendet werden.</para>
+    </sect1>
+    <sect1>
+        <title>Die häufigsten / Top 10</title>
+        <para>Eine Übersicht der Top 10 der am häufigsten aufgerufenen Artikel, der zuletzt erstellten Artikel und zuletzt geänderter Artikel.</para>
+    </sect1>
+    <sect1>
+        <title>Ranking/Voting von FAQ Artikeln</title>
+        <para>Ein persönliches Ranking/Voting von FAQ Artikeln welches als Information für andere über die Qualität des FAQ Artikels Auskunft gibt.</para>
+    </sect1>
+    <sect1>
+        <title>Verwendung OTRS Antworten</title>
+        <para>Es besteht die Möglichkeit des einfügen von FAQ Artikeln bei der Erstellung von Antworten.</para>
+    </sect1>
+    <sect1>
+        <title>Freigabe Workflow</title>
+        <para>Worksflow zur Freigabe im Fall der Neuerstellung oder Änderung von FAQ Artikeln.</para>
+    </sect1>
+    <sect1>
+        <title>RSS Unterstützung für öffentliche FAQ Artikel</title>
+        <para>Im öffentlichen Bereich gibt es die Möglichkeit sogenante RSS-Feed zu abonieren welche über Änderungen an FAQ Artikeln aktuell halten.</para>
+    </sect1>
+    <sect1>
+        <title>OpenSearch Format</title>
+        <para>Unterstützung des OpenSearch Formats (Browserschnellsuche).</para>
+    </sect1>
+</chapter>
+
+<chapter>
+    <title>Systemvoraussetzung</title>
+    <sect1>
+        <title>Framework</title>
+        <para>Folgender OTRS Framework wird benötigt:</para>
+        <para>
+        $Framework
+        </para>
+    </sect1>
+    <sect1>
+        <title>Pakete</title>
+        <para>Folgende Pakete werden benötigt:</para>
+        <para>
+        $PackageRequired
+        </para>
+    </sect1>
+    <sect1>
+        <title>Betriebssystem</title>
+        <para>Folgende Betriebssysteme sind als Abhängigkeit zu beachten:</para>
+        <para>
+        $OS
+        </para>
+    </sect1>
+    <sect1>
+        <title>Third Party Software</title>
+        <para>Folgende Software wird zum Betrieb des Paketes benötigt:</para>
+        <para>
+            <itemizedlist>
+                <listitem><para>Keine</para></listitem>
+            </itemizedlist>
+        </para>
+    </sect1>
+</chapter>
+
+<chapter>
+    <title>Installation</title>
+    <para>Die folgenden Instruktionen zeigen wie man das Paket installiert. Es gibt grundsätzlich zwei Möglichkeiten. Entweder über das Admin-Interface oder über die System-Eingabe.</para>
+    <para>Nach der erfolgreichen Installation folgen Sie bitte dem Kapitel "Erste Schritte".</para>
+    <sect1>
+        <title>Admin-Interface</title>
+        <para>
+Über die folgende URL kann das Paket über das Admin-Interface installiert bzw. wenn nötig auch aktualisiert oder deinstalliert werden
+(bitte vorher prüfen ob der Benutzer auch in der Admin-Gruppe ist).
+        </para>
+        <para>
+<ulink url="http://localhost/otrs/index.pl?Action=AdminPackageManager">http://localhost/otrs/index.pl?Action=AdminPackageManager</ulink>
+        </para>
+    </sect1>
+    <sect1>
+        <title>Command-Line</title>
+        <para>
+Ist es nicht möglich das Admin-Interface zu benutzen, kann das folgendes
+Command-Line Tool ("bin/opm.pl") benutzt werden.
+        </para>
+        <para>
+        <screen>
+shell> bin/opm.pl -a install -p /path/to/$Name-$Version.opm
+        </screen>
+        </para>
+    </sect1>
+</chapter>
+
+<chapter>
+    <title>Erste Schritte</title>
+    <para>Nach der Installation des FAQ Moduls wird automatisch eine Gruppe "faq" angelegt. Nur wer "rw" in ideser Gruppe ist, kann auf das FAQ Modul zugreifen.</para>
+    <sect1>
+        <title>Hinzufügen der FAQ Berechtigung</title>
+        <para>Mit Admin-Rechten ist es möglich existierende Agenten in die FAQ Gruppe einzutragen. Die Agenten müssen sich nach der Zuteilung in die FAQ-Gruppe erneut anmelden um die Änderungen wirkbar zu machen. Danach ist im Navigations-Bereich ein "FAQ"-Symbol zu sehen.</para>
+    </sect1>
+    <sect1>
+        <title>Anlegen von Kategorien</title>
+        <para>Als erstes müssen FAQ Kategorien angelegt werden.</para>
+    </sect1>
+    <sect1>
+        <title>Anlegen von FAQ Artikeln</title>
+        <para>Nun können Sie starten, neue FAQ Artikel anzulegen.</para>
+    </sect1>
+</chapter>
+
+<chapter>
+    <title>Konfiguration</title>
+    <para>Die folgenden Konfigurationen können über SysConfig im Admin-Bereich konfiguriert werden</para>
+    <sect1>
+        <title>FAQ::Default::RootCategoryName</title>
+        <para>Name für den Oberbereich im Kategorie-Baum.</para>
+    </sect1>
+    <sect1>
+        <title>FAQ::Default::RootCategoryComment</title>
+        <para>Kommentar für den Oberbereich im Kategorie-Baum..</para>
+    </sect1>
+    <sect1>
+        <title>FAQ::Default::RootCategoryComment</title>
+        <para>Mögliche Gewichtung für die Bewertung. Mögliche Auswahlmöglichkeiten.</para>
+    </sect1>
+    <sect1>
+        <title>FAQ::Item::Voting::Show</title>
+        <para>Definition bei welchen FAQ-Status das Voting-Feature angezeigt wird.</para>
+    </sect1>
+</chapter>
+
+<chapter>
+    <title>Kontakt</title>
+    <para>
+Kontakt für Fragen rund um das FAQ Modul.
+    </para>
+    <sect1>
+        <title>OTRA AG/OTRS Inc.</title>
+        <para>
+        Email: enjoy@otrs.com
+        </para>
+    </sect1>
+</chapter>
+
+<chapter>
+    <title>Änderungsliste</title>
+    <para>
+    $ChangeLog
+    </para>
+</chapter>
+
+</book>
