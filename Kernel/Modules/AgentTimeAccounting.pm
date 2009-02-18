@@ -2,11 +2,11 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.31 2009-02-16 14:40:28 tr Exp $
+# $Id: AgentTimeAccounting.pm,v 1.32 2009-02-18 07:10:31 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 package Kernel::Modules::AgentTimeAccounting;
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.31 $) [1];
+$VERSION = qw($Revision: 1.32 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1861,11 +1861,13 @@ sub _ProjectList {
         Status => 'valid',
     );
 
-    # get the last projects
-    my @LastProjects = $Self->{TimeAccountingObject}->LastProjectsOfUser();
+    if ( !$Self->{LastProjectsRef} ) {
+        # get the last projects
+        my @LastProjects = $Self->{TimeAccountingObject}->LastProjectsOfUser();
 
-    # add the favorits
-    my %Last = map { $_ => 1 } @LastProjects;
+        # add the favorits
+        %{ $Self->{LastProjectsRef} } = map { $_ => 1 } @LastProjects;
+    }
 
     PROJECTID:
     for my $ProjectID (
@@ -1873,7 +1875,7 @@ sub _ProjectList {
         keys %{ $Project{Project} }
         )
     {
-        next PROJECTID if !$Last{$ProjectID};
+        next PROJECTID if !$Self->{LastProjectsRef}->{$ProjectID};
         my %Hash = (
             Key   => $ProjectID,
             Value => $Project{Project}{$ProjectID},
