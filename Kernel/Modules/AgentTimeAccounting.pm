@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.32 2009-02-18 07:10:31 tr Exp $
+# $Id: AgentTimeAccounting.pm,v 1.33 2009-02-20 15:26:38 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.32 $) [1];
+$VERSION = qw($Revision: 1.33 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -86,6 +86,42 @@ sub Run {
     my @WeekdayArray = ( 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', );
 
     # ---------------------------------------------------------- #
+    # delete the time accounting elements of one day
+    # ---------------------------------------------------------- #
+    if ( $Self->{ParamObject}->GetParam( Param => 'Delete' ) ) {
+        my ( $Sec, $Min, $Hour, $Day, $Month, $Year )
+            = $Self->{TimeObject}->SystemTime2Date(
+            SystemTime => $Self->{TimeObject}->SystemTime(),
+            );
+
+        # get params
+        for (qw(Status Year Month Day)) {
+            $Param{$_} = $Self->{ParamObject}->GetParam( Param => $_ );
+        }
+
+        # Check Date
+        if ( !$Param{Year} || !$Param{Month} || !$Param{Day} ) {
+            $Param{Year}  = $Year;
+            $Param{Month} = $Month;
+            $Param{Day}   = $Day;
+        }
+        else {
+            $Param{Year}  = sprintf( "%02d", $Param{Year} );
+            $Param{Month} = sprintf( "%02d", $Param{Month} );
+            $Param{Day}   = sprintf( "%02d", $Param{Day} );
+        }
+
+        my $Output = $Self->{LayoutObject}->Header( Title => 'Delete' );
+        $Output .= $Self->{LayoutObject}->NavigationBar();
+        $Output .= $Self->{LayoutObject}->Output(
+            Data => \%Param,
+            TemplateFile => 'AgentTimeAccountingDelete'
+        );
+        $Output .= $Self->{LayoutObject}->Footer();
+        return $Output;
+    }
+
+    # ---------------------------------------------------------- #
     # edit the time accounting elements
     # ---------------------------------------------------------- #
     if ( $Self->{Subaction} eq 'Edit' ) {
@@ -93,16 +129,15 @@ sub Run {
         return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' ) if !$Self->{AccessRo};
 
         my %Frontend   = ();
-        my %ActionList = ();
         my %Data       = ();
-        my %Action     = $Self->{TimeAccountingObject}->ActionSettingsGet();
+        my %ActionList = $Self->_ActionList();
         my ( $Sec, $Min, $Hour, $Day, $Month, $Year )
             = $Self->{TimeObject}->SystemTime2Date(
             SystemTime => $Self->{TimeObject}->SystemTime(),
             );
 
         # get params
-        for (qw(Status Year Month Day Delete)) {
+        for (qw(Status Year Month Day)) {
             $Param{$_} = $Self->{ParamObject}->GetParam( Param => $_ );
         }
 
@@ -174,16 +209,6 @@ sub Run {
 
         # Edit Working Units
         if ( $Param{Status} ) {
-            if ( $Param{Delete} ) {
-                my $Output = $Self->{LayoutObject}->Header( Title => 'Delete' );
-                $Output .= $Self->{LayoutObject}->NavigationBar();
-                $Output .= $Self->{LayoutObject}->Output(
-                    Data => %Param,
-                    TemplateFile => 'AgentTimeAccountingDelete'
-                );
-                $Output .= $Self->{LayoutObject}->Footer();
-                return $Output;
-            }
 
             ID:
             for my $ID ( 1 .. 16 ) {
@@ -218,9 +243,9 @@ sub Run {
                     my $StartTime = $1 * 60 + $2;
                     if ( $Param{EndTime} =~ /^(\d+):(\d+)/ ) {
                         my $EndTime = $1 * 60 + $2;
-                        if ( $ReduceTimeRef->{ $Action{ $Param{ActionID} }{Action} } ) {
+                        if ( $ReduceTimeRef->{ $ActionList { $Param{ActionID} } } ) {
                             $WorkingUnit{Period} = ( $EndTime - $StartTime ) / 60
-                                * $ReduceTimeRef->{ $Action{ $Param{ActionID} }{Action} } / 100;
+                                * $ReduceTimeRef->{ $ActionList{ $Param{ActionID} } } / 100;
                         }
                         else {
                             $WorkingUnit{Period} = ( $EndTime - $StartTime ) / 60;
@@ -279,14 +304,6 @@ sub Run {
             $Frontend{PeriodNote} = '';
         }
 
-        # get action settings
-        for my $ActionID ( keys %Action ) {
-            if ( $Action{$ActionID}{ActionStatus} ) {
-                $ActionList{$ActionID} = $Action{$ActionID}{Action};
-            }
-        }
-        $ActionList{''} = '';
-
         if ( time() > timelocal( 1, 0, 0, $Param{Day}, $Param{Month} - 1, $Param{Year} - 1900 ) ) {
             $Self->{LayoutObject}->Block(
                 Name => 'UnitBlock',
@@ -329,39 +346,16 @@ sub Run {
 
             $Param{Remark} = $UnitRef->{Remark} || '';
             if ( $UnitRef->{ProjectID} && $UnitRef->{ActionID} ) {
-                if ( $UnitRef->{Period} ) {
-                    if ( $UnitRef->{Period} > 0 ) {
-                        $Param{Period} = $UnitRef->{Period};
-                    }
-                    elsif ( $UnitRef->{Period} == 0 ) {
-                        $Param{UnitRequiredDescription}
-                            = 'Can\'t save settings, because Period is not given given!';
-                    }
-
-                    else {
-                        $Param{UnitRequiredDescription}
-                            = 'Can\'t save settings, because Starttime is older than Endtime!';
-                    }
-                }
-                else {
-                    $Param{Period} = '';
+                if ( $UnitRef->{Period} == 0 ) {
                     $Param{UnitRequiredDescription}
                         = 'Can\'t save settings, because of missing period!';
                 }
             }
-            else {
-                $Param{Period}    = $UnitRef->{Period} || '';
-                $Param{StartTime} = '';
-                $Param{EndTime}   = '';
-            }
+
+            my $Period    = $UnitRef->{Period} || '';
 
             for (qw(StartTime EndTime)) {
-                if ( $UnitRef->{$_} && $UnitRef->{$_} eq '00:00' ) {
-                    $Param{$_} = '';
-                }
-                else {
-                    $Param{$_} = $UnitRef->{$_};
-                }
+                $Param{$_} = !$UnitRef->{$_} || $UnitRef->{$_} eq '00:00' ? '' : $UnitRef->{$_};
             }
 
             # Define if the input fields are visible or not
@@ -374,7 +368,11 @@ sub Run {
 
             $Self->{LayoutObject}->Block(
                 Name => $Param{PeriodBlock},
-                Data => { %Param, %Frontend },
+                Data => {
+                    TextPosition => $Param{TextPosition},
+                    Period       => $Period,
+                    ID           => $ID,
+                },
             );
 
             # Validity checks start
@@ -1838,6 +1836,24 @@ sub _FirstUserRedirect {
     );
 }
 
+sub _ActionList {
+    my $Self = shift;
+
+    my %ActionList;
+    my %Action     = $Self->{TimeAccountingObject}->ActionSettingsGet();
+
+    # get action settings
+    ACTIONID:
+    for my $ActionID ( keys %Action ) {
+        next ACTIONID if !$Action{$ActionID}{ActionStatus};
+        next ACTIONID if !$Action{$ActionID}{Action};
+        $ActionList{$ActionID} = $Action{$ActionID}{Action};
+    }
+    $ActionList{''} = '';
+
+    return %ActionList;
+}
+
 sub _ProjectList {
     my ( $Self, %Param ) = @_;
 
@@ -1894,11 +1910,13 @@ sub _ProjectList {
     };
 
     # add all allowed projects to the list
+    PROJECTID:
     for my $ProjectID (
         sort { $Project{Project}{$a} cmp $Project{Project}{$b} }
         keys %{ $Project{Project} }
         )
     {
+        next PROJECTID if !$Project{Project}{$ProjectID};
         my %Hash = (
             Key   => $ProjectID,
             Value => $Project{Project}{$ProjectID},
