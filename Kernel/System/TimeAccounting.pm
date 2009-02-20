@@ -2,11 +2,11 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.27 2009-02-16 14:40:28 tr Exp $
+# $Id: TimeAccounting.pm,v 1.28 2009-02-20 14:24:24 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 package Kernel::System::TimeAccounting;
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.27 $) [1];
+$VERSION = qw($Revision: 1.28 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week);
 
@@ -1349,11 +1349,12 @@ sub LastProjectsOfUser {
 
     # fetch Data
     my $Counter = 0;
+    ROW:
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        next ROW if $Counter > 7;
+
         $Counter++;
-        if ( $Counter < 7 ) {
-            $Projects{ $Row[0] } = 1;
-        }
+        $Projects{ $Row[0] } = 1;
     }
 
     return keys %Projects;
@@ -1368,11 +1369,11 @@ sub LastProjectsOfUser {
 This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
-the enclosed file COPYING for license information (GPL). If you
-did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+the enclosed file COPYING for license information (AGPL). If you
+did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.27 $ $Date: 2009-02-16 14:40:28 $
+$Revision: 1.28 $ $Date: 2009-02-20 14:24:24 $
 
 =cut
