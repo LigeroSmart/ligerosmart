@@ -1,13 +1,13 @@
 # --
 # Kernel/Modules/CustomerTicketZoom.pm - to get a closer view
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerTicketZoom.pm,v 1.2 2008-07-24 13:03:43 ub Exp $
-# $OldId: CustomerTicketZoom.pm,v 1.27 2008/07/09 12:32:06 martin Exp $
+# $Id: CustomerTicketZoom.pm,v 1.3 2009-02-20 12:24:46 mh Exp $
+# $OldId: CustomerTicketZoom.pm,v 1.27.2.2 2009/02/20 11:48:05 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 package Kernel::Modules::CustomerTicketZoom;
@@ -24,7 +24,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -154,6 +154,7 @@ sub Run {
 
     # check follow up
     if ( $Self->{Subaction} eq 'Store' ) {
+
         my $NextScreen = $Self->{NextScreen} || $Self->{Config}->{NextScreenAfterFollowUp};
         my %Error = ();
 
@@ -216,7 +217,7 @@ sub Run {
         }
         if ( !%Error ) {
 
-            # set lock if ticket was cloased
+            # set lock if ticket was closed
             if ( $Lock && $State{TypeName} =~ /^close/i && $Ticket{OwnerID} ne '1' ) {
                 $Self->{TicketObject}->LockSet(
                     TicketID => $Self->{TicketID},
@@ -315,6 +316,9 @@ sub Run {
     $Ticket{TicketTimeUnits} = $Self->{TicketObject}->TicketAccountedTimeGet(
         TicketID => $Ticket{TicketID},
     );
+
+    # set priority from ticket as fallback
+    $GetParam{PriorityID} ||= $Ticket{PriorityID};
 
     # get all atricle of this ticket
     my @CustomerArticleTypes = $Self->{TicketObject}->ArticleTypeList( Type => 'Customer' );
