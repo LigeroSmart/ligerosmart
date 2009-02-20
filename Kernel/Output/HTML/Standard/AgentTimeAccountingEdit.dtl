@@ -2,7 +2,7 @@
 # AgentTimeAccountingEdit.dtl - provides HTML form for time accounting edit
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingEdit.dtl,v 1.21 2009-02-14 13:04:14 tr Exp $
+# $Id: AgentTimeAccountingEdit.dtl,v 1.22 2009-02-20 15:18:21 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -172,7 +172,9 @@ function MoreInputFields() {
                         <td><input type="text" name="StartTime[$QData{"ID"}]" value="$QData{"StartTime"}" size="7"></td>
                         <td><input type="text" name="EndTime[$QData{"ID"}]"   value="$QData{"EndTime"}"   size="7"></td>
 <!-- dtl:block:UnitInputPeriod -->
-                        <td align="$QData{"TextPosition"}"><input type="text" name="Period[$QData{"ID"}]"    value="$QData{"Period"}"    size="7"></td>
+                        <td align="$QData{"TextPosition"}">
+                          <input type="text" name="Period[$QData{"ID"}]" value="$QData{"Period"}" size="7">
+                        </td>
 <!-- dtl:block:UnitInputPeriod -->
 <!-- dtl:block:UnitPeriodWithoutInput -->
                         <td align="$QData{"TextPosition"}">$QData{"Period"}</td>
