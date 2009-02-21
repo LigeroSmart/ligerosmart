@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.29 2009-02-21 02:05:30 tr Exp $
+# $Id: TimeAccounting.pm,v 1.30 2009-02-21 02:08:27 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.29 $) [1];
+$VERSION = qw($Revision: 1.30 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week);
 
@@ -1352,12 +1352,10 @@ sub LastProjectsOfUser {
     ROW:
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         next ROW if $Counter > 7;
-
-        if (!$Projects{ $Row[0] }) {
-            $Counter++;
-        }
+        next ROW if $Projects{ $Row[0] };
 
         $Projects{ $Row[0] } = 1;
+        $Counter++;
     }
 
     return keys %Projects;
@@ -1377,6 +1375,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.29 $ $Date: 2009-02-21 02:05:30 $
+$Revision: 1.30 $ $Date: 2009-02-21 02:08:27 $
 
 =cut
