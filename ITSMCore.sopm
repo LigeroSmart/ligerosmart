@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMCore.sopm,v 1.75 2009-03-02 09:47:20 mh Exp $</CVS>
+    <CVS>$Id: ITSMCore.sopm,v 1.76 2009-03-02 09:53:29 mh Exp $</CVS>
     <Name>ITSMCore</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -531,7 +531,7 @@
         &lt;br&gt;
         &lt;b&gt;REQUIRED OTRS PACKAGES&lt;/b&gt;
         &lt;ul&gt;
-        &lt;li&gt;GeneralCatalog 1.2.2&lt;/li&gt;
+        &lt;li&gt;GeneralCatalog 1.2.3&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         &lt;b&gt;ATTENTION&lt;/b&gt;
@@ -555,7 +555,7 @@
         &lt;br&gt;
         &lt;b&gt;BENÖTIGTE OTRS-PAKETE&lt;/b&gt;
         &lt;ul&gt;
-        &lt;li&gt;GeneralCatalog 1.2.2&lt;/li&gt;
+        &lt;li&gt;GeneralCatalog 1.2.3&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         &lt;b&gt;ACHTUNG&lt;/b&gt;
@@ -611,7 +611,7 @@
         &lt;br&gt;
         &lt;b&gt;REQUIRED OTRS PACKAGES&lt;/b&gt;
         &lt;ul&gt;
-        &lt;li&gt;GeneralCatalog 1.2.2&lt;/li&gt;
+        &lt;li&gt;GeneralCatalog 1.2.3&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         &lt;/b&gt;ATTENTION&lt;/b&gt;
@@ -635,7 +635,7 @@
         &lt;br&gt;
         &lt;b&gt;BENÖTIGTE OTRS-PAKETE&lt;/b&gt;
         &lt;ul&gt;
-        &lt;li&gt;GeneralCatalog 1.2.2&lt;/li&gt;
+        &lt;li&gt;GeneralCatalog 1.2.3&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         &lt;b&gt;ACHTUNG&lt;/b&gt;
