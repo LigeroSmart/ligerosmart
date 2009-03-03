@@ -1,13 +1,13 @@
 # --
 # Kernel/Modules/AgentTicketPhone.pm - to handle phone calls
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.pm,v 1.7 2008-12-15 11:41:42 mh Exp $
+# $Id: AgentTicketPhone.pm,v 1.8 2009-03-03 11:15:03 mh Exp $
 # $OldId: AgentTicketPhone.pm,v 1.78.2.1 2008/12/04 12:49:09 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 package Kernel::Modules::AgentTicketPhone;
@@ -31,7 +31,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1116,12 +1116,12 @@ sub Run {
 # ITSM
 # ---
 
-            #get the temporarily links
+            # get the temporarily links
             my $TempLinkList = $Self->{LinkObject}->LinkList(
                 Object    => 'Ticket',
                 Key       => $Self->{FormID},
                 State     => 'Temporary',
-                UserID   => $Self->{UserID},
+                UserID    => $Self->{UserID},
             );
 
             if ( $TempLinkList && ref $TempLinkList eq 'HASH' && %{$TempLinkList} ) {
@@ -1954,7 +1954,8 @@ sub _MaskPhoneNew {
         Data       => $Param{Impacts},
         Name       => 'TicketFreeText14',
         SelectedID => $Param{ImpactID},
-        OnChange   => "document.compose.ExpandCustomerName.value='3'; document.compose.PriorityRC.value='1'; document.compose.submit(); return false;",
+        OnChange   => "document.compose.ExpandCustomerName.value='3'; "
+            . "document.compose.PriorityRC.value='1'; document.compose.submit(); return false;",
         Ajax       => {
             Update => [
                 'PriorityID',
