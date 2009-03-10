@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.33 2009-02-20 15:26:38 tr Exp $
+# $Id: AgentTimeAccounting.pm,v 1.34 2009-03-10 11:20:46 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.33 $) [1];
+$VERSION = qw($Revision: 1.34 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -336,7 +336,7 @@ sub Run {
                 SelectedID  => $UnitRef->{ActionID} || '',
                 Name        => "ActionID[$ID]",
                 Translation => 0,
-                Max         => 35,
+                Max         => 37,
             );
 
             $Frontend{ProjectOption} = $Self->_ProjectList(
@@ -444,18 +444,19 @@ sub Run {
                     Name => 'UnitRequired',
                     Data => { Description => $Param{UnitRequiredDescription} },
                 );
-                if (
-                    !$Self->{TimeAccountingObject}->WorkingUnitsDelete(
-                        Year  => $Param{Year},
-                        Month => $Param{Month},
-                        Day   => $Param{Day},
-                    )
-                    )
-                {
-                    return $Self->{LayoutObject}->ErrorScreen(
-                        Message => 'Can\'t delete Working Units!'
-                    );
-                }
+                # REMARK: don't delete all working units
+                #if (
+                #    !$Self->{TimeAccountingObject}->WorkingUnitsDelete(
+                #        Year  => $Param{Year},
+                #        Month => $Param{Month},
+                #        Day   => $Param{Day},
+                #    )
+                #    )
+                #{
+                #    return $Self->{LayoutObject}->ErrorScreen(
+                #        Message => 'Can\'t delete Working Units!'
+                #    );
+                #}
                 $Param{UnitRequiredDescription}     = '';
                 $Param{UnitRequiredDescriptionTrue} = 1;
             }
@@ -1057,7 +1058,6 @@ sub Run {
     # settings for handling time accounting
     # ---------------------------------------------------------- #
     elsif ( $Self->{Subaction} eq 'Setting' ) {
-        my %Frontend = ();
         my %Data     = ();
 
         for (qw(ActionAction ActionUser NewAction NewUser)) {
@@ -1167,6 +1167,7 @@ sub Run {
                         = $UserBasics{$UserID}{Description} . $Break . $Description;
 
                     $Data{$UserID}{UserID} = $UserID;
+
                     for my $Period ( keys %{ $User{$UserID} } ) {
 
                         # the following is because of deactivate user
@@ -1248,15 +1249,17 @@ sub Run {
             $Param{Action}   = $Action{$ActionID}{Action};
             $Param{ActionID} = $ActionID;
 
-            $Frontend{StatusOption} = $Self->{LayoutObject}->BuildSelection(
+            my $StatusOption = $Self->{LayoutObject}->BuildSelection(
                 Data       => \%StatusList,
-                SelectedID => $Action{$ActionID}{ActionStatus} || '',
+                SelectedID => $Action{$ActionID}{ActionStatus},
                 Name       => "ActionStatus[$Param{ActionID}]",
             );
 
             $Self->{LayoutObject}->Block(
                 Name => 'Action',
-                Data => { %Param, %Frontend },
+                Data => { %Param,
+                    StatusOption => $StatusOption,
+                },
             );
         }
 
@@ -1299,7 +1302,7 @@ sub Run {
             $Self->{LayoutObject}->Block(
                 Name => 'User',
                 Data => {
-                    %Param, %Frontend,
+                    %Param,
                     Description    => $Description,
                     ShowOvertime   => $UserBasicsRef->{ShowOvertime} ? 'checked' : '',
                     CreateProject  => $UserBasicsRef->{CreateProject} ? 'checked' : '',
@@ -1308,31 +1311,34 @@ sub Run {
             );
 
             delete $ShownUsers{$UserID};
-            for my $Period ( sort keys %{$UserRef} ) {
-                $Param{WeeklyHours} = $UserRef->{$Period}{WeeklyHours};
-                $Param{LeaveDays}   = $UserRef->{$Period}{LeaveDays};
-                $Param{Overtime}    = $UserRef->{$Period}{Overtime};
-                $Param{DateStart}   = $UserRef->{$Period}{DateStart};
-                $Param{DateEnd}     = $UserRef->{$Period}{DateEnd};
-                $Param{Period}      = $Period;
 
-                $Frontend{StatusOption} = $Self->{LayoutObject}->BuildSelection(
+            for my $Period ( sort keys %{$UserRef} ) {
+
+                my $StatusOption = $Self->{LayoutObject}->BuildSelection(
                     Data       => \%StatusList,
-                    SelectedID => $UserRef->{$Period}{UserStatus} || '',
+                    SelectedID => $UserRef->{$Period}{UserStatus},
                     Name       => "UserStatus[$UserID][$Period]",
                 );
 
                 $Self->{LayoutObject}->Block(
                     Name => 'Period',
-                    Data => { %Param, %Frontend },
+                    Data => {
+                        UserID       => $UserID,
+                        WeeklyHours  => $UserRef->{$Period}{WeeklyHours},
+                        LeaveDays    => $UserRef->{$Period}{LeaveDays},
+                        Overtime     => $UserRef->{$Period}{Overtime},
+                        DateStart    => $UserRef->{$Period}{DateStart},
+                        DateEnd      => $UserRef->{$Period}{DateEnd},
+                        Period       => $Period,
+                        StatusOption => $StatusOption,
+                    },
                 );
             }
-
         }
 
         if (%ShownUsers) {
             $ShownUsers{''} = '';
-            $Frontend{NewUserOption} = $Self->{LayoutObject}->BuildSelection(
+            my $NewUserOption = $Self->{LayoutObject}->BuildSelection(
                 Data        => \%ShownUsers,
                 SelectedID  => '',
                 Name        => 'NewUserID',
@@ -1340,7 +1346,7 @@ sub Run {
             );
             $Self->{LayoutObject}->Block(
                 Name => 'NewUserOption',
-                Data => { %Param, %Frontend },
+                Data => { NewUserOption => $NewUserOption, },
             );
         }
 
@@ -1348,7 +1354,7 @@ sub Run {
         my $Output = $Self->{LayoutObject}->Header( Title => 'Setting' );
         $Output .= $Self->{LayoutObject}->NavigationBar();
         $Output .= $Self->{LayoutObject}->Output(
-            Data => { %Param, %Frontend },
+            Data => \%Param,
             TemplateFile => 'AgentTimeAccountingSetting'
         );
         $Output .= $Self->{LayoutObject}->Footer();
@@ -1359,7 +1365,6 @@ sub Run {
     # settings for handling time accounting
     # ---------------------------------------------------------- #
     elsif ( $Self->{Subaction} eq 'ProjectSetting' ) {
-        my %Frontend = ();
         my %Project  = ();
         my %Data     = ();
 
@@ -1434,15 +1439,17 @@ sub Run {
             $Param{ProjectDescription} = $Project{ProjectDescription}{$ProjectID};
             $Param{ProjectID}          = $ProjectID;
 
-            $Frontend{StatusOption} = $Self->{LayoutObject}->BuildSelection(
+            my $StatusOption = $Self->{LayoutObject}->BuildSelection(
                 Data       => \%StatusList,
-                SelectedID => $Project{ProjectStatus}{$ProjectID} || '',
+                SelectedID => $Project{ProjectStatus}{$ProjectID},
                 Name       => "ProjectStatus[$Param{ProjectID}]",
             );
 
             $Self->{LayoutObject}->Block(
                 Name => 'Project',
-                Data => { %Param, %Frontend },
+                Data => { %Param,
+                    StatusOption => $StatusOption,
+                },
             );
         }
 
@@ -1450,7 +1457,7 @@ sub Run {
         my $Output = $Self->{LayoutObject}->Header( Title => 'Setting' );
         $Output .= $Self->{LayoutObject}->NavigationBar();
         $Output .= $Self->{LayoutObject}->Output(
-            Data => { %Param, %Frontend },
+            Data => \%Param,
             TemplateFile => 'AgentTimeAccountingSetting'
         );
         $Output .= $Self->{LayoutObject}->Footer();
@@ -1932,7 +1939,7 @@ sub _ProjectList {
         Data        => \@List,
         Name        => "ProjectID[$Param{WorkingUnitID}]",
         Translation => 0,
-        Max         => 60,
+        Max         => 62,
     );
 
 }

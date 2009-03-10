@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.30 2009-02-21 02:08:27 tr Exp $
+# $Id: TimeAccounting.pm,v 1.31 2009-03-10 11:20:46 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.30 $) [1];
+$VERSION = qw($Revision: 1.31 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week);
 
@@ -336,19 +336,15 @@ sub ProjectSettingsInsert {
         || '0';
     $Param{ProjectDescription} ||= '';
 
-    # db quote
-    for ( keys %Param ) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_} ) || '';
-    }
-
     # build sql
 
     my $SQL
-        = "INSERT INTO time_accounting_project (project, description, status) "
-        . "VALUES ('$Param{Project}', '$Param{ProjectDescription}', '$Param{ProjectStatus}')";
+        = 'INSERT INTO time_accounting_project (project, description, status) VALUES ( ? , ? , ?)';
+
+    my $Bind = [\$Param{Project}, \$Param{ProjectDescription}, \$Param{ProjectStatus}];
 
     # db insert
-    return if !$Self->{DBObject}->Do( SQL => $SQL );
+    return if !$Self->{DBObject}->Do( SQL => $SQL, Bind => $Bind );
     return 1;
 }
 
@@ -377,25 +373,15 @@ sub ProjectSettingsUpdate {
     for my $ProjectID ( sort keys %Param ) {
         next if !$Param{$ProjectID}{Project};
 
-        # db quote
-        for ( keys %{ $Param{$ProjectID} } ) {
-            $Param{$ProjectID}{$_} = $Self->{DBObject}->Quote( $Param{$ProjectID}{$_} ) || '';
-        }
-
         # build sql
         my $SQL
             = "UPDATE time_accounting_project "
-            . "SET project = '"
-            . $Param{$ProjectID}{Project}
-            . "', status = '"
-            . $Param{$ProjectID}{ProjectStatus}
-            . "', description = '"
-            . $Param{$ProjectID}{ProjectDescription} . "' "
-            . "WHERE id = '"
-            . $ProjectID . "'";
+            . "SET project = ? , status = ? , description = ?  WHERE id = ?";
+
+        my $Bind = [\$Param{$ProjectID}{Project}, \$Param{$ProjectID}{ProjectStatus}, \$Param{$ProjectID}{ProjectDescription}, \$ProjectID ];
 
         # db insert
-        return if !$Self->{DBObject}->Do( SQL => $SQL );
+        return if !$Self->{DBObject}->Do( SQL => $SQL, Bind => $Bind);
     }
     return 1;
 }
@@ -478,27 +464,16 @@ update action data in the db
 sub ActionSettingsUpdate {
     my ( $Self, %Param ) = @_;
 
+    ACTIONID:
     for my $ActionID ( sort keys %Param ) {
-        if ( $Param{$ActionID}{Action} ) {
+        next ACTIONID if !$Param{$ActionID}{Action};
 
-            # db quote
-            for ( keys %{ $Param{$ActionID} } ) {
-                $Param{$ActionID}{$_} = $Self->{DBObject}->Quote( $Param{$ActionID}{$_} ) || '';
-            }
+        # build sql
+        my $SQL  = 'UPDATE time_accounting_action SET action = ? , status = ? WHERE id = ? ';
+        my $Bind = [ \$Param{$ActionID}{Action} , \$Param{$ActionID}{ActionStatus} , \$ActionID ];
 
-            # build sql
-            my $SQL
-                = "UPDATE time_accounting_action "
-                . "SET action = '"
-                . $Param{$ActionID}{Action}
-                . "', status = '"
-                . $Param{$ActionID}{ActionStatus} . "' "
-                . "WHERE id = '"
-                . $ActionID . "'";
-
-            # db insert
-            return if !$Self->{DBObject}->Do( SQL => $SQL );
-        }
+        # db insert
+        return if !$Self->{DBObject}->Do( SQL => $SQL, Bind => $Bind );
     }
     return 1;
 }
@@ -821,6 +796,9 @@ sub WorkingUnitsCompletnessCheck {
 
     my $UserID = $Param{UserID} || $Self->{UserID};
 
+    # TODO: Search only in the CurrentUserPeriod
+    # TODO: Search only working units where action_id and project_id is true
+
     $Self->{DBObject}->Prepare(
         SQL  => "SELECT DISTINCT time_start FROM time_accounting_table WHERE user_id = ?",
         Bind => [ \$UserID ],
@@ -984,10 +962,13 @@ sub WorkingUnitsGet {
             EndTime   => $EndTime,
             Period    => defined( $Row[6] ) ? sprintf( "%.2f", $Row[6] ) : 0,
         );
-        $Data{Total} += $WorkingUnit{Period};
+
+        # only count complete working units
+        if ($Row[1] && $Row[2]) {
+            $Data{Total} += $WorkingUnit{Period};
+        }
         push @{$Data{WorkingUnits}}, \%WorkingUnit;
     }
-
     return %Data;
 }
 
@@ -1019,9 +1000,7 @@ insert working units in the db
 
 sub WorkingUnitsInsert {
     my ( $Self, %Param ) = @_;
-
     for (qw(Year Month Day)) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_} ) || '';
         if ( !$Param{$_} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -1062,32 +1041,30 @@ sub WorkingUnitsInsert {
     }
 
     #insert new working units
+    UNITREF:
     for my $UnitRef ( @{$Param{WorkingUnits}} ) {
-
-        # db quote
-        for ( keys %{ $UnitRef } ) {
-            $UnitRef->{$_} = $Self->{DBObject}->Quote( $UnitRef->{$_} ) || '';
-        }
+        #next UNITREF if !$UnitRef->{ProjectID} || !$UnitRef->{ActionID};
 
         my $StartTime = $Date . ' ' . $UnitRef->{StartTime};
         my $EndTime   = $Date . ' ' . $UnitRef->{EndTime};
 
         # '' does not work in integer field of postgres
-        $UnitRef->{ProjectID} ||= 0;
-        $UnitRef->{ActionID}  ||= 0;
-        $UnitRef->{Period}    ||= 0;
+        $UnitRef->{ProjectID}    ||= 0;
+        $UnitRef->{ActionID}     ||= 0;
+        $UnitRef->{Period}       ||= 0;
 
         # build sql
         my $SQL
             = "INSERT INTO time_accounting_table (user_id, project_id, action_id, remark,"
             . " time_start, time_end, period, created )"
-            . " VALUES"
-            . " ('$Self->{UserID}', '$UnitRef->{ProjectID}', '$UnitRef->{ActionID}',"
-            . " '$UnitRef->{Remark}', '$StartTime', '$EndTime', $UnitRef->{Period},"
-            . " current_timestamp)";
+            . " VALUES  ( ?, ?, ?, ?, ?, ?, ?, current_timestamp)";
+        my $Bind = [
+            \$Self->{UserID}, \$UnitRef->{ProjectID}, \$UnitRef->{ActionID},
+            \$UnitRef->{Remark}, \$StartTime, \$EndTime, \$UnitRef->{Period}
+        ];
 
         # db insert
-        return if !$Self->{DBObject}->Do( SQL => $SQL );
+        return if !$Self->{DBObject}->Do( SQL => $SQL, Bind => $Bind );
     }
     return 1;
 }
@@ -1375,6 +1352,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.30 $ $Date: 2009-02-21 02:08:27 $
+$Revision: 1.31 $ $Date: 2009-03-10 11:20:46 $
 
 =cut
