@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.56 2008-11-11 10:13:48 ub Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.57 2009-03-21 14:47:33 ub Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
@@ -120,6 +120,9 @@
             <Unique Name="faq_state_name">
                 <UniqueColumn Name="name"/>
             </Unique>
+            <ForeignKey ForeignTable="faq_state_type">
+                <Reference Local="type_id" Foreign="id"/>
+            </ForeignKey>
         </TableCreate>
         <Insert Table="faq_state">
             <Data Key="name" Type="Quote">internal (agent)</Data>
@@ -143,6 +146,11 @@
             <Column Name="created_by" Required="true" Type="INTEGER"/>
             <Column Name="changed" Required="true" Type="DATE"/>
             <Column Name="changed_by" Required="true" Type="INTEGER"/>
+
+            <Index Name="parent_id">
+                <IndexColumn Name="parent_id"/>
+            </Index>
+
         </TableCreate>
         <Insert Table="faq_category">
             <Data Key="name" Type="Quote">Misc</Data>
@@ -191,6 +199,17 @@
             <Column Name="created_by" Required="true" Type="INTEGER"/>
             <Column Name="changed" Required="true" Type="DATE"/>
             <Column Name="changed_by" Required="true" Type="INTEGER"/>
+
+            <ForeignKey ForeignTable="faq_state">
+                <Reference Local="state_id" Foreign="id"/>
+            </ForeignKey>
+            <ForeignKey ForeignTable="faq_category">
+                <Reference Local="category_id" Foreign="id"/>
+            </ForeignKey>
+            <ForeignKey ForeignTable="faq_language">
+                <Reference Local="f_language_id" Foreign="id"/>
+            </ForeignKey>
+
         </TableCreate>
         <TableCreate Name="faq_history">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>

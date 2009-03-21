@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.63 2009-02-05 00:58:09 ub Exp $
+# $Id: FAQ.pm,v 1.64 2009-03-21 14:47:33 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.63 $) [1];
+$VERSION = qw($Revision: 1.64 $) [1];
 
 =head1 NAME
 
@@ -2701,7 +2701,7 @@ sub FAQLogAdd {
     $Self->{DBObject}->Prepare(
         SQL => 'SELECT id FROM faq_log '
             . 'WHERE item_id = ? AND ip = ? '
-            . 'AND user_agent = ? AND created > ? ',
+            . 'AND user_agent = ? AND created >= ? ',
         Bind  => [ \$Param{ItemID}, \$IP, \$UserAgent, \$TimeStamp ],
         Limit => 1,
     );
@@ -3457,6 +3457,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.63 $ $Date: 2009-02-05 00:58:09 $
+$Revision: 1.64 $ $Date: 2009-03-21 14:47:33 $
 
 =cut
