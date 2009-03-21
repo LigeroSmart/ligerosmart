@@ -1,9 +1,9 @@
 # --
 # Kernel/Language/es_FAQ.pm - the spanish translation of FAQ
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # Copyright (C) 2008 Aquiles Cohen
 # --
-# $Id: es_FAQ.pm,v 1.9 2008-09-22 15:51:16 ub Exp $
+# $Id: es_FAQ.pm,v 1.10 2009-03-21 14:44:50 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -38,6 +38,8 @@ sub Data {
     $Lang->{'DetailSearch'}                      = 'Busqueda detallada';
     $Lang->{'Categories'}                        = 'Categorias';
     $Lang->{'SubCategories'}                     = 'Subcategorias';
+    $Lang->{'New FAQ Article'}                   = '';
+    $Lang->{'FAQ Category'}                      = '';
     $Lang->{'A category should have a name!'}    = 'Cada categoría debe tener un nombre!';
     $Lang->{'A category should have a comment!'} = 'Cada categoria debe tener un comentario';
     $Lang->{'FAQ News (new created)'}            = 'Noticias FAQ (creado nuevo)';

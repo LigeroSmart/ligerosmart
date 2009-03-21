@@ -1,9 +1,9 @@
 # --
 # Kernel/Language/pl_FAQ.pm - the polish translation of FAQ
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # Copyright (C) 2008 Patryk ¦ciborek <patryk@sciborek.com>
 # --
-# $Id: pl_FAQ.pm,v 1.2 2008-11-07 10:40:10 ub Exp $
+# $Id: pl_FAQ.pm,v 1.3 2009-03-21 14:44:50 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -38,6 +38,8 @@ sub Data {
     $Lang->{'DetailSearch'}                      = 'Dok³adne wyszukiwanie';
     $Lang->{'Categories'}                        = 'Kategorie';
     $Lang->{'SubCategories'}                     = 'Podkategorie';
+    $Lang->{'New FAQ Article'}                   = '';
+    $Lang->{'FAQ Category'}                      = '';
     $Lang->{'A category should have a name!'}    = 'Kategoria musi posiadaæ nazwê!';
     $Lang->{'A category should have a comment!'} = 'Kategoria musi posiadaæ komentarz!';
     $Lang->{'FAQ News (new created)'}            = 'Zmiany w FAQ (nowe artyku³y)';
