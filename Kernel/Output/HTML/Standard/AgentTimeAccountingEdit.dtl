@@ -2,12 +2,13 @@
 # AgentTimeAccountingEdit.dtl - provides HTML form for time accounting edit
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingEdit.dtl,v 1.24 2009-02-24 14:35:50 tr Exp $
+# $Id: AgentTimeAccountingEdit.dtl,v 1.25 2009-03-23 08:26:15 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+
 <script language="JavaScript" type="text/javascript">
 <!--
 function submit_compose() {
@@ -62,6 +63,13 @@ function MoreInputFields() {
 
 //-->
 </script>
+
+<style type="text/css">
+.ProjectSelection { width:450px;}
+.ActionSelection { width:300px;}
+</style>
+
+
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
   <tr>
     <td colspan="3" class="mainhead">

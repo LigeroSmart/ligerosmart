@@ -2,11 +2,11 @@
 # TODO - todo list of TimeAccounting
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: TODO.TimeAccounting,v 1.23 2009-01-21 10:43:19 tr Exp $
+# $Id: TODO.TimeAccounting,v 1.24 2009-03-23 08:26:15 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 TimeAccounting 1.3
@@ -18,7 +18,6 @@ TimeAccounting 1.3
 - insert a help/description text in projectsetting dtl
 - rework the corefunctions for ProjectAction-Reporting
   one Primary function und serveral extensions
-- translation
 - problems with very long working days
   16:00 - 1:00 is not possible
   16:00 - 24:00 is not possible
@@ -30,7 +29,6 @@ TimeAccounting 1.3
 - error warning for set 31.09 in edit
 - if the agentsetting is changed from valid to invalid his timeaccounting
   settings AND accounted hours are invisible!!!
-- realize different "timezone" for agents. For example for different VacationDays in Bayern and Nordrheinwestfalen
 - realize reports with following settings: selceted group of persons, weekly witch projects and actions
 - grep the TimeAccountingmodule for record and replace the words with accounting or account
 - sysconfig: allow to deactivate the option MaxIncompleteWorkingDays
@@ -41,6 +39,7 @@ TimeAccounting 1.3
   db-insert in time_accounting_user and time_accounting_user_period. Maybe the update function too.
 - check all functions for a better functionallity
 - use bind for sql statements
+- make a logentry is someone adds or updates a project, user or task (time + user)
 
 
 Performance

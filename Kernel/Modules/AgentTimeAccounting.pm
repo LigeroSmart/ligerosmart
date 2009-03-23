@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.34 2009-03-10 11:20:46 tr Exp $
+# $Id: AgentTimeAccounting.pm,v 1.35 2009-03-23 08:26:15 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.34 $) [1];
+$VERSION = qw($Revision: 1.35 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -336,7 +336,8 @@ sub Run {
                 SelectedID  => $UnitRef->{ActionID} || '',
                 Name        => "ActionID[$ID]",
                 Translation => 0,
-                Max         => 37,
+                #Max         => 37,
+                Class       => 'ActionSelection',
             );
 
             $Frontend{ProjectOption} = $Self->_ProjectList(
@@ -445,6 +446,7 @@ sub Run {
                     Data => { Description => $Param{UnitRequiredDescription} },
                 );
                 # REMARK: don't delete all working units
+                # REMARK: better would be to delete only incomplete working units
                 #if (
                 #    !$Self->{TimeAccountingObject}->WorkingUnitsDelete(
                 #        Year  => $Param{Year},
@@ -1939,7 +1941,8 @@ sub _ProjectList {
         Data        => \@List,
         Name        => "ProjectID[$Param{WorkingUnitID}]",
         Translation => 0,
-        Max         => 62,
+        #Max         => 62,
+        Class       => 'ProjectSelection',
     );
 
 }
