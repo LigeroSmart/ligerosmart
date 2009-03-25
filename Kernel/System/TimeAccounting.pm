@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.31 2009-03-10 11:20:46 tr Exp $
+# $Id: TimeAccounting.pm,v 1.32 2009-03-25 13:07:21 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.31 $) [1];
+$VERSION = qw($Revision: 1.32 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week);
 
@@ -129,8 +129,8 @@ sub UserCurrentPeriodGet {
     my %Data = ();
     $Self->{DBObject}->Prepare(
         SQL =>
-            "SELECT user_id, preference_period, date_start, date_end, weekly_hours, leave_days, overtime, status FROM time_accounting_user_period "
-            . "WHERE date_start <= '$Date' AND date_end  >='$Date'",
+            "SELECT user_id, preference_period, date_start, date_end, weekly_hours, leave_days, overtime FROM time_accounting_user_period "
+            . "WHERE date_start <= '$Date' AND date_end  >='$Date' AND status = 1",
     );
 
     # fetch Data
@@ -143,7 +143,6 @@ sub UserCurrentPeriodGet {
             WeeklyHours => $Row[4],
             LeaveDays   => $Row[5],
             Overtime    => $Row[6],
-            UserStatus  => $Row[7],
         };
         $Data{ $Row[0] } = $UserRef;
     }
@@ -1352,6 +1351,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.31 $ $Date: 2009-03-10 11:20:46 $
+$Revision: 1.32 $ $Date: 2009-03-25 13:07:21 $
 
 =cut
