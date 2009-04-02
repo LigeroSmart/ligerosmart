@@ -2,11 +2,11 @@
 # Kernel/Language/bg_PublicSurvey.pm - the bulgarian language for PublicSurvey
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: bg_PublicSurvey.pm,v 1.5 2009-01-07 23:36:02 martin Exp $
+# $Id: bg_PublicSurvey.pm,v 1.6 2009-04-02 16:22:19 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 package Kernel::Language::bg_PublicSurvey;
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub Data {
     my $Self = shift;

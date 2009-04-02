@@ -2,11 +2,11 @@
 # Survey.t - Survey tests
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.t,v 1.9 2009-01-07 23:21:29 martin Exp $
+# $Id: Survey.t,v 1.10 2009-04-02 16:22:20 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 use strict;
@@ -96,9 +96,9 @@ for my $Key ( sort keys %SurveyGet ) {
 
 my @Tests = (
     {
-        Name   => '#1 try',
+        Name                 => '#1 try',
         'Survey::SendPeriod' => 100,
-        Ticket => {
+        Ticket               => {
             Title        => 'Some Ticket Title',
             Queue        => 'Raw',
             Lock         => 'unlock',
@@ -129,9 +129,9 @@ my @Tests = (
         ],
     },
     {
-        Name   => '#2 try',
+        Name                 => '#2 try',
         'Survey::SendPeriod' => 100,
-        Ticket => {
+        Ticket               => {
             Title        => 'Some Ticket Title',
             Queue        => 'Raw',
             Lock         => 'unlock',
@@ -162,9 +162,9 @@ my @Tests = (
         ],
     },
     {
-        Name   => '#3 try',
+        Name                 => '#3 try',
         'Survey::SendPeriod' => 100,
-        Ticket => {
+        Ticket               => {
             Title        => 'Some Ticket Title',
             Queue        => 'Raw',
             Lock         => 'unlock',
@@ -195,10 +195,10 @@ my @Tests = (
         ],
     },
     {
-        Name   => '#4 try',
-        Sleep  => 80,
+        Name                 => '#4 try',
+        Sleep                => 80,
         'Survey::SendPeriod' => 1 / 24 / 60,
-        Ticket => {
+        Ticket               => {
             Title        => 'Some Ticket Title',
             Queue        => 'Raw',
             Lock         => 'unlock',
@@ -229,10 +229,10 @@ my @Tests = (
         ],
     },
     {
-        Name   => '#5 try',
-        Sleep  => 30,
+        Name                 => '#5 try',
+        Sleep                => 30,
         'Survey::SendPeriod' => 1 / 24 / 60,
-        Ticket => {
+        Ticket               => {
             Title        => 'Some Ticket Title',
             Queue        => 'Raw',
             Lock         => 'unlock',
@@ -322,11 +322,11 @@ for my $Test (@Tests) {
     # check if survey got sent
     if ( $Test->{Result}->[0] ) {
         $Self->True(
-            ${ $HeaderRef },
+            ${$HeaderRef},
             "$Test->{Name} RequestSend() - survey got sent",
         );
 
-        ${ $HeaderRef } =~ m{ ^ Subject: [ ] ( .+? ) \n \S+: [ ] }xms;
+        ${$HeaderRef} =~ m{ ^ Subject: [ ] ( .+? ) \n \S+: [ ] }xms;
         $Self->Is(
             $1,
             'Help us with your feedback! =?UTF-8?Q?=C3=84=C3=96=C3=9C?=',
@@ -334,14 +334,14 @@ for my $Test (@Tests) {
         );
 
         $Self->Is(
-            ${ $BodyRef },
+            ${$BodyRef},
             "Dear customer... =C3=A4=C3=B6=C3=BC=\n",
             "$Test->{Name} Test special characters in email body",
         );
     }
     else {
         $Self->False(
-            ${ $HeaderRef },
+            ${$HeaderRef},
             "$Test->{Name} RequestSend() - no survey got sent",
         );
     }
@@ -354,13 +354,13 @@ for my $Test (@Tests) {
     # check if survey got sent
     if ( $Test->{Result}->[1] ) {
         $Self->True(
-            ${ $HeaderRef },
+            ${$HeaderRef},
             "$Test->{Name} 2 RequestSend() - survey got sent",
         );
     }
     else {
         $Self->False(
-            ${ $HeaderRef },
+            ${$HeaderRef},
             "$Test->{Name} 2 RequestSend() - no survey got sent",
         );
     }

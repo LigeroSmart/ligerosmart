@@ -2,11 +2,11 @@
 # Kernel/System/Survey.pm - all survey funtions
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.pm,v 1.45 2009-01-07 23:26:37 martin Exp $
+# $Id: Survey.pm,v 1.46 2009-04-02 16:22:19 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 package Kernel::System::Survey;
@@ -21,7 +21,7 @@ use Kernel::System::Ticket;
 use Mail::Address;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.45 $) [1];
+$VERSION = qw($Revision: 1.46 $) [1];
 
 =head1 NAME
 
@@ -1875,7 +1875,7 @@ sub RequestSend {
 
         # get send time
         $Self->{DBObject}->Prepare(
-            SQL   => "SELECT send_time FROM survey_request WHERE LOWER(send_to) = '$To' "
+            SQL => "SELECT send_time FROM survey_request WHERE LOWER(send_to) = '$To' "
                 . "ORDER BY send_time DESC",
             Limit => 1,
         );
@@ -2179,11 +2179,11 @@ sub SurveyQueueGet {
 This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
-the enclosed file COPYING for license information (GPL). If you
-did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+the enclosed file COPYING for license information (AGPL). If you
+did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.45 $ $Date: 2009-01-07 23:26:37 $
+$Revision: 1.46 $ $Date: 2009-04-02 16:22:19 $
 
 =cut

@@ -1,12 +1,12 @@
 # --
 # Kernel/Language/de_AgentSurvey.pm - the de language for AgentSurvey
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: de_AgentSurvey.pm,v 1.16 2008-08-06 14:59:10 ub Exp $
+# $Id: de_AgentSurvey.pm,v 1.17 2009-04-02 16:22:19 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 package Kernel::Language::de_AgentSurvey;
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 sub Data {
     my $Self = shift;

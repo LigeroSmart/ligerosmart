@@ -2,11 +2,11 @@
 # Kernel/Language/de_PublicSurvey.pm - the de language for PublicSurvey
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: de_PublicSurvey.pm,v 1.10 2009-01-07 23:36:02 martin Exp $
+# $Id: de_PublicSurvey.pm,v 1.11 2009-04-02 16:22:19 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 package Kernel::Language::de_PublicSurvey;
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub Data {
     my $Self = shift;
