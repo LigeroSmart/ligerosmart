@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: Survey.sopm,v 1.28 2008-07-15 19:27:40 martin Exp $</CVS>
+    <CVS>$Id: Survey.sopm,v 1.29 2009-04-02 16:20:42 mh Exp $</CVS>
     <Name>Survey</Name>
     <Version>0.0.0</Version>
     <Framework>2.1.x</Framework>
     <Framework>2.2.x</Framework>
     <Framework>2.3.x</Framework>
+    <Framework>2.4.x</Framework>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
-    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
     <Description Lang="en">A customer survey tool.</Description>
     <Description Lang="de">Ein Kundenumfragen Werkzeug.</Description>
     <Filelist>
