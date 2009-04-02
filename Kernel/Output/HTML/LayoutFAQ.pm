@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutFAQ.pm - provides generic agent HTML output
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutFAQ.pm,v 1.6 2009-03-21 14:46:01 ub Exp $
+# $Id: LayoutFAQ.pm,v 1.7 2009-04-02 15:33:14 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub AgentFAQCategoryListOption {
 
@@ -59,7 +59,7 @@ sub AgentFAQCategoryListOption {
             CategoryList => \%CategoryList,
             LevelCounter => 0,
             ParentID     => 0,
-            SelectedIDs  => $SelectedIDs
+            SelectedIDs  => $SelectedIDs,
         );
     }
     $Output .= '</select>';
@@ -72,36 +72,61 @@ sub AgentFAQCategoryListOptionElement {
 
     my $Output = '';
 
-    my %CategoryList      = %{ $Param{CategoryList} };
-    my %CategoryLevelList = %{ $CategoryList{ $Param{ParentID} } };
-    my @SelectedIDs       = @{ $Param{SelectedIDs} };
-    my $Flag              = 0;
+    my $LevelCounter = $Param{LevelCounter} || 0;
+    my $ParentID     = $Param{ParentID};
 
-    for my $CategoryID (
-        sort( { $CategoryLevelList{$a} cmp $CategoryLevelList{$b} } keys(%CategoryLevelList) )
-        )
-    {
-        $Output .= '<option value="' . $CategoryID . '"';
-        for ( my $i = 0; $i < @SelectedIDs; $i++ ) {
-            if ( $Param{SelectedIDs}[$i] eq $CategoryID ) {
-                $Output .= ' selected';
-            }
+    my %CategoryList       = %{ $Param{CategoryList} };
+    my %CategoryLevelList  = %{ $CategoryList{ $ParentID } };
+    my %SelectedIDs        = map { $_ => 1 } @{ $Param{SelectedIDs} };
+
+    my @TempSubCategoryIDs = map  { "Level:$LevelCounter" . "ParentID:$ParentID", $_ }
+                             sort { $CategoryLevelList{$a} cmp $CategoryLevelList{$b} }
+                             keys %CategoryLevelList;
+
+    SUBCATEGORYID:
+    while ( @TempSubCategoryIDs ) {
+
+        # add level counter id to subcategory array
+        if ( $TempSubCategoryIDs[0] =~ m{ Level : ( \d+ ) ParentID : ( \d+ ) }xms ) {
+            $LevelCounter = $1;
+            $ParentID     = $2;
+            shift @TempSubCategoryIDs;
+        }
+
+        # get next subcategory id
+        my $SubCategoryID = shift @TempSubCategoryIDs;
+
+        # get new category level list
+        %CategoryLevelList = %{ $CategoryList{ $ParentID } };
+
+        # create output
+        $Output .= '<option value="' . $SubCategoryID . '"';
+        if ( $SelectedIDs{ $SubCategoryID } ) {
+            $Output .= ' selected';
         }
         $Output .= '>';
-        for ( my $i = 0; $i < $Param{LevelCounter}; $i++ ) {
+        for ( my $i = 0; $i < $LevelCounter; $i++ ) {
             $Output .= '&nbsp;&nbsp;';
         }
-        $Output .= $CategoryLevelList{$CategoryID};
+        $Output .= $CategoryLevelList{$SubCategoryID};
         $Output .= '</option>';
-        if ( exists( $CategoryList{$CategoryID} ) ) {
-            $Output .= $Self->AgentFAQCategoryListOptionElement(
-                CategoryList => \%CategoryList,
-                LevelCounter => $Param{LevelCounter} + 1,
-                ParentID     => $CategoryID,
-                SelectedIDs  => \@SelectedIDs
-            );
-        }
+
+        # check if subcategory has own subcategories
+        next SUBCATEGORYID if !$CategoryList{ $SubCategoryID };
+
+        # increase level
+        my $NextLevel = $LevelCounter + 1;
+
+        # get new subcategory ids
+        my %NewCategoryLevelList = %{ $CategoryList{ $SubCategoryID } };
+        my @NewSubcategoryIDs = map  { "Level:$NextLevel" . "ParentID:$SubCategoryID", $_ }
+                                sort { $NewCategoryLevelList{$a} cmp $NewCategoryLevelList{$b} }
+                                keys %NewCategoryLevelList;
+
+        # add new subcategory ids at beginning of temp array
+        unshift @TempSubCategoryIDs, @NewSubcategoryIDs;
     }
+
     return $Output;
 }
 
