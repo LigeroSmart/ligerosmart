@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.64 2009-03-21 14:47:33 ub Exp $
+# $Id: FAQ.pm,v 1.65 2009-04-02 16:38:27 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.64 $) [1];
+$VERSION = qw($Revision: 1.65 $) [1];
 
 =head1 NAME
 
@@ -651,7 +651,8 @@ sub AttachmentIndex {
 count an article
 
     $FAQObject->FAQCount(
-        CategoryIDs => [1,2,3,4],
+        CategoryIDs  => [1,2,3,4],
+        OnlyApproved = 1,   # optional (default 0)
     );
 
 =cut
@@ -670,6 +671,12 @@ sub FAQCount {
     my $SQL = 'SELECT COUNT(*) FROM faq_item i, faq_state s' .
         " WHERE i.category_id IN (${\(join ', ', @{$Param{CategoryIDs}})})" .
         ' AND i.state_id = s.id';
+
+    # count only approved articles
+    if ( $Param{OnlyApproved} ) {
+        $SQL .= ' AND i.approved = 1';
+    }
+
     my $Ext = '';
     if ( $Param{ItemStates} && ref( $Param{ItemStates} ) eq 'HASH' && %{ $Param{ItemStates} } ) {
         $Ext .= " AND s.type_id IN (${\(join ', ', keys(%{$Param{ItemStates}}))})";
@@ -3457,6 +3464,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.64 $ $Date: 2009-03-21 14:47:33 $
+$Revision: 1.65 $ $Date: 2009-04-02 16:38:27 $
 
 =cut

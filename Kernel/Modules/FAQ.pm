@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/FAQ.pm - faq module
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.39 2008-10-29 16:33:54 martin Exp $
+# $Id: FAQ.pm,v 1.40 2009-04-02 16:38:27 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::FAQ;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.39 $) [1];
+$VERSION = qw($Revision: 1.40 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -257,9 +257,14 @@ sub _GetExplorerCategoryList {
             $Data{CategoryNumber} = $Self->{FAQObject}->CategoryCount(
                 ParentIDs => [$_],
             );
+            my $OnlyApproved = 1;
+            if ( $Param{Mode} eq 'Agent' ) {
+                $OnlyApproved = 0;
+            }
             $Data{ArticleNumber} = $Self->{FAQObject}->FAQCount(
-                CategoryIDs => [$_],
-                ItemStates  => $Self->{InterfaceStates},
+                CategoryIDs  => [$_],
+                ItemStates   => $Self->{InterfaceStates},
+                OnlyApproved => $OnlyApproved,
             );
 
             # css configuration
