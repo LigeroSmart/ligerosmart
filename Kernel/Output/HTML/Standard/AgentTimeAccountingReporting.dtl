@@ -1,12 +1,12 @@
 # --
 # AgentTimeAccountingReporting.dtl - provides HTML form for time accounting reporting
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingReporting.dtl,v 1.16 2008-09-30 11:41:19 tr Exp $
+# $Id: AgentTimeAccountingReporting.dtl,v 1.17 2009-04-03 11:49:29 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
@@ -39,10 +39,10 @@
                   $Text{"$QData{"Month_to_Text"}"} $QData{"Year"}
                 </td>
                 <td>
-                  <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Reporting&Year=$LQData{"YearBack"}&Month=$LQData{"MonthBack"}"><img border="0" src="$Env{"Images"}left-big.png" alt="$Text{"One day back"}"></a>
+                  <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Reporting&Year=$LQData{"YearBack"}&Month=$LQData{"MonthBack"}"><img border="0" src="$Config{"Frontend::ImagePath"}left-big.png" alt="$Text{"One day back"}"></a>
                 </td>
                 <td>
-                  <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Reporting&Year=$LQData{"YearNext"}&Month=$LQData{"MonthNext"}"><img border="0" src="$Env{"Images"}right-big.png" alt="$Text{"Next day"}"></a>
+                  <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Reporting&Year=$LQData{"YearNext"}&Month=$LQData{"MonthNext"}"><img border="0" src="$Config{"Frontend::ImagePath"}right-big.png" alt="$Text{"Next day"}"></a>
                 </td>
               </tr>
             </table>

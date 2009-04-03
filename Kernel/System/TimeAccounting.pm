@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.32 2009-03-25 13:07:21 tr Exp $
+# $Id: TimeAccounting.pm,v 1.33 2009-04-03 11:49:29 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.32 $) [1];
+$VERSION = qw($Revision: 1.33 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week);
 
@@ -221,10 +221,10 @@ sub UserReporting {
                         UserID => $UserID,
                     );
 
-                    my $LeaveDay     = 0;
-                    my $Sick         = 0;
-                    my $Overtime     = 0;
-                    my $TargetState  = 0;
+                    my $LeaveDay    = 0;
+                    my $Sick        = 0;
+                    my $Overtime    = 0;
+                    my $TargetState = 0;
 
                     if ( $WorkingUnit{LeaveDay} ) {
                         $Data{$UserID}{LeaveDayTotal}++;
@@ -340,7 +340,7 @@ sub ProjectSettingsInsert {
     my $SQL
         = 'INSERT INTO time_accounting_project (project, description, status) VALUES ( ? , ? , ?)';
 
-    my $Bind = [\$Param{Project}, \$Param{ProjectDescription}, \$Param{ProjectStatus}];
+    my $Bind = [ \$Param{Project}, \$Param{ProjectDescription}, \$Param{ProjectStatus} ];
 
     # db insert
     return if !$Self->{DBObject}->Do( SQL => $SQL, Bind => $Bind );
@@ -377,10 +377,13 @@ sub ProjectSettingsUpdate {
             = "UPDATE time_accounting_project "
             . "SET project = ? , status = ? , description = ?  WHERE id = ?";
 
-        my $Bind = [\$Param{$ProjectID}{Project}, \$Param{$ProjectID}{ProjectStatus}, \$Param{$ProjectID}{ProjectDescription}, \$ProjectID ];
+        my $Bind = [
+            \$Param{$ProjectID}{Project},            \$Param{$ProjectID}{ProjectStatus},
+            \$Param{$ProjectID}{ProjectDescription}, \$ProjectID
+        ];
 
         # db insert
-        return if !$Self->{DBObject}->Do( SQL => $SQL, Bind => $Bind);
+        return if !$Self->{DBObject}->Do( SQL => $SQL, Bind => $Bind );
     }
     return 1;
 }
@@ -468,8 +471,8 @@ sub ActionSettingsUpdate {
         next ACTIONID if !$Param{$ActionID}{Action};
 
         # build sql
-        my $SQL  = 'UPDATE time_accounting_action SET action = ? , status = ? WHERE id = ? ';
-        my $Bind = [ \$Param{$ActionID}{Action} , \$Param{$ActionID}{ActionStatus} , \$ActionID ];
+        my $SQL = 'UPDATE time_accounting_action SET action = ? , status = ? WHERE id = ? ';
+        my $Bind = [ \$Param{$ActionID}{Action}, \$Param{$ActionID}{ActionStatus}, \$ActionID ];
 
         # db insert
         return if !$Self->{DBObject}->Do( SQL => $SQL, Bind => $Bind );
@@ -947,8 +950,8 @@ sub WorkingUnitsGet {
             next ROW;
         }
         my $StartTime = $2;
-        my $EndTime = '';
-        if ($Row[5] =~ m{^(.+?)\s(\d+:\d+):(\d+)}smx) {
+        my $EndTime   = '';
+        if ( $Row[5] =~ m{^(.+?)\s(\d+:\d+):(\d+)}smx ) {
             $EndTime = $2;
         }
 
@@ -963,10 +966,10 @@ sub WorkingUnitsGet {
         );
 
         # only count complete working units
-        if ($Row[1] && $Row[2]) {
+        if ( $Row[1] && $Row[2] ) {
             $Data{Total} += $WorkingUnit{Period};
         }
-        push @{$Data{WorkingUnits}}, \%WorkingUnit;
+        push @{ $Data{WorkingUnits} }, \%WorkingUnit;
     }
     return %Data;
 }
@@ -1011,7 +1014,7 @@ sub WorkingUnitsInsert {
     my $Date = sprintf( "%04d-%02d-%02d", $Param{Year}, $Param{Month}, $Param{Day} );
 
     # delete exiting data
-    if ( !$Self->WorkingUnitsDelete( %Param ) ) {
+    if ( !$Self->WorkingUnitsDelete(%Param) ) {
         $Self->{LogObject}->Log( Priority => 'error', Message => 'Can\'t delete Working Units!' );
         return;
     }
@@ -1036,21 +1039,22 @@ sub WorkingUnitsInsert {
             Period    => 0,
         );
 
-        push @{$Param{WorkingUnits}}, \%Unit;
+        push @{ $Param{WorkingUnits} }, \%Unit;
     }
 
     #insert new working units
     UNITREF:
-    for my $UnitRef ( @{$Param{WorkingUnits}} ) {
+    for my $UnitRef ( @{ $Param{WorkingUnits} } ) {
+
         #next UNITREF if !$UnitRef->{ProjectID} || !$UnitRef->{ActionID};
 
         my $StartTime = $Date . ' ' . $UnitRef->{StartTime};
         my $EndTime   = $Date . ' ' . $UnitRef->{EndTime};
 
         # '' does not work in integer field of postgres
-        $UnitRef->{ProjectID}    ||= 0;
-        $UnitRef->{ActionID}     ||= 0;
-        $UnitRef->{Period}       ||= 0;
+        $UnitRef->{ProjectID} ||= 0;
+        $UnitRef->{ActionID}  ||= 0;
+        $UnitRef->{Period}    ||= 0;
 
         # build sql
         my $SQL
@@ -1168,13 +1172,13 @@ sub ProjectActionReporting {
     # add readable components
     my %Project = $Self->ProjectSettingsGet();
     my %Action  = $Self->ActionSettingsGet();
-    for my $ProjectID ( keys %Data) {
-        $Data{$ProjectID}{Name}   = $Project{Project}{$ProjectID};
-        $Data{$ProjectID}{Status} = $Project{ProjectStatus}{$ProjectID};
+    for my $ProjectID ( keys %Data ) {
+        $Data{$ProjectID}{Name}        = $Project{Project}{$ProjectID};
+        $Data{$ProjectID}{Status}      = $Project{ProjectStatus}{$ProjectID};
         $Data{$ProjectID}{Description} = $Project{ProjectDescription}{$ProjectID};
-        my $ActionsRef = $Data{ $ProjectID }{Actions};
-        for my $ActionID ( keys %{$ActionsRef}) {
-            $Data{ $ProjectID }{Actions}{$ActionID}{Name} = $Action{ $ActionID }{Action};
+        my $ActionsRef = $Data{$ProjectID}{Actions};
+        for my $ActionID ( keys %{$ActionsRef} ) {
+            $Data{$ProjectID}{Actions}{$ActionID}{Name} = $Action{$ActionID}{Action};
         }
     }
 
@@ -1351,6 +1355,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.32 $ $Date: 2009-03-25 13:07:21 $
+$Revision: 1.33 $ $Date: 2009-04-03 11:49:29 $
 
 =cut

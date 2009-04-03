@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.35 2009-03-23 08:26:15 tr Exp $
+# $Id: AgentTimeAccounting.pm,v 1.36 2009-04-03 11:49:29 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.35 $) [1];
+$VERSION = qw($Revision: 1.36 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -114,7 +114,7 @@ sub Run {
         my $Output = $Self->{LayoutObject}->Header( Title => 'Delete' );
         $Output .= $Self->{LayoutObject}->NavigationBar();
         $Output .= $Self->{LayoutObject}->Output(
-            Data => \%Param,
+            Data         => \%Param,
             TemplateFile => 'AgentTimeAccountingDelete'
         );
         $Output .= $Self->{LayoutObject}->Footer();
@@ -125,6 +125,7 @@ sub Run {
     # edit the time accounting elements
     # ---------------------------------------------------------- #
     if ( $Self->{Subaction} eq 'Edit' ) {
+
         # permission check
         return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' ) if !$Self->{AccessRo};
 
@@ -233,7 +234,7 @@ sub Run {
                     Period    => $Period,
                 );
 
-                push @{$Data{WorkingUnits}} , \%WorkingUnit;
+                push @{ $Data{WorkingUnits} }, \%WorkingUnit;
 
                 #if ($Param{StartTime} && $Param{EndTime} && !$Param{Period}) {
                 #overwrite Period when Start and Endtime is given...
@@ -243,7 +244,7 @@ sub Run {
                     my $StartTime = $1 * 60 + $2;
                     if ( $Param{EndTime} =~ /^(\d+):(\d+)/ ) {
                         my $EndTime = $1 * 60 + $2;
-                        if ( $ReduceTimeRef->{ $ActionList { $Param{ActionID} } } ) {
+                        if ( $ReduceTimeRef->{ $ActionList{ $Param{ActionID} } } ) {
                             $WorkingUnit{Period} = ( $EndTime - $StartTime ) / 60
                                 * $ReduceTimeRef->{ $ActionList{ $Param{ActionID} } } / 100;
                         }
@@ -257,7 +258,7 @@ sub Run {
             my $CheckboxCheck = 0;
             for my $Element (qw(LeaveDay Sick Overtime)) {
                 my $Value = $Self->{ParamObject}->GetParam( Param => $Element );
-                if ( $Value ) {
+                if ($Value) {
                     $Data{$Element} = 1;
                     $CheckboxCheck++;
                 }
@@ -317,16 +318,17 @@ sub Run {
         $Param{Overtime} = $Data{Overtime} ? 'checked' : '';
 
         $Param{Total} = $Data{Total};
+
         # build a working unit array
-        my @Units = ( undef );
-        if ($Data{WorkingUnits}) {
-            push @Units, @{$Data{WorkingUnits}}
+        my @Units = (undef);
+        if ( $Data{WorkingUnits} ) {
+            push @Units, @{ $Data{WorkingUnits} }
         }
 
         my $ShowAllInputFields = scalar @Units > 9 ? 1 : 0;
 
         # build units
-        for my $ID ( 1..16 ) {
+        for my $ID ( 1 .. 16 ) {
             $Param{ID} = $ID;
             my $UnitRef = $Units[$ID];
 
@@ -336,8 +338,9 @@ sub Run {
                 SelectedID  => $UnitRef->{ActionID} || '',
                 Name        => "ActionID[$ID]",
                 Translation => 0,
+
                 #Max         => 37,
-                Class       => 'ActionSelection',
+                Class => 'ActionSelection',
             );
 
             $Frontend{ProjectOption} = $Self->_ProjectList(
@@ -353,14 +356,14 @@ sub Run {
                 }
             }
 
-            my $Period    = $UnitRef->{Period} || '';
+            my $Period = $UnitRef->{Period} || '';
 
             for (qw(StartTime EndTime)) {
                 $Param{$_} = !$UnitRef->{$_} || $UnitRef->{$_} eq '00:00' ? '' : $UnitRef->{$_};
             }
 
             # Define if the input fields are visible or not
-            $Param{Visibility} = $ShowAllInputFields || $ID < 9 ? 'visible' : 'collapse' ;
+            $Param{Visibility} = $ShowAllInputFields || $ID < 9 ? 'visible' : 'collapse';
 
             $Self->{LayoutObject}->Block(
                 Name => 'Unit',
@@ -445,6 +448,7 @@ sub Run {
                     Name => 'UnitRequired',
                     Data => { Description => $Param{UnitRequiredDescription} },
                 );
+
                 # REMARK: don't delete all working units
                 # REMARK: better would be to delete only incomplete working units
                 #if (
@@ -610,7 +614,7 @@ sub Run {
         # projects
         $Param{RemarkRegExp} = $Self->_Project2RemarkRegExp();
 
-        $Param{LinkVisibility} = $ShowAllInputFields ? 'collapse' : 'visible' ;
+        $Param{LinkVisibility} = $ShowAllInputFields ? 'collapse' : 'visible';
 
         # build output
         my $Output = $Self->{LayoutObject}->Header( Title => 'Edit' );
@@ -716,7 +720,7 @@ sub Run {
 
         # only show the unit block if there is some data
         my $UnitsRef = $Data{WorkingUnits};
-        if ($UnitsRef->[0]) {
+        if ( $UnitsRef->[0] ) {
             $Self->{LayoutObject}->Block( Name => 'UnitBlock', );
 
             for my $UnitRef ( @{$UnitsRef} ) {
@@ -730,7 +734,7 @@ sub Run {
                         StartTime => $UnitRef->{StartTime},
                         EndTime   => $UnitRef->{EndTime},
                         Period    => $UnitRef->{Period},
-                    }
+                        }
                 );
             }
 
@@ -904,10 +908,11 @@ sub Run {
                 UserID => $Param{UserID},
             );
 
-            $Param{Comment} = $Data{Sick}     ? 'Sick leave'
-                            : $Data{LeaveDay} ? 'On vacation'
-                            : $Data{Overtime} ? 'On overtime leave'
-                            :                    '';
+            $Param{Comment} = $Data{Sick}
+                ? 'Sick leave'
+                : $Data{LeaveDay} ? 'On vacation'
+                : $Data{Overtime} ? 'On overtime leave'
+                :                   '';
 
             $Param{WorkingHours} = $Data{Total} ? sprintf( "%.2f", $Data{Total} ) : '';
 
@@ -961,7 +966,7 @@ sub Run {
             keys %ProjectData
             )
         {
-            my $ProjectRef = $ProjectData{ $ProjectID };
+            my $ProjectRef = $ProjectData{$ProjectID};
             my $ActionsRef = $ProjectRef->{Actions};
 
             $Param{Project} = '';
@@ -980,8 +985,8 @@ sub Run {
             {
                 my $ActionRef = $ActionsRef->{$ActionID};
 
-                $Param{Action} = $ActionRef->{Name};
-                $Param{Hours}  = sprintf( "%.2f", $ActionRef->{PerMonth} || 0 );
+                $Param{Action}     = $ActionRef->{Name};
+                $Param{Hours}      = sprintf( "%.2f", $ActionRef->{PerMonth} || 0 );
                 $Param{HoursTotal} = sprintf( "%.2f", $ActionRef->{Total} || 0 );
                 $Total      += $Param{Hours};
                 $TotalTotal += $Param{HoursTotal};
@@ -990,7 +995,7 @@ sub Run {
                     Data => {%Param},
                 );
                 if ( !$Param{Project} ) {
-                    $Param{Project}            = $ProjectRef->{Name};
+                    $Param{Project} = $ProjectRef->{Name};
                     my $ProjectDescription = $Self->{LayoutObject}->Ascii2Html(
                         Text           => $ProjectRef->{Description},
                         HTMLResultMode => 1,
@@ -1000,7 +1005,7 @@ sub Run {
                     $Self->{LayoutObject}->Block(
                         Name => 'Project',
                         Data => {
-                            RowSpan            => (1 + scalar keys %{$ActionsRef}),
+                            RowSpan            => ( 1 + scalar keys %{$ActionsRef} ),
                             Status             => $Param{Status},
                             ProjectDescription => $ProjectDescription,
                         },
@@ -1049,7 +1054,7 @@ sub Run {
         my $Output = $Self->{LayoutObject}->Header( Title => 'Overview' );
         $Output .= $Self->{LayoutObject}->NavigationBar();
         $Output .= $Self->{LayoutObject}->Output(
-            Data => \%Param,
+            Data         => \%Param,
             TemplateFile => 'AgentTimeAccountingOverview'
         );
         $Output .= $Self->{LayoutObject}->Footer();
@@ -1060,7 +1065,7 @@ sub Run {
     # settings for handling time accounting
     # ---------------------------------------------------------- #
     elsif ( $Self->{Subaction} eq 'Setting' ) {
-        my %Data     = ();
+        my %Data = ();
 
         for (qw(ActionAction ActionUser NewAction NewUser)) {
             $Param{$_} = $Self->{ParamObject}->GetParam( Param => $_ );
@@ -1259,7 +1264,8 @@ sub Run {
 
             $Self->{LayoutObject}->Block(
                 Name => 'Action',
-                Data => { %Param,
+                Data => {
+                    %Param,
                     StatusOption => $StatusOption,
                 },
             );
@@ -1356,7 +1362,7 @@ sub Run {
         my $Output = $Self->{LayoutObject}->Header( Title => 'Setting' );
         $Output .= $Self->{LayoutObject}->NavigationBar();
         $Output .= $Self->{LayoutObject}->Output(
-            Data => \%Param,
+            Data         => \%Param,
             TemplateFile => 'AgentTimeAccountingSetting'
         );
         $Output .= $Self->{LayoutObject}->Footer();
@@ -1367,8 +1373,8 @@ sub Run {
     # settings for handling time accounting
     # ---------------------------------------------------------- #
     elsif ( $Self->{Subaction} eq 'ProjectSetting' ) {
-        my %Project  = ();
-        my %Data     = ();
+        my %Project = ();
+        my %Data    = ();
 
         for (qw(ActionProject NewProject)) {
             $Param{$_} = $Self->{ParamObject}->GetParam( Param => $_ );
@@ -1449,7 +1455,8 @@ sub Run {
 
             $Self->{LayoutObject}->Block(
                 Name => 'Project',
-                Data => { %Param,
+                Data => {
+                    %Param,
                     StatusOption => $StatusOption,
                 },
             );
@@ -1459,7 +1466,7 @@ sub Run {
         my $Output = $Self->{LayoutObject}->Header( Title => 'Setting' );
         $Output .= $Self->{LayoutObject}->NavigationBar();
         $Output .= $Self->{LayoutObject}->Output(
-            Data => \%Param,
+            Data         => \%Param,
             TemplateFile => 'AgentTimeAccountingSetting'
         );
         $Output .= $Self->{LayoutObject}->Footer();
@@ -1517,7 +1524,7 @@ sub Run {
             Name => 'Month',
         );
 
-        my @Year = (2005 .. $Year);
+        my @Year = ( 2005 .. $Year );
 
         $Frontend{YearOption} = $Self->{LayoutObject}->BuildSelection(
             Data        => \@Year,
@@ -1591,7 +1598,7 @@ sub Run {
             keys %ProjectData
             )
         {
-            my $ProjectRef = $ProjectData{ $ProjectID };
+            my $ProjectRef = $ProjectData{$ProjectID};
             my $ActionsRef = $ProjectRef->{Actions};
 
             $Param{Project} = '';
@@ -1610,8 +1617,8 @@ sub Run {
             {
                 my $ActionRef = $ActionsRef->{$ActionID};
 
-                $Param{Action} = $ActionRef->{Name};
-                $Param{Hours}  = sprintf( "%.2f", $ActionRef->{PerMonth} || 0 );
+                $Param{Action}     = $ActionRef->{Name};
+                $Param{Hours}      = sprintf( "%.2f", $ActionRef->{PerMonth} || 0 );
                 $Param{HoursTotal} = sprintf( "%.2f", $ActionRef->{Total} || 0 );
                 $Total      += $Param{Hours};
                 $TotalTotal += $Param{HoursTotal};
@@ -1621,7 +1628,7 @@ sub Run {
                 );
 
                 if ( !$Param{Project} ) {
-                    $Param{Project}            = $ProjectRef->{Name};
+                    $Param{Project} = $ProjectRef->{Name};
                     my $ProjectDescription = $Self->{LayoutObject}->Ascii2Html(
                         Text           => $ProjectRef->{Description},
                         HTMLResultMode => 1,
@@ -1631,7 +1638,7 @@ sub Run {
                     $Self->{LayoutObject}->Block(
                         Name => 'Project',
                         Data => {
-                            RowSpan            => (1 + scalar keys %{$ActionsRef}),
+                            RowSpan            => ( 1 + scalar keys %{$ActionsRef} ),
                             Status             => $Param{Status},
                             ProjectDescription => $ProjectDescription,
                             Project            => $ProjectRef->{Name},
@@ -1713,9 +1720,9 @@ sub Run {
                 Month  => $Month,
                 UserID => $UserID,
             );
-            if ( $ProjectData{ $Param{ProjectID} }) {
+            if ( $ProjectData{ $Param{ProjectID} } ) {
                 my $ActionsRef = $ProjectData{ $Param{ProjectID} }{Actions};
-                for my $ActionID ( keys %{ $ActionsRef } ) {
+                for my $ActionID ( keys %{$ActionsRef} ) {
                     $ProjectTime{$ActionID}{$UserID}{Hours} = $ActionsRef->{$ActionID}{Total};
                 }
             }
@@ -1849,7 +1856,7 @@ sub _ActionList {
     my $Self = shift;
 
     my %ActionList;
-    my %Action     = $Self->{TimeAccountingObject}->ActionSettingsGet();
+    my %Action = $Self->{TimeAccountingObject}->ActionSettingsGet();
 
     # get action settings
     ACTIONID:
@@ -1887,6 +1894,7 @@ sub _ProjectList {
     );
 
     if ( !$Self->{LastProjectsRef} ) {
+
         # get the last projects
         my @LastProjects = $Self->{TimeAccountingObject}->LastProjectsOfUser();
 
@@ -1941,8 +1949,9 @@ sub _ProjectList {
         Data        => \@List,
         Name        => "ProjectID[$Param{WorkingUnitID}]",
         Translation => 0,
+
         #Max         => 62,
-        Class       => 'ProjectSelection',
+        Class => 'ProjectSelection',
     );
 
 }
