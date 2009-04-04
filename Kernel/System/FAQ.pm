@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.65 2009-04-02 16:38:27 ub Exp $
+# $Id: FAQ.pm,v 1.66 2009-04-04 16:31:32 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.65 $) [1];
+$VERSION = qw($Revision: 1.66 $) [1];
 
 =head1 NAME
 
@@ -1298,7 +1298,7 @@ sub CategoryGet {
 
 get all subcategory ids of of a category
 
-    my %Category = $FAQObject->CategorySubCategoryIDList(
+    my @SubCategoryIDs = $FAQObject->CategorySubCategoryIDList(
         ParentID   => 1,
     );
 
@@ -2405,7 +2405,7 @@ sub _UserCategories {
     my %UserCategories = ();
 
     PARENTID:
-    for my $ParentID ( sort { $a <=> $b } keys %{ $Param{Categories} }  ) {
+    for my $ParentID ( sort { $a <=> $b } keys %{ $Param{Categories} } ) {
 
         my %SubCategories = ();
 
@@ -2593,7 +2593,7 @@ sub AgentCategorySearch {
 
 get the category search as hash
 
-    my @CategoryIDs = @{$FAQObject->CustomerCategorySearch(
+    my $CategoryIDArrayRef = @{$FAQObject->CustomerCategorySearch(
         CustomerUser  => 'tt',
         ParentID      => 3,   # (optional, default 0)
     )};
@@ -2620,8 +2620,47 @@ sub CustomerCategorySearch {
 
     my %Category = %{ $Categories->{ $Param{ParentID} } };
     my @CategoryIDs = sort { $Category{$a} cmp $Category{$b} } ( keys %Category );
+    my @AllowedCategoryIDs = ();
 
-    return \@CategoryIDs;
+    for my $CategoryID ( @CategoryIDs ) {
+
+        # get all subcategory ids for this category
+        my $SubCategoryIDs = $Self->CategorySubCategoryIDList(
+            ParentID => $CategoryID,
+        );
+
+        # add this category id
+        my @IDs = ( $CategoryID, @{ $SubCategoryIDs } );
+
+        # check if category contains articles with state external or public
+        my $FoundArticle = 0;
+        my $SQL;
+        $SQL  = 'SELECT faq_item.id FROM faq_item, faq_state_type ';
+        $SQL .= 'WHERE faq_item.category_id = ? ';
+        $SQL .= 'AND faq_state_type.id = faq_item.state_id ';
+        $SQL .= "AND faq_state_type.name != 'internal' ";
+        $SQL .= 'AND approved = 1';
+
+        ID:
+        for my $ID ( @IDs ) {
+            $Self->{DBObject}->Prepare(
+                SQL   => $SQL,
+                Bind  => [ \$ID ],
+                Limit => 1,
+            );
+            while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+                $FoundArticle = $Row[0];
+            }
+            last ID if $FoundArticle;
+        }
+
+        # an article was found
+        if ( $FoundArticle ) {
+            push @AllowedCategoryIDs, $CategoryID;
+        }
+    }
+
+    return \@AllowedCategoryIDs;
 }
 
 =item PublicCategorySearch()
@@ -2637,31 +2676,60 @@ get the category search as hash
 sub PublicCategorySearch {
     my ( $Self, %Param ) = @_;
 
-    my $SQL   = '';
-    my $State = 0;
-
-    # get 'public' state id
-    $SQL = "SELECT id from faq_state_type WHERE name = 'public'";
-    $Self->{DBObject}->Prepare( SQL => $SQL, Limit => 500 );
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $State = $Row[0];
+    if ( !defined( $Param{ParentID} ) ) {
+        $Param{ParentID} = 0;
     }
 
-    # get category ids
-    $SQL = "SELECT distinct(faq_item.category_id) FROM faq_item " .
-        "LEFT JOIN faq_category ON faq_item.category_id = faq_category.id " .
-        "WHERE faq_category.valid_id = 1 AND faq_item.state_id = $State";
-    if ( defined( $Param{ParentID} ) ) {
-        $SQL .= " AND faq_category.parent_id = "
-            . $Self->{DBObject}->Quote( $Param{ParentID}, 'Integer' );
+    my $CategoryListCategories = $Self->CategoryList(
+        Valid => 1,
+    );
+
+    return [] if !$CategoryListCategories->{ $Param{ParentID} };
+
+    my %Category = %{ $CategoryListCategories->{ $Param{ParentID} } };
+    my @CategoryIDs = sort { $Category{$a} cmp $Category{$b} } ( keys %Category );
+    my @AllowedCategoryIDs = ();
+
+    for my $CategoryID ( @CategoryIDs ) {
+
+        # get all subcategory ids for this category
+        my $SubCategoryIDs = $Self->CategorySubCategoryIDList(
+            ParentID => $CategoryID,
+        );
+
+        # add this category id
+        my @IDs = ( $CategoryID, @{ $SubCategoryIDs } );
+
+        # check if category contains articles with state public
+        my $FoundArticle = 0;
+        my $SQL;
+        $SQL  = 'SELECT faq_item.id FROM faq_item, faq_state_type ';
+        $SQL .= 'WHERE faq_item.category_id = ? ';
+        $SQL .= 'AND faq_state_type.id = faq_item.state_id ';
+        $SQL .= "AND faq_state_type.name = 'public' ";
+        $SQL .= 'AND approved = 1';
+
+        ID:
+        for my $ID ( @IDs ) {
+            $Self->{DBObject}->Prepare(
+                SQL   => $SQL,
+                Bind  => [ \$ID ],
+                Limit => 1,
+            );
+            while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+                $FoundArticle = $Row[0];
+            }
+            last ID if $FoundArticle;
+        }
+
+        # an article was found
+        if ( $FoundArticle ) {
+            push @AllowedCategoryIDs, $CategoryID;
+        }
     }
 
-    my @List = ();
-    $Self->{DBObject}->Prepare( SQL => $SQL, Limit => 500 );
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        push( @List, $Row[0] );
-    }
-    return \@List;
+    return \@AllowedCategoryIDs;
+
 }
 
 =item FAQLogAdd()
@@ -3464,6 +3532,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.65 $ $Date: 2009-04-02 16:38:27 $
+$Revision: 1.66 $ $Date: 2009-04-04 16:31:32 $
 
 =cut
