@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.58 2009-03-21 14:51:20 ub Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.59 2009-04-06 15:47:44 ub Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
-    <Framework>2.3.x</Framework>
+    <Framework>2.4.x</Framework>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
@@ -45,41 +45,6 @@
         <File Permission="644" Location="var/httpd/htdocs/images/Standard/language.png"/>
         <File Permission="644" Location="var/httpd/htdocs/images/Standard/rss.png"/>
         <File Permission="644" Location="var/httpd/htdocs/yui/image-uploader.js"/>
-        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/asc.gif"/>
-        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/blankimage.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/desc.gif"/>
-        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/dt-arrow-dn.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/dt-arrow-up.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/editor-knob.gif"/>
-        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/editor-sprite-active.gif"/>
-        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/editor-sprite.gif"/>
-        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/header_background.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/layout_sprite.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/menu-button-arrow-disabled.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/menu-button-arrow.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/menubaritem_submenuindicator_disabled.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/menubaritem_submenuindicator.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/menuitem_checkbox_disabled.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/menuitem_checkbox.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/menuitem_submenuindicator_disabled.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/menuitem_submenuindicator.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/skin.css"/>
-        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/split-button-arrow-active.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/split-button-arrow-disabled.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/split-button-arrow-focus.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/split-button-arrow-hover.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/split-button-arrow.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/sprite.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/transparent.gif"/>
-        <File Permission="644" Location="var/httpd/htdocs/yui/build/assets/skins/sam/wait.gif"/>
-        <File Permission="644" Location="var/httpd/htdocs/yui/build/button/button-min.js"/>
-        <File Permission="644" Location="var/httpd/htdocs/yui/build/connection/connection-min.js"/>
-        <File Permission="644" Location="var/httpd/htdocs/yui/build/container/container_core-min.js"/>
-        <File Permission="644" Location="var/httpd/htdocs/yui/build/editor/editor-beta-min.js"/>
-        <File Permission="644" Location="var/httpd/htdocs/yui/build/element/element-beta-min.js"/>
-        <File Permission="644" Location="var/httpd/htdocs/yui/build/fonts/fonts-min.css"/>
-        <File Permission="644" Location="var/httpd/htdocs/yui/build/menu/menu-min.js"/>
-        <File Permission="644" Location="var/httpd/htdocs/yui/build/yahoo-dom-event/yahoo-dom-event.js"/>
         <File Permission="644" Location="var/packagesetup/FAQ.pm"/>
         <File Permission="644" Location="var/stats/FAQ-FAQAccess.xml"/>
     </Filelist>
