@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/PictureUpload.pm - get picture uploads
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: PictureUpload.pm,v 1.3 2008-10-24 18:17:25 ub Exp $
+# $Id: PictureUpload.pm,v 1.4 2009-04-06 16:27:28 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use URI::Escape;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -141,7 +141,7 @@ sub Run {
     );
 
     # check if session data is needed for URL
-    my $Session;
+    my $Session = '';
     if ( !$Self->{LayoutObject}->{SessionIDCookie} ) {
         $Session = '&' . $Self->{LayoutObject}->{SessionName} . '='
             . $Self->{LayoutObject}->{SessionID};
@@ -150,6 +150,7 @@ sub Run {
     # return file URL
     $Output .= "{status:'UPLOADED', image_url:'$Self->{LayoutObject}->{Baselink}"
         . "Action=PictureUpload&FormID=$Self->{FormID}&Filename=$TmpFilename$Session'}";
+
     return $Output;
 }
 
