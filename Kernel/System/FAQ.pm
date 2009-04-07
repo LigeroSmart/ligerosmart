@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.67 2009-04-04 17:19:33 ub Exp $
+# $Id: FAQ.pm,v 1.68 2009-04-07 15:06:58 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.67 $) [1];
+$VERSION = qw($Revision: 1.68 $) [1];
 
 =head1 NAME
 
@@ -79,13 +79,12 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for (qw(DBObject ConfigObject LogObject MainObject TimeObject UserID)) {
+    for (qw(DBObject ConfigObject LogObject EncodeObject MainObject TimeObject UserID)) {
         $Self->{$_} = $Param{$_} || die "Got no $_!";
     }
     $Self->{GroupObject}         = Kernel::System::Group->new( %{$Self} );
     $Self->{CustomerGroupObject} = Kernel::System::CustomerGroup->new( %{$Self} );
     $Self->{UserObject}          = Kernel::System::User->new( %{$Self} );
-    $Self->{EncodeObject}        = Kernel::System::Encode->new( %{$Self} );
     $Self->{TicketObject}        = Kernel::System::Ticket->new( %{$Self} );
     $Self->{UploadCacheObject}   = Kernel::System::Web::UploadCache->new( %{$Self} );
 
@@ -3532,6 +3531,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.67 $ $Date: 2009-04-04 17:19:33 $
+$Revision: 1.68 $ $Date: 2009-04-07 15:06:58 $
 
 =cut
