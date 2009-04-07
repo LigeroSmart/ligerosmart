@@ -1,8 +1,8 @@
 # --
 # AgentFAQ.dtl - provides HTML view for faq articles
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.dtl,v 1.43 2008-11-07 10:29:25 ub Exp $
+# $Id: AgentFAQ.dtl,v 1.44 2009-04-07 09:38:57 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -11,23 +11,23 @@
 
 <!-- dtl:block:WYSIWYGEditor -->
 <!-- Skin CSS file -->
-<link rel="stylesheet" type="text/css" href="$Env{"Images"}../../yui/build/assets/skins/sam/skin.css">
-<link rel="stylesheet" type="text/css" href="$Env{"Images"}../../yui/build/fonts/fonts-min.css">
+<link rel="stylesheet" type="text/css" href="$Config{"Frontend::YUIPath"}build/assets/skins/sam/skin.css">
+<link rel="stylesheet" type="text/css" href="$Config{"Frontend::YUIPath"}build/fonts/fonts-min.css">
 
 <!-- Utility Dependencies -->
-<script type="text/javascript" src="$Env{"Images"}../../yui/build/yahoo-dom-event/yahoo-dom-event.js"></script>
-<script type="text/javascript" src="$Env{"Images"}../../yui/build/element/element-beta-min.js"></script>
+<script type="text/javascript" src="$Config{"Frontend::YUIPath"}build/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script type="text/javascript" src="$Config{"Frontend::YUIPath"}build/element/element-min.js"></script>
 
 <!-- Needed for Menus, Buttons and Overlays used in the Toolbar -->
-<script type="text/javascript" src="$Env{"Images"}../../yui/build/container/container_core-min.js"></script>
-<script type="text/javascript" src="$Env{"Images"}../../yui/build/menu/menu-min.js"></script>
-<script type="text/javascript" src="$Env{"Images"}../../yui/build/button/button-min.js"></script>
+<script type="text/javascript" src="$Config{"Frontend::YUIPath"}build/container/container_core-min.js"></script>
+<script type="text/javascript" src="$Config{"Frontend::YUIPath"}build/menu/menu-min.js"></script>
+<script type="text/javascript" src="$Config{"Frontend::YUIPath"}build/button/button-min.js"></script>
 
 <!-- Source file for Rich Text Editor-->
-<script type="text/javascript" src="$Env{"Images"}../../yui/build/editor/editor-beta-min.js"></script>
+<script type="text/javascript" src="$Config{"Frontend::YUIPath"}build/editor/editor-min.js"></script>
 
 <!-- Source file for Connection Manager (Required for yuiImageUploader) -->
-<script type="text/javascript" src="$Env{"Images"}../../yui/build/connection/connection-min.js"></script>
+<script type="text/javascript" src="$Config{"Frontend::YUIPath"}build/connection/connection-min.js"></script>
 
 <!-- Source file for ImageUploader-->
 <script type="text/javascript" src="$Env{"Images"}../../yui/image-uploader.js"></script>
