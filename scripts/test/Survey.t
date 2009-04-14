@@ -2,7 +2,7 @@
 # Survey.t - Survey tests
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.t,v 1.10 2009-04-02 16:22:20 mh Exp $
+# $Id: Survey.t,v 1.11 2009-04-14 11:37:55 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -230,7 +230,7 @@ my @Tests = (
     },
     {
         Name                 => '#5 try',
-        Sleep                => 30,
+        Sleep                => 80,
         'Survey::SendPeriod' => 1 / 24 / 60,
         Ticket               => {
             Title        => 'Some Ticket Title',
