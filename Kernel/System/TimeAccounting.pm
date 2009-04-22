@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.33 2009-04-03 11:49:29 tr Exp $
+# $Id: TimeAccounting.pm,v 1.34 2009-04-22 07:52:39 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.33 $) [1];
+$VERSION = qw($Revision: 1.34 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week);
 
@@ -36,6 +36,7 @@ All timeaccounting functions
 create an object
 
     use Kernel::Config;
+    use Kernel::System::Encode;
     use Kernel::System::Log;
     use Kernel::System::Main;
     use Kernel::System::DB;
@@ -44,15 +45,21 @@ create an object
     use Kernel::System::TimeAccounting;
 
     my $ConfigObject = Kernel::Config->new();
-    my $LogObject    = Kernel::System::Log->new(
+    my $EncodeObject = Kernel::System::Encode->new(
         ConfigObject => $ConfigObject,
+    );
+    my $LogObject = Kernel::System::Log->new(
+        ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
     );
     my $MainObject = Kernel::System::Main->new(
         ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
         LogObject    => $LogObject,
     );
     my $DBObject = Kernel::System::DB->new(
         ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
         LogObject    => $LogObject,
         MainObject   => $MainObject,
     );
@@ -66,6 +73,7 @@ create an object
         MainObject   => $MainObject,
         TimeObject   => $TimeObject,
         DBObject     => $DBObject,
+        EncodeObject => $EncodeObject,
     );
     my $TimeAccountingObject = Kernel::System::TimeAccounting->new(
         ConfigObject => $ConfigObject,
@@ -73,6 +81,8 @@ create an object
         DBObject     => $DBObject,
         UserID       => 123,
         MainObject   => $MainObject,
+        TimeObject   => $TimeObject,
+        UserObject   => $UserObject,
     );
 
 =cut
@@ -1355,6 +1365,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.33 $ $Date: 2009-04-03 11:49:29 $
+$Revision: 1.34 $ $Date: 2009-04-22 07:52:39 $
 
 =cut
