@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.62 2009-04-17 17:08:01 mh Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.63 2009-04-22 20:19:44 ub Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -86,18 +86,6 @@
                 <UniqueColumn Name="name"/>
             </Unique>
         </TableCreate>
-        <Insert Table="faq_state">
-            <Data Key="name" Type="Quote">internal (agent)</Data>
-            <Data Key="type_id">1</Data>
-        </Insert>
-        <Insert Table="faq_state">
-            <Data Key="name" Type="Quote">external (customer)</Data>
-            <Data Key="type_id">2</Data>
-        </Insert>
-        <Insert Table="faq_state">
-            <Data Key="name" Type="Quote">public (all)</Data>
-            <Data Key="type_id">3</Data>
-        </Insert>
         <TableCreate Name="faq_category">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>
             <Column Name="parent_id" Required="true" Type="INTEGER"/>
