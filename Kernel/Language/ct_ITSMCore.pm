@@ -1,13 +1,13 @@
 # --
 # Kernel/Language/ct_ITSMCore.pm - the catalan translation of ITSMCore
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # Copyright (C) 2008 Sistemes OTIC (ibsalut) - Antonio Linde
 # --
-# $Id: ct_ITSMCore.pm,v 1.2 2008-08-14 11:49:09 mh Exp $
+# $Id: ct_ITSMCore.pm,v 1.3 2009-05-18 09:48:24 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 package Kernel::Language::ct_ITSMCore;
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub Data {
     my $Self = shift;

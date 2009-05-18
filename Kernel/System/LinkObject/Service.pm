@@ -1,12 +1,12 @@
 # --
 # Kernel/System/LinkObject/Service.pm - to link service objects
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: Service.pm,v 1.4 2008-08-02 15:05:33 mh Exp $
+# $Id: Service.pm,v 1.5 2009-05-18 09:49:24 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 package Kernel::System::LinkObject::Service;
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;

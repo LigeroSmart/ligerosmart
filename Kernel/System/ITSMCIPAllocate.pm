@@ -1,12 +1,12 @@
 # --
 # Kernel/System/ITSMCIPAllocate.pm - all criticality, impact and priority allocation functions
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMCIPAllocate.pm,v 1.11 2008-06-24 10:56:19 ub Exp $
+# $Id: ITSMCIPAllocate.pm,v 1.12 2009-05-18 09:53:52 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 package Kernel::System::ITSMCIPAllocate;
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 =head1 NAME
 
@@ -36,11 +36,15 @@ All criticality, impact and priority allocation functions.
 create an object
 
     use Kernel::Config;
-    use Kernel::System::Log;
+    use Kernel::System::CIPAllocate;
     use Kernel::System::DB;
-    use Kernel::System::Priority;
+    use Kernel::System::Log;
+    use Kernel::System::Main;
 
     my $ConfigObject = Kernel::Config->new();
+    my $MainObject = Kernel::System::Main->new(
+        ConfigObject => $ConfigObject,
+    );
     my $LogObject = Kernel::System::Log->new(
         ConfigObject => $ConfigObject,
     );
@@ -241,6 +245,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.11 $ $Date: 2008-06-24 10:56:19 $
+$Revision: 1.12 $ $Date: 2009-05-18 09:53:52 $
 
 =cut

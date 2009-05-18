@@ -1,12 +1,12 @@
 # --
 # Kernel/Modules/AgentITSMSLAZoom.pm - the OTRS::ITSM SLA zoom module
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMSLAZoom.pm,v 1.5 2008-08-02 15:01:11 mh Exp $
+# $Id: AgentITSMSLAZoom.pm,v 1.6 2009-05-18 09:48:35 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 package Kernel::Modules::AgentITSMSLAZoom;
@@ -18,7 +18,7 @@ use Kernel::System::Service;
 use Kernel::System::SLA;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;

@@ -1,12 +1,12 @@
 # --
 # Kernel/Language/de_ITSMCore.pm - the german translation of ITSMCore
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: de_ITSMCore.pm,v 1.14 2008-08-06 07:16:58 ub Exp $
+# $Id: de_ITSMCore.pm,v 1.15 2009-05-18 09:48:24 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 package Kernel::Language::de_ITSMCore;
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 sub Data {
     my $Self = shift;
