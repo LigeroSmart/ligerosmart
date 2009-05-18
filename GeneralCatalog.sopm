@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: GeneralCatalog.sopm,v 1.30 2009-01-20 14:25:35 mh Exp $</CVS>
+    <CVS>$Id: GeneralCatalog.sopm,v 1.31 2009-05-18 09:37:00 mh Exp $</CVS>
     <Name>GeneralCatalog</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
-    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
     <Description Lang="en">The general catalog package.</Description>
     <Description Lang="de">Das General Catalog Paket.</Description>
     <Filelist>
@@ -17,6 +17,7 @@
         <File Permission="644" Location="Kernel/Language/cz_GeneralCatalog.pm"/>
         <File Permission="644" Location="Kernel/Language/de_GeneralCatalog.pm"/>
         <File Permission="644" Location="Kernel/Language/es_GeneralCatalog.pm"/>
+        <File Permission="644" Location="Kernel/Language/it_GeneralCatalog.pm"/>
         <File Permission="644" Location="Kernel/Language/pl_GeneralCatalog.pm"/>
         <File Permission="644" Location="Kernel/Language/ru_GeneralCatalog.pm"/>
         <File Permission="644" Location="Kernel/Modules/AdminGeneralCatalog.pm"/>
