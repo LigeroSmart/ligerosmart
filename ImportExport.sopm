@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ImportExport.sopm,v 1.30 2009-01-20 14:55:52 mh Exp $</CVS>
+    <CVS>$Id: ImportExport.sopm,v 1.31 2009-05-18 09:42:34 mh Exp $</CVS>
     <Name>ImportExport</Name>
     <Version>0.0.0</Version>
     <Framework>2.3.x</Framework>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
-    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
     <Description Lang="en">The ImportExport package.</Description>
     <Description Lang="de">Das ImportExport Paket.</Description>
     <Filelist>
@@ -18,6 +18,7 @@
         <File Permission="644" Location="Kernel/Language/cz_ImportExport.pm"/>
         <File Permission="644" Location="Kernel/Language/de_ImportExport.pm"/>
         <File Permission="644" Location="Kernel/Language/es_ImportExport.pm"/>
+        <File Permission="644" Location="Kernel/Language/it_ImportExport.pm"/>
         <File Permission="644" Location="Kernel/Language/pl_ImportExport.pm"/>
         <File Permission="644" Location="Kernel/Language/ru_ImportExport.pm"/>
         <File Permission="644" Location="Kernel/Modules/AdminImportExport.pm"/>
