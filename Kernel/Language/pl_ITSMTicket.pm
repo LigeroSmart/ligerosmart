@@ -1,13 +1,13 @@
 # --
 # Kernel/Language/pl_ITSMTicket.pm - the polish translation of ITSMTicket
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # Copyright (C) 2008 Maciej Loszajc
 # --
-# $Id: pl_ITSMTicket.pm,v 1.4 2008-08-25 17:05:31 mh Exp $
+# $Id: pl_ITSMTicket.pm,v 1.5 2009-05-18 09:55:54 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 package Kernel::Language::pl_ITSMTicket;
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub Data {
     my $Self = shift;
