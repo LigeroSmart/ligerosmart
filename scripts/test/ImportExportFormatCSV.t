@@ -1,12 +1,12 @@
 # --
 # ImportExportFormatCSV.t - all import export tests for the CSV format backend
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExportFormatCSV.t,v 1.7 2008-04-14 15:02:21 mh Exp $
+# $Id: ImportExportFormatCSV.t,v 1.8 2009-05-18 09:42:53 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 use strict;

@@ -1,23 +1,24 @@
 #!/usr/bin/perl -w
 # --
 # ImportExport.pl - import/export script
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pl,v 1.9 2008-08-07 10:54:27 mh Exp $
+# $Id: ImportExport.pl,v 1.10 2009-05-18 09:42:52 mh Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
+# it under the terms of the GNU AFFERO General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# any later version.
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
-# You should have received a copy of the GNU General Public License
+# You should have received a copy of the GNU Affero General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# or see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 use strict;
@@ -37,7 +38,7 @@ use Kernel::System::Log;
 use Kernel::System::Main;
 
 use vars qw($VERSION $RealBin);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 # get options
 my %Opts;
@@ -46,7 +47,7 @@ getopt( 'hnaio', \%Opts );
 if ( $Opts{h} ) {
 
     print STDOUT "ImportExport.pl <Revision $VERSION> - a import/export tool\n";
-    print STDOUT "Copyright (c) 2001-2008 OTRS AG, http://otrs.org/\n";
+    print STDOUT "Copyright (C) 2001-2009 OTRS AG, http://otrs.org/\n";
     print STDOUT "usage:ImportExport.pl -n <TemplateNumber> -a import|export ";
     print STDOUT "[-i <SourceFile>] [-o <DestinationFile>]\n";
     print STDOUT "\n";
@@ -188,6 +189,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.9 $ $Date: 2008-08-07 10:54:27 $
+$Revision: 1.10 $ $Date: 2009-05-18 09:42:52 $
 
 =cut
