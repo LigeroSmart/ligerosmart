@@ -2,7 +2,7 @@
 # Kernel/Modules/FAQ.pm - faq module
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.41 2009-04-06 11:41:38 ub Exp $
+# $Id: FAQ.pm,v 1.42 2009-06-22 12:51:51 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::FAQ;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.41 $) [1];
+$VERSION = qw($Revision: 1.42 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -594,10 +594,10 @@ sub GetItemView {
 
         # rewrite links to embedded images for customer and public interface
         if ( $Self->{Interface}{Name} eq 'external' ) {
-            $ItemData{$Key} =~ s{ index[.]pl [?] Action=AgentFAQ }{customer.pl?Action=CustomerFAQ}xms;
+            $ItemData{$Key} =~ s{ index[.]pl [?] Action=AgentFAQ }{customer.pl?Action=CustomerFAQ}gxms;
         }
         elsif ( $Self->{Interface}{Name} eq 'public' ) {
-            $ItemData{$Key} =~ s{ index[.]pl [?] Action=AgentFAQ }{public.pl?Action=PublicFAQ}xms;
+            $ItemData{$Key} =~ s{ index[.]pl [?] Action=AgentFAQ }{public.pl?Action=PublicFAQ}gxms;
         }
 
         # no quoting if html view is enabled
