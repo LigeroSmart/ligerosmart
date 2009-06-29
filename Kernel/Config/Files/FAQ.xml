@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.28 2009-04-07 08:43:05 ub Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.29 2009-06-29 12:45:58 ub Exp $</CVS>
     <ConfigItem Name="Ticket::Frontend::NoteTypes" Required="1" Valid="1">
         <Description Lang="en">Specify the different note types, that you want to use in your system.</Description>
         <Description Lang="de">Hier können die verschiedenen Notiz-Typen festgelegt werden, die innerhalb des Systems verwendet werden sollen.</Description>
@@ -255,7 +255,7 @@
     </ConfigItem>
     <ConfigItem Name="FAQ::Default::State" Required="1" Valid="1">
         <Description Lang="en">Default state for FAQ entry.</Description>
-        <Description Lang="de">Standard Status eines  FAQ-Eintrags.</Description>
+        <Description Lang="de">Standard Status eines FAQ-Eintrags.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
