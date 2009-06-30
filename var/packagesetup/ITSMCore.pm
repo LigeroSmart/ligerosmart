@@ -1,12 +1,12 @@
 # --
 # ITSMCore.pm - code to excecute during package installation
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMCore.pm,v 1.11 2008-08-29 08:13:46 mh Exp $
+# $Id: ITSMCore.pm,v 1.12 2009-06-30 14:57:45 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 package var::packagesetup::ITSMCore;
@@ -21,7 +21,7 @@ use Kernel::System::Priority;
 use Kernel::System::Valid;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 =head1 NAME
 
@@ -47,6 +47,7 @@ create an object
     use Kernel::System::Time;
     use Kernel::System::DB;
     use Kernel::System::XML;
+    use var::packagesetup::ITSMCore;
 
     my $ConfigObject = Kernel::Config->new();
     my $LogObject    = Kernel::System::Log->new(
@@ -255,7 +256,7 @@ sub _BackgroundColorChange {
     }
 
     # define the css file
-    my $CssFile = $Self->{ConfigObject}->Get('Home') . '/Kernel/Output/HTML/Standard/css.dtl';
+    my $CssFile = $Self->{ConfigObject}->Get('Home') . '/var/https/htdocs/css/Standard/agent.css';
 
     return 1 if -e $CssFile . '.save';
 
@@ -656,6 +657,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.11 $ $Date: 2008-08-29 08:13:46 $
+$Revision: 1.12 $ $Date: 2009-06-30 14:57:45 $
 
 =cut
