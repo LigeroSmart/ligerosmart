@@ -1,12 +1,12 @@
 # --
 # ITSMServiceLevelManagement.pm - code to excecute during package installation
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMServiceLevelManagement.pm,v 1.18 2008-08-29 08:36:13 mh Exp $
+# $Id: ITSMServiceLevelManagement.pm,v 1.19 2009-06-30 16:13:38 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 package var::packagesetup::ITSMServiceLevelManagement;
@@ -22,7 +22,7 @@ use Kernel::System::Stats;
 use Kernel::System::User;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 =head1 NAME
 
@@ -48,6 +48,7 @@ create an object
     use Kernel::System::Time;
     use Kernel::System::DB;
     use Kernel::System::XML;
+    use var::packagesetup::ITSMServiceLevelManagement;
 
     my $ConfigObject = Kernel::Config->new();
     my $LogObject    = Kernel::System::Log->new(
@@ -91,7 +92,7 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Object (qw(ConfigObject LogObject MainObject TimeObject DBObject XMLObject)) {
+    for my $Object (qw(ConfigObject LogObject MainObject EncodeObject TimeObject DBObject XMLObject)) {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
@@ -227,6 +228,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.18 $ $Date: 2008-08-29 08:36:13 $
+$Revision: 1.19 $ $Date: 2009-06-30 16:13:38 $
 
 =cut
