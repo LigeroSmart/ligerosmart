@@ -1,13 +1,13 @@
 # --
 # CustomerUserService.t - CustomerUserService tests
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerUserService.t,v 1.2 2008-07-07 11:24:59 mh Exp $
-# $OldId: CustomerUserService.t,v 1.4 2008/05/08 09:35:57 mh Exp $
+# $Id: CustomerUserService.t,v 1.3 2009-06-30 14:55:02 ub Exp $
+# $OldId: CustomerUserService.t,v 1.5 2009/02/16 12:41:12 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 use Kernel::System::Service;
