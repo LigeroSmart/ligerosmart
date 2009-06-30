@@ -1,13 +1,13 @@
 # --
 # Kernel/System/Service.pm - all service function
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: Service.pm,v 1.9 2008-08-09 10:00:53 mh Exp $
-# $OldId: Service.pm,v 1.28 2008/06/18 10:15:20 ub Exp $
+# $Id: Service.pm,v 1.10 2009-06-30 14:53:01 ub Exp $
+# $OldId: Service.pm,v 1.37 2009/06/30 12:15:44 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 package Kernel::System::Service;
@@ -26,7 +26,7 @@ use Kernel::System::Time;
 # ---
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 =head1 NAME
 
@@ -47,25 +47,31 @@ All service functions.
 create an object
 
     use Kernel::Config;
+    use Kernel::System::Encode;
     use Kernel::System::Log;
     use Kernel::System::Main;
     use Kernel::System::DB;
     use Kernel::System::Service;
 
     my $ConfigObject = Kernel::Config->new();
-    my $LogObject    = Kernel::System::Log->new(
+    my $EncodeObject = Kernel::System::Encode->new(
         ConfigObject => $ConfigObject,
+    );
+    my $LogObject = Kernel::System::Log->new(
+        ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
     );
     my $MainObject = Kernel::System::Main->new(
         ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
         LogObject    => $LogObject,
     );
     my $DBObject = Kernel::System::DB->new(
         ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
         LogObject    => $LogObject,
         MainObject   => $MainObject,
     );
-
     my $ServiceObject = Kernel::System::Service->new(
         ConfigObject => $ConfigObject,
         LogObject    => $LogObject,
@@ -83,8 +89,8 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for (qw(DBObject ConfigObject LogObject MainObject)) {
-        $Self->{$_} = $Param{$_} || die "Got no $_!";
+    for my $Object (qw(DBObject ConfigObject LogObject MainObject)) {
+        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
     $Self->{CheckItemObject} = Kernel::System::CheckItem->new( %{$Self} );
     $Self->{ValidObject}     = Kernel::System::Valid->new( %{$Self} );
@@ -95,6 +101,13 @@ sub new {
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
     $Self->{LinkObject}           = Kernel::System::LinkObject->new( %{$Self} );
 # ---
+
+    # load generator preferences module
+    my $GeneratorModule = $Self->{ConfigObject}->Get('Service::PreferencesModule')
+        || 'Kernel::System::Service::PreferencesDB';
+    if ( $Self->{MainObject}->Require($GeneratorModule) ) {
+        $Self->{PreferencesObject} = $GeneratorModule->new(%Param);
+    }
 
     return $Self;
 }
@@ -115,7 +128,10 @@ sub ServiceList {
 
     # check needed stuff
     if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log( Priority => 'error', Message => 'Need UserID!' );
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need UserID!',
+        );
         return;
     }
 
@@ -151,30 +167,27 @@ sub ServiceList {
     }
 
     my %ServiceInvalidList;
+    SERVICEID:
     for my $ServiceID ( sort { $ServiceListTmp{$a} cmp $ServiceListTmp{$b} } keys %ServiceListTmp )
     {
 
-        my $Invalid = 1;
-        for my $ValidID (@ValidIDs) {
-            if ( $ServiceValidList{$ServiceID} eq $ValidID ) {
-                $Invalid = 0;
-                last;
-            }
-        }
+        my $Valid = scalar grep { $_ eq $ServiceValidList{$ServiceID} } @ValidIDs;
 
-        if ($Invalid) {
-            $ServiceInvalidList{ $ServiceList{$ServiceID} } = 1;
-            delete( $ServiceList{$ServiceID} );
-        }
+        next SERVICEID if $Valid;
+
+        $ServiceInvalidList{ $ServiceList{$ServiceID} } = 1;
+        delete $ServiceList{$ServiceID};
     }
 
-    # delete invalid services an childs
+    # delete invalid services and childs
     for my $ServiceID ( keys %ServiceList ) {
+
+        INVALIDNAME:
         for my $InvalidName ( keys %ServiceInvalidList ) {
 
             if ( $ServiceList{$ServiceID} =~ m{ \A $InvalidName :: }xms ) {
                 delete $ServiceList{$ServiceID};
-                last;
+                last INVALIDNAME;
             }
         }
     }
@@ -220,15 +233,17 @@ sub ServiceGet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(ServiceID UserID)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+    for my $Argument (qw(ServiceID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
             return;
         }
     }
 
     # get service from db
-    my %ServiceData = ();
     $Self->{DBObject}->Prepare(
         SQL =>
             'SELECT id, name, valid_id, comments, create_time, create_by, change_time, change_by '
@@ -242,6 +257,8 @@ sub ServiceGet {
         Limit => 1,
     );
 
+    # fetch the result
+    my %ServiceData;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $ServiceData{ServiceID}  = $Row[0];
         $ServiceData{Name}       = $Row[1];
@@ -274,7 +291,9 @@ sub ServiceGet {
         $ServiceData{NameShort} = $2;
 
         # lookup parent
-        my $ServiceID = $Self->ServiceLookup( Name => $1, );
+        my $ServiceID = $Self->ServiceLookup(
+            Name => $1,
+        );
         $ServiceData{ParentID} = $ServiceID;
     }
 # ---
@@ -421,6 +440,16 @@ sub ServiceGet {
     $ServiceData{CurInciStateType} = $InciState->{Functionality};
 # ---
 
+    # get service preferences
+    my %Preferences = $Self->ServicePreferencesGet(
+        ServiceID => $Param{ServiceID},
+    );
+
+    # merge hash
+    if (%Preferences) {
+        %ServiceData = ( %ServiceData, %Preferences );
+    }
+
     return %ServiceData;
 }
 
@@ -445,7 +474,10 @@ sub ServiceLookup {
 
     # check needed stuff
     if ( !$Param{ServiceID} && !$Param{Name} ) {
-        $Self->{LogObject}->Log( Priority => 'error', Message => 'Need ServiceID or Name!' );
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need ServiceID or Name!',
+        );
         return;
     }
 
@@ -518,17 +550,20 @@ sub ServiceAdd {
 # ---
 # ITSM
 # ---
-#    for (qw(Name ValidID UserID)) {
-    for (qw(Name ValidID UserID TypeID CriticalityID)) {
+#    for my $Argument (qw(Name ValidID UserID)) {
+    for my $Argument (qw(Name ValidID UserID TypeID CriticalityID)) {
 # ---
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
             return;
         }
     }
 
     # set comment
-    $Param{Comment} = $Param{Comment} || '';
+    $Param{Comment} ||= '';
 
     # cleanup given params
     for my $Argument (qw(Name Comment)) {
@@ -647,17 +682,20 @@ sub ServiceUpdate {
 # ---
 # ITSM
 # ---
-#    for (qw(ServiceID Name ValidID UserID)) {
-    for (qw(ServiceID Name ValidID UserID TypeID CriticalityID)) {
+#    for my $Argument (qw(ServiceID Name ValidID UserID)) {
+    for my $Argument (qw(ServiceID Name ValidID UserID TypeID CriticalityID)) {
 # ---
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
             return;
         }
     }
 
-    # set comment
-    $Param{Comment} = $Param{Comment} || '';
+    # set default comment
+    $Param{Comment} ||= '';
 
     # cleanup given params
     for my $Argument (qw(Name Comment)) {
@@ -689,7 +727,12 @@ sub ServiceUpdate {
 
     # get parent name
     if ( $Param{ParentID} ) {
-        my $ParentName = $Self->ServiceLookup( ServiceID => $Param{ParentID}, );
+
+        # lookup service
+        my $ParentName = $Self->ServiceLookup(
+            ServiceID => $Param{ParentID},
+        );
+
         if ($ParentName) {
             $Param{FullName} = $ParentName . '::' . $Param{Name};
         }
@@ -759,7 +802,7 @@ sub ServiceUpdate {
         my %Child;
         $Child{ServiceID} = $Row[0];
         $Child{Name}      = $Row[1];
-        push( @Childs, \%Child );
+        push @Childs, \%Child;
     }
 
     # update childs
@@ -795,16 +838,20 @@ sub ServiceSearch {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(UserID)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
-            return;
-        }
+    if ( !$Param{UserID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need UserID!',
+        );
+        return;
     }
-    $Param{Limit} = $Param{Limit} || 1000;
 
-    # FIXME: valid_id = 1
-    my $SQL = 'SELECT id FROM service WHERE valid_id = 1 ';
+    # set default limit
+    $Param{Limit} ||= 1000;
+
+    # create sql query
+    my $SQL
+        = "SELECT id FROM service WHERE valid_id IN ( ${\(join ', ', $Self->{ValidObject}->ValidIDsGet())} )";
 
     if ( $Param{Name} ) {
 
@@ -815,7 +862,7 @@ sub ServiceSearch {
         $Param{Name} =~ s{ \*+ }{%}xmsg;
         $Param{Name} =~ s{ %+ }{%}xmsg;
 
-        $SQL .= "AND name LIKE '$Param{Name}' ";
+        $SQL .= " AND name LIKE '$Param{Name}' ";
     }
 # ---
 # ITSM
@@ -830,14 +877,14 @@ sub ServiceSearch {
     }
 # ---
 
-    $SQL .= 'ORDER BY name';
+    $SQL .= ' ORDER BY name';
 
     # search service in db
     $Self->{DBObject}->Prepare( SQL => $SQL );
 
     my @ServiceList;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        push( @ServiceList, $Row[0] );
+        push @ServiceList, $Row[0];
     }
 
     return @ServiceList;
@@ -876,22 +923,23 @@ sub CustomerUserServiceMemberList {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(Result)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
-            return;
-        }
+    if ( !$Param{Result} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need Result!',
+        );
+        return;
     }
     if ( !$Param{ServiceID} && !$Param{CustomerUserLogin} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'Need ServiceID or CustomerUserLogin!'
+            Message  => 'Need ServiceID or CustomerUserLogin!',
         );
         return;
     }
 
     # set default
-    if ( !defined( $Param{DefaultServices} ) ) {
+    if ( !defined $Param{DefaultServices} ) {
         $Param{DefaultServices} = 1;
     }
 
@@ -928,10 +976,10 @@ sub CustomerUserServiceMemberList {
     }
 
     # sql
-    my %Data = ();
-    my @Name = ();
-    my @ID   = ();
-    my $SQL  = 'SELECT scu.service_id, scu.customer_user_login, s.name '
+    my %Data;
+    my @Name;
+    my @ID;
+    my $SQL = 'SELECT scu.service_id, scu.customer_user_login, s.name '
         . ' FROM '
         . ' service_customer_user scu, service s'
         . ' WHERE '
@@ -944,8 +992,11 @@ sub CustomerUserServiceMemberList {
     elsif ( $Param{CustomerUserLogin} ) {
         $SQL .= " scu.customer_user_login = '$Param{CustomerUserLogin}'";
     }
+
     $Self->{DBObject}->Prepare( SQL => $SQL );
+
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+
         my $Key   = '';
         my $Value = '';
         if ( $Param{ServiceID} ) {
@@ -958,10 +1009,10 @@ sub CustomerUserServiceMemberList {
         }
 
         # remember permissions
-        if ( !defined( $Data{$Key} ) ) {
+        if ( !defined $Data{$Key} ) {
             $Data{$Key} = $Value;
-            push( @Name, $Value );
-            push( @ID,   $Key );
+            push @Name, $Value;
+            push @ID,   $Key;
         }
     }
     if ( $Param{CustomerUserLogin} && $Param{DefaultServices} && !keys(%Data) ) {
@@ -971,8 +1022,8 @@ sub CustomerUserServiceMemberList {
             DefaultServices   => 0,
         );
         for my $Key ( keys %Data ) {
-            push( @Name, $Data{$Key} );
-            push( @ID,   $Key );
+            push @Name, $Data{$Key};
+            push @ID,   $Key;
         }
     }
 
@@ -1019,23 +1070,21 @@ to add a member to a service
 sub CustomerUserServiceMemberAdd {
     my ( $Self, %Param ) = @_;
 
-    my $count;
-
     # check needed stuff
-    for (qw(CustomerUserLogin ServiceID UserID)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+    for my $Argument (qw(CustomerUserLogin ServiceID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
             return;
         }
     }
 
     # delete existing relation
     return if !$Self->{DBObject}->Do(
-        SQL => 'DELETE FROM service_customer_user WHERE '
-            . 'customer_user_login = ? AND service_id = ?',
-        Bind => [
-            \$Param{CustomerUserLogin}, \$Param{ServiceID},
-            ]
+        SQL => 'DELETE FROM service_customer_user WHERE customer_user_login = ? AND service_id = ?',
+        Bind => [ \$Param{CustomerUserLogin}, \$Param{ServiceID} ],
     );
 
     # return if relation is not active
@@ -1050,22 +1099,58 @@ sub CustomerUserServiceMemberAdd {
     );
 }
 
+=item ServicePreferencesSet()
+
+set queue preferences
+
+    $ServiceObject->ServicePreferencesSet(
+        ServiceID => 123,
+        Key       => 'UserComment',
+        Value     => 'some comment',
+        UserID    => 123,
+    );
+
+=cut
+
+sub ServicePreferencesSet {
+    my $Self = shift;
+
+    return $Self->{PreferencesObject}->ServicePreferencesSet(@_);
+}
+
+=item ServicePreferencesGet()
+
+get queue preferences
+
+    my %Preferences = $ServiceObject->ServicePreferencesGet(
+        ServiceID => 123,
+        UserID    => 123,
+    );
+
+=cut
+
+sub ServicePreferencesGet {
+    my $Self = shift;
+
+    return $Self->{PreferencesObject}->ServicePreferencesGet(@_);
+}
+
 1;
 
 =back
 
 =head1 TERMS AND CONDITIONS
 
-This Software is part of the OTRS project (http://otrs.org/).
+This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
-the enclosed file COPYING for license information (GPL). If you
-did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+the enclosed file COPYING for license information (AGPL). If you
+did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.9 $ $Date: 2008-08-09 10:00:53 $
+$Revision: 1.10 $ $Date: 2009-06-30 14:53:01 $
 
 =cut
