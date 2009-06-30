@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMCore.sopm,v 1.77 2009-05-18 09:43:40 mh Exp $</CVS>
+    <CVS>$Id: ITSMCore.sopm,v 1.78 2009-06-30 14:48:25 ub Exp $</CVS>
     <Name>ITSMCore</Name>
     <Version>0.0.0</Version>
-    <Framework>2.3.x</Framework>
-    <PackageRequired Version="1.2.3">GeneralCatalog</PackageRequired>
+    <Framework>2.4.x</Framework>
+    <PackageRequired Version="1.2.91">GeneralCatalog</PackageRequired>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
