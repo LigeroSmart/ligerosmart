@@ -1,13 +1,13 @@
 # --
 # Kernel/System/SLA.pm - all sla function
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: SLA.pm,v 1.3 2008-08-01 16:14:55 mh Exp $
-# $OldId: SLA.pm,v 1.30 2008/06/19 11:08:23 ub Exp $
+# $Id: SLA.pm,v 1.4 2009-06-30 14:52:24 ub Exp $
+# $OldId: SLA.pm,v 1.35 2009/04/17 08:36:44 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 package Kernel::System::SLA;
@@ -24,7 +24,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 =head1 NAME
 
@@ -45,25 +45,31 @@ All sla functions.
 create an object
 
     use Kernel::Config;
+    use Kernel::System::Encode;
     use Kernel::System::Log;
     use Kernel::System::Main;
     use Kernel::System::DB;
-    use Kernel::System::Service;
+    use Kernel::System::SLA;
 
     my $ConfigObject = Kernel::Config->new();
-    my $LogObject    = Kernel::System::Log->new(
+    my $EncodeObject = Kernel::System::Encode->new(
         ConfigObject => $ConfigObject,
+    );
+    my $LogObject = Kernel::System::Log->new(
+        ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
     );
     my $MainObject = Kernel::System::Main->new(
         ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
         LogObject    => $LogObject,
     );
     my $DBObject = Kernel::System::DB->new(
         ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
         LogObject    => $LogObject,
         MainObject   => $MainObject,
     );
-
     my $SLAObject = Kernel::System::SLA->new(
         ConfigObject => $ConfigObject,
         LogObject    => $LogObject,
@@ -91,6 +97,13 @@ sub new {
 # ---
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
 # ---
+
+    # load generator preferences module
+    my $GeneratorModule = $Self->{ConfigObject}->Get('SLA::PreferencesModule')
+        || 'Kernel::System::SLA::PreferencesDB';
+    if ( $Self->{MainObject}->Require($GeneratorModule) ) {
+        $Self->{PreferencesObject} = $GeneratorModule->new(%Param);
+    }
 
     return $Self;
 }
@@ -268,7 +281,6 @@ sub SLAGet {
 # ---
 # ITSM
 # ---
-
     # get sla type list
     my $SLATypeList = $Self->{GeneralCatalogObject}->ItemList(
         Class => 'ITSM::SLA::Type',
@@ -290,6 +302,14 @@ sub SLAGet {
 
     # add the ids
     $SLAData{ServiceIDs} = \@ServiceIDs;
+
+    # get queue preferences
+    my %Preferences = $Self->SLAPreferencesGet( SLAID => $Param{SLAID} );
+
+    # merge hash
+    if (%Preferences) {
+        %SLAData = ( %SLAData, %Preferences );
+    }
 
     # cache the result
     $Self->{$CacheKey} = \%SLAData;
@@ -713,22 +733,58 @@ sub SLAUpdate {
     return 1;
 }
 
+=item SLAPreferencesSet()
+
+set queue preferences
+
+    $SLAObject->SLAPreferencesSet(
+        SLAID => 123,
+        Key       => 'UserComment',
+        Value     => 'some comment',
+        UserID    => 123,
+    );
+
+=cut
+
+sub SLAPreferencesSet {
+    my $Self = shift;
+
+    return $Self->{PreferencesObject}->SLAPreferencesSet(@_);
+}
+
+=item SLAPreferencesGet()
+
+get queue preferences
+
+    my %Preferences = $SLAObject->SLAPreferencesGet(
+        SLAID => 123,
+        UserID    => 123,
+    );
+
+=cut
+
+sub SLAPreferencesGet {
+    my $Self = shift;
+
+    return $Self->{PreferencesObject}->SLAPreferencesGet(@_);
+}
+
 1;
 
 =back
 
 =head1 TERMS AND CONDITIONS
 
-This Software is part of the OTRS project (http://otrs.org/).
+This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
-the enclosed file COPYING for license information (GPL). If you
-did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+the enclosed file COPYING for license information (AGPL). If you
+did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2008-08-01 16:14:55 $
+$Revision: 1.4 $ $Date: 2009-06-30 14:52:24 $
 
 =cut
