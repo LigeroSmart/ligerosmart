@@ -1,13 +1,13 @@
 # --
 # Kernel/Modules/AgentTicketClose.pm - close a ticket
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketClose.pm,v 1.3 2008-12-19 14:41:39 ub Exp $
-# $OldId: AgentTicketClose.pm,v 1.46 2008/07/18 18:41:15 martin Exp $
+# $Id: AgentTicketClose.pm,v 1.4 2009-07-01 15:20:33 ub Exp $
+# $OldId: AgentTicketClose.pm,v 1.59 2009/04/23 13:47:27 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 package Kernel::Modules::AgentTicketClose;
@@ -26,7 +26,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -76,7 +76,7 @@ sub Run {
 
         # error page
         return $Self->{LayoutObject}->ErrorScreen(
-            Message => "Need TicketID is given!",
+            Message => 'No TicketID is given!',
             Comment => 'Please contact the admin.',
         );
     }
@@ -305,12 +305,15 @@ sub Run {
     }
 
     # rewrap body if exists
-    if ( $GetParam{Body} ) {
+    if ( $GetParam{Body} && !$Self->{ConfigObject}->{'Frontend::RichText'} ) {
         my $Size = $Self->{ConfigObject}->Get('Ticket::Frontend::TextAreaNote') || 70;
         $GetParam{Body} =~ s/(^>.+|.{4,$Size})(?:\s|\z)/$1\n/gm;
     }
 
     if ( $Self->{Subaction} eq 'Store' ) {
+
+        # challenge token check for write action
+        $Self->{LayoutObject}->ChallengeTokenCheck();
 
         # store action
         my %Error = ();
@@ -558,11 +561,27 @@ sub Run {
         # add note
         my $ArticleID = '';
         if ( $Self->{Config}->{Note} ) {
+            my $MimeType = 'text/plain';
+            if ( $Self->{ConfigObject}->{'Frontend::RichText'} ) {
+                $MimeType = 'text/html';
+
+                # replace image link with content id for uploaded images
+                $GetParam{Body} =~ s{
+                    ((?:<|&lt;)img.*?src=(?:"|&quot;))
+                    .*?ContentID=(inline[\w\.]+?@[\w\.-]+).*?
+                    ((?:"|&quot;).*?(?:>|&gt;))
+                }
+                {
+                    $1 . "cid:" . $2 . $3;
+                }esgxi;
+            }
+
             $ArticleID = $Self->{TicketObject}->ArticleCreate(
                 TicketID    => $Self->{TicketID},
                 SenderType  => 'agent',
                 From        => "$Self->{UserFirstname} $Self->{UserLastname} <$Self->{UserEmail}>",
-                ContentType => "text/plain; charset=$Self->{LayoutObject}->{'UserCharset'}",
+                MimeType    => $MimeType,
+                Charset     => $Self->{LayoutObject}->{UserCharset},
                 UserID      => $Self->{UserID},
                 HistoryType => $Self->{Config}->{HistoryType},
                 HistoryComment => $Self->{Config}->{HistoryComment},
@@ -586,15 +605,9 @@ sub Run {
             }
 
             # get pre loaded attachment
-            my @AttachmentData
-                = $Self->{UploadCachObject}->FormIDGetAllFilesData( FormID => $Self->{FormID} );
-            for my $Ref (@AttachmentData) {
-                $Self->{TicketObject}->ArticleWriteAttachment(
-                    %{$Ref},
-                    ArticleID => $ArticleID,
-                    UserID    => $Self->{UserID},
-                );
-            }
+            my @AttachmentData = $Self->{UploadCachObject}->FormIDGetAllFilesData(
+                FormID => $Self->{FormID},
+            );
 
             # get submit attachment
             my %UploadStuff = $Self->{ParamObject}->GetUploadAll(
@@ -602,8 +615,19 @@ sub Run {
                 Source => 'String',
             );
             if (%UploadStuff) {
+                push( @AttachmentData, \%UploadStuff );
+            }
+
+            # write attachments
+            WRITEATTACHMENT:
+            for my $Ref (@AttachmentData) {
+
+                # skip deleted inline images
+                next WRITEATTACHMENT if $Ref->{ContentID}
+                        && $Ref->{ContentID} =~ /^inline/
+                        && $GetParam{Body} !~ /$Ref->{ContentID}/;
                 $Self->{TicketObject}->ArticleWriteAttachment(
-                    %UploadStuff,
+                    %{$Ref},
                     ArticleID => $ArticleID,
                     UserID    => $Self->{UserID},
                 );
@@ -848,7 +872,14 @@ sub Run {
 
         # fillup vars
         if ( !defined( $GetParam{Body} ) && $Self->{Config}->{Body} ) {
-            $GetParam{Body} = $Self->{LayoutObject}->Output( Template => $Self->{Config}->{Body} );
+            $GetParam{Body} = $Self->{LayoutObject}->Output( Template => $Self->{Config}->{Body} )
+                || '';
+
+            # make sure body has correct format (plain or html)
+            my @NewBody = $Self->{LayoutObject}->ToFromRichText(
+                Content => $GetParam{Body},
+            );
+            $GetParam{Body} = $NewBody[0];
         }
         if ( !defined( $GetParam{Subject} ) && $Self->{Config}->{Subject} ) {
             $GetParam{Subject}
@@ -1354,6 +1385,14 @@ sub _Mask {
             Data => {%Param},
         );
 
+        # add YUI editor
+        if ( $Self->{ConfigObject}->{'Frontend::RichText'} ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'RichText',
+                Data => \%Param,
+            );
+        }
+
         # agent list
         if ( $Self->{Config}->{InformAgent} ) {
             my %ShownUsers       = ();
@@ -1440,11 +1479,7 @@ sub _Mask {
 
         # get possible notes
         my %DefaultNoteTypes = %{ $Self->{Config}->{ArticleTypes} };
-        my %NoteTypes        = $Self->{DBObject}->GetTableData(
-            Table => 'article_type',
-            Valid => 1,
-            What  => 'id, name'
-        );
+        my %NoteTypes = $Self->{TicketObject}->ArticleTypeList( Result => 'HASH' );
         for ( keys %NoteTypes ) {
             if ( !$DefaultNoteTypes{ $NoteTypes{$_} } ) {
                 delete $NoteTypes{$_};
