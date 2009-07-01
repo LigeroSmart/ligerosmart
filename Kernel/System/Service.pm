@@ -2,8 +2,8 @@
 # Kernel/System/Service.pm - all service function
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: Service.pm,v 1.10 2009-06-30 14:53:01 ub Exp $
-# $OldId: Service.pm,v 1.37 2009/06/30 12:15:44 ub Exp $
+# $Id: Service.pm,v 1.11 2009-07-01 14:04:39 ub Exp $
+# $OldId: Service.pm,v 1.38 2009/07/01 14:03:11 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::Time;
 # ---
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 =head1 NAME
 
@@ -89,7 +89,7 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Object (qw(DBObject ConfigObject LogObject MainObject)) {
+    for my $Object (qw(DBObject ConfigObject LogObject EncodeObject MainObject)) {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
     $Self->{CheckItemObject} = Kernel::System::CheckItem->new( %{$Self} );
@@ -1151,6 +1151,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.10 $ $Date: 2009-06-30 14:53:01 $
+$Revision: 1.11 $ $Date: 2009-07-01 14:04:39 $
 
 =cut
