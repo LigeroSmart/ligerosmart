@@ -2,8 +2,8 @@
 # Kernel/Modules/CustomerTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerTicketZoom.pm,v 1.3 2009-02-20 12:24:46 mh Exp $
-# $OldId: CustomerTicketZoom.pm,v 1.27.2.2 2009/02/20 11:48:05 mh Exp $
+# $Id: CustomerTicketZoom.pm,v 1.4 2009-07-02 21:57:21 ub Exp $
+# $OldId: CustomerTicketZoom.pm,v 1.37 2009/04/23 13:47:27 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -154,7 +154,6 @@ sub Run {
 
     # check follow up
     if ( $Self->{Subaction} eq 'Store' ) {
-
         my $NextScreen = $Self->{NextScreen} || $Self->{Config}->{NextScreenAfterFollowUp};
         my %Error = ();
 
@@ -226,6 +225,22 @@ sub Run {
                 );
             }
             my $From = "$Self->{UserFirstname} $Self->{UserLastname} <$Self->{UserEmail}>";
+
+            my $MimeType = 'text/plain';
+            if ( $Self->{ConfigObject}->{'Frontend::RichText'} ) {
+                $MimeType = 'text/html';
+
+                # replace image link with content id for uploaded images
+                $GetParam{Body} =~ s{
+                    ((?:<|&lt;)img.*?src=(?:"|&quot;))
+                    .*?ContentID=(inline[\w\.]+?@[\w\.-]+).*?
+                    ((?:"|&quot;).*?(?:>|&gt;))
+                }
+                {
+                    $1 . "cid:" . $2 . $3;
+                }esgxi;
+            }
+
             if (
                 my $ArticleID = $Self->{TicketObject}->ArticleCreate(
                     TicketID    => $Self->{TicketID},
@@ -234,7 +249,8 @@ sub Run {
                     From        => $From,
                     Subject     => $GetParam{Subject},
                     Body        => $GetParam{Body},
-                    ContentType => "text/plain; charset=$Self->{LayoutObject}->{'UserCharset'}",
+                    MimeType    => $MimeType,
+                    Charset     => $Self->{LayoutObject}->{UserCharset},
                     UserID      => $Self->{ConfigObject}->Get('CustomerPanelUserID'),
                     OrigHeader  => {
                         From    => $From,
@@ -271,16 +287,9 @@ sub Run {
                 }
 
                 # get pre loaded attachment
-                my @Attachment = $Self->{UploadCachObject}->FormIDGetAllFilesData(
+                my @AttachmentData = $Self->{UploadCachObject}->FormIDGetAllFilesData(
                     FormID => $Self->{FormID}
                 );
-                for my $Ref (@Attachment) {
-                    $Self->{TicketObject}->ArticleWriteAttachment(
-                        %{$Ref},
-                        ArticleID => $ArticleID,
-                        UserID    => $Self->{ConfigObject}->Get('CustomerPanelUserID'),
-                    );
-                }
 
                 # get submit attachment
                 my %UploadStuff = $Self->{ParamObject}->GetUploadAll(
@@ -288,8 +297,19 @@ sub Run {
                     Source => 'String',
                 );
                 if (%UploadStuff) {
+                    push( @AttachmentData, \%UploadStuff );
+                }
+
+                # write attachments
+                WRITEATTACHMENT:
+                for my $Ref (@AttachmentData) {
+
+                    # skip deleted inline images
+                    next WRITEATTACHMENT if $Ref->{ContentID}
+                            && $Ref->{ContentID} =~ /^inline/
+                            && $GetParam{Body} !~ /$Ref->{ContentID}/;
                     $Self->{TicketObject}->ArticleWriteAttachment(
-                        %UploadStuff,
+                        %{$Ref},
                         ArticleID => $ArticleID,
                         UserID    => $Self->{ConfigObject}->Get('CustomerPanelUserID'),
                     );
@@ -320,7 +340,7 @@ sub Run {
     # set priority from ticket as fallback
     $GetParam{PriorityID} ||= $Ticket{PriorityID};
 
-    # get all atricle of this ticket
+    # get all article of this ticket
     my @CustomerArticleTypes = $Self->{TicketObject}->ArticleTypeList( Type => 'Customer' );
     my @ArticleBox = $Self->{TicketObject}->ArticleContentIndex(
         TicketID                   => $Self->{TicketID},
@@ -328,7 +348,7 @@ sub Run {
         StripPlainBodyAsAttachment => 1,
     );
 
-    # genterate output
+    # generate output
     my $Output = $Self->{LayoutObject}->CustomerHeader( Value => $Ticket{TicketNumber} );
     $Output .= $Self->{LayoutObject}->CustomerNavigationBar();
 
@@ -375,11 +395,18 @@ sub _Mask {
     my $BaseLink          = $Self->{LayoutObject}->{Baselink} . "TicketID=$Self->{TicketID}&";
     my @ArticleBox        = @{ $Param{ArticleBox} };
 
+    if ( !@ArticleBox ) {
+
+        # error screen, don't show ticket
+        return $Self->{LayoutObject}->CustomerNoPermission( WithHeader => 'no' );
+    }
+
     # get last customer article
     my $CounterArray = 0;
     my $LastCustomerArticleID;
     my $LastCustomerArticle = $#ArticleBox;
-    my $ArticleID           = '';
+
+    my $ArticleID = '';
     for my $ArticleTmp (@ArticleBox) {
         my %Article = %$ArticleTmp;
 
@@ -522,7 +549,7 @@ sub _Mask {
         }
     }
 
-    # get attacment string
+    # get attachment string
     my %AtmIndex = ();
     if ( $Article{Atms} ) {
         %AtmIndex = %{ $Article{Atms} };
@@ -571,20 +598,20 @@ sub _Mask {
             Filename => $Self->{ConfigObject}->Get('Ticket::Hook')
                 . "-$Article{TicketNumber}-$Article{TicketID}-$Article{ArticleID}",
             Type        => 'inline',
-            ContentType => "$Article{MimeType}; charset=$Article{ContentCharset}",
+            ContentType => "$Article{MimeType}; charset=$Article{Charset}",
             Content     => $Article{Body},
         );
     }
 
     # check if just a only html email
     if ( my $MimeTypeText = $Self->{LayoutObject}->CheckMimeType( %Param, %Article ) ) {
-        $Param{"Article::TextNote"} = $MimeTypeText;
-        $Param{"Article::Text"}     = '';
+        $Param{'Article::TextNote'} = $MimeTypeText;
+        $Param{'Article::Text'}     = '';
     }
     else {
 
         # html quoting
-        $Param{"Article::Text"} = $Self->{LayoutObject}->Ascii2Html(
+        $Param{'Article::Text'} = $Self->{LayoutObject}->Ascii2Html(
             NewLine        => $Self->{ConfigObject}->Get('DefaultViewNewLine'),
             Text           => $Article{Body},
             VMax           => $Self->{ConfigObject}->Get('DefaultViewLines') || 5000,
@@ -593,20 +620,26 @@ sub _Mask {
         );
 
         # do charset check
-        if (
-            my $CharsetText = $Self->{LayoutObject}->CheckCharset(
-                ContentCharset => $Article{ContentCharset},
-                TicketID       => $Param{TicketID},
-                ArticleID      => $Article{ArticleID}
-            )
-            )
-        {
-            $Param{"Article::TextNote"} = $CharsetText;
+        if ( my $CharsetText = $Self->{LayoutObject}->CheckCharset( %Param, %Article ) ) {
+            $Param{'Article::TextNote'} = $CharsetText;
         }
     }
 
+    # show plain or html body
+    my $TextType = 'Plain';
+    if ( $Article{BodyHTML} ) {
+        $TextType = 'HTML';
+    }
+    $Self->{LayoutObject}->Block(
+        Name => 'Body' . $TextType,
+        Data => {
+            %Param,
+            %Article,
+        },
+    );
+
     # get article id
-    $Param{"Article::ArticleID"} = $Article{ArticleID};
+    $Param{'Article::ArticleID'} = $Article{ArticleID};
 
     # do some strips && quoting
     for (qw(From To Cc Subject)) {
@@ -642,6 +675,14 @@ sub _Mask {
             Name => 'FollowUp',
             Data => { %Param, },
         );
+
+        # add YUI editor
+        if ( $Self->{ConfigObject}->{'Frontend::RichText'} ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'RichText',
+                Data => \%Param,
+            );
+        }
 
         # build next states string
         if ( $Self->{Config}->{State} ) {
