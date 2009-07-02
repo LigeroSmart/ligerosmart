@@ -1,13 +1,13 @@
 # --
 # Kernel/Modules/AgentTicketZoom.pm - to get a closer view
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.pm,v 1.4 2008-11-27 15:01:51 mh Exp $
-# $OldId: AgentTicketZoom.pm,v 1.61.2.3 2008/11/26 14:06:24 ub Exp $
+# $Id: AgentTicketZoom.pm,v 1.5 2009-07-02 21:56:17 ub Exp $
+# $OldId: AgentTicketZoom.pm,v 1.70 2009/04/15 14:14:58 sb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 package Kernel::Modules::AgentTicketZoom;
@@ -24,7 +24,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -58,6 +58,8 @@ sub new {
     }
     $Self->{HighlightColor1} = $Self->{ConfigObject}->Get('HighlightColor1');
     $Self->{HighlightColor2} = $Self->{ConfigObject}->Get('HighlightColor2');
+    $Self->{ArticleFilterActive}
+        = $Self->{ConfigObject}->Get('Ticket::Frontend::TicketArticleFilter');
 
     # ticket id lookup
     if ( !$Self->{TicketID} && $Self->{ParamObject}->GetParam( Param => 'TicketNumber' ) ) {
@@ -104,6 +106,78 @@ sub Run {
         return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' );
     }
 
+    # write article filter settings to session
+    if ( $Self->{Subaction} eq 'ArticleFilterSet' ) {
+
+        # get params
+        my $TicketID     = $Self->{ParamObject}->GetParam( Param => 'TicketID' );
+        my $SaveDefaults = $Self->{ParamObject}->GetParam( Param => 'SaveDefaults' );
+        my @ArticleTypeFilterIDs = $Self->{ParamObject}->GetArray( Param => 'ArticleTypeFilter' );
+        my @ArticleSenderTypeFilterIDs
+            = $Self->{ParamObject}->GetArray( Param => 'ArticleSenderTypeFilter' );
+
+        # build session string
+        my $SessionString = '';
+        if (@ArticleTypeFilterIDs) {
+            $SessionString .= 'ArticleTypeFilter<';
+            $SessionString .= join ',', @ArticleTypeFilterIDs;
+            $SessionString .= '>';
+        }
+        if (@ArticleSenderTypeFilterIDs) {
+            $SessionString .= 'ArticleSenderTypeFilter<';
+            $SessionString .= join ',', @ArticleSenderTypeFilterIDs;
+            $SessionString .= '>';
+        }
+
+        # write the session
+        my $JSON = '';
+
+        # save default filter settings to user preferences
+        if ($SaveDefaults) {
+            $Self->{UserObject}->SetPreferences(
+                UserID => $Self->{UserID},
+                Key    => "ArticleFilterDefault",
+                Value  => $SessionString,
+            );
+            $Self->{SessionObject}->UpdateSessionID(
+                SessionID => $Self->{SessionID},
+                Key       => "ArticleFilterDefault",
+                Value     => $SessionString,
+                )
+        }
+
+        # turn off filter explicitly for this ticket
+        if ( $SessionString eq '' ) {
+            $SessionString = 'off';
+        }
+
+        # update the session
+        if (
+            $Self->{SessionObject}->UpdateSessionID(
+                SessionID => $Self->{SessionID},
+                Key       => "ArticleFilter$TicketID",
+                Value     => $SessionString,
+            )
+            )
+        {
+
+            # build JSON output
+            $JSON = $Self->{LayoutObject}->JSON(
+                Data => {
+                    Message => 'Article filter settings were saved.',
+                },
+            );
+        }
+
+        # send JSON response
+        return $Self->{LayoutObject}->Attachment(
+            ContentType => 'text/plain; charset=' . $Self->{LayoutObject}->{Charset},
+            Content     => $JSON || '',
+            Type        => 'inline',
+            NoCache     => 1,
+        );
+    }
+
     # store last screen
     if ( $Self->{Subaction} ne 'ShowHTMLeMail' ) {
         $Self->{SessionObject}->UpdateSessionID(
@@ -111,6 +185,43 @@ sub Run {
             Key       => 'LastScreenView',
             Value     => $Self->{RequestedURL},
         );
+    }
+
+    # article filter is activated in sysconfig
+    if ( $Self->{ArticleFilterActive} ) {
+
+        # get article filter settings from session string
+        my $ArticleFilterSessionString = $Self->{ "ArticleFilter" . $Self->{TicketID} };
+
+        # set article filter for this ticket from user preferences
+        if ( !$ArticleFilterSessionString ) {
+            $ArticleFilterSessionString = $Self->{ArticleFilterDefault};
+        }
+
+        # do not use defaults for this ticket if filter was explicitly turned off
+        elsif ( $ArticleFilterSessionString eq 'off' ) {
+            $ArticleFilterSessionString = '';
+        }
+
+        # extract ArticleTypeIDs
+        if (
+            $ArticleFilterSessionString
+            && $ArticleFilterSessionString =~ m{ ArticleTypeFilter < ( [^<>]+ ) > }xms
+            )
+        {
+            my @IDs = split /,/, $1;
+            $Self->{ArticleFilter}->{ArticleTypeID} = { map { $_ => 1 } @IDs };
+        }
+
+        # extract ArticleSenderTypeIDs
+        if (
+            $ArticleFilterSessionString
+            && $ArticleFilterSessionString =~ m{ ArticleSenderTypeFilter < ( [^<>]+ ) > }xms
+            )
+        {
+            my @IDs = split /,/, $1;
+            $Self->{ArticleFilter}->{SenderTypeID} = { map { $_ => 1 } @IDs };
+        }
     }
 
     # get content
@@ -168,7 +279,7 @@ sub Run {
             Filename => $Self->{ConfigObject}->Get('Ticket::Hook')
                 . "-$Article{TicketNumber}-$Article{TicketID}-$Article{ArticleID}",
             Type        => 'inline',
-            ContentType => "$Article{MimeType}; charset=$Article{ContentCharset}",
+            ContentType => "$Article{MimeType}; charset=$Article{Charset}",
             Content     => $Article{Body},
         );
     }
@@ -265,14 +376,6 @@ sub MaskAgentZoom {
         Data => { %Param, %AclAction },
     );
 
-    # ticket title
-    if ( $Self->{ConfigObject}->Get('Ticket::Frontend::Title') ) {
-        $Self->{LayoutObject}->Block(
-            Name => 'Title',
-            Data => { %Param, %AclAction },
-        );
-    }
-
     # run ticket menu modules
     if ( ref( $Self->{ConfigObject}->Get('Ticket::Frontend::MenuModule') ) eq 'HASH' ) {
         my %Menus   = %{ $Self->{ConfigObject}->Get('Ticket::Frontend::MenuModule') };
@@ -341,6 +444,62 @@ sub MaskAgentZoom {
         }
     }
 
+    # remember shown article ids if article filter is activated in sysconfig
+    if ( $Self->{ArticleFilterActive} && $Self->{ArticleFilter} ) {
+
+        # reset shown article ids
+        $Self->{ArticleFilter}->{ShownArticleIDs} = undef;
+
+        my $NewArticleID = '';
+        my $Count        = 0;
+
+        ARTICLE:
+        for my $Article (@ArticleBox) {
+
+            # article type id does not match
+            if (
+                $Self->{ArticleFilter}->{ArticleTypeID}
+                && !$Self->{ArticleFilter}->{ArticleTypeID}->{ $Article->{ArticleTypeID} }
+                )
+            {
+                next ARTICLE;
+            }
+
+            # article sender type id does not match
+            if (
+                $Self->{ArticleFilter}->{SenderTypeID}
+                && !$Self->{ArticleFilter}->{SenderTypeID}->{ $Article->{SenderTypeID} }
+                )
+            {
+                next ARTICLE;
+            }
+
+            # count shown articles
+            $Count++;
+
+            # remember article id
+            $Self->{ArticleFilter}->{ShownArticleIDs}->{ $Article->{ArticleID} } = 1;
+
+            # set article id to first shown article
+            if ( $Count == 1 ) {
+                $NewArticleID = $Article->{ArticleID};
+            }
+
+            # set article id to last shown customer article
+            if ( $Article->{SenderType} eq 'customer' ) {
+                $NewArticleID = $Article->{ArticleID};
+            }
+        }
+
+        # change article id if it was filtered out
+        if ( $NewArticleID && !$Self->{ArticleFilter}->{ShownArticleIDs}->{$ArticleID} ) {
+            $ArticleID = $NewArticleID;
+        }
+
+        # add current article id
+        $Self->{ArticleFilter}->{ShownArticleIDs}->{$ArticleID} = 1;
+    }
+
     # build thread string
     my $Counter        = '';
     my $Space          = '';
@@ -375,19 +534,38 @@ sub MaskAgentZoom {
     # build shown article(s)
     my $Count      = 0;
     my $BodyOutput = '';
+    ARTICLE:
     for my $ArticleTmp (@NewArticleBox) {
-        $Count++;
         my %Article = %$ArticleTmp;
 
-        # check if just a only html email
-        if ( my $MimeTypeText = $Self->{LayoutObject}->CheckMimeType( %Param, %Article ) ) {
-            $Article{"BodyNote"} = $MimeTypeText;
-            $Article{"Body"}     = '';
+        # # article filter is activated in sysconfig and there are articles that passed the filter
+        if (
+            $Self->{ArticleFilterActive}
+            && $Self->{ArticleFilter}
+            && $Self->{ArticleFilter}->{ShownArticleIDs}
+            )
+        {
+
+            # do not show article if it does not match the filter
+            if ( !$Self->{ArticleFilter}->{ShownArticleIDs}->{ $Article{ArticleID} } ) {
+                next ARTICLE;
+            }
         }
-        else {
+
+        # count shown articles
+        $Count++;
+
+        $Self->{LayoutObject}->Block(
+            Name => 'Body',
+            Data => { %Param, %Article, %AclAction, },
+        );
+
+        my $BodyType = 'BodyHTML';
+        if ( !$Article{BodyHTML} ) {
+            $BodyType = 'BodyPlain';
 
             # html quoting
-            $Article{"BodyHTML"} = $Self->{LayoutObject}->Ascii2Html(
+            $Article{Body} = $Self->{LayoutObject}->Ascii2Html(
                 NewLine        => $Self->{ConfigObject}->Get('DefaultViewNewLine'),
                 Text           => $Article{Body},
                 VMax           => $Self->{ConfigObject}->Get('DefaultViewLines') || 5000,
@@ -396,20 +574,15 @@ sub MaskAgentZoom {
             );
 
             # do charset check
-            if (
-                my $CharsetText = $Self->{LayoutObject}->CheckCharset(
-                    ContentCharset => $Article{ContentCharset},
-                    TicketID       => $Param{TicketID},
-                    ArticleID      => $Article{ArticleID}
-                )
-                )
-            {
-                $Article{"BodyNote"} = $CharsetText;
+            if ( my $CharsetText = $Self->{LayoutObject}->CheckCharset( %Param, %Article ) ) {
+                $Article{BodyNote} = $CharsetText;
             }
         }
+
+        # show body
         $Self->{LayoutObject}->Block(
-            Name => 'Body',
-            Data => { %Param, %Article, Body => $Article{"BodyHTML"}, %AclAction, },
+            Name => $BodyType,
+            Data => {%Article},
         );
 
         # show article tree
@@ -638,10 +811,40 @@ sub MaskAgentZoom {
                 Name => 'Tree',
                 Data => { %Param, %Article, %AclAction },
             );
+
+            # article filter is activated in sysconfig
+            if ( $Self->{ArticleFilterActive} ) {
+
+                # define highlight style for links if filter is active
+                my $HighlightStyle = 'menu';
+                if ( $Self->{ArticleFilter} ) {
+                    $HighlightStyle = 'PriorityID-5';
+                }
+
+                # build article filter links
+                $Self->{LayoutObject}->Block(
+                    Name => 'ArticleFilterDialogLink',
+                    Data => {
+                        %Param,
+                        HighlightStyle => $HighlightStyle,
+                    },
+                );
+
+                # build article filter reset link only if filter is set
+                if ( $Self->{ArticleFilter} ) {
+                    $Self->{LayoutObject}->Block(
+                        Name => 'ArticleFilterResetLink',
+                        Data => {%Param},
+                    );
+                }
+            }
+
             my $CounterTree    = 0;
             my $Counter        = '';
             my $Space          = '';
             my $LastSenderType = '';
+
+            TREEARTICLE:
             for my $ArticleTmp (@ArticleBox) {
                 my %Article = %$ArticleTmp;
                 my $Start   = '';
@@ -659,16 +862,26 @@ sub MaskAgentZoom {
                 }
                 $LastSenderType = $Article{SenderType};
 
-                # if this is the shown article -=> add <b>
-                if ( $ArticleID eq $Article{ArticleID} ) {
-                    $Start  = '<i><u>';
-                    $Start2 = '<b>';
+            # article filter is activated in sysconfig and there are articles that passed the filter
+                if (
+                    $Self->{ArticleFilterActive}
+                    && $Self->{ArticleFilter}
+                    && $Self->{ArticleFilter}->{ShownArticleIDs}
+                    )
+                {
+
+                    # do not show article in tree if it does not match the filter
+                    if ( !$Self->{ArticleFilter}->{ShownArticleIDs}->{ $Article{ArticleID} } ) {
+                        next TREEARTICLE;
+                    }
                 }
 
-                # if this is the shown article -=> add </b>
+                # if this is the shown article -=> add <i><u> and <b>
                 if ( $ArticleID eq $Article{ArticleID} ) {
-                    $Stop  = '</u></i>';
-                    $Stop2 = '</b>';
+                    $Start  = '<i><u>';
+                    $Stop   = '</u></i>';
+                    $Start2 = '<b>';
+                    $Stop2  = '</b>';
                 }
 
                 # check if we need to show also expand/collapse icon
@@ -707,7 +920,6 @@ sub MaskAgentZoom {
                     && $Self->{ConfigObject}->Get('Ticket::ZoomAttachmentDisplay')
                     )
                 {
-                    my $Title = '';
 
                     # download type
                     my $Type = $Self->{ConfigObject}->Get('AttachmentDownloadType')
@@ -874,7 +1086,7 @@ sub MaskAgentZoom {
             ArticleID       => $Article{ArticleID},
         );
 
-        # get attacment string
+        # get attachment string
         my %AtmIndex = ();
         if ( $Article{Atms} ) {
 
@@ -936,17 +1148,6 @@ sub MaskAgentZoom {
         if ( $Article{ArticleType} =~ /^note/i ) {
 
             # without compose links!
-            if (
-                $Param{CustomerUserID}
-                && $Param{CustomerUserID} =~ /^$Self->{UserLogin}$/i
-                && $Self->{ConfigObject}->Get('Ticket::AgentCanBeCustomer')
-                )
-            {
-                $Self->{LayoutObject}->Block(
-                    Name => 'AgentIsCustomer',
-                    Data => { %Param, %Article, %AclAction },
-                );
-            }
             $Self->{LayoutObject}->Block(
                 Name => 'AgentArticleCom',
                 Data => { %Param, %Article, %AclAction },
@@ -976,114 +1177,101 @@ sub MaskAgentZoom {
         else {
 
             # without all!
+            $Self->{LayoutObject}->Block(
+                Name => 'AgentAnswer',
+                Data => { %Param, %Article, %AclAction },
+            );
+
+            # check if compose link should be shown
             if (
-                $Param{CustomerUserID}
-                && $Param{CustomerUserID} =~ /^$Self->{UserLogin}$/i
-                && $Self->{ConfigObject}->Get('Ticket::AgentCanBeCustomer')
+                $Self->{ConfigObject}->Get('Frontend::Module')->{AgentTicketCompose}
+                && (
+                    !defined( $AclAction{AgentTicketCompose} )
+                    || $AclAction{AgentTicketCompose}
+                )
                 )
             {
-                $Self->{LayoutObject}->Block(
-                    Name => 'AgentIsCustomer',
-                    Data => { %Param, %Article, %AclAction },
-                );
-            }
-            else {
-                $Self->{LayoutObject}->Block(
-                    Name => 'AgentAnswer',
-                    Data => { %Param, %Article, %AclAction },
-                );
-
-                # check if compose link should be shown
-                if (
-                    $Self->{ConfigObject}->Get('Frontend::Module')->{AgentTicketCompose}
-                    && (
-                        !defined( $AclAction{AgentTicketCompose} )
-                        || $AclAction{AgentTicketCompose}
-                    )
-                    )
-                {
-                    my $Access = 1;
-                    my $Config = $Self->{ConfigObject}->Get("Ticket::Frontend::AgentTicketCompose");
-                    if ( $Config->{Permission} ) {
-                        my $Ok = $Self->{TicketObject}->Permission(
-                            Type     => $Config->{Permission},
-                            TicketID => $Param{TicketID},
-                            UserID   => $Self->{UserID},
-                            LogNo    => 1,
-                        );
-                        if ( !$Ok ) {
-                            $Access = 0;
-                        }
-                    }
-                    if ( $Config->{RequiredLock} ) {
-                        if (
-                            $Self->{TicketObject}->LockIsTicketLocked(
-                                TicketID => $Param{TicketID}
-                            )
-                            )
-                        {
-                            my $AccessOk = $Self->{TicketObject}->OwnerCheck(
-                                TicketID => $Param{TicketID},
-                                OwnerID  => $Self->{UserID},
-                            );
-                            if ( !$AccessOk ) {
-                                $Access = 0;
-                            }
-                        }
-                    }
-                    if ($Access) {
-                        $Self->{LayoutObject}->Block(
-                            Name => 'AgentAnswerCompose',
-                            Data => { %Param, %Article, %AclAction },
-                        );
+                my $Access = 1;
+                my $Config = $Self->{ConfigObject}->Get("Ticket::Frontend::AgentTicketCompose");
+                if ( $Config->{Permission} ) {
+                    my $Ok = $Self->{TicketObject}->Permission(
+                        Type     => $Config->{Permission},
+                        TicketID => $Param{TicketID},
+                        UserID   => $Self->{UserID},
+                        LogNo    => 1,
+                    );
+                    if ( !$Ok ) {
+                        $Access = 0;
                     }
                 }
-
-                # check if phone link should be shown
-                if (
-                    $Self->{ConfigObject}->Get('Frontend::Module')->{AgentTicketPhoneOutbound}
-                    && (
-                        !defined( $AclAction{AgentTicketPhoneOutbound} )
-                        || $AclAction{AgentTicketPhoneOutbound}
-                    )
-                    )
-                {
-                    my $Access = 1;
-                    my $Config
-                        = $Self->{ConfigObject}->Get("Ticket::Frontend::AgentTicketPhoneOutbound");
-                    if ( $Config->{Permission} ) {
-                        my $OK = $Self->{TicketObject}->Permission(
-                            Type     => $Config->{Permission},
+                if ( $Config->{RequiredLock} ) {
+                    if (
+                        $Self->{TicketObject}->LockIsTicketLocked(
+                            TicketID => $Param{TicketID}
+                        )
+                        )
+                    {
+                        my $AccessOk = $Self->{TicketObject}->OwnerCheck(
                             TicketID => $Param{TicketID},
-                            UserID   => $Self->{UserID},
-                            LogNo    => 1,
+                            OwnerID  => $Self->{UserID},
                         );
-                        if ( !$OK ) {
+                        if ( !$AccessOk ) {
                             $Access = 0;
                         }
                     }
-                    if ( $Config->{RequiredLock} ) {
-                        if (
-                            $Self->{TicketObject}->LockIsTicketLocked(
-                                TicketID => $Param{TicketID}
-                            )
-                            )
-                        {
-                            my $AccessOk = $Self->{TicketObject}->OwnerCheck(
-                                TicketID => $Param{TicketID},
-                                OwnerID  => $Self->{UserID},
-                            );
-                            if ( !$AccessOk ) {
-                                $Access = 0;
-                            }
+                }
+                if ($Access) {
+                    $Self->{LayoutObject}->Block(
+                        Name => 'AgentAnswerCompose',
+                        Data => { %Param, %Article, %AclAction },
+                    );
+                }
+            }
+
+            # check if phone link should be shown
+            if (
+                $Self->{ConfigObject}->Get('Frontend::Module')->{AgentTicketPhoneOutbound}
+                && (
+                    !defined( $AclAction{AgentTicketPhoneOutbound} )
+                    || $AclAction{AgentTicketPhoneOutbound}
+                )
+                )
+            {
+                my $Access = 1;
+                my $Config
+                    = $Self->{ConfigObject}->Get("Ticket::Frontend::AgentTicketPhoneOutbound");
+                if ( $Config->{Permission} ) {
+                    my $OK = $Self->{TicketObject}->Permission(
+                        Type     => $Config->{Permission},
+                        TicketID => $Param{TicketID},
+                        UserID   => $Self->{UserID},
+                        LogNo    => 1,
+                    );
+                    if ( !$OK ) {
+                        $Access = 0;
+                    }
+                }
+                if ( $Config->{RequiredLock} ) {
+                    if (
+                        $Self->{TicketObject}->LockIsTicketLocked(
+                            TicketID => $Param{TicketID}
+                        )
+                        )
+                    {
+                        my $AccessOk = $Self->{TicketObject}->OwnerCheck(
+                            TicketID => $Param{TicketID},
+                            OwnerID  => $Self->{UserID},
+                        );
+                        if ( !$AccessOk ) {
+                            $Access = 0;
                         }
                     }
-                    if ($Access) {
-                        $Self->{LayoutObject}->Block(
-                            Name => 'AgentAnswerPhoneOutbound',
-                            Data => { %Param, %Article, %AclAction },
-                        );
-                    }
+                }
+                if ($Access) {
+                    $Self->{LayoutObject}->Block(
+                        Name => 'AgentAnswerPhoneOutbound',
+                        Data => { %Param, %Article, %AclAction },
+                    );
                 }
             }
             $Self->{LayoutObject}->Block(
@@ -1233,6 +1421,45 @@ sub MaskAgentZoom {
         Name => 'Footer',
         Data => { %Param, %AclAction },
     );
+
+    # article filter is activated in sysconfig
+    if ( $Self->{ArticleFilterActive} ) {
+
+        # get article types
+        my %ArticleTypes = $Self->{TicketObject}->ArticleTypeList(
+            Result => 'HASH',
+        );
+
+        # build article type list for filter dialog
+        $Param{'ArticleTypeFilterString'} = $Self->{LayoutObject}->BuildSelection(
+            Data        => \%ArticleTypes,
+            SelectedID  => [ keys %{ $Self->{ArticleFilter}->{ArticleTypeID} } ],
+            Translation => 1,
+            Multiple    => 1,
+            Sort        => 'AlphanumericValue',
+            Name        => 'ArticleTypeFilter',
+        );
+
+        # get sender types
+        my %ArticleSenderTypes = $Self->{TicketObject}->ArticleSenderTypeList(
+            Result => 'HASH',
+        );
+
+        # build article sender type list for filter dialog
+        $Param{'ArticleSenderTypeFilterString'} = $Self->{LayoutObject}->BuildSelection(
+            Data        => \%ArticleSenderTypes,
+            SelectedID  => [ keys %{ $Self->{ArticleFilter}->{SenderTypeID} } ],
+            Translation => 1,
+            Multiple    => 1,
+            Sort        => 'AlphanumericValue',
+            Name        => 'ArticleSenderTypeFilter',
+        );
+
+        $Self->{LayoutObject}->Block(
+            Name => 'ArticleFilterDialog',
+            Data => {%Param},
+        );
+    }
 
     # return output
     return $Self->{LayoutObject}->Output(
