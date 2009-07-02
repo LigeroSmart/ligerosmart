@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketOwner.pm - set ticket owner
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketOwner.pm,v 1.4 2009-07-01 15:22:42 ub Exp $
+# $Id: AgentTicketOwner.pm,v 1.5 2009-07-02 21:53:07 ub Exp $
 # $OldId: AgentTicketOwner.pm,v 1.54 2009/04/23 13:47:27 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -26,7 +26,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -872,7 +872,14 @@ sub Run {
 
         # fillup vars
         if ( !defined( $GetParam{Body} ) && $Self->{Config}->{Body} ) {
-            $GetParam{Body} = $Self->{LayoutObject}->Output( Template => $Self->{Config}->{Body} );
+            $GetParam{Body} = $Self->{LayoutObject}->Output( Template => $Self->{Config}->{Body} )
+                || '';
+
+            # make sure body has correct format (plain or html)
+            my @NewBody = $Self->{LayoutObject}->ToFromRichText(
+                Content => $GetParam{Body},
+            );
+            $GetParam{Body} = $NewBody[0];
         }
         if ( !defined( $GetParam{Subject} ) && $Self->{Config}->{Subject} ) {
             $GetParam{Subject}
