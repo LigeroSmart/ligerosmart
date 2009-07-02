@@ -1,13 +1,13 @@
 # --
 # Kernel/Modules/AgentTicketPrint.pm - print layout for agent interface
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPrint.pm,v 1.2 2008-11-27 15:01:21 mh Exp $
-# $OldId: AgentTicketPrint.pm,v 1.56.2.2 2008/11/26 14:14:01 ub Exp $
+# $Id: AgentTicketPrint.pm,v 1.3 2009-07-02 21:54:47 ub Exp $
+# $OldId: AgentTicketPrint.pm,v 1.62 2009/04/23 14:11:27 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 package Kernel::Modules::AgentTicketPrint;
@@ -25,7 +25,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1019,7 +1019,7 @@ sub _PDFOutputArticles {
 
         my %Article = %{$ArticleTmp};
 
-        # get attacment string
+        # get attachment string
         my %AtmIndex = ();
         if ( $Article{Atms} ) {
             %AtmIndex = %{ $Article{Atms} };
@@ -1259,7 +1259,7 @@ sub _HTMLMask {
     for my $ArticleTmp (@ArticleBox) {
         my %Article = %{$ArticleTmp};
 
-        # get attacment string
+        # get attachment string
         my %AtmIndex = ();
         if ( $Article{Atms} ) {
             %AtmIndex = %{ $Article{Atms} };
@@ -1282,8 +1282,8 @@ sub _HTMLMask {
             = $Self->{LayoutObject}->CheckMimeType( %Param, %Article, Action => 'AgentTicketZoom' )
             )
         {
-            $Param{"TextNote"} = $MimeTypeText;
-            $Article{"Body"}   = '';
+            $Param{TextNote} = $MimeTypeText;
+            $Article{Body}   = '';
         }
         else {
 
@@ -1296,15 +1296,13 @@ sub _HTMLMask {
 
             # do charset check
             if (
-                my $CharsetText = $Self->{LayoutObject}->CheckCharset(
-                    Action         => 'AgentTicketZoom',
-                    ContentCharset => $Article{ContentCharset},
-                    TicketID       => $Param{TicketID},
-                    ArticleID      => $Article{ArticleID}
+                my $CharsetText
+                = $Self->{LayoutObject}->CheckCharset(
+                    %Param, %Article, Action => 'AgentTicketZoom'
                 )
                 )
             {
-                $Param{"Article::TextNote"} = $CharsetText;
+                $Param{'Article::TextNote'} = $CharsetText;
             }
         }
         $Self->{LayoutObject}->Block(
