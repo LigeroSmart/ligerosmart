@@ -1,19 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.29 2009-06-29 12:45:58 ub Exp $</CVS>
-    <ConfigItem Name="Ticket::Frontend::NoteTypes" Required="1" Valid="1">
-        <Description Lang="en">Specify the different note types, that you want to use in your system.</Description>
-        <Description Lang="de">Hier können die verschiedenen Notiz-Typen festgelegt werden, die innerhalb des Systems verwendet werden sollen.</Description>
-        <Group>Ticket</Group>
-        <SubGroup>Frontend::Agent::Ticket::ViewNote</SubGroup>
-        <Setting>
-            <Hash>
-                <Item Key="note-internal">1</Item>
-                <Item Key="note-external">0</Item>
-                <Item Key="note-report">0</Item>
-            </Hash>
-        </Setting>
-    </ConfigItem>
+    <CVS>$Id: FAQ.xml,v 1.30 2009-07-06 16:13:31 ub Exp $</CVS>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
         <Description Lang="en">Default category name.</Description>
         <Description Lang="de">Root Kategorie Name.</Description>
