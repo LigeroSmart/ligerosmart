@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketPhone.pm - to handle phone calls
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.pm,v 1.9 2009-05-28 13:41:04 mh Exp $
-# $OldId: AgentTicketPhone.pm,v 1.78.2.3 2009/05/28 10:37:21 mh Exp $
+# $Id: AgentTicketPhone.pm,v 1.10 2009-07-06 11:40:30 ub Exp $
+# $OldId: AgentTicketPhone.pm,v 1.97 2009/05/28 13:57:57 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -31,7 +31,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -253,31 +253,141 @@ sub Run {
                 }
             }
 
+            # body preparation for plain text processing
+            if ( $Self->{ConfigObject}->{'Frontend::RichText'} ) {
+
+                # check for html body
+                my @ArticleBox = $Self->{TicketObject}->ArticleContentIndex(
+                    TicketID                   => $Self->{TicketID},
+                    StripPlainBodyAsAttachment => 1,
+                );
+                ARTICLE:
+                for my $ArticleTmp (@ArticleBox) {
+                    next ARTICLE if $ArticleTmp->{ArticleID} ne $Article{ArticleID};
+                    last ARTICLE if !$ArticleTmp->{BodyHTML};
+                    my %AttachmentHTML = $Self->{TicketObject}->ArticleAttachment(
+                        ArticleID => $Article{ArticleID},
+                        FileID    => $ArticleTmp->{BodyHTML},
+                    );
+
+                    # make sure encoding is correct
+                    $Self->{EncodeObject}->Encode(
+                        \$AttachmentHTML{Content},
+                    );
+
+                    $Article{BodyHTML}            = $AttachmentHTML{Content}     || '';
+                    $Article{BodyHTMLContentType} = $AttachmentHTML{ContentType} || 'text/html';
+
+                    # display inline images if exists
+                    my %Attachments = %{ $ArticleTmp->{Atms} };
+                    my $SessionID   = '';
+                    if ( $Self->{SessionID} && !$Self->{SessionIDCookie} ) {
+                        $SessionID = "&" . $Self->{SessionName} . "=" . $Self->{SessionID};
+                    }
+                    my $AttachmentLink = $Self->{LayoutObject}->{Baselink}
+                        . 'Action=PictureUpload'
+                        . '&FormID='
+                        . $Self->{FormID}
+                        . $SessionID
+                        . '&ContentID=';
+                    $Article{BodyHTML} =~ s{
+                        "cid:(.*?)"
+                    }
+                    {
+                        my $ContentID = $1;
+                        ATMCOUNT:
+                        for my $AtmCount ( keys %Attachments ) {
+                            next ATMCOUNT if $Attachments{$AtmCount}{ContentID} !~ /^<$ContentID>$/;
+                            # add to upload cache
+                            my %AttachmentPicture = $Self->{TicketObject}->ArticleAttachment(
+                                ArticleID => $Article{ArticleID},
+                                FileID    => $AtmCount,
+                            );
+                            $Self->{UploadCachObject}->FormIDAddFile(
+                                FormID      => $Self->{FormID},
+                                Disposition => 'inline',
+                                %{ $Attachments{$AtmCount} },
+                                %AttachmentPicture,
+                            );
+                            my @Attachments = $Self->{UploadCachObject}->FormIDGetAllFilesMeta(
+                                FormID => $Self->{FormID},
+                            );
+                            CONTENTIDRETURN:
+                            for my $TmpAttachment ( @Attachments ) {
+                                next CONTENTIDRETURN
+                                    if $Attachments{$AtmCount}{Filename} ne $TmpAttachment->{Filename};
+                                $ContentID = $AttachmentLink . $TmpAttachment->{ContentID};
+                                last CONTENTIDRETURN;
+                            }
+                            last ATMCOUNT;
+                        }
+
+                        # return link
+                        '"' . $ContentID . '"';
+                    }egxi;
+                    last ARTICLE;
+                }
+
+                # convert plain body to html if necessary
+                if ( !$Article{BodyHTML} ) {
+
+                    # check if original content isn't text/plain or text/html, don't use it
+                    if ( !$Article{ContentType} || $Article{ContentType} !~ /text\/(plain|html)/i )
+                    {
+                        $Article{Body}        = "-> no quotable message <-";
+                        $Article{ContentType} = 'text/plain';
+                    }
+                    $Article{BodyHTML} = $Self->{LayoutObject}->Ascii2Html(
+                        Text => $Article{Body} || '',
+                        HTMLResultMode => 1,
+                        LinkFeature    => 1,
+                    );
+                    $Article{BodyHTMLContentType} = $Article{ContentType} || 'text/plain';
+                    $Article{BodyHTMLContentType} =~ s/plain/html/i;
+                }
+
+                $Article{Body}        = $Article{BodyHTML}            || '';
+                $Article{ContentType} = $Article{BodyHTMLContentType} || 'text/plain';
+            }
+            else {
+
+                # check if original content isn't text/plain or text/html, don't use it
+                if ( $Article{ContentType} ) {
+                    if ( $Article{ContentType} =~ /text\/html/i ) {
+                        $Article{Body} =~ s/\<.+?\>//gs;
+                    }
+                    elsif ( $Article{ContentType} !~ /text\/plain/i ) {
+                        $Article{Body} = "-> no quotable message <-";
+                    }
+                }
+            }
+
             # get attachments
             my %ArticleIndex = $Self->{TicketObject}->ArticleAttachmentIndex(
                 ArticleID => $GetParam{ArticleID},
                 UserID    => $Self->{UserID},
             );
+            ARTICLEINDEX:
             for my $Index ( keys %ArticleIndex ) {
                 my %Attachment = $Self->{TicketObject}->ArticleAttachment(
                     ArticleID => $GetParam{ArticleID},
                     FileID    => $Index,
                     UserID    => $Self->{UserID},
                 );
+
+                # don't add html-body attachment and inline images (again)
+                if ( $Article{BodyHTML} ) {
+                    next ARTICLEINDEX if
+                        $Attachment{ContentID}
+                            && $Attachment{ContentID} =~ /^<?inline/;
+                    next ARTICLEINDEX if $Attachment{Filename} eq 'file-2';
+                }
+
+                # add attachment
                 $Self->{UploadCachObject}->FormIDAddFile(
                     FormID => $Self->{FormID},
                     %Attachment,
                 );
-            }
-
-            # check if original content isn't text/plain or text/html, don't use it
-            if ( $Article{'ContentType'} ) {
-                if ( $Article{'ContentType'} =~ /text\/html/i ) {
-                    $Article{Body} =~ s/\<.+?\>//gs;
-                }
-                elsif ( $Article{'ContentType'} !~ /text\/plain/i ) {
-                    $Article{Body} = '-> no quotable message <-';
-                }
             }
 
             # show customer info
@@ -316,16 +426,18 @@ sub Run {
         my %TicketFreeText = ();
         for ( 1 .. 16 ) {
             $TicketFreeText{"TicketFreeKey$_"} = $Self->{TicketObject}->TicketFreeTextGet(
-                TicketID => $Self->{TicketID},
-                Action   => $Self->{Action},
-                Type     => "TicketFreeKey$_",
-                UserID   => $Self->{UserID},
+                TicketID       => $Self->{TicketID},
+                Action         => $Self->{Action},
+                Type           => "TicketFreeKey$_",
+                UserID         => $Self->{UserID},
+                CustomerUserID => $CustomerData{CustomerUserLogin} || '',
             );
             $TicketFreeText{"TicketFreeText$_"} = $Self->{TicketObject}->TicketFreeTextGet(
-                TicketID => $Self->{TicketID},
-                Action   => $Self->{Action},
-                Type     => "TicketFreeText$_",
-                UserID   => $Self->{UserID},
+                TicketID       => $Self->{TicketID},
+                Action         => $Self->{Action},
+                Type           => "TicketFreeText$_",
+                UserID         => $Self->{UserID},
+                CustomerUserID => $CustomerData{CustomerUserLogin} || '',
             );
         }
         my %TicketFreeTextHTML = $Self->{LayoutObject}->AgentFreeText(
@@ -358,16 +470,18 @@ sub Run {
         my %ArticleFreeText = ();
         for ( 1 .. 3 ) {
             $ArticleFreeText{"ArticleFreeKey$_"} = $Self->{TicketObject}->ArticleFreeTextGet(
-                TicketID => $Self->{TicketID},
-                Type     => "ArticleFreeKey$_",
-                Action   => $Self->{Action},
-                UserID   => $Self->{UserID},
+                TicketID       => $Self->{TicketID},
+                Type           => "ArticleFreeKey$_",
+                Action         => $Self->{Action},
+                UserID         => $Self->{UserID},
+                CustomerUserID => $CustomerData{CustomerUserLogin} || '',
             );
             $ArticleFreeText{"ArticleFreeText$_"} = $Self->{TicketObject}->ArticleFreeTextGet(
-                TicketID => $Self->{TicketID},
-                Type     => "ArticleFreeText$_",
-                Action   => $Self->{Action},
-                UserID   => $Self->{UserID},
+                TicketID       => $Self->{TicketID},
+                Type           => "ArticleFreeText$_",
+                Action         => $Self->{Action},
+                UserID         => $Self->{UserID},
+                CustomerUserID => $CustomerData{CustomerUserLogin} || '',
             );
         }
         my %ArticleFreeTextHTML = $Self->{LayoutObject}->TicketArticleFreeText(
@@ -379,37 +493,73 @@ sub Run {
         my @Attachments
             = $Self->{UploadCachObject}->FormIDGetAllFilesMeta( FormID => $Self->{FormID} );
 
+        # get and format default subject and body
+        my $Subject = $Article{Subject} ||
+            $Self->{LayoutObject}->Output(
+            Template => $Self->{Config}->{Subject} || '',
+            );
+        my $Body = $Article{Body} || '';
+        if ($Body) {
+            my @ArticleBody = $Self->{LayoutObject}->ToFromRichText(
+                Content     => $Body,
+                ContentType => $Article{ContentType},
+            );
+            $Body = $ArticleBody[0];
+        }
+        else {
+            my @DefaultBody = $Self->{LayoutObject}->ToFromRichText(
+                Content => $Self->{Config}->{Body} || '',
+            );
+            $Body = $Self->{LayoutObject}->Output( Template => $DefaultBody[0] );
+        }
+
         # html output
         my $Services = $Self->_GetServices(
+            %GetParam,
             CustomerUserID => $CustomerData{CustomerUserLogin} || '',
             QueueID => $Self->{QueueID} || 1,
         );
         my $SLAs = $Self->_GetSLAs(
-            QueueID => $Self->{QueueID} || 1,
-            Services => $Services,
             %GetParam,
+            CustomerUserID => $CustomerData{CustomerUserLogin} || '',
+            QueueID        => $Self->{QueueID}                 || 1,
+            Services       => $Services,
         );
         $Output .= $Self->_MaskPhoneNew(
             QueueID    => $Self->{QueueID},
-            NextStates => $Self->_GetNextStates( QueueID => $Self->{QueueID} || 1 ),
+            NextStates => $Self->_GetNextStates(
+                %GetParam,
+                CustomerUserID => $CustomerData{CustomerUserLogin} || '',
+                QueueID => $Self->{QueueID} || 1,
+            ),
 # ---
 # ITSM
 # ---
             Impacts  => $ImpactList,
             ImpactID => $GetParam{ImpactID},
 # ---
-            Priorities => $Self->_GetPriorities( QueueID => $Self->{QueueID} || 1 ),
-            Types      => $Self->_GetTypes( QueueID => $Self->{QueueID} || 1 ),
-            Services   => $Services,
-            SLAs       => $SLAs,
+            Priorities => $Self->_GetPriorities(
+                %GetParam,
+                CustomerUserID => $CustomerData{CustomerUserLogin} || '',
+                QueueID => $Self->{QueueID} || 1,
+            ),
+            Types => $Self->_GetTypes(
+                %GetParam,
+                CustomerUserID => $CustomerData{CustomerUserLogin} || '',
+                QueueID => $Self->{QueueID} || 1,
+            ),
+            Services         => $Services,
+            SLAs             => $SLAs,
             Users            => $Self->_GetUsers( QueueID => $Self->{QueueID} ),
             ResponsibleUsers => $Self->_GetUsers( QueueID => $Self->{QueueID} ),
-            To => $Self->_GetTos( QueueID => $Self->{QueueID} ),
-            From    => $Article{From},
-            Subject => $Article{Subject}
-                || $Self->{LayoutObject}->Output( Template => $Self->{Config}->{Subject} ),
-            Body => $Article{Body}
-                || $Self->{LayoutObject}->Output( Template => $Self->{Config}->{Body} ),
+            To               => $Self->_GetTos(
+                %GetParam,
+                CustomerUserID => $CustomerData{CustomerUserLogin} || '',
+                QueueID => $Self->{QueueID},
+            ),
+            From         => $Article{From},
+            Subject      => $Subject,
+            Body         => $Body,
             CustomerID   => $Article{CustomerID},
             CustomerUser => $Article{CustomerUserID},
             CustomerData => \%CustomerData,
@@ -470,7 +620,7 @@ sub Run {
         }
 
         # rewrap body if exists
-        if ( $GetParam{Body} ) {
+        if ( $Self->{ConfigObject}->{'Frontend::RichText'} && $GetParam{Body} ) {
             $GetParam{Body}
                 =~ s/(^>.+|.{4,$Self->{ConfigObject}->Get('Ticket::Frontend::TextAreaNote')})(?:\s|\z)/$1\n/gm;
         }
@@ -522,18 +672,20 @@ sub Run {
         my %TicketFreeText = ();
         for ( 1 .. 16 ) {
             $TicketFreeText{"TicketFreeKey$_"} = $Self->{TicketObject}->TicketFreeTextGet(
-                TicketID => $Self->{TicketID},
-                Type     => "TicketFreeKey$_",
-                Action   => $Self->{Action},
-                QueueID  => $NewQueueID || 0,
-                UserID   => $Self->{UserID},
+                TicketID       => $Self->{TicketID},
+                Type           => "TicketFreeKey$_",
+                Action         => $Self->{Action},
+                QueueID        => $NewQueueID || 0,
+                UserID         => $Self->{UserID},
+                CustomerUserID => $CustomerUser || $SelectedCustomerUser || '',
             );
             $TicketFreeText{"TicketFreeText$_"} = $Self->{TicketObject}->TicketFreeTextGet(
-                TicketID => $Self->{TicketID},
-                Type     => "TicketFreeText$_",
-                Action   => $Self->{Action},
-                QueueID  => $NewQueueID || 0,
-                UserID   => $Self->{UserID},
+                TicketID       => $Self->{TicketID},
+                Type           => "TicketFreeText$_",
+                Action         => $Self->{Action},
+                QueueID        => $NewQueueID || 0,
+                UserID         => $Self->{UserID},
+                CustomerUserID => $CustomerUser || $SelectedCustomerUser || '',
             );
 
             # check required FreeTextField (if configured)
@@ -558,16 +710,18 @@ sub Run {
         my %ArticleFreeText = ();
         for ( 1 .. 3 ) {
             $ArticleFreeText{"ArticleFreeKey$_"} = $Self->{TicketObject}->ArticleFreeTextGet(
-                TicketID => $Self->{TicketID},
-                Type     => "ArticleFreeKey$_",
-                Action   => $Self->{Action},
-                UserID   => $Self->{UserID},
+                TicketID       => $Self->{TicketID},
+                Type           => "ArticleFreeKey$_",
+                Action         => $Self->{Action},
+                UserID         => $Self->{UserID},
+                CustomerUserID => $CustomerUser || $SelectedCustomerUser || '',
             );
             $ArticleFreeText{"ArticleFreeText$_"} = $Self->{TicketObject}->ArticleFreeTextGet(
-                TicketID => $Self->{TicketID},
-                Type     => "ArticleFreeText$_",
-                Action   => $Self->{Action},
-                UserID   => $Self->{UserID},
+                TicketID       => $Self->{TicketID},
+                Type           => "ArticleFreeText$_",
+                Action         => $Self->{Action},
+                UserID         => $Self->{UserID},
+                CustomerUserID => $CustomerUser || $SelectedCustomerUser || '',
             );
         }
         my %ArticleFreeTextHTML = $Self->{LayoutObject}->TicketArticleFreeText(
@@ -693,6 +847,7 @@ sub Run {
         {
             $Error{'Service invalid'} = 'invalid';
         }
+
         if (%Error) {
 
             # get services
@@ -702,15 +857,15 @@ sub Run {
             );
 
             # reset previous ServiceID to reset SLA-List if no service is selected
-            $GetParam{ServiceID} ||= '';
-            if ( !$Services->{ $GetParam{ServiceID} } ) {
+            if ( !$GetParam{ServiceID} || !$Services->{ $GetParam{ServiceID} } ) {
                 $GetParam{ServiceID} = '';
             }
 
             my $SLAs = $Self->_GetSLAs(
-                QueueID => $NewQueueID || 1,
-                Services => $Services,
                 %GetParam,
+                CustomerUserID => $CustomerUser || $SelectedCustomerUser || '',
+                QueueID        => $NewQueueID   || 1,
+                Services       => $Services,
             );
 
             # header
@@ -728,19 +883,28 @@ sub Run {
                     AllUsers => $GetParam{ResponsibleAll}
                 ),
                 ResponsibleUserSelected => $GetParam{NewResponsibleID},
-                NextStates              => $Self->_GetNextStates( QueueID => $NewQueueID || 1 ),
-                NextState               => $NextState,
+                NextStates              => $Self->_GetNextStates(
+                    CustomerUserID => $CustomerUser || $SelectedCustomerUser || '',
+                    QueueID => $NewQueueID || 1,
+                ),
+                NextState  => $NextState,
 # ---
 # ITSM
 # ---
                 Impacts  => $ImpactList,
                 ImpactID => $GetParam{ImpactID},
 # ---
-                Priorities              => $Self->_GetPriorities( QueueID => $NewQueueID || 1 ),
-                Types                   => $Self->_GetTypes( QueueID => $NewQueueID || 1 ),
-                Services                => $Services,
-                SLAs                    => $SLAs,
-                CustomerID => $Self->{LayoutObject}->Ascii2Html( Text => $CustomerID ),
+                Priorities => $Self->_GetPriorities(
+                    CustomerUserID => $CustomerUser || $SelectedCustomerUser || '',
+                    QueueID => $NewQueueID || 1,
+                ),
+                Types => $Self->_GetTypes(
+                    CustomerUserID => $CustomerUser || $SelectedCustomerUser || '',
+                    QueueID => $NewQueueID || 1,
+                ),
+                Services     => $Services,
+                SLAs         => $SLAs,
+                CustomerID   => $Self->{LayoutObject}->Ascii2Html( Text => $CustomerID ),
                 CustomerUser => $CustomerUser,
                 CustomerData => \%CustomerData,
                 FromOptions  => $Param{FromOptions},
@@ -754,121 +918,6 @@ sub Run {
                 %ArticleFreeTextHTML,
             );
 
-            # show customer tickets
-            my @TicketIDs = ();
-            if ( $CustomerUser && $Self->{Config}->{ShownCustomerTickets} ) {
-
-                # get secondary customer ids
-                my @CustomerIDs = $Self->{CustomerUserObject}->CustomerIDs(
-                    User => $CustomerUser,
-                );
-
-                # get own customer id
-                my %CustomerData = $Self->{CustomerUserObject}->CustomerUserDataGet(
-                    User => $CustomerUser,
-                );
-                if ( $CustomerData{UserCustomerID} ) {
-                    push( @CustomerIDs, $CustomerData{UserCustomerID} );
-                }
-
-                if (@CustomerIDs) {
-                    @TicketIDs = $Self->{TicketObject}->TicketSearch(
-                        Result     => 'ARRAY',
-                        Limit      => $Self->{Config}->{ShownCustomerTickets},
-                        CustomerID => \@CustomerIDs,
-                        UserID     => $Self->{UserID},
-                        Permission => 'ro',
-                    );
-                }
-            }
-            for my $TicketID (@TicketIDs) {
-                my %Article = $Self->{TicketObject}->ArticleLastCustomerArticle(
-                    TicketID => $TicketID,
-                );
-
-                # get acl actions
-                $Self->{TicketObject}->TicketAcl(
-                    Data          => '-',
-                    Action        => $Self->{Action},
-                    TicketID      => $TicketID,
-                    ReturnType    => 'Action',
-                    ReturnSubType => '-',
-                    UserID        => $Self->{UserID},
-                );
-                my %AclAction = $Self->{TicketObject}->TicketAclActionData();
-
-                # ticket title
-                if ( $Self->{ConfigObject}->Get('Ticket::Frontend::Title') ) {
-                    $Self->{LayoutObject}->Block(
-                        Name => 'Title',
-                        Data => { %Param, %Article },
-                    );
-                }
-
-                # run ticket menu modules
-                if (
-                    ref( $Self->{ConfigObject}->Get('Ticket::Frontend::PreMenuModule') ) eq 'HASH'
-                    )
-                {
-                    my %Menus = %{ $Self->{ConfigObject}->Get('Ticket::Frontend::PreMenuModule') };
-                    my $Counter = 0;
-                    for my $Menu ( sort keys %Menus ) {
-
-                        # load module
-                        if ( $Self->{MainObject}->Require( $Menus{$Menu}->{Module} ) ) {
-                            my $Object = $Menus{$Menu}->{Module}->new(
-                                %{$Self},
-                                TicketID => $TicketID,
-                            );
-
-                            # run module
-                            $Counter = $Object->Run(
-                                %Param,
-                                TicketID => $TicketID,
-                                Ticket   => \%Article,
-                                Counter  => $Counter,
-                                ACL      => \%AclAction,
-                                Config   => $Menus{$Menu},
-                            );
-                        }
-                        else {
-                            return $Self->{LayoutObject}->FatalError();
-                        }
-                    }
-                }
-                for (qw(From To Cc Subject)) {
-                    if ( $Article{$_} ) {
-                        $Self->{LayoutObject}->Block(
-                            Name => 'Row',
-                            Data => {
-                                Key   => $_,
-                                Value => $Article{$_},
-                            },
-                        );
-                    }
-                }
-                for ( 1 .. 3 ) {
-                    if ( $Article{"FreeText$_"} ) {
-                        $Self->{LayoutObject}->Block(
-                            Name => 'ArticleFreeText',
-                            Data => {
-                                Key   => $Article{"FreeKey$_"},
-                                Value => $Article{"FreeText$_"},
-                            },
-                        );
-                    }
-                }
-                $Output .= $Self->{LayoutObject}->Output(
-                    TemplateFile => 'AgentTicketQueueTicketViewLite',
-                    Data         => {
-                        %AclAction,
-                        %Article,
-                        Age =>
-                            $Self->{LayoutObject}->CustomerAge( Age => $Article{Age}, Space => ' ' )
-                            || '',
-                        }
-                );
-            }
             $Output .= $Self->{LayoutObject}->Footer();
             return $Output;
         }
@@ -959,6 +1008,46 @@ sub Run {
             }
         }
 
+        # get pre loaded attachment
+        my @AttachmentData = $Self->{UploadCachObject}->FormIDGetAllFilesData(
+            FormID => $Self->{FormID},
+        );
+
+        # get submit attachment
+        my %UploadStuff = $Self->{ParamObject}->GetUploadAll(
+            Param  => 'file_upload',
+            Source => 'String',
+        );
+        if (%UploadStuff) {
+            push( @AttachmentData, \%UploadStuff );
+        }
+
+        my $MimeType = 'text/plain';
+        if ( $Self->{ConfigObject}->{'Frontend::RichText'} ) {
+            $MimeType = 'text/html';
+
+            # replace link with content id for uploaded images
+            $GetParam{Body} =~ s{
+                ((?:<|&lt;)img.*?src=(?:"|&quot;))
+                .*?ContentID=(inline[\w\.]+?@[\w\.-]+).*?
+                ((?:"|&quot;).*?(?:>|&gt;))
+            }
+            {
+                $1 . "cid:" . $2 . $3;
+            }esgxi;
+
+            # remove unused inline images
+            my @NewAttachmentData = ();
+            REMOVEINLINE:
+            for my $TmpAttachment (@AttachmentData) {
+                next REMOVEINLINE if $TmpAttachment->{ContentID}
+                        && $TmpAttachment->{ContentID} =~ /^inline/
+                        && $GetParam{Body} !~ /$TmpAttachment->{ContentID}/;
+                push( @NewAttachmentData, \%{$TmpAttachment} );
+            }
+            @AttachmentData = @NewAttachmentData;
+        }
+
         # check if new owner is given (then send no agent notify)
         my $NoAgentNotify = 0;
         if ( $GetParam{NewUserID} ) {
@@ -974,7 +1063,8 @@ sub Run {
                 To               => $To,
                 Subject          => $GetParam{Subject},
                 Body             => $GetParam{Body},
-                ContentType      => "text/plain; charset=$Self->{LayoutObject}->{'UserCharset'}",
+                MimeType         => $MimeType,
+                Charset          => $Self->{LayoutObject}->{UserCharset},
                 UserID           => $Self->{UserID},
                 HistoryType      => $Self->{Config}->{HistoryType},
                 HistoryComment   => $Self->{Config}->{HistoryComment} || '%%',
@@ -1049,26 +1139,10 @@ sub Run {
                 );
             }
 
-            # get pre loaded attachment
-            my @AttachmentData = $Self->{UploadCachObject}->FormIDGetAllFilesData(
-                FormID => $Self->{FormID},
-            );
+            # write attachments
             for my $Ref (@AttachmentData) {
                 $Self->{TicketObject}->ArticleWriteAttachment(
                     %{$Ref},
-                    ArticleID => $ArticleID,
-                    UserID    => $Self->{UserID},
-                );
-            }
-
-            # get submit attachment
-            my %UploadStuff = $Self->{ParamObject}->GetUploadAll(
-                Param  => 'file_upload',
-                Source => 'String',
-            );
-            if (%UploadStuff) {
-                $Self->{TicketObject}->ArticleWriteAttachment(
-                    %UploadStuff,
                     ArticleID => $ArticleID,
                     UserID    => $Self->{UserID},
                 );
@@ -1227,27 +1301,39 @@ sub Run {
             QueueID  => $QueueID,
             AllUsers => $GetParam{ResponsibleAll},
         );
-        my $NextStates = $Self->_GetNextStates( QueueID => $QueueID || 1 );
-        my $Priorities = $Self->_GetPriorities( QueueID => $QueueID || 1 );
+        my $NextStates = $Self->_GetNextStates(
+            %GetParam,
+            CustomerUserID => $CustomerUser || '',
+            QueueID        => $QueueID      || 1,
+        );
+        my $Priorities = $Self->_GetPriorities(
+            %GetParam,
+            CustomerUserID => $CustomerUser || '',
+            QueueID        => $QueueID      || 1,
+        );
         my $Services = $Self->_GetServices(
+            %GetParam,
             CustomerUserID => $CustomerUser || '',
             QueueID        => $QueueID      || 1,
         );
         my $SLAs = $Self->_GetSLAs(
-            QueueID => $QueueID || 1,
-            Services => $Services,
-            %GetParam
+            %GetParam,
+            CustomerUserID => $CustomerUser || '',
+            QueueID        => $QueueID      || 1,
+            Services       => $Services,
         );
 
         # get free text config options
         my @TicketFreeTextConfig = ();
         for ( 1 .. 16 ) {
             my $ConfigKey = $Self->{TicketObject}->TicketFreeTextGet(
-                TicketID => $Self->{TicketID},
-                Type     => "TicketFreeKey$_",
-                Action   => $Self->{Action},
-                QueueID  => $QueueID || 0,
-                UserID   => $Self->{UserID},
+                %GetParam,
+                TicketID       => $Self->{TicketID},
+                Type           => "TicketFreeKey$_",
+                Action         => $Self->{Action},
+                QueueID        => $QueueID || 0,
+                UserID         => $Self->{UserID},
+                CustomerUserID => $CustomerUser || '',
             );
             if ($ConfigKey) {
                 push(
@@ -1262,11 +1348,13 @@ sub Run {
                 );
             }
             my $ConfigValue = $Self->{TicketObject}->TicketFreeTextGet(
-                TicketID => $Self->{TicketID},
-                Type     => "TicketFreeText$_",
-                Action   => $Self->{Action},
-                QueueID  => $QueueID || 0,
-                UserID   => $Self->{UserID},
+                %GetParam,
+                TicketID       => $Self->{TicketID},
+                Type           => "TicketFreeText$_",
+                Action         => $Self->{Action},
+                QueueID        => $QueueID || 0,
+                UserID         => $Self->{UserID},
+                CustomerUserID => $CustomerUser || '',
             );
             if ($ConfigValue) {
                 push(
@@ -1478,11 +1566,13 @@ sub _GetSLAs {
 
     # get sla
     if ( $Param{ServiceID} && $Param{Services} && %{ $Param{Services} } ) {
-        %SLA = $Self->{TicketObject}->TicketSLAList(
-            %Param,
-            Action => $Self->{Action},
-            UserID => $Self->{UserID},
-        );
+        if ( $Param{Services}->{ $Param{ServiceID} } ) {
+            %SLA = $Self->{TicketObject}->TicketSLAList(
+                %Param,
+                Action => $Self->{Action},
+                UserID => $Self->{UserID},
+            );
+        }
     }
     return \%SLA;
 }
@@ -1561,6 +1651,32 @@ sub _MaskPhoneNew {
     my $TreeView = 0;
     if ( $Self->{ConfigObject}->Get('Ticket::Frontend::ListType') eq 'tree' ) {
         $TreeView = 1;
+    }
+
+    # build customer search autocomplete field
+    my $AutoCompleteConfig
+        = $Self->{ConfigObject}->Get('Ticket::Frontend::CustomerSearchAutoComplete');
+    if ( $AutoCompleteConfig->{Active} ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'CustomerSearchAutoComplete',
+            Data => {
+                minQueryLength      => $AutoCompleteConfig->{MinQueryLength}      || 2,
+                queryDelay          => $AutoCompleteConfig->{QueryDelay}          || 0.1,
+                typeAhead           => $AutoCompleteConfig->{TypeAhead}           || 'false',
+                maxResultsDisplayed => $AutoCompleteConfig->{MaxResultsDisplayed} || 20,
+            },
+        );
+        $Self->{LayoutObject}->Block(
+            Name => 'CustomerSearchAutoCompleteDivStart',
+        );
+        $Self->{LayoutObject}->Block(
+            Name => 'CustomerSearchAutoCompleteDivEnd',
+        );
+    }
+    else {
+        $Self->{LayoutObject}->Block(
+            Name => 'SearchCustomerButton',
+        );
     }
 
     # build string
@@ -2177,6 +2293,14 @@ sub _MaskPhoneNew {
                 },
             );
         }
+    }
+
+    # add YUI editor
+    if ( $Self->{ConfigObject}->{'Frontend::RichText'} ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'RichText',
+            Data => \%Param,
+        );
     }
 
     # get output back
