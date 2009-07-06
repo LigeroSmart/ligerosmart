@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketEmail.pm - to compose initial email to customer
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketEmail.pm,v 1.7 2009-05-28 13:40:29 mh Exp $
-# $OldId: AgentTicketEmail.pm,v 1.68.2.3 2009/05/28 10:37:21 mh Exp $
+# $Id: AgentTicketEmail.pm,v 1.8 2009-07-06 11:39:50 ub Exp $
+# $OldId: AgentTicketEmail.pm,v 1.84 2009/05/28 13:57:57 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,6 +19,8 @@ use Kernel::System::SystemAddress;
 use Kernel::System::CustomerUser;
 use Kernel::System::CheckItem;
 use Kernel::System::Web::UploadCache;
+use Kernel::System::HTML2Ascii;
+use Kernel::System::TemplateGenerator;
 use Kernel::System::State;
 use Mail::Address;
 # ---
@@ -31,7 +33,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -55,6 +57,7 @@ sub new {
     $Self->{CheckItemObject}    = Kernel::System::CheckItem->new(%Param);
     $Self->{StateObject}        = Kernel::System::State->new(%Param);
     $Self->{UploadCachObject}   = Kernel::System::Web::UploadCache->new(%Param);
+    $Self->{HTML2AsciiObject}   = Kernel::System::HTML2Ascii->new(%Param);
 # ---
 # ITSM
 # ---
@@ -317,31 +320,43 @@ sub Run {
                 }
             }
 
+            # get and format default subject and body
+            my $Subject = $Self->{LayoutObject}->Output(
+                Template => $Self->{Config}->{Subject} || '',
+            );
+            my @DefaultBody = $Self->{LayoutObject}->ToFromRichText(
+                Content => $Self->{Config}->{Body} || '',
+            );
+            my $Body = $Self->{LayoutObject}->Output( Template => $DefaultBody[0] );
+
             # html output
-            my $Services = $Self->_GetServices( QueueID => 1, );
+            my $Services = $Self->_GetServices(
+                QueueID => $Self->{QueueID} || 1,
+            );
             my $SLAs = $Self->_GetSLAs(
-                QueueID  => 1,
+                QueueID => $Self->{QueueID} || 1,
                 Services => $Services,
                 %GetParam,
             );
             $Output .= $Self->_MaskEmailNew(
                 QueueID    => $Self->{QueueID},
-                NextStates => $Self->_GetNextStates( QueueID => 1 ),
+                NextStates => $Self->_GetNextStates( QueueID => $Self->{QueueID} || 1 ),
 # ---
 # ITSM
 # ---
                 Impacts  => $ImpactList,
                 ImpactID => $GetParam{ImpactID},
 # ---
-                Priorities => $Self->_GetPriorities( QueueID => 1 ),
-                Types      => $Self->_GetTypes( QueueID => 1 ),
+                Priorities => $Self->_GetPriorities( QueueID => $Self->{QueueID} || 1 ),
+                Types      => $Self->_GetTypes( QueueID => $Self->{QueueID} || 1 ),
                 Services   => $Services,
                 SLAs       => $SLAs,
-                Users      => $Self->_GetUsers(),
-                FromList   => $Self->_GetTos(),
-                To         => '',
-                Subject => $Self->{LayoutObject}->Output( Template => $Self->{Config}->{Subject} ),
-                Body => $Self->{LayoutObject}->Output( Template => $Self->{Config}->{Body} ),
+                Users            => $Self->_GetUsers( QueueID => $Self->{QueueID} ),
+                ResponsibleUsers => $Self->_GetUsers( QueueID => $Self->{QueueID} ),
+                FromList => $Self->_GetTos( QueueID => $Self->{QueueID} ),
+                To       => '',
+                Subject  => $Subject,
+                Body     => $Body,
                 CustomerID   => '',
                 CustomerUser => '',
                 CustomerData => {},
@@ -670,10 +685,10 @@ sub Run {
 
             # get services
             my $Services = $Self->_GetServices(
+                %GetParam,
                 CustomerUserID => $CustomerUser || '',
                 QueueID        => $NewQueueID   || 1,
             );
-
             my $SLAs = $Self->_GetSLAs(
                 QueueID => $NewQueueID || 1,
                 Services => $Services,
@@ -681,8 +696,7 @@ sub Run {
             );
 
             # reset previous ServiceID to reset SLA-List if no service is selected
-            $GetParam{ServiceID} ||= '';
-            if ( !$Services->{ $GetParam{ServiceID} } ) {
+            if ( !$GetParam{ServiceID} || !$Services->{ $GetParam{ServiceID} } ) {
                 $GetParam{ServiceID} = '';
             }
 
@@ -703,19 +717,31 @@ sub Run {
                     AllUsers => $GetParam{ResponsibleAll}
                 ),
                 ResponsibleUsersSelected => $NewResponsibleID,
-                NextStates               => $Self->_GetNextStates( QueueID => $NewQueueID || 1 ),
-                NextState                => $NextState,
+                NextStates               => $Self->_GetNextStates(
+                    %GetParam,
+                    CustomerUserID => $CustomerUser || '',
+                    QueueID        => $NewQueueID   || 1,
+                ),
+                NextState  => $NextState,
 # ---
 # ITSM
 # ---
                 Impacts  => $ImpactList,
                 ImpactID => $GetParam{ImpactID},
 # ---
-                Priorities               => $Self->_GetPriorities( QueueID => $NewQueueID || 1 ),
-                Types                    => $Self->_GetTypes( QueueID => $NewQueueID || 1 ),
-                Services                 => $Services,
-                SLAs                     => $SLAs,
-                CustomerID => $Self->{LayoutObject}->Ascii2Html( Text => $CustomerID ),
+                Priorities => $Self->_GetPriorities(
+                    %GetParam,
+                    CustomerUserID => $CustomerUser || '',
+                    QueueID        => $NewQueueID   || 1,
+                ),
+                Types => $Self->_GetTypes(
+                    %GetParam,
+                    CustomerUserID => $CustomerUser || '',
+                    QueueID        => $NewQueueID   || 1,
+                ),
+                Services     => $Services,
+                SLAs         => $SLAs,
+                CustomerID   => $Self->{LayoutObject}->Ascii2Html( Text => $CustomerID ),
                 CustomerUser => $CustomerUser,
                 CustomerData => \%CustomerData,
                 FromList     => $Self->_GetTos(),
@@ -725,126 +751,13 @@ sub Run {
                 Body         => $Self->{LayoutObject}->Ascii2Html( Text => $GetParam{Body} ),
                 Errors       => \%Error,
                 Attachments  => \@Attachments,
-                Signature    => $Signature,
+                Signature    => $Self->{HTML2AsciiObject}->ToAscii( String => $Signature, ),
                 %GetParam,
                 %TicketFreeTextHTML,
                 %TicketFreeTimeHTML,
                 %ArticleFreeTextHTML,
             );
 
-            # show customer tickets
-            my @TicketIDs = ();
-            if ( $CustomerUser && $Self->{Config}->{ShownCustomerTickets} ) {
-
-                # get secondary customer ids
-                my @CustomerIDs = $Self->{CustomerUserObject}->CustomerIDs( User => $CustomerUser );
-
-                # get own customer id
-                my %CustomerData = $Self->{CustomerUserObject}->CustomerUserDataGet(
-                    User => $CustomerUser,
-                );
-                if ( $CustomerData{UserCustomerID} ) {
-                    push( @CustomerIDs, $CustomerData{UserCustomerID} );
-                }
-                if (@CustomerIDs) {
-                    @TicketIDs = $Self->{TicketObject}->TicketSearch(
-                        Result     => 'ARRAY',
-                        Limit      => $Self->{Config}->{ShownCustomerTickets},
-                        CustomerID => \@CustomerIDs,
-                        UserID     => $Self->{UserID},
-                        Permission => 'ro',
-                    );
-                }
-            }
-            for my $TicketID (@TicketIDs) {
-                my %Article = $Self->{TicketObject}->ArticleLastCustomerArticle(
-                    TicketID => $TicketID,
-                );
-
-                # get acl actions
-                $Self->{TicketObject}->TicketAcl(
-                    Data          => '-',
-                    Action        => $Self->{Action},
-                    TicketID      => $Article{TicketID},
-                    ReturnType    => 'Action',
-                    ReturnSubType => '-',
-                    UserID        => $Self->{UserID},
-                );
-                my %AclAction = $Self->{TicketObject}->TicketAclActionData();
-
-                # ticket title
-                if ( $Self->{ConfigObject}->Get('Ticket::Frontend::Title') ) {
-                    $Self->{LayoutObject}->Block(
-                        Name => 'Title',
-                        Data => { %Param, %Article },
-                    );
-                }
-
-                # run ticket menu modules
-                if (
-                    ref( $Self->{ConfigObject}->Get('Ticket::Frontend::PreMenuModule') ) eq 'HASH'
-                    )
-                {
-                    my %Menus = %{ $Self->{ConfigObject}->Get('Ticket::Frontend::PreMenuModule') };
-                    my $Counter = 0;
-                    for my $Menu ( sort keys %Menus ) {
-
-                        # load module
-                        if ( $Self->{MainObject}->Require( $Menus{$Menu}->{Module} ) ) {
-                            my $Object = $Menus{$Menu}->{Module}->new(
-                                %{$Self},
-                                TicketID => $Self->{TicketID},
-                            );
-
-                            # run module
-                            $Counter = $Object->Run(
-                                %Param,
-                                TicketID => $TicketID,
-                                Ticket   => \%Article,
-                                Counter  => $Counter,
-                                ACL      => \%AclAction,
-                                Config   => $Menus{$Menu},
-                            );
-                        }
-                        else {
-                            return $Self->{LayoutObject}->FatalError();
-                        }
-                    }
-                }
-                for (qw(From To Cc Subject)) {
-                    if ( $Article{$_} ) {
-                        $Self->{LayoutObject}->Block(
-                            Name => 'Row',
-                            Data => {
-                                Key   => $_,
-                                Value => $Article{$_},
-                            },
-                        );
-                    }
-                }
-                for ( 1 .. 3 ) {
-                    if ( $Article{"FreeText$_"} ) {
-                        $Self->{LayoutObject}->Block(
-                            Name => 'ArticleFreeText',
-                            Data => {
-                                Key   => $Article{"FreeKey$_"},
-                                Value => $Article{"FreeText$_"},
-                            },
-                        );
-                    }
-                }
-                $Output .= $Self->{LayoutObject}->Output(
-                    TemplateFile => 'AgentTicketQueueTicketViewLite',
-                    Data         => {
-                        %AclAction,
-                        %Article,
-                        Age => $Self->{LayoutObject}->CustomerAge(
-                            Age   => $Article{Age},
-                            Space => ' '
-                        ),
-                        }
-                );
-            }
             $Output .= $Self->{LayoutObject}->Footer();
             return $Output;
         }
@@ -956,12 +869,41 @@ sub Run {
             Subject      => $GetParam{Subject} || '',
             Type         => 'New',
         );
-        $GetParam{Body} .= "\n\n" . $Signature;
 
         # check if new owner is given (then send no agent notify)
         my $NoAgentNotify = 0;
         if ($NewUserID) {
             $NoAgentNotify = 1;
+        }
+
+        my $MimeType = 'text/plain';
+        if ( $Self->{ConfigObject}->{'Frontend::RichText'} ) {
+            $MimeType = 'text/html';
+            $GetParam{Body} .= "<br/><br/>" . $Signature;
+
+            # replace link with content id for uploaded images
+            $GetParam{Body} =~ s{
+                ((?:<|&lt;)img.*?src=(?:"|&quot;))
+                .*?ContentID=(inline[\w\.]+?@[\w\.-]+).*?
+                ((?:"|&quot;).*?(?:>|&gt;))
+            }
+            {
+                $1 . "cid:" . $2 . $3;
+            }esgxi;
+
+            # remove unused inline images
+            my @NewAttachments = ();
+            REMOVEINLINE:
+            for my $TmpAttachment (@Attachments) {
+                next REMOVEINLINE if $TmpAttachment->{ContentID}
+                        && $TmpAttachment->{ContentID} =~ /^inline/
+                        && $GetParam{Body} !~ /$TmpAttachment->{ContentID}/;
+                push( @NewAttachments, \%{$TmpAttachment} );
+            }
+            @Attachments = @NewAttachments;
+        }
+        else {
+            $GetParam{Body} .= "\n\n" . $Signature;
         }
 
         # send email
@@ -980,7 +922,7 @@ sub Run {
             Subject        => $GetParam{Subject},
             Body           => $GetParam{Body},
             Charset        => $Self->{LayoutObject}->{UserCharset},
-            Type           => 'text/plain',
+            MimeType       => $MimeType,
             UserID         => $Self->{UserID},
             HistoryType    => $Self->{Config}->{HistoryType},
             HistoryComment => $Self->{Config}->{HistoryComment}
@@ -1176,16 +1118,25 @@ sub Run {
             QueueID  => $QueueID,
             AllUsers => $GetParam{ResponsibleAll},
         );
-        my $NextStates = $Self->_GetNextStates( QueueID => $QueueID || 1 );
-        my $Priorities = $Self->_GetPriorities( QueueID => $QueueID || 1 );
+        my $NextStates = $Self->_GetNextStates(
+            %GetParam,
+            CustomerUserID => $CustomerUser || '',
+            QueueID        => $QueueID      || 1,
+        );
+        my $Priorities = $Self->_GetPriorities(
+            %GetParam,
+            CustomerUserID => $CustomerUser || '',
+            QueueID        => $QueueID      || 1,
+        );
         my $Services = $Self->_GetServices(
+            %GetParam,
             CustomerUserID => $CustomerUser || '',
             QueueID        => $QueueID      || 1,
         );
         my $SLAs = $Self->_GetSLAs(
-            QueueID => $QueueID || 1,
-            Services => $Services,
             %GetParam,
+            CustomerUserID => $CustomerUser || '',
+            QueueID        => $QueueID      || 1,
         );
 
         # get free text config options
@@ -1234,7 +1185,7 @@ sub Run {
             [
                 {
                     Name         => 'Signature',
-                    Data         => $Signature,
+                    Data         => $Self->{HTML2AsciiObject}->ToAscii( String => $Signature, ),
                     Translation  => 1,
                     PossibleNone => 1,
                     Max          => 100,
@@ -1434,11 +1385,13 @@ sub _GetSLAs {
 
     # get sla
     if ( $Param{ServiceID} && $Param{Services} && %{ $Param{Services} } ) {
-        %SLA = $Self->{TicketObject}->TicketSLAList(
-            %Param,
-            Action => $Self->{Action},
-            UserID => $Self->{UserID},
-        );
+        if ( $Param{Services}->{ $Param{ServiceID} } ) {
+            %SLA = $Self->{TicketObject}->TicketSLAList(
+                %Param,
+                Action => $Self->{Action},
+                UserID => $Self->{UserID},
+            );
+        }
     }
     return \%SLA;
 }
@@ -1510,37 +1463,14 @@ sub _GetTos {
 sub _GetSignature {
     my ( $Self, %Param ) = @_;
 
-    my $Signature = '';
-    my %Queue = $Self->{QueueObject}->GetSystemAddress( QueueID => $Param{QueueID} );
-
     # prepare signature
-    $Signature = $Self->{QueueObject}->GetSignature( QueueID => $Param{QueueID} );
-    $Signature =~ s/<OTRS_FIRST_NAME>/$Self->{UserFirstname}/g;
-    $Signature =~ s/<OTRS_LAST_NAME>/$Self->{UserLastname}/g;
-
-    # current user
-    my %User = $Self->{UserObject}->GetUserData(
-        UserID => $Self->{UserID},
-        Cached => 1,
+    my $TemplateGenerator = Kernel::System::TemplateGenerator->new( %{$Self} );
+    my $Signature         = $TemplateGenerator->Signature(
+        QueueID => $Param{QueueID},
+        Data    => \%Param,
+        UserID  => $Self->{UserID},
     );
-    for my $UserKey ( keys %User ) {
-        if ( $User{$UserKey} ) {
-            $Signature =~ s/<OTRS_Agent_$UserKey>/$User{$UserKey}/gi;
-            $Signature =~ s/<OTRS_CURRENT_$UserKey>/$User{$UserKey}/gi;
-        }
-    }
 
-    # replace other needed stuff
-    $Signature =~ s/<OTRS_FIRST_NAME>/$Self->{UserFirstname}/g;
-    $Signature =~ s/<OTRS_LAST_NAME>/$Self->{UserLastname}/g;
-
-    # cleanup
-    $Signature =~ s/<OTRS_Agent_.+?>/-/gi;
-    $Signature =~ s/<OTRS_CURRENT_.+?>/-/gi;
-
-    # replace config options
-    $Signature =~ s{<OTRS_CONFIG_(.+?)>}{$Self->{ConfigObject}->Get($1)}egx;
-    $Signature =~ s/<OTRS_CONFIG_.+?>/-/gi;
     return $Signature;
 }
 
@@ -1553,6 +1483,32 @@ sub _MaskEmailNew {
     my $TreeView = 0;
     if ( $Self->{ConfigObject}->Get('Ticket::Frontend::ListType') eq 'tree' ) {
         $TreeView = 1;
+    }
+
+    # build customer search autocomplete field
+    my $AutoCompleteConfig
+        = $Self->{ConfigObject}->Get('Ticket::Frontend::CustomerSearchAutoComplete');
+    if ( $AutoCompleteConfig->{Active} ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'CustomerSearchAutoComplete',
+            Data => {
+                minQueryLength      => $AutoCompleteConfig->{MinQueryLength}      || 2,
+                queryDelay          => $AutoCompleteConfig->{QueryDelay}          || 0.1,
+                typeAhead           => $AutoCompleteConfig->{TypeAhead}           || 'false',
+                maxResultsDisplayed => $AutoCompleteConfig->{MaxResultsDisplayed} || 20,
+            },
+        );
+        $Self->{LayoutObject}->Block(
+            Name => 'CustomerSearchAutoCompleteDivStart',
+        );
+        $Self->{LayoutObject}->Block(
+            Name => 'CustomerSearchAutoCompleteDivEnd',
+        );
+    }
+    else {
+        $Self->{LayoutObject}->Block(
+            Name => 'SearchCustomerButton',
+        );
     }
 
     # build string
@@ -2172,6 +2128,14 @@ sub _MaskEmailNew {
                 },
             );
         }
+    }
+
+    # add YUI editor
+    if ( $Self->{ConfigObject}->{'Frontend::RichText'} ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'RichText',
+            Data => \%Param,
+        );
     }
 
     # get output back
