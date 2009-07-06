@@ -1,14 +1,18 @@
 # --
 # AgentTicketZoom.dtl - provides HTML for AgentTicketZoom.pm
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.dtl,v 1.4 2008-07-24 13:04:16 ub Exp $
-# $OldId: AgentTicketZoom.dtl,v 1.45 2008/07/09 12:32:06 martin Exp $
+# $Id: AgentTicketZoom.dtl,v 1.5 2009-07-06 11:42:40 ub Exp $
+# $OldId: AgentTicketZoom.dtl,v 1.57 2009/07/01 09:19:16 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+
+<!-- dtl:block:ArticleFilterDialog -->
+$Include{"AgentTicketZoomArticleFilterDialog"}
+<!-- dtl:block:ArticleFilterDialog -->
 
 <!-- dtl:block:Header -->
 <!-- start ticket head $Data{"TicketNumber"} -->
@@ -16,9 +20,7 @@
   <tr>
     <td width="70%" class="mainhead">
       $Env{"Box0"}$Text{"Zoom"} $Config{"Ticket::Hook"}: $Data{"TicketNumber"} $Env{"Box1"}
-<!-- dtl:block:Title-->
       $QData{"Title","60"}
-<!-- dtl:block:Title-->
     </td>
     <td align="right" width="30%" class="mainhead">
       $Env{"Box0"}$Text{"Age"}: $Data{"Age"}$Env{"Box1"}
@@ -52,9 +54,19 @@
 <!-- dtl:block:Body -->
   <tr>
     <td rowspan="2" valign="top" width="75%" class="mainbody">
-
 <!-- dtl:block:Tree -->
       <table border="0" width="100%" cellspacing="0" cellpadding="1">
+<!-- dtl:block:ArticleFilterDialogLink -->
+        <tr>
+          <td class="$QData{"HighlightStyle"}">
+            $Text{"Article"} $Text{"Filter"}:
+            <a href="" id="SetArticleFilter" onclick="return false;">$Text{"Set"}</a>
+<!-- dtl:block:ArticleFilterResetLink -->
+            <a href="" id="ResetArticleFilter" onclick="return false;">$Text{"Reset"}</a>
+<!-- dtl:block:ArticleFilterResetLink -->
+          </td>
+        </tr>
+<!-- dtl:block:ArticleFilterDialogLink -->
         <tr>
           <td>
             <table border="0" width="100%" cellspacing="0" cellpadding="1">
@@ -75,7 +87,7 @@
                   [..]
 <!-- dtl:block:TreeItemAttachmentMore -->
 <!-- dtl:block:TreeItemAttachment -->
-                  <a href="$Env{"Baselink"}Action=AgentTicketAttachment&ArticleID=$QData{"ArticleID"}&FileID=$QData{"FileID"}" title="$QData{"Filename"} - $QData{"Filesize"}" $Data{"Target"}><img border="0" src="$Env{"Images"}attach-small.png"></a>
+                  <a href="$Env{"Baselink"}Action=AgentTicketAttachment&ArticleID=$QData{"ArticleID"}&FileID=$QData{"FileID"}" title="$QData{"Filename"} - $QData{"Filesize"}" $Data{"Target"}><img border="0" src="$Config{"Frontend::ImagePath"}attach-small.png"></a>
 <!-- dtl:block:TreeItemAttachment -->
                   </nobr>
                 </td>
@@ -90,7 +102,7 @@
       </table>
 <!-- dtl:block:Tree -->
       <hr size="2">
-      <a name="$Data{"ArticleID"}"></a>
+      <a name="$QData{"ArticleID"}"></a>
       <table border="0" width="100%" cellspacing="0" cellpadding="1">
         <tr>
           <td width="98%" valign="top">
@@ -143,10 +155,10 @@
                       <td>$QData{"Filename"}</td>
                       <td>
 <!-- dtl:block:ArticleAttachmentRowLink -->
-                        <a href="$Data{"Link"}" $Data{"Target"} onmouseover="window.status='$JSText{"$QData{"Action"}"}: $QData{"Filename"}';return true;" onmouseout="window.status='';"><img src="$Env{"Images"}$QData{"Image"}" border="0" alt="$Text{"$QData{"Action"}"}" title="$Text{"$QData{"Action"}"}"></a>
+                        <a href="$Data{"Link"}" $Data{"Target"} onmouseover="window.status='$JSText{"$QData{"Action"}"}: $QData{"Filename"}';return true;" onmouseout="window.status='';"><img src="$Config{"Frontend::ImagePath"}$QData{"Image"}" border="0" alt="$Text{"$QData{"Action"}"}" title="$Text{"$QData{"Action"}"}"></a>
 <!-- dtl:block:ArticleAttachmentRowLink -->
 <!-- dtl:block:ArticleAttachmentRowNoLink -->
-                        <img src="$Env{"Images"}$QData{"Image"}" border="0" alt="$Text{"$QData{"Action"}"}" title="$Text{"$QData{"Action"}"}">
+                        <img src="$Config{"Frontend::ImagePath"}$QData{"Image"}" border="0" alt="$Text{"$QData{"Action"}"}" title="$Text{"$QData{"Action"}"}">
 <!-- dtl:block:ArticleAttachmentRowNoLink -->
                       </td>
                       <td align="right">$QData{"Filesize"}</td>
@@ -158,20 +170,52 @@
 <!-- dtl:block:ArticleAttachment -->
             </table>
 
+<!-- dtl:block:BodyPlain -->
 $Data{"BodyNote"}
             <div class="message">
 $Data{"Body"}
             </div>
+<!-- dtl:block:BodyPlain -->
+<!-- dtl:block:BodyHTML -->
+            <div class="message">
+            <script src="$Config{"Frontend::YUIPath"}build/yahoo/yahoo-min.js" type="text/javascript"></script>
+            <script src="$Config{"Frontend::YUIPath"}build/dom/dom-min.js" type="text/javascript"></script>
+            <script src="$Config{"Frontend::YUIPath"}build/event/event-min.js" type="text/javascript"></script>
+            <script src="$Config{"Frontend::YUIPath"}build/element/element-min.js" type="text/javascript"></script>
+            <script language="JavaScript" type="text/javascript">
+<!--
+            function IframeAutoHeight() {
+            var Dom = YAHOO.util.Dom;
+            var iframe = new YAHOO.util.Element('iframe');
+            var newHeight = iframe.get('element').contentWindow.document.body.scrollHeight;
+            if ( !newHeight || isNaN( newHeight ) ) {
+            newHeight = $Config{"Ticket::Frontend::HTMLArticleHeightDefault"};
+            }
+            else if ( newHeight > $Config{"Ticket::Frontend::HTMLArticleHeightMax"} ) {
+            newHeight = $Config{"Ticket::Frontend::HTMLArticleHeightMax"};
+            }
+            Dom.setStyle(iframe, 'height', newHeight);
+            }
+            //-->
+            </script>
+            <iframe width="100%" frameborder="0" border="0" marginwidth="0" marginheight="0"
+            leftmargin="0" topmargin="0" style="width: 100%;" id="iframe"
+            onload="IframeAutoHeight();"
+            src="$Env{"Baselink"}Action=AgentTicketAttachment&Subaction=inline&ArticleID=$QData{"ArticleID"}&FileID=$QData{"BodyHTML"}"
+            >
+            </iframe>
+            </div>
+<!-- dtl:block:BodyHTML -->
           </td>
           <td valign="top">
 <!-- dtl:block:Expand -->
             <div title="$Text{"Expand View"}">
-            <a href="$Env{"Baselink"}Action=AgentTicketZoom&TicketID=$QData{"TicketID"}&ArticleID=$QData{"ArticleID"}&ZoomExpand=1" onmouseover="window.status='$JSText{"Expand"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Env{"Images"}expand.png"></a>
+            <a href="$Env{"Baselink"}Action=AgentTicketZoom&TicketID=$QData{"TicketID"}&ArticleID=$QData{"ArticleID"}&ZoomExpand=1" onmouseover="window.status='$JSText{"Expand View"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}expand.png"></a>
             </div>
 <!-- dtl:block:Expand -->
 <!-- dtl:block:Collapse -->
             <div title="$Text{"Collapse View"}">
-            <a href="$Env{"Baselink"}Action=AgentTicketZoom&TicketID=$QData{"TicketID"}&ArticleID=$QData{"ArticleID"}&ZoomExpand=0" onmouseover="window.status='$JSText{"Collapse View"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Env{"Images"}collapse.png"></a>
+            <a href="$Env{"Baselink"}Action=AgentTicketZoom&TicketID=$QData{"TicketID"}&ArticleID=$QData{"ArticleID"}&ZoomExpand=0" onmouseover="window.status='$JSText{"Collapse View"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}collapse.png"></a>
             </div>
 <!-- dtl:block:Collapse -->
           </td>
@@ -647,21 +691,6 @@ $Data{"Body"}
         <tr>
           <td>
 # show compose links
-<!-- dtl:block:AgentIsCustomer -->
-            <p>
-              <b>$Text{"Your own Ticket"}:</b>
-              <br/>
-              <table border="0">
-                <tr>
-                  <td>
-                    <li>
-                    <a href="$Env{"Baselink"}Action=AgentTicketCustomerFollowUp&TicketID=$Data{"TicketID"}" onmouseover="window.status='$JSText{"Compose Follow up"}'; return true;" onmouseout="window.status='';">$Text{"Compose Follow up"}</a>
-                    </li>
-                  </td>
-                </tr>
-              </table>
-            </p>
-<!-- dtl:block:AgentIsCustomer -->
 <!-- dtl:block:AgentAnswer -->
 <!-- dtl:block:AgentAnswerCompose -->
             <p>
@@ -702,7 +731,7 @@ $Data{"AgentPhoneStrg"}
                   <td>
 # check if print should be shown
 <!-- dtl:block:AgentArticleComPrint -->
-                    <a href="$Env{"Baselink"}Action=AgentTicketPrint&TicketID=$Data{"TicketID"}&ArticleID=$Data{"ArticleID"}" onmouseover="window.status='$JSText{"Print"}'; return true;" onmouseout="window.status='';">$Text{"Print"}</a>
+                    <a href="$Env{"Baselink"}Action=AgentTicketPrint&TicketID=$Data{"TicketID"}&ArticleID=$Data{"ArticleID"}" onmouseover="window.status='$JSText{"Print"}'; return true;" onmouseout="window.status='';" target="print">$Text{"Print"}</a>
 <!-- dtl:block:AgentArticleComPrint -->
 # check if forward should be shown
 <!-- dtl:block:AgentArticleComForward -->
