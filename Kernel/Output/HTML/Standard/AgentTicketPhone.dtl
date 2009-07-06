@@ -1,17 +1,19 @@
 # --
 # AgentTicketPhone.dtl - provides HTML form for phone
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.dtl,v 1.6 2008-09-15 09:14:26 mh Exp $
-# $OldId: AgentTicketPhone.dtl,v 1.38 2008/09/15 09:12:32 mh Exp $
+# $Id: AgentTicketPhone.dtl,v 1.7 2009-07-06 11:42:07 ub Exp $
+# $OldId: AgentTicketPhone.dtl,v 1.48 2009/07/02 12:49:41 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 # include AJAX lib
 $Include{"AJAX"}
+
+$Include{"AgentCustomerSearch"}
 
 <!-- start form -->
 <script language="JavaScript" type="text/javascript">
@@ -169,19 +171,35 @@ function clear_field() {
           <tr>
             <td width="20%" class="contentkey">$Text{"From"}:</td>
             <td width="60%" class="contentvalue">
-              <input type="text" name="From" value="$QData{"From"}" size="80"/>
+<!-- dtl:block:CustomerSearchAutoCompleteDivStart-->
+              <div id="myAutoComplete" class="myAutoComplete">
+<!-- dtl:block:CustomerSearchAutoCompleteDivStart -->
+              <input id="myAutoCompleteInput" type="text" name="From" value="$QData{"From"}" size="80"/>
+<!-- dtl:block:CustomerSearchAutoCompleteDivEnd -->
+              <div id="myAutoCompleteContainer"></div>
+              </div>
+<!-- dtl:block:CustomerSearchAutoCompleteDivEnd -->
               <font color="red" size="-2">$Text{"$Data{"From invalid"}"}</font>
               <br/>
               $Data{"CustomerUserStrg"}
               <dtl if ($Data{"CustomerUserStrg"} ne "") { $Data{"TakeThisCustomer"} = "<br/><input class="button" type="submit" name="ExpandCustomerName2" value="$Text{"Take this Customer"}"/>"; }>
               $Data{"TakeThisCustomer"}
+<!-- dtl:block:SearchCustomerButton -->
               <input class="button" type="submit" name="ExpandCustomerName1" value="$Text{"Search Customer"}"/>
               <input class="button" type="submit" name="ClearFrom" value="$Text{"Clear From"}" onclick="javascript:clear_field(); return false;"/>
+<!-- dtl:block:SearchCustomerButton -->
             </td>
-            <td width="20%" rowspan="10" class="contentkey">
+            <td width="20%" rowspan="10" class="contentvalue">
 # show customer info table
 <!-- dtl:block:CustomerTable -->
-              <p><b>$Text{"Customer Info"}</b>:<br/>$Data{"CustomerTable"}</p>
+              <p>
+                <div>
+                <b>$Text{"Customer Info"}</b>:<br/>
+                <div id="CustomerTable">
+                $Data{"CustomerTable"}
+                </div>
+                </div>
+              </p>
 <!-- dtl:block:CustomerTable -->
 #              $Text{"FAQ-Search"}: $Env{"Box0"}<a href="" onclick="FAQSubmit(); return false;" onmouseout="window.status='';" onmouseover="window.status='$JSText{"Insert"}'; return true;">$Text{"Insert"}</a>$Env{"Box1"}
 #              <input type="text" name="FAQ" value="" onSubmit="document.compose.ExpandCustomerName.value='4';"/>
@@ -252,21 +270,34 @@ function clear_field() {
             <td class="contentkey">$Text{"Options"}:</td>
             <td class="contentvalue">
 <!-- dtl:block:SpellCheck -->
-              $Env{"Box0"}<a href="" onclick="SpellCheckSubmit(); return false;" onmouseover="window.status='$JSText{"Spell Check"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Env{"Images"}spell.png">$Text{"Spell Check"}</a>$Env{"Box1"}
+              $Env{"Box0"}<a href="" onclick="SpellCheckSubmit(); return false;" onmouseover="window.status='$JSText{"Spell Check"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}spell.png">$Text{"Spell Check"}</a>$Env{"Box1"}
 <!-- dtl:block:SpellCheck -->
-              $Env{"Box0"}<a href="#attachment" onmouseover="window.status='$JSText{"Attachments"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Env{"Images"}attach.png">$Text{"Attachments"}</a>$Env{"Box1"}
 # --
 # check if the faq link should be shown
 # --
-              <dtl if ($Env{"UserIsGroupRo[faq]"} eq "Yes") { $Data{"FAQLink"} = "$Env{"Box0"}<a href="" onclick="FAQSubmit(); return false;" onmouseover="window.status='$JSText{"FAQ"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Env{"Images"}help-small.png">$Text{"FAQ"}</a>$Env{"Box1"}"; }>
+              <dtl if ($Env{"UserIsGroupRo[faq]"} eq "Yes") { $Data{"FAQLink"} = "$Env{"Box0"}<a href="" onclick="FAQSubmit(); return false;" onmouseover="window.status='$JSText{"FAQ"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}help-small.png">$Text{"FAQ"}</a>$Env{"Box1"}"; }>
               $Data{"FAQLink"}
-              $Env{"Box0"}<a href="" onclick="CustomerSubmit(); return false;" onmouseover="window.status='$JSText{"Customer"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Env{"Images"}group-small.png">$Text{"Customer"}</a>$Env{"Box1"}
+              $Env{"Box0"}<a href="" onclick="CustomerSubmit(); return false;" onmouseover="window.status='$JSText{"Customer"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}group-small.png">$Text{"Customer"}</a>$Env{"Box1"}
             </td>
           </tr>
           <tr>
             <td class="contentkey">$Text{"Text"}:</td>
             <td class="contentvalue">
-              <textarea name="Body" rows="15" cols="$Config{"Ticket::Frontend::TextAreaNote"}">$Data{"Body"}</textarea>
+              <div class="yui-skin-sam">
+<!-- dtl:block:RichText -->
+$Include{"RichTextEditor"}
+# set white background for buttons
+<style type="text/css">
+<!--
+              .yui-skin-sam .yui-toolbar-container { background-color: #FFFFFF; }
+              -->
+              </style>
+<!-- dtl:block:RichText -->
+<textarea id="RichText" name="Body" rows="15" cols="$Config{"Ticket::Frontend::TextAreaNote"}">
+$Data{"Body"}
+</textarea>
+              <font color="red" size="-2">$Text{"$Data{"Body invalid"}"}</font>
+              </div>
             </td>
           </tr>
           <tr>
@@ -380,7 +411,7 @@ function clear_field() {
 <!-- dtl:block:TimeUnits -->
         </table>
         <br/>
-        <input class="button" accesskey="g" type="submit" name="Create" value="$Text{"Create"}" onclick="return submit_compose();"/>
+        <input class="button" id="submitRichText" accesskey="g" type="submit" name="Create" value="$Text{"Create"}" onclick="return submit_compose();"/>
       </form>
       <form action="$Env{"CGIHandle"}" method="post" name="spelling" target="spelling">
         <input type="hidden" name="Action" value="AgentSpelling"/>
@@ -404,3 +435,4 @@ function clear_field() {
   </tr>
 </table>
 <!-- end form -->
+<div id="CustomerTickets"></div>
