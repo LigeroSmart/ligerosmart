@@ -2,7 +2,7 @@
 # Kernel/Modules/FAQ.pm - faq module
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.42 2009-06-22 12:51:51 ub Exp $
+# $Id: FAQ.pm,v 1.43 2009-07-07 15:38:12 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::FAQ;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.42 $) [1];
+$VERSION = qw($Revision: 1.43 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1163,14 +1163,70 @@ sub GetItemSearch {
         );
     }
     elsif ( $Param{Mode} && $Param{Mode} eq 'Customer' ) {
+
+        # get customer categories
         $Categories = $Self->{FAQObject}->GetCustomerCategories(
             CustomerUser => $Param{CustomerUser},
             Type         => 'rw',
         );
+
+        # extract category ids
+        my %AllCategoryIDs = ();
+        for my $ParentID ( keys %{$Categories} ) {
+            for my $CategoryID ( keys %{ $Categories->{$ParentID} } ) {
+                $AllCategoryIDs{$CategoryID} = 1;
+            }
+        }
+
+        # get all customer category ids
+        my @CustomerCategoryIDs = ();
+        for my $CategoryID ( 0, keys %AllCategoryIDs ) {
+            push @CustomerCategoryIDs, @{
+                $Self->{FAQObject}->CustomerCategorySearch(
+                    ParentID     => $CategoryID,
+                    CustomerUser => $Param{CustomerUser},
+                )
+            };
+        }
+
+        # build customer category hash
+        $Categories = ();
+        for my $CategoryID (@CustomerCategoryIDs) {
+            my %Category = $Self->{FAQObject}->CategoryGet( CategoryID => $CategoryID );
+            $Categories->{ $Category{ParentID} }->{ $Category{CategoryID} } = $Category{Name};
+        }
     }
     else {
+
+        # get all categories
         $Categories = $Self->{FAQObject}->CategoryList();
+
+        # extract category ids
+        my %AllCategoryIDs = ();
+        for my $ParentID ( keys %{$Categories} ) {
+            for my $CategoryID ( keys %{ $Categories->{$ParentID} } ) {
+                $AllCategoryIDs{$CategoryID} = 1;
+            }
+        }
+
+        # get all public category ids
+        my @PublicCategoryIDs = ();
+        for my $CategoryID ( 0, keys %AllCategoryIDs ) {
+            push @PublicCategoryIDs, @{
+                $Self->{FAQObject}->PublicCategorySearch(
+                    ParentID => $CategoryID,
+                )
+            };
+        }
+
+        # build public category hash
+        $Categories = ();
+        for my $CategoryID (@PublicCategoryIDs) {
+            my %Category = $Self->{FAQObject}->CategoryGet( CategoryID => $CategoryID );
+            $Categories->{ $Category{ParentID} }->{ $Category{CategoryID} } = $Category{Name};
+        }
     }
+
     $Frontend{CategoryOption} = $Self->{LayoutObject}->AgentFAQCategoryListOption(
         CategoryList        => { %{$Categories} },
         Size                => 5,
