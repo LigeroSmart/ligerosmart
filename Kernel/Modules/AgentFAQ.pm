@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentFAQ.pm - faq module
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.pm,v 1.31 2008-10-27 22:57:53 ub Exp $
+# $Id: AgentFAQ.pm,v 1.32 2009-07-07 17:52:18 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::Valid;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION @ISA);
-$VERSION = qw($Revision: 1.31 $) [1];
+$VERSION = qw($Revision: 1.32 $) [1];
 
 @ISA = qw(Kernel::Modules::FAQ);
 
@@ -341,17 +341,24 @@ sub Run {
             return $Self->{LayoutObject}->ErrorScreen();
         }
 
+        # get category list
+        my %CategoryList = %{ $Self->{FAQObject}->CategoryList( UserID => $Self->{UserID} ) };
+
         # dtl
         $Frontend{CategoryLongOption} = $Self->{LayoutObject}->AgentFAQCategoryListOption(
-            CategoryList => { %{ $Self->{FAQObject}->CategoryList( UserID => $Self->{UserID} ) } },
+            CategoryList => { %CategoryList },
             Size         => 10,
             Name         => 'CategoryID',
             SelectedID   => $CategoryData{CategoryID},
             HTMLQuote    => 1,
             LanguageTranslation => 0,
         );
+
+        # delete own category from parent list
+        delete $CategoryList{ $CategoryData{ParentID} }->{ $CategoryData{CategoryID} };
+
         $Frontend{CategoryOption} = $Self->{LayoutObject}->AgentFAQCategoryListOption(
-            CategoryList => { %{ $Self->{FAQObject}->CategoryList( UserID => $Self->{UserID} ) } },
+            CategoryList => { %CategoryList },
             Size         => 1,
             Name         => 'ParentID',
             SelectedID   => $CategoryData{ParentID},
