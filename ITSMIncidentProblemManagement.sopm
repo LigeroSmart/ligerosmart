@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMIncidentProblemManagement.sopm,v 1.36 2009-06-30 16:27:15 ub Exp $</CVS>
+    <CVS>$Id: ITSMIncidentProblemManagement.sopm,v 1.37 2009-07-08 17:52:27 ub Exp $</CVS>
     <Name>ITSMIncidentProblemManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -32,7 +32,6 @@
         <File Permission="644" Location="Kernel/Modules/AgentTicketPhone.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentTicketPrint.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentTicketPriority.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentTicketQueue.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentTicketResponsible.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentTicketZoom.pm"/>
         <File Permission="644" Location="Kernel/Modules/CustomerTicketPrint.pm"/>
@@ -43,17 +42,19 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketEmail.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketFreeText.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketNote.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketOwner.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketNote.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketOverviewMedium.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketOverviewPreview.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketPending.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketPhone.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketPrint.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketPriority.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketQueueTicketView.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketQueueTicketViewLite.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketResponsible.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketZoom.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerTicketPrint.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerTicketZoom.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/TicketOverviewMedium.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/TicketOverviewPreview.pm"/>
         <File Permission="644" Location="Kernel/System/Stats/Dynamic/ITSMTicketFirstLevelSolutionRate.pm"/>
         <File Permission="644" Location="Kernel/System/Stats/Dynamic/ITSMTicketSolutionTimeAverage.pm"/>
         <File Permission="644" Location="var/packagesetup/ITSMIncidentProblemManagement.pm"/>
