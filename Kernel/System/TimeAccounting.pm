@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.34 2009-04-22 07:52:39 tr Exp $
+# $Id: TimeAccounting.pm,v 1.35 2009-07-12 16:50:43 tt Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.34 $) [1];
+$VERSION = qw($Revision: 1.35 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week);
 
@@ -139,8 +139,11 @@ sub UserCurrentPeriodGet {
     my %Data = ();
     $Self->{DBObject}->Prepare(
         SQL =>
-            "SELECT user_id, preference_period, date_start, date_end, weekly_hours, leave_days, overtime FROM time_accounting_user_period "
-            . "WHERE date_start <= '$Date' AND date_end  >='$Date' AND status = 1",
+            "SELECT user_id, preference_period, date_start, date_end, "
+            . "weekly_hours, leave_days, overtime "
+            . "FROM time_accounting_user_period "
+            . "WHERE date_start <= '$Date' AND date_end  >='$Date' "
+            . "AND status = '1'",
     );
 
     # fetch Data
@@ -182,7 +185,10 @@ sub UserReporting {
     for (qw(Year Month Day)) {
         $Param{$_} = $Self->{DBObject}->Quote( $Param{$_} ) || '';
         if ( !$Param{$_} && $_ ne 'Day' ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "UserReporting: Need $_!" );
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message => "UserReporting: Need $_!"
+            );
             return;
         }
     }
@@ -308,12 +314,13 @@ sub ProjectSettingsGet {
 
     if ( $Param{Status} ) {
         $Where = ' WHERE status = ';
-        $Where .= $Param{Status} eq 'invalid' ? '0' : '1';
+        $Where .= $Param{Status} eq 'invalid' ? "'0'" : "'1'";
     }
 
     # db select
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT id, project, description, status FROM time_accounting_project $Where",
+        SQL => "SELECT id, project, description, status "
+            . "FROM time_accounting_project $Where",
     );
 
     # fetch Data
@@ -933,9 +940,15 @@ sub WorkingUnitsGet {
     $Param{UserID} ||= $Self->{UserID};
 
     my $Date = sprintf( "%04d-%02d-%02d", $Param{Year}, $Param{Month}, $Param{Day} );
+    my $DateStart = $Date." 00:00:00";
+    my $DateStop = $Date." 23:59:59";
+
     $Self->{DBObject}->Prepare(
         SQL => "SELECT user_id, project_id, action_id, remark, time_start, time_end,"
-            . " period FROM time_accounting_table WHERE time_start LIKE '$Date%'"
+            . " period FROM time_accounting_table "
+            . " WHERE "
+            . " time_start > '$DateStart' "
+            . " AND time_start <= '$DateStop' "
             . " AND user_id = '$Param{UserID}' ORDER by id",
     );
 
@@ -1025,7 +1038,10 @@ sub WorkingUnitsInsert {
 
     # delete exiting data
     if ( !$Self->WorkingUnitsDelete(%Param) ) {
-        $Self->{LogObject}->Log( Priority => 'error', Message => 'Can\'t delete Working Units!' );
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message => 'Can\'t delete Working Units!'
+        );
         return;
     }
 
@@ -1068,7 +1084,8 @@ sub WorkingUnitsInsert {
 
         # build sql
         my $SQL
-            = "INSERT INTO time_accounting_table (user_id, project_id, action_id, remark,"
+            = "INSERT INTO time_accounting_table "
+            . "(user_id, project_id, action_id, remark,"
             . " time_start, time_end, period, created )"
             . " VALUES  ( ?, ?, ?, ?, ?, ?, ?, current_timestamp)";
         my $Bind = [
@@ -1111,7 +1128,8 @@ sub WorkingUnitsDelete {
 
     # delete old working units
     my $SQL = "DELETE FROM time_accounting_table "
-        . "WHERE time_start <= '$Date 23:59:59' AND time_start >= '$Date 00:00:00' "
+        . "WHERE time_start <= '$Date 23:59:59'"
+        . " AND time_start >= '$Date 00:00:00' "
         . " AND user_id = '$Self->{UserID}'";
 
     return if !$Self->{DBObject}->Do( SQL => $SQL );
@@ -1158,8 +1176,8 @@ sub ProjectActionReporting {
 
     # Total hours
     $Self->{DBObject}->Prepare(
-        SQL =>
-            "SELECT project_id, action_id, period FROM time_accounting_table WHERE project_id != -1 AND $SQL_Query_TimeStart",
+        SQL => "SELECT project_id, action_id, period FROM time_accounting_table"
+            . " WHERE project_id != -1 AND $SQL_Query_TimeStart",
     );
 
     # fetch Data
@@ -1170,7 +1188,9 @@ sub ProjectActionReporting {
 
     $Self->{DBObject}->Prepare(
         SQL => "SELECT project_id, action_id, period FROM time_accounting_table"
-            . " WHERE project_id != -1 AND time_start >= '$DateString-01 00:00:00' AND $SQL_Query_TimeStart",
+            . " WHERE project_id != -1 "
+            . " AND time_start >= '$DateString-01 00:00:00' "
+            . " AND $SQL_Query_TimeStart",
     );
 
     # fetch Data
@@ -1365,6 +1385,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.34 $ $Date: 2009-04-22 07:52:39 $
+$Revision: 1.35 $ $Date: 2009-07-12 16:50:43 $
 
 =cut
