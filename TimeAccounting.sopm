@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: TimeAccounting.sopm,v 1.23 2009-04-03 11:49:29 tr Exp $</CVS>
+    <CVS>$Id: TimeAccounting.sopm,v 1.24 2009-07-12 17:42:14 tt Exp $</CVS>
     <Name>TimeAccounting</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -170,7 +170,8 @@
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
         &lt;br&gt;
-
+        Implemented and maintained by OTRS AG and c.a.p.e. IT.&lt;br&gt;
+        &lt;br&gt;
     </IntroInstall>
     <IntroInstall Type="pre" Title="Installation Information" Lang="de">
 
@@ -188,6 +189,8 @@
         &lt;br&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+        Entwickelt und supported von OTRS AG and c.a.p.e. IT.&lt;br&gt;
         &lt;br&gt;
 
     </IntroInstall>
