@@ -2,7 +2,7 @@
 # AgentTimeAccountingEdit.dtl - provides HTML form for time accounting edit
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingEdit.dtl,v 1.26 2009-04-03 11:49:29 tr Exp $
+# $Id: AgentTimeAccountingEdit.dtl,v 1.27 2009-07-12 17:30:41 tt Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -244,9 +244,8 @@ function MoreInputFields() {
                 </tr>
                 <tr>
                   <td class="contentfooter">
-                    <input class="button" style="display:none;" type="submit" value="$Text{"Submit"}" onclick="return submit_compose();">
+                    <input class="button" type="submit" value="$Text{"Submit"}" onclick="return submit_compose();">
                     <input class="button" type="submit" value="$Text{"Delete"}" name="Delete">
-                    <input class="button" accesskey="g" type="submit" value="$Text{"Submit"}" onclick="return submit_compose();">
                   </td>
                 </tr>
                 <tr>
