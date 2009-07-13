@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.36 2009-04-03 11:49:29 tr Exp $
+# $Id: AgentTimeAccounting.pm,v 1.37 2009-07-13 13:44:02 tt Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.36 $) [1];
+$VERSION = qw($Revision: 1.37 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -221,8 +221,12 @@ sub Run {
 
                 # create a valid period
                 my $Period = $Param{Period};
-                if ( $Period =~ m{^ (\d+) , (\d+) }smx ) {
+                if ( $Period =~ /^(\d+),(\d+)/) {
                     $Period = $1 . "." . $2;
+                }
+                #allow format hh:mm
+                elsif( $Param{Period} =~ /^(\d+):(\d+)/) {
+                    $Period = $1 + $2/60;
                 }
 
                 my %WorkingUnit = (
