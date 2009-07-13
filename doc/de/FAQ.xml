@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
     "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
-<!-- $Id: FAQ.xml,v 1.1 2009-02-17 16:23:48 martin Exp $ -->
+<!-- $Id: FAQ.xml,v 1.2 2009-07-13 10:22:52 ub Exp $ -->
 
 <book lang='de'>
 
@@ -183,7 +183,7 @@ shell> bin/opm.pl -a install -p /path/to/$Name-$Version.opm
         <para>Kommentar für den Oberbereich im Kategorie-Baum..</para>
     </sect1>
     <sect1>
-        <title>FAQ::Default::RootCategoryComment</title>
+        <title>FAQ::Item::Voting::Rates</title>
         <para>Mögliche Gewichtung für die Bewertung. Mögliche Auswahlmöglichkeiten.</para>
     </sect1>
     <sect1>
