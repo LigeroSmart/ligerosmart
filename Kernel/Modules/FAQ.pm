@@ -2,7 +2,7 @@
 # Kernel/Modules/FAQ.pm - faq module
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.43 2009-07-07 15:38:12 ub Exp $
+# $Id: FAQ.pm,v 1.44 2009-07-13 15:58:47 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::FAQ;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.43 $) [1];
+$VERSION = qw($Revision: 1.44 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -237,6 +237,7 @@ sub _GetExplorerCategoryList {
             $Self->{FAQObject}->CustomerCategorySearch(
                 ParentID     => $Param{CategoryID},
                 CustomerUser => $Param{CustomerUser},
+                Mode         => $Param{Mode},
                 )
             };
     }
@@ -244,6 +245,7 @@ sub _GetExplorerCategoryList {
         @CategoryIDs = @{
             $Self->{FAQObject}->PublicCategorySearch(
                 ParentID => $Param{CategoryID},
+                Mode     => $Param{Mode},
                 )
             };
     }
@@ -1155,7 +1157,7 @@ sub GetItemSearch {
         HTMLQuote           => 1,
         LanguageTranslation => 0,
     );
-    my $Categories = ();
+    my $Categories = {};
     if ( $Param{Mode} && $Param{Mode} eq 'Agent' ) {
         $Categories = $Self->{FAQObject}->GetUserCategories(
             UserID => $Self->{UserID},
@@ -1185,12 +1187,13 @@ sub GetItemSearch {
                 $Self->{FAQObject}->CustomerCategorySearch(
                     ParentID     => $CategoryID,
                     CustomerUser => $Param{CustomerUser},
+                    Mode         => $Param{Mode},
                 )
             };
         }
 
         # build customer category hash
-        $Categories = ();
+        $Categories = {};
         for my $CategoryID (@CustomerCategoryIDs) {
             my %Category = $Self->{FAQObject}->CategoryGet( CategoryID => $CategoryID );
             $Categories->{ $Category{ParentID} }->{ $Category{CategoryID} } = $Category{Name};
@@ -1215,12 +1218,13 @@ sub GetItemSearch {
             push @PublicCategoryIDs, @{
                 $Self->{FAQObject}->PublicCategorySearch(
                     ParentID => $CategoryID,
+                    Mode     => $Param{Mode},
                 )
             };
         }
 
         # build public category hash
-        $Categories = ();
+        $Categories = {};
         for my $CategoryID (@PublicCategoryIDs) {
             my %Category = $Self->{FAQObject}->CategoryGet( CategoryID => $CategoryID );
             $Categories->{ $Category{ParentID} }->{ $Category{CategoryID} } = $Category{Name};
@@ -1228,7 +1232,7 @@ sub GetItemSearch {
     }
 
     $Frontend{CategoryOption} = $Self->{LayoutObject}->AgentFAQCategoryListOption(
-        CategoryList        => { %{$Categories} },
+        CategoryList        => $Categories,
         Size                => 5,
         Name                => 'CategoryIDs',
         Multiple            => 1,
