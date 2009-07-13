@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.30 2009-07-06 16:13:31 ub Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.31 2009-07-13 16:52:14 ub Exp $</CVS>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
         <Description Lang="en">Default category name.</Description>
         <Description Lang="de">Root Kategorie Name.</Description>
@@ -675,6 +675,10 @@ Your OTRS Notification Master
                 <Item Key="Debug">0</Item>
                 <Item Key="Templates">
                     <Hash>
+                        <Item Key="AgentTicketPhone">1</Item>
+                        <Item Key="AgentTicketEmail">1</Item>
+                        <Item Key="AgentTicketCompose">1</Item>
+                        <Item Key="AgentTicketForward">1</Item>
                         <Item Key="AgentTicketNote">1</Item>
                         <Item Key="AgentTicketClose">0</Item>
                         <Item Key="AgentTicketFreeText">0</Item>
