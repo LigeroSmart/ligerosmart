@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.31 2009-07-13 16:52:14 ub Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.32 2009-07-14 08:56:47 ub Exp $</CVS>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
         <Description Lang="en">Default category name.</Description>
         <Description Lang="de">Root Kategorie Name.</Description>
@@ -652,15 +652,15 @@ Your OTRS Notification Master
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="Frontend::Module###PictureUpload" Required="0" Valid="1">
-        <Description Lang="en">Frontend module registration for the PictureUpload object in the agent interface.</Description>
-        <Description Lang="de">Frontendmodul-Registration des PictureUpload-Objekts im Agenten-Interface.</Description>
+    <ConfigItem Name="Frontend::Module###PictureUploadFAQ" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the PictureUploadFAQ object in the agent interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration des PictureUploadFAQ-Objekts im Agenten-Interface.</Description>
         <Group>FAQ</Group>
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
                 <Description>Ticket picture upload module</Description>
-                <Title>Picture-Upload</Title>
+                <Title>Picture-Upload-FAQ</Title>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>

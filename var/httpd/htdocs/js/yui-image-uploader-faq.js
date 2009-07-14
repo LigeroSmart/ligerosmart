@@ -2,7 +2,7 @@
 // yui-image-uploader-faq.js - provides image upload functionality for yui rich text editor in the faq module
 // Copyright (C) 2001-2009 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: yui-image-uploader-faq.js,v 1.1 2009-04-07 15:09:32 ub Exp $
+// $Id: yui-image-uploader-faq.js,v 1.2 2009-07-14 08:58:25 ub Exp $
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -66,7 +66,7 @@ function yuiImgUploader(rte, editor_name, upload_url, upload_image_name, form_id
 
                                // remember action, set new action to upload picture
                                var OrgAction = img_elem.form.Action.value;
-                               img_elem.form.Action.value = 'PictureUpload';
+                               img_elem.form.Action.value = 'PictureUploadFAQ';
 
                                YAHOO.util.Connect.setForm ( img_elem.form, true, true );
 

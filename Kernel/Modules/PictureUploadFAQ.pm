@@ -1,15 +1,15 @@
 # --
-# Kernel/Modules/PictureUpload.pm - get picture uploads
+# Kernel/Modules/PictureUploadFAQ.pm - get picture uploads for the FAQ
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: PictureUpload.pm,v 1.4 2009-04-06 16:27:28 ub Exp $
+# $Id: PictureUploadFAQ.pm,v 1.1 2009-07-14 08:56:19 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 
-package Kernel::Modules::PictureUpload;
+package Kernel::Modules::PictureUploadFAQ;
 
 use strict;
 use warnings;
@@ -18,7 +18,7 @@ use URI::Escape;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.1 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -149,7 +149,7 @@ sub Run {
 
     # return file URL
     $Output .= "{status:'UPLOADED', image_url:'$Self->{LayoutObject}->{Baselink}"
-        . "Action=PictureUpload&FormID=$Self->{FormID}&Filename=$TmpFilename$Session'}";
+        . "Action=PictureUploadFAQ&FormID=$Self->{FormID}&Filename=$TmpFilename$Session'}";
 
     return $Output;
 }
