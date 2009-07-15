@@ -2,7 +2,7 @@
 # AgentFAQ.dtl - provides HTML view for faq articles
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.dtl,v 1.46 2009-06-23 14:24:02 ub Exp $
+# $Id: AgentFAQ.dtl,v 1.47 2009-07-15 13:32:03 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -380,6 +380,13 @@ function updateMessage()
         alert('$JSText{"This window must be called from compose window"}');
         this.close();
         return;
+    }
+
+    // add FAQ text to WYSIWYG editor in opener window
+    if (parent.opener.onInsertFAQText) {
+
+        // fire custom onInsertFAQText event
+        parent.opener.onInsertFAQText.fire(document.spelling.Body.value);
     }
 
     /* copy subject */
