@@ -2,7 +2,7 @@
 # Kernel/Modules/FAQ.pm - faq module
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.46 2009-07-15 21:32:57 ub Exp $
+# $Id: FAQ.pm,v 1.47 2009-07-15 21:34:46 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::HTML2Ascii;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.46 $) [1];
+$VERSION = qw($Revision: 1.47 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -801,16 +801,16 @@ sub GetItemSmallView {
     # only convert html to plain text if rich text editor is not used
     if ( $Self->{ConfigObject}->Get('Frontend::RichText') ) {
         $Frontend{ItemFieldValuesPlainText} = $Frontend{ItemFieldValues};
-
-        # remove inline image links to faq images
-        $Frontend{ItemFieldValuesPlainText}
-            =~ s{ <img [^<>]+ Action=(Agent|Customer|Public)FAQ [^<>]+ > }{}gxms;
     }
     else {
         $Frontend{ItemFieldValuesPlainText} = $Self->{HTML2AsciiObject}->ToAscii(
             String => $Frontend{ItemFieldValues},
         );
     }
+
+    # remove inline image links to faq images
+    $Frontend{ItemFieldValuesPlainText}
+        =~ s{ <img [^<>]+ Action=(Agent|Customer|Public)FAQ [^<>]+ > }{}gxms;
 
     $Self->{LayoutObject}->Block(
         Name => 'ViewSmall',
