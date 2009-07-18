@@ -2,7 +2,7 @@
 # ITSMCore.pm - code to excecute during package installation
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMCore.pm,v 1.12 2009-06-30 14:57:45 ub Exp $
+# $Id: ITSMCore.pm,v 1.13 2009-07-18 19:17:47 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Priority;
 use Kernel::System::Valid;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 =head1 NAME
 
@@ -91,7 +91,7 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Object (qw(ConfigObject LogObject MainObject TimeObject DBObject XMLObject)) {
+    for my $Object (qw(ConfigObject LogObject EncodeObject MainObject TimeObject DBObject XMLObject)) {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
@@ -657,6 +657,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.12 $ $Date: 2009-06-30 14:57:45 $
+$Revision: 1.13 $ $Date: 2009-07-18 19:17:47 $
 
 =cut
