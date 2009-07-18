@@ -2,7 +2,7 @@
 # Kernel/Modules/FAQ.pm - faq module
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.47 2009-07-15 21:34:46 ub Exp $
+# $Id: FAQ.pm,v 1.48 2009-07-18 12:45:50 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,10 +17,10 @@ use warnings;
 use Kernel::System::User;
 use Kernel::System::FAQ;
 use Kernel::System::LinkObject;
-use Kernel::System::HTML2Ascii;
+use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.47 $) [1];
+$VERSION = qw($Revision: 1.48 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -43,8 +43,8 @@ sub new {
     # agent user object
     $Self->{AgentUserObject} = Kernel::System::User->new(%Param);
 
-    # html2ascii object
-    $Self->{HTML2AsciiObject} = Kernel::System::HTML2Ascii->new(%Param);
+    # HTMLUtils object
+    $Self->{HTMLUtilsObject} = Kernel::System::HTMLUtils->new(%Param);
 
     # interface settings
     $Self->{Interface} = $Self->{FAQObject}->StateTypeGet(
@@ -803,7 +803,7 @@ sub GetItemSmallView {
         $Frontend{ItemFieldValuesPlainText} = $Frontend{ItemFieldValues};
     }
     else {
-        $Frontend{ItemFieldValuesPlainText} = $Self->{HTML2AsciiObject}->ToAscii(
+        $Frontend{ItemFieldValuesPlainText} = $Self->{HTMLUtilsObject}->ToAscii(
             String => $Frontend{ItemFieldValues},
         );
     }
