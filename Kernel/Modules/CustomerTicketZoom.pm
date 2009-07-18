@@ -2,8 +2,8 @@
 # Kernel/Modules/CustomerTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerTicketZoom.pm,v 1.4 2009-07-02 21:57:21 ub Exp $
-# $OldId: CustomerTicketZoom.pm,v 1.37 2009/04/23 13:47:27 mh Exp $
+# $Id: CustomerTicketZoom.pm,v 1.5 2009-07-18 19:12:58 ub Exp $
+# $OldId: CustomerTicketZoom.pm,v 1.41 2009/07/18 15:19:33 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -239,6 +239,12 @@ sub Run {
                 {
                     $1 . "cid:" . $2 . $3;
                 }esgxi;
+
+                # verify html document
+                $GetParam{Body} = $Self->{LayoutObject}->{HTMLUtilsObject}->DocumentComplete(
+                    String  => $GetParam{Body},
+                    Charset => $Self->{LayoutObject}->{UserCharset},
+                );
             }
 
             if (
@@ -626,12 +632,12 @@ sub _Mask {
     }
 
     # show plain or html body
-    my $TextType = 'Plain';
-    if ( $Article{BodyHTML} ) {
-        $TextType = 'HTML';
+    my $ViewType = 'Plain';
+    if ( $Article{AttachmentIDOfHTMLBody} ) {
+        $ViewType = 'HTML';
     }
     $Self->{LayoutObject}->Block(
-        Name => 'Body' . $TextType,
+        Name => 'Body' . $ViewType,
         Data => {
             %Param,
             %Article,

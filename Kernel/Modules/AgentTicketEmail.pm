@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketEmail.pm - to compose initial email to customer
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketEmail.pm,v 1.8 2009-07-06 11:39:50 ub Exp $
-# $OldId: AgentTicketEmail.pm,v 1.84 2009/05/28 13:57:57 mh Exp $
+# $Id: AgentTicketEmail.pm,v 1.9 2009-07-18 19:12:12 ub Exp $
+# $OldId: AgentTicketEmail.pm,v 1.91 2009/07/18 18:19:38 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::SystemAddress;
 use Kernel::System::CustomerUser;
 use Kernel::System::CheckItem;
 use Kernel::System::Web::UploadCache;
-use Kernel::System::HTML2Ascii;
+use Kernel::System::HTMLUtils;
 use Kernel::System::TemplateGenerator;
 use Kernel::System::State;
 use Mail::Address;
@@ -33,7 +33,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -57,7 +57,7 @@ sub new {
     $Self->{CheckItemObject}    = Kernel::System::CheckItem->new(%Param);
     $Self->{StateObject}        = Kernel::System::State->new(%Param);
     $Self->{UploadCachObject}   = Kernel::System::Web::UploadCache->new(%Param);
-    $Self->{HTML2AsciiObject}   = Kernel::System::HTML2Ascii->new(%Param);
+    $Self->{HTMLUtilsObject}    = Kernel::System::HTMLUtils->new(%Param);
 # ---
 # ITSM
 # ---
@@ -608,12 +608,20 @@ sub Run {
         }
 
         # check some values
-        for (qw(To Cc Bcc)) {
-            if ( $GetParam{$_} ) {
-                for my $Email ( Mail::Address->parse( $GetParam{$_} ) ) {
-                    if ( !$Self->{CheckItemObject}->CheckEmail( Address => $Email->address() ) ) {
-                        $Error{"$_ invalid"} .= $Self->{CheckItemObject}->CheckError();
-                    }
+        for my $Line (qw(To Cc Bcc)) {
+            next if !$GetParam{$Line};
+            for my $Email ( Mail::Address->parse( $GetParam{$Line} ) ) {
+                if ( !$Self->{CheckItemObject}->CheckEmail( Address => $Email->address() ) ) {
+                    $Error{"$Line invalid"} .= $Self->{CheckItemObject}->CheckError();
+                }
+                my $IsLocal = $Self->{SystemAddress}->SystemAddressIsLocalAddress(
+                    Address => $Email->address()
+                );
+                if ($IsLocal) {
+                    $Error{"$Line invalid"}
+                        .= "Can't send email ticket to "
+                        . $Email->address()
+                        . "! It's a local address! Create a phone Ticket!";
                 }
             }
         }
@@ -751,7 +759,7 @@ sub Run {
                 Body         => $Self->{LayoutObject}->Ascii2Html( Text => $GetParam{Body} ),
                 Errors       => \%Error,
                 Attachments  => \@Attachments,
-                Signature    => $Self->{HTML2AsciiObject}->ToAscii( String => $Signature, ),
+                Signature    => $Self->{HTMLUtilsObject}->ToAscii( String => $Signature, ),
                 %GetParam,
                 %TicketFreeTextHTML,
                 %TicketFreeTimeHTML,
@@ -901,6 +909,12 @@ sub Run {
                 push( @NewAttachments, \%{$TmpAttachment} );
             }
             @Attachments = @NewAttachments;
+
+            # verify html document
+            $GetParam{Body} = $Self->{LayoutObject}->{HTMLUtilsObject}->DocumentComplete(
+                String  => $GetParam{Body},
+                Charset => $Self->{LayoutObject}->{UserCharset},
+            );
         }
         else {
             $GetParam{Body} .= "\n\n" . $Signature;
@@ -1185,7 +1199,7 @@ sub Run {
             [
                 {
                     Name         => 'Signature',
-                    Data         => $Self->{HTML2AsciiObject}->ToAscii( String => $Signature, ),
+                    Data         => $Self->{HTMLUtilsObject}->ToAscii( String => $Signature, ),
                     Translation  => 1,
                     PossibleNone => 1,
                     Max          => 100,
@@ -1688,6 +1702,14 @@ sub _MaskEmailNew {
     if ( $Param{Errors} ) {
         for ( keys %{ $Param{Errors} } ) {
             $Param{$_} = '* ' . $Self->{LayoutObject}->Ascii2Html( Text => $Param{Errors}->{$_} );
+        }
+
+        # handle 'To invalid' error if AutoComplete is enabled
+        if ( $AutoCompleteConfig->{Active} && $Param{'To invalid'} ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'CustomerSearchAutoCompleteToInvalid',
+                Data => {%Param},
+            );
         }
     }
 

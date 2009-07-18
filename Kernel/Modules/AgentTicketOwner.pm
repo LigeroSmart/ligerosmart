@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketOwner.pm - set ticket owner
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketOwner.pm,v 1.5 2009-07-02 21:53:07 ub Exp $
-# $OldId: AgentTicketOwner.pm,v 1.54 2009/04/23 13:47:27 mh Exp $
+# $Id: AgentTicketOwner.pm,v 1.6 2009-07-18 19:12:58 ub Exp $
+# $OldId: AgentTicketOwner.pm,v 1.57 2009/07/18 09:19:07 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -574,6 +574,12 @@ sub Run {
                 {
                     $1 . "cid:" . $2 . $3;
                 }esgxi;
+
+                # verify html document
+                $GetParam{Body} = $Self->{LayoutObject}->{HTMLUtilsObject}->DocumentComplete(
+                    String  => $GetParam{Body},
+                    Charset => $Self->{LayoutObject}->{UserCharset},
+                );
             }
 
             $ArticleID = $Self->{TicketObject}->ArticleCreate(

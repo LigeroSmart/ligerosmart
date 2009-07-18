@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.pm,v 1.5 2009-07-02 21:56:17 ub Exp $
-# $OldId: AgentTicketZoom.pm,v 1.70 2009/04/15 14:14:58 sb Exp $
+# $Id: AgentTicketZoom.pm,v 1.6 2009-07-18 19:12:58 ub Exp $
+# $OldId: AgentTicketZoom.pm,v 1.72 2009/07/18 15:19:33 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -50,10 +50,10 @@ sub new {
     $Self->{ArticleID}      = $Self->{ParamObject}->GetParam( Param => 'ArticleID' );
     $Self->{ZoomExpand}     = $Self->{ParamObject}->GetParam( Param => 'ZoomExpand' );
     $Self->{ZoomExpandSort} = $Self->{ParamObject}->GetParam( Param => 'ZoomExpandSort' );
-    if ( !defined( $Self->{ZoomExpand} ) ) {
+    if ( !defined $Self->{ZoomExpand} ) {
         $Self->{ZoomExpand} = $Self->{ConfigObject}->Get('Ticket::Frontend::ZoomExpand');
     }
-    if ( !defined( $Self->{ZoomExpandSort} ) ) {
+    if ( !defined $Self->{ZoomExpandSort} ) {
         $Self->{ZoomExpandSort} = $Self->{ConfigObject}->Get('Ticket::Frontend::ZoomExpandSort');
     }
     $Self->{HighlightColor1} = $Self->{ConfigObject}->Get('HighlightColor1');
@@ -336,7 +336,7 @@ sub MaskAgentZoom {
     my ( $Self, %Param ) = @_;
 
     # owner info
-    my %UserInfo = $Self->{UserObject}->GetUserData(
+    my %OwnerInfo = $Self->{UserObject}->GetUserData(
         UserID => $Param{OwnerID},
         Cached => 1
     );
@@ -377,28 +377,26 @@ sub MaskAgentZoom {
     );
 
     # run ticket menu modules
-    if ( ref( $Self->{ConfigObject}->Get('Ticket::Frontend::MenuModule') ) eq 'HASH' ) {
+    if ( ref $Self->{ConfigObject}->Get('Ticket::Frontend::MenuModule') eq 'HASH' ) {
         my %Menus   = %{ $Self->{ConfigObject}->Get('Ticket::Frontend::MenuModule') };
         my $Counter = 0;
         for my $Menu ( sort keys %Menus ) {
 
             # load module
-            if ( $Self->{MainObject}->Require( $Menus{$Menu}->{Module} ) ) {
-                my $Object
-                    = $Menus{$Menu}->{Module}->new( %{$Self}, TicketID => $Self->{TicketID}, );
-
-                # run module
-                $Counter = $Object->Run(
-                    %Param,
-                    Ticket  => \%Param,
-                    Counter => $Counter,
-                    ACL     => \%AclAction,
-                    Config  => $Menus{$Menu},
-                );
-            }
-            else {
+            if ( !$Self->{MainObject}->Require( $Menus{$Menu}->{Module} ) ) {
                 return $Self->{LayoutObject}->FatalError();
             }
+
+            my $Object = $Menus{$Menu}->{Module}->new( %{$Self}, TicketID => $Self->{TicketID}, );
+
+            # run module
+            $Counter = $Object->Run(
+                %Param,
+                Ticket  => \%Param,
+                Counter => $Counter,
+                ACL     => \%AclAction,
+                Config  => $Menus{$Menu},
+            );
         }
     }
 
@@ -505,9 +503,9 @@ sub MaskAgentZoom {
     my $Space          = '';
     my $LastSenderType = '';
 
-    # check if expand view is usable (only for less then 300 articles)
+    # check if expand view is usable (only for less then 400 article)
     # if you have more articles is going to be slow and not usable
-    my $ArticleMaxLimit = 300;
+    my $ArticleMaxLimit = 400;
     if ( $Self->{ZoomExpand} && $#ArticleBox > $ArticleMaxLimit ) {
         $Self->{ZoomExpand} = 0;
     }
@@ -517,7 +515,7 @@ sub MaskAgentZoom {
     if ( !$Self->{ZoomExpand} ) {
         for my $ArticleTmp (@ArticleBox) {
             if ( $ArticleID eq $ArticleTmp->{ArticleID} ) {
-                push( @NewArticleBox, $ArticleTmp );
+                push @NewArticleBox, $ArticleTmp;
             }
         }
     }
@@ -527,8 +525,8 @@ sub MaskAgentZoom {
 
     # resort article order
     if ( $Self->{ZoomExpandSort} eq 'reverse' ) {
-        @ArticleBox    = reverse(@ArticleBox);
-        @NewArticleBox = reverse(@NewArticleBox);
+        @ArticleBox    = reverse @ArticleBox;
+        @NewArticleBox = reverse @NewArticleBox;
     }
 
     # build shown article(s)
@@ -560,9 +558,10 @@ sub MaskAgentZoom {
             Data => { %Param, %Article, %AclAction, },
         );
 
-        my $BodyType = 'BodyHTML';
-        if ( !$Article{BodyHTML} ) {
-            $BodyType = 'BodyPlain';
+        # show body as html or plain text
+        my $ViewMode = 'BodyHTML';
+        if ( !$Article{AttachmentIDOfHTMLBody} ) {
+            $ViewMode = 'BodyPlain';
 
             # html quoting
             $Article{Body} = $Self->{LayoutObject}->Ascii2Html(
@@ -581,7 +580,7 @@ sub MaskAgentZoom {
 
         # show body
         $Self->{LayoutObject}->Block(
-            Name => $BodyType,
+            Name => $ViewMode,
             Data => {%Article},
         );
 
@@ -617,7 +616,7 @@ sub MaskAgentZoom {
             }
 
             # show first response time if needed
-            if ( defined( $Param{FirstResponseTime} ) ) {
+            if ( defined $Param{FirstResponseTime} ) {
                 $Param{FirstResponseTimeHuman} = $Self->{LayoutObject}->CustomerAgeInHours(
                     Age   => $Param{'FirstResponseTime'},
                     Space => ' ',
@@ -643,7 +642,7 @@ sub MaskAgentZoom {
             }
 
             # show update time if needed
-            if ( defined( $Param{UpdateTime} ) ) {
+            if ( defined $Param{UpdateTime} ) {
                 $Param{UpdateTimeHuman} = $Self->{LayoutObject}->CustomerAgeInHours(
                     Age   => $Param{'UpdateTime'},
                     Space => ' ',
@@ -669,7 +668,7 @@ sub MaskAgentZoom {
             }
 
             # show solution time if needed
-            if ( defined( $Param{SolutionTime} ) ) {
+            if ( defined $Param{SolutionTime} ) {
                 $Param{SolutionTimeHuman} = $Self->{LayoutObject}->CustomerAgeInHours(
                     Age   => $Param{'SolutionTime'},
                     Space => ' ',
@@ -708,7 +707,7 @@ sub MaskAgentZoom {
             }
             $Self->{LayoutObject}->Block(
                 Name => 'Owner',
-                Data => { %Param, %UserInfo, %AclAction },
+                Data => { %Param, %OwnerInfo, %AclAction },
             );
             if ( $Self->{ConfigObject}->Get('Ticket::Responsible') ) {
                 $Self->{LayoutObject}->Block(
@@ -862,7 +861,8 @@ sub MaskAgentZoom {
                 }
                 $LastSenderType = $Article{SenderType};
 
-            # article filter is activated in sysconfig and there are articles that passed the filter
+                # article filter is activated in sysconfig and there are articles
+                # that passed the filter
                 if (
                     $Self->{ArticleFilterActive}
                     && $Self->{ArticleFilter}
@@ -1033,34 +1033,31 @@ sub MaskAgentZoom {
         }
 
         # run article modules
-        if ( ref( $Self->{ConfigObject}->Get('Ticket::Frontend::ArticleViewModule') ) eq 'HASH' ) {
+        if ( ref $Self->{ConfigObject}->Get('Ticket::Frontend::ArticleViewModule') eq 'HASH' ) {
             my %Jobs = %{ $Self->{ConfigObject}->Get('Ticket::Frontend::ArticleViewModule') };
             for my $Job ( sort keys %Jobs ) {
 
                 # load module
-                if ( $Self->{MainObject}->Require( $Jobs{$Job}->{Module} ) ) {
-                    my $Object = $Jobs{$Job}->{Module}->new(
-                        %{$Self},
-                        TicketID  => $Self->{TicketID},
-                        ArticleID => $Article{ArticleID},
-                    );
-
-                    # run module
-                    my @Data
-                        = $Object->Check( Article => \%Article, %Param, Config => $Jobs{$Job} );
-                    for my $DataRef (@Data) {
-                        $Self->{LayoutObject}->Block(
-                            Name => 'ArticleOption',
-                            Data => $DataRef,
-                        );
-                    }
-
-                    # filter option
-                    $Object->Filter( Article => \%Article, %Param, Config => $Jobs{$Job} );
-                }
-                else {
+                if ( !$Self->{MainObject}->Require( $Jobs{$Job}->{Module} ) ) {
                     return $Self->{LayoutObject}->ErrorScreen();
                 }
+                my $Object = $Jobs{$Job}->{Module}->new(
+                    %{$Self},
+                    TicketID  => $Self->{TicketID},
+                    ArticleID => $Article{ArticleID},
+                );
+
+                # run module
+                my @Data = $Object->Check( Article => \%Article, %Param, Config => $Jobs{$Job} );
+                for my $DataRef (@Data) {
+                    $Self->{LayoutObject}->Block(
+                        Name => 'ArticleOption',
+                        Data => $DataRef,
+                    );
+                }
+
+                # filter option
+                $Object->Filter( Article => \%Article, %Param, Config => $Jobs{$Job} );
             }
         }
 
@@ -1109,7 +1106,7 @@ sub MaskAgentZoom {
 
             # run article attachment modules
             if (
-                ref( $Self->{ConfigObject}->Get('Ticket::Frontend::ArticleAttachmentModule') ) eq
+                ref $Self->{ConfigObject}->Get('Ticket::Frontend::ArticleAttachmentModule') eq
                 'HASH'
                 )
             {
@@ -1118,27 +1115,25 @@ sub MaskAgentZoom {
                 for my $Job ( sort keys %Jobs ) {
 
                     # load module
-                    if ( $Self->{MainObject}->Require( $Jobs{$Job}->{Module} ) ) {
-                        my $Object = $Jobs{$Job}->{Module}->new(
-                            %{$Self},
-                            TicketID  => $Self->{TicketID},
-                            ArticleID => $Article{ArticleID},
-                        );
-
-                        # run module
-                        my %Data = $Object->Run(
-                            File => { %File, FileID => $FileID, },
-                            Article => \%Article,
-                        );
-                        if (%Data) {
-                            $Self->{LayoutObject}->Block(
-                                Name => $Data{Block} || 'ArticleAttachmentRowLink',
-                                Data => {%Data},
-                            );
-                        }
-                    }
-                    else {
+                    if ( !$Self->{MainObject}->Require( $Jobs{$Job}->{Module} ) ) {
                         return $Self->{LayoutObject}->ErrorScreen();
+                    }
+                    my $Object = $Jobs{$Job}->{Module}->new(
+                        %{$Self},
+                        TicketID  => $Self->{TicketID},
+                        ArticleID => $Article{ArticleID},
+                    );
+
+                    # run module
+                    my %Data = $Object->Run(
+                        File => { %File, FileID => $FileID, },
+                        Article => \%Article,
+                    );
+                    if (%Data) {
+                        $Self->{LayoutObject}->Block(
+                            Name => $Data{Block} || 'ArticleAttachmentRowLink',
+                            Data => {%Data},
+                        );
                     }
                 }
             }
@@ -1156,7 +1151,7 @@ sub MaskAgentZoom {
             # check if print link should be shown
             if (
                 $Self->{ConfigObject}->Get('Frontend::Module')->{AgentTicketPrint}
-                && ( !defined( $AclAction{AgentTicketPrint} ) || $AclAction{AgentTicketPrint} )
+                && ( !defined $AclAction{AgentTicketPrint} || $AclAction{AgentTicketPrint} )
                 )
             {
                 my $OK = $Self->{TicketObject}->Permission(
@@ -1186,7 +1181,7 @@ sub MaskAgentZoom {
             if (
                 $Self->{ConfigObject}->Get('Frontend::Module')->{AgentTicketCompose}
                 && (
-                    !defined( $AclAction{AgentTicketCompose} )
+                    !defined $AclAction{AgentTicketCompose}
                     || $AclAction{AgentTicketCompose}
                 )
                 )
@@ -1232,7 +1227,7 @@ sub MaskAgentZoom {
             if (
                 $Self->{ConfigObject}->Get('Frontend::Module')->{AgentTicketPhoneOutbound}
                 && (
-                    !defined( $AclAction{AgentTicketPhoneOutbound} )
+                    !defined $AclAction{AgentTicketPhoneOutbound}
                     || $AclAction{AgentTicketPhoneOutbound}
                 )
                 )
@@ -1282,7 +1277,7 @@ sub MaskAgentZoom {
             # check if print link should be shown
             if (
                 $Self->{ConfigObject}->Get('Frontend::Module')->{AgentTicketPrint}
-                && ( !defined( $AclAction{AgentTicketPrint} ) || $AclAction{AgentTicketPrint} )
+                && ( !defined $AclAction{AgentTicketPrint} || $AclAction{AgentTicketPrint} )
                 )
             {
                 my $OK = $Self->{TicketObject}->Permission(
@@ -1302,7 +1297,7 @@ sub MaskAgentZoom {
             # check if forward link should be shown
             if (
                 $Self->{ConfigObject}->Get('Frontend::Module')->{AgentTicketForward}
-                && ( !defined( $AclAction{AgentTicketForward} ) || $AclAction{AgentTicketForward} )
+                && ( !defined $AclAction{AgentTicketForward} || $AclAction{AgentTicketForward} )
                 )
             {
                 my $Access = 1;
@@ -1341,7 +1336,7 @@ sub MaskAgentZoom {
             # check if bounce link should be shown
             if (
                 $Self->{ConfigObject}->Get('Frontend::Module')->{AgentTicketBounce}
-                && ( !defined( $AclAction{AgentTicketBounce} ) || $AclAction{AgentTicketBounce} )
+                && ( !defined $AclAction{AgentTicketBounce} || $AclAction{AgentTicketBounce} )
                 )
             {
                 my $Access = 1;
@@ -1380,7 +1375,7 @@ sub MaskAgentZoom {
             # check if split link should be shown
             if (
                 $Self->{ConfigObject}->Get('Frontend::Module')->{AgentTicketPhone}
-                && ( !defined( $AclAction{AgentTicketPhone} ) || $AclAction{AgentTicketPhone} )
+                && ( !defined $AclAction{AgentTicketPhone} || $AclAction{AgentTicketPhone} )
                 )
             {
                 $Self->{LayoutObject}->Block(
@@ -1401,7 +1396,7 @@ sub MaskAgentZoom {
     }
     if (
         $Self->{ConfigObject}->Get('Frontend::Module')->{AgentTicketMove}
-        && ( !defined( $AclAction{AgentTicketMove} ) || $AclAction{AgentTicketMove} )
+        && ( !defined $AclAction{AgentTicketMove} || $AclAction{AgentTicketMove} )
         )
     {
         my $Access = $Self->{TicketObject}->Permission(

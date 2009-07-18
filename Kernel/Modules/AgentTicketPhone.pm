@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketPhone.pm - to handle phone calls
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.pm,v 1.10 2009-07-06 11:40:30 ub Exp $
-# $OldId: AgentTicketPhone.pm,v 1.97 2009/05/28 13:57:57 mh Exp $
+# $Id: AgentTicketPhone.pm,v 1.11 2009-07-18 19:12:58 ub Exp $
+# $OldId: AgentTicketPhone.pm,v 1.105 2009/07/18 18:19:38 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -31,7 +31,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -258,16 +258,20 @@ sub Run {
 
                 # check for html body
                 my @ArticleBox = $Self->{TicketObject}->ArticleContentIndex(
-                    TicketID                   => $Self->{TicketID},
+                    TicketID                   => $Article{TicketID},
                     StripPlainBodyAsAttachment => 1,
                 );
                 ARTICLE:
                 for my $ArticleTmp (@ArticleBox) {
+
+                    # search for selected article
                     next ARTICLE if $ArticleTmp->{ArticleID} ne $Article{ArticleID};
-                    last ARTICLE if !$ArticleTmp->{BodyHTML};
+
+                    # check if html body exists
+                    last ARTICLE if !$ArticleTmp->{AttachmentIDOfHTMLBody};
                     my %AttachmentHTML = $Self->{TicketObject}->ArticleAttachment(
                         ArticleID => $Article{ArticleID},
-                        FileID    => $ArticleTmp->{BodyHTML},
+                        FileID    => $ArticleTmp->{AttachmentIDOfHTMLBody},
                     );
 
                     # make sure encoding is correct
@@ -1046,6 +1050,12 @@ sub Run {
                 push( @NewAttachmentData, \%{$TmpAttachment} );
             }
             @AttachmentData = @NewAttachmentData;
+
+            # verify html document
+            $GetParam{Body} = $Self->{LayoutObject}->{HTMLUtilsObject}->DocumentComplete(
+                String  => $GetParam{Body},
+                Charset => $Self->{LayoutObject}->{UserCharset},
+            );
         }
 
         # check if new owner is given (then send no agent notify)
@@ -1858,6 +1868,14 @@ sub _MaskPhoneNew {
     if ( $Param{Errors} ) {
         for ( keys %{ $Param{Errors} } ) {
             $Param{$_} = '* ' . $Self->{LayoutObject}->Ascii2Html( Text => $Param{Errors}->{$_} );
+        }
+
+        # handle 'From invalid' error if AutoComplete is enabled
+        if ( $AutoCompleteConfig->{Active} && $Param{'From invalid'} ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'CustomerSearchAutoCompleteFromInvalid',
+                Data => {%Param},
+            );
         }
     }
 
