@@ -3,20 +3,20 @@
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # Translated/Updated into Persian (Farsi) by Afshar Mohebbi <afshar.mohebbi at gmail.com>
 # --
-# $Id: fa_FAQ.pm,v 1.1 2009-07-19 15:44:53 ub Exp $
+# $Id: fa_FAQ.pm,v 1.2 2009-07-20 09:42:48 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 
-package Kernel::Language::de_FAQ;
+package Kernel::Language::fa_FAQ;
 
 use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub Data {
     my $Self = shift;
