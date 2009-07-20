@@ -2,7 +2,7 @@
 # ITSMServiceLevelManagement.pm - code to excecute during package installation
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMServiceLevelManagement.pm,v 1.19 2009-06-30 16:13:38 ub Exp $
+# $Id: ITSMServiceLevelManagement.pm,v 1.20 2009-07-20 23:18:46 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::Stats;
 use Kernel::System::User;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 =head1 NAME
 
@@ -43,6 +43,7 @@ All functions
 create an object
 
     use Kernel::Config;
+    use Kernel::System::Encode;
     use Kernel::System::Log;
     use Kernel::System::Main;
     use Kernel::System::Time;
@@ -51,11 +52,16 @@ create an object
     use var::packagesetup::ITSMServiceLevelManagement;
 
     my $ConfigObject = Kernel::Config->new();
+    my $EncodeObject = Kernel::System::Encode->new(
+        ConfigObject => $ConfigObject,
+    );
     my $LogObject    = Kernel::System::Log->new(
         ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
     );
     my $MainObject = Kernel::System::Main->new(
         ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
         LogObject    => $LogObject,
     );
     my $TimeObject = Kernel::System::Time->new(
@@ -64,17 +70,20 @@ create an object
     );
     my $DBObject = Kernel::System::DB->new(
         ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
         LogObject    => $LogObject,
         MainObject   => $MainObject,
     );
     my $XMLObject = Kernel::System::XML->new(
         ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
         LogObject    => $LogObject,
         DBObject     => $DBObject,
         MainObject   => $MainObject,
     );
     my $CodeObject = var::packagesetup::ITSMServiceLevelManagement->new(
         ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
         LogObject    => $LogObject,
         MainObject   => $MainObject,
         TimeObject   => $TimeObject,
@@ -92,7 +101,7 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Object (qw(ConfigObject LogObject MainObject EncodeObject TimeObject DBObject XMLObject)) {
+    for my $Object (qw(ConfigObject EncodeObject LogObject MainObject TimeObject DBObject XMLObject)) {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
@@ -228,6 +237,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.19 $ $Date: 2009-06-30 16:13:38 $
+$Revision: 1.20 $ $Date: 2009-07-20 23:18:46 $
 
 =cut
