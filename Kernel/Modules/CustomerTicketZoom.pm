@@ -2,8 +2,8 @@
 # Kernel/Modules/CustomerTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerTicketZoom.pm,v 1.5 2009-07-18 19:12:58 ub Exp $
-# $OldId: CustomerTicketZoom.pm,v 1.41 2009/07/18 15:19:33 martin Exp $
+# $Id: CustomerTicketZoom.pm,v 1.6 2009-07-20 15:04:37 ub Exp $
+# $OldId: CustomerTicketZoom.pm,v 1.44 2009/07/20 10:36:04 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -227,23 +227,12 @@ sub Run {
             my $From = "$Self->{UserFirstname} $Self->{UserLastname} <$Self->{UserEmail}>";
 
             my $MimeType = 'text/plain';
-            if ( $Self->{ConfigObject}->{'Frontend::RichText'} ) {
+            if ( $Self->{ConfigObject}->Get('Frontend::RichText') ) {
                 $MimeType = 'text/html';
 
-                # replace image link with content id for uploaded images
-                $GetParam{Body} =~ s{
-                    ((?:<|&lt;)img.*?src=(?:"|&quot;))
-                    .*?ContentID=(inline[\w\.]+?@[\w\.-]+).*?
-                    ((?:"|&quot;).*?(?:>|&gt;))
-                }
-                {
-                    $1 . "cid:" . $2 . $3;
-                }esgxi;
-
                 # verify html document
-                $GetParam{Body} = $Self->{LayoutObject}->{HTMLUtilsObject}->DocumentComplete(
-                    String  => $GetParam{Body},
-                    Charset => $Self->{LayoutObject}->{UserCharset},
+                $GetParam{Body} = $Self->{LayoutObject}->RichTextDocumentComplete(
+                    String => $GetParam{Body},
                 );
             }
 
@@ -682,8 +671,8 @@ sub _Mask {
             Data => { %Param, },
         );
 
-        # add YUI editor
-        if ( $Self->{ConfigObject}->{'Frontend::RichText'} ) {
+        # add rich text editor
+        if ( $Self->{ConfigObject}->Get('Frontend::RichText') ) {
             $Self->{LayoutObject}->Block(
                 Name => 'RichText',
                 Data => \%Param,

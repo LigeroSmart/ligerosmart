@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketPending.pm - set ticket to pending
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPending.pm,v 1.5 2009-07-18 19:12:58 ub Exp $
-# $OldId: AgentTicketPending.pm,v 1.62 2009/07/18 09:19:07 martin Exp $
+# $Id: AgentTicketPending.pm,v 1.6 2009-07-20 15:04:37 ub Exp $
+# $OldId: AgentTicketPending.pm,v 1.65 2009/07/20 10:36:04 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -305,7 +305,7 @@ sub Run {
     }
 
     # rewrap body if exists
-    if ( $GetParam{Body} && !$Self->{ConfigObject}->{'Frontend::RichText'} ) {
+    if ( $GetParam{Body} && !$Self->{ConfigObject}->Get('Frontend::RichText') ) {
         my $Size = $Self->{ConfigObject}->Get('Ticket::Frontend::TextAreaNote') || 70;
         $GetParam{Body} =~ s/(^>.+|.{4,$Size})(?:\s|\z)/$1\n/gm;
     }
@@ -562,23 +562,12 @@ sub Run {
         my $ArticleID = '';
         if ( $Self->{Config}->{Note} ) {
             my $MimeType = 'text/plain';
-            if ( $Self->{ConfigObject}->{'Frontend::RichText'} ) {
+            if ( $Self->{ConfigObject}->Get('Frontend::RichText') ) {
                 $MimeType = 'text/html';
 
-                # replace image link with content id for uploaded images
-                $GetParam{Body} =~ s{
-                    ((?:<|&lt;)img.*?src=(?:"|&quot;))
-                    .*?ContentID=(inline[\w\.]+?@[\w\.-]+).*?
-                    ((?:"|&quot;).*?(?:>|&gt;))
-                }
-                {
-                    $1 . "cid:" . $2 . $3;
-                }esgxi;
-
                 # verify html document
-                $GetParam{Body} = $Self->{LayoutObject}->{HTMLUtilsObject}->DocumentComplete(
-                    String  => $GetParam{Body},
-                    Charset => $Self->{LayoutObject}->{UserCharset},
+                $GetParam{Body} = $Self->{LayoutObject}->RichTextDocumentComplete(
+                    String => $GetParam{Body},
                 );
             }
 
@@ -876,20 +865,23 @@ sub Run {
 # ---
     else {
 
-        # fillup vars
-        if ( !defined( $GetParam{Body} ) && $Self->{Config}->{Body} ) {
-            $GetParam{Body} = $Self->{LayoutObject}->Output( Template => $Self->{Config}->{Body} )
-                || '';
-
-            # make sure body has correct format (plain or html)
-            my @NewBody = $Self->{LayoutObject}->ToFromRichText(
-                Content => $GetParam{Body},
+        # fillup configured default vars
+        if ( !defined $GetParam{Body} && $Self->{Config}->{Body} ) {
+            $GetParam{Body} = $Self->{LayoutObject}->Output(
+                Template => $Self->{Config}->{Body},
             );
-            $GetParam{Body} = $NewBody[0];
+
+            # make sure body is rich text
+            if ( $Self->{ConfigObject}->Get('Frontend::RichText') ) {
+                $GetParam{Body} = $Self->{LayoutObject}->Ascii2RichText(
+                    String => $GetParam{Body},
+                );
+            }
         }
-        if ( !defined( $GetParam{Subject} ) && $Self->{Config}->{Subject} ) {
-            $GetParam{Subject}
-                = $Self->{LayoutObject}->Output( Template => $Self->{Config}->{Subject} );
+        if ( !defined $GetParam{Subject} && $Self->{Config}->{Subject} ) {
+            $GetParam{Subject} = $Self->{LayoutObject}->Output(
+                Template => $Self->{Config}->{Subject},
+            );
         }
 
         # get free text config options
@@ -1391,8 +1383,8 @@ sub _Mask {
             Data => {%Param},
         );
 
-        # add YUI editor
-        if ( $Self->{ConfigObject}->{'Frontend::RichText'} ) {
+        # add rich text editor
+        if ( $Self->{ConfigObject}->Get('Frontend::RichText') ) {
             $Self->{LayoutObject}->Block(
                 Name => 'RichText',
                 Data => \%Param,

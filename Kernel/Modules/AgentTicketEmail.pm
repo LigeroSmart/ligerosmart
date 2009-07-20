@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketEmail.pm - to compose initial email to customer
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketEmail.pm,v 1.9 2009-07-18 19:12:12 ub Exp $
-# $OldId: AgentTicketEmail.pm,v 1.91 2009/07/18 18:19:38 ub Exp $
+# $Id: AgentTicketEmail.pm,v 1.10 2009-07-20 15:04:37 ub Exp $
+# $OldId: AgentTicketEmail.pm,v 1.94 2009/07/20 10:36:04 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,7 +33,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -324,10 +324,17 @@ sub Run {
             my $Subject = $Self->{LayoutObject}->Output(
                 Template => $Self->{Config}->{Subject} || '',
             );
-            my @DefaultBody = $Self->{LayoutObject}->ToFromRichText(
-                Content => $Self->{Config}->{Body} || '',
+
+            my $Body = $Self->{LayoutObject}->Output(
+                Template => $Self->{Config}->{Body} || '',
             );
-            my $Body = $Self->{LayoutObject}->Output( Template => $DefaultBody[0] );
+
+            # make sure body is rich text
+            if ( $Self->{ConfigObject}->Get('Frontend::RichText') ) {
+                $Body = $Self->{LayoutObject}->Ascii2RichText(
+                    String => $Body,
+                );
+            }
 
             # html output
             my $Services = $Self->_GetServices(
@@ -885,19 +892,9 @@ sub Run {
         }
 
         my $MimeType = 'text/plain';
-        if ( $Self->{ConfigObject}->{'Frontend::RichText'} ) {
+        if ( $Self->{ConfigObject}->Get('Frontend::RichText') ) {
             $MimeType = 'text/html';
             $GetParam{Body} .= "<br/><br/>" . $Signature;
-
-            # replace link with content id for uploaded images
-            $GetParam{Body} =~ s{
-                ((?:<|&lt;)img.*?src=(?:"|&quot;))
-                .*?ContentID=(inline[\w\.]+?@[\w\.-]+).*?
-                ((?:"|&quot;).*?(?:>|&gt;))
-            }
-            {
-                $1 . "cid:" . $2 . $3;
-            }esgxi;
 
             # remove unused inline images
             my @NewAttachments = ();
@@ -906,14 +903,13 @@ sub Run {
                 next REMOVEINLINE if $TmpAttachment->{ContentID}
                         && $TmpAttachment->{ContentID} =~ /^inline/
                         && $GetParam{Body} !~ /$TmpAttachment->{ContentID}/;
-                push( @NewAttachments, \%{$TmpAttachment} );
+                push @NewAttachments, \%{$TmpAttachment};
             }
             @Attachments = @NewAttachments;
 
             # verify html document
-            $GetParam{Body} = $Self->{LayoutObject}->{HTMLUtilsObject}->DocumentComplete(
-                String  => $GetParam{Body},
-                Charset => $Self->{LayoutObject}->{UserCharset},
+            $GetParam{Body} = $Self->{LayoutObject}->RichTextDocumentComplete(
+                String => $GetParam{Body},
             );
         }
         else {
@@ -2152,8 +2148,8 @@ sub _MaskEmailNew {
         }
     }
 
-    # add YUI editor
-    if ( $Self->{ConfigObject}->{'Frontend::RichText'} ) {
+    # add rich text editor
+    if ( $Self->{ConfigObject}->Get('Frontend::RichText') ) {
         $Self->{LayoutObject}->Block(
             Name => 'RichText',
             Data => \%Param,
