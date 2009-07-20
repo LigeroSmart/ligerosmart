@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # Copyright (C) 2007-2008 Milen Koutev
 # --
-# $Id: cz_ITSMCore.pm,v 1.12 2009-05-18 09:48:24 mh Exp $
+# $Id: cz_ITSMCore.pm,v 1.13 2009-07-20 12:21:17 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -25,43 +25,43 @@ sub Data {
 
     return if ref $Lang ne 'HASH';
 
-    $Lang->{'Criticality'}                         = 'KritiÄnost';
+    $Lang->{'Criticality'}                         = 'Kritiènost';
     $Lang->{'Impact'}                              = 'Vliv';
-    $Lang->{'Criticality <-> Impact <-> Priority'} = 'KritiÄnost<->Vliv<->Priorita';
-    $Lang->{'allocate'}                            = 'UrÄen';
-    $Lang->{'Relevant to'}                         = 'RelevantnÃ­';
-    $Lang->{'Includes'}                            = 'zahrnutÃ©';
-    $Lang->{'Part of'}                             = 'ÄÃ¡st';
-    $Lang->{'Depends on'}                          = 'ZaleÅ¾Ã­';
-    $Lang->{'Required for'}                        = ' PoÅ¾adovanÃ½';
+    $Lang->{'Criticality <-> Impact <-> Priority'} = 'Kritiènost<->Vliv<->Priorita';
+    $Lang->{'allocate'}                            = 'Urèen';
+    $Lang->{'Relevant to'}                         = 'Relevantní';
+    $Lang->{'Includes'}                            = 'zahrnuté';
+    $Lang->{'Part of'}                             = 'èást';
+    $Lang->{'Depends on'}                          = 'Zale¾í';
+    $Lang->{'Required for'}                        = ' Po¾adovanı';
     $Lang->{'Connected to'}                        = 'Spojen s';
-    $Lang->{'Alternative to'}                      = 'AlternativnÃ­';
+    $Lang->{'Alternative to'}                      = 'Alternativní';
     $Lang->{'Incident State'}                      = '';
     $Lang->{'Current Incident State'}              = '';
     $Lang->{'Current State'}                       = '';
     $Lang->{'Service-Area'}                        = '';
-    $Lang->{'Minimum Time Between Incidents'}      = 'MinimÃ¡lnÃ­ Äas mezi incidenty';
+    $Lang->{'Minimum Time Between Incidents'}      = 'Minimální èas mezi incidenty';
     $Lang->{'Service Overview'}                    = '';
     $Lang->{'SLA Overview'}                        = '';
     $Lang->{'Associated Services'}                 = '';
-    $Lang->{'Associated SLAs'}                     = 'PÅ™idruÅ¾enÃ© SLA smliuvy';
-    $Lang->{'Back End'}                            = 'ZÃ¡kladnÃ­ schÃ©ma/BackEnd';
+    $Lang->{'Associated SLAs'}                     = 'Pøidru¾ené SLA smliuvy';
+    $Lang->{'Back End'}                            = 'Základní schéma/BackEnd';
     $Lang->{'Demonstration'}                       = 'Demonstrace';
-    $Lang->{'End User Service'}                    = 'SluÅ¾by koncovÃ½ch uÅ¾ivatelÅ¯';
-    $Lang->{'Front End'}                           = 'ZÃ¡kaznickÃ½ systÃ©m/FrontEnd';
-    $Lang->{'IT Management'}                       = 'Å˜Ã­zenÃ­ IT';
+    $Lang->{'End User Service'}                    = 'Slu¾by koncovıch u¾ivatelù';
+    $Lang->{'Front End'}                           = 'Zákaznickı systém/FrontEnd';
+    $Lang->{'IT Management'}                       = 'Øízení IT';
     $Lang->{'IT Operational'}                      = 'IT Operace';
-    $Lang->{'Other'}                               = 'DalÅ¡Ã­';
+    $Lang->{'Other'}                               = 'Dal¹í';
     $Lang->{'Project'}                             = 'Projekt';
-    $Lang->{'Reporting'}                           = 'ZpravodajstvÃ­';
-    $Lang->{'Training'}                            = 'Å kolenÃ­';
-    $Lang->{'Underpinning Contract'}               = 'ZÃ¡kladnÃ­ smlouva';
+    $Lang->{'Reporting'}                           = 'Zpravodajství';
+    $Lang->{'Training'}                            = '©kolení';
+    $Lang->{'Underpinning Contract'}               = 'Základní smlouva';
     $Lang->{'Availability'}                        = 'Dostupnost';
     $Lang->{'Errors'}                              = 'Chyby';
-    $Lang->{'Other'}                               = 'DalÅ¡Ã­';
-    $Lang->{'Recovery Time'}                       = 'Doba obnovenÃ­';
-    $Lang->{'Resolution Rate'}                     = 'Doba Å™eÅ¡enÃ­';
-    $Lang->{'Response Time'}                       = 'Doba odpovÄ›di';
+    $Lang->{'Other'}                               = 'Dal¹í';
+    $Lang->{'Recovery Time'}                       = 'Doba obnovení';
+    $Lang->{'Resolution Rate'}                     = 'Doba øe¹ení';
+    $Lang->{'Response Time'}                       = 'Doba odpovìdi';
     $Lang->{'Transactions'}                        = 'Obchody/transakce';
 
     return 1;
