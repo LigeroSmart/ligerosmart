@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # Copyright (C) 2007-2008 Milen Koutev
 # --
-# $Id: cz_ITSMTicket.pm,v 1.5 2009-05-18 09:55:54 mh Exp $
+# $Id: cz_ITSMTicket.pm,v 1.6 2009-07-20 12:27:08 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -25,18 +25,18 @@ sub Data {
 
     return if ref $Lang ne 'HASH';
 
-    $Lang->{'Due Date'}                     = 'KoneÄnÃ­ datum';
-    $Lang->{'Decision'}                     = 'Å˜eÅ¡enÃ­';
-    $Lang->{'Reason'}                       = 'DÅ¯vod';
-    $Lang->{'Decision Date'}                = 'Datum rozhodnutÃ­';
-    $Lang->{'Add decision to ticket'}       = 'Dodat Å™eÅ¡enÃ­ k tiketu';
-    $Lang->{'Decision Result'}              = 'VÃ½sledek rozhodnutÃ­';
-    $Lang->{'Review Required'}              = 'VyÅ¾aduje pÅ™ehled';
-    $Lang->{'closed with workaround'}       = 'UzavÅ™en s obchodnÃ­m rozhodnutÃ­m';
-    $Lang->{'Additional ITSM Fields'}       = 'DodateÄnÃ© ITSM pole';
-    $Lang->{'Change ITSM fields of ticket'} = 'ZmÄ›nit ITSM polÃ­ tiketu';
-    $Lang->{'Repair Start Time'}            = 'ÄŒas zahÃ¡jenÃ­ opravy';
-    $Lang->{'Recovery Start Time'}          = 'ÄŒas zahÃ¡jenÃ­ obnovenÃ­';
+    $Lang->{'Due Date'}                     = 'Koneèní datum';
+    $Lang->{'Decision'}                     = 'Øe¹ení';
+    $Lang->{'Reason'}                       = 'Dùvod';
+    $Lang->{'Decision Date'}                = 'Datum rozhodnutí';
+    $Lang->{'Add decision to ticket'}       = 'Dodat øe¹ení k tiketu';
+    $Lang->{'Decision Result'}              = 'Výsledek rozhodnutí';
+    $Lang->{'Review Required'}              = 'Vy¾aduje pøehled';
+    $Lang->{'closed with workaround'}       = 'Uzavøen s obchodním rozhodnutím';
+    $Lang->{'Additional ITSM Fields'}       = 'Dodateèné ITSM pole';
+    $Lang->{'Change ITSM fields of ticket'} = 'Zmìnit ITSM polí tiketu';
+    $Lang->{'Repair Start Time'}            = 'Èas zahájení opravy';
+    $Lang->{'Recovery Start Time'}          = 'Èas zahájení obnovení';
     $Lang->{'Change the ITSM fields!'}      = '';
     $Lang->{'Add a decision!'}              = '';
 
