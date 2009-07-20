@@ -1,9 +1,9 @@
 # --
-# Kernel/Language/de_FAQ.pm - the german translation of FAQ
+# Kernel/Language/fa_FAQ.pm - the persian (farsi) translation of FAQ
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # Translated/Updated into Persian (Farsi) by Afshar Mohebbi <afshar.mohebbi at gmail.com>
 # --
-# $Id: fa_FAQ.pm,v 1.2 2009-07-20 09:42:48 ub Exp $
+# $Id: fa_FAQ.pm,v 1.3 2009-07-20 09:52:39 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub Data {
     my $Self = shift;
