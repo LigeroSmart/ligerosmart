@@ -2,7 +2,7 @@
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.45 2009-07-19 13:22:35 ub Exp $
+# $Id: GeneralCatalog.pm,v 1.46 2009-07-20 22:48:51 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Valid;
 use Kernel::System::CheckItem;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.45 $) [1];
+$VERSION = qw($Revision: 1.46 $) [1];
 
 =head1 NAME
 
@@ -66,6 +66,7 @@ create an object
     );
     my $GeneralCatalogObject = Kernel::System::GeneralCatalog->new(
         ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
         LogObject    => $LogObject,
         DBObject     => $DBObject,
         MainObject   => $MainObject,
@@ -81,7 +82,7 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Object (qw(DBObject ConfigObject LogObject MainObject)) {
+    for my $Object (qw(DBObject ConfigObject EncodeObject LogObject MainObject)) {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
     $Self->{ValidObject}     = Kernel::System::Valid->new( %{$Self} );
@@ -695,6 +696,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.45 $ $Date: 2009-07-19 13:22:35 $
+$Revision: 1.46 $ $Date: 2009-07-20 22:48:51 $
 
 =cut
