@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # Copyright (C) 2007-2008 Milen Koutev
 # --
-# $Id: cz_GeneralCatalog.pm,v 1.9 2009-05-18 09:40:46 mh Exp $
+# $Id: cz_GeneralCatalog.pm,v 1.10 2009-07-20 12:19:07 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -25,12 +25,12 @@ sub Data {
 
     return if ref $Lang ne 'HASH';
 
-    $Lang->{'General Catalog'}            = 'VÅ¡eobecnÃ½ katalog';
-    $Lang->{'General Catalog Management'} = 'Å˜Ã­zenÃ­ vÅ¡eobecnÃ©ho katalogu';
-    $Lang->{'Catalog Class'}              = 'TÅ™Ã­dy v katalogu';
-    $Lang->{'Add a new Catalog Class.'}   = 'PÅ™idat novou tÅ™Ã­du do katalogu.';
-    $Lang->{'Add Catalog Item'}           = 'PÅ™idat prvek do katalogu';
-    $Lang->{'Add Catalog Class'}          = 'PÅ™idat tÅ™Ã­du do katalogu';
+    $Lang->{'General Catalog'}            = 'V¹eobecný katalog';
+    $Lang->{'General Catalog Management'} = 'Øízení v¹eobecného katalogu';
+    $Lang->{'Catalog Class'}              = 'Tøídy v katalogu';
+    $Lang->{'Add a new Catalog Class.'}   = 'Pøidat novou tøídu do katalogu.';
+    $Lang->{'Add Catalog Item'}           = 'Pøidat prvek do katalogu';
+    $Lang->{'Add Catalog Class'}          = 'Pøidat tøídu do katalogu';
     $Lang->{'Functionality'}              = 'Funkcionalita';
 
     return 1;
