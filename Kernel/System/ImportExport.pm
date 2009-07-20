@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport.pm - all import and export functions
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pm,v 1.31 2009-05-18 09:42:52 mh Exp $
+# $Id: ImportExport.pm,v 1.32 2009-07-20 22:55:23 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::CheckItem;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.31 $) [1];
+$VERSION = qw($Revision: 1.32 $) [1];
 
 =head1 NAME
 
@@ -38,26 +38,34 @@ All import and export functions.
 create an object
 
     use Kernel::Config;
+    use Kernel::System::Encode;
     use Kernel::System::DB;
     use Kernel::System::ImportExport;
     use Kernel::System::Log;
     use Kernel::System::Main;
 
     my $ConfigObject = Kernel::Config->new();
+    my $EncodeObject = Kernel::System::Encode->new(
+        ConfigObject => $ConfigObject,
+    );
     my $LogObject = Kernel::System::Log->new(
         ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
     );
     my $MainObject = Kernel::System::Main->new(
         ConfigObject => $ConfigObject,
         LogObject    => $LogObject,
+        EncodeObject => $EncodeObject,
     );
     my $DBObject = Kernel::System::DB->new(
         ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
         LogObject    => $LogObject,
         MainObject   => $MainObject,
     );
     my $ImportExportObject = Kernel::System::ImportExport->new(
         ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
         LogObject    => $LogObject,
         DBObject     => $DBObject,
         MainObject   => $MainObject,
@@ -74,7 +82,7 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Object (qw(ConfigObject LogObject DBObject MainObject EncodeObject)) {
+    for my $Object (qw(ConfigObject EncodeObject LogObject DBObject MainObject)) {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
     $Self->{CheckItemObject} = Kernel::System::CheckItem->new( %{$Self} );
@@ -2238,6 +2246,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.31 $ $Date: 2009-05-18 09:42:52 $
+$Revision: 1.32 $ $Date: 2009-07-20 22:55:23 $
 
 =cut
