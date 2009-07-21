@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/OutputFilterFAQ.pm - Output filter for FAQ module
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: OutputFilterFAQ.pm,v 1.4 2009-07-15 13:34:47 ub Exp $
+# $Id: OutputFilterFAQ.pm,v 1.5 2009-07-21 14:57:10 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -14,7 +14,7 @@ package Kernel::Output::HTML::OutputFilterFAQ;
 use strict;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.4 $';
+$VERSION = '$Revision: 1.5 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -43,41 +43,6 @@ sub Run {
 
     # check permission
     return if !$Self->{LayoutObject}->{EnvRef}->{'UserIsGroupRo[faq]'};
-
-    # Template is RichTextEditor
-    if ( $Param{TemplateFile} eq 'RichTextEditor' ) {
-
-        # add custom event handler
-        my $Search = '\(function\(\) [ ] \{ \s+ var [ ] EditorConfig [ ] = [ ] \{';
-        my $Replace = <<'END';
-
-// define custom event for inserting faq articles
-var onInsertFAQText = new YAHOO.util.CustomEvent("onInsertFAQText");
-
-END
-        ${$Param{Data}} =~ s{ ($Search) }{$Replace$1}xms;
-
-        # add functionallity to insert an faq article to custom event handler
-        $Search = q{var [ ] myEditor [ ] = [ ] new [ ] YAHOO\.widget\.Editor \( 'RichText' ,[ ] EditorConfig \);};
-        $Replace = <<'END';
-
-    // subscribe event handler to the custom event
-    onInsertFAQText.subscribe( function(type, args) {
-
-        // get faq body
-        var FAQBody = args[0];
-
-        // insert FAQ body at cursor position
-        myEditor.execCommand('inserthtml', FAQBody);
-
-        // save new editor content
-        myEditor.saveHTML();
-    });
-END
-        ${$Param{Data}} =~ s{ ($Search) }{$1$Replace}xms;
-
-        return 1;
-    }
 
     # get allowed template names
     my $ValidTemplates = $Self->{ConfigObject}->Get('Frontend::Output::FilterElementPre')
