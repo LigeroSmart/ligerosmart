@@ -1,24 +1,34 @@
 # --
-# Kernel/Modules/PictureUploadFAQ.pm - get picture uploads for the FAQ
+# Kernel/Modules/PictureUploadFAQ.pm - get picture uploads for FAQ
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: PictureUploadFAQ.pm,v 1.1 2009-07-14 08:56:19 ub Exp $
+# $Id: PictureUploadFAQ.pm,v 1.2 2009-07-21 22:53:02 ub Exp $
+# $OldId: PictureUpload.pm,v 1.3 2009/07/19 21:47:15 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
+# ---
+# FAQ
+# ---
+#package Kernel::Modules::PictureUpload;
 package Kernel::Modules::PictureUploadFAQ;
+# ---
 
 use strict;
 use warnings;
 
+# ---
+# FAQ
+# ---
 use URI::Escape;
+# ---
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -28,16 +38,14 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for (qw(ParamObject DBObject TicketObject LayoutObject LogObject ConfigObject)) {
+    for (qw(ParamObject DBObject LayoutObject LogObject ConfigObject)) {
         if ( !$Self->{$_} ) {
             $Self->{LayoutObject}->FatalError( Message => "Got no $_!" );
         }
     }
 
-    # create needed objects
-    $Self->{UploadCacheObject} = Kernel::System::Web::UploadCache->new(%Param);
+    $Self->{UploadCachObject} = Kernel::System::Web::UploadCache->new(%Param);
 
-    # get params
     $Self->{FormID} = $Self->{ParamObject}->GetParam( Param => 'FormID' );
 
     return $Self;
@@ -46,54 +54,50 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    # prepare header
-    my $Output = "Content-Type: text/html; charset=" . $Self->{ConfigObject}->Get('DefaultCharset') . ";\n\n";
+    my $Output = "Content-Type: text/html; charset="
+        . $Self->{ConfigObject}->Get('DefaultCharset') . ";\n\n";
+    $Output .= "
+<script type=\"text/javascript\">
+(function(){var d=document.domain;while (true){try{var A=window.parent.document.domain;break;}catch(e
+) {};d=d.replace(/.*?(?:\.|\$)/,'');if (d.length==0) break;try{document.domain=d;}catch (e){break;}}}
+)();
 
-    # check param
+";
+
     if ( !$Self->{FormID} ) {
-        $Output .= "{status:'Got no FormID!'}";
+        $Output .= "window.parent.OnUploadCompleted(404,\"\",\"\",\"\") ;</script>";
         return $Output;
     }
 
-    # show existing file
-    my $Filename = $Self->{ParamObject}->GetParam( Param => 'Filename' );
+    if ( $Self->{ParamObject}->GetParam( Param => 'ContentID' ) ) {
+        my $ContentID = $Self->{ParamObject}->GetParam( Param => 'ContentID' ) || '';
 
-    if ( $Filename ) {
-
-        # uri escape filename
-        if ( $Self->{ConfigObject}->Get('DefaultCharset') eq 'utf-8') {
-            $Filename = uri_escape_utf8( $Filename )  ;
-        }
-        else {
-            $Filename = uri_escape( $Filename );
-        }
-
-        # display picture in HTML editor
-        my @AttachmentData = $Self->{UploadCacheObject}->FormIDGetAllFilesData(
-            FormID => $Self->{FormID},
-        );
+        # return image inline
+        my @AttachmentData
+            = $Self->{UploadCachObject}->FormIDGetAllFilesData( FormID => $Self->{FormID} );
         ATTACHMENTDATA:
-        for my $Ref ( @AttachmentData ) {
-            next ATTACHMENTDATA if $Ref->{Filename} ne $Filename;
+        for my $TmpAttachment (@AttachmentData) {
+            next ATTACHMENTDATA if $TmpAttachment->{ContentID} ne $ContentID;
             return $Self->{LayoutObject}->Attachment(
                 Type => 'inline',
-                %{ $Ref },
+                %{$TmpAttachment},
             );
         }
-        $Output .= "{status:'File does not exist: $Filename !'}";
-        return $Output;
     }
 
     # upload new picture
     my %File = $Self->{ParamObject}->GetUploadAll(
-        Param  => 'file_name',
+        Param  => 'NewFile',
         Source => 'string',
     );
+
     if ( !%File ) {
-        $Output .= "{status:'Got no File!'}";
+        $Output .= "window.parent.OnUploadCompleted(404,\"-\",\"-\",\"\") ;</script>";
         return $Output;
     }
-
+# ---
+# FAQ
+# ---
     # uri escape filename
     if ( $Self->{ConfigObject}->Get('DefaultCharset') eq 'utf-8') {
         $File{Filename} = uri_escape_utf8( $File{Filename} )  ;
@@ -101,55 +105,78 @@ sub Run {
     else {
         $File{Filename} = uri_escape( $File{Filename} );
     }
+# ---
 
-    # check image type
-    if ($File{Filename} !~ /\.(png|gif|jpg|jpeg)$/i) {
-        $Output .= "{status:'Only gif, jp(e)g and png images allowed!'}";
+    if ( $File{Filename} !~ /\.(png|gif|jpg|jpeg)$/i ) {
+        $Output .= "window.parent.OnUploadCompleted(202,\"-\",\"-\",\"\") ;</script>";
         return $Output;
     }
 
-    # if filename exists already try to rename it
-    my @AttachmentMeta = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
-        FormID => $Self->{FormID},
+    my @AttachmentMeta = $Self->{UploadCachObject}->FormIDGetAllFilesMeta(
+        FormID => $Self->{FormID}
     );
-    my $TmpFilename = $File{Filename};
-    my $TmpSuffix = 0;
-    NEWNAME:
-    for ( 1 ) {
-        for my $Ref (reverse @AttachmentMeta) {
-            if ($TmpFilename eq $Ref->{Filename}) {
-                # name exists -> change
-                ++$TmpSuffix;
-                if ( $File{Filename} =~ /^(.*)\.(.+?)$/ ) {
-                    $TmpFilename = "$1-$TmpSuffix.$2";
-                }
-                else {
-                    $TmpFilename = "$File{Filename}-$TmpSuffix";
-                }
-                redo NEWNAME;
-            }
-        }
-        last NEWNAME;
-    }
+    my $TmpFilename    = $File{Filename};
+    my $TmpSuffix      = 0;
+    my $UniqueFilename = '';
+    while ( !$UniqueFilename ) {
+        $UniqueFilename = $TmpFilename;
+        NEWNAME:
+        for my $TmpAttachment ( reverse @AttachmentMeta ) {
+            next NEWNAME if $TmpFilename ne $TmpAttachment->{Filename};
 
-    # store file in UploadCache
-    $Self->{UploadCacheObject}->FormIDAddFile(
+            # name exists -> change
+            ++$TmpSuffix;
+            if ( $File{Filename} =~ /^(.*)\.(.+?)$/ ) {
+                $TmpFilename = "$1-$TmpSuffix.$2";
+            }
+            else {
+                $TmpFilename = "$File{Filename}-$TmpSuffix";
+            }
+            $UniqueFilename = '';
+            last NEWNAME;
+        }
+    }
+    $Self->{UploadCachObject}->FormIDAddFile(
         FormID      => $Self->{FormID},
         Filename    => $TmpFilename,
         Content     => $File{Content},
-        ContentType => "$File{ContentType}; name=\"$TmpFilename\"",
+        ContentType => $File{ContentType} . '; name="' . $TmpFilename . '"',
+        Disposition => 'inline',
     );
-
-    # check if session data is needed for URL
-    my $Session = '';
-    if ( !$Self->{LayoutObject}->{SessionIDCookie} ) {
-        $Session = '&' . $Self->{LayoutObject}->{SessionName} . '='
-            . $Self->{LayoutObject}->{SessionID};
+    my $ContentID = '';
+    @AttachmentMeta = $Self->{UploadCachObject}->FormIDGetAllFilesMeta(
+        FormID => $Self->{FormID}
+    );
+    CONTENTID:
+    for my $TmpAttachment (@AttachmentMeta) {
+        next CONTENTID if $TmpFilename ne $TmpAttachment->{Filename};
+        $ContentID = $TmpAttachment->{ContentID};
+        last CONTENTID;
     }
 
-    # return file URL
-    $Output .= "{status:'UPLOADED', image_url:'$Self->{LayoutObject}->{Baselink}"
-        . "Action=PictureUploadFAQ&FormID=$Self->{FormID}&Filename=$TmpFilename$Session'}";
+    my $SessionID = '';
+    if ( $Self->{SessionID} && !$Self->{SessionIDCookie} ) {
+        $SessionID = "&" . $Self->{SessionName} . "=" . $Self->{SessionID};
+    }
+    my $URL = $Self->{LayoutObject}->{Baselink}
+# ---
+# FAQ
+# ---
+#        . "Action=PictureUpload"
+        . "Action=PictureUploadFAQ"
+# ---
+        . "&FormID="
+        . $Self->{FormID}
+        . "&ContentID="
+        . $ContentID
+# ---
+# FAQ
+# ---
+        . "&Filename="
+        . $TmpFilename
+# ---
+        . $SessionID;
+    $Output .= "window.parent.OnUploadCompleted(0,\"$URL\",\"$URL\",\"\") ;</script>";
 
     return $Output;
 }
