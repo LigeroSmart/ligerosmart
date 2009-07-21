@@ -1,30 +1,31 @@
 #!/usr/bin/perl -w
 # --
 # otrs.NagiosCheck.pl - OTRS Nagios checker
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: otrs.NagiosCheck.pl,v 1.6 2008-10-16 23:07:50 jb Exp $
+# $Id: otrs.NagiosCheck.pl,v 1.7 2009-07-21 20:57:34 martin Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
+# it under the terms of the GNU AFFERO General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# any later version.
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
-# You should have received a copy of the GNU General Public License
+# You should have received a copy of the GNU Affero General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# or see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 use File::Basename;
 use FindBin qw($RealBin);
@@ -62,6 +63,7 @@ if ( !eval $Content ) {
 }
 
 use Kernel::Config;
+use Kernel::System::Encode;
 use Kernel::System::Log;
 use Kernel::System::Time;
 use Kernel::System::Main;
@@ -71,6 +73,7 @@ use Kernel::System::Ticket;
 # create common objects
 my %CommonObject = ();
 $CommonObject{ConfigObject} = Kernel::Config->new(%CommonObject);
+$CommonObject{EncodeObject} = Kernel::System::Encode->new(%CommonObject);
 $CommonObject{LogObject}    = Kernel::System::Log->new( %CommonObject, LogPrefix => 'otrs.NagiosCheck' );
 $CommonObject{TimeObject}   = Kernel::System::Time->new(%CommonObject);
 $CommonObject{MainObject}   = Kernel::System::Main->new(%CommonObject);
