@@ -1,19 +1,19 @@
 # --
 # Kernel/System/PostMaster/Filter/SystemMonitoring.pm - Basic System Monitoring Interface
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: SystemMonitoring.pm,v 1.5 2008-11-17 16:44:15 jb Exp $
+# $Id: SystemMonitoring.pm,v 1.6 2009-07-21 20:44:06 jb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 package Kernel::System::PostMaster::Filter::SystemMonitoring;
 use strict;
 use warnings;
 use vars qw($VERSION);
 
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -63,7 +63,7 @@ sub Run {
 
     # check if sender is of interest
     if (   $Param{GetParam}->{From}
-        && $Param{GetParam}->{From} =~ /$Self->{Config}{FromAddressRegExp}/ )
+        && $Param{GetParam}->{From} =~ /$Self->{Config}{FromAddressRegExp}/i )
     {
 
         # Try to get State, Host and Service
