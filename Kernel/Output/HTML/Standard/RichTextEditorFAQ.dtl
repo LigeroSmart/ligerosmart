@@ -1,0 +1,79 @@
+# --
+# RichTextEditor.dtl - provides Rich Text Editor
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# --
+# $Id: RichTextEditorFAQ.dtl,v 1.1 2009-07-21 22:55:22 ub Exp $
+# $OldId: RichTextEditor.dtl,v 1.16 2009/07/21 18:59:41 martin Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+# load js
+<script src="$Config{"Frontend::JavaScriptPath"}fckeditor-2.6.4.1/fckeditor.js"></script>
+
+<script type="text/javascript">
+# ---
+# FAQ
+# ---
+#window.onload = function() {
+function RichTextEditorFAQCreate ( FieldName ) {
+# ---
+# ---
+# FAQ
+# ---
+#    var oFCKeditor = new FCKeditor( 'RichText' );
+#    oFCKeditor.Height = 320;
+#    oFCKeditor.Width  = 620;
+    var oFCKeditor = new FCKeditor( FieldName );
+    oFCKeditor.Height = 400;
+    oFCKeditor.Width  = 850;
+# ---
+    oFCKeditor.BasePath = "$Config{"Frontend::JavaScriptPath"}/fckeditor-2.6.4.1/";
+    oFCKeditor.Config["ForcePasteAsPlainText"] = false;
+    oFCKeditor.Config["EditorAreaStyles"]      = 'body { $Config{"Frontend::RichText::DefaultCSS"} }';
+    oFCKeditor.Config["AutoDetectLanguage"]    = false;
+    oFCKeditor.Config["DefaultLanguage"]       = '$Env{"UserLanguage"}';
+    oFCKeditor.Config["ImageUploadURL"]        = "$Env{"Baselink"}";
+    oFCKeditor.Config["FirefoxSpellChecker"]   = true;
+
+    if ( document.compose && document.compose.FormID ) {
+# ---
+# FAQ
+# ---
+#        oFCKeditor.Config["Action"] = "PictureUpload";
+        oFCKeditor.Config["Action"] = "PictureUploadFAQ";
+# ---
+        oFCKeditor.Config["FormID"] = document.compose.FormID.value;
+        oFCKeditor.ToolbarSet = 'Full';
+    }
+    else {
+        oFCKeditor.ToolbarSet = 'Simple';
+    }
+
+    oFCKeditor.ReplaceTextarea();
+}
+# ---
+# FAQ
+# ---
+window.onload = function() {
+    for ( var i = 1; i <= 6; i++ ) {
+        if ( document.getElementById('Field' + i) ) {
+            var myEditor = RichTextEditorFAQCreate('Field' + i);
+        }
+    }
+}
+# ---
+
+# workaround for http://dev.fckeditor.net/ticket/3053
+# see also http://www.fckeditor.net/forums/viewtopic.php?f=6&t=13222
+function FCKeditor_OnComplete( editorInstance ) {
+    var fck_iframe = document.getElementById('RichText___Frame');
+    if ( fck_iframe && fck_iframe.contentDocument ) {
+        var fck_editing_area = fck_iframe.contentDocument.getElementById('xEditingArea');
+        fck_editing_area.style.height = '100.1%';
+        setTimeout( function() { fck_editing_area.style.height = '100%' }, 100 );
+    }
+}
+</script>
