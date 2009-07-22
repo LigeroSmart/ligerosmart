@@ -2,8 +2,8 @@
 # Kernel/Modules/CustomerTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerTicketZoom.pm,v 1.6 2009-07-20 15:04:37 ub Exp $
-# $OldId: CustomerTicketZoom.pm,v 1.44 2009/07/20 10:36:04 mh Exp $
+# $Id: CustomerTicketZoom.pm,v 1.7 2009-07-22 16:07:08 ub Exp $
+# $OldId: CustomerTicketZoom.pm,v 1.45 2009/07/22 13:08:51 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -236,29 +236,27 @@ sub Run {
                 );
             }
 
-            if (
-                my $ArticleID = $Self->{TicketObject}->ArticleCreate(
-                    TicketID    => $Self->{TicketID},
-                    ArticleType => $Self->{Config}->{ArticleType},
-                    SenderType  => $Self->{Config}->{SenderType},
-                    From        => $From,
-                    Subject     => $GetParam{Subject},
-                    Body        => $GetParam{Body},
-                    MimeType    => $MimeType,
-                    Charset     => $Self->{LayoutObject}->{UserCharset},
-                    UserID      => $Self->{ConfigObject}->Get('CustomerPanelUserID'),
-                    OrigHeader  => {
-                        From    => $From,
-                        To      => 'System',
-                        Subject => $GetParam{Subject},
-                        Body    => $GetParam{Body},
-                    },
-                    HistoryType      => $Self->{Config}->{HistoryType},
-                    HistoryComment   => $Self->{Config}->{HistoryComment} || '%%',
-                    AutoResponseType => 'auto follow up',
-                )
-                )
-            {
+            my $ArticleID = $Self->{TicketObject}->ArticleCreate(
+                TicketID    => $Self->{TicketID},
+                ArticleType => $Self->{Config}->{ArticleType},
+                SenderType  => $Self->{Config}->{SenderType},
+                From        => $From,
+                Subject     => $GetParam{Subject},
+                Body        => $GetParam{Body},
+                MimeType    => $MimeType,
+                Charset     => $Self->{LayoutObject}->{UserCharset},
+                UserID      => $Self->{ConfigObject}->Get('CustomerPanelUserID'),
+                OrigHeader  => {
+                    From    => $From,
+                    To      => 'System',
+                    Subject => $GetParam{Subject},
+                    Body    => $Self->{LayoutObject}->RichText2Ascii( String => $GetParam{Body} ),
+                },
+                HistoryType      => $Self->{Config}->{HistoryType},
+                HistoryComment   => $Self->{Config}->{HistoryComment} || '%%',
+                AutoResponseType => 'auto follow up',
+            );
+            if ($ArticleID) {
 
                 # set state
                 my %NextStateData = $Self->{StateObject}->StateGet( ID => $GetParam{StateID} );
