@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
     "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
-<!-- $Id: FAQ.xml,v 1.2 2009-07-13 10:22:52 ub Exp $ -->
+<!-- $Id: FAQ.xml,v 1.3 2009-07-22 13:25:33 ub Exp $ -->
 
 <book lang='de'>
 
@@ -28,19 +28,19 @@
 <preface id="preface" >
     <title>Vorwort</title>
     <para>Das FAQ Modul ist eine OTRS Erweiterung welche eine FAQ- bzw. Wissensdatenbank zur Verfügung stellt.</para>
-    <para>Somit kann man die Möglichkeit schaffen, schneller Wissen innerhalb der Agenten oder über ein öffentliches Web-Interface an Kunden zu transferieren. Effektiv Zeit zu sparen.</para>
-    <para>Bei Fragen betreffend dieses Dokumentes, kontaktieren Sie Ihren Kommerziellen-Support (support@otrs.com) für weitere Informationen.</para>
+    <para>Somit kann man die Möglichkeit schaffen, schneller Wissen zwischen den Agenten, oder über ein öffentliches Web-Interface an Kunden, zu transferieren und effektiv Zeit zu sparen.</para>
+    <para>Bei Fragen betreffend dieses Dokumentes, kontaktieren Sie Ihren kommerziellen Support (support@otrs.com) für weitere Informationen.</para>
 </preface>
 
 <chapter>
     <title>Funktionsliste</title>
     <sect1>
         <title>FAQ Explorer</title>
-        <para>Intuitive Navigation und flexible Abbildung von Themenhierarchien innerhalb des FAQ Explorers um Übersichtlich durch die Datenbank zu gelangen.</para>
+        <para>Intuitive Navigation und flexible Abbildung von Themenhierarchien innerhalb des FAQ Explorers um übersichtlich durch die Datenbank zu navigieren.</para>
     </sect1>
     <sect1>
         <title>WYSIWYG Editor</title>
-        <para>Ein WYSIWYG Editor dient zur Formatierung von Artikeln und Einfügen von Screenshots oder Bildmaterial.</para>
+        <para>Ein WYSIWYG Editor dient zur Formatierung von Artikeln und zum Einfügen von Screenshots oder Bildmaterial.</para>
     </sect1>
     <sect1>
         <title>FAQ Artikel</title>
@@ -48,11 +48,11 @@
     </sect1>
     <sect1>
         <title>FAQ Anhänge</title>
-        <para>Zu eine, FAQ-Artikel können Anhänge hinzugefügt werden welche auch im Kunden-Interface verfübgar sind (z. B. PDF-Dateien für Anleitungen).</para>
+        <para>Zu einem FAQ-Artikel können Anhänge hinzugefügt werden, welche auch im Kunden-Interface verfübgar sind (z. B. PDF-Dateien für Anleitungen).</para>
     </sect1>
     <sect1>
         <title>Oberflächen für Agenten und Kunden</title>
-        <para>Über den FAQ-Status kann gesteuert werden, in welchen Oberflächen der FAQ-Artikel sichtbar ist. "intern" nur für Agenten in der Agenten-Oberflächen, "external" zusätzlich im geschützten Kunden-Bereich und "public" für den nicht geschützten  Kunden-Bereich.</para>
+        <para>Über den FAQ-Status kann gesteuert werden, in welchen Oberflächen der FAQ-Artikel sichtbar ist. Der Status "intern" ist nur für Agenten in der Agenten-Oberflächen, "external" zusätzlich im geschützten Kunden-Bereich und "public" auch für den nicht geschützten öffentlichen Bereich.</para>
     </sect1>
     <sect1>
         <title>Komfortable Verschlagwortung / Clickable Keywords</title>
@@ -60,35 +60,35 @@
     </sect1>
     <sect1>
         <title>Verknüpfung mit Objekten</title>
-        <para>Verknüpfung von FAQ Artikeln mit anderen Objekten wie mit Tickets, FAQ Artikeln oder Configuration Items (der CMDB) möglich.</para>
+        <para>FAQ Artikel können mit anderen Objekten verknüpft werden, wie z. B. mit Tickets, FAQ Artikeln oder Configuration Items (der CMDB).</para>
     </sect1>
     <sect1>
         <title>Volltext- und Schnellsuche</title>
-        <para>Volltext- und Schnellsuche innerhalb der gesamten Wissendatenbank möglich. Zusätzlich können auch die OTRS-Operatoren für "AND" oder "OR" Verknüpfungen verwendet werden.</para>
+        <para>Es ist eine Volltext- und Schnellsuche innerhalb der gesamten Wissendatenbank möglich. Zusätzlich können auch die OTRS-Operatoren für "AND" oder "OR" Verknüpfungen verwendet werden.</para>
     </sect1>
     <sect1>
         <title>Die häufigsten / Top 10</title>
-        <para>Eine Übersicht der Top 10 der am häufigsten aufgerufenen Artikel, der zuletzt erstellten Artikel und zuletzt geänderter Artikel.</para>
+        <para>Eine Übersicht der Top 10 der am häufigsten aufgerufenen Artikel, der zuletzt erstellten und zuletzt geänderten Artikel.</para>
     </sect1>
     <sect1>
         <title>Ranking/Voting von FAQ Artikeln</title>
-        <para>Ein persönliches Ranking/Voting von FAQ Artikeln welches als Information für andere über die Qualität des FAQ Artikels Auskunft gibt.</para>
+        <para>Ein persönliches Ranking/Voting von FAQ Artikeln welches als Information für andere Benutzer Auskunft über die Qualität des FAQ Artikels gibt.</para>
     </sect1>
     <sect1>
-        <title>Verwendung OTRS Antworten</title>
-        <para>Es besteht die Möglichkeit des einfügen von FAQ Artikeln bei der Erstellung von Antworten.</para>
+        <title>Einfügen von FAQ-Artikeln in OTRS Antworten</title>
+        <para>Es besteht die Möglichkeit in OTRS beim Erstellen von Antworten FAQ-Artikel (ohne Bilder) einzufügen.</para>
     </sect1>
     <sect1>
-        <title>Freigabe Workflow</title>
-        <para>Worksflow zur Freigabe im Fall der Neuerstellung oder Änderung von FAQ Artikeln.</para>
+        <title>Freigabe-Workflow</title>
+        <para>Workflow zur Freigabe von FAQ-Artikeln, im Fall der Neuerstellung oder Änderung von FAQ Artikeln.</para>
     </sect1>
     <sect1>
         <title>RSS Unterstützung für öffentliche FAQ Artikel</title>
-        <para>Im öffentlichen Bereich gibt es die Möglichkeit sogenante RSS-Feed zu abonieren welche über Änderungen an FAQ Artikeln aktuell halten.</para>
+        <para>Im öffentlichen Bereich gibt es die Möglichkeit sogenante RSS-Feed zu abonieren, die über Änderungen an FAQ Artikeln informieren.</para>
     </sect1>
     <sect1>
         <title>OpenSearch Format</title>
-        <para>Unterstützung des OpenSearch Formats (Browserschnellsuche).</para>
+        <para>Unterstützung des Open Search Formats (Browser-Schnellsuche).</para>
     </sect1>
 </chapter>
 
@@ -156,10 +156,10 @@ shell> bin/opm.pl -a install -p /path/to/$Name-$Version.opm
 
 <chapter>
     <title>Erste Schritte</title>
-    <para>Nach der Installation des FAQ Moduls wird automatisch eine Gruppe "faq" angelegt. Nur wer "rw" in ideser Gruppe ist, kann auf das FAQ Modul zugreifen.</para>
+    <para>Nach der Installation des FAQ Moduls wird automatisch eine Gruppe "faq" angelegt. Nur wer das recht "rw" in dieser Gruppe besitzt, kann auf das FAQ Modul zugreifen.</para>
     <sect1>
         <title>Hinzufügen der FAQ Berechtigung</title>
-        <para>Mit Admin-Rechten ist es möglich existierende Agenten in die FAQ Gruppe einzutragen. Die Agenten müssen sich nach der Zuteilung in die FAQ-Gruppe erneut anmelden um die Änderungen wirkbar zu machen. Danach ist im Navigations-Bereich ein "FAQ"-Symbol zu sehen.</para>
+        <para>Mit Admin-Rechten ist es möglich, existierende Agenten in die FAQ-Gruppe einzutragen. Die Agenten müssen sich nach der Zuteilung in die FAQ-Gruppe erneut anmelden, um die Änderungen wirkbar zu machen. Danach ist im Navigations-Bereich ein "FAQ"-Symbol zu sehen.</para>
     </sect1>
     <sect1>
         <title>Anlegen von Kategorien</title>
@@ -173,23 +173,9 @@ shell> bin/opm.pl -a install -p /path/to/$Name-$Version.opm
 
 <chapter>
     <title>Konfiguration</title>
-    <para>Die folgenden Konfigurationen können über SysConfig im Admin-Bereich konfiguriert werden</para>
-    <sect1>
-        <title>FAQ::Default::RootCategoryName</title>
-        <para>Name für den Oberbereich im Kategorie-Baum.</para>
-    </sect1>
-    <sect1>
-        <title>FAQ::Default::RootCategoryComment</title>
-        <para>Kommentar für den Oberbereich im Kategorie-Baum..</para>
-    </sect1>
-    <sect1>
-        <title>FAQ::Item::Voting::Rates</title>
-        <para>Mögliche Gewichtung für die Bewertung. Mögliche Auswahlmöglichkeiten.</para>
-    </sect1>
-    <sect1>
-        <title>FAQ::Item::Voting::Show</title>
-        <para>Definition bei welchen FAQ-Status das Voting-Feature angezeigt wird.</para>
-    </sect1>
+    <para>In der SysConfig im Admin-Bereich gibt es eine Gruppe "FAQ".
+          Hier befinden sich einige Konfigurations-Optionen zum FAQ-Modul, die weitestgehend selbsterklärend sind.
+    </para>
 </chapter>
 
 <chapter>
