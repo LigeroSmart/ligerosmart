@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.73 2009-07-15 13:28:27 ub Exp $
+# $Id: FAQ.pm,v 1.74 2009-07-22 10:26:47 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.73 $) [1];
+$VERSION = qw($Revision: 1.74 $) [1];
 
 =head1 NAME
 
@@ -1985,6 +1985,7 @@ sub FAQSearch {
         ' LEFT JOIN faq_voting v ON v.item_id = i.id' .
         ' LEFT JOIN faq_state s ON s.id = i.state_id';
     my $Ext = '';
+
     if ( $Param{What} && $Param{What} ne '*' ) {
         my @SearchFields = ( 'i.f_number', 'i.f_subject', 'i.f_keywords' );
         if ( $Param{Interface} eq 'internal' ) {
@@ -2027,9 +2028,11 @@ sub FAQSearch {
         }
         $Ext .= " LOWER(i.f_subject) LIKE LOWER('" . $Param{Title} . "')";
     }
-    if ( $Param{LanguageIDs} && ref( $Param{LanguageIDs} ) eq 'ARRAY' && @{ $Param{LanguageIDs} } )
-    {
-        $Ext .= ' AND i.f_language_id IN (';
+    if ( $Param{LanguageIDs} && ref( $Param{LanguageIDs} ) eq 'ARRAY' && @{ $Param{LanguageIDs} } ) {
+        if ($Ext) {
+            $Ext .= ' AND';
+        }
+        $Ext .= ' i.f_language_id IN (';
         for my $LanguageID ( @{ $Param{LanguageIDs} } ) {
             $Ext .= $Self->{DBObject}->Quote( $LanguageID, 'Integer' ) . ',';
         }
@@ -3156,6 +3159,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.73 $ $Date: 2009-07-15 13:28:27 $
+$Revision: 1.74 $ $Date: 2009-07-22 10:26:47 $
 
 =cut
