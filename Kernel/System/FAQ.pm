@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.74 2009-07-22 10:26:47 ub Exp $
+# $Id: FAQ.pm,v 1.75 2009-07-22 17:11:50 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.74 $) [1];
+$VERSION = qw($Revision: 1.75 $) [1];
 
 =head1 NAME
 
@@ -424,10 +424,13 @@ sub FAQUpdate {
         ],
     );
 
+    return 1 if $Param{HistoryOff};
+
     $Self->FAQHistoryAdd(
         Name   => 'Updated',
         ItemID => $Param{ItemID},
     );
+
     return 1;
 }
 
@@ -3074,6 +3077,9 @@ sub FAQPictureUploadAdd {
         FormID => $Param{FormID},
     );
 
+    # if no new pictures were uploaded
+    return 1 if !@AttachmentData;
+
     my %Filenames;
     ATTACHMENT:
     for my $Attachment ( @AttachmentData ) {
@@ -3125,9 +3131,10 @@ sub FAQPictureUploadAdd {
         }
     }
 
-    # update FAQ article
+    # update FAQ article without writing a history entry
     my $Ok = $Self->FAQUpdate(
         %Param,
+        HistoryOff => 1,
     );
     if ( !$Ok ) {
         $Self->{LogObject}->Log(
@@ -3159,6 +3166,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.74 $ $Date: 2009-07-22 10:26:47 $
+$Revision: 1.75 $ $Date: 2009-07-22 17:11:50 $
 
 =cut
