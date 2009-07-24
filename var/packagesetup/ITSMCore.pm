@@ -2,7 +2,7 @@
 # ITSMCore.pm - code to excecute during package installation
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMCore.pm,v 1.14 2009-07-20 22:49:45 ub Exp $
+# $Id: ITSMCore.pm,v 1.15 2009-07-24 15:52:59 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Priority;
 use Kernel::System::Valid;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 =head1 NAME
 
@@ -265,7 +265,7 @@ sub _BackgroundColorChange {
     }
 
     # define the css file
-    my $CssFile = $Self->{ConfigObject}->Get('Home') . '/var/https/htdocs/css/Standard/agent.css';
+    my $CssFile = $Self->{ConfigObject}->Get('Home') . '/var/httpd/htdocs/css/Standard/agent.css';
 
     return 1 if -e $CssFile . '.save';
 
@@ -666,6 +666,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.14 $ $Date: 2009-07-20 22:49:45 $
+$Revision: 1.15 $ $Date: 2009-07-24 15:52:59 $
 
 =cut
