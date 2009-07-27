@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketEmail.pm - to compose initial email to customer
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketEmail.pm,v 1.10 2009-07-20 15:04:37 ub Exp $
-# $OldId: AgentTicketEmail.pm,v 1.94 2009/07/20 10:36:04 mh Exp $
+# $Id: AgentTicketEmail.pm,v 1.11 2009-07-27 14:38:40 ub Exp $
+# $OldId: AgentTicketEmail.pm,v 1.96 2009/07/27 14:35:22 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,7 +33,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -292,7 +292,7 @@ sub Run {
 
             # run compose modules
             if (
-                ref( $Self->{ConfigObject}->Get('Ticket::Frontend::ArticleComposeModule') ) eq
+                ref $Self->{ConfigObject}->Get('Ticket::Frontend::ArticleComposeModule') eq
                 'HASH'
                 )
             {
@@ -301,22 +301,20 @@ sub Run {
                 for my $Job ( sort keys %Jobs ) {
 
                     # load module
-                    if ( $Self->{MainObject}->Require( $Jobs{$Job}->{Module} ) ) {
-                        my $Object
-                            = $Jobs{$Job}->{Module}->new( %{$Self}, Debug => $Self->{Debug}, );
-
-                        # get params
-                        my %GetParam;
-                        for ( $Object->Option( %GetParam, Config => $Jobs{$Job} ) ) {
-                            $GetParam{$_} = $Self->{ParamObject}->GetParam( Param => $_ );
-                        }
-
-                        # run module
-                        $Object->Run( %GetParam, Config => $Jobs{$Job} );
-                    }
-                    else {
+                    if ( !$Self->{MainObject}->Require( $Jobs{$Job}->{Module} ) ) {
                         return $Self->{LayoutObject}->FatalError();
                     }
+
+                    my $Object = $Jobs{$Job}->{Module}->new( %{$Self}, Debug => $Self->{Debug}, );
+
+                    # get params
+                    my %GetParam;
+                    for ( $Object->Option( %GetParam, Config => $Jobs{$Job} ) ) {
+                        $GetParam{$_} = $Self->{ParamObject}->GetParam( Param => $_ );
+                    }
+
+                    # run module
+                    $Object->Run( %GetParam, Config => $Jobs{$Job} );
                 }
             }
 
@@ -671,28 +669,31 @@ sub Run {
             for my $Job ( sort keys %Jobs ) {
 
                 # load module
-                if ( $Self->{MainObject}->Require( $Jobs{$Job}->{Module} ) ) {
-                    my $Object = $Jobs{$Job}->{Module}->new( %{$Self}, Debug => $Self->{Debug}, );
-
-                    # get params
-                    for ( $Object->Option( %GetParam, Config => $Jobs{$Job} ) ) {
-                        $GetParam{$_} = $Self->{ParamObject}->GetParam( Param => $_ );
-                    }
-
-                    # run module
-                    $Object->Run( %GetParam, Config => $Jobs{$Job} );
-
-                    # ticket params
-                    %ArticleParam = (
-                        %ArticleParam, $Object->ArticleOption( %GetParam, Config => $Jobs{$Job} )
-                    );
-
-                    # get errors
-                    %Error = ( %Error, $Object->Error( %GetParam, Config => $Jobs{$Job} ) );
-                }
-                else {
+                if ( !$Self->{MainObject}->Require( $Jobs{$Job}->{Module} ) ) {
                     return $Self->{LayoutObject}->FatalError();
                 }
+
+                my $Object = $Jobs{$Job}->{Module}->new( %{$Self}, Debug => $Self->{Debug}, );
+
+                # get params
+                for ( $Object->Option( %GetParam, Config => $Jobs{$Job} ) ) {
+                    $GetParam{$_} = $Self->{ParamObject}->GetParam( Param => $_ );
+                }
+
+                # run module
+                $Object->Run( %GetParam, Config => $Jobs{$Job} );
+
+                # ticket params
+                %ArticleParam = (
+                    %ArticleParam,
+                    $Object->ArticleOption( %GetParam, Config => $Jobs{$Job} ),
+                );
+
+                # get errors
+                %Error = (
+                    %Error,
+                    $Object->Error( %GetParam, Config => $Jobs{$Job} ),
+                );
             }
         }
 
@@ -1105,9 +1106,13 @@ sub Run {
     elsif ( $Self->{Subaction} eq 'AJAXUpdate' ) {
         my $Dest         = $Self->{ParamObject}->GetParam( Param => 'Dest' ) || '';
         my $CustomerUser = $Self->{ParamObject}->GetParam( Param => 'SelectedCustomerUser' );
-        my $QueueID      = '';
+
+        # get From based on selected queue
+        my $QueueID = '';
         if ( $Dest =~ /^(\d{1,100})\|\|.+?$/ ) {
             $QueueID = $1;
+            my %Queue = $Self->{QueueObject}->GetSystemAddress( QueueID => $QueueID );
+            $GetParam{From} = $Queue{Email};
         }
 
         # get list type
@@ -1150,7 +1155,7 @@ sub Run {
         );
 
         # get free text config options
-        my @TicketFreeTextConfig = ();
+        my @ExtendedData = ();
         for ( 1 .. 16 ) {
             my $ConfigKey = $Self->{TicketObject}->TicketFreeTextGet(
                 TicketID => $Self->{TicketID},
@@ -1161,7 +1166,7 @@ sub Run {
             );
             if ($ConfigKey) {
                 push(
-                    @TicketFreeTextConfig,
+                    @ExtendedData,
                     {
                         Name        => "TicketFreeKey$_",
                         Data        => $ConfigKey,
@@ -1180,7 +1185,7 @@ sub Run {
             );
             if ($ConfigValue) {
                 push(
-                    @TicketFreeTextConfig,
+                    @ExtendedData,
                     {
                         Name        => "TicketFreeText$_",
                         Data        => $ConfigValue,
@@ -1189,6 +1194,40 @@ sub Run {
                         Max         => 100,
                     }
                 );
+            }
+        }
+
+        # run compose modules
+        if ( ref $Self->{ConfigObject}->Get('Ticket::Frontend::ArticleComposeModule') eq 'HASH' ) {
+            my %Jobs = %{ $Self->{ConfigObject}->Get('Ticket::Frontend::ArticleComposeModule') };
+            for my $Job ( sort keys %Jobs ) {
+
+                # load module
+                next if !$Self->{MainObject}->Require( $Jobs{$Job}->{Module} );
+
+                my $Object = $Jobs{$Job}->{Module}->new( %{$Self}, Debug => $Self->{Debug}, );
+
+                # get params
+                for ( $Object->Option( %GetParam, Config => $Jobs{$Job} ) ) {
+                    $GetParam{$_} = $Self->{ParamObject}->GetParam( Param => $_ );
+                }
+
+                # run module
+                my %Data = $Object->Data( %GetParam, Config => $Jobs{$Job} );
+
+                my $Key = $Object->Option( %GetParam, Config => $Jobs{$Job} );
+                if ($Key) {
+                    push(
+                        @ExtendedData,
+                        {
+                            Name        => $Key,
+                            Data        => \%Data,
+                            SelectedID  => $GetParam{$Key},
+                            Translation => 1,
+                            Max         => 100,
+                        }
+                    );
+                }
             }
         }
         my $JSON = $Self->{LayoutObject}->BuildJSON(
@@ -1259,7 +1298,7 @@ sub Run {
                     Translation  => 1,
                     Max          => 100,
                 },
-                @TicketFreeTextConfig,
+                @ExtendedData,
             ],
         );
         return $Self->{LayoutObject}->Attachment(
@@ -1571,6 +1610,8 @@ sub _MaskEmailNew {
                     'PriorityID',
                     'ServiceID',
                     'SLAID',
+                    'SignKeyID',
+                    'CryptKeyID',
                     'TicketFreeText1',
                     'TicketFreeText2',
                     'TicketFreeText3',
@@ -1587,6 +1628,9 @@ sub _MaskEmailNew {
                     'TicketFreeText14',
                     'TicketFreeText15',
                     'TicketFreeText16',
+                    'To',
+                    'Cc',
+                    'Bcc',
                 ],
                 Depend => [
                     'Dest',
@@ -1595,6 +1639,8 @@ sub _MaskEmailNew {
                     'PriorityID',
                     'ServiceID',
                     'SLAID',
+                    'SignKeyID',
+                    'CryptKeyID',
                     'OwnerAll',
                     'ResponsibleAll',
                     'TicketFreeText1',
@@ -1613,6 +1659,9 @@ sub _MaskEmailNew {
                     'TicketFreeText14',
                     'TicketFreeText15',
                     'TicketFreeText16',
+                    'To',
+                    'Cc',
+                    'Bcc',
                 ],
                 Subaction => 'AJAXUpdate',
             },
@@ -1634,6 +1683,8 @@ sub _MaskEmailNew {
                     'PriorityID',
                     'ServiceID',
                     'SLAID',
+                    'SignKeyID',
+                    'CryptKeyID',
                     'TicketFreeText1',
                     'TicketFreeText2',
                     'TicketFreeText3',
@@ -1650,6 +1701,9 @@ sub _MaskEmailNew {
                     'TicketFreeText14',
                     'TicketFreeText15',
                     'TicketFreeText16',
+                    'To',
+                    'Cc',
+                    'Bcc',
                 ],
                 Depend => [
                     'Dest',
@@ -1658,6 +1712,8 @@ sub _MaskEmailNew {
                     'PriorityID',
                     'ServiceID',
                     'SLAID',
+                    'SignKeyID',
+                    'CryptKeyID',
                     'OwnerAll',
                     'ResponsibleAll',
                     'TicketFreeText1',
@@ -1676,6 +1732,9 @@ sub _MaskEmailNew {
                     'TicketFreeText14',
                     'TicketFreeText15',
                     'TicketFreeText16',
+                    'To',
+                    'Cc',
+                    'Bcc',
                 ],
                 Subaction => 'AJAXUpdate',
             },
@@ -1728,6 +1787,8 @@ sub _MaskEmailNew {
                     'PriorityID',
                     'ServiceID',
                     'SLAID',
+                    'SignKeyID',
+                    'CryptKeyID',
                     'TicketFreeText1',
                     'TicketFreeText2',
                     'TicketFreeText3',
@@ -1744,6 +1805,9 @@ sub _MaskEmailNew {
                     'TicketFreeText14',
                     'TicketFreeText15',
                     'TicketFreeText16',
+                    'To',
+                    'Cc',
+                    'Bcc',
                 ],
                 Depend => [
                     'Dest',
@@ -1752,6 +1816,8 @@ sub _MaskEmailNew {
                     'PriorityID',
                     'ServiceID',
                     'SLAID',
+                    'SignKeyID',
+                    'CryptKeyID',
                     'OwnerAll',
                     'ResponsibleAll',
                     'TicketFreeText1',
@@ -1770,6 +1836,9 @@ sub _MaskEmailNew {
                     'TicketFreeText14',
                     'TicketFreeText15',
                     'TicketFreeText16',
+                    'To',
+                    'Cc',
+                    'Bcc',
                 ],
                 Subaction => 'AJAXUpdate',
             },
@@ -1806,6 +1875,8 @@ sub _MaskEmailNew {
                     'PriorityID',
                     'ServiceID',
                     'SLAID',
+                    'SignKeyID',
+                    'CryptKeyID',
                     'TicketFreeText1',
                     'TicketFreeText2',
                     'TicketFreeText3',
@@ -1822,6 +1893,9 @@ sub _MaskEmailNew {
                     'TicketFreeText14',
                     'TicketFreeText15',
                     'TicketFreeText16',
+                    'To',
+                    'Cc',
+                    'Bcc',
                 ],
                 Depend => [
                     'Dest',
@@ -1830,6 +1904,8 @@ sub _MaskEmailNew {
                     'PriorityID',
                     'ServiceID',
                     'SLAID',
+                    'SignKeyID',
+                    'CryptKeyID',
                     'OwnerAll',
                     'ResponsibleAll',
                     'TicketFreeText1',
@@ -1848,6 +1924,9 @@ sub _MaskEmailNew {
                     'TicketFreeText14',
                     'TicketFreeText15',
                     'TicketFreeText16',
+                    'To',
+                    'Cc',
+                    'Bcc',
                 ],
                 Subaction => 'AJAXUpdate',
             },
@@ -1874,6 +1953,8 @@ sub _MaskEmailNew {
                     'PriorityID',
                     'ServiceID',
                     'SLAID',
+                    'SignKeyID',
+                    'CryptKeyID',
                     'TicketFreeText1',
                     'TicketFreeText2',
                     'TicketFreeText3',
@@ -1890,6 +1971,9 @@ sub _MaskEmailNew {
                     'TicketFreeText14',
                     'TicketFreeText15',
                     'TicketFreeText16',
+                    'To',
+                    'Cc',
+                    'Bcc',
                 ],
                 Depend => [
                     'Dest',
@@ -1898,6 +1982,8 @@ sub _MaskEmailNew {
                     'PriorityID',
                     'ServiceID',
                     'SLAID',
+                    'SignKeyID',
+                    'CryptKeyID',
                     'OwnerAll',
                     'ResponsibleAll',
                     'TicketFreeText1',
@@ -1916,6 +2002,9 @@ sub _MaskEmailNew {
                     'TicketFreeText14',
                     'TicketFreeText15',
                     'TicketFreeText16',
+                    'To',
+                    'Cc',
+                    'Bcc',
                 ],
                 Subaction => 'AJAXUpdate',
             },
