@@ -1,21 +1,21 @@
 # --
-# Kernel/Language/zh_FAQ.pm - the·Chinese·Simple·translation·for·FAQ
+# Kernel/Language/zh_CN_FAQ.pm - the·Chinese·Simple·translation·for·FAQ
 #·Copyright·(C)·2009·Never·Min·<never·at·qnofae.org>
 # --
-# $Id: zh_FAQ.pm,v 1.1 2009-07-28 10:53:31 ub Exp $
+# $Id: zh_CN_FAQ.pm,v 1.2 2009-07-28 12:35:48 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 
-package Kernel::Language::zh_FAQ;
+package Kernel::Language::zh_CN_FAQ;
 
 use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub Data {
     my $Self = shift;
