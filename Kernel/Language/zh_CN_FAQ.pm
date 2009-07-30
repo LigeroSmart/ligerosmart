@@ -1,8 +1,8 @@
 # --
-# Kernel/Language/zh_CN_FAQ.pm - theÂ·ChineseÂ·SimpleÂ·translationÂ·forÂ·FAQ
-#Â·CopyrightÂ·(C)Â·2009Â·NeverÂ·MinÂ·<neverÂ·atÂ·qnofae.org>
+# Kernel/Language/zh_CN_FAQ.pm - the Chinese simple translation for FAQ
+# Copyright (C) 2009 Never Min <never at qnofae.org>
 # --
-# $Id: zh_CN_FAQ.pm,v 1.2 2009-07-28 12:35:48 ub Exp $
+# $Id: zh_CN_FAQ.pm,v 1.3 2009-07-30 19:29:38 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -24,38 +24,39 @@ sub Data {
 
     return if ref $Lang ne 'HASH';
 
-    $Lang->{'You have already voted!'}           = 'æ‚¨å·²ç»è¯„åˆ†!';
-    $Lang->{'No rate selected!'}                 = 'æ²¡æœ‰é€‰æ‹©è¯„åˆ†!';
-    $Lang->{'Thanks for your vote!'}             = 'æ„Ÿè°¢æ‚¨çš„è¯„åˆ†';
-    $Lang->{'Votes'}                             = 'è¯„åˆ†';
-    $Lang->{'LatestChangedItems'}                = 'æœ€è¿‘ä¿®æ”¹çš„æ–‡ç« ';
-    $Lang->{'LatestCreatedItems'}                = 'æœ€æ–°åˆ›å»ºçš„æ–‡ç« ';
-    $Lang->{'Top10Items'}                        = 'æœ€å¸¸ç”¨çš„æ–‡ç« ';
-    $Lang->{'ArticleVotingQuestion'}             = 'æ­¤æ–‡ç« å¯¹æ‚¨æœ‰å¸®åŠ©å—?';
-    $Lang->{'SubCategoryOf'}                     = 'å­ç›®å½•äº';
-    $Lang->{'QuickSearch'}                       = 'å¿«é€Ÿæœç´¢';
-    $Lang->{'DetailSearch'}                      = 'é«˜çº§æœç´¢';
-    $Lang->{'Categories'}                        = 'ç›®å½•';
-    $Lang->{'SubCategories'}                     = 'å­ç›®å½•';
-    $Lang->{'New FAQ Article'}                   = 'æ·»åŠ æ–°æ–‡ç« ';
-    $Lang->{'FAQ Category'}                      = 'FAQ ç›®å½•';
-    $Lang->{'A category should have a name!'}    = 'ç›®å½•åä¸èƒ½ä¸ºç©º!';
-    $Lang->{'A category should have a comment!'} = 'è¯·ä¸ºè¯¥ç›®å½•å†™ä¸Šæ³¨é‡Š!';
-    $Lang->{'FAQ News (new created)'}            = 'FAQ æ›´æ–°(æ–°åˆ›å»º)';
-    $Lang->{'FAQ News (recently changed)'}       = 'FAQ æ›´æ–°(æœ€è¿‘æ›´æ”¹)';
-    $Lang->{'FAQ News (Top 10)'}                 = 'FAQ æ›´æ–°';
-    $Lang->{'StartDay'}                          = 'å¼€å§‹æ—¥æœŸ';
-    $Lang->{'StartMonth'}                        = 'å¼€å§‹æœˆä»½';
-    $Lang->{'StartYear'}                         = 'å¼€å§‹å¹´ä»½';
-    $Lang->{'EndDay'}                            = 'ç»“æŸæ—¥æœŸ';
-    $Lang->{'EndMonth'}                          = 'å¼€å§‹æœˆä»½';
-    $Lang->{'EndYear'}                           = 'ç»“æŸå¹´ä»½';
-    $Lang->{'Approval'}                          = 'è®¤å¯åº¦';
+    $Lang->{'Explorer'}                 = 'ä¯ÀÀ';
+    $Lang->{'You have already voted!'}           = 'ÄúÒÑ¾­ÆÀ·Ö!';
+    $Lang->{'No rate selected!'}                 = 'Ã»ÓĞÑ¡ÔñÆÀ·Ö!';
+    $Lang->{'Thanks for your vote!'}             = '¸ĞĞ»ÄúµÄÆÀ·Ö';
+    $Lang->{'Votes'}                             = 'ÆÀ·Ö';
+    $Lang->{'LatestChangedItems'}                = '×î½üĞŞ¸ÄµÄÎÄÕÂ';
+    $Lang->{'LatestCreatedItems'}                = '×îĞÂ´´½¨µÄÎÄÕÂ';
+    $Lang->{'Top10Items'}                        = '×î³£ÓÃµÄÎÄÕÂ';
+    $Lang->{'ArticleVotingQuestion'}             = '´ËÎÄÕÂ¶ÔÄúÓĞ°ïÖúÂğ?';
+    $Lang->{'SubCategoryOf'}                     = '×ÓÄ¿Â¼ÓÚ';
+    $Lang->{'QuickSearch'}                       = '¿ìËÙËÑË÷';
+    $Lang->{'DetailSearch'}                      = '¸ß¼¶ËÑË÷';
+    $Lang->{'Categories'}                        = 'Ä¿Â¼';
+    $Lang->{'SubCategories'}                     = '×ÓÄ¿Â¼';
+    $Lang->{'New FAQ Article'}                   = 'Ìí¼ÓĞÂÎÄÕÂ';
+    $Lang->{'FAQ Category'}                      = 'FAQ Ä¿Â¼';
+    $Lang->{'A category should have a name!'}    = 'Ä¿Â¼Ãû²»ÄÜÎª¿Õ!';
+    $Lang->{'A category should have a comment!'} = 'ÇëÎª¸ÃÄ¿Â¼Ğ´ÉÏ×¢ÊÍ!';
+    $Lang->{'FAQ News (new created)'}            = 'FAQ ¸üĞÂ(ĞÂ´´½¨)';
+    $Lang->{'FAQ News (recently changed)'}       = 'FAQ ¸üĞÂ(×î½ü¸ü¸Ä)';
+    $Lang->{'FAQ News (Top 10)'}                 = 'FAQ ¸üĞÂ';
+    $Lang->{'StartDay'}                          = '¿ªÊ¼ÈÕÆÚ';
+    $Lang->{'StartMonth'}                        = '¿ªÊ¼ÔÂ·İ';
+    $Lang->{'StartYear'}                         = '¿ªÊ¼Äê·İ';
+    $Lang->{'EndDay'}                            = '½áÊøÈÕÆÚ';
+    $Lang->{'EndMonth'}                          = '¿ªÊ¼ÔÂ·İ';
+    $Lang->{'EndYear'}                           = '½áÊøÄê·İ';
+    $Lang->{'Approval'}                          = 'ÈÏ¿É¶È';
 
-    $Lang->{'No category accessible. To create an article you need access to at least one category. Please check your group/category permission under -category menu-!'} = 'æ²¡æœ‰å½’ç±»åˆ°ç›®å½•. è¦åˆ›å»ºä¸€ç¯‡æ–‡ç« éœ€è¦å½’ç±»åˆ°ç›®å½•é‡Œ, è¯·åœ¨ -ç›®å½•èœå•- é‡Œé€‰æ‹©æ‚¨æœ‰æƒé™åˆ›å»ºæ–‡ç« çš„ç›®å½•';
-    $Lang->{'Agent groups which can access this category.'} = 'å“ªä¸€ä¸ªç¾¤ç»„å¯ä»¥è®¿é—®æ­¤ç›®å½•.';
-    $Lang->{'A category needs min. one permission group!'}   = 'ä¸€ä¸ªç›®å½•è‡³å°‘è¦åˆ†é…ä¸€ä¸ªæƒé™ç¾¤ç»„';
-    $Lang->{'Will be shown as comment in Explorer.'}         = 'æ³¨é‡Šå°†æµè§ˆæ—¶æ˜¾ç¤º.';
+    $Lang->{'No category accessible. To create an article you need access to at least one category. Please check your group/category permission under -category menu-!'} = 'Ã»ÓĞ¹éÀàµ½Ä¿Â¼. Òª´´½¨Ò»ÆªÎÄÕÂĞèÒª¹éÀàµ½Ä¿Â¼Àï, ÇëÔÚ -Ä¿Â¼²Ëµ¥- ÀïÑ¡ÔñÄúÓĞÈ¨ÏŞ´´½¨ÎÄÕÂµÄÄ¿Â¼';
+    $Lang->{'Agent groups which can access this category.'} = 'ÄÄÒ»¸öÈº×é¿ÉÒÔ·ÃÎÊ´ËÄ¿Â¼.';
+    $Lang->{'A category needs min. one permission group!'}   = 'Ò»¸öÄ¿Â¼ÖÁÉÙÒª·ÖÅäÒ»¸öÈ¨ÏŞÈº×é';
+    $Lang->{'Will be shown as comment in Explorer.'}         = '×¢ÊÍ½«ä¯ÀÀÊ±ÏÔÊ¾.';
 
     return 1;
 }
