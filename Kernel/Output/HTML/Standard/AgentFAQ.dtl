@@ -2,7 +2,7 @@
 # AgentFAQ.dtl - provides HTML view for faq articles
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.dtl,v 1.50 2009-07-23 17:12:06 ub Exp $
+# $Id: AgentFAQ.dtl,v 1.51 2009-07-30 19:23:32 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -913,7 +913,7 @@ function submit_compose() {
                         <td class="contentbody">$Data{"ValidOption"}</td>
                       </tr>
                       <tr>
-                        <td class="contentkey">$Text{"Permission"}:<br/><i class="small">($Text{"Agent Groups which can access this category."})</i></td>
+                        <td class="contentkey">$Text{"Permission"}:<br/><i class="small">($Text{"Agent groups which can access this category."})</i></td>
                         <td class="contentkey">$Data{"GroupOption"}</td>
                       </tr>
                     </table>
