@@ -2,7 +2,7 @@
 # Kernel/Language/de_FAQ.pm - the german translation of FAQ
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: de_FAQ.pm,v 1.14 2009-03-21 14:44:50 ub Exp $
+# $Id: de_FAQ.pm,v 1.15 2009-07-30 19:21:13 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -58,7 +58,7 @@ sub Data {
     $Lang->{'Agent groups which can access this category.'}
         = 'Agenten Gruppe welche auf diese Kategorie Zugriff hat.';
     $Lang->{'A category needs min. one permission group!'}
-        = 'Eine Kategorie muss min. eine Berechtigung-Gruppe haben.';
+        = 'Eine Kategorie muss min. eine Berechtigungs-Gruppe haben.';
     $Lang->{'Will be shown as comment in Explorer.'} = 'Wird im Explorer als Kommentar angezeigt.';
 
     return 1;
