@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
+<!-- $Id: FAQ.xml,v 1.1 2009-08-11 13:57:40 ub Exp $ -->
+
+<book lang="en">
+
+<bookinfo>
+<title>$Name</title>
+<edition>$Description Version $Version</edition>
+
+<copyright>
+<year>$YearStamp</year>
+<holder>$Vendor, $URL</holder>
+</copyright>
+
+<date>$DateStamp</date>
+
+<legalnotice>
+    <para>$License</para>
+    <para>This work is copyrighted by $Vendor, Norsk-Data-Str. 1, 61352 Bad Homburg, Germany.</para>
+    <para>Build Date: $DateStamp</para>
+</legalnotice>
+
+</bookinfo>
+
+<preface id="preface">
+    <title>Preface</title>
+    <para>The FAQ Module is an OTRS extension providing an FAQ or rather a knowledge database.</para>
+    <para>It facilitates speeding-up the knowledge transfer between agents or (using a public web interface) between organizations and their customers, therefore effectively saving time.</para>
+    <para>Please contact your commercial support (support@otrs.com) if you have any queries regarding this document or need further information.</para>
+</preface>
+
+<chapter>
+    <title>Features</title>
+    <sect1>
+        <title>FAQ Explorer</title>
+        <para>Intuitive navigation and flexible mapping of theme hierarchies within the FAQ Explorer enable easy navigation through the database.</para>
+    </sect1>
+    <sect1>
+        <title>WYSIWYG Editor</title>
+        <para>Using the WYSIWYG Editor you can change the formatting of articles and include screen shots or images.</para>
+    </sect1>
+    <sect1>
+        <title>FAQ articles</title>
+        <para>FAQ articles with various attributes like &quot;Symptom&quot;, &quot;Problem&quot;, &quot;Solution&quot;, &quot;Title&quot;, &quot;Language&quot;, &quot;Category&quot;, &quot;Keywords&quot;, &quot;State&quot;, &quot;Created&quot; and &quot;Changed&quot;.</para>
+    </sect1>
+    <sect1>
+        <title>FAQ attachments</title>
+        <para>You can add attachments to FAQ articles, which are available in the customer interface, too (e. g. user guides in pdf format).</para>
+    </sect1>
+    <sect1>
+        <title>Agent and customer interfaces</title>
+        <para>Using the FAQ state you can determine the interface(s), in which an FAQ article should be displayed. Articles with their state set to &quot;internal&quot; are only visible for agents via the Agent Interface; Articles whose state is set to &quot;external&quot; are also displayed in the protected customer section, and articles tagged as &quot;public&quot; are available in the non-protected public area as well.</para>
+    </sect1>
+    <sect1>
+        <title>Comfortable navigation / clickable keywords</title>
+        <para>The key words feature enables comfortable navigation to alternative articles using clickable key words.</para>
+    </sect1>
+    <sect1>
+        <title>Linked objects</title>
+        <para>FAQ articles can be linked to other objects such as tickets, FAQ articles or (CMDB) configuration items.</para>
+    </sect1>
+    <sect1>
+        <title>Full-text and quick search</title>
+        <para>You can execute a full-text and quick search in the entire knowledge database. You can also use OTRS operators for &quot;AND&quot; or &quot;OR&quot; relations.</para>
+    </sect1>
+    <sect1>
+        <title>Top 10 articles</title>
+        <para>An overview showing the Top 10 most often accessed, most recently generated and most recently changed articles.</para>
+    </sect1>
+    <sect1>
+        <title>Ranking / Voting of FAQ articles</title>
+        <para>A personal ranking / voting of FAQ articles providing other users with information about the quality of FAQ articles.</para>
+    </sect1>
+    <sect1>
+        <title>Inserting FAQ articles in OTRS replies</title>
+        <para>You can insert FAQ articles (without images) in replies you generate in OTRS.</para>
+    </sect1>
+    <sect1>
+        <title>Release workflow</title>
+        <para>Workflow to release FAQ articles that have been newly generated or changed.</para>
+    </sect1>
+    <sect1>
+        <title>RSS feeds for public FAQ articles</title>
+        <para>In the public area, an option is provided to subscribe to RSS Feeds providing information about changes in FAQ articles.</para>
+    </sect1>
+    <sect1>
+        <title>OpenSearch format</title>
+        <para>The FAQ Module supports Open Search format (enabling quick searches directly from the browser).</para>
+    </sect1>
+</chapter>
+
+<chapter>
+    <title>System requirements</title>
+    <sect1>
+        <title>Framework</title>
+        <para>The following OTRS framework is required:</para>
+        <para>
+        $Framework
+        </para>
+    </sect1>
+    <sect1>
+        <title>Packages</title>
+        <para>Following packages are required:</para>
+        <para>
+        $PackageRequired
+        </para>
+    </sect1>
+    <sect1>
+        <title>Operating system</title>
+        <para>Following operating systems are to be considered as dependency:</para>
+        <para>
+        $OS
+        </para>
+    </sect1>
+    <sect1>
+        <title>Third party software</title>
+        <para>Following software is required for package operation:</para>
+        <para>
+            <itemizedlist>
+                <listitem><para>None</para></listitem>
+            </itemizedlist>
+        </para>
+    </sect1>
+</chapter>
+
+<chapter>
+    <title>Installation</title>
+    <para>The following instructions show how to install the package. Generally, there are two possibilities: You can either use the Admin Interface or the command line.</para>
+    <para>After having successfully completed the installation, please follow the instructions provided in the chapter &quot;First steps&quot;.</para>
+    <sect1>
+        <title>Admin Interface</title>
+        <para>
+Using the following URL you can install, as well as update or uninstall (if necessary), the package via the Admin Interface (please check whether the user is a member of the Admin Group before starting.)
+        </para>
+        <para>
+<ulink url="http://localhost/otrs/index.pl?Action=AdminPackageManager">http://localhost/otrs/index.pl?Action=AdminPackageManager</ulink>
+        </para>
+    </sect1>
+    <sect1>
+        <title>Command line</title>
+        <para>
+Whenever you cannot use the Admin Interface for whatever reason, you may use the following command line tool (&quot;bin/opm.pl&quot;) instead.
+        </para>
+        <para>
+        <screen>
+shell&gt; bin/opm.pl -a install -p /path/to/$Name-$Version.opm
+        </screen>
+        </para>
+    </sect1>
+</chapter>
+
+<chapter>
+    <title>First steps</title>
+    <para>As soon as the FAQ Module has been installed, a group &quot;faq&quot; is automatically generated. Access to the FAQ Module is restricted to users with &quot;rw&quot; permission in this group.</para>
+    <sect1>
+        <title>Assigning the FAQ authorization</title>
+        <para>Users with admin rights can add existing agents to the FAQ Group. For the change to be implemented, agents have to re-login after they have been added to the group. Afterwards, an &quot;FAQ&quot; symbol is displayed in their navigation area.</para>
+    </sect1>
+    <sect1>
+        <title>Creating categories</title>
+        <para>First of all, you have to create FAQ categories.</para>
+    </sect1>
+    <sect1>
+        <title>Creating FAQ articles</title>
+        <para>Then you can start creating new FAQ articles.</para>
+    </sect1>
+</chapter>
+
+<chapter>
+    <title>Configuration</title>
+    <para>There is a group &quot;FAQ&quot; in the Admin area of the SysConfig. Here you can find various configuration options for the FAQ module; most of them are self-explaining.
+    </para>
+</chapter>
+
+<chapter>
+    <title>Contact</title>
+    <para>
+Please direct questions about the FAQ Module at:
+    </para>
+    <sect1>
+        <title>OTRA AG/OTRS Inc.</title>
+        <para>
+        E-mail: enjoy@otrs.com
+        </para>
+    </sect1>
+</chapter>
+
+<chapter>
+    <title>Change log</title>
+    <para>
+    $ChangeLog
+    </para>
+</chapter>
+
+</book>
