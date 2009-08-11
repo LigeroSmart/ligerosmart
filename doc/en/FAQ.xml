@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
-<!-- $Id: FAQ.xml,v 1.1 2009-08-11 13:57:40 ub Exp $ -->
+<!-- $Id: FAQ.xml,v 1.2 2009-08-11 14:05:58 ub Exp $ -->
 
 <book lang="en">
 
@@ -179,7 +179,7 @@ shell&gt; bin/opm.pl -a install -p /path/to/$Name-$Version.opm
 Please direct questions about the FAQ Module at:
     </para>
     <sect1>
-        <title>OTRA AG/OTRS Inc.</title>
+        <title>OTRS AG/OTRS Inc.</title>
         <para>
         E-mail: enjoy@otrs.com
         </para>
