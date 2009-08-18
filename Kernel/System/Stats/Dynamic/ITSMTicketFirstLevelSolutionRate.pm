@@ -2,7 +2,7 @@
 # Kernel/System/Stats/Dynamic/ITSMTicketFirstLevelSolutionRate.pm - stats functions for the first level solution rate
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMTicketFirstLevelSolutionRate.pm,v 1.3 2009-07-20 22:48:08 ub Exp $
+# $Id: ITSMTicketFirstLevelSolutionRate.pm,v 1.4 2009-08-18 22:32:57 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Type;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -32,9 +32,13 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Object (qw(DBObject EncodeObject ConfigObject LogObject UserObject TimeObject MainObject)) {
+    for my $Object (
+        qw(DBObject EncodeObject ConfigObject LogObject UserObject TimeObject MainObject)
+        )
+    {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
+
     $Self->{StateObject}    = Kernel::System::State->new( %{$Self} );
     $Self->{QueueObject}    = Kernel::System::Queue->new( %{$Self} );
     $Self->{TicketObject}   = Kernel::System::Ticket->new( %{$Self} );
@@ -307,7 +311,7 @@ sub GetObjectAttributes {
         # Get CustomerID
         # (This way also can be the solution for the CustomerUserID)
         $Self->{DBObject}->Prepare(
-            SQL => "SELECT DISTINCT customer_id FROM ticket",
+            SQL => 'SELECT DISTINCT customer_id FROM ticket',
         );
 
         # fetch the result
@@ -521,14 +525,17 @@ sub _ArticleDataGet {
 
     # ask database
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT article_type_id, article_sender_type_id "
-            . "FROM article "
-            . "WHERE ticket_id = $Param{TicketID} AND "
-            . "article_type_id IN "
-            . "( $Self->{PhoneTypeID}, $Self->{EmailExternalTypeID} ) AND "
-            . "article_sender_type_id IN "
-            . "( $Self->{AgentSenderTypeID}, $Self->{CustomerSenderTypeID} ) "
-            . "ORDER BY create_time",
+        SQL => 'SELECT article_type_id, article_sender_type_id FROM article '
+            . 'WHERE ticket_id = ? AND article_type_id IN ( ?, ? ) AND '
+            . 'article_sender_type_id IN ( ?, ? ) '
+            . 'ORDER BY create_time',
+        Bind => [
+            \$Param{TicketID},
+            \$Self->{PhoneTypeID},
+            \$Self->{EmailExternalTypeID},
+            \$Self->{AgentSenderTypeID},
+            \$Self->{CustomerSenderTypeID},
+        ],
         Limit => 3,
     );
 

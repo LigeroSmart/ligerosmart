@@ -2,7 +2,7 @@
 # Kernel/System/Stats/Dynamic/ITSMTicketSolutionTimeAverage.pm - stats functions for the solution time average
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMTicketSolutionTimeAverage.pm,v 1.3 2009-07-20 22:48:08 ub Exp $
+# $Id: ITSMTicketSolutionTimeAverage.pm,v 1.4 2009-08-18 22:32:57 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Type;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -32,9 +32,13 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Object (qw(DBObject EncodeObject ConfigObject LogObject UserObject TimeObject MainObject)) {
+    for my $Object (
+        qw(DBObject EncodeObject ConfigObject LogObject UserObject TimeObject MainObject)
+        )
+    {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
+
     $Self->{StateObject}    = Kernel::System::State->new( %{$Self} );
     $Self->{QueueObject}    = Kernel::System::Queue->new( %{$Self} );
     $Self->{TicketObject}   = Kernel::System::Ticket->new( %{$Self} );
@@ -307,7 +311,7 @@ sub GetObjectAttributes {
         # Get CustomerID
         # (This way also can be the solution for the CustomerUserID)
         $Self->{DBObject}->Prepare(
-            SQL => "SELECT DISTINCT customer_id FROM ticket",
+            SQL => 'SELECT DISTINCT customer_id FROM ticket',
         );
 
         # fetch the result
@@ -526,8 +530,9 @@ sub _TicketDataGet {
 
     # ask database
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT queue_id, sla_id, create_time_unix "
-            . "FROM ticket WHERE id = $Param{TicketID}",
+        SQL => 'SELECT queue_id, sla_id, create_time_unix '
+            . 'FROM ticket WHERE id = ?',
+        Bind  => [ \$Param{TicketID} ],
         Limit => 1,
     );
 
@@ -603,11 +608,10 @@ sub _TicketHistoryDataGet {
 
     # ask database
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT state_id, create_time "
-            . "FROM ticket_history "
-            . "WHERE ticket_id = $Param{TicketID} AND "
-            . "history_type_id IN ( $Self->{StateUpdateID}, $Self->{NewTicketID} ) "
-            . "ORDER BY create_time",
+        SQL => 'SELECT state_id, create_time FROM ticket_history '
+            . 'WHERE ticket_id = ? AND history_type_id IN ( ?, ? ) '
+            . 'ORDER BY create_time',
+        Bind => [ \$Param{TicketID}, \$Self->{StateUpdateID}, $Self->{NewTicketID} ],
     );
 
     # fetch the result
