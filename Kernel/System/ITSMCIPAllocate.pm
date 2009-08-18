@@ -2,7 +2,7 @@
 # Kernel/System/ITSMCIPAllocate.pm - all criticality, impact and priority allocation functions
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMCIPAllocate.pm,v 1.12 2009-05-18 09:53:52 mh Exp $
+# $Id: ITSMCIPAllocate.pm,v 1.13 2009-08-18 22:20:52 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 =head1 NAME
 
@@ -36,20 +36,28 @@ All criticality, impact and priority allocation functions.
 create an object
 
     use Kernel::Config;
+    use Kernel::System::Encode;
+    use Kernel::System::Log;
     use Kernel::System::CIPAllocate;
     use Kernel::System::DB;
-    use Kernel::System::Log;
     use Kernel::System::Main;
 
     my $ConfigObject = Kernel::Config->new();
-    my $MainObject = Kernel::System::Main->new(
+    my $EncodeObject = Kernel::System::Encode->new(
         ConfigObject => $ConfigObject,
     );
     my $LogObject = Kernel::System::Log->new(
         ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
+    );
+    my $MainObject = Kernel::System::Main->new(
+        ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
+        LogObject    => $LogObject,
     );
     my $DBObject = Kernel::System::DB->new(
         ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
         LogObject    => $LogObject,
         MainObject   => $MainObject,
     );
@@ -93,7 +101,7 @@ sub AllocateList {
     if ( !$Param{UserID} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'Need UserID!'
+            Message  => 'Need UserID!',
         );
         return;
     }
@@ -131,7 +139,7 @@ sub AllocateUpdate {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -206,7 +214,7 @@ sub PriorityAllocationGet {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -245,6 +253,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.12 $ $Date: 2009-05-18 09:53:52 $
+$Revision: 1.13 $ $Date: 2009-08-18 22:20:52 $
 
 =cut

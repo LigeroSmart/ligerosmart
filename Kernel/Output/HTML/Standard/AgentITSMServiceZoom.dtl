@@ -2,7 +2,7 @@
 # AgentITSMServiceZoom.dtl - provides HTML form for AgentITSMServiceZoom
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMServiceZoom.dtl,v 1.4 2009-05-18 09:48:46 mh Exp $
+# $Id: AgentITSMServiceZoom.dtl,v 1.5 2009-08-18 22:20:52 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -114,7 +114,7 @@
                   </div>
                 </td>
                 <td>
-                  <img border="0" src="$Env{"Images"}$QData{"CurInciSignal"}.png" title="$Text{"$QData{"CurInciState"}"}" alt="$Text{"$QData{"CurInciState"}"}">
+                  <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"CurInciSignal"}.png" title="$Text{"$QData{"CurInciState"}"}" alt="$Text{"$QData{"CurInciState"}"}">
                 </td>
               </tr>
             </table>

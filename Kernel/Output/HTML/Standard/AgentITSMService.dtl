@@ -2,7 +2,7 @@
 # AgentITSMService.dtl - provides HTML form for AgentITSMService
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMService.dtl,v 1.3 2009-05-18 09:48:46 mh Exp $
+# $Id: AgentITSMService.dtl,v 1.4 2009-08-18 22:20:52 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -30,7 +30,7 @@
 <!-- dtl:block:OverviewRow -->
         <tr class="contentbody">
           <td class="$QData{"CssClass"}" align="right">
-            <img border="0" src="$Env{"Images"}$QData{"CurInciSignal"}.png" title="$Quote{"$Text{"$Data{"CurInciState"}"}"}" alt="$Quote{"$Text{"$Data{"CurInciState"}"}"}">
+            <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"CurInciSignal"}.png" title="$Quote{"$Text{"$Data{"CurInciState"}"}"}" alt="$Quote{"$Text{"$Data{"CurInciState"}"}"}">
           </td>
           <td class="$QData{"CssClass"}">
 <!-- dtl:block:OverviewRowSpace -->
