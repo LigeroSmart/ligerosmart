@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketAddtlITSMField.pm - additional itsm fields for ticket
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketAddtlITSMField.pm,v 1.7 2009-07-23 16:36:35 ub Exp $
-# $OldId: AgentTicketFreeText.pm,v 1.57 2009/07/23 09:29:24 martin Exp $
+# $Id: AgentTicketAddtlITSMField.pm,v 1.8 2009-08-28 11:32:01 mh Exp $
+# $OldId: AgentTicketFreeText.pm,v 1.59 2009/08/25 14:32:55 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -31,7 +31,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -239,8 +239,8 @@ sub Run {
 
     # get ticket free text params
     for my $Count ( 1 .. 16 ) {
-        my $Key           = 'TicketFreeKey' . $Count;
-        my $Value         = 'TicketFreeText' . $Count;
+        my $Key   = 'TicketFreeKey' . $Count;
+        my $Value = 'TicketFreeText' . $Count;
         $GetParam{$Key}   = $Self->{ParamObject}->GetParam( Param => $Key );
         $GetParam{$Value} = $Self->{ParamObject}->GetParam( Param => $Value );
     }
@@ -304,8 +304,8 @@ sub Run {
 
     # get article free text params
     for my $Count ( 1 .. 3 ) {
-        my $Key           = 'ArticleFreeKey' . $Count;
-        my $Value         = 'ArticleFreeText' . $Count;
+        my $Key   = 'ArticleFreeKey' . $Count;
+        my $Value = 'ArticleFreeText' . $Count;
         $GetParam{$Key}   = $Self->{ParamObject}->GetParam( Param => $Key );
         $GetParam{$Value} = $Self->{ParamObject}->GetParam( Param => $Value );
     }
@@ -428,8 +428,8 @@ sub Run {
             # ticket free text
             my %TicketFreeText = ();
             for my $Count ( 1 .. 16 ) {
-                my $Key               = 'TicketFreeKey' . $Count;
-                my $Value             = 'TicketFreeText' . $Count;
+                my $Key   = 'TicketFreeKey' . $Count;
+                my $Value = 'TicketFreeText' . $Count;
                 $TicketFreeText{$Key} = $Self->{TicketObject}->TicketFreeTextGet(
                     TicketID => $Self->{TicketID},
                     Type     => $Key,
@@ -454,8 +454,8 @@ sub Run {
             # article free text
             my %ArticleFreeText = ();
             for my $Count ( 1 .. 3 ) {
-                my $Key           = 'ArticleFreeKey' . $Count;
-                my $Value         = 'ArticleFreeText' . $Count;
+                my $Key   = 'ArticleFreeKey' . $Count;
+                my $Value = 'ArticleFreeText' . $Count;
                 $ArticleFreeText{$Key} = $Self->{TicketObject}->ArticleFreeTextGet(
                     TicketID => $Self->{TicketID},
                     Type     => $Key,
@@ -612,7 +612,7 @@ sub Run {
                 );
             }
 
-            my $From          = "$Self->{UserFirstname} $Self->{UserLastname} <$Self->{UserEmail}>";
+            my $From = "$Self->{UserFirstname} $Self->{UserLastname} <$Self->{UserEmail}>";
             my @NotifyUserIDs = ( @{ $Self->{InformUserID} }, @{ $Self->{InvolvedUserID} } );
             $ArticleID = $Self->{TicketObject}->ArticleCreate(
                 TicketID                        => $Self->{TicketID},
@@ -1498,11 +1498,7 @@ sub _Mask {
         }
 
         # show spell check
-        if (
-            $Self->{ConfigObject}->Get('SpellChecker')
-            && $Self->{LayoutObject}->{BrowserJavaScriptSupport}
-            )
-        {
+        if ( $Self->{LayoutObject}->{BrowserSpellChecker} ) {
             $Self->{LayoutObject}->Block(
                 Name => 'SpellCheck',
                 Data => {},
