@@ -2,8 +2,8 @@
 # Kernel/Modules/CustomerTicketPrint.pm - print layout for customer interface
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerTicketPrint.pm,v 1.2 2009-07-02 21:56:47 ub Exp $
-# $OldId: CustomerTicketPrint.pm,v 1.25 2009/04/23 13:47:27 mh Exp $
+# $Id: CustomerTicketPrint.pm,v 1.3 2009-08-28 11:40:03 mh Exp $
+# $OldId: CustomerTicketPrint.pm,v 1.27 2009/08/27 16:00:23 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -937,7 +937,7 @@ sub _HTMLMask {
             $Self->{LayoutObject}->Block(
                 Name => 'TicketFreeTime',
                 Data => {
-                    %Param,,
+                    %Param,
                     TicketFreeTimeKey => $Self->{ConfigObject}->Get( 'TicketFreeTimeKey' . $Count ),
                     TicketFreeTime    => $Param{ 'TicketFreeTime' . $Count },
                     Count             => $Count,
@@ -959,12 +959,12 @@ sub _HTMLMask {
         if ( $Article{Atms} ) {
             %AtmIndex = %{ $Article{Atms} };
         }
-        $Param{"Article::ATM"} = '';
+        $Param{'Article::ATM'} = '';
         for my $FileID ( keys %AtmIndex ) {
             my %File = %{ $AtmIndex{$FileID} };
             $File{Filename} = $Self->{LayoutObject}->Ascii2Html( Text => $File{Filename} );
-            $Param{"Article::ATM"}
-                .= '<a href="$Env{"Baselink"}Action=AgentTicketAttachment&'
+            $Param{'Article::ATM'}
+                .= '<a href="$Env{"CGIHandle"}/$QData{"Filename"}?Action=CustomerTicketAttachment&'
                 . "ArticleID=$Article{ArticleID}&FileID=$FileID\" target=\"attachment\" "
                 . "onmouseover=\"window.status='\$Text{\"Download\"}: $File{Filename}';"
                 . ' return true;" onmouseout="window.status=\'\';">'
@@ -972,13 +972,12 @@ sub _HTMLMask {
         }
 
         # check if just a only html email
-        if (
-            my $MimeTypeText
-            = $Self->{LayoutObject}->CheckMimeType( %Param, %Article, Action => 'AgentTicketZoom' )
-            )
-        {
-            $Param{'TextNote'} = $MimeTypeText;
-            $Article{'Body'}   = '';
+        my $MimeTypeText = $Self->{LayoutObject}->CheckMimeType(
+            %Param, %Article, Action => 'AgentTicketZoom',
+        );
+        if ($MimeTypeText) {
+            $Param{TextNote} = $MimeTypeText;
+            $Article{Body}   = '';
         }
         else {
 
@@ -990,12 +989,10 @@ sub _HTMLMask {
             );
 
             # do charset check
-            if (
-                my $CharsetText = $Self->{LayoutObject}->CheckCharset(
-                    %Param, %Article, Action => 'AgentTicketZoom',
-                )
-                )
-            {
+            my $CharsetText = $Self->{LayoutObject}->CheckCharset(
+                %Param, %Article, Action => 'AgentTicketZoom',
+            );
+            if ($CharsetText) {
                 $Param{'Article::TextNote'} = $CharsetText;
             }
         }
