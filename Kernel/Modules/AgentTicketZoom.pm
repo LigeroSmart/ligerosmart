@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.pm,v 1.6 2009-07-18 19:12:58 ub Exp $
-# $OldId: AgentTicketZoom.pm,v 1.72 2009/07/18 15:19:33 martin Exp $
+# $Id: AgentTicketZoom.pm,v 1.7 2009-08-28 11:39:31 mh Exp $
+# $OldId: AgentTicketZoom.pm,v 1.73 2009/08/02 14:53:55 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -56,8 +56,11 @@ sub new {
     if ( !defined $Self->{ZoomExpandSort} ) {
         $Self->{ZoomExpandSort} = $Self->{ConfigObject}->Get('Ticket::Frontend::ZoomExpandSort');
     }
-    $Self->{HighlightColor1} = $Self->{ConfigObject}->Get('HighlightColor1');
-    $Self->{HighlightColor2} = $Self->{ConfigObject}->Get('HighlightColor2');
+    my $Config = $Self->{ConfigObject}->Get('Ticket::Frontend::AgentTicketQueue');
+    if ($Config) {
+        $Self->{HighlightColor1} = $Config->{HighlightColor1} || 'orange';
+        $Self->{HighlightColor2} = $Config->{HighlightColor2} || 'red';
+    }
     $Self->{ArticleFilterActive}
         = $Self->{ConfigObject}->Get('Ticket::Frontend::TicketArticleFilter');
 
