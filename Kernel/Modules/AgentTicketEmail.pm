@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketEmail.pm - to compose initial email to customer
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketEmail.pm,v 1.11 2009-07-27 14:38:40 ub Exp $
-# $OldId: AgentTicketEmail.pm,v 1.96 2009/07/27 14:35:22 ub Exp $
+# $Id: AgentTicketEmail.pm,v 1.12 2009-08-28 11:34:15 mh Exp $
+# $OldId: AgentTicketEmail.pm,v 1.99 2009/08/25 14:32:55 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,7 +33,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1090,9 +1090,7 @@ sub Run {
 # ---
 
             # get redirect screen
-            my $NextScreen = $Self->{UserCreateNextMask}
-                || $Self->{ConfigObject}->Get('PreferencesGroups')->{CreateNextMask}->{DataSelected}
-                || 'AgentTicketEmail';
+            my $NextScreen = $Self->{UserCreateNextMask} || 'AgentTicketEmail';
 
             # redirect
             return $Self->{LayoutObject}->Redirect(
@@ -1104,7 +1102,7 @@ sub Run {
         }
     }
     elsif ( $Self->{Subaction} eq 'AJAXUpdate' ) {
-        my $Dest         = $Self->{ParamObject}->GetParam( Param => 'Dest' ) || '';
+        my $Dest = $Self->{ParamObject}->GetParam( Param => 'Dest' ) || '';
         my $CustomerUser = $Self->{ParamObject}->GetParam( Param => 'SelectedCustomerUser' );
 
         # get From based on selected queue
@@ -2183,11 +2181,7 @@ sub _MaskEmailNew {
     }
 
     # show spell check
-    if (
-        $Self->{ConfigObject}->Get('SpellChecker')
-        && $Self->{LayoutObject}->{BrowserJavaScriptSupport}
-        )
-    {
+    if ( $Self->{LayoutObject}->{BrowserSpellChecker} ) {
         $Self->{LayoutObject}->Block(
             Name => 'SpellCheck',
             Data => {},
