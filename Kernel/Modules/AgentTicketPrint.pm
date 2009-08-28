@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketPrint.pm - print layout for agent interface
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPrint.pm,v 1.3 2009-07-02 21:54:47 ub Exp $
-# $OldId: AgentTicketPrint.pm,v 1.62 2009/04/23 14:11:27 mh Exp $
+# $Id: AgentTicketPrint.pm,v 1.4 2009-08-28 11:37:31 mh Exp $
+# $OldId: AgentTicketPrint.pm,v 1.64 2009/08/27 16:00:23 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -434,7 +434,7 @@ sub _PDFOutputTicketInfos {
         },
     ];
 
-    # add responible row, if feature is enabled
+    # add responsible row, if feature is enabled
     if ( $Self->{ConfigObject}->Get('Ticket::Responsible') ) {
         my $Responsible = '-';
         if ( $Ticket{Responsible} ) {
@@ -1147,7 +1147,7 @@ sub _PDFOutputArticles {
 sub _HTMLMask {
     my ( $Self, %Param ) = @_;
 
-    # output responible, if feature is enabled
+    # output responsible, if feature is enabled
     if ( $Self->{ConfigObject}->Get('Ticket::Responsible') ) {
         my $Responsible = '-';
         if ( $Param{Responsible} ) {
@@ -1264,12 +1264,12 @@ sub _HTMLMask {
         if ( $Article{Atms} ) {
             %AtmIndex = %{ $Article{Atms} };
         }
-        $Param{"Article::ATM"} = '';
+        $Param{'Article::ATM'} = '';
         for my $FileID ( keys %AtmIndex ) {
             my %File = %{ $AtmIndex{$FileID} };
             $File{Filename} = $Self->{LayoutObject}->Ascii2Html( Text => $File{Filename} );
-            $Param{"Article::ATM"}
-                .= '<a href="$Env{"Baselink"}Action=AgentTicketAttachment&'
+            $Param{'Article::ATM'}
+                .= '<a href="$Env{"CGIHandle"}/$QData{"Filename"}?Action=AgentTicketAttachment&'
                 . "ArticleID=$Article{ArticleID}&FileID=$FileID\" target=\"attachment\" "
                 . "onmouseover=\"window.status='\$Text{\"Download\"}: $File{Filename}';"
                 . ' return true;" onmouseout="window.status=\'\';">'
@@ -1277,11 +1277,12 @@ sub _HTMLMask {
         }
 
         # check if just a only html email
-        if (
-            my $MimeTypeText
-            = $Self->{LayoutObject}->CheckMimeType( %Param, %Article, Action => 'AgentTicketZoom' )
-            )
-        {
+        my $MimeTypeText = $Self->{LayoutObject}->CheckMimeType(
+            %Param,
+            %Article,
+            Action => 'AgentTicketZoom',
+        );
+        if ($MimeTypeText) {
             $Param{TextNote} = $MimeTypeText;
             $Article{Body}   = '';
         }
@@ -1295,13 +1296,10 @@ sub _HTMLMask {
             );
 
             # do charset check
-            if (
-                my $CharsetText
-                = $Self->{LayoutObject}->CheckCharset(
-                    %Param, %Article, Action => 'AgentTicketZoom'
-                )
-                )
-            {
+            my $CharsetText = $Self->{LayoutObject}->CheckCharset(
+                %Param, %Article, Action => 'AgentTicketZoom'
+            );
+            if ($CharsetText) {
                 $Param{'Article::TextNote'} = $CharsetText;
             }
         }
