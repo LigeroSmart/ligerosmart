@@ -2,8 +2,8 @@
 # Kernel/Modules/CustomerTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerTicketZoom.pm,v 1.7 2009-07-22 16:07:08 ub Exp $
-# $OldId: CustomerTicketZoom.pm,v 1.45 2009/07/22 13:08:51 martin Exp $
+# $Id: CustomerTicketZoom.pm,v 1.8 2009-08-28 11:40:37 mh Exp $
+# $OldId: CustomerTicketZoom.pm,v 1.46 2009/08/27 16:00:23 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -575,7 +575,7 @@ sub _Mask {
                     %File,
                     Action => 'Download',
                     Link =>
-                        "\$Env{\"Baselink\"}Action=CustomerTicketAttachment&ArticleID=$Article{ArticleID}&FileID=$FileID",
+                        "\$Env{\"CGIHandle\"}/\$QData{\"Filename\"}?Action=CustomerTicketAttachment&ArticleID=$Article{ArticleID}&FileID=$FileID",
                     Image  => 'disk-s.png',
                     Target => $Target,
                 },
