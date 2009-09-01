@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQ.pm - faq module
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.pm,v 1.32 2009-07-07 17:52:18 ub Exp $
+# $Id: AgentFAQ.pm,v 1.33 2009-09-01 17:25:11 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::Valid;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION @ISA);
-$VERSION = qw($Revision: 1.32 $) [1];
+$VERSION = qw($Revision: 1.33 $) [1];
 
 @ISA = qw(Kernel::Modules::FAQ);
 
@@ -295,7 +295,7 @@ sub Run {
         {
 
             # db action
-            if ( !$Self->{FAQObject}->LanguageUpdate( %ParamData, UserID => $Self->{UserID} ) ) {
+            if ( $Self->{FAQObject}->LanguageUpdate( %ParamData, UserID => $Self->{UserID} ) ) {
                 return $Self->{LayoutObject}->Redirect(
                     OP => "Action=AgentFAQ&Subaction=Language"
                 );
