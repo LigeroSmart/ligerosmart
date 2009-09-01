@@ -2,7 +2,7 @@
 # FAQ.pm - code to excecute during package installation
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.5 2009-04-22 20:19:44 ub Exp $
+# $Id: FAQ.pm,v 1.6 2009-09-01 14:44:23 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Valid;
 use Kernel::System::FAQ;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 =head1 NAME
 
@@ -274,6 +274,9 @@ sub CodeUninstall {
         FilePrefix => $Self->{FilePrefix},
     );
 
+    # delete all links with FAQ articles
+    $Self->_LinkDelete();
+
     return 1;
 }
 
@@ -506,6 +509,39 @@ sub _GroupDeactivate {
     return 1;
 }
 
+=item _LinkDelete()
+
+delete all existing links to faq articles
+
+    my $Result = $CodeObject->_LinkDelete();
+
+=cut
+
+sub _LinkDelete {
+    my ( $Self, %Param ) = @_;
+
+    # get all faq article ids
+    my @FAQIDs = ();
+    $Self->{DBObject}->Prepare(
+        SQL => 'SELECT id FROM faq_item'
+    );
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        push @FAQIDs, $Row[0];
+    }
+    return if !@FAQIDs;
+
+    # delete the faq article links
+    for my $FAQID ( @FAQIDs ) {
+        $Self->{LinkObject}->LinkDeleteAll(
+            Object => 'FAQ',
+            Key    => $FAQID,
+            UserID => 1,
+        );
+    }
+
+    return 1;
+}
+
 1;
 
 =back
@@ -522,6 +558,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2009-04-22 20:19:44 $
+$Revision: 1.6 $ $Date: 2009-09-01 14:44:23 $
 
 =cut
