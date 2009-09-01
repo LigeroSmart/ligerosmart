@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.71 2009-08-04 22:16:34 ub Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.72 2009-09-01 14:28:16 ub Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -235,14 +235,14 @@
         </TableAlter>
     </DatabaseUpgrade>
     <DatabaseUninstall Type="pre">
+        <TableDrop Name="faq_history"/>
+        <TableDrop Name="faq_attachment"/>
+        <TableDrop Name="faq_item"/>
         <TableDrop Name="faq_category"/>
         <TableDrop Name="faq_category_group"/>
-        <TableDrop Name="faq_item"/>
-        <TableDrop Name="faq_language"/>
-        <TableDrop Name="faq_history"/>
         <TableDrop Name="faq_state"/>
         <TableDrop Name="faq_state_type"/>
-        <TableDrop Name="faq_attachment"/>
+        <TableDrop Name="faq_language"/>
         <TableDrop Name="faq_voting"/>
         <TableDrop Name="faq_log"/>
     </DatabaseUninstall>
