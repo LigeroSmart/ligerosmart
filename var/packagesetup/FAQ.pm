@@ -2,7 +2,7 @@
 # FAQ.pm - code to excecute during package installation
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.6 2009-09-01 14:44:23 ub Exp $
+# $Id: FAQ.pm,v 1.7 2009-09-01 14:55:41 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Valid;
 use Kernel::System::FAQ;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 =head1 NAME
 
@@ -127,6 +127,7 @@ sub new {
     $Self->{GroupObject}  = Kernel::System::Group->new( %{$Self} );
     $Self->{UserObject}   = Kernel::System::User->new( %{$Self} );
     $Self->{ValidObject}  = Kernel::System::Valid->new( %{$Self} );
+    $Self->{LinkObject}   = Kernel::System::LinkObject->new( %{$Self} );
     $Self->{StatsObject}  = Kernel::System::Stats->new(
         %{$Self},
         UserID => 1,
@@ -558,6 +559,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.6 $ $Date: 2009-09-01 14:44:23 $
+$Revision: 1.7 $ $Date: 2009-09-01 14:55:41 $
 
 =cut
