@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.0">
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.1.1.1 2009-09-12 08:01:24 mh Exp $</CVS>
+    <Name>ITSMChangeManagement</Name>
+    <Version>0.0.0</Version>
+    <Framework>2.3.x</Framework>
+    <PackageRequired Version="1.2.91">ITSMCore</PackageRequired>
+    <Vendor>OTRS AG</Vendor>
+    <URL>http://otrs.org/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <Description Lang="en">The OTRS::ITSM change management package.</Description>
+    <Description Lang="de">Das OTRS::ITSM Change Management Paket.</Description>
+    <Filelist>
+        <File Permission="644" Location="Kernel/Config/Files/ITSMChangeManagement.xml"/>
+        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeZoom.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeZoom.dtl"/>
+        <File Permission="644" Location="Kernel/System/ITSMChange.pm"/>
+        <File Permission="644" Location="Kernel/System/ITSMChange/WorkOrder.pm"/>
+        <File Permission="644" Location="var/packagesetup/ITSMChangeManagement.pm"/>
+    </Filelist>
+    <DatabaseInstall Type="post">
+        <TableCreate Name="change">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
+            <Column Name="change_number" Required="true" Size="100" Type="VARCHAR"/>
+            <Column Name="title" Required="true" Size="200" Type="VARCHAR"/>
+            <Column Name="description" Required="true" Size="5000" Type="VARCHAR"/>
+            <Column Name="justification" Required="true" Size="5000" Type="VARCHAR"/>
+            <Column Name="backout_plan" Required="true" Size="5000" Type="VARCHAR"/>
+            <Column Name="post_implementation_review" Required="true" Size="5000" Type="VARCHAR"/>
+            <Column Name="note" Required="true" Size="5000" Type="VARCHAR"/>
+            <Column Name="start_time" Required="true" Type="DATE"/>
+            <Column Name="end_time" Required="true" Type="DATE"/>
+            <Column Name="state_id" Required="true" Type="INTEGER"/>
+            <Column Name="category_id" Required="true" Type="INTEGER"/>
+            <Column Name="impact_id" Required="true" Type="INTEGER"/>
+            <Column Name="priority_id" Required="true" Type="INTEGER"/>
+            <Column Name="change_manager_id" Required="true" Type="INTEGER"/>
+            <Column Name="change_builder_id" Required="true" Type="INTEGER"/>
+            <Column Name="create_time" Required="true" Type="DATE"/>
+            <Column Name="create_by" Required="true" Type="INTEGER"/>
+            <Column Name="change_time" Required="true" Type="DATE"/>
+            <Column Name="change_by" Required="true" Type="INTEGER"/>
+            <Unique>
+                <UniqueColumn Name="change_number"/>
+            </Unique>
+            <Index Name="change_state_id">
+                <IndexColumn Name="state_id"/>
+            </Index>
+            <Index Name="change_category_id">
+                <IndexColumn Name="category_id"/>
+            </Index>
+            <Index Name="change_impact_id">
+                <IndexColumn Name="impact_id"/>
+            </Index>
+            <Index Name="change_priority_id">
+                <IndexColumn Name="priority_id"/>
+            </Index>
+            <ForeignKey ForeignTable="general_catalog">
+                <Reference Local="state_id" Foreign="id"/>
+                <Reference Local="category_id" Foreign="id"/>
+                <Reference Local="impact_id" Foreign="id"/>
+                <Reference Local="priority_id" Foreign="id"/>
+            </ForeignKey>
+            <ForeignKey ForeignTable="users">
+                <Reference Local="change_manager_id" Foreign="id"/>
+                <Reference Local="change_builder_id" Foreign="id"/>
+                <Reference Local="create_by" Foreign="id"/>
+                <Reference Local="change_by" Foreign="id"/>
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Name="change_workorder">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
+            <Column Name="change_id" Required="true" Type="BIGINT"/>
+            <Column Name="workorder_number" Required="true" Size="100" Type="VARCHAR"/>
+            <Column Name="title" Required="true" Size="200" Type="VARCHAR"/>
+            <Column Name="description" Required="true" Size="5000" Type="VARCHAR"/>
+            <Column Name="note" Required="true" Size="5000" Type="VARCHAR"/>
+            <Column Name="start_time" Required="true" Type="DATE"/>
+            <Column Name="end_time" Required="true" Type="DATE"/>
+            <Column Name="state_id" Required="true" Type="INTEGER"/>
+            <Column Name="workorder_agent_id" Required="true" Type="INTEGER"/>
+            <Column Name="create_time" Required="true" Type="DATE"/>
+            <Column Name="create_by" Required="true" Type="INTEGER"/>
+            <Column Name="change_time" Required="true" Type="DATE"/>
+            <Column Name="change_by" Required="true" Type="INTEGER"/>
+            <Unique>
+                <UniqueColumn Name="workorder_number"/>
+            </Unique>
+            <Index Name="change_workorder_state_id">
+                <IndexColumn Name="state_id"/>
+            </Index>
+            <ForeignKey ForeignTable="general_catalog">
+                <Reference Local="state_id" Foreign="id"/>
+            </ForeignKey>
+            <ForeignKey ForeignTable="change">
+                <Reference Local="change_id" Foreign="id"/>
+            </ForeignKey>
+            <ForeignKey ForeignTable="users">
+                <Reference Local="workorder_agent_id" Foreign="id"/>
+                <Reference Local="create_by" Foreign="id"/>
+                <Reference Local="change_by" Foreign="id"/>
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Name="change_history_type">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="SMALLINT"/>
+            <Column Name="name" Required="true" Size="100" Type="VARCHAR"/>
+            <Column Name="comments" Required="false" Size="250" Type="VARCHAR"/>
+            <Column Name="valid_id" Required="true" Type="SMALLINT"/>
+            <Column Name="create_time" Required="true" Type="DATE"/>
+            <Column Name="create_by" Required="true" Type="INTEGER"/>
+            <Column Name="change_time" Required="true" Type="DATE"/>
+            <Column Name="change_by" Required="true" Type="INTEGER"/>
+            <Unique Name="change_history_type_name">
+                <UniqueColumn Name="name"/>
+            </Unique>
+            <ForeignKey ForeignTable="valid">
+                <Reference Local="valid_id" Foreign="id"/>
+            </ForeignKey>
+            <ForeignKey ForeignTable="users">
+                <Reference Local="create_by" Foreign="id"/>
+                <Reference Local="change_by" Foreign="id"/>
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Name="change_history">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
+            <Column Name="change_id" Required="true" Type="BIGINT"/>
+            <Column Name="workorder_id" Required="true" Type="BIGINT"/>
+            <Column Name="history_type_id" Required="true" Type="SMALLINT"/>
+            <Column Name="content" Required="true" Size="5000" Type="VARCHAR"/>
+            <Column Name="change_state_id" Required="true" Type="INTEGER"/>
+            <Column Name="change_category_id" Required="true" Type="INTEGER"/>
+            <Column Name="change_impact_id" Required="true" Type="INTEGER"/>
+            <Column Name="change_priority_id" Required="true" Type="INTEGER"/>
+            <Column Name="workorder_state_id" Required="true" Type="INTEGER"/>
+            <Column Name="create_time" Required="true" Type="DATE"/>
+            <Column Name="create_by" Required="true" Type="INTEGER"/>
+            <Index Name="change_history_change_id">
+                <IndexColumn Name="change_id"/>
+            </Index>
+            <Index Name="change_history_workorder_id">
+                <IndexColumn Name="workorder_id"/>
+            </Index>
+            <Index Name="change_history_history_type_id">
+                <IndexColumn Name="history_type_id"/>
+            </Index>
+            <Index Name="change_history_change_state_id">
+                <IndexColumn Name="change_state_id"/>
+            </Index>
+            <Index Name="change_history_change_category_id">
+                <IndexColumn Name="change_category_id"/>
+            </Index>
+            <Index Name="change_history_change_impact_id">
+                <IndexColumn Name="change_impact_id"/>
+            </Index>
+            <Index Name="change_history_change_priority_id">
+                <IndexColumn Name="change_priority_id"/>
+            </Index>
+            <Index Name="change_history_workorder_state_id">
+                <IndexColumn Name="workorder_state_id"/>
+            </Index>
+            <ForeignKey ForeignTable="change">
+                <Reference Local="change_id" Foreign="id"/>
+            </ForeignKey>
+            <ForeignKey ForeignTable="change_workorder">
+                <Reference Local="workorder_id" Foreign="id"/>
+            </ForeignKey>
+            <ForeignKey ForeignTable="change_history_type">
+                <Reference Local="history_type_id" Foreign="id"/>
+            </ForeignKey>
+            <ForeignKey ForeignTable="general_catalog">
+                <Reference Local="change_state_id" Foreign="id"/>
+                <Reference Local="change_category_id" Foreign="id"/>
+                <Reference Local="change_impact_id" Foreign="id"/>
+                <Reference Local="change_priority_id" Foreign="id"/>
+                <Reference Local="workorder_state_id" Foreign="id"/>
+            </ForeignKey>
+            <ForeignKey ForeignTable="users">
+                <Reference Local="create_by" Foreign="id"/>
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Name="change_cab">
+            <Column Name="change_id" Required="true" Type="BIGINT"/>
+            <Column Name="member_id" Required="true" Type="INTEGER"/>
+            <Unique Name="change_cab_unique">
+                <UniqueColumn Name="change_id"/>
+                <UniqueColumn Name="member_id"/>
+            </Unique>
+            <ForeignKey ForeignTable="change">
+                <Reference Local="change_id" Foreign="id"/>
+            </ForeignKey>
+            <ForeignKey ForeignTable="users">
+                <Reference Local="member_id" Foreign="id"/>
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Name="change_cip_matrix">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
+            <Column Name="category_id" Required="true" Type="INTEGER"/>
+            <Column Name="impact_id" Required="true" Type="INTEGER"/>
+            <Column Name="priority_id" Required="true" Type="INTEGER"/>
+            <Column Name="create_time" Required="false" Type="DATE"/>
+            <Column Name="create_by" Required="false" Type="INTEGER"/>
+            <Unique Name="change_cip_matrix_unique">
+                <UniqueColumn Name="category_id"/>
+                <UniqueColumn Name="impact_id"/>
+                <UniqueColumn Name="priority_id"/>
+            </Unique>
+            <ForeignKey ForeignTable="general_catalog">
+                <Reference Local="category_id" Foreign="id"/>
+                <Reference Local="impact_id" Foreign="id"/>
+                <Reference Local="priority_id" Foreign="id"/>
+            </ForeignKey>
+            <ForeignKey ForeignTable="users">
+                <Reference Local="create_by" Foreign="id"/>
+            </ForeignKey>
+        </TableCreate>
+    </DatabaseInstall>
+    <DatabaseUninstall Type="pre">
+        <TableDrop Name="change_cip_matrix"/>
+        <TableDrop Name="change_cab"/>
+        <TableDrop Name="change_history"/>
+        <TableDrop Name="change_history_type"/>
+        <TableDrop Name="change_workorder"/>
+        <TableDrop Name="change"/>
+    </DatabaseUninstall>
+    <CodeInstall Type="post">
+
+        # define function name
+        my $FunctionName = 'CodeInstall';
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+
+        # load the module
+        if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
+
+            # create new instance
+            my $CodeObject = $CodeModule-&gt;new( %{$Self} );
+
+            if ($CodeObject) {
+
+                # start methode
+                if ( !$CodeObject-&gt;$FunctionName(%{$Self}) ) {
+                    $Self-&gt;{LogObject}-&gt;Log(
+                        Priority =&gt; 'error',
+                        Message  =&gt; "Could not call method $FunctionName() on $CodeModule.pm."
+                    );
+                }
+            }
+
+            # error handling
+            else {
+                $Self-&gt;{LogObject}-&gt;Log(
+                    Priority =&gt; 'error',
+                    Message  =&gt; "Could not call method new() on $CodeModule.pm."
+                );
+            }
+        }
+
+    </CodeInstall>
+    <CodeReinstall Type="post">
+
+        # define function name
+        my $FunctionName = 'CodeReinstall';
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+
+        # load the module
+        if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
+
+            # create new instance
+            my $CodeObject = $CodeModule-&gt;new( %{$Self} );
+
+            if ($CodeObject) {
+
+                # start methode
+                if ( !$CodeObject-&gt;$FunctionName(%{$Self}) ) {
+                    $Self-&gt;{LogObject}-&gt;Log(
+                        Priority =&gt; 'error',
+                        Message  =&gt; "Could not call method $FunctionName() on $CodeModule.pm."
+                    );
+                }
+            }
+
+            # error handling
+            else {
+                $Self-&gt;{LogObject}-&gt;Log(
+                    Priority =&gt; 'error',
+                    Message  =&gt; "Could not call method new() on $CodeModule.pm."
+                );
+            }
+        }
+
+    </CodeReinstall>
+    <CodeUninstall Type="pre">
+
+        # define function name
+        my $FunctionName = 'CodeUninstall';
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+
+        # load the module
+        if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
+
+            # create new instance
+            my $CodeObject = $CodeModule-&gt;new( %{$Self} );
+
+            if ($CodeObject) {
+
+                # start methode
+                if ( !$CodeObject-&gt;$FunctionName(%{$Self}) ) {
+                    $Self-&gt;{LogObject}-&gt;Log(
+                        Priority =&gt; 'error',
+                        Message  =&gt; "Could not call method $FunctionName() on $CodeModule.pm."
+                    );
+                }
+            }
+
+            # error handling
+            else {
+                $Self-&gt;{LogObject}-&gt;Log(
+                    Priority =&gt; 'error',
+                    Message  =&gt; "Could not call method new() on $CodeModule.pm."
+                );
+            }
+        }
+
+    </CodeUninstall>
+    <IntroInstall Type="pre" Title="Install Information" Lang="en">
+
+        &lt;br&gt;
+        &lt;b&gt;WELCOME&lt;/b&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        You are about to install the OTRS package ITSMChangeManagement.&lt;br&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        &lt;b&gt;REQUIRED OTRS PACKAGES&lt;/b&gt;
+        &lt;ul&gt;
+        &lt;li&gt;ITSMCore 1.2.91&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+
+    </IntroInstall>
+    <IntroInstall Type="pre" Title="Installation Information" Lang="de">
+
+        &lt;br&gt;
+        &lt;b&gt;WILLKOMMEN&lt;/b&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        Sie sind im Begriff das OTRS-Paket ITSMChangeManagement zu installieren.&lt;br&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        &lt;b&gt;BENÖTIGTE OTRS-PAKETE&lt;/b&gt;
+        &lt;ul&gt;
+        &lt;li&gt;ITSMCore 1.2.91&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+
+    </IntroInstall>
+    <IntroInstall Type="post" Title="Installation Information" Lang="en">
+
+        &lt;br&gt;
+        &lt;b&gt;NOTICE&lt;/b&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        In order to grant users access to the change menu, you need to add them as member to the group 'itsm-change'.
+        &lt;br&gt;
+        &lt;br&gt;
+        The menu items that were added by this package will be visible after you log-in to the system again.
+        &lt;br&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+
+    </IntroInstall>
+    <IntroInstall Type="post" Title="Installation Information" Lang="de">
+
+        &lt;br&gt;
+        &lt;b&gt;HINWEIS&lt;/b&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        Um Benutzern Zugriff auf das Change-Menü zu gewähren, müssen diese Mitglied der neuen Gruppe 'itsm-change' sein.
+        &lt;br&gt;
+        &lt;br&gt;
+        Die von diesem Paket hinzugefügten Menü-Punkte sind erst nach einem erneuten Anmeldevorgang im System sichtbar.
+        &lt;br&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+
+    </IntroInstall>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="en">
+
+        &lt;br&gt;
+        &lt;b&gt;WELCOME&lt;/b&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        You are about to upgrade the OTRS package ITSMChangeManagement.&lt;br&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        &lt;b&gt;REQUIRED OTRS PACKAGES&lt;/b&gt;
+        &lt;ul&gt;
+        &lt;li&gt;ITSMCore 1.2.91&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+
+    </IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="de">
+
+        &lt;br&gt;
+        &lt;b&gt;WILLKOMMEN&lt;/b&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        Sie sind im Begriff das OTRS-Paket ITSMChangeManagement zu aktualisieren.&lt;br&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        &lt;b&gt;BENÖTIGTE OTRS-PAKETE&lt;/b&gt;
+        &lt;ul&gt;
+        &lt;li&gt;ITSMCore 1.2.91&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+
+    </IntroUpgrade>
+    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="en">
+
+        &lt;br&gt;
+        &lt;b&gt;ATTENTION&lt;/b&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        If you uninstall this package, all database tables that were created during installation will be deleted.
+        All data from these tables will be irrevocably lost!
+        &lt;br&gt;
+        &lt;br&gt;
+        The group 'itsm-change' that was created during package installation will be deactivated.
+        You can activate this group again in the admin area.
+        &lt;br&gt;
+        &lt;br&gt;
+        All links to change objects will be irrevocably deleted!
+        &lt;br&gt;
+        &lt;br&gt;
+        The statistics that are associated with this package, will no longer be available if the package is uninstalled.
+        &lt;br&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+
+    </IntroUninstall>
+    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="de">
+
+        &lt;br&gt;
+        &lt;b&gt;ACHTUNG&lt;/b&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        Bei der Deinstallation werden die von diesem Paket angelegten Datenbank-Tabellen gelöscht.
+        Alle darin enthaltenen Daten gehen unwiderruflich verloren!
+        &lt;br&gt;
+        &lt;br&gt;
+        Die von diesem Paket angelegte Gruppe 'itsm-change' wird deaktiviert.
+        Sie kann jederzeit im Admin-Bereich wieder aktiviert werden.
+        &lt;br&gt;
+        &lt;br&gt;
+        Alle Verknüpfungen zu Change-Objekten werden unwiderruflich gelöscht!
+        &lt;br&gt;
+        &lt;br&gt;
+        Nach der Deinstallation sind die zu diesem Paket zugehörigen Statistiken nicht mehr verfügbar.
+        &lt;br&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+
+    </IntroUninstall>
+</otrs_package>
