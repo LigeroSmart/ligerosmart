@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.76 2009-09-01 15:48:21 ub Exp $
+# $Id: FAQ.pm,v 1.77 2009-09-22 09:51:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -16,6 +16,7 @@ use warnings;
 
 use MIME::Base64;
 use Kernel::System::Encode;
+use Kernel::System::Cache;
 use Kernel::System::User;
 use Kernel::System::Group;
 use Kernel::System::CustomerGroup;
@@ -24,7 +25,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.76 $) [1];
+$VERSION = qw($Revision: 1.77 $) [1];
 
 =head1 NAME
 
@@ -83,6 +84,7 @@ sub new {
         $Self->{$_} = $Param{$_} || die "Got no $_!";
     }
     $Self->{GroupObject}         = Kernel::System::Group->new( %{$Self} );
+    $Self->{CacheObject}         = Kernel::System::Cache->new( %{ $Self } );
     $Self->{CustomerGroupObject} = Kernel::System::CustomerGroup->new( %{$Self} );
     $Self->{UserObject}          = Kernel::System::User->new( %{$Self} );
     $Self->{TicketObject}        = Kernel::System::Ticket->new( %{$Self} );
@@ -117,28 +119,24 @@ sub FAQGet {
         }
     }
 
-    # db quote
-    for (qw(ItemID)) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_}, 'Integer' );
-    }
-    my %Data = ();
-    my $SQL  = "SELECT i.f_name, i.f_language_id, i.f_subject, " .
-        " i.f_field1, i.f_field2, i.f_field3, " .
-        " i.f_field4, i.f_field5, i.f_field6, " .
-        " i.free_key1, i.free_value1, i.free_key2, i.free_value2, " .
-        " i.free_key3, i.free_value3, i.free_key4, i.free_value4, " .
-        " i.created, i.created_by, i.changed, i.changed_by, " .
-        " i.category_id, i.state_id, c.name, s.name, l.name, i.f_keywords, i.approved, i.f_number, st.id, st.name "
-        .
-        " FROM faq_item i, faq_category c, faq_state s, faq_state_type st, faq_language l " .
-        " WHERE " .
-        " i.state_id = s.id AND " .
-        " s.type_id = st.id AND " .
-        " i.category_id = c.id AND " .
-        " i.f_language_id = l.id AND " .
-        " i.id = $Param{ItemID}";
-    return if !$Self->{DBObject}->Prepare( SQL => $SQL );
+    return if !$Self->{DBObject}->Prepare(
+        SQL => 'SELECT i.f_name, i.f_language_id, i.f_subject, ' .
+            ' i.f_field1, i.f_field2, i.f_field3, ' .
+            ' i.f_field4, i.f_field5, i.f_field6, ' .
+            ' i.free_key1, i.free_value1, i.free_key2, i.free_value2, ' .
+            ' i.free_key3, i.free_value3, i.free_key4, i.free_value4, ' .
+            ' i.created, i.created_by, i.changed, i.changed_by, ' .
+            ' i.category_id, i.state_id, c.name, s.name, l.name, i.f_keywords, i.approved, ' .
+            ' i.f_number, st.id, st.name ' .
+            ' FROM faq_item i, faq_category c, faq_state s, faq_state_type st, faq_language l ' .
+            ' WHERE i.state_id = s.id AND s.type_id = st.id AND i.category_id = c.id AND ' .
+            ' i.f_language_id = l.id AND i.id = ?',
+        Bind => [
+            \$Param{ItemID},
+        ],
+    );
 
+    my %Data;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         my %VoteData = %{ $Self->ItemVoteDataGet( ItemID => $Param{ItemID} ) };
         %Data = (
@@ -198,9 +196,10 @@ sub FAQGet {
 
     # update number
     if ( !$Data{Number} ) {
-        my $Number = $Self->{ConfigObject}->Get('SystemID') . "00" . $Data{ItemID};
+        my $Number = $Self->{ConfigObject}->Get('SystemID') . '00' . $Data{ItemID};
         $Self->{DBObject}->Do(
-            SQL => "UPDATE faq_item SET f_number = '$Number' WHERE id = $Data{ItemID}",
+            SQL  => 'UPDATE faq_item SET f_number = ? WHERE id = ?',
+            Bind => [ \$Number, \$Data{ItemID}, ],
         );
         $Data{Number} = $Number;
     }
@@ -230,19 +229,34 @@ sub ItemVoteDataGet {
         }
     }
 
-    # db quote
-    for (qw(ItemID)) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_}, 'Integer' );
-    }
+    # check cache
+    my $CacheKey = 'ItemVoteDataGet::' . $Param{ItemID};
+    my $Cache = $Self->{CacheObject}->Get(
+        Type => 'FAQ',
+        Key  => $CacheKey,
+    );
+    return $Cache if $Cache;
 
-    my $SQL = "SELECT count(*), avg(rate) FROM faq_voting WHERE item_id = " . $Param{ItemID};
-
-    my %Hash = ();
-    $Self->{DBObject}->Prepare( SQL => $SQL, Limit => $Param{Limit} || 500 );
+    # real database query
+    return if !$Self->{DBObject}->Prepare(
+        SQL   => 'SELECT count(*), avg(rate) FROM faq_voting WHERE item_id = ?',
+        Bind  => [ \$Param{ItemID} ],
+        Limit => $Param{Limit} || 500,
+    );
+    my %Hash;
     if ( my @Data = $Self->{DBObject}->FetchrowArray() ) {
         $Hash{Votes}  = $Data[0];
         $Hash{Result} = $Data[1];
     }
+
+    # cache result
+    $Self->{CacheObject}->Set(
+        Type  => 'FAQ',
+        Key   => $CacheKey,
+        Value => \%Hash,
+        TTL   => 60 * 60 * 24 * 2,
+    );
+
     return \%Hash;
 }
 
@@ -320,19 +334,10 @@ sub FAQAdd {
         ]
     );
 
-    # db quote
-    for (qw(Name Title)) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_} );
-    }
-    for (qw(LanguageID)) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_}, 'Integer' );
-    }
-
     # get id
-    $Self->{DBObject}->Prepare(
-        SQL => "SELECT id FROM faq_item WHERE " .
-            "f_name = '$Param{Name}' AND f_language_id = $Param{LanguageID} " .
-            " AND f_subject = '$Param{Title}'",
+    return if !$Self->{DBObject}->Prepare(
+        SQL  => 'SELECT id FROM faq_item WHERE f_name = ? AND f_language_id = ? AND f_subject = ?',
+        Bind => [ \$Param{Name}, \$Param{LanguageID}, \$Param{Title}, ],
     );
     my $ID;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
@@ -340,9 +345,10 @@ sub FAQAdd {
     }
 
     # update number
-    my $Number = $Self->{ConfigObject}->Get('SystemID') . "00" . $ID;
-    $Self->{DBObject}->Do(
-        SQL => "UPDATE faq_item SET f_number = '$Number' WHERE id = $ID",
+    my $Number = $Self->{ConfigObject}->Get('SystemID') . '00' . $ID;
+    return if !$Self->{DBObject}->Do(
+        SQL  => 'UPDATE faq_item SET f_number = ? WHERE id = ?',
+        Bind => [ \$Number, \$ID, ],
     );
 
     # add history
@@ -407,13 +413,12 @@ sub FAQUpdate {
     }
 
     return if !$Self->{DBObject}->Do(
-        SQL => "UPDATE faq_item SET f_name = ?, f_language_id = ?, f_subject = ?, " .
-            " category_id = ?, state_id = ?, f_keywords = ?, " .
-            " f_field1 = ?, f_field2 = ?, f_field3 = ?, f_field4 = ?, f_field5 = ?, f_field6 = ?, "
-            .
-            " free_key1 = ?, free_value1 = ?, free_key2 = ?, free_value2 = ?, " .
-            " free_key3 = ?, free_value3 = ?, free_key4 = ?, free_value4 = ?, " .
-            " changed = current_timestamp, changed_by = ? WHERE id = ?",
+        SQL => 'UPDATE faq_item SET f_name = ?, f_language_id = ?, f_subject = ?, ' .
+            ' category_id = ?, state_id = ?, f_keywords = ?, f_field1 = ?, ' .
+            ' f_field2 = ?, f_field3 = ?, f_field4 = ?, f_field5 = ?, f_field6 = ?, ' .
+            ' free_key1 = ?, free_value1 = ?, free_key2 = ?, free_value2 = ?, ' .
+            ' free_key3 = ?, free_value3 = ?, free_key4 = ?, free_value4 = ?, ' .
+            ' changed = current_timestamp, changed_by = ? WHERE id = ?',
         Bind => [
             \$Param{Name},     \$Param{LanguageID}, \$Param{Title},    \$Param{CategoryID},
             \$Param{StateID},  \$Param{Keywords},   \$Param{Field1},   \$Param{Field2},
@@ -489,10 +494,10 @@ sub AttachmentAdd {
 
     # write attachment to db
     return $Self->{DBObject}->Do(
-        SQL => "INSERT INTO faq_attachment " .
-            " (faq_id, filename, content_type, content_size, content, inlineattachment, " .
-            " created, created_by, changed, changed_by) VALUES " .
-            " (?, ?, ?, ?, ?, ?, current_timestamp, ?, current_timestamp, ?)",
+        SQL => 'INSERT INTO faq_attachment ' .
+            ' (faq_id, filename, content_type, content_size, content, inlineattachment, ' .
+            ' created, created_by, changed, changed_by) VALUES ' .
+            ' (?, ?, ?, ?, ?, ?, current_timestamp, ?, current_timestamp, ?)',
         Bind => [
             \$Param{ItemID},  \$Param{Filename}, \$Param{ContentType}, \$Param{Filesize},
             \$Param{Content}, \$Param{Inline},   \$Self->{UserID}, \$Self->{UserID},
@@ -522,12 +527,9 @@ sub AttachmentGet {
         }
     }
 
-    $Self->{DBObject}->Prepare(
+    return if !$Self->{DBObject}->Prepare(
         SQL => 'SELECT filename, content_type, content_size, content '
-            . 'FROM faq_attachment '
-            . 'WHERE id = ? '
-            . 'AND faq_id = ? '
-            . 'ORDER BY created',
+            . 'FROM faq_attachment WHERE id = ? AND faq_id = ? ORDER BY created',
         Bind => [ \$Param{FileID},  \$Param{ItemID} ],
         Encode => [ 1, 1, 1, 0 ],
         Limit => 1,
@@ -573,8 +575,7 @@ sub AttachmentDelete {
     }
 
     return $Self->{DBObject}->Do(
-        SQL => 'DELETE FROM faq_attachment '
-            . 'WHERE id = ? AND faq_id = ? ',
+        SQL => 'DELETE FROM faq_attachment WHERE id = ? AND faq_id = ? ',
         Bind => [ \$Param{FileID}, \$Param{ItemID} ],
     );
 }
@@ -601,10 +602,9 @@ sub AttachmentIndex {
         }
     }
 
-    $Self->{DBObject}->Prepare(
+    return if !$Self->{DBObject}->Prepare(
         SQL => 'SELECT id, filename, content_type, content_size, inlineattachment FROM '
-            . 'faq_attachment WHERE faq_id = ? '
-            . 'ORDER BY created',
+            . 'faq_attachment WHERE faq_id = ? ORDER BY created',
         Bind => [ \$Param{ItemID} ],
         Limit => 100,
     );
@@ -664,7 +664,7 @@ sub FAQCount {
 
     # check needed stuff
     for (qw(CategoryIDs ItemStates)) {
-        if ( !defined( $Param{$_} ) ) {
+        if ( !defined $Param{$_} ) {
             $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
             return;
         }
@@ -680,13 +680,13 @@ sub FAQCount {
     }
 
     my $Ext = '';
-    if ( $Param{ItemStates} && ref( $Param{ItemStates} ) eq 'HASH' && %{ $Param{ItemStates} } ) {
+    if ( $Param{ItemStates} && ref $Param{ItemStates} eq 'HASH' && %{ $Param{ItemStates} } ) {
         $Ext .= " AND s.type_id IN (${\(join ', ', keys(%{$Param{ItemStates}}))})";
     }
     $Ext .= ' GROUP BY category_id';
     $SQL .= $Ext;
 
-    $Self->{DBObject}->Prepare( SQL => $SQL, Limit => 200 );
+    return if !$Self->{DBObject}->Prepare( SQL => $SQL, Limit => 200 );
 
     my $Count = 0;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
@@ -716,36 +716,27 @@ sub VoteAdd {
     for (qw(CreatedBy ItemID IP Interface)) {
         if ( !$Param{$_} ) {
             $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
-            return 0;
+            return;
         }
     }
 
-    # db quote
-    for (qw(CreatedBy Interface IP)) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_} );
-    }
-    for (qw(ItemID Rate)) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_}, 'Integer' );
-    }
+    return if !$Self->{DBObject}->Do(
+        SQL => 'INSERT INTO faq_voting (created_by, item_id, ip, interface, rate, created )'
+            . ' VALUES ( ?, ?, ?, ?, ?, current_timestamp )',
+        Bind => [
+            \$Param{CreatedBy}, \$Param{ItemID}, \$Param{IP}, \$Param{Interface},
+            \$Param{Rate},
+        ],
+    );
 
-    my $SQL = "INSERT INTO faq_voting ( " .
-        " created_by, item_id, ip, interface, rate, created" .
-        " ) VALUES (" .
-        " '$Param{CreatedBy}', " .
-        " $Param{ItemID}, " .
-        " '$Param{IP}', " .
-        " '$Param{Interface}', " .
-        " $Param{Rate}, " .
-        " current_timestamp " .
-        " )";
+    # delete cache
+    my $CacheKey = 'ItemVoteDataGet::' . $Param{ItemID};
+    $Self->{CacheObject}->Delete(
+        Type => 'FAQ',
+        Key  => $CacheKey,
+    );
 
-    if ( $Self->{DBObject}->Do( SQL => $SQL ) ) {
-        return 1;
-    }
-    else {
-        return 0;
-    }
-
+    return 1;
 }
 
 =item VoteGet()
@@ -802,8 +793,8 @@ sub VoteGet {
     }
     $SQL .= $Ext;
 
-    $Self->{DBObject}->Prepare( SQL => $SQL );
-    my %Data = ();
+    return if !$Self->{DBObject}->Prepare( SQL => $SQL );
+    my %Data;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         %Data = (
             CreatedBy => $Row[0],
@@ -842,26 +833,19 @@ sub VoteSearch {
     }
 
     # db quote
-    for (qw()) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_} );
-    }
     for (qw(ItemID)) {
         $Param{$_} = $Self->{DBObject}->Quote( $Param{$_}, 'Integer' );
     }
 
-    my $Ext = "";
-    my $SQL = " SELECT id FROM faq_voting WHERE";
-
-    if ( defined( $Param{ItemID} ) ) {
-        $Ext .= " item_id = " . $Param{ItemID};
+    my $SQL = 'SELECT id FROM faq_voting WHERE';
+    if ( defined $Param{ItemID} ) {
+        $SQL .= ' item_id = ' . $Param{ItemID};
     }
 
-    $SQL .= $Ext;
-
-    my @List = ();
-    $Self->{DBObject}->Prepare( SQL => $SQL, Limit => $Param{Limit} || 500 );
+    my @List;
+    return if !$Self->{DBObject}->Prepare( SQL => $SQL, Limit => $Param{Limit} || 500 );
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        push( @List, $Row[0] );
+        push @List, $Row[0];
     }
     return \@List;
 }
@@ -887,20 +871,10 @@ sub VoteDelete {
         }
     }
 
-    # db quote
-    for (qw(VoteID)) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_}, 'Integer' );
-    }
-
-    my $SQL = "DELETE FROM faq_voting WHERE id = " . $Param{VoteID};
-
-    if ( $Self->{DBObject}->Do( SQL => $SQL ) ) {
-        return 1;
-    }
-    else {
-        return 0;
-    }
-
+    return $Self->{DBObject}->Do(
+        SQL  => 'DELETE FROM faq_voting WHERE id = ?',
+        Bind => [ \$Param{VoteID} ],
+    );
 }
 
 =item FAQDelete()
@@ -959,7 +933,7 @@ sub FAQDelete {
 
     # delete article
     return $Self->{DBObject}->Do(
-        SQL  => "DELETE FROM faq_item WHERE id = ?",
+        SQL  => 'DELETE FROM faq_item WHERE id = ?',
         Bind => [ \$Param{ItemID} ],
     );
 }
@@ -986,21 +960,14 @@ sub FAQHistoryAdd {
         }
     }
 
-    # db quote
-    for (qw(Name)) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_} ) || '';
-    }
-    for (qw(ItemID)) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_}, 'Integer' );
-    }
-    my $SQL = "INSERT INTO faq_history (name, item_id, " .
-        " created, created_by, changed, changed_by)" .
-        " VALUES " .
-        " ('$Param{Name}', $Param{ItemID}, " .
-        " current_timestamp, $Self->{UserID}, " .
-        " current_timestamp, $Self->{UserID})";
-
-    return $Self->{DBObject}->Do( SQL => $SQL );
+    return $Self->{DBObject}->Do(
+        SQL => 'INSERT INTO faq_history (name, item_id, ' .
+            ' created, created_by, changed, changed_by)' .
+            ' VALUES ( ?, ?, current_timestamp, ?, current_timestamp, ?)',
+        Bind => [
+            \$Param{Name}, \$Param{ItemID}, \$Self->{UserID}, \$Self->{UserID},
+        ],
+    );
 }
 
 =item FAQHistoryGet()
@@ -1024,21 +991,18 @@ sub FAQHistoryGet {
         }
     }
 
-    # db quote
-    for (qw(ItemID)) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_}, 'Integer' );
-    }
-    my @Data = ();
-    $Self->{DBObject}->Prepare(
-        SQL => "SELECT name, created, created_by FROM faq_history WHERE item_id = $Param{ItemID}",
+    return if !$Self->{DBObject}->Prepare(
+        SQL  => 'SELECT name, created, created_by FROM faq_history WHERE item_id = ?',
+        Bind => [ \$Param{ItemID} ],
     );
+    my @Data;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         my %Record = (
             Name      => $Row[0],
             Created   => $Row[1],
             CreatedBy => $Row[2],
         );
-        push( @Data, \%Record );
+        push @Data, \%Record;
     }
     return \@Data;
 }
@@ -1064,7 +1028,7 @@ sub FAQHistoryDelete {
         }
     }
     return $Self->{DBObject}->Do(
-        SQL  => "DELETE FROM faq_history WHERE item_id = ?",
+        SQL  => 'DELETE FROM faq_history WHERE item_id = ?',
         Bind => [ \$Param{ItemID} ],
     );
 }
@@ -1089,15 +1053,15 @@ sub HistoryGet {
     }
 
     # query
-    my $SQL = "SELECT i.id, h.name, h.created, h.created_by, c.name, i.f_subject, i.f_number FROM" .
-        " faq_item i, faq_state s, faq_history h, faq_category c WHERE" .
-        " s.id = i.state_id AND h.item_id = i.id AND i.category_id = c.id";
-    if ( $Param{States} && ref( $Param{States} ) eq 'ARRAY' && @{ $Param{States} } ) {
+    my $SQL = 'SELECT i.id, h.name, h.created, h.created_by, c.name, i.f_subject, i.f_number FROM' .
+        ' faq_item i, faq_state s, faq_history h, faq_category c WHERE' .
+        ' s.id = i.state_id AND h.item_id = i.id AND i.category_id = c.id';
+    if ( $Param{States} && ref $Param{States} eq 'ARRAY' && @{ $Param{States} } ) {
         $SQL .= " AND s.name IN ('${\(join '\', \'', @{$Param{States}})}') ";
     }
     $SQL .= ' ORDER BY created DESC';
-    my @Data = ();
-    $Self->{DBObject}->Prepare( SQL => $SQL, Limit => 200 );
+    return if !$Self->{DBObject}->Prepare( SQL => $SQL, Limit => 200 );
+    my @Data;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         my %Record = (
             ItemID    => $Row[0],
@@ -1108,7 +1072,7 @@ sub HistoryGet {
             Subject   => $Row[5],
             Number    => $Row[6],
         );
-        push( @Data, \%Record );
+        push @Data, \%Record;
     }
     return \@Data;
 }
@@ -1149,8 +1113,8 @@ sub CategoryList {
     if ( $Valid ) {
         $SQL .= 'WHERE valid_id = 1';
     }
-    $Self->{DBObject}->Prepare( SQL => $SQL );
-    my %Data = ();
+    return if !$Self->{DBObject}->Prepare( SQL => $SQL );
+    my %Data;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $Data{ $Row[1] }->{ $Row[0] } = $Row[2];
     }
@@ -1184,16 +1148,16 @@ sub CategorySearch {
     my $Ext = '';
 
     # WHERE
-    if ( defined( $Param{Name} ) ) {
+    if ( defined $Param{Name} ) {
         $Ext .= " AND name LIKE '%" . $Self->{DBObject}->Quote( $Param{Name} ) . "%'";
     }
-    elsif ( defined( $Param{ParentID} ) ) {
+    elsif ( defined $Param{ParentID} ) {
         $Ext
             .= " AND parent_id = '" . $Self->{DBObject}->Quote( $Param{ParentID}, 'Integer' ) . "'";
     }
     elsif (
-        defined( $Param{ParentIDs} )
-        && ref( $Param{ParentIDs} ) eq 'ARRAY'
+        defined $Param{ParentIDs}
+        && ref $Param{ParentIDs} eq 'ARRAY'
         && @{ $Param{ParentIDs} }
         )
     {
@@ -1205,8 +1169,8 @@ sub CategorySearch {
         $Ext .= ")";
     }
     elsif (
-        defined( $Param{CategoryIDs} )
-        && ref( $Param{CategoryIDs} ) eq 'ARRAY'
+        defined $Param{CategoryIDs}
+        && ref $Param{CategoryIDs} eq 'ARRAY'
         && @{ $Param{CategoryIDs} }
         )
     {
@@ -1244,10 +1208,10 @@ sub CategorySearch {
     # SQL STATEMENT
     $SQL .= $Ext;
 
-    my @List = ();
-    $Self->{DBObject}->Prepare( SQL => $SQL, Limit => 500 );
+    return if !$Self->{DBObject}->Prepare( SQL => $SQL, Limit => 500 );
+    my @List;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        push( @List, $Row[0] );
+        push @List, $Row[0];
     }
     return \@List;
 }
@@ -1267,23 +1231,26 @@ sub CategoryGet {
 
     # check needed stuff
     for (qw(CategoryID)) {
-        if ( !defined( $Param{$_} ) ) {
+        if ( !defined $Param{$_} ) {
             $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
             return;
         }
     }
 
-    # db quote
-    for (qw(CategoryID)) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_}, 'Integer' );
-    }
+    # check cache
+    my $CacheKey = 'CategoryGet::' . $Param{CategoryID};
+    my $Cache = $Self->{CacheObject}->Get(
+        Type => 'FAQ',
+        Key  => $CacheKey,
+    );
+    return %{$Cache} if $Cache;
 
     # sql
-    my %Data = ();
-    $Self->{DBObject}->Prepare(
-        SQL =>
-            "SELECT id, parent_id, name, comments, valid_id FROM faq_category WHERE id = $Param{CategoryID} ",
+    return if !$Self->{DBObject}->Prepare(
+        SQL => 'SELECT id, parent_id, name, comments, valid_id FROM faq_category WHERE id = ?',
+        Bind => [ \$Param{CategoryID} ],
     );
+    my %Data;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         %Data = (
             CategoryID => $Row[0],
@@ -1293,6 +1260,15 @@ sub CategoryGet {
             ValidID    => $Row[4],
         );
     }
+
+    # cache result
+    $Self->{CacheObject}->Set(
+        Type  => 'FAQ',
+        Key   => $CacheKey,
+        Value => \%Data,
+        TTL   => 60 * 60 * 24 * 2,
+    );
+
     return %Data;
 }
 
@@ -1313,7 +1289,7 @@ sub CategorySubCategoryIDList {
 
     # check needed stuff
     for (qw(ParentID)) {
-        if ( !defined( $Param{$_} ) ) {
+        if ( !defined $Param{$_} ) {
             $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
             return [];
         }
@@ -1385,46 +1361,40 @@ sub CategoryAdd {
 
     # check needed stuff
     for (qw(ParentID Name)) {
-        if ( !defined( $Param{$_} ) ) {
+        if ( !defined $Param{$_} ) {
             $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
             return;
         }
     }
 
-    # db quote
-    for (qw(Name Comment)) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_} ) || '';
-    }
-    for (qw(ParentID UserID ValidID)) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_}, 'Integer' );
-    }
-    my $SQL = "INSERT INTO faq_category (name, parent_id, comments, valid_id, " .
-        " created, created_by, changed, changed_by)" .
-        " VALUES " .
-        " ('$Param{Name}', $Param{ParentID}, '$Param{Comment}', $Param{ValidID}, " .
-        " current_timestamp, $Self->{UserID}, " .
-        " current_timestamp, $Self->{UserID})";
-    if ( $Self->{DBObject}->Do( SQL => $SQL ) ) {
+    # insert record
+    return if !$Self->{DBObject}->Do(
+        SQL => 'INSERT INTO faq_category (name, parent_id, comments, valid_id, ' .
+            'created, created_by, changed, changed_by) ' .
+            'VALUES ( ?, ?, ?, ?, current_timestamp, ?, current_timestamp, ?)',
+        Bind => [
+            \$Param{Name}, \$Param{ParentID}, \$Param{Comment}, \$Param{ValidID},
+            \$Self->{UserID}, \$Self->{UserID},
+        ],
+    );
 
-        # get new category id
-        $SQL = "SELECT id FROM faq_category WHERE name = '$Param{Name}'";
-        my $ID = '';
-        $Self->{DBObject}->Prepare( SQL => $SQL );
-        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-            $ID = $Row[0];
-        }
+    # get new category id
+    return if !$Self->{DBObject}->Prepare(
+        SQL  => 'SELECT id FROM faq_category WHERE name = ?',
+        Bind => [ \$Param{Name} ],
+    );
+    my $ID;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $ID = $Row[0];
+    }
 
-        # log notice
-        $Self->{LogObject}->Log(
-            Priority => 'notice',
-            Message =>
-                "FAQCategory: '$Param{Name}' ID: '$ID' created successfully ($Self->{UserID})!",
-        );
-        return $ID;
-    }
-    else {
-        return;
-    }
+    # log notice
+    $Self->{LogObject}->Log(
+        Priority => 'notice',
+        Message =>
+            "FAQCategory: '$Param{Name}' ID: '$ID' created successfully ($Self->{UserID})!",
+    );
+    return $ID;
 }
 
 =item CategoryUpdate()
@@ -1432,9 +1402,10 @@ sub CategoryAdd {
 update a category
 
     $FAQObject->CategoryUpdate(
-        ID      => 1,
-        Name    => 'Some Category',
-        Comment => 'some comment ...',
+        CategoryID => 2,
+        ParentID   => 1,
+        Name       => 'Some Category',
+        Comment    => 'some comment ...',
     );
 
 =cut
@@ -1444,42 +1415,38 @@ sub CategoryUpdate {
 
     # check needed stuff
     for (qw(CategoryID ParentID Name)) {
-        if ( !defined( $Param{$_} ) ) {
+        if ( !defined $Param{$_} ) {
             $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
             return;
         }
     }
 
-    # db quote
-    for (qw(Name Comment)) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_} ) || '';
-    }
-    for (qw(CategoryID ParentID ValidID)) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_}, 'Integer' );
-    }
-
     # sql
-    my $SQL = "UPDATE faq_category SET " .
-        " parent_id = $Param{ParentID}, " .
-        " name = '$Param{Name}', " .
-        " comments = '$Param{Comment}', " .
-        " valid_id = $Param{ValidID}, " .
-        " changed = current_timestamp, changed_by = $Self->{UserID} " .
-        " WHERE id = $Param{CategoryID}";
+    return if !$Self->{DBObject}->Do(
+        SQL => 'UPDATE faq_category SET parent_id = ?, name = ?, ' .
+            'comments = ?, valid_id = ?, changed = current_timestamp, ' .
+            'changed_by = ? WHERE id = ?',
+        Bind => [
+            \$Param{ParentID}, \$Param{Name}, \$Param{Comment}, \$Param{ValidID},
+            \$Self->{UserID}, \$Param{CategoryID},
+        ],
+    );
 
-    if ( $Self->{DBObject}->Do( SQL => $SQL ) ) {
+    # log notice
+    $Self->{LogObject}->Log(
+        Priority => 'notice',
+        Message =>
+            "FAQCategory: '$Param{Name}' ID: '$Param{CategoryID}' updated successfully ($Self->{UserID})!",
+    );
 
-        # log notice
-        $Self->{LogObject}->Log(
-            Priority => 'notice',
-            Message =>
-                "FAQCategory: '$Param{Name}' ID: '$Param{CategoryID}' updated successfully ($Self->{UserID})!",
-        );
-        return 1;
-    }
-    else {
-        return;
-    }
+    # delete cache
+    my $CacheKey = 'CategoryGet::' . $Param{CategoryID};
+    $Self->{CacheObject}->Delete(
+        Type => 'FAQ',
+        Key  => $CacheKey,
+    );
+
+    return 1;
 }
 
 =item CategoryDuplicateCheck()
@@ -1506,14 +1473,14 @@ sub CategoryDuplicateCheck {
     }
 
     # sql
-    my $SQL = "SELECT id FROM faq_category WHERE ";
-    if ( defined( $Param{Name} ) ) {
+    my $SQL = 'SELECT id FROM faq_category WHERE ';
+    if ( defined $Param{Name} ) {
         $SQL .= "name = '$Param{Name}' AND parent_id = $Param{ParentID} ";
-        if ( defined( $Param{ID} ) ) {
+        if ( defined $Param{ID} ) {
             $SQL .= "AND id != '$Param{ID}' ";
         }
     }
-    $Self->{DBObject}->Prepare( SQL => $SQL );
+    return if !$Self->{DBObject}->Prepare( SQL => $SQL );
     my $Exists = 0;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $Exists = 1;
@@ -1536,27 +1503,27 @@ sub CategoryCount {
 
     # check needed stuff
     for (qw(ParentIDs)) {
-        if ( !defined( $Param{$_} ) ) {
+        if ( !defined $Param{$_} ) {
             $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
             return;
         }
     }
 
-    my $SQL = "SELECT COUNT(*) FROM faq_category WHERE valid_id = 1";
+    my $SQL = 'SELECT COUNT(*) FROM faq_category WHERE valid_id = 1';
 
     my $Ext = '';
-    if ( defined( $Param{ParentIDs} ) ) {
-        $Ext = " AND parent_id IN (";
+    if ( defined $Param{ParentIDs} ) {
+        $Ext = ' AND parent_id IN (';
         for my $ParentID ( @{ $Param{ParentIDs} } ) {
             $Ext .= $Self->{DBObject}->Quote( $ParentID, 'Integer' ) . ",";
         }
         $Ext = substr( $Ext, 0, -1 );
-        $Ext .= ")";
+        $Ext .= ')';
     }
     $Ext .= ' GROUP BY parent_id';
 
     $SQL .= $Ext;
-    $Self->{DBObject}->Prepare( SQL => $SQL, Limit => 200 );
+    return if !$Self->{DBObject}->Prepare( SQL => $SQL, Limit => 200 );
 
     my $Count = 0;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
@@ -1576,13 +1543,12 @@ get the state type list as hash
 sub StateTypeList {
     my ( $Self, %Param ) = @_;
 
-    my $SQL = '';
     my $Ext = '';
-    $SQL = "SELECT id, name FROM faq_state_type";
+    my $SQL = 'SELECT id, name FROM faq_state_type';
 
     if ( $Param{Types} ) {
         my @States = @{ $Param{Types} };
-        $Ext = " WHERE";
+        $Ext = ' WHERE';
         for my $State (@States) {
             $Ext .= " name = '" . $Self->{DBObject}->Quote($State) . "' OR";
         }
@@ -1592,7 +1558,7 @@ sub StateTypeList {
 
     # sql
     my %List = ();
-    $Self->{DBObject}->Prepare( SQL => $SQL );
+    return if !$Self->{DBObject}->Prepare( SQL => $SQL );
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $List{ $Row[0] } = $Row[1];
     }
@@ -1611,8 +1577,8 @@ sub StateList {
     my ( $Self, %Param ) = @_;
 
     # sql
-    my %List = ();
-    $Self->{DBObject}->Prepare( SQL => 'SELECT id, name FROM faq_state' );
+    return if !$Self->{DBObject}->Prepare( SQL => 'SELECT id, name FROM faq_state' );
+    my %List;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $List{ $Row[0] } = $Row[1];
     }
@@ -1642,18 +1608,11 @@ sub StateUpdate {
         }
     }
 
-    # db quote
-    for (qw(Name)) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_} ) || '';
-    }
-    for (qw(ID TypeID)) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_}, 'Integer' );
-    }
-
     # sql
-    my $SQL = "UPDATE faq_state SET name = '$Param{Name}', type_id = $Param{TypeID}, " .
-        " WHERE id = $Param{ID}";
-    return $Self->{DBObject}->Do( SQL => $SQL );
+    return $Self->{DBObject}->Do(
+        SQL  => 'UPDATE faq_state SET name = ?, type_id = ?, WHERE id = ?',
+        Bind => [ \$Param{Name}, \$Param{TypeID}, \$Param{ID} ],
+    );
 }
 
 =item StateAdd()
@@ -1678,18 +1637,10 @@ sub StateAdd {
         }
     }
 
-    # db quote
-    for (qw(Name)) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_} ) || '';
-    }
-    for (qw(TypeID)) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_}, 'Integer' );
-    }
-    my $SQL = "INSERT INTO faq_state (name, type_id) " .
-        " VALUES " .
-        " ('$Param{Name}', $Param{TypeID}) ";
-
-    return $Self->{DBObject}->Do( SQL => $SQL );
+    return $Self->{DBObject}->Do(
+        SQL  => 'INSERT INTO faq_state (name, type_id) VALUES ( ?, ? )',
+        Bind => [ \$Param{Name}, \$Param{TypeID}, ],
+    );
 }
 
 =item StateGet()
@@ -1713,16 +1664,12 @@ sub StateGet {
         }
     }
 
-    # db quote
-    for (qw(ID)) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_}, 'Integer' );
-    }
-
     # sql
-    my %Data = ();
-    $Self->{DBObject}->Prepare(
-        SQL => "SELECT id, name FROM faq_state WHERE id = $Param{ID}",
+    return if !$Self->{DBObject}->Prepare(
+        SQL  => 'SELECT id, name FROM faq_state WHERE id = ?',
+        Bind => [ \$Param{ID}, ],
     );
+    my %Data;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         %Data = (
             ID      => $Row[0],
@@ -1747,30 +1694,48 @@ get a state as hashref
 sub StateTypeGet {
     my ( $Self, %Param ) = @_;
 
-    my $SQL = "";
-    my $Ext = "";
-
-    $SQL = "SELECT id, name FROM faq_state_type WHERE";
-
-    if ( defined( $Param{ID} ) ) {
-        $Ext .= " id = " . $Self->{DBObject}->Quote( $Param{ID}, 'Integer' )
+    my $SQL = 'SELECT id, name FROM faq_state_type WHERE ';
+    my @Bind;
+    my $CacheKey = 'StateTypeGet::';
+    if ( defined $Param{ID} ) {
+        $SQL .= 'id = ?';
+        push @Bind, \$Param{ID};
+        $CacheKey .= 'ID::' . $Param{ID};
     }
-    elsif ( defined( $Param{Name} ) ) {
-        $Ext .= " name = '" . $Self->{DBObject}->Quote( $Param{Name} ) . "'"
+    elsif ( defined $Param{Name} ) {
+        $SQL .= 'name = ?';
+        push @Bind, \$Param{Name};
+        $CacheKey .= 'Name::' . $Param{Name};
     }
-    $SQL .= $Ext;
+
+    # check cache
+    my $Cache = $Self->{CacheObject}->Get(
+        Type => 'FAQ',
+        Key  => $CacheKey,
+    );
+    return $Cache if $Cache;
 
     # sql
-    my %Data = ();
-    $Self->{DBObject}->Prepare(
-        SQL => $SQL,
+    return if !$Self->{DBObject}->Prepare(
+        SQL  => $SQL,
+        Bind => \@Bind,
     );
+    my %Data;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         %Data = (
             ID   => $Row[0],
             Name => $Row[1],
         );
     }
+
+    # cache result
+    $Self->{CacheObject}->Set(
+        Type  => 'FAQ',
+        Key   => $CacheKey,
+        Value => \%Data,
+        TTL   => 60 * 60 * 24 * 2,
+    );
+
     return \%Data;
 }
 
@@ -1794,8 +1759,8 @@ sub LanguageList {
     }
 
     # sql
-    my %List = ();
-    $Self->{DBObject}->Prepare( SQL => 'SELECT id, name FROM faq_language' );
+    return if !$Self->{DBObject}->Prepare( SQL => 'SELECT id, name FROM faq_language' );
+    my %List;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $List{ $Row[0] } = $Row[1];
     }
@@ -1824,18 +1789,11 @@ sub LanguageUpdate {
         }
     }
 
-    # db quote
-    for (qw(Name)) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_} ) || '';
-    }
-    for (qw(ID)) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_}, 'Integer' );
-    }
-
     # sql
-    my $SQL = "UPDATE faq_language SET name = '$Param{Name}' " .
-        " WHERE id = $Param{ID}";
-    return $Self->{DBObject}->Do( SQL => $SQL );
+    return $Self->{DBObject}->Do(
+        SQL  => 'UPDATE faq_language SET name = ? WHERE id = ?',
+        Bind => [ \$Param{Name}, \$Param{Name} ],
+    );
 }
 
 =item LanguageDuplicateCheck()
@@ -1861,14 +1819,14 @@ sub LanguageDuplicateCheck {
     }
 
     # sql
-    my $SQL = "SELECT id FROM faq_language WHERE ";
-    if ( defined( $Param{Name} ) ) {
+    my $SQL = 'SELECT id FROM faq_language WHERE ';
+    if ( defined $Param{Name} ) {
         $SQL .= "name = '$Param{Name}' ";
     }
-    if ( defined( $Param{ID} ) ) {
+    if ( defined $Param{ID} ) {
         $SQL .= "AND id != '$Param{ID}' ";
     }
-    $Self->{DBObject}->Prepare( SQL => $SQL );
+    return if !$Self->{DBObject}->Prepare( SQL => $SQL );
     my $Exists = 0;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $Exists = 1;
@@ -1897,15 +1855,10 @@ sub LanguageAdd {
         }
     }
 
-    # db quote
-    for (qw(Name)) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_} ) || '';
-    }
-    my $SQL = "INSERT INTO faq_language (name) " .
-        " VALUES " .
-        " ('$Param{Name}') ";
-
-    return $Self->{DBObject}->Do( SQL => $SQL );
+    return $Self->{DBObject}->Do(
+        SQL  => 'INSERT INTO faq_language (name) VALUES (?)',
+        Bind => [ \$Param{Name} ],
+    );
 }
 
 =item LanguageGet()
@@ -1929,16 +1882,12 @@ sub LanguageGet {
         }
     }
 
-    # db quote
-    for (qw(ID)) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_}, 'Integer' );
-    }
-
     # sql
-    my %Data = ();
-    $Self->{DBObject}->Prepare(
-        SQL => "SELECT id, name FROM faq_language WHERE id = $Param{ID}",
+    return if !$Self->{DBObject}->Prepare(
+        SQL  => 'SELECT id, name FROM faq_language WHERE id = ?',
+        Bind => [ \$Param{ID} ],
     );
+    my %Data;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         %Data = (
             ID   => $Row[0],
@@ -2031,7 +1980,7 @@ sub FAQSearch {
         }
         $Ext .= " LOWER(i.f_subject) LIKE LOWER('" . $Param{Title} . "')";
     }
-    if ( $Param{LanguageIDs} && ref( $Param{LanguageIDs} ) eq 'ARRAY' && @{ $Param{LanguageIDs} } ) {
+    if ( $Param{LanguageIDs} && ref $Param{LanguageIDs} eq 'ARRAY' && @{ $Param{LanguageIDs} } ) {
         if ($Ext) {
             $Ext .= ' AND';
         }
@@ -2042,7 +1991,7 @@ sub FAQSearch {
         $Ext = substr( $Ext, 0, -1 );
         $Ext .= ')';
     }
-    if ( $Param{CategoryIDs} && ref( $Param{CategoryIDs} ) eq 'ARRAY' && @{ $Param{CategoryIDs} } )
+    if ( $Param{CategoryIDs} && ref $Param{CategoryIDs} eq 'ARRAY' && @{ $Param{CategoryIDs} } )
     {
         if ($Ext) {
             $Ext .= ' AND';
@@ -2061,7 +2010,7 @@ sub FAQSearch {
         $Ext = substr( $Ext, 0, -1 );
         $Ext .= '))';
     }
-    if ( $Param{States} && ref( $Param{States} ) eq 'HASH' && %{ $Param{States} } ) {
+    if ( $Param{States} && ref $Param{States} eq 'HASH' && %{ $Param{States} } ) {
         if ($Ext) {
             $Ext .= ' AND';
         }
@@ -2152,10 +2101,10 @@ sub FAQSearch {
         }
     }
     $SQL .= $Ext;
-    my @List = ();
-    $Self->{DBObject}->Prepare( SQL => $SQL, Limit => $Param{Limit} || 500 );
+    return if !$Self->{DBObject}->Prepare( SQL => $SQL, Limit => $Param{Limit} || 500 );
+    my @List;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        push( @List, $Row[0] );
+        push @List, $Row[0];
     }
     return @List;
 }
@@ -2216,7 +2165,7 @@ sub GetCategoryTree {
     if ( $Valid ) {
         $SQL .= ' WHERE valid_id = 1';
     }
-    $Self->{DBObject}->Prepare(
+    return if !$Self->{DBObject}->Prepare(
         SQL => $SQL,
     );
 
@@ -2272,14 +2221,15 @@ sub SetCategoryGroup {
             return;
         }
     }
-    $Param{CategoryID} = $Self->{DBObject}->Quote( $Param{CategoryID}, 'Integer' );
 
     # delete old groups
-    $Self->{DBObject}->Do(
-        SQL => "DELETE FROM faq_category_group WHERE category_id = $Param{CategoryID}",
+    return if !$Self->{DBObject}->Do(
+        SQL  => 'DELETE FROM faq_category_group WHERE category_id = ?',
+        Bind => [ \$Param{CategoryID} ],
     );
 
     # insert groups
+    $Param{CategoryID} = $Self->{DBObject}->Quote( $Param{CategoryID}, 'Integer' );
     for my $Key ( @{ $Param{GroupIDs} } ) {
         my $GroupID = $Self->{DBObject}->Quote( $Key, 'Integer' );
         $SQL = "INSERT INTO faq_category_group " .
@@ -2308,9 +2258,6 @@ get groups from a category
 sub GetCategoryGroup {
     my ( $Self, %Param ) = @_;
 
-    my $SQL    = '';
-    my @Groups = ();
-
     # check needed stuff
     for (qw(CategoryID)) {
         if ( !$Param{$_} ) {
@@ -2318,13 +2265,15 @@ sub GetCategoryGroup {
             return;
         }
     }
-    $Param{CategoryID} = $Self->{DBObject}->Quote( $Param{CategoryID}, 'Integer' );
 
     # get groups
-    $SQL = "SELECT group_id FROM faq_category_group WHERE category_id = $Param{CategoryID}";
-    $Self->{DBObject}->Prepare( SQL => $SQL );
+    return if !$Self->{DBObject}->Prepare(
+        SQL  => 'SELECT group_id FROM faq_category_group WHERE category_id = ?',
+        Bind => [ \$Param{CategoryID} ],
+    );
+    my @Groups;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        push( @Groups, $Row[0] );
+        push @Groups, $Row[0];
     }
     return \@Groups;
 }
@@ -2346,9 +2295,10 @@ sub GetAllCategoryGroup {
     }
 
     # get groups
-    my $SQL = 'SELECT group_id, category_id FROM faq_category_group';
-    $Self->{DBObject}->Prepare( SQL => $SQL );
-    my %Groups = ();
+    return if !$Self->{DBObject}->Prepare(
+        SQL => 'SELECT group_id, category_id FROM faq_category_group',
+    );
+    my %Groups;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $Groups{ $Row[1] }->{ $Row[0] } = 1;
     }
@@ -2590,7 +2540,7 @@ sub AgentCategorySearch {
         }
     }
 
-    if ( !defined( $Param{ParentID} ) ) {
+    if ( !defined $Param{ParentID} ) {
         $Param{ParentID} = 0;
     }
     my $Categories = $Self->GetUserCategories(
@@ -2626,7 +2576,7 @@ sub CustomerCategorySearch {
             return ();
         }
     }
-    if ( !defined( $Param{ParentID} ) ) {
+    if ( !defined $Param{ParentID} ) {
         $Param{ParentID} = 0;
     }
     my $Categories = $Self->GetCustomerCategories(
@@ -2654,7 +2604,7 @@ sub CustomerCategorySearch {
         $SQL .= "AND faq_state_type.name != 'internal' ";
         $SQL .= 'AND approved = 1';
 
-        $Self->{DBObject}->Prepare(
+        return if !$Self->{DBObject}->Prepare(
             SQL   => $SQL,
         );
         while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
@@ -2703,7 +2653,7 @@ get the category search as hash
 sub PublicCategorySearch {
     my ( $Self, %Param ) = @_;
 
-    if ( !defined( $Param{ParentID} ) ) {
+    if ( !defined $Param{ParentID} ) {
         $Param{ParentID} = 0;
     }
 
@@ -2740,7 +2690,7 @@ sub PublicCategorySearch {
 
         ID:
         for my $ID ( @IDs ) {
-            $Self->{DBObject}->Prepare(
+            return if !$Self->{DBObject}->Prepare(
                 SQL   => $SQL,
                 Bind  => [ \$ID ],
                 Limit => 1,
@@ -2802,7 +2752,7 @@ sub FAQLogAdd {
     );
 
     # check if a log entry exists newer than the ReloadBlockTime
-    $Self->{DBObject}->Prepare(
+    return if !$Self->{DBObject}->Prepare(
         SQL => 'SELECT id FROM faq_log '
             . 'WHERE item_id = ? AND ip = ? '
             . 'AND user_agent = ? AND created >= ? ',
@@ -2885,7 +2835,7 @@ sub FAQTop10Get {
         . 'ORDER BY 2 DESC ';
 
     # get the top 10 article ids from database
-    $Self->{DBObject}->Prepare(
+    return if !$Self->{DBObject}->Prepare(
         SQL   => $SQL,
         Bind  => \@Bind,
         Limit => $Param{Limit},
@@ -2931,11 +2881,8 @@ sub FAQApprovalUpdate {
 
     # update database
     return if !$Self->{DBObject}->Do(
-        SQL => 'UPDATE faq_item '
-            . 'SET approved = ?, '
-            . 'changed = current_timestamp, '
-            . 'changed_by = ? '
-            . 'WHERE id = ?',
+        SQL => 'UPDATE faq_item SET approved = ?, changed = current_timestamp, '
+            . 'changed_by = ? WHERE id = ?',
         Bind => [
             \$Param{Approved}, \$Self->{UserID}, \$Param{ItemID},
         ],
@@ -3166,6 +3113,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.76 $ $Date: 2009-09-01 15:48:21 $
+$Revision: 1.77 $ $Date: 2009-09-22 09:51:25 $
 
 =cut
