@@ -3,7 +3,7 @@
 # ImportExport.pl - import/export script
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pl,v 1.10 2009-05-18 09:42:52 mh Exp $
+# $Id: ImportExport.pl,v 1.11 2009-09-23 14:30:27 ub Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -38,16 +38,17 @@ use Kernel::System::Log;
 use Kernel::System::Main;
 
 use vars qw($VERSION $RealBin);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 # get options
 my %Opts;
-getopt( 'hnaio', \%Opts );
+getopts( 'hn:a:i:o:', \%Opts );
 
 if ( $Opts{h} ) {
 
-    print STDOUT "ImportExport.pl <Revision $VERSION> - a import/export tool\n";
+    print STDOUT "ImportExport.pl <Revision $VERSION> - an import/export tool\n";
     print STDOUT "Copyright (C) 2001-2009 OTRS AG, http://otrs.org/\n";
+    print STDOUT "\n";
     print STDOUT "usage:ImportExport.pl -n <TemplateNumber> -a import|export ";
     print STDOUT "[-i <SourceFile>] [-o <DestinationFile>]\n";
     print STDOUT "\n";
@@ -189,6 +190,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.10 $ $Date: 2009-05-18 09:42:52 $
+$Revision: 1.11 $ $Date: 2009-09-23 14:30:27 $
 
 =cut
