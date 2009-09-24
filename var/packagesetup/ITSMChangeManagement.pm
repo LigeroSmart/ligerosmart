@@ -1,12 +1,12 @@
 # --
 # ITSMChangeManagement.pm - code to excecute during package installation
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.1.1.1 2009-09-12 08:01:24 mh Exp $
+# $Id: ITSMChangeManagement.pm,v 1.2 2009-09-24 17:23:07 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 package var::packagesetup::ITSMChangeManagement;
@@ -18,6 +18,9 @@ use Kernel::Config;
 use Kernel::System::Config;
 use Kernel::System::CSV;
 use Kernel::System::Group;
+use Kernel::System::ITSMChange;
+use Kernel::System::ITSMChange::WorkOrder;
+use Kernel::System::LinkObject;
 use Kernel::System::State;
 use Kernel::System::Stats;
 use Kernel::System::Type;
@@ -25,7 +28,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.1.1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -46,18 +49,25 @@ All functions
 create an object
 
     use Kernel::Config;
+    use Kernel::System::Encode;
     use Kernel::System::Log;
     use Kernel::System::Main;
     use Kernel::System::Time;
     use Kernel::System::DB;
     use Kernel::System::XML;
+    use var::packagesetup::ITSMChangeManagement;
 
     my $ConfigObject = Kernel::Config->new();
+    my $EncodeObject = Kernel::System::Encode->new(
+        ConfigObject => $ConfigObject,
+    );
     my $LogObject    = Kernel::System::Log->new(
         ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
     );
     my $MainObject = Kernel::System::Main->new(
         ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
         LogObject    => $LogObject,
     );
     my $TimeObject = Kernel::System::Time->new(
@@ -66,17 +76,20 @@ create an object
     );
     my $DBObject = Kernel::System::DB->new(
         ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
         LogObject    => $LogObject,
         MainObject   => $MainObject,
     );
     my $XMLObject = Kernel::System::XML->new(
         ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
         LogObject    => $LogObject,
         DBObject     => $DBObject,
         MainObject   => $MainObject,
     );
     my $CodeObject = var::packagesetup::ITSMChangeManagement->new(
         ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
         LogObject    => $LogObject,
         MainObject   => $MainObject,
         TimeObject   => $TimeObject,
@@ -94,7 +107,10 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Object (qw(ConfigObject LogObject MainObject TimeObject DBObject XMLObject)) {
+    for my $Object (
+        qw(ConfigObject EncodeObject LogObject MainObject TimeObject DBObject XMLObject)
+        )
+    {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
@@ -123,14 +139,17 @@ sub new {
     }
 
     # create needed objects
-    $Self->{ConfigObject} = Kernel::Config->new();
-    $Self->{CSVObject}    = Kernel::System::CSV->new( %{$Self} );
-    $Self->{GroupObject}  = Kernel::System::Group->new( %{$Self} );
-    $Self->{UserObject}   = Kernel::System::User->new( %{$Self} );
-    $Self->{StateObject}  = Kernel::System::State->new( %{$Self} );
-    $Self->{TypeObject}   = Kernel::System::Type->new( %{$Self} );
-    $Self->{ValidObject}  = Kernel::System::Valid->new( %{$Self} );
-    $Self->{StatsObject}  = Kernel::System::Stats->new(
+    $Self->{ConfigObject}    = Kernel::Config->new();
+    $Self->{CSVObject}       = Kernel::System::CSV->new( %{$Self} );
+    $Self->{GroupObject}     = Kernel::System::Group->new( %{$Self} );
+    $Self->{UserObject}      = Kernel::System::User->new( %{$Self} );
+    $Self->{StateObject}     = Kernel::System::State->new( %{$Self} );
+    $Self->{TypeObject}      = Kernel::System::Type->new( %{$Self} );
+    $Self->{ValidObject}     = Kernel::System::Valid->new( %{$Self} );
+    $Self->{LinkObject}      = Kernel::System::LinkObject->new( %{$Self} );
+    $Self->{ChangeObject}    = Kernel::System::ITSMChange->new( %{$Self} );
+    $Self->{WorkOrderObject} = Kernel::System::ITSMChange::WorkOrder->new( %{$Self} );
+    $Self->{StatsObject}     = Kernel::System::Stats->new(
         %{$Self},
         UserID => 1,
     );
@@ -220,6 +239,9 @@ run the code uninstall part
 
 sub CodeUninstall {
     my ( $Self, %Param ) = @_;
+
+    # delete all links with change and workorder objects
+    $Self->_LinkDelete();
 
     # deactivate the group itsm-change
     $Self->_GroupDeactivate(
@@ -370,22 +392,65 @@ sub _GroupDeactivate {
     return 1;
 }
 
+=item _LinkDelete()
+
+delete all existing links with change and workorder objects
+
+    my $Result = $CodeObject->_LinkDelete();
+
+=cut
+
+sub _LinkDelete {
+    my ( $Self, %Param ) = @_;
+
+    # get all change object ids
+    my $ChangeIDs = $Self->{ChangeObject}->ChangeList();
+
+    # delete all change links
+    if ( $ChangeIDs && ref $ChangeIDs eq 'ARRAY' ) {
+        for my $ChangeID ( @{$ChangeIDs} ) {
+            $Self->{LinkObject}->LinkDeleteAll(
+                Object => 'ITSMChange',
+                Key    => $ChangeID,
+                UserID => 1,
+            );
+        }
+    }
+
+    # get all work order object ids
+    my $WorkOrderIDs = $Self->{WorkOrderObject}->WorkOrderList();
+
+    return if !$WorkOrderIDs;
+    return if ref $WorkOrderIDs ne 'ARRAY';
+
+    # delete all work order links
+    for my $WorkOrderID ( @{$WorkOrderIDs} ) {
+        $Self->{LinkObject}->LinkDeleteAll(
+            Object => 'ITSMWorkOrder',
+            Key    => $WorkOrderID,
+            UserID => 1,
+        );
+    }
+
+    return 1;
+}
+
 1;
 
 =back
 
 =head1 TERMS AND CONDITIONS
 
-This Software is part of the OTRS project (http://otrs.org/).
+This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
-the enclosed file COPYING for license information (GPL). If you
-did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+the enclosed file COPYING for license information (AGPL). If you
+did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.1.1.1 $ $Date: 2009-09-12 08:01:24 $
+$Revision: 1.2 $ $Date: 2009-09-24 17:23:07 $
 
 =cut
