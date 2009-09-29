@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.4 2009-09-29 14:11:35 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.5 2009-09-29 15:37:36 ub Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -210,7 +210,7 @@
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
             <Column Name="change_id" Required="true" Type="BIGINT"/>
             <Column Name="workorder_id" Required="false" Type="BIGINT"/>
-            <Column Name="history_type_id" Required="true" Type="INTEGER"/>
+            <Column Name="type_id" Required="true" Type="INTEGER"/>
             <Column Name="content" Required="true" Size="3800" Type="VARCHAR"/>
             <Column Name="create_time" Required="true" Type="DATE"/>
             <Column Name="create_by" Required="true" Type="INTEGER"/>
@@ -220,8 +220,8 @@
             <Index Name="change_history_workorder_id">
                 <IndexColumn Name="workorder_id"/>
             </Index>
-            <Index Name="change_history_history_type_id">
-                <IndexColumn Name="history_type_id"/>
+            <Index Name="change_history_type_id">
+                <IndexColumn Name="type_id"/>
             </Index>
             <Index Name="change_history_create_time">
                 <IndexColumn Name="create_time"/>
@@ -233,7 +233,7 @@
                 <Reference Local="workorder_id" Foreign="id"/>
             </ForeignKey>
             <ForeignKey ForeignTable="change_history_type">
-                <Reference Local="history_type_id" Foreign="id"/>
+                <Reference Local="type_id" Foreign="id"/>
             </ForeignKey>
             <ForeignKey ForeignTable="users">
                 <Reference Local="create_by" Foreign="id"/>
@@ -242,9 +242,9 @@
         <TableCreate Name="change_template">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>
             <Column Name="name" Required="true" Size="250" Type="VARCHAR"/>
-            <Column Name="content" Required="true" Type="LONGBLOB"/>
             <Column Name="comments" Required="false" Size="250" Type="VARCHAR"/>
-            <Column Name="type_id" Required="true" Type="SMALLINT"/>
+            <Column Name="content" Required="true" Type="LONGBLOB"/>
+            <Column Name="type_id" Required="true" Type="INTEGER"/>
             <Column Name="valid_id" Required="true" Type="SMALLINT"/>
             <Column Name="create_time" Required="true" Type="DATE"/>
             <Column Name="create_by" Required="true" Type="INTEGER"/>
@@ -268,8 +268,9 @@
             </ForeignKey>
         </TableCreate>
         <TableCreate Name="change_template_type">
-            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="SMALLINT"/>
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>
             <Column Name="name" Required="true" Size="250" Type="VARCHAR"/>
+            <Column Name="valid_id" Required="true" Type="SMALLINT"/>
             <Column Name="create_time" Required="true" Type="DATE"/>
             <Column Name="create_by" Required="true" Type="INTEGER"/>
             <Column Name="change_time" Required="true" Type="DATE"/>
@@ -277,6 +278,12 @@
             <Unique Name="change_template_type_name">
                 <UniqueColumn Name="name"/>
             </Unique>
+            <Index Name="change_template_type_valid_id">
+                <IndexColumn Name="valid_id"/>
+            </Index>
+            <ForeignKey ForeignTable="valid">
+                <Reference Local="valid_id" Foreign="id"/>
+            </ForeignKey>
         </TableCreate>
     </DatabaseInstall>
     <DatabaseUninstall Type="pre">
