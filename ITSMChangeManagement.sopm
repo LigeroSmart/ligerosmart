@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.3 2009-09-25 08:12:25 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.4 2009-09-29 14:11:35 ub Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
-    <PackageRequired Version="1.3.91">ITSMCore</PackageRequired>
+    <PackageRequired Version="1.3.71">ITSMCore</PackageRequired>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
@@ -20,19 +20,11 @@
         <TableCreate Name="change">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
             <Column Name="change_number" Required="true" Size="100" Type="VARCHAR"/>
-            <Column Name="title" Required="true" Size="200" Type="VARCHAR"/>
-            <Column Name="description" Required="true" Size="5000" Type="VARCHAR"/>
-            <Column Name="justification" Required="true" Size="5000" Type="VARCHAR"/>
-            <Column Name="backout_plan" Required="true" Size="5000" Type="VARCHAR"/>
-            <Column Name="post_implementation_review" Required="true" Size="5000" Type="VARCHAR"/>
-            <Column Name="note" Required="true" Size="5000" Type="VARCHAR"/>
-            <Column Name="start_time" Required="true" Type="DATE"/>
-            <Column Name="end_time" Required="true" Type="DATE"/>
+            <Column Name="title" Required="true" Size="250" Type="VARCHAR"/>
+            <Column Name="description" Required="false" Size="3800" Type="VARCHAR"/>
+            <Column Name="justification" Required="false" Size="3800" Type="VARCHAR"/>
             <Column Name="state_id" Required="true" Type="INTEGER"/>
-            <Column Name="category_id" Required="true" Type="INTEGER"/>
-            <Column Name="impact_id" Required="true" Type="INTEGER"/>
-            <Column Name="priority_id" Required="true" Type="INTEGER"/>
-            <Column Name="change_manager_id" Required="true" Type="INTEGER"/>
+            <Column Name="change_manager_id" Required="false" Type="INTEGER"/>
             <Column Name="change_builder_id" Required="true" Type="INTEGER"/>
             <Column Name="create_time" Required="true" Type="DATE"/>
             <Column Name="create_by" Required="true" Type="INTEGER"/>
@@ -41,23 +33,26 @@
             <Unique>
                 <UniqueColumn Name="change_number"/>
             </Unique>
+            <Index Name="change_title">
+                <IndexColumn Name="title"/>
+            </Index>
+            <Index Name="change_description">
+                <IndexColumn Name="description"/>
+            </Index>
+            <Index Name="change_justification">
+                <IndexColumn Name="justification"/>
+            </Index>
             <Index Name="change_state_id">
                 <IndexColumn Name="state_id"/>
             </Index>
-            <Index Name="change_category_id">
-                <IndexColumn Name="category_id"/>
+            <Index Name="change_change_manager_id">
+                <IndexColumn Name="change_manager_id"/>
             </Index>
-            <Index Name="change_impact_id">
-                <IndexColumn Name="impact_id"/>
+            <Index Name="change_change_builder_id">
+                <IndexColumn Name="change_builder_id"/>
             </Index>
-            <Index Name="change_priority_id">
-                <IndexColumn Name="priority_id"/>
-            </Index>
-            <ForeignKey ForeignTable="general_catalog">
+            <ForeignKey ForeignTable="change_state">
                 <Reference Local="state_id" Foreign="id"/>
-                <Reference Local="category_id" Foreign="id"/>
-                <Reference Local="impact_id" Foreign="id"/>
-                <Reference Local="priority_id" Foreign="id"/>
             </ForeignKey>
             <ForeignKey ForeignTable="users">
                 <Reference Local="change_manager_id" Foreign="id"/>
@@ -69,29 +64,55 @@
         <TableCreate Name="change_workorder">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
             <Column Name="change_id" Required="true" Type="BIGINT"/>
-            <Column Name="workorder_number" Required="true" Size="100" Type="VARCHAR"/>
-            <Column Name="title" Required="true" Size="200" Type="VARCHAR"/>
-            <Column Name="description" Required="true" Size="5000" Type="VARCHAR"/>
-            <Column Name="note" Required="true" Size="5000" Type="VARCHAR"/>
-            <Column Name="start_time" Required="true" Type="DATE"/>
-            <Column Name="end_time" Required="true" Type="DATE"/>
+            <Column Name="workorder_number" Required="true" Type="INTEGER"/>
+            <Column Name="title" Required="true" Size="250" Type="VARCHAR"/>
+            <Column Name="instruction" Required="false" Size="3800" Type="VARCHAR"/>
+            <Column Name="report" Required="false" Size="3800" Type="VARCHAR"/>
             <Column Name="state_id" Required="true" Type="INTEGER"/>
-            <Column Name="workorder_agent_id" Required="true" Type="INTEGER"/>
+            <Column Name="workorder_agent_id" Required="false" Type="INTEGER"/>
+            <Column Name="planned_start_time" Required="false" Type="DATE"/>
+            <Column Name="planned_end_time" Required="false" Type="DATE"/>
+            <Column Name="actual_start_time" Required="false" Type="DATE"/>
+            <Column Name="actual_end_time" Required="false" Type="DATE"/>
             <Column Name="create_time" Required="true" Type="DATE"/>
             <Column Name="create_by" Required="true" Type="INTEGER"/>
             <Column Name="change_time" Required="true" Type="DATE"/>
             <Column Name="change_by" Required="true" Type="INTEGER"/>
-            <Unique>
-                <UniqueColumn Name="workorder_number"/>
-            </Unique>
+            <Index Name="change_change_title">
+                <IndexColumn Name="change_id"/>
+            </Index>
+            <Index Name="change_workorder_title">
+                <IndexColumn Name="title"/>
+            </Index>
+            <Index Name="change_workorder_instruction">
+                <IndexColumn Name="instruction"/>
+            </Index>
+            <Index Name="change_workorder_report">
+                <IndexColumn Name="report"/>
+            </Index>
             <Index Name="change_workorder_state_id">
                 <IndexColumn Name="state_id"/>
             </Index>
-            <ForeignKey ForeignTable="general_catalog">
-                <Reference Local="state_id" Foreign="id"/>
-            </ForeignKey>
+            <Index Name="change_workorder_agent_id">
+                <IndexColumn Name="workorder_agent_id"/>
+            </Index>
+            <Index Name="change_workorder_planned_start_time">
+                <IndexColumn Name="planned_start_time"/>
+            </Index>
+            <Index Name="change_workorder_planned_end_time">
+                <IndexColumn Name="planned_end_time"/>
+            </Index>
+            <Index Name="change_workorder_actual_start_time">
+                <IndexColumn Name="actual_start_time"/>
+            </Index>
+            <Index Name="change_workorder_actual_end_time">
+                <IndexColumn Name="actual_end_time"/>
+            </Index>
             <ForeignKey ForeignTable="change">
                 <Reference Local="change_id" Foreign="id"/>
+            </ForeignKey>
+            <ForeignKey ForeignTable="change_workorder_state">
+                <Reference Local="state_id" Foreign="id"/>
             </ForeignKey>
             <ForeignKey ForeignTable="users">
                 <Reference Local="workorder_agent_id" Foreign="id"/>
@@ -99,8 +120,71 @@
                 <Reference Local="change_by" Foreign="id"/>
             </ForeignKey>
         </TableCreate>
+        <TableCreate Name="change_cab">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
+            <Column Name="change_id" Required="true" Type="BIGINT"/>
+            <Column Name="user_id" Required="false" Type="INTEGER"/>
+            <Column Name="customer_user_id" Required="false" Size="250" Type="VARCHAR"/>
+            <Unique Name="change_cab_unique">
+                <UniqueColumn Name="change_id"/>
+                <UniqueColumn Name="user_id"/>
+                <UniqueColumn Name="customer_user_id"/>
+            </Unique>
+            <ForeignKey ForeignTable="change">
+                <Reference Local="change_id" Foreign="id"/>
+            </ForeignKey>
+            <ForeignKey ForeignTable="users">
+                <Reference Local="user_id" Foreign="id"/>
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Name="change_state">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>
+            <Column Name="name" Required="true" Size="100" Type="VARCHAR"/>
+            <Column Name="comments" Required="false" Size="250" Type="VARCHAR"/>
+            <Column Name="valid_id" Required="true" Type="SMALLINT"/>
+            <Column Name="create_time" Required="true" Type="DATE"/>
+            <Column Name="create_by" Required="true" Type="INTEGER"/>
+            <Column Name="change_time" Required="true" Type="DATE"/>
+            <Column Name="change_by" Required="true" Type="INTEGER"/>
+            <Unique Name="change_state_name">
+                <UniqueColumn Name="name"/>
+            </Unique>
+            <Index Name="change_state_valid_id">
+                <IndexColumn Name="valid_id"/>
+            </Index>
+            <ForeignKey ForeignTable="valid">
+                <Reference Local="valid_id" Foreign="id"/>
+            </ForeignKey>
+            <ForeignKey ForeignTable="users">
+                <Reference Local="create_by" Foreign="id"/>
+                <Reference Local="change_by" Foreign="id"/>
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Name="change_workorder_state">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>
+            <Column Name="name" Required="true" Size="100" Type="VARCHAR"/>
+            <Column Name="comments" Required="false" Size="250" Type="VARCHAR"/>
+            <Column Name="valid_id" Required="true" Type="SMALLINT"/>
+            <Column Name="create_time" Required="true" Type="DATE"/>
+            <Column Name="create_by" Required="true" Type="INTEGER"/>
+            <Column Name="change_time" Required="true" Type="DATE"/>
+            <Column Name="change_by" Required="true" Type="INTEGER"/>
+            <Unique Name="change_workorder_state_name">
+                <UniqueColumn Name="name"/>
+            </Unique>
+            <Index Name="change_workorder_state_valid_id">
+                <IndexColumn Name="valid_id"/>
+            </Index>
+            <ForeignKey ForeignTable="valid">
+                <Reference Local="valid_id" Foreign="id"/>
+            </ForeignKey>
+            <ForeignKey ForeignTable="users">
+                <Reference Local="create_by" Foreign="id"/>
+                <Reference Local="change_by" Foreign="id"/>
+            </ForeignKey>
+        </TableCreate>
         <TableCreate Name="change_history_type">
-            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="SMALLINT"/>
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>
             <Column Name="name" Required="true" Size="100" Type="VARCHAR"/>
             <Column Name="comments" Required="false" Size="250" Type="VARCHAR"/>
             <Column Name="valid_id" Required="true" Type="SMALLINT"/>
@@ -111,6 +195,9 @@
             <Unique Name="change_history_type_name">
                 <UniqueColumn Name="name"/>
             </Unique>
+            <Index Name="change_history_type_valid_id">
+                <IndexColumn Name="valid_id"/>
+            </Index>
             <ForeignKey ForeignTable="valid">
                 <Reference Local="valid_id" Foreign="id"/>
             </ForeignKey>
@@ -122,14 +209,9 @@
         <TableCreate Name="change_history">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
             <Column Name="change_id" Required="true" Type="BIGINT"/>
-            <Column Name="workorder_id" Required="true" Type="BIGINT"/>
-            <Column Name="history_type_id" Required="true" Type="SMALLINT"/>
-            <Column Name="content" Required="true" Size="5000" Type="VARCHAR"/>
-            <Column Name="change_state_id" Required="true" Type="INTEGER"/>
-            <Column Name="change_category_id" Required="true" Type="INTEGER"/>
-            <Column Name="change_impact_id" Required="true" Type="INTEGER"/>
-            <Column Name="change_priority_id" Required="true" Type="INTEGER"/>
-            <Column Name="workorder_state_id" Required="true" Type="INTEGER"/>
+            <Column Name="workorder_id" Required="false" Type="BIGINT"/>
+            <Column Name="history_type_id" Required="true" Type="INTEGER"/>
+            <Column Name="content" Required="true" Size="3800" Type="VARCHAR"/>
             <Column Name="create_time" Required="true" Type="DATE"/>
             <Column Name="create_by" Required="true" Type="INTEGER"/>
             <Index Name="change_history_change_id">
@@ -141,20 +223,8 @@
             <Index Name="change_history_history_type_id">
                 <IndexColumn Name="history_type_id"/>
             </Index>
-            <Index Name="change_history_change_state_id">
-                <IndexColumn Name="change_state_id"/>
-            </Index>
-            <Index Name="change_history_change_category_id">
-                <IndexColumn Name="change_category_id"/>
-            </Index>
-            <Index Name="change_history_change_impact_id">
-                <IndexColumn Name="change_impact_id"/>
-            </Index>
-            <Index Name="change_history_change_priority_id">
-                <IndexColumn Name="change_priority_id"/>
-            </Index>
-            <Index Name="change_history_workorder_state_id">
-                <IndexColumn Name="workorder_state_id"/>
+            <Index Name="change_history_create_time">
+                <IndexColumn Name="create_time"/>
             </Index>
             <ForeignKey ForeignTable="change">
                 <Reference Local="change_id" Foreign="id"/>
@@ -165,60 +235,60 @@
             <ForeignKey ForeignTable="change_history_type">
                 <Reference Local="history_type_id" Foreign="id"/>
             </ForeignKey>
-            <ForeignKey ForeignTable="general_catalog">
-                <Reference Local="change_state_id" Foreign="id"/>
-                <Reference Local="change_category_id" Foreign="id"/>
-                <Reference Local="change_impact_id" Foreign="id"/>
-                <Reference Local="change_priority_id" Foreign="id"/>
-                <Reference Local="workorder_state_id" Foreign="id"/>
-            </ForeignKey>
             <ForeignKey ForeignTable="users">
                 <Reference Local="create_by" Foreign="id"/>
             </ForeignKey>
         </TableCreate>
-        <TableCreate Name="change_cab">
-            <Column Name="change_id" Required="true" Type="BIGINT"/>
-            <Column Name="member_id" Required="true" Type="INTEGER"/>
-            <Unique Name="change_cab_unique">
-                <UniqueColumn Name="change_id"/>
-                <UniqueColumn Name="member_id"/>
+        <TableCreate Name="change_template">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>
+            <Column Name="name" Required="true" Size="250" Type="VARCHAR"/>
+            <Column Name="content" Required="true" Type="LONGBLOB"/>
+            <Column Name="comments" Required="false" Size="250" Type="VARCHAR"/>
+            <Column Name="type_id" Required="true" Type="SMALLINT"/>
+            <Column Name="valid_id" Required="true" Type="SMALLINT"/>
+            <Column Name="create_time" Required="true" Type="DATE"/>
+            <Column Name="create_by" Required="true" Type="INTEGER"/>
+            <Column Name="change_time" Required="true" Type="DATE"/>
+            <Column Name="change_by" Required="true" Type="INTEGER"/>
+            <Unique Name="change_template_name_type_id">
+                <UniqueColumn Name="name"/>
+                <UniqueColumn Name="type_id"/>
             </Unique>
-            <ForeignKey ForeignTable="change">
-                <Reference Local="change_id" Foreign="id"/>
+            <Index Name="change_template_valid_id">
+                <IndexColumn Name="valid_id"/>
+            </Index>
+            <Index Name="change_template_type_id">
+                <IndexColumn Name="type_id"/>
+            </Index>
+            <ForeignKey ForeignTable="valid">
+                <Reference Local="valid_id" Foreign="id"/>
             </ForeignKey>
-            <ForeignKey ForeignTable="users">
-                <Reference Local="member_id" Foreign="id"/>
+            <ForeignKey ForeignTable="change_template_type">
+                <Reference Local="type_id" Foreign="id"/>
             </ForeignKey>
         </TableCreate>
-        <TableCreate Name="change_cip_matrix">
-            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
-            <Column Name="category_id" Required="true" Type="INTEGER"/>
-            <Column Name="impact_id" Required="true" Type="INTEGER"/>
-            <Column Name="priority_id" Required="true" Type="INTEGER"/>
-            <Column Name="create_time" Required="false" Type="DATE"/>
-            <Column Name="create_by" Required="false" Type="INTEGER"/>
-            <Unique Name="change_cip_matrix_unique">
-                <UniqueColumn Name="category_id"/>
-                <UniqueColumn Name="impact_id"/>
-                <UniqueColumn Name="priority_id"/>
+        <TableCreate Name="change_template_type">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="SMALLINT"/>
+            <Column Name="name" Required="true" Size="250" Type="VARCHAR"/>
+            <Column Name="create_time" Required="true" Type="DATE"/>
+            <Column Name="create_by" Required="true" Type="INTEGER"/>
+            <Column Name="change_time" Required="true" Type="DATE"/>
+            <Column Name="change_by" Required="true" Type="INTEGER"/>
+            <Unique Name="change_template_type_name">
+                <UniqueColumn Name="name"/>
             </Unique>
-            <ForeignKey ForeignTable="general_catalog">
-                <Reference Local="category_id" Foreign="id"/>
-                <Reference Local="impact_id" Foreign="id"/>
-                <Reference Local="priority_id" Foreign="id"/>
-            </ForeignKey>
-            <ForeignKey ForeignTable="users">
-                <Reference Local="create_by" Foreign="id"/>
-            </ForeignKey>
         </TableCreate>
     </DatabaseInstall>
     <DatabaseUninstall Type="pre">
-        <TableDrop Name="change_cip_matrix"/>
         <TableDrop Name="change_cab"/>
         <TableDrop Name="change_history"/>
         <TableDrop Name="change_history_type"/>
         <TableDrop Name="change_workorder"/>
+        <TableDrop Name="change_workorder_state"/>
         <TableDrop Name="change"/>
+        <TableDrop Name="change_state"/>
+        <TableDrop Name="change_template"/>
+        <TableDrop Name="change_template_type"/>
     </DatabaseUninstall>
     <CodeInstall Type="post">
 
@@ -396,7 +466,7 @@
         &lt;br&gt;
         &lt;b&gt;REQUIRED OTRS PACKAGES&lt;/b&gt;
         &lt;ul&gt;
-        &lt;li&gt;ITSMCore 1.3.91&lt;/li&gt;
+        &lt;li&gt;ITSMCore 1.3.71&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
@@ -414,7 +484,7 @@
         &lt;br&gt;
         &lt;b&gt;BENÖTIGTE OTRS-PAKETE&lt;/b&gt;
         &lt;ul&gt;
-        &lt;li&gt;ITSMCore 1.3.91&lt;/li&gt;
+        &lt;li&gt;ITSMCore 1.3.71&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
@@ -464,7 +534,7 @@
         &lt;br&gt;
         &lt;b&gt;REQUIRED OTRS PACKAGES&lt;/b&gt;
         &lt;ul&gt;
-        &lt;li&gt;ITSMCore 1.3.91&lt;/li&gt;
+        &lt;li&gt;ITSMCore 1.3.71&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
@@ -482,7 +552,7 @@
         &lt;br&gt;
         &lt;b&gt;BENÖTIGTE OTRS-PAKETE&lt;/b&gt;
         &lt;ul&gt;
-        &lt;li&gt;ITSMCore 1.3.91&lt;/li&gt;
+        &lt;li&gt;ITSMCore 1.3.71&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
