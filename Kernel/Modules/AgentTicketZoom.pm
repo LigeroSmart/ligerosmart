@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.pm,v 1.7 2009-08-28 11:39:31 mh Exp $
-# $OldId: AgentTicketZoom.pm,v 1.73 2009/08/02 14:53:55 martin Exp $
+# $Id: AgentTicketZoom.pm,v 1.8 2009-09-30 17:53:05 ub Exp $
+# $OldId: AgentTicketZoom.pm,v 1.75.2.4 2009/09/29 11:47:48 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -64,6 +64,12 @@ sub new {
     $Self->{ArticleFilterActive}
         = $Self->{ConfigObject}->Get('Ticket::Frontend::TicketArticleFilter');
 
+    # define if rich text should be used
+    $Self->{RichText}
+        = $Self->{ConfigObject}->Get('Ticket::Frontend::ZoomRichTextForce')
+        || $Self->{ConfigObject}->Get('Frontend::RichText')
+        || 0;
+
     # ticket id lookup
     if ( !$Self->{TicketID} && $Self->{ParamObject}->GetParam( Param => 'TicketNumber' ) ) {
         $Self->{TicketID} = $Self->{TicketObject}->TicketIDLookup(
@@ -96,16 +102,14 @@ sub Run {
     }
 
     # check permissions
-    if (
-        !$Self->{TicketObject}->Permission(
-            Type     => 'ro',
-            TicketID => $Self->{TicketID},
-            UserID   => $Self->{UserID}
-        )
-        )
-    {
+    my $Access = $Self->{TicketObject}->Permission(
+        Type     => 'ro',
+        TicketID => $Self->{TicketID},
+        UserID   => $Self->{UserID}
+    );
 
-        # error screen, don't show ticket
+    # error screen, don't show ticket
+    if ( !$Access ) {
         return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' );
     }
 
@@ -133,7 +137,6 @@ sub Run {
         }
 
         # write the session
-        my $JSON = '';
 
         # save default filter settings to user preferences
         if ($SaveDefaults) {
@@ -146,7 +149,7 @@ sub Run {
                 SessionID => $Self->{SessionID},
                 Key       => "ArticleFilterDefault",
                 Value     => $SessionString,
-                )
+            );
         }
 
         # turn off filter explicitly for this ticket
@@ -155,16 +158,15 @@ sub Run {
         }
 
         # update the session
-        if (
-            $Self->{SessionObject}->UpdateSessionID(
-                SessionID => $Self->{SessionID},
-                Key       => "ArticleFilter$TicketID",
-                Value     => $SessionString,
-            )
-            )
-        {
+        my $Update = $Self->{SessionObject}->UpdateSessionID(
+            SessionID => $Self->{SessionID},
+            Key       => "ArticleFilter$TicketID",
+            Value     => $SessionString,
+        );
 
-            # build JSON output
+        # build JSON output
+        my $JSON = '';
+        if ($Update) {
             $JSON = $Self->{LayoutObject}->JSON(
                 Data => {
                     Message => 'Article filter settings were saved.',
@@ -227,6 +229,14 @@ sub Run {
         }
     }
 
+    # strip html and ascii attachments of content
+    my $StripPlainBodyAsAttachment = 1;
+
+    # check if rich text is enabled, if not only stip ascii attachments
+    if ( !$Self->{RichText} ) {
+        $StripPlainBodyAsAttachment = 2;
+    }
+
     # get content
     my %Ticket = $Self->{TicketObject}->TicketGet( TicketID => $Self->{TicketID} );
 # ---
@@ -253,7 +263,7 @@ sub Run {
 # ---
     my @ArticleBox = $Self->{TicketObject}->ArticleContentIndex(
         TicketID                   => $Self->{TicketID},
-        StripPlainBodyAsAttachment => 1,
+        StripPlainBodyAsAttachment => $StripPlainBodyAsAttachment,
     );
 
     # return if HTML email
@@ -365,12 +375,14 @@ sub MaskAgentZoom {
     # age design
     $Param{Age} = $Self->{LayoutObject}->CustomerAge( Age => $Param{Age}, Space => ' ' );
     if ( $Param{UntilTime} ) {
-        if ( $Param{UntilTime} < -1 ) {
+        if ( $Param{UntilTime} < -1 && $Self->{HighlightColor2} ) {
             $Param{PendingUntil} = "<font color='$Self->{HighlightColor2}'>";
         }
-        $Param{PendingUntil}
-            .= $Self->{LayoutObject}->CustomerAge( Age => $Param{UntilTime}, Space => '<br>' );
-        if ( $Param{UntilTime} < -1 ) {
+        $Param{PendingUntil} .= $Self->{LayoutObject}->CustomerAge(
+            Age   => $Param{UntilTime},
+            Space => '<br>',
+        );
+        if ( $Param{UntilTime} < -1 && $Self->{HighlightColor2} ) {
             $Param{PendingUntil} .= "</font>";
         }
     }
@@ -563,8 +575,14 @@ sub MaskAgentZoom {
 
         # show body as html or plain text
         my $ViewMode = 'BodyHTML';
-        if ( !$Article{AttachmentIDOfHTMLBody} ) {
+
+        # in case show plain article body (if no html body as attachment exists of if rich
+        # text is not enabled)
+        if ( !$Self->{RichText} || !$Article{AttachmentIDOfHTMLBody} ) {
             $ViewMode = 'BodyPlain';
+
+            # remember plain body for further processing by ArticleViewModules
+            $Article{BodyPlain} = $Article{Body};
 
             # html quoting
             $Article{Body} = $Self->{LayoutObject}->Ascii2Html(
@@ -582,10 +600,17 @@ sub MaskAgentZoom {
         }
 
         # show body
+        # Create a reference to an anonymous copy of %Article and pass it to
+        # the LayoutObject, because %Article may be modified afterwards.
         $Self->{LayoutObject}->Block(
             Name => $ViewMode,
             Data => {%Article},
         );
+
+        # restore plain body for further processing by ArticleViewModules
+        if ( !$Self->{RichText} || !$Article{AttachmentIDOfHTMLBody} ) {
+            $Article{Body} = $Article{BodyPlain};
+        }
 
         # show article tree
         if ( $Count == 1 ) {
