@@ -2,7 +2,7 @@
 # Kernel/System/LinkObject/FAQ.pm - to link faq objects
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.11 2009-07-14 07:56:06 ub Exp $
+# $Id: FAQ.pm,v 1.12 2009-10-01 18:31:45 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -27,7 +27,7 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for (qw(DBObject ConfigObject LogObject MainObject EncodeObject TimeObject LinkObject UserID)) {
+    for (qw(DBObject ConfigObject LogObject MainObject EncodeObject TimeObject UserID)) {
         $Self->{$_} = $Param{$_} || die "Got no $_!";
     }
 
