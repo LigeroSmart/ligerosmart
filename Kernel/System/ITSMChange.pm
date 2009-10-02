@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.1 2009-10-02 13:07:31 ub Exp $
+# $Id: ITSMChange.pm,v 1.2 2009-10-02 16:34:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,10 +15,12 @@ use strict;
 use warnings;
 
 use Kernel::System::Valid;
+use Kernel::System::GeneralCatalog;
+use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -86,19 +88,29 @@ sub new {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
-    $Self->{ValidObject}     = Kernel::System::Valid->new( %{$Self} );
-    $Self->{WorkOrderObject} = Kernel::System::ITSMChange::WorkOrder->new( %{$Self} );
+    $Self->{ValidObject}          = Kernel::System::Valid->new( %{$Self} );
+    $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
+    $Self->{LinkObject}           = Kernel::System::LinkObject->new( %{$Self} );
+    $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::WorkOrder->new( %{$Self} );
 
     return $Self;
 }
 
 =item ChangeAdd()
 
-short description of ChangeAdd
+add a new change
 
+    my $ChangeID = $ChangeObject->ChangeAdd();
+or
     my $ChangeID = $ChangeObject->ChangeAdd(
-        Test1 => 123,
-        Test2 => 'Hello',  # (optional)
+        Title           => 'Replacement of mail server',       # (optional)
+        Description     => 'New mail server is faster',        # (optional)
+        Justification   => 'Old mail server too slow',         # (optional)
+        ChangeStateID   => 4,                                  # (optional)
+        ChangeManagerID => 5,                                  # (optional)
+        ChangeBuilderID => 6,                                  # (optional)
+        CABAgents       => [ 1, 2, 4 ],     # UserIDs          # (optional)
+        CABCustomers    => [ 'tt', 'mm' ],  # CustomerUserIDs  # (optional)
     );
 
 =cut
@@ -106,16 +118,25 @@ short description of ChangeAdd
 sub ChangeAdd {
     my ( $Self, %Param ) = @_;
 
+    # check if given ChangeStateID is listed in general catalog
+
     return $ChangeID;
 }
 
 =item ChangeUpdate()
 
-short description of ChangeUpdate
+update a change
 
-    my $Result = $ChangeObject->ChangeUpdate(
-        ChangeID => 123,
-        Test2    => 'Hello',  # (optional)
+    my $Success = $ChangeObject->ChangeUpdate(
+        ChangeID        => 123,
+        Title           => 'Replacement of slow mail server',  # (optional)
+        Description     => 'New mail server is faster',        # (optional)
+        Justification   => 'Old mail server too slow',         # (optional)
+        ChangeStateID   => 4,                                  # (optional)
+        ChangeManagerID => 5,                                  # (optional)
+        ChangeBuilderID => 6,                                  # (optional)
+        CABAgents       => [ 1, 2, 4 ],     # UserIDs          # (optional)
+        CABCustomers    => [ 'tt', 'mm' ],  # CustomerUserIDs  # (optional)
     );
 
 =cut
@@ -123,14 +144,35 @@ short description of ChangeUpdate
 sub ChangeUpdate {
     my ( $Self, %Param ) = @_;
 
-    return;
+    # check if given ChangeStateID is listed in general catalog
+
+    return 1;
 }
 
 =item ChangeGet()
 
-short description of ChangeGet
+return a change as hash reference
 
-    my $Result = $ChangeObject->ChangeGet(
+Return
+    $Change{ChangeID}
+    $Change{ChangeNumber}
+    $Change{Title}
+    $Change{Description}
+    $Change{Justification}
+    $Change{ChangeManagerID}
+    $Change{ChangeBuilderID}
+    $Change{WorkOrderIDs}     # array reference with WorkOrderIDs
+    $Change{CAB}              # hasharray reference with CAB member ids, look at ChangeCABGet()
+    $Change{PlannedStart}
+    $Change{PlannedEnd}
+    $Change{ActualStart}
+    $Change{ActualEnd}
+    $Change{CreateTime}
+    $Change{CreateBy}
+    $Change{ChangeTime}
+    $Change{ChangeBy}
+
+    my $ChangeRef = $ChangeObject->ChangeGet(
         ChangeID => 123,
     );
 
@@ -142,11 +184,69 @@ sub ChangeGet {
     return;
 }
 
+=item ChangeCABUpdate()
+
+add or update the CAB of a change
+
+    my $Success = $ChangeObject->ChangeCABUpdate(
+        ChangeID     => 123,
+        CABAgents    => [ 1, 2, 4 ],     # UserIDs          (optional)
+        CABCustomers => [ 'tt', 'mm' ],  # CustomerUserIDs  (optional)
+    );
+
+=cut
+
+sub ChangeCABUpdate {
+    my ( $Self, %Param ) = @_;
+
+    return;
+}
+
+=item ChangeCABGet()
+
+return the CAB of a change as hasharray reference
+
+# NOTE: Maybe make this function internal, as it will be used in ChangeGet()
+
+Return
+    $ChangeCAB = {
+        CABAgents    => [ 1, 2, 4 ],
+        CABCustomers => [ 'tt', 'mm' ],
+    }
+
+    my $ChangeCAB = $ChangeObject->ChangeCABGet(
+        ChangeID => 123,
+    );
+
+=cut
+
+sub ChangeCABGet {
+    my ( $Self, %Param ) = @_;
+
+    return;
+}
+
+=item ChangeCABDelete()
+
+delete the CAB of a change
+
+    my $Success = $ChangeObject->ChangeCABDelete(
+        ChangeID => 123,
+    );
+
+=cut
+
+sub ChangeCABDelete {
+    my ( $Self, %Param ) = @_;
+
+    return;
+}
+
 =item ChangeList()
 
-short description of ChangeList
+return a change id list of all changes as array reference
 
-    my $Result = $ChangeObject->ChangeList();
+    my $ChangeIDsRef = $ChangeObject->ChangeList();
 
 =cut
 
@@ -158,11 +258,59 @@ sub ChangeList {
 
 =item ChangeSearch()
 
-short description of ChangeSearch
+return a change id list as an array reference
 
-    my $Result = $ChangeObject->ChangeSearch(
-        Test1 => 123,
-        Test2 => 'Hello',  # (optional)
+    my $ChangeIDsRef = $ChangeObject->ChangeSearch(
+        ChangeID          => 123,
+        ChangeNumber      => '2009100112345778',                 # (optional)
+        Title             => 'Replacement of slow mail server',  # (optional)
+        Description       => 'New mail server is faster',        # (optional)
+        Justification     => 'Old mail server too slow',         # (optional)
+        ChangeStateID     => 4,                                  # (optional)
+
+        ChangeManagerID   => 5,                                  # (optional)
+        ChangeBuilderID   => 6,                                  # (optional)
+        WorkOrderAgentID  => 7,                                  # (optional)
+        CABAgent          => 9,                                  # (optional)
+        CABCustomer       => 'tt',                               # (optional)
+
+        # changes with planned start time after ...
+        PlannedStartTimeNewerDate => '2006-01-09 00:00:01',      # (optional)
+        # changes with planned start time before then ....
+        PlannedStartTimeOlderDate => '2006-01-19 23:59:59',      # (optional)
+
+        # changes with planned end time after ...
+        PlannedEndTimeNewerDate => '2006-01-09 00:00:01',        # (optional)
+        # changes with planned end time before then ....
+        PlannedEndTimeOlderDate => '2006-01-19 23:59:59',        # (optional)
+
+        # changes with actual start time after ...
+        ActualStartTimeNewerDate => '2006-01-09 00:00:01',       # (optional)
+        # changes with actual start time before then ....
+        ActualStartTimeOlderDate => '2006-01-19 23:59:59',       # (optional)
+
+        # changes with actual end time after ...
+        ActualEndTimeNewerDate => '2006-01-09 00:00:01',         # (optional)
+        # changes with actual end time before then ....
+        ActualEndTimeOlderDate => '2006-01-19 23:59:59',         # (optional)
+
+        # changes with created time after ...
+        CreateTimeNewerDate => '2006-01-09 00:00:01',            # (optional)
+        # changes with created time before then ....
+        CreateTimeOlderDate => '2006-01-19 23:59:59',            # (optional)
+
+        # changes with changed time after ...
+        ChangeTimeNewerDate => '2006-01-09 00:00:01',            # (optional)
+        # changes with changed time before then ....
+        ChangeTimeOlderDate => '2006-01-19 23:59:59',            # (optional)
+
+        OrderBy => 'ChangeNumber',                               # (optional) default ChangeID
+        # (ChangeID, ChangeNumber, ChangeStateID,
+        # ChangeManagerID, ChangeBuilderID,
+        # PlannedStart, PlannedEnd, ActualStart, ActualEnd,
+        # CreateTime, CreateBy, ChangeTime, ChangeBy)
+
+        Limit => 100,                                            # (optional)
     );
 
 =cut
@@ -175,18 +323,16 @@ sub ChangeSearch {
 
 =item ChangeDelete()
 
-short description of ChangeDelete
+delete a change
 
 NOTE: This function must first remove all links to this ChangeObject,
-      delete the history of this ChangeObject,
+      delete the history of this ChangeObject, delete the CAB,
       then get a list of all WorkOrderObjects of this change and
       call WorkorderDelete for each WorkOrder (which will itself delete
       all links to the WorkOrder).
 
-    my $Result = $ChangeObject->ChangeDelete(
+    my $Success = $ChangeObject->ChangeDelete(
         ChangeID => 123,
-        Test1 => 123,
-        Test2 => 'Hello',  # (optional)
     );
 
 =cut
@@ -199,11 +345,12 @@ sub ChangeDelete {
 
 =item ChangeEditWorkflow()
 
-short description of ChangeEditWorkflow
+edit the workflow of a change
 
-    my $Result = $ChangeObject->ChangeEditWorkflow(
-        Test1 => 123,
-        Test2 => 'Hello',  # (optional)
+NOTE: To be defined in more detail!
+
+    my $Success = $ChangeObject->ChangeEditWorkflow(
+        ChangeID  => 123,
     );
 
 =cut
@@ -216,11 +363,12 @@ sub ChangeEditWorkflow {
 
 =item ChangeListWorkflow()
 
-short description of ChangeListWorkflow
+list the workflow of a change
 
-    my $Result = $ChangeObject->ChangeListWorkflow(
-        Test1 => 123,
-        Test2 => 'Hello',  # (optional)
+NOTE: To be defined in more detail!
+
+    my $ChangeWorkflow = $ChangeObject->ChangeListWorkflow(
+        ChangeID  => 123,
     );
 
 =cut
@@ -233,7 +381,7 @@ sub ChangeListWorkflow {
 
 =item _ChangeGetStart()
 
-short description of _ChangeGetStart
+get the start date of a change, calculated from the start of the first work order
 
     my $ChangeStartTime = $ChangeObject->_ChangeGetStart(
         ChangeID => 123,
@@ -250,7 +398,7 @@ sub _ChangeGetStart {
 
 =item _ChangeGetEnd()
 
-short description of _ChangeGetEnd
+get the end date of a change, calculated from the start of the first work order
 
     my $ChangeEndTime = $ChangeObject->_ChangeGetEnd(
         ChangeID => 123,
@@ -272,8 +420,7 @@ NOTE: Maybe this function better belongs to Kernel/Output/HTML/LayoutITSMChange.
 short description of _ChangeGetTicks
 
     my $Result = $ChangeObject->_ChangeGetTicks(
-        Test1 => 123,
-        Test2 => 'Hello',  # (optional)
+        ChangeID => 123,
     );
 
 =cut
@@ -300,6 +447,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2009-10-02 13:07:31 $
+$Revision: 1.2 $ $Date: 2009-10-02 16:34:25 $
 
 =cut
