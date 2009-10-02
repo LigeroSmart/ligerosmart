@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.5 2009-09-29 15:37:36 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.6 2009-10-02 12:52:01 ub Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -23,7 +23,7 @@
             <Column Name="title" Required="true" Size="250" Type="VARCHAR"/>
             <Column Name="description" Required="false" Size="3800" Type="VARCHAR"/>
             <Column Name="justification" Required="false" Size="3800" Type="VARCHAR"/>
-            <Column Name="state_id" Required="true" Type="INTEGER"/>
+            <Column Name="change_state_id" Required="true" Type="INTEGER"/>
             <Column Name="change_manager_id" Required="false" Type="INTEGER"/>
             <Column Name="change_builder_id" Required="true" Type="INTEGER"/>
             <Column Name="create_time" Required="true" Type="DATE"/>
@@ -42,8 +42,8 @@
             <Index Name="change_justification">
                 <IndexColumn Name="justification"/>
             </Index>
-            <Index Name="change_state_id">
-                <IndexColumn Name="state_id"/>
+            <Index Name="change_change_state_id">
+                <IndexColumn Name="change_state_id"/>
             </Index>
             <Index Name="change_change_manager_id">
                 <IndexColumn Name="change_manager_id"/>
@@ -51,9 +51,6 @@
             <Index Name="change_change_builder_id">
                 <IndexColumn Name="change_builder_id"/>
             </Index>
-            <ForeignKey ForeignTable="change_state">
-                <Reference Local="state_id" Foreign="id"/>
-            </ForeignKey>
             <ForeignKey ForeignTable="users">
                 <Reference Local="change_manager_id" Foreign="id"/>
                 <Reference Local="change_builder_id" Foreign="id"/>
@@ -68,7 +65,7 @@
             <Column Name="title" Required="true" Size="250" Type="VARCHAR"/>
             <Column Name="instruction" Required="false" Size="3800" Type="VARCHAR"/>
             <Column Name="report" Required="false" Size="3800" Type="VARCHAR"/>
-            <Column Name="state_id" Required="true" Type="INTEGER"/>
+            <Column Name="workorder_state_id" Required="true" Type="INTEGER"/>
             <Column Name="workorder_agent_id" Required="false" Type="INTEGER"/>
             <Column Name="planned_start_time" Required="false" Type="DATE"/>
             <Column Name="planned_end_time" Required="false" Type="DATE"/>
@@ -90,10 +87,10 @@
             <Index Name="change_workorder_report">
                 <IndexColumn Name="report"/>
             </Index>
-            <Index Name="change_workorder_state_id">
-                <IndexColumn Name="state_id"/>
+            <Index Name="change_workorder_workorder_state_id">
+                <IndexColumn Name="workorder_state_id"/>
             </Index>
-            <Index Name="change_workorder_agent_id">
+            <Index Name="change_workorder_workorder_agent_id">
                 <IndexColumn Name="workorder_agent_id"/>
             </Index>
             <Index Name="change_workorder_planned_start_time">
@@ -110,9 +107,6 @@
             </Index>
             <ForeignKey ForeignTable="change">
                 <Reference Local="change_id" Foreign="id"/>
-            </ForeignKey>
-            <ForeignKey ForeignTable="change_workorder_state">
-                <Reference Local="state_id" Foreign="id"/>
             </ForeignKey>
             <ForeignKey ForeignTable="users">
                 <Reference Local="workorder_agent_id" Foreign="id"/>
@@ -135,52 +129,6 @@
             </ForeignKey>
             <ForeignKey ForeignTable="users">
                 <Reference Local="user_id" Foreign="id"/>
-            </ForeignKey>
-        </TableCreate>
-        <TableCreate Name="change_state">
-            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>
-            <Column Name="name" Required="true" Size="100" Type="VARCHAR"/>
-            <Column Name="comments" Required="false" Size="250" Type="VARCHAR"/>
-            <Column Name="valid_id" Required="true" Type="SMALLINT"/>
-            <Column Name="create_time" Required="true" Type="DATE"/>
-            <Column Name="create_by" Required="true" Type="INTEGER"/>
-            <Column Name="change_time" Required="true" Type="DATE"/>
-            <Column Name="change_by" Required="true" Type="INTEGER"/>
-            <Unique Name="change_state_name">
-                <UniqueColumn Name="name"/>
-            </Unique>
-            <Index Name="change_state_valid_id">
-                <IndexColumn Name="valid_id"/>
-            </Index>
-            <ForeignKey ForeignTable="valid">
-                <Reference Local="valid_id" Foreign="id"/>
-            </ForeignKey>
-            <ForeignKey ForeignTable="users">
-                <Reference Local="create_by" Foreign="id"/>
-                <Reference Local="change_by" Foreign="id"/>
-            </ForeignKey>
-        </TableCreate>
-        <TableCreate Name="change_workorder_state">
-            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>
-            <Column Name="name" Required="true" Size="100" Type="VARCHAR"/>
-            <Column Name="comments" Required="false" Size="250" Type="VARCHAR"/>
-            <Column Name="valid_id" Required="true" Type="SMALLINT"/>
-            <Column Name="create_time" Required="true" Type="DATE"/>
-            <Column Name="create_by" Required="true" Type="INTEGER"/>
-            <Column Name="change_time" Required="true" Type="DATE"/>
-            <Column Name="change_by" Required="true" Type="INTEGER"/>
-            <Unique Name="change_workorder_state_name">
-                <UniqueColumn Name="name"/>
-            </Unique>
-            <Index Name="change_workorder_state_valid_id">
-                <IndexColumn Name="valid_id"/>
-            </Index>
-            <ForeignKey ForeignTable="valid">
-                <Reference Local="valid_id" Foreign="id"/>
-            </ForeignKey>
-            <ForeignKey ForeignTable="users">
-                <Reference Local="create_by" Foreign="id"/>
-                <Reference Local="change_by" Foreign="id"/>
             </ForeignKey>
         </TableCreate>
         <TableCreate Name="change_history_type">
