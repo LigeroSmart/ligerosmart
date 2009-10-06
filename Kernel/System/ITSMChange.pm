@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.4 2009-10-06 11:24:50 ub Exp $
+# $Id: ITSMChange.pm,v 1.5 2009-10-06 22:23:39 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 =head1 NAME
 
@@ -121,7 +121,10 @@ or
 sub ChangeAdd {
     my ( $Self, %Param ) = @_;
 
-    # check if given ChangeStateID is listed in general catalog
+    # check if given ChangeStateID is valid
+    return if $Param{ChangeStateID} && !$Self->_CheckChangeStateID(
+        ChangeStateID => $Param{ChangeStateID},
+    );
 
     return $ChangeID;
 }
@@ -148,7 +151,21 @@ update a change
 sub ChangeUpdate {
     my ( $Self, %Param ) = @_;
 
-    # check if given ChangeStateID is listed in general catalog
+    # check needed stuff
+    for my $Argument (qw(ChangeID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # check if given ChangeStateID is valid
+    return if $Param{ChangeStateID} && !$Self->_CheckChangeStateID(
+        ChangeStateID => $Param{ChangeStateID},
+    );
 
     return 1;
 }
@@ -423,6 +440,49 @@ sub _ChangeGetEnd {
     return;
 }
 
+=item _CheckChangeStateID()
+
+check if a given change state id is valid
+
+    my $Ok = $ChangeObject->_CheckChangeStateID(
+        ChangeStateID => 25,
+    );
+
+=cut
+
+sub _CheckChangeStateID {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    if ( !$Param{ChangeStateID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Need $Argument!",
+        );
+        return;
+    }
+
+    # get work order state list
+    my $ChangeStateList = $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::ChangeManagement::Change::State',
+    );
+
+    if (
+        !$ChangeStateList
+        || ref $ChangeStateList ne 'HASH'
+        || !$ChangeStateList->{ $Param{ChangeStateID} }
+        )
+    {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "No valid work order state id given!",
+        );
+        return;
+    }
+
+    return 1;
+}
+
 =item _ChangeGetTicks()
 
 NOTE: Maybe this function better belongs to Kernel/Output/HTML/LayoutITSMChange.pm
@@ -457,6 +517,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2009-10-06 11:24:50 $
+$Revision: 1.5 $ $Date: 2009-10-06 22:23:39 $
 
 =cut
