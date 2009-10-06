@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all work order functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.1 2009-10-06 11:26:33 ub Exp $
+# $Id: WorkOrder.pm,v 1.2 2009-10-06 22:24:42 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -127,7 +127,10 @@ or
 sub WorkOrderAdd {
     my ( $Self, %Param ) = @_;
 
-    # check if given WorkOrderStateID is listed in general catalog
+    # check if given WorkOrderStateID is valid
+    return if $Param{WorkOrderStateID} && !$Self->_CheckWorkOrderStateID(
+        WorkOrderStateID => $Param{WorkOrderStateID},
+    );
 
     return $WorkOrderID;
 }
@@ -168,10 +171,9 @@ sub WorkOrderUpdate {
         }
     }
 
-    # check if given WorkOrderStateID is listed in general catalog
-    return if $Param{WorkOrderStateID} && !$Self->_CheckGeneralCatalogClassItem(
-        ItemID => $Param{WorkOrderStateID},
-        Class  => 'ITSM::ChangeManagement::WorkOrder::State',
+    # check if given WorkOrderStateID is valid
+    return if $Param{WorkOrderStateID} && !$Self->_CheckWorkOrderStateID(
+        WorkOrderStateID => $Param{WorkOrderStateID},
     );
 
     return 1;
@@ -306,55 +308,42 @@ sub WorkOrderDelete {
     return;
 }
 
-=item _CheckGeneralCatalogClassItem()
+=item _CheckWorkOrderStateID()
 
-NOTE:
-This function should be included in the GeneralCatalog package,
-as it is also needed in Kernel/System/ITSMChange.pm and could be useful
-for other ITSM modules too.
+check if a given work order state id is valid
 
-check if a given general catalog item id is valid and if it is in the given class
-
-    my $Success = $WorkOrderObject->_CheckGeneralCatalogClassItem(
-        ItemID => 25,
-        Class => 'ITSM::ChangeManagement::WorkOrder::State',
+    my $Ok = $WorkOrderObject->_CheckWorkOrderStateID(
+        WorkOrderStateID => 25,
     );
 
 =cut
 
-sub _CheckGeneralCatalogClassItem {
+sub _CheckWorkOrderStateID {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(ItemID Class)) {
-        if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Argument!",
-            );
-            return;
-        }
+    if ( !$Param{WorkOrderStateID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Need $Argument!",
+        );
+        return;
     }
 
-    # get general catalog item
-    my $ItemDataRef = $Self - {GeneralCatalogObject}->ItemGet(
-        ItemID => $Param{ItemID},
+    # get work order state list
+    my $WorkOrderStateList = $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::ChangeManagement::WorkOrder::State',
     );
 
-    # get valid ids
-    my @ValidList = $Self->{ValidObject}->ValidIDsGet();
-    my %Valid = map { $_ => 1 } @ValidList;
-
     if (
-        !$ItemDataRef
-        || ref $ItemDataRef ne 'HASH'
-        || $Valid{ $ItemDataRef->{ValidID} }
-        || $ItemDataRef->{Class} ne $Param{Class}
+        !$WorkOrderStateList
+        || ref $WorkOrderStateList ne 'HASH'
+        || !$WorkOrderStateList->{ $Param{WorkOrderStateID} }
         )
     {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Invalid ItemID $Param{ItemID} for general catalog class '$Param{Class}'!",
+            Message  => "No valid work order state id given!",
         );
         return;
     }
@@ -378,6 +367,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2009-10-06 11:26:33 $
+$Revision: 1.2 $ $Date: 2009-10-06 22:24:42 $
 
 =cut

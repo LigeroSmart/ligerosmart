@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.5 2009-10-06 22:23:39 ub Exp $
+# $Id: ITSMChange.pm,v 1.6 2009-10-06 22:26:48 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 =head1 NAME
 
@@ -462,7 +462,7 @@ sub _CheckChangeStateID {
         return;
     }
 
-    # get work order state list
+    # get change state list
     my $ChangeStateList = $Self->{GeneralCatalogObject}->ItemList(
         Class => 'ITSM::ChangeManagement::Change::State',
     );
@@ -475,7 +475,7 @@ sub _CheckChangeStateID {
     {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "No valid work order state id given!",
+            Message  => "No valid change state id given!",
         );
         return;
     }
@@ -517,6 +517,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2009-10-06 22:23:39 $
+$Revision: 1.6 $ $Date: 2009-10-06 22:26:48 $
 
 =cut
