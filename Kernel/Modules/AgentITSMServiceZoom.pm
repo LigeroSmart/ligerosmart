@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMServiceZoom.pm - the OTRS::ITSM Service zoom module
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMServiceZoom.pm,v 1.5 2009-05-18 09:48:35 mh Exp $
+# $Id: AgentITSMServiceZoom.pm,v 1.6 2009-10-06 20:29:33 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::Service;
 use Kernel::System::SLA;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -192,6 +192,13 @@ sub Run {
     for my $Postfix (qw(UserLogin UserFirstname UserLastname)) {
         $Service{ 'Change' . $Postfix } = $ChangeUser{$Postfix};
     }
+
+    # store last screen
+    $Self->{SessionObject}->UpdateSessionID(
+        SessionID => $Self->{SessionID},
+        Key       => 'LastScreenView',
+        Value     => $Self->{RequestedURL},
+    );
 
     # output header
     my $Output = $Self->{LayoutObject}->Header();
