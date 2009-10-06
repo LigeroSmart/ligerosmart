@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.6 2009-10-02 12:52:01 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.7 2009-10-06 11:22:39 ub Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -233,15 +233,31 @@
                 <Reference Local="valid_id" Foreign="id"/>
             </ForeignKey>
         </TableCreate>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Change::State</Data>
+            <Data Key="name" Type="Quote">ready</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::WorkOrder::State</Data>
+            <Data Key="name" Type="Quote">accepted</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
     </DatabaseInstall>
     <DatabaseUninstall Type="pre">
         <TableDrop Name="change_cab"/>
         <TableDrop Name="change_history"/>
         <TableDrop Name="change_history_type"/>
         <TableDrop Name="change_workorder"/>
-        <TableDrop Name="change_workorder_state"/>
         <TableDrop Name="change"/>
-        <TableDrop Name="change_state"/>
         <TableDrop Name="change_template"/>
         <TableDrop Name="change_template_type"/>
     </DatabaseUninstall>
