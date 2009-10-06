@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport.pm - all import and export functions
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pm,v 1.33 2009-08-18 22:23:48 mh Exp $
+# $Id: ImportExport.pm,v 1.34 2009-10-06 16:56:56 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::CheckItem;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.33 $) [1];
+$VERSION = qw($Revision: 1.34 $) [1];
 
 =head1 NAME
 
@@ -2196,10 +2196,6 @@ sub _LoadBackend {
         return;
     }
 
-    # check if object is already cached
-    return $Self->{Cache}->{LoadBackend}->{ $Param{Module} }
-        if $Self->{Cache}->{LoadBackend}->{ $Param{Module} };
-
     # load object backend module
     if ( !$Self->{MainObject}->Require( $Param{Module} ) ) {
         $Self->{LogObject}->Log(
@@ -2224,9 +2220,6 @@ sub _LoadBackend {
         return;
     }
 
-    # cache the object
-    $Self->{Cache}->{LoadBackend}->{ $Param{Module} } = $BackendObject;
-
     return $BackendObject;
 }
 
@@ -2246,6 +2239,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.33 $ $Date: 2009-08-18 22:23:48 $
+$Revision: 1.34 $ $Date: 2009-10-06 16:56:56 $
 
 =cut
