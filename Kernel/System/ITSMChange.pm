@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.3 2009-10-02 17:01:17 ub Exp $
+# $Id: ITSMChange.pm,v 1.4 2009-10-06 11:24:50 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 =head1 NAME
 
@@ -100,7 +100,9 @@ sub new {
 
 add a new change
 
-    my $ChangeID = $ChangeObject->ChangeAdd();
+    my $ChangeID = $ChangeObject->ChangeAdd(
+        UserID => 1,
+    );
 or
     my $ChangeID = $ChangeObject->ChangeAdd(
         Title           => 'Replacement of mail server',       # (optional)
@@ -111,6 +113,7 @@ or
         ChangeBuilderID => 6,                                  # (optional)
         CABAgents       => [ 1, 2, 4 ],     # UserIDs          # (optional)
         CABCustomers    => [ 'tt', 'mm' ],  # CustomerUserIDs  # (optional)
+        UserID          => 1,
     );
 
 =cut
@@ -137,6 +140,7 @@ update a change
         ChangeBuilderID => 6,                                  # (optional)
         CABAgents       => [ 1, 2, 4 ],     # UserIDs          # (optional)
         CABCustomers    => [ 'tt', 'mm' ],  # CustomerUserIDs  # (optional)
+        UserID          => 1,
     );
 
 =cut
@@ -163,10 +167,10 @@ Return
     $Change{ChangeBuilderID}
     $Change{WorkOrderIDs}     # array reference with WorkOrderIDs
     $Change{CAB}              # hasharray reference with CAB member ids, look at ChangeCABGet()
-    $Change{PlannedStart}
-    $Change{PlannedEnd}
-    $Change{ActualStart}
-    $Change{ActualEnd}
+    $Change{PlannedStartTime}
+    $Change{PlannedEndTime}
+    $Change{ActualStartTime}
+    $Change{ActualEndTime}
     $Change{CreateTime}
     $Change{CreateBy}
     $Change{ChangeTime}
@@ -192,6 +196,7 @@ add or update the CAB of a change
         ChangeID     => 123,
         CABAgents    => [ 1, 2, 4 ],     # UserIDs          (optional)
         CABCustomers => [ 'tt', 'mm' ],  # CustomerUserIDs  (optional)
+        UserID       => 1,
     );
 
 =cut
@@ -206,7 +211,9 @@ sub ChangeCABUpdate {
 
 return the CAB of a change as hasharray reference
 
-# NOTE: Maybe make this function internal, as it will be used in ChangeGet()
+NOTE:
+Maybe make this function internal, as it will be used in ChangeGet()
+(depends on if it would be used somewhere else)
 
 Return
     $ChangeCAB = {
@@ -232,6 +239,7 @@ delete the CAB of a change
 
     my $Success = $ChangeObject->ChangeCABDelete(
         ChangeID => 123,
+        UserID   => 1,
     );
 
 =cut
@@ -258,58 +266,59 @@ sub ChangeList {
 
 =item ChangeSearch()
 
-return a change id list as an array reference
+return list of change ids as an array reference
 
     my $ChangeIDsRef = $ChangeObject->ChangeSearch(
-        ChangeNumber      => '2009100112345778',                 # (optional)
-        Title             => 'Replacement of slow mail server',  # (optional)
-        Description       => 'New mail server is faster',        # (optional)
-        Justification     => 'Old mail server too slow',         # (optional)
-        ChangeStateID     => 4,                                  # (optional)
+        ChangeNumber     => '2009100112345778',                 # (optional)
+        Title            => 'Replacement of slow mail server',  # (optional)
+        Description      => 'New mail server is faster',        # (optional)
+        Justification    => 'Old mail server too slow',         # (optional)
+        ChangeStateID    => 4,                                  # (optional)
 
-        ChangeManagerID   => 5,                                  # (optional)
-        ChangeBuilderID   => 6,                                  # (optional)
-        WorkOrderAgentID  => 7,                                  # (optional)
-        CABAgent          => 9,                                  # (optional)
-        CABCustomer       => 'tt',                               # (optional)
+        ChangeManagerID  => 5,                                  # (optional)
+        ChangeBuilderID  => 6,                                  # (optional)
+        WorkOrderAgentID => 7,                                  # (optional)
+        CABAgent         => 9,                                  # (optional)
+        CABCustomer      => 'tt',                               # (optional)
 
         # changes with planned start time after ...
-        PlannedStartTimeNewerDate => '2006-01-09 00:00:01',      # (optional)
+        PlannedStartTimeNewerDate => '2006-01-09 00:00:01',     # (optional)
         # changes with planned start time before then ....
-        PlannedStartTimeOlderDate => '2006-01-19 23:59:59',      # (optional)
+        PlannedStartTimeOlderDate => '2006-01-19 23:59:59',     # (optional)
 
         # changes with planned end time after ...
-        PlannedEndTimeNewerDate => '2006-01-09 00:00:01',        # (optional)
+        PlannedEndTimeNewerDate => '2006-01-09 00:00:01',       # (optional)
         # changes with planned end time before then ....
-        PlannedEndTimeOlderDate => '2006-01-19 23:59:59',        # (optional)
+        PlannedEndTimeOlderDate => '2006-01-19 23:59:59',       # (optional)
 
         # changes with actual start time after ...
-        ActualStartTimeNewerDate => '2006-01-09 00:00:01',       # (optional)
+        ActualStartTimeNewerDate => '2006-01-09 00:00:01',      # (optional)
         # changes with actual start time before then ....
-        ActualStartTimeOlderDate => '2006-01-19 23:59:59',       # (optional)
+        ActualStartTimeOlderDate => '2006-01-19 23:59:59',      # (optional)
 
         # changes with actual end time after ...
-        ActualEndTimeNewerDate => '2006-01-09 00:00:01',         # (optional)
+        ActualEndTimeNewerDate => '2006-01-09 00:00:01',        # (optional)
         # changes with actual end time before then ....
-        ActualEndTimeOlderDate => '2006-01-19 23:59:59',         # (optional)
+        ActualEndTimeOlderDate => '2006-01-19 23:59:59',        # (optional)
 
         # changes with created time after ...
-        CreateTimeNewerDate => '2006-01-09 00:00:01',            # (optional)
+        CreateTimeNewerDate => '2006-01-09 00:00:01',           # (optional)
         # changes with created time before then ....
-        CreateTimeOlderDate => '2006-01-19 23:59:59',            # (optional)
+        CreateTimeOlderDate => '2006-01-19 23:59:59',           # (optional)
 
         # changes with changed time after ...
-        ChangeTimeNewerDate => '2006-01-09 00:00:01',            # (optional)
+        ChangeTimeNewerDate => '2006-01-09 00:00:01',           # (optional)
         # changes with changed time before then ....
-        ChangeTimeOlderDate => '2006-01-19 23:59:59',            # (optional)
+        ChangeTimeOlderDate => '2006-01-19 23:59:59',           # (optional)
 
-        OrderBy => 'ChangeNumber',                               # (optional) default ChangeID
+        OrderBy => 'ChangeID',  # default                       # (optional)
         # (ChangeID, ChangeNumber, ChangeStateID,
         # ChangeManagerID, ChangeBuilderID,
-        # PlannedStart, PlannedEnd, ActualStart, ActualEnd,
+        # PlannedStartTime, PlannedEndTime,
+        # ActualStartTime, ActualEndTime,
         # CreateTime, CreateBy, ChangeTime, ChangeBy)
 
-        Limit => 100,                                            # (optional)
+        Limit => 100,                                           # (optional)
     );
 
 =cut
@@ -332,6 +341,7 @@ NOTE: This function must first remove all links to this ChangeObject,
 
     my $Success = $ChangeObject->ChangeDelete(
         ChangeID => 123,
+        UserID   => 1,
     );
 
 =cut
@@ -350,6 +360,7 @@ NOTE: To be defined in more detail!
 
     my $Success = $ChangeObject->ChangeEditWorkflow(
         ChangeID  => 123,
+        UserID    => 1,
     );
 
 =cut
@@ -446,6 +457,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2009-10-02 17:01:17 $
+$Revision: 1.4 $ $Date: 2009-10-06 11:24:50 $
 
 =cut
