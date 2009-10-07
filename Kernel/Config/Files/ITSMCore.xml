@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMCore.xml,v 1.22 2009-10-07 14:33:15 reb Exp $</CVS>
+    <CVS>$Id: ITSMCore.xml,v 1.23 2009-10-07 14:36:11 reb Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -321,7 +321,7 @@
                 <Item Key="Module">Kernel::Output::HTML::GeneralCatalogPreferencesGeneric</Item>
                 <Item Key="Class">ITSM::Core::IncidentState</Item>
                 <Item Key="Label">Incident State Type</Item>
-                <Item Key="Desc">Incident States Type.</Item>
+                <Item Key="Desc">Incident State Type.</Item>
                 <Item Key="Data">
                     <Hash>
                         <Item Key="warning">Warning</Item>
