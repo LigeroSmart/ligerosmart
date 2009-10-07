@@ -2,7 +2,7 @@
 # Kernel/System/Service.pm - all service function
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: Service.pm,v 1.12 2009-08-28 12:00:26 mh Exp $
+# $Id: Service.pm,v 1.13 2009-10-07 13:27:32 reb Exp $
 # $OldId: Service.pm,v 1.39 2009/08/27 19:27:31 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -26,7 +26,7 @@ use Kernel::System::Time;
 # ---
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 =head1 NAME
 
@@ -419,7 +419,9 @@ sub ServiceGet {
     # get the incident state list of this type
     my $InciStateList = $Self->{GeneralCatalogObject}->ItemList(
         Class         => 'ITSM::Core::IncidentState',
-        Functionality => $ServiceData{CurInciStateType},
+        Preferences   => {
+            Functionality => $ServiceData{CurInciStateType},
+        },
     );
 
     my %ReverseInciStateList = reverse %{ $InciStateList };
@@ -1152,6 +1154,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.12 $ $Date: 2009-08-28 12:00:26 $
+$Revision: 1.13 $ $Date: 2009-10-07 13:27:32 $
 
 =cut

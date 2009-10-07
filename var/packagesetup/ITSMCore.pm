@@ -2,7 +2,7 @@
 # ITSMCore.pm - code to excecute during package installation
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMCore.pm,v 1.15 2009-07-24 15:52:59 ub Exp $
+# $Id: ITSMCore.pm,v 1.16 2009-10-07 13:27:33 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Priority;
 use Kernel::System::Valid;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 =head1 NAME
 
@@ -100,7 +100,10 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Object (qw(ConfigObject LogObject EncodeObject MainObject TimeObject DBObject XMLObject)) {
+    for my $Object (
+        qw(ConfigObject LogObject EncodeObject MainObject TimeObject DBObject XMLObject)
+        )
+    {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
@@ -146,6 +149,9 @@ sub CodeInstall {
 
     # fillup empty type_id rows in sla table
     $Self->_FillupEmptySLATypeID();
+
+    # set preferences for some GeneralCatalog entries
+    $Self->_SetPreferences();
 
     return 1;
 }
@@ -237,6 +243,38 @@ sub CodeUninstall {
     );
 
     return 1;
+}
+
+=item _SetPreferences()
+
+    my $Result = $CodeObject->_SetPreferences()
+
+=cut
+
+sub _SetPreferences {
+    my $Self = shift;
+
+    my %Map = (
+        Operational => 'operational',
+        Warning     => 'warning',
+        Incident    => 'incident',
+    );
+
+    NAME:
+    for my $Name ( keys %Map ) {
+        my $Item = $Self->{GeneralCatalogObject}->ItemGet(
+            Name  => $Name,
+            Class => 'ITSM::Core::IncidentState',
+        );
+
+        next NAME if !$Item;
+
+        $Self->{GeneralCatalogObject}->GeneralCatalogPreferencesSet(
+            ItemID => $Item->{ItemID},
+            Key    => 'Functionality',
+            Value  => $Map{$Name},
+        );
+    }
 }
 
 =item _BackgroundColorChange()
@@ -666,6 +704,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.15 $ $Date: 2009-07-24 15:52:59 $
+$Revision: 1.16 $ $Date: 2009-10-07 13:27:33 $
 
 =cut
