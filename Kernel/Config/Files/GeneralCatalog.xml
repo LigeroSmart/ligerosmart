@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Framework">
-    <CVS>$Id: GeneralCatalog.xml,v 1.3 2008-01-23 08:58:26 mh Exp $</CVS>
+    <CVS>$Id: GeneralCatalog.xml,v 1.4 2009-10-07 13:18:18 reb Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminGeneralCatalog" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminGeneralCatalog configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminGeneralCatalog Konfiguration im Admin-Bereich.</Description>
@@ -19,6 +19,39 @@
                     <Prio>410</Prio>
                 </NavBarModule>
             </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="GeneralCatalogPreferences###Comment2" Required="0" Valid="0">
+        <Description Lang="en">Parameters for the example comment 2 of general catalog attributes.</Description>
+        <Description Lang="de">Parameter für den Beispiel-Kommentar 2 der GeneralCatalog-Attribute.</Description>
+        <Group>GeneralCatalog</Group>
+        <SubGroup>GeneralCatalog::Preferences</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::GeneralCatalogPreferencesGeneric</Item>
+                <Item Key="Label">Comment2</Item>
+                <Item Key="Desc">Define the queue comment 2.</Item>
+                <Item Key="Block">TextArea</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">Comment2</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="GeneralCatalogPreferences###Permissions" Required="0" Valid="0">
+        <Description Lang="en">Parameters for the example permission groups of general catalog attributes.</Description>
+        <Description Lang="de">Parameter für die zugriffsberechtigte Gruppe der GeneralCatalog-Attribute.</Description>
+        <Group>GeneralCatalog</Group>
+        <SubGroup>GeneralCatalog::Preferences</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::GeneralCatalogPreferencesGeneric</Item>
+                <Item Key="Label">Permissions</Item>
+                <Item Key="Desc">Define the group with permissions.</Item>
+                <Item Key="Block">Permission</Item>
+                <Item Key="Class">ITSM::ConfigItem::Class</Item>
+                <Item Key="PrefKey">Permissions</Item>
+            </Hash>
         </Setting>
     </ConfigItem>
 </otrs_config>

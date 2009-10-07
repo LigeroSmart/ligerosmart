@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminGeneralCatalog.pm - admin frontend of general catalog management
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminGeneralCatalog.pm,v 1.22 2009-05-18 09:40:46 mh Exp $
+# $Id: AdminGeneralCatalog.pm,v 1.23 2009-10-07 13:18:18 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -106,9 +106,8 @@ sub Run {
                 Name => 'OverviewItemList',
                 Data => {
                     %{$ItemData},
-                    CssClass      => $CssClass,
-                    Functionality => $ItemData->{Functionality} || '-',
-                    Valid         => $ValidList{ $ItemData->{ValidID} },
+                    CssClass => $CssClass,
+                    Valid    => $ValidList{ $ItemData->{ValidID} },
                 },
             );
         }
@@ -179,30 +178,6 @@ sub Run {
             },
         );
 
-        # get functionality list
-        my $FunctionalityRef = $Self->{GeneralCatalogObject}->FunctionalityList(
-            Class => $ItemData{Class},
-        );
-
-        # prepare functionality list
-        my %FunctionalityList;
-        for my $Functionality ( @{$FunctionalityRef} ) {
-            $FunctionalityList{$Functionality} = $Functionality || '-';
-        }
-        if ( !%FunctionalityList ) {
-            %FunctionalityList = (
-                '' => '-',
-            );
-        }
-
-        # generate FunctionalityOptionStrg
-        my $FunctionalityOptionStrg = $Self->{LayoutObject}->BuildSelection(
-            Name        => 'Functionality',
-            Data        => \%FunctionalityList,
-            SelectedID  => $ItemData{Functionality} || '',
-            Translation => 0,
-        );
-
         # generate ValidOptionStrg
         my %ValidList        = $Self->{ValidObject}->ValidList();
         my %ValidListReverse = reverse %ValidList;
@@ -217,10 +192,63 @@ sub Run {
             Name => 'ItemEdit',
             Data => {
                 %ItemData,
-                FunctionalityOptionStrg => $FunctionalityOptionStrg,
-                ValidOptionStrg         => $ValidOptionStrg,
+                ValidOptionStrg => $ValidOptionStrg,
             },
         );
+
+        # show each preferences setting
+        my %Preferences = ();
+        if ( $Self->{ConfigObject}->Get('GeneralCatalogPreferences') ) {
+            %Preferences = %{ $Self->{ConfigObject}->Get('GeneralCatalogPreferences') };
+        }
+
+        ITEM:
+        for my $Item ( sort keys %Preferences ) {
+
+            # skip items that don't belong to the class
+            next if $Preferences{$Item}->{Class}
+                    && $Preferences{$Item}->{Class} ne $ItemData{Class};
+
+            # find output module
+            my $Module = $Preferences{$Item}->{Module}
+                || 'Kernel::Output::HTML::GeneralCatalogPreferencesGeneric';
+
+            # load module
+            if ( !$Self->{MainObject}->Require($Module) ) {
+                return $Self->{LayoutObject}->FatalError();
+            }
+
+            # create object for this preferences item
+            my $Object = $Module->new(
+                %{$Self},
+                ConfigItem => $Preferences{$Item},
+                Debug      => $Self->{Debug},
+            );
+
+            # show all parameters
+            my @Params = $Object->Param( GeneralCatalogData => { %ItemData, %Param } );
+            for my $ParamItem (@Params) {
+
+                if (
+                    ref( $ParamItem->{Data} ) eq 'HASH'
+                    || ref( $Preferences{$Item}->{Data} ) eq 'HASH'
+                    )
+                {
+                    $ParamItem->{'Option'} = $Self->{LayoutObject}->OptionStrgHashRef(
+                        %{ $Preferences{$Item} },
+                        %{$ParamItem},
+                    );
+                }
+
+                $Self->{LayoutObject}->Block(
+                    Name => $ParamItem->{Block} || $Preferences{$Item}->{Block} || 'Option',
+                    Data => {
+                        %{ $Preferences{$Item} },
+                        %{$ParamItem},
+                    },
+                );
+            }
+        }
 
         if ( $ItemData{Class} eq 'NEW' ) {
 
@@ -266,7 +294,7 @@ sub Run {
         my %ItemData;
 
         # get params
-        for my $Param (qw(Class ItemID Name Functionality ValidID Comment)) {
+        for my $Param (qw(Class ItemID Name ValidID Comment)) {
             $ItemData{$Param} = $Self->{ParamObject}->GetParam( Param => $Param ) || '';
         }
 
@@ -276,17 +304,61 @@ sub Run {
 
         # save to database
         my $Success;
+        my $ItemID = $ItemData{ItemID};
         if ( $ItemData{ItemID} eq 'NEW' ) {
             $Success = $Self->{GeneralCatalogObject}->ItemAdd(
                 %ItemData,
                 UserID => $Self->{UserID},
             );
+            $ItemID = $Success;
         }
         else {
             $Success = $Self->{GeneralCatalogObject}->ItemUpdate(
                 %ItemData,
                 UserID => $Self->{UserID},
             );
+        }
+
+        # update preferences
+        my $GCData      = $Self->{GeneralCatalogObject}->ItemGet( ItemID => $ItemID );
+        my %Preferences = ();
+        my $Note        = '';
+
+        if ( $Self->{ConfigObject}->Get('GeneralCatalogPreferences') ) {
+            %Preferences = %{ $Self->{ConfigObject}->Get('GeneralCatalogPreferences') };
+        }
+
+        for my $Item ( keys %Preferences ) {
+            my $Module = $Preferences{$Item}->{Module}
+                || 'Kernel::Output::HTML::GeneralCatalogPreferencesGeneric';
+
+            # load module
+            if ( !$Self->{MainObject}->Require($Module) ) {
+                return $Self->{LayoutObject}->FatalError();
+            }
+
+            my $Object = $Module->new(
+                %{$Self},
+                ConfigItem => $Preferences{$Item},
+                Debug      => $Self->{Debug},
+            );
+            my @Params = $Object->Param( GeneralCatalogData => $GCData );
+            if (@Params) {
+                my %GetParam = ();
+                for my $ParamItem (@Params) {
+                    my @Array = $Self->{ParamObject}->GetArray( Param => $ParamItem->{Name} );
+                    $GetParam{ $ParamItem->{Name} } = \@Array;
+                }
+                if (
+                    !$Object->Run(
+                        GetParam => \%GetParam,
+                        ItemID   => $GCData->{ItemID},
+                    )
+                    )
+                {
+                    $Note .= $Self->{LayoutObject}->Notify( Info => $Object->Error() );
+                }
+            }
         }
 
         return $Self->{LayoutObject}->ErrorScreen() if !$Success;

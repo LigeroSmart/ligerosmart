@@ -2,7 +2,7 @@
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.46 2009-07-20 22:48:51 ub Exp $
+# $Id: GeneralCatalog.pm,v 1.47 2009-10-07 13:18:04 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Valid;
 use Kernel::System::CheckItem;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.46 $) [1];
+$VERSION = qw($Revision: 1.47 $) [1];
 
 =head1 NAME
 
@@ -87,6 +87,13 @@ sub new {
     }
     $Self->{ValidObject}     = Kernel::System::Valid->new( %{$Self} );
     $Self->{CheckItemObject} = Kernel::System::CheckItem->new( %{$Self} );
+
+    # load generator preferences module
+    my $GeneratorModule = $Self->{ConfigObject}->Get('GeneralCatalog::PreferencesModule')
+        || 'Kernel::System::GeneralCatalog::PreferencesDB';
+    if ( $Self->{MainObject}->Require($GeneratorModule) ) {
+        $Self->{PreferencesObject} = $GeneratorModule->new(%Param);
+    }
 
     return $Self;
 }
@@ -195,8 +202,10 @@ return a list as hash reference of one general catalog class
 
     my $HashRef = $GeneralCatalogObject->ItemList(
         Class         => 'ITSM::Service::Type',
-        Functionality => 'active',               # (optional) string or array reference
         Valid         => 0,                      # (optional) default 1
+        Preferences   => {                       # (optional) default {}
+            Permission => 2,                     # or whatever preferences can be used
+        },
     );
 
 =cut
@@ -218,9 +227,42 @@ sub ItemList {
         $Param{Valid} = 1;
     }
 
+    my $PreferencesCacheKey = '';
+    my $PreferencesTable    = '';
+    my $PreferencesWhere    = '';
+    my @PreferencesBind;
+
+    # handle given preferences
+    if ( exists $Param{Preferences} && ref $Param{Preferences} eq 'HASH' ) {
+
+        $PreferencesTable = ', general_catalog_preferences';
+        my @Wheres;
+
+        # add all preferences given to where-clause
+        for my $Key ( keys %{ $Param{Preferences} } ) {
+
+            if ( ref( $Param{Preferences}->{$Key} ) ne 'ARRAY' ) {
+                $Param{Preferences}->{$Key} = [ $Param{Preferences}->{$Key} ];
+            }
+
+            push @Wheres, '(pref_key = ? AND pref_value IN ('
+                . join( ', ', map {'?'} @{ $Param{Preferences}->{$Key} } )
+                . '))';
+
+            push @PreferencesBind, \$Key, map { \$_ } @{ $Param{Preferences}->{$Key} };
+
+            # add functionality list to cache key
+            $PreferencesCacheKey .= '####' if $PreferencesCacheKey;
+            $PreferencesCacheKey .= join q{####}, $Key, map {$_} @{ $Param{Preferences}->{$Key} };
+        }
+
+        $PreferencesWhere = ' AND ' . join ' AND ', @Wheres;
+    }
+
     # create sql string
-    my $SQL  = 'SELECT id, name FROM general_catalog WHERE general_catalog_class = ? ';
-    my @BIND = ( \$Param{Class} );
+    my $SQL = "SELECT id, name FROM general_catalog $PreferencesTable "
+        . "WHERE general_catalog_class = ? $PreferencesWhere ";
+    my @BIND = ( \$Param{Class}, @PreferencesBind );
 
     # add valid string to sql string
     if ( $Param{Valid} ) {
@@ -228,29 +270,7 @@ sub ItemList {
     }
 
     # create cache key
-    my $CacheKey = $Param{Class} . '####' . $Param{Valid} . '####';
-
-    # add functionality to sql string
-    if ( $Param{Functionality} ) {
-
-        # create array reference, if functionality is give as sting
-        if ( ref $Param{Functionality} ne 'ARRAY' ) {
-            $Param{Functionality} = [ $Param{Functionality} ];
-        }
-
-        # create functionality string
-        my $FunctionalityString = join q{, }, map {'?'} @{ $Param{Functionality} };
-
-        # add functionality list to cache key
-        $CacheKey .= join q{####}, map {$_} @{ $Param{Functionality} };
-
-        # create and add bind parameters
-        my @BindParams = map { \$_ } @{ $Param{Functionality} };
-        push @BIND, @BindParams;
-
-        # add functionality string to sql string
-        $SQL .= "AND functionality IN ($FunctionalityString)";
-    }
+    my $CacheKey = $Param{Class} . '####' . $Param{Valid} . '####' . $PreferencesCacheKey;
 
     # check if result is already cached
     return $Self->{Cache}->{ItemList}->{$CacheKey}
@@ -283,45 +303,6 @@ sub ItemList {
     return \%Data;
 }
 
-=item FunctionalityList()
-
-return an array reference of all functionalities of a general catalog class
-
-    my $ArrayRef = $GeneralCatalogObject->FunctionalityList(
-        Class => 'ITSM::Service::Type',
-    );
-
-=cut
-
-sub FunctionalityList {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    if ( !$Param{Class} ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => 'Need Class!'
-        );
-        return;
-    }
-
-    # ask database
-    $Self->{DBObject}->Prepare(
-        SQL => 'SELECT DISTINCT(functionality) FROM general_catalog '
-            . 'WHERE general_catalog_class = ? ORDER BY functionality',
-        Bind => [ \$Param{Class} ],
-    );
-
-    # fetch the result
-    my @FunctionalityList;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $Row[0] ||= '';
-        push @FunctionalityList, $Row[0];
-    }
-
-    return \@FunctionalityList;
-}
-
 =item ItemGet()
 
 get a general catalog item
@@ -330,7 +311,6 @@ Return
     $ItemData{ItemID}
     $ItemData{Class}
     $ItemData{Name}
-    $ItemData{Functionality}
     $ItemData{ValidID}
     $ItemData{Comment}
     $ItemData{CreateTime}
@@ -364,7 +344,7 @@ sub ItemGet {
     }
 
     # create sql string
-    my $SQL = 'SELECT id, general_catalog_class, name, functionality, valid_id, comments, '
+    my $SQL = 'SELECT id, general_catalog_class, name, valid_id, comments, '
         . 'create_time, create_by, change_time, change_by FROM general_catalog WHERE ';
     my @BIND;
 
@@ -400,16 +380,15 @@ sub ItemGet {
     # fetch the result
     my %ItemData;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $ItemData{ItemID}        = $Row[0];
-        $ItemData{Class}         = $Row[1];
-        $ItemData{Name}          = $Row[2];
-        $ItemData{Functionality} = $Row[3] || '';
-        $ItemData{ValidID}       = $Row[4];
-        $ItemData{Comment}       = $Row[5] || '';
-        $ItemData{CreateTime}    = $Row[6];
-        $ItemData{CreateBy}      = $Row[7];
-        $ItemData{ChangeTime}    = $Row[8];
-        $ItemData{ChangeBy}      = $Row[9];
+        $ItemData{ItemID}     = $Row[0];
+        $ItemData{Class}      = $Row[1];
+        $ItemData{Name}       = $Row[2];
+        $ItemData{ValidID}    = $Row[3];
+        $ItemData{Comment}    = $Row[4] || '';
+        $ItemData{CreateTime} = $Row[5];
+        $ItemData{CreateBy}   = $Row[6];
+        $ItemData{ChangeTime} = $Row[7];
+        $ItemData{ChangeBy}   = $Row[8];
     }
 
     # check item
@@ -419,6 +398,14 @@ sub ItemGet {
             Message  => 'Item not found in database!',
         );
         return;
+    }
+
+    # get general catalog preferences
+    my %Preferences = $Self->GeneralCatalogPreferencesGet( ItemID => $ItemData{ItemID} );
+
+    # merge hash
+    if (%Preferences) {
+        %ItemData = ( %ItemData, %Preferences );
     }
 
     # cache the result
@@ -435,7 +422,6 @@ add a new general catalog item
     my $ItemID = $GeneralCatalogObject->ItemAdd(
         Class         => 'ITSM::Service::Type',
         Name          => 'Item Name',
-        Functionality => 'Func3',                # (optional)
         ValidID       => 1,
         Comment       => 'Comment',              # (optional)
         UserID        => 1,
@@ -458,12 +444,12 @@ sub ItemAdd {
     }
 
     # set default values
-    for my $Argument (qw(Functionality Comment)) {
+    for my $Argument (qw(Comment)) {
         $Param{$Argument} ||= '';
     }
 
     # cleanup given params
-    for my $Argument (qw(Class Functionality)) {
+    for my $Argument (qw(Class)) {
         $Self->{CheckItemObject}->StringClean(
             StringRef         => \$Param{$Argument},
             RemoveAllNewlines => 1,
@@ -509,13 +495,13 @@ sub ItemAdd {
     # insert new item
     return if !$Self->{DBObject}->Do(
         SQL => 'INSERT INTO general_catalog '
-            . '(general_catalog_class, name, functionality, valid_id, comments, '
+            . '(general_catalog_class, name, valid_id, comments, '
             . 'create_time, create_by, change_time, change_by) VALUES '
-            . '(?, ?, ?, ?, ?, current_timestamp, ?, current_timestamp, ?)',
+            . '(?, ?, ?, ?, current_timestamp, ?, current_timestamp, ?)',
         Bind => [
-            \$Param{Class},         \$Param{Name},
-            \$Param{Functionality}, \$Param{ValidID},
-            \$Param{Comment},       \$Param{UserID},
+            \$Param{Class}, \$Param{Name},
+            \$Param{ValidID},
+            \$Param{Comment}, \$Param{UserID},
             \$Param{UserID},
         ],
     );
@@ -544,7 +530,6 @@ update a existing general catalog item
     my $True = $GeneralCatalogObject->ItemUpdate(
         ItemID        => 123,
         Name          => 'Item Name',
-        Functionality => 'Func3',      # (optional)
         ValidID       => 1,
         Comment       => 'Comment',    # (optional)
         UserID        => 1,
@@ -567,12 +552,12 @@ sub ItemUpdate {
     }
 
     # set default values
-    for my $Argument (qw(Functionality Comment)) {
+    for my $Argument (qw(Comment)) {
         $Param{$Argument} ||= '';
     }
 
     # cleanup given params
-    for my $Argument (qw(Class Functionality)) {
+    for my $Argument (qw(Class)) {
         $Self->{CheckItemObject}->StringClean(
             StringRef         => \$Param{$Argument},
             RemoveAllNewlines => 1,
@@ -590,17 +575,15 @@ sub ItemUpdate {
 
     # get class of item
     $Self->{DBObject}->Prepare(
-        SQL   => 'SELECT general_catalog_class, functionality FROM general_catalog WHERE id = ?',
+        SQL   => 'SELECT general_catalog_class FROM general_catalog WHERE id = ?',
         Bind  => [ \$Param{ItemID} ],
         Limit => 1,
     );
 
     # fetch the result
     my $Class;
-    my $OldFunctionality;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $Class = $Row[0];
-        $OldFunctionality = $Row[1] || '';
     }
 
     if ( !$Class ) {
@@ -635,32 +618,6 @@ sub ItemUpdate {
         return;
     }
 
-    # count the functionality
-    $Self->{DBObject}->Prepare(
-        SQL => 'SELECT COUNT(functionality) FROM general_catalog '
-            . 'WHERE general_catalog_class = ? AND functionality = ?',
-        Bind => [ \$Class, \$OldFunctionality ],
-        Limit => 1,
-    );
-
-    # fetch the result
-    my $LastFunctionality = 1;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        if ( $Row[0] > 1 || $Param{Functionality} eq $OldFunctionality ) {
-            $LastFunctionality = 0;
-        }
-    }
-
-    # abort update, if functionality is the last one
-    if ($LastFunctionality) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message =>
-                "Can't update item! The functionality of this item is the last in this class.",
-        );
-        return;
-    }
-
     # reset cache
     delete $Self->{Cache}->{ItemGet}->{Class}->{$Class}->{ $Param{Name} };
     delete $Self->{Cache}->{ItemGet}->{ItemID}->{ $Param{ItemID} };
@@ -668,16 +625,49 @@ sub ItemUpdate {
 
     return $Self->{DBObject}->Do(
         SQL => 'UPDATE general_catalog SET '
-            . 'name = ?, functionality = ?,'
-            . 'valid_id = ?, comments = ?, '
+            . 'name = ?, valid_id = ?, comments = ?, '
             . 'change_time = current_timestamp, change_by = ? '
             . 'WHERE id = ?',
         Bind => [
-            \$Param{Name},    \$Param{Functionality},
+            \$Param{Name},
             \$Param{ValidID}, \$Param{Comment},
             \$Param{UserID},  \$Param{ItemID},
         ],
     );
+}
+
+=item GeneralCatalogPreferencesSet()
+
+set GeneralCatalog preferences
+
+    $GeneralCatalogObject->GeneralCatalogPreferencesSet(
+        ItemID => 123,
+        Key    => 'UserComment',
+        Value  => 'some comment',
+    );
+
+=cut
+
+sub GeneralCatalogPreferencesSet {
+    my $Self = shift;
+
+    return $Self->{PreferencesObject}->GeneralCatalogPreferencesSet(@_);
+}
+
+=item GeneralCatalogPreferencesGet()
+
+get GeneralCatalog preferences
+
+    my %Preferences = $QueueObject->GeneralCatalogPreferencesGet(
+        ItemID => 123,
+    );
+
+=cut
+
+sub GeneralCatalogPreferencesGet {
+    my $Self = shift;
+
+    return $Self->{PreferencesObject}->GeneralCatalogPreferencesGet(@_);
 }
 
 1;
@@ -696,6 +686,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.46 $ $Date: 2009-07-20 22:48:51 $
+$Revision: 1.47 $ $Date: 2009-10-07 13:18:04 $
 
 =cut

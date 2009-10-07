@@ -2,7 +2,7 @@
 # GeneralCatalog.t - general catalog tests
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.t,v 1.18 2009-05-18 09:40:47 mh Exp $
+# $Id: GeneralCatalog.t,v 1.19 2009-10-07 13:16:23 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -117,13 +117,12 @@ my $ItemData = [
             UserID  => 1,
         },
         AddGet => {
-            Class         => 'UnitTest::TestClass' . $ClassRand[0],
-            Name          => 'TestItem4',
-            Functionality => '',
-            ValidID       => 1,
-            Comment       => '',
-            CreateBy      => 1,
-            ChangeBy      => 1,
+            Class    => 'UnitTest::TestClass' . $ClassRand[0],
+            Name     => 'TestItem4',
+            ValidID  => 1,
+            Comment  => '',
+            CreateBy => 1,
+            ChangeBy => 1,
         },
     },
 
@@ -137,33 +136,21 @@ my $ItemData = [
         },
     },
 
-    # the item one add-test before must be NOT updated (Func '' is the last in this class)
-    {
-        Update => {
-            Name          => 'TestItem4UPDATE1',
-            Functionality => 'Test',
-            ValidID       => $UserIDs[0],
-            UserID        => $UserIDs[0],
-        },
-    },
-
     # this item must be inserted sucessfully
     {
         Add => {
-            Class         => 'UnitTest::TestClass' . $ClassRand[0],
-            Name          => 'TestItem5',
-            Functionality => 'Test1',
-            ValidID       => 1,
-            UserID        => 1,
+            Class   => 'UnitTest::TestClass' . $ClassRand[0],
+            Name    => 'TestItem5',
+            ValidID => 1,
+            UserID  => 1,
         },
         AddGet => {
-            Class         => 'UnitTest::TestClass' . $ClassRand[0],
-            Name          => 'TestItem5',
-            Functionality => 'Test1',
-            ValidID       => 1,
-            Comment       => '',
-            CreateBy      => 1,
-            ChangeBy      => 1,
+            Class    => 'UnitTest::TestClass' . $ClassRand[0],
+            Name     => 'TestItem5',
+            ValidID  => 1,
+            Comment  => '',
+            CreateBy => 1,
+            ChangeBy => 1,
         },
     },
 
@@ -186,221 +173,223 @@ my $ItemData = [
     # the item one add-test before must be NOT updated (item update arguments NOT complete)
     {
         Update => {
-            Functionality => 'Test1',
-            ValidID       => $UserIDs[0],
+            ValidID => $UserIDs[0],
         },
     },
 
-    # the item one add-test before must be NOT updated (Func 'test1' is the last in this class)
+    # the item one add-test before must be updated (item update arguments are complete)
     {
         Update => {
-            Name    => 'TestItem5',
+            Name    => 'TestItem5UPDATE2',
             ValidID => $UserIDs[0],
             UserID  => $UserIDs[0],
         },
-    },
-
-    # the item one add-test before must be NOT updated (Func 'test1' is the last in this class)
-    {
-        Update => {
-            Name          => 'TestItem5',
-            Functionality => 'Test2',
-            ValidID       => $UserIDs[0],
-            UserID        => $UserIDs[0],
+        UpdateGet => {
+            Name     => 'TestItem5UPDATE2',
+            ValidID  => $UserIDs[0],
+            Comment  => '',
+            CreateBy => 1,
+            ChangeBy => $UserIDs[0],
         },
     },
 
     # the item one add-test before must be updated (item update arguments are complete)
     {
         Update => {
-            Name          => 'TestItem5UPDATE2',
-            Functionality => 'Test1',
-            ValidID       => $UserIDs[0],
-            UserID        => $UserIDs[0],
+            Name    => 'TestItem5UPDATE3',
+            ValidID => 1,
+            UserID  => 1,
         },
         UpdateGet => {
-            Name          => 'TestItem5UPDATE2',
-            Functionality => 'Test1',
-            ValidID       => $UserIDs[0],
-            Comment       => '',
-            CreateBy      => 1,
-            ChangeBy      => $UserIDs[0],
-        },
-    },
-
-    # the item one add-test before must be updated (item update arguments are complete)
-    {
-        Update => {
-            Name          => 'TestItem5UPDATE3',
-            Functionality => 'Test1',
-            ValidID       => 1,
-            UserID        => 1,
-        },
-        UpdateGet => {
-            Name          => 'TestItem5UPDATE3',
-            Functionality => 'Test1',
-            ValidID       => 1,
-            Comment       => '',
-            CreateBy      => 1,
-            ChangeBy      => 1,
+            Name     => 'TestItem5UPDATE3',
+            ValidID  => 1,
+            Comment  => '',
+            CreateBy => 1,
+            ChangeBy => 1,
         },
     },
 
     # this template must be inserted sucessfully (check string cleaner function)
     {
         Add => {
-            Class         => " \t \n \r Unit Test :: Test Class \t \n \r " . $ClassRand[0],
-            Name          => " \t \n \r Test Item \t \n \r ",
-            Functionality => " \t \n \r Test Functionality \t \n \r ",
-            ValidID       => 1,
-            Comment       => " \t \n \r Test Comment \t \n \r ",
-            UserID        => 1,
+            Class   => " \t \n \r Unit Test :: Test Class \t \n \r " . $ClassRand[0],
+            Name    => " \t \n \r Test Item \t \n \r ",
+            ValidID => 1,
+            Comment => " \t \n \r Test Comment \t \n \r ",
+            UserID  => 1,
         },
         AddGet => {
-            Class         => 'UnitTest::TestClass' . $ClassRand[0],
-            Name          => 'Test Item',
-            Functionality => 'TestFunctionality',
-            ValidID       => 1,
-            Comment       => 'Test Comment',
-            CreateBy      => 1,
-            ChangeBy      => 1,
+            Class    => 'UnitTest::TestClass' . $ClassRand[0],
+            Name     => 'Test Item',
+            ValidID  => 1,
+            Comment  => 'Test Comment',
+            CreateBy => 1,
+            ChangeBy => 1,
         },
     },
 
     # the item one add-test before must be updated sucessfully (check string cleaner function)
     {
         Update => {
-            Name          => " \t \n \r Test Item UPDATE1 \t \n \r ",
-            Functionality => " \t \n \r Test Func tiona lity \t \n \r ",
-            ValidID       => $UserIDs[0],
-            Comment       => " \t \n \r Test Comment UPDATE1 \t \n \r ",
-            UserID        => $UserIDs[0],
+            Name    => " \t \n \r Test Item UPDATE1 \t \n \r ",
+            ValidID => $UserIDs[0],
+            Comment => " \t \n \r Test Comment UPDATE1 \t \n \r ",
+            UserID  => $UserIDs[0],
         },
         UpdateGet => {
-            Name          => 'Test Item UPDATE1',
-            Functionality => 'TestFunctionality',
-            ValidID       => $UserIDs[0],
-            Comment       => 'Test Comment UPDATE1',
-            CreateBy      => 1,
-            ChangeBy      => $UserIDs[0],
+            Name     => 'Test Item UPDATE1',
+            ValidID  => $UserIDs[0],
+            Comment  => 'Test Comment UPDATE1',
+            CreateBy => 1,
+            ChangeBy => $UserIDs[0],
         },
     },
 
     # this item must be inserted sucessfully (unicode checks)
     {
         Add => {
-            Class         => 'UnitTest::TestClass©' . $ClassRand[1],
-            Name          => ' ϒ ϡ Test Item Ʃ Ϟ ',
-            Functionality => ' Ѡ Ѥ TestFunctionality Ϡ Ω ',
-            ValidID       => 1,
-            Comment       => ' Ϡ Я Test Comment Ѭ Ѡ ',
-            UserID        => 1,
+            Class   => 'UnitTest::TestClass©' . $ClassRand[1],
+            Name    => ' ϒ ϡ Test Item Ʃ Ϟ ',
+            ValidID => 1,
+            Comment => ' Ϡ Я Test Comment Ѭ Ѡ ',
+            UserID  => 1,
         },
         AddGet => {
-            Class         => 'UnitTest::TestClass©' . $ClassRand[1],
-            Name          => 'ϒ ϡ Test Item Ʃ Ϟ',
-            Functionality => 'ѠѤTestFunctionalityϠΩ',
-            ValidID       => 1,
-            Comment       => 'Ϡ Я Test Comment Ѭ Ѡ',
-            CreateBy      => 1,
-            ChangeBy      => 1,
+            Class    => 'UnitTest::TestClass©' . $ClassRand[1],
+            Name     => 'ϒ ϡ Test Item Ʃ Ϟ',
+            ValidID  => 1,
+            Comment  => 'Ϡ Я Test Comment Ѭ Ѡ',
+            CreateBy => 1,
+            ChangeBy => 1,
         },
     },
 
     # the item one add-test before must be updated sucessfully (unicode checks)
     {
         Update => {
-            Name          => 'Test Item Ʃ ɤ UPDATE1',
-            Functionality => ' Ѡ Ѥ TestFunctionality Ϡ Ω ',
-            ValidID       => $UserIDs[1],
-            Comment       => ' Test Comment љ ђ UPDATE1 ',
-            UserID        => $UserIDs[1],
+            Name    => 'Test Item Ʃ ɤ UPDATE1',
+            ValidID => $UserIDs[1],
+            Comment => ' Test Comment љ ђ UPDATE1 ',
+            UserID  => $UserIDs[1],
         },
         UpdateGet => {
-            Name          => 'Test Item Ʃ ɤ UPDATE1',
-            Functionality => 'ѠѤTestFunctionalityϠΩ',
-            ValidID       => $UserIDs[1],
-            Comment       => 'Test Comment љ ђ UPDATE1',
-            CreateBy      => 1,
-            ChangeBy      => $UserIDs[1],
+            Name     => 'Test Item Ʃ ɤ UPDATE1',
+            ValidID  => $UserIDs[1],
+            Comment  => 'Test Comment љ ђ UPDATE1',
+            CreateBy => 1,
+            ChangeBy => $UserIDs[1],
         },
     },
 
     # this item must be inserted sucessfully (a second item with Functionality 'test1')
     {
         Add => {
-            Class         => 'UnitTest::TestClass' . $ClassRand[0],
-            Name          => 'TestItem6',
-            Functionality => 'Test1',
-            ValidID       => 1,
-            UserID        => 1,
+            Class   => 'UnitTest::TestClass' . $ClassRand[0],
+            Name    => 'TestItem6',
+            ValidID => 1,
+            UserID  => 1,
         },
         AddGet => {
-            Class         => 'UnitTest::TestClass' . $ClassRand[0],
-            Name          => 'TestItem6',
-            Functionality => 'Test1',
-            ValidID       => 1,
-            Comment       => '',
-            CreateBy      => 1,
-            ChangeBy      => 1,
+            Class    => 'UnitTest::TestClass' . $ClassRand[0],
+            Name     => 'TestItem6',
+            ValidID  => 1,
+            Comment  => '',
+            CreateBy => 1,
+            ChangeBy => 1,
         },
     },
 
     # the item one add-test before must be updated (set functionality to '')
     {
         Update => {
-            Name          => 'TestItem6UPDATE1',
-            Functionality => '',
-            ValidID       => 1,
-            UserID        => 1,
+            Name    => 'TestItem6UPDATE1',
+            ValidID => 1,
+            UserID  => 1,
         },
         UpdateGet => {
-            Name          => 'TestItem6UPDATE1',
-            Functionality => '',
-            ValidID       => 1,
-            Comment       => '',
-            CreateBy      => 1,
-            ChangeBy      => 1,
+            Name     => 'TestItem6UPDATE1',
+            ValidID  => 1,
+            Comment  => '',
+            CreateBy => 1,
+            ChangeBy => 1,
         },
     },
 
     # this item must be inserted sucessfully (special character checks)
     {
         Add => {
-            Class         => 'UnitTest::TestClass[test]%*\\' . $ClassRand[1],
-            Name          => ' [test]%*\\ Test Item [test]%*\\ ',
-            Functionality => ' [test]%*\\ TestFunctionality [test]%*\\ ',
-            ValidID       => 1,
-            Comment       => ' [test]%*\\ Test Comment [test]%*\\ ',
-            UserID        => 1,
+            Class   => 'UnitTest::TestClass[test]%*\\' . $ClassRand[1],
+            Name    => ' [test]%*\\ Test Item [test]%*\\ ',
+            ValidID => 1,
+            Comment => ' [test]%*\\ Test Comment [test]%*\\ ',
+            UserID  => 1,
         },
         AddGet => {
-            Class         => 'UnitTest::TestClass[test]%*\\' . $ClassRand[1],
-            Name          => '[test]%*\\ Test Item [test]%*\\',
-            Functionality => '[test]%*\\TestFunctionality[test]%*\\',
-            ValidID       => 1,
-            Comment       => '[test]%*\\ Test Comment [test]%*\\',
-            CreateBy      => 1,
-            ChangeBy      => 1,
+            Class    => 'UnitTest::TestClass[test]%*\\' . $ClassRand[1],
+            Name     => '[test]%*\\ Test Item [test]%*\\',
+            ValidID  => 1,
+            Comment  => '[test]%*\\ Test Comment [test]%*\\',
+            CreateBy => 1,
+            ChangeBy => 1,
         },
     },
 
     # the item one add-test before must be updated sucessfully (special character checks)
     {
         Update => {
-            Name          => ' [test]%*\\ Test Item UPDATE1 [test]%*\\ ',
-            Functionality => ' [test]%*\\ TestFunctionality [test]%*\\ ',
-            ValidID       => $UserIDs[1],
-            Comment       => ' [test]%*\\ Test Comment UPDATE1 [test]%*\\ ',
-            UserID        => $UserIDs[1],
+            Name    => ' [test]%*\\ Test Item UPDATE1 [test]%*\\ ',
+            ValidID => $UserIDs[1],
+            Comment => ' [test]%*\\ Test Comment UPDATE1 [test]%*\\ ',
+            UserID  => $UserIDs[1],
         },
         UpdateGet => {
-            Name          => '[test]%*\\ Test Item UPDATE1 [test]%*\\',
-            Functionality => '[test]%*\\TestFunctionality[test]%*\\',
-            ValidID       => $UserIDs[1],
-            Comment       => '[test]%*\\ Test Comment UPDATE1 [test]%*\\',
-            CreateBy      => 1,
-            ChangeBy      => $UserIDs[1],
+            Name     => '[test]%*\\ Test Item UPDATE1 [test]%*\\',
+            ValidID  => $UserIDs[1],
+            Comment  => '[test]%*\\ Test Comment UPDATE1 [test]%*\\',
+            CreateBy => 1,
+            ChangeBy => $UserIDs[1],
+        },
+    },
+
+    # this item must be inserted sucessfully
+    {
+        Add => {
+            Class   => 'UnitTest::TestClass' . $ClassRand[0],
+            Name    => 'TestItemPreferences',
+            ValidID => 1,
+            UserID  => 1,
+        },
+        AddGet => {
+            Class    => 'UnitTest::TestClass' . $ClassRand[0],
+            Name     => 'TestItemPreferences',
+            ValidID  => 1,
+            Comment  => '',
+            CreateBy => 1,
+            ChangeBy => 1,
+        },
+    },
+
+    # the preferences of the item one add-test before must be set
+    {
+        PreferencesSet => {
+            Test  => 'hello world',
+            Group => 33,
+        },
+        PreferencesGet => {
+            Test  => 'hello world',
+            Group => 33,
+        },
+    },
+
+    # the preferences of the item one add-test before must be set
+    {
+        PreferencesSet => {
+            Test => 'hello',
+            Size => 38,
+        },
+        PreferencesGet => {
+            Test => 'hello',
+            Size => 38,
         },
     },
 ];
@@ -508,6 +497,46 @@ for my $Item ( @{$ItemData} ) {
         }
     }
 
+    if ( $Item->{PreferencesSet} ) {
+
+        for my $Key ( keys %{ $Item->{PreferencesSet} } ) {
+
+            # set preferences
+            my $Success = $Self->{GeneralCatalogObject}->GeneralCatalogPreferencesSet(
+                Key    => $Key,
+                Value  => $Item->{PreferencesSet}->{$Key},
+                ItemID => $LastAddedItemID,
+            );
+
+            $Self->True(
+                $Success,
+                "Test $TestCount: PreferencesSet() - $Key",
+            );
+        }
+    }
+
+    # check preferences
+    if ( $Item->{PreferencesGet} ) {
+        my %Preferences = $Self->{GeneralCatalogObject}->GeneralCatalogPreferencesGet(
+            ItemID => $LastAddedItemID,
+        );
+
+        for my $Key ( keys %{ $Item->{PreferencesGet} } ) {
+            if ( $Item->{PreferencesGet}->{$Key} eq $Preferences{$Key} ) {
+                $Self->True(
+                    1,
+                    "Test $TestCount: PreferencesGet() - $Key",
+                );
+            }
+            else {
+                $Self->True(
+                    0,
+                    "Test $TestCount: PreferencesGet() - $Key",
+                );
+            }
+        }
+    }
+
     $TestCount++;
 }
 
@@ -601,8 +630,10 @@ for my $Class (@ExistingClasses) {
 }
 
 # ------------------------------------------------------------ #
-# FunctionalityList test 1
+# Preferences test 1
 # ------------------------------------------------------------ #
+
+=pod
 
 my %FunctionalityList1;
 map { $FunctionalityList1{$_} = 1 } @ExistingFunctionalities;
@@ -631,6 +662,8 @@ $Self->True(
 );
 
 $TestCount++;
+
+=cut
 
 # ------------------------------------------------------------ #
 # ClassRename test 1 (check normal rename)

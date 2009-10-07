@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: GeneralCatalog.sopm,v 1.35 2009-08-04 12:29:01 ub Exp $</CVS>
+    <CVS>$Id: GeneralCatalog.sopm,v 1.36 2009-10-07 13:20:52 reb Exp $</CVS>
     <Name>GeneralCatalog</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -24,16 +24,18 @@
         <File Permission="644" Location="Kernel/Language/pl_GeneralCatalog.pm"/>
         <File Permission="644" Location="Kernel/Language/ru_GeneralCatalog.pm"/>
         <File Permission="644" Location="Kernel/Modules/AdminGeneralCatalog.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/GeneralCatalogPreferencesGeneric.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminGeneralCatalog.dtl"/>
         <File Permission="644" Location="Kernel/System/GeneralCatalog.pm"/>
+        <File Permission="644" Location="Kernel/System/GeneralCatalog/PreferencesDB.pm"/>
         <File Permission="644" Location="scripts/test/GeneralCatalog.t"/>
+        <File Permission="644" Location="var/packagesetup/GeneralCatalog.pm"/>
     </Filelist>
     <DatabaseInstall Type="post">
         <TableCreate Name="general_catalog">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>
             <Column Name="general_catalog_class" Required="true" Size="100" Type="VARCHAR"/>
             <Column Name="name" Required="true" Size="100" Type="VARCHAR"/>
-            <Column Name="functionality" Required="false" Size="100" Type="VARCHAR"/>
             <Column Name="valid_id" Required="true" Type="SMALLINT"/>
             <Column Name="comments" Required="false" Size="200" Type="VARCHAR"/>
             <Column Name="create_time" Required="true" Type="DATE"/>
@@ -49,10 +51,70 @@
                 <Reference Local="change_by" Foreign="id"/>
             </ForeignKey>
         </TableCreate>
+        <TableCreate Name="general_catalog_preferences">
+            <Column Name="general_catalog_id" Required="true" Type="INTEGER"/>
+            <Column Name="pref_key" Required="true" Size="255" Type="VARCHAR"/>
+            <Column Name="pref_value" Required="false" Size="255" Type="VARCHAR"/>
+            <Index Name="general_catalog_preferences_general_catalog_id">
+                <IndexColumn Name="general_catalog_id"/>
+            </Index>
+            <ForeignKey ForeignTable="general_catalog">
+                <Reference Local="general_catalog_id" Foreign="id"/>
+            </ForeignKey>
+        </TableCreate>
     </DatabaseInstall>
+    <DatabaseUpgrade Type="pre">
+        <TableCreate Name="general_catalog_preferences" Version="1.3.72">
+            <Column Name="general_catalog_id" Required="true" Type="INTEGER"/>
+            <Column Name="pref_key" Required="true" Size="255" Type="VARCHAR"/>
+            <Column Name="pref_value" Required="false" Size="255" Type="VARCHAR"/>
+            <Index Name="general_catalog_preferences_general_catalog_id">
+                <IndexColumn Name="general_catalog_id"/>
+            </Index>
+            <ForeignKey ForeignTable="general_catalog">
+                <Reference Local="general_catalog_id" Foreign="id"/>
+            </ForeignKey>
+        </TableCreate>
+    </DatabaseUpgrade>
     <DatabaseUninstall Type="pre">
+        <TableDrop Name="general_catalog_preferences"/>
         <TableDrop Name="general_catalog"/>
     </DatabaseUninstall>
+    <CodeUpgrade Type="post">
+
+        # define function name
+        my $FunctionName = 'CodeUpgrade';
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+
+        # load the module
+        if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
+
+            # create new instance
+            my $CodeObject = $CodeModule-&gt;new( %{$Self} );
+
+            if ($CodeObject) {
+
+                # start methode
+                if ( !$CodeObject-&gt;$FunctionName(%{$Self}) ) {
+                    $Self-&gt;{LogObject}-&gt;Log(
+                        Priority =&gt; 'error',
+                        Message  =&gt; "Could not call method $FunctionName() on $CodeModule.pm."
+                    );
+                }
+            }
+
+            # error handling
+            else {
+                $Self-&gt;{LogObject}-&gt;Log(
+                    Priority =&gt; 'error',
+                    Message  =&gt; "Could not call method new() on $CodeModule.pm."
+                );
+            }
+        }
+
+    </CodeUpgrade>
     <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="en">
 
         &lt;br&gt;
