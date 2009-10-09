@@ -2,7 +2,7 @@
 # ImportExportFormatCSV.t - all import export tests for the CSV format backend
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExportFormatCSV.t,v 1.8 2009-05-18 09:42:53 mh Exp $
+# $Id: ImportExportFormatCSV.t,v 1.9 2009-10-09 10:28:14 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -987,6 +987,49 @@ my $ImportDataTests = [
             [ '  Η ϗ Ϡ  ', 'Ά Λ Ξ' ],
         ],
     },
+
+    # all required values are given (check the parsed content)
+    {
+        SourceImportData => {
+            FormatData => {
+                ColumnSeperator => 'Semicolon',
+                Charset         => 'ISO-8859-1',
+            },
+            SourceFile    => 'ImportExportFormatCSV007-OpenOffice-Semicolon.csv',
+            ImportDataGet => {
+                TemplateID    => $TemplateIDs[5],
+                SourceContent => 'SourceFile',
+                UserID        => 1,
+            },
+        },
+        ReferenceImportData => [
+            [ 'Row1-Col1', 'Row1-Col2',  'Row1-Col3' ],
+            [ 'Row2-Col1', 'Row2-Col2',  'Row2-Col3' ],
+            [ 'Row3-Col1', '0Row3-Col2', 'Row3-Col3' ],
+        ],
+    },
+
+    # all required values are given (check the parsed content)
+    {
+        SourceImportData => {
+            FormatData => {
+                ColumnSeperator => 'Semicolon',
+                Charset         => 'ISO-8859-1',
+            },
+            SourceFile    => 'ImportExportFormatCSV008-OpenOffice-Semicolon.csv',
+            ImportDataGet => {
+                TemplateID    => $TemplateIDs[5],
+                SourceContent => 'SourceFile',
+                UserID        => 1,
+            },
+        },
+        ReferenceImportData => [
+            [ 'Row1-Col1', 'Row1-Col2',  'Row1-Col3' ],
+            [ 'Row2-Col1', '0Row2-Col2', 'Row2-Col3' ],
+            [ 'Row3-Col1', 'Row3-Col2',  'Row3-Col3' ],
+        ],
+    },
+
 ];
 
 # ------------------------------------------------------------ #
