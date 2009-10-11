@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<otrs_config version="1.0" init="Config">
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.1 2009-10-11 23:19:56 ub Exp $</CVS>
+    <ConfigItem Name="Frontend::Module###AgentITSMChangeZoom" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AgentITSMChangeZoom object in the agent interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration des AgentITSMChangeZoom-Objekts im Agent-Interface.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <GroupRo>itsm-change</GroupRo>
+                <Description>Change Zoom</Description>
+                <Title>Zoom</Title>
+                <NavBarName>Change</NavBarName>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+</otrs_config>
