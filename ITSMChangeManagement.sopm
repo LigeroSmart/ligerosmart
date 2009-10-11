@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.9 2009-10-07 11:51:01 mae Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.10 2009-10-11 23:26:33 ub Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
-    <PackageRequired Version="1.3.71">ITSMCore</PackageRequired>
+    <PackageRequired Version="1.3.72">ITSMCore</PackageRequired>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
@@ -12,12 +12,47 @@
     <Description Lang="de">Das OTRS::ITSM Change Management Paket.</Description>
     <Filelist>
         <File Permission="644" Location="Kernel/Config/Files/ITSMChangeManagement.xml"/>
+        <File Permission="644" Location="Kernel/Language/de_ITSMChangeManagement.pm"/>
+        <File Permission="644" Location="Kernel/Language/en_ITSMChangeManagement.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentITSMChange.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeAdd.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeEdit.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeHistory.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeInvolvedPersons.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentITSMChangePrint.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeSearch.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeSearchResult.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeZoom.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderAdd.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderAgent.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderEdit.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderPrint.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderReport.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderZoom.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChange.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeAdd.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeEdit.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeHistory.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeInvolvedPersons.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangePrint.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeSearch.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeSearchResult.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeZoom.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMWorkOrderAdd.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMWorkOrderAgent.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMWorkOrderEdit.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMWorkOrderPrint.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMWorkOrderReport.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMWorkOrderZoom.dtl"/>
         <File Permission="644" Location="Kernel/System/ITSMChange.pm"/>
+        <File Permission="644" Location="Kernel/System/ITSMChange/History.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/WorkOrder.pm"/>
+        <File Permission="644" Location="scripts/test/ITSMChange.t"/>
+        <File Permission="644" Location="scripts/test/ITSMWorkOrder.t"/>
         <File Permission="644" Location="var/packagesetup/ITSMChangeManagement.pm"/>
     </Filelist>
     <DatabaseInstall Type="post">
-        <TableCreate Name="change">
+        <TableCreate Name="change_item">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
             <Column Name="change_number" Required="true" Size="100" Type="VARCHAR"/>
             <Column Name="title" Required="true" Size="250" Type="VARCHAR"/>
@@ -33,22 +68,22 @@
             <Unique>
                 <UniqueColumn Name="change_number"/>
             </Unique>
-            <Index Name="change_title">
+            <Index Name="change_item_title">
                 <IndexColumn Name="title"/>
             </Index>
-            <Index Name="change_description">
-                <IndexColumn Name="description"/>
+            <Index Name="change_item_description">
+                <IndexColumn Name="description" Size="250"/>
             </Index>
-            <Index Name="change_justification">
-                <IndexColumn Name="justification"/>
+            <Index Name="change_item_justification">
+                <IndexColumn Name="justification" Size="250"/>
             </Index>
-            <Index Name="change_change_state_id">
+            <Index Name="change_item_change_state_id">
                 <IndexColumn Name="change_state_id"/>
             </Index>
-            <Index Name="change_change_manager_id">
+            <Index Name="change_item_change_manager_id">
                 <IndexColumn Name="change_manager_id"/>
             </Index>
-            <Index Name="change_change_builder_id">
+            <Index Name="change_item_change_builder_id">
                 <IndexColumn Name="change_builder_id"/>
             </Index>
             <ForeignKey ForeignTable="users">
@@ -75,17 +110,17 @@
             <Column Name="create_by" Required="true" Type="INTEGER"/>
             <Column Name="change_time" Required="true" Type="DATE"/>
             <Column Name="change_by" Required="true" Type="INTEGER"/>
-            <Index Name="change_change_title">
+            <Index Name="change_workorder_change_id">
                 <IndexColumn Name="change_id"/>
             </Index>
             <Index Name="change_workorder_title">
                 <IndexColumn Name="title"/>
             </Index>
             <Index Name="change_workorder_instruction">
-                <IndexColumn Name="instruction"/>
+                <IndexColumn Name="instruction" Size="250"/>
             </Index>
             <Index Name="change_workorder_report">
-                <IndexColumn Name="report"/>
+                <IndexColumn Name="report" Size="250"/>
             </Index>
             <Index Name="change_workorder_workorder_state_id">
                 <IndexColumn Name="workorder_state_id"/>
@@ -105,7 +140,7 @@
             <Index Name="change_workorder_actual_end_time">
                 <IndexColumn Name="actual_end_time"/>
             </Index>
-            <ForeignKey ForeignTable="change">
+            <ForeignKey ForeignTable="change_item">
                 <Reference Local="change_id" Foreign="id"/>
             </ForeignKey>
             <ForeignKey ForeignTable="users">
@@ -124,7 +159,7 @@
                 <UniqueColumn Name="user_id"/>
                 <UniqueColumn Name="customer_user_id"/>
             </Unique>
-            <ForeignKey ForeignTable="change">
+            <ForeignKey ForeignTable="change_item">
                 <Reference Local="change_id" Foreign="id"/>
             </ForeignKey>
             <ForeignKey ForeignTable="users">
@@ -174,7 +209,7 @@
             <Index Name="change_history_create_time">
                 <IndexColumn Name="create_time"/>
             </Index>
-            <ForeignKey ForeignTable="change">
+            <ForeignKey ForeignTable="change_item">
                 <Reference Local="change_id" Foreign="id"/>
             </ForeignKey>
             <ForeignKey ForeignTable="change_workorder">
@@ -360,15 +395,17 @@
             <Data Key="change_by">1</Data>
         </Insert>
     </DatabaseInstall>
+<!--
     <DatabaseUninstall Type="pre">
         <TableDrop Name="change_cab"/>
         <TableDrop Name="change_history"/>
         <TableDrop Name="change_history_type"/>
         <TableDrop Name="change_workorder"/>
-        <TableDrop Name="change"/>
+        <TableDrop Name="change_item"/>
         <TableDrop Name="change_template"/>
         <TableDrop Name="change_template_type"/>
     </DatabaseUninstall>
+-->
     <CodeInstall Type="post">
 
         # define function name
@@ -545,7 +582,7 @@
         &lt;br&gt;
         &lt;b&gt;REQUIRED OTRS PACKAGES&lt;/b&gt;
         &lt;ul&gt;
-        &lt;li&gt;ITSMCore 1.3.71&lt;/li&gt;
+        &lt;li&gt;ITSMCore 1.3.72&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
@@ -563,7 +600,7 @@
         &lt;br&gt;
         &lt;b&gt;BENÖTIGTE OTRS-PAKETE&lt;/b&gt;
         &lt;ul&gt;
-        &lt;li&gt;ITSMCore 1.3.71&lt;/li&gt;
+        &lt;li&gt;ITSMCore 1.3.72&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
@@ -613,7 +650,7 @@
         &lt;br&gt;
         &lt;b&gt;REQUIRED OTRS PACKAGES&lt;/b&gt;
         &lt;ul&gt;
-        &lt;li&gt;ITSMCore 1.3.71&lt;/li&gt;
+        &lt;li&gt;ITSMCore 1.3.72&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
@@ -631,7 +668,7 @@
         &lt;br&gt;
         &lt;b&gt;BENÖTIGTE OTRS-PAKETE&lt;/b&gt;
         &lt;ul&gt;
-        &lt;li&gt;ITSMCore 1.3.71&lt;/li&gt;
+        &lt;li&gt;ITSMCore 1.3.72&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
