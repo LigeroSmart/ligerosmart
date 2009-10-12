@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.10 2009-10-12 15:20:16 ub Exp $
+# $Id: ITSMChange.pm,v 1.11 2009-10-12 16:11:39 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 =head1 NAME
 
@@ -144,7 +144,7 @@ sub ChangeAdd {
 
     # TODO: replace this later with State-Condition-Action logic
     # get initial change state id
-    my $ItemDataRef = $GeneralCatalogObject->ItemGet(
+    my $ItemDataRef = $Self->{GeneralCatalogObject}->ItemGet(
         Class => 'ITSM::ChangeManagement::Change::State',
         Name  => 'requested',
     );
@@ -173,11 +173,6 @@ sub ChangeAdd {
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $ChangeID = $Row[0];
     }
-
-    #    # check if given ChangeStateID is valid
-    #    return if $Param{ChangeStateID} && !$Self->_CheckChangeStateID(
-    #        ChangeStateID => $Param{ChangeStateID},
-    #    );
 
     return $ChangeID;
 }
@@ -215,10 +210,8 @@ sub ChangeUpdate {
         }
     }
 
-    # check if given ChangeStateID is valid
-    return if $Param{ChangeStateID} && !$Self->_CheckChangeStateID(
-        ChangeStateID => $Param{ChangeStateID},
-    );
+    # check change parameters
+    return if !$Self->_CheckChangeParams(%Param);
 
     return 1;
 }
@@ -585,6 +578,126 @@ sub _ChangeTicksGet {
     return;
 }
 
+=item _CheckChangeParams()
+
+checks the params to ChangeAdd() and ChangeUpdate().
+There are no required parameters.
+
+    my $Ok = $ChangeObject->_CheckChangeParams(
+        Title           => 'Replacement of mail server',       # (optional)
+        Description     => 'New mail server is faster',        # (optional)
+        Justification   => 'Old mail server too slow',         # (optional)
+        ChangeStateID   => 4,                                  # (optional)
+        ChangeManagerID => 5,                                  # (optional)
+        ChangeBuilderID => 6,                                  # (optional)
+        CABAgents       => [ 1, 2, 4 ],     # UserIDs          # (optional)
+        CABCustomers    => [ 'tt', 'mm' ],  # CustomerUserIDs  # (optional)
+    );
+
+=cut
+
+sub _CheckChangeParams {
+    my ( $Self, %Param ) = @_;
+
+    # check the string and id parameters
+    ARGUMENT:
+    for my $Argument (
+        qw( Title Description Justification ChangeManagerID ChangeBuilderID ChangeStateID )
+        )
+    {
+
+        next ARGUMENT if !exists $Param{$Argument};    # params are not required
+
+        if ( !defined $Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "The parameter $Argument must be defined!",
+            );
+            return;
+        }
+
+        if ( ref $Param{$Argument} ne '' ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "The parameter $Argument mustn't be a reference!",
+            );
+            return;
+        }
+    }
+
+    # check if given ChangeStateID is valid
+    return if $Param{ChangeStateID} && !$Self->_CheckChangeStateID(
+        ChangeStateID => $Param{ChangeStateID},
+    );
+
+    if ( exists $Param{CABAgents} ) {
+        if ( ref $Param{CABAgents} ne 'ARRAY' ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "The parameter CABAgents is not an ARRAY reference!",
+            );
+            return;
+        }
+        for my $UserID ( @{ $Param{CABAgents} } ) {
+            my %UserData = $Self->{UserObject}->GetUserData(
+                UserId => $UserID,
+                Valid  => 1,
+            );
+            if ( !$UserData{UserID} ) {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "The CABAgent $UserID is not a valid user id!",
+                );
+                return;
+            }
+        }
+    }
+
+    # change manager and change builder must be agents
+    ARGUMENT:
+    for my $Argument (qw( ChangeManagerID ChangeBuilderID )) {
+
+        next ARGUMENT if !exists $Param{$Argument};    # params are not required
+
+        my %UserData = $Self->{UserObject}->GetUserData(
+            UserId => $Param{$Argument},
+            Valid  => 1,
+        );
+        if ( !$UserData{UserID} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "The $Argument $Param{Argument} is not a valid user id!",
+            );
+            return;
+        }
+    }
+
+    if ( exists $Param{CABCustomers} ) {
+        if ( ref $Param{CABCustomers} ne 'ARRAY' ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "The parameter CABCustomers is not an ARRAY reference!",
+            );
+            return;
+        }
+        for my $CustomerUser ( @{ $Param{CABCustomers} } ) {
+            my %CustomerUserData = $Self->{CustomerUserObject}->CustomerUserDataGet(
+                User  => $CustomerUser,
+                Valid => 1,
+            );
+            if ( !%CustomerUserData ) {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "The CABCustomer $CustomerUser is not a valid customer!",
+                );
+                return;
+            }
+        }
+    }
+
+    return;
+}
+
 1;
 
 =back
@@ -601,6 +714,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.10 $ $Date: 2009-10-12 15:20:16 $
+$Revision: 1.11 $ $Date: 2009-10-12 16:11:39 $
 
 =cut
