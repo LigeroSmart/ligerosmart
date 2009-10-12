@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.21 2009-10-12 20:05:00 bes Exp $
+# $Id: ITSMChange.pm,v 1.22 2009-10-12 20:16:13 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::LinkObject;
 #use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.21 $) [1];
+$VERSION = qw($Revision: 1.22 $) [1];
 
 =head1 NAME
 
@@ -99,7 +99,7 @@ sub new {
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
     $Self->{LinkObject}           = Kernel::System::LinkObject->new( %{$Self} );
     $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
-    $Self->{CustomerUserObject}   = Kernel::System::User->new( %{$Self} );
+    $Self->{CustomerUserObject}   = Kernel::System::CustomerUser->new( %{$Self} );
 
     #$Self->{WorkOrderObject}      = Kernel::System::ITSMChange::WorkOrder->new( %{$Self} );
 
@@ -331,6 +331,10 @@ sub ChangeCABUpdate {
         }
     }
 
+    # TODO:
+    # add filter to filter out entries that appear more than once
+
+    # TODO: add comment
     if ( !$Param{CABAgents} && !$Param{CABCustomers} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
@@ -339,6 +343,7 @@ sub ChangeCABUpdate {
         return;
     }
 
+    # TODO: add comment
     for my $Attribute (qw(CABAgents CABCustomers)) {
         if ( $Param{$Attribute} && ref $Param{$Attribute} ne 'ARRAY' ) {
             $Self->{LogObject}->Log(
@@ -349,6 +354,7 @@ sub ChangeCABUpdate {
         }
     }
 
+    # TODO: add comment
     if ( $Param{CABAgents} ) {
         return if !$Self->{DBObject}->Do(
             SQL => 'DELETE FROM change_cab '
@@ -364,6 +370,7 @@ sub ChangeCABUpdate {
         }
     }
 
+    # TODO: add comment
     if ( $Param{CABCustomers} ) {
         return if !$Self->{DBObject}->Do(
             SQL => 'DELETE FROM change_cab '
@@ -386,10 +393,6 @@ sub ChangeCABUpdate {
 
 return the CAB of a change as hasharray reference
 
-NOTE:
-Maybe make this function internal, as it will be used in ChangeGet()
-(depends on if it would be used somewhere else)
-
 Return
     $ChangeCAB = {
         CABAgents    => [ 1, 2, 4 ],
@@ -398,12 +401,42 @@ Return
 
     my $ChangeCAB = $ChangeObject->ChangeCABGet(
         ChangeID => 123,
+        UserID   => 1,
     );
 
 =cut
 
 sub ChangeCABGet {
     my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(ChangeID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    my %CAB = (
+        CABAgents    => [],
+        CABCustomers => [],
+    );
+
+    # get data
+    $Self->{DBObject}->Prepare(
+        SQL => 'SELECT id, change_id, user_id, customer_user_id '
+            . 'FROM change_cab WHERE change_id = ?',
+        Bind => [ \$Param{ChangeID} ],
+    );
+
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        my %CABData;
+        $CABData{ID} = $Row[0];
+    }
+    return if !$ChangeID;
 
     return;
 }
@@ -828,6 +861,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.21 $ $Date: 2009-10-12 20:05:00 $
+$Revision: 1.22 $ $Date: 2009-10-12 20:16:13 $
 
 =cut
