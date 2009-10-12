@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.8 2009-10-12 20:07:43 mae Exp $
+# $Id: ITSMChange.t,v 1.9 2009-10-12 20:19:33 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -64,9 +64,9 @@ for my $Counter ( 1 .. 3 ) {
         UserLastname   => 'UnitTestCustomer',
         UserCustomerID => 'UCT' . $Counter . int rand 1_000_000,
         UserLogin      => 'UnitTest-ITSMChange-Customer-' . $Counter . int rand 1_000_000,
-        UserEmail      => 'UnitTest-ITSMChange-Customer-' . $Counter . '@localhost',
-        ValidID        => 1,
-        UserID         => 1,
+        UserEmail => 'UnitTest-ITSMChange-Customer-' . $Counter . int rand 1_000_000 . '@localhost',
+        ValidID   => 1,
+        UserID    => 1,
     );
     push @CustomerUserIDs, $CustomerUserID;
 }
@@ -226,6 +226,30 @@ my @ChangeTests = (
                 ],
             },
         },
+    },
+
+    # change contains all date - wrong CAB - (wrong CAB attributes)
+    {
+        SourceData => {
+            ChangeAdd => {
+                Title           => 'Change 1',
+                Description     => 'Description 1',
+                Justification   => 'Justification 1',
+                ChangeManagerID => $UserIDs[0],
+                ChangeBuilder   => $UserIDs[0],
+                ChangeBuilder   => $UserIDs[0],
+                CABAgents       => [
+                    $CustomerUserIDs[0],
+                    $CustomerUserIDs[1],
+                ],
+                CABCustomers => [
+                    $UserIDs[0],
+                    $UserIDs[1]
+                ],
+                UserID => $UserIDs[1],
+            },
+        },
+        Fails => 1,
     },
 
     # Update change without required params (required attributes)
