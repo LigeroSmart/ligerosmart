@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.18 2009-10-12 18:39:13 ub Exp $
+# $Id: ITSMChange.pm,v 1.19 2009-10-12 18:56:34 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::LinkObject;
 #use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 =head1 NAME
 
@@ -98,6 +98,8 @@ sub new {
     $Self->{ValidObject}          = Kernel::System::Valid->new( %{$Self} );
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
     $Self->{LinkObject}           = Kernel::System::LinkObject->new( %{$Self} );
+    $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
+    $Self->{CustomerUserObject}   = Kernel::System::User->new( %{$Self} );
 
     #    $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::WorkOrder->new( %{$Self} );
 
@@ -247,11 +249,11 @@ sub ChangeUpdate {
 
         # do not use column if not in function parameters
         next ATTRIBUTE if !exists $Param{$Key};
-        $SQl .= "$Attribute{$Key} = ?, ";
+        $SQL .= "$Attribute{$Key} = ?, ";
         push @Bind, \$Param{$Key};
     }
     push @Bind, \$Param{UserID}, \$Param{ChangeID};
-    $SQl .= 'change_time = current_timestamp, change_by = ? ';
+    $SQL .= 'change_time = current_timestamp, change_by = ? ';
     $SQL .= 'WHERE id = ? ';
 
     # add change to database
@@ -686,13 +688,14 @@ sub _CheckChangeParams {
         next ARGUMENT if !exists $Param{$Argument};    # params are not required
 
         my %UserData = $Self->{UserObject}->GetUserData(
-            UserId => $Param{$Argument},
+            UserID => $Param{$Argument},
             Valid  => 1,
         );
+
         if ( !$UserData{UserID} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "The $Argument $Param{Argument} is not a valid user id!",
+                Message  => "The $Argument $Param{$Argument} is not a valid user id!",
             );
             return;
         }
@@ -709,7 +712,7 @@ sub _CheckChangeParams {
         }
         for my $UserID ( @{ $Param{CABAgents} } ) {
             my %UserData = $Self->{UserObject}->GetUserData(
-                UserId => $UserID,
+                UserID => $UserID,
                 Valid  => 1,
             );
             if ( !$UserData{UserID} ) {
@@ -765,6 +768,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.18 $ $Date: 2009-10-12 18:39:13 $
+$Revision: 1.19 $ $Date: 2009-10-12 18:56:34 $
 
 =cut
