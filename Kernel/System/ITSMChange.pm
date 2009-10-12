@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.9 2009-10-12 13:35:11 ub Exp $
+# $Id: ITSMChange.pm,v 1.10 2009-10-12 15:20:16 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 =head1 NAME
 
@@ -127,12 +127,57 @@ or
 sub ChangeAdd {
     my ( $Self, %Param ) = @_;
 
-    # check if given ChangeStateID is valid
-    return if $Param{ChangeStateID} && !$Self->_CheckChangeStateID(
-        ChangeStateID => $Param{ChangeStateID},
+    # check needed stuff
+    if ( !$Param{UserID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Need UserID!",
+        );
+        return;
+    }
+
+    # check change parameters
+    return if !$Self->_CheckChangeParams(%Param);
+
+    # create a new change number
+    my $ChangeNumber = $Self->_ChangeNumberCreate();
+
+    # TODO: replace this later with State-Condition-Action logic
+    # get initial change state id
+    my $ItemDataRef = $GeneralCatalogObject->ItemGet(
+        Class => 'ITSM::ChangeManagement::Change::State',
+        Name  => 'requested',
     );
 
-    my $ChangeID = 1;    # dummy for now
+    my $ChangeStateID = $ItemDataRef->{ItemID};
+
+    # add change to database
+    return if !$Self->{DBObject}->Do(
+        SQL => 'INSERT INTO change_item '
+            . '(change_number, change_state_id, change_builder_id, '
+            . ' create_time, create_by, change_time, change_by) '
+            . 'VALUES (?, ?, ?, current_timestamp, ?, current_timestamp, ?)',
+        Bind => [
+            \$ChangeNumber, \$ChangeStateID, \$Param{UserID},
+            \$Param{UserID}, \$Param{UserID},
+        ],
+    );
+
+    # get change id
+    $Self->{DBObject}->Prepare(
+        SQL   => 'SELECT id FROM change_item WHERE change_number = ?',
+        Bind  => [ \$ChangeNumber ],
+        Limit => 1,
+    );
+    my $ChangeID;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $ChangeID = $Row[0];
+    }
+
+    #    # check if given ChangeStateID is valid
+    #    return if $Param{ChangeStateID} && !$Self->_CheckChangeStateID(
+    #        ChangeStateID => $Param{ChangeStateID},
+    #    );
 
     return $ChangeID;
 }
@@ -492,6 +537,36 @@ sub _CheckChangeStateID {
     return 1;
 }
 
+=item _ChangeNumberCreate()
+
+create a new change number
+
+    my $ChangeNumber= $ChangeObject->_ChangeNumberCreate();
+
+=cut
+
+sub _ChangeNumberCreate {
+    my ($Self) = @_;
+
+    # TODO : Replace this function with the similar code as in DateChecksum in OTRS!!!!
+
+    # get needed config options
+    my $SystemID = $Self->{ConfigObject}->Get('SystemID');
+
+    # get current time
+    my ( $Sec, $Min, $Hour, $Day, $Month, $Year ) = $Self->{TimeObject}->SystemTime2Date(
+        SystemTime => $Self->{TimeObject}->SystemTime(),
+    );
+
+    # create random number
+    my $RandomNumber = int( rand(100000) );
+
+    # create new change number
+    my $ChangeNumber = $Year . $Month . $Day . $SystemID . $RandomNumber;
+
+    return $ChangeNumber;
+}
+
 =item _ChangeTicksGet()
 
 NOTE: Maybe this function better belongs to Kernel/Output/HTML/LayoutITSMChange.pm
@@ -526,6 +601,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.9 $ $Date: 2009-10-12 13:35:11 $
+$Revision: 1.10 $ $Date: 2009-10-12 15:20:16 $
 
 =cut
