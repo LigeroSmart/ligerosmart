@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.20 2009-10-12 19:11:55 ub Exp $
+# $Id: ITSMChange.pm,v 1.21 2009-10-12 20:05:00 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::LinkObject;
 #use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 =head1 NAME
 
@@ -319,6 +319,65 @@ add or update the CAB of a change
 
 sub ChangeCABUpdate {
     my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Attribute (qw(ChangeID UserID)) {
+        if ( !$Param{$Attribute} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Attribute!",
+            );
+            return;
+        }
+    }
+
+    if ( !$Param{CABAgents} && !$Param{CABCustomers} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Need parameter CABAgents or CABCustomers!",
+        );
+        return;
+    }
+
+    for my $Attribute (qw(CABAgents CABCustomers)) {
+        if ( $Param{$Attribute} && ref $Param{$Attribute} ne 'ARRAY' ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "The parameter $Attribute is not an arrray reference!",
+            );
+            return;
+        }
+    }
+
+    if ( $Param{CABAgents} ) {
+        return if !$Self->{DBObject}->Do(
+            SQL => 'DELETE FROM change_cab '
+                . 'WHERE change_id = ? '
+                . 'AND user_id IS NOT NULL',
+            Bind => [ \$Param{ChangeID} ],
+        );
+        for my $UserID ( @{ $Param{CABAgents} } ) {
+            return if !$Self->{DBObject}->Do(
+                SQL => 'INSERT INTO change_cab ( change_id, user_id ) VALUES ( ?, ? )',
+                Bind => [ \$Param{ChangeID}, \$UserID ],
+            );
+        }
+    }
+
+    if ( $Param{CABCustomers} ) {
+        return if !$Self->{DBObject}->Do(
+            SQL => 'DELETE FROM change_cab '
+                . 'WHERE change_id = ? '
+                . 'AND customer_user_id IS NOT NULL',
+            Bind => [ \$Param{ChangeID} ],
+        );
+        for my $CustomerUserID ( @{ $Param{CABCustomers} } ) {
+            return if !$Self->{DBObject}->Do(
+                SQL => 'INSERT INTO change_cab ( change_id, customer_user_id ) VALUES ( ?, ? )',
+                Bind => [ \$Param{ChangeID}, \$CustomerUserID ],
+            );
+        }
+    }
 
     return 1;
 }
@@ -769,6 +828,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.20 $ $Date: 2009-10-12 19:11:55 $
+$Revision: 1.21 $ $Date: 2009-10-12 20:05:00 $
 
 =cut
