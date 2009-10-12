@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.5 2009-10-12 19:32:50 mae Exp $
+# $Id: ITSMChange.t,v 1.6 2009-10-12 19:42:03 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -301,6 +301,13 @@ $Self->Is(
 # clean the system
 # ------------------------------------------------------------ #
 
+# disable email checks to create new user
+my $CheckEmailAddressesOrig = $Self->{ConfigObject}->Get('CheckEmailAddresses') || 1;
+$Self->{ConfigObject}->Set(
+    Key   => 'CheckEmailAddresses',
+    Value => 0,
+);
+
 # set unittest users invalid
 ITEMID:
 for my $UnittestUserID (@UserIDs) {
@@ -320,6 +327,12 @@ for my $UnittestUserID (@UserIDs) {
     );
 }
 
+# restore original email check param
+$Self->{ConfigObject}->Set(
+    Key   => 'CheckEmailAddresses',
+    Value => $CheckEmailAddressesOrg,
+);
+
 # delete the test config items
 for my $ChangeID ( keys %TestedChangeID ) {
     $Self->{ChangeObject}->ChangeDelete(
@@ -331,6 +344,26 @@ for my $ChangeID ( keys %TestedChangeID ) {
 # ------------------------------------------------------------ #
 # helper subroutines
 # ------------------------------------------------------------ #
+
+=head2 METHODS
+
+=over 4
+
+=item ITSMChangeCompareDatastructure()
+
+This method compares two datastructures with each other and it compares "deeply".
+
+    my $IsEqual = ITSMChangeCompareDatastructure(
+        Reference => [ 'test', 'array' ],
+        ToCheck   => [ 'test', 'array1' ],
+    );
+
+In the case above, C<$IsEqual> is 0 as the two array references differ.
+
+If the datastructures are equal, this method returns 1. You can pass scalars, array references
+and hash references.
+
+=cut
 
 sub ITSMChangeCompareDatastructure {
     my %Param = @_;
@@ -371,6 +404,17 @@ sub ITSMChangeCompareDatastructure {
     return 0;
 }
 
+=item ITSMChangeCompareArray()
+
+This method compares two array references if the are equal.
+
+    my $IsEqual = ITSMChangeCompareHash(
+        Reference => [ 'elem1', 'elem2' ],
+        ToCheck   => [ 'elem1', 'elem2' ],
+    );
+
+=cut
+
 sub ITSMChangeCompareArray {
     my %Param = @_;
 
@@ -388,6 +432,17 @@ sub ITSMChangeCompareArray {
     return 1;
 }
 
+=item ITSMChangeCompareHash()
+
+This method compares two hash references if the are equal.
+
+    my $IsEqual = ITSMChangeCompareHash(
+        Reference => { 1 => 'test' },
+        ToCheck   => { 1 => 'test' },
+    );
+
+=cut
+
 sub ITSMChangeCompareHash {
     my %Param = @_;
 
@@ -404,5 +459,9 @@ sub ITSMChangeCompareHash {
 
     return 1;
 }
+
+=back
+
+=cut
 
 1;
