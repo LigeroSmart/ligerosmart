@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.12 2009-10-12 16:17:53 ub Exp $
+# $Id: ITSMChange.pm,v 1.13 2009-10-12 16:21:43 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 =head1 NAME
 
@@ -631,6 +631,26 @@ sub _CheckChangeParams {
         ChangeStateID => $Param{ChangeStateID},
     );
 
+    # change manager and change builder must be agents
+    ARGUMENT:
+    for my $Argument (qw( ChangeManagerID ChangeBuilderID )) {
+
+        next ARGUMENT if !exists $Param{$Argument};    # params are not required
+
+        my %UserData = $Self->{UserObject}->GetUserData(
+            UserId => $Param{$Argument},
+            Valid  => 1,
+        );
+        if ( !$UserData{UserID} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "The $Argument $Param{Argument} is not a valid user id!",
+            );
+            return;
+        }
+    }
+
+    # CAB agents must be agents
     if ( exists $Param{CABAgents} ) {
         if ( ref $Param{CABAgents} ne 'ARRAY' ) {
             $Self->{LogObject}->Log(
@@ -654,25 +674,7 @@ sub _CheckChangeParams {
         }
     }
 
-    # change manager and change builder must be agents
-    ARGUMENT:
-    for my $Argument (qw( ChangeManagerID ChangeBuilderID )) {
-
-        next ARGUMENT if !exists $Param{$Argument};    # params are not required
-
-        my %UserData = $Self->{UserObject}->GetUserData(
-            UserId => $Param{$Argument},
-            Valid  => 1,
-        );
-        if ( !$UserData{UserID} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "The $Argument $Param{Argument} is not a valid user id!",
-            );
-            return;
-        }
-    }
-
+    # CAB customers must be customers
     if ( exists $Param{CABCustomers} ) {
         if ( ref $Param{CABCustomers} ne 'ARRAY' ) {
             $Self->{LogObject}->Log(
@@ -715,6 +717,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.12 $ $Date: 2009-10-12 16:17:53 $
+$Revision: 1.13 $ $Date: 2009-10-12 16:21:43 $
 
 =cut
