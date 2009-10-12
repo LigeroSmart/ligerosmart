@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.7 2009-10-12 19:49:34 reb Exp $
+# $Id: ITSMChange.t,v 1.8 2009-10-12 20:07:43 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,12 +17,14 @@ use vars qw($Self);
 
 use Data::Dumper;
 use Kernel::System::User;
+use Kernel::System::CustomerUser;
 use Kernel::System::GeneralCatalog;
 use Kernel::System::ITSMChange;
 
 $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
 $Self->{ChangeObject}         = Kernel::System::ITSMChange->new( %{$Self} );
 $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
+$Self->{CustomerUserObject}   = Kernel::System::CustomerUser->new( %{$Self} );
 
 # ------------------------------------------------------------ #
 # make preparations
@@ -31,6 +33,9 @@ my $TestCount = 1;
 
 # create needed users
 my @UserIDs;
+
+# create needed users
+my @CustomerUserIDs;
 
 # disable email checks to create new user
 my $CheckEmailAddressesOrg = $Self->{ConfigObject}->Get('CheckEmailAddresses') || 1;
@@ -50,8 +55,20 @@ for my $Counter ( 1 .. 3 ) {
         ValidID       => 1,
         ChangeUserID  => 1,
     );
-
     push @UserIDs, $UserID;
+
+    # create new customers for the tests
+    my $CustomerUserID = $Self->{CustomerUserObject}->CustomerUserAdd(
+        Source         => 'CustomerUser',
+        UserFirstname  => 'ITSMChangeCustomer' . $Counter,
+        UserLastname   => 'UnitTestCustomer',
+        UserCustomerID => 'UCT' . $Counter . int rand 1_000_000,
+        UserLogin      => 'UnitTest-ITSMChange-Customer-' . $Counter . int rand 1_000_000,
+        UserEmail      => 'UnitTest-ITSMChange-Customer-' . $Counter . '@localhost',
+        ValidID        => 1,
+        UserID         => 1,
+    );
+    push @CustomerUserIDs, $CustomerUserID;
 }
 
 # set 3rd user invalid
@@ -166,6 +183,47 @@ my @ChangeTests = (
                 CABCustomers    => [],
                 CreateBy        => $UserIDs[0],
                 ChangeBy        => $UserIDs[0],
+            },
+        },
+    },
+
+    # change contains all date - (all attributes)
+    {
+        SourceData => {
+            ChangeAdd => {
+                Title           => 'Change 1',
+                Description     => 'Description 1',
+                Justification   => 'Justification 1',
+                ChangeManagerID => $UserIDs[0],
+                ChangeBuilder   => $UserIDs[0],
+                ChangeBuilder   => $UserIDs[0],
+                CABAgents       => [
+                    $UserIDs[0],
+                    $UserIDs[1]
+                ],
+                CABCustomers => [
+                    $CustomerUserIDs[0],
+                    $CustomerUserIDs[1],
+                ],
+                UserID => $UserIDs[1],
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                Title           => 'Change 1',
+                Description     => 'Description 1',
+                Justification   => 'Justification 1',
+                ChangeManagerID => $UserIDs[0],
+                ChangeBuilder   => $UserIDs[0],
+                ChangeBuilder   => $UserIDs[0],
+                CABAgents       => [
+                    $UserIDs[0],
+                    $UserIDs[1]
+                ],
+                CABCustomers => [
+                    $CustomerUserIDs[0],
+                    $CustomerUserIDs[1],
+                ],
             },
         },
     },
