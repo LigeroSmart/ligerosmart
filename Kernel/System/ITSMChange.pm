@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.22 2009-10-12 20:16:13 ub Exp $
+# $Id: ITSMChange.pm,v 1.23 2009-10-12 20:36:30 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,10 +18,8 @@ use Kernel::System::Valid;
 use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
-#use Kernel::System::ITSMChange::WorkOrder;
-
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 =head1 NAME
 
@@ -101,8 +99,6 @@ sub new {
     $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
     $Self->{CustomerUserObject}   = Kernel::System::CustomerUser->new( %{$Self} );
 
-    #$Self->{WorkOrderObject}      = Kernel::System::ITSMChange::WorkOrder->new( %{$Self} );
-
     return $Self;
 }
 
@@ -168,7 +164,7 @@ sub ChangeAdd {
     );
 
     # get change id
-    $Self->{DBObject}->Prepare(
+    return if !$Self->{DBObject}->Prepare(
         SQL   => 'SELECT id FROM change_item WHERE change_number = ?',
         Bind  => [ \$ChangeNumber ],
         Limit => 1,
@@ -386,6 +382,8 @@ sub ChangeCABUpdate {
         }
     }
 
+    # TODO: trigger ChangeCABUpdate-Event
+
     return 1;
 }
 
@@ -420,25 +418,34 @@ sub ChangeCABGet {
         }
     }
 
+    # cab data
     my %CAB = (
         CABAgents    => [],
         CABCustomers => [],
     );
 
     # get data
-    $Self->{DBObject}->Prepare(
+    return if !$Self->{DBObject}->Prepare(
         SQL => 'SELECT id, change_id, user_id, customer_user_id '
             . 'FROM change_cab WHERE change_id = ?',
         Bind => [ \$Param{ChangeID} ],
     );
-
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        my %CABData;
-        $CABData{ID} = $Row[0];
-    }
-    return if !$ChangeID;
+        my %Data;
+        $Data{CABID}          = $Row[0];
+        $Data{ChangeID}       = $Row[1];
+        $Data{UserID}         = $Row[2];
+        $Data{CustomerUserID} = $Row[3];
 
-    return;
+        if ( $Data{UserID} ) {
+            push @{ $Data{CABAgents} }, $Data{UserID};
+        }
+        elsif ( $Data{CustomerUserID} ) {
+            push @{ $Data{CABCustomers} }, $Data{CustomerUserID};
+        }
+    }
+
+    return \%CAB;
 }
 
 =item ChangeCABDelete()
@@ -455,7 +462,23 @@ delete the CAB of a change
 sub ChangeCABDelete {
     my ( $Self, %Param ) = @_;
 
-    return;
+    # check needed stuff
+    for my $Attribute (qw(ChangeID UserID)) {
+        if ( !$Param{$Attribute} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Attribute!",
+            );
+            return;
+        }
+    }
+
+    return if !$Self->{DBObject}->Do(
+        SQL  => 'DELETE FROM change_cab WHERE change_id = ? ',
+        Bind => [ \$Param{ChangeID} ],
+    );
+
+    return 1;
 }
 
 =item ChangeList()
@@ -861,6 +884,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.22 $ $Date: 2009-10-12 20:16:13 $
+$Revision: 1.23 $ $Date: 2009-10-12 20:36:30 $
 
 =cut
