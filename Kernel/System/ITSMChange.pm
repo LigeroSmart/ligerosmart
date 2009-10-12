@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.19 2009-10-12 18:56:34 ub Exp $
+# $Id: ITSMChange.pm,v 1.20 2009-10-12 19:11:55 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::LinkObject;
 #use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 =head1 NAME
 
@@ -101,7 +101,7 @@ sub new {
     $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
     $Self->{CustomerUserObject}   = Kernel::System::User->new( %{$Self} );
 
-    #    $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::WorkOrder->new( %{$Self} );
+    #$Self->{WorkOrderObject}      = Kernel::System::ITSMChange::WorkOrder->new( %{$Self} );
 
     return $Self;
 }
@@ -249,6 +249,7 @@ sub ChangeUpdate {
 
         # do not use column if not in function parameters
         next ATTRIBUTE if !exists $Param{$Key};
+
         $SQL .= "$Attribute{$Key} = ?, ";
         push @Bind, \$Param{$Key};
     }
@@ -319,7 +320,7 @@ add or update the CAB of a change
 sub ChangeCABUpdate {
     my ( $Self, %Param ) = @_;
 
-    return;
+    return 1;
 }
 
 =item ChangeCABGet()
@@ -768,6 +769,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.19 $ $Date: 2009-10-12 18:56:34 $
+$Revision: 1.20 $ $Date: 2009-10-12 19:11:55 $
 
 =cut
