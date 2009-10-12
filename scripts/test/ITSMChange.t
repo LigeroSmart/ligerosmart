@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.2 2009-10-12 16:33:14 mae Exp $
+# $Id: ITSMChange.t,v 1.3 2009-10-12 18:51:58 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -121,6 +121,7 @@ my @ChangeTests = (
         SourceData => {
             ChangeAdd => {},
         },
+        Fails => 1,    # we expect this test to fail
     },
 
     # Change contains only required data - default user (required attributes)
@@ -198,9 +199,13 @@ for my $Test (@ChangeTests) {
             );
         }
     }    # end if 'SourceData'
-    if ( $SourceData->{ReferenceData} )
+
+    if ( $Test->{ReferenceData} )
     {
-        if ( $SourceData->{ReferenceData} eq "ChangeGet" ) {
+        if ( $Test->{ReferenceData}->{ChangeGet} ) {
+
+            my $ChangeGetReferenceData = $SourceData->{ReferenceData}->{ChangeGet};
+
             my $ChangeData = $Self->{ChangeObject}->ChangeGet(
                 ChangeID => $ChangeID,
             );
@@ -211,15 +216,159 @@ for my $Test (@ChangeTests) {
                     "Test $TestCount: ChangeGet() - Get change.",
                 );
             }
+
+            $Self->True(
+                $ChangeData->{ChangeID},
+                "Test $TestCount: has ChangeID",
+            );
+
+            $Self->True(
+                $ChangeData->{CreateTime},
+                "Test $TestCount: has CreateTime",
+            );
+
+            $Self->True(
+                $ChangeData->{ChangeTime},
+                "Test $TestCount: has ChangeTime",
+            );
+
+            for my $Key ( keys %{$ChangeGetReferenceData} ) {
+                my $IsEqual = ITSMChangeCompareDatastructure(
+                    Reference => $ChangeGetReferenceData->{$Key},
+                    ToCheck   => $ChangeData->{$Key},
+                );
+
+                $Self->True(
+                    $IsEqual,
+                    "Test $TestCount: $Key",
+                );
+            }
         }
     }    # end if 'ReferenceData'
     ++$TestCount;
 }
 
+# test if ChangeList returns at least as many changes as we created
+# we cannot test for a specific number as these tests can be run in existing environments
+# where other changes already exist
+my $ChangeList = $Self->{ChangeObject}->ChangeList();
+$Self->True(
+    @{$ChangeList} >= ( keys %TestedChangeID || 0 ),
+    'Test ' . $TestCount++ . ': ChangeList() returns at least as many changes as we created',
+);
+
+# count all tests that are required to and planned for fail
+my $Fails = grep { $_->{Fails} } @ChangeTests;
+
+# test if the changes where created
 $Self->Is(
     keys %TestedChangeID || 0,
-    scalar @ChangeTests - 1,    # don't count the first test case, it should not return a change!
+    scalar @ChangeTests - $Fails,
     'Test ' . $TestCount++ . ': amount of change objects and test cases.',
 );
+
+# ------------------------------------------------------------ #
+# clean the system
+# ------------------------------------------------------------ #
+
+# set unittest users invalid
+ITEMID:
+for my $UnittestUserID (@UserIDs) {
+
+    # get user data
+    my %User = $Self->{UserObject}->GetUserData(
+        UserID => $UnittestUserID,
+    );
+
+    # update user
+    $Self->{UserObject}->UserUpdate(
+        %User,
+        ValidID => $Self->{ChangeObject}->{ValidObject}->ValidLookup(
+            Valid => 'invalid',
+        ),
+        ChangeUserID => 1
+    );
+}
+
+# delete the test config items
+for my $ChangeID ( keys %TestedChangeID ) {
+    $Self->{ChangeObject}->ChangeDelete(
+        ChangeID => $ChangeID,
+        UserID   => 1,
+    );
+}
+
+# ------------------------------------------------------------ #
+# helper subroutines
+# ------------------------------------------------------------ #
+
+sub ITSMChangeCompareDatastructure {
+    my %Param = @_;
+
+    if ( !defined $Param{Reference} ) {
+        return 1 if !defined $Param{ToCheck};
+        return 0;
+    }
+
+    if ( !ref( $Param{Reference} ) ) {
+        return 1 if !ref( $Param{ToCheck} ) && $Param{Reference} eq $Param{ToCheck};
+        return 0;
+    }
+
+    if ( ref( $Param{Reference} ) ) {
+        if ( ( !ref( $Param{ToCheck} ) ) || ref( $Param{Reference} ) ne ref( $Param{ToCheck} ) ) {
+            return 0;
+        }
+
+        if ( ref( $Param{Reference} ) eq 'ARRAY' ) {
+            return ITSMChangeCompareArray(
+                Reference => $Param{Reference},
+                ToCheck   => $Param{ToCheck},
+            );
+        }
+        elsif ( ref( $Param{Reference} ) eq 'HASH' ) {
+            return ITSMChangeCompareHash(
+                Reference => $Param{Reference},
+                ToCheck   => $Param{ToCheck},
+            );
+        }
+    }
+
+    return 0;
+}
+
+sub ITSMChangeCompareArray {
+    my %Param = @_;
+
+    return 0 if @{ $Param{Reference} } != @{ $Param{ToCheck} };
+
+    for my $ArrayIndex ( 0 .. $#{ $Param{Reference} } ) {
+        my $IsEqual = ITSMChangeCompareDatastructure(
+            Reference => $Param{Reference}->[$ArrayIndex],
+            ToCheck   => $Param{ToCheck}->[$ArrayIndex],
+        );
+
+        return 0 if !$IsEqual;
+    }
+
+    return 1;
+}
+
+sub ITSMChangeCompareHash {
+    my %Param = @_;
+
+    return 0 if keys %{ $Param{Reference} } != keys %{ $Param{ToCheck} };
+
+    for my $Key ( keys %{ $Param{Reference} } ) {
+        my $IsEqual = ITSMChangeCompareDatastructure(
+            Reference => $Param{Reference}->{$Key},
+            ToCheck   => $Param{ToCheck}->{$Key},
+        );
+
+        return 0 if !$IsEqual;
+    }
+
+    return 1;
+}
 
 1;
