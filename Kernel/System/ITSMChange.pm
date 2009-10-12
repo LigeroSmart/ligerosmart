@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.6 2009-10-06 22:26:48 ub Exp $
+# $Id: ITSMChange.pm,v 1.7 2009-10-12 12:35:32 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 =head1 NAME
 
@@ -183,7 +183,8 @@ Return
     $Change{ChangeManagerID}
     $Change{ChangeBuilderID}
     $Change{WorkOrderIDs}     # array reference with WorkOrderIDs
-    $Change{CAB}              # hasharray reference with CAB member ids, look at ChangeCABGet()
+    $Change{CABAgents}        # array reference with CAB Agent UserIDs
+    $Change{CABCustomers}     # array reference with CAB CustomerUserIDs
     $Change{PlannedStartTime}
     $Change{PlannedEndTime}
     $Change{ActualStartTime}
@@ -369,72 +370,72 @@ sub ChangeDelete {
     return;
 }
 
-=item ChangeEditWorkflow()
+=item ChangeWorkflowEdit()
 
 edit the workflow of a change
 
 NOTE: To be defined in more detail!
 
-    my $Success = $ChangeObject->ChangeEditWorkflow(
+    my $Success = $ChangeObject->ChangeWorkflowEdit(
         ChangeID  => 123,
         UserID    => 1,
     );
 
 =cut
 
-sub ChangeEditWorkflow {
+sub ChangeWorkflowEdit {
     my ( $Self, %Param ) = @_;
 
     return;
 }
 
-=item ChangeListWorkflow()
+=item ChangeWorkflowList()
 
 list the workflow of a change
 
 NOTE: To be defined in more detail!
 
-    my $ChangeWorkflow = $ChangeObject->ChangeListWorkflow(
+    my $ChangeWorkflow = $ChangeObject->ChangeWorkflowList(
         ChangeID  => 123,
     );
 
 =cut
 
-sub ChangeListWorkflow {
+sub ChangeWorkflowList {
     my ( $Self, %Param ) = @_;
 
     return;
 }
 
-=item _ChangeGetStart()
+=item _ChangeStartGet()
 
 get the start date of a change, calculated from the start of the first work order
 
-    my $ChangeStartTime = $ChangeObject->_ChangeGetStart(
+    my $ChangeStartTime = $ChangeObject->_ChangeStartGet(
         ChangeID => 123,
         Type     => 'planned' || 'actual',
     );
 
 =cut
 
-sub _ChangeGetStart {
+sub _ChangeStartGet {
     my ( $Self, %Param ) = @_;
 
     return;
 }
 
-=item _ChangeGetEnd()
+=item _ChangeEndGet()
 
 get the end date of a change, calculated from the start of the first work order
 
-    my $ChangeEndTime = $ChangeObject->_ChangeGetEnd(
+    my $ChangeEndTime = $ChangeObject->_ChangeEndGet(
         ChangeID => 123,
         Type     => 'planned' || 'actual',
     );
 
 =cut
 
-sub _ChangeGetEnd {
+sub _ChangeEndGet {
     my ( $Self, %Param ) = @_;
 
     return;
@@ -483,19 +484,19 @@ sub _CheckChangeStateID {
     return 1;
 }
 
-=item _ChangeGetTicks()
+=item _ChangeTicksGet()
 
 NOTE: Maybe this function better belongs to Kernel/Output/HTML/LayoutITSMChange.pm
 
-short description of _ChangeGetTicks
+short description of _ChangeTicksGet
 
-    my $Result = $ChangeObject->_ChangeGetTicks(
+    my $Result = $ChangeObject->_ChangeTicksGet(
         ChangeID => 123,
     );
 
 =cut
 
-sub _ChangeGetTicks {
+sub _ChangeTicksGet {
     my ( $Self, %Param ) = @_;
 
     return;
@@ -517,6 +518,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.6 $ $Date: 2009-10-06 22:26:48 $
+$Revision: 1.7 $ $Date: 2009-10-12 12:35:32 $
 
 =cut
