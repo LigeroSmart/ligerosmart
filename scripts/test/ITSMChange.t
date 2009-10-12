@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.11 2009-10-12 20:37:00 reb Exp $
+# $Id: ITSMChange.t,v 1.12 2009-10-12 20:43:01 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -329,7 +329,7 @@ for my $Test (@ChangeTests) {
             for my $ChangeAttributes (qw(ChangeID CreateTime ChangeTime)) {
                 $Self->True(
                     $ChangeData->{$ChangeAttributes},
-                    "Test $TestCount: has $ChangeAttributes.",
+                    "Test $TestCount: |- has $ChangeAttributes.",
                 );
             }
 
@@ -347,7 +347,7 @@ for my $Test (@ChangeTests) {
                 $Self->Is(
                     $ChangeAttribute,
                     $ReferenceAttribute,
-                    "Test $TestCount: $Key",
+                    "Test $TestCount: |- $Key",
                 );
             }
         }    # end ChangeGet
