@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.3 2009-10-12 18:51:58 reb Exp $
+# $Id: ITSMChange.t,v 1.4 2009-10-12 19:06:55 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -154,6 +154,20 @@ my @ChangeTests = (
                 UserID => $UserIDs[0],
             },
         },
+        ReferenceData => {
+            ChangeGet => {
+                Title           => undef,
+                Description     => undef,
+                Justification   => undef,
+                ChangeManagerID => $UserIDs[0],
+                ChangeBuilderID => $UserIDs[0],
+                WorkOrderIDs    => [],
+                CABAgents       => [],
+                CABCustomers    => [],
+                CreateBy        => $UserIDs[0],
+                ChangeBy        => $UserIDs[0],
+            },
+        },
     },
 
 );
@@ -173,8 +187,9 @@ for my $Test (@ChangeTests) {
         next TEST;
     }
 
-    # extract source data
-    my $SourceData = $Test->{SourceData};
+    # extract test data
+    my $SourceData    = $Test->{SourceData};
+    my $ReferenceData = $Test->{ReferenceData};
 
     # add a new Change
     my $ChangeID;
@@ -200,37 +215,27 @@ for my $Test (@ChangeTests) {
         }
     }    # end if 'SourceData'
 
-    if ( $Test->{ReferenceData} )
+    if ($ReferenceData)
     {
-        if ( $Test->{ReferenceData}->{ChangeGet} ) {
+        if ( $ReferenceData->{ChangeGet} ) {
 
-            my $ChangeGetReferenceData = $SourceData->{ReferenceData}->{ChangeGet};
+            my $ChangeGetReferenceData = $ReferenceData->{ChangeGet};
 
             my $ChangeData = $Self->{ChangeObject}->ChangeGet(
                 ChangeID => $ChangeID,
             );
 
-            if ( !$ChangeData ) {
+            $Self->True(
+                $ChangeData,
+                "Test $TestCount: ChangeGet() - Get change.",
+            );
+
+            for my $ChangeAttributes (qw(ChangeID CreateTime ChangeTime)) {
                 $Self->True(
-                    0,
-                    "Test $TestCount: ChangeGet() - Get change.",
+                    $ChangeData->{$ChangeAttributes},
+                    "Test $TestCount: has $ChangeAttributes.",
                 );
             }
-
-            $Self->True(
-                $ChangeData->{ChangeID},
-                "Test $TestCount: has ChangeID",
-            );
-
-            $Self->True(
-                $ChangeData->{CreateTime},
-                "Test $TestCount: has CreateTime",
-            );
-
-            $Self->True(
-                $ChangeData->{ChangeTime},
-                "Test $TestCount: has ChangeTime",
-            );
 
             for my $Key ( keys %{$ChangeGetReferenceData} ) {
                 my $IsEqual = ITSMChangeCompareDatastructure(
@@ -243,7 +248,7 @@ for my $Test (@ChangeTests) {
                     "Test $TestCount: $Key",
                 );
             }
-        }
+        }    # end ChangeGet
     }    # end if 'ReferenceData'
     ++$TestCount;
 }
@@ -307,6 +312,10 @@ sub ITSMChangeCompareDatastructure {
 
     if ( !defined $Param{Reference} ) {
         return 1 if !defined $Param{ToCheck};
+        return 0;
+    }
+
+    if ( defined $Param{Reference} && !defined $Param{ToCheck} ) {
         return 0;
     }
 
