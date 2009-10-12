@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.9 2009-10-12 20:19:33 mae Exp $
+# $Id: ITSMChange.t,v 1.10 2009-10-12 20:30:13 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -64,9 +64,12 @@ for my $Counter ( 1 .. 3 ) {
         UserLastname   => 'UnitTestCustomer',
         UserCustomerID => 'UCT' . $Counter . int rand 1_000_000,
         UserLogin      => 'UnitTest-ITSMChange-Customer-' . $Counter . int rand 1_000_000,
-        UserEmail => 'UnitTest-ITSMChange-Customer-' . $Counter . int rand 1_000_000 . '@localhost',
-        ValidID   => 1,
-        UserID    => 1,
+        UserEmail      => 'UnitTest-ITSMChange-Customer-'
+            . $Counter
+            . int( rand 1_000_000 )
+            . '@localhost',
+        ValidID => 1,
+        UserID  => 1,
     );
     push @CustomerUserIDs, $CustomerUserID;
 }
@@ -342,8 +345,8 @@ for my $Test (@ChangeTests) {
                 my $ReferenceAttribute = Data::Dumper::Dumper( $ChangeGetReferenceData->{$Key} );
 
                 $Self->Is(
-                    $ReferenceAttribute,
                     $ChangeAttribute,
+                    $ReferenceAttribute,
                     "Test $TestCount: $Key",
                 );
             }
@@ -363,7 +366,9 @@ for my $Test (@ChangeTests) {
 
         }    # end if ChangeUpdate
     }    # end if 'ReferenceData'
-    ++$TestCount;
+}
+continue {
+    $TestCount++;
 }
 
 # test if ChangeList returns at least as many changes as we created
@@ -380,10 +385,80 @@ my $Fails = grep { $_->{Fails} } @ChangeTests;
 
 # test if the changes where created
 $Self->Is(
-    keys %TestedChangeID || 0,
     scalar @ChangeTests - $Fails,
+    keys %TestedChangeID || 0,
     'Test ' . $TestCount++ . ': amount of change objects and test cases.',
 );
+
+# ------------------------------------------------------------ #
+# define general config item search tests
+# ------------------------------------------------------------ #
+
+my @ChangeSearchTests = (
+
+    # a simple check if the search functions takes care of "Limit"
+    {
+        SearchData => {
+            Limit => 1,
+        },
+        ResultData => {
+            Count => 1,
+            }
+    },
+
+    # search for all changes created by our first user
+    {
+        SearchData => {
+            Title         => 'Change 1',
+            Justification => 'Justification 1',
+        },
+        ReferenceData => {
+            Count => 2,
+
+        },
+    },
+
+    # search for all changes created by our first user
+    #{
+    #    Title => '',
+    #    Justification => '',
+    #},
+);
+
+SEARCHTEST:
+for my $SearchTest (@ChangeSearchTests) {
+
+    # check SearchData attribute
+    if ( !$SearchTest->{SearchData} || ref $SearchTest->{SearchData} ne 'HASH' ) {
+
+        $Self->True(
+            0,
+            "Test $TestCount: No SearchData found for this test.",
+        );
+
+        next SEARCHTEST;
+    }
+
+    my $ChangeIDs = $Self->{ChangeObject}->ChangeSearch(
+        %{ $SearchTest->{SearchData} },
+    );
+
+    $Self->True(
+        defined($ChangeIDs) && ref($ChangeIDs) eq 'ARRAY',
+        "Test $TestCount: No SearchData found for this test.",
+    );
+
+    $ChangeIDs ||= [];
+
+    $Self->Is(
+        scalar @{$ChangeIDs},
+        $SearchTest->{ResultData}->{Count},
+        "Test $TestCount: Number of found changes.",
+    );
+}
+continue {
+    $TestCount++;
+}
 
 # ------------------------------------------------------------ #
 # clean the system
