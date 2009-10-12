@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.6 2009-10-12 19:42:03 reb Exp $
+# $Id: ITSMChange.t,v 1.7 2009-10-12 19:49:34 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -249,13 +249,19 @@ for my $Test (@ChangeTests) {
             }
 
             for my $Key ( keys %{$ChangeGetReferenceData} ) {
-                my $IsEqual = ITSMChangeCompareDatastructure(
-                    Reference => $ChangeGetReferenceData->{$Key},
-                    ToCheck   => $ChangeData->{$Key},
-                );
 
-                $Self->True(
-                    $IsEqual,
+                # turn off all pretty print
+                $Data::Dumper::Indent = 0;
+
+                # dump the attribute from VersionGet()
+                my $ChangeAttribute = Data::Dumper::Dumper( $ChangeData->{$Key} );
+
+                # dump the reference attribute
+                my $ReferenceAttribute = Data::Dumper::Dumper( $ChangeGetReferenceData->{$Key} );
+
+                $Self->Is(
+                    $ReferenceAttribute,
+                    $ChangeAttribute,
                     "Test $TestCount: $Key",
                 );
             }
@@ -340,128 +346,5 @@ for my $ChangeID ( keys %TestedChangeID ) {
         UserID   => 1,
     );
 }
-
-# ------------------------------------------------------------ #
-# helper subroutines
-# ------------------------------------------------------------ #
-
-=head2 METHODS
-
-=over 4
-
-=item ITSMChangeCompareDatastructure()
-
-This method compares two datastructures with each other and it compares "deeply".
-
-    my $IsEqual = ITSMChangeCompareDatastructure(
-        Reference => [ 'test', 'array' ],
-        ToCheck   => [ 'test', 'array1' ],
-    );
-
-In the case above, C<$IsEqual> is 0 as the two array references differ.
-
-If the datastructures are equal, this method returns 1. You can pass scalars, array references
-and hash references.
-
-=cut
-
-sub ITSMChangeCompareDatastructure {
-    my %Param = @_;
-
-    if ( !defined $Param{Reference} ) {
-        return 1 if !defined $Param{ToCheck};
-        return 0;
-    }
-
-    if ( defined $Param{Reference} && !defined $Param{ToCheck} ) {
-        return 0;
-    }
-
-    if ( !ref( $Param{Reference} ) ) {
-        return 1 if !ref( $Param{ToCheck} ) && $Param{Reference} eq $Param{ToCheck};
-        return 0;
-    }
-
-    if ( ref( $Param{Reference} ) ) {
-        if ( ( !ref( $Param{ToCheck} ) ) || ref( $Param{Reference} ) ne ref( $Param{ToCheck} ) ) {
-            return 0;
-        }
-
-        if ( ref( $Param{Reference} ) eq 'ARRAY' ) {
-            return ITSMChangeCompareArray(
-                Reference => $Param{Reference},
-                ToCheck   => $Param{ToCheck},
-            );
-        }
-        elsif ( ref( $Param{Reference} ) eq 'HASH' ) {
-            return ITSMChangeCompareHash(
-                Reference => $Param{Reference},
-                ToCheck   => $Param{ToCheck},
-            );
-        }
-    }
-
-    return 0;
-}
-
-=item ITSMChangeCompareArray()
-
-This method compares two array references if the are equal.
-
-    my $IsEqual = ITSMChangeCompareHash(
-        Reference => [ 'elem1', 'elem2' ],
-        ToCheck   => [ 'elem1', 'elem2' ],
-    );
-
-=cut
-
-sub ITSMChangeCompareArray {
-    my %Param = @_;
-
-    return 0 if @{ $Param{Reference} } != @{ $Param{ToCheck} };
-
-    for my $ArrayIndex ( 0 .. $#{ $Param{Reference} } ) {
-        my $IsEqual = ITSMChangeCompareDatastructure(
-            Reference => $Param{Reference}->[$ArrayIndex],
-            ToCheck   => $Param{ToCheck}->[$ArrayIndex],
-        );
-
-        return 0 if !$IsEqual;
-    }
-
-    return 1;
-}
-
-=item ITSMChangeCompareHash()
-
-This method compares two hash references if the are equal.
-
-    my $IsEqual = ITSMChangeCompareHash(
-        Reference => { 1 => 'test' },
-        ToCheck   => { 1 => 'test' },
-    );
-
-=cut
-
-sub ITSMChangeCompareHash {
-    my %Param = @_;
-
-    return 0 if keys %{ $Param{Reference} } != keys %{ $Param{ToCheck} };
-
-    for my $Key ( keys %{ $Param{Reference} } ) {
-        my $IsEqual = ITSMChangeCompareDatastructure(
-            Reference => $Param{Reference}->{$Key},
-            ToCheck   => $Param{ToCheck}->{$Key},
-        );
-
-        return 0 if !$IsEqual;
-    }
-
-    return 1;
-}
-
-=back
-
-=cut
 
 1;
