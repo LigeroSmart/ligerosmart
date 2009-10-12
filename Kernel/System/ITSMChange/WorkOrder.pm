@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all work order functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.2 2009-10-06 22:24:42 ub Exp $
+# $Id: WorkOrder.pm,v 1.3 2009-10-12 12:52:45 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
@@ -131,6 +131,8 @@ sub WorkOrderAdd {
     return if $Param{WorkOrderStateID} && !$Self->_CheckWorkOrderStateID(
         WorkOrderStateID => $Param{WorkOrderStateID},
     );
+
+    my $WorkOrderID = 1;    # dummy value for now
 
     return $WorkOrderID;
 }
@@ -325,7 +327,7 @@ sub _CheckWorkOrderStateID {
     if ( !$Param{WorkOrderStateID} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Need $Argument!",
+            Message  => 'Need WorkOrderStateID!',
         );
         return;
     }
@@ -367,6 +369,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2009-10-06 22:24:42 $
+$Revision: 1.3 $ $Date: 2009-10-12 12:52:45 $
 
 =cut
