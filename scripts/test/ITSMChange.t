@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.10 2009-10-12 20:30:13 reb Exp $
+# $Id: ITSMChange.t,v 1.11 2009-10-12 20:37:00 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -412,9 +412,8 @@ my @ChangeSearchTests = (
             Title         => 'Change 1',
             Justification => 'Justification 1',
         },
-        ReferenceData => {
+        ResultData => {
             Count => 2,
-
         },
     },
 
@@ -429,11 +428,11 @@ SEARCHTEST:
 for my $SearchTest (@ChangeSearchTests) {
 
     # check SearchData attribute
-    if ( !$SearchTest->{SearchData} || ref $SearchTest->{SearchData} ne 'HASH' ) {
+    if ( ( !$SearchTest->{SearchData} ) || ref( $SearchTest->{SearchData} ) ne 'HASH' ) {
 
         $Self->True(
             0,
-            "Test $TestCount: No SearchData found for this test.",
+            "Test $TestCount: SearchData found for this test.",
         );
 
         next SEARCHTEST;
@@ -445,7 +444,7 @@ for my $SearchTest (@ChangeSearchTests) {
 
     $Self->True(
         defined($ChangeIDs) && ref($ChangeIDs) eq 'ARRAY',
-        "Test $TestCount: No SearchData found for this test.",
+        "Test $TestCount: array reference for ChangeIDs.",
     );
 
     $ChangeIDs ||= [];
