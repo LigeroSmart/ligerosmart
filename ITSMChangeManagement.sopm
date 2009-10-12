@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.10 2009-10-11 23:26:33 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.11 2009-10-12 12:28:51 ub Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -222,6 +222,24 @@
                 <Reference Local="create_by" Foreign="id"/>
             </ForeignKey>
         </TableCreate>
+        <TableCreate Name="change_template_type">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>
+            <Column Name="name" Required="true" Size="250" Type="VARCHAR"/>
+            <Column Name="valid_id" Required="true" Type="SMALLINT"/>
+            <Column Name="create_time" Required="true" Type="DATE"/>
+            <Column Name="create_by" Required="true" Type="INTEGER"/>
+            <Column Name="change_time" Required="true" Type="DATE"/>
+            <Column Name="change_by" Required="true" Type="INTEGER"/>
+            <Unique Name="change_template_type_name">
+                <UniqueColumn Name="name"/>
+            </Unique>
+            <Index Name="change_template_type_valid_id">
+                <IndexColumn Name="valid_id"/>
+            </Index>
+            <ForeignKey ForeignTable="valid">
+                <Reference Local="valid_id" Foreign="id"/>
+            </ForeignKey>
+        </TableCreate>
         <TableCreate Name="change_template">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>
             <Column Name="name" Required="true" Size="250" Type="VARCHAR"/>
@@ -248,24 +266,6 @@
             </ForeignKey>
             <ForeignKey ForeignTable="change_template_type">
                 <Reference Local="type_id" Foreign="id"/>
-            </ForeignKey>
-        </TableCreate>
-        <TableCreate Name="change_template_type">
-            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>
-            <Column Name="name" Required="true" Size="250" Type="VARCHAR"/>
-            <Column Name="valid_id" Required="true" Type="SMALLINT"/>
-            <Column Name="create_time" Required="true" Type="DATE"/>
-            <Column Name="create_by" Required="true" Type="INTEGER"/>
-            <Column Name="change_time" Required="true" Type="DATE"/>
-            <Column Name="change_by" Required="true" Type="INTEGER"/>
-            <Unique Name="change_template_type_name">
-                <UniqueColumn Name="name"/>
-            </Unique>
-            <Index Name="change_template_type_valid_id">
-                <IndexColumn Name="valid_id"/>
-            </Index>
-            <ForeignKey ForeignTable="valid">
-                <Reference Local="valid_id" Foreign="id"/>
             </ForeignKey>
         </TableCreate>
         <Insert Table="general_catalog">
