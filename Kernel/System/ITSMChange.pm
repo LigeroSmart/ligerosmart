@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.17 2009-10-12 17:40:13 ub Exp $
+# $Id: ITSMChange.pm,v 1.18 2009-10-12 18:39:13 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,14 +15,13 @@ use strict;
 use warnings;
 
 use Kernel::System::Valid;
-use Kernel::System::CheckItem;
 use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 #use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 =head1 NAME
 
@@ -96,7 +95,6 @@ sub new {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
-    $Self->{CheckItemObject}      = Kernel::System::CheckItem->new( %{$Self} );
     $Self->{ValidObject}          = Kernel::System::Valid->new( %{$Self} );
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
     $Self->{LinkObject}           = Kernel::System::LinkObject->new( %{$Self} );
@@ -179,6 +177,8 @@ sub ChangeAdd {
     }
     return if !$ChangeID;
 
+    # TODO: trigger ChangeAdd-Event
+
     # update change with remaining parameters
     return if !$Self->ChangeUpdate(
         ChangeID => $ChangeID,
@@ -223,6 +223,44 @@ sub ChangeUpdate {
 
     # check change parameters
     return if !$Self->_CheckChangeParams(%Param);
+
+    # map update attributes to column names
+    my %Attribute = (
+        Title           => 'title',
+        Description     => 'description',
+        Justification   => 'justification',
+        ChangeStateID   => 'change_state_id',
+        ChangeManagerID => 'change_manager_id',
+        ChangeBuilderID => 'change_builder_id',
+    );
+
+    # update CAB
+    if ( exists $Param{CABAgents} || exists $Param{CABCustomers} ) {
+        return if !$Self->ChangeCABUpdate(%Param);
+    }
+
+    # build SQL to update change
+    my $SQL = 'UPDATE change_item SET ';
+    my @Bind;
+    ATTRIBUTE:
+    for my $Key ( keys %Attribute ) {
+
+        # do not use column if not in function parameters
+        next ATTRIBUTE if !exists $Param{$Key};
+        $SQl .= "$Attribute{$Key} = ?, ";
+        push @Bind, \$Param{$Key};
+    }
+    push @Bind, \$Param{UserID}, \$Param{ChangeID};
+    $SQl .= 'change_time = current_timestamp, change_by = ? ';
+    $SQL .= 'WHERE id = ? ';
+
+    # add change to database
+    return if !$Self->{DBObject}->Do(
+        SQL  => $SQL,
+        Bind => \@Bind,
+    );
+
+    # TODO: trigger ChangeUpdate-Event
 
     return 1;
 }
@@ -727,6 +765,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.17 $ $Date: 2009-10-12 17:40:13 $
+$Revision: 1.18 $ $Date: 2009-10-12 18:39:13 $
 
 =cut
