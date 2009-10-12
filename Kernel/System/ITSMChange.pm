@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.16 2009-10-12 16:33:58 ub Exp $
+# $Id: ITSMChange.pm,v 1.17 2009-10-12 17:40:13 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,10 +18,11 @@ use Kernel::System::Valid;
 use Kernel::System::CheckItem;
 use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
-use Kernel::System::ITSMChange::WorkOrder;
+
+#use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 =head1 NAME
 
@@ -99,7 +100,8 @@ sub new {
     $Self->{ValidObject}          = Kernel::System::Valid->new( %{$Self} );
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
     $Self->{LinkObject}           = Kernel::System::LinkObject->new( %{$Self} );
-    $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::WorkOrder->new( %{$Self} );
+
+    #    $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::WorkOrder->new( %{$Self} );
 
     return $Self;
 }
@@ -725,6 +727,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.16 $ $Date: 2009-10-12 16:33:58 $
+$Revision: 1.17 $ $Date: 2009-10-12 17:40:13 $
 
 =cut
