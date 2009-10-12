@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.4 2009-10-12 19:06:55 mae Exp $
+# $Id: ITSMChange.t,v 1.5 2009-10-12 19:32:50 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -170,6 +170,17 @@ my @ChangeTests = (
         },
     },
 
+    # Update change without required params (required attributes)
+    {
+        SourceData => {
+            ChangeUpdate => {},
+        },
+        ReferenceData => {
+            ChangeUpdate => undef,
+        },
+        Fails => 1,    # we expect this test to fail
+    },
+
 );
 
 my %TestedChangeID;
@@ -215,8 +226,8 @@ for my $Test (@ChangeTests) {
         }
     }    # end if 'SourceData'
 
-    if ($ReferenceData)
-    {
+    if ($ReferenceData) {
+
         if ( $ReferenceData->{ChangeGet} ) {
 
             my $ChangeGetReferenceData = $ReferenceData->{ChangeGet};
@@ -249,6 +260,20 @@ for my $Test (@ChangeTests) {
                 );
             }
         }    # end ChangeGet
+
+        if ( exists $ReferenceData->{ChangeUpdate} ) {
+            my $ChangeUpdateSuccess = $Self->{ChangeObject}->ChangeUpdate(
+                ChangeID => $ChangeID,
+                %{ $SourceData->{ChangeUpdate} },
+            );
+
+            $Self->Is(
+                $ReferenceData->{ChangeUpdate},
+                $ChangeUpdateSuccess,
+                "Test $TestCount: ChangeUpdate() - update change.",
+            );
+
+        }    # end if ChangeUpdate
     }    # end if 'ReferenceData'
     ++$TestCount;
 }
@@ -256,7 +281,7 @@ for my $Test (@ChangeTests) {
 # test if ChangeList returns at least as many changes as we created
 # we cannot test for a specific number as these tests can be run in existing environments
 # where other changes already exist
-my $ChangeList = $Self->{ChangeObject}->ChangeList();
+my $ChangeList = $Self->{ChangeObject}->ChangeList() || [];
 $Self->True(
     @{$ChangeList} >= ( keys %TestedChangeID || 0 ),
     'Test ' . $TestCount++ . ': ChangeList() returns at least as many changes as we created',
