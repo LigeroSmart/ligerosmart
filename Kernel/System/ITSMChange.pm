@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.8 2009-10-12 13:00:42 bes Exp $
+# $Id: ITSMChange.pm,v 1.9 2009-10-12 13:35:11 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 =head1 NAME
 
@@ -45,6 +45,7 @@ create an object
     use Kernel::System::Log;
     use Kernel::System::DB;
     use Kernel::System::Main;
+    use Kernel::System::Time;
     use Kernel::System::ITSMChange;
 
     my $ConfigObject = Kernel::Config->new();
@@ -58,6 +59,10 @@ create an object
     my $MainObject = Kernel::System::Main->new(
         ConfigObject => $ConfigObject,
         EncodeObject => $EncodeObject,
+        LogObject    => $LogObject,
+    );
+    my $TimeObject = Kernel::System::Time->new(
+        ConfigObject => $ConfigObject,
         LogObject    => $LogObject,
     );
     my $DBObject = Kernel::System::DB->new(
@@ -84,10 +89,11 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Object (qw(DBObject ConfigObject EncodeObject LogObject MainObject)) {
+    for my $Object (qw(DBObject ConfigObject EncodeObject LogObject MainObject TimeObject)) {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
+    $Self->{CheckItemObject}      = Kernel::System::CheckItem->new( %{$Self} );
     $Self->{ValidObject}          = Kernel::System::Valid->new( %{$Self} );
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
     $Self->{LinkObject}           = Kernel::System::LinkObject->new( %{$Self} );
@@ -520,6 +526,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.8 $ $Date: 2009-10-12 13:00:42 $
+$Revision: 1.9 $ $Date: 2009-10-12 13:35:11 $
 
 =cut
