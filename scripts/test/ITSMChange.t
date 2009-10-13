@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.12 2009-10-12 20:43:01 mae Exp $
+# $Id: ITSMChange.t,v 1.13 2009-10-13 06:43:49 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -97,7 +97,7 @@ $Self->{ConfigObject}->Set(
 );
 
 # ------------------------------------------------------------ #
-# test ITSMChange api
+# test ITSMChange API
 # ------------------------------------------------------------ #
 my @ObjectMethods = qw(ChangeAdd ChangeDelete ChangeGet ChangeList ChangeSearch ChangeUpdate
     ChangeCABDelete ChangeCABGet ChangeCABUpdate);
@@ -319,6 +319,7 @@ for my $Test (@ChangeTests) {
 
             my $ChangeData = $Self->{ChangeObject}->ChangeGet(
                 ChangeID => $ChangeID,
+                UserID   => 1,
             );
 
             $Self->True(
