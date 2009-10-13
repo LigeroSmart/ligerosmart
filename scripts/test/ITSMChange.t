@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.15 2009-10-13 07:23:12 ub Exp $
+# $Id: ITSMChange.t,v 1.16 2009-10-13 07:35:50 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -354,6 +354,7 @@ for my $Test (@ChangeTests) {
 
                 # turn off all pretty print
                 $Data::Dumper::Indent = 0;
+                $Data::Dumper::Useqq  = 1;
 
                 # dump the attribute from VersionGet()
                 my $ChangeAttribute = Data::Dumper::Dumper( $ChangeData->{$Key} );
@@ -420,7 +421,7 @@ my @ChangeSearchTests = (
         },
         ResultData => {
             Count => 1,
-            }
+        },
     },
 
     # search for all changes created by our first user
@@ -488,7 +489,6 @@ $Self->{ConfigObject}->Set(
 );
 
 # set unittest users invalid
-ITEMID:
 for my $UnittestUserID (@UserIDs) {
 
     # get user data
