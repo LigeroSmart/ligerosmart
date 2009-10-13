@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.33 2009-10-13 11:37:50 bes Exp $
+# $Id: ITSMChange.pm,v 1.34 2009-10-13 12:09:35 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.33 $) [1];
+$VERSION = qw($Revision: 1.34 $) [1];
 
 =head1 NAME
 
@@ -603,11 +603,17 @@ sub ChangeCABDelete {
 
 =item ChangeNumberLookup()
 
-Return a change id for the passed change number.
-When no change id is found, the undefined value is returned.
+Return the change id when the passed change number.
+Return the change number when the change id is passed.
+When no change id or change number is found, the undefined value is returned.
 
     my $ChangeID = $ChangeObject->ChangeNumberLookup(
         ChangeNumber => '2009091742000465',
+        UserID => 1,
+    );
+
+    my $ChangeNumber = $ChangeObject->ChangeNumberLookup(
+        ChangeID => 42,
         UserID => 1,
     );
 
@@ -616,30 +622,62 @@ When no change id is found, the undefined value is returned.
 sub ChangeNumberLookup {
     my ( $Self, %Param ) = @_;
 
-    for my $Argument (qw( UserID ChangeNumber )) {
-        if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Argument!",
-            );
-            return;
-        }
+    if ( !$Param{UserID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Need UserID!",
+        );
+        return;
+    }
+
+    # the change id or the change number must be passed
+    if ( !$Param{ChangeID} && !$Param{ChangeNummber} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Need the ChangeId or the ChangeNumber!",
+        );
+        return;
+    }
+
+    # only one of change id abd change number can be passed
+    if ( $Param{ChangeID} && $Param{ChangeNummber} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Need either the ChangeId or the ChangeNumber, not both!",
+        );
+        return;
     }
 
     # get change id
+    if ( $Param{ChangeNumber} ) {
+        return if !$Self->{DBObject}->Prepare(
+            SQL => 'SELECT id FROM change_item '
+                . 'WHERE change_number = ?',
+            Bind  => [ \$Param{ChangeNumber} ],
+            Limit => 1,
+        );
+
+        my $ChangeID;
+        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+            $ChangeID = $Row[0];
+        }
+
+        return $ChangeID;
+    }
+
     return if !$Self->{DBObject}->Prepare(
-        SQL => 'SELECT id FROM change_item '
-            . 'WHERE change_number = ?',
-        Bind  => [ \$Param{ChangeNumber} ],
+        SQL => 'SELECT change_number FROM change_item '
+            . 'WHERE id = ?',
+        Bind  => [ \$Param{ChangeID} ],
         Limit => 1,
     );
 
-    my $ChangeID;
+    my $ChangeNumber;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $ChangeID = $Row[0];
+        $ChangeNumber = $Row[0];
     }
 
-    return $ChangeID;
+    return $ChangeNumber;
 }
 
 =item ChangeList()
@@ -1235,6 +1273,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.33 $ $Date: 2009-10-13 11:37:50 $
+$Revision: 1.34 $ $Date: 2009-10-13 12:09:35 $
 
 =cut
