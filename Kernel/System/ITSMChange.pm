@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.30 2009-10-13 08:19:00 bes Exp $
+# $Id: ITSMChange.pm,v 1.31 2009-10-13 08:28:21 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.30 $) [1];
+$VERSION = qw($Revision: 1.31 $) [1];
 
 =head1 NAME
 
@@ -347,9 +347,46 @@ sub ChangeGet {
         ChangeID => $Param{ChangeID},
         UserID   => $Param{UserID},
     );
+
+    # add result to change data
     %ChangeData = ( %ChangeData, %{$CAB} );
 
-    #$Self->{LogObject}->Dum_per( '', '%ChangeData', \%ChangeData );
+    # get all workorder ids for this change
+    my $WorkOrderIDsRef = $Self->{WorkOrderObject}->WorkOrderList(
+        ChangeID => $Param{ChangeID},
+        UserID   => $Param{UserID},
+    );
+
+    # add result to change data
+    $ChangeData{WorkOrderIDs} = $WorkOrderIDsRef || [];
+
+    # get PlannedStartTime
+    $ChangeData{PlannedStartTime} = $Self->{WorkOrderObject}->WorkOrderChangeStartGet(
+        ChangeID => $Param{ChangeID},
+        Type     => 'planned',
+        UserID   => $Param{UserID},
+    );
+
+    # get PlannedEndTime
+    $ChangeData{PlannedEndTime} = $Self->{WorkOrderObject}->WorkOrderChangeEndGet(
+        ChangeID => $Param{ChangeID},
+        Type     => 'planned',
+        UserID   => $Param{UserID},
+    );
+
+    # get PlannedStartTime
+    $ChangeData{ActualStartTime} = $Self->{WorkOrderObject}->WorkOrderChangeStartGet(
+        ChangeID => $Param{ChangeID},
+        Type     => 'actual',
+        UserID   => $Param{UserID},
+    );
+
+    # get ActualStartTime
+    $ChangeData{ActualEndTime} = $Self->{WorkOrderObject}->WorkOrderChangeEndGet(
+        ChangeID => $Param{ChangeID},
+        Type     => 'actual',
+        UserID   => $Param{UserID},
+    );
 
     return \%ChangeData;
 }
@@ -590,7 +627,7 @@ sub ChangeList {
         return;
     }
 
-    # get change id,
+    # get change id
     return if !$Self->{DBObject}->Prepare(
         SQL => 'SELECT id FROM change_item',
     );
@@ -1031,6 +1068,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.30 $ $Date: 2009-10-13 08:19:00 $
+$Revision: 1.31 $ $Date: 2009-10-13 08:28:21 $
 
 =cut
