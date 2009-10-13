@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.40 2009-10-13 14:07:05 reb Exp $
+# $Id: ITSMChange.t,v 1.41 2009-10-13 14:11:36 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -77,10 +77,9 @@ for my $Counter ( 1 .. 3 ) {
 
 # create invalid user IDs
 for ( 1 .. 2 ) {
-    my $TempInvalidUserID = int rand 1_000_000;
-
     LPC:
     for my $LoopProtectionCounter ( 1 .. 100 ) {
+        my $TempInvalidUserID = int rand 1_000_000;
         next LPC
             if (
             defined $Self->{UserObject}->GetUserData(
@@ -477,6 +476,7 @@ my @ChangeTests   = (
     # test on max+1 long params  (required attributes)
     {
         Description => 'Test for max+1 string length for ChangeUpdate.',
+        UpdateFails => 1,
         SourceData  => {
             ChangeAdd => {
                 UserID => $UserIDs[0],
@@ -720,7 +720,11 @@ for my $Test (@ChangeTests) {
             %{ $SourceData->{ChangeUpdate} },
         );
 
-        if ( $Test->{Fails} ) {
+        if (
+            $Test->{Fails}
+            || $Test->{UpdateFails}
+            )
+        {
             $Self->False(
                 $ChangeUpdateSuccess,
                 "Test $TestCount: ChangeUpdate()",
