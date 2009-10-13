@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.28 2009-10-13 12:23:23 reb Exp $
+# $Id: ITSMChange.t,v 1.29 2009-10-13 12:27:34 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -345,6 +345,7 @@ my @ChangeTests   = (
     # test on max+1 long params  (required attributes)
     {
         Description => 'Test for max+1 string length for ChangeAdd.',
+        Fails       => 1,
         SourceData  => {
             ChangeAdd => {
                 UserID        => $UserIDs[0],
@@ -354,20 +355,8 @@ my @ChangeTests   = (
             },
         },
         ReferenceData => {
-            ChangeGet => {
-                Title           => 'X' x 250,
-                Description     => 'Y' x 3800,
-                Justification   => 'Z' x 3800,
-                ChangeManagerID => undef,
-                ChangeBuilderID => $UserIDs[0],
-                WorkOrderIDs    => [],
-                CABAgents       => [],
-                CABCustomers    => [],
-                CreateBy        => $UserIDs[0],
-                ChangeBy        => $UserIDs[0],
-            },
+            ChangeGet => undef,
         },
-        SearchTest => [ 2, 11 ],
     },
 
     # Update change without required params (required attributes)
@@ -409,6 +398,26 @@ my @ChangeTests   = (
                 CreateBy        => $UserIDs[0],
                 ChangeBy        => 1,
             },
+        },
+        SearchTest => [ 2, 11 ],
+    },
+
+    # test on max+1 long params  (required attributes)
+    {
+        Description => 'Test for max+1 string length for ChangeUpdate.',
+        SourceData  => {
+            ChangeAdd => {
+                UserID => $UserIDs[0],
+            },
+            ChangeUpdate => {
+                UserID        => 1,
+                Title         => 'X' x 251,
+                Description   => 'Y' x 3801,
+                Justification => 'Z' x 3801,
+            },
+        },
+        ReferenceData => {
+            ChangeGet => undef,
         },
     },
 
