@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.25 2009-10-13 07:20:11 ub Exp $
+# $Id: ITSMChange.pm,v 1.26 2009-10-13 07:47:06 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.25 $) [1];
+$VERSION = qw($Revision: 1.26 $) [1];
 
 =head1 NAME
 
@@ -28,7 +28,7 @@ Kernel::System::ITSMChange - change lib
 
 =head1 SYNOPSIS
 
-All config item functions.
+All functions for changes in ITSMChangeManagement.
 
 =head1 PUBLIC INTERFACE
 
@@ -353,7 +353,11 @@ sub ChangeGet {
 
 =item ChangeCABUpdate()
 
-add or update the CAB of a change
+add or update the CAB of a change.
+One of CABAgents and CABCustomers must be passed.
+Passing a reference to an empty array deletes the CAB.
+When an agents or customer is passed multiple time, he will
+be inserted only once.
 
     my $Success = $ChangeObject->ChangeCABUpdate(
         ChangeID     => 123,
@@ -378,10 +382,7 @@ sub ChangeCABUpdate {
         }
     }
 
-    # TODO:
-    # add filter to filter out entries that appear more than once
-
-    # TODO: add comment
+    # either CABAgents of CABCustomers or both must be passed
     if ( !$Param{CABAgents} && !$Param{CABCustomers} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
@@ -390,7 +391,7 @@ sub ChangeCABUpdate {
         return;
     }
 
-    # TODO: add comment
+    # CABAgents and CABCustomers must be array references
     for my $Attribute (qw(CABAgents CABCustomers)) {
         if ( $Param{$Attribute} && ref $Param{$Attribute} ne 'ARRAY' ) {
             $Self->{LogObject}->Log(
@@ -401,33 +402,53 @@ sub ChangeCABUpdate {
         }
     }
 
-    # TODO: add comment
+    # enter the CAB Agents
     if ( $Param{CABAgents} ) {
+
+        # remove old list
         return if !$Self->{DBObject}->Do(
             SQL => 'DELETE FROM change_cab '
                 . 'WHERE change_id = ? '
                 . 'AND user_id IS NOT NULL',
             Bind => [ \$Param{ChangeID} ],
         );
+
+        # Insert an user only once
+        my %Seen;
+        USER_ID:
         for my $UserID ( @{ $Param{CABAgents} } ) {
+            next USER_ID if $Seen{$UserID};
+            $Seen{$UserID} = 1;
+
             return if !$Self->{DBObject}->Do(
-                SQL => 'INSERT INTO change_cab ( change_id, user_id ) VALUES ( ?, ? )',
+                SQL => 'INSERT INTO change_cab ( change_id, user_id ) '
+                    . 'VALUES ( ?, ? )',
                 Bind => [ \$Param{ChangeID}, \$UserID ],
             );
         }
     }
 
-    # TODO: add comment
+    # enter the CAB Customers
     if ( $Param{CABCustomers} ) {
+
+        # remove old list
         return if !$Self->{DBObject}->Do(
             SQL => 'DELETE FROM change_cab '
                 . 'WHERE change_id = ? '
                 . 'AND customer_user_id IS NOT NULL',
             Bind => [ \$Param{ChangeID} ],
         );
+
+        # Insert an customer only once
+        my %Seen;
+        CUSTOMER_USER_ID:
         for my $CustomerUserID ( @{ $Param{CABCustomers} } ) {
+            next CUSTOMER_USER_ID if $Seen{$CustomerUserID};
+            $Seen{$CustomerUserID} = 1;
+
             return if !$Self->{DBObject}->Do(
-                SQL => 'INSERT INTO change_cab ( change_id, customer_user_id ) VALUES ( ?, ? )',
+                SQL => 'INSERT INTO change_cab ( change_id, customer_user_id ) '
+                    . 'VALUES ( ?, ? )',
                 Bind => [ \$Param{ChangeID}, \$CustomerUserID ],
             );
         }
@@ -918,6 +939,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.25 $ $Date: 2009-10-13 07:20:11 $
+$Revision: 1.26 $ $Date: 2009-10-13 07:47:06 $
 
 =cut
