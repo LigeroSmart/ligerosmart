@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all work order functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.4 2009-10-13 07:21:19 ub Exp $
+# $Id: WorkOrder.pm,v 1.5 2009-10-13 08:07:32 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 =head1 NAME
 
@@ -125,6 +125,7 @@ or
         PlannedEndTime   => '2009-10-15 15:00:00',                     # (optional)
         ActualStartTime  => '2009-10-14 00:00:01',                     # (optional)
         ActualEndTime    => '2009-01-20 00:00:01',                     # (optional)
+
         UserID           => 1,
     );
 
@@ -211,6 +212,7 @@ Return
 
     my $WorkOrderRef = $WorkOrderObject->WorkOrderGet(
         WorkOrderID => 123,
+        UserID      => 1,
     );
 
 =cut
@@ -288,6 +290,8 @@ return a list of workorder ids as an array reference
         # CreateTime, CreateBy, ChangeTime, ChangeBy)
 
         Limit => 100,                                                  # (optional)
+
+        UserID => 1,
     );
 
 =cut
@@ -306,6 +310,7 @@ NOTE: This function must first remove all links to this WorkOrderObject,
 
     my $Success = $WorkOrderObject->WorkOrderDelete(
         WorkOrderID => 123,
+        UserID      => 1,
     );
 
 =cut
@@ -323,6 +328,7 @@ get the start date of a change, calculated from the start of the first work orde
     my $ChangeStartTime = $WorkOrderObject->WorkOrderChangeStartGet(
         ChangeID => 123,
         Type     => 'planned' || 'actual',
+        UserID   => 1,
     );
 
 =cut
@@ -342,6 +348,7 @@ get the end date of a change, calculated from the start of the first work order
     my $ChangeEndTime = $WorkOrderObject->WorkOrderChangeEndGet(
         ChangeID => 123,
         Type     => 'planned' || 'actual',
+        UserID   => 1,
     );
 
 =cut
@@ -413,6 +420,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2009-10-13 07:21:19 $
+$Revision: 1.5 $ $Date: 2009-10-13 08:07:32 $
 
 =cut
