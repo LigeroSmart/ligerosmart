@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.36 2009-10-13 13:46:50 reb Exp $
+# $Id: ITSMChange.t,v 1.37 2009-10-13 13:55:36 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -911,7 +911,7 @@ $Self->Is(
 );
 
 # ------------------------------------------------------------ #
-# define general config item search tests
+# define general change search tests
 # ------------------------------------------------------------ #
 my $SystemTime = $Self->{TimeObject}->SystemTime();
 
@@ -1245,7 +1245,7 @@ $Self->{ConfigObject}->Set(
     Value => $CheckEmailAddressesOrg,
 );
 
-# delete the test config items
+# delete the test changes
 for my $ChangeID ( keys %TestedChangeID ) {
     $Self->True(
         $Self->{ChangeObject}->ChangeDelete(
