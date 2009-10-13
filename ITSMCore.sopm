@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMCore.sopm,v 1.87 2009-10-07 13:37:51 reb Exp $</CVS>
+    <CVS>$Id: ITSMCore.sopm,v 1.88 2009-10-13 17:58:09 ub Exp $</CVS>
     <Name>ITSMCore</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
-    <PackageRequired Version="1.3.72">GeneralCatalog</PackageRequired>
+    <PackageRequired Version="1.3.73">GeneralCatalog</PackageRequired>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
@@ -451,7 +451,7 @@
         }
 
     </CodeReinstall>
-    <CodeUpgrade Type="post" Version="1.3.72">
+    <CodeUpgrade Type="post">
 
         # define function name
         my $FunctionName = 'CodeUpgrade';
@@ -532,7 +532,7 @@
         &lt;br&gt;
         &lt;b&gt;REQUIRED OTRS PACKAGES&lt;/b&gt;
         &lt;ul&gt;
-        &lt;li&gt;GeneralCatalog 1.3.72&lt;/li&gt;
+        &lt;li&gt;GeneralCatalog 1.3.73&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         &lt;b&gt;ATTENTION&lt;/b&gt;
@@ -556,7 +556,7 @@
         &lt;br&gt;
         &lt;b&gt;BENÖTIGTE OTRS-PAKETE&lt;/b&gt;
         &lt;ul&gt;
-        &lt;li&gt;GeneralCatalog 1.3.72&lt;/li&gt;
+        &lt;li&gt;GeneralCatalog 1.3.73&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         &lt;b&gt;ACHTUNG&lt;/b&gt;
@@ -612,7 +612,7 @@
         &lt;br&gt;
         &lt;b&gt;REQUIRED OTRS PACKAGES&lt;/b&gt;
         &lt;ul&gt;
-        &lt;li&gt;GeneralCatalog 1.3.72&lt;/li&gt;
+        &lt;li&gt;GeneralCatalog 1.3.73&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         &lt;/b&gt;ATTENTION&lt;/b&gt;
@@ -636,7 +636,7 @@
         &lt;br&gt;
         &lt;b&gt;BENÃ–TIGTE OTRS-PAKETE&lt;/b&gt;
         &lt;ul&gt;
-        &lt;li&gt;GeneralCatalog 1.3.72&lt;/li&gt;
+        &lt;li&gt;GeneralCatalog 1.3.73&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         &lt;b&gt;ACHTUNG&lt;/b&gt;
