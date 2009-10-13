@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.39 2009-10-13 14:04:11 reb Exp $
+# $Id: ITSMChange.t,v 1.40 2009-10-13 14:07:05 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -892,7 +892,7 @@ if ($ChangeLookupTestID) {
 # where other changes already exist
 my $ChangeList = $Self->{ChangeObject}->ChangeList( UserID => 1 ) || [];
 my %ChangeListMap = map { $_ => 1 } @{$ChangeList};
-for my $KeyTestedChangeID (%TestedChangeID) {
+for my $KeyTestedChangeID ( keys %TestedChangeID ) {
     $Self->True(
         $ChangeListMap{$KeyTestedChangeID},
         'Test ' . $TestCount++ . ": ChangeList() - ChangeID $KeyTestedChangeID in list.",
