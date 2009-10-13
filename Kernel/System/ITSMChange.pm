@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.40 2009-10-13 13:19:44 ub Exp $
+# $Id: ITSMChange.pm,v 1.41 2009-10-13 17:17:59 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.40 $) [1];
+$VERSION = qw($Revision: 1.41 $) [1];
 
 =head1 NAME
 
@@ -223,6 +223,11 @@ sub ChangeUpdate {
     # check change parameters
     return if !$Self->_CheckChangeParams(%Param);
 
+    # update CAB
+    if ( exists $Param{CABAgents} || exists $Param{CABCustomers} ) {
+        return if !$Self->ChangeCABUpdate(%Param);
+    }
+
     # map update attributes to column names
     my %Attribute = (
         Title           => 'title',
@@ -232,11 +237,6 @@ sub ChangeUpdate {
         ChangeManagerID => 'change_manager_id',
         ChangeBuilderID => 'change_builder_id',
     );
-
-    # update CAB
-    if ( exists $Param{CABAgents} || exists $Param{CABCustomers} ) {
-        return if !$Self->ChangeCABUpdate(%Param);
-    }
 
     # build SQL to update change
     my $SQL = 'UPDATE change_item SET ';
@@ -329,9 +329,9 @@ sub ChangeGet {
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $ChangeData{ChangeID}        = $Row[0];
         $ChangeData{ChangeNumber}    = $Row[1];
-        $ChangeData{Title}           = $Row[2] || '';
-        $ChangeData{Description}     = $Row[3] || '';
-        $ChangeData{Justification}   = $Row[4] || '';
+        $ChangeData{Title}           = defined( $Row[2] ) ? $Row[2] : '';
+        $ChangeData{Description}     = defined( $Row[3] ) ? $Row[3] : '';
+        $ChangeData{Justification}   = defined( $Row[4] ) ? $Row[4] : '';
         $ChangeData{ChangeStateID}   = $Row[5];
         $ChangeData{ChangeManagerID} = $Row[6];
         $ChangeData{ChangeBuilderID} = $Row[7];
@@ -724,14 +724,23 @@ return list of change ids as an array reference
 
     my $ChangeIDsRef = $ChangeObject->ChangeSearch(
         ChangeNumber     => '2009100112345778',                 # (optional)
+
         Title            => 'Replacement of slow mail server',  # (optional)
         Description      => 'New mail server is faster',        # (optional)
         Justification    => 'Old mail server too slow',         # (optional)
-        ChangeStateID    => 4,                                  # (optional)
 
-        ChangeManagerID  => 5,                                  # (optional)
-        ChangeBuilderID  => 6,                                  # (optional)
-        WorkOrderAgentID => 7,                                  # (optional)
+        # array parameters are used with logical OR operator
+        ChangeStateID    => [ 11, 12, 13 ],                     # (optional)
+        ChangeManagerID  => [ 1, 2, 3 ],                        # (optional)
+        ChangeBuilderID  => [ 5, 7, 4 ],                        # (optional)
+
+        TODO : ????? Array params or not????
+        WorkOrderAgentID => [ 6, 2 ],                           # (optional)
+
+        CreateBy         => [ 5, 2, 3 ],                        # (optional)
+        ChangeBy         => [ 3, 2, 1 ],                        # (optional)
+
+        # TODO : implement this!
         CABAgent         => 9,                                  # (optional)
         CABCustomer      => 'tt',                               # (optional)
 
@@ -789,6 +798,155 @@ sub ChangeSearch {
         );
         return;
     }
+
+    # set default values
+    if ( !defined $Param{UsingWildcards} ) {
+        $Param{UsingWildcards} = 1;
+    }
+    $Param{OrderBy} ||= 'id';
+
+    # to build the SQL-Where clause
+    my @SQLWhere;
+
+    # set string params
+    my %StringParams = (
+        ChangeNumber  => 'change_number',
+        Title         => 'title',
+        Description   => 'description',
+        Justification => 'justification',
+    );
+
+    # add string params to sql-where-array
+    STRINGPARAM:
+    for my $StringParam ( keys %StringParams ) {
+
+        # check string params for useful values
+        next STRINGPARAM if !exists $Param{$StringParam};
+        next STRINGPARAM if !defined $Param{$StringParam};
+        next STRINGPARAM if $Param{$StringParam} ne '';
+
+        # quote
+        $Param{$StringParam} = $Self->{DBObject}->Quote( $Param{$StringParam} );
+
+        if ( $Param{UsingWildcards} ) {
+
+            # prepare like string
+            $Self->_PrepareLikeString( \$Param{$StringParam} );
+
+            push @SQLWhere, "LOWER($StringParams{$StringParam}) LIKE LOWER('$Param{$StringParam}')";
+        }
+        else {
+            push @SQLWhere, "LOWER($StringParams{$StringParam}) = LOWER('$Param{$StringParam}')";
+        }
+
+    }
+
+    # set array params
+    my %ArrayParams = (
+        ChangeStateID   => 'change_state_id',
+        ChangeManagerID => 'change_manager_id',
+        ChangeBuilderID => 'change_builder_id',
+        CreateBy        => 'create_by',
+        ChangeBy        => 'change_by',
+    );
+
+    # add array params to sql-where-array
+    ARRAYPARAM:
+    for my $ArrayParam ( keys %ArrayParams ) {
+
+        next ARRAYPARAM if !$Param{$ArrayParam};
+
+        if ( ref $Param{$ArrayParam} ne 'ARRAY' ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "$ArrayParam must be an array reference!",
+            );
+            return;
+        }
+
+        next ARRAYPARAM if !@{ $Param{$ArrayParam} };
+
+        # quote
+        for my $OneParam ( @{ $Param{$ArrayParam} } ) {
+            $OneParam = $Self->{DBObject}->Quote($OneParam);
+        }
+
+        # create string
+        my $InString = join q{, }, @{ $Param{$ArrayParam} };
+
+        next ARRAYPARAM if !$InString;
+
+        push @SQLWhere, "$ArrayParams{ $ArrayParam } IN ($InString)";
+    }
+
+    # set time params
+    my %TimeParams = (
+        CreateTimeNewerDate => 'create_time >=',
+        CreateTimeOlderDate => 'create_time <=',
+        ChangeTimeNewerDate => 'change_time >=',
+        ChangeTimeOlderDate => 'change_time <=',
+    );
+
+    TIMEPARAM:
+    for my $TimeParam ( keys %TimeParams ) {
+
+        next TIMEPARAM if !$Param{$TimeParam};
+
+        if ( $Param{$TimeParam} !~ m{ \A \d\d\d\d-\d\d-\d\d \s \d\d:\d\d:\d\d \z }xms ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Invalid date format found!",
+            );
+            return;
+        }
+
+        # quote
+        $Param{$TimeParam} = $Self->{DBObject}->Quote( $Param{$TimeParam} );
+
+        push @SQLWhere, "$TimeParams{ $TimeParam } '$Param{ $TimeParam }'";
+    }
+
+    # create where string
+    my $WhereString = @SQLWhere ? ' WHERE ' . join q{ AND }, @SQLWhere : '';
+
+    #    # define order table
+    #    my %OrderByTable = (
+    #        ChangeID         => 'id',
+    #        ChangeNumber     => '',
+    #        ChangeStateID    => '',
+    #        ChangeManagerID  => '',
+    #        ChangeBuilderID  => '',
+    #        PlannedStartTime => '',
+    #        PlannedStartTime => '',
+    #        ActualStartTime  => '',
+    #        ActualEndTime    => '',
+    #        CreateTime       => '',
+    #        CreateBy         => '',
+    #        ChangeTime       => '',
+    #        ChangeBy         => '',
+    #    );
+    #
+    #    # set order by
+    #    my $OrderBy = $OrderByTable{ $Param{OrderBy} } || $OrderByTable{ConfigItemID};
+
+    # set limit
+    if ( $Param{Limit} ) {
+        $Param{Limit} = $Self->{DBObject}->Quote( $Param{Limit}, 'Integer' );
+    }
+
+    # ask database
+    $Self->{DBObject}->Prepare(
+        SQL   => "SELECT id FROM configitem $WhereString ORDER BY $OrderBy ASC",
+        Limit => $Param{Limit},
+    );
+
+    # fetch the result
+    my @ConfigItemList;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        push @ConfigItemList, $Row[0];
+    }
+
+    return \@ConfigItemList;
 
     return;
 }
@@ -1302,6 +1460,29 @@ sub _CheckChangeParams {
     return 1;
 }
 
+=item _PrepareLikeString()
+
+internal function to prepare like strings
+
+    $ChangeObject->_PrepareLikeString( $StringRef );
+
+=cut
+
+sub _PrepareLikeString {
+    my ( $Self, $Value ) = @_;
+
+    return if !$Value;
+    return if ref $Value ne 'SCALAR';
+
+    # Quote
+    ${$Value} = $Self->{DBObject}->Quote( ${$Value}, 'Like' );
+
+    # replace * with %
+    ${$Value} =~ s{ \*+ }{%}xmsg;
+
+    return;
+}
+
 1;
 
 =back
@@ -1318,6 +1499,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.40 $ $Date: 2009-10-13 13:19:44 $
+$Revision: 1.41 $ $Date: 2009-10-13 17:17:59 $
 
 =cut
