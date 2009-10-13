@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.35 2009-10-13 13:37:01 mae Exp $
+# $Id: ITSMChange.t,v 1.36 2009-10-13 13:46:50 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -895,7 +895,7 @@ my %ChangeListMap = map { $_ => 1 } @{$ChangeList};
 for my $KeyTestedChangeID (%TestedChangeID) {
     $Self->True(
         $ChangeListMap{$KeyTestedChangeID},
-        'Test ' . $TestCount++ . ": $KeyTestedChangeID in array ref returned by ChangeList().",
+        'Test ' . $TestCount++ . ": ChangeList() - ChangeID $KeyTestedChangeID in list.",
     );
 }
 
