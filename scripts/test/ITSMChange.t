@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.37 2009-10-13 13:55:36 reb Exp $
+# $Id: ITSMChange.t,v 1.38 2009-10-13 14:00:56 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -677,7 +677,7 @@ for my $Test (@ChangeTests) {
             %{ $SourceData->{ChangeAdd} }
         );
 
-        # rember current ChangeID
+        # remember current ChangeID
         if ($ChangeID) {
             $TestedChangeID{$ChangeID} = 1;
 
