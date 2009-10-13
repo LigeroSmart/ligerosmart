@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.34 2009-10-13 12:09:35 bes Exp $
+# $Id: ITSMChange.pm,v 1.35 2009-10-13 12:11:08 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.34 $) [1];
+$VERSION = qw($Revision: 1.35 $) [1];
 
 =head1 NAME
 
@@ -1175,6 +1175,24 @@ sub _CheckChangeParams {
             );
             return;
         }
+
+        # check the maximum length of title
+        if ( $Argument eq 'Title' && length( $Param{$Argument} ) > 250 ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "The parameter $Argument must be shorter than 250 characters!",
+            );
+        }
+
+        # check the maximum length of description and justification
+        if ( $Argument eq 'Description' || $Argument eq 'Justification' ) {
+            if ( length( $Param{$Argument} ) > 3800 ) {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "The parameter $Argument must be shorter than 3800 characters!",
+                );
+            }
+        }
     }
 
     # check if given ChangeStateID is valid
@@ -1273,6 +1291,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.34 $ $Date: 2009-10-13 12:09:35 $
+$Revision: 1.35 $ $Date: 2009-10-13 12:11:08 $
 
 =cut
