@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.32 2009-10-13 11:21:40 ub Exp $
+# $Id: ITSMChange.pm,v 1.33 2009-10-13 11:37:50 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.32 $) [1];
+$VERSION = qw($Revision: 1.33 $) [1];
 
 =head1 NAME
 
@@ -165,16 +165,11 @@ sub ChangeAdd {
     );
 
     # get change id
-    return if !$Self->{DBObject}->Prepare(
-        SQL => 'SELECT id FROM change_item '
-            . 'WHERE change_number = ?',
-        Bind  => [ \$ChangeNumber ],
-        Limit => 1,
+    my $ChangeID = $Self->ChangeNumberLookup(
+        UserID       => $Param{UserID},
+        ChangeNumber => $ChangeNumber,
     );
-    my $ChangeID;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $ChangeID = $Row[0];
-    }
+
     return if !$ChangeID;
 
     # TODO: trigger ChangeAdd-Event
@@ -604,6 +599,47 @@ sub ChangeCABDelete {
     );
 
     return 1;
+}
+
+=item ChangeNumberLookup()
+
+Return a change id for the passed change number.
+When no change id is found, the undefined value is returned.
+
+    my $ChangeID = $ChangeObject->ChangeNumberLookup(
+        ChangeNumber => '2009091742000465',
+        UserID => 1,
+    );
+
+=cut
+
+sub ChangeNumberLookup {
+    my ( $Self, %Param ) = @_;
+
+    for my $Argument (qw( UserID ChangeNumber )) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # get change id
+    return if !$Self->{DBObject}->Prepare(
+        SQL => 'SELECT id FROM change_item '
+            . 'WHERE change_number = ?',
+        Bind  => [ \$Param{ChangeNumber} ],
+        Limit => 1,
+    );
+
+    my $ChangeID;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $ChangeID = $Row[0];
+    }
+
+    return $ChangeID;
 }
 
 =item ChangeList()
@@ -1199,6 +1235,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.32 $ $Date: 2009-10-13 11:21:40 $
+$Revision: 1.33 $ $Date: 2009-10-13 11:37:50 $
 
 =cut
