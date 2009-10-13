@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.33 2009-10-13 13:00:41 reb Exp $
+# $Id: ITSMChange.t,v 1.34 2009-10-13 13:32:46 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -805,7 +805,7 @@ if ($ChangeLookupTestID) {
         $ChangeData->{ChangeNumber},
         'Test '
             . $TestCount++
-            . ": ChangeNumberLookup with ChangeID $ChangeLookupTestID successful.",
+            . ": ChangeLookup with ChangeID $ChangeLookupTestID successful.",
     );
 }
 
@@ -813,10 +813,13 @@ if ($ChangeLookupTestID) {
 # we cannot test for a specific number as these tests can be run in existing environments
 # where other changes already exist
 my $ChangeList = $Self->{ChangeObject}->ChangeList( UserID => 1 ) || [];
-$Self->True(
-    @{$ChangeList} >= ( keys %TestedChangeID || 0 ),
-    'Test ' . $TestCount++ . ': ChangeList() returns at least as many changes as we created',
-);
+my %ChangeListMap = map { $_ => 1 } @{$ChangeList};
+for my $KeyTestedChangeID (%TestedChangeID) {
+    $Self->True(
+        $ChangeListMap{$KeyTestedChangeID},
+        'Test ' . $TestCount++ . ": $KeyTestedChangeID in array ref returned by ChangeList().",
+    );
+}
 
 # count all tests that are required to and planned for fail
 my $Fails = grep { $_->{Fails} } @ChangeTests;
