@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.20 2009-10-13 08:46:57 reb Exp $
+# $Id: ITSMChange.t,v 1.21 2009-10-13 09:04:58 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -149,22 +149,26 @@ for my $DefaultChangeState (@DefaultChangeStates) {
 # ------------------------------------------------------------ #
 # define general change tests
 # ------------------------------------------------------------ #
-my @ChangeTests = (
+# store current TestCount for better test case recognition
+my $TestCountMisc = $TestCount;
+my @ChangeTests   = (
 
     # Change doesn't contain all data (required attributes)
     {
-        SourceData => {
+        Description => 'Test contains no params for ChangeAdd.',
+        Fails       => 1,                                          # we expect this test to fail
+        SourceData  => {
             ChangeAdd => {},
         },
         ReferenceData => {
             ChangeGet => undef,
         },
-        Fails => 1,    # we expect this test to fail
     },
 
     # Change contains only required data - default user (required attributes)
     {
-        SourceData => {
+        Description => 'Test only needed params (UserID = 1) for ChangeAdd.',
+        SourceData  => {
             ChangeAdd => {
                 UserID => 1,
             },
@@ -174,7 +178,7 @@ my @ChangeTests = (
                 Title           => q{},
                 Description     => q{},
                 Justification   => q{},
-                ChangeManagerID => 1,
+                ChangeManagerID => undef,
                 ChangeBuilderID => 1,
                 WorkOrderIDs    => [],
                 CABAgents       => [],
@@ -187,9 +191,37 @@ my @ChangeTests = (
 
     # Change contains only required data - default user (required attributes)
     {
-        SourceData => {
+        Description => 'Test only needed params (UserID != 1) for ChangeAdd.',
+        SourceData  => {
             ChangeAdd => {
                 UserID => $UserIDs[0],
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                Title           => q{},
+                Description     => q{},
+                Justification   => q{},
+                ChangeManagerID => undef,
+                ChangeBuilderID => $UserIDs[0],
+                WorkOrderIDs    => [],
+                CABAgents       => [],
+                CABCustomers    => [],
+                CreateBy        => $UserIDs[0],
+                ChangeBy        => $UserIDs[0],
+            },
+        },
+    },
+
+    # test on proper mapping on undef params - default user  (required attributes)
+    {
+        Description => 'Test for proper string handling for ChangeAdd.',
+        SourceData  => {
+            ChangeAdd => {
+                UserID        => $UserIDs[0],
+                Title         => undef,
+                Description   => undef,
+                Justification => undef,
             },
         },
         ReferenceData => {
@@ -210,7 +242,8 @@ my @ChangeTests = (
 
     # change contains all date - (all attributes)
     {
-        SourceData => {
+        Description => 'Test contains all possible params for ChangeAdd.',
+        SourceData  => {
             ChangeAdd => {
                 Title           => 'Change 1',
                 Description     => 'Description 1',
@@ -252,7 +285,8 @@ my @ChangeTests = (
 
     # change contains all date - wrong CAB - (wrong CAB attributes)
     {
-        SourceData => {
+        Description => 'Test contains invalid CAB members.',
+        SourceData  => {
             ChangeAdd => {
                 Title           => 'Change 1',
                 Description     => 'Description 1',
@@ -271,18 +305,22 @@ my @ChangeTests = (
                 UserID => $UserIDs[1],
             },
         },
+        ReferenceData => {
+            ChangeGet => undef,
+        },
         Fails => 1,
     },
 
     # Update change without required params (required attributes)
     {
-        SourceData => {
+        Description => 'Test contains no params for ChangeUpdate().',
+        Fails       => 1,                                              # we expect this test to fail
+        SourceData  => {
             ChangeUpdate => {},
         },
         ReferenceData => {
             ChangeUpdate => undef,
         },
-        Fails => 1,    # we expect this test to fail
     },
 
     # Test for ChangeCABGet
@@ -371,10 +409,19 @@ for my $Test (@ChangeTests) {
 
         $Self->True(
             0,
-            "Test $TestCount: No SourceData found for this test.",
+            "Test $TestCount: No SourceData found for this test (test case: "
+                . ( $TestCount - $TestCountMisc ) . ").",
         );
 
         next TEST;
+    }
+
+    # print test case description
+    if ( $Test->{Description} ) {
+        $Self->True(
+            1,
+            "Test $TestCount: $Test->{Description}",
+        );
     }
 
     # extract test data
@@ -411,10 +458,18 @@ for my $Test (@ChangeTests) {
         }
 
         if ( $SourceData->{ChangeAdd}->{UserID} ) {
-            $Self->True(
-                $ChangeID,
-                "Test $TestCount: ChangeAdd() - Add change with given UserID.",
-            );
+            if ( $Test->{Fails} ) {
+                $Self->False(
+                    $ChangeID,
+                    "Test $TestCount: ChangeAdd() - Add change should fail.",
+                );
+            }
+            else {
+                $Self->True(
+                    $ChangeID,
+                    "Test $TestCount: ChangeAdd() - Add change.",
+                );
+            }
         }
     }    # end if 'ChangeAdd'
 
@@ -444,11 +499,20 @@ for my $Test (@ChangeTests) {
         );
 
         # ChangeGet should not return anything
-        if ( $ReferenceData->{ChangeGet} == undef ) {
+        if ( !defined $ReferenceData->{ChangeGet} ) {
             $Self->False(
                 $ChangeData,
-                "Test $TestCount: ChangeGet() - Get change.",
+                "Test $TestCount: |- Get change returns undef.",
             );
+
+            # check if we excpected to fail
+            if ( $Test->{Fails} ) {
+                $Self->Is(
+                    !defined $ChangeData,
+                    !defined $ReferenceData->{ChangeData},
+                    "Test $TestCount: |- Should fail.",
+                );
+            }
             next TEST;
         }
 
