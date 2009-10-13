@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.29 2009-10-13 08:01:08 bes Exp $
+# $Id: ITSMChange.pm,v 1.30 2009-10-13 08:19:00 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.29 $) [1];
+$VERSION = qw($Revision: 1.30 $) [1];
 
 =head1 NAME
 
@@ -166,7 +166,8 @@ sub ChangeAdd {
 
     # get change id
     return if !$Self->{DBObject}->Prepare(
-        SQL   => 'SELECT id FROM change_item WHERE change_number = ?',
+        SQL => 'SELECT id FROM change_item '
+            . 'WHERE change_number = ?',
         Bind  => [ \$ChangeNumber ],
         Limit => 1,
     );
@@ -708,7 +709,32 @@ sub ChangeDelete {
         }
     }
 
-    return;
+    # TODO: delete the links to the change
+
+    # TODO: delete the history
+
+    # delete the work orders
+    my %Change = $Self->ChangeGet(%Param);
+    return if !%Change;
+    return if !$Change{WorkOrderIDs};
+    for my $WorkOrderID ( @{ $Change{WorkOrderIDs} } ) {
+        $Self->{WorkOrderObject}->WorkOrderDelete(
+            UserID      => $Param{UserID},
+            WorkOrderID => $WorkOrderID
+        );
+    }
+
+    # delete the CAB
+    return if !$Self->ChangeCABDelete(%Param);
+
+    # delete the change
+    return if !$Self->{DBObject}->Do(
+        SQL => 'DELETE FROM change_item '
+            . 'WHERE id = ? ',
+        Bind => [ \$Param{ChangeID} ],
+    );
+
+    return 1;
 }
 
 =item ChangeWorkflowEdit()
@@ -1005,6 +1031,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.29 $ $Date: 2009-10-13 08:01:08 $
+$Revision: 1.30 $ $Date: 2009-10-13 08:19:00 $
 
 =cut
