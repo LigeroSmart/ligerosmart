@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.42 2009-10-13 14:46:00 reb Exp $
+# $Id: ITSMChange.t,v 1.43 2009-10-13 15:16:41 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -275,7 +275,7 @@ my @ChangeTests   = (
                 ChangeBuilderID => $UserIDs[0],
                 CABAgents       => [
                     $UserIDs[0],
-                    $UserIDs[1]
+                    $UserIDs[1],
                 ],
                 CABCustomers => [
                     $CustomerUserIDs[0],
@@ -293,7 +293,7 @@ my @ChangeTests   = (
                 ChangeBuilderID => $UserIDs[0],
                 CABAgents       => [
                     $UserIDs[0],
-                    $UserIDs[1]
+                    $UserIDs[1],
                 ],
                 CABCustomers => [
                     $CustomerUserIDs[0],
@@ -304,9 +304,9 @@ my @ChangeTests   = (
         SearchTest => [ 2, 3, 4, 5, 6, 8, 9, 10, 12, 13 ],
     },
 
-    # change contains all date - wrong CAB - (wrong CAB attributes)
+    # change contains all data - wrong CAB - (wrong CAB attributes)
     {
-        Description => 'Test contains invalid CAB members.',
+        Description => 'Test contains invalid CAB members for ChangeAdd.',
         SourceData  => {
             ChangeAdd => {
                 Title           => 'Change 1',
@@ -320,7 +320,7 @@ my @ChangeTests   = (
                 ],
                 CABCustomers => [
                     $UserIDs[0],
-                    $UserIDs[1]
+                    $UserIDs[1],
                 ],
                 UserID => $UserIDs[1],
             },
@@ -329,6 +329,42 @@ my @ChangeTests   = (
             ChangeGet => undef,
         },
         Fails => 1,
+    },
+
+    # change contains required data - duplicate CAB entries - (duplicate CAB entries)
+    {
+        Description => 'Test contains duplicate CAB members for ChangeAdd.',
+        SourceData  => {
+            ChangeAdd => {
+                CABAgents => [
+                    $UserIDs[0],
+                    $UserIDs[1],
+                    $UserIDs[0],
+                    $UserIDs[1],
+                ],
+                CABCustomers => [
+                    $CustomerUserIDs[0],
+                    $CustomerUserIDs[1],
+                    $CustomerUserIDs[0],
+                    $CustomerUserIDs[1],
+                ],
+                UserID => 1,
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                CABAgents => [
+                    $UserIDs[0],
+                    $UserIDs[1],
+                ],
+                CABCustomers => [
+                    $CustomerUserIDs[0],
+                    $CustomerUserIDs[1],
+                ],
+                CreateBy => 1,
+                ChangeBy => 1,
+            },
+        },
     },
 
     # test on max long params  (required attributes)
@@ -376,6 +412,26 @@ my @ChangeTests   = (
         },
     },
 
+    # test on '0' strings - default user  (required attributes)
+    {
+        Description => q{Test for '0' string handling for ChangeAdd.},
+        SourceData  => {
+            ChangeAdd => {
+                UserID        => 1,
+                Title         => '0',
+                Description   => '0',
+                Justification => '0',
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                Title         => '0',
+                Description   => '0',
+                Justification => '0',
+            },
+        },
+    },
+
     # test on mixed valid and invalid CABAgents  (required attributes)
     {
         Description => 'Test on mixed valid and invalid CABAgents for ChangeAdd.',
@@ -416,7 +472,7 @@ my @ChangeTests   = (
 
     # test on invalid IDs for ChangeManagerID and ChangeBuilderID
     {
-        Description => 'Test on invalid IDs for ChangeManagerID and ChangeManagerID.',
+        Description => 'Test on invalid IDs for ChangeManagerID and ChangeManagerID for ChangeAdd.',
         Fails       => 1,
         SourceData  => {
             ChangeAdd => {
@@ -432,9 +488,9 @@ my @ChangeTests   = (
 
     # Update change without required params (required attributes)
     {
-        Description => 'Test contains no params for ChangeUpdate().',
-        Fails       => 1,                                              # we expect this test to fail
-        SourceData  => {
+        Description => 'Test contains no params for ChangeUpdate() for ChangeUpdate.',
+        Fails      => 1,    # we expect this test to fail
+        SourceData => {
             ChangeUpdate => {},
         },
         ReferenceData => {
@@ -498,10 +554,34 @@ my @ChangeTests   = (
         SearchTest => [2],
     },
 
+    # test on '0' strings - default user  (required attributes)
+    {
+        Description => q{Test for '0' string handling for ChangeUpdate.},
+        SourceData  => {
+            ChangeAdd => {
+                UserID => 1,
+            },
+            ChangeUpdate => {
+                UserID        => 1,
+                Title         => '0',
+                Description   => '0',
+                Justification => '0',
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                Title         => '0',
+                Description   => '0',
+                Justification => '0',
+            },
+        },
+    },
+
     # Test for ChangeCABGet
     {
-        Description => 'Test checks empty ARRAY-ref on ChangeCABGet with no given CAB.',
-        SourceData  => {
+        Description =>
+            'Test checks empty ARRAY-ref on ChangeCABGet with no given CAB for ChangeCABGet.',
+        SourceData => {
             ChangeAdd => {
                 UserID => $UserIDs[0],
             },
