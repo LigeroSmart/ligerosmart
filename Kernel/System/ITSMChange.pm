@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.42 2009-10-13 19:21:48 bes Exp $
+# $Id: ITSMChange.pm,v 1.43 2009-10-13 19:52:21 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.42 $) [1];
+$VERSION = qw($Revision: 1.43 $) [1];
 
 =head1 NAME
 
@@ -810,10 +810,10 @@ sub ChangeSearch {
 
     # set string params
     my %StringParams = (
-        ChangeNumber  => 'ci.change_number',
-        Title         => 'ci.title',
-        Description   => 'ci.description',
-        Justification => 'ci.justification',
+        ChangeNumber  => 'c.change_number',
+        Title         => 'c.title',
+        Description   => 'c.description',
+        Justification => 'c.justification',
     );
 
     # add string params to sql-where-array
@@ -823,7 +823,7 @@ sub ChangeSearch {
         # check string params for useful values
         next STRINGPARAM if !exists $Param{$StringParam};
         next STRINGPARAM if !defined $Param{$StringParam};
-        next STRINGPARAM if $Param{$StringParam} ne '';
+        next STRINGPARAM if $Param{$StringParam} eq '';
 
         # quote
         $Param{$StringParam} = $Self->{DBObject}->Quote( $Param{$StringParam} );
@@ -845,11 +845,11 @@ sub ChangeSearch {
 
     # set array params
     my %ArrayParams = (
-        ChangeStateID   => 'ci.change_state_id',
-        ChangeManagerID => 'ci.change_manager_id',
-        ChangeBuilderID => 'ci.change_builder_id',
-        CreateBy        => 'ci.create_by',
-        ChangeBy        => 'ci.change_by',
+        ChangeStateID   => 'c.change_state_id',
+        ChangeManagerID => 'c.change_manager_id',
+        ChangeBuilderID => 'c.change_builder_id',
+        CreateBy        => 'c.create_by',
+        ChangeBy        => 'c.change_by',
     );
 
     # add array params to sql-where-array
@@ -883,10 +883,10 @@ sub ChangeSearch {
 
     # set time params
     my %TimeParams = (
-        CreateTimeNewerDate => 'ci.create_time >=',
-        CreateTimeOlderDate => 'ci.create_time <=',
-        ChangeTimeNewerDate => 'ci.change_time >=',
-        ChangeTimeOlderDate => 'ci.change_time <=',
+        CreateTimeNewerDate => 'c.create_time >=',
+        CreateTimeOlderDate => 'c.create_time <=',
+        ChangeTimeNewerDate => 'c.change_time >=',
+        ChangeTimeOlderDate => 'c.change_time <=',
     );
 
     TIMEPARAM:
@@ -981,16 +981,16 @@ sub ChangeSearch {
         $Param{Limit} = $Self->{DBObject}->Quote( $Param{Limit}, 'Integer' );
     }
 
-    my $SQL = 'SELECT id FROM change_item ci ';
+    my $SQL = 'SELECT id FROM change_item c ';
 
     # check whether we need to join in the workorder table
     if ( $HavingString && $Param{WorkOrderAgentID} ) {
-        $SQL .= " INNER JOIN change_workorder wo1 ON wo1.change_id = ci.id "
+        $SQL .= " INNER JOIN change_workorder wo1 ON wo1.change_id = c.id "
             . " INNER JOIN change_workorder wo2 ON wo1.change_id = wo2.change_id $WhereString $HavingString";
     }
     elsif ($HavingString) {
         $SQL
-            .= " INNER JOIN change_workorder wo1 ON wo1.change_id = ci.id $WhereString $HavingString";
+            .= " INNER JOIN change_workorder wo1 ON wo1.change_id = c.id $WhereString $HavingString";
     }
     else {
         $SQL .= $WhereString;
@@ -998,20 +998,18 @@ sub ChangeSearch {
     $SQL .= $OrderByString;
 
     # ask database
-    $Self->{DBObject}->Prepare(
+    return if !$Self->{DBObject}->Prepare(
         SQL   => $SQL,
         Limit => $Param{Limit},
     );
 
     # fetch the result
-    my @ConfigItemList;
+    my @ChangeIDList;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        push @ConfigItemList, $Row[0];
+        push @ChangeIDList, $Row[0];
     }
 
-    return \@ConfigItemList;
-
-    return;
+    return \@ChangeIDList;
 }
 
 =item ChangeDelete()
@@ -1562,6 +1560,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.42 $ $Date: 2009-10-13 19:21:48 $
+$Revision: 1.43 $ $Date: 2009-10-13 19:52:21 $
 
 =cut
