@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.29 2009-10-13 12:27:34 mae Exp $
+# $Id: ITSMChange.t,v 1.30 2009-10-13 12:47:17 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -220,10 +220,11 @@ my @ChangeTests   = (
         Description => 'Test for proper string handling for ChangeAdd.',
         SourceData  => {
             ChangeAdd => {
-                UserID        => $UserIDs[0],
-                Title         => undef,
-                Description   => undef,
-                Justification => undef,
+                UserID => $UserIDs[0],
+
+                # don't specify Title
+                # don't specify Description
+                # don't specify Justification
             },
         },
         ReferenceData => {
@@ -727,8 +728,8 @@ for my $Test (@ChangeTests) {
         for my $Key ( keys %{ $ReferenceData->{ChangeGet} } ) {
 
             # turn off all pretty print
-            $Data::Dumper::Indent = 0;
-            $Data::Dumper::Useqq  = 1;
+            local $Data::Dumper::Indent = 0;
+            local $Data::Dumper::Useqq  = 1;
 
             # dump the attribute from VersionGet()
             my $ChangeAttribute = Data::Dumper::Dumper( $ChangeData->{$Key} );
@@ -754,8 +755,8 @@ for my $Test (@ChangeTests) {
         for my $Key ( keys %{ $ReferenceData->{ChangeCABGet} } ) {
 
             # turn off all pretty print
-            $Data::Dumper::Indent = 0;
-            $Data::Dumper::Useqq  = 1;
+            local $Data::Dumper::Indent = 0;
+            local $Data::Dumper::Useqq  = 1;
 
             # dump the attribute from VersionGet()
             my $ChangeAttribute = Data::Dumper::Dumper( $CABData->{$Key} );
