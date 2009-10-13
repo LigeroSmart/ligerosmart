@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.31 2009-10-13 12:50:24 mae Exp $
+# $Id: ITSMChange.t,v 1.32 2009-10-13 12:59:08 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -232,7 +232,7 @@ my @ChangeTests   = (
                 Title           => q{},
                 Description     => q{},
                 Justification   => q{},
-                ChangeManagerID => $UserIDs[0],
+                ChangeManagerID => undef,
                 ChangeBuilderID => $UserIDs[0],
                 WorkOrderIDs    => [],
                 CABAgents       => [],
