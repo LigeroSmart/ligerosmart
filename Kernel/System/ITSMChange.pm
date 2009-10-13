@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.28 2009-10-13 07:59:16 ub Exp $
+# $Id: ITSMChange.pm,v 1.29 2009-10-13 08:01:08 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.28 $) [1];
+$VERSION = qw($Revision: 1.29 $) [1];
 
 =head1 NAME
 
@@ -589,7 +589,17 @@ sub ChangeList {
         return;
     }
 
-    return;
+    # get change id,
+    return if !$Self->{DBObject}->Prepare(
+        SQL => 'SELECT id FROM change_item',
+    );
+
+    my @ChangeIDs;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        push @ChangeIDs, $Row[0];
+    }
+
+    return \@ChangeIDs;
 }
 
 =item ChangeSearch()
@@ -995,6 +1005,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.28 $ $Date: 2009-10-13 07:59:16 $
+$Revision: 1.29 $ $Date: 2009-10-13 08:01:08 $
 
 =cut
