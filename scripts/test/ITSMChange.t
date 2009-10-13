@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.44 2009-10-13 16:22:21 mae Exp $
+# $Id: ITSMChange.t,v 1.45 2009-10-13 19:51:03 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1056,7 +1056,7 @@ my @ChangeSearchTests = (
     {
         Description => 'ChangeManagerID',
         SearchData  => {
-            ChangeManagerID => $UserIDs[0],
+            ChangeManagerID => [ $UserIDs[0] ],
         },
         ResultData => {
             TestExistence => 1,
@@ -1067,7 +1067,7 @@ my @ChangeSearchTests = (
     {
         Description => 'ChangeBuilderID',
         SearchData  => {
-            ChangeBuilderID => $UserIDs[0],
+            ChangeBuilderID => [ $UserIDs[0] ],
         },
         ResultData => {
             TestExistence => 1,
@@ -1078,8 +1078,8 @@ my @ChangeSearchTests = (
     {
         Description => 'ChangeBuilderID, ChangeManagerID',
         SearchData  => {
-            ChangeBuilderID => $UserIDs[1],
-            ChangeManagerID => $UserIDs[0],
+            ChangeBuilderID => [ $UserIDs[1] ],
+            ChangeManagerID => [ $UserIDs[0] ],
         },
         ResultData => {
             TestCount => 1,
