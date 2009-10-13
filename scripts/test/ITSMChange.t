@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.41 2009-10-13 14:11:36 mae Exp $
+# $Id: ITSMChange.t,v 1.42 2009-10-13 14:46:00 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -470,7 +470,7 @@ my @ChangeTests   = (
                 ChangeBy        => 1,
             },
         },
-        SearchTest => [ 2, 11 ],
+        SearchTest => [ 2, 11, 14, 15, 16, 17 ],
     },
 
     # test on max+1 long params  (required attributes)
@@ -1077,7 +1077,52 @@ my @ChangeSearchTests = (
         },
     },
 
-    # XXX: WorkOrderAgentID
+    # Nr 14 - Title with wildcard
+    {
+        Description => 'Title with wildcard',
+        SearchData  => {
+            Title => ( 'X' x 250 ) . '%',
+        },
+        ResultData => {
+            TestExistence => 1,
+        },
+    },
+
+    # Nr 15 - Description with wildcard
+    {
+        Description => 'Description with wildcard',
+        SearchData  => {
+            Description => ( 'Y' x 250 ) . '%',
+        },
+        ResultData => {
+            TestExistence => 1,
+        },
+    },
+
+    # Nr 16 - Justification with wildcard
+    {
+        Description => 'Justification with wildcard',
+        SearchData  => {
+            Justification => ( 'Z' x 250 ) . '%',
+        },
+        ResultData => {
+            TestExistence => 1,
+        },
+    },
+
+    # Nr 17 - Title, Description, Justification with wildcard
+    {
+        Description => 'Title with wildcard',
+        SearchData  => {
+            Title         => ( 'X' x 250 ) . '%',
+            Description   => ( 'Y' x 250 ) . '%',
+            Justification => ( 'Z' x 250 ) . '%',
+        },
+        ResultData => {
+            TestExistence => 1,
+        },
+    },
+
 );
 
 # get a sample change we created above for some 'special' test cases
@@ -1144,6 +1189,27 @@ if ($SearchTestID) {
                 Count     => 1,
             },
         },
+        {
+            Description => 'ChangeNumber with wildcard',
+            SearchData  => {
+                ChangeNumber => substr( $SearchTestChange->{ChangeNumber}, 0, 10 ) . '%',
+            },
+            ResultData => {
+                TestExistence => 1,
+                IDExpected    => $SearchTestChange->{ChangeID},
+            },
+        },
+        {
+            Description => 'ChangeNumber, Title with wildcard',
+            SearchData  => {
+                ChangeNumber => substr( $SearchTestChange->{ChangeNumber}, 0, 10 ) . '%',
+                Title        => substr( $SearchTestChange->{Title},        0, 1 ) . '%',
+            },
+            ResultData => {
+                TestExistence => 1,
+                IDExpected    => $SearchTestChange->{ChangeID},
+            },
+        },
     );
 }
 
@@ -1197,6 +1263,9 @@ for my $SearchTest (@ChangeSearchTests) {
 
         # check if all ids that belongs to this searchtest are returned
         my @ChangeIDs = keys %{ $ChangeIDForSearchTest{$SearchTestCount} };
+
+        @ChangeIDs = $SearchTest->{ResultData}->{IDExpected}
+            if $SearchTest->{ResultData}->{IDExpected};
 
         my %ReturnedChangeID;
         @ReturnedChangeID{ @{$ChangeIDs} } = (1) x scalar @{$ChangeIDs};
