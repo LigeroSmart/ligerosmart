@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.27 2009-10-13 12:11:25 mae Exp $
+# $Id: ITSMChange.t,v 1.28 2009-10-13 12:23:23 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -493,7 +493,8 @@ my @ChangeTests   = (
 
     # Test for ChangeCABDelete
     {
-        SourceData => {
+        Description => 'Test checks ChangeCABDelete with valid params.',
+        SourceData  => {
             ChangeAdd => {
                 UserID    => $UserIDs[0],
                 CABAgents => [
@@ -518,7 +519,8 @@ my @ChangeTests   = (
 
     # Test for ChangeCABDelete
     {
-        SourceData => {
+        Description => 'Test checks ChangeCABDelete with invalid params.',
+        SourceData  => {
             ChangeAdd => {
                 UserID    => $UserIDs[0],
                 CABAgents => [
