@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.21 2009-10-13 09:04:58 mae Exp $
+# $Id: ITSMChange.t,v 1.22 2009-10-13 09:29:16 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -371,7 +371,7 @@ my @ChangeTests   = (
                     $CustomerUserIDs[0],
                     $CustomerUserIDs[1],
                 ],
-                }
+            },
         },
     },
 
@@ -392,7 +392,62 @@ my @ChangeTests   = (
             ChangeCABGet => {
                 CABAgents    => [],
                 CABCustomers => [],
-                }
+            },
+        },
+    },
+
+    # Test for ChangeCABDelete
+    {
+        SourceData => {
+            ChangeAdd => {
+                UserID    => $UserIDs[0],
+                CABAgents => [
+                    $UserIDs[0],
+                    $UserIDs[1]
+                ],
+                CABCustomers => [
+                    $CustomerUserIDs[0],
+                    $CustomerUserIDs[1],
+                ],
+            },
+            ChangeCABDelete => 1,
+        },
+        ReferenceData => {
+            ChangeCABGet => {
+                CABAgents    => [],
+                CABCustomers => [],
+            },
+        },
+    },
+
+    # Test for ChangeCABDelete
+    {
+        SourceData => {
+            ChangeAdd => {
+                UserID    => $UserIDs[0],
+                CABAgents => [
+                    $UserIDs[0],
+                    $UserIDs[1]
+                ],
+                CABCustomers => [
+                    $CustomerUserIDs[0],
+                    $CustomerUserIDs[1],
+                ],
+            },
+            ChangeCABDelete     => 1,
+            ChangeCABDeleteFail => 1,
+        },
+        ReferenceData => {
+            ChangeCABGet => {
+                CABAgents => [
+                    $UserIDs[0],
+                    $UserIDs[1]
+                ],
+                CABCustomers => [
+                    $CustomerUserIDs[0],
+                    $CustomerUserIDs[1],
+                ],
+            },
         },
     },
 
@@ -487,6 +542,23 @@ for my $Test (@ChangeTests) {
             "Test $TestCount: |- ChangeCABUpdate",
         );
     }    # end if 'ChangeCABUpdate'
+
+    if ( $SourceData->{ChangeCABDelete} && $ChangeID ) {
+        my %CABDeleteParams = (
+            UserID => 1,
+        );
+
+        $CABDeleteParams{ChangeID} = $ChangeID if !$SourceData->{ChangeCABDeleteFail};
+
+        my $CABDeleteSuccess = $Self->{ChangeObject}->ChangeCABDelete(%CABDeleteParams);
+
+        my $IsSuccess = $CABDeleteSuccess || $SourceData->{ChangeCABDeleteFail};
+
+        $Self->True(
+            $IsSuccess,
+            "Test $TestCount: |- ChangeCABDelete",
+        );
+    }    # end if 'ChangeCABDelete'
 
     # get a change
     if ( exists $ReferenceData->{ChangeGet} ) {
