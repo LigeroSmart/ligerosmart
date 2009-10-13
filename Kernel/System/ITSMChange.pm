@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.41 2009-10-13 17:17:59 ub Exp $
+# $Id: ITSMChange.pm,v 1.42 2009-10-13 19:21:48 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.41 $) [1];
+$VERSION = qw($Revision: 1.42 $) [1];
 
 =head1 NAME
 
@@ -810,10 +810,10 @@ sub ChangeSearch {
 
     # set string params
     my %StringParams = (
-        ChangeNumber  => 'change_number',
-        Title         => 'title',
-        Description   => 'description',
-        Justification => 'justification',
+        ChangeNumber  => 'ci.change_number',
+        Title         => 'ci.title',
+        Description   => 'ci.description',
+        Justification => 'ci.justification',
     );
 
     # add string params to sql-where-array
@@ -833,21 +833,23 @@ sub ChangeSearch {
             # prepare like string
             $Self->_PrepareLikeString( \$Param{$StringParam} );
 
-            push @SQLWhere, "LOWER($StringParams{$StringParam}) LIKE LOWER('$Param{$StringParam}')";
+            push @SQLWhere,
+                "( LOWER($StringParams{$StringParam}) LIKE LOWER('$Param{$StringParam}') )";
         }
         else {
-            push @SQLWhere, "LOWER($StringParams{$StringParam}) = LOWER('$Param{$StringParam}')";
+            push @SQLWhere,
+                "( LOWER($StringParams{$StringParam}) = LOWER('$Param{$StringParam}') )";
         }
 
     }
 
     # set array params
     my %ArrayParams = (
-        ChangeStateID   => 'change_state_id',
-        ChangeManagerID => 'change_manager_id',
-        ChangeBuilderID => 'change_builder_id',
-        CreateBy        => 'create_by',
-        ChangeBy        => 'change_by',
+        ChangeStateID   => 'ci.change_state_id',
+        ChangeManagerID => 'ci.change_manager_id',
+        ChangeBuilderID => 'ci.change_builder_id',
+        CreateBy        => 'ci.create_by',
+        ChangeBy        => 'ci.change_by',
     );
 
     # add array params to sql-where-array
@@ -876,15 +878,15 @@ sub ChangeSearch {
 
         next ARRAYPARAM if !$InString;
 
-        push @SQLWhere, "$ArrayParams{ $ArrayParam } IN ($InString)";
+        push @SQLWhere, "( $ArrayParams{ $ArrayParam } IN ($InString) )";
     }
 
     # set time params
     my %TimeParams = (
-        CreateTimeNewerDate => 'create_time >=',
-        CreateTimeOlderDate => 'create_time <=',
-        ChangeTimeNewerDate => 'change_time >=',
-        ChangeTimeOlderDate => 'change_time <=',
+        CreateTimeNewerDate => 'ci.create_time >=',
+        CreateTimeOlderDate => 'ci.create_time <=',
+        ChangeTimeNewerDate => 'ci.change_time >=',
+        ChangeTimeOlderDate => 'ci.change_time <=',
     );
 
     TIMEPARAM:
@@ -903,13 +905,57 @@ sub ChangeSearch {
         # quote
         $Param{$TimeParam} = $Self->{DBObject}->Quote( $Param{$TimeParam} );
 
-        push @SQLWhere, "$TimeParams{ $TimeParam } '$Param{ $TimeParam }'";
+        push @SQLWhere, "( $TimeParams{ $TimeParam } '$Param{ $TimeParam }' )";
+    }
+
+    # set time params in workorder table
+    my %WorkOrderTimeParams = (
+        PlannedStartTimeNewerDate => 'min(wo1.planned_start_time) >=',
+        PlannedStartTimeOlderDate => 'min(wo1.planned_start_time) <=',
+        PlannedEndTimeNewerDate   => 'max(wo1.planned_end_time) >=',
+        PlannedEndTimeOlderDate   => 'max(wo1.planned_end_time) <=',
+        ActualStartTimeNewerDate  => 'min(wo1.actual_start_time) >=',
+        ActualStartTimeOlderDate  => 'min(wo1.actual_start_time) <=',
+        ActualEndTimeNewerDate    => 'max(wo1.actual_end_time) >=',
+        ActualEndTimeOlderDate    => 'max(wo1.actual_end_time) <=',
+    );
+
+    my @SQLHaving;
+
+    WORKORDERTIMEPARAM:
+    for my $TimeParam ( keys %WorkOrderTimeParams ) {
+
+        next WORKORDERTIMEPARAM if !$Param{$TimeParam};
+
+        if ( $Param{$TimeParam} !~ m{ \A \d\d\d\d-\d\d-\d\d \s \d\d:\d\d:\d\d \z }xms ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Invalid date format found!",
+            );
+            return;
+        }
+
+        # quote
+        $Param{$TimeParam} = $Self->{DBObject}->Quote( $Param{$TimeParam} );
+
+        push @SQLHaving, "( $WorkOrderTimeParams{ $TimeParam } '$Param{ $TimeParam }' )";
+    }
+
+    my $WorkOrderAgentIDField = '';
+    if ( $Param{WorkOrderAgentID} ) {
+        $WorkOrderAgentIDField .= 'CASE change_workorder.workorder_agent_id ';
+        for my $WorkOrderAgentID ( @{ $Param{WorkOrderAgentID} } ) {
+            $WorkOrderAgentIDField .= " WHEN $WorkOrderAgentID THEB 1 ";
+        }
+        $WorkOrderAgentIDField .= ' ELSE 0 END AS agent_flag ';
+        push @SQLHaving, 'SUM(agent_flag) > 0 ';
     }
 
     # create where string
     my $WhereString = @SQLWhere ? ' WHERE ' . join q{ AND }, @SQLWhere : '';
+    my $HavingString = join q{ AND }, @SQLHaving;
 
-    #    # define order table
+    #    # define order tableword
     #    my %OrderByTable = (
     #        ChangeID         => 'id',
     #        ChangeNumber     => '',
@@ -928,15 +974,32 @@ sub ChangeSearch {
     #
     #    # set order by
     #    my $OrderBy = $OrderByTable{ $Param{OrderBy} } || $OrderByTable{ConfigItemID};
+    my $OrderByString = '';
 
     # set limit
     if ( $Param{Limit} ) {
         $Param{Limit} = $Self->{DBObject}->Quote( $Param{Limit}, 'Integer' );
     }
 
+    my $SQL = 'SELECT id FROM change_item ci ';
+
+    # check whether we need to join in the workorder table
+    if ( $HavingString && $Param{WorkOrderAgentID} ) {
+        $SQL .= " INNER JOIN change_workorder wo1 ON wo1.change_id = ci.id "
+            . " INNER JOIN change_workorder wo2 ON wo1.change_id = wo2.change_id $WhereString $HavingString";
+    }
+    elsif ($HavingString) {
+        $SQL
+            .= " INNER JOIN change_workorder wo1 ON wo1.change_id = ci.id $WhereString $HavingString";
+    }
+    else {
+        $SQL .= $WhereString;
+    }
+    $SQL .= $OrderByString;
+
     # ask database
     $Self->{DBObject}->Prepare(
-        SQL   => "SELECT id FROM configitem $WhereString ORDER BY $OrderBy ASC",
+        SQL   => $SQL,
         Limit => $Param{Limit},
     );
 
@@ -1499,6 +1562,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.41 $ $Date: 2009-10-13 17:17:59 $
+$Revision: 1.42 $ $Date: 2009-10-13 19:21:48 $
 
 =cut
