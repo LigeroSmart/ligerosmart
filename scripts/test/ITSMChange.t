@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.32 2009-10-13 12:59:08 mae Exp $
+# $Id: ITSMChange.t,v 1.33 2009-10-13 13:00:41 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -100,7 +100,7 @@ my @ObjectMethods = qw(
     ChangeDelete
     ChangeGet
     ChangeList
-    ChangeNumberLookup
+    ChangeLookup
     ChangeSearch
     ChangeUpdate
     ChangeCABDelete
@@ -282,7 +282,7 @@ my @ChangeTests   = (
                 ],
             },
         },
-        SearchTest => [ 2, 3, 4, 5, 6, 8, 9, 10 ],
+        SearchTest => [ 2, 3, 4, 5, 6, 8, 9, 10, 12, 13 ],
     },
 
     # change contains all date - wrong CAB - (wrong CAB attributes)
@@ -337,7 +337,7 @@ my @ChangeTests   = (
                 ChangeBy        => $UserIDs[0],
             },
         },
-        SearchTest => [ 2, 11 ],
+        SearchTest => [ 2, 11, 12, 13 ],
     },
 
     # test on max+1 long params  (required attributes)
@@ -417,6 +417,7 @@ my @ChangeTests   = (
         ReferenceData => {
             ChangeGet => undef,
         },
+        SearchTest => [2],
     },
 
     # Test for ChangeCABGet
@@ -433,7 +434,7 @@ my @ChangeTests   = (
                 CABCustomers => [],
             },
         },
-        SearchTest => [ 2, 4 ],
+        SearchTest => [ 2, 4, 12, 13 ],
     },
 
     # Test for ChangeCABUpdate and ChangeCABGet
@@ -773,16 +774,16 @@ continue {
     $TestCount++;
 }
 
-# test for ChangeNumberLookup
-my ($ChangeNumberLookupTestID) = keys %TestedChangeID;
+# test for ChangeLookup
+my ($ChangeLookupTestID) = keys %TestedChangeID;
 
-if ($ChangeNumberLookupTestID) {
+if ($ChangeLookupTestID) {
     my $ChangeData = $Self->{ChangeObject}->ChangeGet(
-        ChangeID => $ChangeNumberLookupTestID,
+        ChangeID => $ChangeLookupTestID,
         UserID   => 1,
     );
 
-    my $ChangeID = $Self->{ChangeObject}->ChangeNumberLookup(
+    my $ChangeID = $Self->{ChangeObject}->ChangeLookup(
         ChangeNumber => $ChangeData->{ChangeNumber},
         UserID       => 1,
     );
@@ -790,12 +791,12 @@ if ($ChangeNumberLookupTestID) {
     $Self->Is(
         $ChangeID,
         $ChangeData->{ChangeID},
-        'Test ' . $TestCount++ . ': ChangeNumberLookup with ChangeNumber '
+        'Test ' . $TestCount++ . ': ChangeLookup with ChangeNumber '
             . $ChangeData->{ChangeNumber} . ' successful.',
     );
 
-    my $ChangeNumber = $Self->{ChangeObject}->ChangeNumberLookup(
-        ChangeID => $ChangeNumberLookupTestID,
+    my $ChangeNumber = $Self->{ChangeObject}->ChangeLookup(
+        ChangeID => $ChangeLookupTestID,
         UserID   => 1,
     );
 
@@ -804,7 +805,7 @@ if ($ChangeNumberLookupTestID) {
         $ChangeData->{ChangeNumber},
         'Test '
             . $TestCount++
-            . ": ChangeNumberLookup with ChangeID $ChangeNumberLookupTestID successful.",
+            . ": ChangeNumberLookup with ChangeID $ChangeLookupTestID successful.",
     );
 }
 
@@ -832,17 +833,6 @@ $Self->Is(
 # define general config item search tests
 # ------------------------------------------------------------ #
 my $SystemTime = $Self->{TimeObject}->SystemTime();
-
-# get a sample change we created above for some 'special' test cases
-my ($SearchTestID) = keys %TestedChangeID;
-my $SearchTestChange = {};
-
-if ($SearchTestID) {
-    $SearchTestChange = $Self->{ChangeObject}->ChangeGet(
-        ChangeID => $SearchTestID,
-        UserID   => 1,
-    );
-}
 
 my @ChangeSearchTests = (
 
@@ -976,8 +966,101 @@ my @ChangeSearchTests = (
         },
     },
 
-    # XXX: WorkOrderAgentID, ChangeNumber
+    # Nr 12 - test changetimenewerdate
+    {
+        Description => 'ChangeTimeNewerDate',
+        SearchData  => {
+            ChangeTimeNewerDate => $Self->{TimeObject}->SystemTime2TimeStamp(
+                SystemTime => $SystemTime - ( 60 * 60 ),
+            ),
+        },
+        ResultData => {
+            TestExistence => 1,
+        },
+    },
+
+    # Nr 13 - test changetimeolderdate
+    {
+        Description => 'ChangeTimeOlderDate',
+        SearchData  => {
+            ChangeTimeOlderDate => $Self->{TimeObject}->SystemTime2TimeStamp(
+                SystemTime => $SystemTime + ( 60 * 60 ),
+            ),
+        },
+        ResultData => {
+            TestExistence => 1,
+        },
+    },
+
+    # XXX: WorkOrderAgentID
 );
+
+# get a sample change we created above for some 'special' test cases
+my ($SearchTestID) = keys %TestedChangeID;
+
+if ($SearchTestID) {
+    my $SearchTestChange = $Self->{ChangeObject}->ChangeGet(
+        ChangeID => $SearchTestID,
+        UserID   => 1,
+    );
+
+    push @ChangeSearchTests, (
+        {
+            Description => 'ChangeNumber',
+            SearchData  => {
+                ChangeNumber => $SearchTestChange->{ChangeNumber},
+            },
+            ResultData => {
+                TestCount => 1,
+                Count     => 1,
+            },
+        },
+        {
+            Description => 'ChangeNumber, PlannedStartTimeNewerDate',
+            SearchData  => {
+                ChangeNumber              => $SearchTestChange->{ChangeNumber},
+                PlannedStartTimeNewerDate => $SearchTestChange->{PlannedStartTime},
+            },
+            ResultData => {
+                TestCount => 1,
+                Count     => 1,
+            },
+        },
+        {
+            Description => 'ChangeNumber, PlannedStartTimeOlderDate',
+            SearchData  => {
+                ChangeNumber              => $SearchTestChange->{ChangeNumber},
+                PlannedStartTimeOlderDate => $SearchTestChange->{PlannedStartTime},
+            },
+            ResultData => {
+                TestCount => 1,
+                Count     => 1,
+            },
+        },
+        {
+            Description => 'ChangeNumber, PlannedEndTimeNewerDate',
+            SearchData  => {
+                ChangeNumber            => $SearchTestChange->{ChangeNumber},
+                PlannedEndTimeNewerDate => $SearchTestChange->{PlannedEndTime},
+            },
+            ResultData => {
+                TestCount => 1,
+                Count     => 1,
+            },
+        },
+        {
+            Description => 'ChangeNumber, PlannedEndTimeOlderDate',
+            SearchData  => {
+                ChangeNumber            => $SearchTestChange->{ChangeNumber},
+                PlannedEndTimeOlderDate => $SearchTestChange->{PlannedEndTime},
+            },
+            ResultData => {
+                TestCount => 1,
+                Count     => 1,
+            },
+        },
+    );
+}
 
 my $SearchTestCount = 1;
 
