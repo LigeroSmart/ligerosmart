@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.26 2009-10-13 12:10:20 reb Exp $
+# $Id: ITSMChange.t,v 1.27 2009-10-13 12:11:25 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -330,7 +330,7 @@ my @ChangeTests   = (
                 Title           => 'X' x 250,
                 Description     => 'Y' x 3800,
                 Justification   => 'Z' x 3800,
-                ChangeManagerID => $UserIDs[0],
+                ChangeManagerID => undef,
                 ChangeBuilderID => $UserIDs[0],
                 WorkOrderIDs    => [],
                 CABAgents       => [],
@@ -358,7 +358,7 @@ my @ChangeTests   = (
                 Title           => 'X' x 250,
                 Description     => 'Y' x 3800,
                 Justification   => 'Z' x 3800,
-                ChangeManagerID => $UserIDs[0],
+                ChangeManagerID => undef,
                 ChangeBuilderID => $UserIDs[0],
                 WorkOrderIDs    => [],
                 CABAgents       => [],
@@ -379,6 +379,36 @@ my @ChangeTests   = (
         },
         ReferenceData => {
             ChangeUpdate => undef,
+        },
+    },
+
+    # test on max long params  (required attributes)
+    {
+        Description => 'Test for max string length for ChangeUpdate.',
+        SourceData  => {
+            ChangeAdd => {
+                UserID => $UserIDs[0],
+            },
+            ChangeUpdate => {
+                UserID        => 1,
+                Title         => 'X' x 250,
+                Description   => 'Y' x 3800,
+                Justification => 'Z' x 3800,
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                Title           => 'X' x 250,
+                Description     => 'Y' x 3800,
+                Justification   => 'Z' x 3800,
+                ChangeManagerID => undef,
+                ChangeBuilderID => $UserIDs[0],
+                WorkOrderIDs    => [],
+                CABAgents       => [],
+                CABCustomers    => [],
+                CreateBy        => $UserIDs[0],
+                ChangeBy        => 1,
+            },
         },
     },
 
@@ -542,7 +572,8 @@ for my $Test (@ChangeTests) {
     if ( $Test->{Description} ) {
         $Self->True(
             1,
-            "Test $TestCount: $Test->{Description}",
+            "Test $TestCount: $Test->{Description} (test case: "
+                . ( $TestCount - $TestCountMisc ) . ").",
         );
     }
 
@@ -594,6 +625,26 @@ for my $Test (@ChangeTests) {
             }
         }
     }    # end if 'ChangeAdd'
+
+    if ( exists $SourceData->{ChangeUpdate} ) {
+        my $ChangeUpdateSuccess = $Self->{ChangeObject}->ChangeUpdate(
+            ChangeID => $ChangeID,
+            %{ $SourceData->{ChangeUpdate} },
+        );
+
+        if ( $Test->{Fails} ) {
+            $Self->False(
+                $ChangeUpdateSuccess,
+                "Test $TestCount: ChangeUpdate()",
+            );
+        }
+        else {
+            $Self->True(
+                $ChangeUpdateSuccess,
+                "Test $TestCount: ChangeUpdate()",
+            );
+        }
+    }    # end if ChangeUpdate
 
     if ( $SourceData->{ChangeCABUpdate} && $ChangeID ) {
         my $CABUpdateSuccess = $Self->{ChangeObject}->ChangeCABUpdate(
@@ -680,7 +731,7 @@ for my $Test (@ChangeTests) {
                 "Test $TestCount: |- $Key",
             );
         }
-    }    # end ChangeGet
+    }    # end if 'ChangeGet'
 
     if ( $ReferenceData->{ChangeCABGet} ) {
         my $CABData = $Self->{ChangeObject}->ChangeCABGet(
@@ -707,21 +758,7 @@ for my $Test (@ChangeTests) {
                 "Test $TestCount: |- ChangeCABGet ( $Key )",
             );
         }
-    }
-
-    if ( exists $ReferenceData->{ChangeUpdate} ) {
-        my $ChangeUpdateSuccess = $Self->{ChangeObject}->ChangeUpdate(
-            ChangeID => $ChangeID,
-            %{ $SourceData->{ChangeUpdate} },
-        );
-
-        $Self->Is(
-            $ReferenceData->{ChangeUpdate},
-            $ChangeUpdateSuccess,
-            "Test $TestCount: ChangeUpdate() - update change.",
-        );
-
-    }    # end if ChangeUpdate
+    }    # end if 'ChangeCABGet'
 }
 continue {
     $TestCount++;
