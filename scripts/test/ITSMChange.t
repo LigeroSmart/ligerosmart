@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.14 2009-10-13 07:22:15 ub Exp $
+# $Id: ITSMChange.t,v 1.15 2009-10-13 07:23:12 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -133,7 +133,7 @@ my @DefaultChangeStates = (
     'in progress',
     'successful',
     'failed',
-    'retracted'
+    'retracted',
 );
 my $ClassList = $Self->{GeneralCatalogObject}->ItemList(
     Class => 'ITSM::ChangeManagement::Change::State',
