@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.26 2009-10-13 07:47:06 bes Exp $
+# $Id: ITSMChange.pm,v 1.27 2009-10-13 07:53:00 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.26 $) [1];
+$VERSION = qw($Revision: 1.27 $) [1];
 
 =head1 NAME
 
@@ -570,12 +570,22 @@ sub ChangeCABDelete {
 
 return a change id list of all changes as array reference
 
-    my $ChangeIDsRef = $ChangeObject->ChangeList();
+    my $ChangeIDsRef = $ChangeObject->ChangeList(
+        UserID => 1,
+    );
 
 =cut
 
 sub ChangeList {
     my ( $Self, %Param ) = @_;
+
+    if ( !$Param{UserID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Need UserID!",
+        );
+        return;
+    }
 
     return;
 }
@@ -635,12 +645,22 @@ return list of change ids as an array reference
         # CreateTime, CreateBy, ChangeTime, ChangeBy)
 
         Limit => 100,                                           # (optional)
+
+        UserID => 1,
     );
 
 =cut
 
 sub ChangeSearch {
     my ( $Self, %Param ) = @_;
+
+    if ( !$Param{UserID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Need UserID!",
+        );
+        return;
+    }
 
     return;
 }
@@ -665,6 +685,17 @@ NOTE: This function must first remove all links to this ChangeObject,
 sub ChangeDelete {
     my ( $Self, %Param ) = @_;
 
+    # check needed stuff
+    for my $Attribute (qw(ChangeID UserID)) {
+        if ( !$Param{$Attribute} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Attribute!",
+            );
+            return;
+        }
+    }
+
     return;
 }
 
@@ -684,6 +715,17 @@ NOTE: To be defined in more detail!
 sub ChangeWorkflowEdit {
     my ( $Self, %Param ) = @_;
 
+    # check needed stuff
+    for my $Attribute (qw(ChangeID UserID)) {
+        if ( !$Param{$Attribute} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Attribute!",
+            );
+            return;
+        }
+    }
+
     return;
 }
 
@@ -694,13 +736,25 @@ list the workflow of a change
 NOTE: To be defined in more detail!
 
     my $ChangeWorkflow = $ChangeObject->ChangeWorkflowList(
-        ChangeID  => 123,
+        ChangeID => 123,
+        UserID   => 1,
     );
 
 =cut
 
 sub ChangeWorkflowList {
     my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Attribute (qw(ChangeID UserID)) {
+        if ( !$Param{$Attribute} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Attribute!",
+            );
+            return;
+        }
+    }
 
     return;
 }
@@ -939,6 +993,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.26 $ $Date: 2009-10-13 07:47:06 $
+$Revision: 1.27 $ $Date: 2009-10-13 07:53:00 $
 
 =cut
