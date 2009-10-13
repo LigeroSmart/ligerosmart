@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.19 2009-10-13 08:14:19 reb Exp $
+# $Id: ITSMChange.t,v 1.20 2009-10-13 08:46:57 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -285,6 +285,79 @@ my @ChangeTests = (
         Fails => 1,    # we expect this test to fail
     },
 
+    # Test for ChangeCABGet
+    {
+        SourceData => {
+            ChangeAdd => {
+                UserID => $UserIDs[0],
+            },
+        },
+        ReferenceData => {
+            ChangeCABGet => {
+                CABAgents    => [],
+                CABCustomers => [],
+                }
+        },
+    },
+
+    # Test for ChangeCABUpdate and ChangeCABGet
+    {
+        SourceData => {
+            ChangeAdd => {
+                UserID => $UserIDs[0],
+            },
+            ChangeCABUpdate => {
+                CABAgents => [
+                    $UserIDs[0],
+                    $UserIDs[0],
+                    $UserIDs[0],
+                    $UserIDs[1],
+                ],
+                CABCustomers => [
+                    $CustomerUserIDs[0],
+                    $CustomerUserIDs[1],
+                    $CustomerUserIDs[1],
+                    $CustomerUserIDs[1],
+                    $CustomerUserIDs[1],
+                    $CustomerUserIDs[1],
+                ],
+            },
+        },
+        ReferenceData => {
+            ChangeCABGet => {
+                CABAgents => [
+                    $UserIDs[0],
+                    $UserIDs[1],
+                ],
+                CABCustomers => [
+                    $CustomerUserIDs[0],
+                    $CustomerUserIDs[1],
+                ],
+                }
+        },
+    },
+
+    # Test for ChangeCABUpdate and ChangeCABGet
+    {
+        SourceData => {
+            ChangeAdd => {
+                UserID => $UserIDs[0],
+            },
+            ChangeCABUpdate => {
+                CABAgents => [
+                    $CustomerUserIDs[0],
+                ],
+            },
+            ChangeCABUpdateFail => 1,
+        },
+        ReferenceData => {
+            ChangeCABGet => {
+                CABAgents    => [],
+                CABCustomers => [],
+                }
+        },
+    },
+
 );
 
 my %TestedChangeID;
@@ -343,7 +416,22 @@ for my $Test (@ChangeTests) {
                 "Test $TestCount: ChangeAdd() - Add change with given UserID.",
             );
         }
-    }    # end if 'SourceData'
+    }    # end if 'ChangeAdd'
+
+    if ( $SourceData->{ChangeCABUpdate} && $ChangeID ) {
+        my $CABUpdateSuccess = $Self->{ChangeObject}->ChangeCABUpdate(
+            %{ $SourceData->{ChangeCABUpdate} },
+            ChangeID => $ChangeID,
+            UserID   => 1,
+        );
+
+        my $IsSuccess = $CABUpdateSuccess || $SourceData->{ChangeCABUpdateFail};
+
+        $Self->True(
+            $IsSuccess,
+            "Test $TestCount: |- ChangeCABUpdate",
+        );
+    }    # end if 'ChangeCABUpdate'
 
     # get a change
     if ( exists $ReferenceData->{ChangeGet} ) {
@@ -390,6 +478,33 @@ for my $Test (@ChangeTests) {
             );
         }
     }    # end ChangeGet
+
+    if ( $ReferenceData->{ChangeCABGet} ) {
+        my $CABData = $Self->{ChangeObject}->ChangeCABGet(
+            %{ $ReferenceData->{ChangeCABGet} },
+            UserID   => 1,
+            ChangeID => $ChangeID,
+        );
+
+        for my $Key ( keys %{ $ReferenceData->{ChangeCABGet} } ) {
+
+            # turn off all pretty print
+            $Data::Dumper::Indent = 0;
+            $Data::Dumper::Useqq  = 1;
+
+            # dump the attribute from VersionGet()
+            my $ChangeAttribute = Data::Dumper::Dumper( $CABData->{$Key} );
+
+            # dump the reference attribute
+            my $ReferenceAttribute = Data::Dumper::Dumper( $ReferenceData->{ChangeCABGet}->{$Key} );
+
+            $Self->Is(
+                $ChangeAttribute,
+                $ReferenceAttribute,
+                "Test $TestCount: |- ChangeCABGet ( $Key )",
+            );
+        }
+    }
 
     if ( exists $ReferenceData->{ChangeUpdate} ) {
         my $ChangeUpdateSuccess = $Self->{ChangeObject}->ChangeUpdate(
