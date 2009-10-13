@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.23 2009-10-13 09:38:00 mae Exp $
+# $Id: ITSMChange.t,v 1.24 2009-10-13 10:00:00 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -309,6 +309,60 @@ my @ChangeTests   = (
             ChangeGet => undef,
         },
         Fails => 1,
+    },
+
+    # test on max long params  (required attributes)
+    {
+        Description => 'Test for max string length for ChangeAdd.',
+        SourceData  => {
+            ChangeAdd => {
+                UserID        => $UserIDs[0],
+                Title         => 'X' x 250,
+                Description   => 'Y' x 3800,
+                Justification => 'Z' x 3800,
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                Title           => 'X' x 250,
+                Description     => 'Y' x 3800,
+                Justification   => 'Z' x 3800,
+                ChangeManagerID => $UserIDs[0],
+                ChangeBuilderID => $UserIDs[0],
+                WorkOrderIDs    => [],
+                CABAgents       => [],
+                CABCustomers    => [],
+                CreateBy        => $UserIDs[0],
+                ChangeBy        => $UserIDs[0],
+            },
+        },
+    },
+
+    # test on max+1 long params  (required attributes)
+    {
+        Description => 'Test for max+1 string length for ChangeAdd.',
+        SourceData  => {
+            ChangeAdd => {
+                UserID        => $UserIDs[0],
+                Title         => 'X' x 251,
+                Description   => 'Y' x 3801,
+                Justification => 'Z' x 3801,
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                Title           => 'X' x 250,
+                Description     => 'Y' x 3800,
+                Justification   => 'Z' x 3800,
+                ChangeManagerID => $UserIDs[0],
+                ChangeBuilderID => $UserIDs[0],
+                WorkOrderIDs    => [],
+                CABAgents       => [],
+                CABCustomers    => [],
+                CreateBy        => $UserIDs[0],
+                ChangeBy        => $UserIDs[0],
+            },
+        },
     },
 
     # Update change without required params (required attributes)
