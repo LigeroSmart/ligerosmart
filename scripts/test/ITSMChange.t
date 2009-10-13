@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.45 2009-10-13 19:51:03 bes Exp $
+# $Id: ITSMChange.t,v 1.46 2009-10-13 20:12:23 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -207,7 +207,7 @@ my @ChangeTests   = (
                 ChangeBy        => 1,
             },
         },
-        SearchTest => [2],
+        SearchTest => [ 2, 25, 26 ],
     },
 
     # Change contains only required data - default user (required attributes)
@@ -260,7 +260,7 @@ my @ChangeTests   = (
                 ChangeBy        => $UserIDs[0],
             },
         },
-        SearchTest => [ 2, 4 ],
+        SearchTest => [ 2, 4, 25, 26 ],
     },
 
     # change contains all date - (all attributes)
@@ -301,7 +301,7 @@ my @ChangeTests   = (
                 ],
             },
         },
-        SearchTest => [ 2, 3, 4, 5, 6, 8, 9, 10, 12, 13 ],
+        SearchTest => [ 2, 3, 4, 5, 6, 8, 9, 10, 12, 13, 23, 24 ],
     },
 
     # change contains all data - wrong CAB - (wrong CAB attributes)
@@ -632,7 +632,7 @@ my @ChangeTests   = (
                 ],
             },
         },
-        SearchTest => [ 2, 8, 9, 10 ],
+        SearchTest => [ 2, 8, 9, 10, 22 ],
     },
 
     # Test for ChangeCABUpdate and ChangeCABGet
@@ -715,6 +715,34 @@ my @ChangeTests   = (
             },
         },
         SearchTest => [ 2, 8, 9, 10 ],
+    },
+
+    # change contains title, description, justification, changemanagerid and changebuilderid
+    {
+        Description => 'Test contains all possible params for ChangeAdd (Second try).',
+        SourceData  => {
+            ChangeAdd => {
+                Title           => 'Change 2',
+                Description     => 'Description 2',
+                Justification   => 'Justification 2',
+                ChangeManagerID => $UserIDs[1],
+                ChangeBuilderID => $UserIDs[1],
+                UserID          => $UserIDs[1],
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                Title           => 'Change 2',
+                Description     => 'Description 2',
+                Justification   => 'Justification 2',
+                ChangeManagerID => $UserIDs[1],
+                ChangeBuilderID => $UserIDs[1],
+                CABAgents       => [],
+                CABCustomers    => [],
+                CreateBy        => $UserIDs[1]
+            },
+        },
+        SearchTest => [ 2, 23, 24 ],
     },
 
 );
@@ -1250,6 +1278,61 @@ my @ChangeSearchTests = (
         },
     },
 
+    # Nr 22 - ChangeStateID
+    {
+        Description => q{ChangeStateID},
+        SearchData  => {
+            ChangeStateID => [ $ReverseClassList{requested} ],
+        },
+        ResultData => {
+            TestExistence => 1,
+        },
+    },
+
+    # Nr 23 - ChangeBuilderID
+    {
+        Description => q{ChangeBuilderID (two builders)},
+        SearchData  => {
+            ChangeBuilderID => [ $UserIDs[0], $UserIDs[1] ],
+        },
+        ResultData => {
+            TestExistence => 1,
+        },
+    },
+
+    # Nr 24 - ChangeManagerID
+    {
+        Description => q{ChangeManagerID (two manager)},
+        SearchData  => {
+            ChangeManagerID => [ $UserIDs[0], $UserIDs[1] ],
+        },
+        ResultData => {
+            TestExistence => 1,
+        },
+    },
+
+    # Nr 25 - CreateBy
+    {
+        Description => q{CreateBy (two creators)},
+        SearchData  => {
+            CreateBy => [ 1, $UserIDs[0] ],
+        },
+        ResultData => {
+            TestExistence => 1,
+        },
+    },
+
+    # Nr 26 - ChangeBy
+    {
+        Description => q{ChangeBy (two creators)},
+        SearchData  => {
+            ChangeBy => [ 1, $UserIDs[0] ],
+        },
+        ResultData => {
+            TestExistence => 1,
+        },
+    },
+
 );
 
 # get a sample change we created above for some 'special' test cases
@@ -1331,6 +1414,28 @@ if ($SearchTestID) {
             SearchData  => {
                 ChangeNumber => substr( $SearchTestChange->{ChangeNumber}, 0, 10 ) . '%',
                 Title        => substr( $SearchTestChange->{Title},        0, 1 ) . '%',
+            },
+            ResultData => {
+                TestExistence => 1,
+                IDExpected    => $SearchTestChange->{ChangeID},
+            },
+        },
+        {
+            Description => 'ChangeNumber, two creators',
+            SearchData  => {
+                ChangeNumber => $SearchTestChange->{ChangeNumber},
+                CreateBy => [ $SearchTestChange->{CreateBy}, $SearchTestChange->{CreateBy} + 1 ],
+            },
+            ResultData => {
+                TestCount => 1,
+                Count     => 1,
+            },
+        },
+        {
+            Description => 'ChangeNumber (with wildcard), two creators',
+            SearchData  => {
+                ChangeNumber => substr( $SearchTestChange->{ChangeNumber}, 0, 10 ) . '%',
+                CreateBy => [ $SearchTestChange->{CreateBy}, $SearchTestChange->{CreateBy} + 1 ],
             },
             ResultData => {
                 TestExistence => 1,
