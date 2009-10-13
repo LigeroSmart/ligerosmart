@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.34 2009-10-13 13:32:46 reb Exp $
+# $Id: ITSMChange.t,v 1.35 2009-10-13 13:37:01 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,6 +33,7 @@ my $TestCount = 1;
 
 # create needed users
 my @UserIDs;
+my @InvalidUserIDs;
 
 # create needed users
 my @CustomerUserIDs;
@@ -72,6 +73,25 @@ for my $Counter ( 1 .. 3 ) {
         UserID  => 1,
     );
     push @CustomerUserIDs, $CustomerUserID;
+}
+
+# create invalid user IDs
+for ( 1 .. 2 ) {
+    my $TempInvalidUserID = int rand 1_000_000;
+
+    LPC:
+    for my $LoopProtectionCounter ( 1 .. 100 ) {
+        next LPC
+            if (
+            defined $Self->{UserObject}->GetUserData(
+                UserID => $TempInvalidUserID,
+            )
+            );
+
+        # we got unused user ID
+        push @InvalidUserIDs, $TempInvalidUserID;
+        last LPC;
+    }
 }
 
 # set 3rd user invalid
@@ -357,6 +377,60 @@ my @ChangeTests   = (
         },
     },
 
+    # test on mixed valid and invalid CABAgents  (required attributes)
+    {
+        Description => 'Test on mixed valid and invalid CABAgents for ChangeAdd.',
+        Fails       => 1,
+        SourceData  => {
+            ChangeAdd => {
+                UserID    => 1,
+                CABAgents => [
+                    $UserIDs[0],
+                    $UserIDs[1],
+                    'ThisIsAnInvalidUserId',
+                ],
+            },
+        },
+        ReferenceData => {
+            ChangeGet => undef,
+        },
+    },
+
+    # test on mixed valid and invalid CABCustomers  (required attributes)
+    {
+        Description => 'Test on mixed valid and invalid CABCustomers for ChangeAdd.',
+        Fails       => 1,
+        SourceData  => {
+            ChangeAdd => {
+                UserID       => 1,
+                CABCustomers => [
+                    $CustomerUserIDs[0],
+                    $CustomerUserIDs[1],
+                    'ThisIsAnInvalidCustomerUserId',
+                ],
+            },
+        },
+        ReferenceData => {
+            ChangeGet => undef,
+        },
+    },
+
+    # test on invalid IDs for ChangeManagerID and ChangeBuilderID
+    {
+        Description => 'Test on invalid IDs for ChangeManagerID and ChangeManagerID.',
+        Fails       => 1,
+        SourceData  => {
+            ChangeAdd => {
+                UserID          => 1,
+                ChangeManagerID => $InvalidUserIDs[0],
+                ChangeBuilderID => $InvalidUserIDs[0],
+            },
+        },
+        ReferenceData => {
+            ChangeGet => undef,
+        },
+    },
+
     # Update change without required params (required attributes)
     {
         Description => 'Test contains no params for ChangeUpdate().',
@@ -415,7 +489,11 @@ my @ChangeTests   = (
             },
         },
         ReferenceData => {
-            ChangeGet => undef,
+            ChangeGet => {
+                Title         => q{},
+                Description   => q{},
+                Justification => q{},
+            },
         },
         SearchTest => [2],
     },
@@ -1174,7 +1252,7 @@ for my $ChangeID ( keys %TestedChangeID ) {
             ChangeID => $ChangeID,
             UserID   => 1,
         ),
-        "Test $TestCount++: ChangeDelete()",
+        "Test " . $TestCount++ . ": ChangeDelete()",
     );
 }
 
