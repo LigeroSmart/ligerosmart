@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.43 2009-10-13 15:16:41 mae Exp $
+# $Id: ITSMChange.t,v 1.44 2009-10-13 16:22:21 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -430,6 +430,7 @@ my @ChangeTests   = (
                 Justification => '0',
             },
         },
+        SearchTest => [ 18, 19, 20, 21 ],
     },
 
     # test on mixed valid and invalid CABAgents  (required attributes)
@@ -1192,11 +1193,57 @@ my @ChangeSearchTests = (
 
     # Nr 17 - Title, Description, Justification with wildcard
     {
-        Description => 'Title with wildcard',
+        Description => 'Title, Description, Justification with wildcard',
         SearchData  => {
             Title         => ( 'X' x 250 ) . '%',
             Description   => ( 'Y' x 250 ) . '%',
             Justification => ( 'Z' x 250 ) . '%',
+        },
+        ResultData => {
+            TestExistence => 1,
+        },
+    },
+
+    # Nr 18 - Title with '0'
+    {
+        Description => q{Title with '0'},
+        SearchData  => {
+            Title => '0',
+        },
+        ResultData => {
+            TestExistence => 1,
+        },
+    },
+
+    # Nr 19 - Description with '0'
+    {
+        Description => q{Description with '0'},
+        SearchData  => {
+            Description => '0',
+        },
+        ResultData => {
+            TestExistence => 1,
+        },
+    },
+
+    # Nr 20 - Justification with '0'
+    {
+        Description => q{Justification with '0'},
+        SearchData  => {
+            Justification => '0',
+        },
+        ResultData => {
+            TestExistence => 1,
+        },
+    },
+
+    # Nr 21 - Title, Description, Justification with '0'
+    {
+        Description => q{Title, Description, Justification with '0'},
+        SearchData  => {
+            Title         => '0',
+            Description   => '0',
+            Justification => '0',
         },
         ResultData => {
             TestExistence => 1,
