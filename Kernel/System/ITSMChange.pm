@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.36 2009-10-13 12:13:30 ub Exp $
+# $Id: ITSMChange.pm,v 1.37 2009-10-13 12:27:26 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.36 $) [1];
+$VERSION = qw($Revision: 1.37 $) [1];
 
 =head1 NAME
 
@@ -634,16 +634,16 @@ sub ChangeNumberLookup {
     if ( !$Param{ChangeID} && !$Param{ChangeNummber} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Need the ChangeId or the ChangeNumber!",
+            Message  => "Need the ChangeID or the ChangeNumber!",
         );
         return;
     }
 
-    # only one of change id abd change number can be passed
+    # only one of change id and change number can be passed
     if ( $Param{ChangeID} && $Param{ChangeNummber} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Need either the ChangeId or the ChangeNumber, not both!",
+            Message  => "Need either the ChangeID or the ChangeNumber, not both!",
         );
         return;
     }
@@ -1087,7 +1087,7 @@ sub _ChangeNumberCreate {
         # lookup if change number exists already
         my $ChangeID = $Self->ChangeNumberLookup(
             ChangeNumber => $ChangeNumber,
-            UserID       => $Param{UserID},
+            UserID       => 1,
         );
 
         # now we have a new unused change number and return it
@@ -1293,6 +1293,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.36 $ $Date: 2009-10-13 12:13:30 $
+$Revision: 1.37 $ $Date: 2009-10-13 12:27:26 $
 
 =cut
