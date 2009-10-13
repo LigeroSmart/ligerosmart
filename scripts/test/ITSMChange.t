@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.25 2009-10-13 10:20:52 reb Exp $
+# $Id: ITSMChange.t,v 1.26 2009-10-13 12:10:20 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -100,6 +100,7 @@ my @ObjectMethods = qw(
     ChangeDelete
     ChangeGet
     ChangeList
+    ChangeNumberLookup
     ChangeSearch
     ChangeUpdate
     ChangeCABDelete
@@ -338,6 +339,7 @@ my @ChangeTests   = (
                 ChangeBy        => $UserIDs[0],
             },
         },
+        SearchTest => [ 2, 11 ],
     },
 
     # test on max+1 long params  (required attributes)
@@ -365,6 +367,7 @@ my @ChangeTests   = (
                 ChangeBy        => $UserIDs[0],
             },
         },
+        SearchTest => [ 2, 11 ],
     },
 
     # Update change without required params (required attributes)
@@ -724,6 +727,41 @@ continue {
     $TestCount++;
 }
 
+# test for ChangeNumberLookup
+my ($ChangeNumberLookupTestID) = keys %TestedChangeID;
+
+if ($ChangeNumberLookupTestID) {
+    my $ChangeData = $Self->{ChangeObject}->ChangeGet(
+        ChangeID => $ChangeNumberLookupTestID,
+        UserID   => 1,
+    );
+
+    my $ChangeID = $Self->{ChangeObject}->ChangeNumberLookup(
+        ChangeNumber => $ChangeData->{ChangeNumber},
+        UserID       => 1,
+    );
+
+    $Self->Is(
+        $ChangeID,
+        $ChangeData->{ChangeID},
+        'Test ' . $TestCount++ . ': ChangeNumberLookup with ChangeNumber '
+            . $ChangeData->{ChangeNumber} . ' successful.',
+    );
+
+    my $ChangeNumber = $Self->{ChangeObject}->ChangeNumberLookup(
+        ChangeID => $ChangeNumberLookupTestID,
+        UserID   => 1,
+    );
+
+    $Self->Is(
+        $ChangeNumber,
+        $ChangeData->{ChangeNumber},
+        'Test '
+            . $TestCount++
+            . ": ChangeNumberLookup with ChangeID $ChangeNumberLookupTestID successful.",
+    );
+}
+
 # test if ChangeList returns at least as many changes as we created
 # we cannot test for a specific number as these tests can be run in existing environments
 # where other changes already exist
@@ -748,6 +786,17 @@ $Self->Is(
 # define general config item search tests
 # ------------------------------------------------------------ #
 my $SystemTime = $Self->{TimeObject}->SystemTime();
+
+# get a sample change we created above for some 'special' test cases
+my ($SearchTestID) = keys %TestedChangeID;
+my $SearchTestChange = {};
+
+if ($SearchTestID) {
+    $SearchTestChange = $Self->{ChangeObject}->ChangeGet(
+        ChangeID => $SearchTestID,
+        UserID   => 1,
+    );
+}
 
 my @ChangeSearchTests = (
 
@@ -869,6 +918,19 @@ my @ChangeSearchTests = (
             TestExistence => 1,
         },
     },
+
+    # Nr 11 - test Justification
+    {
+        Description => 'Justification',
+        SearchData  => {
+            Justification => 'Z' x 3800,
+        },
+        ResultData => {
+            TestExistence => 1,
+        },
+    },
+
+    # XXX: WorkOrderAgentID, ChangeNumber
 );
 
 my $SearchTestCount = 1;
