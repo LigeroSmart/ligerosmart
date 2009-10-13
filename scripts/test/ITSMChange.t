@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.22 2009-10-13 09:29:16 reb Exp $
+# $Id: ITSMChange.t,v 1.23 2009-10-13 09:38:00 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -325,7 +325,8 @@ my @ChangeTests   = (
 
     # Test for ChangeCABGet
     {
-        SourceData => {
+        Description => 'Test checks empty ARRAY-ref on ChangeCABGet with no given CAB.',
+        SourceData  => {
             ChangeAdd => {
                 UserID => $UserIDs[0],
             },
@@ -340,7 +341,8 @@ my @ChangeTests   = (
 
     # Test for ChangeCABUpdate and ChangeCABGet
     {
-        SourceData => {
+        Description => 'Test checks removment of duplicate CAB members for ChangeCABUpdate',
+        SourceData  => {
             ChangeAdd => {
                 UserID => $UserIDs[0],
             },
@@ -377,7 +379,8 @@ my @ChangeTests   = (
 
     # Test for ChangeCABUpdate and ChangeCABGet
     {
-        SourceData => {
+        Description => 'Test checks invalid CABAgents param for ChangeCABUpdate.',
+        SourceData  => {
             ChangeAdd => {
                 UserID => $UserIDs[0],
             },
@@ -588,7 +591,7 @@ for my $Test (@ChangeTests) {
             next TEST;
         }
 
-        for my $ChangeAttributes (qw(ChangeID CreateTime ChangeTime)) {
+        for my $ChangeAttributes (qw(ChangeID ChangeNumber CreateTime ChangeTime)) {
             $Self->True(
                 $ChangeData->{$ChangeAttributes},
                 "Test $TestCount: |- has $ChangeAttributes.",
@@ -821,9 +824,12 @@ $Self->{ConfigObject}->Set(
 
 # delete the test config items
 for my $ChangeID ( keys %TestedChangeID ) {
-    $Self->{ChangeObject}->ChangeDelete(
-        ChangeID => $ChangeID,
-        UserID   => 1,
+    $Self->True(
+        $Self->{ChangeObject}->ChangeDelete(
+            ChangeID => $ChangeID,
+            UserID   => 1,
+        ),
+        "Test $TestCount++: ChangeDelete()",
     );
 }
 
