@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.24 2009-10-13 06:54:37 ub Exp $
+# $Id: ITSMChange.pm,v 1.25 2009-10-13 07:20:11 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,9 +17,10 @@ use warnings;
 use Kernel::System::Valid;
 use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
+use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.24 $) [1];
+$VERSION = qw($Revision: 1.25 $) [1];
 
 =head1 NAME
 
@@ -98,6 +99,7 @@ sub new {
     $Self->{LinkObject}           = Kernel::System::LinkObject->new( %{$Self} );
     $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
     $Self->{CustomerUserObject}   = Kernel::System::CustomerUser->new( %{$Self} );
+    $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::WorkOrder->new( %{$Self} );
 
     return $Self;
 }
@@ -682,40 +684,6 @@ sub ChangeWorkflowList {
     return;
 }
 
-=item _ChangeStartGet()
-
-get the start date of a change, calculated from the start of the first work order
-
-    my $ChangeStartTime = $ChangeObject->_ChangeStartGet(
-        ChangeID => 123,
-        Type     => 'planned' || 'actual',
-    );
-
-=cut
-
-sub _ChangeStartGet {
-    my ( $Self, %Param ) = @_;
-
-    return;
-}
-
-=item _ChangeEndGet()
-
-get the end date of a change, calculated from the start of the first work order
-
-    my $ChangeEndTime = $ChangeObject->_ChangeEndGet(
-        ChangeID => 123,
-        Type     => 'planned' || 'actual',
-    );
-
-=cut
-
-sub _ChangeEndGet {
-    my ( $Self, %Param ) = @_;
-
-    return;
-}
-
 =item _CheckChangeStateID()
 
 check if a given change state id is valid
@@ -950,6 +918,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.24 $ $Date: 2009-10-13 06:54:37 $
+$Revision: 1.25 $ $Date: 2009-10-13 07:20:11 $
 
 =cut

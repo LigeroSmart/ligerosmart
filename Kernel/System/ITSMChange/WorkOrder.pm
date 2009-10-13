@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all work order functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.3 2009-10-12 12:52:45 bes Exp $
+# $Id: WorkOrder.pm,v 1.4 2009-10-13 07:21:19 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 =head1 NAME
 
@@ -44,6 +44,7 @@ create an object
     use Kernel::System::Log;
     use Kernel::System::DB;
     use Kernel::System::Main;
+    use Kernel::System::Time;
     use Kernel::System::ITSMChange::WorkOrder;
 
     my $ConfigObject = Kernel::Config->new();
@@ -59,6 +60,10 @@ create an object
         EncodeObject => $EncodeObject,
         LogObject    => $LogObject,
     );
+    my $TimeObject = Kernel::System::Time->new(
+        ConfigObject => $ConfigObject,
+        LogObject    => $LogObject,
+    );
     my $DBObject = Kernel::System::DB->new(
         ConfigObject => $ConfigObject,
         EncodeObject => $EncodeObject,
@@ -70,6 +75,7 @@ create an object
         EncodeObject => $EncodeObject,
         LogObject    => $LogObject,
         DBObject     => $DBObject,
+        TimeObject   => $TimeObject,
         MainObject   => $MainObject,
     );
 
@@ -83,7 +89,7 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Object (qw(DBObject ConfigObject EncodeObject LogObject MainObject)) {
+    for my $Object (qw(DBObject ConfigObject EncodeObject LogObject MainObject TimeObject)) {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
@@ -310,6 +316,44 @@ sub WorkOrderDelete {
     return;
 }
 
+=item WorkOrderChangeStartGet()
+
+get the start date of a change, calculated from the start of the first work order
+
+    my $ChangeStartTime = $WorkOrderObject->WorkOrderChangeStartGet(
+        ChangeID => 123,
+        Type     => 'planned' || 'actual',
+    );
+
+=cut
+
+sub WorkOrderChangeStartGet {
+    my ( $Self, %Param ) = @_;
+
+    # SELECT MIN(planed_start_time) WHERE change_id = ?
+
+    return;
+}
+
+=item WorkOrderChangeEndGet()
+
+get the end date of a change, calculated from the start of the first work order
+
+    my $ChangeEndTime = $WorkOrderObject->WorkOrderChangeEndGet(
+        ChangeID => 123,
+        Type     => 'planned' || 'actual',
+    );
+
+=cut
+
+sub WorkOrderChangeEndGet {
+    my ( $Self, %Param ) = @_;
+
+    # SELECT MAX(planed_end_time) WHERE change_id = ?
+
+    return;
+}
+
 =item _CheckWorkOrderStateID()
 
 check if a given work order state id is valid
@@ -369,6 +413,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2009-10-12 12:52:45 $
+$Revision: 1.4 $ $Date: 2009-10-13 07:21:19 $
 
 =cut
