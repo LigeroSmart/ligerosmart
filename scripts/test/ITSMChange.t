@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.16 2009-10-13 07:35:50 reb Exp $
+# $Id: ITSMChange.t,v 1.17 2009-10-13 07:45:04 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -75,19 +75,14 @@ for my $Counter ( 1 .. 3 ) {
 }
 
 # set 3rd user invalid
-my %User = $Self->{UserObject}->GetUserData(
-    UserID => $UserIDs[2],
-);
-
-# set user invalid
-$User{ValidID} = $Self->{ChangeObject}->{ValidObject}->ValidLookup(
-    Valid => 'invalid',
-);
-$User{ChangeUserID} = 1;
-
-# update user
 $Self->{UserObject}->UserUpdate(
-    %User,
+    $Self->{UserObject}->GetUserData(
+        UserID => $UserIDs[2],
+    ),
+    ValidID => $Self->{ChangeObject}->{ValidObject}->ValidLookup(
+        Valid => 'invalid',
+    ),
+    ChangeUserID => 1,
 );
 
 # restore original email check param
@@ -123,7 +118,6 @@ for my $ObjectMethod (@ObjectMethods) {
 # ------------------------------------------------------------ #
 # search for default ITSMChange-states
 # ------------------------------------------------------------ #
-# get class list
 # can't use qw due to spaces in states
 my @DefaultChangeStates = (
     'requested',
@@ -135,11 +129,15 @@ my @DefaultChangeStates = (
     'failed',
     'retracted',
 );
-my $ClassList = $Self->{GeneralCatalogObject}->ItemList(
-    Class => 'ITSM::ChangeManagement::Change::State',
-);
-my %ReverseClassList = reverse %{$ClassList};
 
+# get class list with swapped keys and values
+my %ReverseClassList = reverse %{
+    $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::ChangeManagement::Change::State',
+    );
+    };
+
+# check if states are in GeneralCatalog
 for my $DefaultChangeState (@DefaultChangeStates) {
     $Self->True(
         $ReverseClassList{$DefaultChangeState},
@@ -156,6 +154,9 @@ my @ChangeTests = (
     {
         SourceData => {
             ChangeAdd => {},
+        },
+        ReferenceData => {
+            ChangeGet => undef,
         },
         Fails => 1,    # we expect this test to fail
     },
@@ -303,13 +304,15 @@ for my $Test (@ChangeTests) {
     my $SourceData    = $Test->{SourceData};
     my $ReferenceData = $Test->{ReferenceData};
 
-    # add a new Change
     my $ChangeID;
+
+    # add a new Change
     if ( $SourceData->{ChangeAdd} ) {
         $ChangeID = $Self->{ChangeObject}->ChangeAdd(
             %{ $SourceData->{ChangeAdd} }
         );
 
+        # rember current ChangeID
         $TestedChangeID{$ChangeID} = 1 if ($ChangeID);
 
         if ( !$SourceData->{ChangeAdd}->{UserID} ) {
@@ -327,63 +330,65 @@ for my $Test (@ChangeTests) {
         }
     }    # end if 'SourceData'
 
-    if ($ReferenceData) {
+    # get a change
+    if ( exists $ReferenceData->{ChangeGet} ) {
 
-        if ( $ReferenceData->{ChangeGet} ) {
+        my $ChangeGetReferenceData = $ReferenceData->{ChangeGet};
 
-            my $ChangeGetReferenceData = $ReferenceData->{ChangeGet};
+        my $ChangeData = $Self->{ChangeObject}->ChangeGet(
+            ChangeID => $ChangeID,
+            UserID   => 1,
+        );
 
-            my $ChangeData = $Self->{ChangeObject}->ChangeGet(
-                ChangeID => $ChangeID,
-                UserID   => 1,
-            );
-
-            $Self->True(
+        # ChangeGet should not return anything
+        if ( $ReferenceData->{ChangeGet} == undef ) {
+            $Self->False(
                 $ChangeData,
                 "Test $TestCount: ChangeGet() - Get change.",
             );
+            next TEST;
+        }
 
-            for my $ChangeAttributes (qw(ChangeID CreateTime ChangeTime)) {
-                $Self->True(
-                    $ChangeData->{$ChangeAttributes},
-                    "Test $TestCount: |- has $ChangeAttributes.",
-                );
-            }
-
-            for my $Key ( keys %{$ChangeGetReferenceData} ) {
-
-                # turn off all pretty print
-                $Data::Dumper::Indent = 0;
-                $Data::Dumper::Useqq  = 1;
-
-                # dump the attribute from VersionGet()
-                my $ChangeAttribute = Data::Dumper::Dumper( $ChangeData->{$Key} );
-
-                # dump the reference attribute
-                my $ReferenceAttribute = Data::Dumper::Dumper( $ChangeGetReferenceData->{$Key} );
-
-                $Self->Is(
-                    $ChangeAttribute,
-                    $ReferenceAttribute,
-                    "Test $TestCount: |- $Key",
-                );
-            }
-        }    # end ChangeGet
-
-        if ( exists $ReferenceData->{ChangeUpdate} ) {
-            my $ChangeUpdateSuccess = $Self->{ChangeObject}->ChangeUpdate(
-                ChangeID => $ChangeID,
-                %{ $SourceData->{ChangeUpdate} },
+        for my $ChangeAttributes (qw(ChangeID CreateTime ChangeTime)) {
+            $Self->True(
+                $ChangeData->{$ChangeAttributes},
+                "Test $TestCount: |- has $ChangeAttributes.",
             );
+        }
+
+        for my $Key ( keys %{ $ReferenceData->{ChangeGet} } ) {
+
+            # turn off all pretty print
+            $Data::Dumper::Indent = 0;
+            $Data::Dumper::Useqq  = 1;
+
+            # dump the attribute from VersionGet()
+            my $ChangeAttribute = Data::Dumper::Dumper( $ChangeData->{$Key} );
+
+            # dump the reference attribute
+            my $ReferenceAttribute = Data::Dumper::Dumper( $ReferenceData->{ChangeGet}->{$Key} );
 
             $Self->Is(
-                $ReferenceData->{ChangeUpdate},
-                $ChangeUpdateSuccess,
-                "Test $TestCount: ChangeUpdate() - update change.",
+                $ChangeAttribute,
+                $ReferenceAttribute,
+                "Test $TestCount: |- $Key",
             );
+        }
+    }    # end ChangeGet
 
-        }    # end if ChangeUpdate
-    }    # end if 'ReferenceData'
+    if ( exists $ReferenceData->{ChangeUpdate} ) {
+        my $ChangeUpdateSuccess = $Self->{ChangeObject}->ChangeUpdate(
+            ChangeID => $ChangeID,
+            %{ $SourceData->{ChangeUpdate} },
+        );
+
+        $Self->Is(
+            $ReferenceData->{ChangeUpdate},
+            $ChangeUpdateSuccess,
+            "Test $TestCount: ChangeUpdate() - update change.",
+        );
+
+    }    # end if ChangeUpdate
 }
 continue {
     $TestCount++;
