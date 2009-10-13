@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.39 2009-10-13 12:55:54 bes Exp $
+# $Id: ITSMChange.pm,v 1.40 2009-10-13 13:19:44 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.39 $) [1];
+$VERSION = qw($Revision: 1.40 $) [1];
 
 =head1 NAME
 
@@ -169,7 +169,7 @@ sub ChangeAdd {
     );
 
     # get change id
-    my $ChangeID = $Self->ChangeNumberLookup(
+    my $ChangeID = $Self->ChangeLookup(
         UserID       => $Param{UserID},
         ChangeNumber => $ChangeNumber,
     );
@@ -605,25 +605,25 @@ sub ChangeCABDelete {
     return 1;
 }
 
-=item ChangeNumberLookup()
+=item ChangeLookup()
 
 Return the change id when the passed change number.
 Return the change number when the change id is passed.
 When no change id or change number is found, the undefined value is returned.
 
-    my $ChangeID = $ChangeObject->ChangeNumberLookup(
+    my $ChangeID = $ChangeObject->ChangeLookup(
         ChangeNumber => '2009091742000465',
         UserID => 1,
     );
 
-    my $ChangeNumber = $ChangeObject->ChangeNumberLookup(
+    my $ChangeNumber = $ChangeObject->ChangeLookup(
         ChangeID => 42,
         UserID => 1,
     );
 
 =cut
 
-sub ChangeNumberLookup {
+sub ChangeLookup {
     my ( $Self, %Param ) = @_;
 
     if ( !$Param{UserID} ) {
@@ -824,28 +824,49 @@ sub ChangeDelete {
         }
     }
 
+    # lookup if change exists
+    return if !$Self->ChangeLookup(
+        ChangeID => $Param{ChangeID},
+        UserID   => $Param{UserID},
+    );
+
     # TODO: delete the links to the change
 
     # TODO: delete the history
 
-    # delete the work orders
-    my %Change = $Self->ChangeGet(%Param);
-    return if !%Change;
-    return if !$Change{WorkOrderIDs};
-    for my $WorkOrderID ( @{ $Change{WorkOrderIDs} } ) {
-        $Self->{WorkOrderObject}->WorkOrderDelete(
-            UserID      => $Param{UserID},
-            WorkOrderID => $WorkOrderID
-        );
+    # get change data to get the work order ids
+    my $ChangeData = $Self->ChangeGet(
+        ChangeID => $Param{ChangeID},
+        UserID   => $Param{UserID},
+    );
+
+    # check if change contains work orders
+    if (
+        $ChangeData
+        && ref $ChangeData eq 'HASH'
+        && $ChangeData->{WorkOrderIDs}
+        && ref $ChangeData->{WorkOrderIDs} eq 'ARRAY'
+        )
+    {
+
+        # delete the work orders
+        for my $WorkOrderID ( @{ $ChangeData->{WorkOrderIDs} } ) {
+            return if !$Self->{WorkOrderObject}->WorkOrderDelete(
+                WorkOrderID => $WorkOrderID,
+                UserID      => $Param{UserID},
+            );
+        }
     }
 
     # delete the CAB
-    return if !$Self->ChangeCABDelete(%Param);
+    return if !$Self->ChangeCABDelete(
+        ChangeID => $Param{ChangeID},
+        UserID   => $Param{UserID},
+    );
 
     # delete the change
     return if !$Self->{DBObject}->Do(
-        SQL => 'DELETE FROM change_item '
-            . 'WHERE id = ? ',
+        SQL  => 'DELETE FROM change_item WHERE id = ? ',
         Bind => [ \$Param{ChangeID} ],
     );
 
@@ -1089,7 +1110,7 @@ sub _ChangeNumberCreate {
         $ChangeNumber .= $ChkSum;
 
         # lookup if change number exists already
-        my $ChangeID = $Self->ChangeNumberLookup(
+        my $ChangeID = $Self->ChangeLookup(
             ChangeNumber => $ChangeNumber,
             UserID       => 1,
         );
@@ -1297,6 +1318,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.39 $ $Date: 2009-10-13 12:55:54 $
+$Revision: 1.40 $ $Date: 2009-10-13 13:19:44 $
 
 =cut
