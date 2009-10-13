@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.46 2009-10-13 20:12:23 reb Exp $
+# $Id: ITSMChange.t,v 1.47 2009-10-13 20:31:50 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -207,7 +207,7 @@ my @ChangeTests   = (
                 ChangeBy        => 1,
             },
         },
-        SearchTest => [ 2, 25, 26 ],
+        SearchTest => [ 25, 26 ],
     },
 
     # Change contains only required data - default user (required attributes)
@@ -260,7 +260,7 @@ my @ChangeTests   = (
                 ChangeBy        => $UserIDs[0],
             },
         },
-        SearchTest => [ 2, 4, 25, 26 ],
+        SearchTest => [ 4, 25, 26 ],
     },
 
     # change contains all date - (all attributes)
@@ -392,7 +392,7 @@ my @ChangeTests   = (
                 ChangeBy        => $UserIDs[0],
             },
         },
-        SearchTest => [ 2, 11, 12, 13 ],
+        SearchTest => [ 11, 12, 13 ],
     },
 
     # test on max+1 long params  (required attributes)
@@ -527,7 +527,7 @@ my @ChangeTests   = (
                 ChangeBy        => 1,
             },
         },
-        SearchTest => [ 2, 11, 14, 15, 16, 17 ],
+        SearchTest => [ 11, 14, 15, 16, 17 ],
     },
 
     # test on max+1 long params  (required attributes)
@@ -552,7 +552,6 @@ my @ChangeTests   = (
                 Justification => q{},
             },
         },
-        SearchTest => [2],
     },
 
     # test on '0' strings - default user  (required attributes)
@@ -593,7 +592,7 @@ my @ChangeTests   = (
                 CABCustomers => [],
             },
         },
-        SearchTest => [ 2, 4, 12, 13 ],
+        SearchTest => [ 4, 12, 13 ],
     },
 
     # Test for ChangeCABUpdate and ChangeCABGet
@@ -632,7 +631,7 @@ my @ChangeTests   = (
                 ],
             },
         },
-        SearchTest => [ 2, 8, 9, 10, 22 ],
+        SearchTest => [ 8, 9, 10, 22 ],
     },
 
     # Test for ChangeCABUpdate and ChangeCABGet
@@ -655,7 +654,6 @@ my @ChangeTests   = (
                 CABCustomers => [],
             },
         },
-        SearchTest => [2],
     },
 
     # Test for ChangeCABDelete
@@ -681,7 +679,6 @@ my @ChangeTests   = (
                 CABCustomers => [],
             },
         },
-        SearchTest => [2],
     },
 
     # Test for ChangeCABDelete
@@ -714,7 +711,7 @@ my @ChangeTests   = (
                 ],
             },
         },
-        SearchTest => [ 2, 8, 9, 10 ],
+        SearchTest => [ 8, 9, 10 ],
     },
 
     # change contains title, description, justification, changemanagerid and changebuilderid
@@ -742,7 +739,7 @@ my @ChangeTests   = (
                 CreateBy        => $UserIDs[1]
             },
         },
-        SearchTest => [ 2, 23, 24 ],
+        SearchTest => [ 23, 24 ],
     },
 
 );
@@ -1048,6 +1045,7 @@ my @ChangeSearchTests = (
         SearchData  => {
             Title         => 'Change 1',
             Justification => 'Justification 1',
+            HUHU          => 1,
         },
         ResultData => {
             TestExistence => 1,
