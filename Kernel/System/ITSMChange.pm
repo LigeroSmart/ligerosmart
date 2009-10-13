@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.23 2009-10-12 20:36:30 ub Exp $
+# $Id: ITSMChange.pm,v 1.24 2009-10-13 06:54:37 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.23 $) [1];
+$VERSION = qw($Revision: 1.24 $) [1];
 
 =head1 NAME
 
@@ -148,7 +148,6 @@ sub ChangeAdd {
         Class => 'ITSM::ChangeManagement::Change::State',
         Name  => 'requested',
     );
-
     my $ChangeStateID = $ItemDataRef->{ItemID};
 
     # add change to database
@@ -266,7 +265,7 @@ sub ChangeUpdate {
 
 =item ChangeGet()
 
-return a change as hash reference
+return a change as a hash reference
 
 Return
     $Change{ChangeID}
@@ -290,6 +289,7 @@ Return
 
     my $ChangeRef = $ChangeObject->ChangeGet(
         ChangeID => 123,
+        UserID   => 1,
     );
 
 =cut
@@ -297,7 +297,56 @@ Return
 sub ChangeGet {
     my ( $Self, %Param ) = @_;
 
-    return;
+    # check needed stuff
+    for my $Attribute (qw(ChangeID UserID)) {
+        if ( !$Param{$Attribute} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Attribute!",
+            );
+            return;
+        }
+    }
+
+    # build SQL
+    my $SQL = 'SELECT id, change_number, title, description, justification, '
+        . 'change_state_id, change_manager_id, change_builder_id, '
+        . 'create_time, create_by, change_time, change_by '
+        . 'FROM change_item '
+        . 'WHERE id = ? ';
+
+    # get change data from database
+    return if !$Self->{DBObject}->Prepare(
+        SQL   => $SQL,
+        Bind  => [ \$Param{ChangeID} ],
+        Limit => 1,
+    );
+
+    # fetch the result
+    my %ChangeData;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $ChangeData{ChangeID}        = $Row[0];
+        $ChangeData{ChangeNumber}    = $Row[1];
+        $ChangeData{Title}           = $Row[2];
+        $ChangeData{Description}     = $Row[3];
+        $ChangeData{Justification}   = $Row[4];
+        $ChangeData{ChangeStateID}   = $Row[5];
+        $ChangeData{ChangeManagerID} = $Row[6];
+        $ChangeData{ChangeBuilderID} = $Row[7];
+        $ChangeData{CreateTime}      = $Row[8];
+        $ChangeData{CreateBy}        = $Row[9];
+        $ChangeData{ChangeTime}      = $Row[10];
+        $ChangeData{ChangeBy}        = $Row[11];
+    }
+
+    # get CAB data
+    my $CAB = $Self->ChangeCABGet(
+        ChangeID => $Param{ChangeID},
+        UserID   => $Param{UserID},
+    );
+    %ChangeData = ( %ChangeData, %{$CAB} );
+
+    return \%ChangeData;
 }
 
 =item ChangeCABUpdate()
@@ -437,11 +486,23 @@ sub ChangeCABGet {
         $Data{UserID}         = $Row[2];
         $Data{CustomerUserID} = $Row[3];
 
+        # error check
+        if ( $Data{UserID} && $Data{CustomerUserID} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message =>
+                    "CAB table entry with ID $Data{CABID} contains UserID and CustomerUserID! "
+                    . 'Only one at a time is allowed!',
+            );
+            return;
+        }
+
+        # add data to CAB
         if ( $Data{UserID} ) {
-            push @{ $Data{CABAgents} }, $Data{UserID};
+            push @{ $CAB{CABAgents} }, $Data{UserID};
         }
         elsif ( $Data{CustomerUserID} ) {
-            push @{ $Data{CABCustomers} }, $Data{CustomerUserID};
+            push @{ $CAB{CABCustomers} }, $Data{CustomerUserID};
         }
     }
 
@@ -473,8 +534,9 @@ sub ChangeCABDelete {
         }
     }
 
+    # delete CAB
     return if !$Self->{DBObject}->Do(
-        SQL  => 'DELETE FROM change_cab WHERE change_id = ? ',
+        SQL  => 'DELETE FROM change_cab WHERE change_id = ?',
         Bind => [ \$Param{ChangeID} ],
     );
 
@@ -826,6 +888,8 @@ sub _CheckChangeParams {
             );
             return;
         }
+
+        # check users
         for my $UserID ( @{ $Param{CABAgents} } ) {
             my %UserData = $Self->{UserObject}->GetUserData(
                 UserID => $UserID,
@@ -850,6 +914,8 @@ sub _CheckChangeParams {
             );
             return;
         }
+
+        # check customer users
         for my $CustomerUser ( @{ $Param{CABCustomers} } ) {
             my %CustomerUserData = $Self->{CustomerUserObject}->CustomerUserDataGet(
                 User  => $CustomerUser,
@@ -884,6 +950,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.23 $ $Date: 2009-10-12 20:36:30 $
+$Revision: 1.24 $ $Date: 2009-10-13 06:54:37 $
 
 =cut
