@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.27 2009-10-13 07:53:00 ub Exp $
+# $Id: ITSMChange.pm,v 1.28 2009-10-13 07:59:16 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.27 $) [1];
+$VERSION = qw($Revision: 1.28 $) [1];
 
 =head1 NAME
 
@@ -329,9 +329,9 @@ sub ChangeGet {
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $ChangeData{ChangeID}        = $Row[0];
         $ChangeData{ChangeNumber}    = $Row[1];
-        $ChangeData{Title}           = $Row[2];
-        $ChangeData{Description}     = $Row[3];
-        $ChangeData{Justification}   = $Row[4];
+        $ChangeData{Title}           = $Row[2] || '';
+        $ChangeData{Description}     = $Row[3] || '';
+        $ChangeData{Justification}   = $Row[4] || '';
         $ChangeData{ChangeStateID}   = $Row[5];
         $ChangeData{ChangeManagerID} = $Row[6];
         $ChangeData{ChangeBuilderID} = $Row[7];
@@ -347,6 +347,8 @@ sub ChangeGet {
         UserID   => $Param{UserID},
     );
     %ChangeData = ( %ChangeData, %{$CAB} );
+
+    #$Self->{LogObject}->Dum_per( '', '%ChangeData', \%ChangeData );
 
     return \%ChangeData;
 }
@@ -993,6 +995,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.27 $ $Date: 2009-10-13 07:53:00 $
+$Revision: 1.28 $ $Date: 2009-10-13 07:59:16 $
 
 =cut
