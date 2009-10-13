@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.24 2009-10-13 10:00:00 mae Exp $
+# $Id: ITSMChange.t,v 1.25 2009-10-13 10:20:52 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -187,6 +187,7 @@ my @ChangeTests   = (
                 ChangeBy        => 1,
             },
         },
+        SearchTest => [2],
     },
 
     # Change contains only required data - default user (required attributes)
@@ -238,6 +239,7 @@ my @ChangeTests   = (
                 ChangeBy        => $UserIDs[0],
             },
         },
+        SearchTest => [ 2, 4 ],
     },
 
     # change contains all date - (all attributes)
@@ -280,7 +282,7 @@ my @ChangeTests   = (
                 ],
             },
         },
-        SearchTest => [ 2, 3 ],
+        SearchTest => [ 2, 3, 4, 5, 6, 8, 9, 10 ],
     },
 
     # change contains all date - wrong CAB - (wrong CAB attributes)
@@ -389,8 +391,9 @@ my @ChangeTests   = (
             ChangeCABGet => {
                 CABAgents    => [],
                 CABCustomers => [],
-                }
+            },
         },
+        SearchTest => [ 2, 4 ],
     },
 
     # Test for ChangeCABUpdate and ChangeCABGet
@@ -429,6 +432,7 @@ my @ChangeTests   = (
                 ],
             },
         },
+        SearchTest => [ 2, 8, 9, 10 ],
     },
 
     # Test for ChangeCABUpdate and ChangeCABGet
@@ -451,6 +455,7 @@ my @ChangeTests   = (
                 CABCustomers => [],
             },
         },
+        SearchTest => [2],
     },
 
     # Test for ChangeCABDelete
@@ -475,6 +480,7 @@ my @ChangeTests   = (
                 CABCustomers => [],
             },
         },
+        SearchTest => [2],
     },
 
     # Test for ChangeCABDelete
@@ -506,6 +512,7 @@ my @ChangeTests   = (
                 ],
             },
         },
+        SearchTest => [ 2, 8, 9, 10 ],
     },
 
 );
@@ -728,12 +735,12 @@ $Self->True(
 
 # count all tests that are required to and planned for fail
 my $Fails = grep { $_->{Fails} } @ChangeTests;
-my $NrCreatedChanges = scalar @ChangeTests - $Fails;
+my $NrCreateChanges = scalar @ChangeTests - $Fails;
 
 # test if the changes where created
 $Self->Is(
-    $NrCreatedChanges,
     keys %TestedChangeID || 0,
+    $NrCreateChanges,
     'Test ' . $TestCount++ . ': amount of change objects and test cases.',
 );
 
@@ -746,7 +753,8 @@ my @ChangeSearchTests = (
 
     # Nr 1 - a simple check if the search functions takes care of "Limit"
     {
-        SearchData => {
+        Description => 'Limit',
+        SearchData  => {
             Limit => 1,
         },
         ResultData => {
@@ -757,7 +765,8 @@ my @ChangeSearchTests = (
 
     # Nr 2 - search for all changes created by our first user
     {
-        SearchData => {
+        Description => 'Title, Justification',
+        SearchData  => {
             Title         => 'Change 1',
             Justification => 'Justification 1',
         },
@@ -768,14 +777,97 @@ my @ChangeSearchTests = (
 
     # Nr 3 - test createtimenewerdate
     {
-        SearchData => {
+        Description => 'CreateTimeNewerDate',
+        SearchData  => {
             CreateTimeNewerDate => $Self->{TimeObject}->SystemTime2TimeStamp(
                 SystemTime => $SystemTime - ( 60 * 60 ),
             ),
         },
         ResultData => {
             TestExistence => 1,
-            }
+        },
+    },
+
+    # Nr 4 - test createtimeolderdate
+    {
+        Description => 'CreateTimeOlderDate',
+        SearchData  => {
+            CreateTimeOlderDate => $Self->{TimeObject}->SystemTime2TimeStamp(
+                SystemTime => $SystemTime + ( 60 * 60 ),
+            ),
+        },
+        ResultData => {
+            TestExistence => 1,
+        },
+    },
+
+    # Nr 5 - test changeMANAGERid
+    {
+        Description => 'ChangeManagerID',
+        SearchData  => {
+            ChangeManagerID => $UserIDs[0],
+        },
+        ResultData => {
+            TestExistence => 1,
+        },
+    },
+
+    # Nr 6 - test changeBUILDERid
+    {
+        Description => 'ChangeBuilderID',
+        SearchData  => {
+            ChangeBuilderID => $UserIDs[0],
+        },
+        ResultData => {
+            TestExistence => 1,
+        },
+    },
+
+    # Nr 7 - test changeBUILDERid and changeMANAGERid
+    {
+        Description => 'ChangeBuilderID, ChangeManagerID',
+        SearchData  => {
+            ChangeBuilderID => $UserIDs[1],
+            ChangeManagerID => $UserIDs[0],
+        },
+        ResultData => {
+            TestCount => 1,
+            Count     => 0,
+        },
+    },
+
+    # Nr 8 - test CABAgent
+    {
+        Description => 'CABAgent',
+        SearchData  => {
+            CABAgent => $UserIDs[0],
+        },
+        ResultData => {
+            TestExistence => 1,
+        },
+    },
+
+    # Nr 9 - test CABCustomer
+    {
+        Description => 'CABCustomer',
+        SearchData  => {
+            CABCustomer => $CustomerUserIDs[0],
+        },
+        ResultData => {
+            TestExistence => 1,
+        },
+    },
+
+    # Nr 10 - test CABAgent and CABCustomer
+    {
+        Description => 'CABAgent, CABCustomer',
+        SearchData  => {
+            CABAgent    => $UserIDs[0],
+            CABCustomer => $CustomerUserIDs[1],
+        },
+        ResultData => {
+            TestExistence => 1,
+        },
     },
 );
 
@@ -795,6 +887,11 @@ for my $SearchTest (@ChangeSearchTests) {
         next SEARCHTEST;
     }
 
+    $Self->True(
+        1,
+        'call ChangeSearch with params: ' . $SearchTest->{Description},
+    );
+
     my $ChangeIDs = $Self->{ChangeObject}->ChangeSearch(
         %{ $SearchTest->{SearchData} },
         UserID => 1,
@@ -802,7 +899,7 @@ for my $SearchTest (@ChangeSearchTests) {
 
     $Self->True(
         defined($ChangeIDs) && ref($ChangeIDs) eq 'ARRAY',
-        "Test $TestCount: array reference for ChangeIDs.",
+        "Test $TestCount: |- array reference for ChangeIDs.",
     );
 
     $ChangeIDs ||= [];
@@ -816,7 +913,7 @@ for my $SearchTest (@ChangeSearchTests) {
         $Self->Is(
             scalar @{$ChangeIDs},
             $Count,
-            "Test $TestCount: Number of found changes.",
+            "Test $TestCount: |- Number of found changes.",
         );
     }
 
@@ -831,7 +928,7 @@ for my $SearchTest (@ChangeSearchTests) {
         for my $ChangeID (@ChangeIDs) {
             $Self->True(
                 $ReturnedChangeID{$ChangeID},
-                "Test $TestCount: ChangeID found in returned list.",
+                "Test $TestCount: |- ChangeID $ChangeID found in returned list.",
             );
         }
     }
