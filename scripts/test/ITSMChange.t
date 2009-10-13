@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.17 2009-10-13 07:45:04 mae Exp $
+# $Id: ITSMChange.t,v 1.18 2009-10-13 07:58:58 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -94,6 +94,7 @@ $Self->{ConfigObject}->Set(
 # ------------------------------------------------------------ #
 # test ITSMChange API
 # ------------------------------------------------------------ #
+# define public interface
 my @ObjectMethods = qw(
     ChangeAdd
     ChangeDelete
@@ -106,11 +107,10 @@ my @ObjectMethods = qw(
     ChangeCABUpdate
 );
 
+# check if subs are available
 for my $ObjectMethod (@ObjectMethods) {
-    my $Sub = $Self->{ChangeObject}->can($ObjectMethod);
-
     $Self->True(
-        $Sub,
+        $Self->{ChangeObject}->can($ObjectMethod),
         "Test " . $TestCount++ . " - check 'can $ObjectMethod'"
     );
 }
@@ -118,6 +118,7 @@ for my $ObjectMethod (@ObjectMethods) {
 # ------------------------------------------------------------ #
 # search for default ITSMChange-states
 # ------------------------------------------------------------ #
+# define default ITSMChange-states
 # can't use qw due to spaces in states
 my @DefaultChangeStates = (
     'requested',
@@ -134,7 +135,7 @@ my @DefaultChangeStates = (
 my %ReverseClassList = reverse %{
     $Self->{GeneralCatalogObject}->ItemList(
         Class => 'ITSM::ChangeManagement::Change::State',
-    );
+        )
     };
 
 # check if states are in GeneralCatalog
@@ -170,9 +171,9 @@ my @ChangeTests = (
         },
         ReferenceData => {
             ChangeGet => {
-                Title           => undef,
-                Description     => undef,
-                Justification   => undef,
+                Title           => q{},
+                Description     => q{},
+                Justification   => q{},
                 ChangeManagerID => 1,
                 ChangeBuilderID => 1,
                 WorkOrderIDs    => [],
@@ -193,9 +194,9 @@ my @ChangeTests = (
         },
         ReferenceData => {
             ChangeGet => {
-                Title           => undef,
-                Description     => undef,
-                Justification   => undef,
+                Title           => q{},
+                Description     => q{},
+                Justification   => q{},
                 ChangeManagerID => $UserIDs[0],
                 ChangeBuilderID => $UserIDs[0],
                 WorkOrderIDs    => [],
