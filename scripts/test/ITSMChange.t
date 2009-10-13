@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.18 2009-10-13 07:58:58 mae Exp $
+# $Id: ITSMChange.t,v 1.19 2009-10-13 08:14:19 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -247,6 +247,7 @@ my @ChangeTests = (
                 ],
             },
         },
+        SearchTest => [ 2, 3 ],
     },
 
     # change contains all date - wrong CAB - (wrong CAB attributes)
@@ -287,6 +288,8 @@ my @ChangeTests = (
 );
 
 my %TestedChangeID;
+my %ChangeIDForSearchTest;
+
 TEST:
 for my $Test (@ChangeTests) {
 
@@ -314,7 +317,18 @@ for my $Test (@ChangeTests) {
         );
 
         # rember current ChangeID
-        $TestedChangeID{$ChangeID} = 1 if ($ChangeID);
+        if ($ChangeID) {
+            $TestedChangeID{$ChangeID} = 1;
+
+            # save changeid for use in search tests
+            if ( exists $Test->{SearchTest} ) {
+                my @SearchTests = @{ $Test->{SearchTest} };
+
+                for my $SearchTestNr (@SearchTests) {
+                    $ChangeIDForSearchTest{$SearchTestNr}->{$ChangeID} = 1;
+                }
+            }
+        }
 
         if ( !$SourceData->{ChangeAdd}->{UserID} ) {
             $Self->False(
@@ -398,7 +412,7 @@ continue {
 # test if ChangeList returns at least as many changes as we created
 # we cannot test for a specific number as these tests can be run in existing environments
 # where other changes already exist
-my $ChangeList = $Self->{ChangeObject}->ChangeList() || [];
+my $ChangeList = $Self->{ChangeObject}->ChangeList( UserID => 1 ) || [];
 $Self->True(
     @{$ChangeList} >= ( keys %TestedChangeID || 0 ),
     'Test ' . $TestCount++ . ': ChangeList() returns at least as many changes as we created',
@@ -406,10 +420,11 @@ $Self->True(
 
 # count all tests that are required to and planned for fail
 my $Fails = grep { $_->{Fails} } @ChangeTests;
+my $NrCreatedChanges = scalar @ChangeTests - $Fails;
 
 # test if the changes where created
 $Self->Is(
-    scalar @ChangeTests - $Fails,
+    $NrCreatedChanges,
     keys %TestedChangeID || 0,
     'Test ' . $TestCount++ . ': amount of change objects and test cases.',
 );
@@ -417,42 +432,52 @@ $Self->Is(
 # ------------------------------------------------------------ #
 # define general config item search tests
 # ------------------------------------------------------------ #
+my $SystemTime = $Self->{TimeObject}->SystemTime();
 
 my @ChangeSearchTests = (
 
-    # a simple check if the search functions takes care of "Limit"
+    # Nr 1 - a simple check if the search functions takes care of "Limit"
     {
         SearchData => {
             Limit => 1,
         },
         ResultData => {
-            Count => 1,
+            TestCount => 1,
+            Count     => 1,
         },
     },
 
-    # search for all changes created by our first user
+    # Nr 2 - search for all changes created by our first user
     {
         SearchData => {
             Title         => 'Change 1',
             Justification => 'Justification 1',
         },
         ResultData => {
-            Count => 2,
+            TestCount => 1,
         },
     },
 
-    # search for all changes created by our first user
-    #{
-    #    Title => '',
-    #    Justification => '',
-    #},
+    # Nr 3 - test createtimenewerdate
+    {
+        SearchData => {
+            CreateTimeNewerDate => $Self->{TimeObject}->SystemTime2TimeStamp(
+                SystemTime => $SystemTime - ( 60 * 60 ),
+            ),
+        },
+        ResultData => {
+            TestExistence => 1,
+            }
+    },
 );
+
+my $SearchTestCount = 1;
 
 SEARCHTEST:
 for my $SearchTest (@ChangeSearchTests) {
 
     # check SearchData attribute
-    if ( ( !$SearchTest->{SearchData} ) || ref( $SearchTest->{SearchData} ) ne 'HASH' ) {
+    if ( !$SearchTest->{SearchData} || ref( $SearchTest->{SearchData} ) ne 'HASH' ) {
 
         $Self->True(
             0,
@@ -464,6 +489,7 @@ for my $SearchTest (@ChangeSearchTests) {
 
     my $ChangeIDs = $Self->{ChangeObject}->ChangeSearch(
         %{ $SearchTest->{SearchData} },
+        UserID => 1,
     );
 
     $Self->True(
@@ -473,14 +499,38 @@ for my $SearchTest (@ChangeSearchTests) {
 
     $ChangeIDs ||= [];
 
-    $Self->Is(
-        scalar @{$ChangeIDs},
-        $SearchTest->{ResultData}->{Count},
-        "Test $TestCount: Number of found changes.",
-    );
+    if ( $SearchTest->{ResultData}->{TestCount} ) {
+
+        # get number of change ids ChangeSearch should return
+        my $Count = keys %{ $ChangeIDForSearchTest{$SearchTestCount} };
+        $Count = $SearchTest->{ResultData}->{Count} if exists $SearchTest->{ResultData}->{Count};
+
+        $Self->Is(
+            scalar @{$ChangeIDs},
+            $Count,
+            "Test $TestCount: Number of found changes.",
+        );
+    }
+
+    if ( $SearchTest->{ResultData}->{TestExistence} ) {
+
+        # check if all ids that belongs to this searchtest are returned
+        my @ChangeIDs = keys %{ $ChangeIDForSearchTest{$SearchTestCount} };
+
+        my %ReturnedChangeID;
+        @ReturnedChangeID{ @{$ChangeIDs} } = (1) x scalar @{$ChangeIDs};
+
+        for my $ChangeID (@ChangeIDs) {
+            $Self->True(
+                $ReturnedChangeID{$ChangeID},
+                "Test $TestCount: ChangeID found in returned list.",
+            );
+        }
+    }
 }
 continue {
     $TestCount++;
+    $SearchTestCount++;
 }
 
 # ------------------------------------------------------------ #
