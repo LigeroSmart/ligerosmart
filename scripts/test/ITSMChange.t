@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.13 2009-10-13 06:43:49 ub Exp $
+# $Id: ITSMChange.t,v 1.14 2009-10-13 07:22:15 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -99,8 +99,18 @@ $Self->{ConfigObject}->Set(
 # ------------------------------------------------------------ #
 # test ITSMChange API
 # ------------------------------------------------------------ #
-my @ObjectMethods = qw(ChangeAdd ChangeDelete ChangeGet ChangeList ChangeSearch ChangeUpdate
-    ChangeCABDelete ChangeCABGet ChangeCABUpdate);
+my @ObjectMethods = qw(
+    ChangeAdd
+    ChangeDelete
+    ChangeGet
+    ChangeList
+    ChangeSearch
+    ChangeUpdate
+    ChangeCABDelete
+    ChangeCABGet
+    ChangeCABUpdate
+);
+
 for my $ObjectMethod (@ObjectMethods) {
     my $Sub = $Self->{ChangeObject}->can($ObjectMethod);
 
@@ -116,8 +126,14 @@ for my $ObjectMethod (@ObjectMethods) {
 # get class list
 # can't use qw due to spaces in states
 my @DefaultChangeStates = (
-    'requested', 'pending approval', 'rejected', 'approved', 'in progress',
-    'successful', 'failed', 'retracted'
+    'requested',
+    'pending approval',
+    'rejected',
+    'approved',
+    'in progress',
+    'successful',
+    'failed',
+    'retracted'
 );
 my $ClassList = $Self->{GeneralCatalogObject}->ItemList(
     Class => 'ITSM::ChangeManagement::Change::State',
