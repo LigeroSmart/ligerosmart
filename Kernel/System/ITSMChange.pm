@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.52 2009-10-14 11:30:52 ub Exp $
+# $Id: ITSMChange.pm,v 1.53 2009-10-14 11:35:47 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.52 $) [1];
+$VERSION = qw($Revision: 1.53 $) [1];
 
 =head1 NAME
 
@@ -946,28 +946,44 @@ sub ChangeSearch {
     }
 
     # conditions for CAB searches
-    CABPARAM:
-    for my $ArrRef (
-        [ 'CABAgent',    'user_id',          q{},  'cab1' ],
-        [ 'CABCustomer', 'customer_user_id', q{'}, 'cab2' ],
-        )
-    {
-        my ( $SearchField, $TableAttribute, $Delimiter, $JoinTable ) = @{$ArrRef};
+    my %CABParams = (
+        CABAgent    => 'cab1.user_id',
+        CABCustomer => 'cab2.customer_user_id',
+    );
 
-        next CABPARAM if !$Param{$SearchField};
+    CABPARAM:
+    for my $CABParam ( keys %CABParams ) {
+        next CABPARAM if !$Param{$CABParam};
+
+        if ( ref $Param{$CABParam} ne 'ARRAY' ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "$CABParam must be an array reference!",
+            );
+            return;
+        }
+
+        next CAPPARAM if !@{ $Param{$CABParam} };
 
         # quote
-        for my $OneParam ( @{ $Param{$SearchField} } ) {
+        for my $OneParam ( @{ $Param{$CABParam} } ) {
             $OneParam = $Self->{DBObject}->Quote($OneParam);
         }
 
-        # create string
-        my $InString = join q{, }, map { $Delimiter . $_ . $Delimiter } @{ $Param{$SearchField} };
+        if ( $CABParam eq 'CABAgent' ) {
 
-        next CAPPARAM if !$InString;
+            # CABAgent is a integer, so no quotes are needed
+            my $InString = join q{, }, @{ $Param{$CABParam} };
+            push @SQLWhere,   "$CABParams{$CABParam} IN ($InString)";
+            push @JoinTables, 'cab1';
+        }
+        else {
 
-        push @SQLWhere,   "$JoinTable.$TableAttribute IN ($InString)";
-        push @JoinTables, $JoinTable;
+            # CABCustomer is a string, so the single quotes are needed
+            my $InString = join q{, }, map {"'$_'"} @{ $Param{$CABParam} };
+            push @SQLWhere,   "$CABParams{$CABParam} IN ($InString)";
+            push @JoinTables, 'cab2';
+        }
     }
 
     WORKORDERAGENTID:
@@ -1585,6 +1601,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.52 $ $Date: 2009-10-14 11:30:52 $
+$Revision: 1.53 $ $Date: 2009-10-14 11:35:47 $
 
 =cut
