@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.53 2009-10-14 10:24:20 mae Exp $
+# $Id: ITSMChange.t,v 1.54 2009-10-14 11:23:20 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -170,8 +170,9 @@ for my $DefaultChangeState (@DefaultChangeStates) {
 # define general change tests
 # ------------------------------------------------------------ #
 # store current TestCount for better test case recognition
-my $TestCountMisc = $TestCount;
-my @ChangeTests   = (
+my $TestCountMisc   = $TestCount;
+my $UniqueSignature = 'UnitTest-ITSMChange-' . int( rand 1_000_000 ) . '_' . time;
+my @ChangeTests     = (
 
     #------------------------------#
     # Tests on ChangeAdd
@@ -926,6 +927,84 @@ my @ChangeTests   = (
         SearchTest => [29],
     },
 
+    #----------------------------------------#
+    # Changes for 'OrderBy' search tests
+    #----------------------------------------#
+
+    #
+    {
+        Description => q{Change for 'OrderBy' tests (1).},
+        SourceData  => {
+            SleepBeforeUpdate => 3,    # seconds the script waits before ChangeUpdate is called
+            ChangeAdd         => {
+                UserID => 1,
+                Title  => $UniqueSignature,
+            },
+            ChangeUpdate => {
+                UserID          => $UserIDs[0],
+                ChangeStateID   => $ReverseClassList{successful},
+                ChangeManagerID => $UserIDs[1],
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                ChangeStateID => $ReverseClassList{successful},
+            },
+        },
+
+        # 999999 is a special test case. changes with searchtest 999999
+        # are used in 'OrderBy' search tests
+        SearchTest => [999999],
+    },
+
+    #
+    {
+        Description => q{Change for 'OrderBy' tests (2).},
+        SourceData  => {
+            SleepBeforeAdd    => 3,    # seconds the script waits before ChangeAdd is called
+            SleepBeforeUpdate => 3,    # seconds the script waits before ChangeUpdate is called
+            ChangeAdd         => {
+                UserID => $UserIDs[1],
+                Title  => $UniqueSignature,
+            },
+            ChangeUpdate => {
+                UserID          => $UserIDs[1],
+                ChangeStateID   => $ReverseClassList{rejected},
+                ChangeManagerID => 1,
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                ChangeStateID => $ReverseClassList{rejected},
+            },
+        },
+        SearchTest => [999999],
+    },
+
+    #
+    {
+        Description => q{Change for 'OrderBy' tests (3).},
+        SourceData  => {
+            SleepBeforeAdd    => 3,    # seconds the script waits before ChangeAdd is called
+            SleepBeforeUpdate => 3,    # seconds the script waits before ChangeUpdate is called
+            ChangeAdd         => {
+                UserID => $UserIDs[0],
+                Title  => $UniqueSignature,
+            },
+            ChangeUpdate => {
+                UserID          => 1,
+                ChangeStateID   => $ReverseClassList{failed},
+                ChangeManagerID => $UserIDs[0],
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                ChangeStateID => $ReverseClassList{failed},
+            },
+        },
+        SearchTest => [999999],
+    },
+
 );
 
 my %TestedChangeID;
@@ -963,6 +1042,13 @@ for my $Test (@ChangeTests) {
 
     # add a new Change
     if ( $SourceData->{ChangeAdd} ) {
+
+        # sleep before adding the change if SleepBeforeAdd is specified
+        if ( $SourceData->{SleepBeforeAdd} ) {
+            sleep $SourceData->{SleepBeforeAdd};
+        }
+
+        # add the change
         $ChangeID = $Self->{ChangeObject}->ChangeAdd(
             %{ $SourceData->{ChangeAdd} }
         );
@@ -1005,6 +1091,13 @@ for my $Test (@ChangeTests) {
     }    # end if 'ChangeAdd'
 
     if ( exists $SourceData->{ChangeUpdate} ) {
+
+        # sleep before adding the change if SleepBeforeAdd is specified
+        if ( $SourceData->{SleepBeforeUpdate} ) {
+            sleep $SourceData->{SleepBeforeUpdate};
+        }
+
+        # update the change
         my $ChangeUpdateSuccess = $Self->{ChangeObject}->ChangeUpdate(
             ChangeID => $ChangeID,
             %{ $SourceData->{ChangeUpdate} },
@@ -1867,6 +1960,58 @@ for my $SearchTest (@ChangeSearchTests) {
 continue {
     $TestCount++;
     $SearchTestCount++;
+}
+
+# ------------------------------------------------------------ #
+# define change search tests for 'OrderBy' searches
+# ------------------------------------------------------------ #
+
+# get three change ids. Then get the data. That is needed for sorting
+my @ChangeIDsForOrderByTests = keys %{ $ChangeIDForSearchTest{999999} };
+my @ChangesForOrderByTests;
+
+for my $ChangeIDForOrderByTests (@ChangeIDsForOrderByTests) {
+    push @ChangesForOrderByTests, $Self->{ChangeObject}->ChangeGet(
+        ChangeID => $ChangeIDForOrderByTests,
+        UserID   => 1,
+    );
+}
+
+my @OrderByColumns = qw(
+    ChangeID
+    ChangeNumber
+    ChangeStateID
+    ChangeManagerID
+    ChangeBuilderID
+    CreateBy
+    ChangeBy
+);
+
+for my $OrderByColumn (@OrderByColumns) {
+    my @SortedChanges
+        = sort { $a->{$OrderByColumn} <=> $b->{$OrderByColumn} } @ChangesForOrderByTests;
+    my @SortedIDs = map { $_->{ChangeID} } @SortedChanges;
+
+    # turn off all pretty print
+    local $Data::Dumper::Indent = 0;
+    local $Data::Dumper::Useqq  = 1;
+
+    my $SearchResult = $Self->{ChangeObject}->ChangeSearch(
+        Title  => $UniqueSignature,
+        UserID => 1,
+    );
+
+    # dump the attribute from ChangeGet()
+    my $SearchList = Data::Dumper::Dumper($SearchResult);
+
+    # dump the reference attribute
+    my $ReferenceList = Data::Dumper::Dumper( \@SortedIDs );
+
+    $Self->Is(
+        $SearchList,
+        $ReferenceList,
+        'Test ' . $TestCount++ . ": ChangeSearch() OrderBy $OrderByColumn."
+    );
 }
 
 # ------------------------------------------------------------ #
