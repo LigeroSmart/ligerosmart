@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.50 2009-10-14 10:10:23 bes Exp $
+# $Id: ITSMChange.pm,v 1.51 2009-10-14 10:30:54 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.50 $) [1];
+$VERSION = qw($Revision: 1.51 $) [1];
 
 =head1 NAME
 
@@ -848,12 +848,13 @@ sub ChangeSearch {
         }
     }
 
-    # set string params
+    # set array params
     my %ArrayParams = (
-        ChangeNumber  => 'c.change_number',
-        Title         => 'c.title',
-        Description   => 'c.description',
-        Justification => 'c.justification',
+        ChangeStateID   => 'c.change_state_id',
+        ChangeManagerID => 'c.change_manager_id',
+        ChangeBuilderID => 'c.change_builder_id',
+        CreateBy        => 'c.create_by',
+        ChangeBy        => 'c.change_by',
     );
 
     # add array params to sql-where-array
@@ -1585,6 +1586,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.50 $ $Date: 2009-10-14 10:10:23 $
+$Revision: 1.51 $ $Date: 2009-10-14 10:30:54 $
 
 =cut
