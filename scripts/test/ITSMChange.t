@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.62 2009-10-14 13:56:55 reb Exp $
+# $Id: ITSMChange.t,v 1.63 2009-10-14 14:17:39 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -830,6 +830,28 @@ my @ChangeTests     = (
 
     # Test for ChangeCABUpdate and ChangeCABGet
     {
+        Description => 'Test checks deaktivated CABAgents param for ChangeCABUpdate.',
+        SourceData  => {
+            ChangeAdd => {
+                UserID => $UserIDs[0],
+            },
+            ChangeCABUpdate => {
+                CABAgents => [
+                    $UserIDs[2],
+                ],
+            },
+            ChangeCABUpdateFail => 1,
+        },
+        ReferenceData => {
+            ChangeCABGet => {
+                CABAgents    => [],
+                CABCustomers => [],
+            },
+        },
+    },
+
+    # Test for ChangeCABUpdate and ChangeCABGet
+    {
         Description => 'Test checks invalid CABCustomers param for ChangeCABUpdate.',
         SourceData  => {
             ChangeAdd => {
@@ -846,6 +868,45 @@ my @ChangeTests     = (
             ChangeCABGet => {
                 CABAgents    => [],
                 CABCustomers => [],
+            },
+        },
+    },
+
+    # Test for ChangeCABUpdate and ChangeCABGet
+    {
+        Description => 'Test checks valid ChangeAdd and ChangeCABUpdate.',
+        SourceData  => {
+            ChangeAdd => {
+                UserID    => $UserIDs[0],
+                CABAgents => [
+                    $UserIDs[0],
+                ],
+                CABCustomers => [
+                    $CustomerUserIDs[0]
+                ],
+            },
+            ChangeCABUpdate => {
+                CABCustomers => [
+                    $UserIDs[0],
+                ],
+                CABAgents => [
+                    $UserIDs[1],
+                ],
+                CABCustomers => [
+                    $CustomerUserIDs[1],
+                ],
+            },
+        },
+        ReferenceData => {
+            ChangeCABGet => {
+                CABAgents => [
+                    $UserIDs[0],
+                    $UserIDs[1],
+                ],
+                CABCustomers => [
+                    $CustomerUserIDs[0],
+                    $CustomerUserIDs[1],
+                ],
             },
         },
     },
