@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.67 2009-10-14 20:31:08 mae Exp $
+# $Id: ITSMChange.t,v 1.68 2009-10-14 21:01:13 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1228,25 +1228,35 @@ for my $Test (@ChangeTests) {
 
     if ( $SourceData->{ChangeCABDelete} && $ChangeID ) {
         my %CABDeleteParams = (
-            UserID => 1,
+            UserID   => 1,
+            ChangeID => $ChangeID,
         );
 
-        # The only way to make ChangeCABDelete() fail is to not pass ChangeID
-        if ( !$SourceData->{ChangeCABDeleteFail} ) {
-            $CABDeleteParams{ChangeID} = $ChangeID;
-        }
-
-        my $CABDeleteSuccess = $Self->{ChangeObject}->ChangeCABDelete(%CABDeleteParams);
-
+        # special handling for fail tests
         if ( $SourceData->{ChangeCABDeleteFail} ) {
+
+            # test void context
             $Self->False(
-                $CABDeleteSuccess,
+                $Self->{ChangeObject}->ChangeCABDelete() || 0,
                 "Test $TestCount: |- ChangeCABDelete",
             );
+
+            my @DeleteTests = (
+                { UserID   => 1 },
+                { ChangeID => $ChangeID },
+            );
+            for my $FailTest (@DeleteTests) {
+                $Self->False(
+                    $Self->{ChangeObject}->ChangeCABDelete( %{$FailTest} ) || 0,
+                    "Test $TestCount: |- ChangeCABDelete",
+                );
+            }
         }
         else {
+
+            # Delete with all params
             $Self->True(
-                $CABDeleteSuccess,
+                $Self->{ChangeObject}->ChangeCABDelete(%CABDeleteParams),
                 "Test $TestCount: |- ChangeCABDelete",
             );
         }
@@ -2244,13 +2254,6 @@ for my $ChangeID ( keys %TestedChangeID ) {
             UserID   => 1,
         ),
         "Test " . $TestCount++ . ": ChangeDelete()",
-    );
-}
-
-for ( 1 .. 10 ) {
-    $Self->True(
-        ( int rand 1_000_000 ) % 2,
-        "Test " . $TestCount . " : ChangeFoo()",
     );
 }
 
