@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.43 2009-10-13 19:52:21 bes Exp $
+# $Id: ITSMChange.pm,v 1.44 2009-10-14 06:42:54 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.43 $) [1];
+$VERSION = qw($Revision: 1.44 $) [1];
 
 =head1 NAME
 
@@ -733,12 +733,11 @@ return list of change ids as an array reference
         ChangeStateID    => [ 11, 12, 13 ],                     # (optional)
         ChangeManagerID  => [ 1, 2, 3 ],                        # (optional)
         ChangeBuilderID  => [ 5, 7, 4 ],                        # (optional)
+        CreateBy         => [ 5, 2, 3 ],                        # (optional)
+        ChangeBy         => [ 3, 2, 1 ],                        # (optional)
 
         TODO : ????? Array params or not????
         WorkOrderAgentID => [ 6, 2 ],                           # (optional)
-
-        CreateBy         => [ 5, 2, 3 ],                        # (optional)
-        ChangeBy         => [ 3, 2, 1 ],                        # (optional)
 
         # TODO : implement this!
         CABAgent         => 9,                                  # (optional)
@@ -830,8 +829,14 @@ sub ChangeSearch {
 
         if ( $Param{UsingWildcards} ) {
 
-            # prepare like string
-            $Self->_PrepareLikeString( \$Param{$StringParam} );
+            # Quote
+            $Param{$StringParam} = $Self->{DBObject}->Quote( $Param{$StringParam}, 'Like' );
+
+            # replace * with %
+            $Param{$StringParam} =~ s{ \*+ }{%}xmsg;
+
+            # do not use string params which contain only %
+            next STRINGPARAM if $Param{$StringParam} =~ m{ \A \%* \z }xms;
 
             push @SQLWhere,
                 "( LOWER($StringParams{$StringParam}) LIKE LOWER('$Param{$StringParam}') )";
@@ -840,7 +845,6 @@ sub ChangeSearch {
             push @SQLWhere,
                 "( LOWER($StringParams{$StringParam}) = LOWER('$Param{$StringParam}') )";
         }
-
     }
 
     # set array params
@@ -1187,7 +1191,7 @@ sub _CheckChangeStateID {
     {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "No valid change state id given!",
+            Message  => "ChangeStateID $Param{ChangeStateID} is not a valid change state id!",
         );
         return;
     }
@@ -1195,41 +1199,11 @@ sub _CheckChangeStateID {
     return 1;
 }
 
-=item _ChangeNumberCreateOld()
-
-create a new change number
-
-    my $ChangeNumber= $ChangeObject->_ChangeNumberCreateOld();
-
-=cut
-
-sub _ChangeNumberCreateOld {
-    my ( $Self, %Param ) = @_;
-
-    # TODO : Replace this function with the similar code as in DateChecksum in OTRS!!!!
-
-    # get needed config options
-    my $SystemID = $Self->{ConfigObject}->Get('SystemID');
-
-    # get current time
-    my ( $Sec, $Min, $Hour, $Day, $Month, $Year ) = $Self->{TimeObject}->SystemTime2Date(
-        SystemTime => $Self->{TimeObject}->SystemTime(),
-    );
-
-    # create random number
-    my $RandomNumber = int( rand(100000) );
-
-    # create new change number
-    my $ChangeNumber = $Year . $Month . $Day . $SystemID . $RandomNumber;
-
-    return $ChangeNumber;
-}
-
 =item _ChangeNumberCreate()
 
 create a new change number
 
-    my $ChangeNumber= $ChangeObject->_ChangeNumberCreate();
+    my $ChangeNumber = $ChangeObject->_ChangeNumberCreate();
 
 =cut
 
@@ -1402,20 +1376,23 @@ sub _CheckChangeParams {
         )
     {
 
-        next ARGUMENT if !exists $Param{$Argument};    # params are not required
+        # params are not required
+        next ARGUMENT if !exists $Param{$Argument};
 
+        # check if param is not defined
         if ( !defined $Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "The parameter $Argument must be defined!",
+                Message  => "The parameter '$Argument' must be defined!",
             );
             return;
         }
 
+        # check if param is not a reference
         if ( ref $Param{$Argument} ne '' ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "The parameter $Argument mustn't be a reference!",
+                Message  => "The parameter '$Argument' mustn't be a reference!",
             );
             return;
         }
@@ -1424,7 +1401,7 @@ sub _CheckChangeParams {
         if ( $Argument eq 'Title' && length( $Param{$Argument} ) > 250 ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "The parameter $Argument must be shorter than 250 characters!",
+                Message  => "The parameter '$Argument' must be shorter than 250 characters!",
             );
             return;
         }
@@ -1434,7 +1411,7 @@ sub _CheckChangeParams {
             if ( length( $Param{$Argument} ) > 3800 ) {
                 $Self->{LogObject}->Log(
                     Priority => 'error',
-                    Message  => "The parameter $Argument must be shorter than 3800 characters!",
+                    Message  => "The parameter '$Argument' must be shorter than 3800 characters!",
                 );
                 return;
             }
@@ -1442,16 +1419,20 @@ sub _CheckChangeParams {
     }
 
     # check if given ChangeStateID is valid
-    return if $Param{ChangeStateID} && !$Self->_CheckChangeStateID(
-        ChangeStateID => $Param{ChangeStateID},
-    );
+    if ( $Param{ChangeStateID} ) {
+        return if !$Self->_CheckChangeStateID(
+            ChangeStateID => $Param{ChangeStateID},
+        );
+    }
 
     # change manager and change builder must be agents
     ARGUMENT:
     for my $Argument (qw( ChangeManagerID ChangeBuilderID )) {
 
-        next ARGUMENT if !exists $Param{$Argument};    # params are not required
+        # params are not required
+        next ARGUMENT if !exists $Param{$Argument};
 
+        # get user data
         my %UserData = $Self->{UserObject}->GetUserData(
             UserID => $Param{$Argument},
             Valid  => 1,
@@ -1478,6 +1459,8 @@ sub _CheckChangeParams {
 
         # check users
         for my $UserID ( @{ $Param{CABAgents} } ) {
+
+            # get user data
             my %UserData = $Self->{UserObject}->GetUserData(
                 UserID => $UserID,
                 Valid  => 1,
@@ -1504,6 +1487,8 @@ sub _CheckChangeParams {
 
         # check customer users
         for my $CustomerUser ( @{ $Param{CABCustomers} } ) {
+
+            # get customer user data
             my %CustomerUserData = $Self->{CustomerUserObject}->CustomerUserDataGet(
                 User  => $CustomerUser,
                 Valid => 1,
@@ -1519,29 +1504,6 @@ sub _CheckChangeParams {
     }
 
     return 1;
-}
-
-=item _PrepareLikeString()
-
-internal function to prepare like strings
-
-    $ChangeObject->_PrepareLikeString( $StringRef );
-
-=cut
-
-sub _PrepareLikeString {
-    my ( $Self, $Value ) = @_;
-
-    return if !$Value;
-    return if ref $Value ne 'SCALAR';
-
-    # Quote
-    ${$Value} = $Self->{DBObject}->Quote( ${$Value}, 'Like' );
-
-    # replace * with %
-    ${$Value} =~ s{ \*+ }{%}xmsg;
-
-    return;
 }
 
 1;
@@ -1560,6 +1522,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.43 $ $Date: 2009-10-13 19:52:21 $
+$Revision: 1.44 $ $Date: 2009-10-14 06:42:54 $
 
 =cut
