@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.60 2009-10-14 13:07:07 reb Exp $
+# $Id: ITSMChange.t,v 1.61 2009-10-14 13:29:29 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -2043,7 +2043,7 @@ for my $OrderByColumn (@OrderByColumns) {
     my $SearchResult = $Self->{ChangeObject}->ChangeSearch(
         Title            => 'OrderByChange - ' . $UniqueSignature,
         OrderBy          => [$OrderByColumn],
-        OrderByDirection => 'Up',
+        OrderByDirection => ['Up'],
         UserID           => 1,
     );
 
