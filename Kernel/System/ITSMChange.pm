@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.51 2009-10-14 10:30:54 bes Exp $
+# $Id: ITSMChange.pm,v 1.52 2009-10-14 11:30:52 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.51 $) [1];
+$VERSION = qw($Revision: 1.52 $) [1];
 
 =head1 NAME
 
@@ -442,10 +442,13 @@ sub ChangeCABUpdate {
         }
     }
 
+    # check if CABAgents and CABCustomers exist in the agents and customer databases
+    return if !$Self->_CheckChangeParams(%Param);
+
     # enter the CAB Agents
     if ( $Param{CABAgents} ) {
 
-        # remove old list
+        # remove all current users from cab table
         return if !$Self->{DBObject}->Do(
             SQL => 'DELETE FROM change_cab '
                 . 'WHERE change_id = ? '
@@ -453,13 +456,11 @@ sub ChangeCABUpdate {
             Bind => [ \$Param{ChangeID} ],
         );
 
-        # Insert an user only once
-        my %Seen;
-        USER_ID:
-        for my $UserID ( @{ $Param{CABAgents} } ) {
-            next USER_ID if $Seen{$UserID};
-            $Seen{$UserID} = 1;
+        # filter out unique users
+        my %UniqueUsers = map { $_ => 1 } @{ $Param{CABAgents} };
 
+        # add user to cab table
+        for my $UserID ( keys %UniqueUsers ) {
             return if !$Self->{DBObject}->Do(
                 SQL => 'INSERT INTO change_cab ( change_id, user_id ) '
                     . 'VALUES ( ?, ? )',
@@ -471,7 +472,7 @@ sub ChangeCABUpdate {
     # enter the CAB Customers
     if ( $Param{CABCustomers} ) {
 
-        # remove old list
+        # remove all current customer users from cab table
         return if !$Self->{DBObject}->Do(
             SQL => 'DELETE FROM change_cab '
                 . 'WHERE change_id = ? '
@@ -479,13 +480,11 @@ sub ChangeCABUpdate {
             Bind => [ \$Param{ChangeID} ],
         );
 
-        # Insert an customer only once
-        my %Seen;
-        CUSTOMER_USER_ID:
-        for my $CustomerUserID ( @{ $Param{CABCustomers} } ) {
-            next CUSTOMER_USER_ID if $Seen{$CustomerUserID};
-            $Seen{$CustomerUserID} = 1;
+        # filter out unique customer users
+        my %UniqueCustomerUsers = map { $_ => 1 } @{ $Param{CABCustomers} };
 
+        # add user to cab table
+        for my $CustomerUserID ( keys %UniqueCustomerUsers ) {
             return if !$Self->{DBObject}->Do(
                 SQL => 'INSERT INTO change_cab ( change_id, customer_user_id ) '
                     . 'VALUES ( ?, ? )',
@@ -1586,6 +1585,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.51 $ $Date: 2009-10-14 10:30:54 $
+$Revision: 1.52 $ $Date: 2009-10-14 11:30:52 $
 
 =cut
