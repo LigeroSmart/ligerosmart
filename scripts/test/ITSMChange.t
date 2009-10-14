@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.63 2009-10-14 14:17:39 mae Exp $
+# $Id: ITSMChange.t,v 1.64 2009-10-14 14:28:28 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -882,7 +882,7 @@ my @ChangeTests     = (
                     $UserIDs[0],
                 ],
                 CABCustomers => [
-                    $CustomerUserIDs[0]
+                    $CustomerUserIDs[0],
                 ],
             },
             ChangeCABUpdate => {
@@ -890,9 +890,11 @@ my @ChangeTests     = (
                     $UserIDs[0],
                 ],
                 CABAgents => [
+                    $UserIDs[0],
                     $UserIDs[1],
                 ],
                 CABCustomers => [
+                    $CustomerUserIDs[0],
                     $CustomerUserIDs[1],
                 ],
             },
