@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.57 2009-10-14 12:46:29 mae Exp $
+# $Id: ITSMChange.t,v 1.58 2009-10-14 12:56:40 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -2005,8 +2005,9 @@ for my $ChangeIDForOrderByTests (@ChangeIDsForOrderByTests) {
     );
 
     # convert time string to numbers - that's better for the comparisons
-    $ChangeData->{CreateTime} =~ s/\D//g;
-    $ChangeData->{ChangeTime} =~ s/\D//g;
+    for my $TimeColumn (qw(CreateTime ChangeTime)) {
+        $ChangeData->{$TimeColumn} =~ s/\D//g;
+    }
 
     push @ChangesForOrderByTests, $ChangeData;
 }
@@ -2023,6 +2024,13 @@ my @OrderByColumns = qw(
     ChangeTime
 );
 
+# These columns can be added to lists above as soon as Workorder is implemented
+# and the time columns are set.
+#    PlannedStartTime
+#    PlannedEndTime
+#    ActualStartTime
+#    ActualEndTime
+
 for my $OrderByColumn (@OrderByColumns) {
     my @SortedChanges
         = sort { $a->{$OrderByColumn} <=> $b->{$OrderByColumn} } @ChangesForOrderByTests;
@@ -2034,7 +2042,7 @@ for my $OrderByColumn (@OrderByColumns) {
 
     my $SearchResult = $Self->{ChangeObject}->ChangeSearch(
         Title   => 'OrderByChange - ' . $UniqueSignature,
-        OrderBy => $OrderByColumn,
+        OrderBy => [$OrderByColumn],
         UserID  => 1,
     );
 
