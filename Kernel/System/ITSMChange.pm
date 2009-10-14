@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.53 2009-10-14 11:35:47 bes Exp $
+# $Id: ITSMChange.pm,v 1.54 2009-10-14 11:49:47 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.53 $) [1];
+$VERSION = qw($Revision: 1.54 $) [1];
 
 =head1 NAME
 
@@ -725,22 +725,21 @@ return list of change ids as an array reference
     my $ChangeIDsRef = $ChangeObject->ChangeSearch(
         ChangeNumber     => '2009100112345778',                 # (optional)
 
-        Title            => 'Replacement of slow mail server',  # (optional)
-        Description      => 'New mail server is faster',        # (optional)
-        Justification    => 'Old mail server too slow',         # (optional)
+        Title             => 'Replacement of slow mail server',  # (optional)
+        Description       => 'New mail server is faster',        # (optional)
+        Justification     => 'Old mail server too slow',         # (optional)
 
         # array parameters are used with logical OR operator
-        ChangeStateID    => [ 11, 12, 13 ],                     # (optional)
-        ChangeManagerID  => [ 1, 2, 3 ],                        # (optional)
-        ChangeBuilderID  => [ 5, 7, 4 ],                        # (optional)
-        CreateBy         => [ 5, 2, 3 ],                        # (optional)
-        ChangeBy         => [ 3, 2, 1 ],                        # (optional)
+        ChangeStateIDs    => [ 11, 12, 13 ],                     # (optional)
+        ChangeManagerIDs  => [ 1, 2, 3 ],                        # (optional)
+        ChangeBuilderIDs  => [ 5, 7, 4 ],                        # (optional)
+        CreateBy          => [ 5, 2, 3 ],                        # (optional)
+        ChangeBy          => [ 3, 2, 1 ],                        # (optional)
 
-        TODO : ????? Array params or not????
-        WorkOrderAgentID => [ 6, 2 ],                           # (optional)
+        WorkOrderAgentIDs => [ 6, 2 ],                           # (optional)
 
-        CABAgent        => [ 9, 13 ],                          # (optional)
-        CABCustomer     => [ 'tt', 'xx' ],                     # (optional)
+        CABAgents         => [ 9, 13 ],                          # (optional)
+        CABCustomers      => [ 'tt', 'xx' ],                     # (optional)
 
         # changes with planned start time after ...
         PlannedStartTimeNewerDate => '2006-01-09 00:00:01',     # (optional)
@@ -849,11 +848,11 @@ sub ChangeSearch {
 
     # set array params
     my %ArrayParams = (
-        ChangeStateID   => 'c.change_state_id',
-        ChangeManagerID => 'c.change_manager_id',
-        ChangeBuilderID => 'c.change_builder_id',
-        CreateBy        => 'c.create_by',
-        ChangeBy        => 'c.change_by',
+        ChangeStateIDs   => 'c.change_state_id',
+        ChangeManagerIDs => 'c.change_manager_id',
+        ChangeBuilderIDs => 'c.change_builder_id',
+        CreateBy         => 'c.create_by',
+        ChangeBy         => 'c.change_by',
     );
 
     # add array params to sql-where-array
@@ -886,7 +885,7 @@ sub ChangeSearch {
     }
 
     # set time params
-    # TODO: loop over array references
+    # TODO: loop over time references
     my %TimeParams = (
         CreateTimeNewerDate => 'c.create_time >=',
         CreateTimeOlderDate => 'c.create_time <=',
@@ -947,8 +946,8 @@ sub ChangeSearch {
 
     # conditions for CAB searches
     my %CABParams = (
-        CABAgent    => 'cab1.user_id',
-        CABCustomer => 'cab2.customer_user_id',
+        CABAgents    => 'cab1.user_id',
+        CABCustomers => 'cab2.customer_user_id',
     );
 
     CABPARAM:
@@ -970,7 +969,7 @@ sub ChangeSearch {
             $OneParam = $Self->{DBObject}->Quote($OneParam);
         }
 
-        if ( $CABParam eq 'CABAgent' ) {
+        if ( $CABParam eq 'CABAgents' ) {
 
             # CABAgent is a integer, so no quotes are needed
             my $InString = join q{, }, @{ $Param{$CABParam} };
@@ -987,8 +986,8 @@ sub ChangeSearch {
     }
 
     WORKORDERAGENTID:
-    if ( $Param{WorkOrderAgentID} ) {
-        if ( ref $Param{WorkOrderAgentID} ne 'ARRAY' ) {
+    if ( $Param{WorkOrderAgentIDs} ) {
+        if ( ref $Param{WorkOrderAgentIDs} ne 'ARRAY' ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
                 Message  => "WorkOrderAgentID must be an array reference!",
@@ -996,15 +995,15 @@ sub ChangeSearch {
             return;
         }
 
-        next WORKORDERAGENTID if !@{ $Param{WorkOrderAgentID} };
+        next WORKORDERAGENTID if !@{ $Param{WorkOrderAgentIDs} };
 
         # quote
-        for my $OneParam ( @{ $Param{WorkOrderAgentID} } ) {
+        for my $OneParam ( @{ $Param{WorkOrderAgentIDs} } ) {
             $OneParam = $Self->{DBObject}->Quote($OneParam);
         }
 
         # create string
-        my $InString = join q{, }, @{ $Param{WorkOrderAgentID} };
+        my $InString = join q{, }, @{ $Param{WorkOrderAgentIDs} };
 
         push @SQLWhere,   "wo2.workorder_agent_id IN ( $InString )";
         push @JoinTables, 'wo2';
@@ -1601,6 +1600,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.53 $ $Date: 2009-10-14 11:35:47 $
+$Revision: 1.54 $ $Date: 2009-10-14 11:49:47 $
 
 =cut
