@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.46 2009-10-14 08:39:08 bes Exp $
+# $Id: ITSMChange.pm,v 1.47 2009-10-14 09:03:33 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.46 $) [1];
+$VERSION = qw($Revision: 1.47 $) [1];
 
 =head1 NAME
 
@@ -995,7 +995,7 @@ sub ChangeSearch {
     }
 
     # assemble the SQL query
-    my $SQL = " SELECT id FROM change_item c\n";
+    my $SQL = " SELECT c.id FROM change_item c\n";
 
     # add the joins
     my %TableSeen;
@@ -1005,6 +1005,8 @@ sub ChangeSearch {
         # do not join a table twice
         next TABLE if $TableSeen{$Table};
 
+        $TableSeen{$Table} = 1;
+
         if ( $Table eq 'wo1' ) {
             $SQL .= " INNER JOIN change_workorder wo1 ON wo1.change_id = c.id \n";
         }
@@ -1012,7 +1014,7 @@ sub ChangeSearch {
             $SQL .= " INNER JOIN change_workorder wo2 ON wo2.change_id = wo1.change_id \n";
         }
         elsif ( $Table eq 'cab' ) {
-            $SQL .= " INNER JOIN change_workorder cab ON cab.change_id = c.id \n";
+            $SQL .= " INNER JOIN change_cab cab ON cab.change_id = c.id \n";
         }
         else {
             $Self->{LogObject}->Log(
@@ -1584,6 +1586,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.46 $ $Date: 2009-10-14 08:39:08 $
+$Revision: 1.47 $ $Date: 2009-10-14 09:03:33 $
 
 =cut
