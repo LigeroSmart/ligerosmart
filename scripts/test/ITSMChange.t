@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.64 2009-10-14 14:28:28 mae Exp $
+# $Id: ITSMChange.t,v 1.65 2009-10-14 14:37:18 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -2138,6 +2138,61 @@ for my $OrderByColumn (@OrderByColumns) {
         $SearchListDown,
         $ReferenceListDown,
         'Test ' . $TestCount++ . ": ChangeSearch() OrderBy $OrderByColumn (Down)."
+    );
+}
+
+# change the create time for the second test case we defined above for the orderby tests
+# we do this to have two changes with the same create time. this is needed to test
+# the 'orderby' with two columns
+SetChangeTimes(
+    ChangeID   => ( sort @ChangeIDsForOrderByTests )[1],
+    CreateTime => '2009-10-01 01:00:00',
+);
+
+my @ChangesForSecondOrderByTests;
+for my $ChangeIDForSecondOrderByTests (@ChangeIDsForOrderByTests) {
+    my $ChangeData = $Self->{ChangeObject}->ChangeGet(
+        ChangeID => $ChangeIDForSecondOrderByTests,
+        UserID   => 1,
+    );
+
+    # convert time string to numbers - that's better for the comparisons
+    for my $TimeColumn (qw(CreateTime ChangeTime)) {
+        $ChangeData->{$TimeColumn} =~ s/\D//g;
+    }
+
+    push @ChangesForSecondOrderByTests, $ChangeData;
+}
+
+# create an extra block as we use "local"
+{
+    my @SortedChanges = sort {
+        $a->{CreateTime} <=> $b->{CreateTime}       # createtime is sorted ascending
+            || $a->{ChangeID} <=> $b->{ChangeID}    # changeid is sorted ascending
+    } @ChangesForSecondOrderByTests;
+    my @SortedIDs = map { $_->{ChangeID} } @SortedChanges;
+
+    # turn off all pretty print
+    local $Data::Dumper::Indent = 0;
+    local $Data::Dumper::Useqq  = 1;
+
+    my $SearchResult = $Self->{ChangeObject}->ChangeSearch(
+        Title            => 'OrderByChange - ' . $UniqueSignature,
+        OrderBy          => [ 'CreateTime', 'ChangeID' ],
+        OrderByDirection => [ 'Up', 'Up' ],
+        UserID           => 1,
+    );
+
+    # dump the attribute from ChangeGet()
+    my $SearchList = Data::Dumper::Dumper($SearchResult);
+
+    # dump the reference attribute
+    my $ReferenceList = Data::Dumper::Dumper( \@SortedIDs );
+
+    $Self->Is(
+        $SearchList,
+        $ReferenceList,
+        'Test ' . $TestCount++ . ": ChangeSearch() OrderBy CreateTime (Down) and ChangeID (Up)."
     );
 }
 
