@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.56 2009-10-14 13:03:03 bes Exp $
+# $Id: ITSMChange.pm,v 1.57 2009-10-14 13:21:41 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.56 $) [1];
+$VERSION = qw($Revision: 1.57 $) [1];
 
 =head1 NAME
 
@@ -395,9 +395,8 @@ sub ChangeGet {
 
 add or update the CAB of a change.
 One of CABAgents and CABCustomers must be passed.
-Passing a reference to an empty array deletes the CAB.
-When an agents or customer is passed multiple time, he will
-be inserted only once.
+Passing a reference to an empty array deletes the part of the CAB (CABAgents or CABCustomers)
+When agents or customers are passed multiple times, they will be inserted only once.
 
     my $Success = $ChangeObject->ChangeCABUpdate(
         ChangeID     => 123,
@@ -462,8 +461,7 @@ sub ChangeCABUpdate {
         # add user to cab table
         for my $UserID ( keys %UniqueUsers ) {
             return if !$Self->{DBObject}->Do(
-                SQL => 'INSERT INTO change_cab ( change_id, user_id ) '
-                    . 'VALUES ( ?, ? )',
+                SQL => 'INSERT INTO change_cab ( change_id, user_id ) VALUES ( ?, ? )',
                 Bind => [ \$Param{ChangeID}, \$UserID ],
             );
         }
@@ -486,8 +484,7 @@ sub ChangeCABUpdate {
         # add user to cab table
         for my $CustomerUserID ( keys %UniqueCustomerUsers ) {
             return if !$Self->{DBObject}->Do(
-                SQL => 'INSERT INTO change_cab ( change_id, customer_user_id ) '
-                    . 'VALUES ( ?, ? )',
+                SQL => 'INSERT INTO change_cab ( change_id, customer_user_id ) VALUES ( ?, ? )',
                 Bind => [ \$Param{ChangeID}, \$CustomerUserID ],
             );
         }
@@ -548,7 +545,7 @@ sub ChangeCABGet {
         $Data{UserID}         = $Row[2];
         $Data{CustomerUserID} = $Row[3];
 
-        # error check
+        # error check if both columns are filled
         if ( $Data{UserID} && $Data{CustomerUserID} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -607,7 +604,7 @@ sub ChangeCABDelete {
 
 =item ChangeLookup()
 
-Return the change id when the passed change number.
+Return the change id when the change number is passed.
 Return the change number when the change id is passed.
 When no change id or change number is found, the undefined value is returned.
 
@@ -655,12 +652,10 @@ sub ChangeLookup {
     # get change id
     if ( $Param{ChangeNumber} ) {
         return if !$Self->{DBObject}->Prepare(
-            SQL => 'SELECT id FROM change_item '
-                . 'WHERE change_number = ?',
+            SQL   => 'SELECT id FROM change_item WHERE change_number = ?',
             Bind  => [ \$Param{ChangeNumber} ],
             Limit => 1,
         );
-
         my $ChangeID;
         while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
             $ChangeID = $Row[0];
@@ -669,19 +664,23 @@ sub ChangeLookup {
         return $ChangeID;
     }
 
-    return if !$Self->{DBObject}->Prepare(
-        SQL => 'SELECT change_number FROM change_item '
-            . 'WHERE id = ?',
-        Bind  => [ \$Param{ChangeID} ],
-        Limit => 1,
-    );
+    # get change number
+    elsif ( $Param{ChangeID} ) {
 
-    my $ChangeNumber;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $ChangeNumber = $Row[0];
+        return if !$Self->{DBObject}->Prepare(
+            SQL   => 'SELECT change_number FROM change_item WHERE id = ?',
+            Bind  => [ \$Param{ChangeID} ],
+            Limit => 1,
+        );
+        my $ChangeNumber;
+        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+            $ChangeNumber = $Row[0];
+        }
+
+        return $ChangeNumber;
     }
 
-    return $ChangeNumber;
+    return;
 }
 
 =item ChangeList()
@@ -1037,35 +1036,32 @@ sub ChangeSearch {
     );
 
     my @SQLOrderBy;
-    my $OrderByClause;
-    {
-        if ( ref $Param{OrderBy} ne 'ARRAY' ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "OrderBy must be an array reference!",
-            );
-            return;
+    if ( ref $Param{OrderBy} ne 'ARRAY' ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "OrderBy must be an array reference!",
+        );
+        return;
+    }
+
+    # assemble list of table attributes, which should be used for ordering
+    my %OrderBySeen;
+    ORDERBY:
+    for my $OrderBy ( @{ $Param{OrderBy} } ) {
+
+        next ORDERBY if !$OrderBy;
+        next ORDERBY if !$OrderByTable{$OrderBy};
+        push @SQLOrderBy, $OrderByTable{$OrderBy};
+
+        # for some order fields, we need to make sure, that the wo1 table is joined
+        if ( $TableRequiresJoin{$OrderBy} ) {
+            push @JoinTables, 'wo1';
         }
+    }
 
-        # assemble list of table attributes, which should be used for ordering
-        my %OrderBySeen;
-        ORDERBY:
-        for my $OrderBy ( @{ $Param{OrderBy} } ) {
-
-            next ORDERBY if !$OrderBy;
-            next ORDERBY if !$OrderByTable{$OrderBy};
-            push @SQLOrderBy, $OrderByTable{$OrderBy};
-
-            # for some order fields, we need to make sure, that the wo1 table is joined
-            if ( $TableRequiresJoin{$OrderBy} ) {
-                push @JoinTables, 'wo1';
-            }
-        }
-
-        # we need at least on sort criterion
-        if ( !@SQLOrderBy ) {
-            push @SQLOrderBy, $OrderByTable{ChangeID};
-        }
+    # we need at least on sort criterion
+    if ( !@SQLOrderBy ) {
+        push @SQLOrderBy, $OrderByTable{ChangeID};
     }
 
     # assemble the SQL query
@@ -1643,6 +1639,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.56 $ $Date: 2009-10-14 13:03:03 $
+$Revision: 1.57 $ $Date: 2009-10-14 13:21:41 $
 
 =cut
