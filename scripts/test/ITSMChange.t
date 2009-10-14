@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.50 2009-10-14 08:39:28 reb Exp $
+# $Id: ITSMChange.t,v 1.51 2009-10-14 09:28:49 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -173,6 +173,10 @@ for my $DefaultChangeState (@DefaultChangeStates) {
 my $TestCountMisc = $TestCount;
 my @ChangeTests   = (
 
+    #------------------------------#
+    # Tests on ChangeAdd
+    #------------------------------#
+
     # Change doesn't contain all data (required attributes)
     {
         Description => 'Test contains no params for ChangeAdd.',
@@ -232,34 +236,6 @@ my @ChangeTests   = (
                 ChangeBy        => $UserIDs[0],
             },
         },
-    },
-
-    # test on proper mapping on undef params - default user  (required attributes)
-    {
-        Description => 'Test for proper string handling for ChangeAdd.',
-        SourceData  => {
-            ChangeAdd => {
-                UserID => $UserIDs[0],
-
-                # don't specify Title
-                # don't specify Description
-                # don't specify Justification
-            },
-        },
-        ReferenceData => {
-            ChangeGet => {
-                Title           => q{},
-                Description     => q{},
-                Justification   => q{},
-                ChangeManagerID => undef,
-                ChangeBuilderID => $UserIDs[0],
-                WorkOrderIDs    => [],
-                CABAgents       => [],
-                CABCustomers    => [],
-                CreateBy        => $UserIDs[0],
-                ChangeBy        => $UserIDs[0],
-            },
-        },
         SearchTest => [ 4, 25, 26 ],
     },
 
@@ -302,6 +278,40 @@ my @ChangeTests   = (
             },
         },
         SearchTest => [ 2, 3, 4, 5, 6, 8, 9, 10, 12, 13, 23, 24, 27 ],
+    },
+
+    # change contains title, description, justification, changemanagerid and changebuilderid
+    {
+        Description => 'Test contains all possible params for ChangeAdd (Second try).',
+        SourceData  => {
+            ChangeAdd => {
+                Title           => 'Change 2',
+                Description     => 'Description 2',
+                Justification   => 'Justification 2',
+                ChangeManagerID => $UserIDs[1],
+                ChangeBuilderID => $UserIDs[1],
+                CABAgents       => [
+                    $UserIDs[1],
+                ],
+                CABCustomers => [
+                    $CustomerUserIDs[1],
+                ],
+                UserID => $UserIDs[1],
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                Title           => 'Change 2',
+                Description     => 'Description 2',
+                Justification   => 'Justification 2',
+                ChangeManagerID => $UserIDs[1],
+                ChangeBuilderID => $UserIDs[1],
+                CABAgents       => [ $UserIDs[1] ],
+                CABCustomers    => [ $CustomerUserIDs[1] ],
+                CreateBy        => $UserIDs[1]
+            },
+        },
+        SearchTest => [ 23, 24 ],
     },
 
     # change contains all data - wrong CAB - (wrong CAB attributes)
@@ -412,6 +422,57 @@ my @ChangeTests   = (
         },
     },
 
+    # test on max+1 long params - title  (required attributes)
+    {
+        Description => 'Test for max+1 string - title - length for ChangeAdd.',
+        Fails       => 1,
+        SourceData  => {
+            ChangeAdd => {
+                UserID        => $UserIDs[0],
+                Title         => 'X' x 251,
+                Description   => 'Y',
+                Justification => 'Z',
+            },
+        },
+        ReferenceData => {
+            ChangeGet => undef,
+        },
+    },
+
+    # test on max+1 long params - description (required attributes)
+    {
+        Description => 'Test for max+1 string - description - length for ChangeAdd.',
+        Fails       => 1,
+        SourceData  => {
+            ChangeAdd => {
+                UserID        => $UserIDs[0],
+                Title         => 'X',
+                Description   => 'Y' x 3801,
+                Justification => 'Z',
+            },
+        },
+        ReferenceData => {
+            ChangeGet => undef,
+        },
+    },
+
+    # test on max+1 long params - justification (required attributes)
+    {
+        Description => 'Test for max+1 string - justification - length for ChangeAdd.',
+        Fails       => 1,
+        SourceData  => {
+            ChangeAdd => {
+                UserID        => $UserIDs[0],
+                Title         => 'X',
+                Description   => 'Y',
+                Justification => 'Z' x 3801,
+            },
+        },
+        ReferenceData => {
+            ChangeGet => undef,
+        },
+    },
+
     # test on '0' strings - default user  (required attributes)
     {
         Description => q{Test for '0' string handling for ChangeAdd.},
@@ -442,8 +503,9 @@ my @ChangeTests   = (
                 UserID    => 1,
                 CABAgents => [
                     $UserIDs[0],
+                    $InvalidUserIDs[1],
                     $UserIDs[1],
-                    'ThisIsAnInvalidUserId',
+                    $InvalidUserIDs[0],
                 ],
             },
         },
@@ -473,7 +535,7 @@ my @ChangeTests   = (
 
     # test on invalid IDs for ChangeManagerID and ChangeBuilderID
     {
-        Description => 'Test on invalid IDs for ChangeManagerID and ChangeManagerID for ChangeAdd.',
+        Description => 'Test on invalid IDs for ChangeManagerID and ChangeBuilderID for ChangeAdd.',
         Fails       => 1,
         SourceData  => {
             ChangeAdd => {
@@ -486,6 +548,42 @@ my @ChangeTests   = (
             ChangeGet => undef,
         },
     },
+
+    # test on invalid IDs for ChangeManagerID
+    {
+        Description => 'Test on invalid ID for ChangeManagerID for ChangeAdd.',
+        Fails       => 1,
+        SourceData  => {
+            ChangeAdd => {
+                UserID          => 1,
+                ChangeManagerID => $InvalidUserIDs[0],
+                ChangeBuilderID => $UserIDs[0],
+            },
+        },
+        ReferenceData => {
+            ChangeGet => undef,
+        },
+    },
+
+    # test on invalid IDs for ChangeBuilderID
+    {
+        Description => 'Test on invalid ID for ChangeBuilderID for ChangeAdd.',
+        Fails       => 1,
+        SourceData  => {
+            ChangeAdd => {
+                UserID          => 1,
+                ChangeManagerID => $UserIDs[0],
+                ChangeBuilderID => $InvalidUserIDs[0],
+            },
+        },
+        ReferenceData => {
+            ChangeGet => undef,
+        },
+    },
+
+    #------------------------------#
+    # Tests on ChangeUpdate
+    #------------------------------#
 
     # Update change without required params (required attributes)
     {
@@ -554,6 +652,74 @@ my @ChangeTests   = (
         },
     },
 
+    # test on max+1 long params - title  (required attributes)
+    {
+        Description => 'Test for max+1 string length - title - for ChangeUpdate.',
+        UpdateFails => 1,
+        SourceData  => {
+            ChangeAdd => {
+                UserID => $UserIDs[0],
+            },
+            ChangeUpdate => {
+                UserID        => 1,
+                Title         => 'X' x 251,
+                Description   => 'Y',
+                Justification => 'Z',
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                Title         => q{},
+                Description   => q{},
+                Justification => q{},
+            },
+        },
+    },    # test on max+1 long params - description  (required attributes)
+    {
+        Description => 'Test for max+1 string length - description - for ChangeUpdate.',
+        UpdateFails => 1,
+        SourceData  => {
+            ChangeAdd => {
+                UserID => $UserIDs[0],
+            },
+            ChangeUpdate => {
+                UserID        => 1,
+                Title         => 'X',
+                Description   => 'Y' x 3801,
+                Justification => 'Z',
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                Title         => q{},
+                Description   => q{},
+                Justification => q{},
+            },
+        },
+    },    # test on max+1 long params  - justification - (required attributes)
+    {
+        Description => 'Test for max+1 string length - justification - for ChangeUpdate.',
+        UpdateFails => 1,
+        SourceData  => {
+            ChangeAdd => {
+                UserID => $UserIDs[0],
+            },
+            ChangeUpdate => {
+                UserID        => 1,
+                Title         => 'X',
+                Description   => 'Y',
+                Justification => 'Z' x 3801,
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                Title         => q{},
+                Description   => q{},
+                Justification => q{},
+            },
+        },
+    },
+
     # test on '0' strings - default user  (required attributes)
     {
         Description => q{Test for '0' string handling for ChangeUpdate.},
@@ -576,6 +742,10 @@ my @ChangeTests   = (
             },
         },
     },
+
+    #------------------------------#
+    # Tests on ChangeCAB*
+    #------------------------------#
 
     # Test for ChangeCABGet
     {
@@ -656,6 +826,28 @@ my @ChangeTests   = (
         },
     },
 
+    # Test for ChangeCABUpdate and ChangeCABGet
+    {
+        Description => 'Test checks invalid CABCustomers param for ChangeCABUpdate.',
+        SourceData  => {
+            ChangeAdd => {
+                UserID => $UserIDs[0],
+            },
+            ChangeCABUpdate => {
+                CABCustomers => [
+                    $UserIDs[0],
+                ],
+            },
+            ChangeCABUpdateFail => 1,
+        },
+        ReferenceData => {
+            ChangeCABGet => {
+                CABAgents    => [],
+                CABCustomers => [],
+            },
+        },
+    },
+
     # Test for ChangeCABDelete
     {
         Description => 'Test checks ChangeCABDelete with valid params.',
@@ -681,7 +873,7 @@ my @ChangeTests   = (
         },
     },
 
-    # Test for ChangeCABDelete
+    # Test for ChangeCABDelete - in the executiion of the, no ChangeID will be given
     {
         Description => 'Test checks ChangeCABDelete with invalid params.',
         SourceData  => {
@@ -712,34 +904,6 @@ my @ChangeTests   = (
             },
         },
         SearchTest => [ 8, 9, 10 ],
-    },
-
-    # change contains title, description, justification, changemanagerid and changebuilderid
-    {
-        Description => 'Test contains all possible params for ChangeAdd (Second try).',
-        SourceData  => {
-            ChangeAdd => {
-                Title           => 'Change 2',
-                Description     => 'Description 2',
-                Justification   => 'Justification 2',
-                ChangeManagerID => $UserIDs[1],
-                ChangeBuilderID => $UserIDs[1],
-                UserID          => $UserIDs[1],
-            },
-        },
-        ReferenceData => {
-            ChangeGet => {
-                Title           => 'Change 2',
-                Description     => 'Description 2',
-                Justification   => 'Justification 2',
-                ChangeManagerID => $UserIDs[1],
-                ChangeBuilderID => $UserIDs[1],
-                CABAgents       => [],
-                CABCustomers    => [],
-                CreateBy        => $UserIDs[1]
-            },
-        },
-        SearchTest => [ 23, 24 ],
     },
 
     # add change and update changestateid
@@ -871,12 +1035,18 @@ for my $Test (@ChangeTests) {
             UserID   => 1,
         );
 
-        my $IsSuccess = $CABUpdateSuccess || $SourceData->{ChangeCABUpdateFail};
-
-        $Self->True(
-            $IsSuccess,
-            "Test $TestCount: |- ChangeCABUpdate",
-        );
+        if ( $SourceData->{ChangeCABUpdateFail} ) {
+            $Self->False(
+                $CABUpdateSuccess,
+                "Test $TestCount: |- ChangeCABUpdate",
+                )
+        }
+        else {
+            $Self->True(
+                $CABUpdateSuccess,
+                "Test $TestCount: |- ChangeCABUpdate",
+            );
+        }
     }    # end if 'ChangeCABUpdate'
 
     if ( $SourceData->{ChangeCABDelete} && $ChangeID ) {
@@ -884,16 +1054,24 @@ for my $Test (@ChangeTests) {
             UserID => 1,
         );
 
-        $CABDeleteParams{ChangeID} = $ChangeID if !$SourceData->{ChangeCABDeleteFail};
+        if ( !$SourceData->{ChangeCABDeleteFail} ) {
+            $CABDeleteParams{ChangeID} = $ChangeID;
+        }
 
         my $CABDeleteSuccess = $Self->{ChangeObject}->ChangeCABDelete(%CABDeleteParams);
 
-        my $IsSuccess = $CABDeleteSuccess || $SourceData->{ChangeCABDeleteFail};
-
-        $Self->True(
-            $IsSuccess,
-            "Test $TestCount: |- ChangeCABDelete",
-        );
+        if ( $SourceData->{ChangeCABDeleteFail} ) {
+            $Self->False(
+                $CABDeleteSuccess,
+                "Test $TestCount: |- ChangeCABDelete",
+            );
+        }
+        else {
+            $Self->True(
+                $CABDeleteSuccess,
+                "Test $TestCount: |- ChangeCABDelete",
+            );
+        }
     }    # end if 'ChangeCABDelete'
 
     # get a change
@@ -924,29 +1102,31 @@ for my $Test (@ChangeTests) {
             next TEST;
         }
 
-        for my $ChangeAttributes (qw(ChangeID ChangeNumber CreateTime ChangeTime)) {
+        # check for always existing attributes
+        for my $ChangeAttributes (qw(ChangeID ChangeNumber ChangeBuilderID CreateTime ChangeTime)) {
             $Self->True(
                 $ChangeData->{$ChangeAttributes},
                 "Test $TestCount: |- has $ChangeAttributes.",
             );
         }
 
-        for my $Key ( keys %{ $ReferenceData->{ChangeGet} } ) {
+        for my $RequestedAttribute ( keys %{ $ReferenceData->{ChangeGet} } ) {
 
             # turn off all pretty print
             local $Data::Dumper::Indent = 0;
             local $Data::Dumper::Useqq  = 1;
 
             # dump the attribute from ChangeGet()
-            my $ChangeAttribute = Data::Dumper::Dumper( $ChangeData->{$Key} );
+            my $ChangeAttribute = Data::Dumper::Dumper( $ChangeData->{$RequestedAttribute} );
 
             # dump the reference attribute
-            my $ReferenceAttribute = Data::Dumper::Dumper( $ReferenceData->{ChangeGet}->{$Key} );
+            my $ReferenceAttribute
+                = Data::Dumper::Dumper( $ReferenceData->{ChangeGet}->{$RequestedAttribute} );
 
             $Self->Is(
                 $ChangeAttribute,
                 $ReferenceAttribute,
-                "Test $TestCount: |- $Key",
+                "Test $TestCount: |- $ReferenceAttribute",
             );
         }
     }    # end if 'ChangeGet'
@@ -958,26 +1138,29 @@ for my $Test (@ChangeTests) {
             ChangeID => $ChangeID,
         );
 
-        for my $Key ( keys %{ $ReferenceData->{ChangeCABGet} } ) {
+        for my $RequestedAttribute ( keys %{ $ReferenceData->{ChangeCABGet} } ) {
 
             # turn off all pretty print
             local $Data::Dumper::Indent = 0;
             local $Data::Dumper::Useqq  = 1;
 
             # dump the attribute from ChangeGet()
-            my $ChangeAttribute = Data::Dumper::Dumper( $CABData->{$Key} );
+            my $ChangeAttribute = Data::Dumper::Dumper( $CABData->{$RequestedAttribute} );
 
             # dump the reference attribute
-            my $ReferenceAttribute = Data::Dumper::Dumper( $ReferenceData->{ChangeCABGet}->{$Key} );
+            my $ReferenceAttribute
+                = Data::Dumper::Dumper( $ReferenceData->{ChangeCABGet}->{$RequestedAttribute} );
 
             $Self->Is(
                 $ChangeAttribute,
                 $ReferenceAttribute,
-                "Test $TestCount: |- ChangeCABGet ( $Key )",
+                "Test $TestCount: |- ChangeCABGet ( $RequestedAttribute )",
             );
         }
     }    # end if 'ChangeCABGet'
 }
+
+# get executed each loop, even on next
 continue {
     $TestCount++;
 }
@@ -1022,6 +1205,7 @@ if ($ChangeLookupTestID) {
 # where other changes already exist
 my $ChangeList = $Self->{ChangeObject}->ChangeList( UserID => 1 ) || [];
 my %ChangeListMap = map { $_ => 1 } @{$ChangeList};
+
 for my $KeyTestedChangeID ( keys %TestedChangeID ) {
     $Self->True(
         $ChangeListMap{$KeyTestedChangeID},
@@ -1030,12 +1214,12 @@ for my $KeyTestedChangeID ( keys %TestedChangeID ) {
 }
 
 # count all tests that are required to and planned for fail
-my $Fails = grep { $_->{Fails} } @ChangeTests;
-my $NrCreateChanges = scalar @ChangeTests - $Fails;
+my $Fails = scalar grep { $_->{Fails} } @ChangeTests;
+my $NrCreateChanges = ( scalar @ChangeTests ) - $Fails;
 
 # test if the changes were created
 $Self->Is(
-    keys %TestedChangeID || 0,
+    scalar keys %TestedChangeID || 0,
     $NrCreateChanges,
     'Test ' . $TestCount++ . ': amount of change objects and test cases.',
 );
@@ -1051,11 +1235,11 @@ my @ChangeSearchTests = (
     {
         Description => 'Limit',
         SearchData  => {
-            Limit => 1,
+            Limit => 3,    # excpect only 3 results
         },
         ResultData => {
-            TestCount => 1,
-            Count     => 1,
+            TestCount => 1,    # flag for check result amount
+            Count     => 3,    # check on 3 results
         },
     },
 
@@ -1119,12 +1303,12 @@ my @ChangeSearchTests = (
         },
     },
 
-    # Nr 7 - test changeBUILDERid and changeMANAGERid
+    # Nr 7 - test ChangeManagerID and ChangeBuilderID
     {
         Description => 'ChangeBuilderID, ChangeManagerID',
         SearchData  => {
-            ChangeBuilderID => [ $UserIDs[1] ],
-            ChangeManagerID => [ $UserIDs[0] ],
+            ChangeBuilderID => [ $UserIDs[0] ],
+            ChangeManagerID => [ $UserIDs[2] ],
         },
         ResultData => {
             TestCount => 1,
@@ -1584,8 +1768,12 @@ for my $SearchTest (@ChangeSearchTests) {
     if ( $SearchTest->{ResultData}->{TestCount} ) {
 
         # get number of change ids ChangeSearch should return
-        my $Count = keys %{ $ChangeIDForSearchTest{$SearchTestCount} };
-        $Count = $SearchTest->{ResultData}->{Count} if exists $SearchTest->{ResultData}->{Count};
+        my $Count = scalar keys %{ $ChangeIDForSearchTest{$SearchTestCount} };
+
+        # get defined expected result count (defined in search test case!)
+        if ( exists $SearchTest->{ResultData}->{Count} ) {
+            $Count = $SearchTest->{ResultData}->{Count}
+        }
 
         $Self->Is(
             scalar @{$ChangeIDs},
@@ -1599,12 +1787,11 @@ for my $SearchTest (@ChangeSearchTests) {
         # check if all ids that belongs to this searchtest are returned
         my @ChangeIDs = keys %{ $ChangeIDForSearchTest{$SearchTestCount} };
 
-        @ChangeIDs = $SearchTest->{ResultData}->{IDExpected}
-            if $SearchTest->{ResultData}->{IDExpected};
+        if ( $SearchTest->{ResultData}->{IDExpected} ) {
+            @ChangeIDs = $SearchTest->{ResultData}->{IDExpected};
+        }
 
-        my %ReturnedChangeID;
-        @ReturnedChangeID{ @{$ChangeIDs} } = (1) x scalar @{$ChangeIDs};
-
+        my %ReturnedChangeID = map { $_ => 1 } @{$ChangeIDs};
         for my $ChangeID (@ChangeIDs) {
             $Self->True(
                 $ReturnedChangeID{$ChangeID},
