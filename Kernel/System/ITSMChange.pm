@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.61 2009-10-14 15:40:42 ub Exp $
+# $Id: ITSMChange.pm,v 1.62 2009-10-14 19:35:31 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.61 $) [1];
+$VERSION = qw($Revision: 1.62 $) [1];
 
 =head1 NAME
 
@@ -137,7 +137,7 @@ sub ChangeAdd {
     if ( !$Param{UserID} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Need UserID!",
+            Message  => 'Need UserID!',
         );
         return;
     }
@@ -241,18 +241,20 @@ sub ChangeUpdate {
     # build SQL to update change
     my $SQL = 'UPDATE change_item SET ';
     my @Bind;
-    ATTRIBUTE:
-    for my $Key ( keys %Attribute ) {
+
+    CHANGEATTRIBUTE:
+    for my $ChangeAttribute ( keys %Attribute ) {
 
         # do not use column if not in function parameters
-        next ATTRIBUTE if !exists $Param{$Key};
+        next CHANGEATTRIBUTE if !exists $Param{$ChangeAttribute};
 
-        $SQL .= "$Attribute{$Key} = ?, ";
-        push @Bind, \$Param{$Key};
+        $SQL .= "$Attribute{$ChangeAttribute} = ?, ";
+        push @Bind, \$Param{$ChangeAttribute};
     }
+
     push @Bind, \$Param{UserID}, \$Param{ChangeID};
     $SQL .= 'change_time = current_timestamp, change_by = ? ';
-    $SQL .= 'WHERE id = ? ';
+    $SQL .= 'WHERE id = ? LIMIT 1';
 
     # add change to database
     return if !$Self->{DBObject}->Do(
@@ -270,6 +272,7 @@ sub ChangeUpdate {
 return a change as a hash reference
 
 The returned hash reference contains following elements:
+
     $Change{ChangeID}
     $Change{ChangeNumber}
     $Change{ChangeStateID}
@@ -538,6 +541,7 @@ sub ChangeCABGet {
             . 'FROM change_cab WHERE change_id = ?',
         Bind => [ \$Param{ChangeID} ],
     );
+
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         my %Data;
         $Data{CABID}          = $Row[0];
@@ -626,7 +630,7 @@ sub ChangeLookup {
     if ( !$Param{UserID} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Need UserID!",
+            Message  => 'Need UserID!',
         );
         return;
     }
@@ -635,7 +639,7 @@ sub ChangeLookup {
     if ( !$Param{ChangeID} && !$Param{ChangeNumber} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Need the ChangeID or the ChangeNumber!",
+            Message  => 'Need the ChangeID or the ChangeNumber!',
         );
         return;
     }
@@ -644,7 +648,7 @@ sub ChangeLookup {
     if ( $Param{ChangeID} && $Param{ChangeNummber} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Need either the ChangeID or the ChangeNumber, not both!",
+            Message  => 'Need either the ChangeID or the ChangeNumber, not both!',
         );
         return;
     }
@@ -656,6 +660,7 @@ sub ChangeLookup {
             Bind  => [ \$Param{ChangeNumber} ],
             Limit => 1,
         );
+
         my $ChangeID;
         while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
             $ChangeID = $Row[0];
@@ -672,6 +677,7 @@ sub ChangeLookup {
             Bind  => [ \$Param{ChangeID} ],
             Limit => 1,
         );
+
         my $ChangeNumber;
         while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
             $ChangeNumber = $Row[0];
@@ -699,7 +705,7 @@ sub ChangeList {
     if ( !$Param{UserID} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Need UserID!",
+            Message  => 'Need UserID!',
         );
         return;
     }
@@ -792,7 +798,7 @@ sub ChangeSearch {
     if ( !$Param{UserID} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Need UserID!",
+            Message  => 'Need UserID!',
         );
         return;
     }
@@ -853,7 +859,7 @@ sub ChangeSearch {
             $Param{$StringParam} =~ s{ \*+ }{%}xmsg;
 
             # do not use string params which contain only %
-            next STRINGPARAM if $Param{$StringParam} =~ m{ \A \%* \z }xms;
+            next STRINGPARAM if $Param{$StringParam} =~ m{ \A %* \z }xms;
 
             push @SQLWhere,
                 "LOWER($StringParams{$StringParam}) LIKE LOWER('$Param{$StringParam}')";
@@ -929,7 +935,7 @@ sub ChangeSearch {
         # quote
         $Param{$TimeParam} = $Self->{DBObject}->Quote( $Param{$TimeParam} );
 
-        push @SQLWhere, "$TimeParams{ $TimeParam } '$Param{ $TimeParam }'";
+        push @SQLWhere, "$TimeParams{$TimeParam} '$Param{$TimeParam}'";
     }
 
     # set time params in workorder table
@@ -945,15 +951,15 @@ sub ChangeSearch {
     );
 
     # add work order time params to sql-having-array
-    WORKORDERTIMEPARAM:
+    TIMEPARAM:
     for my $TimeParam ( keys %WorkOrderTimeParams ) {
 
-        next WORKORDERTIMEPARAM if !$Param{$TimeParam};
+        next TIMEPARAM if !$Param{$TimeParam};
 
         if ( $Param{$TimeParam} !~ m{ \A \d\d\d\d-\d\d-\d\d \s \d\d:\d\d:\d\d \z }xms ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Invalid date format found!",
+                Message  => 'Invalid date format found!',
             );
             return;
         }
@@ -961,7 +967,7 @@ sub ChangeSearch {
         # quote
         $Param{$TimeParam} = $Self->{DBObject}->Quote( $Param{$TimeParam} );
 
-        push @SQLHaving,  "$WorkOrderTimeParams{ $TimeParam } '$Param{ $TimeParam }'";
+        push @SQLHaving,  "$WorkOrderTimeParams{$TimeParam} '$Param{$TimeParam}'";
         push @JoinTables, 'wo1';
     }
 
@@ -1008,7 +1014,6 @@ sub ChangeSearch {
     }
 
     # add work order agent id params to sql-where-array
-    WORKORDERAGENTID:
     if ( $Param{WorkOrderAgentIDs} ) {
         if ( ref $Param{WorkOrderAgentIDs} ne 'ARRAY' ) {
             $Self->{LogObject}->Log(
@@ -1018,18 +1023,19 @@ sub ChangeSearch {
             return;
         }
 
-        next WORKORDERAGENTID if !@{ $Param{WorkOrderAgentIDs} };
+        if ( @{ $Param{WorkOrderAgentIDs} } ) {
 
-        # quote
-        for my $OneParam ( @{ $Param{WorkOrderAgentIDs} } ) {
-            $OneParam = $Self->{DBObject}->Quote($OneParam);
+            # quote
+            for my $OneParam ( @{ $Param{WorkOrderAgentIDs} } ) {
+                $OneParam = $Self->{DBObject}->Quote($OneParam);
+            }
+
+            # create string
+            my $InString = join q{, }, @{ $Param{WorkOrderAgentIDs} };
+
+            push @SQLWhere,   "wo2.workorder_agent_id IN ( $InString )";
+            push @JoinTables, 'wo2';
         }
-
-        # create string
-        my $InString = join q{, }, @{ $Param{WorkOrderAgentIDs} };
-
-        push @SQLWhere,   "wo2.workorder_agent_id IN ( $InString )";
-        push @JoinTables, 'wo2';
     }
 
     # assemble the ORDER BY clause
@@ -1106,6 +1112,7 @@ sub ChangeSearch {
         cab2 => 'change_cab',
     );
     my %TableSeen;
+
     TABLE:
     for my $Table (@JoinTables) {
 
@@ -1127,26 +1134,27 @@ sub ChangeSearch {
 
     # add the WHERE clause
     if (@SQLWhere) {
-        $SQL .= 'WHERE ';
-        $SQL .= join q{ AND }, map {"( $_ )"} @SQLWhere;
+        $SQL .= ' WHERE ';
+        $SQL .= join ' AND ', map {"( $_ )"} @SQLWhere;
+        $SQL .= ' ';
     }
 
     # we need to group whenever there is a join
     if (@JoinTables) {
-        $SQL .= 'GROUP BY c.id ';
+        $SQL .= ' GROUP BY c.id ';
     }
 
     # add the HAVING clause
     if (@SQLHaving) {
-        $SQL .= 'HAVING ';
-        $SQL .= join q{ AND }, map {"( $_ )"} @SQLHaving;
+        $SQL .= ' HAVING ';
+        $SQL .= join ' AND ', map {"( $_ )"} @SQLHaving;
         $SQL .= ' ';
     }
 
     # add the ORDER BY clause
     if (@SQLOrderBy) {
-        $SQL .= 'ORDER BY ';
-        $SQL .= join( q{, }, @SQLOrderBy );
+        $SQL .= ' ORDER BY ';
+        $SQL .= join q{, }, @SQLOrderBy;
         $SQL .= ' ';
     }
 
@@ -1206,6 +1214,7 @@ sub ChangeDelete {
 
     # TODO: delete the history
 
+    # TODO: replace ChangeGet call with WorkOrderList
     # get change data to get the work order ids
     my $ChangeData = $Self->ChangeGet(
         ChangeID => $Param{ChangeID},
@@ -1322,7 +1331,7 @@ sub _CheckChangeStateID {
     if ( !$Param{ChangeStateID} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Need ChangeStateID!",
+            Message  => 'Need ChangeStateID!',
         );
         return;
     }
@@ -1359,7 +1368,6 @@ create a new change number
 =cut
 
 sub _ChangeNumberCreate {
-
     my ( $Self, %Param ) = @_;
 
     # get needed config options
@@ -1426,9 +1434,7 @@ sub _ChangeNumberCreate {
         }
 
         # pad ticket number with leading '0' to length 5
-        while ( length($Count) < 5 ) {
-            $Count = '0' . $Count;
-        }
+        $Count = sprintf "%05d", $Count;
 
         # create new change number
         my $ChangeNumber = $Year . $Month . $Day . $SystemID . $Count;
@@ -1603,7 +1609,7 @@ sub _CheckChangeParams {
         if ( ref $Param{CABAgents} ne 'ARRAY' ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "The parameter CABAgents is not an ARRAY reference!",
+                Message  => 'The parameter CABAgents is not an ARRAY reference!',
             );
             return;
         }
@@ -1616,6 +1622,7 @@ sub _CheckChangeParams {
                 UserID => $UserID,
                 Valid  => 1,
             );
+
             if ( !$UserData{UserID} ) {
                 $Self->{LogObject}->Log(
                     Priority => 'error',
@@ -1631,7 +1638,7 @@ sub _CheckChangeParams {
         if ( ref $Param{CABCustomers} ne 'ARRAY' ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "The parameter CABCustomers is not an ARRAY reference!",
+                Message  => 'The parameter CABCustomers is not an ARRAY reference!',
             );
             return;
         }
@@ -1644,6 +1651,7 @@ sub _CheckChangeParams {
                 User  => $CustomerUser,
                 Valid => 1,
             );
+
             if ( !%CustomerUserData ) {
                 $Self->{LogObject}->Log(
                     Priority => 'error',
@@ -1673,6 +1681,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.61 $ $Date: 2009-10-14 15:40:42 $
+$Revision: 1.62 $ $Date: 2009-10-14 19:35:31 $
 
 =cut
