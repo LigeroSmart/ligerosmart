@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.65 2009-10-14 14:37:18 reb Exp $
+# $Id: ITSMChange.t,v 1.66 2009-10-14 19:52:55 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,6 +21,7 @@ use Kernel::System::CustomerUser;
 use Kernel::System::GeneralCatalog;
 use Kernel::System::ITSMChange;
 
+# create common objects
 $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
 $Self->{ChangeObject}         = Kernel::System::ITSMChange->new( %{$Self} );
 $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
@@ -35,7 +36,7 @@ my $TestCount = 1;
 my @UserIDs;
 my @InvalidUserIDs;
 
-# create needed users
+# create needed customer users
 my @CustomerUserIDs;
 
 # disable email checks to create new user
@@ -1113,6 +1114,7 @@ for my $Test (@ChangeTests) {
     my $SourceData    = $Test->{SourceData};
     my $ReferenceData = $Test->{ReferenceData};
 
+    # the change id will be used for several calls
     my $ChangeID;
 
     # add a new Change
@@ -1125,7 +1127,7 @@ for my $Test (@ChangeTests) {
 
         # remember current ChangeID
         if ($ChangeID) {
-            $TestedChangeID{$ChangeID} = $TestCountMisc;
+            $TestedChangeID{$ChangeID} = 1;
 
             # save changeid for use in search tests
             if ( exists $Test->{SearchTest} ) {
@@ -1145,6 +1147,7 @@ for my $Test (@ChangeTests) {
             );
         }
 
+        # UserID is the only required parameter
         if ( !$SourceData->{ChangeAdd}->{UserID} ) {
             $Self->False(
                 $ChangeID,
@@ -1228,6 +1231,7 @@ for my $Test (@ChangeTests) {
             UserID => 1,
         );
 
+        # The only way to make ChangeCABDelete() fail is to not pass ChangeID
         if ( !$SourceData->{ChangeCABDeleteFail} ) {
             $CABDeleteParams{ChangeID} = $ChangeID;
         }
@@ -1380,6 +1384,7 @@ if ($ChangeLookupTestID) {
 my $ChangeList = $Self->{ChangeObject}->ChangeList( UserID => 1 ) || [];
 my %ChangeListMap = map { $_ => 1 } @{$ChangeList};
 
+# check whether the created changes were found by ChangeList()
 for my $KeyTestedChangeID ( keys %TestedChangeID ) {
     $Self->True(
         $ChangeListMap{$KeyTestedChangeID},
@@ -1409,7 +1414,7 @@ my @ChangeSearchTests = (
     {
         Description => 'Limit',
         SearchData  => {
-            Limit => 3,    # excpect only 3 results
+            Limit => 3,    # expect only 3 results
         },
         ResultData => {
             TestCount => 1,    # flag for check result amount
@@ -2069,7 +2074,7 @@ for my $ChangeIDForOrderByTests (@ChangeIDsForOrderByTests) {
 
     # convert time string to numbers - that's better for the comparisons
     for my $TimeColumn (qw(CreateTime ChangeTime)) {
-        $ChangeData->{$TimeColumn} =~ s/\D//g;
+        $ChangeData->{$TimeColumn} =~ s{ \D }{}xmsg;
     }
 
     push @ChangesForOrderByTests, $ChangeData;
@@ -2158,7 +2163,7 @@ for my $ChangeIDForSecondOrderByTests (@ChangeIDsForOrderByTests) {
 
     # convert time string to numbers - that's better for the comparisons
     for my $TimeColumn (qw(CreateTime ChangeTime)) {
-        $ChangeData->{$TimeColumn} =~ s/\D//g;
+        $ChangeData->{$TimeColumn} =~ s{ \D }{}xmsg;
     }
 
     push @ChangesForSecondOrderByTests, $ChangeData;
@@ -2200,8 +2205,8 @@ for my $ChangeIDForSecondOrderByTests (@ChangeIDsForOrderByTests) {
 # clean the system
 # ------------------------------------------------------------ #
 
-# disable email checks to create new user
-my $CheckEmailAddressesOrig = $Self->{ConfigObject}->Get('CheckEmailAddresses') || 1;
+# disable email checks to change the newly added users
+$CheckEmailAddressesOrg = $Self->{ConfigObject}->Get('CheckEmailAddresses') || 1;
 $Self->{ConfigObject}->Set(
     Key   => 'CheckEmailAddresses',
     Value => 0,
