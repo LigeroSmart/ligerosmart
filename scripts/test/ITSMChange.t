@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.61 2009-10-14 13:29:29 reb Exp $
+# $Id: ITSMChange.t,v 1.62 2009-10-14 13:56:55 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -2066,7 +2066,7 @@ for my $OrderByColumn (@OrderByColumns) {
     );
 
     # dump the attribute from ChangeGet()
-    my $SearchListDown = Data::Dumper::Dumper( [ reverse @{$SearchResult} ] );
+    my $SearchListDown = Data::Dumper::Dumper($SearchResultDown);
 
     # dump the reference attribute
     my $ReferenceListDown = Data::Dumper::Dumper( [ reverse @SortedIDs ] );
