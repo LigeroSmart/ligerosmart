@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.52 2009-10-14 09:57:40 reb Exp $
+# $Id: ITSMChange.t,v 1.53 2009-10-14 10:24:20 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1285,7 +1285,7 @@ my @ChangeSearchTests = (
     {
         Description => 'ChangeManagerID',
         SearchData  => {
-            ChangeManagerID => [ $UserIDs[0] ],
+            ChangeManagerIDs => [ $UserIDs[0] ],
         },
         ResultData => {
             TestExistence => 1,
@@ -1296,7 +1296,7 @@ my @ChangeSearchTests = (
     {
         Description => 'ChangeBuilderID',
         SearchData  => {
-            ChangeBuilderID => [ $UserIDs[0] ],
+            ChangeBuilderIDs => [ $UserIDs[0] ],
         },
         ResultData => {
             TestExistence => 1,
@@ -1307,8 +1307,8 @@ my @ChangeSearchTests = (
     {
         Description => 'ChangeBuilderID, ChangeManagerID',
         SearchData  => {
-            ChangeBuilderID => [ $UserIDs[0] ],
-            ChangeManagerID => [ $UserIDs[2] ],
+            ChangeBuilderIDs => [ $UserIDs[0] ],
+            ChangeManagerIDs => [ $UserIDs[2] ],
         },
         ResultData => {
             TestCount => 1,
@@ -1320,7 +1320,7 @@ my @ChangeSearchTests = (
     {
         Description => 'CABAgent',
         SearchData  => {
-            CABAgent => [ $UserIDs[0] ],
+            CABAgents => [ $UserIDs[0] ],
         },
         ResultData => {
             TestExistence => 1,
@@ -1331,7 +1331,7 @@ my @ChangeSearchTests = (
     {
         Description => 'CABCustomer',
         SearchData  => {
-            CABCustomer => [ $CustomerUserIDs[0] ],
+            CABCustomers => [ $CustomerUserIDs[0] ],
         },
         ResultData => {
             TestExistence => 1,
@@ -1342,8 +1342,8 @@ my @ChangeSearchTests = (
     {
         Description => 'CABAgent, CABCustomer',
         SearchData  => {
-            CABAgent    => [ $UserIDs[0] ],
-            CABCustomer => [ $CustomerUserIDs[1] ],
+            CABAgents    => [ $UserIDs[0] ],
+            CABCustomers => [ $CustomerUserIDs[1] ],
         },
         ResultData => {
             TestExistence => 1,
@@ -1483,7 +1483,7 @@ my @ChangeSearchTests = (
     {
         Description => q{ChangeStateID},
         SearchData  => {
-            ChangeStateID => [ $ReverseClassList{requested} ],
+            ChangeStateIDs => [ $ReverseClassList{requested} ],
         },
         ResultData => {
             TestExistence => 1,
@@ -1494,7 +1494,7 @@ my @ChangeSearchTests = (
     {
         Description => q{ChangeBuilderID (two builders)},
         SearchData  => {
-            ChangeBuilderID => [ $UserIDs[0], $UserIDs[1] ],
+            ChangeBuilderIDs => [ $UserIDs[0], $UserIDs[1] ],
         },
         ResultData => {
             TestExistence => 1,
@@ -1505,7 +1505,7 @@ my @ChangeSearchTests = (
     {
         Description => q{ChangeManagerID (two manager)},
         SearchData  => {
-            ChangeManagerID => [ $UserIDs[0], $UserIDs[1] ],
+            ChangeManagerIDs => [ $UserIDs[0], $UserIDs[1] ],
         },
         ResultData => {
             TestExistence => 1,
@@ -1554,7 +1554,7 @@ my @ChangeSearchTests = (
     {
         Description => q{ChangeStateID (same ID three times)},
         SearchData  => {
-            ChangeStateID => [
+            ChangeStateIDs => [
                 $ReverseClassList{requested},
                 $ReverseClassList{requested},
                 $ReverseClassList{requested},
@@ -1569,7 +1569,7 @@ my @ChangeSearchTests = (
     {
         Description => q{ChangeStateID (three different IDs)},
         SearchData  => {
-            ChangeStateID => [
+            ChangeStateIDs => [
                 $ReverseClassList{requested},
                 $ReverseClassList{approved},
                 $ReverseClassList{rejected},
