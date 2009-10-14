@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.54 2009-10-14 11:49:47 bes Exp $
+# $Id: ITSMChange.pm,v 1.55 2009-10-14 12:15:41 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.54 $) [1];
+$VERSION = qw($Revision: 1.55 $) [1];
 
 =head1 NAME
 
@@ -826,6 +826,7 @@ sub ChangeSearch {
         # quote
         $Param{$StringParam} = $Self->{DBObject}->Quote( $Param{$StringParam} );
 
+        # wildcards are used
         if ( $Param{UsingWildcards} ) {
 
             # Quote
@@ -840,6 +841,8 @@ sub ChangeSearch {
             push @SQLWhere,
                 "LOWER($StringParams{$StringParam}) LIKE LOWER('$Param{$StringParam}')";
         }
+
+        # no wildcards are used
         else {
             push @SQLWhere,
                 "LOWER($StringParams{$StringParam}) = LOWER('$Param{$StringParam}')";
@@ -885,7 +888,6 @@ sub ChangeSearch {
     }
 
     # set time params
-    # TODO: loop over time references
     my %TimeParams = (
         CreateTimeNewerDate => 'c.create_time >=',
         CreateTimeOlderDate => 'c.create_time <=',
@@ -940,7 +942,7 @@ sub ChangeSearch {
         # quote
         $Param{$TimeParam} = $Self->{DBObject}->Quote( $Param{$TimeParam} );
 
-        push @SQLHaving,  "( $WorkOrderTimeParams{ $TimeParam } '$Param{ $TimeParam }' )";
+        push @SQLHaving,  "$WorkOrderTimeParams{ $TimeParam } '$Param{ $TimeParam }' ";
         push @JoinTables, 'wo1';
     }
 
@@ -976,7 +978,7 @@ sub ChangeSearch {
             push @SQLWhere,   "$CABParams{$CABParam} IN ($InString)";
             push @JoinTables, 'cab1';
         }
-        else {
+        elsif ( $CABParam eq 'CABCustomers' ) {
 
             # CABCustomer is a string, so the single quotes are needed
             my $InString = join q{, }, map {"'$_'"} @{ $Param{$CABParam} };
@@ -1010,7 +1012,7 @@ sub ChangeSearch {
     }
 
     # assemble the SQL query
-    my $SQL = " SELECT c.id FROM change_item c ";
+    my $SQL = 'SELECT c.id FROM change_item c ';
 
     # add the joins
     my %LongTableName = (
@@ -1036,23 +1038,23 @@ sub ChangeSearch {
             return;
         }
 
-        $SQL .= " INNER JOIN $LongTableName{$Table} $Table ON $Table.change_id = c.id ";
+        $SQL .= "INNER JOIN $LongTableName{$Table} $Table ON $Table.change_id = c.id ";
     }
 
     # add the WHERE clause
     if (@SQLWhere) {
-        $SQL .= ' WHERE ';
+        $SQL .= 'WHERE ';
         $SQL .= join q{ AND }, map {"( $_ )"} @SQLWhere;
     }
 
     # we need to group whenever there is a join
     if (@JoinTables) {
-        $SQL .= ' GROUP BY c.id ';
+        $SQL .= 'GROUP BY c.id ';
     }
 
     # add the HAVING clause
     if (@SQLHaving) {
-        $SQL .= ' HAVING ';
+        $SQL .= 'HAVING ';
         $SQL .= join q{ AND }, map {"( $_ )"} @SQLHaving;
     }
 
@@ -1600,6 +1602,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.54 $ $Date: 2009-10-14 11:49:47 $
+$Revision: 1.55 $ $Date: 2009-10-14 12:15:41 $
 
 =cut
