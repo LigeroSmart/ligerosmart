@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.60 2009-10-14 14:23:53 bes Exp $
+# $Id: ITSMChange.pm,v 1.61 2009-10-14 15:40:42 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.60 $) [1];
+$VERSION = qw($Revision: 1.61 $) [1];
 
 =head1 NAME
 
@@ -393,7 +393,7 @@ sub ChangeGet {
 
 =item ChangeCABUpdate()
 
-add or update the CAB of a change.
+Add or update the CAB of a change.
 One of CABAgents and CABCustomers must be passed.
 Passing a reference to an empty array deletes the part of the CAB (CABAgents or CABCustomers)
 When agents or customers are passed multiple times, they will be inserted only once.
@@ -779,7 +779,7 @@ return list of change ids as an array reference
 
         OrderByDirection => ['Down', 'Up'],                      # (optional) (Down|Up) default Down
 
-        UsingWildcards  => 0,                                    # (optional) default 1
+        UsingWildcards => 0,                                     # (optional) default 1
         Limit => 100,                                            # (optional)
         UserID => 1,
     );
@@ -912,6 +912,7 @@ sub ChangeSearch {
         ChangeTimeOlderDate => 'c.change_time <=',
     );
 
+    # add change time params to sql-where-array
     TIMEPARAM:
     for my $TimeParam ( keys %TimeParams ) {
 
@@ -943,6 +944,7 @@ sub ChangeSearch {
         ActualEndTimeOlderDate    => 'max(wo1.actual_end_time) <=',
     );
 
+    # add work order time params to sql-having-array
     WORKORDERTIMEPARAM:
     for my $TimeParam ( keys %WorkOrderTimeParams ) {
 
@@ -969,6 +971,7 @@ sub ChangeSearch {
         CABCustomers => 'cab2.customer_user_id',
     );
 
+    # add cab params to sql-where-array
     CABPARAM:
     for my $CABParam ( keys %CABParams ) {
         next CABPARAM if !$Param{$CABParam};
@@ -1004,6 +1007,7 @@ sub ChangeSearch {
         }
     }
 
+    # add work order agent id params to sql-where-array
     WORKORDERAGENTID:
     if ( $Param{WorkOrderAgentIDs} ) {
         if ( ref $Param{WorkOrderAgentIDs} ne 'ARRAY' ) {
@@ -1046,6 +1050,7 @@ sub ChangeSearch {
         ActualEndTime    => 'max(wo1.actual_end_time)',
     );
 
+    # define which parameter require a join with work order table
     my %TableRequiresJoin = (
         PlannedStartTime => 1,
         PlannedEndTime   => 1,
@@ -1327,12 +1332,14 @@ sub _CheckChangeStateID {
         Class => 'ITSM::ChangeManagement::Change::State',
     );
 
+    # check the change state id
     if (
         !$ChangeStateList
         || ref $ChangeStateList ne 'HASH'
         || !$ChangeStateList->{ $Param{ChangeStateID} }
         )
     {
+
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message  => "ChangeStateID $Param{ChangeStateID} is not a valid change state id!",
@@ -1666,6 +1673,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.60 $ $Date: 2009-10-14 14:23:53 $
+$Revision: 1.61 $ $Date: 2009-10-14 15:40:42 $
 
 =cut
