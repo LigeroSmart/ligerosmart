@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.58 2009-10-14 13:54:33 ub Exp $
+# $Id: ITSMChange.pm,v 1.59 2009-10-14 14:04:06 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.58 $) [1];
+$VERSION = qw($Revision: 1.59 $) [1];
 
 =head1 NAME
 
@@ -797,11 +797,27 @@ sub ChangeSearch {
         return;
     }
 
+    # check parameters, OrderBy and OrderByDirection are array references
+    ARGUMENT:
+    for my $Argument (qw(OrderBy OrderByDirection)) {
+        if ( !defined $Param{$Argument} ) {
+            $Param{$Argument} ||= [];
+        }
+        else {
+            if ( ref $Param{$Argument} ne 'ARRAY' ) {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "$Argument must be an array reference!",
+                );
+                return;
+            }
+        }
+    }
+
     # set default values
     if ( !defined $Param{UsingWildcards} ) {
         $Param{UsingWildcards} = 1;
     }
-    $Param{OrderBy} ||= [];
 
     my @SQLWhere;      # assemble the conditions used in the WHERE clause
     my @SQLHaving;     # assemble the conditions used in the HAVING clause
@@ -943,7 +959,7 @@ sub ChangeSearch {
         # quote
         $Param{$TimeParam} = $Self->{DBObject}->Quote( $Param{$TimeParam} );
 
-        push @SQLHaving,  "$WorkOrderTimeParams{ $TimeParam } '$Param{ $TimeParam }' ";
+        push @SQLHaving,  "$WorkOrderTimeParams{ $TimeParam } '$Param{ $TimeParam }'";
         push @JoinTables, 'wo1';
     }
 
@@ -1038,27 +1054,35 @@ sub ChangeSearch {
     );
 
     my @SQLOrderBy;
-    if ( ref $Param{OrderBy} ne 'ARRAY' ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "OrderBy must be an array reference!",
-        );
-        return;
-    }
 
     # assemble list of table attributes, which should be used for ordering
+    my $Count = 0;
     my %OrderBySeen;
     ORDERBY:
     for my $OrderBy ( @{ $Param{OrderBy} } ) {
 
         next ORDERBY if !$OrderBy;
         next ORDERBY if !$OrderByTable{$OrderBy};
-        push @SQLOrderBy, $OrderByTable{$OrderBy};
+        next ORDERBY if $OrderBySeen{ $OrderByTable{$OrderBy} };
+
+        $OrderBySeen{ $OrderByTable{$OrderBy} } = 1;
+
+        my $Direction;
+        if ( $Param{OrderByDirection}->[$Count] && $Param{OrderByDirection}->[$Count] eq 'Up' ) {
+            $Direction = 'ASC';
+        }
+        else {
+            $Direction = 'DESC';
+        }
+        push @SQLOrderBy, "$OrderByTable{$OrderBy} $Direction";
 
         # for some order fields, we need to make sure, that the wo1 table is joined
         if ( $TableRequiresJoin{$OrderBy} ) {
             push @JoinTables, 'wo1';
         }
+    }
+    continue {
+        $Count++;
     }
 
     # we need at least on sort criterion
@@ -1111,13 +1135,14 @@ sub ChangeSearch {
     if (@SQLHaving) {
         $SQL .= 'HAVING ';
         $SQL .= join q{ AND }, map {"( $_ )"} @SQLHaving;
+        $SQL .= ' ';
     }
 
     # add the ORDER BY clause
     if (@SQLOrderBy) {
         $SQL .= 'ORDER BY ';
         $SQL .= join( q{, }, @SQLOrderBy );
-        $SQL .= ' ASC';
+        $SQL .= ' ';
     }
 
     # ask database
@@ -1641,6 +1666,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.58 $ $Date: 2009-10-14 13:54:33 $
+$Revision: 1.59 $ $Date: 2009-10-14 14:04:06 $
 
 =cut
