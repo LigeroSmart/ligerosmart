@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.48 2009-10-13 20:33:13 ub Exp $
+# $Id: ITSMChange.t,v 1.49 2009-10-14 06:43:41 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -917,7 +917,7 @@ for my $Test (@ChangeTests) {
             local $Data::Dumper::Indent = 0;
             local $Data::Dumper::Useqq  = 1;
 
-            # dump the attribute from VersionGet()
+            # dump the attribute from ChangeGet()
             my $ChangeAttribute = Data::Dumper::Dumper( $ChangeData->{$Key} );
 
             # dump the reference attribute
@@ -944,7 +944,7 @@ for my $Test (@ChangeTests) {
             local $Data::Dumper::Indent = 0;
             local $Data::Dumper::Useqq  = 1;
 
-            # dump the attribute from VersionGet()
+            # dump the attribute from ChangeGet()
             my $ChangeAttribute = Data::Dumper::Dumper( $CABData->{$Key} );
 
             # dump the reference attribute
@@ -1013,7 +1013,7 @@ for my $KeyTestedChangeID ( keys %TestedChangeID ) {
 my $Fails = grep { $_->{Fails} } @ChangeTests;
 my $NrCreateChanges = scalar @ChangeTests - $Fails;
 
-# test if the changes where created
+# test if the changes were created
 $Self->Is(
     keys %TestedChangeID || 0,
     $NrCreateChanges,
@@ -1537,7 +1537,7 @@ for my $UnittestUserID (@UserIDs) {
         ValidID => $Self->{ChangeObject}->{ValidObject}->ValidLookup(
             Valid => 'invalid',
         ),
-        ChangeUserID => 1
+        ChangeUserID => 1,
     );
 }
 
