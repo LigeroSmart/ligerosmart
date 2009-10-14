@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.44 2009-10-14 06:42:54 ub Exp $
+# $Id: ITSMChange.pm,v 1.45 2009-10-14 08:22:41 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.44 $) [1];
+$VERSION = qw($Revision: 1.45 $) [1];
 
 =head1 NAME
 
@@ -269,9 +269,10 @@ sub ChangeUpdate {
 
 return a change as a hash reference
 
-Return
+The returned hash reference contains following elements:
     $Change{ChangeID}
     $Change{ChangeNumber}
+    $Change{ChangeStateID}
     $Change{Title}
     $Change{Description}
     $Change{Justification}
@@ -804,8 +805,9 @@ sub ChangeSearch {
     }
     $Param{OrderBy} ||= 'id';
 
-    # to build the SQL-Where clause
-    my @SQLWhere;
+    my @SQLWhere;      # assemble the conditions used in the WHERE clause
+    my @SQLHaving;     # assemble the conditions used in the HAVING clause
+    my @JoinTables;    # keep track of the tables that need to be joined
 
     # set string params
     my %StringParams = (
@@ -839,53 +841,53 @@ sub ChangeSearch {
             next STRINGPARAM if $Param{$StringParam} =~ m{ \A \%* \z }xms;
 
             push @SQLWhere,
-                "( LOWER($StringParams{$StringParam}) LIKE LOWER('$Param{$StringParam}') )";
+                "LOWER($StringParams{$StringParam}) LIKE LOWER('$Param{$StringParam}')";
         }
         else {
             push @SQLWhere,
-                "( LOWER($StringParams{$StringParam}) = LOWER('$Param{$StringParam}') )";
+                "LOWER($StringParams{$StringParam}) = LOWER('$Param{$StringParam}')";
         }
     }
 
-    # set array params
-    my %ArrayParams = (
-        ChangeStateID   => 'c.change_state_id',
-        ChangeManagerID => 'c.change_manager_id',
-        ChangeBuilderID => 'c.change_builder_id',
-        CreateBy        => 'c.create_by',
-        ChangeBy        => 'c.change_by',
-    );
-
     # add array params to sql-where-array
     ARRAYPARAM:
-    for my $ArrayParam ( keys %ArrayParams ) {
+    for my $ArrRef (
+        [ ChangeStateID   => 'c.change_state_id' ],
+        [ ChangeManagerID => 'c.change_manager_id' ],
+        [ ChangeBuilderID => 'c.change_builder_id' ],
+        [ CreateBy        => 'c.create_by' ],
+        [ ChangeBy        => 'c.change_by' ],
+        )
+    {
+        my ( $SearchField, $TableAttribute ) = @{$ArrRef};
 
-        next ARRAYPARAM if !$Param{$ArrayParam};
+        next ARRAYPARAM if !$Param{$SearchField};
 
-        if ( ref $Param{$ArrayParam} ne 'ARRAY' ) {
+        if ( ref $Param{$SearchField} ne 'ARRAY' ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "$ArrayParam must be an array reference!",
+                Message  => "$SearchField must be an array reference!",
             );
             return;
         }
 
-        next ARRAYPARAM if !@{ $Param{$ArrayParam} };
+        next ARRAYPARAM if !@{ $Param{$SearchField} };
 
         # quote
-        for my $OneParam ( @{ $Param{$ArrayParam} } ) {
+        for my $OneParam ( @{ $Param{$SearchField} } ) {
             $OneParam = $Self->{DBObject}->Quote($OneParam);
         }
 
         # create string
-        my $InString = join q{, }, @{ $Param{$ArrayParam} };
+        my $InString = join q{, }, @{ $Param{$SearchField} };
 
         next ARRAYPARAM if !$InString;
 
-        push @SQLWhere, "( $ArrayParams{ $ArrayParam } IN ($InString) )";
+        push @SQLWhere, "$TableAttribute IN ($InString)";
     }
 
     # set time params
+    # TODO: loop over array references
     my %TimeParams = (
         CreateTimeNewerDate => 'c.create_time >=',
         CreateTimeOlderDate => 'c.create_time <=',
@@ -909,7 +911,7 @@ sub ChangeSearch {
         # quote
         $Param{$TimeParam} = $Self->{DBObject}->Quote( $Param{$TimeParam} );
 
-        push @SQLWhere, "( $TimeParams{ $TimeParam } '$Param{ $TimeParam }' )";
+        push @SQLWhere, "$TimeParams{ $TimeParam } '$Param{ $TimeParam }'";
     }
 
     # set time params in workorder table
@@ -923,8 +925,6 @@ sub ChangeSearch {
         ActualEndTimeNewerDate    => 'max(wo1.actual_end_time) >=',
         ActualEndTimeOlderDate    => 'max(wo1.actual_end_time) <=',
     );
-
-    my @SQLHaving;
 
     WORKORDERTIMEPARAM:
     for my $TimeParam ( keys %WorkOrderTimeParams ) {
@@ -942,22 +942,96 @@ sub ChangeSearch {
         # quote
         $Param{$TimeParam} = $Self->{DBObject}->Quote( $Param{$TimeParam} );
 
-        push @SQLHaving, "( $WorkOrderTimeParams{ $TimeParam } '$Param{ $TimeParam }' )";
+        push @SQLHaving,  "( $WorkOrderTimeParams{ $TimeParam } '$Param{ $TimeParam }' )";
+        push @JoinTables, 'wo1';
     }
 
-    my $WorkOrderAgentIDField = '';
+    # conditions for CAB searches
+    my %CABParams = (
+        CABAgents    => 'cab.user_id',
+        CABCustomers => 'cab.customer_user_id',
+    );
+    CABPARAM:
+    for my $CABParam ( keys %CABParams ) {
+
+        next CABPARAM if !$Param{$CABParam};
+
+        # quote
+        $Param{$CABParam} = $Self->{DBObject}->Quote( $Param{$CABParam} );
+
+        push @SQLWhere,   "$CABParams{ $CABParam } '$Param{ $CABParam }'";
+        push @JoinTables, 'cap';
+    }
+
+    WORKORDERAGENTID:
     if ( $Param{WorkOrderAgentID} ) {
-        $WorkOrderAgentIDField .= 'CASE change_workorder.workorder_agent_id ';
-        for my $WorkOrderAgentID ( @{ $Param{WorkOrderAgentID} } ) {
-            $WorkOrderAgentIDField .= " WHEN $WorkOrderAgentID THEB 1 ";
+        if ( ref $Param{WorkOrderAgentID} ne 'ARRAY' ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "WorkOrderAgentID must be an array reference!",
+            );
+            return;
         }
-        $WorkOrderAgentIDField .= ' ELSE 0 END AS agent_flag ';
-        push @SQLHaving, 'SUM(agent_flag) > 0 ';
+
+        next WORKORDERAGENTID if !@{ $Param{WorkOrderAgentID} };
+
+        # quote
+        for my $OneParam ( @{ $Param{WorkOrderAgentID} } ) {
+            $OneParam = $Self->{DBObject}->Quote($OneParam);
+        }
+
+        # create string
+        my $InString = join q{, }, @{ $Param{WorkOrderAgentID} };
+
+        push @SQLWhere, "wo2.workorder_agent_id IN ( $InString )";
+        push @JoinTables, 'wo1', 'wo2';
     }
 
-    # create where string
-    my $WhereString = @SQLWhere ? ' WHERE ' . join q{ AND }, @SQLWhere : '';
-    my $HavingString = join q{ AND }, @SQLHaving;
+    # assemble the SQL query
+    my $SQL = " SELECT id FROM change_item c\n";
+
+    # add the joins
+    my %TableSeen;
+    TABLE:
+    for my $Table (@JoinTables) {
+
+        # do not join a table twice
+        next TABLE if $TableSeen{$Table};
+
+        if ( $Table eq 'wo1' ) {
+            $SQL .= " INNER JOIN change_workorder wo1 ON wo1.change_id = c.id \n";
+        }
+        elsif ( $Table eq 'wo2' ) {
+            $SQL .= " INNER JOIN change_workorder wo2 ON wo2.change_id = wo1.change_id \n";
+        }
+        elsif ( $Table eq 'cab' ) {
+            $SQL .= " INNER JOIN change_workorder cab ON cab.change_id = c.id \n";
+        }
+        else {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Encountered unknown join table '$Table'!",
+            );
+            return;
+        }
+    }
+
+    # add the WHERE clause
+    if (@SQLWhere) {
+        $SQL .= ' WHERE ';
+        $SQL .= join q{ AND }, map {"( $_ )\n"} @SQLWhere;
+    }
+
+    # we need to group whenever there is a join
+    if (@JoinTables) {
+        $SQL .= ' GROUP BY c.id ';
+    }
+
+    # add the HAVING clause
+    if (@SQLHaving) {
+        $SQL .= ' HAVING ';
+        $SQL .= join q{ AND }, map {"( $_ )\n"} @SQLHaving;
+    }
 
     #    # define order tableword
     #    my %OrderByTable = (
@@ -980,25 +1054,6 @@ sub ChangeSearch {
     #    my $OrderBy = $OrderByTable{ $Param{OrderBy} } || $OrderByTable{ConfigItemID};
     my $OrderByString = '';
 
-    # set limit
-    if ( $Param{Limit} ) {
-        $Param{Limit} = $Self->{DBObject}->Quote( $Param{Limit}, 'Integer' );
-    }
-
-    my $SQL = 'SELECT id FROM change_item c ';
-
-    # check whether we need to join in the workorder table
-    if ( $HavingString && $Param{WorkOrderAgentID} ) {
-        $SQL .= " INNER JOIN change_workorder wo1 ON wo1.change_id = c.id "
-            . " INNER JOIN change_workorder wo2 ON wo1.change_id = wo2.change_id $WhereString $HavingString";
-    }
-    elsif ($HavingString) {
-        $SQL
-            .= " INNER JOIN change_workorder wo1 ON wo1.change_id = c.id $WhereString $HavingString";
-    }
-    else {
-        $SQL .= $WhereString;
-    }
     $SQL .= $OrderByString;
 
     # ask database
@@ -1522,6 +1577,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.44 $ $Date: 2009-10-14 06:42:54 $
+$Revision: 1.45 $ $Date: 2009-10-14 08:22:41 $
 
 =cut
