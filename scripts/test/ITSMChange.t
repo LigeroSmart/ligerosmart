@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.54 2009-10-14 11:23:20 reb Exp $
+# $Id: ITSMChange.t,v 1.55 2009-10-14 12:13:50 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -245,7 +245,7 @@ my @ChangeTests     = (
         Description => 'Test contains all possible params for ChangeAdd.',
         SourceData  => {
             ChangeAdd => {
-                Title           => 'Change 1',
+                Title           => 'Change 1 - ' . $UniqueSignature,
                 Description     => 'Description 1',
                 Justification   => 'Justification 1',
                 ChangeManagerID => $UserIDs[0],
@@ -263,7 +263,7 @@ my @ChangeTests     = (
         },
         ReferenceData => {
             ChangeGet => {
-                Title           => 'Change 1',
+                Title           => 'Change 1 - ' . $UniqueSignature,
                 Description     => 'Description 1',
                 Justification   => 'Justification 1',
                 ChangeManagerID => $UserIDs[0],
@@ -278,7 +278,7 @@ my @ChangeTests     = (
                 ],
             },
         },
-        SearchTest => [ 2, 3, 4, 5, 6, 8, 9, 10, 12, 13, 23, 24, 27 ],
+        SearchTest => [ 2, 3, 4, 5, 6, 8, 9, 10, 12, 13, 23, 24, 27, 888888 ],
     },
 
     # change contains title, description, justification, changemanagerid and changebuilderid
@@ -286,7 +286,7 @@ my @ChangeTests     = (
         Description => 'Test contains all possible params for ChangeAdd (Second try).',
         SourceData  => {
             ChangeAdd => {
-                Title           => 'Change 2',
+                Title           => 'Change 2 - ' . $UniqueSignature,
                 Description     => 'Description 2',
                 Justification   => 'Justification 2',
                 ChangeManagerID => $UserIDs[1],
@@ -302,7 +302,7 @@ my @ChangeTests     = (
         },
         ReferenceData => {
             ChangeGet => {
-                Title           => 'Change 2',
+                Title           => 'Change 2 - ' . $UniqueSignature,
                 Description     => 'Description 2',
                 Justification   => 'Justification 2',
                 ChangeManagerID => $UserIDs[1],
@@ -320,7 +320,7 @@ my @ChangeTests     = (
         Description => 'Test contains invalid CAB members for ChangeAdd.',
         SourceData  => {
             ChangeAdd => {
-                Title           => 'Change 1',
+                Title           => 'Change 1 - ' . $UniqueSignature,
                 Description     => 'Description 1',
                 Justification   => 'Justification 1',
                 ChangeManagerID => $UserIDs[0],
@@ -772,6 +772,7 @@ my @ChangeTests     = (
         SourceData  => {
             ChangeAdd => {
                 UserID => $UserIDs[0],
+                Title  => 'CABUpdate and CABGet - ' . $UniqueSignature,
             },
             ChangeCABUpdate => {
                 CABAgents => [
@@ -880,6 +881,7 @@ my @ChangeTests     = (
         SourceData  => {
             ChangeAdd => {
                 UserID    => $UserIDs[0],
+                Title     => 'CABDelete (invalid params) - ' . $UniqueSignature,
                 CABAgents => [
                     $UserIDs[0],
                     $UserIDs[1]
@@ -938,7 +940,7 @@ my @ChangeTests     = (
             SleepBeforeUpdate => 3,    # seconds the script waits before ChangeUpdate is called
             ChangeAdd         => {
                 UserID => 1,
-                Title  => $UniqueSignature,
+                Title  => 'OrderByChange - ' . $UniqueSignature,
             },
             ChangeUpdate => {
                 UserID          => $UserIDs[0],
@@ -965,7 +967,7 @@ my @ChangeTests     = (
             SleepBeforeUpdate => 3,    # seconds the script waits before ChangeUpdate is called
             ChangeAdd         => {
                 UserID => $UserIDs[1],
-                Title  => $UniqueSignature,
+                Title  => 'OrderByChange - ' . $UniqueSignature,
             },
             ChangeUpdate => {
                 UserID          => $UserIDs[1],
@@ -989,7 +991,7 @@ my @ChangeTests     = (
             SleepBeforeUpdate => 3,    # seconds the script waits before ChangeUpdate is called
             ChangeAdd         => {
                 UserID => $UserIDs[0],
-                Title  => $UniqueSignature,
+                Title  => 'OrderByChange - ' . $UniqueSignature,
             },
             ChangeUpdate => {
                 UserID          => 1,
@@ -1340,7 +1342,7 @@ my @ChangeSearchTests = (
     {
         Description => 'Title, Justification',
         SearchData  => {
-            Title         => 'Change 1',
+            Title         => 'Change 1 - ' . $UniqueSignature,
             Justification => 'Justification 1',
         },
         ResultData => {
@@ -1385,14 +1387,15 @@ my @ChangeSearchTests = (
         },
     },
 
-    # Nr 6 - test changeBUILDERid
+    # Nr 6 - test changeBUILDERid and Title with wildcard
     {
         Description => 'ChangeBuilderID',
         SearchData  => {
             ChangeBuilderIDs => [ $UserIDs[0] ],
+            Title            => '%' . $UniqueSignature,
         },
         ResultData => {
-            TestExistence => 1,
+            TestCount => 1,
         },
     },
 
@@ -1402,6 +1405,7 @@ my @ChangeSearchTests = (
         SearchData  => {
             ChangeBuilderIDs => [ $UserIDs[0] ],
             ChangeManagerIDs => [ $UserIDs[2] ],
+            Title            => '%' . $UniqueSignature,
         },
         ResultData => {
             TestCount => 1,
@@ -1414,9 +1418,10 @@ my @ChangeSearchTests = (
         Description => 'CABAgent',
         SearchData  => {
             CABAgents => [ $UserIDs[0] ],
+            Title     => '%' . $UniqueSignature,
         },
         ResultData => {
-            TestExistence => 1,
+            TestCount => 1,
         },
     },
 
@@ -1425,9 +1430,10 @@ my @ChangeSearchTests = (
         Description => 'CABCustomer',
         SearchData  => {
             CABCustomers => [ $CustomerUserIDs[0] ],
+            Title        => '%' . $UniqueSignature,
         },
         ResultData => {
-            TestExistence => 1,
+            TestCount => 1,
         },
     },
 
@@ -1437,9 +1443,10 @@ my @ChangeSearchTests = (
         SearchData  => {
             CABAgents    => [ $UserIDs[0] ],
             CABCustomers => [ $CustomerUserIDs[1] ],
+            Title        => '%' . $UniqueSignature,
         },
         ResultData => {
-            TestExistence => 1,
+            TestCount => 1,
         },
     },
 
@@ -1676,7 +1683,7 @@ my @ChangeSearchTests = (
 );
 
 # get a sample change we created above for some 'special' test cases
-my ($SearchTestID) = keys %TestedChangeID;
+my ($SearchTestID) = keys %{ $ChangeIDForSearchTest{888888} };
 my $NrOfGeneralSearchTests = scalar @ChangeSearchTests;
 
 if ($SearchTestID) {
@@ -1785,7 +1792,6 @@ if ($SearchTestID) {
             },
             ResultData => {
                 TestExistence => 1,
-                IDExpected    => $SearchTestChange->{ChangeID},
             },
         },
         {
@@ -1907,7 +1913,9 @@ for my $SearchTest (@ChangeSearchTests) {
 
     $Self->True(
         1,
-        'call ChangeSearch with params: ' . $SearchTest->{Description},
+        'call ChangeSearch with params: '
+            . $SearchTest->{Description}
+            . " (SearchTestCase: $SearchTestCount)",
     );
 
     my $ChangeIDs = $Self->{ChangeObject}->ChangeSearch(
@@ -1971,10 +1979,16 @@ my @ChangeIDsForOrderByTests = keys %{ $ChangeIDForSearchTest{999999} };
 my @ChangesForOrderByTests;
 
 for my $ChangeIDForOrderByTests (@ChangeIDsForOrderByTests) {
-    push @ChangesForOrderByTests, $Self->{ChangeObject}->ChangeGet(
+    my $ChangeData = $Self->{ChangeObject}->ChangeGet(
         ChangeID => $ChangeIDForOrderByTests,
         UserID   => 1,
     );
+
+    # convert time string to numbers - that's better for the comparisons
+    $ChangeData->{CreateTime} =~ s/\D//g;
+    $ChangeData->{ChangeTime} =~ s/\D//g;
+
+    push @ChangesForOrderByTests, $ChangeData;
 }
 
 my @OrderByColumns = qw(
@@ -1985,6 +1999,8 @@ my @OrderByColumns = qw(
     ChangeBuilderID
     CreateBy
     ChangeBy
+    CreateTime
+    ChangeTime
 );
 
 for my $OrderByColumn (@OrderByColumns) {
