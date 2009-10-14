@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.62 2009-10-14 19:35:31 reb Exp $
+# $Id: ITSMChange.pm,v 1.63 2009-10-14 20:02:14 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.62 $) [1];
+$VERSION = qw($Revision: 1.63 $) [1];
 
 =head1 NAME
 
@@ -543,29 +543,28 @@ sub ChangeCABGet {
     );
 
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        my %Data;
-        $Data{CABID}          = $Row[0];
-        $Data{ChangeID}       = $Row[1];
-        $Data{UserID}         = $Row[2];
-        $Data{CustomerUserID} = $Row[3];
+        my $CABID          = $Row[0];
+        my $ChangeID       = $Row[1];
+        my $UserID         = $Row[2];
+        my $CustomerUserID = $Row[3];
 
         # error check if both columns are filled
-        if ( $Data{UserID} && $Data{CustomerUserID} ) {
+        if ( $UserID && $CustomerUserID ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
                 Message =>
-                    "CAB table entry with ID $Data{CABID} contains UserID and CustomerUserID! "
+                    "CAB table entry with ID $CABID contains UserID and CustomerUserID! "
                     . 'Only one at a time is allowed!',
             );
             return;
         }
 
         # add data to CAB
-        if ( $Data{UserID} ) {
-            push @{ $CAB{CABAgents} }, $Data{UserID};
+        if ($UserID) {
+            push @{ $CAB{CABAgents} }, $UserID;
         }
-        elsif ( $Data{CustomerUserID} ) {
-            push @{ $CAB{CABCustomers} }, $Data{CustomerUserID};
+        elsif ($CustomerUserID) {
+            push @{ $CAB{CABCustomers} }, $CustomerUserID;
         }
     }
 
@@ -841,7 +840,7 @@ sub ChangeSearch {
     STRINGPARAM:
     for my $StringParam ( keys %StringParams ) {
 
-        # check string params for useful values
+        # check string params for useful values, the string q{0} is allowed
         next STRINGPARAM if !exists $Param{$StringParam};
         next STRINGPARAM if !defined $Param{$StringParam};
         next STRINGPARAM if $Param{$StringParam} eq '';
@@ -1411,7 +1410,7 @@ sub _ChangeNumberCreate {
             $Count = 0;
         }
 
-        # count auto increment ($Count++)
+        # count auto increment
         $Count++;
 
         # increase the the counter faster if we are in loop pretection mode
@@ -1681,6 +1680,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.62 $ $Date: 2009-10-14 19:35:31 $
+$Revision: 1.63 $ $Date: 2009-10-14 20:02:14 $
 
 =cut
