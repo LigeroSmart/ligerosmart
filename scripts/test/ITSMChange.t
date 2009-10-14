@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.51 2009-10-14 09:28:49 mae Exp $
+# $Id: ITSMChange.t,v 1.52 2009-10-14 09:57:40 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -969,7 +969,7 @@ for my $Test (@ChangeTests) {
 
         # remember current ChangeID
         if ($ChangeID) {
-            $TestedChangeID{$ChangeID} = 1;
+            $TestedChangeID{$ChangeID} = $TestCountMisc;
 
             # save changeid for use in search tests
             if ( exists $Test->{SearchTest} ) {
@@ -1584,6 +1584,7 @@ my @ChangeSearchTests = (
 
 # get a sample change we created above for some 'special' test cases
 my ($SearchTestID) = keys %TestedChangeID;
+my $NrOfGeneralSearchTests = scalar @ChangeSearchTests;
 
 if ($SearchTestID) {
     my $SearchTestChange = $Self->{ChangeObject}->ChangeGet(
@@ -1681,7 +1682,6 @@ if ($SearchTestID) {
             },
             ResultData => {
                 TestExistence => 1,
-                IDExpected    => $SearchTestChange->{ChangeID},
             },
         },
         {
@@ -1714,7 +1714,6 @@ if ($SearchTestID) {
             },
             ResultData => {
                 TestExistence => 1,
-                IDExpected    => $SearchTestChange->{ChangeID},
             },
         },
         {
@@ -1729,7 +1728,72 @@ if ($SearchTestID) {
                 Count     => 1,
             },
         },
+        {
+            Description => 'ChangeNumber, ActualEndTimeNewerDate',
+            SearchData  => {
+                ChangeNumber           => $SearchTestChange->{ChangeNumber},
+                ActualEndTimeNewerDate => $SearchTestChange->{ActualEndTime},
+            },
+            ResultData => {
+                TestCount => 1,
+                Count     => 1,
+            },
+        },
+        {
+            Description => 'ChangeNumber, ActualEndTimeOlderDate',
+            SearchData  => {
+                ChangeNumber           => $SearchTestChange->{ChangeNumber},
+                ActualEndTimeOlderDate => $SearchTestChange->{ActualEndTime},
+            },
+            ResultData => {
+                TestExistence => 1,
+            },
+        },
+        {
+            Description => 'ChangeNumber, ActualEndTimeNewerDate, ActualEndTimeOlderDate',
+            SearchData  => {
+                ActualEndTimeNewerDate => $SearchTestChange->{ActualEndTime},
+                ActualEndTimeOlderDate => $SearchTestChange->{ActualEndTime},
+            },
+            ResultData => {
+                TestExistence => 1,
+            },
+        },
+        {
+            Description => 'ChangeNumber, ActualStartTimeNewerDate',
+            SearchData  => {
+                ActualStartTimeNewerDate => $SearchTestChange->{ActualStartTime},
+            },
+            ResultData => {
+                TestExistence => 1,
+            },
+        },
+        {
+            Description => 'ChangeNumber, ActualStartTimeOlderDate',
+            SearchData  => {
+                ActualStartTimeOlderDate => $SearchTestChange->{ActualStartTime},
+            },
+            ResultData => {
+                TestExistence => 1,
+            },
+        },
+        {
+            Description => 'ChangeNumber, ActualStartTimeNewerDate, ActualStartTimeOlderDate',
+            SearchData  => {
+                ActualStartTimeNewerDate => $SearchTestChange->{ActualStartTime},
+                ActualStartTimeOlderDate => $SearchTestChange->{ActualStartTime},
+            },
+            ResultData => {
+                TestExistence => 1,
+            },
+        },
     );
+
+    my $NrOfAllSearchTests = scalar @ChangeSearchTests;
+
+    for my $TestNumber ( ( $NrOfGeneralSearchTests + 1 ) .. $NrOfAllSearchTests ) {
+        $ChangeIDForSearchTest{$TestNumber}->{ $SearchTestChange->{ChangeID} } = 1;
+    }
 }
 
 my $SearchTestCount = 1;
