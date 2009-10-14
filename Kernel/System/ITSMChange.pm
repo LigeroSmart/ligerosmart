@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.55 2009-10-14 12:15:41 ub Exp $
+# $Id: ITSMChange.pm,v 1.56 2009-10-14 13:03:03 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.55 $) [1];
+$VERSION = qw($Revision: 1.56 $) [1];
 
 =head1 NAME
 
@@ -800,7 +800,7 @@ sub ChangeSearch {
     if ( !defined $Param{UsingWildcards} ) {
         $Param{UsingWildcards} = 1;
     }
-    $Param{OrderBy} ||= 'id';
+    $Param{OrderBy} ||= [];
 
     my @SQLWhere;      # assemble the conditions used in the WHERE clause
     my @SQLHaving;     # assemble the conditions used in the HAVING clause
@@ -1011,6 +1011,63 @@ sub ChangeSearch {
         push @JoinTables, 'wo2';
     }
 
+    # assemble the ORDER BY clause
+    # define order table
+    my %OrderByTable = (
+        ChangeID         => 'c.id',
+        ChangeNumber     => 'c.change_number',
+        ChangeStateID    => 'c.change_state_id',
+        ChangeManagerID  => 'c.change_manager_id',
+        ChangeBuilderID  => 'c.change_builder_id',
+        CreateTime       => 'c.create_time',
+        CreateBy         => 'c.create_by',
+        ChangeTime       => 'c.change_time',
+        ChangeBy         => 'c.change_by',
+        PlannedStartTime => 'min(wo1.planned_start_time)',
+        PlannedEndTime   => 'max(wo1.planned_end_time)',
+        ActualStartTime  => 'min(wo1.actual_start_time)',
+        ActualEndTime    => 'max(wo1.actual_end_time)',
+    );
+
+    my %TableRequiresJoin = (
+        PlannedStartTime => 1,
+        PlannedEndTime   => 1,
+        ActualStartTime  => 1,
+        ActualEndTime    => 1,
+    );
+
+    my @SQLOrderBy;
+    my $OrderByClause;
+    {
+        if ( ref $Param{OrderBy} ne 'ARRAY' ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "OrderBy must be an array reference!",
+            );
+            return;
+        }
+
+        # assemble list of table attributes, which should be used for ordering
+        my %OrderBySeen;
+        ORDERBY:
+        for my $OrderBy ( @{ $Param{OrderBy} } ) {
+
+            next ORDERBY if !$OrderBy;
+            next ORDERBY if !$OrderByTable{$OrderBy};
+            push @SQLOrderBy, $OrderByTable{$OrderBy};
+
+            # for some order fields, we need to make sure, that the wo1 table is joined
+            if ( $TableRequiresJoin{$OrderBy} ) {
+                push @JoinTables, 'wo1';
+            }
+        }
+
+        # we need at least on sort criterion
+        if ( !@SQLOrderBy ) {
+            push @SQLOrderBy, $OrderByTable{ChangeID};
+        }
+    }
+
     # assemble the SQL query
     my $SQL = 'SELECT c.id FROM change_item c ';
 
@@ -1058,28 +1115,12 @@ sub ChangeSearch {
         $SQL .= join q{ AND }, map {"( $_ )"} @SQLHaving;
     }
 
-    #    # define order tableword
-    #    my %OrderByTable = (
-    #        ChangeID         => 'id',
-    #        ChangeNumber     => '',
-    #        ChangeStateID    => '',
-    #        ChangeManagerID  => '',
-    #        ChangeBuilderID  => '',
-    #        PlannedStartTime => '',
-    #        PlannedStartTime => '',
-    #        ActualStartTime  => '',
-    #        ActualEndTime    => '',
-    #        CreateTime       => '',
-    #        CreateBy         => '',
-    #        ChangeTime       => '',
-    #        ChangeBy         => '',
-    #    );
-    #
-    #    # set order by
-    #    my $OrderBy = $OrderByTable{ $Param{OrderBy} } || $OrderByTable{ConfigItemID};
-    my $OrderByString = '';
-
-    $SQL .= $OrderByString;
+    # add the ORDER BY clause
+    if (@SQLOrderBy) {
+        $SQL .= 'ORDER BY ';
+        $SQL .= join( q{, }, @SQLOrderBy );
+        $SQL .= ' ASC';
+    }
 
     # ask database
     return if !$Self->{DBObject}->Prepare(
@@ -1602,6 +1643,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.55 $ $Date: 2009-10-14 12:15:41 $
+$Revision: 1.56 $ $Date: 2009-10-14 13:03:03 $
 
 =cut
