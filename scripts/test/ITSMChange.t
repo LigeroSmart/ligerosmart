@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.59 2009-10-14 13:03:42 reb Exp $
+# $Id: ITSMChange.t,v 1.60 2009-10-14 13:07:07 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -2124,15 +2124,19 @@ for my $ChangeID ( keys %TestedChangeID ) {
     );
 }
 
-=item SetChangeDate
+=over 4
+
+=item SetChangeTimes()
 
 Set new values for CreateTime and ChangeTime for a given ChangeID.
 
     my $UpdateSuccess = SetChangeTimes(
         ChangeID => 123,
-        CreateTime => ,
-        ChangeTime => ,
+        CreateTime => '2009-10-30 01:00:15',
+        ChangeTime => '2009-10-30 01:00:15',
     );
+
+=back
 
 =cut
 
