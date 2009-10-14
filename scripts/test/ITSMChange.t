@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.56 2009-10-14 12:24:18 reb Exp $
+# $Id: ITSMChange.t,v 1.57 2009-10-14 12:46:29 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -937,8 +937,7 @@ my @ChangeTests     = (
     {
         Description => q{Change for 'OrderBy' tests (1).},
         SourceData  => {
-            SleepBeforeUpdate => 3,    # seconds the script waits before ChangeUpdate is called
-            ChangeAdd         => {
+            ChangeAdd => {
                 UserID => 1,
                 Title  => 'OrderByChange - ' . $UniqueSignature,
             },
@@ -946,6 +945,9 @@ my @ChangeTests     = (
                 UserID          => $UserIDs[0],
                 ChangeStateID   => $ReverseClassList{successful},
                 ChangeManagerID => $UserIDs[1],
+            },
+            ChangeAddChangeTime => {
+                CreateTime => '2009-10-01 01:00:00',
             },
         },
         ReferenceData => {
@@ -963,9 +965,7 @@ my @ChangeTests     = (
     {
         Description => q{Change for 'OrderBy' tests (2).},
         SourceData  => {
-            SleepBeforeAdd    => 3,    # seconds the script waits before ChangeAdd is called
-            SleepBeforeUpdate => 3,    # seconds the script waits before ChangeUpdate is called
-            ChangeAdd         => {
+            ChangeAdd => {
                 UserID => $UserIDs[1],
                 Title  => 'OrderByChange - ' . $UniqueSignature,
             },
@@ -973,6 +973,12 @@ my @ChangeTests     = (
                 UserID          => $UserIDs[1],
                 ChangeStateID   => $ReverseClassList{rejected},
                 ChangeManagerID => 1,
+            },
+            ChangeAddChangeTime => {
+                CreateTime => '2009-10-30 01:00:00',
+            },
+            ChangeUpdateChangeTime => {
+                ChangeTime => '2009-10-30 01:00:15',
             },
         },
         ReferenceData => {
@@ -987,9 +993,7 @@ my @ChangeTests     = (
     {
         Description => q{Change for 'OrderBy' tests (3).},
         SourceData  => {
-            SleepBeforeAdd    => 3,    # seconds the script waits before ChangeAdd is called
-            SleepBeforeUpdate => 3,    # seconds the script waits before ChangeUpdate is called
-            ChangeAdd         => {
+            ChangeAdd => {
                 UserID => $UserIDs[0],
                 Title  => 'OrderByChange - ' . $UniqueSignature,
             },
@@ -997,6 +1001,12 @@ my @ChangeTests     = (
                 UserID          => 1,
                 ChangeStateID   => $ReverseClassList{failed},
                 ChangeManagerID => $UserIDs[0],
+            },
+            ChangeAddChangeTime => {
+                CreateTime => '2009-01-30 00:00:00',
+            },
+            ChangeUpdateChangeTime => {
+                ChangeTime => '2009-01-30 23:59:59',
             },
         },
         ReferenceData => {
@@ -1045,11 +1055,6 @@ for my $Test (@ChangeTests) {
     # add a new Change
     if ( $SourceData->{ChangeAdd} ) {
 
-        # sleep before adding the change if SleepBeforeAdd is specified
-        if ( $SourceData->{SleepBeforeAdd} ) {
-            sleep $SourceData->{SleepBeforeAdd};
-        }
-
         # add the change
         $ChangeID = $Self->{ChangeObject}->ChangeAdd(
             %{ $SourceData->{ChangeAdd} }
@@ -1067,6 +1072,14 @@ for my $Test (@ChangeTests) {
                     $ChangeIDForSearchTest{$SearchTestNr}->{$ChangeID} = 1;
                 }
             }
+        }
+
+        # change CreateTime
+        if ( $ChangeID && $SourceData->{ChangeAddChangeTime} ) {
+            SetChangeTimes(
+                ChangeID   => $ChangeID,
+                CreateTime => $SourceData->{ChangeAddChangeTime}->{CreateTime},
+            );
         }
 
         if ( !$SourceData->{ChangeAdd}->{UserID} ) {
@@ -1094,16 +1107,19 @@ for my $Test (@ChangeTests) {
 
     if ( exists $SourceData->{ChangeUpdate} ) {
 
-        # sleep before adding the change if SleepBeforeAdd is specified
-        if ( $SourceData->{SleepBeforeUpdate} ) {
-            sleep $SourceData->{SleepBeforeUpdate};
-        }
-
         # update the change
         my $ChangeUpdateSuccess = $Self->{ChangeObject}->ChangeUpdate(
             ChangeID => $ChangeID,
             %{ $SourceData->{ChangeUpdate} },
         );
+
+        # change ChangeTime
+        if ( $ChangeID && $SourceData->{ChangeUpdateChangeTime} ) {
+            SetChangeTimes(
+                ChangeID   => $ChangeID,
+                ChangeTime => $SourceData->{ChangeUpdateChangeTime}->{ChangeTime},
+            );
+        }
 
         if (
             $Test->{Fails}
@@ -2017,8 +2033,9 @@ for my $OrderByColumn (@OrderByColumns) {
     local $Data::Dumper::Useqq  = 1;
 
     my $SearchResult = $Self->{ChangeObject}->ChangeSearch(
-        Title  => $UniqueSignature,
-        UserID => 1,
+        Title   => 'OrderByChange - ' . $UniqueSignature,
+        OrderBy => $OrderByColumn,
+        UserID  => 1,
     );
 
     # dump the attribute from ChangeGet()
@@ -2078,6 +2095,49 @@ for my $ChangeID ( keys %TestedChangeID ) {
         ),
         "Test " . $TestCount++ . ": ChangeDelete()",
     );
+}
+
+=item SetChangeDate
+
+Set new values for CreateTime and ChangeTime for a given ChangeID.
+
+    my $UpdateSuccess = SetChangeTimes(
+        ChangeID => 123,
+        CreateTime => ,
+        ChangeTime => ,
+    );
+
+=cut
+
+sub SetChangeTimes {
+    my (%Param) = @_;
+
+    my @Bind;
+    my $SQL = 'UPDATE change_item SET ';
+
+    if ( $Param{CreateTime} ) {
+        $SQL .= 'create_time = ?';
+        push @Bind, \$Param{CreateTime};
+    }
+
+    if ( $Param{CreateTime} && $Param{ChangeTime} ) {
+        $SQL .= ',';
+    }
+
+    if ( $Param{ChangeTime} ) {
+        $SQL .= 'change_time = ?';
+        push @Bind, \$Param{ChangeTime};
+    }
+
+    $SQL .= 'WHERE id = ? '
+        . 'LIMIT 1';
+    push @Bind, \$Param{ChangeID};
+
+    return if !$Self->{DBObject}->Do(
+        SQL  => $SQL,
+        Bind => \@Bind,
+    );
+    return 1;
 }
 
 1;
