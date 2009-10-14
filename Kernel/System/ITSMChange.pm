@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.57 2009-10-14 13:21:41 ub Exp $
+# $Id: ITSMChange.pm,v 1.58 2009-10-14 13:54:33 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.57 $) [1];
+$VERSION = qw($Revision: 1.58 $) [1];
 
 =head1 NAME
 
@@ -722,7 +722,7 @@ sub ChangeList {
 return list of change ids as an array reference
 
     my $ChangeIDsRef = $ChangeObject->ChangeSearch(
-        ChangeNumber     => '2009100112345778',                 # (optional)
+        ChangeNumber     => '2009100112345778',                  # (optional)
 
         Title             => 'Replacement of slow mail server',  # (optional)
         Description       => 'New mail server is faster',        # (optional)
@@ -741,44 +741,46 @@ return list of change ids as an array reference
         CABCustomers      => [ 'tt', 'xx' ],                     # (optional)
 
         # changes with planned start time after ...
-        PlannedStartTimeNewerDate => '2006-01-09 00:00:01',     # (optional)
+        PlannedStartTimeNewerDate => '2006-01-09 00:00:01',      # (optional)
         # changes with planned start time before then ....
-        PlannedStartTimeOlderDate => '2006-01-19 23:59:59',     # (optional)
+        PlannedStartTimeOlderDate => '2006-01-19 23:59:59',      # (optional)
 
         # changes with planned end time after ...
-        PlannedEndTimeNewerDate => '2006-01-09 00:00:01',       # (optional)
+        PlannedEndTimeNewerDate => '2006-01-09 00:00:01',        # (optional)
         # changes with planned end time before then ....
-        PlannedEndTimeOlderDate => '2006-01-19 23:59:59',       # (optional)
+        PlannedEndTimeOlderDate => '2006-01-19 23:59:59',        # (optional)
 
         # changes with actual start time after ...
-        ActualStartTimeNewerDate => '2006-01-09 00:00:01',      # (optional)
+        ActualStartTimeNewerDate => '2006-01-09 00:00:01',       # (optional)
         # changes with actual start time before then ....
-        ActualStartTimeOlderDate => '2006-01-19 23:59:59',      # (optional)
+        ActualStartTimeOlderDate => '2006-01-19 23:59:59',       # (optional)
 
         # changes with actual end time after ...
-        ActualEndTimeNewerDate => '2006-01-09 00:00:01',        # (optional)
+        ActualEndTimeNewerDate => '2006-01-09 00:00:01',         # (optional)
         # changes with actual end time before then ....
-        ActualEndTimeOlderDate => '2006-01-19 23:59:59',        # (optional)
+        ActualEndTimeOlderDate => '2006-01-19 23:59:59',         # (optional)
 
         # changes with created time after ...
-        CreateTimeNewerDate => '2006-01-09 00:00:01',           # (optional)
+        CreateTimeNewerDate => '2006-01-09 00:00:01',            # (optional)
         # changes with created time before then ....
-        CreateTimeOlderDate => '2006-01-19 23:59:59',           # (optional)
+        CreateTimeOlderDate => '2006-01-19 23:59:59',            # (optional)
 
         # changes with changed time after ...
-        ChangeTimeNewerDate => '2006-01-09 00:00:01',           # (optional)
+        ChangeTimeNewerDate => '2006-01-09 00:00:01',            # (optional)
         # changes with changed time before then ....
-        ChangeTimeOlderDate => '2006-01-19 23:59:59',           # (optional)
+        ChangeTimeOlderDate => '2006-01-19 23:59:59',            # (optional)
 
-        OrderBy => 'ChangeID',  # default                       # (optional)
+        OrderBy => 'ChangeID',  # default                        # (optional)
         # (ChangeID, ChangeNumber, ChangeStateID,
         # ChangeManagerID, ChangeBuilderID,
         # PlannedStartTime, PlannedEndTime,
         # ActualStartTime, ActualEndTime,
         # CreateTime, CreateBy, ChangeTime, ChangeBy)
 
-        Limit => 100,                                           # (optional)
+        OrderByDirection => ['Down', 'Up'],                      # (optional) (Down|Up) default Down
 
+        UsingWildcards  => 0,                                    # (optional) default 1
+        Limit => 100,                                            # (optional)
         UserID => 1,
     );
 
@@ -1639,6 +1641,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.57 $ $Date: 2009-10-14 13:21:41 $
+$Revision: 1.58 $ $Date: 2009-10-14 13:54:33 $
 
 =cut
