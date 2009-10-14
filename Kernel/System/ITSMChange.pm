@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.49 2009-10-14 09:43:02 bes Exp $
+# $Id: ITSMChange.pm,v 1.50 2009-10-14 10:10:23 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.49 $) [1];
+$VERSION = qw($Revision: 1.50 $) [1];
 
 =head1 NAME
 
@@ -848,41 +848,41 @@ sub ChangeSearch {
         }
     }
 
+    # set string params
+    my %ArrayParams = (
+        ChangeNumber  => 'c.change_number',
+        Title         => 'c.title',
+        Description   => 'c.description',
+        Justification => 'c.justification',
+    );
+
     # add array params to sql-where-array
     ARRAYPARAM:
-    for my $ArrRef (
-        [ ChangeStateID   => 'c.change_state_id' ],
-        [ ChangeManagerID => 'c.change_manager_id' ],
-        [ ChangeBuilderID => 'c.change_builder_id' ],
-        [ CreateBy        => 'c.create_by' ],
-        [ ChangeBy        => 'c.change_by' ],
-        )
-    {
-        my ( $SearchField, $TableAttribute ) = @{$ArrRef};
+    for my $ArrayParam ( keys %ArrayParams ) {
 
-        next ARRAYPARAM if !$Param{$SearchField};
+        next ARRAYPARAM if !$Param{$ArrayParam};
 
-        if ( ref $Param{$SearchField} ne 'ARRAY' ) {
+        if ( ref $Param{$ArrayParam} ne 'ARRAY' ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "$SearchField must be an array reference!",
+                Message  => "$ArrayParam must be an array reference!",
             );
             return;
         }
 
-        next ARRAYPARAM if !@{ $Param{$SearchField} };
+        next ARRAYPARAM if !@{ $Param{$ArrayParam} };
 
         # quote
-        for my $OneParam ( @{ $Param{$SearchField} } ) {
+        for my $OneParam ( @{ $Param{$ArrayParam} } ) {
             $OneParam = $Self->{DBObject}->Quote($OneParam);
         }
 
         # create string
-        my $InString = join q{, }, @{ $Param{$SearchField} };
+        my $InString = join q{, }, @{ $Param{$ArrayParam} };
 
         next ARRAYPARAM if !$InString;
 
-        push @SQLWhere, "$TableAttribute IN ($InString)";
+        push @SQLWhere, "$ArrayParams{$ArrayParam} IN ($InString)";
     }
 
     # set time params
@@ -995,7 +995,7 @@ sub ChangeSearch {
     }
 
     # assemble the SQL query
-    my $SQL = " SELECT c.id FROM change_item c\n";
+    my $SQL = " SELECT c.id FROM change_item c ";
 
     # add the joins
     my %LongTableName = (
@@ -1021,13 +1021,13 @@ sub ChangeSearch {
             return;
         }
 
-        $SQL .= " INNER JOIN $LongTableName{$Table} $Table ON $Table.change_id = c.id \n";
+        $SQL .= " INNER JOIN $LongTableName{$Table} $Table ON $Table.change_id = c.id ";
     }
 
     # add the WHERE clause
     if (@SQLWhere) {
         $SQL .= ' WHERE ';
-        $SQL .= join q{ AND }, map {"( $_ )\n"} @SQLWhere;
+        $SQL .= join q{ AND }, map {"( $_ )"} @SQLWhere;
     }
 
     # we need to group whenever there is a join
@@ -1038,7 +1038,7 @@ sub ChangeSearch {
     # add the HAVING clause
     if (@SQLHaving) {
         $SQL .= ' HAVING ';
-        $SQL .= join q{ AND }, map {"( $_ )\n"} @SQLHaving;
+        $SQL .= join q{ AND }, map {"( $_ )"} @SQLHaving;
     }
 
     #    # define order tableword
@@ -1585,6 +1585,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.49 $ $Date: 2009-10-14 09:43:02 $
+$Revision: 1.50 $ $Date: 2009-10-14 10:10:23 $
 
 =cut
