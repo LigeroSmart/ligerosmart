@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.45 2009-10-14 08:22:41 bes Exp $
+# $Id: ITSMChange.pm,v 1.46 2009-10-14 08:39:08 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.45 $) [1];
+$VERSION = qw($Revision: 1.46 $) [1];
 
 =head1 NAME
 
@@ -740,9 +740,8 @@ return list of change ids as an array reference
         TODO : ????? Array params or not????
         WorkOrderAgentID => [ 6, 2 ],                           # (optional)
 
-        # TODO : implement this!
-        CABAgent         => 9,                                  # (optional)
-        CABCustomer      => 'tt',                               # (optional)
+        CABAgent        => [ 9, 13 ],                          # (optional)
+        CABCustomer     => [ 'tt', 'xx' ],                     # (optional)
 
         # changes with planned start time after ...
         PlannedStartTimeNewerDate => '2006-01-09 00:00:01',     # (optional)
@@ -947,20 +946,28 @@ sub ChangeSearch {
     }
 
     # conditions for CAB searches
-    my %CABParams = (
-        CABAgents    => 'cab.user_id',
-        CABCustomers => 'cab.customer_user_id',
-    );
     CABPARAM:
-    for my $CABParam ( keys %CABParams ) {
+    for my $ArrRef (
+        [ 'CABAgent',    'cab.user_id',          q{}, ],
+        [ 'CABCustomer', 'cab.customer_user_id', q{'}, ],
+        )
+    {
+        my ( $SearchField, $TableAttribute, $Delimiter ) = @{$ArrRef};
 
-        next CABPARAM if !$Param{$CABParam};
+        next CABPARAM if !$Param{$SearchField};
 
         # quote
-        $Param{$CABParam} = $Self->{DBObject}->Quote( $Param{$CABParam} );
+        for my $OneParam ( @{ $Param{$SearchField} } ) {
+            $OneParam = $Self->{DBObject}->Quote($OneParam);
+        }
 
-        push @SQLWhere,   "$CABParams{ $CABParam } '$Param{ $CABParam }'";
-        push @JoinTables, 'cap';
+        # create string
+        my $InString = join q{, }, map { $Delimiter . $_ . $Delimiter } @{ $Param{$SearchField} };
+
+        next CAPPARAM if !$InString;
+
+        push @SQLWhere,   "$TableAttribute IN ($InString)";
+        push @JoinTables, 'cab';
     }
 
     WORKORDERAGENTID:
@@ -1577,6 +1584,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.45 $ $Date: 2009-10-14 08:22:41 $
+$Revision: 1.46 $ $Date: 2009-10-14 08:39:08 $
 
 =cut
