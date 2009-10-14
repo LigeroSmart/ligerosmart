@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.58 2009-10-14 12:56:40 reb Exp $
+# $Id: ITSMChange.t,v 1.59 2009-10-14 13:03:42 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -2041,9 +2041,10 @@ for my $OrderByColumn (@OrderByColumns) {
     local $Data::Dumper::Useqq  = 1;
 
     my $SearchResult = $Self->{ChangeObject}->ChangeSearch(
-        Title   => 'OrderByChange - ' . $UniqueSignature,
-        OrderBy => [$OrderByColumn],
-        UserID  => 1,
+        Title            => 'OrderByChange - ' . $UniqueSignature,
+        OrderBy          => [$OrderByColumn],
+        OrderByDirection => 'Up',
+        UserID           => 1,
     );
 
     # dump the attribute from ChangeGet()
@@ -2055,7 +2056,25 @@ for my $OrderByColumn (@OrderByColumns) {
     $Self->Is(
         $SearchList,
         $ReferenceList,
-        'Test ' . $TestCount++ . ": ChangeSearch() OrderBy $OrderByColumn."
+        'Test ' . $TestCount++ . ": ChangeSearch() OrderBy $OrderByColumn (Up)."
+    );
+
+    my $SearchResultDown = $Self->{ChangeObject}->ChangeSearch(
+        Title   => 'OrderByChange - ' . $UniqueSignature,
+        OrderBy => [$OrderByColumn],
+        UserID  => 1,
+    );
+
+    # dump the attribute from ChangeGet()
+    my $SearchListDown = Data::Dumper::Dumper( [ reverse @{$SearchResult} ] );
+
+    # dump the reference attribute
+    my $ReferenceListDown = Data::Dumper::Dumper( [ reverse @SortedIDs ] );
+
+    $Self->Is(
+        $SearchListDown,
+        $ReferenceListDown,
+        'Test ' . $TestCount++ . ": ChangeSearch() OrderBy $OrderByColumn (Down)."
     );
 }
 
