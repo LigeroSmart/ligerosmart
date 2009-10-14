@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.47 2009-10-14 09:03:33 bes Exp $
+# $Id: ITSMChange.pm,v 1.48 2009-10-14 09:10:12 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.47 $) [1];
+$VERSION = qw($Revision: 1.48 $) [1];
 
 =head1 NAME
 
@@ -948,11 +948,11 @@ sub ChangeSearch {
     # conditions for CAB searches
     CABPARAM:
     for my $ArrRef (
-        [ 'CABAgent',    'cab.user_id',          q{}, ],
-        [ 'CABCustomer', 'cab.customer_user_id', q{'}, ],
+        [ 'CABAgent',    'user_id',          q{},  'cab_agent' ],
+        [ 'CABCustomer', 'customer_user_id', q{'}, 'cab_customer' ],
         )
     {
-        my ( $SearchField, $TableAttribute, $Delimiter ) = @{$ArrRef};
+        my ( $SearchField, $TableAttribute, $Delimiter, $JoinTable ) = @{$ArrRef};
 
         next CABPARAM if !$Param{$SearchField};
 
@@ -966,8 +966,8 @@ sub ChangeSearch {
 
         next CAPPARAM if !$InString;
 
-        push @SQLWhere,   "$TableAttribute IN ($InString)";
-        push @JoinTables, 'cab';
+        push @SQLWhere,   "$JoinTable.$TableAttribute IN ($InString)";
+        push @JoinTables, $JoinTable;
     }
 
     WORKORDERAGENTID:
@@ -1008,13 +1008,13 @@ sub ChangeSearch {
         $TableSeen{$Table} = 1;
 
         if ( $Table eq 'wo1' ) {
-            $SQL .= " INNER JOIN change_workorder wo1 ON wo1.change_id = c.id \n";
+            $SQL .= " INNER JOIN change_workorder $Table ON $Table.change_id = c.id \n";
         }
         elsif ( $Table eq 'wo2' ) {
-            $SQL .= " INNER JOIN change_workorder wo2 ON wo2.change_id = wo1.change_id \n";
+            $SQL .= " INNER JOIN change_workorder $Table ON $Table.change_id = wo1.change_id \n";
         }
-        elsif ( $Table eq 'cab' ) {
-            $SQL .= " INNER JOIN change_cab cab ON cab.change_id = c.id \n";
+        elsif ( $Table eq 'cab_agent' || $Table eq 'cab_customer' ) {
+            $SQL .= " INNER JOIN change_cab $Table ON $Table.change_id = c.id \n";
         }
         else {
             $Self->{LogObject}->Log(
@@ -1586,6 +1586,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.47 $ $Date: 2009-10-14 09:03:33 $
+$Revision: 1.48 $ $Date: 2009-10-14 09:10:12 $
 
 =cut
