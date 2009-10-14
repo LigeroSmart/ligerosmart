@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.55 2009-10-14 12:13:50 reb Exp $
+# $Id: ITSMChange.t,v 1.56 2009-10-14 12:24:18 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -803,7 +803,7 @@ my @ChangeTests     = (
                 ],
             },
         },
-        SearchTest => [ 8, 9, 10, 22, 28, 29 ],
+        SearchTest => [ 6, 8, 9, 10, 22, 28, 29 ],
     },
 
     # Test for ChangeCABUpdate and ChangeCABGet
@@ -906,7 +906,7 @@ my @ChangeTests     = (
                 ],
             },
         },
-        SearchTest => [ 8, 9, 10 ],
+        SearchTest => [ 6, 8, 9, 10 ],
     },
 
     # add change and update changestateid
@@ -1004,7 +1004,7 @@ my @ChangeTests     = (
                 ChangeStateID => $ReverseClassList{failed},
             },
         },
-        SearchTest => [999999],
+        SearchTest => [ 6, 999999 ],
     },
 
 );
@@ -1395,7 +1395,8 @@ my @ChangeSearchTests = (
             Title            => '%' . $UniqueSignature,
         },
         ResultData => {
-            TestCount => 1,
+            TestCount     => 1,
+            TestExistence => 1,
         },
     },
 
@@ -1421,7 +1422,8 @@ my @ChangeSearchTests = (
             Title     => '%' . $UniqueSignature,
         },
         ResultData => {
-            TestCount => 1,
+            TestCount     => 1,
+            TestExistence => 1,
         },
     },
 
@@ -1433,7 +1435,8 @@ my @ChangeSearchTests = (
             Title        => '%' . $UniqueSignature,
         },
         ResultData => {
-            TestCount => 1,
+            TestCount     => 1,
+            TestExistence => 1,
         },
     },
 
@@ -1446,7 +1449,8 @@ my @ChangeSearchTests = (
             Title        => '%' . $UniqueSignature,
         },
         ResultData => {
-            TestCount => 1,
+            TestCount     => 1,
+            TestExistence => 1,
         },
     },
 
