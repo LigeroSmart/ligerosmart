@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.11 2009-10-15 12:19:50 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.12 2009-10-15 12:48:53 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -272,7 +272,10 @@ for my $Test (@ChangeTests) {
         }
 
         # check for always existing attributes
-        for my $ChangeAttributes (qw(ChangeID ChangeNumber ChangeBuilderID CreateTime ChangeTime)) {
+        for my $ChangeAttributes (
+            qw(ChangeID WorkOrderNumber WorkOrderAgentID CreateTime ChangeTime)
+            )
+        {
             $Self->True(
                 $ChangeData->{$ChangeAttributes},
                 "Test $TestCount: |- has $ChangeAttributes.",
@@ -416,7 +419,8 @@ my @WorkOrderTests = (
 # execute the general workorder tests
 # ------------------------------------------------------------ #
 
-my %TestedWorkOrderID;    # change ids of created changes
+my %TestedWorkOrderID;         # ids of all created workorders
+my %WorkOrderIDForChangeID;    # keep track of the workorders that are attached to a change
 
 TEST:
 for my $Test (@WorkOrderTests) {
@@ -459,7 +463,14 @@ for my $Test (@WorkOrderTests) {
 
         # remember current WorkOrderID
         if ($WorkOrderID) {
+            my $ChangeID = $SourceData->{WorkOrderAdd}->{ChangeID};
+
+            # keep track of all created workorders
             $TestedWorkOrderID{$WorkOrderID} = 1;
+
+            # keep track of the workorders attached to a change
+            $WorkOrderIDForChangeID{$ChangeID} ||= {};
+            $WorkOrderIDForChangeID{$ChangeID}->{$WorkOrderID} = 1;
         }
 
         # change CreateTime
@@ -514,7 +525,7 @@ for my $Test (@WorkOrderTests) {
 
         # check for always existing attributes
         for my $WorkOrderAttributes (
-            qw(WorkOrderID ChangeNumber ChangeBuilderID CreateTime ChangeTime)
+            qw(WorkOrderID WorkOrderNumber CreateTime ChangeTime)
             )
         {
             $Self->True(
@@ -549,6 +560,40 @@ continue {
     # increase the test count, even on next
     $TestCount++;
 }
+
+# ------------------------------------------------------------ #
+# test WorkOrderList()
+# ------------------------------------------------------------ #
+
+# Test whether WorkOrderList returns at least as many workorder as we created.
+# We cannot test for a specific number as these tests can be run in existing environments
+# where other changes already exist.
+for my $ChangeID ( sort keys %WorkOrderIDForChangeID ) {
+    my $WorkOrderList = $Self->{WorkOrderObject}->WorkOrderList(
+        UserID   => 1,
+        ChangeID => $ChangeID
+    ) || [];
+    my %WorkOrderListMap = map { $_ => 1 } @{$WorkOrderList};
+
+    # check whether the created workorders were found by WorkOrderList()
+    for my $WorkOrderID ( sort keys %{ $WorkOrderIDForChangeID{$ChangeID} } ) {
+        $Self->True(
+            $WorkOrderListMap{$WorkOrderID},
+            'Test ' . $TestCount++ . ": WorkOrderList() - WorkOrderID $WorkOrderID in list.",
+        );
+    }
+}
+
+# count all tests that are required to and planned for fail
+my $Fails = scalar grep { $_->{Fails} } @WorkOrderTests;
+my $NrCreateWorkOrders = ( scalar @WorkOrderTests ) - $Fails;
+
+# test if the changes were created
+$Self->Is(
+    scalar keys %TestedWorkOrderID || 0,
+    $NrCreateWorkOrders,
+    'Test ' . $TestCount++ . ': amount of workorder objects and test cases.',
+);
 
 # ------------------------------------------------------------ #
 # clean the system
