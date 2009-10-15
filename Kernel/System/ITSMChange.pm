@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.67 2009-10-15 08:55:48 reb Exp $
+# $Id: ITSMChange.pm,v 1.68 2009-10-15 10:06:26 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.67 $) [1];
+$VERSION = qw($Revision: 1.68 $) [1];
 
 =head1 NAME
 
@@ -930,7 +930,7 @@ sub ChangeSearch {
         if ( $Param{$TimeParam} !~ m{ \A \d\d\d\d-\d\d-\d\d \s \d\d:\d\d:\d\d \z }xms ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Invalid date format found!",
+                Message  => 'Invalid date format found!',
             );
             return;
         }
@@ -1684,6 +1684,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.67 $ $Date: 2009-10-15 08:55:48 $
+$Revision: 1.68 $ $Date: 2009-10-15 10:06:26 $
 
 =cut
