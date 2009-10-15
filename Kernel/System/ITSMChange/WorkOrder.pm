@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all work order functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.15 2009-10-15 10:29:31 reb Exp $
+# $Id: WorkOrder.pm,v 1.16 2009-10-15 12:29:38 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 =head1 NAME
 
@@ -45,6 +45,7 @@ create an object
     use Kernel::System::DB;
     use Kernel::System::Main;
     use Kernel::System::Time;
+    use Kernel::System::User;
     use Kernel::System::ITSMChange::WorkOrder;
 
     my $ConfigObject = Kernel::Config->new();
@@ -70,6 +71,14 @@ create an object
         LogObject    => $LogObject,
         MainObject   => $MainObject,
     );
+    my $UserObject = Kernel::System::User->new(
+        ConfigObject => $ConfigObject,
+        LogObject    => $LogObject,
+        MainObject   => $MainObject,
+        TimeObject   => $TimeObject,
+        DBObject     => $DBObject,
+        EncodeObject => $EncodeObject,
+    );
     my $WorkOrderObject = Kernel::System::ITSMChange::WorkOrder->new(
         ConfigObject => $ConfigObject,
         EncodeObject => $EncodeObject,
@@ -77,6 +86,7 @@ create an object
         DBObject     => $DBObject,
         TimeObject   => $TimeObject,
         MainObject   => $MainObject,
+        UserObject   => $UserObject,
     );
 
 =cut
@@ -90,7 +100,7 @@ sub new {
 
     # check needed objects
     for my $Object (
-        qw(DBObject ConfigObject EncodeObject LogObject MainObject TimeObject)
+        qw(DBObject ConfigObject EncodeObject LogObject MainObject TimeObject UserObject)
         )
     {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
@@ -811,6 +821,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.15 $ $Date: 2009-10-15 10:29:31 $
+$Revision: 1.16 $ $Date: 2009-10-15 12:29:38 $
 
 =cut
