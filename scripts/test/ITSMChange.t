@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.81 2009-10-15 15:09:04 bes Exp $
+# $Id: ITSMChange.t,v 1.82 2009-10-15 15:16:16 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -2253,10 +2253,6 @@ for my $OrderByColumn (@OrderByColumns) {
 # create an extra block as we use "local"
 {
 
-    # turn off all pretty print
-    local $Data::Dumper::Indent = 0;
-    local $Data::Dumper::Useqq  = 1;
-
     # check for 'OrderBy' with non-existent column
     my $SearchResultFooBarColumn = $Self->{ChangeObject}->ChangeSearch(
         Title   => 'OrderByChange - ' . $UniqueSignature,
@@ -2264,15 +2260,9 @@ for my $OrderByColumn (@OrderByColumns) {
         UserID  => 1,
     );
 
-    # dump the attribute from ChangeGet()
-    my $SearchListFooBarColumn = Data::Dumper::Dumper($SearchResultFooBarColumn);
-
-    # dump the reference attribute
-    my $ReferenceListEmpty = Data::Dumper::Dumper( [] );
-
     $Self->Is(
-        $SearchListFooBarColumn,
-        $ReferenceListEmpty,
+        $SearchResultFooBarColumn,
+        undef,
         'Test ' . $TestCount++ . ": ChangeSearch() OrderBy FooBar (Down)."
     );
 
@@ -2284,13 +2274,23 @@ for my $OrderByColumn (@OrderByColumns) {
         UserID           => 1,
     );
 
-    # dump the attribute from ChangeGet()
-    my $SearchListFooBarColumnDirection = Data::Dumper::Dumper($SearchResultFooBarColumnDirection);
+    $Self->Is(
+        $SearchResultFooBarColumnDirection,
+        undef,
+        'Test ' . $TestCount++ . ": ChangeSearch() OrderBy FooBar (FooBar)."
+    );
+
+    # check for 'OrderBy' with non-existent column
+    my $SearchResultFooBarDoubleColumn = $Self->{ChangeObject}->ChangeSearch(
+        Title   => 'OrderByChange - ' . $UniqueSignature,
+        OrderBy => [ 'ChangeID', 'ChangeID' ],
+        UserID  => 1,
+    );
 
     $Self->Is(
-        $SearchListFooBarColumnDirection,
-        $ReferenceListEmpty,
-        'Test ' . $TestCount++ . ": ChangeSearch() OrderBy FooBar (FooBar)."
+        $SearchResultFooBarDoubleColumn,
+        undef,
+        'Test ' . $TestCount++ . ": ChangeSearch() Doubled OrderBy FooBar."
     );
 }
 
