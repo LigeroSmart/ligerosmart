@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all work order functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.19 2009-10-15 13:09:54 mae Exp $
+# $Id: WorkOrder.pm,v 1.20 2009-10-15 13:17:26 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 =head1 NAME
 
@@ -524,9 +524,9 @@ sub WorkOrderSearch {
     # set string params
     my %StringParams = (
         WorkOrderNumber => 'wo.workorder_number',
-        Title           => 'woc.title',
-        Instruction     => 'woc.instruction',
-        Report          => 'woc.report',
+        Title           => 'wo.title',
+        Instruction     => 'wo.instruction',
+        Report          => 'wo.report',
     );
 
     # add string params to sql-where-array
@@ -1101,6 +1101,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.19 $ $Date: 2009-10-15 13:09:54 $
+$Revision: 1.20 $ $Date: 2009-10-15 13:17:26 $
 
 =cut
