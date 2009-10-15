@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.19 2009-10-15 15:34:01 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.20 2009-10-15 16:34:13 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,9 +27,10 @@ use Kernel::System::ITSMChange::WorkOrder;
 my $TestCount = 1;
 
 # create common objects
-$Self->{UserObject}      = Kernel::System::User->new( %{$Self} );
-$Self->{ChangeObject}    = Kernel::System::ITSMChange->new( %{$Self} );
-$Self->{WorkOrderObject} = Kernel::System::ITSMChange::WorkOrder->new( %{$Self} );
+$Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
+$Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
+$Self->{ChangeObject}         = Kernel::System::ITSMChange->new( %{$Self} );
+$Self->{WorkOrderObject}      = Kernel::System::ITSMChange::WorkOrder->new( %{$Self} );
 $Self->True(
     $Self->{WorkOrderObject},
     "Test " . $TestCount++ . ' - construction of workorder object'
@@ -126,6 +127,34 @@ for my $ObjectMethod (@ObjectMethods) {
     $Self->True(
         $Self->{WorkOrderObject}->can($ObjectMethod),
         "Test " . $TestCount++ . " - check 'can $ObjectMethod'"
+    );
+}
+
+# ------------------------------------------------------------ #
+# search for default ITSMWorkOrder-states
+# ------------------------------------------------------------ #
+# define default ITSMWorkOrder-states
+# can't use qw due to spaces in states
+my @DefaultWorkOrderStates = (
+    'accepted',
+    'ready',
+    'in progress',
+    'closed',
+    'canceled'
+);
+
+# get class list with swapped keys and values
+my %ReverseClassList = reverse %{
+    $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::ChangeManagement::WorkOrder::State',
+        )
+    };
+
+# check if states are in GeneralCatalog
+for my $DefaultWorkOrderState (@DefaultWorkOrderStates) {
+    $Self->True(
+        $ReverseClassList{$DefaultWorkOrderState},
+        "Test " . $TestCount++ . " - check state '$DefaultWorkOrderState'"
     );
 }
 
