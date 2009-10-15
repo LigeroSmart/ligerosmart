@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.84 2009-10-15 15:31:53 ub Exp $
+# $Id: ITSMChange.t,v 1.85 2009-10-15 15:35:29 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1476,7 +1476,7 @@ my @ChangeSearchTests = (
     {
         Description => 'Title, Justification',
         SearchData  => {
-            Title         => 'Change 1 - ' . $UniqueSignature,
+            Title         => 'Change 1 - Title - ' . $UniqueSignature,
             Justification => 'Change 1 - Justification - ' . $UniqueSignature,
         },
         ResultData => {
