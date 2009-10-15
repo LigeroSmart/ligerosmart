@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.80 2009-10-15 14:30:54 reb Exp $
+# $Id: ITSMChange.t,v 1.81 2009-10-15 15:09:04 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -625,9 +625,9 @@ my @ChangeTests = (
 
     # Update change without required params (required attributes)
     {
-        Description => 'Test contains no params for ChangeUpdate() for ChangeUpdate.',
-        Fails      => 1,    # we expect this test to fail
-        SourceData => {
+        Description => 'Test contains no params for ChangeUpdate().',
+        Fails       => 1,                                              # we expect this test to fail
+        SourceData  => {
             ChangeUpdate => {},
         },
         ReferenceData => {
