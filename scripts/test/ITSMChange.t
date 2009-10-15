@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.68 2009-10-14 21:01:13 mae Exp $
+# $Id: ITSMChange.t,v 1.69 2009-10-15 07:11:21 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -2276,6 +2276,15 @@ Set new values for CreateTime and ChangeTime for a given ChangeID.
 sub SetChangeTimes {
     my (%Param) = @_;
 
+    # check parameters
+    if ( !$Param{CreateTime} && !$Param{ChangeTime} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Need parameter CreateTime or ChangeTime!",
+        );
+        return;
+    }
+
     my @Bind;
     my $SQL = 'UPDATE change_item SET ';
 
@@ -2285,21 +2294,21 @@ sub SetChangeTimes {
     }
 
     if ( $Param{CreateTime} && $Param{ChangeTime} ) {
-        $SQL .= ',';
+        $SQL .= ', ';
     }
 
     if ( $Param{ChangeTime} ) {
-        $SQL .= 'change_time = ?';
+        $SQL .= 'change_time = ? ';
         push @Bind, \$Param{ChangeTime};
     }
 
-    $SQL .= 'WHERE id = ? '
-        . 'LIMIT 1';
+    $SQL .= 'WHERE id = ? ';
     push @Bind, \$Param{ChangeID};
 
     return if !$Self->{DBObject}->Do(
-        SQL  => $SQL,
-        Bind => \@Bind,
+        SQL   => $SQL,
+        Bind  => \@Bind,
+        Limit => 1,
     );
     return 1;
 }
