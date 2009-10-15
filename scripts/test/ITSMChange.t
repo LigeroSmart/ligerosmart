@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.75 2009-10-15 09:39:02 bes Exp $
+# $Id: ITSMChange.t,v 1.76 2009-10-15 09:49:19 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1280,7 +1280,7 @@ for my $Test (@ChangeTests) {
         }
     }    # end if 'ChangeCABDelete'
 
-    # get a change
+    # get a change and compare the retrieved data with the reference
     if ( exists $ReferenceData->{ChangeGet} ) {
 
         my $ChangeGetReferenceData = $ReferenceData->{ChangeGet};
