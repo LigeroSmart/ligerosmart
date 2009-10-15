@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.66 2009-10-15 08:43:44 reb Exp $
+# $Id: ITSMChange.pm,v 1.67 2009-10-15 08:55:48 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.66 $) [1];
+$VERSION = qw($Revision: 1.67 $) [1];
 
 =head1 NAME
 
@@ -103,10 +103,7 @@ sub new {
     $Self->{LinkObject}           = Kernel::System::LinkObject->new( %{$Self} );
     $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
     $Self->{CustomerUserObject}   = Kernel::System::CustomerUser->new( %{$Self} );
-    $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::WorkOrder->new(
-        %{$Self},
-        ChangeObject => $Self,    # WorkOrder needs the ChangeObject to do ChangeLookup()s
-    );
+    $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::WorkOrder->new( %{$Self} );
 
     return $Self;
 }
@@ -1687,6 +1684,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.66 $ $Date: 2009-10-15 08:43:44 $
+$Revision: 1.67 $ $Date: 2009-10-15 08:55:48 $
 
 =cut
