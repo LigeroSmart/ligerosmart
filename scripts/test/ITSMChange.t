@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.74 2009-10-15 09:05:41 bes Exp $
+# $Id: ITSMChange.t,v 1.75 2009-10-15 09:39:02 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -183,6 +183,7 @@ for my $DefaultChangeState (@DefaultChangeStates) {
 # ------------------------------------------------------------ #
 # define general change tests
 # ------------------------------------------------------------ #
+
 # store current TestCount for better test case recognition
 my $TestCountMisc   = $TestCount;
 my $UniqueSignature = 'UnitTest-ITSMChange-' . int( rand 1_000_000 ) . '_' . time;
@@ -254,7 +255,7 @@ my @ChangeTests     = (
         SearchTest => [ 4, 25, 26 ],
     },
 
-    # change contains all date - (all attributes)
+    # change contains all data - (all attributes)
     {
         Description => 'Test contains all possible params for ChangeAdd.',
         SourceData  => {
@@ -1096,8 +1097,12 @@ my @ChangeTests     = (
 
 );
 
-my %TestedChangeID;
-my %ChangeIDForSearchTest;
+# ------------------------------------------------------------ #
+# execute the general change tests
+# ------------------------------------------------------------ #
+
+my %TestedChangeID;           # change ids of created changes
+my %ChangeIDForSearchTest;    # change ids that are expected to be found by a search test
 
 TEST:
 for my $Test (@ChangeTests) {
@@ -1154,7 +1159,7 @@ for my $Test (@ChangeTests) {
 
         # change CreateTime
         if ( $ChangeID && $SourceData->{ChangeAddChangeTime} ) {
-            SetChangeTimes(
+            SetTimes(
                 ChangeID   => $ChangeID,
                 CreateTime => $SourceData->{ChangeAddChangeTime}->{CreateTime},
             );
@@ -1194,7 +1199,7 @@ for my $Test (@ChangeTests) {
 
         # change ChangeTime
         if ( $ChangeID && $SourceData->{ChangeUpdateChangeTime} ) {
-            SetChangeTimes(
+            SetTimes(
                 ChangeID   => $ChangeID,
                 ChangeTime => $SourceData->{ChangeUpdateChangeTime}->{ChangeTime},
             );
@@ -2172,7 +2177,7 @@ for my $OrderByColumn (@OrderByColumns) {
 # change the create time for the second test case we defined above for the orderby tests
 # we do this to have two changes with the same create time. this is needed to test
 # the 'orderby' with two columns
-SetChangeTimes(
+SetTimes(
     ChangeID   => ( sort @ChangeIDsForOrderByTests )[1],
     CreateTime => '2009-10-01 01:00:00',
 );
@@ -2272,11 +2277,11 @@ for my $ChangeID ( keys %TestedChangeID ) {
 
 =over 4
 
-=item SetChangeTimes()
+=item SetTimes()
 
 Set new values for CreateTime and ChangeTime for a given ChangeID.
 
-    my $UpdateSuccess = SetChangeTimes(
+    my $UpdateSuccess = SetTimes(
         ChangeID => 123,
         CreateTime => '2009-10-30 01:00:15',
         ChangeTime => '2009-10-30 01:00:15',
@@ -2286,14 +2291,14 @@ Set new values for CreateTime and ChangeTime for a given ChangeID.
 
 =cut
 
-sub SetChangeTimes {
+sub SetTimes {
     my (%Param) = @_;
 
     # check parameters
     if ( !$Param{CreateTime} && !$Param{ChangeTime} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Need parameter CreateTime or ChangeTime!",
+            Message  => 'Need parameter CreateTime or ChangeTime!',
         );
         return;
     }
