@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.12 2009-10-15 12:48:53 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.13 2009-10-15 12:55:18 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -273,7 +273,7 @@ for my $Test (@ChangeTests) {
 
         # check for always existing attributes
         for my $ChangeAttributes (
-            qw(ChangeID WorkOrderNumber WorkOrderAgentID CreateTime ChangeTime)
+            qw(ChangeID ChangeNumber ChangeBuilderID CreateTime ChangeTime)
             )
         {
             $Self->True(
