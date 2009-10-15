@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.72 2009-10-15 08:34:27 ub Exp $
+# $Id: ITSMChange.t,v 1.73 2009-10-15 08:42:08 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,16 +21,25 @@ use Kernel::System::CustomerUser;
 use Kernel::System::GeneralCatalog;
 use Kernel::System::ITSMChange;
 
-# create common objects
-$Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
-$Self->{ChangeObject}         = Kernel::System::ITSMChange->new( %{$Self} );
-$Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
-$Self->{CustomerUserObject}   = Kernel::System::CustomerUser->new( %{$Self} );
-
 # ------------------------------------------------------------ #
 # make preparations
 # ------------------------------------------------------------ #
 my $TestCount = 1;
+
+# create common objects
+$Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
+$Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
+$Self->{CustomerUserObject}   = Kernel::System::CustomerUser->new( %{$Self} );
+$Self->{ChangeObject}         = Kernel::System::ITSMChange->new( %{$Self} );
+$Self->True(
+    $Self->{ChangeObject},
+    "Test " . $TestCount++ . ' - construction of change object'
+);
+$Self->Is(
+    ref $Self->{ChangeObject},
+    'Kernel::System::ITSMChange',
+    "Test " . $TestCount++ . ' - class of change object'
+);
 
 # create needed users
 my @UserIDs;

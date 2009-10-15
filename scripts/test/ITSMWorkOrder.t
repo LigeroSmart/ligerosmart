@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - work order tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.2 2009-10-14 07:26:30 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.3 2009-10-15 08:42:08 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,18 +15,34 @@ use utf8;
 
 use vars qw($Self);
 
+#use Data::Dumper;
+#use Kernel::System::User;
+#use Kernel::System::CustomerUser;
+#use Kernel::System::GeneralCatalog;
+#use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::WorkOrder;
-
-$Self->{WorkOrderObject} = Kernel::System::ITSMChange::WorkOrder->new( %{$Self} );
 
 # ------------------------------------------------------------ #
 # make preparations
 # ------------------------------------------------------------ #
 my $TestCount = 1;
 
+# create common objects
+$Self->{WorkOrderObject} = Kernel::System::ITSMChange::WorkOrder->new( %{$Self} );
+$Self->True(
+    $Self->{WorkOrderObject},
+    "Test " . $TestCount++ . ' - construction of workorder object'
+);
+$Self->Is(
+    ref $Self->{WorkOrderObject},
+    'Kernel::System::ITSMChange::WorkOrder',
+    "Test " . $TestCount++ . ' - class of workorder object'
+);
+
 # ------------------------------------------------------------ #
 # test WorkOrder API
 # ------------------------------------------------------------ #
+
 # define public interface
 my @ObjectMethods = qw(
     WorkOrderAdd
