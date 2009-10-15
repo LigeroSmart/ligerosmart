@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all work order functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.12 2009-10-15 09:18:06 reb Exp $
+# $Id: WorkOrder.pm,v 1.13 2009-10-15 09:45:23 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 =head1 NAME
 
@@ -159,7 +159,50 @@ sub WorkOrderAdd {
     # check change parameters
     return if !$Self->_CheckWorkOrderParams(%Param);
 
-    my $WorkOrderID = 1;    # dummy value for now
+    # get default WorkOrderStateID if not given
+    my $ItemDataRef = $Self->{GeneralCatalogObject}->ItemGet(
+        Class => 'ITSM::ChangeManagement::WorkOrder::State',
+        Name  => 'accepted',
+    );
+
+    my $WorkOrderStateID = $Param{WorkOrderStateID} || $ItemDataRef->{ItemID};
+
+    # get default workorder number if not given
+    my $WorkOrderNumber = $Param{WorkOrderNumber} || $Self->_GetWorkOrderNumber(%Param);
+
+    # add WorkOrder to database
+    return if !$Self->{DBObject}->Do(
+        SQL => 'INSERT INTO change_workitem '
+            . '(change_id, workorder_number, workorder_state_id, create_time, '
+            . 'create_by, change_time, change_by) '
+            . 'VALUES (?, ?, current_timestamp, ?, current_timestamp, ?)',
+        Bind => [
+            \$Param{ChangeID}, \$WorkOrderNumber, \$WorkOrderStateID,
+            \$Param{UserID}, \$Param{UserID},
+        ],
+    );
+
+    # get WorkOrder id
+    return if !$Self->{DBObject}->Prepare(
+        SQL   => 'SELECT id FROM change_workitem WHERE change_id = ? AND workorder_number = ?',
+        Bind  => [ \$Param{ChangeID}, \$WorkOrderNumber ],
+        Limit => 1,
+    );
+
+    my $WorkOrderID;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $WorkOrderID = $Row[0];
+    }
+
+    return if !$WorkOrderID;
+
+    # TODO: trigger WorkOrderAdd-Event
+
+    # update WorkOrder with remaining parameters
+    return if !$Self->WorkOrderUpdate(
+        WorkOrderID => $WorkOrderID,
+        %Param,
+    );
 
     return $WorkOrderID;
 }
@@ -200,11 +243,7 @@ sub WorkOrderUpdate {
         }
     }
 
-    # check if given WorkOrderStateID is valid
-    return if $Param{WorkOrderStateID} && !$Self->_CheckWorkOrderStateID(
-        WorkOrderStateID => $Param{WorkOrderStateID},
-    );
-
+    # check the given parameters
     return if !$Self->_CheckWorkOrderParams(%Param);
 
     return 1;
@@ -419,6 +458,8 @@ sub WorkOrderDelete {
 
     # TODO: Delete all links
 
+    # TODO: trigger WorkOrder delete event
+
     # delete the workorder
     return if !$Self->{DBObject}->Do(
         SQL  => 'DELETE FROM change_workorder WHERE id = ? ',
@@ -492,9 +533,38 @@ get the end date of a change, calculated from the start of the first work order
 sub WorkOrderChangeEndGet {
     my ( $Self, %Param ) = @_;
 
-    # SELECT MAX(planed_end_time) WHERE change_id = ?
+    # check needed stuff
+    for my $Attribute (qw(ChangeID Type UserID)) {
+        if ( !$Param{$Attribute} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Attribute!",
+            );
+            return;
+        }
+    }
 
-    return;
+    # mapping for types -> column
+    my %TypeColumnMap = (
+        planned => 'planned_end_time',
+        actual  => 'actual_end_time',
+    );
+
+    return if !$TypeColumnMap{ $Param{Type} };
+
+    # retrieve the start time
+    return if !$Self->{DBObject}->Prepare(
+        SQL   => 'SELECT MIN(' . $TypeColumnMap{ $Param{Type} } . ') WHERE change_id = ?',
+        Bind  => [ \$Param{ChangeID} ],
+        Limit => 1,
+    );
+
+    my $EndTime;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $EndTime = $Row[0];
+    }
+
+    return $EndTime;
 }
 
 =item _CheckWorkOrderStateID()
@@ -538,6 +608,42 @@ sub _CheckWorkOrderStateID {
     }
 
     return 1;
+}
+
+=item _GetWorkOrderNumber()
+
+Get a default WorkOrderNumber
+
+=cut
+
+sub _GetWorkOrderNumber {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    if ( !$Param{ChangeID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need ChangeID!',
+        );
+        return;
+    }
+
+    # get max workorder number
+    return if !$Self->{DBObject}->Prepare(
+        SQL   => 'SELECT MAX(workorder_number) FROM change_workorder WHERE change_id = ?',
+        Bind  => [ \$Param{ChangeID} ],
+        Limit => 1,
+    );
+
+    my $WorkOrderNumber;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray ) {
+        $WorkOrderNumber = $Row[0];
+    }
+
+    # increment number to get a non-existent work order number
+    $WorkOrderNumber++;
+
+    return $WorkOrderNumber;
 }
 
 =item _CheckWorkOrderParams()
@@ -660,6 +766,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.12 $ $Date: 2009-10-15 09:18:06 $
+$Revision: 1.13 $ $Date: 2009-10-15 09:45:23 $
 
 =cut
