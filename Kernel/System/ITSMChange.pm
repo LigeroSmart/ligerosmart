@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.72 2009-10-15 15:31:21 ub Exp $
+# $Id: ITSMChange.pm,v 1.73 2009-10-15 15:45:02 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::CustomerUser;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.72 $) [1];
+$VERSION = qw($Revision: 1.73 $) [1];
 
 =head1 NAME
 
@@ -788,10 +788,19 @@ return list of change ids as an array reference
         # ActualStartTime, ActualEndTime,
         # CreateTime, CreateBy, ChangeTime, ChangeBy)
 
-        OrderByDirection => ['Down', 'Up'],                      # (optional) (Down|Up) default Down
+        OrderByDirection => [ 'Down', 'Up' ],                    # (optional)
+        # default: [ 'Down' ],
+        # (Down | Up)
 
-        UsingWildcards => 0,                                     # (optional) default 1
+        UsingWildcards => 0,                                     # (optional)
+        # default 1
+
+        # Additional information for OrderBy:
+        # The OrderByDirection could specified for each OrderBy attribute.
+        # The pairing is made by the array idices.
+
         Limit => 100,                                            # (optional)
+
         UserID => 1,
     );
 
@@ -1732,6 +1741,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.72 $ $Date: 2009-10-15 15:31:21 $
+$Revision: 1.73 $ $Date: 2009-10-15 15:45:02 $
 
 =cut
