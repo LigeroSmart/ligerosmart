@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.73 2009-10-15 08:42:08 bes Exp $
+# $Id: ITSMChange.t,v 1.74 2009-10-15 09:05:41 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -41,12 +41,11 @@ $Self->Is(
     "Test " . $TestCount++ . ' - class of change object'
 );
 
-# create needed users
-my @UserIDs;
-my @InvalidUserIDs;
-
-# create needed customer users
-my @CustomerUserIDs;
+# create needed users and customer users
+my @UserIDs;               # a list of existing and valid user ids
+my @InvalidUserIDs;        # a list of existing but invalid user ids
+my @NonExistingUserIDs;    # a list of non-existion user ids
+my @CustomerUserIDs;       # a list of existing and valid customer user ids, a list of strings
 
 # disable email checks to create new user
 my $CheckEmailAddressesOrg = $Self->{ConfigObject}->Get('CheckEmailAddresses') || 1;
@@ -93,16 +92,16 @@ for my $Counter ( 1 .. 3 ) {
 for ( 1 .. 2 ) {
     LPC:
     for my $LoopProtectionCounter ( 1 .. 100 ) {
-        my $TempInvalidUserID = int rand 1_000_000;
+        my $TempNonExistingUserID = int rand 1_000_000;
         next LPC
             if (
             defined $Self->{UserObject}->GetUserData(
-                UserID => $TempInvalidUserID,
+                UserID => $TempNonExistingUserID,
             )
             );
 
         # we got unused user ID
-        push @InvalidUserIDs, $TempInvalidUserID;
+        push @NonExistingUserIDs, $TempNonExistingUserID;
         last LPC;
     }
 }
@@ -117,6 +116,7 @@ $Self->{UserObject}->UserUpdate(
     ),
     ChangeUserID => 1,
 );
+push @InvalidUserIDs, pop @UserIDs;
 
 # restore original email check param
 $Self->{ConfigObject}->Set(
@@ -518,9 +518,9 @@ my @ChangeTests     = (
                 UserID    => 1,
                 CABAgents => [
                     $UserIDs[0],
-                    $InvalidUserIDs[1],
+                    $NonExistingUserIDs[1],
                     $UserIDs[1],
-                    $InvalidUserIDs[0],
+                    $NonExistingUserIDs[0],
                 ],
             },
         },
@@ -555,8 +555,8 @@ my @ChangeTests     = (
         SourceData  => {
             ChangeAdd => {
                 UserID          => 1,
-                ChangeManagerID => $InvalidUserIDs[0],
-                ChangeBuilderID => $InvalidUserIDs[0],
+                ChangeManagerID => $NonExistingUserIDs[0],
+                ChangeBuilderID => $NonExistingUserIDs[0],
             },
         },
         ReferenceData => {
@@ -571,7 +571,7 @@ my @ChangeTests     = (
         SourceData  => {
             ChangeAdd => {
                 UserID          => 1,
-                ChangeManagerID => $InvalidUserIDs[0],
+                ChangeManagerID => $NonExistingUserIDs[0],
                 ChangeBuilderID => $UserIDs[0],
             },
         },
@@ -588,7 +588,7 @@ my @ChangeTests     = (
             ChangeAdd => {
                 UserID          => 1,
                 ChangeManagerID => $UserIDs[0],
-                ChangeBuilderID => $InvalidUserIDs[0],
+                ChangeBuilderID => $NonExistingUserIDs[0],
             },
         },
         ReferenceData => {
@@ -851,7 +851,7 @@ my @ChangeTests     = (
             },
             ChangeCABUpdate => {
                 CABAgents => [
-                    $UserIDs[2],
+                    $InvalidUserIDs[0],
                 ],
             },
             ChangeCABUpdateFail => 1,
@@ -1512,7 +1512,7 @@ my @ChangeSearchTests = (
         Description => 'ChangeBuilderID, ChangeManagerID',
         SearchData  => {
             ChangeBuilderIDs => [ $UserIDs[0] ],
-            ChangeManagerIDs => [ $UserIDs[2] ],
+            ChangeManagerIDs => [ $InvalidUserIDs[0] ],
             Title            => '%' . $UniqueSignature,
         },
         ResultData => {
