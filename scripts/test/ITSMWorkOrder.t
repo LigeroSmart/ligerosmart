@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.15 2009-10-15 13:25:12 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.16 2009-10-15 13:28:37 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,9 +17,6 @@ use vars qw($Self);
 
 use Data::Dumper;
 use Kernel::System::User;
-
-#use Kernel::System::GeneralCatalog;
-use Kernel::System::ITSMChange;
 use Kernel::System::GeneralCatalog;
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::WorkOrder;
