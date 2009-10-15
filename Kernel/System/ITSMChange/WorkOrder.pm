@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all work order functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.10 2009-10-15 08:43:44 reb Exp $
+# $Id: WorkOrder.pm,v 1.11 2009-10-15 09:04:51 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 =head1 NAME
 
@@ -90,7 +90,7 @@ sub new {
 
     # check needed objects
     for my $Object (
-        qw(DBObject ConfigObject EncodeObject LogObject MainObject TimeObject ChangeObject)
+        qw(DBObject ConfigObject EncodeObject LogObject MainObject TimeObject)
         )
     {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
@@ -112,13 +112,15 @@ sub new {
 add a new workorder
 
     my $WorkOrderID = $WorkOrderObject->WorkOrderAdd(
-        UserID => 1,
+        ChangeID => 123,
+        UserID   => 1,
     );
 
 or
 
     my $WorkOrderID = $WorkOrderObject->WorkOrderAdd(
-        ChangeID         => 123,                                       # (optional)
+        ChangeID         => 123,
+
         WorkOrderNumber  => 5,                                         # (optional)
         Title            => 'Replacement of mail server',              # (optional)
         Instruction      => 'Install the the new server',              # (optional)
@@ -143,13 +145,15 @@ or
 sub WorkOrderAdd {
     my ( $Self, %Param ) = @_;
 
-    # check for needed stuff
-    if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => 'Need UserID!',
-        );
-        return;
+    # check needed stuff
+    for my $Argument (qw(ChangeID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
     }
 
     # check change parameters
@@ -206,7 +210,7 @@ sub WorkOrderUpdate {
         WorkOrderStateID => $Param{WorkOrderStateID},
     );
 
-    return if !$Self->_CheckTimeFormats(%Param);
+    return if !$Self->_CheckWorkOrderParams(%Param);
 
     return 1;
 }
@@ -518,7 +522,10 @@ sub _CheckWorkOrderParams {
 
     # check the string and id parameters
     ARGUMENT:
-    for my $Argument (qw( Title Instruction Report WorkOrderAgentID WorkOrderStateID )) {
+    for my $Argument (
+        qw(Title Instruction Report WorkOrderAgentID WorkOrderStateID WorkOrderNumber ChangeID)
+        )
+    {
 
         # params are not required
         next ARGUMENT if !exists $Param{$Argument};
@@ -584,6 +591,13 @@ sub _CheckWorkOrderParams {
         return;
     }
 
+    # check if given ChangeStateID is valid
+    if ( exists $Param{WorkOrderStateID} ) {
+        return if !$Self->_CheckWorkOrderStateID(
+            WorkOrderStateID => $Param{WorkOrderStateID},
+        );
+    }
+
     return 1;
 }
 
@@ -603,6 +617,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.10 $ $Date: 2009-10-15 08:43:44 $
+$Revision: 1.11 $ $Date: 2009-10-15 09:04:51 $
 
 =cut
