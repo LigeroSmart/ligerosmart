@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.9 2009-10-15 12:07:00 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.10 2009-10-15 12:13:08 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -357,8 +357,7 @@ my @WorkOrderTests = (
     # First test of WorkOrderAdd() with all required arguments.
     {
         Description => 'Test contains ChangeID and ChangeID for WorkOrderAdd().',
-        Fails      => 1,                                               # we expect this test to fail
-        SourceData => {
+        SourceData  => {
             WorkOrderAdd => {
                 UserID   => 1,
                 ChangeID => $WorkOrderAddTestID,
@@ -367,6 +366,47 @@ my @WorkOrderTests = (
         ReferenceData => {
             WorkOrderGet => {
                 ChangeID => $WorkOrderAddTestID,
+            },
+        },
+    },
+
+    {
+        Description => 'WorkOrderAdd() with string parameters.',
+        SourceData  => {
+            WorkOrderAdd => {
+                UserID      => 1,
+                ChangeID    => $WorkOrderAddTestID,
+                Title       => 'Replacement of mail server',
+                Instruction => 'Install the the new server',
+                Report      => 'Installed new server without problems',
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                ChangeID    => $WorkOrderAddTestID,
+                Title       => 'Replacement of mail server',
+                Instruction => 'Install the the new server',
+                Report      => 'Installed new server without problems',
+            },
+        },
+    },
+    {
+        Description => 'WorkOrderAdd() with empty string parameters.',
+        SourceData  => {
+            WorkOrderAdd => {
+                UserID      => 1,
+                ChangeID    => $WorkOrderAddTestID,
+                Title       => '',
+                Instruction => '',
+                Report      => '',
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                ChangeID    => $WorkOrderAddTestID,
+                Title       => '',
+                Instruction => '',
+                Report      => '',
             },
         },
     },
