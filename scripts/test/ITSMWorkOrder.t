@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.14 2009-10-15 13:19:17 ub Exp $
+# $Id: ITSMWorkOrder.t,v 1.15 2009-10-15 13:25:12 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,6 +17,9 @@ use vars qw($Self);
 
 use Data::Dumper;
 use Kernel::System::User;
+
+#use Kernel::System::GeneralCatalog;
+use Kernel::System::ITSMChange;
 use Kernel::System::GeneralCatalog;
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::WorkOrder;
@@ -560,26 +563,54 @@ continue {
 }
 
 # ------------------------------------------------------------ #
-# test WorkOrderList()
+# test WorkOrderList() and ChangeGet()
 # ------------------------------------------------------------ #
 
-# Test whether WorkOrderList returns at least as many workorder as we created.
-# We cannot test for a specific number as these tests can be run in existing environments
-# where other changes already exist.
+# Test whether WorkOrderList() and ChangeGet() return the same workorders as we created.
 for my $ChangeID ( sort keys %WorkOrderIDForChangeID ) {
-    my $WorkOrderList = $Self->{WorkOrderObject}->WorkOrderList(
+
+    # ask the WorkOrder object for a list of workorders
+    my $ListFromWorkOrderObject = $Self->{WorkOrderObject}->WorkOrderList(
         UserID   => 1,
-        ChangeID => $ChangeID
+        ChangeID => $ChangeID,
     ) || [];
-    my %WorkOrderListMap = map { $_ => 1 } @{$WorkOrderList};
+    my %MapFromWorkOrderObject = map { $_ => 1 } @{$ListFromWorkOrderObject};
+
+    # ask the Change object for a list of workorders
+    my $Change = $Self->{ChangeObject}->ChangeGet(
+        UserID   => 1,
+        ChangeID => $ChangeID,
+    ) || {};
+    my $ListFromChangeObject = $Change->{WorkOrderIDs} || [];
+    my %MapFromChangeObject = map { $_ => 1 } @{$ListFromChangeObject};
 
     # check whether the created workorders were found by WorkOrderList()
     for my $WorkOrderID ( sort keys %{ $WorkOrderIDForChangeID{$ChangeID} } ) {
         $Self->True(
-            $WorkOrderListMap{$WorkOrderID},
-            'Test ' . $TestCount++ . ": WorkOrderList() - WorkOrderID $WorkOrderID in list.",
+            $MapFromWorkOrderObject{$WorkOrderID},
+            'Test '
+                . $TestCount++
+                . ": WorkOrderList() - WorkOrderID $WorkOrderID in list from WorkOrder object.",
+        );
+        $Self->True(
+            $MapFromChangeObject{$WorkOrderID},
+            'Test '
+                . $TestCount++
+                . ": ChangeGet() - WorkOrderID $WorkOrderID in list from Change object.",
         );
     }
+
+    # check the number of workorders for a change
+    $Self->Is(
+        scalar @{$ListFromWorkOrderObject},
+        scalar keys %{ $WorkOrderIDForChangeID{$ChangeID} },
+        'Test ' . $TestCount++ . ": WorkOrderList() - number of workorders for a change.",
+    );
+    $Self->Is(
+        scalar @{$ListFromChangeObject},
+        scalar keys %{ $WorkOrderIDForChangeID{$ChangeID} },
+        'Test ' . $TestCount++ . ": ChangeGet() - number of workorders for a change.",
+    );
 }
 
 # count all tests that are required to and planned for fail
