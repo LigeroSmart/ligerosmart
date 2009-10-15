@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.20 2009-10-15 16:34:13 mae Exp $
+# $Id: ITSMWorkOrder.t,v 1.21 2009-10-15 18:07:45 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -172,17 +172,17 @@ my @ChangeTests     = (
         Description => 'First change for testing workorders.',
         SourceData  => {
             ChangeAdd => {
-                Title         => 'Change 1 - ' . $UniqueSignature,
-                Description   => 'Description 1',
-                Justification => 'Justification 1',
+                Title         => 'Change 1 - Title - ' . $UniqueSignature,
+                Description   => 'Change 1 - Description - ' . $UniqueSignature,
+                Justification => 'Change 1 - Justification - ' . $UniqueSignature,
                 UserID        => $UserIDs[0],
             },
         },
         ReferenceData => {
             ChangeGet => {
-                Title         => 'Change 1 - ' . $UniqueSignature,
-                Description   => 'Description 1',
-                Justification => 'Justification 1',
+                Title         => 'Change 1 - Title - ' . $UniqueSignature,
+                Description   => 'Change 1 - Description - ' . $UniqueSignature,
+                Justification => 'Change 1 - Justification - ' . $UniqueSignature,
             },
         },
     },
@@ -192,7 +192,8 @@ my @ChangeTests     = (
 # Create the changes that are needed for testing workorders
 # ------------------------------------------------------------ #
 
-my %TestedChangeID;    # change ids of created changes
+# change ids of created changes
+my %TestedChangeID;
 
 TEST:
 for my $Test (@ChangeTests) {
@@ -225,7 +226,7 @@ for my $Test (@ChangeTests) {
     # the change id will be used for several calls
     my $ChangeID;
 
-    # add a new Change
+    # add a new change
     if ( $SourceData->{ChangeAdd} ) {
 
         # add the change
