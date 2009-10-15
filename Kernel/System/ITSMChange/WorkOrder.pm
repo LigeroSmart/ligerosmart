@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all work order functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.18 2009-10-15 12:36:34 reb Exp $
+# $Id: WorkOrder.pm,v 1.19 2009-10-15 13:09:54 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 =head1 NAME
 
@@ -422,13 +422,15 @@ sub WorkOrderList {
 return a list of workorder ids as an array reference
 
     my $WorkOrderIDsRef = $WorkOrderObject->WorkOrderSearch(
-        ChangeID         => 123,                                       # (optional)
-        WorkOrderNumber  => 12,                                        # (optional)
-        Title            => 'Replacement of mail server',              # (optional)
-        Instruction      => 'Install the the new server',              # (optional)
-        Report           => 'Installed new server without problems',   # (optional)
-        WorkOrderStateID => 4,                                         # (optional)
-        WorkOrderAgentID => 7,                                         # (optional)
+        ChangeID          => 123,                                      # (optional)
+        WorkOrderNumber   => 12,                                       # (optional)
+        Title             => 'Replacement of mail server',             # (optional)
+        Instruction       => 'Install the the new server',             # (optional)
+        Report            => 'Installed new server without problems',  # (optional)
+        WorkOrderStateIDs => [ 11, 12, 13 ],                           # (optional)
+        WorkOrderAgentIDs => [ 1, 2, 3 ],                              # (optional)
+        CreateBy          => [ 5, 2, 3 ],                              # (optional)
+        ChangeBy          => [ 3, 2, 1 ],                              # (optional)
 
         # changes with planned start time after ...
         PlannedStartTimeNewerDate => '2006-01-09 00:00:01',            # (optional)
@@ -460,13 +462,20 @@ return a list of workorder ids as an array reference
         # changes with changed time before then ....
         ChangeTimeOlderDate => '2006-01-19 23:59:59',                  # (optional)
 
-        OrderBy => 'WorkOrderID',  # default                           # (optional)
-        # (WorkOrderID, ChangeID,
+        OrderBy => [ 'ChangeID', 'WorkOrderNumber' ],                  # (optional)
+        # default: [ 'WorkOrderID' ],
+        # (WorkOrderID, ChangeID, WorkOrderNumber,
         # WorkOrderStateID, WorkOrderAgentID,
         # PlannedStartTime, PlannedEndTime,
         # ActualStartTime, ActualEndTime,
         # CreateTime, CreateBy, ChangeTime, ChangeBy)
 
+        OrderByDirection => [ 'Down', 'Up' ],                          # (optional)
+        # default: [ 'Down' ],
+        # (Down | Up)
+
+        UsingWildcards => 0,                                           # (optional)
+        # default 1
         Limit => 100,                                                  # (optional)
 
         UserID => 1,
@@ -477,7 +486,275 @@ return a list of workorder ids as an array reference
 sub WorkOrderSearch {
     my ( $Self, %Param ) = @_;
 
-    return;
+    if ( !$Param{UserID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need UserID!',
+        );
+        return;
+    }
+
+    # check parameters, OrderBy and OrderByDirection are array references
+    ARGUMENT:
+    for my $Argument (qw(OrderBy OrderByDirection)) {
+        if ( !defined $Param{$Argument} ) {
+            $Param{$Argument} ||= [];
+        }
+        else {
+            if ( ref $Param{$Argument} ne 'ARRAY' ) {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "$Argument must be an array reference!",
+                );
+                return;
+            }
+        }
+    }
+
+    # set default values
+    if ( !defined $Param{UsingWildcards} ) {
+        $Param{UsingWildcards} = 1;
+    }
+
+    my @SQLWhere;     # assemble the conditions used in the WHERE clause
+    my @SQLHaving;    # assemble the conditions used in the HAVING clause
+
+    #    my @JoinTables;    # keep track of the tables that need to be joined
+
+    # set string params
+    my %StringParams = (
+        WorkOrderNumber => 'wo.workorder_number',
+        Title           => 'woc.title',
+        Instruction     => 'woc.instruction',
+        Report          => 'woc.report',
+    );
+
+    # add string params to sql-where-array
+    STRINGPARAM:
+    for my $StringParam ( keys %StringParams ) {
+
+        # check string params for useful values, the string q{0} is allowed
+        next STRINGPARAM if !exists $Param{$StringParam};
+        next STRINGPARAM if !defined $Param{$StringParam};
+        next STRINGPARAM if $Param{$StringParam} eq '';
+
+        # quote
+        $Param{$StringParam} = $Self->{DBObject}->Quote( $Param{$StringParam} );
+
+        # wildcards are used
+        if ( $Param{UsingWildcards} ) {
+
+            # Quote
+            $Param{$StringParam} = $Self->{DBObject}->Quote( $Param{$StringParam}, 'Like' );
+
+            # replace * with %
+            $Param{$StringParam} =~ s{ \*+ }{%}xmsg;
+
+            # do not use string params which contain only %
+            next STRINGPARAM if $Param{$StringParam} =~ m{ \A %* \z }xms;
+
+            push @SQLWhere,
+                "LOWER($StringParams{$StringParam}) LIKE LOWER('$Param{$StringParam}')";
+        }
+
+        # no wildcards are used
+        else {
+            push @SQLWhere,
+                "LOWER($StringParams{$StringParam}) = LOWER('$Param{$StringParam}')";
+        }
+    }
+
+    # set array params
+    my %ArrayParams = (
+        WorkOrderStateIDs => 'wo.workorder_state_id',
+        WorkOrderAgentIDs => 'wo.workorder_agent_id',
+        CreateBy          => 'wo.create_by',
+        ChangeBy          => 'wo.change_by',
+    );
+
+    # add array params to sql-where-array
+    ARRAYPARAM:
+    for my $ArrayParam ( keys %ArrayParams ) {
+
+        next ARRAYPARAM if !$Param{$ArrayParam};
+
+        if ( ref $Param{$ArrayParam} ne 'ARRAY' ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "$ArrayParam must be an array reference!",
+            );
+            return;
+        }
+
+        next ARRAYPARAM if !@{ $Param{$ArrayParam} };
+
+        # quote
+        for my $OneParam ( @{ $Param{$ArrayParam} } ) {
+            $OneParam = $Self->{DBObject}->Quote($OneParam);
+        }
+
+        # create string
+        my $InString = join q{, }, @{ $Param{$ArrayParam} };
+
+        next ARRAYPARAM if !$InString;
+
+        push @SQLWhere, "$ArrayParams{$ArrayParam} IN ($InString)";
+    }
+
+    # set time params
+    my %TimeParams = (
+        CreateTimeNewerDate => 'wo.create_time >=',
+        CreateTimeOlderDate => 'wo.create_time <=',
+        ChangeTimeNewerDate => 'wo.change_time >=',
+        ChangeTimeOlderDate => 'wo.change_time <=',
+    );
+
+    # add change time params to sql-where-array
+    TIMEPARAM:
+    for my $TimeParam ( keys %TimeParams ) {
+
+        next TIMEPARAM if !$Param{$TimeParam};
+
+        if ( $Param{$TimeParam} !~ m{ \A \d\d\d\d-\d\d-\d\d \s \d\d:\d\d:\d\d \z }xms ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => 'Invalid date format found!',
+            );
+            return;
+        }
+
+        # quote
+        $Param{$TimeParam} = $Self->{DBObject}->Quote( $Param{$TimeParam} );
+
+        push @SQLWhere, "$TimeParams{$TimeParam} '$Param{$TimeParam}'";
+    }
+
+    # set time params in workorder table
+    my %WorkOrderTimeParams = (
+        PlannedStartTimeNewerDate => 'min(wo.planned_start_time) >=',
+        PlannedStartTimeOlderDate => 'min(wo.planned_start_time) <=',
+        PlannedEndTimeNewerDate   => 'max(wo.planned_end_time) >=',
+        PlannedEndTimeOlderDate   => 'max(wo.planned_end_time) <=',
+        ActualStartTimeNewerDate  => 'min(wo.actual_start_time) >=',
+        ActualStartTimeOlderDate  => 'min(wo.actual_start_time) <=',
+        ActualEndTimeNewerDate    => 'max(wo.actual_end_time) >=',
+        ActualEndTimeOlderDate    => 'max(wo.actual_end_time) <=',
+    );
+
+    # add work order time params to sql-having-array
+    TIMEPARAM:
+    for my $TimeParam ( keys %WorkOrderTimeParams ) {
+
+        next TIMEPARAM if !$Param{$TimeParam};
+
+        if ( $Param{$TimeParam} !~ m{ \A \d\d\d\d-\d\d-\d\d \s \d\d:\d\d:\d\d \z }xms ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => 'Invalid date format found!',
+            );
+            return;
+        }
+
+        # quote
+        $Param{$TimeParam} = $Self->{DBObject}->Quote( $Param{$TimeParam} );
+
+        push @SQLHaving, "$WorkOrderTimeParams{$TimeParam} '$Param{$TimeParam}'";
+    }
+
+    # assemble the ORDER BY clause
+    # define order table
+    my %OrderByTable = (
+        ChangeID         => 'wo.change_id',
+        WorkOrderID      => 'wo.id',
+        WorkOrderNumber  => 'wo.workorder_number',
+        WorkOrderStateID => 'wo.workorder_state_id',
+        WorkOrderAgentID => 'wo.workorder_agent_id',
+        PlannedStartTime => 'wo.planned_start_time',
+        PlannedEndTime   => 'wo.planned_end_time',
+        ActualStartTime  => 'wo.actual_start_time',
+        ActualEndTime    => 'wo.actual_end_time',
+        CreateTime       => 'wo.create_time',
+        CreateBy         => 'wo.create_by',
+        ChangeTime       => 'wo.change_time',
+        ChangeBy         => 'wo.change_by',
+    );
+
+    # assemble list of table attributes, which should be used for ordering
+    my $Count = 0;
+    my %OrderBySeen;
+    my @SQLOrderBy;
+    ORDERBY:
+    for my $OrderBy ( @{ $Param{OrderBy} } ) {
+
+        next ORDERBY if !$OrderBy;
+        next ORDERBY if !$OrderByTable{$OrderBy};
+        next ORDERBY if $OrderBySeen{ $OrderByTable{$OrderBy} };
+
+        $Self->{LogObject}->Log( Priority => 'error', Message => $OrderBy );
+
+        $OrderBySeen{ $OrderByTable{$OrderBy} } = 1;
+
+        my $Direction;
+        if ( $Param{OrderByDirection}->[$Count] && $Param{OrderByDirection}->[$Count] eq 'Up' ) {
+            $Direction = 'ASC';
+        }
+        else {
+            $Direction = 'DESC';
+        }
+        push @SQLOrderBy, "$OrderByTable{$OrderBy} $Direction";
+
+    }
+    continue {
+        $Count++;
+    }
+
+    # we need at least one sort criterion
+    if ( !@SQLOrderBy ) {
+        push @SQLOrderBy, "$OrderByTable{WorkOrderID} DESC";
+    }
+
+    # assemble the SQL query
+    my $SQL = 'SELECT wo.id FROM change_workorder wo ';
+
+    # add the WHERE clause
+    if (@SQLWhere) {
+        $SQL .= ' WHERE ';
+        $SQL .= join ' AND ', map {"( $_ )"} @SQLWhere;
+        $SQL .= ' ';
+    }
+
+    # add the HAVING clause
+    if (@SQLHaving) {
+        $SQL .= ' HAVING ';
+        $SQL .= join ' AND ', map {"( $_ )"} @SQLHaving;
+        $SQL .= ' ';
+    }
+
+    # add the ORDER BY clause
+    if (@SQLOrderBy) {
+        $SQL .= ' ORDER BY ';
+        $SQL .= join q{, }, @SQLOrderBy;
+        $SQL .= ' ';
+    }
+
+    $Self->{LogObject}->Log(
+        Priority => 'error',
+        Message  => $SQL,
+    );
+
+    # ask database
+    return if !$Self->{DBObject}->Prepare(
+        SQL   => $SQL,
+        Limit => $Param{Limit},
+    );
+
+    # fetch the result
+    my @WorkOrderIDList;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        push @WorkOrderIDList, $Row[0];
+    }
+
+    return \@WorkOrderIDList;
 }
 
 =item WorkOrderDelete()
@@ -824,6 +1101,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.18 $ $Date: 2009-10-15 12:36:34 $
+$Revision: 1.19 $ $Date: 2009-10-15 13:09:54 $
 
 =cut
