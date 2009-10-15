@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.17 2009-10-15 14:38:57 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.18 2009-10-15 15:20:19 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -404,6 +404,161 @@ my @WorkOrderTests = (
             },
         },
         SearchTest => [2],
+    },
+
+    #------------------------------#
+    # Tests on WorkOrderUpdate
+    #------------------------------#
+
+    {
+        Description => 'Test contains no params for WorkOrderUpdate().',
+        Fails      => 1,    # we expect this test to fail
+        SourceData => {
+            WorkOrderUpdate => {},
+        },
+        ReferenceData => {
+            WorkOrderUpdate => undef,
+        },
+    },
+
+    {
+        Description => 'Test for max string length for WorkOrderUpdate.',
+        SourceData  => {
+            WorkOrderAdd => {
+                UserID   => $UserIDs[0],
+                ChangeID => $WorkOrderAddTestID,
+            },
+            WorkOrderUpdate => {
+                UserID      => 1,
+                Title       => 'T' x 250,
+                Instruction => 'I' x 3800,
+                Report      => 'R' x 3800,
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                Title       => 'T' x 250,
+                Instruction => 'I' x 3800,
+                Report      => 'R' x 3800,
+                CreateBy    => $UserIDs[0],
+                ChangeBy    => 1,
+            },
+        },
+        SearchTest => [1],
+    },
+
+    {
+        Description => 'Test for max+1 string length for WorkOrderUpdate.',
+        UpdateFails => 1,
+        SourceData  => {
+            ChangeAdd => {
+                UserID => $UserIDs[0],
+            },
+            WorkOrderUpdate => {
+                UserID      => 1,
+                Title       => 'T' x 251,
+                Instruction => 'I' x 3801,
+                Report      => 'R' x 3801,
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                Title       => q{},
+                Instruction => q{},
+                Report      => q{},
+            },
+        },
+    },
+
+    {
+        Description => 'Test for max+1 string length - title - for WorkOrderUpdate.',
+        UpdateFails => 1,
+        SourceData  => {
+            ChangeAdd => {
+                UserID => $UserIDs[0],
+            },
+            WorkOrderUpdate => {
+                UserID      => 1,
+                Title       => 'T' x 251,
+                Instruction => 'I',
+                Report      => 'R',
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                Title       => q{},
+                Instruction => q{},
+                Report      => q{},
+            },
+        },
+    },
+
+    {
+        Description => 'Test for max+1 string length - Instruction - for WorkOrderUpdate.',
+        UpdateFails => 1,
+        SourceData  => {
+            ChangeAdd => {
+                UserID => $UserIDs[0],
+            },
+            WorkOrderUpdate => {
+                UserID      => 1,
+                Title       => 'T',
+                Instruction => 'I' x 3801,
+                Report      => 'R',
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                Title       => q{},
+                Instruction => q{},
+                Report      => q{},
+            },
+        },
+    },
+
+    {
+        Description => 'Test for max+1 string length - Report - for WorkOrderUpdate.',
+        UpdateFails => 1,
+        SourceData  => {
+            ChangeAdd => {
+                UserID => $UserIDs[0],
+            },
+            WorkOrderUpdate => {
+                UserID      => 1,
+                Title       => 'T',
+                Instruction => 'I',
+                Report      => 'R' x 3801,
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                Title       => q{},
+                Instruction => q{},
+                Report      => q{},
+            },
+        },
+    },
+
+    {
+        Description => q{Test for '0' string handling for WorkOrderUpdate.},
+        SourceData  => {
+            ChangeAdd => {
+                UserID => 1,
+            },
+            WorkOrderUpdate => {
+                UserID      => 1,
+                Title       => '0',
+                Instruction => '0',
+                Report      => '0',
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                Title       => '0',
+                Instruction => '0',
+                Report      => '0',
+            },
+        },
     },
 );
 
