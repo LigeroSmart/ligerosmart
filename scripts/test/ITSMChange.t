@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.85 2009-10-15 15:35:29 ub Exp $
+# $Id: ITSMChange.t,v 1.86 2009-10-15 15:41:37 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -430,9 +430,9 @@ my @ChangeTests = (
         SourceData  => {
             ChangeAdd => {
                 UserID        => $UserIDs[0],
-                Title         => 'X' x 251,
-                Description   => 'Y' x 3801,
-                Justification => 'Z' x 3801,
+                Title         => 'T' x 251,
+                Description   => 'D' x 3801,
+                Justification => 'J' x 3801,
             },
         },
         ReferenceData => {
@@ -447,9 +447,9 @@ my @ChangeTests = (
         SourceData  => {
             ChangeAdd => {
                 UserID        => $UserIDs[0],
-                Title         => 'X' x 251,
-                Description   => 'Y',
-                Justification => 'Z',
+                Title         => 'T' x 251,
+                Description   => 'D',
+                Justification => 'J',
             },
         },
         ReferenceData => {
