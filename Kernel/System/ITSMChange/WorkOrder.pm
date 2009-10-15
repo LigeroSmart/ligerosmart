@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all work order functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.9 2009-10-15 07:41:46 reb Exp $
+# $Id: WorkOrder.pm,v 1.10 2009-10-15 08:43:44 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 =head1 NAME
 
@@ -89,7 +89,10 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Object (qw(DBObject ConfigObject EncodeObject LogObject MainObject TimeObject)) {
+    for my $Object (
+        qw(DBObject ConfigObject EncodeObject LogObject MainObject TimeObject ChangeObject)
+        )
+    {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
@@ -150,7 +153,7 @@ sub WorkOrderAdd {
     }
 
     # check change parameters
-    return if !$Self->_CheckChangeParams(%Param);
+    return if !$Self->_CheckWorkOrderParams(%Param);
 
     # check if given WorkOrderStateID is valid
     return if $Param{WorkOrderStateID} && !$Self->_CheckWorkOrderStateID(
@@ -202,6 +205,8 @@ sub WorkOrderUpdate {
     return if $Param{WorkOrderStateID} && !$Self->_CheckWorkOrderStateID(
         WorkOrderStateID => $Param{WorkOrderStateID},
     );
+
+    return if !$Self->_CheckTimeFormats(%Param);
 
     return 1;
 }
@@ -488,6 +493,100 @@ sub _CheckWorkOrderStateID {
     return 1;
 }
 
+=item _CheckWorkOrderParams()
+
+Checks if the various parameters are valid.
+
+    my $Ok = $WorkOrderObject->_CheckWorkOrderParams(
+        ChangeID         => 123,                                       # (optional)
+        WorkOrderNumber  => 5,                                         # (optional)
+        Title            => 'Replacement of mail server',              # (optional)
+        Instruction      => 'Install the the new server',              # (optional)
+        Report           => 'Installed new server without problems',   # (optional)
+        WorkOrderStateID => 4,                                         # (optional)
+        WorkOrderAgentID => 8,                                         # (optional)
+        PlannedStartTime => '2009-10-01 10:33:00',                     # (optional)
+        ActualStartTime  => '2009-10-01 10:33:00',                     # (optional)
+        PlannedEndTime   => '2009-10-01 10:33:00',                     # (optional)
+        ActualEndTime    => '2009-10-01 10:33:00',                     # (optional)
+    );
+
+=cut
+
+sub _CheckWorkOrderParams {
+    my ( $Self, %Param ) = @_;
+
+    # check the string and id parameters
+    ARGUMENT:
+    for my $Argument (qw( Title Instruction Report WorkOrderAgentID WorkOrderStateID )) {
+
+        # params are not required
+        next ARGUMENT if !exists $Param{$Argument};
+
+        # check if param is not defined
+        if ( !defined $Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "The parameter '$Argument' must be defined!",
+            );
+            return;
+        }
+
+        # check if param is not a reference
+        if ( ref $Param{$Argument} ne '' ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "The parameter '$Argument' mustn't be a reference!",
+            );
+            return;
+        }
+
+        # check the maximum length of title
+        if ( $Argument eq 'Title' && length( $Param{$Argument} ) > 250 ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "The parameter '$Argument' must be shorter than 250 characters!",
+            );
+            return;
+        }
+
+        # check the maximum length of description and justification
+        if ( $Argument eq 'Instruction' || $Argument eq 'Report' ) {
+            if ( length( $Param{$Argument} ) > 3800 ) {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "The parameter '$Argument' must be shorter than 3800 characters!",
+                );
+                return;
+            }
+        }
+    }
+
+    # check format
+    OPTION:
+    for my $Option (qw(PlannedStartTime PlannedEndTime ActualStartTime ActualEndTime)) {
+        next OPTION if !$Param{$Option};
+
+        return if $Param{$Option} !~ m{ \A \d\d\d\d-\d\d-\d\d \s \d\d:\d\d:\d\d \z }xms;
+    }
+
+    # WorkOrderAgent must be agents
+    my %UserData = $Self->{UserObject}->GetUserData(
+        UserID => $Param{WorkOrderAgentID},
+        Valid  => 1,
+    );
+
+    if ( !$UserData{UserID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "The WorkOrderAgentID $Param{WorkOrderAgentID} is not a valid user id!",
+        );
+        return;
+    }
+
+    return 1;
+}
+
 1;
 
 =back
@@ -504,6 +603,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.9 $ $Date: 2009-10-15 07:41:46 $
+$Revision: 1.10 $ $Date: 2009-10-15 08:43:44 $
 
 =cut
