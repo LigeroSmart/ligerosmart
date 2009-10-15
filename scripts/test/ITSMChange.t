@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.79 2009-10-15 14:29:54 bes Exp $
+# $Id: ITSMChange.t,v 1.80 2009-10-15 14:30:54 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1477,7 +1477,7 @@ my @ChangeSearchTests = (
         Description => 'Title, Justification',
         SearchData  => {
             Title         => 'Change 1 - ' . $UniqueSignature,
-            Justification => 'Justification 1',
+            Justification => 'Change 1 - Justification - ' . $UniqueSignature,
         },
         ResultData => {
             TestExistence => 1,
@@ -2228,6 +2228,70 @@ for my $OrderByColumn (@OrderByColumns) {
         $ReferenceListDown,
         'Test ' . $TestCount++ . ": ChangeSearch() OrderBy $OrderByColumn (Down)."
     );
+
+    # check if ITSMChange.pm handles non-existent OrderByDirection criteria correct
+    my $SearchResultFooBar = $Self->{ChangeObject}->ChangeSearch(
+        Title   => 'OrderByChange - ' . $UniqueSignature,
+        OrderBy => [$OrderByColumn],
+        OrderBy => ['FooBar'],
+        UserID  => 1,
+    );
+
+    # dump the attribute from ChangeGet()
+    my $SearchListFooBar = Data::Dumper::Dumper($SearchResultFooBar);
+
+    # dump the reference attribute
+    my $ReferenceListFooBar = Data::Dumper::Dumper( [] );
+
+    $Self->Is(
+        $SearchListFooBar,
+        $ReferenceListFooBar,
+        'Test ' . $TestCount++ . ": ChangeSearch() OrderBy $OrderByColumn (FooBar)."
+    );
+}
+
+# create an extra block as we use "local"
+{
+
+    # turn off all pretty print
+    local $Data::Dumper::Indent = 0;
+    local $Data::Dumper::Useqq  = 1;
+
+    # check for 'OrderBy' with non-existent column
+    my $SearchResultFooBarColumn = $Self->{ChangeObject}->ChangeSearch(
+        Title   => 'OrderByChange - ' . $UniqueSignature,
+        OrderBy => ['FooBar'],
+        UserID  => 1,
+    );
+
+    # dump the attribute from ChangeGet()
+    my $SearchListFooBarColumn = Data::Dumper::Dumper($SearchResultFooBarColumn);
+
+    # dump the reference attribute
+    my $ReferenceListEmpty = Data::Dumper::Dumper( [] );
+
+    $Self->Is(
+        $SearchListFooBarColumn,
+        $ReferenceListEmpty,
+        'Test ' . $TestCount++ . ": ChangeSearch() OrderBy FooBar (Down)."
+    );
+
+    # check for 'OrderBy' with non-existent column
+    my $SearchResultFooBarColumnDirection = $Self->{ChangeObject}->ChangeSearch(
+        Title            => 'OrderByChange - ' . $UniqueSignature,
+        OrderBy          => ['FooBar'],
+        OrderByDirection => ['FooBar'],
+        UserID           => 1,
+    );
+
+    # dump the attribute from ChangeGet()
+    my $SearchListFooBarColumnDirection = Data::Dumper::Dumper($SearchResultFooBarColumnDirection);
+
+    $Self->Is(
+        $SearchListFooBarColumnDirection,
+        $ReferenceListEmpty,
+        'Test ' . $TestCount++ . ": ChangeSearch() OrderBy FooBar (FooBar)."
+    );
 }
 
 # change the create time for the second test case we defined above for the orderby tests
@@ -2327,8 +2391,23 @@ for my $ChangeID ( keys %TestedChangeID ) {
             ChangeID => $ChangeID,
             UserID   => 1,
         ),
-        "Test " . $TestCount++ . ": ChangeDelete()",
+        "Test $TestCount: ChangeDelete()",
     );
+
+    # double check if change is really deleted
+    my $ChangeData = $Self->{ChangeObject}->ChangeGet(
+        ChangeID => $ChangeID,
+        UserID   => 1,
+    );
+
+    $Self->Is(
+        undef,
+        $ChangeData->{ChangeID},
+        "Test $TestCount: ChangeDelete() - double check",
+    );
+}
+continue {
+    $TestCount++;
 }
 
 =over 4
