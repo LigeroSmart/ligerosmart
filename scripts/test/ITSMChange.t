@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.77 2009-10-15 10:35:22 reb Exp $
+# $Id: ITSMChange.t,v 1.78 2009-10-15 14:08:44 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -262,9 +262,9 @@ my @ChangeTests = (
         Description => 'Test contains all possible params for ChangeAdd.',
         SourceData  => {
             ChangeAdd => {
-                Title           => 'Change 1 - ' . $UniqueSignature,
-                Description     => 'Description 1',
-                Justification   => 'Justification 1',
+                Title           => 'Change 1 - Title - ' . $UniqueSignature,
+                Description     => 'Change 1 - Description - ' . $UniqueSignature,
+                Justification   => 'Change 1 - Justification - ' . $UniqueSignature,
                 ChangeManagerID => $UserIDs[0],
                 ChangeBuilderID => $UserIDs[0],
                 CABAgents       => [
@@ -280,9 +280,9 @@ my @ChangeTests = (
         },
         ReferenceData => {
             ChangeGet => {
-                Title           => 'Change 1 - ' . $UniqueSignature,
-                Description     => 'Description 1',
-                Justification   => 'Justification 1',
+                Title           => 'Change 1 - Title - ' . $UniqueSignature,
+                Description     => 'Change 1 - Description - ' . $UniqueSignature,
+                Justification   => 'Change 1 - Justification - ' . $UniqueSignature,
                 ChangeManagerID => $UserIDs[0],
                 ChangeBuilderID => $UserIDs[0],
                 CABAgents       => [
@@ -303,9 +303,9 @@ my @ChangeTests = (
         Description => 'Test contains all possible params for ChangeAdd (Second try).',
         SourceData  => {
             ChangeAdd => {
-                Title           => 'Change 2 - ' . $UniqueSignature,
-                Description     => 'Description 2',
-                Justification   => 'Justification 2',
+                Title           => 'Change 2 - Title - ' . $UniqueSignature,
+                Description     => 'Change 2 - Description - ' . $UniqueSignature,
+                Justification   => 'Change 2 - Justification - ' . $UniqueSignature,
                 ChangeManagerID => $UserIDs[1],
                 ChangeBuilderID => $UserIDs[1],
                 CABAgents       => [
@@ -319,9 +319,9 @@ my @ChangeTests = (
         },
         ReferenceData => {
             ChangeGet => {
-                Title           => 'Change 2 - ' . $UniqueSignature,
-                Description     => 'Description 2',
-                Justification   => 'Justification 2',
+                Title           => 'Change 2 - Title - ' . $UniqueSignature,
+                Description     => 'Change 2 - Description - ' . $UniqueSignature,
+                Justification   => 'Change 2 - Justification - ' . $UniqueSignature,
                 ChangeManagerID => $UserIDs[1],
                 ChangeBuilderID => $UserIDs[1],
                 CABAgents       => [ $UserIDs[1] ],
@@ -337,9 +337,9 @@ my @ChangeTests = (
         Description => 'Test contains invalid CAB members for ChangeAdd.',
         SourceData  => {
             ChangeAdd => {
-                Title           => 'Change 1 - ' . $UniqueSignature,
-                Description     => 'Description 1',
-                Justification   => 'Justification 1',
+                Title           => 'Change 3 - Title - ' . $UniqueSignature,
+                Description     => 'Change 3 - Description - ' . $UniqueSignature,
+                Justification   => 'Change 3 - Justification - ' . $UniqueSignature,
                 ChangeManagerID => $UserIDs[0],
                 ChangeBuilderID => $UserIDs[0],
                 CABAgents       => [
@@ -809,7 +809,7 @@ my @ChangeTests = (
         SourceData  => {
             ChangeAdd => {
                 UserID => $UserIDs[0],
-                Title  => 'CABUpdate and CABGet - ' . $UniqueSignature,
+                Title  => 'CABUpdate and CABGet - Title - ' . $UniqueSignature,
             },
             ChangeCABUpdate => {
                 CABAgents => [
@@ -981,7 +981,7 @@ my @ChangeTests = (
         SourceData  => {
             ChangeAdd => {
                 UserID    => $UserIDs[0],
-                Title     => 'CABDelete (invalid params) - ' . $UniqueSignature,
+                Title     => 'CABDelete (invalid params) - Title - ' . $UniqueSignature,
                 CABAgents => [
                     $UserIDs[0],
                     $UserIDs[1]
@@ -1039,7 +1039,7 @@ my @ChangeTests = (
         SourceData  => {
             ChangeAdd => {
                 UserID => 1,
-                Title  => 'OrderByChange - ' . $UniqueSignature,
+                Title  => 'OrderByChange - Title - ' . $UniqueSignature,
             },
             ChangeUpdate => {
                 UserID          => $UserIDs[0],
@@ -1067,7 +1067,7 @@ my @ChangeTests = (
         SourceData  => {
             ChangeAdd => {
                 UserID => $UserIDs[1],
-                Title  => 'OrderByChange - ' . $UniqueSignature,
+                Title  => 'OrderByChange - Title - ' . $UniqueSignature,
             },
             ChangeUpdate => {
                 UserID          => $UserIDs[1],
@@ -1095,7 +1095,7 @@ my @ChangeTests = (
         SourceData  => {
             ChangeAdd => {
                 UserID => $UserIDs[0],
-                Title  => 'OrderByChange - ' . $UniqueSignature,
+                Title  => 'OrderByChange - Title - ' . $UniqueSignature,
             },
             ChangeUpdate => {
                 UserID          => 1,
