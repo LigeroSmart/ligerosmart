@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all work order functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.13 2009-10-15 09:45:23 reb Exp $
+# $Id: WorkOrder.pm,v 1.14 2009-10-15 09:55:29 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 =head1 NAME
 
@@ -245,6 +245,47 @@ sub WorkOrderUpdate {
 
     # check the given parameters
     return if !$Self->_CheckWorkOrderParams(%Param);
+
+    # map update attributes to column names
+    my %Attribute = (
+        Title            => 'title',
+        WorkOrderNumber  => 'workorder_number',
+        Instruction      => 'instruction',
+        Report           => 'report',
+        ChangeID         => 'change_id',
+        WorkOrderStateID => 'workorder_state_id',
+        WorkOrderAgentID => 'workorder_agent_id',
+        PlannedStartTime => 'planned_start_time',
+        PlannedEndTime   => 'planned_end_time',
+        ActualStartTime  => 'actual_start_time',
+        ActualEndTime    => 'actual_end_time',
+    );
+
+    # build SQL to update change
+    my $SQL = 'UPDATE change_workorder SET ';
+    my @Bind;
+
+    WORKORDERATTRIBUTE:
+    for my $WorkOrderAttribute ( keys %Attribute ) {
+
+        # do not use column if not in function parameters
+        next WORKORDERATTRIBUTE if !exists $Param{$WorkOrderAttribute};
+
+        $SQL .= "$Attribute{$WorkOrderAttribute} = ?, ";
+        push @Bind, \$Param{$WorkOrderAttribute};
+    }
+
+    $SQL .= 'change_time = current_timestamp, change_by = ? ';
+    $SQL .= 'WHERE id = ?';
+    push @Bind, \$Param{UserID}, \$Param{WorkOrderID};
+
+    # add change to database
+    return if !$Self->{DBObject}->Do(
+        SQL  => $SQL,
+        Bind => \@Bind,
+    );
+
+    # TODO: trigger WordOrderUpdate-Event
 
     return 1;
 }
@@ -766,6 +807,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.13 $ $Date: 2009-10-15 09:45:23 $
+$Revision: 1.14 $ $Date: 2009-10-15 09:55:29 $
 
 =cut
