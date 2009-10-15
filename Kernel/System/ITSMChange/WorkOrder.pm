@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all work order functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.24 2009-10-15 16:11:48 reb Exp $
+# $Id: WorkOrder.pm,v 1.25 2009-10-15 16:13:10 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.24 $) [1];
+$VERSION = qw($Revision: 1.25 $) [1];
 
 =head1 NAME
 
@@ -852,6 +852,19 @@ get the start date of a change, calculated from the start of the first work orde
         ChangeID => 123,
         Type     => 'planned' || 'actual',
         UserID   => 1,
+
+        # ---------------------------------------------------- #
+        # TODO: (decide this later!)
+        Maybe add this new attribute:
+
+        # These are WorkOrdertypes (Types, not States!)
+        # which would be excluded from the calculation
+        # of the change start time.
+        The WorkOrder-Type for a normal WorkOrder could be just 'WorkOrder'
+
+        ExcludeWorkOrderTypes => [ 'Approval', 'PIR' ],
+        # ---------------------------------------------------- #
+
     );
 
 =cut
@@ -903,6 +916,19 @@ get the end date of a change, calculated from the start of the first work order
         ChangeID => 123,
         Type     => 'planned' || 'actual',
         UserID   => 1,
+
+        # ---------------------------------------------------- #
+        # TODO: (decide this later!)
+        Maybe add this new attribute:
+
+        # These are WorkOrdertypes (Types, not States!)
+        # which would be excluded from the calculation
+        # of the change start time.
+        The WorkOrder-Type for a normal WorkOrder could be just 'WorkOrder'
+
+        ExcludeWorkOrderTypes => [ 'Approval', 'PIR' ],
+        # ---------------------------------------------------- #
+
     );
 
 =cut
@@ -1207,6 +1233,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.24 $ $Date: 2009-10-15 16:11:48 $
+$Revision: 1.25 $ $Date: 2009-10-15 16:13:10 $
 
 =cut
