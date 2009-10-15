@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all work order functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.17 2009-10-15 12:33:28 reb Exp $
+# $Id: WorkOrder.pm,v 1.18 2009-10-15 12:36:34 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 =head1 NAME
 
@@ -182,10 +182,10 @@ sub WorkOrderAdd {
 
     # add WorkOrder to database
     return if !$Self->{DBObject}->Do(
-        SQL => 'INSERT INTO change_workitem '
+        SQL => 'INSERT INTO change_workorder '
             . '(change_id, workorder_number, workorder_state_id, create_time, '
             . 'create_by, change_time, change_by) '
-            . 'VALUES (?, ?, current_timestamp, ?, current_timestamp, ?)',
+            . 'VALUES (?, ?, ?, current_timestamp, ?, current_timestamp, ?)',
         Bind => [
             \$Param{ChangeID}, \$WorkOrderNumber, \$WorkOrderStateID,
             \$Param{UserID}, \$Param{UserID},
@@ -194,7 +194,7 @@ sub WorkOrderAdd {
 
     # get WorkOrder id
     return if !$Self->{DBObject}->Prepare(
-        SQL   => 'SELECT id FROM change_workitem WHERE change_id = ? AND workorder_number = ?',
+        SQL   => 'SELECT id FROM change_workorder WHERE change_id = ? AND workorder_number = ?',
         Bind  => [ \$Param{ChangeID}, \$WorkOrderNumber ],
         Limit => 1,
     );
@@ -824,6 +824,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.17 $ $Date: 2009-10-15 12:33:28 $
+$Revision: 1.18 $ $Date: 2009-10-15 12:36:34 $
 
 =cut
