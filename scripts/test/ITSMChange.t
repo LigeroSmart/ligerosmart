@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.71 2009-10-15 08:08:10 ub Exp $
+# $Id: ITSMChange.t,v 1.72 2009-10-15 08:34:27 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -2293,7 +2293,7 @@ sub SetChangeTimes {
     my $SQL = 'UPDATE change_item SET ';
 
     if ( $Param{CreateTime} ) {
-        $SQL .= 'create_time = ?';
+        $SQL .= 'create_time = ? ';
         push @Bind, \$Param{CreateTime};
     }
 
