@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all work order functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.22 2009-10-15 14:56:40 reb Exp $
+# $Id: WorkOrder.pm,v 1.23 2009-10-15 15:37:26 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 =head1 NAME
 
@@ -516,6 +516,63 @@ sub WorkOrderSearch {
         }
     }
 
+    # define order table
+    my %OrderByTable = (
+        ChangeID         => 'wo.change_id',
+        WorkOrderID      => 'wo.id',
+        WorkOrderNumber  => 'wo.workorder_number',
+        WorkOrderStateID => 'wo.workorder_state_id',
+        WorkOrderAgentID => 'wo.workorder_agent_id',
+        PlannedStartTime => 'wo.planned_start_time',
+        PlannedEndTime   => 'wo.planned_end_time',
+        ActualStartTime  => 'wo.actual_start_time',
+        ActualEndTime    => 'wo.actual_end_time',
+        CreateTime       => 'wo.create_time',
+        CreateBy         => 'wo.create_by',
+        ChangeTime       => 'wo.change_time',
+        ChangeBy         => 'wo.change_by',
+    );
+
+    # check if OrderBy contains only unique valid values
+    if ( @{ $Param{OrderBy} } ) {
+        my %OrderBySeen;
+        ORDERBY:
+        for my $OrderBy ( @{ $Param{OrderBy} } ) {
+
+            if ( !$OrderBy || !$OrderByTable{$OrderBy} || $OrderBySeen{$OrderBy} ) {
+
+                # found an error
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "OrderByDirection contains invalid value '$OrderBy' "
+                        . " or the value is used more than once!",
+                );
+                return;
+            }
+
+            # remember the value to check if it appears more than once
+            $OrderBySeen{$OrderBy} = 1;
+        }
+    }
+
+    # check if OrderByDirection array contains only 'Up' or 'Down'
+    if ( @{ $Param{OrderByDirection} } ) {
+        DIRECTION:
+        for my $Direction ( @{ $Param{OrderByDirection} } ) {
+
+            # only 'Up' or 'Down' allowed
+            next DIRECTION if $Direction eq 'Up';
+            next DIRECTION if $Direction eq 'Down';
+
+            # found an error
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "OrderByDirection can only contain 'Up' or 'Down'!",
+            );
+            return;
+        }
+    }
+
     # set default values
     if ( !defined $Param{UsingWildcards} ) {
         $Param{UsingWildcards} = 1;
@@ -523,8 +580,6 @@ sub WorkOrderSearch {
 
     my @SQLWhere;     # assemble the conditions used in the WHERE clause
     my @SQLHaving;    # assemble the conditions used in the HAVING clause
-
-    #    my @JoinTables;    # keep track of the tables that need to be joined
 
     # set string params
     my %StringParams = (
@@ -667,47 +722,26 @@ sub WorkOrderSearch {
     }
 
     # assemble the ORDER BY clause
-    # define order table
-    my %OrderByTable = (
-        ChangeID         => 'wo.change_id',
-        WorkOrderID      => 'wo.id',
-        WorkOrderNumber  => 'wo.workorder_number',
-        WorkOrderStateID => 'wo.workorder_state_id',
-        WorkOrderAgentID => 'wo.workorder_agent_id',
-        PlannedStartTime => 'wo.planned_start_time',
-        PlannedEndTime   => 'wo.planned_end_time',
-        ActualStartTime  => 'wo.actual_start_time',
-        ActualEndTime    => 'wo.actual_end_time',
-        CreateTime       => 'wo.create_time',
-        CreateBy         => 'wo.create_by',
-        ChangeTime       => 'wo.change_time',
-        ChangeBy         => 'wo.change_by',
-    );
-
-    # assemble list of table attributes, which should be used for ordering
-    my $Count = 0;
-    my %OrderBySeen;
     my @SQLOrderBy;
+    my $Count = 0;
     ORDERBY:
     for my $OrderBy ( @{ $Param{OrderBy} } ) {
 
-        next ORDERBY if !$OrderBy;
-        next ORDERBY if !$OrderByTable{$OrderBy};
-        next ORDERBY if $OrderBySeen{ $OrderByTable{$OrderBy} };
+        # set the default order direction
+        my $Direction = 'DESC';
 
-        $Self->{LogObject}->Log( Priority => 'error', Message => $OrderBy );
-
-        $OrderBySeen{ $OrderByTable{$OrderBy} } = 1;
-
-        my $Direction;
-        if ( $Param{OrderByDirection}->[$Count] && $Param{OrderByDirection}->[$Count] eq 'Up' ) {
-            $Direction = 'ASC';
+        # add the given order direction
+        if ( $Param{OrderByDirection}->[$Count] ) {
+            if ( $Param{OrderByDirection}->[$Count] eq 'Up' ) {
+                $Direction = 'ASC';
+            }
+            elsif ( $Param{OrderByDirection}->[$Count] eq 'Down' ) {
+                $Direction = 'DESC';
+            }
         }
-        else {
-            $Direction = 'DESC';
-        }
+
+        # add SQL
         push @SQLOrderBy, "$OrderByTable{$OrderBy} $Direction";
-
     }
     continue {
         $Count++;
@@ -1114,6 +1148,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.22 $ $Date: 2009-10-15 14:56:40 $
+$Revision: 1.23 $ $Date: 2009-10-15 15:37:26 $
 
 =cut
