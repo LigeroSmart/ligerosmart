@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.6 2009-10-15 10:13:05 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.7 2009-10-15 10:29:07 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -29,7 +29,8 @@ use Kernel::System::ITSMChange::WorkOrder;
 my $TestCount = 1;
 
 # create common objects
-$Self->{UserObject}      = Kernel::System::User->new( %{$Self} );
+$Self->{UserObject} = Kernel::System::User->new( %{$Self} );
+my $ChangeObject = Kernel::System::ITSMChange->new( %{$Self} );
 $Self->{WorkOrderObject} = Kernel::System::ITSMChange::WorkOrder->new( %{$Self} );
 $Self->True(
     $Self->{WorkOrderObject},
@@ -93,7 +94,7 @@ $Self->{UserObject}->UserUpdate(
     $Self->{UserObject}->GetUserData(
         UserID => $UserIDs[2],
     ),
-    ValidID => $Self->{ChangeObject}->{ValidObject}->ValidLookup(
+    ValidID => $ChangeObject->{ValidObject}->ValidLookup(
         Valid => 'invalid',
     ),
     ChangeUserID => 1,
@@ -202,7 +203,7 @@ for my $Test (@ChangeTests) {
     if ( $SourceData->{ChangeAdd} ) {
 
         # add the change
-        $ChangeID = $Self->{ChangeObject}->ChangeAdd(
+        $ChangeID = $ChangeObject->ChangeAdd(
             %{ $SourceData->{ChangeAdd} }
         );
 
@@ -247,7 +248,7 @@ for my $Test (@ChangeTests) {
 
         my $ChangeGetReferenceData = $ReferenceData->{ChangeGet};
 
-        my $ChangeData = $Self->{ChangeObject}->ChangeGet(
+        my $ChangeData = $ChangeObject->ChangeGet(
             ChangeID => $ChangeID,
             UserID   => 1,
         );
