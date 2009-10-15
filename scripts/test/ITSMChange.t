@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.82 2009-10-15 15:16:16 reb Exp $
+# $Id: ITSMChange.t,v 1.83 2009-10-15 15:18:31 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -2237,15 +2237,9 @@ for my $OrderByColumn (@OrderByColumns) {
         UserID  => 1,
     );
 
-    # dump the attribute from ChangeGet()
-    my $SearchListFooBar = Data::Dumper::Dumper($SearchResultFooBar);
-
-    # dump the reference attribute
-    my $ReferenceListFooBar = Data::Dumper::Dumper( [] );
-
     $Self->Is(
-        $SearchListFooBar,
-        $ReferenceListFooBar,
+        $SearchResultFooBar,
+        undef,
         'Test ' . $TestCount++ . ": ChangeSearch() OrderBy $OrderByColumn (FooBar)."
     );
 }
