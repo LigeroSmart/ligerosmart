@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.69 2009-10-15 07:11:21 ub Exp $
+# $Id: ITSMChange.t,v 1.70 2009-10-15 07:32:29 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -2306,9 +2306,8 @@ sub SetChangeTimes {
     push @Bind, \$Param{ChangeID};
 
     return if !$Self->{DBObject}->Do(
-        SQL   => $SQL,
-        Bind  => \@Bind,
-        Limit => 1,
+        SQL  => $SQL,
+        Bind => \@Bind,
     );
     return 1;
 }
