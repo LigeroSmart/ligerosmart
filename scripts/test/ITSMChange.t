@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.83 2009-10-15 15:18:31 reb Exp $
+# $Id: ITSMChange.t,v 1.84 2009-10-15 15:31:53 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -2193,7 +2193,7 @@ for my $OrderByColumn (@OrderByColumns) {
     local $Data::Dumper::Useqq  = 1;
 
     my $SearchResult = $Self->{ChangeObject}->ChangeSearch(
-        Title            => 'OrderByChange - ' . $UniqueSignature,
+        Title            => 'OrderByChange - Title - ' . $UniqueSignature,
         OrderBy          => [$OrderByColumn],
         OrderByDirection => ['Up'],
         UserID           => 1,
@@ -2212,7 +2212,7 @@ for my $OrderByColumn (@OrderByColumns) {
     );
 
     my $SearchResultDown = $Self->{ChangeObject}->ChangeSearch(
-        Title   => 'OrderByChange - ' . $UniqueSignature,
+        Title   => 'OrderByChange - Title - ' . $UniqueSignature,
         OrderBy => [$OrderByColumn],
         UserID  => 1,
     );
@@ -2231,7 +2231,7 @@ for my $OrderByColumn (@OrderByColumns) {
 
     # check if ITSMChange.pm handles non-existent OrderByDirection criteria correct
     my $SearchResultFooBar = $Self->{ChangeObject}->ChangeSearch(
-        Title   => 'OrderByChange - ' . $UniqueSignature,
+        Title   => 'OrderByChange - Title - ' . $UniqueSignature,
         OrderBy => [$OrderByColumn],
         OrderBy => ['FooBar'],
         UserID  => 1,
@@ -2249,7 +2249,7 @@ for my $OrderByColumn (@OrderByColumns) {
 
     # check for 'OrderBy' with non-existent column
     my $SearchResultFooBarColumn = $Self->{ChangeObject}->ChangeSearch(
-        Title   => 'OrderByChange - ' . $UniqueSignature,
+        Title   => 'OrderByChange - Title - ' . $UniqueSignature,
         OrderBy => ['FooBar'],
         UserID  => 1,
     );
@@ -2262,7 +2262,7 @@ for my $OrderByColumn (@OrderByColumns) {
 
     # check for 'OrderBy' with non-existent column
     my $SearchResultFooBarColumnDirection = $Self->{ChangeObject}->ChangeSearch(
-        Title            => 'OrderByChange - ' . $UniqueSignature,
+        Title            => 'OrderByChange - Title - ' . $UniqueSignature,
         OrderBy          => ['FooBar'],
         OrderByDirection => ['FooBar'],
         UserID           => 1,
@@ -2276,7 +2276,7 @@ for my $OrderByColumn (@OrderByColumns) {
 
     # check for 'OrderBy' with non-existent column
     my $SearchResultFooBarDoubleColumn = $Self->{ChangeObject}->ChangeSearch(
-        Title   => 'OrderByChange - ' . $UniqueSignature,
+        Title   => 'OrderByChange - Title - ' . $UniqueSignature,
         OrderBy => [ 'ChangeID', 'ChangeID' ],
         UserID  => 1,
     );
@@ -2324,7 +2324,7 @@ for my $ChangeIDForSecondOrderByTests (@ChangeIDsForOrderByTests) {
     local $Data::Dumper::Useqq  = 1;
 
     my $SearchResult = $Self->{ChangeObject}->ChangeSearch(
-        Title            => 'OrderByChange - ' . $UniqueSignature,
+        Title            => 'OrderByChange - Title - ' . $UniqueSignature,
         OrderBy          => [ 'CreateTime', 'ChangeID' ],
         OrderByDirection => [ 'Up', 'Up' ],
         UserID           => 1,
