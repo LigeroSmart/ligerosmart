@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.86 2009-10-15 15:41:37 ub Exp $
+# $Id: ITSMChange.t,v 1.87 2009-10-15 15:45:52 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -401,16 +401,16 @@ my @ChangeTests = (
         SourceData  => {
             ChangeAdd => {
                 UserID        => $UserIDs[0],
-                Title         => 'X' x 250,
-                Description   => 'Y' x 3800,
-                Justification => 'Z' x 3800,
+                Title         => 'T' x 250,
+                Description   => 'D' x 3800,
+                Justification => 'J' x 3800,
             },
         },
         ReferenceData => {
             ChangeGet => {
-                Title           => 'X' x 250,
-                Description     => 'Y' x 3800,
-                Justification   => 'Z' x 3800,
+                Title           => 'T' x 250,
+                Description     => 'D' x 3800,
+                Justification   => 'J' x 3800,
                 ChangeManagerID => undef,
                 ChangeBuilderID => $UserIDs[0],
                 WorkOrderIDs    => [],
@@ -464,9 +464,9 @@ my @ChangeTests = (
         SourceData  => {
             ChangeAdd => {
                 UserID        => $UserIDs[0],
-                Title         => 'X',
-                Description   => 'Y' x 3801,
-                Justification => 'Z',
+                Title         => 'T',
+                Description   => 'D' x 3801,
+                Justification => 'J',
             },
         },
         ReferenceData => {
@@ -481,9 +481,9 @@ my @ChangeTests = (
         SourceData  => {
             ChangeAdd => {
                 UserID        => $UserIDs[0],
-                Title         => 'X',
-                Description   => 'Y',
-                Justification => 'Z' x 3801,
+                Title         => 'T',
+                Description   => 'D',
+                Justification => 'J' x 3801,
             },
         },
         ReferenceData => {
@@ -644,16 +644,16 @@ my @ChangeTests = (
             },
             ChangeUpdate => {
                 UserID        => 1,
-                Title         => 'X' x 250,
-                Description   => 'Y' x 3800,
-                Justification => 'Z' x 3800,
+                Title         => 'T' x 250,
+                Description   => 'D' x 3800,
+                Justification => 'J' x 3800,
             },
         },
         ReferenceData => {
             ChangeGet => {
-                Title           => 'X' x 250,
-                Description     => 'Y' x 3800,
-                Justification   => 'Z' x 3800,
+                Title           => 'T' x 250,
+                Description     => 'D' x 3800,
+                Justification   => 'J' x 3800,
                 ChangeManagerID => undef,
                 ChangeBuilderID => $UserIDs[0],
                 WorkOrderIDs    => [],
@@ -676,9 +676,9 @@ my @ChangeTests = (
             },
             ChangeUpdate => {
                 UserID        => 1,
-                Title         => 'X' x 251,
-                Description   => 'Y' x 3801,
-                Justification => 'Z' x 3801,
+                Title         => 'T' x 251,
+                Description   => 'D' x 3801,
+                Justification => 'J' x 3801,
             },
         },
         ReferenceData => {
@@ -700,9 +700,9 @@ my @ChangeTests = (
             },
             ChangeUpdate => {
                 UserID        => 1,
-                Title         => 'X' x 251,
-                Description   => 'Y',
-                Justification => 'Z',
+                Title         => 'T' x 251,
+                Description   => 'D',
+                Justification => 'J',
             },
         },
         ReferenceData => {
@@ -722,9 +722,9 @@ my @ChangeTests = (
             },
             ChangeUpdate => {
                 UserID        => 1,
-                Title         => 'X',
-                Description   => 'Y' x 3801,
-                Justification => 'Z',
+                Title         => 'T',
+                Description   => 'D' x 3801,
+                Justification => 'J',
             },
         },
         ReferenceData => {
@@ -744,9 +744,9 @@ my @ChangeTests = (
             },
             ChangeUpdate => {
                 UserID        => 1,
-                Title         => 'X',
-                Description   => 'Y',
-                Justification => 'Z' x 3801,
+                Title         => 'T',
+                Description   => 'D',
+                Justification => 'J' x 3801,
             },
         },
         ReferenceData => {
@@ -1592,7 +1592,7 @@ my @ChangeSearchTests = (
     {
         Description => 'Justification',
         SearchData  => {
-            Justification => 'Z' x 3800,
+            Justification => 'J' x 3800,
         },
         ResultData => {
             TestExistence => 1,
@@ -1629,7 +1629,7 @@ my @ChangeSearchTests = (
     {
         Description => 'Title with wildcard',
         SearchData  => {
-            Title => ( 'X' x 250 ) . '%',
+            Title => ( 'T' x 250 ) . '%',
         },
         ResultData => {
             TestExistence => 1,
@@ -1640,7 +1640,7 @@ my @ChangeSearchTests = (
     {
         Description => 'Description with wildcard',
         SearchData  => {
-            Description => ( 'Y' x 250 ) . '%',
+            Description => ( 'D' x 250 ) . '%',
         },
         ResultData => {
             TestExistence => 1,
@@ -1651,7 +1651,7 @@ my @ChangeSearchTests = (
     {
         Description => 'Justification with wildcard',
         SearchData  => {
-            Justification => ( 'Z' x 250 ) . '%',
+            Justification => ( 'J' x 250 ) . '%',
         },
         ResultData => {
             TestExistence => 1,
@@ -1662,9 +1662,9 @@ my @ChangeSearchTests = (
     {
         Description => 'Title, Description, Justification with wildcard',
         SearchData  => {
-            Title         => ( 'X' x 250 ) . '%',
-            Description   => ( 'Y' x 250 ) . '%',
-            Justification => ( 'Z' x 250 ) . '%',
+            Title         => ( 'T' x 250 ) . '%',
+            Description   => ( 'D' x 250 ) . '%',
+            Justification => ( 'J' x 250 ) . '%',
         },
         ResultData => {
             TestExistence => 1,
