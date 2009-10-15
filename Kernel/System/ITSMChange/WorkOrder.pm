@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all work order functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.11 2009-10-15 09:04:51 reb Exp $
+# $Id: WorkOrder.pm,v 1.12 2009-10-15 09:18:06 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 =head1 NAME
 
@@ -158,11 +158,6 @@ sub WorkOrderAdd {
 
     # check change parameters
     return if !$Self->_CheckWorkOrderParams(%Param);
-
-    # check if given WorkOrderStateID is valid
-    return if $Param{WorkOrderStateID} && !$Self->_CheckWorkOrderStateID(
-        WorkOrderStateID => $Param{WorkOrderStateID},
-    );
 
     my $WorkOrderID = 1;    # dummy value for now
 
@@ -411,7 +406,26 @@ NOTE: This function must first remove all links to this WorkOrderObject,
 sub WorkOrderDelete {
     my ( $Self, %Param ) = @_;
 
-    return;
+    # check needed stuff
+    for my $Attribute (qw(WorkOrderID UserID)) {
+        if ( !$Param{$Attribute} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Attribute!",
+            );
+            return;
+        }
+    }
+
+    # TODO: Delete all links
+
+    # delete the workorder
+    return if !$Self->{DBObject}->Do(
+        SQL  => 'DELETE FROM change_workorder WHERE id = ? ',
+        Bind => [ \$Param{WorkOrderID} ],
+    );
+
+    return 1;
 }
 
 =item WorkOrderChangeStartGet()
@@ -429,9 +443,38 @@ get the start date of a change, calculated from the start of the first work orde
 sub WorkOrderChangeStartGet {
     my ( $Self, %Param ) = @_;
 
-    # SELECT MIN(planed_start_time) WHERE change_id = ?
+    # check needed stuff
+    for my $Attribute (qw(ChangeID Type UserID)) {
+        if ( !$Param{$Attribute} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Attribute!",
+            );
+            return;
+        }
+    }
 
-    return;
+    # mapping for types -> column
+    my %TypeColumnMap = (
+        planned => 'planned_start_time',
+        actual  => 'actual_start_time',
+    );
+
+    return if !$TypeColumnMap{ $Param{Type} };
+
+    # retrieve the start time
+    return if !$Self->{DBObject}->Prepare(
+        SQL   => 'SELECT MIN(' . $TypeColumnMap{ $Param{Type} } . ') WHERE change_id = ?',
+        Bind  => [ \$Param{ChangeID} ],
+        Limit => 1,
+    );
+
+    my $StartTime;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $StartTime = $Row[0];
+    }
+
+    return $StartTime;
 }
 
 =item WorkOrderChangeEndGet()
@@ -617,6 +660,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.11 $ $Date: 2009-10-15 09:04:51 $
+$Revision: 1.12 $ $Date: 2009-10-15 09:18:06 $
 
 =cut
