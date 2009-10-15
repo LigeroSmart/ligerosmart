@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.8 2009-10-15 11:40:30 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.9 2009-10-15 12:07:00 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -318,39 +318,56 @@ my @WorkOrderTests = (
     # Tests on WorkOrderAdd
     #------------------------------#
 
-    # Workorder doesn't contain all data (required attributes)
+    # Tests where the workorder doesn't contain all data (required attributes)
     {
-        Description => 'Test contains no params for WorkflowAdd.',
-        Fails       => 1,                                            # we expect this test to fail
+        Description => 'Test contains no params for WorkOrderAdd().',
+        Fails       => 1,                                              # we expect this test to fail
         SourceData  => {
-            ChangeAdd => {},    # UserID and ChangeID are missing
+            WorkOrderAdd => {},    # UserID and ChangeID are missing
         },
         ReferenceData => {
-            ChangeGet => undef,
+            WorkOrderGet => undef,
         },
     },
     {
-        Description => 'Test contains no UserID for WorkflowAdd.',
-        Fails       => 1,                                            # we expect this test to fail
+        Description => 'Test contains no UserID for WorkOrderAdd().',
+        Fails       => 1,                                              # we expect this test to fail
         SourceData  => {
-            ChangeAdd => {                                           # UserID is missing
+            WorkOrderAdd => {                                          # UserID is missing
                 ChangeID => $WorkOrderAddTestID,
             },
         },
         ReferenceData => {
-            ChangeGet => undef,
+            WorkOrderGet => undef,
         },
     },
     {
-        Description => 'Test contains no ChangeID for WorkflowAdd.',
+        Description => 'Test contains no ChangeID for WorkOrderAdd().',
         Fails       => 1,                                              # we expect this test to fail
         SourceData  => {
-            ChangeAdd => {                                             # ChangeID is missing
+            WorkOrderAdd => {                                          # ChangeID is missing
                 UserID => 1,
             },
         },
         ReferenceData => {
-            ChangeGet => undef,
+            WorkOrderGet => undef,
+        },
+    },
+
+    # First test of WorkOrderAdd() with all required arguments.
+    {
+        Description => 'Test contains ChangeID and ChangeID for WorkOrderAdd().',
+        Fails      => 1,                                               # we expect this test to fail
+        SourceData => {
+            WorkOrderAdd => {
+                UserID   => 1,
+                ChangeID => $WorkOrderAddTestID,
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                ChangeID => $WorkOrderAddTestID,
+            },
         },
     },
 );
