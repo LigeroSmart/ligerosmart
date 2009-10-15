@@ -1,8 +1,8 @@
 # --
-# ITSMWorkOrder.t - work order tests
+# ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.5 2009-10-15 09:45:44 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.6 2009-10-15 10:13:05 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -141,7 +141,7 @@ my @ChangeTests     = (
 
     # change contains all date - (all attributes)
     {
-        Description => 'First change for testing work orders.',
+        Description => 'First change for testing workorders.',
         SourceData  => {
             ChangeAdd => {
                 Title         => 'Change 1 - ' . $UniqueSignature,
@@ -305,11 +305,198 @@ continue {
     $TestCount++;
 }
 
+# ------------------------------------------------------------ #
+# Define the general workorder tests
+# ------------------------------------------------------------ #
+
+my ($WorkOrderAddTestID) = keys %TestedChangeID;
+
+my @WorkOrderTests = (
+
+    #------------------------------#
+    # Tests on WorkOrderAdd
+    #------------------------------#
+
+    # Workorder doesn't contain all data (required attributes)
+    {
+        Description => 'Test contains no params for WorkflowAdd.',
+        Fails       => 1,                                            # we expect this test to fail
+        SourceData  => {
+            ChangeAdd => {},    # UserID and ChangeID are missing
+        },
+        ReferenceData => {
+            ChangeGet => undef,
+        },
+    },
+    {
+        Description => 'Test contains no UserID for WorkflowAdd.',
+        Fails       => 1,                                            # we expect this test to fail
+        SourceData  => {
+            ChangeAdd => {                                           # UserID is missing
+                ChangeID => $WorkOrderAddTestID,
+            },
+        },
+        ReferenceData => {
+            ChangeGet => undef,
+        },
+    },
+    {
+        Description => 'Test contains no ChangeID for WorkflowAdd.',
+        Fails       => 1,                                              # we expect this test to fail
+        SourceData  => {
+            ChangeAdd => {                                             # ChangeID is missing
+                UserID => 1,
+            },
+        },
+        ReferenceData => {
+            ChangeGet => undef,
+        },
+    },
+);
+
+# ------------------------------------------------------------ #
+# execute the general workorder tests
+# ------------------------------------------------------------ #
+
+my %TestedWorkOrderID;    # change ids of created changes
+
+TEST:
+for my $Test (@WorkOrderTests) {
+
+    # check SourceData attribute
+    if ( !$Test->{SourceData} || ref $Test->{SourceData} ne 'HASH' ) {
+
+        $Self->True(
+            0,
+            "Test $TestCount: No SourceData found for this test (test case: "
+                . ( $TestCount - $TestCountMisc ) . ").",
+        );
+
+        next TEST;
+    }
+
+    # print test case description
+    if ( $Test->{Description} ) {
+        $Self->True(
+            1,
+            "Test $TestCount: $Test->{Description} (test case: "
+                . ( $TestCount - $TestCountMisc ) . ").",
+        );
+    }
+
+    # extract test data
+    my $SourceData    = $Test->{SourceData};
+    my $ReferenceData = $Test->{ReferenceData};
+
+    # the change id will be used for several calls
+    my $WorkOrderID;
+
+    # add a new Change
+    if ( $SourceData->{WorkOrderAdd} ) {
+
+        # add the workorder
+        $WorkOrderID = $Self->{WorkOrderObject}->WorkOrderAdd(
+            %{ $SourceData->{WorkOrderAdd} }
+        );
+
+        # remember current WorkOrderID
+        if ($WorkOrderID) {
+            $TestedWorkOrderID{$WorkOrderID} = 1;
+        }
+
+        # change CreateTime
+        if ( $WorkOrderID && $SourceData->{WorkOrderAddChangeTime} ) {
+            SetTimes(
+                WorkOrderID => $WorkOrderID,
+                CreateTime  => $SourceData->{WorkOrderAddChangeTime}->{CreateTime},
+            );
+        }
+
+        if ( $Test->{Fails} ) {
+            $Self->False(
+                $WorkOrderID,
+                "Test $TestCount: WorkOrderAdd() - Add workorder should fail.",
+            );
+        }
+        else {
+            $Self->True(
+                $WorkOrderID,
+                "Test $TestCount: WorkOrderAdd() - Add workorder.",
+            );
+        }
+    }    # end if 'WorkOrderAdd'
+
+    # get a change and compare the retrieved data with the reference
+    if ( exists $ReferenceData->{WorkOrderGet} ) {
+
+        my $WorkOrderGetReferenceData = $ReferenceData->{WorkOrderGet};
+
+        my $WorkOrderData = $Self->{WorkOrderObject}->WorkOrderGet(
+            WorkOrderID => $WorkOrderID,
+            UserID      => 1,
+        );
+
+        # WorkOrderGet should not return anything
+        if ( !defined $ReferenceData->{WorkOrderGet} ) {
+            $Self->False(
+                $WorkOrderData,
+                "Test $TestCount: |- Get change returns undef.",
+            );
+
+            # check if we excpected to fail
+            if ( $Test->{Fails} ) {
+                $Self->Is(
+                    !defined $WorkOrderData,
+                    !defined $ReferenceData->{WorkOrderData},
+                    "Test $TestCount: |- Should fail.",
+                );
+            }
+            next TEST;
+        }
+
+        # check for always existing attributes
+        for my $WorkOrderAttributes (
+            qw(WorkOrderID ChangeNumber ChangeBuilderID CreateTime ChangeTime)
+            )
+        {
+            $Self->True(
+                $WorkOrderData->{$WorkOrderAttributes},
+                "Test $TestCount: |- has $WorkOrderAttributes.",
+            );
+        }
+
+        for my $RequestedAttribute ( keys %{ $ReferenceData->{WorkOrderGet} } ) {
+
+            # turn off all pretty print
+            local $Data::Dumper::Indent = 0;
+            local $Data::Dumper::Useqq  = 1;
+
+            # dump the attribute from WorkOrderGet()
+            my $WorkOrderAttribute = Data::Dumper::Dumper( $WorkOrderData->{$RequestedAttribute} );
+
+            # dump the reference attribute
+            my $ReferenceAttribute
+                = Data::Dumper::Dumper( $ReferenceData->{WorkOrderGet}->{$RequestedAttribute} );
+
+            $Self->Is(
+                $WorkOrderAttribute,
+                $ReferenceAttribute,
+                "Test $TestCount: |- $ReferenceAttribute",
+            );
+        }
+    }    # end if 'WorkOrderGet'
+}
+continue {
+
+    # increase the test count, even on next
+    $TestCount++;
+}
+
 =over 4
 
 =item SetTimes()
 
-Set new values for CreateTime and ChangeTime for a given work order.
+Set new values for CreateTime and ChangeTime for a given workorder.
 
     my $UpdateSuccess = SetTimes(
         WorkOrderID => 123,
