@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.78 2009-10-15 14:08:44 ub Exp $
+# $Id: ITSMChange.t,v 1.79 2009-10-15 14:29:54 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -2128,11 +2128,6 @@ for my $SearchTest (@ChangeSearchTests) {
 
         # check if all ids that belongs to this searchtest are returned
         my @ChangeIDs = keys %{ $ChangeIDForSearchTest{$SearchTestCount} };
-
-        if ( $SearchTest->{ResultData}->{IDExpected} ) {
-            @ChangeIDs = $SearchTest->{ResultData}->{IDExpected};
-        }
-
         my %ReturnedChangeID = map { $_ => 1 } @{$ChangeIDs};
         for my $ChangeID (@ChangeIDs) {
             $Self->True(
