@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.10 2009-10-15 12:13:08 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.11 2009-10-15 12:19:50 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -548,6 +548,52 @@ continue {
 
     # increase the test count, even on next
     $TestCount++;
+}
+
+# ------------------------------------------------------------ #
+# clean the system
+# ------------------------------------------------------------ #
+
+# disable email checks to change the newly added users
+$CheckEmailAddressesOrg = $Self->{ConfigObject}->Get('CheckEmailAddresses') || 1;
+$Self->{ConfigObject}->Set(
+    Key   => 'CheckEmailAddresses',
+    Value => 0,
+);
+
+# set unittest users invalid
+for my $UnittestUserID (@UserIDs) {
+
+    # get user data
+    my %User = $Self->{UserObject}->GetUserData(
+        UserID => $UnittestUserID,
+    );
+
+    # update user
+    $Self->{UserObject}->UserUpdate(
+        %User,
+        ValidID => $Self->{ChangeObject}->{ValidObject}->ValidLookup(
+            Valid => 'invalid',
+        ),
+        ChangeUserID => 1,
+    );
+}
+
+# restore original email check param
+$Self->{ConfigObject}->Set(
+    Key   => 'CheckEmailAddresses',
+    Value => $CheckEmailAddressesOrg,
+);
+
+# delete the test changes
+for my $WorkOrderID ( keys %TestedWorkOrderID ) {
+    $Self->True(
+        $Self->{WorkOrderObject}->WorkOrderDelete(
+            WorkOrderID => $WorkOrderID,
+            UserID      => 1,
+        ),
+        "Test " . $TestCount++ . ": WorkOrderDelete()",
+    );
 }
 
 =over 4
