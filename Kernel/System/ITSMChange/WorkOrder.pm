@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all work order functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.8 2009-10-13 13:30:47 ub Exp $
+# $Id: WorkOrder.pm,v 1.9 2009-10-15 07:41:46 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 =head1 NAME
 
@@ -111,7 +111,9 @@ add a new workorder
     my $WorkOrderID = $WorkOrderObject->WorkOrderAdd(
         UserID => 1,
     );
+
 or
+
     my $WorkOrderID = $WorkOrderObject->WorkOrderAdd(
         ChangeID         => 123,                                       # (optional)
         WorkOrderNumber  => 5,                                         # (optional)
@@ -137,6 +139,18 @@ or
 
 sub WorkOrderAdd {
     my ( $Self, %Param ) = @_;
+
+    # check for needed stuff
+    if ( !$Param{UserID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need UserID!',
+        );
+        return;
+    }
+
+    # check change parameters
+    return if !$Self->_CheckChangeParams(%Param);
 
     # check if given WorkOrderStateID is valid
     return if $Param{WorkOrderStateID} && !$Self->_CheckWorkOrderStateID(
@@ -197,6 +211,7 @@ sub WorkOrderUpdate {
 return a WorkOrder as hash reference
 
 Return
+
     $WorkOrder{WorkOrderID}
     $WorkOrder{ChangeID}
     $WorkOrder{WorkOrderNumber}
@@ -224,7 +239,49 @@ Return
 sub WorkOrderGet {
     my ( $Self, %Param ) = @_;
 
-    return;
+    # check needed stuff
+    for my $Attribute (qw(WorkOrderID UserID)) {
+        if ( !$Param{$Attribute} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Attribute!",
+            );
+            return;
+        }
+    }
+
+    return if !$Self->{DBObject}->Prepare(
+        SQL => 'SELECT id, change_id, workorder_number, title, instruction, '
+            . 'report, workorder_state_id, workorder_agent_id, planned_start_time, '
+            . 'planned_end_time, actual_start_time, actual_end_time, create_time, '
+            . 'create_by, change_time, change_by '
+            . 'FROM change_workorder '
+            . 'WHERE id = ?',
+        Bind  => [ \$Param{WorkOrderID} ],
+        Limit => 1,
+    );
+
+    my %WorkOrderData;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $WorkOrderData{WorkOrderID}      = $Row[0];
+        $WorkOrderData{ChangeID}         = $Row[1];
+        $WorkOrderData{WorkOrderNumber}  = $Row[2];
+        $WorkOrderData{Title}            = defined $Row[3] ? $Row[3] : '';
+        $WorkOrderData{Instruction}      = defined $Row[4] ? $Row[4] : '';
+        $WorkOrderData{Report}           = defined $Row[5] ? $Row[5] : '';
+        $WorkOrderData{WorkOrderStateID} = $Row[6];
+        $WorkOrderData{WorkOrderAgentID} = $Row[7];
+        $WorkOrderData{PlannedStartTime} = $Row[8];
+        $WorkOrderData{PlannedEndTime}   = $Row[9];
+        $WorkOrderData{ActualStartTime}  = $Row[10];
+        $WorkOrderData{ActualEndTime}    = $Row[11];
+        $WorkOrderData{CreateTime}       = $Row[12];
+        $WorkOrderData{CreateBy}         = $Row[13];
+        $WorkOrderData{ChangeTime}       = $Row[14];
+        $WorkOrderData{ChangeBy}         = $Row[15];
+    }
+
+    return \%WorkOrderData;
 }
 
 =item WorkOrderList()
@@ -241,7 +298,29 @@ return a list of all workorder ids of a given change id as array reference
 sub WorkOrderList {
     my ( $Self, %Param ) = @_;
 
-    return [];
+    # check needed stuff
+    for my $Attribute (qw(ChangeID UserID)) {
+        if ( !$Param{$Attribute} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Attribute!",
+            );
+            return;
+        }
+    }
+
+    # get workorder ids
+    return if !$Self->{DBObject}->Prepare(
+        SQL  => 'SELECT id FROM change_workorder WHERE change_id = ?',
+        Bind => [ \$Param{ChangeID} ],
+    );
+
+    my @WorkOrderIDs;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        push @WorkOrderIDs, $Row[0];
+    }
+
+    return \@WorkOrderIDs;
 }
 
 =item WorkOrderSearch()
@@ -425,6 +504,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.8 $ $Date: 2009-10-13 13:30:47 $
+$Revision: 1.9 $ $Date: 2009-10-15 07:41:46 $
 
 =cut
