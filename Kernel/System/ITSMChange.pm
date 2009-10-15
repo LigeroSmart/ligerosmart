@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.64 2009-10-15 07:32:29 ub Exp $
+# $Id: ITSMChange.pm,v 1.65 2009-10-15 08:06:45 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.64 $) [1];
+$VERSION = qw($Revision: 1.65 $) [1];
 
 =head1 NAME
 
@@ -500,12 +500,12 @@ sub ChangeCABUpdate {
 
 =item ChangeCABGet()
 
-return the CAB of a change as hasharray reference
+return the CAB of a change as hasharray reference, the returned array references are sorted
 
 Return
     $ChangeCAB = {
         CABAgents    => [ 1, 2, 4 ],
-        CABCustomers => [ 'tt', 'mm' ],
+        CABCustomers => [ 'aa', 'bb' ],
     }
 
     my $ChangeCAB = $ChangeObject->ChangeCABGet(
@@ -567,6 +567,10 @@ sub ChangeCABGet {
             push @{ $CAB{CABCustomers} }, $CustomerUserID;
         }
     }
+
+    # sort the results
+    @{ $CAB{CABAgents} }    = sort @{ $CAB{CABAgents} };
+    @{ $CAB{CABCustomers} } = sort @{ $CAB{CABCustomers} };
 
     return \%CAB;
 }
@@ -1680,6 +1684,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.64 $ $Date: 2009-10-15 07:32:29 $
+$Revision: 1.65 $ $Date: 2009-10-15 08:06:45 $
 
 =cut
