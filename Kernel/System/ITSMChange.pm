@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.68 2009-10-15 10:06:26 mae Exp $
+# $Id: ITSMChange.pm,v 1.69 2009-10-15 13:18:32 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,10 +17,12 @@ use warnings;
 use Kernel::System::Valid;
 use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
+use Kernel::System::User;
+use Kernel::System::CustomerUser;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.68 $) [1];
+$VERSION = qw($Revision: 1.69 $) [1];
 
 =head1 NAME
 
@@ -1684,6 +1686,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.68 $ $Date: 2009-10-15 10:06:26 $
+$Revision: 1.69 $ $Date: 2009-10-15 13:18:32 $
 
 =cut
