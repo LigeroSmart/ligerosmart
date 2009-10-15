@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.76 2009-10-15 09:49:19 bes Exp $
+# $Id: ITSMChange.t,v 1.77 2009-10-15 10:35:22 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -185,9 +185,11 @@ for my $DefaultChangeState (@DefaultChangeStates) {
 # ------------------------------------------------------------ #
 
 # store current TestCount for better test case recognition
-my $TestCountMisc   = $TestCount;
-my $UniqueSignature = 'UnitTest-ITSMChange-' . int( rand 1_000_000 ) . '_' . time;
-my @ChangeTests     = (
+my $TestCountMisc        = $TestCount;
+my $UniqueSignature      = 'UnitTest-ITSMChange-' . int( rand 1_000_000 ) . '_' . time;
+my $NoWildcardsTestTitle = 'UnitTest-ITSMChange-%NoWildcards%_' . time;
+
+my @ChangeTests = (
 
     #------------------------------#
     # Tests on ChangeAdd
@@ -508,6 +510,26 @@ my @ChangeTests     = (
             },
         },
         SearchTest => [ 18, 19, 20, 21 ],
+    },
+
+    # a change for the 'UsingWildcards => 0' test
+    {
+        Description => q{A change for the 'UsingWildcards => 0' test.},
+        SourceData  => {
+            ChangeAdd => {
+                UserID        => 1,
+                Title         => $NoWildcardsTestTitle,
+                Description   => $NoWildcardsTestTitle,
+                Justification => $NoWildcardsTestTitle,
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                Title         => $NoWildcardsTestTitle,
+                Description   => $NoWildcardsTestTitle,
+                Justification => $NoWildcardsTestTitle,
+            },
+        },
     },
 
     # test on mixed valid and invalid CABAgents  (required attributes)
@@ -1793,6 +1815,45 @@ my @ChangeSearchTests = (
         },
         ResultData => {
             TestExistence => 1,
+        },
+    },
+
+    # Nr 30 - UsingWildcards => 0, Title
+    {
+        Description => q{UsingWildcards => 0, Title},
+        SearchData  => {
+            UsingWildcards => 0,
+            Title          => 'UnitTest-ITSMChange-%NoWildcards%',
+        },
+        ResultData => {
+            TestCount => 1,
+            Count     => 0,
+        },
+    },
+
+    # Nr 31 - UsingWildcards => 0, Description
+    {
+        Description => q{UsingWildcards => 0, Description},
+        SearchData  => {
+            UsingWildcards => 0,
+            Description    => 'UnitTest-ITSMChange-%NoWildcards%',
+        },
+        ResultData => {
+            TestCount => 1,
+            Count     => 0,
+        },
+    },
+
+    # Nr 32 - UsingWildcards => 0, Description
+    {
+        Description => q{UsingWildcards => 0, Description},
+        SearchData  => {
+            UsingWildcards => 0,
+            Description    => $NoWildcardsTestTitle,
+        },
+        ResultData => {
+            TestCount => 1,
+            Count     => 1,
         },
     },
 
