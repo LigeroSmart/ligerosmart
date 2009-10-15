@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.16 2009-10-15 13:28:37 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.17 2009-10-15 14:38:57 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -163,8 +163,7 @@ my @ChangeTests     = (
 # Create the changes that are needed for testing workorders
 # ------------------------------------------------------------ #
 
-my %TestedChangeID;           # change ids of created changes
-my %ChangeIDForSearchTest;    # change ids that are expected to be found by a search test
+my %TestedChangeID;    # change ids of created changes
 
 TEST:
 for my $Test (@ChangeTests) {
@@ -209,14 +208,6 @@ for my $Test (@ChangeTests) {
         if ($ChangeID) {
             $TestedChangeID{$ChangeID} = 1;
 
-            # save changeid for use in search tests
-            if ( exists $Test->{SearchTest} ) {
-                my @SearchTests = @{ $Test->{SearchTest} };
-
-                for my $SearchTestNr (@SearchTests) {
-                    $ChangeIDForSearchTest{$SearchTestNr}->{$ChangeID} = 1;
-                }
-            }
         }
 
         # change CreateTime
@@ -369,6 +360,7 @@ my @WorkOrderTests = (
                 ChangeID => $WorkOrderAddTestID,
             },
         },
+        SearchTest => [2],
     },
 
     {
@@ -390,6 +382,7 @@ my @WorkOrderTests = (
                 Report      => 'Installed new server without problems',
             },
         },
+        SearchTest => [2],
     },
     {
         Description => 'WorkOrderAdd() with empty string parameters.',
@@ -410,6 +403,7 @@ my @WorkOrderTests = (
                 Report      => '',
             },
         },
+        SearchTest => [2],
     },
 );
 
@@ -417,8 +411,9 @@ my @WorkOrderTests = (
 # execute the general workorder tests
 # ------------------------------------------------------------ #
 
-my %TestedWorkOrderID;         # ids of all created workorders
-my %WorkOrderIDForChangeID;    # keep track of the workorders that are attached to a change
+my %TestedWorkOrderID;           # ids of all created workorders
+my %WorkOrderIDForChangeID;      # keep track of the workorders that are attached to a change
+my %WorkOrderIDForSearchTest;    # workorder ids that are expected to be found in a search
 
 TEST:
 for my $Test (@WorkOrderTests) {
@@ -469,6 +464,15 @@ for my $Test (@WorkOrderTests) {
             # keep track of the workorders attached to a change
             $WorkOrderIDForChangeID{$ChangeID} ||= {};
             $WorkOrderIDForChangeID{$ChangeID}->{$WorkOrderID} = 1;
+
+            # save workorder id for use in search tests
+            if ( exists $Test->{SearchTest} ) {
+                my @SearchTests = @{ $Test->{SearchTest} };
+
+                for my $SearchTestNr (@SearchTests) {
+                    $WorkOrderIDForSearchTest{$SearchTestNr}->{$WorkOrderID} = 1;
+                }
+            }
         }
 
         # change CreateTime
@@ -620,6 +624,112 @@ $Self->Is(
     $NrCreateWorkOrders,
     'Test ' . $TestCount++ . ': amount of workorder objects and test cases.',
 );
+
+# ------------------------------------------------------------ #
+# define general workflow search tests
+# ------------------------------------------------------------ #
+my $SystemTime = $Self->{TimeObject}->SystemTime();
+
+my @WorkOrderSearchTests = (
+
+    # Nr 1 - a simple check if the search functions takes care of "Limit"
+    {
+        Description => 'Limit',
+        SearchData  => {
+            Limit => 3,    # expect only 3 results
+        },
+        ResultData => {
+            TestCount => 1,    # flag for check result amount
+            Count     => 3,    # check on 3 results
+        },
+    },
+
+    # Nr 2 - a simple check that should find all workorders
+    {
+        Description => 'Limit',
+        SearchData  => {
+        },
+        ResultData => {
+            TestExistence => 1,    # flag for check results that were marked with 'SearchTest'
+        },
+    },
+);
+
+my $SearchTestCount = 1;
+
+SEARCHTEST:
+for my $SearchTest (@WorkOrderSearchTests) {
+
+    # check SearchData attribute
+    if ( !$SearchTest->{SearchData} || ref( $SearchTest->{SearchData} ) ne 'HASH' ) {
+
+        $Self->True(
+            0,
+            "Test $TestCount: SearchData found for this test.",
+        );
+
+        next SEARCHTEST;
+    }
+
+    $Self->True(
+        1,
+        'call WorkOrderSearch with params: '
+            . $SearchTest->{Description}
+            . " (SearchTestCase: $SearchTestCount)",
+    );
+
+    my $WorkOrderIDs = $Self->{WorkOrderObject}->WorkOrderSearch(
+        %{ $SearchTest->{SearchData} },
+        UserID   => 1,
+        ChangeID => $WorkOrderAddTestID,
+    );
+
+    $Self->True(
+        defined($WorkOrderIDs) && ref($WorkOrderIDs) eq 'ARRAY',
+        "Test $TestCount: |- array reference for WorkOrderIDs.",
+    );
+
+    $WorkOrderIDs ||= [];
+
+    if ( $SearchTest->{ResultData}->{TestCount} ) {
+
+        # get number of change ids ChangeSearch should return
+        my $Count = scalar keys %{ $WorkOrderIDForSearchTest{$SearchTestCount} };
+
+        # get defined expected result count (defined in search test case!)
+        if ( exists $SearchTest->{ResultData}->{Count} ) {
+            $Count = $SearchTest->{ResultData}->{Count}
+        }
+
+        $Self->Is(
+            scalar @{$WorkOrderIDs},
+            $Count,
+            "Test $TestCount: |- Number of found workorders.",
+        );
+    }
+
+    if ( $SearchTest->{ResultData}->{TestExistence} ) {
+
+        # check if all ids that belongs to this searchtest are returned
+        my @WorkOrderIDs = keys %{ $WorkOrderIDForSearchTest{$SearchTestCount} };
+
+        if ( $SearchTest->{ResultData}->{IDExpected} ) {
+            @WorkOrderIDs = $SearchTest->{ResultData}->{IDExpected};
+        }
+
+        my %ReturnedWorkOrderID = map { $_ => 1 } @{$WorkOrderIDs};
+        for my $WorkOrderID (@WorkOrderIDs) {
+            $Self->True(
+                $ReturnedWorkOrderID{$WorkOrderID},
+                "Test $TestCount: |- WorkOrderID $WorkOrderID found in returned list.",
+            );
+        }
+    }
+}
+continue {
+    $TestCount++;
+    $SearchTestCount++;
+}
 
 # ------------------------------------------------------------ #
 # clean the system
