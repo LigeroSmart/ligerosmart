@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.70 2009-10-15 07:32:29 ub Exp $
+# $Id: ITSMChange.t,v 1.71 2009-10-15 08:08:10 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -75,6 +75,10 @@ for my $Counter ( 1 .. 3 ) {
     );
     push @CustomerUserIDs, $CustomerUserID;
 }
+
+# sort the user and customer user arrays
+@UserIDs         = sort @UserIDs;
+@CustomerUserIDs = sort @CustomerUserIDs;
 
 # create invalid user IDs
 for ( 1 .. 2 ) {
