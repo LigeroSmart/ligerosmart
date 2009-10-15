@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all work order functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.23 2009-10-15 15:37:26 ub Exp $
+# $Id: WorkOrder.pm,v 1.24 2009-10-15 16:11:48 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.23 $) [1];
+$VERSION = qw($Revision: 1.24 $) [1];
 
 =head1 NAME
 
@@ -237,6 +237,11 @@ update a WorkOrder
         UserID           => 1,
     );
 
+constraints:
+
+xxxStartTime has to be before xxxEndTime. If just one of these parameters is passed
+the other time is retrieved from database
+
 =cut
 
 sub WorkOrderUpdate {
@@ -255,6 +260,9 @@ sub WorkOrderUpdate {
 
     # check the given parameters
     return if !$Self->_CheckWorkOrderParams(%Param);
+
+    # check if the timestamps are correct
+    return if !$Self->_CheckTimestamps(%Param);
 
     # map update attributes to column names
     my %Attribute = (
@@ -1132,6 +1140,57 @@ sub _CheckWorkOrderParams {
     return 1;
 }
 
+=item _CheckTimestamps()
+
+Checks the constraints of timestamps: xxxStartTime must be before xxxEndTime
+
+    my $Ok = $WorkOrderObject->_CheckTimestamps(
+        WorkOrderID      => 123,
+        UserID           => 1,
+        PlannedStartTime => '2009-10-12 00:00:01',                     # (optional)
+        PlannedEndTime   => '2009-10-15 15:00:00',                     # (optional)
+        ActualStartTime  => '2009-10-14 00:00:01',                     # (optional)
+        ActualEndTime    => '2009-01-20 00:00:01',                     # (optional)
+    );
+
+=cut
+
+sub _CheckTimestamps {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(WorkOrderID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # get workorder data
+    my $WorkOrderData = $Self->WorkOrderGet(
+        WorkOrderID => $Param{WorkOrderID},
+        UserID      => $Param{UserID},
+    );
+
+    # check planned time
+    for my $Type (qw(Actual Planned)) {
+        next if !( $Param{ $Type . 'StartTime' } || $Param{ $Type . 'EndTime' } );
+
+        my $StartTime = $Param{ $Type . 'StartTime' } || $WorkOrderData->{ $Type . 'StartTime' };
+        my $EndTime   = $Param{ $Type . 'EndTime' }   || $WorkOrderData->{ $Type . 'EndTime' };
+
+        $StartTime =~ s{ \D }{}xmsg;
+        $EndTime   =~ s{ \D }{}xmsg;
+
+        return if $StartTime > $EndTime;
+    }
+
+    return 1;
+}
+
 1;
 
 =back
@@ -1148,6 +1207,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.23 $ $Date: 2009-10-15 15:37:26 $
+$Revision: 1.24 $ $Date: 2009-10-15 16:11:48 $
 
 =cut
