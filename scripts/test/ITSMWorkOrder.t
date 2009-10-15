@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.18 2009-10-15 15:20:19 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.19 2009-10-15 15:34:01 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -451,8 +451,9 @@ my @WorkOrderTests = (
         Description => 'Test for max+1 string length for WorkOrderUpdate.',
         UpdateFails => 1,
         SourceData  => {
-            ChangeAdd => {
-                UserID => $UserIDs[0],
+            WorkOrderAdd => {
+                UserID   => $UserIDs[0],
+                ChangeID => $WorkOrderAddTestID,
             },
             WorkOrderUpdate => {
                 UserID      => 1,
@@ -474,8 +475,9 @@ my @WorkOrderTests = (
         Description => 'Test for max+1 string length - title - for WorkOrderUpdate.',
         UpdateFails => 1,
         SourceData  => {
-            ChangeAdd => {
-                UserID => $UserIDs[0],
+            WorkOrderAdd => {
+                UserID   => $UserIDs[0],
+                ChangeID => $WorkOrderAddTestID,
             },
             WorkOrderUpdate => {
                 UserID      => 1,
@@ -497,8 +499,9 @@ my @WorkOrderTests = (
         Description => 'Test for max+1 string length - Instruction - for WorkOrderUpdate.',
         UpdateFails => 1,
         SourceData  => {
-            ChangeAdd => {
-                UserID => $UserIDs[0],
+            WorkOrderAdd => {
+                UserID   => $UserIDs[0],
+                ChangeID => $WorkOrderAddTestID,
             },
             WorkOrderUpdate => {
                 UserID      => 1,
@@ -520,8 +523,9 @@ my @WorkOrderTests = (
         Description => 'Test for max+1 string length - Report - for WorkOrderUpdate.',
         UpdateFails => 1,
         SourceData  => {
-            ChangeAdd => {
-                UserID => $UserIDs[0],
+            WorkOrderAdd => {
+                UserID   => $UserIDs[0],
+                ChangeID => $WorkOrderAddTestID,
             },
             WorkOrderUpdate => {
                 UserID      => 1,
@@ -542,8 +546,9 @@ my @WorkOrderTests = (
     {
         Description => q{Test for '0' string handling for WorkOrderUpdate.},
         SourceData  => {
-            ChangeAdd => {
-                UserID => 1,
+            WorkOrderAdd => {
+                UserID   => 1,
+                ChangeID => $WorkOrderAddTestID,
             },
             WorkOrderUpdate => {
                 UserID      => 1,
