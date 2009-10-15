@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all work order functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.21 2009-10-15 14:11:47 mae Exp $
+# $Id: WorkOrder.pm,v 1.22 2009-10-15 14:56:40 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.21 $) [1];
+$VERSION = qw($Revision: 1.22 $) [1];
 
 =head1 NAME
 
@@ -1001,6 +1001,14 @@ Checks if the various parameters are valid.
         ActualEndTime    => '2009-10-01 10:33:00',                     # (optional)
     );
 
+These string parameters have length constraints:
+
+    Parameter      | max. length
+    ---------------+-----------------
+    Title          |  250 characters
+    Instruction    | 3800 characters
+    Report         | 3800 characters
+
 =cut
 
 sub _CheckWorkOrderParams {
@@ -1106,6 +1114,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.21 $ $Date: 2009-10-15 14:11:47 $
+$Revision: 1.22 $ $Date: 2009-10-15 14:56:40 $
 
 =cut
