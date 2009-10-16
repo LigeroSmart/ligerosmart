@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all work order functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.26 2009-10-16 06:46:38 ub Exp $
+# $Id: WorkOrder.pm,v 1.27 2009-10-16 08:06:47 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.26 $) [1];
+$VERSION = qw($Revision: 1.27 $) [1];
 
 =head1 NAME
 
@@ -847,7 +847,12 @@ sub WorkOrderDelete {
 Returns PlannedStartTime | PlannedEndTime | ActualStartTime | ActualEndTime
 of a change, which would be the respective time of the earliest starting
 workorder (for start times) or the latest ending workorder (for end times).
-Undefined is returned if the workorder would not have the wanted time defined.
+
+For PlannedStartTime | PlannedEndTime | ActualEndTime Undefined is returned
+if any of the workorders of a change has the wanted time not defined.
+
+The ActualStartTime is defined when any of the workorders of a change has
+a defined ActualStartTime.
 
     my $ChangePlannedStartTime = $WorkOrderObject->WorkOrderChangeTimeGet(
         ChangeID => 123,
@@ -889,11 +894,15 @@ sub WorkOrderChangeTimeGet {
     }
 
     # mapping for time types -> column
+    # COALESCE returns the first non-NULL value.
+    # It should be available for DB2, MS SQL Server, MySQL, Oracle and Postgres.
+    # Ingres seems to have COALESCE only since r3.
+    # http://www.orafaq.com/forum/mv/msg/149054/418609/0/#msg_418609
     my %TypeColumnMap = (
-        PlannedStartTime => 'planned_start_time',
-        PlannedEndTime   => 'planned_end_time',
-        ActualStartTime  => 'actual_start_time',
-        ActualEndTime    => 'actual_end_time',
+        PlannedStartTime => q{MIN( COALESCE( planned_start_time, '0001-01-01 01:01:01' ) )},
+        PlannedEndTime   => q{MAX( COALESCE( planned_end_time, '9999-01-01 01:01:01' ) )},
+        ActualStartTime  => q{MIN( actual_start_time )},
+        ActualEndTime    => q{MAX( COALESCE( actual_end_time, '9999-01-01 01:01:01' ) )},
     );
 
     # error if unknown time type is given
@@ -908,48 +917,46 @@ sub WorkOrderChangeTimeGet {
     }
 
     # set column from given time type
-    my $Column = $TypeColumnMap{ $Param{Type} };
+    # my $Column = $TypeColumnMap{ $Param{Type} };
 
     # check if there is a work order with an undefined time of the requested type
+    # return if !$Self->{DBObject}->Prepare(
+    #     SQL => 'SELECT COUNT(*) '
+    #         . 'FROM change_workorder '
+    #         . 'WHERE change_id = ? '
+    #         . "AND $Column IS NULL",
+    #     Bind  => [ \$Param{ChangeID} ],
+    #     Limit => 1,
+    # );
+
+    #my $UndefinedTime;
+    #while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    #    $UndefinedTime = $Row[0];
+    #}
+
+    # there is a workorder with an undefined time of the requested type
+    #return if $UndefinedTime;
+
+    # build sql, using min or max functions
+    my $SQL = "SELECT $TypeColumnMap{ $Param{Type} } FROM change_workorder WHERE change_id = ?";
+
+    # retrieve the requested time
     return if !$Self->{DBObject}->Prepare(
-        SQL => 'SELECT COUNT(*) '
-            . 'FROM change_workorder '
-            . 'WHERE change_id = ? '
-            . "AND $Column IS NULL",
+        SQL   => $SQL,
         Bind  => [ \$Param{ChangeID} ],
         Limit => 1,
     );
-
-    my $UndefinedTime;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $UndefinedTime = $Row[0];
-    }
-
-    # there is a workorder with an undefined time of the requested type
-    return if $UndefinedTime;
-
-    # build sql, using min or max functions
-    my $SQL = 'SELECT ';
-    if ( $Param{Type} =~ m{ PlannedStartTime | ActualStartTime }xms ) {
-        $SQL .= "MIN($Column) ";
-    }
-    elsif ( $Param{Type} =~ m{ PlannedEndTime | ActualEndTime }xms ) {
-        $SQL .= "MAX($Column) ";
-    }
-    $SQL .= 'FROM change_workorder WHERE change_id = ?',
-
-        # retrieve the requested time
-        return if !$Self->{DBObject}->Prepare(
-        SQL  => $SQL,
-        Bind => [ \$Param{ChangeID} ],
-
-        #Limit => 1,
-        );
 
     my $Time;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $Time = $Row[0];
     }
+
+    return if !defined $Time;
+
+    return if $Time eq '0001-01-01 01:01:01';
+
+    return if $Time eq '9999-01-01 01:01:01';
 
     return $Time;
 }
@@ -1265,6 +1272,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.26 $ $Date: 2009-10-16 06:46:38 $
+$Revision: 1.27 $ $Date: 2009-10-16 08:06:47 $
 
 =cut
