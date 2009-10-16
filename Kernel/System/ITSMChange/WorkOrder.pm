@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all work order functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.29 2009-10-16 10:16:29 bes Exp $
+# $Id: WorkOrder.pm,v 1.30 2009-10-16 11:48:28 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.29 $) [1];
+$VERSION = qw($Revision: 1.30 $) [1];
 
 =head1 NAME
 
@@ -769,16 +769,6 @@ sub WorkOrderSearch {
         $SQL .= join q{, }, @SQLOrderBy;
     }
 
-    # --------------------------------------------------------------------------------
-    # TODO : Why Error logging?
-    # If this is for debugging, better use $Self->{LogObject}->Dum_per( '', '',  );
-    # whch would be recognized by check-in filter.
-    # --------------------------------------------------------------------------------
-    $Self->{LogObject}->Log(
-        Priority => 'error',
-        Message  => $SQL,
-    );
-
     # ask database
     return if !$Self->{DBObject}->Prepare(
         SQL   => $SQL,
@@ -836,7 +826,7 @@ sub WorkOrderDelete {
 
 =item WorkOrderChangeTimeGet()
 
-Returns PlannedStartTime | PlannedEndTime | ActualStartTime | ActualEndTime
+Returns a list of PlannedStartTime | PlannedEndTime | ActualStartTime | ActualEndTime
 of a change, which would be the respective time of the earliest starting
 workorder (for start times) or the latest ending workorder (for end times).
 
@@ -849,7 +839,7 @@ a defined ActualStartTime.
     my $ChangePlannedStartTime = $WorkOrderObject->WorkOrderChangeTimeGet(
         ChangeID => 123,
 
-        Type     => 'PlannedStartTime',
+        Types    => [ 'PlannedStartTime', 'PlannedEndTime' ],
         # (PlannedStartTime | PlannedEndTime
         # | ActualStartTime | ActualEndTime )
 
@@ -875,7 +865,7 @@ sub WorkOrderChangeTimeGet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Attribute (qw(ChangeID Type UserID)) {
+    for my $Attribute (qw(ChangeID Types UserID)) {
         if ( !$Param{$Attribute} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -884,6 +874,30 @@ sub WorkOrderChangeTimeGet {
             return;
         }
     }
+
+    # check params
+    for my $Argument (qw(Types)) {
+        if ( !defined $Param{$Argument} ) {
+            $Param{$Argument} = [];
+        }
+        else {
+            if ( ref $Param{$Argument} ne 'ARRAY' ) {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "$Argument must be an array reference!",
+                );
+                return;
+            }
+        }
+    }
+
+    # define expected TimeTypes
+    my %TimeType = (
+        'PlannedStartTime' => 1,
+        'PlannedEndTime'   => 1,
+        'ActualStartTime'  => 1,
+        'ActualEndTime'    => 1,
+    );
 
     # mapping for time types -> column
     # COALESCE returns the first non-NULL value.
@@ -898,12 +912,31 @@ sub WorkOrderChangeTimeGet {
     );
 
     # error if unknown time type is given
-    if ( !$TypeColumnMap{ $Param{Type} } ) {
+    for my $ArgumentType ( @{ $Param{Types} } ) {
+        if ( !$TypeColumnMap{$ArgumentType} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Unknown type '$ArgumentType'! "
+                    . "Allowed types are 'PlannedStartTime', 'PlannedEndTime', "
+                    . "'ActualStartTime', 'ActualEndTime'!",
+            );
+            return;
+        }
+    }
+
+    # build columns, the order of the array is important!
+    my @SelectColumns;
+    SELECTCOLUM:
+    for my $SelectColumn ( @{ $Param{Types} } ) {
+        next SELECTCOLUM if !$SelectColumn;
+
+        push @SelectColumns, $TypeColumnMap{$SelectColumn};
+    }
+
+    if ( !@SelectColumns ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Unknown type '$Param{Type}'! "
-                . "Allowed types are 'PlannedStartTime', 'PlannedEndTime', "
-                . "'ActualStartTime', 'ActualEndTime'!",
+            Message  => 'No Type selected!',
         );
         return;
     }
@@ -930,7 +963,15 @@ sub WorkOrderChangeTimeGet {
     #return if $UndefinedTime;
 
     # build sql, using min or max functions
-    my $SQL = "SELECT $TypeColumnMap{ $Param{Type} } FROM change_workorder WHERE change_id = ?";
+    my $SQL = 'SELECT ';
+
+    # add colums
+    if (@SelectColumns) {
+        $SQL .= join q{, }, @SelectColumns;
+    }
+
+    # add from and where clause
+    $SQL .= ' FROM change_workorder WHERE change_id = ?';
 
     # retrieve the requested time
     return if !$Self->{DBObject}->Prepare(
@@ -939,18 +980,26 @@ sub WorkOrderChangeTimeGet {
         Limit => 1,
     );
 
-    my $Time;
+    # extract time values
+    my @Times;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $Time = $Row[0];
-    }
+        for my $SelectIndex ( 0 .. $#SelectColumns ) {
+            my $Time = $Row[$SelectIndex];
 
-    return if !defined $Time;
+            if (
+                !defined $Time
+                || $Time eq '0001-01-01 01:01:01'
+                || $Time eq '9999-01-01 01:01:01'
+                )
+            {
+                $Time = undef;
+            }
 
-    return if $Time eq '0001-01-01 01:01:01';
+            push @Times, $Time;
+        }
+    }    # end while FetchrowArray
 
-    return if $Time eq '9999-01-01 01:01:01';
-
-    return $Time;
+    return \@Times;
 }
 
 =item _CheckWorkOrderStateID()
@@ -1264,6 +1313,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.29 $ $Date: 2009-10-16 10:16:29 $
+$Revision: 1.30 $ $Date: 2009-10-16 11:48:28 $
 
 =cut
