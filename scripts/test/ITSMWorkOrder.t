@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.27 2009-10-16 10:15:39 reb Exp $
+# $Id: ITSMWorkOrder.t,v 1.28 2009-10-16 10:20:54 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1223,7 +1223,7 @@ for my $OrderByColumn (qw(PlannedStartTime PlannedEndTime ActualStartTime Actual
     my $SearchResultUp = $Self->{ChangeObject}->ChangeSearch(
         Title            => $ChangesTitle,
         OrderBy          => [ $OrderByColumn, 'ChangeID' ],
-        OrderByDirection => [ 'Up', 'Up' ],
+        OrderByDirection => [ 'Up', 'Down' ],
         UserID           => 1,
     );
 
