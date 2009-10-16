@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.74 2009-10-16 06:44:37 ub Exp $
+# $Id: ITSMChange.pm,v 1.75 2009-10-16 08:55:40 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::CustomerUser;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.74 $) [1];
+$VERSION = qw($Revision: 1.75 $) [1];
 
 =head1 NAME
 
@@ -840,19 +840,22 @@ sub ChangeSearch {
 
     # define order table
     my %OrderByTable = (
-        ChangeID         => 'c.id',
-        ChangeNumber     => 'c.change_number',
-        ChangeStateID    => 'c.change_state_id',
-        ChangeManagerID  => 'c.change_manager_id',
-        ChangeBuilderID  => 'c.change_builder_id',
-        CreateTime       => 'c.create_time',
-        CreateBy         => 'c.create_by',
-        ChangeTime       => 'c.change_time',
-        ChangeBy         => 'c.change_by',
-        PlannedStartTime => 'min(wo1.planned_start_time)',
-        PlannedEndTime   => 'max(wo1.planned_end_time)',
-        ActualStartTime  => 'min(wo1.actual_start_time)',
-        ActualEndTime    => 'max(wo1.actual_end_time)',
+        ChangeID        => 'c.id',
+        ChangeNumber    => 'c.change_number',
+        ChangeStateID   => 'c.change_state_id',
+        ChangeManagerID => 'c.change_manager_id',
+        ChangeBuilderID => 'c.change_builder_id',
+        CreateTime      => 'c.create_time',
+        CreateBy        => 'c.create_by',
+        ChangeTime      => 'c.change_time',
+        ChangeBy        => 'c.change_by',
+        PlannedStartTime =>
+            q{ COALESCE( min(COLASCE(wo1.planned_start_time, '0001:01:01 01:01:01')), '0001:01:01 01:01:01') },
+        PlannedEndTime =>
+            q{ COALESCE( max(COLASCE(wo1.planned_end_time, '9999:01:01 01:01:01')), '9999:01:01 01:01:01') },
+        ActualStartTime => q{ COALESCE( min(wo1.actual_start_time), '0001:01:01 01:01:01') >= },
+        ActualEndTime =>
+            q{ COALESCE( max(COLASCE(wo1.actual_end_time, '9999:01:01 01:01:01')), '9999:01:01 01:01:01') },
     );
 
     # check if OrderBy contains only unique valid values
@@ -900,9 +903,10 @@ sub ChangeSearch {
         $Param{UsingWildcards} = 1;
     }
 
-    my @SQLWhere;      # assemble the conditions used in the WHERE clause
-    my @SQLHaving;     # assemble the conditions used in the HAVING clause
-    my @JoinTables;    # keep track of the tables that need to be joined
+    my @SQLWhere;           # assemble the conditions used in the WHERE clause
+    my @SQLHaving;          # assemble the conditions used in the HAVING clause
+    my @InnerJoinTables;    # keep track of the tables that need to be inner joined
+    my @OuterJoinTables;    # keep track of the tables that need to be outer joined
 
     # set string params
     my %StringParams = (
@@ -1013,16 +1017,29 @@ sub ChangeSearch {
         push @SQLWhere, "$TimeParams{$TimeParam} '$Param{$TimeParam}'";
     }
 
-    # set time params in workorder table
+# set time params in workorder table
+# Two cases need to be considered:
+# i. There are no workorders at all: min() and max() give NULL. The first COALESCE ensures the sorting.
+# ii. There is at least one workorder with an undefined time: The second COALESCE ensures the sorting.
+# ActualStartTime is a special case. The actual start time of a change is defined when
+# the actual start time of at lease one workorder is defined. The second COALESCE is not needed.
     my %WorkOrderTimeParams = (
-        PlannedStartTimeNewerDate => 'min(wo1.planned_start_time) >=',
-        PlannedStartTimeOlderDate => 'min(wo1.planned_start_time) <=',
-        PlannedEndTimeNewerDate   => 'max(wo1.planned_end_time) >=',
-        PlannedEndTimeOlderDate   => 'max(wo1.planned_end_time) <=',
-        ActualStartTimeNewerDate  => 'min(wo1.actual_start_time) >=',
-        ActualStartTimeOlderDate  => 'min(wo1.actual_start_time) <=',
-        ActualEndTimeNewerDate    => 'max(wo1.actual_end_time) >=',
-        ActualEndTimeOlderDate    => 'max(wo1.actual_end_time) <=',
+        PlannedStartTimeNewerDate =>
+            q{ COALESCE( min(COLASCE(wo1.planned_start_time, '0001:01:01 01:01:01')), '0001:01:01 01:01:01') >= },
+        PlannedStartTimeOlderDate =>
+            q{ COALESCE( min(COLASCE(wo1.planned_start_time, '0001:01:01 01:01:01')), '0001:01:01 01:01:01') <= },
+        PlannedEndTimeNewerDate =>
+            q{ COALESCE( max(COLASCE(wo1.planned_end_time, '9999:01:01 01:01:01')), '9999:01:01 01:01:01') >= },
+        PlannedEndTimeOlderDate =>
+            q{ COALESCE( max(COLASCE(wo1.planned_end_time, '9999:01:01 01:01:01')), '9999:01:01 01:01:01') <= },
+        ActualStartTimeNewerDate =>
+            q{ COALESCE( min(wo1.actual_start_time), '0001:01:01 01:01:01') >= },
+        ActualStartTimeOlderDate =>
+            q{ COALESCE( min(wo1.actual_start_time), '0001:01:01 01:01:01') <= },
+        ActualEndTimeNewerDate =>
+            q{ COALESCE( max(COLASCE(wo1.actual_end_time, '9999:01:01 01:01:01')), '9999:01:01 01:01:01') >= },
+        ActualEndTimeOlderDate =>
+            q{ COALESCE( max(COLASCE(wo1.actual_end_time, '9999:01:01 01:01:01')), '9999:01:01 01:01:01') <= },
     );
 
     # add work order time params to sql-having-array
@@ -1042,8 +1059,8 @@ sub ChangeSearch {
         # quote
         $Param{$TimeParam} = $Self->{DBObject}->Quote( $Param{$TimeParam} );
 
-        push @SQLHaving,  "$WorkOrderTimeParams{$TimeParam} '$Param{$TimeParam}'";
-        push @JoinTables, 'wo1';
+        push @SQLHaving,       "$WorkOrderTimeParams{$TimeParam} '$Param{$TimeParam}'";
+        push @OuterJoinTables, 'wo1';
     }
 
     # conditions for CAB searches
@@ -1076,15 +1093,15 @@ sub ChangeSearch {
 
             # CABAgent is a integer, so no quotes are needed
             my $InString = join q{, }, @{ $Param{$CABParam} };
-            push @SQLWhere,   "$CABParams{$CABParam} IN ($InString)";
-            push @JoinTables, 'cab1';
+            push @SQLWhere,        "$CABParams{$CABParam} IN ($InString)";
+            push @InnerJoinTables, 'cab1';
         }
         elsif ( $CABParam eq 'CABCustomers' ) {
 
             # CABCustomer is a string, so the single quotes are needed
             my $InString = join q{, }, map {"'$_'"} @{ $Param{$CABParam} };
-            push @SQLWhere,   "$CABParams{$CABParam} IN ($InString)";
-            push @JoinTables, 'cab2';
+            push @SQLWhere,        "$CABParams{$CABParam} IN ($InString)";
+            push @InnerJoinTables, 'cab2';
         }
     }
 
@@ -1108,8 +1125,8 @@ sub ChangeSearch {
             # create string
             my $InString = join q{, }, @{ $Param{WorkOrderAgentIDs} };
 
-            push @SQLWhere,   "wo2.workorder_agent_id IN ( $InString )";
-            push @JoinTables, 'wo2';
+            push @SQLWhere,        "wo2.workorder_agent_id IN ( $InString )";
+            push @InnerJoinTables, 'wo2';
         }
     }
 
@@ -1145,7 +1162,7 @@ sub ChangeSearch {
 
         # for some order fields, we need to make sure, that the wo1 table is joined
         if ( $TableRequiresJoin{$OrderBy} ) {
-            push @JoinTables, 'wo1';
+            push @OuterJoinTables, 'wo1';
         }
     }
     continue {
@@ -1170,7 +1187,7 @@ sub ChangeSearch {
     my %TableSeen;
 
     TABLE:
-    for my $Table (@JoinTables) {
+    for my $Table (@InnerJoinTables) {
 
         # do not join a table twice
         next TABLE if $TableSeen{$Table};
@@ -1180,12 +1197,30 @@ sub ChangeSearch {
         if ( !$LongTableName{$Table} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Encountered invalid join table '$Table'!",
+                Message  => "Encountered invalid inner join table '$Table'!",
             );
             return;
         }
 
         $SQL .= "INNER JOIN $LongTableName{$Table} $Table ON $Table.change_id = c.id ";
+    }
+
+    for my $Table (@OuterJoinTables) {
+
+        # do not join a table twice, when a table has been inner joined, no outer join is necessary
+        next TABLE if $TableSeen{$Table};
+
+        $TableSeen{$Table} = 1;
+
+        if ( !$LongTableName{$Table} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Encountered invalid outer join table '$Table'!",
+            );
+            return;
+        }
+
+        $SQL .= "OUTER JOIN $LongTableName{$Table} $Table ON $Table.change_id = c.id ";
     }
 
     # add the WHERE clause
@@ -1196,7 +1231,7 @@ sub ChangeSearch {
     }
 
     # we need to group whenever there is a join
-    if (@JoinTables) {
+    if ( scalar(@InnerJoinTables) || scalar(@OuterJoinTables) ) {
         $SQL .= 'GROUP BY c.id ';
     }
 
@@ -1745,6 +1780,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.74 $ $Date: 2009-10-16 06:44:37 $
+$Revision: 1.75 $ $Date: 2009-10-16 08:55:40 $
 
 =cut
