@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.37 2009-10-16 12:46:15 reb Exp $
+# $Id: ITSMWorkOrder.t,v 1.38 2009-10-16 12:58:49 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1434,6 +1434,196 @@ for my $OrderByColumn (qw(PlannedStartTime PlannedEndTime ActualStartTime Actual
 
     $OrderByTestCount++;
     $TestCount++;
+}
+
+# ------------------------------------------------------------ #
+# test WorkOrderChangeTimeGet
+# ------------------------------------------------------------ #
+my @WOCTGTests = (
+    {
+        Description => 'Generic test for WorkOrderChangeTimeGet',
+        SourceData  => {
+            ChangeAdd => {
+                UserID => 1,
+            },
+            WorkOrderAdd => {
+                UserID => 1,
+            },
+        },
+        ReferenceData => {
+            WorkOrderChangeTimeGet => {
+                UserID => 1,
+                Types  => [
+                    'PlannedStartTime',
+                    'PlannedEndTime',
+                    'ActualStartTime',
+                    'ActualEndTime',
+                ],
+                ResultData => [
+                    undef,
+                    undef,
+                    undef,
+                    undef,
+                ],
+            },
+        },
+    },
+    {
+        Description => 'Generic test for WorkOrderChangeTimeGet',
+        SourceData  => {
+            ChangeAdd => {
+                UserID => 1,
+            },
+            WorkOrderAdd => {
+                UserID           => 1,
+                PlannedStartTime => '2009-10-01 00:00:00',
+                PlannedEndTime   => '2009-10-02 23:59:59',
+                ActualStartTime  => '2009-10-01 00:08:00',
+                ActualEndTime    => '2009-10-02 00:18:00',
+            },
+        },
+        ReferenceData => {
+            WorkOrderChangeTimeGet => {
+                UserID => 1,
+                Types  => [
+                    'PlannedStartTime',
+                    'PlannedEndTime',
+                    'ActualStartTime',
+                    'ActualEndTime',
+                ],
+                ResultData => [
+                    '2009-10-01 00:00:00',
+                    '2009-10-02 23:59:59',
+                    '2009-10-01 00:08:00',
+                    '2009-10-02 00:18:00',
+                ],
+            },
+        },
+    },
+    {
+        Description => 'Generic test for WorkOrderChangeTimeGet',
+        SourceData  => {
+            ChangeAdd => {
+                UserID => 1,
+            },
+            WorkOrderAdd => {
+                UserID           => 1,
+                PlannedStartTime => '2009-10-01 00:00:00',
+                PlannedEndTime   => '2009-10-02 23:59:59',
+            },
+        },
+        ReferenceData => {
+            WorkOrderChangeTimeGet => {
+                UserID => 1,
+                Types  => [
+                    'PlannedStartTime',
+                    'PlannedEndTime',
+                    'ActualStartTime',
+                    'ActualEndTime',
+                ],
+                ResultData => [
+                    '2009-10-01 00:00:00',
+                    '2009-10-02 23:59:59',
+                    undef,
+                    undef,
+                ],
+            },
+        },
+    },
+    {
+        Description => 'Generic test for WorkOrderChangeTimeGet',
+        SourceData  => {
+            ChangeAdd => {
+                UserID => 1,
+            },
+            WorkOrderAdd => {
+                UserID          => 1,
+                ActualStartTime => '2009-10-01 00:08:00',
+            },
+        },
+        ReferenceData => {
+            WorkOrderChangeTimeGet => {
+                UserID => 1,
+                Types  => [
+                    'PlannedStartTime',
+                    'PlannedEndTime',
+                    'ActualStartTime',
+                    'ActualEndTime',
+                ],
+                ResultData => [
+                    undef,
+                    undef,
+                    '2009-10-01 00:08:00',
+                    undef,
+                ],
+            },
+        },
+    },
+);
+
+my $WOCTGTestCount = 1;
+for my $WOCTGTest (@WOCTGTests) {
+    my $SourceData    = $WOCTGTest->{SourceData};
+    my $ReferenceData = $WOCTGTest->{ReferenceData};
+
+    my $ChangeID;
+    my $WorkOrderID;
+
+    $Self->True(
+        1,
+        "Test $TestCount: $WOCTGTest->{Description} (WOCTGTest case: $WOCTGTestCount)",
+    );
+
+    if ( $SourceData->{ChangeAdd} ) {
+        $ChangeID = $Self->{ChangeObject}->ChangeAdd(
+            %{ $SourceData->{ChangeAdd} },
+        );
+
+        $Self->True(
+            $ChangeID,
+            "Test $TestCount: |- ChangeAdd",
+        );
+    }
+
+    if ( $SourceData->{WorkOrderAdd} ) {
+        $WorkOrderID = $Self->{WorkOrderObject}->WorkOrderAdd(
+            %{ $SourceData->{WorkOrderAdd} },
+            ChangeID => $ChangeID,
+        );
+
+        if ($ChangeID) {
+            $TestedChangeID{$ChangeID} = 1;
+        }
+
+        $Self->True(
+            $ChangeID,
+            "Test $TestCount: |- WorkOrderAdd",
+        );
+    }
+
+    if ( $ReferenceData->{WorkOrderChangeTimeGet} ) {
+        my $Times = $Self->{WorkOrderObject}->WorkOrderChangeTimeGet(
+            %{ $ReferenceData->{WorkOrderChangeTimeGet} },
+            ChangeID => $ChangeID,
+        );
+
+        # Test for right values in result
+        TIMEVALUE:
+        for my $TimeValue (
+            0 .. ( scalar @{ $ReferenceData->{WorkOrderChangeTimeGet}->{ResultData} } - 1 )
+            )
+        {
+            $Self->Is(
+                $Times->[$TimeValue],
+                $ReferenceData->{WorkOrderChangeTimeGet}->{ResultData}->[$TimeValue],
+                "Test $TestCount: |- check TimeResult ("
+                    . $ReferenceData->{WorkOrderChangeTimeGet}->{Types}->[$TimeValue] . ")",
+            );
+        }
+    }
+
+    $TestCount++;
+    $WOCTGTestCount++;
 }
 
 # ------------------------------------------------------------ #
