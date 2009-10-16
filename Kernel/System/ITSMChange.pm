@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.77 2009-10-16 12:13:01 reb Exp $
+# $Id: ITSMChange.pm,v 1.78 2009-10-16 12:24:45 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::CustomerUser;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.77 $) [1];
+$VERSION = qw($Revision: 1.78 $) [1];
 
 =head1 NAME
 
@@ -367,13 +367,13 @@ sub ChangeGet {
 
     # get timestamps for the change
     my @TimeTypes   = qw(PlannedStartTime PlannedEndTime ActualStartTime ActualEndTime);
-    my @ChangeTimes = $Self->{WorkOrderObject}->WorkOrderChangeTimeGet(
+    my $ChangeTimes = $Self->{WorkOrderObject}->WorkOrderChangeTimeGet(
         ChangeID => $Param{ChangeID},
         Types    => [@TimeTypes],
         UserID   => $Param{UserID},
     );
 
-    @ChangeData{@TimeTypes} = @ChangeTimes;
+    @ChangeData{@TimeTypes} = @{$ChangeTimes};
 
     return \%ChangeData;
 }
@@ -1765,6 +1765,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.77 $ $Date: 2009-10-16 12:13:01 $
+$Revision: 1.78 $ $Date: 2009-10-16 12:24:45 $
 
 =cut
