@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.24 2009-10-16 07:23:53 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.25 2009-10-16 08:28:00 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1066,10 +1066,6 @@ for my $SearchTest (@WorkOrderSearchTests) {
         # check if all ids that belongs to this searchtest are returned
         my @WorkOrderIDs = keys %{ $WorkOrderIDForSearchTest{$SearchTestCount} };
 
-        if ( $SearchTest->{ResultData}->{IDExpected} ) {
-            @WorkOrderIDs = $SearchTest->{ResultData}->{IDExpected};
-        }
-
         my %ReturnedWorkOrderID = map { $_ => 1 } @{$WorkOrderIDs};
         for my $WorkOrderID (@WorkOrderIDs) {
             $Self->True(
@@ -1082,6 +1078,164 @@ for my $SearchTest (@WorkOrderSearchTests) {
 continue {
     $TestCount++;
     $SearchTestCount++;
+}
+
+# ------------------------------------------------------------ #
+# test sorting of changes (some have no workorder, others have severel workorders)
+# ------------------------------------------------------------ #
+my $ChangesTitle       = 'ChangeSearchOrderByTimes - ' . $UniqueSignature;
+my @ChangesForSortTest = (
+    {
+        Change => {
+            Title  => $ChangesTitle,
+            UserID => 1,
+        },
+        Workorders => [
+            {
+                ActualStartTime => '2009-06-30 09:33:12',
+                ActualEndTime   => '2009-09-01 01:12:55',
+                UserID          => 1,
+            },
+        ],
+    },
+    {
+        Change => {
+            Title  => $ChangesTitle,
+            UserID => 1,
+        },
+        Workorders => [
+            {
+                PlannedStartTime => '2009-02-21 13:25:09',
+                PlannedEndTime   => '2009-10-13 22:15:56',
+                ActualStartTime  => '2009-05-31 09:33:12',
+                ActualEndTime    => '2009-10-01 01:12:55',
+                UserID           => 1,
+            },
+            {
+                PlannedStartTime => '2009-03-25 13:25:09',
+                PlannedEndTime   => '2009-09-13 22:15:56',
+                ActualStartTime  => '2009-06-01 09:33:12',
+                ActualEndTime    => '2009-11-01 01:12:55',
+                UserID           => 1,
+            },
+        ],
+    },
+    {
+        Change => {
+            Title  => $ChangesTitle,
+            UserID => 1,
+        },
+        Workorders => [],
+    },
+    {
+        Change => {
+            Title  => $ChangesTitle,
+            UserID => 1,
+        },
+        Workorders => [
+            {
+                PlannedStartTime => '2009-03-21 13:25:09',
+                PlannedEndTime   => '2009-10-13 22:15:56',
+                ActualStartTime  => '2009-06-30 09:33:12',
+                ActualEndTime    => '2009-09-01 01:12:55',
+                UserID           => 1,
+            },
+            {
+                PlannedStartTime => '2009-03-20 13:25:09',
+                PlannedEndTime   => '2009-10-12 22:15:56',
+                UserID           => 1,
+            },
+            {
+                PlannedStartTime => '2009-03-22 13:25:09',
+                PlannedEndTime   => '2009-10-11 22:15:56',
+                UserID           => 1,
+            },
+        ],
+    },
+);
+
+my @ChangeIDsForSortTest;
+for my $Change (@ChangesForSortTest) {
+
+    # create change
+    my $ChangeID = $Self->{ChangeObject}->ChangeAdd( %{ $Change->{Change} } );
+
+    $Self->True(
+        $ChangeID,
+        "Test: $TestCount: Change for sort test created",
+    );
+
+    # store ChangeID
+    push @ChangeIDsForSortTest, $ChangeID;
+
+    # add the workorders for the change
+    my $WorkOrderCount = 1;
+    for my $WorkOrder ( @{ $Change->{Workorders} } ) {
+        my $WorkOrderID = $Self->{WorkOrderObject}->WorkOrderAdd(
+            ChangeID => $ChangeID,
+            %{$WorkOrder},
+        );
+
+        $Self->True(
+            $WorkOrderID,
+            "Test: $TestCount: WorkOrder $WorkOrderCount for Change created",
+        );
+
+        $WorkOrderCount++;
+    }
+}
+continue {
+    $TestCount++;
+}
+
+my @Testplan = (
+    [ 0, 2, 1, 3 ],    # index of changes in @ChangeIDsForSortTest
+    [ 1, 3, 0, 2 ],
+    [ 2, 1, 0, 3 ],
+    [ 0, 1, 3, 2 ],
+);
+
+# Do the testing
+my $OrderByTestCount = 0;
+for my $OrderByColumn (qw(PlannedStartTime PlannedEndTime ActualStartTime ActualEndTime)) {
+
+    # turn off all pretty print
+    local $Data::Dumper::Indent = 0;
+    local $Data::Dumper::Useqq  = 1;
+
+    # result what we expect
+    my @ResultReference = map { $ChangeIDsForSortTest[$_] } @{ $Testplan[$OrderByTestCount] };
+
+    # search with direction 'DOWN'
+    my $SearchResult = $Self->{ChangeObject}->ChangeSearch(
+        Title            => $ChangesTitle,
+        OrderBy          => [ $OrderByColumn, 'ChangeID' ],
+        OrderByDirection => [ 'Down', 'Up' ],
+        UserID           => 1,
+    );
+
+    $Self->Is(
+        Data::Dumper::Dumper($SearchResult),
+        Data::Dumper::Dumper( \@ResultReference ),
+        "Test $TestCount: ChangeSearch OrderBy $OrderByColumn (Down)",
+    );
+
+    # search with direction 'UP'
+    my $SearchResultUp = $Self->{ChangeObject}->ChangeSearch(
+        Title            => $ChangesTitle,
+        OrderBy          => [ $OrderByColumn, 'ChangeID' ],
+        OrderByDirection => [ 'Up', 'Up' ],
+        UserID           => 1,
+    );
+
+    $Self->Is(
+        Data::Dumper::Dumper($SearchResultUp),
+        Data::Dumper::Dumper( [ reverse @ResultReference ] ),
+        "Test $TestCount: ChangeSearch OrderBy $OrderByColumn (Up)",
+    );
+
+    $OrderByTestCount++;
+    $TestCount++;
 }
 
 # ------------------------------------------------------------ #
