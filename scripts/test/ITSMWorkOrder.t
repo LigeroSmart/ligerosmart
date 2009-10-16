@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.26 2009-10-16 09:01:01 reb Exp $
+# $Id: ITSMWorkOrder.t,v 1.27 2009-10-16 10:15:39 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1188,10 +1188,10 @@ continue {
 }
 
 my @Testplan = (
-    [ 0, 2, 1, 3 ],    # index of changes in @ChangeIDsForSortTest
-    [ 1, 3, 0, 2 ],
-    [ 2, 1, 0, 3 ],
-    [ 0, 1, 3, 2 ],
+    [ 3, 1, 0, 2 ],    # index of changes in @ChangeIDsForSortTest
+    [ 0, 2, 1, 3 ],
+    [ 0, 3, 1, 2 ],
+    [ 2, 3, 1, 0 ],
 );
 
 # Do the testing
