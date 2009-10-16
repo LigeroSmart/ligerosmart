@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.28 2009-10-16 10:20:54 reb Exp $
+# $Id: ITSMWorkOrder.t,v 1.29 2009-10-16 10:28:18 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -210,66 +210,6 @@ my @ChangeTests     = (
         ReferenceData => {
             ChangeGet => {
                 Title => 'Change 1 - Title - ' . $UniqueSignature,
-            },
-        },
-    },
-
-    {
-        Description => 'A change for testing WorkOrderChangeTimeGet() without workorders.',
-        SourceData  => {
-            ChangeAdd => {
-                Title  => 'Testing WorkOrderChangeTimeGet(), no workorder ' . $UniqueSignature,
-                UserID => $UserIDs[0],
-            },
-        },
-        ReferenceData => {
-            ChangeGet => {
-                Title => 'Testing WorkOrderChangeTimeGet(), no workorder ' . $UniqueSignature,
-            },
-        },
-    },
-
-    {
-        Description => 'A change for testing WorkOrderChangeTimeGet() with a single workorder.',
-        SourceData  => {
-            ChangeAdd => {
-                Title  => 'Testing WorkOrderChangeTimeGet(), one workorder ' . $UniqueSignature,
-                UserID => $UserIDs[0],
-            },
-        },
-        ReferenceData => {
-            ChangeGet => {
-                Title => 'Testing WorkOrderChangeTimeGet(), one workorder ' . $UniqueSignature,
-            },
-        },
-    },
-
-    {
-        Description => 'A change for testing WorkOrderChangeTimeGet() with two workorders.',
-        SourceData  => {
-            ChangeAdd => {
-                Title  => 'Testing WorkOrderChangeTimeGet(), two workorders ' . $UniqueSignature,
-                UserID => $UserIDs[0],
-            },
-        },
-        ReferenceData => {
-            ChangeGet => {
-                Title => 'Testing WorkOrderChangeTimeGet(), two workorders ' . $UniqueSignature,
-            },
-        },
-    },
-
-    {
-        Description => 'A change for testing WorkOrderChangeTimeGet() with three workorders.',
-        SourceData  => {
-            ChangeAdd => {
-                Title  => 'Testing WorkOrderChangeTimeGet(), three workorders ' . $UniqueSignature,
-                UserID => $UserIDs[0],
-            },
-        },
-        ReferenceData => {
-            ChangeGet => {
-                Title => 'Testing WorkOrderChangeTimeGet(), three workorders ' . $UniqueSignature,
             },
         },
     },
