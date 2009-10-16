@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.75 2009-10-16 08:55:40 bes Exp $
+# $Id: ITSMChange.pm,v 1.76 2009-10-16 09:17:36 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::CustomerUser;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.75 $) [1];
+$VERSION = qw($Revision: 1.76 $) [1];
 
 =head1 NAME
 
@@ -850,12 +850,13 @@ sub ChangeSearch {
         ChangeTime      => 'c.change_time',
         ChangeBy        => 'c.change_by',
         PlannedStartTime =>
-            q{ COALESCE( min(COLASCE(wo1.planned_start_time, '0001:01:01 01:01:01')), '0001:01:01 01:01:01') },
+            q{COALESCE( min(COALESCE(wo1.planned_start_time, '0001:01:01 01:01:01')), '0001:01:01 01:01:01')},
         PlannedEndTime =>
-            q{ COALESCE( max(COLASCE(wo1.planned_end_time, '9999:01:01 01:01:01')), '9999:01:01 01:01:01') },
-        ActualStartTime => q{ COALESCE( min(wo1.actual_start_time), '0001:01:01 01:01:01') >= },
+            q{COALESCE( max(COALESCE(wo1.planned_end_time, '9999:01:01 01:01:01')), '9999:01:01 01:01:01')},
+        ActualStartTime =>
+            q{COALESCE( min(wo1.actual_start_time), '0001:01:01 01:01:01')},
         ActualEndTime =>
-            q{ COALESCE( max(COLASCE(wo1.actual_end_time, '9999:01:01 01:01:01')), '9999:01:01 01:01:01') },
+            q{COALESCE( max(COALESCE(wo1.actual_end_time, '9999:01:01 01:01:01')), '9999:01:01 01:01:01')},
     );
 
     # check if OrderBy contains only unique valid values
@@ -1025,21 +1026,21 @@ sub ChangeSearch {
 # the actual start time of at lease one workorder is defined. The second COALESCE is not needed.
     my %WorkOrderTimeParams = (
         PlannedStartTimeNewerDate =>
-            q{ COALESCE( min(COLASCE(wo1.planned_start_time, '0001:01:01 01:01:01')), '0001:01:01 01:01:01') >= },
+            q{ COALESCE( min(COALESCE(wo1.planned_start_time, '0001:01:01 01:01:01')), '0001:01:01 01:01:01') >= },
         PlannedStartTimeOlderDate =>
-            q{ COALESCE( min(COLASCE(wo1.planned_start_time, '0001:01:01 01:01:01')), '0001:01:01 01:01:01') <= },
+            q{ COALESCE( min(COALESCE(wo1.planned_start_time, '0001:01:01 01:01:01')), '0001:01:01 01:01:01') <= },
         PlannedEndTimeNewerDate =>
-            q{ COALESCE( max(COLASCE(wo1.planned_end_time, '9999:01:01 01:01:01')), '9999:01:01 01:01:01') >= },
+            q{ COALESCE( max(COALESCE(wo1.planned_end_time, '9999:01:01 01:01:01')), '9999:01:01 01:01:01') >= },
         PlannedEndTimeOlderDate =>
-            q{ COALESCE( max(COLASCE(wo1.planned_end_time, '9999:01:01 01:01:01')), '9999:01:01 01:01:01') <= },
+            q{ COALESCE( max(COALESCE(wo1.planned_end_time, '9999:01:01 01:01:01')), '9999:01:01 01:01:01') <= },
         ActualStartTimeNewerDate =>
             q{ COALESCE( min(wo1.actual_start_time), '0001:01:01 01:01:01') >= },
         ActualStartTimeOlderDate =>
             q{ COALESCE( min(wo1.actual_start_time), '0001:01:01 01:01:01') <= },
         ActualEndTimeNewerDate =>
-            q{ COALESCE( max(COLASCE(wo1.actual_end_time, '9999:01:01 01:01:01')), '9999:01:01 01:01:01') >= },
+            q{ COALESCE( max(COALESCE(wo1.actual_end_time, '9999:01:01 01:01:01')), '9999:01:01 01:01:01') >= },
         ActualEndTimeOlderDate =>
-            q{ COALESCE( max(COLASCE(wo1.actual_end_time, '9999:01:01 01:01:01')), '9999:01:01 01:01:01') <= },
+            q{ COALESCE( max(COALESCE(wo1.actual_end_time, '9999:01:01 01:01:01')), '9999:01:01 01:01:01') <= },
     );
 
     # add work order time params to sql-having-array
@@ -1220,7 +1221,7 @@ sub ChangeSearch {
             return;
         }
 
-        $SQL .= "OUTER JOIN $LongTableName{$Table} $Table ON $Table.change_id = c.id ";
+        $SQL .= "LEFT OUTER JOIN $LongTableName{$Table} $Table ON $Table.change_id = c.id ";
     }
 
     # add the WHERE clause
@@ -1260,6 +1261,8 @@ sub ChangeSearch {
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         push @ChangeIDList, $Row[0];
     }
+
+    #use Data::Dumper; die Dumper( \%Param, $SQL, \@ChangeIDList );
 
     return \@ChangeIDList;
 }
@@ -1780,6 +1783,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.75 $ $Date: 2009-10-16 08:55:40 $
+$Revision: 1.76 $ $Date: 2009-10-16 09:17:36 $
 
 =cut
