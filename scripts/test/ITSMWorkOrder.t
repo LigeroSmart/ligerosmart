@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.31 2009-10-16 11:24:44 reb Exp $
+# $Id: ITSMWorkOrder.t,v 1.32 2009-10-16 11:41:38 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -777,6 +777,32 @@ for my $Test (@WorkOrderTests) {
         }
     }    # end if 'WorkOrderAdd'
 
+    if ( $SourceData->{WorkOrderUpdate} ) {
+
+        # update the change
+        my $WorkOrderUpdateSuccess = $Self->{WorkOrderObject}->WorkOrderUpdate(
+            WorkOrderID => $WorkOrderID,
+            %{ $SourceData->{WorkOrderUpdate} },
+        );
+
+        if (
+            $Test->{Fails}
+            || $Test->{UpdateFails}
+            )
+        {
+            $Self->False(
+                $WorkOrderUpdateSuccess,
+                "Test $TestCount: WorkOrderUpdate()",
+            );
+        }
+        else {
+            $Self->True(
+                $WorkOrderUpdateSuccess,
+                "Test $TestCount: WorkOrderUpdate()",
+            );
+        }
+    }
+
     # get a workorder and compare the retrieved data with the reference
     if ( exists $ReferenceData->{WorkOrderGet} ) {
 
@@ -832,7 +858,7 @@ for my $Test (@WorkOrderTests) {
             $Self->Is(
                 $WorkOrderAttribute,
                 $ReferenceAttribute,
-                "Test $TestCount: |- $ReferenceAttribute",
+                "Test $TestCount: |- $ReferenceAttribute ( $WorkOrderID )",
             );
         }
     }    # end if 'WorkOrderGet'
