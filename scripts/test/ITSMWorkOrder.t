@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.40 2009-10-16 13:10:51 reb Exp $
+# $Id: ITSMWorkOrder.t,v 1.41 2009-10-16 13:21:08 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -734,7 +734,6 @@ push @WorkOrderTests, (
 
     {
         Description => 'Test for TimeChanges - just ActualStartTime - for WorkOrderUpdate.',
-        UpdateFails => 1,
         SourceData  => {
             WorkOrderAdd => {
                 UserID   => $UserIDs[0],
@@ -749,11 +748,12 @@ push @WorkOrderTests, (
         },
         ReferenceData => {
             WorkOrderGet => {
-                Title       => q{},
-                Instruction => q{},
-                Report      => 'Report - just ActualStartTime',
-                ChangeBy    => $UserIDs[0],
-                CreateBy    => $UserIDs[0],
+                Title           => 'Test',
+                Instruction     => q{},
+                Report          => 'Report - just ActualStartTime',
+                ActualStartTime => '2009-03-20 13:25:09',
+                ChangeBy        => 1,
+                CreateBy        => $UserIDs[0],
             },
         },
         SearchTest => [8],
@@ -867,22 +867,6 @@ push @WorkOrderTests, (
             },
         },
         SearchTest => [8],
-    },
-);
-
-# tests for WorkOrderChangeTimeGet()
-push @WorkOrderTests, (
-    {
-        Description => 'Test contains no params for WorkOrderUpdate().',
-        SourceData  => {
-            WorkOrderAdd => {
-                UserID   => 1,
-                ChangeID => $TimesTestID,
-            },
-        },
-        ReferenceData => {
-            WorkOrderUpdate => undef,
-        },
     },
 );
 
