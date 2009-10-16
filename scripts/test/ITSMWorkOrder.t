@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.39 2009-10-16 13:04:11 reb Exp $
+# $Id: ITSMWorkOrder.t,v 1.40 2009-10-16 13:10:51 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -462,7 +462,7 @@ push @WorkOrderTests, (
                 Report      => 'WorkOrder 1 - Report - ' . $UniqueSignature,
             },
         },
-        SearchTest => [ 2, 3, 4, 5, 6, 7, 8 ],
+        SearchTest => [ 2, 3, 4, 5, 6, 8 ],
     },
     {
         Description => 'WorkOrderAdd() with empty string parameters.',
@@ -1212,7 +1212,7 @@ my @WorkOrderSearchTests = (
         },
         ResultData => {
             TestCount => 1,
-            Count     => 1,
+            Count     => 0,
         },
     },
 
