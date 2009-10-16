@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.35 2009-10-16 12:07:29 mae Exp $
+# $Id: ITSMWorkOrder.t,v 1.36 2009-10-16 12:35:49 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -573,6 +573,33 @@ push @WorkOrderTests, (
                 ChangeBy    => 1,
             },
         },
+        SearchTest => [2],
+    },
+
+    {
+        Description => 'Test create_by and change_by for WorkOrderUpdate.',
+        SourceData  => {
+            WorkOrderAdd => {
+                UserID   => $UserIDs[0],
+                ChangeID => $WorkOrderAddTestID,
+            },
+            WorkOrderUpdate => {
+                UserID      => 1,
+                Title       => 'T' x 25,
+                Instruction => 'I' x 38,
+                Report      => 'R' x 38,
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                Title       => 'T' x 25,
+                Instruction => 'I' x 38,
+                Report      => 'R' x 38,
+                CreateBy    => $UserIDs[0],
+                ChangeBy    => 1,
+            },
+        },
+        SearchTest => [2],
     },
 
     {
@@ -643,6 +670,167 @@ push @WorkOrderTests, (
                 Title       => q{},
                 Instruction => q{},
                 Report      => q{},
+            },
+        },
+    },
+
+    {
+        Description => 'Test for TimeChanges - just PlannedStartTime - for WorkOrderUpdate.',
+        UpdateFails => 1,
+        SourceData  => {
+            WorkOrderAdd => {
+                UserID   => $UserIDs[0],
+                ChangeID => $WorkOrderAddTestID,
+                Report   => 'Update fails',
+            },
+            WorkOrderUpdate => {
+                PlannedStartTime => '2009-03-20 13:25:09',
+                Title            => 'Test',
+                UserID           => 1,
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                Title       => q{},
+                Instruction => q{},
+                Report      => 'Update fails',
+                ChangeBy    => $UserIDs[0],
+                CreateBy    => $UserIDs[0],
+            },
+        },
+    },
+
+    {
+        Description => 'Test for TimeChanges - just PlannedEndTime - for WorkOrderUpdate.',
+        UpdateFails => 1,
+        SourceData  => {
+            WorkOrderAdd => {
+                UserID   => $UserIDs[0],
+                ChangeID => $WorkOrderAddTestID,
+                Report   => 'Update fails',
+            },
+            WorkOrderUpdate => {
+                PlannedEndTime => '2009-03-20 13:25:09',
+                Title          => 'Test',
+                UserID         => 1,
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                Title       => q{},
+                Instruction => q{},
+                Report      => 'Update fails',
+                ChangeBy    => $UserIDs[0],
+                CreateBy    => $UserIDs[0],
+            },
+        },
+    },
+
+    {
+        Description => 'Test for TimeChanges - just ActualStartTime - for WorkOrderUpdate.',
+        UpdateFails => 1,
+        SourceData  => {
+            WorkOrderAdd => {
+                UserID   => $UserIDs[0],
+                ChangeID => $WorkOrderAddTestID,
+                Report   => 'Update fails',
+            },
+            WorkOrderUpdate => {
+                ActualStartTime => '2009-03-20 13:25:09',
+                Title           => 'Test',
+                UserID          => 1,
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                Title       => q{},
+                Instruction => q{},
+                Report      => 'Update fails',
+                ChangeBy    => $UserIDs[0],
+                CreateBy    => $UserIDs[0],
+            },
+        },
+    },
+
+    {
+        Description => 'Test for TimeChanges - just ActualStartTime - for WorkOrderUpdate.',
+        UpdateFails => 1,
+        SourceData  => {
+            WorkOrderAdd => {
+                UserID   => $UserIDs[0],
+                ChangeID => $WorkOrderAddTestID,
+                Report   => 'Update fails',
+            },
+            WorkOrderUpdate => {
+                ActualEndTime => '2009-03-20 13:25:09',
+                Title         => 'Test',
+                UserID        => 1,
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                Title       => q{},
+                Instruction => q{},
+                Report      => 'Update fails',
+                ChangeBy    => $UserIDs[0],
+                CreateBy    => $UserIDs[0],
+            },
+        },
+    },
+
+    {
+        Description =>
+            'Test for TimeChanges - ActualStartTime > ActualEndTime - for WorkOrderUpdate.',
+        UpdateFails => 1,
+        SourceData  => {
+            WorkOrderAdd => {
+                UserID   => $UserIDs[0],
+                ChangeID => $WorkOrderAddTestID,
+                Report   => 'Update fails',
+            },
+            WorkOrderUpdate => {
+                ActualEndTime   => '2009-03-20 13:25:09',
+                ActualStartTime => '2009-03-21 13:25:09',
+                Title           => 'Test',
+                UserID          => 1,
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                Title       => q{},
+                Instruction => q{},
+                Report      => 'Update fails',
+                ChangeBy    => $UserIDs[0],
+                CreateBy    => $UserIDs[0],
+            },
+        },
+    },
+
+    {
+        Description =>
+            'Test for TimeChanges - ActualStartTime < ActualEndTime - for WorkOrderUpdate.',
+        SourceData => {
+            WorkOrderAdd => {
+                UserID   => $UserIDs[0],
+                ChangeID => $WorkOrderAddTestID,
+                Report   => 'Update fails',
+            },
+            WorkOrderUpdate => {
+                ActualEndTime   => '2009-03-22 13:25:09',
+                ActualStartTime => '2009-03-21 13:25:09',
+                Title           => 'Test',
+                UserID          => 1,
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                Title           => q{},
+                Instruction     => q{},
+                Report          => 'Update fails',
+                ChangeBy        => $UserIDs[0],
+                CreateBy        => $UserIDs[0],
+                ActualEndTime   => '2009-03-22 13:25:09',
+                ActualStartTime => '2009-03-21 13:25:09',
             },
         },
     },
