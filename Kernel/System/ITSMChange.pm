@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.76 2009-10-16 09:17:36 bes Exp $
+# $Id: ITSMChange.pm,v 1.77 2009-10-16 12:13:01 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::CustomerUser;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.76 $) [1];
+$VERSION = qw($Revision: 1.77 $) [1];
 
 =head1 NAME
 
@@ -365,33 +365,15 @@ sub ChangeGet {
     # add result to change data
     $ChangeData{WorkOrderIDs} = $WorkOrderIDsRef || [];
 
-    # get PlannedStartTime
-    $ChangeData{PlannedStartTime} = $Self->{WorkOrderObject}->WorkOrderChangeTimeGet(
+    # get timestamps for the change
+    my @TimeTypes   = qw(PlannedStartTime PlannedEndTime ActualStartTime ActualEndTime);
+    my @ChangeTimes = $Self->{WorkOrderObject}->WorkOrderChangeTimeGet(
         ChangeID => $Param{ChangeID},
-        Type     => 'PlannedStartTime',
+        Types    => [@TimeTypes],
         UserID   => $Param{UserID},
     );
 
-    # get PlannedEndTime
-    $ChangeData{PlannedEndTime} = $Self->{WorkOrderObject}->WorkOrderChangeTimeGet(
-        ChangeID => $Param{ChangeID},
-        Type     => 'PlannedEndTime',
-        UserID   => $Param{UserID},
-    );
-
-    # get ActualStartTime
-    $ChangeData{ActualStartTime} = $Self->{WorkOrderObject}->WorkOrderChangeTimeGet(
-        ChangeID => $Param{ChangeID},
-        Type     => 'ActualStartTime',
-        UserID   => $Param{UserID},
-    );
-
-    # get ActualEndTime
-    $ChangeData{ActualEndTime} = $Self->{WorkOrderObject}->WorkOrderChangeTimeGet(
-        ChangeID => $Param{ChangeID},
-        Type     => 'ActualEndTime',
-        UserID   => $Param{UserID},
-    );
+    @ChangeData{@TimeTypes} = @ChangeTimes;
 
     return \%ChangeData;
 }
@@ -1783,6 +1765,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.76 $ $Date: 2009-10-16 09:17:36 $
+$Revision: 1.77 $ $Date: 2009-10-16 12:13:01 $
 
 =cut
