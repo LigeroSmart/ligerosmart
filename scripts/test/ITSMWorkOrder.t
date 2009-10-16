@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.32 2009-10-16 11:41:38 reb Exp $
+# $Id: ITSMWorkOrder.t,v 1.33 2009-10-16 11:44:58 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1291,6 +1291,40 @@ for my $WorkOrderID ( keys %TestedWorkOrderID ) {
             UserID      => 1,
         ),
         "Test " . $TestCount++ . ": WorkOrderDelete()",
+    );
+
+    # double WorkOrder if change is really deleted
+    my $WorkOrderData = $Self->{WorkOrderObject}->WorkOrderGet(
+        WorkOrderID => $WorkOrderID,
+        UserID      => 1,
+    );
+
+    $Self->Is(
+        undef,
+        $WorkOrderData->{WorkOrderID},
+        "Test $TestCount: WorkOrderDelete() - double check",
+    );
+}
+
+for my $ChangeID ( keys %TestedChangeID ) {
+    $Self->True(
+        $Self->{ChangeObject}->ChangeDelete(
+            ChangeID => $ChangeID,
+            UserID   => 1,
+        ),
+        "Test $TestCount: ChangeDelete()",
+    );
+
+    # double check if change is really deleted
+    my $ChangeData = $Self->{ChangeObject}->ChangeGet(
+        ChangeID => $ChangeID,
+        UserID   => 1,
+    );
+
+    $Self->Is(
+        undef,
+        $ChangeData->{ChangeID},
+        "Test $TestCount: ChangeDelete() - double check",
     );
 }
 
