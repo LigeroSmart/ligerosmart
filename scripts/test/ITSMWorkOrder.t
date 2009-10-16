@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.21 2009-10-15 18:07:45 ub Exp $
+# $Id: ITSMWorkOrder.t,v 1.22 2009-10-16 06:50:43 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -31,6 +31,8 @@ $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
 $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
 $Self->{ChangeObject}         = Kernel::System::ITSMChange->new( %{$Self} );
 $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::WorkOrder->new( %{$Self} );
+
+# test if workorder object was created successfully
 $Self->True(
     $Self->{WorkOrderObject},
     "Test " . $TestCount++ . ' - construction of workorder object'
@@ -70,20 +72,22 @@ for my $Counter ( 1 .. 3 ) {
 # sort the user and customer user arrays
 @UserIDs = sort @UserIDs;
 
-# create invalid user IDs
+# create non existing user IDs
 for ( 1 .. 2 ) {
     LPC:
     for my $LoopProtectionCounter ( 1 .. 100 ) {
-        my $TempInvalidUserID = int rand 1_000_000;
-        next LPC
-            if (
-            defined $Self->{UserObject}->GetUserData(
-                UserID => $TempInvalidUserID,
-            )
-            );
 
-        # we got unused user ID
-        push @NonExistingUserIDs, $TempInvalidUserID;
+        # create a random user id
+        my $TempNonExistingUserID = int rand 1_000_000;
+
+        # check if random user id exists already
+        my %UserData = $Self->{UserObject}->GetUserData(
+            UserID => $TempNonExistingUserID,
+        );
+        next LPC if %UserData;
+
+        # we got an unused user ID
+        push @NonExistingUserIDs, $TempNonExistingUserID;
         last LPC;
     }
 }
@@ -110,16 +114,15 @@ $Self->{ConfigObject}->Set(
 # test WorkOrder API
 # ------------------------------------------------------------ #
 
-# define public interface
+# define public interface (in alphabetical order)
 my @ObjectMethods = qw(
     WorkOrderAdd
+    WorkOrderChangeTimeGet
     WorkOrderDelete
     WorkOrderGet
     WorkOrderList
     WorkOrderSearch
     WorkOrderUpdate
-    WorkOrderChangeStartGet
-    WorkOrderChangeEndGet
 );
 
 # check if subs are available
@@ -131,16 +134,16 @@ for my $ObjectMethod (@ObjectMethods) {
 }
 
 # ------------------------------------------------------------ #
-# search for default ITSMWorkOrder-states
+# search for default ITSMWorkOrder States
 # ------------------------------------------------------------ #
-# define default ITSMWorkOrder-states
+# define default ITSMWorkOrder States
 # can't use qw due to spaces in states
 my @DefaultWorkOrderStates = (
     'accepted',
     'ready',
     'in progress',
     'closed',
-    'canceled'
+    'canceled',
 );
 
 # get class list with swapped keys and values
@@ -167,7 +170,7 @@ my $TestCountMisc   = $TestCount;
 my $UniqueSignature = 'UnitTest-ITSMChange::WorkOrder-' . int( rand 1_000_000 ) . '_' . time;
 my @ChangeTests     = (
 
-    # change contains all date - (all attributes)
+    # change contains all data - (all attributes)
     {
         Description => 'First change for testing workorders.',
         SourceData  => {
@@ -237,12 +240,17 @@ for my $Test (@ChangeTests) {
         # remember current ChangeID
         if ($ChangeID) {
             $TestedChangeID{$ChangeID} = 1;
-
         }
 
+        # ?????????????????????????????????????
+        # TODO : What about ChangeAddChangeTime, do we need this in the WorkOrder-Test?
+        # SetTimes with ChangeID wouldn't work here anyway, because this is a function
+        # in WorkOrder.t, which would only set the Times of a workorder and not of a change
+        #
+        #
         # change CreateTime
         if ( $ChangeID && $SourceData->{ChangeAddChangeTime} ) {
-            SetChangeTimes(
+            SetTimes(
                 ChangeID   => $ChangeID,
                 CreateTime => $SourceData->{ChangeAddChangeTime}->{CreateTime},
             );
@@ -399,20 +407,20 @@ my @WorkOrderTests = (
             WorkOrderAdd => {
                 UserID      => 1,
                 ChangeID    => $WorkOrderAddTestID,
-                Title       => 'Replacement of mail server',
-                Instruction => 'Install the the new server',
-                Report      => 'Installed new server without problems',
+                Title       => 'WorkOrder 1 - Title - ' . $UniqueSignature,
+                Instruction => 'WorkOrder 1 - Instruction - ' . $UniqueSignature,
+                Report      => 'WorkOrder 1 - Report - ' . $UniqueSignature,
             },
         },
         ReferenceData => {
             WorkOrderGet => {
                 ChangeID    => $WorkOrderAddTestID,
-                Title       => 'Replacement of mail server',
-                Instruction => 'Install the the new server',
-                Report      => 'Installed new server without problems',
+                Title       => 'WorkOrder 1 - Title - ' . $UniqueSignature,
+                Instruction => 'WorkOrder 1 - Instruction - ' . $UniqueSignature,
+                Report      => 'WorkOrder 1 - Report - ' . $UniqueSignature,
             },
         },
-        SearchTest => [2],
+        SearchTest => [ 2, 3, 4, 5, 6, 7 ],
     },
     {
         Description => 'WorkOrderAdd() with empty string parameters.',
@@ -808,7 +816,7 @@ for my $ChangeID ( sort keys %WorkOrderIDForChangeID ) {
 my $Fails = scalar grep { $_->{Fails} } @WorkOrderTests;
 my $NrCreateWorkOrders = ( scalar @WorkOrderTests ) - $Fails;
 
-# test if the changes were created
+# test if the workorders were created
 $Self->Is(
     scalar keys %TestedWorkOrderID || 0,
     $NrCreateWorkOrders,
@@ -816,7 +824,7 @@ $Self->Is(
 );
 
 # ------------------------------------------------------------ #
-# define general workflow search tests
+# define general workorder search tests
 # ------------------------------------------------------------ #
 my $SystemTime = $Self->{TimeObject}->SystemTime();
 
@@ -843,6 +851,64 @@ my @WorkOrderSearchTests = (
             TestExistence => 1,    # flag for check results that were marked with 'SearchTest'
         },
     },
+
+    # Nr 3 - search for title
+    {
+        Description => 'Title',
+        SearchData  => {
+            Title => 'WorkOrder 1 - Title - ' . $UniqueSignature,
+        },
+        ResultData => {
+            TestExistence => 1,
+        },
+    },
+
+    # Nr 4 - search for instruction
+    {
+        Description => 'Instruction',
+        SearchData  => {
+            Instruction => 'WorkOrder 1 - Instruction - ' . $UniqueSignature,
+        },
+        ResultData => {
+            TestExistence => 1,
+        },
+    },
+
+    # Nr 5 - search for report
+    {
+        Description => 'Report',
+        SearchData  => {
+            Report => 'WorkOrder 1 - Report - ' . $UniqueSignature,
+        },
+        ResultData => {
+            TestExistence => 1,
+        },
+    },
+
+    # Nr 6 - search for title, instruction and report
+    {
+        Description => 'Title, Instruction, Report',
+        SearchData  => {
+            Title       => 'WorkOrder 1 - Title - ' . $UniqueSignature,
+            Instruction => 'WorkOrder 1 - Instruction - ' . $UniqueSignature,
+            Report      => 'WorkOrder 1 - Report - ' . $UniqueSignature,
+        },
+        ResultData => {
+            TestExistence => 1,
+        },
+    },
+
+    # Nr 7 - search for title, which is not in database
+    {
+        Description => 'Title does not exist',
+        SearchData  => {
+            Title => 'NOT IN DATABASE ' . $UniqueSignature,
+        },
+        ResultData => {
+            TestExistence => 0,
+        },
+    },
+
 );
 
 my $SearchTestCount = 1;
@@ -883,7 +949,7 @@ for my $SearchTest (@WorkOrderSearchTests) {
 
     if ( $SearchTest->{ResultData}->{TestCount} ) {
 
-        # get number of change ids ChangeSearch should return
+        # get number of workorder ids WorkOrderSearch should return
         my $Count = scalar keys %{ $WorkOrderIDForSearchTest{$SearchTestCount} };
 
         # get defined expected result count (defined in search test case!)
@@ -971,7 +1037,7 @@ for my $WorkOrderID ( keys %TestedWorkOrderID ) {
 
 =item SetTimes()
 
-Set new values for CreateTime and ChangeTime for a given workorder.
+Set new values for CreateTime and ChangeTime for a given WorkOrderID.
 
     my $UpdateSuccess = SetTimes(
         WorkOrderID => 123,
@@ -985,6 +1051,15 @@ Set new values for CreateTime and ChangeTime for a given workorder.
 
 sub SetTimes {
     my (%Param) = @_;
+
+    # check workorder id
+    if ( !$Param{WorkOrderID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need WorkOrderID!',
+        );
+        return;
+    }
 
     # check parameters
     if ( !$Param{CreateTime} && !$Param{ChangeTime} ) {
