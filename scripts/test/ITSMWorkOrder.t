@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.29 2009-10-16 10:28:18 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.30 2009-10-16 11:15:12 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -423,6 +423,26 @@ push @WorkOrderTests, (
         SearchTest => [2],
     },
 
+    # First test of WorkOrderAdd() with all required arguments, not UserID => 1.
+    {
+        Description =>
+            'Test contains ChangeID and ChangeID for WorkOrderAdd(), other user than UserID => 1.',
+        SourceData => {
+            WorkOrderAdd => {
+                UserID   => $UserIDs[0],
+                ChangeID => $WorkOrderAddTestID,
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                ChangeID => $WorkOrderAddTestID,
+                CreateBy => $UserIDs[0],
+                ChangeBy => $UserIDs[0]
+            },
+        },
+        SearchTest => [2],
+    },
+
     {
         Description => 'WorkOrderAdd() with string parameters.',
         SourceData  => {
@@ -531,6 +551,32 @@ push @WorkOrderTests, (
     },
 
     {
+        Description => 'Test for max+1 string length for WorkOrderUpdate.',
+        UpdateFails => 1,
+        SourceData  => {
+            WorkOrderAdd => {
+                UserID   => $UserIDs[0],
+                ChangeID => $WorkOrderAddTestID,
+            },
+            WorkOrderUpdate => {
+                UserID      => 1,
+                Title       => 'T' x 25,
+                Instruction => 'I' x 38,
+                Report      => 'R' x 38,
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                Title       => q{},
+                Instruction => q{},
+                Report      => q{},
+                CreateBy    => $UserIDs[0],
+                ChangeBy    => 1,
+            },
+        },
+    },
+
+    {
         Description => 'Test for max+1 string length - title - for WorkOrderUpdate.',
         UpdateFails => 1,
         SourceData  => {
@@ -546,7 +592,7 @@ push @WorkOrderTests, (
             },
         },
         ReferenceData => {
-            ChangeGet => {
+            WorkOrderGet => {
                 Title       => q{},
                 Instruction => q{},
                 Report      => q{},
@@ -570,7 +616,7 @@ push @WorkOrderTests, (
             },
         },
         ReferenceData => {
-            ChangeGet => {
+            WorkOrderGet => {
                 Title       => q{},
                 Instruction => q{},
                 Report      => q{},
@@ -594,7 +640,7 @@ push @WorkOrderTests, (
             },
         },
         ReferenceData => {
-            ChangeGet => {
+            WorkOrderGet => {
                 Title       => q{},
                 Instruction => q{},
                 Report      => q{},
@@ -617,7 +663,7 @@ push @WorkOrderTests, (
             },
         },
         ReferenceData => {
-            ChangeGet => {
+            WorkORderGet => {
                 Title       => '0',
                 Instruction => '0',
                 Report      => '0',
@@ -732,7 +778,7 @@ for my $Test (@WorkOrderTests) {
         }
     }    # end if 'WorkOrderAdd'
 
-    # get a change and compare the retrieved data with the reference
+    # get a workorder and compare the retrieved data with the reference
     if ( exists $ReferenceData->{WorkOrderGet} ) {
 
         my $WorkOrderGetReferenceData = $ReferenceData->{WorkOrderGet};
