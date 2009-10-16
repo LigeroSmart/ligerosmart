@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.73 2009-10-15 15:45:02 mae Exp $
+# $Id: ITSMChange.pm,v 1.74 2009-10-16 06:44:37 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::CustomerUser;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.73 $) [1];
+$VERSION = qw($Revision: 1.74 $) [1];
 
 =head1 NAME
 
@@ -366,30 +366,30 @@ sub ChangeGet {
     $ChangeData{WorkOrderIDs} = $WorkOrderIDsRef || [];
 
     # get PlannedStartTime
-    $ChangeData{PlannedStartTime} = $Self->{WorkOrderObject}->WorkOrderChangeStartGet(
+    $ChangeData{PlannedStartTime} = $Self->{WorkOrderObject}->WorkOrderChangeTimeGet(
         ChangeID => $Param{ChangeID},
-        Type     => 'planned',
+        Type     => 'PlannedStartTime',
         UserID   => $Param{UserID},
     );
 
     # get PlannedEndTime
-    $ChangeData{PlannedEndTime} = $Self->{WorkOrderObject}->WorkOrderChangeEndGet(
+    $ChangeData{PlannedEndTime} = $Self->{WorkOrderObject}->WorkOrderChangeTimeGet(
         ChangeID => $Param{ChangeID},
-        Type     => 'planned',
-        UserID   => $Param{UserID},
-    );
-
-    # get PlannedStartTime
-    $ChangeData{ActualStartTime} = $Self->{WorkOrderObject}->WorkOrderChangeStartGet(
-        ChangeID => $Param{ChangeID},
-        Type     => 'actual',
+        Type     => 'PlannedEndTime',
         UserID   => $Param{UserID},
     );
 
     # get ActualStartTime
-    $ChangeData{ActualEndTime} = $Self->{WorkOrderObject}->WorkOrderChangeEndGet(
+    $ChangeData{ActualStartTime} = $Self->{WorkOrderObject}->WorkOrderChangeTimeGet(
         ChangeID => $Param{ChangeID},
-        Type     => 'actual',
+        Type     => 'ActualStartTime',
+        UserID   => $Param{UserID},
+    );
+
+    # get ActualEndTime
+    $ChangeData{ActualEndTime} = $Self->{WorkOrderObject}->WorkOrderChangeTimeGet(
+        ChangeID => $Param{ChangeID},
+        Type     => 'ActualEndTime',
         UserID   => $Param{UserID},
     );
 
@@ -632,6 +632,7 @@ When no change id or change number is found, the undefined value is returned.
 sub ChangeLookup {
     my ( $Self, %Param ) = @_;
 
+    # check needed stuff
     if ( !$Param{UserID} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
@@ -707,6 +708,7 @@ return a change id list of all changes as array reference
 sub ChangeList {
     my ( $Self, %Param ) = @_;
 
+    # check needed stuff
     if ( !$Param{UserID} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
@@ -781,23 +783,24 @@ return list of change ids as an array reference
         # changes with changed time before then ....
         ChangeTimeOlderDate => '2006-01-19 23:59:59',            # (optional)
 
-        OrderBy => 'ChangeID',  # default                        # (optional)
+        OrderBy => [ 'ChangeID', 'ChangeManagerID' ],            # (optional)
+        # default: [ 'ChangeID' ]
         # (ChangeID, ChangeNumber, ChangeStateID,
         # ChangeManagerID, ChangeBuilderID,
         # PlannedStartTime, PlannedEndTime,
         # ActualStartTime, ActualEndTime,
         # CreateTime, CreateBy, ChangeTime, ChangeBy)
 
+        # Additional information for OrderBy:
+        # The OrderByDirection can be specified for each OrderBy attribute.
+        # The pairing is made by the array indices.
+
         OrderByDirection => [ 'Down', 'Up' ],                    # (optional)
-        # default: [ 'Down' ],
+        # default: [ 'Down' ]
         # (Down | Up)
 
         UsingWildcards => 0,                                     # (optional)
         # default 1
-
-        # Additional information for OrderBy:
-        # The OrderByDirection could specified for each OrderBy attribute.
-        # The pairing is made by the array idices.
 
         Limit => 100,                                            # (optional)
 
@@ -809,6 +812,7 @@ return list of change ids as an array reference
 sub ChangeSearch {
     my ( $Self, %Param ) = @_;
 
+    # check needed stuff
     if ( !$Param{UserID} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
@@ -1186,26 +1190,26 @@ sub ChangeSearch {
 
     # add the WHERE clause
     if (@SQLWhere) {
-        $SQL .= ' WHERE ';
+        $SQL .= 'WHERE ';
         $SQL .= join ' AND ', map {"( $_ )"} @SQLWhere;
         $SQL .= ' ';
     }
 
     # we need to group whenever there is a join
     if (@JoinTables) {
-        $SQL .= ' GROUP BY c.id ';
+        $SQL .= 'GROUP BY c.id ';
     }
 
     # add the HAVING clause
     if (@SQLHaving) {
-        $SQL .= ' HAVING ';
+        $SQL .= 'HAVING ';
         $SQL .= join ' AND ', map {"( $_ )"} @SQLHaving;
         $SQL .= ' ';
     }
 
     # add the ORDER BY clause
     if (@SQLOrderBy) {
-        $SQL .= ' ORDER BY ';
+        $SQL .= 'ORDER BY ';
         $SQL .= join q{, }, @SQLOrderBy;
         $SQL .= ' ';
     }
@@ -1741,6 +1745,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.73 $ $Date: 2009-10-15 15:45:02 $
+$Revision: 1.74 $ $Date: 2009-10-16 06:44:37 $
 
 =cut

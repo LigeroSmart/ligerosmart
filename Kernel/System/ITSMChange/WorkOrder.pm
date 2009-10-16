@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all work order functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.25 2009-10-15 16:13:10 ub Exp $
+# $Id: WorkOrder.pm,v 1.26 2009-10-16 06:46:38 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.25 $) [1];
+$VERSION = qw($Revision: 1.26 $) [1];
 
 =head1 NAME
 
@@ -130,23 +130,16 @@ or
 
     my $WorkOrderID = $WorkOrderObject->WorkOrderAdd(
         ChangeID         => 123,
-
         WorkOrderNumber  => 5,                                         # (optional)
         Title            => 'Replacement of mail server',              # (optional)
         Instruction      => 'Install the the new server',              # (optional)
         Report           => 'Installed new server without problems',   # (optional)
         WorkOrderStateID => 4,                                         # (optional)
         WorkOrderAgentID => 8,                                         # (optional)
-
-        NOTE:
-        * Setting of ACTUAL times here and in WorkOrderUpdate()
-        and/or in a separate set function? (Planned times should stay here)
-
         PlannedStartTime => '2009-10-12 00:00:01',                     # (optional)
         PlannedEndTime   => '2009-10-15 15:00:00',                     # (optional)
         ActualStartTime  => '2009-10-14 00:00:01',                     # (optional)
         ActualEndTime    => '2009-01-20 00:00:01',                     # (optional)
-
         UserID           => 1,
     );
 
@@ -478,16 +471,16 @@ return a list of workorder ids as an array reference
         # ActualStartTime, ActualEndTime,
         # CreateTime, CreateBy, ChangeTime, ChangeBy)
 
+        # Additional information for OrderBy:
+        # The OrderByDirection could specified for each OrderBy attribute.
+        # The pairing is made by the array idices.
+
         OrderByDirection => [ 'Down', 'Up' ],                          # (optional)
         # default: [ 'Down' ],
         # (Down | Up)
 
         UsingWildcards => 0,                                           # (optional)
         # default 1
-
-        # Additional information for OrderBy:
-        # The OrderByDirection could specified for each OrderBy attribute.
-        # The pairing is made by the array idices.
 
         Limit => 100,                                                  # (optional)
 
@@ -499,6 +492,7 @@ return a list of workorder ids as an array reference
 sub WorkOrderSearch {
     my ( $Self, %Param ) = @_;
 
+    # check needed stuff
     if ( !$Param{UserID} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
@@ -765,25 +759,29 @@ sub WorkOrderSearch {
 
     # add the WHERE clause
     if (@SQLWhere) {
-        $SQL .= ' WHERE ';
+        $SQL .= 'WHERE ';
         $SQL .= join ' AND ', map {"( $_ )"} @SQLWhere;
         $SQL .= ' ';
     }
 
     # add the HAVING clause
     if (@SQLHaving) {
-        $SQL .= ' HAVING ';
+        $SQL .= 'HAVING ';
         $SQL .= join ' AND ', map {"( $_ )"} @SQLHaving;
         $SQL .= ' ';
     }
 
     # add the ORDER BY clause
     if (@SQLOrderBy) {
-        $SQL .= ' ORDER BY ';
+        $SQL .= 'ORDER BY ';
         $SQL .= join q{, }, @SQLOrderBy;
-        $SQL .= ' ';
     }
 
+    # --------------------------------------------------------------------------------
+    # TODO : Why Error logging?
+    # If this is for debugging, better use $Self->{LogObject}->Dum_per( '', '',  );
+    # whch would be recognized by check-in filter.
+    # --------------------------------------------------------------------------------
     $Self->{LogObject}->Log(
         Priority => 'error',
         Message  => $SQL,
@@ -844,32 +842,39 @@ sub WorkOrderDelete {
     return 1;
 }
 
-=item WorkOrderChangeStartGet()
+=item WorkOrderChangeTimeGet()
 
-get the start date of a change, calculated from the start of the first work order
+Returns PlannedStartTime | PlannedEndTime | ActualStartTime | ActualEndTime
+of a change, which would be the respective time of the earliest starting
+workorder (for start times) or the latest ending workorder (for end times).
+Undefined is returned if the workorder would not have the wanted time defined.
 
-    my $ChangeStartTime = $WorkOrderObject->WorkOrderChangeStartGet(
+    my $ChangePlannedStartTime = $WorkOrderObject->WorkOrderChangeTimeGet(
         ChangeID => 123,
-        Type     => 'planned' || 'actual',
+
+        Type     => 'PlannedStartTime',
+        # (PlannedStartTime | PlannedEndTime
+        # | ActualStartTime | ActualEndTime )
+
         UserID   => 1,
 
         # ---------------------------------------------------- #
+
         # TODO: (decide this later!)
         Maybe add this new attribute:
 
-        # These are WorkOrdertypes (Types, not States!)
+        # These are WorkOrderTypes (Types, not States!)
         # which would be excluded from the calculation
         # of the change start time.
-        The WorkOrder-Type for a normal WorkOrder could be just 'WorkOrder'
 
-        ExcludeWorkOrderTypes => [ 'Approval', 'PIR' ],
+        ExcludeWorkOrderTypes => [ 'approval', 'pir' ], # (optional)
+
         # ---------------------------------------------------- #
-
     );
 
 =cut
 
-sub WorkOrderChangeStartGet {
+sub WorkOrderChangeTimeGet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
@@ -883,93 +888,70 @@ sub WorkOrderChangeStartGet {
         }
     }
 
-    # mapping for types -> column
+    # mapping for time types -> column
     my %TypeColumnMap = (
-        planned => 'planned_start_time',
-        actual  => 'actual_start_time',
+        PlannedStartTime => 'planned_start_time',
+        PlannedEndTime   => 'planned_end_time',
+        ActualStartTime  => 'actual_start_time',
+        ActualEndTime    => 'actual_end_time',
     );
 
-    return if !$TypeColumnMap{ $Param{Type} };
+    # error if unknown time type is given
+    if ( !$TypeColumnMap{ $Param{Type} } ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Unknown type '$Param{Type}'! "
+                . "Allowed types are 'PlannedStartTime', 'PlannedEndTime', "
+                . "'ActualStartTime', 'ActualEndTime'!",
+        );
+        return;
+    }
 
-    # retrieve the start time
+    # set column from given time type
+    my $Column = $TypeColumnMap{ $Param{Type} };
+
+    # check if there is a work order with an undefined time of the requested type
     return if !$Self->{DBObject}->Prepare(
-        SQL => 'SELECT MIN(' . $TypeColumnMap{ $Param{Type} } . ') '
+        SQL => 'SELECT COUNT(*) '
             . 'FROM change_workorder '
-            . 'WHERE change_id = ?',
+            . 'WHERE change_id = ? '
+            . "AND $Column IS NULL",
         Bind  => [ \$Param{ChangeID} ],
         Limit => 1,
     );
 
-    my $StartTime;
+    my $UndefinedTime;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $StartTime = $Row[0];
+        $UndefinedTime = $Row[0];
     }
 
-    return $StartTime;
-}
+    # there is a workorder with an undefined time of the requested type
+    return if $UndefinedTime;
 
-=item WorkOrderChangeEndGet()
-
-get the end date of a change, calculated from the start of the first work order
-
-    my $ChangeEndTime = $WorkOrderObject->WorkOrderChangeEndGet(
-        ChangeID => 123,
-        Type     => 'planned' || 'actual',
-        UserID   => 1,
-
-        # ---------------------------------------------------- #
-        # TODO: (decide this later!)
-        Maybe add this new attribute:
-
-        # These are WorkOrdertypes (Types, not States!)
-        # which would be excluded from the calculation
-        # of the change start time.
-        The WorkOrder-Type for a normal WorkOrder could be just 'WorkOrder'
-
-        ExcludeWorkOrderTypes => [ 'Approval', 'PIR' ],
-        # ---------------------------------------------------- #
-
-    );
-
-=cut
-
-sub WorkOrderChangeEndGet {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for my $Attribute (qw(ChangeID Type UserID)) {
-        if ( !$Param{$Attribute} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Attribute!",
-            );
-            return;
-        }
+    # build sql, using min or max functions
+    my $SQL = 'SELECT ';
+    if ( $Param{Type} =~ m{ PlannedStartTime | ActualStartTime }xms ) {
+        $SQL .= "MIN($Column) ";
     }
+    elsif ( $Param{Type} =~ m{ PlannedEndTime | ActualEndTime }xms ) {
+        $SQL .= "MAX($Column) ";
+    }
+    $SQL .= 'FROM change_workorder WHERE change_id = ?',
 
-    # mapping for types -> column
-    my %TypeColumnMap = (
-        planned => 'planned_end_time',
-        actual  => 'actual_end_time',
-    );
+        # retrieve the requested time
+        return if !$Self->{DBObject}->Prepare(
+        SQL  => $SQL,
+        Bind => [ \$Param{ChangeID} ],
 
-    return if !$TypeColumnMap{ $Param{Type} };
+        #Limit => 1,
+        );
 
-    # retrieve the start time
-    return if !$Self->{DBObject}->Prepare(
-        SQL => 'SELECT MIN(' . $TypeColumnMap{ $Param{Type} } . ') '
-            . 'FROM change_workorder '
-            . 'WHERE change_id = ?',
-        Bind  => [ \$Param{ChangeID} ],
-        Limit => 1,
-    );
-
-    my $EndTime;
+    my $Time;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $EndTime = $Row[0];
+        $Time = $Row[0];
     }
 
-    return $EndTime;
+    return $Time;
 }
 
 =item _CheckWorkOrderStateID()
@@ -1015,9 +997,58 @@ sub _CheckWorkOrderStateID {
     return 1;
 }
 
+=item _CheckWorkOrderTypeID()
+
+check if a given work order type id is valid
+
+    my $Ok = $WorkOrderObject->_CheckWorkOrderTypeID(
+        WorkOrderTypeID => 2,
+    );
+
+=cut
+
+sub _CheckWorkOrderTypeID {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    if ( !$Param{WorkOrderTypeID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need WorkOrderTypeID!',
+        );
+        return;
+    }
+
+    # get work order type list
+    my $WorkOrderTypeList = $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::ChangeManagement::WorkOrder::Type',
+    );
+
+    if (
+        !$WorkOrderTypeList
+        || ref $WorkOrderTypeList ne 'HASH'
+        || !$WorkOrderTypeList->{ $Param{WorkOrderTypeID} }
+        )
+    {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "No valid work order type id given!",
+        );
+        return;
+    }
+
+    return 1;
+}
+
 =item _GetWorkOrderNumber()
 
-Get a default WorkOrderNumber
+Get a new unused workorder number for a given ChangeID.
+The highest current workorder number for a given change is
+looked up and increased by one.
+
+    my $WorkOrderNumber = $WorkOrderObject->_GetWorkOrderNumber(
+        ChangeID => 2,
+    );
 
 =cut
 
@@ -1131,7 +1162,7 @@ sub _CheckWorkOrderParams {
         }
     }
 
-    # check format
+    # check time formats
     OPTION:
     for my $Option (qw(PlannedStartTime PlannedEndTime ActualStartTime ActualEndTime)) {
         next OPTION if !$Param{$Option};
@@ -1139,9 +1170,10 @@ sub _CheckWorkOrderParams {
         return if $Param{$Option} !~ m{ \A \d\d\d\d-\d\d-\d\d \s \d\d:\d\d:\d\d \z }xms;
     }
 
+    # check workorder agent
     if ( exists $Param{WorkOrderAgentID} && defined $Param{WorkOrderAgentID} ) {
 
-        # WorkOrderAgent must be agents
+        # WorkOrderAgent must be an agent
         my %UserData = $Self->{UserObject}->GetUserData(
             UserID => $Param{WorkOrderAgentID},
             Valid  => 1,
@@ -1172,11 +1204,11 @@ Checks the constraints of timestamps: xxxStartTime must be before xxxEndTime
 
     my $Ok = $WorkOrderObject->_CheckTimestamps(
         WorkOrderID      => 123,
-        UserID           => 1,
         PlannedStartTime => '2009-10-12 00:00:01',                     # (optional)
         PlannedEndTime   => '2009-10-15 15:00:00',                     # (optional)
         ActualStartTime  => '2009-10-14 00:00:01',                     # (optional)
         ActualEndTime    => '2009-01-20 00:00:01',                     # (optional)
+        UserID           => 1,
     );
 
 =cut
@@ -1201,7 +1233,7 @@ sub _CheckTimestamps {
         UserID      => $Param{UserID},
     );
 
-    # check planned time
+    # check times
     for my $Type (qw(Actual Planned)) {
         next if !( $Param{ $Type . 'StartTime' } || $Param{ $Type . 'EndTime' } );
 
@@ -1233,6 +1265,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.25 $ $Date: 2009-10-15 16:13:10 $
+$Revision: 1.26 $ $Date: 2009-10-16 06:46:38 $
 
 =cut
