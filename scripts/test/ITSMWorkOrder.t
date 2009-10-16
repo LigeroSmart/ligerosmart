@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.38 2009-10-16 12:58:49 mae Exp $
+# $Id: ITSMWorkOrder.t,v 1.39 2009-10-16 13:04:11 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -420,7 +420,7 @@ push @WorkOrderTests, (
                 ChangeID => $WorkOrderAddTestID,
             },
         },
-        SearchTest => [2],
+        SearchTest => [ 2, 8 ],
     },
 
     # First test of WorkOrderAdd() with all required arguments, not UserID => 1.
@@ -440,7 +440,7 @@ push @WorkOrderTests, (
                 ChangeBy => $UserIDs[0]
             },
         },
-        SearchTest => [2],
+        SearchTest => [ 2, 8 ],
     },
 
     {
@@ -462,7 +462,7 @@ push @WorkOrderTests, (
                 Report      => 'WorkOrder 1 - Report - ' . $UniqueSignature,
             },
         },
-        SearchTest => [ 2, 3, 4, 5, 6, 7 ],
+        SearchTest => [ 2, 3, 4, 5, 6, 7, 8 ],
     },
     {
         Description => 'WorkOrderAdd() with empty string parameters.',
@@ -483,7 +483,7 @@ push @WorkOrderTests, (
                 Report      => '',
             },
         },
-        SearchTest => [2],
+        SearchTest => [ 2, 8 ],
     },
 );
 
@@ -523,7 +523,7 @@ push @WorkOrderTests, (
                 ChangeBy    => 1,
             },
         },
-        SearchTest => [1],
+        SearchTest => [ 1, 8 ],
     },
 
     {
@@ -548,6 +548,7 @@ push @WorkOrderTests, (
                 Report      => q{},
             },
         },
+        SearchTest => [8],
     },
 
     {
@@ -573,7 +574,7 @@ push @WorkOrderTests, (
                 ChangeBy    => 1,
             },
         },
-        SearchTest => [2],
+        SearchTest => [ 2, 8 ],
     },
 
     {
@@ -599,7 +600,7 @@ push @WorkOrderTests, (
                 ChangeBy    => 1,
             },
         },
-        SearchTest => [2],
+        SearchTest => [ 2, 8 ],
     },
 
     {
@@ -624,6 +625,7 @@ push @WorkOrderTests, (
                 Report      => q{},
             },
         },
+        SearchTest => [8],
     },
 
     {
@@ -648,6 +650,7 @@ push @WorkOrderTests, (
                 Report      => q{},
             },
         },
+        SearchTest => [8],
     },
 
     {
@@ -672,6 +675,7 @@ push @WorkOrderTests, (
                 Report      => q{},
             },
         },
+        SearchTest => [8],
     },
 
     {
@@ -698,6 +702,7 @@ push @WorkOrderTests, (
                 CreateBy    => $UserIDs[0],
             },
         },
+        SearchTest => [8],
     },
 
     {
@@ -724,6 +729,7 @@ push @WorkOrderTests, (
                 CreateBy    => $UserIDs[0],
             },
         },
+        SearchTest => [8],
     },
 
     {
@@ -750,6 +756,7 @@ push @WorkOrderTests, (
                 CreateBy    => $UserIDs[0],
             },
         },
+        SearchTest => [8],
     },
 
     {
@@ -776,6 +783,7 @@ push @WorkOrderTests, (
                 CreateBy    => $UserIDs[0],
             },
         },
+        SearchTest => [8],
     },
 
     {
@@ -804,6 +812,7 @@ push @WorkOrderTests, (
                 CreateBy    => $UserIDs[0],
             },
         },
+        SearchTest => [8],
     },
 
     {
@@ -833,6 +842,7 @@ push @WorkOrderTests, (
                 ActualStartTime => '2009-03-21 13:25:09',
             },
         },
+        SearchTest => [8],
     },
 
     {
@@ -856,6 +866,7 @@ push @WorkOrderTests, (
                 Report      => '0',
             },
         },
+        SearchTest => [8],
     },
 );
 
@@ -1200,7 +1211,19 @@ my @WorkOrderSearchTests = (
             Title => 'NOT IN DATABASE ' . $UniqueSignature,
         },
         ResultData => {
-            TestExistence => 0,
+            TestCount => 1,
+            Count     => 1,
+        },
+    },
+
+    # Nr 8 - search for title, which is not in database
+    {
+        Description => "All WorkOrders for Change $WorkOrderAddTestID",
+        SearchData  => {
+            ChangeID => $WorkOrderAddTestID,
+        },
+        ResultData => {
+            TestCount => 1,
         },
     },
 
