@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.22 2009-10-16 06:50:43 ub Exp $
+# $Id: ITSMWorkOrder.t,v 1.23 2009-10-16 06:56:02 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -150,7 +150,7 @@ my @DefaultWorkOrderStates = (
 my %ReverseClassList = reverse %{
     $Self->{GeneralCatalogObject}->ItemList(
         Class => 'ITSM::ChangeManagement::WorkOrder::State',
-        )
+        ) || {}
     };
 
 # check if states are in GeneralCatalog
@@ -158,6 +158,34 @@ for my $DefaultWorkOrderState (@DefaultWorkOrderStates) {
     $Self->True(
         $ReverseClassList{$DefaultWorkOrderState},
         "Test " . $TestCount++ . " - check state '$DefaultWorkOrderState'"
+    );
+}
+
+# ------------------------------------------------------------ #
+# search for default ITSMWorkOrder-types
+# ------------------------------------------------------------ #
+# define default ITSMWorkOrder-states
+# can't use qw due to spaces in states
+my @DefaultWorkOrderTypes = (
+    'approval',
+    'workorder',
+    'backout',
+    'decision',
+    'pir',
+);
+
+# get class list with swapped keys and values
+%ReverseClassList = reverse %{
+    $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::ChangeManagement::WorkOrder::Type',
+        ) || {}
+    };
+
+# check if states are in GeneralCatalog
+for my $DefaultWorkOrderType (@DefaultWorkOrderTypes) {
+    $Self->True(
+        $ReverseClassList{$DefaultWorkOrderType},
+        "Test " . $TestCount++ . " - check type '$DefaultWorkOrderType'"
     );
 }
 
