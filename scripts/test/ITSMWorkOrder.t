@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.30 2009-10-16 11:15:12 reb Exp $
+# $Id: ITSMWorkOrder.t,v 1.31 2009-10-16 11:24:44 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -551,8 +551,7 @@ push @WorkOrderTests, (
     },
 
     {
-        Description => 'Test for max+1 string length for WorkOrderUpdate.',
-        UpdateFails => 1,
+        Description => 'Test create_by and change_by for WorkOrderUpdate.',
         SourceData  => {
             WorkOrderAdd => {
                 UserID   => $UserIDs[0],
@@ -663,7 +662,7 @@ push @WorkOrderTests, (
             },
         },
         ReferenceData => {
-            WorkORderGet => {
+            WorkOrderGet => {
                 Title       => '0',
                 Instruction => '0',
                 Report      => '0',
