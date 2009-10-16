@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.33 2009-10-16 11:44:58 reb Exp $
+# $Id: ITSMWorkOrder.t,v 1.34 2009-10-16 11:51:11 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -542,7 +542,7 @@ push @WorkOrderTests, (
             },
         },
         ReferenceData => {
-            ChangeGet => {
+            WorkOrderGet => {
                 Title       => q{},
                 Instruction => q{},
                 Report      => q{},
@@ -566,9 +566,9 @@ push @WorkOrderTests, (
         },
         ReferenceData => {
             WorkOrderGet => {
-                Title       => q{},
-                Instruction => q{},
-                Report      => q{},
+                Title       => 'T' x 25,
+                Instruction => 'I' x 38,
+                Report      => 'R' x 38,
                 CreateBy    => $UserIDs[0],
                 ChangeBy    => 1,
             },
