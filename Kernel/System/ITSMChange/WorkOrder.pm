@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all work order functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.28 2009-10-16 08:52:53 bes Exp $
+# $Id: WorkOrder.pm,v 1.29 2009-10-16 10:16:29 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.28 $) [1];
+$VERSION = qw($Revision: 1.29 $) [1];
 
 =head1 NAME
 
@@ -580,8 +580,7 @@ sub WorkOrderSearch {
         $Param{UsingWildcards} = 1;
     }
 
-    my @SQLWhere;     # assemble the conditions used in the WHERE clause
-    my @SQLHaving;    # assemble the conditions used in the HAVING clause
+    my @SQLWhere;    # assemble the conditions used in the WHERE clause
 
     # set string params
     my %StringParams = (
@@ -720,7 +719,7 @@ sub WorkOrderSearch {
         # quote
         $Param{$TimeParam} = $Self->{DBObject}->Quote( $Param{$TimeParam} );
 
-        push @SQLHaving, "$WorkOrderTimeParams{$TimeParam} '$Param{$TimeParam}'";
+        push @SQLWhere, "$WorkOrderTimeParams{$TimeParam} '$Param{$TimeParam}'";
     }
 
     # assemble the ORDER BY clause
@@ -761,13 +760,6 @@ sub WorkOrderSearch {
     if (@SQLWhere) {
         $SQL .= 'WHERE ';
         $SQL .= join ' AND ', map {"( $_ )"} @SQLWhere;
-        $SQL .= ' ';
-    }
-
-    # add the HAVING clause
-    if (@SQLHaving) {
-        $SQL .= 'HAVING ';
-        $SQL .= join ' AND ', map {"( $_ )"} @SQLHaving;
         $SQL .= ' ';
     }
 
@@ -1272,6 +1264,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.28 $ $Date: 2009-10-16 08:52:53 $
+$Revision: 1.29 $ $Date: 2009-10-16 10:16:29 $
 
 =cut
