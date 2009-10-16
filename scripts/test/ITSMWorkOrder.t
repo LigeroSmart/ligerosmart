@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.36 2009-10-16 12:35:49 reb Exp $
+# $Id: ITSMWorkOrder.t,v 1.37 2009-10-16 12:46:15 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -681,7 +681,7 @@ push @WorkOrderTests, (
             WorkOrderAdd => {
                 UserID   => $UserIDs[0],
                 ChangeID => $WorkOrderAddTestID,
-                Report   => 'Update fails',
+                Report   => 'Report - just PlannedStartTime',
             },
             WorkOrderUpdate => {
                 PlannedStartTime => '2009-03-20 13:25:09',
@@ -693,7 +693,7 @@ push @WorkOrderTests, (
             WorkOrderGet => {
                 Title       => q{},
                 Instruction => q{},
-                Report      => 'Update fails',
+                Report      => 'Report - just PlannedStartTime',
                 ChangeBy    => $UserIDs[0],
                 CreateBy    => $UserIDs[0],
             },
@@ -707,7 +707,7 @@ push @WorkOrderTests, (
             WorkOrderAdd => {
                 UserID   => $UserIDs[0],
                 ChangeID => $WorkOrderAddTestID,
-                Report   => 'Update fails',
+                Report   => 'Report - just PlannedEndTime',
             },
             WorkOrderUpdate => {
                 PlannedEndTime => '2009-03-20 13:25:09',
@@ -719,7 +719,7 @@ push @WorkOrderTests, (
             WorkOrderGet => {
                 Title       => q{},
                 Instruction => q{},
-                Report      => 'Update fails',
+                Report      => 'Report - just PlannedEndTime',
                 ChangeBy    => $UserIDs[0],
                 CreateBy    => $UserIDs[0],
             },
@@ -733,7 +733,7 @@ push @WorkOrderTests, (
             WorkOrderAdd => {
                 UserID   => $UserIDs[0],
                 ChangeID => $WorkOrderAddTestID,
-                Report   => 'Update fails',
+                Report   => 'Report - just ActualStartTime',
             },
             WorkOrderUpdate => {
                 ActualStartTime => '2009-03-20 13:25:09',
@@ -745,7 +745,7 @@ push @WorkOrderTests, (
             WorkOrderGet => {
                 Title       => q{},
                 Instruction => q{},
-                Report      => 'Update fails',
+                Report      => 'Report - just ActualStartTime',
                 ChangeBy    => $UserIDs[0],
                 CreateBy    => $UserIDs[0],
             },
@@ -753,13 +753,13 @@ push @WorkOrderTests, (
     },
 
     {
-        Description => 'Test for TimeChanges - just ActualStartTime - for WorkOrderUpdate.',
+        Description => 'Test for TimeChanges - just ActualEndTime - for WorkOrderUpdate.',
         UpdateFails => 1,
         SourceData  => {
             WorkOrderAdd => {
                 UserID   => $UserIDs[0],
                 ChangeID => $WorkOrderAddTestID,
-                Report   => 'Update fails',
+                Report   => 'Report - just ActualEndTime',
             },
             WorkOrderUpdate => {
                 ActualEndTime => '2009-03-20 13:25:09',
@@ -771,7 +771,7 @@ push @WorkOrderTests, (
             WorkOrderGet => {
                 Title       => q{},
                 Instruction => q{},
-                Report      => 'Update fails',
+                Report      => 'Report - just ActualEndTime',
                 ChangeBy    => $UserIDs[0],
                 CreateBy    => $UserIDs[0],
             },
@@ -786,7 +786,7 @@ push @WorkOrderTests, (
             WorkOrderAdd => {
                 UserID   => $UserIDs[0],
                 ChangeID => $WorkOrderAddTestID,
-                Report   => 'Update fails',
+                Report   => 'Report - ActualStartTime > ActualEndTime',
             },
             WorkOrderUpdate => {
                 ActualEndTime   => '2009-03-20 13:25:09',
@@ -799,7 +799,7 @@ push @WorkOrderTests, (
             WorkOrderGet => {
                 Title       => q{},
                 Instruction => q{},
-                Report      => 'Update fails',
+                Report      => 'Report - ActualStartTime > ActualEndTime',
                 ChangeBy    => $UserIDs[0],
                 CreateBy    => $UserIDs[0],
             },
@@ -813,7 +813,7 @@ push @WorkOrderTests, (
             WorkOrderAdd => {
                 UserID   => $UserIDs[0],
                 ChangeID => $WorkOrderAddTestID,
-                Report   => 'Update fails',
+                Report   => 'Report - ActualStartTime < ActualEndTime',
             },
             WorkOrderUpdate => {
                 ActualEndTime   => '2009-03-22 13:25:09',
@@ -824,10 +824,10 @@ push @WorkOrderTests, (
         },
         ReferenceData => {
             WorkOrderGet => {
-                Title           => q{},
+                Title           => 'Test',
                 Instruction     => q{},
-                Report          => 'Update fails',
-                ChangeBy        => $UserIDs[0],
+                Report          => 'Report - ActualStartTime < ActualEndTime',
+                ChangeBy        => 1,
                 CreateBy        => $UserIDs[0],
                 ActualEndTime   => '2009-03-22 13:25:09',
                 ActualStartTime => '2009-03-21 13:25:09',
