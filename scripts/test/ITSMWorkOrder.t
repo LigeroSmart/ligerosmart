@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.34 2009-10-16 11:51:11 reb Exp $
+# $Id: ITSMWorkOrder.t,v 1.35 2009-10-16 12:07:29 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1172,7 +1172,7 @@ for my $Change (@ChangesForSortTest) {
 
     $Self->True(
         $ChangeID,
-        "Test: $TestCount: Change for sort test created",
+        "Test $TestCount: Change for sort test created",
     );
 
     # store ChangeID
@@ -1188,7 +1188,7 @@ for my $Change (@ChangesForSortTest) {
 
         $Self->True(
             $WorkOrderID,
-            "Test: $TestCount: WorkOrder $WorkOrderCount for Change created",
+            "Test $TestCount: WorkOrder $WorkOrderCount for Change created",
         );
 
         $WorkOrderCount++;
