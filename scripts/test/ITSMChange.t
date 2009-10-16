@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.87 2009-10-15 15:45:52 ub Exp $
+# $Id: ITSMChange.t,v 1.88 2009-10-16 06:49:56 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -31,6 +31,8 @@ $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
 $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
 $Self->{CustomerUserObject}   = Kernel::System::CustomerUser->new( %{$Self} );
 $Self->{ChangeObject}         = Kernel::System::ITSMChange->new( %{$Self} );
+
+# test if change object was created successfully
 $Self->True(
     $Self->{ChangeObject},
     "Test " . $TestCount++ . ' - construction of change object'
@@ -88,19 +90,21 @@ for my $Counter ( 1 .. 3 ) {
 @UserIDs         = sort @UserIDs;
 @CustomerUserIDs = sort @CustomerUserIDs;
 
-# create invalid user IDs
+# create non existing user IDs
 for ( 1 .. 2 ) {
     LPC:
     for my $LoopProtectionCounter ( 1 .. 100 ) {
-        my $TempNonExistingUserID = int rand 1_000_000;
-        next LPC
-            if (
-            defined $Self->{UserObject}->GetUserData(
-                UserID => $TempNonExistingUserID,
-            )
-            );
 
-        # we got unused user ID
+        # create a random user id
+        my $TempNonExistingUserID = int rand 1_000_000;
+
+        # check if random user id exists already
+        my %UserData = $Self->{UserObject}->GetUserData(
+            UserID => $TempNonExistingUserID,
+        );
+        next LPC if %UserData;
+
+        # we got an unused user ID
         push @NonExistingUserIDs, $TempNonExistingUserID;
         last LPC;
     }
@@ -127,18 +131,18 @@ $Self->{ConfigObject}->Set(
 # ------------------------------------------------------------ #
 # test ITSMChange API
 # ------------------------------------------------------------ #
-# define public interface
+# define public interface (in alphabetical order)
 my @ObjectMethods = qw(
     ChangeAdd
+    ChangeCABDelete
+    ChangeCABGet
+    ChangeCABUpdate
     ChangeDelete
     ChangeGet
     ChangeList
     ChangeLookup
     ChangeSearch
     ChangeUpdate
-    ChangeCABDelete
-    ChangeCABGet
-    ChangeCABUpdate
 );
 
 # check if subs are available
@@ -2176,6 +2180,10 @@ my @OrderByColumns = qw(
     ChangeTime
 );
 
+# TODO:
+# Add these 4 Start/End-Times as soon as the Change-Search was rewritten,
+# so that it can handle the problem with undefined start or end times
+
 # These columns can be added to lists above as soon as Workorder is implemented
 # and the time columns are set.
 #    PlannedStartTime
@@ -2422,6 +2430,15 @@ Set new values for CreateTime and ChangeTime for a given ChangeID.
 
 sub SetTimes {
     my (%Param) = @_;
+
+    # check change id
+    if ( !$Param{ChangeID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need ChangeID!',
+        );
+        return;
+    }
 
     # check parameters
     if ( !$Param{CreateTime} && !$Param{ChangeTime} ) {
