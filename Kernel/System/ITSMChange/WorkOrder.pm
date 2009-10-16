@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all work order functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.30 2009-10-16 11:48:28 mae Exp $
+# $Id: WorkOrder.pm,v 1.31 2009-10-16 12:37:03 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.30 $) [1];
+$VERSION = qw($Revision: 1.31 $) [1];
 
 =head1 NAME
 
@@ -1259,6 +1259,8 @@ Checks the constraints of timestamps: xxxStartTime must be before xxxEndTime
         UserID           => 1,
     );
 
+If xxxStartTime is given, xxxEndTime has to be given, too - and vice versa.
+
 =cut
 
 sub _CheckTimestamps {
@@ -1282,11 +1284,14 @@ sub _CheckTimestamps {
     );
 
     # check times
+    TYPE:
     for my $Type (qw(Actual Planned)) {
-        next if !( $Param{ $Type . 'StartTime' } || $Param{ $Type . 'EndTime' } );
+        next TYPE if !( $Param{ $Type . 'StartTime' } || $Param{ $Type . 'EndTime' } );
 
         my $StartTime = $Param{ $Type . 'StartTime' } || $WorkOrderData->{ $Type . 'StartTime' };
         my $EndTime   = $Param{ $Type . 'EndTime' }   || $WorkOrderData->{ $Type . 'EndTime' };
+
+        return if !( $StartTime && $EndTime );
 
         $StartTime =~ s{ \D }{}xmsg;
         $EndTime   =~ s{ \D }{}xmsg;
@@ -1313,6 +1318,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.30 $ $Date: 2009-10-16 11:48:28 $
+$Revision: 1.31 $ $Date: 2009-10-16 12:37:03 $
 
 =cut
