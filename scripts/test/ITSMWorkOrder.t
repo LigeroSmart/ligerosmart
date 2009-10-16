@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.23 2009-10-16 06:56:02 mae Exp $
+# $Id: ITSMWorkOrder.t,v 1.24 2009-10-16 07:23:53 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -200,20 +200,76 @@ my @ChangeTests     = (
 
     # change contains all data - (all attributes)
     {
-        Description => 'First change for testing workorders.',
+        Description => 'First change for general testing of workorders.',
         SourceData  => {
             ChangeAdd => {
-                Title         => 'Change 1 - Title - ' . $UniqueSignature,
-                Description   => 'Change 1 - Description - ' . $UniqueSignature,
-                Justification => 'Change 1 - Justification - ' . $UniqueSignature,
-                UserID        => $UserIDs[0],
+                Title  => 'Change 1 - Title - ' . $UniqueSignature,
+                UserID => $UserIDs[0],
             },
         },
         ReferenceData => {
             ChangeGet => {
-                Title         => 'Change 1 - Title - ' . $UniqueSignature,
-                Description   => 'Change 1 - Description - ' . $UniqueSignature,
-                Justification => 'Change 1 - Justification - ' . $UniqueSignature,
+                Title => 'Change 1 - Title - ' . $UniqueSignature,
+            },
+        },
+    },
+
+    {
+        Description => 'A change for testing WorkOrderChangeTimeGet() without workorders.',
+        SourceData  => {
+            ChangeAdd => {
+                Title  => 'Testing WorkOrderChangeTimeGet(), no workorder ' . $UniqueSignature,
+                UserID => $UserIDs[0],
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                Title => 'Testing WorkOrderChangeTimeGet(), no workorder ' . $UniqueSignature,
+            },
+        },
+    },
+
+    {
+        Description => 'A change for testing WorkOrderChangeTimeGet() with a single workorder.',
+        SourceData  => {
+            ChangeAdd => {
+                Title  => 'Testing WorkOrderChangeTimeGet(), one workorder ' . $UniqueSignature,
+                UserID => $UserIDs[0],
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                Title => 'Testing WorkOrderChangeTimeGet(), one workorder ' . $UniqueSignature,
+            },
+        },
+    },
+
+    {
+        Description => 'A change for testing WorkOrderChangeTimeGet() with two workorders.',
+        SourceData  => {
+            ChangeAdd => {
+                Title  => 'Testing WorkOrderChangeTimeGet(), two workorders ' . $UniqueSignature,
+                UserID => $UserIDs[0],
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                Title => 'Testing WorkOrderChangeTimeGet(), two workorders ' . $UniqueSignature,
+            },
+        },
+    },
+
+    {
+        Description => 'A change for testing WorkOrderChangeTimeGet() with three workorders.',
+        SourceData  => {
+            ChangeAdd => {
+                Title  => 'Testing WorkOrderChangeTimeGet(), three workorders ' . $UniqueSignature,
+                UserID => $UserIDs[0],
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                Title => 'Testing WorkOrderChangeTimeGet(), three workorders ' . $UniqueSignature,
             },
         },
     },
@@ -365,16 +421,14 @@ continue {
 }
 
 # ------------------------------------------------------------ #
-# Define the general workorder tests
+# Define the workorder tests
 # ------------------------------------------------------------ #
+my @WorkOrderTests;
 
-my ($WorkOrderAddTestID) = keys %TestedChangeID;
+my ( $WorkOrderAddTestID, $TimesTestID ) = keys %TestedChangeID;
 
-my @WorkOrderTests = (
-
-    #------------------------------#
-    # Tests on WorkOrderAdd
-    #------------------------------#
+# tests with only WorkOrderAdd();
+push @WorkOrderTests, (
 
     # Tests where the workorder doesn't contain all data (required attributes)
     {
@@ -471,11 +525,10 @@ my @WorkOrderTests = (
         },
         SearchTest => [2],
     },
+);
 
-    #------------------------------#
-    # Tests on WorkOrderUpdate
-    #------------------------------#
-
+# tests for WorkOrderUpdate();
+push @WorkOrderTests, (
     {
         Description => 'Test contains no params for WorkOrderUpdate().',
         Fails      => 1,    # we expect this test to fail
@@ -633,8 +686,25 @@ my @WorkOrderTests = (
     },
 );
 
+# tests for WorkOrderChangeTimeGet()
+push @WorkOrderTests, (
+    {
+        Description => 'Test contains no params for WorkOrderUpdate().',
+        Fails      => 1,    # we expect this test to fail
+        SourceData => {
+            WorkOrderAdd => {
+                UserID   => 1,
+                ChangeID => $TimesTestID,
+            },
+        },
+        ReferenceData => {
+            WorkOrderUpdate => undef,
+        },
+    },
+);
+
 # ------------------------------------------------------------ #
-# execute the general workorder tests
+# execute the workorder tests
 # ------------------------------------------------------------ #
 
 my %TestedWorkOrderID;           # ids of all created workorders
@@ -854,7 +924,6 @@ $Self->Is(
 # ------------------------------------------------------------ #
 # define general workorder search tests
 # ------------------------------------------------------------ #
-my $SystemTime = $Self->{TimeObject}->SystemTime();
 
 my @WorkOrderSearchTests = (
 
