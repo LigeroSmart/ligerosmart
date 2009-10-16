@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.25 2009-10-16 08:28:00 reb Exp $
+# $Id: ITSMWorkOrder.t,v 1.26 2009-10-16 09:01:01 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -690,8 +690,7 @@ push @WorkOrderTests, (
 push @WorkOrderTests, (
     {
         Description => 'Test contains no params for WorkOrderUpdate().',
-        Fails      => 1,    # we expect this test to fail
-        SourceData => {
+        SourceData  => {
             WorkOrderAdd => {
                 UserID   => 1,
                 ChangeID => $TimesTestID,
