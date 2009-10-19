@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.18 2009-10-19 18:28:22 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.19 2009-10-19 18:30:33 ub Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -103,6 +103,7 @@
             <Column Name="instruction" Required="false" Size="3800" Type="VARCHAR"/>
             <Column Name="report" Required="false" Size="3800" Type="VARCHAR"/>
             <Column Name="workorder_state_id" Required="true" Type="INTEGER"/>
+            <Column Name="workorder_type_id" Required="false" Type="INTEGER"/>
             <Column Name="workorder_agent_id" Required="false" Type="INTEGER"/>
             <Column Name="planned_start_time" Required="true" Default="0001-01-01 00:00:00" Type="DATE"/>
             <Column Name="planned_end_time" Required="true" Default="9999-01-01 00:00:00" Type="DATE"/>
@@ -130,16 +131,16 @@
             <Index Name="change_workorder_workorder_agent_id">
                 <IndexColumn Name="workorder_agent_id"/>
             </Index>
-            <Index Name="change_item_planned_start_time">
+            <Index Name="change_workorder_planned_start_time">
                 <IndexColumn Name="planned_start_time"/>
             </Index>
-            <Index Name="change_item_planned_end_time">
+            <Index Name="change_workorder_planned_end_time">
                 <IndexColumn Name="planned_end_time"/>
             </Index>
-            <Index Name="change_item_actual_start_time">
+            <Index Name="change_workorder_actual_start_time">
                 <IndexColumn Name="actual_start_time"/>
             </Index>
-            <Index Name="change_item_actual_end_time">
+            <Index Name="change_workorder_actual_end_time">
                 <IndexColumn Name="actual_end_time"/>
             </Index>
             <ForeignKey ForeignTable="change_item">
