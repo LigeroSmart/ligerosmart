@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderZoom.pm - the OTRS::ITSM::ChangeManagement work order zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderZoom.pm,v 1.2 2009-10-19 17:57:40 reb Exp $
+# $Id: AgentITSMWorkOrderZoom.pm,v 1.3 2009-10-19 19:05:51 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,9 +17,10 @@ use warnings;
 use Kernel::System::ITSMChange::WorkOrder;
 use Kernel::System::ITSMChange;
 use Kernel::System::GeneralCatalog;
+use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -38,6 +39,7 @@ sub new {
     $Self->{ChangeObject}         = Kernel::System::ITSMChange->new(%Param);
     $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::WorkOrder->new(%Param);
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
+    $Self->{LinkObject}           = Kernel::System::LinkObject->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChangeManagement::Frontend::$Self->{Action}");
@@ -95,6 +97,7 @@ sub Run {
         UserID => $WorkOrder->{CreateBy},
         Cached => 1,
     );
+
     for my $Postfix (qw(UserLogin UserFirstname UserLastname)) {
         $WorkOrder->{ 'Create' . $Postfix } = $CreateUser{$Postfix};
     }
@@ -104,6 +107,7 @@ sub Run {
         UserID => $WorkOrder->{ChangeBy},
         Cached => 1,
     );
+
     for my $Postfix (qw(UserLogin UserFirstname UserLastname)) {
         $WorkOrder->{ 'Change' . $Postfix } = $ChangeUser{$Postfix};
     }
@@ -113,8 +117,18 @@ sub Run {
         UserID => $Change->{ChangeBuilderID},
         Cached => 1,
     );
+
     for my $Postfix (qw(UserLogin UserFirstname UserLastname)) {
-        $Change->{ 'ChangeBuilder' . $Postfix } = $ChangeBuilderUser{$Postfix};
+        $WorkOrder->{ 'ChangeBuilder' . $Postfix } = $ChangeBuilderUser{$Postfix};
+    }
+
+    $WorkOrder->{ChangeBuilderString} = '-';
+
+    if (%ChangeBuilderUser) {
+        $WorkOrder->{ChangeBuilderString} = sprintf "%s (%s %s)",
+            $WorkOrder->{ChangeBuilderUserLogin},
+            $WorkOrder->{ChangeBuilderUserFirstname},
+            $WorkOrder->{ChangeBuilderUserLastname};
     }
 
     # get work order agent user
@@ -122,18 +136,28 @@ sub Run {
         UserID => $WorkOrder->{WorkOrderAgentID},
         Cached => 1,
     );
+
     for my $Postfix (qw(UserLogin UserFirstname UserLastname)) {
-        $Change->{ 'WorkOrderAgentBuilder' . $Postfix } = $WorkOrderAgentUser{$Postfix};
+        $WorkOrder->{ 'WorkOrderAgent' . $Postfix } = $WorkOrderAgentUser{$Postfix} || '';
+    }
+
+    $WorkOrder->{WorkOrderAgentString} = '-';
+
+    if (%WorkOrderAgentUser) {
+        $WorkOrder->{WorkOrderAgentString} = sprintf "%s (%s %s)",
+            $WorkOrder->{WorkOrderAgentUserLogin},
+            $WorkOrder->{WorkOrderAgentUserFirstname},
+            $WorkOrder->{WorkOrderAgentUserLastname};
     }
 
     # get work order state list
     my $WorkOrderStateList = $Self->{GeneralCatalogObject}->ItemList(
         Class => 'ITSM::ChangeManagement::WorkOrder::State',
-    );
+    ) || {};
 
     # temp color for changes
     my %CurWorkOrderSignal = (
-        109 => 'greenled',
+        118 => 'greenled',
     );
 
     # output meta block
@@ -146,12 +170,63 @@ sub Run {
         },
     );
 
+    # get linked objects
+    my $LinkListWithData = $Self->{LinkObject}->LinkListWithData(
+        Object => 'WorkOrder',
+        Key    => $WorkOrderID,
+        State  => 'Valid',
+        UserID => $Self->{UserID},
+    );
+
+    # get link table view mode
+    my $LinkTableViewMode = $Self->{ConfigObject}->Get('LinkObject::ViewMode');
+
+    # create the link table
+    my $LinkTableStrg = $Self->{LayoutObject}->LinkObjectTableCreate(
+        LinkListWithData => $LinkListWithData,
+        ViewMode         => $LinkTableViewMode,
+    );
+
+    # output the link table
+    if ($LinkTableStrg) {
+        $Self->{LayoutObject}->Block(
+            Name => 'LinkTable' . $LinkTableViewMode,
+            Data => {
+                LinkTableStrg => $LinkTableStrg,
+            },
+        );
+    }
+
+    # TODO: GeneralCatalog-Preferences definition of LED color
+    #  CurInciSignal => $InciSignals{ $LastVersion->{CurInciStateType} },
+    # temp color for changes
+    my %CurChangeSignal = (
+        requested          => 'yellowled',
+        accepted           => 'greenled',
+        'pending approval' => 'yellowled',
+        rejected           => 'grayled',
+        approved           => 'greenled',
+        'in progress'      => 'yellowled',
+        successfull        => 'greenled',
+        failed             => 'redled',
+        canceled           => 'grayled',
+    );
+
+    my $ChangeStateList = $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::ChangeManagement::Change::State',
+    ) || {};
+
     # start template output
     $Output .= $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentITSMWorkOrderZoom',
         Data         => {
-            ChangeNumber  => $Change->{ChangeNumber},
-            ChangeBuilder => $Change->{ChangeBuilder},
+            ChangeNumber    => $Change->{ChangeNumber},
+            ChangeBuilder   => $Change->{ChangeBuilder},
+            ChangeTitle     => $Change->{Title},
+            CurChangeSignal => $CurChangeSignal{ $ChangeStateList->{ $Change->{ChangeStateID} } },
+            CurChangeState  => $ChangeStateList->{ $Change->{ChangeStateID} },
+            CurWorkOrderSignal => $CurWorkOrderSignal{ $WorkOrder->{WorkOrderStateID} },
+            CurWorkOrderState  => $WorkOrderStateList->{ $WorkOrder->{WorkOrderStateID} },
             %{$WorkOrder},
         },
     );

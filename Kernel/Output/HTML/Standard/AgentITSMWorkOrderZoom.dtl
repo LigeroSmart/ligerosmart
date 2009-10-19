@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderZoom.dtl - provides HTML form for AgentITSMWorkOrderZoom
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderZoom.dtl,v 1.2 2009-10-19 17:57:40 reb Exp $
+# $Id: AgentITSMWorkOrderZoom.dtl,v 1.3 2009-10-19 19:05:52 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -12,16 +12,33 @@
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
         <td class="mainhead">
-            $Env{"Box0"}$Text{"Zoom"} $Text{"Change#"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"} $QData{"Title","70"}
+            $Env{"Box0"}$Text{"Zoom"} $Text{"Work Order#"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"} $QData{"Title","70"}
         </td>
     </tr>
 </table>
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
         <td rowspan="2" valign="top" width="75%" class="mainbody">
+            <table border="0" width="100%" cellspacing="0" cellpadding="1">
+                <tr>
+                    <td style="font-size: 18px; font-weight: bold">
+                        <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"CurChangeSignal"}.png" title="$Text{"$QData{"CurChangeState"}"}" alt="$Text{"$QData{"CurChangeState"}"}">
+                        <span>$Text{"Change#"}</span>
+                        <span>$QData{"ChangeNumber"}</span>
+                        <span style="color: blue;">$QData{"ChangeTitle","70"}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="font-style: italic; font-weight: bold;">
+                        <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"CurWorkOrderSignal"}-small.png" title="$Text{"$QData{"CurWorkOrderState"}"}" alt="$Text{"$QData{"CurWorkOrderState"}"}">
+                        <span>$Text{"Work Order#"}</span>
+                        <span>$QData{"ChangeNumber"}-$QData{"WorkOrderNumber"}</span>
+                        <span style="color: blue;">$QData{"Title","70"}</span>
+                    </td>
+                </tr>
+            </table>
             <hr size="2">
             <table border="0" width="100%" cellspacing="0" cellpadding="1">
-
                 <tr>
                     <td class="contentkey" width="16%">
                         <div title="$Text{"$QData{"Instruction"}"}">
@@ -58,6 +75,7 @@
             </table>
             <hr size="2">
             <br>
+<!-- dtl:block:LinkTableSimple -->
             <table width="98%" align="center" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                     <td>
@@ -66,6 +84,7 @@
                 </tr>
             </table>
             <br>
+<!-- dtl:block:LinkTableSimple -->
         </td>
         <td width="25%" valign="top" class="menu">
 <!-- dtl:block:Meta -->
@@ -103,7 +122,7 @@
                     <td><b>$Text{"Change Builder:"}</b></td>
                     <td>
                         <div title="$QData{"ChangeBuilderUserLogin"} ($Quote{"$Data{"ChangeBuilderUserFirstname"} $Data{"ChangeBuilderUserLastname"}"})">
-                            $QData{"ChangeBuilderUserLogin","15"} ($Quote{"$Data{"ChangeBuilderUserFirstname"} $Data{"ChangeBuilderUserLastname"}","15"})
+                            $QData{"ChangeBuilderString"}
                         </div>
                     </td>
                 </tr>
@@ -113,8 +132,8 @@
                 <tr>
                     <td><b>$Text{"Work Order Agent:"}</b></td>
                     <td>
-                        <div title="$QData{"ChangeBuilderUserLogin"} ($Quote{"$Data{"ChangeBuilderUserFirstname"} $Data{"ChangeBuilderUserLastname"}"})">
-                            $QData{"ChangeBuilderUserLogin","15"} ($Quote{"$Data{"ChangeBuilderUserFirstname"} $Data{"ChangeBuilderUserLastname"}","15"})
+                        <div title="$QData{"WorkOrderAgentUserLogin"} ($Quote{"$Data{"WorkOrderAgentUserFirstname"} $Data{"WorkOrderAgentUserLastname"}"})">
+                            $QData{"WorkOrderAgentString"}
                         </div>
                     </td>
                 </tr>
@@ -148,9 +167,6 @@
                         </div>
                     </td>
                 </tr>
-<!-- dtl:block:LinkTableSimple -->
-                $Data{"LinkTableStrg"}
-<!-- dtl:block:LinkTableSimple -->
             </table>
 <!-- dtl:block:Meta -->
         </td>
