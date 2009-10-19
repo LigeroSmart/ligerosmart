@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeZoom.pm - the OTRS::ITSM::ChangeManagement change zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.pm,v 1.3 2009-10-19 16:19:28 mae Exp $
+# $Id: AgentITSMChangeZoom.pm,v 1.4 2009-10-19 19:08:23 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::GeneralCatalog;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -34,9 +34,10 @@ sub new {
             $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
         }
     }
-    $Self->{ChangeObject}         = Kernel::System::ITSMChange->new(%Param);
-    $Self->{LinkObject}           = Kernel::System::LinkObject->new(%Param);
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
+    $Self->{CustomerUserObject}   = Kernel::System::CustomerUser->new(%Param);
+    $Self->{LinkObject}           = Kernel::System::LinkObject->new(%Param);
+    $Self->{ChangeObject}         = Kernel::System::ITSMChange->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChangeManagement::Frontend::$Self->{Action}");
@@ -86,13 +87,27 @@ sub Run {
 
     my @Postfixes = qw(UserLogin UserFirstname UserLastname);
 
-    # get change manager data
-    my %ChangeManagerUser = $Self->{UserObject}->GetUserData(
-        UserID => $Change->{ChangeManagerID},
-        Cached => 1,
-    );
-    for my $Postfix (@Postfixes) {
-        $Change->{ 'ChangeManager' . $Postfix } = $ChangeManagerUser{$Postfix};
+    if ( $Change->{ChangeManager} ) {
+
+        # get change manager data
+        my %ChangeManagerUser = $Self->{UserObject}->GetUserData(
+            UserID => $Change->{ChangeManagerID},
+            Cached => 1,
+        );
+        for my $Postfix (@Postfixes) {
+            if ( $Postfix eq 'UserFirstname' ) {
+                $Change->{ 'ChangeManager' . $Postfix } = '(' . $ChangeManagerUser{$Postfix};
+            }
+            elsif ( $Postfix eq 'UserLastname' ) {
+                $Change->{ 'ChangeManager' . $Postfix } = $ChangeManagerUser{$Postfix} . ')';
+            }
+            else {
+                $Change->{ 'ChangeManager' . $Postfix } = $ChangeManagerUser{$Postfix};
+            }
+        }
+    }
+    else {
+        $Change->{ChangeManagerUserLogin} = '-';
     }
 
     # get change builder data
@@ -137,25 +152,80 @@ sub Run {
         canceled           => 'grayled',
     );
 
+    my $CurChangeState = $Self->{GeneralCatalogObject}->ItemGet(
+        ItemID => $Change->{ChangeStateID},
+    ) || {};
+
     # output meta block
     $Self->{LayoutObject}->Block(
         Name => 'Meta',
         Data => {
             %{$Change},
-            CurChangeSignal => $CurChangeSignal{
-                (
-                    $Self->{GeneralCatalogObject}->ItemGet(
-                        ItemID => $Change->{ChangeStateID},
-                        ) || {}
-                    )->{Name}
-                },
-            CurChangeState => (
-                $Self->{GeneralCatalogObject}->ItemGet(
-                    ItemID => $Change->{ChangeStateID},
-                    ) || {}
-                )->{Name},
+            CurChangeState  => $CurChangeState->{Name},
+            CurChangeSignal => $CurChangeSignal{ $CurChangeState->{Name} },
         },
     );
+
+    # output CAB block
+    $Self->{LayoutObject}->Block(
+        Name => 'CAB',
+        Data => {
+            %{$Change},
+        },
+    );
+
+    # build and output CAB agents
+    CABAGENT:
+    for my $CABAgent ( @{ $Change->{CABAgents} } ) {
+        next CABAGENT if !$CABAgent;
+
+        my %CABAgentUserData = $Self->{UserObject}->GetUserData(
+            UserID => $CABAgent,
+            Cache  => 1,
+        );
+
+        next CABAGENT if !%CABAgentUserData;
+
+        # build content for agent block
+        my %CABAgentData;
+        for my $Postfix (@Postfixes) {
+            $CABAgentData{ 'CABAgent' . $Postfix } = $CABAgentUserData{$Postfix};
+        }
+
+        # output agent block
+        $Self->{LayoutObject}->Block(
+            Name => 'CABAgent',
+            Data => {
+                %CABAgentData,
+            },
+        );
+    }
+
+    # build and outpu CAB customers
+    CABCUSTOMER:
+    for my $CABCustomer ( @{ $Change->{CABCustomers} } ) {
+        next CABCUSTOMER if !$CABCustomer;
+
+        my %CABCustomerUserData = $Self->{CustomerUserObject}->CustomerUserDataGet(
+            User => $CABCustomer,
+        );
+
+        next CABCUSTOMER if !%CABCustomerUserData;
+
+        # build content for customer block
+        my %CABCustomerData;
+        for my $Postfix (@Postfixes) {
+            $CABCustomerData{ 'CABCustomer' . $Postfix } = $CABCustomerUserData{$Postfix};
+        }
+
+        # output agent block
+        $Self->{LayoutObject}->Block(
+            Name => 'CABCustomer',
+            Data => {
+                %CABCustomerData,
+            },
+        );
+    }
 
     # get linked objects
     my $LinkListWithData = $Self->{LinkObject}->LinkListWithData(
