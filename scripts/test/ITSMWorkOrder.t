@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.43 2009-10-19 09:02:10 ub Exp $
+# $Id: ITSMWorkOrder.t,v 1.44 2009-10-19 09:17:31 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1466,12 +1466,12 @@ my @WOCTGTests = (
                     'ActualStartTime',
                     'ActualEndTime',
                 ],
-                ResultData => [
-                    undef,
-                    undef,
-                    undef,
-                    undef,
-                ],
+                ResultData => {
+                    'PlannedStartTime' => undef,
+                    'PlannedEndTime'   => undef,
+                    'ActualStartTime'  => undef,
+                    'ActualEndTime'    => undef,
+                },
             },
         },
     },
@@ -1498,12 +1498,12 @@ my @WOCTGTests = (
                     'ActualStartTime',
                     'ActualEndTime',
                 ],
-                ResultData => [
-                    '2009-10-01 00:00:00',
-                    '2009-10-02 23:59:59',
-                    '2009-10-01 00:08:00',
-                    '2009-10-02 00:18:00',
-                ],
+                ResultData => {
+                    'PlannedStartTime' => '2009-10-01 00:00:00',
+                    'PlannedEndTime'   => '2009-10-02 23:59:59',
+                    'ActualStartTime'  => '2009-10-01 00:08:00',
+                    'ActualEndTime'    => '2009-10-02 00:18:00',
+                },
             },
         },
     },
@@ -1528,12 +1528,12 @@ my @WOCTGTests = (
                     'ActualStartTime',
                     'ActualEndTime',
                 ],
-                ResultData => [
-                    '2009-10-01 00:00:00',
-                    '2009-10-02 23:59:59',
-                    undef,
-                    undef,
-                ],
+                ResultData => {
+                    'PlannedStartTime' => '2009-10-01 00:00:00',
+                    'PlannedEndTime'   => '2009-10-02 23:59:59',
+                    'ActualStartTime'  => undef,
+                    'ActualEndTime'    => undef,
+                },
             },
         },
     },
@@ -1557,12 +1557,12 @@ my @WOCTGTests = (
                     'ActualStartTime',
                     'ActualEndTime',
                 ],
-                ResultData => [
-                    undef,
-                    undef,
-                    '2009-10-01 00:08:00',
-                    undef,
-                ],
+                ResultData => {
+                    'PlannedStartTime' => undef,
+                    'PlannedEndTime'   => undef,
+                    'ActualStartTime'  => '2009-10-01 00:08:00',
+                    'ActualEndTime'    => undef,
+                },
             },
         },
     },
@@ -1609,23 +1609,27 @@ for my $WOCTGTest (@WOCTGTests) {
     }
 
     if ( $ReferenceData->{WorkOrderChangeTimeGet} ) {
-        my $Times = $Self->{WorkOrderObject}->WorkOrderChangeTimeGet(
+        my $Time = $Self->{WorkOrderObject}->WorkOrderChangeTimeGet(
             %{ $ReferenceData->{WorkOrderChangeTimeGet} },
             ChangeID => $ChangeID,
         );
 
-        # Test for right values in result
-        TIMEVALUE:
-        for my $TimeValue (
-            0 .. ( scalar @{ $ReferenceData->{WorkOrderChangeTimeGet}->{ResultData} } - 1 )
-            )
-        {
-            $Self->Is(
-                $Times->[$TimeValue],
-                $ReferenceData->{WorkOrderChangeTimeGet}->{ResultData}->[$TimeValue],
-                "Test $TestCount: |- check TimeResult ("
-                    . $ReferenceData->{WorkOrderChangeTimeGet}->{Types}->[$TimeValue] . ")",
-            );
+        $Self->True(
+            $Time,
+            "Test $TestCount: |- WorkOrderChangeTimeGet()",
+        );
+
+        if ($Time) {
+
+            # Test for right values in result
+            TIMEVALUE:
+            for my $TimeType ( keys %{$Time} ) {
+                $Self->Is(
+                    $Time->{$TimeType},
+                    $ReferenceData->{WorkOrderChangeTimeGet}->{ResultData}->{$TimeType},
+                    "Test $TestCount: |- check TimeResult ($TimeType)",
+                );
+            }
         }
     }
 

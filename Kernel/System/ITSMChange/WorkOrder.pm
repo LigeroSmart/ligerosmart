@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all work order functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.32 2009-10-16 13:01:01 reb Exp $
+# $Id: WorkOrder.pm,v 1.33 2009-10-19 09:17:31 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.32 $) [1];
+$VERSION = qw($Revision: 1.33 $) [1];
 
 =head1 NAME
 
@@ -836,7 +836,14 @@ if any of the workorders of a change has the wanted time not defined.
 The ActualStartTime is defined when any of the workorders of a change has
 a defined ActualStartTime.
 
-    my $ChangePlannedStartTime = $WorkOrderObject->WorkOrderChangeTimeGet(
+Return
+
+    $Time{PlannedStartTime}
+    $Time{PlannedEndTime}
+    $Time{ActualStartTime}
+    $Time{ActualEndTime}
+
+    my $TimeRef = $WorkOrderObject->WorkOrderChangeTimeGet(
         ChangeID => 123,
 
         Types    => [ 'PlannedStartTime', 'PlannedEndTime' ],
@@ -892,11 +899,11 @@ sub WorkOrderChangeTimeGet {
     }
 
     # define expected TimeTypes
-    my %TimeType = (
-        'PlannedStartTime' => 1,
-        'PlannedEndTime'   => 1,
-        'ActualStartTime'  => 1,
-        'ActualEndTime'    => 1,
+    my %TimeReturn = (
+        'PlannedStartTime' => undef,
+        'PlannedEndTime'   => undef,
+        'ActualStartTime'  => undef,
+        'ActualEndTime'    => undef,
     );
 
     # mapping for time types -> column
@@ -980,6 +987,9 @@ sub WorkOrderChangeTimeGet {
         Limit => 1,
     );
 
+    # reverse select lookup hash for return values
+    my %ColumnType = reverse %TypeColumnMap;
+
     # extract time values
     my @Times;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
@@ -992,14 +1002,15 @@ sub WorkOrderChangeTimeGet {
                 || $Time eq '9999-01-01 01:01:01'
                 )
             {
-                $Time = undef;
+                $TimeReturn{ $ColumnType{ $SelectColumns[$SelectIndex] } } = undef;
             }
-
-            push @Times, $Time;
+            else {
+                $TimeReturn{ $ColumnType{ $SelectColumns[$SelectIndex] } } = $Time;
+            }
         }
     }    # end while FetchrowArray
 
-    return \@Times;
+    return \%TimeReturn;
 }
 
 =item _CheckWorkOrderStateID()
@@ -1321,6 +1332,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.32 $ $Date: 2009-10-16 13:01:01 $
+$Revision: 1.33 $ $Date: 2009-10-19 09:17:31 $
 
 =cut
