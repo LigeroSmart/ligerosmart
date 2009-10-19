@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.83 2009-10-19 12:10:23 mae Exp $
+# $Id: ITSMChange.pm,v 1.84 2009-10-19 14:19:44 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::CustomerUser;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.83 $) [1];
+$VERSION = qw($Revision: 1.84 $) [1];
 
 =head1 NAME
 
@@ -733,7 +733,7 @@ sub ChangeList {
 return list of change ids as an array reference
 
     my $ChangeIDsRef = $ChangeObject->ChangeSearch(
-        ChangeNumber     => '2009100112345778',                  # (optional)
+        ChangeNumber      => '2009100112345778',                 # (optional)
 
         Title             => 'Replacement of slow mail server',  # (optional)
         Description       => 'New mail server is faster',        # (optional)
@@ -757,29 +757,29 @@ return list of change ids as an array reference
         PlannedStartTimeOlderDate => '2006-01-19 23:59:59',      # (optional)
 
         # changes with planned end time after ...
-        PlannedEndTimeNewerDate => '2006-01-09 00:00:01',        # (optional)
+        PlannedEndTimeNewerDate   => '2006-01-09 00:00:01',        # (optional)
         # changes with planned end time before then ....
-        PlannedEndTimeOlderDate => '2006-01-19 23:59:59',        # (optional)
+        PlannedEndTimeOlderDate   => '2006-01-19 23:59:59',        # (optional)
 
         # changes with actual start time after ...
-        ActualStartTimeNewerDate => '2006-01-09 00:00:01',       # (optional)
+        ActualStartTimeNewerDate  => '2006-01-09 00:00:01',       # (optional)
         # changes with actual start time before then ....
-        ActualStartTimeOlderDate => '2006-01-19 23:59:59',       # (optional)
+        ActualStartTimeOlderDate  => '2006-01-19 23:59:59',       # (optional)
 
         # changes with actual end time after ...
-        ActualEndTimeNewerDate => '2006-01-09 00:00:01',         # (optional)
+        ActualEndTimeNewerDate    => '2006-01-09 00:00:01',         # (optional)
         # changes with actual end time before then ....
-        ActualEndTimeOlderDate => '2006-01-19 23:59:59',         # (optional)
+        ActualEndTimeOlderDate    => '2006-01-19 23:59:59',         # (optional)
 
         # changes with created time after ...
-        CreateTimeNewerDate => '2006-01-09 00:00:01',            # (optional)
+        CreateTimeNewerDate       => '2006-01-09 00:00:01',            # (optional)
         # changes with created time before then ....
-        CreateTimeOlderDate => '2006-01-19 23:59:59',            # (optional)
+        CreateTimeOlderDate       => '2006-01-19 23:59:59',            # (optional)
 
         # changes with changed time after ...
-        ChangeTimeNewerDate => '2006-01-09 00:00:01',            # (optional)
+        ChangeTimeNewerDate       => '2006-01-09 00:00:01',            # (optional)
         # changes with changed time before then ....
-        ChangeTimeOlderDate => '2006-01-19 23:59:59',            # (optional)
+        ChangeTimeOlderDate       => '2006-01-19 23:59:59',            # (optional)
 
         OrderBy => [ 'ChangeID', 'ChangeManagerID' ],            # (optional)
         # default: [ 'ChangeID' ]
@@ -1139,6 +1139,7 @@ sub ChangeSearch {
 
     # assemble the ORDER BY clause
     my @SQLOrderBy;
+    my @SQLAliases;    # order by aliases, be on the save side with MySQL
     my $Count = 0;
     ORDERBY:
     for my $OrderBy ( @{ $Param{OrderBy} } ) {
@@ -1157,7 +1158,13 @@ sub ChangeSearch {
         }
 
         # add SQL
-        push @SQLOrderBy, "$OrderByTable{$OrderBy} $Direction";
+        if ( $OrderByTable{$OrderBy} =~ m{ \A COALESCE }xms ) {
+            push @SQLAliases, "$OrderByTable{$OrderBy} as alias_$OrderBy";
+            push @SQLOrderBy, "alias_$OrderBy $Direction";
+        }
+        else {
+            push @SQLOrderBy, "$OrderByTable{$OrderBy} $Direction";
+        }
 
         # for some order fields, we need to make sure, that the wo1 table is joined
         if ( $TableRequiresJoin{$OrderBy} ) {
@@ -1174,7 +1181,7 @@ sub ChangeSearch {
     }
 
     # assemble the SQL query
-    my $SQL = 'SELECT c.id FROM change_item c ';
+    my $SQL = 'SELECT ' . join( ', ', ( 'c.id', @SQLAliases ) ) . ' FROM change_item c ';
 
     # add the joins
     my %LongTableName = (
@@ -1781,6 +1788,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.83 $ $Date: 2009-10-19 12:10:23 $
+$Revision: 1.84 $ $Date: 2009-10-19 14:19:44 $
 
 =cut
