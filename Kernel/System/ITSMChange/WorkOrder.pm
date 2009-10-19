@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all work order functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.40 2009-10-19 20:51:30 ub Exp $
+# $Id: WorkOrder.pm,v 1.41 2009-10-19 20:59:13 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.40 $) [1];
+$VERSION = qw($Revision: 1.41 $) [1];
 
 =head1 NAME
 
@@ -908,12 +908,7 @@ sub WorkOrderChangeTimeGet {
     );
 
     # initialize the return time hash
-    my %TimeReturn = (
-        PlannedStartTime => '',
-        PlannedEndTime   => '',
-        ActualStartTime  => '',
-        ActualEndTime    => '',
-    );
+    my %TimeReturn;
 
     # extract time values
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
@@ -923,7 +918,7 @@ sub WorkOrderChangeTimeGet {
         $TimeReturn{ActualEndTime}    = $Row[3] || '';
     }
 
-    # set empty string if the deafult time was found
+    # set empty string if the default time was found
     for my $Time ( keys %TimeReturn ) {
         if ( $TimeReturn{$Time} eq '9999-01-01 00:00:00' ) {
             $TimeReturn{$Time} = '';
@@ -1280,6 +1275,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.40 $ $Date: 2009-10-19 20:51:30 $
+$Revision: 1.41 $ $Date: 2009-10-19 20:59:13 $
 
 =cut
