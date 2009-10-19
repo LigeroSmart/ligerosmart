@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.45 2009-10-19 09:36:09 mae Exp $
+# $Id: ITSMWorkOrder.t,v 1.46 2009-10-19 12:55:34 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -462,7 +462,7 @@ push @WorkOrderTests, (
                 Report      => 'WorkOrder 1 - Report - ' . $UniqueSignature,
             },
         },
-        SearchTest => [ 2, 3, 4, 5, 6, 8 ],
+        SearchTest => [ 2, 3, 4, 5, 6, 8, 11 ],
     },
     {
         Description => 'WorkOrderAdd() with empty string parameters.',
@@ -1200,14 +1200,64 @@ my @WorkOrderSearchTests = (
         },
     },
 
-    # Nr 8 - search for title, which is not in database
+    # Nr 8 - search for ChangeID
     {
-        Description => "All WorkOrders for Change $WorkOrderAddTestID",
+        Description => 'ChangeID does exist',
         SearchData  => {
-            ChangeID => $WorkOrderAddTestID,
+            ChangeIDs => [$WorkOrderAddTestID],
         },
         ResultData => {
             TestExistence => 1,
+        },
+    },
+
+    # Nr 9 - search for change id, which is not in database
+    {
+        Description => 'All WorkOrders for Change 1_000_000',
+        SearchData  => {
+            ChangeIDs => [1_000_000],
+        },
+        ResultData => {
+            TestCount => 1,
+            Count     => 0,
+        },
+    },
+
+    # Nr 10 - search for non-existing change id and existing title which is not in database
+    {
+        Description => 'All WorkOrders for Change 1_000_000 and an existing title',
+        SearchData  => {
+            ChangeIDs => [1_000_000],
+            Title     => 'WorkOrder 1 - Title - ' . $UniqueSignature,
+        },
+        ResultData => {
+            TestCount => 1,
+            Count     => 0,
+        },
+    },
+
+    # Nr 11 - search for existing ChangeID and existing Title
+    {
+        Description => 'ChangeID does exist, Title does exist',
+        SearchData  => {
+            ChangeIDs => [$WorkOrderAddTestID],
+            Title     => 'WorkOrder 1 - Title - ' . $UniqueSignature,
+        },
+        ResultData => {
+            TestExistence => 1,
+        },
+    },
+
+    # Nr 12 - search for existing change id and for title, which is not in database
+    {
+        Description => 'ChangeID does exist, Title does not exist',
+        SearchData  => {
+            ChangeIDs => [$WorkOrderAddTestID],
+            Title     => 'NOT IN DATABASE ' . $UniqueSignature,
+        },
+        ResultData => {
+            TestCount => 1,
+            Count     => 0,
         },
     },
 
