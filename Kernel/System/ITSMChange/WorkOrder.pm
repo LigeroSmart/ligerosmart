@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all work order functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.38 2009-10-19 14:56:29 bes Exp $
+# $Id: WorkOrder.pm,v 1.39 2009-10-19 17:47:32 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.38 $) [1];
+$VERSION = qw($Revision: 1.39 $) [1];
 
 =head1 NAME
 
@@ -162,12 +162,13 @@ sub WorkOrderAdd {
     # check change parameters
     return if !$Self->_CheckWorkOrderParams(%Param);
 
+    # TODO: replace this later with State-Condition-Action logic
+    # get WorkOrderStateID
     # get default WorkOrderStateID if not given
     my $ItemDataRef = $Self->{GeneralCatalogObject}->ItemGet(
         Class => 'ITSM::ChangeManagement::WorkOrder::State',
         Name  => 'accepted',
     );
-
     my $WorkOrderStateID = $Param{WorkOrderStateID} || $ItemDataRef->{ItemID};
 
     # get default workorder number if not given
@@ -272,7 +273,7 @@ sub WorkOrderUpdate {
         ActualEndTime    => 'actual_end_time',
     );
 
-    # build SQL to update change
+    # build SQL to update workorder
     my $SQL = 'UPDATE change_workorder SET ';
     my @Bind;
 
@@ -290,13 +291,13 @@ sub WorkOrderUpdate {
     $SQL .= 'WHERE id = ?';
     push @Bind, \$Param{UserID}, \$Param{WorkOrderID};
 
-    # add change to database
+    # update workorder
     return if !$Self->{DBObject}->Do(
         SQL  => $SQL,
         Bind => \@Bind,
     );
 
-    # TODO: trigger WordOrderUpdate-Event
+    # TODO: trigger WorkOrderUpdate-Event
 
     return 1;
 }
@@ -856,7 +857,7 @@ Return
         ChangeID => 123,
 
         Types    => [ 'PlannedStartTime', 'PlannedEndTime' ],
-        # (PlannedStartTime | PlannedEndTime
+        # ( PlannedStartTime | PlannedEndTime
         # | ActualStartTime | ActualEndTime )
 
         UserID   => 1,
@@ -1341,6 +1342,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.38 $ $Date: 2009-10-19 14:56:29 $
+$Revision: 1.39 $ $Date: 2009-10-19 17:47:32 $
 
 =cut
