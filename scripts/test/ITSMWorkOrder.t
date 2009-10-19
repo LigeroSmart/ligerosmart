@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.47 2009-10-19 19:17:38 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.48 2009-10-19 20:49:30 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -695,12 +695,11 @@ push @WorkOrderTests, (
         },
         ReferenceData => {
             WorkOrderGet => {
-                Title            => q{},
-                Instruction      => q{},
-                Report           => 'Report - just PlannedStartTime',
-                ChangeBy         => $UserIDs[0],
-                CreateBy         => $UserIDs[0],
-                PlannedStartTime => '2009-03-20 13:25:09',
+                Title       => q{},
+                Instruction => q{},
+                Report      => 'Report - just PlannedStartTime',
+                ChangeBy    => $UserIDs[0],
+                CreateBy    => $UserIDs[0],
             },
         },
         SearchTest => [8],
@@ -1518,10 +1517,10 @@ my @WOCTGTests = (
                     'ActualEndTime',
                 ],
                 ResultData => {
-                    'PlannedStartTime' => undef,
-                    'PlannedEndTime'   => undef,
-                    'ActualStartTime'  => undef,
-                    'ActualEndTime'    => undef,
+                    'PlannedStartTime' => '',
+                    'PlannedEndTime'   => '',
+                    'ActualStartTime'  => '',
+                    'ActualEndTime'    => '',
                 },
             },
         },
@@ -1582,8 +1581,8 @@ my @WOCTGTests = (
                 ResultData => {
                     'PlannedStartTime' => '2009-10-01 00:00:00',
                     'PlannedEndTime'   => '2009-10-02 23:59:59',
-                    'ActualStartTime'  => undef,
-                    'ActualEndTime'    => undef,
+                    'ActualStartTime'  => '',
+                    'ActualEndTime'    => '',
                 },
             },
         },
@@ -1609,10 +1608,10 @@ my @WOCTGTests = (
                     'ActualEndTime',
                 ],
                 ResultData => {
-                    'PlannedStartTime' => undef,
-                    'PlannedEndTime'   => undef,
+                    'PlannedStartTime' => '',
+                    'PlannedEndTime'   => '',
                     'ActualStartTime'  => '2009-10-01 00:08:00',
-                    'ActualEndTime'    => undef,
+                    'ActualEndTime'    => '',
                 },
             },
         },
