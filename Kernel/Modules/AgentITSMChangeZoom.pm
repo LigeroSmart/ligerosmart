@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeZoom.pm - the OTRS::ITSM::ChangeManagement change zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.pm,v 1.4 2009-10-19 19:08:23 mae Exp $
+# $Id: AgentITSMChangeZoom.pm,v 1.5 2009-10-19 19:58:23 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,12 +14,13 @@ package Kernel::Modules::AgentITSMChangeZoom;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange;
-use Kernel::System::LinkObject;
 use Kernel::System::GeneralCatalog;
+use Kernel::System::LinkObject;
+use Kernel::System::CustomerUser;
+use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -35,8 +36,8 @@ sub new {
         }
     }
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
-    $Self->{CustomerUserObject}   = Kernel::System::CustomerUser->new(%Param);
     $Self->{LinkObject}           = Kernel::System::LinkObject->new(%Param);
+    $Self->{CustomerUserObject}   = Kernel::System::CustomerUser->new(%Param);
     $Self->{ChangeObject}         = Kernel::System::ITSMChange->new(%Param);
 
     # get config of frontend module
@@ -70,6 +71,33 @@ sub Run {
             Message => "Change $Change not found in database!",
             Comment => 'Please contact the admin.',
         );
+    }
+
+    # run change menu modules
+    if ( ref $Self->{ConfigObject}->Get('ITSMChange::Frontend::MenuModule') eq 'HASH' ) {
+        my %Menus   = %{ $Self->{ConfigObject}->Get('ITSMChange::Frontend::MenuModule') };
+        my $Counter = 0;
+        for my $Menu ( sort keys %Menus ) {
+
+            # load module
+            if ( $Self->{MainObject}->Require( $Menus{$Menu}->{Module} ) ) {
+                my $Object = $Menus{$Menu}->{Module}->new(
+                    %{$Self},
+                    ChangeID => $Self->{ChangeID},
+                );
+
+                # run module
+                $Counter = $Object->Run(
+                    %Param,
+                    Change  => $Change,
+                    Counter => $Counter,
+                    Config  => $Menus{$Menu},
+                );
+            }
+            else {
+                return $Self->{LayoutObject}->FatalError();
+            }
+        }
     }
 
     # strip header on max 80 chars
