@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all work order functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.36 2009-10-19 12:55:34 bes Exp $
+# $Id: WorkOrder.pm,v 1.37 2009-10-19 14:16:49 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.36 $) [1];
+$VERSION = qw($Revision: 1.37 $) [1];
 
 =head1 NAME
 
@@ -431,7 +431,7 @@ sub WorkOrderList {
 return a list of workorder ids as an array reference
 
     my $WorkOrderIDsRef = $WorkOrderObject->WorkOrderSearch(
-        ChangeID          => 123,                                      # (optional)
+        ChangeIDs         => [ 123, 122 ]                              # (optional)
         WorkOrderNumber   => 12,                                       # (optional)
         Title             => 'Replacement of mail server',             # (optional)
         Instruction       => 'Install the the new server',             # (optional)
@@ -1341,6 +1341,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.36 $ $Date: 2009-10-19 12:55:34 $
+$Revision: 1.37 $ $Date: 2009-10-19 14:16:49 $
 
 =cut
