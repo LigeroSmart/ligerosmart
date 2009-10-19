@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeZoom.pm - the OTRS::ITSM::ChangeManagement change zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.pm,v 1.5 2009-10-19 19:58:23 mae Exp $
+# $Id: AgentITSMChangeZoom.pm,v 1.6 2009-10-19 20:26:19 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,9 +18,10 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 use Kernel::System::CustomerUser;
 use Kernel::System::ITSMChange;
+use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -39,6 +40,7 @@ sub new {
     $Self->{LinkObject}           = Kernel::System::LinkObject->new(%Param);
     $Self->{CustomerUserObject}   = Kernel::System::CustomerUser->new(%Param);
     $Self->{ChangeObject}         = Kernel::System::ITSMChange->new(%Param);
+    $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::WorkOrder->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChangeManagement::Frontend::$Self->{Action}");
@@ -112,6 +114,22 @@ sub Run {
         Value => $Change->{Title},
     );
     $Output .= $Self->{LayoutObject}->NavigationBar();
+
+    # build temporary workorder zoom
+    WORKORDERID:
+    for my $WorkOrderID ( @{ $Change->{WorkOrderIDs} } ) {
+        my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+            WorkOrderID => $WorkOrderID,
+            UserID      => $Self->{UserID},
+        );
+
+        $Self->{LayoutObject}->Block(
+            Name => 'WorkOrderListItem',
+            Data => {
+                %{$WorkOrder},
+            },
+        );
+    }
 
     my @Postfixes = qw(UserLogin UserFirstname UserLastname);
 
