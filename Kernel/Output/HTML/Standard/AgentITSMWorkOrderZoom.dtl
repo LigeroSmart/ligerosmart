@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderZoom.dtl - provides HTML form for AgentITSMWorkOrderZoom
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderZoom.dtl,v 1.3 2009-10-19 19:05:52 reb Exp $
+# $Id: AgentITSMWorkOrderZoom.dtl,v 1.4 2009-10-19 19:31:19 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,6 +14,21 @@
         <td class="mainhead">
             $Env{"Box0"}$Text{"Zoom"} $Text{"Work Order#"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"} $QData{"Title","70"}
         </td>
+    </tr>
+</table>
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+    <tr>
+        <td width="75%" class="menu">
+<!-- dtl:block:Menu -->
+<!-- dtl:block:MenuItemSplit -->
+            -
+<!-- dtl:block:MenuItemSplit -->
+<!-- dtl:block:MenuItem -->
+            <a href="$Env{"Baselink"}$Data{"Link"}" $Data{"LinkParam"} onmouseover="window.status='$JSText{"$QData{"Name"}"}'; return true;" onmouseout="window.status='';" class="menuitem">$Text{"$QData{"Name"}"}</a>
+<!-- dtl:block:MenuItem -->
+<!-- dtl:block:Menu -->
+        </td>
+        <td align="right" width="25%" class="menu"></td>
     </tr>
 </table>
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
