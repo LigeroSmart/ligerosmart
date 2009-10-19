@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.44 2009-10-19 09:17:31 mae Exp $
+# $Id: ITSMWorkOrder.t,v 1.45 2009-10-19 09:36:09 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1614,12 +1614,26 @@ for my $WOCTGTest (@WOCTGTests) {
             ChangeID => $ChangeID,
         );
 
-        $Self->True(
-            $Time,
+        $Self->Is(
+            ref $Time,
+            'HASH',
             "Test $TestCount: |- WorkOrderChangeTimeGet()",
         );
 
-        if ($Time) {
+        $Self->True(
+            (
+                ref $Time eq 'HASH'
+                    && %{$Time}
+            )
+                || 0,
+            "Test $TestCount: |- WorkOrderChangeTimeGet() - HashRef with content",
+        );
+
+        if (
+            ref $Time eq 'HASH'
+            && %{$Time}
+            )
+        {
 
             # Test for right values in result
             TIMEVALUE:
