@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all work order functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.33 2009-10-19 09:17:31 mae Exp $
+# $Id: WorkOrder.pm,v 1.34 2009-10-19 10:36:16 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.33 $) [1];
+$VERSION = qw($Revision: 1.34 $) [1];
 
 =head1 NAME
 
@@ -525,10 +525,10 @@ sub WorkOrderSearch {
         WorkOrderNumber  => q{COALESCE( wo.workorder_number, 0 )},
         WorkOrderStateID => q{COALESCE( wo.workorder_state_, 0 )},
         WorkOrderAgentID => q{COALESCE( wo.workorder_agent_, 0 )},
-        PlannedStartTime => q{COALESCE( planned_start_time, '0001-01-01 01:01:01' )},
-        PlannedEndTime   => q{COALESCE( planned_end_time, '9999-01-01 01:01:01' )},
-        ActualStartTime  => q{COALESCE( actual_start_time, '0001-01-01 01:01:01' )},
-        ActualEndTime    => q{COALESCE( actual_end_time, '9999-01-01 01:01:01' )},
+        PlannedStartTime => q{COALESCE( planned_start_time, DATE '0001-01-01' )},
+        PlannedEndTime   => q{COALESCE( planned_end_time, DATE '9999-01-01' )},
+        ActualStartTime  => q{COALESCE( actual_start_time, DATE '0001-01-01' )},
+        ActualEndTime    => q{COALESCE( actual_end_time, DATE '9999-01-01' )},
         CreateTime       => q{wo.create_time},
         CreateBy         => q{wo.create_by},
         ChangeTime       => q{wo.change_time},
@@ -912,10 +912,10 @@ sub WorkOrderChangeTimeGet {
     # Ingres seems to have COALESCE only since r3.
     # http://www.orafaq.com/forum/mv/msg/149054/418609/0/#msg_418609
     my %TypeColumnMap = (
-        PlannedStartTime => q{MIN( COALESCE( planned_start_time, '0001-01-01 01:01:01' ) )},
-        PlannedEndTime   => q{MAX( COALESCE( planned_end_time, '9999-01-01 01:01:01' ) )},
+        PlannedStartTime => q{MIN( COALESCE( planned_start_time, DATE '0001-01-01' ) )},
+        PlannedEndTime   => q{MAX( COALESCE( planned_end_time, DATE '9999-01-01' ) )},
         ActualStartTime  => q{MIN( actual_start_time )},
-        ActualEndTime    => q{MAX( COALESCE( actual_end_time, '9999-01-01 01:01:01' ) )},
+        ActualEndTime    => q{MAX( COALESCE( actual_end_time, DATE '9999-01-01' ) )},
     );
 
     # error if unknown time type is given
@@ -997,9 +997,9 @@ sub WorkOrderChangeTimeGet {
             my $Time = $Row[$SelectIndex];
 
             if (
-                !defined $Time
-                || $Time eq '0001-01-01 01:01:01'
-                || $Time eq '9999-01-01 01:01:01'
+                !$Time    # no workorders
+                || $Time =~ m{ \A 0001-01-01 }xms    # default time used in min()
+                || $Time =~ m{ \A 9999-01-01 }xms    # default time used in max()
                 )
             {
                 $TimeReturn{ $ColumnType{ $SelectColumns[$SelectIndex] } } = undef;
@@ -1332,6 +1332,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.33 $ $Date: 2009-10-19 09:17:31 $
+$Revision: 1.34 $ $Date: 2009-10-19 10:36:16 $
 
 =cut

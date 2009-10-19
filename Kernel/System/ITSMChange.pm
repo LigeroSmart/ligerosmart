@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.81 2009-10-19 09:49:49 ub Exp $
+# $Id: ITSMChange.pm,v 1.82 2009-10-19 10:36:16 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::CustomerUser;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.81 $) [1];
+$VERSION = qw($Revision: 1.82 $) [1];
 
 =head1 NAME
 
@@ -840,13 +840,13 @@ sub ChangeSearch {
         ChangeTime      => 'c.change_time',
         ChangeBy        => 'c.change_by',
         PlannedStartTime =>
-            q{COALESCE( min(COALESCE(wo1.planned_start_time, '0001-01-01 01:01:01')), '0001-01-01 01:01:01')},
+            q{COALESCE( min(COALESCE(wo1.planned_start_time, DATE '0001-01-01')), DATE '0001-01-01')},
         PlannedEndTime =>
-            q{COALESCE( max(COALESCE(wo1.planned_end_time, '9999-01-01 01:01:01')), '9999-01-01 01:01:01')},
+            q{COALESCE( max(COALESCE(wo1.planned_end_time, DATE '9999-01-01')), DATE '9999-01-01')},
         ActualStartTime =>
-            q{COALESCE( min(wo1.actual_start_time), '0001-01-01 01:01:01')},
+            q{COALESCE( min(wo1.actual_start_time), DATE '0001-01-01')},
         ActualEndTime =>
-            q{COALESCE( max(COALESCE(wo1.actual_end_time, '9999-01-01 01:01:01')), '9999-01-01 01:01:01')},
+            q{COALESCE( max(COALESCE(wo1.actual_end_time, DATE '9999-01-01')), DATE '9999-01-01')},
     );
 
     # check if OrderBy contains only unique valid values
@@ -1016,21 +1016,21 @@ sub ChangeSearch {
 # the actual start time of at lease one workorder is defined. The second COALESCE is not needed.
     my %WorkOrderTimeParams = (
         PlannedStartTimeNewerDate =>
-            q{ COALESCE( min(COALESCE(wo1.planned_start_time, '0001-01-01 01:01:01')), '0001-01-01 01:01:01') >= },
+            q{ COALESCE( min(COALESCE(wo1.planned_start_time, DATE '0001-01-01')), DATE '0001-01-01') >= },
         PlannedStartTimeOlderDate =>
-            q{ COALESCE( min(COALESCE(wo1.planned_start_time, '0001-01-01 01:01:01')), '0001-01-01 01:01:01') <= },
+            q{ COALESCE( min(COALESCE(wo1.planned_start_time, DATE '0001-01-01')), DATE '0001-01-01') <= },
         PlannedEndTimeNewerDate =>
-            q{ COALESCE( max(COALESCE(wo1.planned_end_time, '9999-01-01 01:01:01')), '9999-01-01 01:01:01') >= },
+            q{ COALESCE( max(COALESCE(wo1.planned_end_time, DATE '9999-01-01')), DATE '9999-01-01') >= },
         PlannedEndTimeOlderDate =>
-            q{ COALESCE( max(COALESCE(wo1.planned_end_time, '9999-01-01 01:01:01')), '9999-01-01 01:01:01') <= },
+            q{ COALESCE( max(COALESCE(wo1.planned_end_time, DATE '9999-01-01')), DATE '9999-01-01') <= },
         ActualStartTimeNewerDate =>
-            q{ COALESCE( min(wo1.actual_start_time), '0001-01-01 01:01:01') >= },
+            q{ COALESCE( min(wo1.actual_start_time), DATE '0001-01-01') >= },
         ActualStartTimeOlderDate =>
-            q{ COALESCE( min(wo1.actual_start_time), '0001-01-01 01:01:01') <= },
+            q{ COALESCE( min(wo1.actual_start_time), DATE '0001-01-01') <= },
         ActualEndTimeNewerDate =>
-            q{ COALESCE( max(COALESCE(wo1.actual_end_time, '9999-01-01 01:01:01')), '9999-01-01 01:01:01') >= },
+            q{ COALESCE( max(COALESCE(wo1.actual_end_time, DATE '9999-01-01')), DATE '9999-01-01') >= },
         ActualEndTimeOlderDate =>
-            q{ COALESCE( max(COALESCE(wo1.actual_end_time, '9999-01-01 01:01:01')), '9999-01-01 01:01:01') <= },
+            q{ COALESCE( max(COALESCE(wo1.actual_end_time, DATE '9999-01-01')), DATE '9999-01-01') <= },
     );
 
     # add work order time params to sql-having-array
@@ -1773,6 +1773,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.81 $ $Date: 2009-10-19 09:49:49 $
+$Revision: 1.82 $ $Date: 2009-10-19 10:36:16 $
 
 =cut
