@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all work order functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.37 2009-10-19 14:16:49 bes Exp $
+# $Id: WorkOrder.pm,v 1.38 2009-10-19 14:56:29 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.37 $) [1];
+$VERSION = qw($Revision: 1.38 $) [1];
 
 =head1 NAME
 
@@ -701,14 +701,14 @@ sub WorkOrderSearch {
 
     # set time params in workorder table
     my %WorkOrderTimeParams = (
-        PlannedStartTimeNewerDate => 'min(wo.planned_start_time) >=',
-        PlannedStartTimeOlderDate => 'min(wo.planned_start_time) <=',
-        PlannedEndTimeNewerDate   => 'max(wo.planned_end_time) >=',
-        PlannedEndTimeOlderDate   => 'max(wo.planned_end_time) <=',
-        ActualStartTimeNewerDate  => 'min(wo.actual_start_time) >=',
-        ActualStartTimeOlderDate  => 'min(wo.actual_start_time) <=',
-        ActualEndTimeNewerDate    => 'max(wo.actual_end_time) >=',
-        ActualEndTimeOlderDate    => 'max(wo.actual_end_time) <=',
+        PlannedStartTimeNewerDate => 'wo.planned_start_time >=',
+        PlannedStartTimeOlderDate => 'wo.planned_start_time <=',
+        PlannedEndTimeNewerDate   => 'wo.planned_end_time >=',
+        PlannedEndTimeOlderDate   => 'wo.planned_end_time <=',
+        ActualStartTimeNewerDate  => 'wo.actual_start_time >=',
+        ActualStartTimeOlderDate  => 'wo.actual_start_time <=',
+        ActualEndTimeNewerDate    => 'wo.actual_end_time >=',
+        ActualEndTimeOlderDate    => 'wo.actual_end_time <=',
     );
 
     # add work order time params to sql-having-array
@@ -1341,6 +1341,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.37 $ $Date: 2009-10-19 14:16:49 $
+$Revision: 1.38 $ $Date: 2009-10-19 14:56:29 $
 
 =cut
