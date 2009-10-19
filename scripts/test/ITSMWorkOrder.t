@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.46 2009-10-19 12:55:34 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.47 2009-10-19 19:17:38 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -695,11 +695,12 @@ push @WorkOrderTests, (
         },
         ReferenceData => {
             WorkOrderGet => {
-                Title       => q{},
-                Instruction => q{},
-                Report      => 'Report - just PlannedStartTime',
-                ChangeBy    => $UserIDs[0],
-                CreateBy    => $UserIDs[0],
+                Title            => q{},
+                Instruction      => q{},
+                Report           => 'Report - just PlannedStartTime',
+                ChangeBy         => $UserIDs[0],
+                CreateBy         => $UserIDs[0],
+                PlannedStartTime => '2009-03-20 13:25:09',
             },
         },
         SearchTest => [8],
@@ -1041,7 +1042,7 @@ for my $Test (@WorkOrderTests) {
             $Self->Is(
                 $WorkOrderAttribute,
                 $ReferenceAttribute,
-                "Test $TestCount: |- $ReferenceAttribute ( $WorkOrderID )",
+                "Test $TestCount: |- $RequestedAttribute (WO: $WorkOrderID )",
             );
         }
     }    # end if 'WorkOrderGet'
