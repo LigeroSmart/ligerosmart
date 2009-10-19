@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.82 2009-10-19 10:36:16 bes Exp $
+# $Id: ITSMChange.pm,v 1.83 2009-10-19 12:10:23 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::CustomerUser;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.82 $) [1];
+$VERSION = qw($Revision: 1.83 $) [1];
 
 =head1 NAME
 
@@ -345,6 +345,14 @@ sub ChangeGet {
         $ChangeData{CreateBy}        = $Row[9];
         $ChangeData{ChangeTime}      = $Row[10];
         $ChangeData{ChangeBy}        = $Row[11];
+    }
+
+    if ( !%ChangeData ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Change with ID $Param{ChangeID} does not exist.",
+        );
+        return;
     }
 
     # get CAB data
@@ -1773,6 +1781,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.82 $ $Date: 2009-10-19 10:36:16 $
+$Revision: 1.83 $ $Date: 2009-10-19 12:10:23 $
 
 =cut
