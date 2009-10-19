@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderZoom.pm - the OTRS::ITSM::ChangeManagement work order zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderZoom.pm,v 1.4 2009-10-19 19:31:19 reb Exp $
+# $Id: AgentITSMWorkOrderZoom.pm,v 1.5 2009-10-19 20:26:27 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -158,23 +158,27 @@ sub Run {
             $WorkOrder->{ChangeBuilderUserLastname};
     }
 
-    # get work order agent user
-    my %WorkOrderAgentUser = $Self->{UserObject}->GetUserData(
-        UserID => $WorkOrder->{WorkOrderAgentID},
-        Cached => 1,
-    );
-
-    for my $Postfix (qw(UserLogin UserFirstname UserLastname)) {
-        $WorkOrder->{ 'WorkOrderAgent' . $Postfix } = $WorkOrderAgentUser{$Postfix} || '';
-    }
-
+    # get work order user
     $WorkOrder->{WorkOrderAgentString} = '-';
+    if ( $WorkOrder->{WorkOrderAgentID} ) {
 
-    if (%WorkOrderAgentUser) {
-        $WorkOrder->{WorkOrderAgentString} = sprintf "%s (%s %s)",
-            $WorkOrder->{WorkOrderAgentUserLogin},
-            $WorkOrder->{WorkOrderAgentUserFirstname},
-            $WorkOrder->{WorkOrderAgentUserLastname};
+        # get work order agent user
+        my %WorkOrderAgentUser = $Self->{UserObject}->GetUserData(
+            UserID => $WorkOrder->{WorkOrderAgentID},
+            Cached => 1,
+        );
+
+        for my $Postfix (qw(UserLogin UserFirstname UserLastname)) {
+            $WorkOrder->{ 'WorkOrderAgent' . $Postfix } = $WorkOrderAgentUser{$Postfix} || '';
+        }
+
+        # build string for frontend if user exists
+        if (%WorkOrderAgentUser) {
+            $WorkOrder->{WorkOrderAgentString} = sprintf "%s (%s %s)",
+                $WorkOrder->{WorkOrderAgentUserLogin},
+                $WorkOrder->{WorkOrderAgentUserFirstname},
+                $WorkOrder->{WorkOrderAgentUserLastname};
+        }
     }
 
     # get work order state list
