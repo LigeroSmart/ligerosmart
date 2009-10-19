@@ -2,9 +2,143 @@
 # AgentITSMChangeZoom.dtl - provides HTML form for AgentITSMChangeZoom
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.dtl,v 1.1 2009-10-11 23:17:37 ub Exp $
+# $Id: AgentITSMChangeZoom.dtl,v 1.2 2009-10-19 15:13:10 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+    <tr>
+        <td class="mainhead">
+            $Env{"Box0"}$Text{"Zoom"} $Text{"Change#"}: $QData{"ChangeNumber"} $Env{"Box1"} $QData{"Title","70"}
+        </td>
+    </tr>
+</table>
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+    <tr>
+        <td rowspan="2" valign="top" width="75%" class="mainbody">
+
+            <table border="0" width="100%" cellspacing="0" cellpadding="0">
+
+
+                <tr>
+                    <td>
+                        <table border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                                <td style="text-align:center">WorkOrder - Graph </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+            </table>
+            <hr size="2">
+            <table border="0" width="100%" cellspacing="0" cellpadding="1">
+
+                <tr>
+                    <td class="contentkey" width="16%">
+                        <div title="$Text{"$QData{"Description"}"}">
+                            $Text{"Description:"}&nbsp;&nbsp;&nbsp;&nbsp;
+                        </div>
+                    </td>
+                    <td class="contentvalue">
+                        $QData{"Description"}
+                    </td>
+                </tr>
+                <tr><td colspan="2">&nbsp;</td></tr>
+                <tr>
+                    <td class="contentkey" width="16%">
+                        <div title="$Text{"$QData{"Justification"}"}">
+                            $Text{"Justification:"}&nbsp;&nbsp;&nbsp;&nbsp;
+                        </div>
+                    </td>
+                    <td class="contentvalue">
+                        $QData{"Justification"}
+                    </td>
+                </tr>
+                <tr><td colspan="2">&nbsp;</td></tr>
+            </table>
+            <hr size="2">
+            <br>
+            <table width="98%" align="center" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td>
+                        $Data{"LinkTableStrg"}
+                    </td>
+                </tr>
+            </table>
+            <br>
+        </td>
+        <td width="25%" valign="top" class="menu">
+<!-- dtl:block:Meta -->
+            <table border="0" cellspacing="1" cellpadding="0" width="100%">
+                <tr>
+                    <td><b>$Text{"Current State Change"}: </b></td>
+                    <td>
+                        $QData{"CurChangeState"}
+                        <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"CurChangeSignal"}.png" title="$Text{"$QData{"CurInciState"}"}" alt="$Text{"$QData{"CurInciState"}"}">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td><b>$Text{"Planned Start"}: </b></td>
+                    <td><div title="$QData{"Planned Start"}">$TimeLong{"$Data{"PlannedStartTime"}"}</div></td>
+                </tr>
+                <tr>
+                    <td><b>$Text{"Planned End"}: </b></td>
+                    <td><div title="$QData{"Planned End"}">$TimeLong{"$Data{"PlannedEndTime"}"}</div></td>
+                </tr>
+                <tr>
+                    <td><b>$Text{"Actual Start"}: </b></td>
+                    <td><div title="$QData{"Actual Start"}">$TimeLong{"$Data{"ActualStartTime"}"}</div></td>
+                </tr>
+                <tr>
+                    <td><b>$Text{"Actual End"}: </b></td>
+                    <td><div title="$QData{"Actual End"}">$TimeLong{"$Data{"ActualEndTime"}"}</div></td>
+                </tr>
+                <tr>
+                    <td colspan="2">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td><b>$Text{"Change Initiators:"}</b></td>
+                    <td><div title="QData{"Change Initiators"}"></div></td>
+                </tr>
+                <tr>
+                    <td colspan="2">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="mainkey">$Text{"Created"}:</td>
+                    <td class="mainvalue">$TimeLong{"$Data{"CreateTime"}"}</td>
+                </tr>
+                <tr>
+                    <td class="mainkey">$Text{"Created by"}:</td>
+                    <td>
+                        <div title="$QData{"CreateUserLogin"} ($Quote{"$Data{"CreateUserFirstname"} $Data{"CreateUserLastname"}"})">
+                            $QData{"CreateUserLogin","15"} ($Quote{"$Data{"CreateUserFirstname"} $Data{"CreateUserLastname"}","15"})
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="mainkey">$Text{"Last changed"}:</td>
+                    <td class="mainvalue">$TimeLong{"$Data{"ChangeTime"}"}</td>
+                </tr>
+                <tr>
+                    <td class="mainkey">$Text{"Last changed by"}:</td>
+                    <td>
+                        <div title="$QData{"ChangeUserLogin"} ($Quote{"$Data{"ChangeUserFirstname"} $Data{"ChangeUserLastname"}"})">
+                            $QData{"ChangeUserLogin","15"} ($Quote{"$Data{"ChangeUserFirstname"} $Data{"ChangeUserLastname"}","15"})
+                        </div>
+                    </td>
+                </tr>
+<!-- dtl:block:LinkTableSimple -->
+                $Data{"LinkTableStrg"}
+<!-- dtl:block:LinkTableSimple -->
+            </table>
+<!-- dtl:block:Meta -->
+        </td>
+    </tr>
+</table>
