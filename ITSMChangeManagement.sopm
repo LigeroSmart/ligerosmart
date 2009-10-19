@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.22 2009-10-19 19:58:23 mae Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.23 2009-10-19 20:48:33 ub Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -129,6 +129,9 @@
             </Index>
             <Index Name="change_workorder_workorder_state_id">
                 <IndexColumn Name="workorder_state_id"/>
+            </Index>
+            <Index Name="change_workorder_workorder_type_id">
+                <IndexColumn Name="workorder_type_id"/>
             </Index>
             <Index Name="change_workorder_workorder_agent_id">
                 <IndexColumn Name="workorder_agent_id"/>
