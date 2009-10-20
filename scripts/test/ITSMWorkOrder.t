@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.62 2009-10-20 09:59:40 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.63 2009-10-20 12:54:35 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -152,6 +152,7 @@ my %ReverseStatesList = reverse %{
         Class => 'ITSM::ChangeManagement::WorkOrder::State',
         ) || {}
     };
+my @SortedStateIDs = sort values %ReverseStatesList;
 
 # check if states are in GeneralCatalog
 for my $DefaultWorkOrderState (@DefaultWorkOrderStates) {
@@ -180,6 +181,7 @@ my %ReverseTypesList = reverse %{
         Class => 'ITSM::ChangeManagement::WorkOrder::Type',
         ) || {}
     };
+my @SortedTypeIDs = sort values %ReverseTypesList;
 
 # check if states are in GeneralCatalog
 for my $DefaultWorkOrderType (@DefaultWorkOrderTypes) {
@@ -198,9 +200,9 @@ my $TestCountMisc   = $TestCount;
 my $UniqueSignature = 'UnitTest-ITSMChange::WorkOrder-' . int( rand 1_000_000 ) . '_' . time;
 my @ChangeTests     = (
 
-    # change contains all data - (all attributes)
+    # a change for general workorder testing
     {
-        Description => 'First change for general testing of workorders.',
+        Description => 'Change for general testing of workorders.',
         SourceData  => {
             ChangeAdd => {
                 Title  => 'Change 1 - Title - ' . $UniqueSignature,
@@ -210,6 +212,22 @@ my @ChangeTests     = (
         ReferenceData => {
             ChangeGet => {
                 Title => 'Change 1 - Title - ' . $UniqueSignature,
+            },
+        },
+    },
+
+    # a change for OrderBy workorder seaches
+    {
+        Description => 'Change for testing OrderBy workorder searches.',
+        SourceData  => {
+            ChangeAdd => {
+                Title  => 'Change 2 - Title - ' . $UniqueSignature,
+                UserID => $UserIDs[0],
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                Title => 'Change 2 - Title - ' . $UniqueSignature,
             },
         },
     },
@@ -351,7 +369,7 @@ continue {
 # ------------------------------------------------------------ #
 my @WorkOrderTests;
 
-my ( $WorkOrderAddTestID, $TimesTestID ) = keys %TestedChangeID;
+my ( $WorkOrderAddTestID, $OrderByTestID ) = sort keys %TestedChangeID;
 
 # tests with only WorkOrderAdd();
 push @WorkOrderTests, (
@@ -974,6 +992,82 @@ push @WorkOrderTests, (
     },
 );
 
+# workorders tests for WorkOrderSearch() with OrderBy
+push @WorkOrderTests, (
+
+    {
+        Description =>
+            'WorkOrderAdd() for OrderBy with WorkOrderTypeID and WorkOrderStateID.',
+        SourceData => {
+            WorkOrderAdd => {
+                UserID           => 1,
+                ChangeID         => $OrderByTestID,
+                WorkOrderTypeID  => $SortedTypeIDs[2],
+                WorkOrderStateID => $SortedStateIDs[0],
+                Title            => 'WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                ChangeID         => $OrderByTestID,
+                WorkOrderTypeID  => $SortedTypeIDs[2],
+                WorkOrderStateID => $SortedStateIDs[0],
+                Title            => 'WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
+            },
+        },
+        SearchTest => [999999],
+    },
+
+    {
+        Description =>
+            'WorkOrderAdd() for OrderBy with WorkOrderTypeID and WorkOrderStateID.',
+        SourceData => {
+            WorkOrderAdd => {
+                UserID           => 1,
+                ChangeID         => $OrderByTestID,
+                WorkOrderTypeID  => $SortedTypeIDs[1],
+                WorkOrderStateID => $SortedStateIDs[1],
+                Title            => 'WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                ChangeID         => $OrderByTestID,
+                WorkOrderTypeID  => $SortedTypeIDs[1],
+                WorkOrderStateID => $SortedStateIDs[1],
+                Title            => 'WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
+            },
+        },
+        SearchTest => [999999],
+    },
+
+    {
+        Description =>
+            'WorkOrderAdd() for OrderBy with WorkOrderTypeID and WorkOrderStateID.',
+        SourceData => {
+            WorkOrderAdd => {
+                UserID           => 1,
+                ChangeID         => $OrderByTestID,
+                WorkOrderTypeID  => $SortedTypeIDs[0],
+                WorkOrderStateID => $SortedStateIDs[2],
+                Title            => 'WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                ChangeID         => $OrderByTestID,
+                WorkOrderTypeID  => $SortedTypeIDs[0],
+                WorkOrderStateID => $SortedStateIDs[2],
+                Title            => 'WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
+            },
+        },
+
+        # 999999 is a special test case. changes with searchtest 999999
+        # are used in 'OrderBy' search tests
+        SearchTest => [999999],
+    },
+);
+
 # ------------------------------------------------------------ #
 # execute the workorder tests
 # ------------------------------------------------------------ #
@@ -1445,6 +1539,101 @@ for my $SearchTest (@WorkOrderSearchTests) {
 continue {
     $TestCount++;
     $SearchTestCount++;
+}
+
+# ------------------------------------------------------------ #
+# define workorder search tests for 'OrderBy' searches
+# ------------------------------------------------------------ #
+
+# get three change ids. Then get the data. That is needed for sorting
+my @WorkOrderIDsForOrderByTests = keys %{ $WorkOrderIDForSearchTest{999999} };
+my @WorkOrdersForOrderByTests;
+
+for my $WorkOrderIDForOrderByTests (@WorkOrderIDsForOrderByTests) {
+    my $WorkOrderData = $Self->{WorkOrderObject}->WorkOrderGet(
+        WorkOrderID => $WorkOrderIDForOrderByTests,
+        UserID      => 1,
+    );
+
+    # convert time string to numbers - that's better for the comparisons
+    for my $TimeColumn (qw(CreateTime ChangeTime)) {
+        $WorkOrderData->{$TimeColumn} =~ s{ \D }{}xmsg;
+    }
+
+    push @WorkOrdersForOrderByTests, $WorkOrderData;
+}
+
+my @OrderByColumns = qw(
+    WorkOrderID
+    WorkOrderNumber
+    WorkOrderStateID
+    WorkOrderTypeID
+    CreateBy
+    ChangeBy
+    CreateTime
+    ChangeTime
+);
+
+for my $OrderByColumn (@OrderByColumns) {
+    my @WorkOrders
+        = sort { $a->{$OrderByColumn} <=> $b->{$OrderByColumn} } @WorkOrdersForOrderByTests;
+    my @SortedIDs = map { $_->{WorkOrderID} } @WorkOrders;
+
+    # turn off all pretty print
+    local $Data::Dumper::Indent = 0;
+    local $Data::Dumper::Useqq  = 1;
+
+    my $SearchResult = $Self->{WorkOrderObject}->WorkOrderSearch(
+        ChangeIDs        => [$OrderByTestID],
+        OrderBy          => [$OrderByColumn],
+        OrderByDirection => ['Up'],
+        UserID           => 1,
+        Huhu             => 1,
+    );
+
+    # dump the attribute from WorkOrderGet()
+    my $SearchList = Data::Dumper::Dumper($SearchResult);
+
+    # dump the reference attribute
+    my $ReferenceList = Data::Dumper::Dumper( \@SortedIDs );
+
+    $Self->Is(
+        $SearchList,
+        $ReferenceList,
+        'Test ' . $TestCount++ . ": WorkOrderSearch() OrderBy $OrderByColumn (Up)."
+    );
+
+    my $SearchResultDown = $Self->{WorkOrderObject}->WorkOrderSearch(
+        ChangeIDs => [$OrderByTestID],
+        OrderBy   => [$OrderByColumn],
+        UserID    => 1,
+    );
+
+    # dump the attribute from WorkOrderGet()
+    my $SearchListDown = Data::Dumper::Dumper($SearchResultDown);
+
+    # dump the reference attribute
+    my $ReferenceListDown = Data::Dumper::Dumper( [ reverse @SortedIDs ] );
+
+    $Self->Is(
+        $SearchListDown,
+        $ReferenceListDown,
+        'Test ' . $TestCount++ . ": WorkOrderSearch() OrderBy $OrderByColumn (Down)."
+    );
+
+    # check if WorkOrder.pm handles non-existent OrderByDirection criteria correct
+    my $SearchResultFooBar = $Self->{ChangeObject}->ChangeSearch(
+        Title   => 'OrderByWorkOrder - Title - ' . $UniqueSignature,
+        OrderBy => [$OrderByColumn],
+        OrderBy => ['FooBar'],
+        UserID  => 1,
+    );
+
+    $Self->Is(
+        $SearchResultFooBar,
+        undef,
+        'Test ' . $TestCount++ . ": WorkOrderSearch() OrderBy $OrderByColumn (FooBar)."
+    );
 }
 
 # test sorting of changes (some have no workorder, others have severel workorders)
