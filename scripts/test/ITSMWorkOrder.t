@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.48 2009-10-19 20:49:30 ub Exp $
+# $Id: ITSMWorkOrder.t,v 1.49 2009-10-20 06:54:12 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -270,7 +270,8 @@ for my $Test (@ChangeTests) {
         # TODO : What about ChangeAddChangeTime, do we need this in the WorkOrder-Test?
         # SetTimes with ChangeID wouldn't work here anyway, because this is a function
         # in WorkOrder.t, which would only set the Times of a workorder and not of a change
-        #
+        # Also, check why not all workorders are deleted after the test
+        # -> have a look in the database
         #
         # change CreateTime
         if ( $ChangeID && $SourceData->{ChangeAddChangeTime} ) {
@@ -464,6 +465,11 @@ push @WorkOrderTests, (
         },
         SearchTest => [ 2, 3, 4, 5, 6, 8, 11 ],
     },
+
+    # TODO:
+    # Add somewhere some test cases for WorkOrderAdd with WorkOrderStateID and WorkOrderTypeID
+    #
+
     {
         Description => 'WorkOrderAdd() with empty string parameters.',
         SourceData  => {
@@ -1041,7 +1047,7 @@ for my $Test (@WorkOrderTests) {
             $Self->Is(
                 $WorkOrderAttribute,
                 $ReferenceAttribute,
-                "Test $TestCount: |- $RequestedAttribute (WO: $WorkOrderID )",
+                "Test $TestCount: |- $RequestedAttribute (WorkOrderID: $WorkOrderID)",
             );
         }
     }    # end if 'WorkOrderGet'
@@ -1746,7 +1752,7 @@ for my $WorkOrderID ( keys %TestedWorkOrderID ) {
         "Test " . $TestCount++ . ": WorkOrderDelete()",
     );
 
-    # double WorkOrder if change is really deleted
+    # double check WorkOrder it is really deleted
     my $WorkOrderData = $Self->{WorkOrderObject}->WorkOrderGet(
         WorkOrderID => $WorkOrderID,
         UserID      => 1,

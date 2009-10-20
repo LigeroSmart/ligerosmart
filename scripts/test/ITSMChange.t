@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.88 2009-10-16 06:49:56 ub Exp $
+# $Id: ITSMChange.t,v 1.89 2009-10-20 06:53:39 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1358,7 +1358,7 @@ for my $Test (@ChangeTests) {
             $Self->Is(
                 $ChangeAttribute,
                 $ReferenceAttribute,
-                "Test $TestCount: |- $ReferenceAttribute",
+                "Test $TestCount: |- $RequestedAttribute (ChangeID: $ChangeID)",
             );
         }
     }    # end if 'ChangeGet'
