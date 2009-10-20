@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.51 2009-10-20 07:46:16 reb Exp $
+# $Id: ITSMWorkOrder.t,v 1.52 2009-10-20 08:00:22 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -147,7 +147,7 @@ my @DefaultWorkOrderStates = (
 );
 
 # get class list with swapped keys and values
-my %ReverseClassList = reverse %{
+my %ReverseStatesList = reverse %{
     $Self->{GeneralCatalogObject}->ItemList(
         Class => 'ITSM::ChangeManagement::WorkOrder::State',
         ) || {}
@@ -156,7 +156,7 @@ my %ReverseClassList = reverse %{
 # check if states are in GeneralCatalog
 for my $DefaultWorkOrderState (@DefaultWorkOrderStates) {
     $Self->True(
-        $ReverseClassList{$DefaultWorkOrderState},
+        $ReverseStatesList{$DefaultWorkOrderState},
         "Test " . $TestCount++ . " - check state '$DefaultWorkOrderState'"
     );
 }
@@ -175,7 +175,7 @@ my @DefaultWorkOrderTypes = (
 );
 
 # get class list with swapped keys and values
-%ReverseClassList = reverse %{
+my %ReverseTypesList = reverse %{
     $Self->{GeneralCatalogObject}->ItemList(
         Class => 'ITSM::ChangeManagement::WorkOrder::Type',
         ) || {}
@@ -184,7 +184,7 @@ my @DefaultWorkOrderTypes = (
 # check if states are in GeneralCatalog
 for my $DefaultWorkOrderType (@DefaultWorkOrderTypes) {
     $Self->True(
-        $ReverseClassList{$DefaultWorkOrderType},
+        $ReverseTypesList{$DefaultWorkOrderType},
         "Test " . $TestCount++ . " - check type '$DefaultWorkOrderType'"
     );
 }
@@ -454,6 +454,116 @@ push @WorkOrderTests, (
     # TODO:
     # Add somewhere some test cases for WorkOrderAdd with WorkOrderStateID and WorkOrderTypeID
     #
+
+    {
+        Description => 'WorkOrderAdd() with WorkOrderStateID.',
+        SourceData  => {
+            WorkOrderAdd => {
+                UserID           => 1,
+                ChangeID         => $WorkOrderAddTestID,
+                WorkOrderStateID => $ReverseStatesList{ready},
+                Title       => 'WorkOrderAdd with WorkOrderStateID - Title - ' . $UniqueSignature,
+                Instruction => 'WorkOrderAdd with WorkOrderStateID - Instruction - '
+                    . $UniqueSignature,
+                Report => 'WorkOrderAdd with WorkOrderStateID - Report - ' . $UniqueSignature,
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                ChangeID         => $WorkOrderAddTestID,
+                WorkOrderStateID => $ReverseStatesList{ready},
+                Title       => 'WorkOrderAdd with WorkOrderStateID - Title - ' . $UniqueSignature,
+                Instruction => 'WorkOrderAdd with WorkOrderStateID - Instruction - '
+                    . $UniqueSignature,
+                Report => 'WorkOrderAdd with WorkOrderStateID - Report - ' . $UniqueSignature,
+            },
+        },
+        SearchTest => [ 2, 8 ],
+    },
+    {
+        Description => 'WorkOrderAdd() with WorkOrderTypeID.',
+        SourceData  => {
+            WorkOrderAdd => {
+                UserID          => 1,
+                ChangeID        => $WorkOrderAddTestID,
+                WorkOrderTypeID => $ReverseTypesList{approval},
+                Title       => 'WorkOrderAdd with WorkOrderStateID - Title - ' . $UniqueSignature,
+                Instruction => 'WorkOrderAdd with WorkOrderStateID - Instruction - '
+                    . $UniqueSignature,
+                Report => 'WorkOrderAdd with WorkOrderStateID - Report - ' . $UniqueSignature,
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                ChangeID        => $WorkOrderAddTestID,
+                WorkOrderTypeID => $ReverseTypesList{approval},
+                Title       => 'WorkOrderAdd with WorkOrderStateID - Title - ' . $UniqueSignature,
+                Instruction => 'WorkOrderAdd with WorkOrderStateID - Instruction - '
+                    . $UniqueSignature,
+                Report => 'WorkOrderAdd with WorkOrderStateID - Report - ' . $UniqueSignature,
+            },
+        },
+        SearchTest => [ 2, 8 ],
+    },
+    {
+        Description => 'WorkOrderAdd() with WorkOrderTypeID and WorkOrderStateID.',
+        SourceData  => {
+            WorkOrderAdd => {
+                UserID           => 1,
+                ChangeID         => $WorkOrderAddTestID,
+                WorkOrderTypeID  => $ReverseTypesList{pir},
+                WorkOrderStateID => $ReverseStatesList{closed},
+                Title       => 'WorkOrderAdd with WorkOrderStateID - Title - ' . $UniqueSignature,
+                Instruction => 'WorkOrderAdd with WorkOrderStateID - Instruction - '
+                    . $UniqueSignature,
+                Report => 'WorkOrderAdd with WorkOrderStateID - Report - ' . $UniqueSignature,
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                ChangeID         => $WorkOrderAddTestID,
+                WorkOrderTypeID  => $ReverseTypesList{pir},
+                WorkOrderStateID => $ReverseStatesList{closed},
+                Title       => 'WorkOrderAdd with WorkOrderStateID - Title - ' . $UniqueSignature,
+                Instruction => 'WorkOrderAdd with WorkOrderStateID - Instruction - '
+                    . $UniqueSignature,
+                Report => 'WorkOrderAdd with WorkOrderStateID - Report - ' . $UniqueSignature,
+            },
+        },
+        SearchTest => [ 2, 8 ],
+    },
+    {
+        Description => 'WorkOrderAdd() with WorkOrderTypeID and WorkOrderStateID.',
+        SourceData  => {
+            WorkOrderAdd => {
+                UserID           => 1,
+                ChangeID         => $WorkOrderAddTestID,
+                WorkOrderTypeID  => $ReverseTypesList{pir},
+                WorkOrderStateID => $ReverseStatesList{closed},
+                Title       => 'WorkOrderAdd with WorkOrderStateID - Title - ' . $UniqueSignature,
+                Instruction => 'WorkOrderAdd with WorkOrderStateID - Instruction - '
+                    . $UniqueSignature,
+                Report => 'WorkOrderAdd with WorkOrderStateID - Report - ' . $UniqueSignature,
+            },
+            WorkOrderUpdate => {
+                UserID           => 1,
+                WorkOrderTypeID  => $ReverseTypesList{decision},
+                WorkOrderStateID => $ReverseStatesList{canceled},
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                ChangeID         => $WorkOrderAddTestID,
+                WorkOrderTypeID  => $ReverseTypesList{decision},
+                WorkOrderStateID => $ReverseStatesList{canceled},
+                Title       => 'WorkOrderAdd with WorkOrderStateID - Title - ' . $UniqueSignature,
+                Instruction => 'WorkOrderAdd with WorkOrderStateID - Instruction - '
+                    . $UniqueSignature,
+                Report => 'WorkOrderAdd with WorkOrderStateID - Report - ' . $UniqueSignature,
+            },
+        },
+        SearchTest => [ 2, 8 ],
+    },
 
     {
         Description => 'WorkOrderAdd() with empty string parameters.',
