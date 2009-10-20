@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.44 2009-10-20 08:09:02 bes Exp $
+# $Id: WorkOrder.pm,v 1.45 2009-10-20 08:26:47 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.44 $) [1];
+$VERSION = qw($Revision: 1.45 $) [1];
 
 =head1 NAME
 
@@ -646,7 +646,7 @@ sub WorkOrderSearch {
                 $Self->{LogObject}->Log(
                     Priority => 'error',
                     Message  => "OrderByDirection contains invalid value '$OrderBy' "
-                        . " or the value is used more than once!",
+                        . "or the value is used more than once!",
                 );
                 return;
             }
@@ -1396,6 +1396,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.44 $ $Date: 2009-10-20 08:09:02 $
+$Revision: 1.45 $ $Date: 2009-10-20 08:26:47 $
 
 =cut
