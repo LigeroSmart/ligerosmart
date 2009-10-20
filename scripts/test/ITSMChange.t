@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.89 2009-10-20 06:53:39 ub Exp $
+# $Id: ITSMChange.t,v 1.90 2009-10-20 12:31:57 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,6 +20,7 @@ use Kernel::System::User;
 use Kernel::System::CustomerUser;
 use Kernel::System::GeneralCatalog;
 use Kernel::System::ITSMChange;
+use Kernel::System::ITSMChange::WorkOrder;
 
 # ------------------------------------------------------------ #
 # make preparations
@@ -31,6 +32,7 @@ $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
 $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
 $Self->{CustomerUserObject}   = Kernel::System::CustomerUser->new( %{$Self} );
 $Self->{ChangeObject}         = Kernel::System::ITSMChange->new( %{$Self} );
+$Self->{WorkOrderObject}      = Kernel::System::ITSMChange::WorkOrder->new( %{$Self} );
 
 # test if change object was created successfully
 $Self->True(
@@ -2349,6 +2351,485 @@ for my $ChangeIDForSecondOrderByTests (@ChangeIDsForOrderByTests) {
         $ReferenceList,
         'Test ' . $TestCount++ . ": ChangeSearch() OrderBy CreateTime (Down) and ChangeID (Up)."
     );
+}
+
+# ------------------------------------------------------------ #
+# advanced search by tests for times
+# ------------------------------------------------------------ #
+my @TSTChangeIDs;
+my @TimeSearchTests = (
+    {
+        Description => 'Insert change with one workorder in the first century.',
+        SourceData  => {
+            ChangeAdd => {
+                UserID => 1,
+            },
+            WorkOrderAdd => {
+                UserID           => 1,
+                PlannedStartTime => '1009-01-01 00:00:00',
+                PlannedEndTime   => '1009-01-30 00:00:00',
+                ActualStartTime  => '1009-01-02 00:00:00',
+                ActualEndTime    => '1009-01-29 00:00:00',
+            },
+        },
+    },
+    {
+        Description => 'Insert change with one workorder in the first century.',
+        SourceData  => {
+            ChangeAdd => {
+                UserID => 1,
+            },
+            WorkOrderAdd => {
+                UserID           => 1,
+                PlannedStartTime => '1009-01-10 00:00:00',
+                PlannedEndTime   => '1009-01-20 00:00:00',
+                ActualStartTime  => '1009-01-11 00:00:00',
+                ActualEndTime    => '1009-01-19 00:00:00',
+            },
+        },
+    },
+    {
+        Description => 'Insert change with one workorder in the first century.',
+        SourceData  => {
+            ChangeAdd => {
+                UserID => 1,
+            },
+            WorkOrderAdd => {
+                UserID           => 1,
+                PlannedStartTime => '1009-02-01 00:00:00',
+                PlannedEndTime   => '1009-02-27 00:00:00',
+                ActualStartTime  => '1009-02-02 00:00:00',
+                ActualEndTime    => '1009-02-26 00:00:00',
+            },
+        },
+    },
+    {
+        Description => 'Insert change with one workorder in the first century.',
+        SourceData  => {
+            ChangeAdd => {
+                UserID => 1,
+            },
+            WorkOrderAdd => {
+                UserID           => 1,
+                PlannedStartTime => '1009-03-01 00:00:00',
+                PlannedEndTime   => '1009-04-07 00:00:00',
+                ActualStartTime  => '1009-02-20 00:00:00',
+                ActualEndTime    => '1009-05-01 00:00:00',
+            },
+        },
+    },
+
+    #---------------------------------#
+    # test for planned start time
+    #---------------------------------#
+    {
+        Description => 'Search for PlannedStartTimeNewerDate and PlannedStartTimeOlderDate.',
+        SourceData  => {
+            ChangeSearch => {
+                UserID                    => 1,
+                PlannedStartTimeNewerDate => '1009-01-01 00:00:00',
+                PlannedStartTimeOlderDate => '1009-01-02 00:00:00',
+            },
+        },
+        ReferenceData => [
+            0,
+        ],
+    },
+    {
+        Description => 'Search for PlannedStartTimeNewerDate and PlannedStartTimeOlderDate.',
+        SourceData  => {
+            ChangeSearch => {
+                UserID                    => 1,
+                PlannedStartTimeNewerDate => '1008-12-01 00:00:00',
+                PlannedStartTimeOlderDate => '1008-12-31 00:00:00',
+            },
+        },
+        ReferenceData => [],
+    },
+    {
+        Description => 'Search for PlannedStartTimeNewerDate.',
+        SourceData  => {
+            ChangeSearch => {
+                UserID                    => 1,
+                PlannedStartTimeNewerDate => '1009-02-01 00:00:00',
+            },
+        },
+        ReferenceData => [ 2, 3, ],
+    },
+    {
+        Description => 'Search for PlannedStartTimeNewerDate.',
+        SourceData  => {
+            ChangeSearch => {
+                UserID                    => 1,
+                PlannedStartTimeNewerDate => '1009-12-01 00:00:00',
+            },
+        },
+        ReferenceData => [],
+    },
+    {
+        Description => 'Search for PlannedStartTimeOlderDate.',
+        SourceData  => {
+            ChangeSearch => {
+                UserID                    => 1,
+                PlannedStartTimeOlderDate => '1009-01-10 00:00:00',
+            },
+        },
+        ReferenceData => [ 0, 1, ],
+    },
+    {
+        Description => 'Search for PlannedStartTimeOlderDate.',
+        SourceData  => {
+            ChangeSearch => {
+                UserID                    => 1,
+                PlannedStartTimeOlderDate => '1008-01-31 00:00:00',
+            },
+        },
+        ReferenceData => [],
+    },
+    {
+        Description => 'Search for PlannedStartTimeNewerDate and PlannedStartTimeOlderDate.',
+        SourceData  => {
+            ChangeSearch => {
+                UserID                    => 1,
+                PlannedStartTimeNewerDate => '1009-12-01 00:00:00',
+                PlannedStartTimeOlderDate => '1008-12-01 00:00:00',
+            },
+        },
+        ReferenceData => [],
+    },
+
+    #---------------------------------#
+    # test for planned end time
+    #---------------------------------#
+    {
+        Description => 'Search for PlannedEndTimeNewerDate and PlannedEndTimeOlderDate.',
+        SourceData  => {
+            ChangeSearch => {
+                UserID                  => 1,
+                PlannedEndTimeNewerDate => '1009-01-30 00:00:00',
+                PlannedEndTimeOlderDate => '1009-01-31 00:00:00',
+            },
+        },
+        ReferenceData => [
+            0,
+        ],
+    },
+    {
+        Description => 'Search for PlannedEndTimeNewerDate and PlannedEndTimeOlderDate.',
+        SourceData  => {
+            ChangeSearch => {
+                UserID                  => 1,
+                PlannedEndTimeNewerDate => '1008-12-01 00:00:00',
+                PlannedEndTimeOlderDate => '1008-12-31 00:00:00',
+            },
+        },
+        ReferenceData => [],
+    },
+    {
+        Description => 'Search for PlannedEndTimeNewerDate.',
+        SourceData  => {
+            ChangeSearch => {
+                UserID                  => 1,
+                PlannedEndTimeNewerDate => '1009-02-27 00:00:00',
+            },
+        },
+        ReferenceData => [ 2, 3, ],
+    },
+    {
+        Description => 'Search for PlannedEndTimeNewerDate.',
+        SourceData  => {
+            ChangeSearch => {
+                UserID                  => 1,
+                PlannedEndTimeNewerDate => '1009-05-01 00:00:00',
+            },
+        },
+        ReferenceData => [],
+    },
+    {
+        Description => 'Search for PlannedEndTimeOlderDate.',
+        SourceData  => {
+            ChangeSearch => {
+                UserID                  => 1,
+                PlannedEndTimeOlderDate => '1009-01-25 00:00:00',
+            },
+        },
+        ReferenceData => [ 1, ],
+    },
+    {
+        Description => 'Search for PlannedEndTimeOlderDate.',
+        SourceData  => {
+            ChangeSearch => {
+                UserID                  => 1,
+                PlannedEndTimeOlderDate => '1008-01-31 00:00:00',
+            },
+        },
+        ReferenceData => [],
+    },
+    {
+        Description => 'Search for PlannedEndTimeNewerDate and PlannedEndTimeOlderDate.',
+        SourceData  => {
+            ChangeSearch => {
+                UserID                  => 1,
+                PlannedEndTimeNewerDate => '1009-05-01 00:00:00',
+                PlannedEndTimeOlderDate => '1008-12-01 00:00:00',
+            },
+        },
+        ReferenceData => [],
+    },
+
+    #---------------------------------#
+    # test for actual start time
+    #---------------------------------#
+    {
+        Description => 'Search for ActualStartTimeNewerDate and ActualStartTimeOlderDate.',
+        SourceData  => {
+            ChangeSearch => {
+                UserID                   => 1,
+                ActualStartTimeNewerDate => '1009-01-02 00:00:00',
+                ActualStartTimeOlderDate => '1009-01-02 00:00:00',
+            },
+        },
+        ReferenceData => [
+            0,
+        ],
+    },
+    {
+        Description => 'Search for ActualStartTimeNewerDate and ActualStartTimeOlderDate.',
+        SourceData  => {
+            ChangeSearch => {
+                UserID                   => 1,
+                ActualStartTimeNewerDate => '1008-12-01 00:00:00',
+                ActualStartTimeOlderDate => '1008-12-31 00:00:00',
+            },
+        },
+        ReferenceData => [],
+    },
+    {
+        Description => 'Search for ActualStartTimeNewerDate.',
+        SourceData  => {
+            ChangeSearch => {
+                UserID                   => 1,
+                ActualStartTimeNewerDate => '1009-02-01 00:00:00',
+            },
+        },
+        ReferenceData => [ 2, 3, ],
+    },
+    {
+        Description => 'Search for ActualStartTimeNewerDate.',
+        SourceData  => {
+            ChangeSearch => {
+                UserID                   => 1,
+                ActualStartTimeNewerDate => '1009-12-30 00:00:00',
+            },
+        },
+        ReferenceData => [],
+    },
+    {
+        Description => 'Search for ActualStartTimeOlderDate.',
+        SourceData  => {
+            ChangeSearch => {
+                UserID                   => 1,
+                ActualStartTimeOlderDate => '1009-01-12 00:00:00',
+            },
+        },
+        ReferenceData => [ 0, 1, ],
+    },
+    {
+        Description => 'Search for ActualStartTimeOlderDate.',
+        SourceData  => {
+            ChangeSearch => {
+                UserID                   => 1,
+                ActualStartTimeOlderDate => '1008-01-31 00:00:00',
+            },
+        },
+        ReferenceData => [],
+    },
+    {
+        Description => 'Search for ActualStartTimeNewerDate and ActualStartTimeOlderDate.',
+        SourceData  => {
+            ChangeSearch => {
+                UserID                   => 1,
+                ActualStartTimeNewerDate => '1009-12-01 00:00:00',
+                ActualStartTimeOlderDate => '1008-12-01 00:00:00',
+            },
+        },
+        ReferenceData => [],
+    },
+
+    #---------------------------------#
+    # test for actual end time
+    #---------------------------------#
+    {
+        Description => 'Search for ActualEndTimeNewerDate and ActualEndTimeOlderDate.',
+        SourceData  => {
+            ChangeSearch => {
+                UserID                 => 1,
+                ActualEndTimeNewerDate => '1009-01-28 00:00:00',
+                ActualEndTimeOlderDate => '1009-01-29 00:00:00',
+            },
+        },
+        ReferenceData => [
+            0,
+        ],
+    },
+    {
+        Description => 'Search for ActualEndTimeNewerDate and ActualEndTimeOlderDate.',
+        SourceData  => {
+            ChangeSearch => {
+                UserID                 => 1,
+                ActualEndTimeNewerDate => '1008-12-01 00:00:00',
+                ActualEndTimeOlderDate => '1008-12-31 00:00:00',
+            },
+        },
+        ReferenceData => [],
+    },
+    {
+        Description => 'Search for ActualEndTimeNewerDate.',
+        SourceData  => {
+            ChangeSearch => {
+                UserID                 => 1,
+                ActualEndTimeNewerDate => '1009-02-26 00:00:00',
+            },
+        },
+        ReferenceData => [ 2, 3, ],
+    },
+    {
+        Description => 'Search for ActualEndTimeNewerDate.',
+        SourceData  => {
+            ChangeSearch => {
+                UserID                 => 1,
+                ActualEndTimeNewerDate => '1009-12-01 00:00:00',
+            },
+        },
+        ReferenceData => [],
+    },
+    {
+        Description => 'Search for ActualEndTimeOlderDate.',
+        SourceData  => {
+            ChangeSearch => {
+                UserID                 => 1,
+                ActualEndTimeOlderDate => '1009-01-29 00:00:00',
+            },
+        },
+        ReferenceData => [ 0, 1, ],
+    },
+    {
+        Description => 'Search for ActualEndTimeOlderDate.',
+        SourceData  => {
+            ChangeSearch => {
+                UserID                 => 1,
+                ActualEndTimeOlderDate => '1008-12-01 00:00:00',
+            },
+        },
+        ReferenceData => [],
+    },
+    {
+        Description => 'Search for ActualEndTimeNewerDate and ActualEndTimeOlderDate.',
+        SourceData  => {
+            ChangeSearch => {
+                UserID                 => 1,
+                ActualEndTimeNewerDate => '1009-12-01 00:00:00',
+                ActualEndTimeOlderDate => '1008-12-31 00:00:00',
+            },
+        },
+        ReferenceData => [],
+    },
+
+);
+
+my $TSTCounter = 1;
+my @TSTWorkOrderIDs;
+TSTEST:
+for my $TSTest (@TimeSearchTests) {
+    my $SourceData    = $TSTest->{SourceData};
+    my $ReferenceData = $TSTest->{ReferenceData};
+
+    my $ChangeID;
+    my $WorkOrderID;
+
+    $Self->True(
+        1,
+        "Test $TestCount: $TSTest->{Description} (TSTest case: $TSTCounter)",
+    );
+
+    if ( $SourceData->{ChangeAdd} ) {
+        $ChangeID = $Self->{ChangeObject}->ChangeAdd(
+            %{ $SourceData->{ChangeAdd} },
+        );
+
+        $Self->True(
+            $ChangeID,
+            "Test $TestCount: |- ChangeAdd",
+        );
+
+        if ($ChangeID) {
+            $TestedChangeID{$ChangeID} = 1;
+            push @TSTChangeIDs, $ChangeID;
+        }
+    }
+
+    if ( $SourceData->{WorkOrderAdd} ) {
+        $WorkOrderID = $Self->{WorkOrderObject}->WorkOrderAdd(
+            %{ $SourceData->{WorkOrderAdd} },
+            ChangeID => $ChangeID,
+        );
+
+        $Self->True(
+            $WorkOrderID,
+            "Test $TestCount: |- WorkOrderAdd",
+        );
+
+        push @TSTWorkOrderIDs, $WorkOrderID;
+    }
+
+    my $SearchResult;
+    if ( $SourceData->{ChangeSearch} ) {
+        $SearchResult = $Self->{ChangeObject}->ChangeSearch(
+            %{ $SourceData->{ChangeSearch} },
+        );
+
+        $Self->True(
+            $SearchResult && ref $SearchResult eq 'ARRAY',
+            "Test $TestCount: ChangeSearch() - List is an array reference.",
+        );
+
+        next TSTEST if !$SearchResult;
+
+        # check number of founded change
+        $Self->Is(
+            scalar @{$SearchResult},
+            scalar @{$ReferenceData},
+            "Test $TestCount: ChangeSearch() - correct number of found changes",
+        );
+
+        # map array index to ChangeID
+        my @ResultChangeIDs;
+        for my $ResultChangeID ( @{$ReferenceData} ) {
+            push @ResultChangeIDs, $TSTChangeIDs[$ResultChangeID];
+        }
+
+        # turn off all pretty print
+        local $Data::Dumper::Indent = 0;
+        local $Data::Dumper::Useqq  = 1;
+
+        # dump the attribute from ChangeSearch()
+        my $SearchResultDump = Data::Dumper::Dumper( sort @{$SearchResult} );
+
+        # dump the reference attribute
+        my $ReferenceDump
+            = Data::Dumper::Dumper( sort @ResultChangeIDs );
+
+        $Self->Is(
+            $SearchResultDump,
+            $ReferenceDump,
+            "Test $TestCount: |- ChangeSearch(): "
+                . Data::Dumper::Dumper( $SourceData->{ChangeSearch} )
+                . $SearchResultDump,
+        );
+    }
+
+    $TestCount++;
+    $TSTCounter++;
 }
 
 # ------------------------------------------------------------ #
