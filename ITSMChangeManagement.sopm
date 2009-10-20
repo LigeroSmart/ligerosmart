@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.25 2009-10-20 07:29:41 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.26 2009-10-20 08:39:43 ub Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -467,7 +467,6 @@
             <Data Key="change_by">1</Data>
         </Insert>
     </DatabaseInstall>
-<!--
     <DatabaseUninstall Type="pre">
         <TableDrop Name="change_cab"/>
         <TableDrop Name="change_history"/>
@@ -477,7 +476,6 @@
         <TableDrop Name="change_template"/>
         <TableDrop Name="change_template_type"/>
     </DatabaseUninstall>
--->
     <CodeInstall Type="post">
 
         # define function name
