@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.15 2009-10-20 17:47:23 reb Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.16 2009-10-20 17:59:49 mae Exp $</CVS>
     <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
         <Description Lang="en">Logfile for the itsm change counter.</Description>
         <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
@@ -58,7 +58,7 @@
     <ConfigItem Name="Frontend::Module###AgentITSMChangeZoom" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AgentITSMChangeZoom object in the agent interface.</Description>
         <Description Lang="de">Frontendmodul-Registration des AgentITSMChangeZoom-Objekts im Agent-Interface.</Description>
-        <Group>ITSM Configuration Management</Group>
+        <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
@@ -122,7 +122,7 @@
     <ConfigItem Name="Frontend::Module###AgentITSMWorkOrderZoom" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AgentITSMWorkOrderZoom object in the agent interface.</Description>
         <Description Lang="de">Frontendmodul-Registration des AgentITSMWorkOrderZoom-Objekts im Agent-Interface.</Description>
-        <Group>ITSM Configuration Management</Group>
+        <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
@@ -136,7 +136,7 @@
     <ConfigItem Name="Frontend::Module###AgentITSMWorkOrderReport" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AgentITSMWorkOrderReport object in the agent interface.</Description>
         <Description Lang="de">Frontendmodul-Registration des AgentITSMWorkOrderReport-Objekts im Agent-Interface.</Description>
-        <Group>ITSM Configuration Management</Group>
+        <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
@@ -150,7 +150,7 @@
     <ConfigItem Name="Frontend::Module###AgentITSMWorkOrderAgent" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AgentITSMWorkOrderAgent object in the agent interface.</Description>
         <Description Lang="de">Frontendmodul-Registration des AgentITSMWorkOrderAgent-Objekts im Agent-Interface.</Description>
-        <Group>ITSM Configuration Management</Group>
+        <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
@@ -395,7 +395,7 @@
     <ConfigItem Name="Frontend::Module###AgentITSMUserSearch" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AgentUserSearch object in the agent interface.</Description>
         <Description Lang="de">Frontendmodul-Registration des AgentUserSearch-Objekts im Agent-Interface.</Description>
-        <Group>ITSM Configuration Management</Group>
+        <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
