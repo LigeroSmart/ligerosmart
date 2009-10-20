@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.55 2009-10-20 08:40:23 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.56 2009-10-20 08:45:32 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1599,7 +1599,7 @@ for my $OrderByColumn (qw(PlannedStartTime PlannedEndTime ActualStartTime Actual
 # ------------------------------------------------------------ #
 my @WOCTGTests = (
     {
-        Description => 'Generic test for WorkOrderChangeTimeGet',
+        Description => 'test for WorkOrderChangeTimeGet without times.',
         SourceData  => {
             ChangeAdd => {
                 UserID => 1,
@@ -1610,13 +1610,7 @@ my @WOCTGTests = (
         },
         ReferenceData => {
             WorkOrderChangeTimeGet => {
-                UserID => 1,
-                Types  => [
-                    'PlannedStartTime',
-                    'PlannedEndTime',
-                    'ActualStartTime',
-                    'ActualEndTime',
-                ],
+                UserID     => 1,
                 ResultData => {
                     'PlannedStartTime' => '',
                     'PlannedEndTime'   => '',
@@ -1627,7 +1621,7 @@ my @WOCTGTests = (
         },
     },
     {
-        Description => 'Generic test for WorkOrderChangeTimeGet',
+        Description => 'test for WorkOrderChangeTimeGet with all times',
         SourceData  => {
             ChangeAdd => {
                 UserID => 1,
@@ -1642,13 +1636,7 @@ my @WOCTGTests = (
         },
         ReferenceData => {
             WorkOrderChangeTimeGet => {
-                UserID => 1,
-                Types  => [
-                    'PlannedStartTime',
-                    'PlannedEndTime',
-                    'ActualStartTime',
-                    'ActualEndTime',
-                ],
+                UserID     => 1,
                 ResultData => {
                     'PlannedStartTime' => '2009-10-01 00:00:00',
                     'PlannedEndTime'   => '2009-10-02 23:59:59',
@@ -1659,7 +1647,7 @@ my @WOCTGTests = (
         },
     },
     {
-        Description => 'Generic test for WorkOrderChangeTimeGet',
+        Description => 'test for WorkOrderChangeTimeGet only with planned times',
         SourceData  => {
             ChangeAdd => {
                 UserID => 1,
@@ -1672,13 +1660,7 @@ my @WOCTGTests = (
         },
         ReferenceData => {
             WorkOrderChangeTimeGet => {
-                UserID => 1,
-                Types  => [
-                    'PlannedStartTime',
-                    'PlannedEndTime',
-                    'ActualStartTime',
-                    'ActualEndTime',
-                ],
+                UserID     => 1,
                 ResultData => {
                     'PlannedStartTime' => '2009-10-01 00:00:00',
                     'PlannedEndTime'   => '2009-10-02 23:59:59',
@@ -1689,7 +1671,103 @@ my @WOCTGTests = (
         },
     },
     {
-        Description => 'Generic test for WorkOrderChangeTimeGet',
+        Description =>
+            'test for WorkOrderChangeTimeGet only with planned times PlannedStartTime = PlannedEndTime',
+        SourceData => {
+            ChangeAdd => {
+                UserID => 1,
+            },
+            WorkOrderAdd => {
+                UserID           => 1,
+                PlannedStartTime => '2009-10-01 00:00:00',
+                PlannedEndTime   => '2009-10-01 00:00:00',
+            },
+        },
+        ReferenceData => {
+            WorkOrderChangeTimeGet => {
+                UserID     => 1,
+                ResultData => {
+                    'PlannedStartTime' => '',
+                    'PlannedEndTime'   => '',
+                    'ActualStartTime'  => '',
+                    'ActualEndTime'    => '',
+                },
+            },
+        },
+    },
+    {
+        Description =>
+            'test for WorkOrderChangeTimeGet only with planned times PlannedStartTime > PlannedEndTime',
+        SourceData => {
+            ChangeAdd => {
+                UserID => 1,
+            },
+            WorkOrderAdd => {
+                UserID           => 1,
+                PlannedStartTime => '2009-10-01 00:00:01',
+                PlannedEndTime   => '2009-10-01 00:00:00',
+            },
+        },
+        ReferenceData => {
+            WorkOrderChangeTimeGet => {
+                UserID     => 1,
+                ResultData => {
+                    'PlannedStartTime' => '',
+                    'PlannedEndTime'   => '',
+                    'ActualStartTime'  => '',
+                    'ActualEndTime'    => '',
+                },
+            },
+        },
+    },
+    {
+        Description => 'test for WorkOrderChangeTimeGet only with PlannedStartTime',
+        SourceData  => {
+            ChangeAdd => {
+                UserID => 1,
+            },
+            WorkOrderAdd => {
+                UserID           => 1,
+                PlannedStartTime => '2009-10-01 00:00:00',
+            },
+        },
+        ReferenceData => {
+            WorkOrderChangeTimeGet => {
+                UserID     => 1,
+                ResultData => {
+                    'PlannedStartTime' => '',
+                    'PlannedEndTime'   => '',
+                    'ActualStartTime'  => '',
+                    'ActualEndTime'    => '',
+                },
+            },
+        },
+    },
+    {
+        Description => 'test for WorkOrderChangeTimeGet only with PlannedEndTime',
+        SourceData  => {
+            ChangeAdd => {
+                UserID => 1,
+            },
+            WorkOrderAdd => {
+                UserID         => 1,
+                PlannedEndTime => '2009-10-02 23:59:59',
+            },
+        },
+        ReferenceData => {
+            WorkOrderChangeTimeGet => {
+                UserID     => 1,
+                ResultData => {
+                    'PlannedStartTime' => '',
+                    'PlannedEndTime'   => '',
+                    'ActualStartTime'  => '',
+                    'ActualEndTime'    => '',
+                },
+            },
+        },
+    },
+    {
+        Description => 'test for WorkOrderChangeTimeGet only with ActualStartTime',
         SourceData  => {
             ChangeAdd => {
                 UserID => 1,
@@ -1701,17 +1779,213 @@ my @WOCTGTests = (
         },
         ReferenceData => {
             WorkOrderChangeTimeGet => {
-                UserID => 1,
-                Types  => [
-                    'PlannedStartTime',
-                    'PlannedEndTime',
-                    'ActualStartTime',
-                    'ActualEndTime',
-                ],
+                UserID     => 1,
                 ResultData => {
                     'PlannedStartTime' => '',
                     'PlannedEndTime'   => '',
                     'ActualStartTime'  => '2009-10-01 00:08:00',
+                    'ActualEndTime'    => '',
+                },
+            },
+        },
+    },
+    {
+        Description => 'test for WorkOrderChangeTimeGet only with ActualEndTime',
+        SourceData  => {
+            ChangeAdd => {
+                UserID => 1,
+            },
+            WorkOrderAdd => {
+                UserID        => 1,
+                ActualEndTime => '2009-10-01 00:08:00',
+            },
+        },
+        ReferenceData => {
+            WorkOrderChangeTimeGet => {
+                UserID     => 1,
+                ResultData => {
+                    'PlannedStartTime' => '',
+                    'PlannedEndTime'   => '',
+                    'ActualStartTime'  => '',
+                    'ActualEndTime'    => '',
+                },
+            },
+        },
+    },
+    {
+        Description => 'test for WorkOrderChangeTimeGet only with actual times',
+        SourceData  => {
+            ChangeAdd => {
+                UserID => 1,
+            },
+            WorkOrderAdd => {
+                UserID          => 1,
+                ActualStartTime => '2009-10-01 00:00:00',
+                ActualEndTime   => '2009-10-02 23:59:59',
+            },
+        },
+        ReferenceData => {
+            WorkOrderChangeTimeGet => {
+                UserID     => 1,
+                ResultData => {
+                    'PlannedStartTime' => '',
+                    'PlannedEndTime'   => '',
+                    'ActualStartTime'  => '2009-10-01 00:00:00',
+                    'ActualEndTime'    => '2009-10-02 23:59:59',
+                },
+            },
+        },
+    },
+    {
+        Description => 'test for WorkOrderChangeTimeGet only with ActualStartTime = ActualEndTime',
+        SourceData  => {
+            ChangeAdd => {
+                UserID => 1,
+            },
+            WorkOrderAdd => {
+                UserID          => 1,
+                ActualStartTime => '2009-10-01 00:00:00',
+                ActualEndTime   => '2009-10-01 00:00:00',
+            },
+        },
+        ReferenceData => {
+            WorkOrderChangeTimeGet => {
+                UserID     => 1,
+                ResultData => {
+                    'PlannedStartTime' => '',
+                    'PlannedEndTime'   => '',
+                    'ActualStartTime'  => '',
+                    'ActualEndTime'    => '',
+                },
+            },
+        },
+    },
+    {
+        Description => 'test for WorkOrderChangeTimeGet only with ActualStartTime > ActualEndTime',
+        SourceData  => {
+            ChangeAdd => {
+                UserID => 1,
+            },
+            WorkOrderAdd => {
+                UserID          => 1,
+                ActualStartTime => '2009-10-01 00:00:01',
+                ActualEndTime   => '2009-10-01 00:00:00',
+            },
+        },
+        ReferenceData => {
+            WorkOrderChangeTimeGet => {
+                UserID     => 1,
+                ResultData => {
+                    'PlannedStartTime' => '',
+                    'PlannedEndTime'   => '',
+                    'ActualStartTime'  => '',
+                    'ActualEndTime'    => '',
+                },
+            },
+        },
+    },
+    {
+        Description =>
+            'test for WorkOrderChangeTimeGet with all times (with reserved time PlannedStartTime)',
+        SourceData => {
+            ChangeAdd => {
+                UserID => 1,
+            },
+            WorkOrderAdd => {
+                UserID           => 1,
+                PlannedStartTime => '9999-01-01 00:00:00',
+                PlannedStartTime => '9999-01-01 00:00:01',
+                ActualStartTime  => '2009-10-01 00:08:00',
+                ActualEndTime    => '2009-10-02 00:18:00',
+            },
+        },
+        ReferenceData => {
+            WorkOrderChangeTimeGet => {
+                UserID     => 1,
+                ResultData => {
+                    'PlannedStartTime' => '',
+                    'PlannedEndTime'   => '',
+                    'ActualStartTime'  => '',
+                    'ActualEndTime'    => '',
+                },
+            },
+        },
+    },
+    {
+        Description =>
+            'test for WorkOrderChangeTimeGet with all times (with reserved time PlannedEndTime)',
+        SourceData => {
+            ChangeAdd => {
+                UserID => 1,
+            },
+            WorkOrderAdd => {
+                UserID           => 1,
+                PlannedStartTime => '2009-10-01 01:01:00',
+                PlannedStartTime => '9999-01-01 00:00:00',
+                ActualStartTime  => '2009-10-01 00:08:00',
+                ActualEndTime    => '2009-10-02 00:18:00',
+            },
+        },
+        ReferenceData => {
+            WorkOrderChangeTimeGet => {
+                UserID     => 1,
+                ResultData => {
+                    'PlannedStartTime' => '',
+                    'PlannedEndTime'   => '',
+                    'ActualStartTime'  => '',
+                    'ActualEndTime'    => '',
+                },
+            },
+        },
+    },
+    {
+        Description =>
+            'test for WorkOrderChangeTimeGet with all times (with reserved time ActualStartTime)',
+        SourceData => {
+            ChangeAdd => {
+                UserID => 1,
+            },
+            WorkOrderAdd => {
+                UserID           => 1,
+                PlannedStartTime => '2009-10-01 01:01:00',
+                PlannedEndTime   => '2009-10-01 01:01:01',
+                ActualStartTime  => '9990-01-01 00:00:00',
+            },
+        },
+        ReferenceData => {
+            WorkOrderChangeTimeGet => {
+                UserID     => 1,
+                ResultData => {
+                    'PlannedStartTime' => '',
+                    'PlannedEndTime'   => '',
+                    'ActualStartTime'  => '',
+                    'ActualEndTime'    => '',
+                },
+            },
+        },
+    },
+    {
+        Description =>
+            'test for WorkOrderChangeTimeGet with all times (with reserved time ActualEndTime)',
+        SourceData => {
+            ChangeAdd => {
+                UserID => 1,
+            },
+            WorkOrderAdd => {
+                UserID           => 1,
+                PlannedStartTime => '2009-10-01 01:01:00',
+                PlannedEndTime   => '2009-10-01 01:01:01',
+                ActualStartTime  => '2009-10-01 01:01:00',
+                ActualEndTime    => '9999-01-01 00:00:00',
+            },
+        },
+        ReferenceData => {
+            WorkOrderChangeTimeGet => {
+                UserID     => 1,
+                ResultData => {
+                    'PlannedStartTime' => '',
+                    'PlannedEndTime'   => '',
+                    'ActualStartTime'  => '',
                     'ActualEndTime'    => '',
                 },
             },
