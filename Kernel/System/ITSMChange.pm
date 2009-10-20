@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.90 2009-10-20 10:12:26 bes Exp $
+# $Id: ITSMChange.pm,v 1.91 2009-10-20 13:34:53 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::CustomerUser;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.90 $) [1];
+$VERSION = qw($Revision: 1.91 $) [1];
 
 =head1 NAME
 
@@ -1157,8 +1157,9 @@ sub ChangeSearch {
         $Count++;
     }
 
-    # we need at least one sort criterion
-    if ( !@SQLOrderBy ) {
+    # if there is a possibility that the ordering is not determined
+    # we add an descending orderung by id
+    if ( !grep { $_ eq 'ChangeID' } ( @{ $Param{OrderBy} } ) ) {
         push @SQLOrderBy, "$OrderByTable{ChangeID} DESC";
     }
 
@@ -1775,6 +1776,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.90 $ $Date: 2009-10-20 10:12:26 $
+$Revision: 1.91 $ $Date: 2009-10-20 13:34:53 $
 
 =cut

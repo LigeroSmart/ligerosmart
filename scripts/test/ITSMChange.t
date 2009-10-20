@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.90 2009-10-20 12:31:57 mae Exp $
+# $Id: ITSMChange.t,v 1.91 2009-10-20 13:34:53 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -2194,32 +2194,47 @@ my @OrderByColumns = qw(
 #    ActualEndTime
 
 for my $OrderByColumn (@OrderByColumns) {
-    my @SortedChanges
-        = sort { $a->{$OrderByColumn} <=> $b->{$OrderByColumn} } @ChangesForOrderByTests;
-    my @SortedIDs = map { $_->{ChangeID} } @SortedChanges;
 
     # turn off all pretty print
     local $Data::Dumper::Indent = 0;
     local $Data::Dumper::Useqq  = 1;
+
+    my @SortedChanges
+        = sort {
+        $a->{$OrderByColumn} <=> $b->{$OrderByColumn}
+            || $b->{ChangeID} <=> $a->{ChangeID}
+        } @ChangesForOrderByTests;
+    my @SortedIDs = map { $_->{ChangeID} } @SortedChanges;
+
+    # dump the reference attribute
+    my $ReferenceList = Data::Dumper::Dumper( \@SortedIDs );
 
     my $SearchResult = $Self->{ChangeObject}->ChangeSearch(
         Title            => 'OrderByChange - Title - ' . $UniqueSignature,
         OrderBy          => [$OrderByColumn],
         OrderByDirection => ['Up'],
         UserID           => 1,
+        Huhu             => 'Haha',
     );
 
     # dump the attribute from ChangeGet()
     my $SearchList = Data::Dumper::Dumper($SearchResult);
-
-    # dump the reference attribute
-    my $ReferenceList = Data::Dumper::Dumper( \@SortedIDs );
 
     $Self->Is(
         $SearchList,
         $ReferenceList,
         'Test ' . $TestCount++ . ": ChangeSearch() OrderBy $OrderByColumn (Up)."
     );
+
+    my @SortedChangesDown
+        = sort {
+        $b->{$OrderByColumn} <=> $a->{$OrderByColumn}
+            || $b->{ChangeID} <=> $a->{ChangeID}
+        } @ChangesForOrderByTests;
+    my @SortedIDsDown = map { $_->{ChangeID} } @SortedChangesDown;
+
+    # dump the reference attribute
+    my $ReferenceListDown = Data::Dumper::Dumper( \@SortedIDsDown );
 
     my $SearchResultDown = $Self->{ChangeObject}->ChangeSearch(
         Title   => 'OrderByChange - Title - ' . $UniqueSignature,
@@ -2229,9 +2244,6 @@ for my $OrderByColumn (@OrderByColumns) {
 
     # dump the attribute from ChangeGet()
     my $SearchListDown = Data::Dumper::Dumper($SearchResultDown);
-
-    # dump the reference attribute
-    my $ReferenceListDown = Data::Dumper::Dumper( [ reverse @SortedIDs ] );
 
     $Self->Is(
         $SearchListDown,
