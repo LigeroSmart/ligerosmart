@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.59 2009-10-20 09:27:03 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.60 2009-10-20 09:35:03 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1368,7 +1368,8 @@ my @WorkOrderSearchTests = (
             Title => '%' . $UniqueSignature,
         },
         ResultData => {
-            TestCount => 1,
+            TestCount     => 1,
+            TestExistence => 1,
         },
     },
 

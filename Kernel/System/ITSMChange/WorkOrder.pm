@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.46 2009-10-20 09:11:16 bes Exp $
+# $Id: WorkOrder.pm,v 1.47 2009-10-20 09:35:03 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.46 $) [1];
+$VERSION = qw($Revision: 1.47 $) [1];
 
 =head1 NAME
 
@@ -518,16 +518,7 @@ return a list of workorder ids as an array reference
         Report            => 'Installed new server without problems',  # (optional)
 
         WorkOrderStateIDs => [ 11, 12, 13 ],                           # (optional)
-
-        # --------------------------------------------
-        #
-        # TODO: Implement this!!!!
-        #
         WorkOrderTypeIDs  => [ 21, 22, 23 ],                           # (optional)
-        #
-        #
-        # --------------------------------------------
-
         WorkOrderAgentIDs => [ 1, 2, 3 ],                              # (optional)
         CreateBy          => [ 5, 2, 3 ],                              # (optional)
         ChangeBy          => [ 3, 2, 1 ],                              # (optional)
@@ -729,6 +720,7 @@ sub WorkOrderSearch {
     my %ArrayParams = (
         ChangeIDs         => 'wo.change_id',
         WorkOrderStateIDs => 'wo.workorder_state_id',
+        WorkOrderTypeIDs  => 'wo.workorder_type_id',
         WorkOrderAgentIDs => 'wo.workorder_agent_id',
         CreateBy          => 'wo.create_by',
         ChangeBy          => 'wo.change_by',
@@ -1396,6 +1388,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.46 $ $Date: 2009-10-20 09:11:16 $
+$Revision: 1.47 $ $Date: 2009-10-20 09:35:03 $
 
 =cut
