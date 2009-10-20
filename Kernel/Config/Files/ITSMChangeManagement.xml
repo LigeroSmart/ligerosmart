@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.12 2009-10-20 14:16:36 reb Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.13 2009-10-20 16:07:55 reb Exp $</CVS>
     <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
         <Description Lang="en">Logfile for the itsm change counter.</Description>
         <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
@@ -364,7 +364,7 @@
             <String>20</String>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="Frontend::Module###AgentUserSearch" Required="0" Valid="1">
+    <ConfigItem Name="Frontend::Module###AgentITSMUserSearch" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AgentUserSearch object in the agent interface.</Description>
         <Description Lang="de">Frontendmodul-Registration des AgentUserSearch-Objekts im Agent-Interface.</Description>
         <Group>ITSM Configuration Management</Group>

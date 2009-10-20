@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderReport.pm - the OTRS::ITSM::ChangeManagement work order report module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderReport.pm,v 1.3 2009-10-20 08:35:29 reb Exp $
+# $Id: AgentITSMWorkOrderReport.pm,v 1.4 2009-10-20 16:07:55 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -66,7 +66,7 @@ sub Run {
 
     if ( !$WorkOrder ) {
         return $Self->{LayoutObject}->ErrorScreen(
-            Message => "WorkOrder $WorkOrder not found in database!",
+            Message => "WorkOrder $WorkOrderID not found in database!",
             Comment => 'Please contact the admin.',
         );
     }
@@ -84,7 +84,7 @@ sub Run {
 
             # show error message
             return $Self->{LayoutObject}->ErrorScreen(
-                Message => "Was not able to update WorkOrder $WorkOrder!",
+                Message => "Was not able to update WorkOrder $WorkOrder->{WorkOrderID}!",
                 Comment => 'Please contact the admin.',
             );
         }

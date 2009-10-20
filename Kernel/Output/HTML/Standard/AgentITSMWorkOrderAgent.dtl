@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderAgent.dtl - provides HTML form for AgentITSMWorkOrderAgent
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAgent.dtl,v 1.3 2009-10-20 15:34:35 reb Exp $
+# $Id: AgentITSMWorkOrderAgent.dtl,v 1.4 2009-10-20 16:07:55 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -11,7 +11,7 @@
 
 $Include{"AJAX"}
 
-$Include{"AgentUserSearch"}
+$Include{"AgentITSMUserSearch"}
 
 <style type="text/css">
 .myAutoComplete {
@@ -73,6 +73,10 @@ function clear_field() {
                                             <div id="myAutoCompleteContainer"></div>
                                         </div>
 <!-- dtl:block:UserSearchAutoCompleteDivEnd -->
+<!-- dtl:block:InvalidUser -->
+                                        <br />
+                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
+<!-- dtl:block:InvalidUser -->
                                         <br/>
                                         $Data{"UserStrg"}
                                         <dtl if ($Data{"UserStrg"} ne "") { $Data{"TakeThisUser"} = "<br/><input class="button" type="submit" name="ExpandUserName2" value="$Text{"Take this User"}"/>"; }>

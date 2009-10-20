@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAgent.pm - the OTRS::ITSM::ChangeManagement work order agent edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAgent.pm,v 1.5 2009-10-20 15:40:59 reb Exp $
+# $Id: AgentITSMWorkOrderAgent.pm,v 1.6 2009-10-20 16:07:55 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -77,11 +77,19 @@ sub Run {
     my $ClearUser       = $Self->{ParamObject}->GetParam( Param => 'ClearUser' );
     my $ExpandUserName = $ExpandUserName1 || $ExpandUserName2 || $ClearUser || 0;
 
+    my $WorkOrderAgentID = $Self->{ParamObject}->GetParam( Param => 'SelectedUser' );
+
+    if ( $Self->{Subaction} eq 'Save' && !$WorkOrderAgentID ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'InvalidUser',
+        );
+    }
+
     # update workorder
-    if ( $Self->{Subaction} eq 'Save' && !$ExpandUserName ) {
+    if ( $Self->{Subaction} eq 'Save' && !$ExpandUserName && $WorkOrderAgentID ) {
         my $Success = $Self->{WorkOrderObject}->WorkOrderUpdate(
             WorkOrderID      => $WorkOrder->{WorkOrderID},
-            WorkOrderAgentID => $Self->{ParamObject}->GetParam( Param => 'SelectedUser' ),
+            WorkOrderAgentID => $WorkOrderAgentID,
             UserID           => $Self->{UserID},
         );
 
@@ -89,7 +97,7 @@ sub Run {
 
             # show error message
             return $Self->{LayoutObject}->ErrorScreen(
-                Message => "Was not able to update WorkOrder $WorkOrder!",
+                Message => "Was not able to update WorkOrder $WorkOrder->{WorkOrderID}!",
                 Comment => 'Please contact the admin.',
             );
         }
@@ -159,7 +167,8 @@ sub Run {
 
             # clear to if there is no customer found
             if ( !%UserList ) {
-                $Param{User} = '';
+                $Param{User}   = '';
+                $Param{UserID} = '';
             }
         }
     }
@@ -173,8 +182,24 @@ sub Run {
 
         if (%UserData) {
             $Param{UserID} = $UserID;
-            $Param{User} = sprintf '%s %s', $UserData{UserFirstname}, $UserData{UserLastname};
+            $Param{User}   = sprintf '%s %s %s',
+                $UserData{UserLogin},
+                $UserData{UserFirstname},
+                $UserData{UserLastname};
         }
+    }
+
+    # show current workorder agent
+    if ( !$ExpandUserName && $WorkOrder->{WorkOrderAgentID} ) {
+        my %UserData = $Self->{UserObject}->GetUserData(
+            UserID => $WorkOrder->{WorkOrderAgentID},
+        );
+
+        $Param{UserID} = $UserData{UserID};
+        $Param{User}   = sprintf '%s %s %s',
+            $UserData{UserLogin},
+            $UserData{UserFirstname},
+            $UserData{UserLastname};
     }
 
     # get change that workorder belongs to
