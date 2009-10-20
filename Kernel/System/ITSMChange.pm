@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.89 2009-10-20 09:02:34 bes Exp $
+# $Id: ITSMChange.pm,v 1.90 2009-10-20 10:12:26 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::CustomerUser;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.89 $) [1];
+$VERSION = qw($Revision: 1.90 $) [1];
 
 =head1 NAME
 
@@ -1174,11 +1174,11 @@ sub ChangeSearch {
     );
     my %TableSeen;
 
-    TABLE:
+    INNER_JOIN_TABLE:
     for my $Table (@InnerJoinTables) {
 
         # do not join a table twice
-        next TABLE if $TableSeen{$Table};
+        next INNER_JOIN_TABLE if $TableSeen{$Table};
 
         $TableSeen{$Table} = 1;
 
@@ -1193,10 +1193,11 @@ sub ChangeSearch {
         $SQL .= "INNER JOIN $LongTableName{$Table} $Table ON $Table.change_id = c.id ";
     }
 
+    OUTER_JOIN_TABLE:
     for my $Table (@OuterJoinTables) {
 
         # do not join a table twice, when a table has been inner joined, no outer join is necessary
-        next TABLE if $TableSeen{$Table};
+        next OUTER_JOIN_TABLE if $TableSeen{$Table};
 
         $TableSeen{$Table} = 1;
 
@@ -1774,6 +1775,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.89 $ $Date: 2009-10-20 09:02:34 $
+$Revision: 1.90 $ $Date: 2009-10-20 10:12:26 $
 
 =cut
