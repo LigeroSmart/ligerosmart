@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.49 2009-10-20 06:54:12 ub Exp $
+# $Id: ITSMWorkOrder.t,v 1.50 2009-10-20 07:15:04 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1344,6 +1344,10 @@ continue {
 # ------------------------------------------------------------ #
 # test sorting of changes (some have no workorder, others have severel workorders)
 # ------------------------------------------------------------ #
+my %IDsToDelete = (
+    Change    => [],
+    WorkOrder => [],
+);
 my $ChangesTitle       = 'ChangeSearchOrderByTimes - ' . $UniqueSignature;
 my @ChangesForSortTest = (
     {
@@ -1428,6 +1432,7 @@ for my $Change (@ChangesForSortTest) {
 
     # store ChangeID
     push @ChangeIDsForSortTest, $ChangeID;
+    push @{ $IDsToDelete{Change} }, $ChangeID;
 
     # add the workorders for the change
     my $WorkOrderCount = 1;
@@ -1441,6 +1446,8 @@ for my $Change (@ChangesForSortTest) {
             $WorkOrderID,
             "Test $TestCount: WorkOrder $WorkOrderCount for Change created",
         );
+
+        push @{ $IDsToDelete{WorkOrder} }, $WorkOrderID;
 
         $WorkOrderCount++;
     }
@@ -1646,6 +1653,10 @@ for my $WOCTGTest (@WOCTGTests) {
             $ChangeID,
             "Test $TestCount: |- ChangeAdd",
         );
+
+        if ($ChangeID) {
+            $TestedChangeID{$ChangeID} = 1;
+        }
     }
 
     if ( $SourceData->{WorkOrderAdd} ) {
@@ -1654,14 +1665,12 @@ for my $WOCTGTest (@WOCTGTests) {
             ChangeID => $ChangeID,
         );
 
-        if ($ChangeID) {
-            $TestedChangeID{$ChangeID} = 1;
-        }
-
         $Self->True(
-            $ChangeID,
+            $WorkOrderID,
             "Test $TestCount: |- WorkOrderAdd",
         );
+
+        push @{ $IDsToDelete{WorkOrder} }, $WorkOrderID;
     }
 
     if ( $ReferenceData->{WorkOrderChangeTimeGet} ) {
@@ -1743,12 +1752,14 @@ $Self->{ConfigObject}->Set(
 );
 
 # delete the test workorders
-for my $WorkOrderID ( keys %TestedWorkOrderID ) {
+for my $WorkOrderID ( @{ $IDsToDelete{WorkOrder} }, keys %TestedWorkOrderID ) {
+    my $Success = $Self->{WorkOrderObject}->WorkOrderDelete(
+        WorkOrderID => $WorkOrderID,
+        UserID      => 1,
+    );
+
     $Self->True(
-        $Self->{WorkOrderObject}->WorkOrderDelete(
-            WorkOrderID => $WorkOrderID,
-            UserID      => 1,
-        ),
+        $Success,
         "Test " . $TestCount++ . ": WorkOrderDelete()",
     );
 
@@ -1765,12 +1776,14 @@ for my $WorkOrderID ( keys %TestedWorkOrderID ) {
     );
 }
 
-for my $ChangeID ( keys %TestedChangeID ) {
+for my $ChangeID ( @{ $IDsToDelete{Change} }, keys %TestedChangeID ) {
+    my $Success = $Self->{ChangeObject}->ChangeDelete(
+        ChangeID => $ChangeID,
+        UserID   => 1,
+    );
+
     $Self->True(
-        $Self->{ChangeObject}->ChangeDelete(
-            ChangeID => $ChangeID,
-            UserID   => 1,
-        ),
+        $Success,
         "Test $TestCount: ChangeDelete()",
     );
 
@@ -1785,6 +1798,8 @@ for my $ChangeID ( keys %TestedChangeID ) {
         $ChangeData->{ChangeID},
         "Test $TestCount: ChangeDelete() - double check",
     );
+
+    $TestCount++;
 }
 
 =over 4
