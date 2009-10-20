@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.58 2009-10-20 09:18:11 reb Exp $
+# $Id: ITSMWorkOrder.t,v 1.59 2009-10-20 09:27:03 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1695,7 +1695,8 @@ my @WOCTGTests = (
             ChangeAdd => {
                 UserID => 1,
             },
-            WorkOrderAdd => {
+            WorkOrderAddFails => 1,
+            WorkOrderAdd      => {
                 UserID           => 1,
                 PlannedStartTime => '2009-10-01 00:00:00',
                 PlannedEndTime   => '2009-10-01 00:00:00',
@@ -1720,7 +1721,8 @@ my @WOCTGTests = (
             ChangeAdd => {
                 UserID => 1,
             },
-            WorkOrderAdd => {
+            WorkOrderAddFails => 1,
+            WorkOrderAdd      => {
                 UserID           => 1,
                 PlannedStartTime => '2009-10-01 00:00:01',
                 PlannedEndTime   => '2009-10-01 00:00:00',
@@ -1744,7 +1746,8 @@ my @WOCTGTests = (
             ChangeAdd => {
                 UserID => 1,
             },
-            WorkOrderAdd => {
+            WorkOrderAddFails => 1,
+            WorkOrderAdd      => {
                 UserID           => 1,
                 PlannedStartTime => '2009-10-01 00:00:00',
             },
@@ -1767,7 +1770,8 @@ my @WOCTGTests = (
             ChangeAdd => {
                 UserID => 1,
             },
-            WorkOrderAdd => {
+            WorkOrderAddFails => 1,
+            WorkOrderAdd      => {
                 UserID         => 1,
                 PlannedEndTime => '2009-10-02 23:59:59',
             },
@@ -1813,7 +1817,8 @@ my @WOCTGTests = (
             ChangeAdd => {
                 UserID => 1,
             },
-            WorkOrderAdd => {
+            WorkOrderAddFails => 1,
+            WorkOrderAdd      => {
                 UserID        => 1,
                 ActualEndTime => '2009-10-01 00:08:00',
             },
@@ -1860,7 +1865,8 @@ my @WOCTGTests = (
             ChangeAdd => {
                 UserID => 1,
             },
-            WorkOrderAdd => {
+            WorkOrderAddFails => 1,
+            WorkOrderAdd      => {
                 UserID          => 1,
                 ActualStartTime => '2009-10-01 00:00:00',
                 ActualEndTime   => '2009-10-01 00:00:00',
@@ -1884,7 +1890,8 @@ my @WOCTGTests = (
             ChangeAdd => {
                 UserID => 1,
             },
-            WorkOrderAdd => {
+            WorkOrderAddFails => 1,
+            WorkOrderAdd      => {
                 UserID          => 1,
                 ActualStartTime => '2009-10-01 00:00:01',
                 ActualEndTime   => '2009-10-01 00:00:00',
@@ -1909,7 +1916,8 @@ my @WOCTGTests = (
             ChangeAdd => {
                 UserID => 1,
             },
-            WorkOrderAdd => {
+            WorkOrderAddFails => 1,
+            WorkOrderAdd      => {
                 UserID           => 1,
                 PlannedStartTime => '9999-01-01 00:00:00',
                 PlannedStartTime => '9999-01-01 00:00:01',
@@ -1936,7 +1944,8 @@ my @WOCTGTests = (
             ChangeAdd => {
                 UserID => 1,
             },
-            WorkOrderAdd => {
+            WorkOrderAddFails => 1,
+            WorkOrderAdd      => {
                 UserID           => 1,
                 PlannedStartTime => '2009-10-01 01:01:00',
                 PlannedStartTime => '9999-01-01 00:00:00',
@@ -1963,7 +1972,8 @@ my @WOCTGTests = (
             ChangeAdd => {
                 UserID => 1,
             },
-            WorkOrderAdd => {
+            WorkOrderAddFails => 1,
+            WorkOrderAdd      => {
                 UserID           => 1,
                 PlannedStartTime => '2009-10-01 01:01:00',
                 PlannedEndTime   => '2009-10-01 01:01:01',
@@ -1989,7 +1999,8 @@ my @WOCTGTests = (
             ChangeAdd => {
                 UserID => 1,
             },
-            WorkOrderAdd => {
+            WorkOrderAddFails => 1,
+            WorkOrderAdd      => {
                 UserID           => 1,
                 PlannedStartTime => '2009-10-01 01:01:00',
                 PlannedEndTime   => '2009-10-01 01:01:01',
@@ -2045,12 +2056,19 @@ for my $WOCTGTest (@WOCTGTests) {
             ChangeID => $ChangeID,
         );
 
-        $Self->True(
-            $WorkOrderID,
-            "Test $TestCount: |- WorkOrderAdd",
-        );
-
-        push @{ $IDsToDelete{WorkOrder} }, $WorkOrderID;
+        if ( $SourceData->{WorkOrderAddFails} ) {
+            $Self->False(
+                $WorkOrderID,
+                "Test $TestCount: |- WorkOrderAdd",
+            );
+        }
+        else {
+            $Self->True(
+                $WorkOrderID,
+                "Test $TestCount: |- WorkOrderAdd",
+            );
+            push @{ $IDsToDelete{WorkOrder} }, $WorkOrderID;
+        }
     }
 
     if ( $ReferenceData->{WorkOrderChangeTimeGet} ) {
