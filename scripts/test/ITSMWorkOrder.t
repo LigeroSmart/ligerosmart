@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.61 2009-10-20 09:46:33 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.62 2009-10-20 09:59:40 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1585,8 +1585,6 @@ for my $OrderByColumn (qw(PlannedStartTime PlannedEndTime ActualStartTime Actual
         OrderBy          => [ $OrderByColumn, 'ChangeID' ],
         OrderByDirection => [ 'Down', 'Up' ],
         UserID           => 1,
-
-        #Huhu             => 'Haha',
     );
 
     $Self->Is(
