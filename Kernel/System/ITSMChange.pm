@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.86 2009-10-20 06:49:59 ub Exp $
+# $Id: ITSMChange.pm,v 1.87 2009-10-20 07:08:39 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::CustomerUser;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.86 $) [1];
+$VERSION = qw($Revision: 1.87 $) [1];
 
 =head1 NAME
 
@@ -756,29 +756,29 @@ return list of change ids as an array reference
         PlannedStartTimeOlderDate => '2006-01-19 23:59:59',      # (optional)
 
         # changes with planned end time after ...
-        PlannedEndTimeNewerDate   => '2006-01-09 00:00:01',        # (optional)
+        PlannedEndTimeNewerDate   => '2006-01-09 00:00:01',      # (optional)
         # changes with planned end time before then ....
-        PlannedEndTimeOlderDate   => '2006-01-19 23:59:59',        # (optional)
+        PlannedEndTimeOlderDate   => '2006-01-19 23:59:59',      # (optional)
 
         # changes with actual start time after ...
-        ActualStartTimeNewerDate  => '2006-01-09 00:00:01',       # (optional)
+        ActualStartTimeNewerDate  => '2006-01-09 00:00:01',      # (optional)
         # changes with actual start time before then ....
-        ActualStartTimeOlderDate  => '2006-01-19 23:59:59',       # (optional)
+        ActualStartTimeOlderDate  => '2006-01-19 23:59:59',      # (optional)
 
         # changes with actual end time after ...
-        ActualEndTimeNewerDate    => '2006-01-09 00:00:01',         # (optional)
+        ActualEndTimeNewerDate    => '2006-01-09 00:00:01',      # (optional)
         # changes with actual end time before then ....
-        ActualEndTimeOlderDate    => '2006-01-19 23:59:59',         # (optional)
+        ActualEndTimeOlderDate    => '2006-01-19 23:59:59',      # (optional)
 
         # changes with created time after ...
-        CreateTimeNewerDate       => '2006-01-09 00:00:01',            # (optional)
+        CreateTimeNewerDate       => '2006-01-09 00:00:01',      # (optional)
         # changes with created time before then ....
-        CreateTimeOlderDate       => '2006-01-19 23:59:59',            # (optional)
+        CreateTimeOlderDate       => '2006-01-19 23:59:59',      # (optional)
 
         # changes with changed time after ...
-        ChangeTimeNewerDate       => '2006-01-09 00:00:01',            # (optional)
+        ChangeTimeNewerDate       => '2006-01-09 00:00:01',      # (optional)
         # changes with changed time before then ....
-        ChangeTimeOlderDate       => '2006-01-19 23:59:59',            # (optional)
+        ChangeTimeOlderDate       => '2006-01-19 23:59:59',      # (optional)
 
         OrderBy => [ 'ChangeID', 'ChangeManagerID' ],            # (optional)
         # default: [ 'ChangeID' ]
@@ -1791,6 +1791,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.86 $ $Date: 2009-10-20 06:49:59 $
+$Revision: 1.87 $ $Date: 2009-10-20 07:08:39 $
 
 =cut
