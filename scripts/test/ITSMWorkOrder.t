@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.60 2009-10-20 09:35:03 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.61 2009-10-20 09:46:33 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1978,7 +1978,7 @@ my @WOCTGTests = (
                 UserID           => 1,
                 PlannedStartTime => '2009-10-01 01:01:00',
                 PlannedEndTime   => '2009-10-01 01:01:01',
-                ActualStartTime  => '9990-01-01 00:00:00',
+                ActualStartTime  => '9999-01-01 00:00:00',
             },
         },
         ReferenceData => {
