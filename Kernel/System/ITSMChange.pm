@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.87 2009-10-20 07:08:39 ub Exp $
+# $Id: ITSMChange.pm,v 1.88 2009-10-20 07:32:52 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::CustomerUser;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.87 $) [1];
+$VERSION = qw($Revision: 1.88 $) [1];
 
 =head1 NAME
 
@@ -837,23 +837,19 @@ sub ChangeSearch {
 
     # define order table
     my %OrderByTable = (
-        ChangeID        => 'c.id',
-        ChangeNumber    => 'c.change_number',
-        ChangeStateID   => 'c.change_state_id',
-        ChangeManagerID => 'c.change_manager_id',
-        ChangeBuilderID => 'c.change_builder_id',
-        CreateTime      => 'c.create_time',
-        CreateBy        => 'c.create_by',
-        ChangeTime      => 'c.change_time',
-        ChangeBy        => 'c.change_by',
-        PlannedStartTime =>
-            q{COALESCE( min(COALESCE(wo1.planned_start_time, DATE '0001-01-01')), DATE '0001-01-01')},
-        PlannedEndTime =>
-            q{COALESCE( max(COALESCE(wo1.planned_end_time, DATE '9999-01-01')), DATE '9999-01-01')},
-        ActualStartTime =>
-            q{COALESCE( min(wo1.actual_start_time), DATE '0001-01-01')},
-        ActualEndTime =>
-            q{COALESCE( max(COALESCE(wo1.actual_end_time, DATE '9999-01-01')), DATE '9999-01-01')},
+        ChangeID         => 'c.id',
+        ChangeNumber     => 'c.change_number',
+        ChangeStateID    => 'c.change_state_id',
+        ChangeManagerID  => 'c.change_manager_id',
+        ChangeBuilderID  => 'c.change_builder_id',
+        CreateTime       => 'c.create_time',
+        CreateBy         => 'c.create_by',
+        ChangeTime       => 'c.change_time',
+        ChangeBy         => 'c.change_by',
+        PlannedStartTime => 'min(wo1.planned_start_time)',
+        PlannedEndTime   => 'max(wo1.planned_end_time)',
+        ActualStartTime  => 'min(wo1.actual_start_time)',
+        ActualEndTime    => 'max(wo1.actual_end_time)',
     );
 
     # check if OrderBy contains only unique valid values
@@ -1015,29 +1011,16 @@ sub ChangeSearch {
         push @SQLWhere, "$TimeParams{$TimeParam} '$Param{$TimeParam}'";
     }
 
-# set time params in workorder table
-# Two cases need to be considered:
-# i. There are no workorders at all: min() and max() give NULL. The first COALESCE ensures the sorting.
-# ii. There is at least one workorder with an undefined time: The second COALESCE ensures the sorting.
-# ActualStartTime is a special case. The actual start time of a change is defined when
-# the actual start time of at lease one workorder is defined. The second COALESCE is not needed.
+    # set time params in workorder table
     my %WorkOrderTimeParams = (
-        PlannedStartTimeNewerDate =>
-            q{ COALESCE( min(COALESCE(wo1.planned_start_time, DATE '0001-01-01')), DATE '0001-01-01') >= },
-        PlannedStartTimeOlderDate =>
-            q{ COALESCE( min(COALESCE(wo1.planned_start_time, DATE '0001-01-01')), DATE '0001-01-01') <= },
-        PlannedEndTimeNewerDate =>
-            q{ COALESCE( max(COALESCE(wo1.planned_end_time, DATE '9999-01-01')), DATE '9999-01-01') >= },
-        PlannedEndTimeOlderDate =>
-            q{ COALESCE( max(COALESCE(wo1.planned_end_time, DATE '9999-01-01')), DATE '9999-01-01') <= },
-        ActualStartTimeNewerDate =>
-            q{ COALESCE( min(wo1.actual_start_time), DATE '0001-01-01') >= },
-        ActualStartTimeOlderDate =>
-            q{ COALESCE( min(wo1.actual_start_time), DATE '0001-01-01') <= },
-        ActualEndTimeNewerDate =>
-            q{ COALESCE( max(COALESCE(wo1.actual_end_time, DATE '9999-01-01')), DATE '9999-01-01') >= },
-        ActualEndTimeOlderDate =>
-            q{ COALESCE( max(COALESCE(wo1.actual_end_time, DATE '9999-01-01')), DATE '9999-01-01') <= },
+        PlannedStartTimeNewerDate => 'min(wo1.planned_start_time)',
+        PlannedStartTimeOlderDate => 'min(wo1.planned_start_time)',
+        PlannedEndTimeNewerDate   => 'max(wo1.planned_end_time)',
+        PlannedEndTimeOlderDate   => 'max(wo1.planned_end_time)',
+        ActualStartTimeNewerDate  => 'min(wo1.actual_start_time)',
+        ActualStartTimeOlderDate  => 'min(wo1.actual_start_time)',
+        ActualEndTimeNewerDate    => 'max(wo1.actual_end_time)',
+        ActualEndTimeOlderDate    => 'max(wo1.actual_end_time)',
     );
 
     # add work order time params to sql-having-array
@@ -1157,7 +1140,7 @@ sub ChangeSearch {
         }
 
         # add SQL
-        if ( $OrderByTable{$OrderBy} =~ m{ \A COALESCE }xms ) {
+        if ( $OrderByTable{$OrderBy} =~ m{ wo1 }xms ) {
             push @SQLAliases, "$OrderByTable{$OrderBy} as alias_$OrderBy";
             push @SQLOrderBy, "alias_$OrderBy $Direction";
         }
@@ -1791,6 +1774,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.87 $ $Date: 2009-10-20 07:08:39 $
+$Revision: 1.88 $ $Date: 2009-10-20 07:32:52 $
 
 =cut

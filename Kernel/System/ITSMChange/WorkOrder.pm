@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.42 2009-10-20 06:51:03 ub Exp $
+# $Id: WorkOrder.pm,v 1.43 2009-10-20 07:32:52 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.42 $) [1];
+$VERSION = qw($Revision: 1.43 $) [1];
 
 =head1 NAME
 
@@ -619,19 +619,19 @@ sub WorkOrderSearch {
 
     # define order table
     my %OrderByTable = (
-        ChangeID         => q{wo.change_id},
-        WorkOrderID      => q{wo.id},
-        WorkOrderNumber  => q{COALESCE( wo.workorder_number, 0 )},
-        WorkOrderStateID => q{COALESCE( wo.workorder_state_, 0 )},
-        WorkOrderAgentID => q{COALESCE( wo.workorder_agent_, 0 )},
-        PlannedStartTime => q{COALESCE( planned_start_time, DATE '0001-01-01' )},
-        PlannedEndTime   => q{COALESCE( planned_end_time, DATE '9999-01-01' )},
-        ActualStartTime  => q{COALESCE( actual_start_time, DATE '0001-01-01' )},
-        ActualEndTime    => q{COALESCE( actual_end_time, DATE '9999-01-01' )},
-        CreateTime       => q{wo.create_time},
-        CreateBy         => q{wo.create_by},
-        ChangeTime       => q{wo.change_time},
-        ChangeBy         => q{wo.change_by},
+        ChangeID         => 'wo.change_id',
+        WorkOrderID      => 'wo.id',
+        WorkOrderNumber  => 'wo.workorder_number',
+        WorkOrderStateID => 'wo.workorder_state_id)',
+        WorkOrderAgentID => 'wo.workorder_agent_id)',
+        PlannedStartTime => 'wo.planned_start_time',
+        PlannedEndTime   => 'wo.planned_end_time',
+        ActualStartTime  => 'wo.actual_start_time',
+        ActualEndTime    => 'wo.actual_end_time',
+        CreateTime       => 'wo.create_time',
+        CreateBy         => 'wo.create_by',
+        ChangeTime       => 'wo.change_time',
+        ChangeBy         => 'wo.change_by',
     );
 
     # check if OrderBy contains only unique valid values
@@ -1396,6 +1396,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.42 $ $Date: 2009-10-20 06:51:03 $
+$Revision: 1.43 $ $Date: 2009-10-20 07:32:52 $
 
 =cut
