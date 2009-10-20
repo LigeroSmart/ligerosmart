@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.88 2009-10-20 07:32:52 bes Exp $
+# $Id: ITSMChange.pm,v 1.89 2009-10-20 09:02:34 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::CustomerUser;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.88 $) [1];
+$VERSION = qw($Revision: 1.89 $) [1];
 
 =head1 NAME
 
@@ -1013,14 +1013,14 @@ sub ChangeSearch {
 
     # set time params in workorder table
     my %WorkOrderTimeParams = (
-        PlannedStartTimeNewerDate => 'min(wo1.planned_start_time)',
-        PlannedStartTimeOlderDate => 'min(wo1.planned_start_time)',
-        PlannedEndTimeNewerDate   => 'max(wo1.planned_end_time)',
-        PlannedEndTimeOlderDate   => 'max(wo1.planned_end_time)',
-        ActualStartTimeNewerDate  => 'min(wo1.actual_start_time)',
-        ActualStartTimeOlderDate  => 'min(wo1.actual_start_time)',
-        ActualEndTimeNewerDate    => 'max(wo1.actual_end_time)',
-        ActualEndTimeOlderDate    => 'max(wo1.actual_end_time)',
+        PlannedStartTimeNewerDate => 'min(wo1.planned_start_time) >=',
+        PlannedStartTimeOlderDate => 'min(wo1.planned_start_time) <=',
+        PlannedEndTimeNewerDate   => 'max(wo1.planned_end_time) >=',
+        PlannedEndTimeOlderDate   => 'max(wo1.planned_end_time) <=',
+        ActualStartTimeNewerDate  => 'min(wo1.actual_start_time) >=',
+        ActualStartTimeOlderDate  => 'min(wo1.actual_start_time) <=',
+        ActualEndTimeNewerDate    => 'max(wo1.actual_end_time) >=',
+        ActualEndTimeOlderDate    => 'max(wo1.actual_end_time) <=',
     );
 
     # add work order time params to sql-having-array
@@ -1774,6 +1774,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.88 $ $Date: 2009-10-20 07:32:52 $
+$Revision: 1.89 $ $Date: 2009-10-20 09:02:34 $
 
 =cut
