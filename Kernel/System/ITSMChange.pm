@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.85 2009-10-19 20:52:14 ub Exp $
+# $Id: ITSMChange.pm,v 1.86 2009-10-20 06:49:59 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::CustomerUser;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.85 $) [1];
+$VERSION = qw($Revision: 1.86 $) [1];
 
 =head1 NAME
 
@@ -347,6 +347,7 @@ sub ChangeGet {
         $ChangeData{ChangeBy}        = $Row[11];
     }
 
+    # check error
     if ( !%ChangeData ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
@@ -379,7 +380,7 @@ sub ChangeGet {
         UserID   => $Param{UserID},
     );
 
-    # join time hash with change hash
+    # merge time hash with change hash
     if (
         $ChangeTime
         && ref $ChangeTime eq 'HASH'
@@ -1307,11 +1308,15 @@ sub ChangeDelete {
         UserID   => $Param{UserID},
     );
 
-    # TODO: delete the links to the change
+    # delete all links to this change
+    return if !$Self->{LinkObject}->LinkDeleteAll(
+        Object => 'ITSMChange',
+        Key    => $Param{ChangeID},
+        UserID => 1,
+    );
 
     # TODO: delete the history
 
-    # TODO: replace ChangeGet call with WorkOrderList
     # get change data to get the work order ids
     my $ChangeData = $Self->ChangeGet(
         ChangeID => $Param{ChangeID},
@@ -1786,6 +1791,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.85 $ $Date: 2009-10-19 20:52:14 $
+$Revision: 1.86 $ $Date: 2009-10-20 06:49:59 $
 
 =cut
