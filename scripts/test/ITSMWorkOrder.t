@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.64 2009-10-20 13:14:01 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.65 2009-10-20 13:38:51 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1455,6 +1455,7 @@ my @WorkOrderSearchTests = (
     {
         Description => 'Search for WorkOrder type',
         SearchData  => {
+            ChangeIDs        => [$WorkOrderAddTestID],
             WorkOrderTypeIDs => [
                 $ReverseTypesList{approval},
                 $ReverseTypesList{pir},
