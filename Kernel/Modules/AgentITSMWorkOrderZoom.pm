@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderZoom.pm - the OTRS::ITSM::ChangeManagement work order zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderZoom.pm,v 1.5 2009-10-19 20:26:27 reb Exp $
+# $Id: AgentITSMWorkOrderZoom.pm,v 1.6 2009-10-20 08:18:10 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -181,11 +181,18 @@ sub Run {
         }
     }
 
+    # get work order type list
+    my $WorkOrderTypeList = $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::ChangeManagement::WorkOrder::Type',
+    ) || {};
+
     # get work order state list
     my $WorkOrderStateList = $Self->{GeneralCatalogObject}->ItemList(
         Class => 'ITSM::ChangeManagement::WorkOrder::State',
     ) || {};
 
+    # TODO: replace this hard coded hash with preferences in General catalog
+    # when implemented...
     # temp color for changes
     my %CurWorkOrderSignal = (
         118 => 'greenled',
@@ -198,6 +205,7 @@ sub Run {
             %{$WorkOrder},
             CurWorkOrderSignal => $CurWorkOrderSignal{ $WorkOrder->{WorkOrderStateID} },
             CurWorkOrderState  => $WorkOrderStateList->{ $WorkOrder->{WorkOrderStateID} },
+            CurWorkOrderType   => $WorkOrderTypeList->{ $WorkOrder->{WorkOrderTypeID} },
         },
     );
 
