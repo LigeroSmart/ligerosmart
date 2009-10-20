@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.91 2009-10-20 13:34:53 bes Exp $
+# $Id: ITSMChange.t,v 1.92 2009-10-20 15:03:00 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -2842,6 +2842,190 @@ for my $TSTest (@TimeSearchTests) {
 
     $TestCount++;
     $TSTCounter++;
+}
+
+# ------------------------------------------------------------ #
+# advanced search by tests for times
+# ------------------------------------------------------------ #
+my @SSTChangeIDs;
+my @StringSearchTests = (
+
+    {
+        Description => 'Insert change with one workorder and with set string fields.',
+        SourceData  => {
+            ChangeAdd => {
+                UserID => 1,
+            },
+            WorkOrderAdd => {
+                UserID      => 1,
+                Title       => 'String Test 1 - Title - ' . $UniqueSignature,
+                Instruction => 'String Test 1 - Instruction - ' . $UniqueSignature,
+                Report      => 'String Test 1 - Report - ' . $UniqueSignature,
+            },
+        },
+    },
+
+    {
+        Description => 'Search for WorkOrder Title',
+        SourceData  => {
+            ChangeSearch => {
+                UserID         => 1,
+                WorkOrderTitle => 'String Test 1 - Title - ' . $UniqueSignature,
+            },
+        },
+        ReferenceData => [0],
+    },
+
+    {
+        Description => 'Search for non-existing WorkOrder Title',
+        SourceData  => {
+            ChangeSearch => {
+                UserID         => 1,
+                WorkOrderTitle => 'NONEXISTENT String Test 1 - Title - ' . $UniqueSignature,
+            },
+        },
+        ReferenceData => [],
+    },
+
+    {
+        Description => 'Search for WorkOrder Instruction',
+        SourceData  => {
+            ChangeSearch => {
+                UserID               => 1,
+                WorkOrderInstruction => 'String Test 1 - Instruction - ' . $UniqueSignature,
+            },
+        },
+        ReferenceData => [0],
+    },
+
+    {
+        Description => 'Search for non-existing WorkOrder Instruction',
+        SourceData  => {
+            ChangeSearch => {
+                UserID               => 1,
+                WorkOrderInstruction => 'NONEXISTENT String Test 1 - Instruction - '
+                    . $UniqueSignature,
+            },
+        },
+        ReferenceData => [],
+    },
+
+    {
+        Description => 'Search for WorkOrder Report',
+        SourceData  => {
+            ChangeSearch => {
+                UserID          => 1,
+                WorkOrderReport => 'String Test 1 - Report - ' . $UniqueSignature,
+            },
+        },
+        ReferenceData => [0],
+    },
+
+    {
+        Description => 'Search for non-existing WorkOrder Report',
+        SourceData  => {
+            ChangeSearch => {
+                UserID          => 1,
+                WorkOrderReport => 'NONEXISTENT String Test 1 - Report - ' . $UniqueSignature,
+            },
+        },
+        ReferenceData => [],
+    },
+);
+
+my $SSTCounter = 1;
+my @SSTWorkOrderIDs;
+SSTEST:
+for my $StringSearchTest (@StringSearchTests) {
+    my $SourceData    = $StringSearchTest->{SourceData};
+    my $ReferenceData = $StringSearchTest->{ReferenceData};
+
+    my $ChangeID;
+    my $WorkOrderID;
+
+    $Self->True(
+        1,
+        "Test $TestCount: $StringSearchTest->{Description} (SSTest case: $SSTCounter)",
+    );
+
+    if ( $SourceData->{ChangeAdd} ) {
+        $ChangeID = $Self->{ChangeObject}->ChangeAdd(
+            %{ $SourceData->{ChangeAdd} },
+        );
+
+        $Self->True(
+            $ChangeID,
+            "Test $TestCount: |- ChangeAdd",
+        );
+
+        if ($ChangeID) {
+            $TestedChangeID{$ChangeID} = 1;
+            push @SSTChangeIDs, $ChangeID;
+        }
+    }
+
+    if ( $SourceData->{WorkOrderAdd} ) {
+        $WorkOrderID = $Self->{WorkOrderObject}->WorkOrderAdd(
+            %{ $SourceData->{WorkOrderAdd} },
+            ChangeID => $ChangeID,
+        );
+
+        $Self->True(
+            $WorkOrderID,
+            "Test $TestCount: |- WorkOrderAdd",
+        );
+
+        push @SSTWorkOrderIDs, $WorkOrderID;
+    }
+
+    my $SearchResult;
+    if ( $SourceData->{ChangeSearch} ) {
+        $SearchResult = $Self->{ChangeObject}->ChangeSearch(
+            %{ $SourceData->{ChangeSearch} },
+        );
+
+        $Self->True(
+            $SearchResult && ref $SearchResult eq 'ARRAY',
+            "Test $TestCount: ChangeSearch() - List is an array reference.",
+        );
+
+        next SSTEST if !$SearchResult;
+
+        # check number of founded change
+        $Self->Is(
+            scalar @{$SearchResult},
+            scalar @{$ReferenceData},
+            "Test $TestCount: ChangeSearch() - correct number of found changes",
+        );
+
+        # map array index to ChangeID
+        my @ResultChangeIDs;
+        for my $ResultChangeID ( @{$ReferenceData} ) {
+            push @ResultChangeIDs, $SSTChangeIDs[$ResultChangeID];
+        }
+
+        # turn off all pretty print
+        local $Data::Dumper::Indent = 0;
+        local $Data::Dumper::Useqq  = 1;
+
+        # dump the attribute from ChangeSearch()
+        my $SearchResultDump = Data::Dumper::Dumper( sort @{$SearchResult} );
+
+        # dump the reference attribute
+        my $ReferenceDump
+            = Data::Dumper::Dumper( sort @ResultChangeIDs );
+
+        $Self->Is(
+            $SearchResultDump,
+            $ReferenceDump,
+            "Test $TestCount: |- ChangeSearch(): "
+                . Data::Dumper::Dumper( $SourceData->{ChangeSearch} )
+                . $SearchResultDump,
+        );
+    }
+
+    $TestCount++;
+    $SSTCounter++;
 }
 
 # ------------------------------------------------------------ #

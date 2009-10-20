@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.91 2009-10-20 13:34:53 bes Exp $
+# $Id: ITSMChange.pm,v 1.92 2009-10-20 15:03:00 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::CustomerUser;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.91 $) [1];
+$VERSION = qw($Revision: 1.92 $) [1];
 
 =head1 NAME
 
@@ -780,6 +780,11 @@ return list of change ids as an array reference
         # changes with changed time before then ....
         ChangeTimeOlderDate       => '2006-01-19 23:59:59',      # (optional)
 
+        # Searching in the string fields of workorders
+        WorkOrderTitle            => 'Boot Mailserver',
+        WorkOrderInstruction      => 'Press the button.',
+        WorkOrderReport           => 'Mailserver has booted.',
+
         OrderBy => [ 'ChangeID', 'ChangeManagerID' ],            # (optional)
         # default: [ 'ChangeID' ]
         # (ChangeID, ChangeNumber, ChangeStateID,
@@ -1084,6 +1089,50 @@ sub ChangeSearch {
             push @SQLWhere,        "$CABParams{$CABParam} IN ($InString)";
             push @InnerJoinTables, 'cab2';
         }
+    }
+
+    # conditions for workorder string searches
+    my %WOStringParams = (
+        WorkOrderTitle       => 'wo2.title',
+        WorkOrderInstruction => 'wo2.instruction',
+        WorkOrderReport      => 'wo2.report',
+    );
+
+    # add cab params to sql-where-array
+    WOSTRINGPARAM:
+    for my $WOStringParam ( keys %WOStringParams ) {
+
+        # check string params for useful values, the string q{0} is allowed
+        next WOSTRINGPARAM if !exists $Param{$WOStringParam};
+        next WOSTRINGPARAM if !defined $Param{$WOStringParam};
+        next WOSTRINGPARAM if $Param{$WOStringParam} eq '';
+
+        # quote
+        $Param{$WOStringParam} = $Self->{DBObject}->Quote( $Param{$WOStringParam} );
+
+        # wildcards are used
+        if ( $Param{UsingWildcards} ) {
+
+            # Quote
+            $Param{$WOStringParam} = $Self->{DBObject}->Quote( $Param{$WOStringParam}, 'Like' );
+
+            # replace * with %
+            $Param{$WOStringParam} =~ s{ \*+ }{%}xmsg;
+
+            # do not use string params which contain only %
+            next WOSTRINGPARAM if $Param{$WOStringParam} =~ m{ \A %* \z }xms;
+
+            push @SQLWhere,
+                "LOWER($WOStringParams{$WOStringParam}) LIKE LOWER('$Param{$WOStringParam}')";
+        }
+
+        # no wildcards are used
+        else {
+            push @SQLWhere,
+                "LOWER($WOStringParams{$WOStringParam}) = LOWER('$Param{$WOStringParam}')";
+        }
+
+        push @InnerJoinTables, 'wo2';
     }
 
     # add work order agent id params to sql-where-array
@@ -1776,6 +1825,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.91 $ $Date: 2009-10-20 13:34:53 $
+$Revision: 1.92 $ $Date: 2009-10-20 15:03:00 $
 
 =cut
