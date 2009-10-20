@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LinkObjectITSMWorkOrder.pm - layout backend module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LinkObjectITSMWorkOrder.pm,v 1.1 2009-10-20 15:53:42 ub Exp $
+# $Id: LinkObjectITSMWorkOrder.pm,v 1.2 2009-10-20 18:46:44 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::Output::HTML::Layout;
 use Kernel::System::GeneralCatalog;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -218,8 +218,7 @@ sub TableCreateComplex {
 
         # get the change state name from general catalog
         my $ItemDataRef = $Self->{GeneralCatalogObject}->ItemGet(
-            Class => 'ITSM::ChangeManagement::WorkOrder::State',
-            Name  => $WorkOrder->{ChangeData}->{ChangeStateID},
+            ItemID => $WorkOrder->{WorkOrderStateID},
         );
         my $ChangeStateName = $ItemDataRef->{Name};
 
@@ -423,7 +422,8 @@ sub ContentStringCreate {
         'canceled'    => 'redled',
     );
 
-    my $ChangeStateSignal = $ChangeStateSignals{ $Content->{Content} };
+    # TODO:
+    my $ChangeStateSignal = $ChangeStateSignals{ $Content->{Content} } || 'greenled';
 
     my $String = $Self->{LayoutObject}->Output(
         Template => '<img border="0" src="$Env{"Images"}$QData{"ChangeStateSignal"}.png" '
@@ -501,8 +501,23 @@ sub SearchOptionList {
     # search option list
     my @SearchOptionList = (
         {
-            Key  => 'Name',
-            Name => 'Service',
+            Key  => 'ChangeNumber',
+            Name => 'Change#',
+            Type => 'Text',
+        },
+        {
+            Key  => 'ChangeTitle',
+            Name => 'Change Title',
+            Type => 'Text',
+        },
+        {
+            Key  => 'WorkOrderNumber',
+            Name => 'WorkOrder#',
+            Type => 'Text',
+        },
+        {
+            Key  => 'WorkOrderTitle',
+            Name => 'WorkOrder Title',
             Type => 'Text',
         },
     );
@@ -555,6 +570,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2009-10-20 15:53:42 $
+$Revision: 1.2 $ $Date: 2009-10-20 18:46:44 $
 
 =cut
