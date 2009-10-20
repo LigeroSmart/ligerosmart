@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.51 2009-10-20 16:34:13 bes Exp $
+# $Id: WorkOrder.pm,v 1.52 2009-10-20 17:37:05 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.51 $) [1];
+$VERSION = qw($Revision: 1.52 $) [1];
 
 =head1 NAME
 
@@ -100,7 +100,7 @@ sub new {
 
     # check needed objects
     for my $Object (
-        qw(DBObject ConfigObject EncodeObject LogObject MainObject TimeObject UserObject)
+        qw(DBObject ConfigObject EncodeObject LogObject MainObject TimeObject)
         )
     {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
@@ -111,6 +111,7 @@ sub new {
 
     # create additional objects
     $Self->{ValidObject}          = Kernel::System::Valid->new( %{$Self} );
+    $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
     $Self->{LinkObject}           = Kernel::System::LinkObject->new( %{$Self} );
 
@@ -1470,6 +1471,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.51 $ $Date: 2009-10-20 16:34:13 $
+$Revision: 1.52 $ $Date: 2009-10-20 17:37:05 $
 
 =cut
