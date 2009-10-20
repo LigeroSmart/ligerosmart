@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderReport.pm - the OTRS::ITSM::ChangeManagement work order report module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderReport.pm,v 1.2 2009-10-19 20:16:19 reb Exp $
+# $Id: AgentITSMWorkOrderReport.pm,v 1.3 2009-10-20 08:35:29 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,10 +14,12 @@ package Kernel::Modules::AgentITSMWorkOrderReport;
 use strict;
 use warnings;
 
+use Kernel::System::GeneralCatalog;
+use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -32,7 +34,10 @@ sub new {
             $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
         }
     }
-    $Self->{WorkOrderObject} = Kernel::System::ITSMChange::WorkOrder->new(%Param);
+
+    $Self->{ChangeObject}         = Kernel::System::ITSMChange->new(%Param);
+    $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::WorkOrder->new(%Param);
+    $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChangeManagement::Frontend::$Self->{Action}");
@@ -66,8 +71,58 @@ sub Run {
         );
     }
 
+    # update workorder
+    if ( $Self->{Subaction} eq 'Save' ) {
+        my $Success = $Self->{WorkOrderObject}->WorkOrderUpdate(
+            WorkOrderID      => $WorkOrder->{WorkOrderID},
+            Report           => $Self->{ParamObject}->GetParam( Param => 'Report' ),
+            WorkOrderStateID => $Self->{ParamObject}->GetParam( Param => 'WorkOrderStateID' ),
+            UserID           => $Self->{UserID},
+        );
+
+        if ( !$Success ) {
+
+            # show error message
+            return $Self->{LayoutObject}->ErrorScreen(
+                Message => "Was not able to update WorkOrder $WorkOrder!",
+                Comment => 'Please contact the admin.',
+            );
+        }
+        else {
+
+            # redirect to zoom mask
+            return $Self->{LayoutObject}->Redirect(
+                OP => "Action=AgentITSMWorkOrderZoom&WorkOrderID=$WorkOrder->{WorkOrderID}",
+            );
+        }
+    }
+
     # strip header on max 80 chars
     $WorkOrder->{Title} =~ s{ \A (.{80}) .* \z }{ $1 }xms;
+
+    # get change that workorder belongs to
+    my $Change = $Self->{ChangeObject}->ChangeGet(
+        ChangeID => $WorkOrder->{ChangeID},
+        UserID   => $Self->{UserID},
+    );
+
+    if ( !$Change ) {
+        return $Self->{LayoutObject}->ErrorScreen(
+            Message => "Could not find Change for WorkOrder $WorkOrder!",
+            Comment => 'Please contact the admin.',
+        );
+    }
+
+    # get work order state list
+    my $WorkOrderStateList = $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::ChangeManagement::WorkOrder::State',
+    ) || {};
+
+    $Param{StateSelect} = $Self->{LayoutObject}->BuildSelection(
+        Data       => $WorkOrderStateList,
+        Name       => 'WorkOrderStateID',
+        SelectedID => $WorkOrder->{WorkOrderStateID},
+    );
 
     # output header
     my $Output = $Self->{LayoutObject}->Header(
@@ -83,6 +138,8 @@ sub Run {
     $Output .= $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentITSMWorkOrderReport',
         Data         => {
+            %Param,
+            %{$Change},
             %{$WorkOrder},
         },
     );
