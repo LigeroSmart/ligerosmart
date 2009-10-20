@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderAgent.dtl - provides HTML form for AgentITSMWorkOrderAgent
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAgent.dtl,v 1.2 2009-10-20 13:59:02 reb Exp $
+# $Id: AgentITSMWorkOrderAgent.dtl,v 1.3 2009-10-20 15:34:35 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -44,12 +44,12 @@ function clear_field() {
     <tr>
         <td class="mainbody">
             <br>
-            <table border="0" width="700" align="center" cellspacing="0" cellpadding="4">
+            <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
                 <form action="$Env{"CGIHandle"}" method="post" name="compose">
                     <input type="hidden" name="Action"    value="$Env{"Action"}">
                     <input type="hidden" name="Subaction" value="Save">
                     <input type="hidden" name="WorkOrderID" value="$QData{"WorkOrderID"}">
-                    <input type="hidden" name="SelectedUser" value="">
+                    <input type="hidden" name="SelectedUser" value="$QData{"UserID"}">
                     <input type="hidden" name="UserSearchGroups" value="itsm-change">
                     <tr>
                         <td class="contenthead">
@@ -74,7 +74,7 @@ function clear_field() {
                                         </div>
 <!-- dtl:block:UserSearchAutoCompleteDivEnd -->
                                         <br/>
-                                        $Data{"AgentStrg"}
+                                        $Data{"UserStrg"}
                                         <dtl if ($Data{"UserStrg"} ne "") { $Data{"TakeThisUser"} = "<br/><input class="button" type="submit" name="ExpandUserName2" value="$Text{"Take this User"}"/>"; }>
                                         $Data{"TakeThisUser"}
 <!-- dtl:block:SearchUserButton -->

@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAgent.pm - the OTRS::ITSM::ChangeManagement work order agent edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAgent.pm,v 1.3 2009-10-20 14:16:36 reb Exp $
+# $Id: AgentITSMWorkOrderAgent.pm,v 1.4 2009-10-20 15:34:35 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,11 +14,13 @@ package Kernel::Modules::AgentITSMWorkOrderAgent;
 use strict;
 use warnings;
 
+use Kernel::System::Group;
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::WorkOrder;
+use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -35,6 +37,8 @@ sub new {
     }
     $Self->{WorkOrderObject} = Kernel::System::ITSMChange::WorkOrder->new(%Param);
     $Self->{ChangeObject}    = Kernel::System::ITSMChange->new(%Param);
+    $Self->{UserObject}      = Kernel::System::User->new(%Param);
+    $Self->{GroupObject}     = Kernel::System::Group->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChangeManagement::Frontend::$Self->{Action}");
@@ -68,8 +72,12 @@ sub Run {
         );
     }
 
+    my $ExpandUserName1 = $Self->{ParamObject}->GetParam( Param => 'ExpandUserName1' );
+    my $ExpandUserName2 = $Self->{ParamObject}->GetParam( Param => 'ExpandUserName2' );
+    my $ExpandUserName = $ExpandUserName1 || $ExpandUserName2 || 0;
+
     # update workorder
-    if ( $Self->{Subaction} eq 'Save' ) {
+    if ( $Self->{Subaction} eq 'Save' && !$ExpandUserName ) {
         my $Success = $Self->{WorkOrderObject}->WorkOrderUpdate(
             WorkOrderID      => $WorkOrder->{WorkOrderID},
             WorkOrderAgentID => $Self->{ParamObject}->GetParam( Param => 'SelectedUser' ),
@@ -90,6 +98,81 @@ sub Run {
             return $Self->{LayoutObject}->Redirect(
                 OP => "Action=AgentITSMWorkOrderZoom&WorkOrderID=$WorkOrder->{WorkOrderID}",
             );
+        }
+    }
+    elsif ($ExpandUserName1) {
+
+        # search agents
+        my %UserFound = $Self->{UserObject}->UserSearch(
+            Search => $Self->{ParamObject}->GetParam( Param => 'User' ),
+            Valid => 1,
+        );
+
+        # get group of group itsm-change
+        my $GroupID = $Self->{GroupObject}->GroupLookup(
+            Group => 'itsm-change',
+        );
+
+        # get members of group
+        my %ITSMChangeUsers = $Self->{GroupObject}->GroupMemberList(
+            GroupID => $GroupID,
+            Type    => 'ro',
+            Result  => 'HASH',
+            Cached  => 1,
+        );
+
+        # filter the itsm-change users in found users
+        my %UserList;
+        CHANGEUSERID:
+        for my $ChangeUserID ( keys %ITSMChangeUsers ) {
+            next CHANGEUSERID if !$UserFound{$ChangeUserID};
+
+            $UserList{$ChangeUserID} = $UserFound{$ChangeUserID};
+        }
+
+        # check if just one customer user exists
+        # if just one, fillup CustomerUserID and CustomerID
+        my @KeysUserList = keys %UserList;
+        if ( 1 == scalar @KeysUserList ) {
+            $Param{User} = $UserList{ $KeysUserList[0] };
+
+            my %UserData = $Self->{UserObject}->GetUserData(
+                UserID => $KeysUserList[0],
+            );
+
+            if ( $UserData{UserID} ) {
+                $Param{UserID} = $UserData{UserID};
+            }
+        }
+
+        # if more the one user exists, show list
+        # and clean UserID
+        else {
+
+            $Param{UserID} = '';
+
+            $Param{"UserStrg"} = $Self->{LayoutObject}->BuildSelection(
+                Name => 'UserID',
+                Data => \%UserList,
+            );
+
+            # clear to if there is no customer found
+            if ( !%UserList ) {
+                $Param{User} = '';
+            }
+        }
+    }
+    elsif ($ExpandUserName2) {
+
+        # show user data
+        my $UserID = $Self->{ParamObject}->GetParam( Param => 'UserID' );
+        my %UserData = $Self->{UserObject}->GetUserData(
+            UserID => $UserID,
+        );
+
+        if (%UserData) {
+            $Param{UserID} = $UserID;
+            $Param{User} = sprintf '%s %s', $UserData{UserFirstname}, $UserData{UserLastname};
         }
     }
 
