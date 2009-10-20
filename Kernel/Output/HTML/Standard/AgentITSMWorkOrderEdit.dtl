@@ -2,9 +2,85 @@
 # AgentITSMWorkOrderEdit.dtl - provides HTML form for AgentITSMWorkOrderEdit
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderEdit.dtl,v 1.1 2009-10-11 23:17:37 ub Exp $
+# $Id: AgentITSMWorkOrderEdit.dtl,v 1.2 2009-10-20 16:30:14 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+    <tr>
+        <td class="mainhead">
+            $Env{"Box0"}$Text{"Edit"} $Text{"Work Order#"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"} $QData{"Title","70"}
+        </td>
+    </tr>
+    <tr>
+        <td class="menu">
+            <a href="$Env{"Baselink"}Action=AgentITSMWorkOrderZoom&WorkOrderID=$QData{"WorkOrderID"}" class="menuitem">$Text{"Back"}</a>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="mainbody">
+            <br>
+            <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
+                <form action="$Env{"CGIHandle"}" method="post">
+                    <input type="hidden" name="Action"    value="$Env{"Action"}">
+                    <input type="hidden" name="Subaction" value="Save">
+                    <input type="hidden" name="WorkOrderID" value="$QData{"WorkOrderID"}">
+                    <tr>
+                        <td class="contenthead">$Text{"WorkOrder"}</td>
+                    </tr>
+                    <tr class="contentbody">
+                        <td>
+                            <table border="0">
+                                <tr>
+                                    <td class="contentkey">
+                                        $Text{"Title"}:
+                                        <font color="red" title="$Text{"Required"}">*</font>
+                                    </td>
+                                    <td class="contentvalue">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="contentkey">
+                                        $Text{"Instruction"}:
+                                    </td>
+                                    <td class="contentvalue">
+                                        <div class="yui-skin-sam">
+<!-- dtl:block:RichText -->
+$Include{"RichTextEditor"}
+# set white background for buttons
+<style type="text/css">
+<!--
+                                            .yui-skin-sam .yui-toolbar-container { background-color: #FFFFFF; }
+                                            -->
+                                            </style>
+<!-- dtl:block:RichText -->
+<textarea id="RichText" name="Instruction" rows="15" cols="$Config{"Ticket::Frontend::TextAreaEmail"}" wrap="$Env{"BrowserWrap"}">
+$Data{"Instruction"}
+</textarea>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="contentkey">
+                                        $Text{"Attachment"}:
+                                    </td>
+                                    <td class="contentvalue">
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="contentfooter">
+                            <input class="button" type="submit" name="Submit" value="$Text{"Submit"}">
+                        </td>
+                    </tr>
+                </form>
+            </table>
+            <br>
+        </td>
+    </tr>
+</table>
