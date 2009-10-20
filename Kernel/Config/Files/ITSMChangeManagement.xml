@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.11 2009-10-20 13:59:02 reb Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.12 2009-10-20 14:16:36 reb Exp $</CVS>
     <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
         <Description Lang="en">Logfile for the itsm change counter.</Description>
         <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
@@ -323,6 +323,45 @@
                 <Item Key="0">No</Item>
                 <Item Key="1">Yes</Item>
             </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::CustomerSearchAutoComplete###MinQueryLength" Required="1" Valid="1">
+        <Description Lang="en">Set minimum number of characters before autocomplete query is sent.</Description>
+        <Description Lang="de">Mindestanzahl von Zeichen zum Ausfuehren der Autocomplete-Funktionalitaet.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::UserSearch</SubGroup>
+        <Setting>
+            <String Regex="^[1-9]$">2</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::CustomerSearchAutoComplete###QueryDelay" Required="1" Valid="1">
+        <Description Lang="en">Delay time between autocomplete queries.</Description>
+        <Description Lang="de">Wartezeit zwischen zwei Autocomplete-Queries.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::UserSearch</SubGroup>
+        <Setting>
+            <String Regex="^(0\.[1-9]+)|([1-9](\.[0-9]+)?)$">0.1</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::CustomerSearchAutoComplete###TypeAhead" Required="1" Valid="1">
+        <Description Lang="en">Enable or disable TypeAhead for the autocomplete feature.</Description>
+        <Description Lang="de">Aktivieren oder deativieren von TypeAhead für die Autocomplete-Funktionalitaet.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::UserSearch</SubGroup>
+        <Setting>
+            <Option SelectedID="false">
+                <Item Key="false">No</Item>
+                <Item Key="true">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::CustomerSearchAutoComplete###MaxResultsDisplayed" Required="1" Valid="1">
+        <Description Lang="en">Set number of search results for the autocomplete feature.</Description>
+        <Description Lang="de">Anzahl der Suchergebnisse für die Autocomplete-Funktionalitaet.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::UserSearch</SubGroup>
+        <Setting>
+            <String>20</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Frontend::Module###AgentUserSearch" Required="0" Valid="1">
