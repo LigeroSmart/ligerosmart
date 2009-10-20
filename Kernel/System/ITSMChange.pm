@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.93 2009-10-20 16:30:16 bes Exp $
+# $Id: ITSMChange.pm,v 1.94 2009-10-20 17:13:22 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::CustomerUser;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.93 $) [1];
+$VERSION = qw($Revision: 1.94 $) [1];
 
 =head1 NAME
 
@@ -1098,7 +1098,7 @@ sub ChangeSearch {
         WorkOrderReport      => 'wo2.report',
     );
 
-    # add cab params to sql-where-array
+    # add workorder string params to sql-where-array
     WOSTRINGPARAM:
     for my $WOStringParam ( keys %WOStringParams ) {
 
@@ -1823,6 +1823,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.93 $ $Date: 2009-10-20 16:30:16 $
+$Revision: 1.94 $ $Date: 2009-10-20 17:13:22 $
 
 =cut
