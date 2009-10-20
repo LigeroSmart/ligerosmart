@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.50 2009-10-20 13:14:01 bes Exp $
+# $Id: WorkOrder.pm,v 1.51 2009-10-20 16:34:13 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.50 $) [1];
+$VERSION = qw($Revision: 1.51 $) [1];
 
 =head1 NAME
 
@@ -553,6 +553,12 @@ return a list of workorder ids as an array reference
         # changes with changed time before then ....
         ChangeTimeOlderDate => '2006-01-19 23:59:59',                  # (optional)
 
+        # string searches in change
+        ChangeNumber  => 'Number of change',
+        ChangeTitle  => 'Title of change',
+        ChangeDescription  => 'Description of change',
+        ChangeJustification  => 'Justification of change',
+
         OrderBy => [ 'ChangeID', 'WorkOrderNumber' ],                  # (optional)
         # default: [ 'WorkOrderID' ],
         # (WorkOrderID, ChangeID, WorkOrderNumber,
@@ -671,8 +677,8 @@ sub WorkOrderSearch {
         $Param{UsingWildcards} = 1;
     }
 
-    # assemble the conditions used in the WHERE clause
-    my @SQLWhere;
+    my @SQLWhere;           # assemble the conditions used in the WHERE clause
+    my @InnerJoinTables;    # keep track of the tables that need to be inner joined
 
     # set string params
     my %StringParams = (
@@ -816,6 +822,51 @@ sub WorkOrderSearch {
         push @SQLWhere, "$WorkOrderTimeParams{$TimeParam} '$Param{$TimeParam}'";
     }
 
+    # set change string params
+    my %ChangeStringParams = (
+        ChangeNumber        => 'c.change_number',
+        ChangeTitle         => 'c.title',
+        ChangeDescription   => 'c.description',
+        ChangeJustification => 'c.justification',
+    );
+
+    # add string params to sql-where-array
+    CHANGESTRINGPARAM:
+    for my $ChangeStringParam ( keys %ChangeStringParams ) {
+
+        # check string params for useful values, the string q{0} is allowed
+        next CHANGESTRINGPARAM if !exists $Param{$ChangeStringParam};
+        next CHANGESTRINGPARAM if !defined $Param{$ChangeStringParam};
+        next CHANGESTRINGPARAM if $Param{$ChangeStringParam} eq '';
+
+        # quote
+        $Param{$ChangeStringParam} = $Self->{DBObject}->Quote( $Param{$ChangeStringParam} );
+
+        # wildcards are used
+        if ( $Param{UsingWildcards} ) {
+
+            # Quote
+            $Param{$ChangeStringParam}
+                = $Self->{DBObject}->Quote( $Param{$ChangeStringParam}, 'Like' );
+
+            # replace * with %
+            $Param{$ChangeStringParam} =~ s{ \*+ }{%}xmsg;
+
+            # do not use string params which contain only %
+            next CHANGESTRINGPARAM if $Param{$ChangeStringParam} =~ m{ \A %* \z }xms;
+
+            push @SQLWhere,
+                "LOWER($ChangeStringParams{$ChangeStringParam}) LIKE LOWER('$Param{$ChangeStringParam}')";
+        }
+
+        # no wildcards are used
+        else {
+            push @SQLWhere,
+                "LOWER($ChangeStringParams{$ChangeStringParam}) = LOWER('$Param{$ChangeStringParam}')";
+        }
+        push @InnerJoinTables, 'c';
+    }
+
     # assemble the ORDER BY clause
     my @SQLOrderBy;
     my $Count = 0;
@@ -850,6 +901,31 @@ sub WorkOrderSearch {
 
     # assemble the SQL query
     my $SQL = 'SELECT wo.id FROM change_workorder wo ';
+
+    # add the joins
+    my %LongTableName = (
+        c => 'change_item',
+    );
+    my %TableSeen;
+
+    INNER_JOIN_TABLE:
+    for my $Table (@InnerJoinTables) {
+
+        # do not join a table twice
+        next INNER_JOIN_TABLE if $TableSeen{$Table};
+
+        $TableSeen{$Table} = 1;
+
+        if ( !$LongTableName{$Table} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Encountered invalid inner join table '$Table'!",
+            );
+            return;
+        }
+
+        $SQL .= "INNER JOIN $LongTableName{$Table} $Table ON $Table.id = wo.change_id ";
+    }
 
     # add the WHERE clause
     if (@SQLWhere) {
@@ -1394,6 +1470,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.50 $ $Date: 2009-10-20 13:14:01 $
+$Revision: 1.51 $ $Date: 2009-10-20 16:34:13 $
 
 =cut

@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.66 2009-10-20 13:40:39 mae Exp $
+# $Id: ITSMWorkOrder.t,v 1.67 2009-10-20 16:34:13 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -231,6 +231,26 @@ my @ChangeTests     = (
             },
         },
     },
+
+    # a change for testing string searches in the associated change
+    {
+        Description => 'Change for testing string searches in change.',
+        SourceData  => {
+            ChangeAdd => {
+                Title         => 'Change 3 - Title - ' . $UniqueSignature,
+                Description   => 'Change 3 - Description - ' . $UniqueSignature,
+                Justification => 'Change 3 - Justification - ' . $UniqueSignature,
+                UserID        => $UserIDs[0],
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                Title         => 'Change 3 - Title - ' . $UniqueSignature,
+                Description   => 'Change 3 - Description - ' . $UniqueSignature,
+                Justification => 'Change 3 - Justification - ' . $UniqueSignature,
+            },
+        },
+    },
 );
 
 # ------------------------------------------------------------ #
@@ -369,7 +389,7 @@ continue {
 # ------------------------------------------------------------ #
 my @WorkOrderTests;
 
-my ( $WorkOrderAddTestID, $OrderByTestID ) = sort keys %TestedChangeID;
+my ( $WorkOrderAddTestID, $OrderByTestID, $StringSearchTestID ) = sort keys %TestedChangeID;
 
 # tests with only WorkOrderAdd();
 push @WorkOrderTests, (
@@ -1068,6 +1088,29 @@ push @WorkOrderTests, (
     },
 );
 
+# workorders tests for WorkOrderSearch() with string searches in change
+push @WorkOrderTests, (
+
+    {
+        Description =>
+            'WorkOrderAdd() for string search in change.',
+        SourceData => {
+            WorkOrderAdd => {
+                UserID   => 1,
+                ChangeID => $StringSearchTestID,
+                Title => 'WorkOrderAdd() for string search in change - Title - ' . $UniqueSignature,
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                ChangeID => $StringSearchTestID,
+                Title => 'WorkOrderAdd() for string search in change - Title - ' . $UniqueSignature,
+            },
+        },
+        SearchTest => [ 15, 17, 19, 21, 22 ],
+    },
+);
+
 # ------------------------------------------------------------ #
 # execute the workorder tests
 # ------------------------------------------------------------ #
@@ -1308,6 +1351,11 @@ $Self->Is(
 # define general workorder search tests
 # ------------------------------------------------------------ #
 
+my $StringSearchTestChange = $Self->{ChangeObject}->ChangeGet(
+    ChangeID => $StringSearchTestID,
+    UserID   => 1,
+);
+
 my @WorkOrderSearchTests = (
 
     # Nr 1 - a simple check if the search functions takes care of "Limit"
@@ -1468,6 +1516,125 @@ my @WorkOrderSearchTests = (
         },
     },
 
+    # Nr 14 - search for nonexistent change title
+    {
+        Description => 'Search for nonexistent change title',
+        SearchData  => {
+            ChangeIDs   => [$StringSearchTestID],
+            ChangeTitle => 'NONEXISTENT Change 3 - Title - ' . $UniqueSignature,
+        },
+        ResultData => {
+            TestCount     => 1,
+            TestExistence => 1,
+        },
+    },
+
+    # Nr 15 - search for change title
+    {
+        Description => 'Search for change title',
+        SearchData  => {
+            ChangeIDs   => [$StringSearchTestID],
+            ChangeTitle => 'Change 3 - Title - ' . $UniqueSignature,
+        },
+        ResultData => {
+            TestCount     => 1,
+            TestExistence => 1,
+        },
+    },
+
+    # Nr 16 - search for nonexistent change description
+    {
+        Description => 'Search for nonexistent change description',
+        SearchData  => {
+            ChangeIDs         => [$StringSearchTestID],
+            ChangeDescription => 'NONEXISTENT Change 3 - Description - ' . $UniqueSignature,
+        },
+        ResultData => {
+            TestCount     => 1,
+            TestExistence => 1,
+        },
+    },
+
+    # Nr 17 - search for change description
+    {
+        Description => 'Search for change description',
+        SearchData  => {
+            ChangeIDs         => [$StringSearchTestID],
+            ChangeDescription => 'Change 3 - Description - ' . $UniqueSignature,
+        },
+        ResultData => {
+            TestCount     => 1,
+            TestExistence => 1,
+        },
+    },
+
+    # Nr 18 - search for nonexistent change justification
+    {
+        Description => 'Search for nonexistent change justification',
+        SearchData  => {
+            ChangeIDs           => [$StringSearchTestID],
+            ChangeJustification => 'NONEXISTENT Change 3 - Justification - ' . $UniqueSignature,
+        },
+        ResultData => {
+            TestCount     => 1,
+            TestExistence => 1,
+        },
+    },
+
+    # Nr 19 - search for change justification
+    {
+        Description => 'Search for change justification',
+        SearchData  => {
+            ChangeIDs           => [$StringSearchTestID],
+            ChangeJustification => 'Change 3 - Justification - ' . $UniqueSignature,
+        },
+        ResultData => {
+            TestCount     => 1,
+            TestExistence => 1,
+        },
+    },
+
+    # Nr 20 - search for nonexistent change number
+    {
+        Description => 'Search for nonexistent change number',
+        SearchData  => {
+            ChangeIDs    => [$StringSearchTestID],
+            ChangeNumber => 'NONEXISTENT ' . $StringSearchTestChange->{ChangeNumber},
+        },
+        ResultData => {
+            TestCount     => 1,
+            TestExistence => 1,
+        },
+    },
+
+    # Nr 21 - search for change number
+    {
+        Description => 'Search for change number',
+        SearchData  => {
+            ChangeIDs    => [$StringSearchTestID],
+            ChangeNumber => $StringSearchTestChange->{ChangeNumber},
+        },
+        ResultData => {
+            TestCount     => 1,
+            TestExistence => 1,
+        },
+    },
+
+    # Nr 22 - search for change title, change number, description and justification
+    {
+        Description => 'Search for change justification',
+        SearchData  => {
+            ChangeIDs           => [$StringSearchTestID],
+            ChangeNumber        => $StringSearchTestChange->{ChangeNumber},
+            ChangeTitle         => 'Change 3 - Title - ' . $UniqueSignature,
+            ChangeDescription   => 'Change 3 - Description - ' . $UniqueSignature,
+            ChangeJustification => 'Change 3 - Justification - ' . $UniqueSignature,
+        },
+        ResultData => {
+            TestCount     => 1,
+            TestExistence => 1,
+        },
+    },
 );
 
 my $SearchTestCount = 1;
