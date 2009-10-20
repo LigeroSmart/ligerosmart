@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.52 2009-10-20 08:00:22 reb Exp $
+# $Id: ITSMWorkOrder.t,v 1.53 2009-10-20 08:08:07 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1428,7 +1428,6 @@ continue {
     $SearchTestCount++;
 }
 
-# ------------------------------------------------------------ #
 # test sorting of changes (some have no workorder, others have severel workorders)
 # ------------------------------------------------------------ #
 my %IDsToDelete = (
@@ -1544,10 +1543,10 @@ continue {
 }
 
 my @Testplan = (
-    [ 3, 1, 0, 2 ],    # index of changes in @ChangeIDsForSortTest
-    [ 0, 2, 1, 3 ],
+    [ 1, 4, 2, 3 ],    # index of changes in @ChangeIDsForSortTest
+    [ 1, 4, 2, 3 ],
     [ 0, 3, 1, 2 ],
-    [ 2, 3, 1, 0 ],
+    [ 4, 2, 1, 3 ],
 );
 
 # Do the testing
