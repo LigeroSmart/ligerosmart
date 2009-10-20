@@ -1,0 +1,166 @@
+# --
+# AgentUserSearch.dtl - provides autocomplete feature for customer search
+# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# --
+# $Id: AgentUserSearch.dtl,v 1.1 2009-10-20 13:59:02 reb Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<!--CSS file (default YUI Sam Skin) -->
+<link type="text/css" rel="stylesheet" href="$Config{"Frontend::YUIPath"}build/autocomplete/assets/skins/sam/autocomplete.css">
+
+<!-- Dependencies -->
+<script type="text/javascript" src="$Config{"Frontend::YUIPath"}build/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script type="text/javascript" src="$Config{"Frontend::YUIPath"}build/datasource/datasource-min.js"></script>
+
+<!-- OPTIONAL: Connection (required only if using XHRDataSource) -->
+<script type="text/javascript" src="$Config{"Frontend::YUIPath"}build/connection/connection-min.js"></script>
+
+<!-- OPTIONAL: Animation (required only if enabling animation) -->
+<script type="text/javascript" src="$Config{"Frontend::YUIPath"}build/animation/animation-min.js"></script>
+
+<!-- OPTIONAL: JSON (enables JSON validation) -->
+<script type="text/javascript" src="$Config{"Frontend::YUIPath"}build/json/json-min.js"></script>
+
+<!-- Source file -->
+<script type="text/javascript" src="$Config{"Frontend::YUIPath"}build/autocomplete/autocomplete-min.js"></script>
+
+<style type="text/css">
+.myAutoComplete {
+    width:36em; /* set width here or else widget will expand to fit its container */
+    padding-bottom:0.5em;
+}
+</style>
+
+<script type="text/javascript">
+
+(function() {
+
+    var Dom = YAHOO.util.Dom,
+        Event = YAHOO.util.Event;
+
+    Event.onDOMReady(function() {
+
+        // add yui css to body tag
+        document.body.className = "yui-skin-sam";
+
+<!-- dtl:block:UserSearchAutoComplete -->
+        // define XHRDataSource for autocomplete object
+        var myDataSource = new YAHOO.util.XHRDataSource('');
+        myDataSource.responseType = YAHOO.util.XHRDataSource.TYPE_JSON;
+        myDataSource.maxCacheEntries = 100;
+        myDataSource.connXhrMode = 'cancelStaleRequests';
+
+        // define the schema of the results for autocomplete object
+        myDataSource.responseSchema = {
+            resultsList : "Response.Results", // String pointer to result data
+            fields : [
+                { key: "UserKey" },
+                { key: "UserValue" },
+                { key: "UserValuePlain" }
+            ]
+        };
+
+        // define autocomplete object
+        var myAutoComp = new YAHOO.widget.AutoComplete("myAutoCompleteInput", "myAutoCompleteContainer", myDataSource);
+        myAutoComp.resultTypeList = false;
+
+        // get groups the user should belong to
+        var UserGroup = document.compose.UserSearchGroups.value;
+
+        // define request parameters
+        myAutoComp.generateRequest = function(sQuery) {
+          return "?Action=AgentUserSearch&Search=" + sQuery + "&Groups=" + UserGroup;
+        };
+
+        // define output format for drop down list
+        myAutoComp.formatResult = function(oResultData, sQuery, sResultMatch) {
+            return (oResultData.UserValue + " (" + oResultData.UserKey + ")");
+        };
+
+        // define various autocomplete properties
+        myAutoComp.minQueryLength           = $QData{"minQueryLength"};
+        myAutoComp.queryDelay               = $QData{"queryDelay"};
+        myAutoComp.typeAhead                = $QData{"typeAhead"};
+        myAutoComp.maxResultsDisplayed      = $QData{"maxResultsDisplayed"};
+        myAutoComp.animVert                 = true;
+        myAutoComp.animSpeed                = 0.2;
+        myAutoComp.allowBrowserAutocomplete = false;
+
+        // fixes IE6 bug that causes form select elements to be displayed
+        // over elements with a higher z-index
+        myAutoComp.useIFrame = true;
+
+        // define custom itemSelect handler function
+        var itemSelectHandler = function(sType, aArgs) {
+            var oMyAcInstance = aArgs[0];  // your AutoComplete instance
+            var elListItem    = aArgs[1];  // the <li> element selected in the suggestion container
+            var oData         = aArgs[2];  // object literal of data for the result
+
+            // set autocomplete field with selected value
+            oMyAcInstance.getInputEl().value = oData.UserValuePlain;
+
+            // set hidden field SelectedUser
+            if (document.compose.SelectedUser) {
+                document.compose.SelectedUser.value = oData.UserKey;
+            }
+        };
+
+        // subscribe custom itemSelect handler to the event
+        myAutoComp.itemSelectEvent.subscribe(itemSelectHandler);
+
+        // dynamically adjust the width of the autocomplete container
+        myAutoComp.doBeforeLoadData = function (oRequest, oResponse, oPayload) {
+
+            // check if dynamic width is enabled
+            if ( !Number('$Config{"Agent::Frontend::UserSearchAutoComplete::DynamicWidth"}') ) {
+                return true;
+            }
+
+            // find the longest result string
+            var MaxString = '';
+            for ( var i = 0; i < oResponse.results.length; i++ ) {
+                var Result = oResponse.results[i];
+                var String = Result["UserValuePlain"] + Result["UserKey"];
+                if ( String.length > MaxString.length ) {
+                    MaxString = String;
+                }
+            }
+
+            // build option element with the longest result string
+            var DummyOption = document.createElement("option");
+            DummyOption.appendChild(document.createTextNode(MaxString));
+
+            // build invisible dummy select field to find the width
+            var DummySelect = document.createElement("select");
+            DummySelect.setAttribute( 'id', 'DummySelectID' );
+            DummySelect.setAttribute( 'style', 'visibility:hidden' );
+            DummySelect.appendChild(DummyOption);
+            document.getElementsByTagName("body")[0].appendChild(DummySelect);
+
+            // get new width
+            var NewWidth = DummySelect.offsetWidth;
+
+            // remove hidden select field
+            document.getElementsByTagName("body")[0].removeChild(DummySelect);
+
+            // get container
+            var Container = document.getElementById('myAutoCompleteContainer');
+
+            // apply new width to container
+            Container.style.width = NewWidth + 'px';
+
+            return true;
+        };
+
+        return {
+            myDataSource: myDataSource,
+            myAutoComp  : myAutoComp
+        };
+<!-- dtl:block:UserSearchAutoComplete -->
+    });
+})();
+</script>

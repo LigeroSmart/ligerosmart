@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.10 2009-10-20 06:54:49 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.11 2009-10-20 13:59:02 reb Exp $</CVS>
     <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
         <Description Lang="en">Logfile for the itsm change counter.</Description>
         <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
@@ -143,6 +143,20 @@
                 <GroupRo>itsm-change</GroupRo>
                 <Description>WorkOrder Report</Description>
                 <Title>Report</Title>
+                <NavBarName>Change</NavBarName>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentITSMWorkOrderAgent" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AgentITSMWorkOrderAgent object in the agent interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration des AgentITSMWorkOrderAgent-Objekts im Agent-Interface.</Description>
+        <Group>ITSM Configuration Management</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <GroupRo>itsm-change</GroupRo>
+                <Description>WorkOrder Agent</Description>
+                <Title>Agent</Title>
                 <NavBarName>Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
@@ -297,6 +311,32 @@
                 <Item Key="Action">AgentITSMWorkOrderXXX</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderXXX&amp;WorkOrderID=$QData{"WorkOrderID"}</Item>
             </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::UserSearchAutoComplete###Active" Required="1" Valid="1">
+        <Description Lang="en">Enable or disable the autocomplete feature for the user search in the agent interface.</Description>
+        <Description Lang="de">Aktivieren oder deativieren der Autocomplete-Funktionalitaet für die User-Suche im Agenteninterface.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::UserSearch</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentUserSearch" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AgentUserSearch object in the agent interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration des AgentUserSearch-Objekts im Agent-Interface.</Description>
+        <Group>ITSM Configuration Management</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <GroupRo>itsm-change</GroupRo>
+                <Description>Agent UserSearch</Description>
+                <Title>UserSearch</Title>
+                <NavBarName>Change</NavBarName>
+            </FrontendModuleReg>
         </Setting>
     </ConfigItem>
 </otrs_config>

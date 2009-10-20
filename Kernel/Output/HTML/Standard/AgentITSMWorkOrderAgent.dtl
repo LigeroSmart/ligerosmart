@@ -2,9 +2,98 @@
 # AgentITSMWorkOrderAgent.dtl - provides HTML form for AgentITSMWorkOrderAgent
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAgent.dtl,v 1.1 2009-10-11 23:17:37 ub Exp $
+# $Id: AgentITSMWorkOrderAgent.dtl,v 1.2 2009-10-20 13:59:02 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+
+$Include{"AJAX"}
+
+$Include{"AgentUserSearch"}
+
+<style type="text/css">
+.myAutoComplete {
+width:32em; /* set width here or else widget will expand to fit its container */
+padding-bottom:0.5em;
+}
+</style>
+
+<script language="JavaScript" type="text/javascript">
+<!--
+function clear_field() {
+    document.compose.Agent.value = "";
+    document.compose.Agent.focus();
+}
+//-->
+</script>
+
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+    <tr>
+        <td class="mainhead">
+            $Env{"Box0"}$Text{"Edit"} $Text{"Work Order Agent#"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"} $QData{"Title","70"}
+        </td>
+    </tr>
+    <tr>
+        <td class="menu">
+            <a href="$Env{"Baselink"}Action=AgentITSMWorkOrderZoom&WorkOrderID=$QData{"WorkOrderID"}" class="menuitem">$Text{"Back"}</a>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="mainbody">
+            <br>
+            <table border="0" width="700" align="center" cellspacing="0" cellpadding="4">
+                <form action="$Env{"CGIHandle"}" method="post" name="compose">
+                    <input type="hidden" name="Action"    value="$Env{"Action"}">
+                    <input type="hidden" name="Subaction" value="Save">
+                    <input type="hidden" name="WorkOrderID" value="$QData{"WorkOrderID"}">
+                    <input type="hidden" name="SelectedUser" value="">
+                    <input type="hidden" name="UserSearchGroups" value="itsm-change">
+                    <tr>
+                        <td class="contenthead">
+                            $Text{"WorkOrder Agent"}
+                        </td>
+                    </tr>
+                    <tr class="contentbody">
+                        <td>
+                            <table border="0">
+                                <tr>
+                                    <td class="contentkey">
+                                        $Text{"WorkOrder Agent"}:
+                                        <font color="red" title="$Text{"Required"}">*</font>
+                                    </td>
+                                    <td class="contentvalue">
+<!-- dtl:block:UserSearchAutoCompleteDivStart -->
+                                        <div id="myAutoComplete" class="myAutoComplete">
+<!-- dtl:block:UserSearchAutoCompleteDivStart -->
+                                            <input id="myAutoCompleteInput" type="text" name="User" value="$QData{"User"}" size="70"/>
+<!-- dtl:block:UserSearchAutoCompleteDivEnd -->
+                                            <div id="myAutoCompleteContainer"></div>
+                                        </div>
+<!-- dtl:block:UserSearchAutoCompleteDivEnd -->
+                                        <br/>
+                                        $Data{"AgentStrg"}
+                                        <dtl if ($Data{"UserStrg"} ne "") { $Data{"TakeThisUser"} = "<br/><input class="button" type="submit" name="ExpandUserName2" value="$Text{"Take this User"}"/>"; }>
+                                        $Data{"TakeThisUser"}
+<!-- dtl:block:SearchUserButton -->
+                                        <input class="button" type="submit" name="ExpandUserName1" value="$Text{"Search User"}"/>
+                                        <input class="button" type="submit" name="ClearUser" value="$Text{"Clear User"}" onclick="javascript:clear_field(); return false;"/>
+<!-- dtl:block:SearchUserButton -->
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="contentfooter">
+                            <input class="button" type="submit" name="Submit" value="$Text{"Submit"}">
+                        </td>
+                    </tr>
+                </form>
+            </table>
+            <br>
+        </td>
+    </tr>
+</table>
