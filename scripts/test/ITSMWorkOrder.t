@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.65 2009-10-20 13:38:51 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.66 2009-10-20 13:40:39 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1781,8 +1781,17 @@ for my $OrderByColumn (qw(PlannedStartTime PlannedEndTime ActualStartTime Actual
     local $Data::Dumper::Indent = 0;
     local $Data::Dumper::Useqq  = 1;
 
+    # get the current reference array
+    my @TestplanAlternative = @{ $Testplan[$OrderByTestCount] };
+
+    # place the last element at front of the array
+    # some DBs sort the NULLs values at front of the result set
+    my $Last = pop @TestplanAlternative;
+    unshift @TestplanAlternative, $Last;
+
     # result what we expect
     my @ResultReference = map { $ChangeIDsForSortTest[$_] } @{ $Testplan[$OrderByTestCount] };
+    my @ResultReferenceAlternative = map { $ChangeIDsForSortTest[$_] } @TestplanAlternative;
 
     # search with direction 'DOWN'
     my $SearchResult = $Self->{ChangeObject}->ChangeSearch(
@@ -1792,11 +1801,35 @@ for my $OrderByColumn (qw(PlannedStartTime PlannedEndTime ActualStartTime Actual
         UserID           => 1,
     );
 
-    $Self->Is(
-        Data::Dumper::Dumper($SearchResult),
-        Data::Dumper::Dumper( \@ResultReference ),
-        "Test $TestCount: ChangeSearch OrderBy $OrderByColumn (Down)",
-    );
+    if (
+        Data::Dumper::Dumper($SearchResult)
+        eq Data::Dumper::Dumper( \@ResultReference )
+        )
+    {
+        $Self->Is(
+            Data::Dumper::Dumper($SearchResult),
+            Data::Dumper::Dumper( \@ResultReference ),
+            "Test $TestCount: ChangeSearch OrderBy $OrderByColumn (Down)",
+        );
+    }
+    elsif (
+        Data::Dumper::Dumper($SearchResult)
+        eq Data::Dumper::Dumper( \@ResultReferenceAlternative )
+        )
+    {
+        $Self->Is(
+            Data::Dumper::Dumper($SearchResult),
+            Data::Dumper::Dumper( \@ResultReferenceAlternative ),
+            "Test $TestCount: ChangeSearch OrderBy $OrderByColumn (Down)",
+        );
+    }
+    else {
+        $Self->Is(
+            Data::Dumper::Dumper($SearchResult),
+            undef,
+            "Test $TestCount: ChangeSearch OrderBy $OrderByColumn (Down)",
+        );
+    }
 
     # search with direction 'UP'
     my $SearchResultUp = $Self->{ChangeObject}->ChangeSearch(
@@ -1806,11 +1839,35 @@ for my $OrderByColumn (qw(PlannedStartTime PlannedEndTime ActualStartTime Actual
         UserID           => 1,
     );
 
-    $Self->Is(
-        Data::Dumper::Dumper($SearchResultUp),
-        Data::Dumper::Dumper( [ reverse @ResultReference ] ),
-        "Test $TestCount: ChangeSearch OrderBy $OrderByColumn (Up)",
-    );
+    if (
+        Data::Dumper::Dumper($SearchResultUp)
+        eq Data::Dumper::Dumper( [ reverse @ResultReference ] )
+        )
+    {
+        $Self->Is(
+            Data::Dumper::Dumper($SearchResultUp),
+            Data::Dumper::Dumper( [ reverse @ResultReference ] ),
+            "Test $TestCount: ChangeSearch OrderBy $OrderByColumn (Up)",
+        );
+    }
+    elsif (
+        Data::Dumper::Dumper($SearchResultUp)
+        eq Data::Dumper::Dumper( [ reverse @ResultReferenceAlternative ] )
+        )
+    {
+        $Self->Is(
+            Data::Dumper::Dumper($SearchResultUp),
+            Data::Dumper::Dumper( [ reverse @ResultReferenceAlternative ] ),
+            "Test $TestCount: ChangeSearch OrderBy $OrderByColumn (Up)",
+        );
+    }
+    else {
+        $Self->Is(
+            Data::Dumper::Dumper($SearchResultUp),
+            undef,
+            "Test $TestCount: ChangeSearch OrderBy $OrderByColumn (Up)",
+        );
+    }
 
     $OrderByTestCount++;
     $TestCount++;
