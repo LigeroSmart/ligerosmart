@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.53 2009-10-20 08:08:07 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.54 2009-10-20 08:28:52 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1543,10 +1543,10 @@ continue {
 }
 
 my @Testplan = (
-    [ 1, 4, 2, 3 ],    # index of changes in @ChangeIDsForSortTest
-    [ 1, 4, 2, 3 ],
+    [ 0, 3, 1, 2 ],    # index of changes in @ChangeIDsForSortTest
+    [ 2, 3, 1, 0 ],
     [ 0, 3, 1, 2 ],
-    [ 4, 2, 1, 3 ],
+    [ 3, 1, 0, 2 ],
 );
 
 # Do the testing
@@ -1566,6 +1566,7 @@ for my $OrderByColumn (qw(PlannedStartTime PlannedEndTime ActualStartTime Actual
         OrderBy          => [ $OrderByColumn, 'ChangeID' ],
         OrderByDirection => [ 'Down', 'Up' ],
         UserID           => 1,
+        Huhu             => 'Haha',
     );
 
     $Self->Is(
