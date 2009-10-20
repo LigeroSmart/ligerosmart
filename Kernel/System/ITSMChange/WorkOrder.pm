@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.47 2009-10-20 09:35:03 bes Exp $
+# $Id: WorkOrder.pm,v 1.48 2009-10-20 09:42:43 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.47 $) [1];
+$VERSION = qw($Revision: 1.48 $) [1];
 
 =head1 NAME
 
@@ -1355,6 +1355,10 @@ sub _CheckTimestamps {
         my $StartTime = $Param{ $Type . 'StartTime' } || $WorkOrderData->{ $Type . 'StartTime' };
         my $EndTime   = $Param{ $Type . 'EndTime' }   || $WorkOrderData->{ $Type . 'EndTime' };
 
+        # check for the reserved date
+        return if $StartTime && $StartTime eq '9999-01-01 00:00:00';
+        return if $EndTime   && $EndTime   eq '9999-01-01 00:00:00';
+
         # don't check actual start time when change has not ended yet
         next TYPE if $Type eq 'Actual' && $StartTime && !$EndTime;
 
@@ -1388,6 +1392,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.47 $ $Date: 2009-10-20 09:35:03 $
+$Revision: 1.48 $ $Date: 2009-10-20 09:42:43 $
 
 =cut
