@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.49 2009-10-20 11:52:13 bes Exp $
+# $Id: WorkOrder.pm,v 1.50 2009-10-20 13:14:01 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.49 $) [1];
+$VERSION = qw($Revision: 1.50 $) [1];
 
 =head1 NAME
 
@@ -842,8 +842,9 @@ sub WorkOrderSearch {
         $Count++;
     }
 
-    # we need at least one sort criterion
-    if ( !@SQLOrderBy ) {
+    # if there is a possibility that the ordering is not determined
+    # we add an descending orderung by id
+    if ( !grep { $_ eq 'WorkOrderID' } ( @{ $Param{OrderBy} } ) ) {
         push @SQLOrderBy, "$OrderByTable{WorkOrderID} DESC";
     }
 
@@ -1393,6 +1394,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.49 $ $Date: 2009-10-20 11:52:13 $
+$Revision: 1.50 $ $Date: 2009-10-20 13:14:01 $
 
 =cut

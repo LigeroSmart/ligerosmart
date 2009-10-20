@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.63 2009-10-20 12:54:35 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.64 2009-10-20 13:14:01 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1575,13 +1575,21 @@ my @OrderByColumns = qw(
 );
 
 for my $OrderByColumn (@OrderByColumns) {
-    my @WorkOrders
-        = sort { $a->{$OrderByColumn} <=> $b->{$OrderByColumn} } @WorkOrdersForOrderByTests;
-    my @SortedIDs = map { $_->{WorkOrderID} } @WorkOrders;
 
     # turn off all pretty print
     local $Data::Dumper::Indent = 0;
     local $Data::Dumper::Useqq  = 1;
+
+    # the sorting is completely determined by the second comparison
+    my @WorkOrders
+        = sort {
+        $a->{$OrderByColumn} <=> $b->{$OrderByColumn}
+            || $b->{WorkOrderID} <=> $a->{WorkOrderID}
+        } @WorkOrdersForOrderByTests;
+    my @SortedIDs = map { $_->{WorkOrderID} } @WorkOrders;
+
+    # dump the reference attribute
+    my $ReferenceList = Data::Dumper::Dumper( \@SortedIDs );
 
     my $SearchResult = $Self->{WorkOrderObject}->WorkOrderSearch(
         ChangeIDs        => [$OrderByTestID],
@@ -1594,14 +1602,24 @@ for my $OrderByColumn (@OrderByColumns) {
     # dump the attribute from WorkOrderGet()
     my $SearchList = Data::Dumper::Dumper($SearchResult);
 
-    # dump the reference attribute
-    my $ReferenceList = Data::Dumper::Dumper( \@SortedIDs );
-
     $Self->Is(
         $SearchList,
         $ReferenceList,
         'Test ' . $TestCount++ . ": WorkOrderSearch() OrderBy $OrderByColumn (Up)."
     );
+
+    # sort in the other direction
+
+    # the sorting is completely determined by the second comparison
+    my @WorkOrdersDown
+        = sort {
+        $b->{$OrderByColumn} <=> $a->{$OrderByColumn}
+            || $b->{WorkOrderID} <=> $a->{WorkOrderID}
+        } @WorkOrdersForOrderByTests;
+    my @SortedIDsDown = map { $_->{WorkOrderID} } @WorkOrdersDown;
+
+    # dump the reference attribute
+    my $ReferenceListDown = Data::Dumper::Dumper( \@SortedIDsDown );
 
     my $SearchResultDown = $Self->{WorkOrderObject}->WorkOrderSearch(
         ChangeIDs => [$OrderByTestID],
@@ -1611,9 +1629,6 @@ for my $OrderByColumn (@OrderByColumns) {
 
     # dump the attribute from WorkOrderGet()
     my $SearchListDown = Data::Dumper::Dumper($SearchResultDown);
-
-    # dump the reference attribute
-    my $ReferenceListDown = Data::Dumper::Dumper( [ reverse @SortedIDs ] );
 
     $Self->Is(
         $SearchListDown,
