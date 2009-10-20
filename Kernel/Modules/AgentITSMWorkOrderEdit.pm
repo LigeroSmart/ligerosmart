@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderEdit.pm - the OTRS::ITSM::ChangeManagement work order edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderEdit.pm,v 1.2 2009-10-20 16:30:14 reb Exp $
+# $Id: AgentITSMWorkOrderEdit.pm,v 1.3 2009-10-20 17:29:48 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -69,12 +69,17 @@ sub Run {
         );
     }
 
+    # currenttitle is the value for the title input
+    $Param{CurrentTitle} = $WorkOrder->{Title};
+
+    my $Title = $Self->{ParamObject}->GetParam( Param => 'Title' );
+
     # update workorder
-    if ( $Self->{Subaction} eq 'Save' ) {
+    if ( $Self->{Subaction} eq 'Save' && $Title ) {
         my $Success = $Self->{WorkOrderObject}->WorkOrderUpdate(
             WorkOrderID => $WorkOrder->{WorkOrderID},
             Instruction => $Self->{ParamObject}->GetParam( Param => 'Instruction' ),
-            Title       => $Self->{ParamObject}->GetParam( Param => 'Title' ),
+            Title       => $Title,
             UserID      => $Self->{UserID},
         );
 
@@ -93,6 +98,16 @@ sub Run {
                 OP => "Action=AgentITSMWorkOrderZoom&WorkOrderID=$WorkOrder->{WorkOrderID}",
             );
         }
+    }
+    elsif ( $Self->{Subaction} eq 'Save' && !$Title ) {
+
+        # show invalid message
+        $Self->{LayoutObject}->Block(
+            Name => 'InvalidTitle',
+        );
+
+        # don't show title
+        $Param{CurrentTitle} = '';
     }
 
     # get change that workorder belongs to
