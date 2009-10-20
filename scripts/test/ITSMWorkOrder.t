@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.50 2009-10-20 07:15:04 reb Exp $
+# $Id: ITSMWorkOrder.t,v 1.51 2009-10-20 07:46:16 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -264,21 +264,6 @@ for my $Test (@ChangeTests) {
         # remember current ChangeID
         if ($ChangeID) {
             $TestedChangeID{$ChangeID} = 1;
-        }
-
-        # ?????????????????????????????????????
-        # TODO : What about ChangeAddChangeTime, do we need this in the WorkOrder-Test?
-        # SetTimes with ChangeID wouldn't work here anyway, because this is a function
-        # in WorkOrder.t, which would only set the Times of a workorder and not of a change
-        # Also, check why not all workorders are deleted after the test
-        # -> have a look in the database
-        #
-        # change CreateTime
-        if ( $ChangeID && $SourceData->{ChangeAddChangeTime} ) {
-            SetTimes(
-                ChangeID   => $ChangeID,
-                CreateTime => $SourceData->{ChangeAddChangeTime}->{CreateTime},
-            );
         }
 
         if ( $Test->{Fails} ) {
@@ -942,14 +927,6 @@ for my $Test (@WorkOrderTests) {
                     $WorkOrderIDForSearchTest{$SearchTestNr}->{$WorkOrderID} = 1;
                 }
             }
-        }
-
-        # change CreateTime
-        if ( $WorkOrderID && $SourceData->{WorkOrderAddChangeTime} ) {
-            SetTimes(
-                WorkOrderID => $WorkOrderID,
-                CreateTime  => $SourceData->{WorkOrderAddChangeTime}->{CreateTime},
-            );
         }
 
         if ( $Test->{Fails} ) {
@@ -1800,70 +1777,6 @@ for my $ChangeID ( @{ $IDsToDelete{Change} }, keys %TestedChangeID ) {
     );
 
     $TestCount++;
-}
-
-=over 4
-
-=item SetTimes()
-
-Set new values for CreateTime and ChangeTime for a given WorkOrderID.
-
-    my $UpdateSuccess = SetTimes(
-        WorkOrderID => 123,
-        CreateTime => '2009-10-30 01:00:15',
-        ChangeTime => '2009-10-30 01:00:15',
-    );
-
-=back
-
-=cut
-
-sub SetTimes {
-    my (%Param) = @_;
-
-    # check workorder id
-    if ( !$Param{WorkOrderID} ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => 'Need WorkOrderID!',
-        );
-        return;
-    }
-
-    # check parameters
-    if ( !$Param{CreateTime} && !$Param{ChangeTime} ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => 'Need parameter CreateTime or ChangeTime!',
-        );
-        return;
-    }
-
-    my @Bind;
-    my $SQL = 'UPDATE change_workorder SET ';
-
-    if ( $Param{CreateTime} ) {
-        $SQL .= 'create_time = ? ';
-        push @Bind, \$Param{CreateTime};
-    }
-
-    if ( $Param{CreateTime} && $Param{ChangeTime} ) {
-        $SQL .= ', ';
-    }
-
-    if ( $Param{ChangeTime} ) {
-        $SQL .= 'change_time = ? ';
-        push @Bind, \$Param{ChangeTime};
-    }
-
-    $SQL .= 'WHERE id = ? ';
-    push @Bind, \$Param{ChangeID};
-
-    return if !$Self->{DBObject}->Do(
-        SQL  => $SQL,
-        Bind => \@Bind,
-    );
-    return 1;
 }
 
 1;
