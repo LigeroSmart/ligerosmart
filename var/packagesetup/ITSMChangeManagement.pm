@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.2 2009-09-24 17:23:07 ub Exp $
+# $Id: ITSMChangeManagement.pm,v 1.3 2009-10-20 18:14:37 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -28,7 +28,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
@@ -177,6 +177,18 @@ sub CodeInstall {
         Description => 'Group for ITSM Change mask access in the agent interface.',
     );
 
+    # add the group itsm-change-builder
+    $Self->_GroupAdd(
+        Name        => 'itsm-change-builder',
+        Description => 'Group for ITSM Change Builder.',
+    );
+
+    # add the group itsm-change-manager
+    $Self->_GroupAdd(
+        Name        => 'itsm-change-manager',
+        Description => 'Group for ITSM Change Managers.',
+    );
+
     # install stats
     $Self->{StatsObject}->StatsInstall(
         FilePrefix => $Self->{FilePrefix},
@@ -200,6 +212,18 @@ sub CodeReinstall {
     $Self->_GroupAdd(
         Name        => 'itsm-change',
         Description => 'Group for ITSM Change mask access in the agent interface.',
+    );
+
+    # add the group itsm-change-builder
+    $Self->_GroupAdd(
+        Name        => 'itsm-change-builder',
+        Description => 'Group for ITSM Change Builder.',
+    );
+
+    # add the group itsm-change-manager
+    $Self->_GroupAdd(
+        Name        => 'itsm-change-manager',
+        Description => 'Group for ITSM Change Managers.',
     );
 
     # install stats
@@ -248,6 +272,15 @@ sub CodeUninstall {
         Name => 'itsm-change',
     );
 
+    # deactivate the group itsm-change-builder
+    $Self->_GroupDeactivate(
+        Name => 'itsm-change-builder',
+    );
+
+    # deactivate the group itsm-change-manager
+    $Self->_GroupDeactivate(
+        Name => 'itsm-change-manager',
+    );
     return 1;
 }
 
@@ -451,6 +484,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2009-09-24 17:23:07 $
+$Revision: 1.3 $ $Date: 2009-10-20 18:14:37 $
 
 =cut
