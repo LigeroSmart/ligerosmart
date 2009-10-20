@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderAdd.dtl - provides HTML form for AgentITSMWorkOrderAdd
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.dtl,v 1.3 2009-10-20 17:51:33 reb Exp $
+# $Id: AgentITSMWorkOrderAdd.dtl,v 1.4 2009-10-20 17:53:20 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -11,7 +11,7 @@
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
         <td class="mainhead">
-            $Env{"Box0"}$Text{"Edit"} $Text{"Work Order#"}: $QData{"ChangeNumber"} $Env{"Box1"}
+            $Env{"Box0"}$Text{"Add WorkOrder to"} $Text{"Change#"}: $QData{"ChangeNumber"} $Env{"Box1"}
         </td>
     </tr>
     <tr>
