@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.56 2009-10-20 08:45:32 mae Exp $
+# $Id: ITSMWorkOrder.t,v 1.57 2009-10-20 09:17:22 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -487,23 +487,23 @@ push @WorkOrderTests, (
                 UserID          => 1,
                 ChangeID        => $WorkOrderAddTestID,
                 WorkOrderTypeID => $ReverseTypesList{approval},
-                Title       => 'WorkOrderAdd with WorkOrderStateID - Title - ' . $UniqueSignature,
-                Instruction => 'WorkOrderAdd with WorkOrderStateID - Instruction - '
+                Title       => 'WorkOrderAdd with WorkOrderTypeID - Title - ' . $UniqueSignature,
+                Instruction => 'WorkOrderAdd with WorkOrderTypeID - Instruction - '
                     . $UniqueSignature,
-                Report => 'WorkOrderAdd with WorkOrderStateID - Report - ' . $UniqueSignature,
+                Report => 'WorkOrderAdd with WorkOrderTypeID - Report - ' . $UniqueSignature,
             },
         },
         ReferenceData => {
             WorkOrderGet => {
                 ChangeID        => $WorkOrderAddTestID,
                 WorkOrderTypeID => $ReverseTypesList{approval},
-                Title       => 'WorkOrderAdd with WorkOrderStateID - Title - ' . $UniqueSignature,
-                Instruction => 'WorkOrderAdd with WorkOrderStateID - Instruction - '
+                Title       => 'WorkOrderAdd with WorkOrderTypeID - Title - ' . $UniqueSignature,
+                Instruction => 'WorkOrderAdd with WorkOrderTypeID - Instruction - '
                     . $UniqueSignature,
-                Report => 'WorkOrderAdd with WorkOrderStateID - Report - ' . $UniqueSignature,
+                Report => 'WorkOrderAdd with WorkOrderTypeID - Report - ' . $UniqueSignature,
             },
         },
-        SearchTest => [ 2, 8 ],
+        SearchTest => [ 2, 8, 13 ],
     },
     {
         Description => 'WorkOrderAdd() with WorkOrderTypeID and WorkOrderStateID.',
@@ -513,10 +513,13 @@ push @WorkOrderTests, (
                 ChangeID         => $WorkOrderAddTestID,
                 WorkOrderTypeID  => $ReverseTypesList{pir},
                 WorkOrderStateID => $ReverseStatesList{closed},
-                Title       => 'WorkOrderAdd with WorkOrderStateID - Title - ' . $UniqueSignature,
-                Instruction => 'WorkOrderAdd with WorkOrderStateID - Instruction - '
+                Title => 'WorkOrderAdd with WorkOrderTypeID and WorkOrderStateID - Title - '
                     . $UniqueSignature,
-                Report => 'WorkOrderAdd with WorkOrderStateID - Report - ' . $UniqueSignature,
+                Instruction =>
+                    'WorkOrderAdd with WorkOrderTypeID and WorkOrderStateID - Instruction - '
+                    . $UniqueSignature,
+                Report => 'WorkOrderAdd with WorkOrderTypeID and WorkOrderStateID - Report - '
+                    . $UniqueSignature,
             },
         },
         ReferenceData => {
@@ -524,17 +527,21 @@ push @WorkOrderTests, (
                 ChangeID         => $WorkOrderAddTestID,
                 WorkOrderTypeID  => $ReverseTypesList{pir},
                 WorkOrderStateID => $ReverseStatesList{closed},
-                Title       => 'WorkOrderAdd with WorkOrderStateID - Title - ' . $UniqueSignature,
-                Instruction => 'WorkOrderAdd with WorkOrderStateID - Instruction - '
+                Title => 'WorkOrderAdd with WorkOrderTypeID and WorkOrderStateID - Title - '
                     . $UniqueSignature,
-                Report => 'WorkOrderAdd with WorkOrderStateID - Report - ' . $UniqueSignature,
+                Instruction =>
+                    'WorkOrderAdd with WorkOrderTypeID and WorkOrderStateID - Instruction - '
+                    . $UniqueSignature,
+                Report => 'WorkOrderAdd with WorkOrderTypeID and WorkOrderStateID - Report - '
+                    . $UniqueSignature,
             },
         },
-        SearchTest => [ 2, 8 ],
+        SearchTest => [ 2, 8, 13 ],
     },
     {
-        Description => 'WorkOrderAdd() with WorkOrderTypeID and WorkOrderStateID.',
-        SourceData  => {
+        Description =>
+            'WorkOrderAdd() and WorkOrderUpdate() with WorkOrderTypeID and WorkOrderStateID.',
+        SourceData => {
             WorkOrderAdd => {
                 UserID           => 1,
                 ChangeID         => $WorkOrderAddTestID,
@@ -1351,6 +1358,21 @@ my @WorkOrderSearchTests = (
         ResultData => {
             TestCount => 1,
             Count     => 0,
+        },
+    },
+
+    # Nr 13 - search for workorder types
+    {
+        Description => 'Search for WorkOrder type',
+        SearchData  => {
+            WorkOrderTypeIDs => [
+                $ReverseTypesList{approval},
+                $ReverseTypesList{pir},
+            ],
+            Title => '%' . $UniqueSignature,
+        },
+        ResultData => {
+            TestCount => 1,
         },
     },
 
