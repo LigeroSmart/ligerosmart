@@ -1,8 +1,8 @@
 # --
-# Kernel/System/ITSMChange/WorkOrder.pm - all work order functions
+# Kernel/System/ITSMChange/WorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.41 2009-10-19 20:59:13 ub Exp $
+# $Id: WorkOrder.pm,v 1.42 2009-10-20 06:51:03 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,15 +19,15 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.41 $) [1];
+$VERSION = qw($Revision: 1.42 $) [1];
 
 =head1 NAME
 
-Kernel::System::ITSMChange::WorkOrder - work order lib
+Kernel::System::ITSMChange::WorkOrder - workorder lib
 
 =head1 SYNOPSIS
 
-All config item functions.
+All workorder functions.
 
 =head1 PUBLIC INTERFACE
 
@@ -135,6 +135,7 @@ or
         Instruction      => 'Install the the new server',              # (optional)
         Report           => 'Installed new server without problems',   # (optional)
         WorkOrderStateID => 4,                                         # (optional)
+        WorkOrderTypeID  => 12,                                        # (optional)
         WorkOrderAgentID => 8,                                         # (optional)
         PlannedStartTime => '2009-10-12 00:00:01',                     # (optional)
         PlannedEndTime   => '2009-10-15 15:00:00',                     # (optional)
@@ -162,14 +163,69 @@ sub WorkOrderAdd {
     # check change parameters
     return if !$Self->_CheckWorkOrderParams(%Param);
 
-    # TODO: replace this later with State-Condition-Action logic
-    # get WorkOrderStateID
-    # get default WorkOrderStateID if not given
-    my $ItemDataRef = $Self->{GeneralCatalogObject}->ItemGet(
-        Class => 'ITSM::ChangeManagement::WorkOrder::State',
-        Name  => 'accepted',
-    );
-    my $WorkOrderStateID = $Param{WorkOrderStateID} || $ItemDataRef->{ItemID};
+    # set default WorkOrderStateID
+    my $WorkOrderStateID = $Param{WorkOrderStateID};
+    if ( !$Param{WorkOrderStateID} ) {
+
+        # ----------------------------------------------------------------
+        # TODO:
+        # Replace this later with State-Condition-Action logic
+        # to get the 'first' workorder state
+        # here, workorder state 'accepted' is used as default
+
+        my $DefaultState = 'accepted';
+
+        # get WorkOrderStateID from general catalog
+        my $ItemDataRef = $Self->{GeneralCatalogObject}->ItemGet(
+            Class => 'ITSM::ChangeManagement::WorkOrder::State',
+            Name  => $DefaultState,
+        );
+
+        # error handling because of WorkOrderStateID
+        if ( !$ItemDataRef || ref $ItemDataRef ne 'HASH' || !%{$ItemDataRef} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "The default WorkOrderState '$DefaultState' "
+                    . "is invalid! Check the general catalog!",
+            );
+            return;
+        }
+
+        # set default
+        $WorkOrderStateID = $ItemDataRef->{ItemID};
+
+        # ----------------------------------------------------------------
+    }
+
+    # set default WorkOrderTypeID
+    my $WorkOrderTypeID = $Param{WorkOrderTypeID};
+    if ( !$Param{WorkOrderTypeID} ) {
+
+        # set config option
+        my $ConfigOption = 'ITSMWorkOrder::Type::Default';
+
+        # get default workorder type from config
+        my $DefaultType = $Self->{ConfigObject}->Get($ConfigOption);
+
+        # check if default type exists in general catalog
+        my $ItemDataRef = $Self->{GeneralCatalogObject}->ItemGet(
+            Class => 'ITSM::ChangeManagement::WorkOrder::Type',
+            Name  => $DefaultType,
+        );
+
+        # error handling because of invalid config setting
+        if ( !$ItemDataRef || ref $ItemDataRef ne 'HASH' || !%{$ItemDataRef} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "The default WorkOrderType '$DefaultType' "
+                    . "in sysconfig option '$ConfigOption' is invalid! Check the general catalog!",
+            );
+            return;
+        }
+
+        # set default
+        $WorkOrderTypeID = $ItemDataRef->{ItemID};
+    }
 
     # get default workorder number if not given
     my $WorkOrderNumber = $Param{WorkOrderNumber} || $Self->_GetWorkOrderNumber(%Param);
@@ -177,28 +233,36 @@ sub WorkOrderAdd {
     # add WorkOrder to database
     return if !$Self->{DBObject}->Do(
         SQL => 'INSERT INTO change_workorder '
-            . '(change_id, workorder_number, workorder_state_id, create_time, '
-            . 'create_by, change_time, change_by) '
-            . 'VALUES (?, ?, ?, current_timestamp, ?, current_timestamp, ?)',
+            . '(change_id, workorder_number, workorder_state_id, workorder_type_id, '
+            . 'create_time, create_by, change_time, change_by) '
+            . 'VALUES (?, ?, ?, ?, current_timestamp, ?, current_timestamp, ?)',
         Bind => [
-            \$Param{ChangeID}, \$WorkOrderNumber, \$WorkOrderStateID,
+            \$Param{ChangeID}, \$WorkOrderNumber, \$WorkOrderStateID, \$WorkOrderTypeID,
             \$Param{UserID}, \$Param{UserID},
         ],
     );
 
-    # get WorkOrder id
+    # get WorkOrderID
     return if !$Self->{DBObject}->Prepare(
         SQL   => 'SELECT id FROM change_workorder WHERE change_id = ? AND workorder_number = ?',
         Bind  => [ \$Param{ChangeID}, \$WorkOrderNumber ],
         Limit => 1,
     );
 
+    # fetch the result
     my $WorkOrderID;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $WorkOrderID = $Row[0];
     }
 
-    return if !$WorkOrderID;
+    # check error
+    if ( !$WorkOrderID ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "WorkOrderAdd() failed!",
+        );
+        return;
+    }
 
     # TODO: trigger WorkOrderAdd-Event
 
@@ -223,6 +287,7 @@ update a WorkOrder
         Instruction      => 'Install the the new server',              # (optional)
         Report           => 'Installed new server without problems',   # (optional)
         WorkOrderStateID => 4,                                         # (optional)
+        WorkOrderTypeID  => 12,                                        # (optional)
         WorkOrderAgentID => 8,                                         # (optional)
         PlannedStartTime => '2009-10-12 00:00:01',                     # (optional)
         PlannedEndTime   => '2009-10-15 15:00:00',                     # (optional)
@@ -266,6 +331,7 @@ sub WorkOrderUpdate {
         Report           => 'report',
         ChangeID         => 'change_id',
         WorkOrderStateID => 'workorder_state_id',
+        WorkOrderTypeID  => 'workorder_type_id',
         WorkOrderAgentID => 'workorder_agent_id',
         PlannedStartTime => 'planned_start_time',
         PlannedEndTime   => 'planned_end_time',
@@ -315,10 +381,7 @@ Return
     $WorkOrder{Instruction}
     $WorkOrder{Report}
     $WorkOrder{WorkOrderStateID}
-
-    TODO: Add workorder_type_id here and in all other fuctions!!!
-    Also in Database diagram!!!
-
+    $WorkOrder{WorkOrderTypeID}
     $WorkOrder{WorkOrderAgentID}
     $WorkOrder{PlannedStartTime}
     $WorkOrder{PlannedEndTime}
@@ -350,17 +413,19 @@ sub WorkOrderGet {
         }
     }
 
+    # get workorder data from database
     return if !$Self->{DBObject}->Prepare(
         SQL => 'SELECT id, change_id, workorder_number, title, instruction, '
-            . 'report, workorder_state_id, workorder_agent_id, planned_start_time, '
-            . 'planned_end_time, actual_start_time, actual_end_time, create_time, '
-            . 'create_by, change_time, change_by '
+            . 'report, workorder_state_id, workorder_type_id, workorder_agent_id, '
+            . 'planned_start_time, planned_end_time, actual_start_time, actual_end_time, '
+            . 'create_time, create_by, change_time, change_by '
             . 'FROM change_workorder '
             . 'WHERE id = ?',
         Bind  => [ \$Param{WorkOrderID} ],
         Limit => 1,
     );
 
+    # fetch the result
     my %WorkOrderData;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $WorkOrderData{WorkOrderID}      = $Row[0];
@@ -370,23 +435,32 @@ sub WorkOrderGet {
         $WorkOrderData{Instruction}      = defined $Row[4] ? $Row[4] : '';
         $WorkOrderData{Report}           = defined $Row[5] ? $Row[5] : '';
         $WorkOrderData{WorkOrderStateID} = $Row[6];
-        $WorkOrderData{WorkOrderAgentID} = $Row[7];
-        $WorkOrderData{PlannedStartTime} = $Row[8] ne '9999-01-01 00:00:00' ? $Row[8] : '';
-        $WorkOrderData{PlannedEndTime}   = $Row[9] ne '9999-01-01 00:00:00' ? $Row[9] : '';
-        $WorkOrderData{ActualStartTime}  = $Row[10] ne '9999-01-01 00:00:00' ? $Row[10] : '';
-        $WorkOrderData{ActualEndTime}    = $Row[11] ne '9999-01-01 00:00:00' ? $Row[11] : '';
-        $WorkOrderData{CreateTime}       = $Row[12];
-        $WorkOrderData{CreateBy}         = $Row[13];
-        $WorkOrderData{ChangeTime}       = $Row[14];
-        $WorkOrderData{ChangeBy}         = $Row[15];
+        $WorkOrderData{WorkOrderTypeID}  = $Row[7];
+        $WorkOrderData{WorkOrderAgentID} = $Row[8];
+        $WorkOrderData{PlannedStartTime} = $Row[9];
+        $WorkOrderData{PlannedEndTime}   = $Row[10];
+        $WorkOrderData{ActualStartTime}  = $Row[11];
+        $WorkOrderData{ActualEndTime}    = $Row[12];
+        $WorkOrderData{CreateTime}       = $Row[13];
+        $WorkOrderData{CreateBy}         = $Row[14];
+        $WorkOrderData{ChangeTime}       = $Row[15];
+        $WorkOrderData{ChangeBy}         = $Row[16];
     }
 
+    # check error
     if ( !%WorkOrderData ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "WorkOrder with ID $Param{WorkOrderID} does not exist.",
+            Message  => "WorkOrderID $Param{WorkOrderID} does not exist!",
         );
         return;
+    }
+
+    # replace default time values with empty string
+    for my $Time (qw(PlannedStartTime PlannedEndTime ActualStartTime ActualEndTime)) {
+        if ( $WorkOrderData{$Time} eq '9999-01-01 00:00:00' ) {
+            $WorkOrderData{$Time} = '';
+        }
     }
 
     return \%WorkOrderData;
@@ -397,7 +471,7 @@ sub WorkOrderGet {
 return a list of all workorder ids of a given change id as array reference
 
     my $WorkOrderIDsRef = $WorkOrderObject->WorkOrderList(
-        ChangeID = 5,
+        ChangeID => 5,
         UserID   => 1,
     );
 
@@ -423,6 +497,7 @@ sub WorkOrderList {
         Bind => [ \$Param{ChangeID} ],
     );
 
+    # fetch the result
     my @WorkOrderIDs;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         push @WorkOrderIDs, $Row[0];
@@ -441,7 +516,18 @@ return a list of workorder ids as an array reference
         Title             => 'Replacement of mail server',             # (optional)
         Instruction       => 'Install the the new server',             # (optional)
         Report            => 'Installed new server without problems',  # (optional)
+
         WorkOrderStateIDs => [ 11, 12, 13 ],                           # (optional)
+
+        # --------------------------------------------
+        #
+        # TODO: Implement this!!!!
+        #
+        WorkOrderTypeIDs  => [ 21, 22, 23 ],                           # (optional)
+        #
+        #
+        # --------------------------------------------
+
         WorkOrderAgentIDs => [ 1, 2, 3 ],                              # (optional)
         CreateBy          => [ 5, 2, 3 ],                              # (optional)
         ChangeBy          => [ 3, 2, 1 ],                              # (optional)
@@ -593,7 +679,8 @@ sub WorkOrderSearch {
         $Param{UsingWildcards} = 1;
     }
 
-    my @SQLWhere;    # assemble the conditions used in the WHERE clause
+    # assemble the conditions used in the WHERE clause
+    my @SQLWhere;
 
     # set string params
     my %StringParams = (
@@ -716,7 +803,7 @@ sub WorkOrderSearch {
         ActualEndTimeOlderDate    => 'wo.actual_end_time <=',
     );
 
-    # add work order time params to sql-having-array
+    # add workorder time params to sql-having-array
     TIMEPARAM:
     for my $TimeParam ( keys %WorkOrderTimeParams ) {
 
@@ -825,7 +912,12 @@ sub WorkOrderDelete {
         }
     }
 
-    # TODO: Delete all links
+    # delete all links to this workorder
+    return if !$Self->{LinkObject}->LinkDeleteAll(
+        Object => 'ITSMWorkOrder',
+        Key    => $Param{WorkOrderID},
+        UserID => 1,
+    );
 
     # TODO: trigger WorkOrder delete event
 
@@ -870,7 +962,7 @@ Return
         # which would be excluded from the calculation
         # of the change start time.
 
-        ExcludeWorkOrderTypes => [ 'approval', 'pir' ], # (optional)
+        ExcludeWorkOrderTypes => [ 'approval', 'pir' ],   # (optional)
 
         # ---------------------------------------------------- #
     );
@@ -893,10 +985,10 @@ sub WorkOrderChangeTimeGet {
 
     # build sql, using min and max functions
     my $SQL = 'SELECT '
-        . 'MIN(planned_start_time), '
-        . 'MAX(planned_end_time), '
-        . 'MIN(actual_start_time), '
-        . 'MAX(actual_end_time) '
+        . 'MIN( planned_start_time ), '
+        . 'MAX( planned_end_time ), '
+        . 'MIN( actual_start_time ), '
+        . 'MAX( actual_end_time ) '
         . 'FROM change_workorder '
         . 'WHERE change_id = ?';
 
@@ -910,7 +1002,7 @@ sub WorkOrderChangeTimeGet {
     # initialize the return time hash
     my %TimeReturn;
 
-    # extract time values
+    # fetch the result
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $TimeReturn{PlannedStartTime} = $Row[0] || '';
         $TimeReturn{PlannedEndTime}   = $Row[1] || '';
@@ -941,7 +1033,7 @@ sub WorkOrderChangeTimeGet {
             Limit => 1,
         );
 
-        # extract count
+        # fetch the result
         my $Count;
         while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
             $Count = $Row[0];
@@ -958,7 +1050,7 @@ sub WorkOrderChangeTimeGet {
 
 =item _CheckWorkOrderStateID()
 
-check if a given work order state id is valid
+check if a given workorder state id is valid
 
     my $Ok = $WorkOrderObject->_CheckWorkOrderStateID(
         WorkOrderStateID => 25,
@@ -978,11 +1070,12 @@ sub _CheckWorkOrderStateID {
         return;
     }
 
-    # get work order state list
+    # get workorder state list
     my $WorkOrderStateList = $Self->{GeneralCatalogObject}->ItemList(
         Class => 'ITSM::ChangeManagement::WorkOrder::State',
     );
 
+    # check if WorkOrderStateID belongs to correct general catalog class
     if (
         !$WorkOrderStateList
         || ref $WorkOrderStateList ne 'HASH'
@@ -991,7 +1084,7 @@ sub _CheckWorkOrderStateID {
     {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "No valid work order state id given!",
+            Message  => "No valid WorkOrderStateID given!",
         );
         return;
     }
@@ -1001,7 +1094,7 @@ sub _CheckWorkOrderStateID {
 
 =item _CheckWorkOrderTypeID()
 
-check if a given work order type id is valid
+check if a given workorder type id is valid
 
     my $Ok = $WorkOrderObject->_CheckWorkOrderTypeID(
         WorkOrderTypeID => 2,
@@ -1021,11 +1114,12 @@ sub _CheckWorkOrderTypeID {
         return;
     }
 
-    # get work order type list
+    # get workorder type list
     my $WorkOrderTypeList = $Self->{GeneralCatalogObject}->ItemList(
         Class => 'ITSM::ChangeManagement::WorkOrder::Type',
     );
 
+    # check if WorkOrderTypeID belongs to correct general catalog class
     if (
         !$WorkOrderTypeList
         || ref $WorkOrderTypeList ne 'HASH'
@@ -1034,7 +1128,7 @@ sub _CheckWorkOrderTypeID {
     {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "No valid work order type id given!",
+            Message  => "No valid WorkOrderTypeID id given!",
         );
         return;
     }
@@ -1068,17 +1162,20 @@ sub _GetWorkOrderNumber {
 
     # get max workorder number
     return if !$Self->{DBObject}->Prepare(
-        SQL   => 'SELECT MAX(workorder_number) FROM change_workorder WHERE change_id = ?',
+        SQL => 'SELECT MAX(workorder_number) '
+            . 'FROM change_workorder '
+            . 'WHERE change_id = ?',
         Bind  => [ \$Param{ChangeID} ],
         Limit => 1,
     );
 
+    # fetch the result
     my $WorkOrderNumber;
     while ( my @Row = $Self->{DBObject}->FetchrowArray ) {
         $WorkOrderNumber = $Row[0];
     }
 
-    # increment number to get a non-existent work order number
+    # increment number to get a non-existent workorder number
     $WorkOrderNumber++;
 
     return $WorkOrderNumber;
@@ -1095,6 +1192,7 @@ Checks if the various parameters are valid.
         Instruction      => 'Install the the new server',              # (optional)
         Report           => 'Installed new server without problems',   # (optional)
         WorkOrderStateID => 4,                                         # (optional)
+        WorkOrderTypeID  => 12,                                        # (optional)
         WorkOrderAgentID => 8,                                         # (optional)
         PlannedStartTime => '2009-10-01 10:33:00',                     # (optional)
         ActualStartTime  => '2009-10-01 10:33:00',                     # (optional)
@@ -1118,7 +1216,16 @@ sub _CheckWorkOrderParams {
     # check the string and id parameters
     ARGUMENT:
     for my $Argument (
-        qw(Title Instruction Report WorkOrderAgentID WorkOrderStateID WorkOrderNumber ChangeID)
+        qw(
+        Title
+        Instruction
+        Report
+        WorkOrderAgentID
+        WorkOrderStateID
+        WorkOrderTypeID
+        WorkOrderNumber
+        ChangeID
+        )
         )
     {
 
@@ -1138,7 +1245,7 @@ sub _CheckWorkOrderParams {
         if ( ref $Param{$Argument} ne '' ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "The parameter '$Argument' mustn't be a reference!",
+                Message  => "The parameter '$Argument' must be a scalar!",
             );
             return;
         }
@@ -1190,10 +1297,17 @@ sub _CheckWorkOrderParams {
         }
     }
 
-    # check if given ChangeStateID is valid
+    # check if given WorkOrderStateID is valid
     if ( exists $Param{WorkOrderStateID} ) {
         return if !$Self->_CheckWorkOrderStateID(
             WorkOrderStateID => $Param{WorkOrderStateID},
+        );
+    }
+
+    # check if given WorkOrderTypeID is valid
+    if ( exists $Param{WorkOrderTypeID} ) {
+        return if !$Self->_CheckWorkOrderTypeID(
+            WorkOrderTypeID => $Param{WorkOrderTypeID},
         );
     }
 
@@ -1241,18 +1355,25 @@ sub _CheckTimestamps {
     # check times
     TYPE:
     for my $Type (qw(Actual Planned)) {
-        next TYPE if !( $Param{ $Type . 'StartTime' } || $Param{ $Type . 'EndTime' } );
 
+        # at least one of the start or end times is needed
+        next TYPE if !$Param{ $Type . 'StartTime' } && !$Param{ $Type . 'EndTime' };
+
+        # if only one time is given, get the other one from the workorder
         my $StartTime = $Param{ $Type . 'StartTime' } || $WorkOrderData->{ $Type . 'StartTime' };
         my $EndTime   = $Param{ $Type . 'EndTime' }   || $WorkOrderData->{ $Type . 'EndTime' };
 
+        # don't check actual start time when change has not ended yet
         next TYPE if $Type eq 'Actual' && $StartTime && !$EndTime;
 
-        return if !( $StartTime && $EndTime );
+        # the check fails if not both (start and end) times are present
+        return if !$StartTime || !$EndTime;
 
+        # remove all Non-Number characters
         $StartTime =~ s{ \D }{}xmsg;
         $EndTime   =~ s{ \D }{}xmsg;
 
+        # start time must be smaller than end time
         return if $StartTime > $EndTime;
     }
 
@@ -1275,6 +1396,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.41 $ $Date: 2009-10-19 20:59:13 $
+$Revision: 1.42 $ $Date: 2009-10-20 06:51:03 $
 
 =cut
