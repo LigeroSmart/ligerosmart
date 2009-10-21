@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.94 2009-10-21 09:33:07 bes Exp $
+# $Id: ITSMChange.t,v 1.95 2009-10-21 10:11:52 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -2214,7 +2214,6 @@ for my $OrderByColumn (@OrderByColumns) {
         OrderBy          => [$OrderByColumn],
         OrderByDirection => ['Up'],
         UserID           => 1,
-        Huhu             => 'Haha',
     );
 
     # dump the attribute from ChangeGet()
