@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LinkObjectITSMWorkOrder.pm - layout backend module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LinkObjectITSMWorkOrder.pm,v 1.2 2009-10-20 18:46:44 ub Exp $
+# $Id: LinkObjectITSMWorkOrder.pm,v 1.3 2009-10-21 13:07:15 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::Output::HTML::Layout;
 use Kernel::System::GeneralCatalog;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
@@ -235,7 +235,7 @@ sub TableCreateComplex {
             },
             {
                 Type    => 'Text',
-                Content => $WorkOrder->{ChangeData}->{Title},
+                Content => $WorkOrder->{ChangeData}->{ChangeTitle},
             },
             {
                 Type    => 'Text',
@@ -243,7 +243,7 @@ sub TableCreateComplex {
             },
             {
                 Type    => 'Link',
-                Content => $WorkOrder->{Title},,
+                Content => $WorkOrder->{WorkOrderTitle},,
                 Link => '$Env{"Baselink"}Action=AgentITSMWorkOrderZoom&WorkOrderID=' . $WorkOrderID,
                 MaxLength => 70,
             },
@@ -370,7 +370,7 @@ sub TableCreateSimple {
                     Title => 'Change# ' . $WorkOrder->{ChangeData}->{ChangeNumber} . '-'
                         . 'WorkOrder# '
                         . $WorkOrder->{WorkOrderNumber} . ': '
-                        . $WorkOrder->{Title},
+                        . $WorkOrder->{WorkOrderTitle},
                     Link => '$Env{"Baselink"}Action=AgentITSMWorkOrderZoom&WorkOrderID='
                         . $WorkOrderID,
                     MaxLength => 20,
@@ -570,6 +570,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2009-10-20 18:46:44 $
+$Revision: 1.3 $ $Date: 2009-10-21 13:07:15 $
 
 =cut
