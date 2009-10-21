@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LinkObjectITSMWorkOrder.pm - layout backend module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LinkObjectITSMWorkOrder.pm,v 1.5 2009-10-21 21:23:19 ub Exp $
+# $Id: LinkObjectITSMWorkOrder.pm,v 1.6 2009-10-21 22:14:52 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::Output::HTML::Layout;
 use Kernel::System::GeneralCatalog;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 =head1 NAME
 
@@ -107,9 +107,9 @@ Return
         ItemList => [
             [
                 {
-                    Type    => 'ChangeStateSignal',
-                    Key     => 123,
-                    Content => 'In Progress',
+                    Type    => 'WorkOrderStateSignal',
+                    Key     => 2,
+                    Content => 'in progress',
                 },
                 {
                     Type    => 'Text',
@@ -137,9 +137,9 @@ Return
             ],
             [
                 {
-                    Type    => 'ChangeStateSignal',
-                    Key     => 321,
-                    Content => 'Successful',
+                    Type    => 'WorkOrderStateSignal',
+                    Key     => 3,
+                    Content => 'ready',
                 },
                 {
                     Type    => 'Text',
@@ -208,26 +208,28 @@ sub TableCreateComplex {
     # create the item list, sort by ChangeID Down, then by WorkOrderNumber Up
     my @ItemList;
     for my $WorkOrderID (
-        sort { $LinkList{$b}{Data}->{ChangeID} <=> $LinkList{$a}{Data}->{ChangeID} || $a <=> $b }
-        keys %LinkList
+        sort {
+            $LinkList{$b}{Data}->{ChangeID} <=> $LinkList{$a}{Data}->{ChangeID}
+                || $a <=> $b
+        } keys %LinkList
         )
     {
 
         # extract workorder data
         my $WorkOrder = $LinkList{$WorkOrderID}{Data};
 
-        # get the change state name from general catalog
+        # get the workorder state name from general catalog
         my $ItemDataRef = $Self->{GeneralCatalogObject}->ItemGet(
             ItemID => $WorkOrder->{WorkOrderStateID},
         );
-        my $ChangeStateName = $ItemDataRef->{Name};
+        my $WorkOrderStateName = $ItemDataRef->{Name};
 
         my @ItemColumns = (
             {
-                Type          => 'ChangeStateSignal',
-                Key           => $WorkOrder->{ChangeID},
-                ChangeStateID => $WorkOrder->{ChangeData}->{ChangeStateID},
-                Content       => $ChangeStateName,
+                Type             => 'WorkOrderStateSignal',
+                Key              => $WorkOrderID,
+                WorkOrderStateID => $WorkOrder->{WorkOrderStateID},
+                Content          => $WorkOrderStateName,
             },
             {
                 Type    => 'Text',
@@ -243,9 +245,13 @@ sub TableCreateComplex {
             },
             {
                 Type    => 'Link',
-                Content => $WorkOrder->{WorkOrderTitle},,
+                Content => $WorkOrder->{WorkOrderTitle},
                 Link => '$Env{"Baselink"}Action=AgentITSMWorkOrderZoom&WorkOrderID=' . $WorkOrderID,
                 MaxLength => 70,
+            },
+            {
+                Type    => 'Text',
+                Content => $WorkOrder->{WorkOrderStateID},
             },
             {
                 Type    => 'TimeLong',
@@ -279,6 +285,10 @@ sub TableCreateComplex {
             },
             {
                 Content => 'WorkOrder Title',
+                Width   => 100,
+            },
+            {
+                Content => 'WorkOrderStateID',
                 Width   => 100,
             },
             {
@@ -411,13 +421,13 @@ sub ContentStringCreate {
     # extract content
     my $Content = $Param{ContentData};
 
-    return if $Content->{Type} ne 'ChangeStateSignal';
+    return if $Content->{Type} ne 'WorkOrderStateSignal';
 
     # TODO:
     # get LED-color for change state name from GeneralCatalog Preferences
     # and not from %ChangeStateSignals hash below!
     # set change state signals (only examples so far, not the final colors)
-    my %ChangeStateSignals = (
+    my %WorkOrderStateSignals = (
         'accepted'    => 'redled',
         'in progress' => 'greenled',
         'closed'      => 'grayled',
@@ -425,14 +435,14 @@ sub ContentStringCreate {
     );
 
     # TODO:
-    my $ChangeStateSignal = $ChangeStateSignals{ $Content->{Content} } || 'greenled';
+    my $WorkOrderStateSignal = $WorkOrderStateSignals{ $Content->{Content} } || 'greenled';
 
     my $String = $Self->{LayoutObject}->Output(
-        Template => '<img border="0" src="$Env{"Images"}$QData{"ChangeStateSignal"}.png" '
-            . 'title="$Text{"$QData{"ChangeState"}"}" alt="$Text{"$QData{"ChangeState"}"}">',
+        Template => '<img border="0" src="$Env{"Images"}$QData{"WorkOrderStateSignal"}.png" '
+            . 'title="$Text{"$QData{"WorkOrderState"}"}" alt="$Text{"$QData{"WorkOrderState"}"}">',
         Data => {
-            ChangeStateSignal => $ChangeStateSignal,
-            ChangeState => $Content->{Content} || '',
+            WorkOrderStateSignal => $WorkOrderStateSignal,
+            WorkOrderState => $Content->{Content} || '',
         },
     );
 
@@ -578,6 +588,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2009-10-21 21:23:19 $
+$Revision: 1.6 $ $Date: 2009-10-21 22:14:52 $
 
 =cut
