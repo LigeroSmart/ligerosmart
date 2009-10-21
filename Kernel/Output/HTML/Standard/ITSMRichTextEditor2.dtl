@@ -1,0 +1,55 @@
+# --
+# ITSMRichTextEditor2.dtl - provides Rich Text Editor
+# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# --
+# $Id: ITSMRichTextEditor2.dtl,v 1.1 2009-10-21 06:56:56 reb Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+# load js
+<script src="$Config{"Frontend::JavaScriptPath"}fckeditor-2.6.4.1/fckeditor.js"></script>
+
+<script type="text/javascript">
+var oldfunction = window.onload;
+window.onload = function() {
+    oldfunction();
+    var oFCKeditor = new FCKeditor( 'RichText2' );
+    oFCKeditor.Height = 320;
+    oFCKeditor.Width  = 620;
+    oFCKeditor.BasePath = "$Config{"Frontend::JavaScriptPath"}/fckeditor-2.6.4.1/";
+    oFCKeditor.Config["ForcePasteAsPlainText"] = false;
+    oFCKeditor.Config["EditorAreaStyles"]      = 'body { $Config{"Frontend::RichText::DefaultCSS"} }';
+    oFCKeditor.Config["AutoDetectLanguage"]    = false;
+    oFCKeditor.Config["DefaultLanguage"]       = '$Env{"UserLanguage"}';
+    oFCKeditor.Config["ImageUploadURL"]        = "$Env{"Baselink"}";
+    oFCKeditor.Config["FirefoxSpellChecker"]   = true;
+    oFCKeditor.Config["BrowserContextMenu"]    = true;
+    if ( '$Env{"TextDirection"}' ) {
+        oFCKeditor.Config["ContentLangDirection"]  = '$Env{"TextDirection"}';
+    }
+    if ( document.compose && document.compose.FormID ) {
+        oFCKeditor.Config["Action"] = "PictureUpload";
+        oFCKeditor.Config["FormID"] = document.compose.FormID.value;
+        oFCKeditor.ToolbarSet = 'Full';
+    }
+    else {
+        oFCKeditor.ToolbarSet = 'Simple';
+    }
+
+    oFCKeditor.ReplaceTextarea();
+}
+
+# workaround for http://dev.fckeditor.net/ticket/3053
+# see also http://www.fckeditor.net/forums/viewtopic.php?f=6&t=13222
+function FCKeditor_OnComplete( editorInstance ) {
+    var fck_iframe = document.getElementById('RichText___Frame');
+    if ( fck_iframe && fck_iframe.contentDocument ) {
+        var fck_editing_area = fck_iframe.contentDocument.getElementById('xEditingArea');
+        fck_editing_area.style.height = '100.1%';
+        setTimeout( function() { fck_editing_area.style.height = '100%' }, 100 );
+    }
+}
+</script>
