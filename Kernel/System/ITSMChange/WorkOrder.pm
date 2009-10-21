@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.54 2009-10-21 08:05:24 ub Exp $
+# $Id: WorkOrder.pm,v 1.55 2009-10-21 08:23:28 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.54 $) [1];
+$VERSION = qw($Revision: 1.55 $) [1];
 
 =head1 NAME
 
@@ -132,7 +132,7 @@ or
     my $WorkOrderID = $WorkOrderObject->WorkOrderAdd(
         ChangeID         => 123,
         WorkOrderNumber  => 5,                                         # (optional)
-        Title            => 'Replacement of mail server',              # (optional)
+        WorkOrderTitle   => 'Replacement of mail server',              # (optional)
         Instruction      => 'Install the the new server',              # (optional)
         Report           => 'Installed new server without problems',   # (optional)
         WorkOrderStateID => 4,                                         # (optional)
@@ -284,7 +284,7 @@ update a WorkOrder
         WorkOrderID      => 4,
         ChangeID         => 123,                                       # (optional)
         WorkOrderNumber  => 5,                                         # (optional)
-        Title            => 'Replacement of mail server',              # (optional)
+        WorkOrderTitle   => 'Replacement of mail server',              # (optional)
         Instruction      => 'Install the the new server',              # (optional)
         Report           => 'Installed new server without problems',   # (optional)
         WorkOrderStateID => 4,                                         # (optional)
@@ -326,7 +326,7 @@ sub WorkOrderUpdate {
 
     # map update attributes to column names
     my %Attribute = (
-        Title            => 'title',
+        WorkOrderTitle   => 'title',
         WorkOrderNumber  => 'workorder_number',
         Instruction      => 'instruction',
         Report           => 'report',
@@ -378,7 +378,7 @@ Return
     $WorkOrder{WorkOrderID}
     $WorkOrder{ChangeID}
     $WorkOrder{WorkOrderNumber}
-    $WorkOrder{Title}
+    $WorkOrder{WorkOrderTitle}
     $WorkOrder{Instruction}
     $WorkOrder{Report}
     $WorkOrder{WorkOrderStateID}
@@ -432,7 +432,7 @@ sub WorkOrderGet {
         $WorkOrderData{WorkOrderID}      = $Row[0];
         $WorkOrderData{ChangeID}         = $Row[1];
         $WorkOrderData{WorkOrderNumber}  = $Row[2];
-        $WorkOrderData{Title}            = defined $Row[3] ? $Row[3] : '';
+        $WorkOrderData{WorkOrderTitle}   = defined $Row[3] ? $Row[3] : '';
         $WorkOrderData{Instruction}      = defined $Row[4] ? $Row[4] : '';
         $WorkOrderData{Report}           = defined $Row[5] ? $Row[5] : '';
         $WorkOrderData{WorkOrderStateID} = $Row[6];
@@ -514,7 +514,8 @@ return a list of workorder ids as an array reference
     my $WorkOrderIDsRef = $WorkOrderObject->WorkOrderSearch(
         ChangeIDs         => [ 123, 122 ]                              # (optional)
         WorkOrderNumber   => 12,                                       # (optional)
-        Title             => 'Replacement of mail server',             # (optional)
+
+        WorkOrderTitle    => 'Replacement of mail server',             # (optional)
         Instruction       => 'Install the the new server',             # (optional)
         Report            => 'Installed new server without problems',  # (optional)
 
@@ -684,7 +685,7 @@ sub WorkOrderSearch {
     # set string params
     my %StringParams = (
         WorkOrderNumber => 'wo.workorder_number',
-        Title           => 'wo.title',
+        WorkOrderTitle  => 'wo.title',
         Instruction     => 'wo.instruction',
         Report          => 'wo.report',
     );
@@ -1259,7 +1260,7 @@ Checks if the various parameters are valid.
     my $Ok = $WorkOrderObject->_CheckWorkOrderParams(
         ChangeID         => 123,                                       # (optional)
         WorkOrderNumber  => 5,                                         # (optional)
-        Title            => 'Replacement of mail server',              # (optional)
+        WorkOrderTitle   => 'Replacement of mail server',              # (optional)
         Instruction      => 'Install the the new server',              # (optional)
         Report           => 'Installed new server without problems',   # (optional)
         WorkOrderStateID => 4,                                         # (optional)
@@ -1275,7 +1276,7 @@ These string parameters have length constraints:
 
     Parameter      | max. length
     ---------------+-----------------
-    Title          |  250 characters
+    WorkOrderTitle |  250 characters
     Instruction    | 3800 characters
     Report         | 3800 characters
 
@@ -1288,7 +1289,7 @@ sub _CheckWorkOrderParams {
     ARGUMENT:
     for my $Argument (
         qw(
-        Title
+        WorkOrderTitle
         Instruction
         Report
         WorkOrderAgentID
@@ -1322,7 +1323,7 @@ sub _CheckWorkOrderParams {
         }
 
         # check the maximum length of title
-        if ( $Argument eq 'Title' && length( $Param{$Argument} ) > 250 ) {
+        if ( $Argument eq 'WorkOrderTitle' && length( $Param{$Argument} ) > 250 ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
                 Message  => "The parameter '$Argument' must be shorter than 250 characters!",
@@ -1471,6 +1472,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.54 $ $Date: 2009-10-21 08:05:24 $
+$Revision: 1.55 $ $Date: 2009-10-21 08:23:28 $
 
 =cut
