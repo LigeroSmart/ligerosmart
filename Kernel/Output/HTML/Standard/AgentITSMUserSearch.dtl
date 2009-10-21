@@ -2,7 +2,7 @@
 # AgentITSMUserSearch.dtl - provides autocomplete feature for customer search
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMUserSearch.dtl,v 1.1 2009-10-20 16:07:55 reb Exp $
+# $Id: AgentITSMUserSearch.dtl,v 1.2 2009-10-21 08:44:29 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -65,37 +65,37 @@
         };
 
         // define autocomplete object
-        var myAutoComp = new YAHOO.widget.AutoComplete("myAutoCompleteInput", "myAutoCompleteContainer", myDataSource);
-        myAutoComp.resultTypeList = false;
+        var myAutoComp$Data{"InputNr"} = new YAHOO.widget.AutoComplete("myAutoCompleteInput$Data{"InputNr"}", "myAutoCompleteContainer$Data{"InputNr"}", myDataSource);
+        myAutoComp$Data{"InputNr"}.resultTypeList = false;
 
         // get groups the user should belong to
-        var UserGroup = document.compose.UserSearchGroups.value;
+        var UserGroup$Data{"InputNr"} = document.compose.UserSearchGroups$Data{"InputNr"}.value;
 
         // define request parameters
-        myAutoComp.generateRequest = function(sQuery) {
-          return "?Action=AgentITSMUserSearch&Search=" + sQuery + "&Groups=" + UserGroup;
+        myAutoComp$Data{"InputNr"}.generateRequest = function(sQuery) {
+          return "?Action=AgentITSMUserSearch&Search=" + sQuery + "&Groups=" + UserGroup$Data{"InputNr"};
         };
 
         // define output format for drop down list
-        myAutoComp.formatResult = function(oResultData, sQuery, sResultMatch) {
+        myAutoComp$Data{"InputNr"}.formatResult = function(oResultData, sQuery, sResultMatch) {
             return (oResultData.UserValue + " (" + oResultData.UserKey + ")");
         };
 
         // define various autocomplete properties
-        myAutoComp.minQueryLength           = $QData{"minQueryLength"};
-        myAutoComp.queryDelay               = $QData{"queryDelay"};
-        myAutoComp.typeAhead                = $QData{"typeAhead"};
-        myAutoComp.maxResultsDisplayed      = $QData{"maxResultsDisplayed"};
-        myAutoComp.animVert                 = true;
-        myAutoComp.animSpeed                = 0.2;
-        myAutoComp.allowBrowserAutocomplete = false;
+        myAutoComp$Data{"InputNr"}.minQueryLength           = $QData{"minQueryLength"};
+        myAutoComp$Data{"InputNr"}.queryDelay               = $QData{"queryDelay"};
+        myAutoComp$Data{"InputNr"}.typeAhead                = $QData{"typeAhead"};
+        myAutoComp$Data{"InputNr"}.maxResultsDisplayed      = $QData{"maxResultsDisplayed"};
+        myAutoComp$Data{"InputNr"}.animVert                 = true;
+        myAutoComp$Data{"InputNr"}.animSpeed                = 0.2;
+        myAutoComp$Data{"InputNr"}.allowBrowserAutocomplete = false;
 
         // fixes IE6 bug that causes form select elements to be displayed
         // over elements with a higher z-index
-        myAutoComp.useIFrame = true;
+        myAutoComp$Data{"InputNr"}.useIFrame = true;
 
         // define custom itemSelect handler function
-        var itemSelectHandler = function(sType, aArgs) {
+        var itemSelectHandler$Data{"InputNr"} = function(sType, aArgs) {
             var oMyAcInstance = aArgs[0];  // your AutoComplete instance
             var elListItem    = aArgs[1];  // the <li> element selected in the suggestion container
             var oData         = aArgs[2];  // object literal of data for the result
@@ -104,16 +104,16 @@
             oMyAcInstance.getInputEl().value = oData.UserValuePlain;
 
             // set hidden field SelectedUser
-            if (document.compose.SelectedUser) {
-                document.compose.SelectedUser.value = oData.UserKey;
+            if (document.compose.SelectedUser$Data{"InputNr"}) {
+                document.compose.SelectedUser$Data{"InputNr"}.value = oData.UserKey;
             }
         };
 
         // subscribe custom itemSelect handler to the event
-        myAutoComp.itemSelectEvent.subscribe(itemSelectHandler);
+        myAutoComp$Data{"InputNr"}.itemSelectEvent.subscribe(itemSelectHandler$Data{"InputNr"});
 
         // dynamically adjust the width of the autocomplete container
-        myAutoComp.doBeforeLoadData = function (oRequest, oResponse, oPayload) {
+        myAutoComp$Data{"InputNr"}.doBeforeLoadData = function (oRequest, oResponse, oPayload) {
 
             // check if dynamic width is enabled
             if ( !Number('$Config{"Agent::Frontend::UserSearchAutoComplete::DynamicWidth"}') ) {
@@ -131,36 +131,41 @@
             }
 
             // build option element with the longest result string
-            var DummyOption = document.createElement("option");
-            DummyOption.appendChild(document.createTextNode(MaxString));
+            var DummyOption$Data{"InputNr"} = document.createElement("option");
+            DummyOption$Data{"InputNr"}.appendChild(document.createTextNode(MaxString));
 
             // build invisible dummy select field to find the width
-            var DummySelect = document.createElement("select");
-            DummySelect.setAttribute( 'id', 'DummySelectID' );
-            DummySelect.setAttribute( 'style', 'visibility:hidden' );
-            DummySelect.appendChild(DummyOption);
-            document.getElementsByTagName("body")[0].appendChild(DummySelect);
+            var DummySelect$Data{"InputNr"} = document.createElement("select");
+            DummySelect$Data{"InputNr"}.setAttribute( 'id', 'DummySelectID' );
+            DummySelect$Data{"InputNr"}.setAttribute( 'style', 'visibility:hidden' );
+            DummySelect$Data{"InputNr"}.appendChild(DummyOption$Data{"InputNr"});
+            document.getElementsByTagName("body")[0].appendChild(DummySelect$Data{"InputNr"});
 
             // get new width
-            var NewWidth = DummySelect.offsetWidth;
+            var NewWidth$Data{"InputNr"} = DummySelect$Data{"InputNr"}.offsetWidth;
 
             // remove hidden select field
-            document.getElementsByTagName("body")[0].removeChild(DummySelect);
+            document.getElementsByTagName("body")[0].removeChild(DummySelect$Data{"InputNr"});
 
             // get container
-            var Container = document.getElementById('myAutoCompleteContainer');
+            var Container$Data{"InputNr"} = document.getElementById('myAutoCompleteContainer$Data{"InputNr"}');
 
             // apply new width to container
-            Container.style.width = NewWidth + 'px';
+            Container$Data{"InputNr"}.style.width = NewWidth$Data{"InputNr"} + 'px';
 
             return true;
         };
-
-        return {
-            myDataSource: myDataSource,
-            myAutoComp  : myAutoComp
-        };
 <!-- dtl:block:UserSearchAutoComplete -->
+
+<!-- dtl:block:UserSearchAutoCompleteReturn -->
+        return {
+<!-- dtl:block:UserSearchAutoCompleteReturnElements -->
+            myDataSource$Data{"InputNr"}: myDataSource$Data{"InputNr"},
+            myAutoComp$Data{"InputNr"}  : myAutoComp$Data{"InputNr"}
+
+<!-- dtl:block:UserSearchAutoCompleteReturnElements -->
+        };
+<!-- dtl:block:UserSearchAutoCompleteReturn -->
     });
 })();
 </script>
