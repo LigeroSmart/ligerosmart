@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMCore.xml,v 1.23 2009-10-07 14:36:11 reb Exp $</CVS>
+    <CVS>$Id: ITSMCore.xml,v 1.24 2009-10-21 23:24:10 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -32,7 +32,7 @@
     </ConfigItem>
     <ConfigItem Name="LinkObject::Type###AlternativeTo" Required="1" Valid="1">
         <Description Lang="en">This setting defines the link type 'AlternativeTo'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.</Description>
-        <Description Lang="de">Definiert den Linktyp 'AlternativeTo'. Wird als SourceName und TargetName der gleiche Inhalt angegeben, entsteht ein ungerichteter Linktyp. Wird als SourceName und TargetName verschiedene Inhalt angegeben, entsteht ein gerichteter Linktyp.</Description>
+        <Description Lang="de">Definiert den Linktyp 'AlternativeTo'. Wird als SourceName und TargetName der gleiche Inhalt angegeben, entsteht ein ungerichteter Linktyp. Wird als SourceName und TargetName verschiedener Inhalt angegeben, entsteht ein gerichteter Linktyp.</Description>
         <Group>Framework</Group>
         <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
@@ -44,7 +44,7 @@
     </ConfigItem>
     <ConfigItem Name="LinkObject::Type###ConnectedTo" Required="1" Valid="1">
         <Description Lang="en">This setting defines the link type 'ConnectedTo'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.</Description>
-        <Description Lang="de">Definiert den Linktyp 'ConnectedTo'. Wird als SourceName und TargetName der gleiche Inhalt angegeben, entsteht ein ungerichteter Linktyp. Wird als SourceName und TargetName verschiedene Inhalt angegeben, entsteht ein gerichteter Linktyp.</Description>
+        <Description Lang="de">Definiert den Linktyp 'ConnectedTo'. Wird als SourceName und TargetName der gleiche Inhalt angegeben, entsteht ein ungerichteter Linktyp. Wird als SourceName und TargetName verschiedener Inhalt angegeben, entsteht ein gerichteter Linktyp.</Description>
         <Group>Framework</Group>
         <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
@@ -56,7 +56,7 @@
     </ConfigItem>
     <ConfigItem Name="LinkObject::Type###DependsOn" Required="1" Valid="1">
         <Description Lang="en">This setting defines the link type 'DependsOn'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.</Description>
-        <Description Lang="de">Definiert den Linktyp 'DependsOn'. Wird als SourceName und TargetName der gleiche Inhalt angegeben, entsteht ein ungerichteter Linktyp. Wird als SourceName und TargetName verschiedene Inhalt angegeben, entsteht ein gerichteter Linktyp.</Description>
+        <Description Lang="de">Definiert den Linktyp 'DependsOn'. Wird als SourceName und TargetName der gleiche Inhalt angegeben, entsteht ein ungerichteter Linktyp. Wird als SourceName und TargetName verschiedener Inhalt angegeben, entsteht ein gerichteter Linktyp.</Description>
         <Group>Framework</Group>
         <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
@@ -68,7 +68,7 @@
     </ConfigItem>
     <ConfigItem Name="LinkObject::Type###Includes" Required="1" Valid="1">
         <Description Lang="en">This setting defines the link type 'Includes'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.</Description>
-        <Description Lang="de">Definiert den Linktyp 'Includes'. Wird als SourceName und TargetName der gleiche Inhalt angegeben, entsteht ein ungerichteter Linktyp. Wird als SourceName und TargetName verschiedene Inhalt angegeben, entsteht ein gerichteter Linktyp.</Description>
+        <Description Lang="de">Definiert den Linktyp 'Includes'. Wird als SourceName und TargetName der gleiche Inhalt angegeben, entsteht ein ungerichteter Linktyp. Wird als SourceName und TargetName verschiedener Inhalt angegeben, entsteht ein gerichteter Linktyp.</Description>
         <Group>Framework</Group>
         <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
@@ -80,7 +80,7 @@
     </ConfigItem>
     <ConfigItem Name="LinkObject::Type###RelevantTo" Required="1" Valid="1">
         <Description Lang="en">This setting defines the link type 'RelevantTo'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.</Description>
-        <Description Lang="de">Definiert den Linktyp 'RelevantTo'. Wird als SourceName und TargetName der gleiche Inhalt angegeben, entsteht ein ungerichteter Linktyp. Wird als SourceName und TargetName verschiedene Inhalt angegeben, entsteht ein gerichteter Linktyp.</Description>
+        <Description Lang="de">Definiert den Linktyp 'RelevantTo'. Wird als SourceName und TargetName der gleiche Inhalt angegeben, entsteht ein ungerichteter Linktyp. Wird als SourceName und TargetName verschiedener Inhalt angegeben, entsteht ein gerichteter Linktyp.</Description>
         <Group>Framework</Group>
         <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
@@ -311,6 +311,60 @@
             </Hash>
         </Setting>
     </ConfigItem>
+
+    <ConfigItem Name="LinkObject::PossibleLink###3300" Required="0" Valid="1">
+        <Description Lang="en">This setting defines that a 'ITSMWorkOrder' object can be linked with 'Service' objects using the 'Normal' link type.</Description>
+        <Description Lang="de">Definiert, dass ein 'ITSMWorkOrder'-Objekt mit dem Linktyp 'Normal' mit 'Service'-Objekten verlinkt werden kann.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::LinkObject</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Object1">ITSMWorkOrder</Item>
+                <Item Key="Object2">Service</Item>
+                <Item Key="Type">Normal</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="LinkObject::PossibleLink###3301" Required="0" Valid="1">
+        <Description Lang="en">This setting defines that a 'ITSMWorkOrder' object can be linked with 'Service' objects using the 'Normal' link type.</Description>
+        <Description Lang="de">Definiert, dass ein 'ITSMWorkOrder'-Objekt mit dem Linktyp 'Normal' mit 'Service'-Objekten verlinkt werden kann.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::LinkObject</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Object1">ITSMWorkOrder</Item>
+                <Item Key="Object2">Service</Item>
+                <Item Key="Type">DependsOn</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="LinkObject::PossibleLink###3310" Required="0" Valid="1">
+        <Description Lang="en">This setting defines that a 'ITSMWorkOrder' object can be linked with 'ITSMConfigItem' objects using the 'Normal' link type.</Description>
+        <Description Lang="de">Definiert, dass ein 'ITSMWorkOrder'-Objekt mit dem Linktyp 'Normal' mit 'ITSMConfigItem'-Objekten verlinkt werden kann.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::LinkObject</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Object1">ITSMWorkOrder</Item>
+                <Item Key="Object2">ITSMConfigItem</Item>
+                <Item Key="Type">Normal</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="LinkObject::PossibleLink###3311" Required="0" Valid="1">
+        <Description Lang="en">This setting defines that a 'ITSMWorkOrder' object can be linked with 'ITSMConfigItem' objects using the 'Normal' link type.</Description>
+        <Description Lang="de">Definiert, dass ein 'ITSMWorkOrder'-Objekt mit dem Linktyp 'Normal' mit 'ITSMConfigItem'-Objekten verlinkt werden kann.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::LinkObject</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Object1">ITSMWorkOrder</Item>
+                <Item Key="Object2">ITSMConfigItem</Item>
+                <Item Key="Type">DependsOn</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+
     <ConfigItem Name="GeneralCatalogPreferences###IncidentStates" Required="0" Valid="1">
         <Description Lang="en">Parameters for the incident states in the preference view.</Description>
         <Description Lang="de">Parameter für den Vorfallsstatus in der Ansicht für die Einstellungen.</Description>
