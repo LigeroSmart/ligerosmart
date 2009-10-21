@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderZoom.pm - the OTRS::ITSM::ChangeManagement work order zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderZoom.pm,v 1.8 2009-10-21 10:25:29 mae Exp $
+# $Id: AgentITSMWorkOrderZoom.pm,v 1.9 2009-10-21 17:57:04 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -30,7 +30,7 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Object (qw(ParamObject DBObject LayoutObject LogObject ConfigObject)) {
+    for my $Object (qw(ParamObject DBObject LayoutObject LogObject ConfigObject UserObject)) {
         if ( !$Self->{$Object} ) {
             $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
         }
@@ -50,6 +50,7 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    # get needed WorkOrderID
     my $WorkOrderID = $Self->{ParamObject}->GetParam( Param => 'WorkOrderID' );
 
     # check needed stuff
@@ -66,19 +67,23 @@ sub Run {
         UserID      => $Self->{UserID},
     );
 
+    # check error
     if ( !$WorkOrder ) {
         return $Self->{LayoutObject}->ErrorScreen(
-            Message => "WorkOrder $WorkOrder not found in database!",
+            Message => "WorkOrder $WorkOrderID not found in database!",
             Comment => 'Please contact the admin.',
         );
     }
 
-    # strip header on max 80 chars
-    $WorkOrder->{WorkOrderTitle} =~ s{ \A (.{80}) .* \z }{ $1 }xms;
+    # break instruction after 80 chars
+    if ( $WorkOrder->{Instruction} ) {
+        $WorkOrder->{Instruction} =~ s{ (\S{80}) }{$1 }xmsg;
+    }
 
-    # break words after 80 chars
-    $WorkOrder->{Instruction} =~ s{ (\S{80}) }{ $1\n }xmsg;
-    $WorkOrder->{Report}      =~ s{ (\S{80}) }{ $1\n }xmsg;
+    # break report after 80 chars
+    if ( $WorkOrder->{Report} ) {
+        $WorkOrder->{Report} =~ s{ (\S{80}) }{$1 }xmsg;
+    }
 
     # get the change that workorder belongs to
     my $Change = $Self->{ChangeObject}->ChangeGet(
@@ -135,9 +140,36 @@ sub Run {
         Cached => 1,
     );
 
+    # get ChangeBy user information
     for my $Postfix (qw(UserLogin UserFirstname UserLastname)) {
         $WorkOrder->{ 'Change' . $Postfix } = $ChangeUser{$Postfix};
     }
+
+    # get work order type
+    my $WorkOrderType = $Self->{GeneralCatalogObject}->ItemGet(
+        ItemID => $WorkOrder->{WorkOrderTypeID},
+    ) || {};
+
+    # get work order state
+    my $WorkOrderState = $Self->{GeneralCatalogObject}->ItemGet(
+        ItemID => $WorkOrder->{WorkOrderStateID},
+    ) || {};
+
+    # TODO: replace this hard coded hash with preferences in General catalog
+    # when implemented...
+    # temp color for changes
+    $WorkOrderState->{Signal} = 'greenled';
+
+    # output meta block
+    $Self->{LayoutObject}->Block(
+        Name => 'Meta',
+        Data => {
+            %{$WorkOrder},
+            WorkOrderStateSignal => $WorkOrderState->{Signal},
+            WorkOrderState       => $WorkOrderState->{Name},
+            WorkOrderType        => $WorkOrderType->{Name},
+        },
+    );
 
     # get change builder user
     my %ChangeBuilderUser = $Self->{UserObject}->GetUserData(
@@ -145,73 +177,62 @@ sub Run {
         Cached => 1,
     );
 
+    # get change builder information
     for my $Postfix (qw(UserLogin UserFirstname UserLastname)) {
-        $WorkOrder->{ 'ChangeBuilder' . $Postfix } = $ChangeBuilderUser{$Postfix};
+        $WorkOrder->{ 'ChangeBuilder' . $Postfix } = $ChangeBuilderUser{$Postfix} || '';
     }
 
-    $WorkOrder->{ChangeBuilderString} = '-';
-
+    # output change builder block
     if (%ChangeBuilderUser) {
-        $WorkOrder->{ChangeBuilderString} = sprintf "%s (%s %s)",
-            $WorkOrder->{ChangeBuilderUserLogin},
-            $WorkOrder->{ChangeBuilderUserFirstname},
-            $WorkOrder->{ChangeBuilderUserLastname};
+        $Self->{LayoutObject}->Block(
+            Name => 'ChangeBuilder',
+            Data => {
+                %{$WorkOrder},
+            },
+        );
+    }
+    else {
+        $Self->{LayoutObject}->Block(
+            Name => 'EmptyChangeBuilder',
+            Data => {},
+        );
     }
 
-    # get work order user
-    $WorkOrder->{WorkOrderAgentString} = '-';
+    # get work order agent user
     if ( $WorkOrder->{WorkOrderAgentID} ) {
-
-        # get work order agent user
         my %WorkOrderAgentUser = $Self->{UserObject}->GetUserData(
             UserID => $WorkOrder->{WorkOrderAgentID},
             Cached => 1,
         );
 
-        for my $Postfix (qw(UserLogin UserFirstname UserLastname)) {
-            $WorkOrder->{ 'WorkOrderAgent' . $Postfix } = $WorkOrderAgentUser{$Postfix} || '';
-        }
-
-        # build string for frontend if user exists
         if (%WorkOrderAgentUser) {
-            $WorkOrder->{WorkOrderAgentString} = sprintf "%s (%s %s)",
-                $WorkOrder->{WorkOrderAgentUserLogin},
-                $WorkOrder->{WorkOrderAgentUserFirstname},
-                $WorkOrder->{WorkOrderAgentUserLastname};
+
+            # get WorkOrderAgent information
+            for my $Postfix (qw(UserLogin UserFirstname UserLastname)) {
+                $WorkOrder->{ 'WorkOrderAgent' . $Postfix } = $WorkOrderAgentUser{$Postfix} || '';
+            }
+
+            # output WorkOrderAgent information
+            $Self->{LayoutObject}->Block(
+                Name => 'WorkOrderAgent',
+                Data => {
+                    %{$WorkOrder},
+                },
+            );
         }
     }
 
-    # get work order type list
-    my $WorkOrderTypeList = $Self->{GeneralCatalogObject}->ItemList(
-        Class => 'ITSM::ChangeManagement::WorkOrder::Type',
-    ) || {};
-
-    # get work order state list
-    my $WorkOrderStateList = $Self->{GeneralCatalogObject}->ItemList(
-        Class => 'ITSM::ChangeManagement::WorkOrder::State',
-    ) || {};
-
-    # TODO: replace this hard coded hash with preferences in General catalog
-    # when implemented...
-    # temp color for changes
-    my %CurWorkOrderSignal = (
-        118 => 'greenled',
-    );
-
-    # output meta block
-    $Self->{LayoutObject}->Block(
-        Name => 'Meta',
-        Data => {
-            %{$WorkOrder},
-            CurWorkOrderSignal => $CurWorkOrderSignal{ $WorkOrder->{WorkOrderStateID} },
-            CurWorkOrderState  => $WorkOrderStateList->{ $WorkOrder->{WorkOrderStateID} },
-            CurWorkOrderType   => $WorkOrderTypeList->{ $WorkOrder->{WorkOrderTypeID} },
-        },
-    );
+    # output if no WorkOrderAgent is found
+    if ( !$WorkOrder->{WorkOrderAgentUserLogin} ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'EmptyWorkOrderAgent',
+            Data => {},
+        );
+    }
 
     # get linked objects
     my $LinkListWithData = $Self->{LinkObject}->LinkListWithData(
-        Object => 'WorkOrder',
+        Object => 'ITSMWorkOrder',
         Key    => $WorkOrderID,
         State  => 'Valid',
         UserID => $Self->{UserID},
@@ -236,36 +257,24 @@ sub Run {
         );
     }
 
-    # TODO: GeneralCatalog-Preferences definition of LED color
-    #  CurInciSignal => $InciSignals{ $LastVersion->{CurInciStateType} },
-    # temp color for changes
-    my %CurChangeSignal = (
-        requested          => 'yellowled',
-        accepted           => 'greenled',
-        'pending approval' => 'yellowled',
-        rejected           => 'grayled',
-        approved           => 'greenled',
-        'in progress'      => 'yellowled',
-        successful         => 'greenled',
-        failed             => 'redled',
-        canceled           => 'grayled',
-    );
-
-    my $ChangeStateList = $Self->{GeneralCatalogObject}->ItemList(
-        Class => 'ITSM::ChangeManagement::Change::State',
+    # get change state
+    my $ChangeState = $Self->{GeneralCatalogObject}->ItemGet(
+        ItemID => $Change->{ChangeStateID},
     ) || {};
+
+    # TODO: GeneralCatalog-Preferences definition of LED color
+    # temp color for changes
+    $ChangeState->{Signal} = 'greenled';
 
     # start template output
     $Output .= $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentITSMWorkOrderZoom',
         Data         => {
-            ChangeNumber    => $Change->{ChangeNumber},
-            ChangeBuilder   => $Change->{ChangeBuilder},
-            ChangeTitle     => $Change->{ChangeTitle},
-            CurChangeSignal => $CurChangeSignal{ $ChangeStateList->{ $Change->{ChangeStateID} } },
-            CurChangeState  => $ChangeStateList->{ $Change->{ChangeStateID} },
-            CurWorkOrderSignal => $CurWorkOrderSignal{ $WorkOrder->{WorkOrderStateID} },
-            CurWorkOrderState  => $WorkOrderStateList->{ $WorkOrder->{WorkOrderStateID} },
+            ChangeState          => $ChangeState->{Name},
+            ChangeStateSignal    => $ChangeState->{Signal},
+            WorkOrderState       => $WorkOrderState->{Name},
+            WorkOrderStateSignal => $WorkOrderState->{Signal},
+            %{$Change},
             %{$WorkOrder},
         },
     );
