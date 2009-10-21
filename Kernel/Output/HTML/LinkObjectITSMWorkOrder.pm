@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LinkObjectITSMWorkOrder.pm - layout backend module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LinkObjectITSMWorkOrder.pm,v 1.3 2009-10-21 13:07:15 ub Exp $
+# $Id: LinkObjectITSMWorkOrder.pm,v 1.4 2009-10-21 20:22:47 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::Output::HTML::Layout;
 use Kernel::System::GeneralCatalog;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 =head1 NAME
 
@@ -198,9 +198,9 @@ sub TableCreateComplex {
             # extract direction list
             my $DirectionList = $Param{ObjectLinkListWithData}->{$LinkType}->{$Direction};
 
-            for my $ServiceID ( keys %{$DirectionList} ) {
+            for my $WorkOrderID ( keys %{$DirectionList} ) {
 
-                $LinkList{$ServiceID}->{Data} = $DirectionList->{$ServiceID};
+                $LinkList{$WorkOrderID}->{Data} = $DirectionList->{$WorkOrderID};
             }
         }
     }
@@ -359,7 +359,7 @@ sub TableCreateSimple {
                 )
             {
 
-                # extract service data
+                # extract workorder data
                 my $WorkOrder = $DirectionList->{$WorkOrderID};
 
                 # define item data
@@ -380,7 +380,7 @@ sub TableCreateSimple {
             }
 
             # add item list to link output data
-            $LinkOutputData{ $LinkType . '::' . $Direction }->{Service} = \@ItemList;
+            $LinkOutputData{ $LinkType . '::' . $Direction }->{ITSMWorkOrder} = \@ItemList;
         }
     }
 
@@ -484,10 +484,16 @@ Return
 
     @SearchOptionList = (
         {
-            Key       => 'Name',
-            Name      => 'Service',
+            Key       => 'WorkOrderNumber',
+            Name      => 'WorkOrder#',
             InputStrg => $FormString,
-            FormData  => 'Service Name',
+            FormData  => '12',
+        },
+        {
+            Key       => 'WorkOrderTitle',
+            Name      => 'WorkOrder Title',
+            InputStrg => $FormString,
+            FormData  => 'MailServer needs update',
         },
     );
 
@@ -570,6 +576,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2009-10-21 13:07:15 $
+$Revision: 1.4 $ $Date: 2009-10-21 20:22:47 $
 
 =cut
