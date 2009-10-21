@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.92 2009-10-20 15:03:00 bes Exp $
+# $Id: ITSMChange.t,v 1.93 2009-10-21 08:34:47 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -223,7 +223,7 @@ my @ChangeTests = (
         },
         ReferenceData => {
             ChangeGet => {
-                Title           => q{},
+                ChangeTitle     => q{},
                 Description     => q{},
                 Justification   => q{},
                 ChangeManagerID => undef,
@@ -248,7 +248,7 @@ my @ChangeTests = (
         },
         ReferenceData => {
             ChangeGet => {
-                Title           => q{},
+                ChangeTitle     => q{},
                 Description     => q{},
                 Justification   => q{},
                 ChangeManagerID => undef,
@@ -268,7 +268,7 @@ my @ChangeTests = (
         Description => 'Test contains all possible params for ChangeAdd.',
         SourceData  => {
             ChangeAdd => {
-                Title           => 'Change 1 - Title - ' . $UniqueSignature,
+                ChangeTitle     => 'Change 1 - Title - ' . $UniqueSignature,
                 Description     => 'Change 1 - Description - ' . $UniqueSignature,
                 Justification   => 'Change 1 - Justification - ' . $UniqueSignature,
                 ChangeManagerID => $UserIDs[0],
@@ -286,7 +286,7 @@ my @ChangeTests = (
         },
         ReferenceData => {
             ChangeGet => {
-                Title           => 'Change 1 - Title - ' . $UniqueSignature,
+                ChangeTitle     => 'Change 1 - Title - ' . $UniqueSignature,
                 Description     => 'Change 1 - Description - ' . $UniqueSignature,
                 Justification   => 'Change 1 - Justification - ' . $UniqueSignature,
                 ChangeManagerID => $UserIDs[0],
@@ -309,7 +309,7 @@ my @ChangeTests = (
         Description => 'Test contains all possible params for ChangeAdd (Second try).',
         SourceData  => {
             ChangeAdd => {
-                Title           => 'Change 2 - Title - ' . $UniqueSignature,
+                ChangeTitle     => 'Change 2 - Title - ' . $UniqueSignature,
                 Description     => 'Change 2 - Description - ' . $UniqueSignature,
                 Justification   => 'Change 2 - Justification - ' . $UniqueSignature,
                 ChangeManagerID => $UserIDs[1],
@@ -325,7 +325,7 @@ my @ChangeTests = (
         },
         ReferenceData => {
             ChangeGet => {
-                Title           => 'Change 2 - Title - ' . $UniqueSignature,
+                ChangeTitle     => 'Change 2 - Title - ' . $UniqueSignature,
                 Description     => 'Change 2 - Description - ' . $UniqueSignature,
                 Justification   => 'Change 2 - Justification - ' . $UniqueSignature,
                 ChangeManagerID => $UserIDs[1],
@@ -343,7 +343,7 @@ my @ChangeTests = (
         Description => 'Test contains invalid CAB members for ChangeAdd.',
         SourceData  => {
             ChangeAdd => {
-                Title           => 'Change 3 - Title - ' . $UniqueSignature,
+                ChangeTitle     => 'Change 3 - Title - ' . $UniqueSignature,
                 Description     => 'Change 3 - Description - ' . $UniqueSignature,
                 Justification   => 'Change 3 - Justification - ' . $UniqueSignature,
                 ChangeManagerID => $UserIDs[0],
@@ -407,14 +407,14 @@ my @ChangeTests = (
         SourceData  => {
             ChangeAdd => {
                 UserID        => $UserIDs[0],
-                Title         => 'T' x 250,
+                ChangeTitle   => 'T' x 250,
                 Description   => 'D' x 3800,
                 Justification => 'J' x 3800,
             },
         },
         ReferenceData => {
             ChangeGet => {
-                Title           => 'T' x 250,
+                ChangeTitle     => 'T' x 250,
                 Description     => 'D' x 3800,
                 Justification   => 'J' x 3800,
                 ChangeManagerID => undef,
@@ -436,7 +436,7 @@ my @ChangeTests = (
         SourceData  => {
             ChangeAdd => {
                 UserID        => $UserIDs[0],
-                Title         => 'T' x 251,
+                ChangeTitle   => 'T' x 251,
                 Description   => 'D' x 3801,
                 Justification => 'J' x 3801,
             },
@@ -453,7 +453,7 @@ my @ChangeTests = (
         SourceData  => {
             ChangeAdd => {
                 UserID        => $UserIDs[0],
-                Title         => 'T' x 251,
+                ChangeTitle   => 'T' x 251,
                 Description   => 'D',
                 Justification => 'J',
             },
@@ -470,7 +470,7 @@ my @ChangeTests = (
         SourceData  => {
             ChangeAdd => {
                 UserID        => $UserIDs[0],
-                Title         => 'T',
+                ChangeTitle   => 'T',
                 Description   => 'D' x 3801,
                 Justification => 'J',
             },
@@ -487,7 +487,7 @@ my @ChangeTests = (
         SourceData  => {
             ChangeAdd => {
                 UserID        => $UserIDs[0],
-                Title         => 'T',
+                ChangeTitle   => 'T',
                 Description   => 'D',
                 Justification => 'J' x 3801,
             },
@@ -503,14 +503,14 @@ my @ChangeTests = (
         SourceData  => {
             ChangeAdd => {
                 UserID        => 1,
-                Title         => '0',
+                ChangeTitle   => '0',
                 Description   => '0',
                 Justification => '0',
             },
         },
         ReferenceData => {
             ChangeGet => {
-                Title         => '0',
+                ChangeTitle   => '0',
                 Description   => '0',
                 Justification => '0',
             },
@@ -524,14 +524,14 @@ my @ChangeTests = (
         SourceData  => {
             ChangeAdd => {
                 UserID        => 1,
-                Title         => $NoWildcardsTestTitle,
+                ChangeTitle   => $NoWildcardsTestTitle,
                 Description   => $NoWildcardsTestTitle,
                 Justification => $NoWildcardsTestTitle,
             },
         },
         ReferenceData => {
             ChangeGet => {
-                Title         => $NoWildcardsTestTitle,
+                ChangeTitle   => $NoWildcardsTestTitle,
                 Description   => $NoWildcardsTestTitle,
                 Justification => $NoWildcardsTestTitle,
             },
@@ -650,14 +650,14 @@ my @ChangeTests = (
             },
             ChangeUpdate => {
                 UserID        => 1,
-                Title         => 'T' x 250,
+                ChangeTitle   => 'T' x 250,
                 Description   => 'D' x 3800,
                 Justification => 'J' x 3800,
             },
         },
         ReferenceData => {
             ChangeGet => {
-                Title           => 'T' x 250,
+                ChangeTitle     => 'T' x 250,
                 Description     => 'D' x 3800,
                 Justification   => 'J' x 3800,
                 ChangeManagerID => undef,
@@ -682,14 +682,14 @@ my @ChangeTests = (
             },
             ChangeUpdate => {
                 UserID        => 1,
-                Title         => 'T' x 251,
+                ChangeTitle   => 'T' x 251,
                 Description   => 'D' x 3801,
                 Justification => 'J' x 3801,
             },
         },
         ReferenceData => {
             ChangeGet => {
-                Title         => q{},
+                ChangeTitle   => q{},
                 Description   => q{},
                 Justification => q{},
             },
@@ -706,14 +706,14 @@ my @ChangeTests = (
             },
             ChangeUpdate => {
                 UserID        => 1,
-                Title         => 'T' x 251,
+                ChangeTitle   => 'T' x 251,
                 Description   => 'D',
                 Justification => 'J',
             },
         },
         ReferenceData => {
             ChangeGet => {
-                Title         => q{},
+                ChangeTitle   => q{},
                 Description   => q{},
                 Justification => q{},
             },
@@ -728,14 +728,14 @@ my @ChangeTests = (
             },
             ChangeUpdate => {
                 UserID        => 1,
-                Title         => 'T',
+                ChangeTitle   => 'T',
                 Description   => 'D' x 3801,
                 Justification => 'J',
             },
         },
         ReferenceData => {
             ChangeGet => {
-                Title         => q{},
+                ChangeTitle   => q{},
                 Description   => q{},
                 Justification => q{},
             },
@@ -750,14 +750,14 @@ my @ChangeTests = (
             },
             ChangeUpdate => {
                 UserID        => 1,
-                Title         => 'T',
+                ChangeTitle   => 'T',
                 Description   => 'D',
                 Justification => 'J' x 3801,
             },
         },
         ReferenceData => {
             ChangeGet => {
-                Title         => q{},
+                ChangeTitle   => q{},
                 Description   => q{},
                 Justification => q{},
             },
@@ -773,14 +773,14 @@ my @ChangeTests = (
             },
             ChangeUpdate => {
                 UserID        => 1,
-                Title         => '0',
+                ChangeTitle   => '0',
                 Description   => '0',
                 Justification => '0',
             },
         },
         ReferenceData => {
             ChangeGet => {
-                Title         => '0',
+                ChangeTitle   => '0',
                 Description   => '0',
                 Justification => '0',
             },
@@ -814,8 +814,8 @@ my @ChangeTests = (
         Description => 'Test checks removment of duplicate CAB members for ChangeCABUpdate',
         SourceData  => {
             ChangeAdd => {
-                UserID => $UserIDs[0],
-                Title  => 'CABUpdate and CABGet - Title - ' . $UniqueSignature,
+                UserID      => $UserIDs[0],
+                ChangeTitle => 'CABUpdate and CABGet - Title - ' . $UniqueSignature,
             },
             ChangeCABUpdate => {
                 CABAgents => [
@@ -986,9 +986,9 @@ my @ChangeTests = (
         Description => 'Test checks ChangeCABDelete with invalid params.',
         SourceData  => {
             ChangeAdd => {
-                UserID    => $UserIDs[0],
-                Title     => 'CABDelete (invalid params) - Title - ' . $UniqueSignature,
-                CABAgents => [
+                UserID      => $UserIDs[0],
+                ChangeTitle => 'CABDelete (invalid params) - Title - ' . $UniqueSignature,
+                CABAgents   => [
                     $UserIDs[0],
                     $UserIDs[1]
                 ],
@@ -1044,8 +1044,8 @@ my @ChangeTests = (
         Description => q{Change for 'OrderBy' tests (1).},
         SourceData  => {
             ChangeAdd => {
-                UserID => 1,
-                Title  => 'OrderByChange - Title - ' . $UniqueSignature,
+                UserID      => 1,
+                ChangeTitle => 'OrderByChange - Title - ' . $UniqueSignature,
             },
             ChangeUpdate => {
                 UserID          => $UserIDs[0],
@@ -1072,8 +1072,8 @@ my @ChangeTests = (
         Description => q{Change for 'OrderBy' tests (2).},
         SourceData  => {
             ChangeAdd => {
-                UserID => $UserIDs[1],
-                Title  => 'OrderByChange - Title - ' . $UniqueSignature,
+                UserID      => $UserIDs[1],
+                ChangeTitle => 'OrderByChange - Title - ' . $UniqueSignature,
             },
             ChangeUpdate => {
                 UserID          => $UserIDs[1],
@@ -1100,8 +1100,8 @@ my @ChangeTests = (
         Description => q{Change for 'OrderBy' tests (3).},
         SourceData  => {
             ChangeAdd => {
-                UserID => $UserIDs[0],
-                Title  => 'OrderByChange - Title - ' . $UniqueSignature,
+                UserID      => $UserIDs[0],
+                ChangeTitle => 'OrderByChange - Title - ' . $UniqueSignature,
             },
             ChangeUpdate => {
                 UserID          => 1,
@@ -1480,9 +1480,9 @@ my @ChangeSearchTests = (
 
     # Nr 2 - search for all changes created by our first user
     {
-        Description => 'Title, Justification',
+        Description => 'ChangeTitle, Justification',
         SearchData  => {
-            Title         => 'Change 1 - Title - ' . $UniqueSignature,
+            ChangeTitle   => 'Change 1 - Title - ' . $UniqueSignature,
             Justification => 'Change 1 - Justification - ' . $UniqueSignature,
         },
         ResultData => {
@@ -1527,12 +1527,12 @@ my @ChangeSearchTests = (
         },
     },
 
-    # Nr 6 - test changeBUILDERid and Title with wildcard
+    # Nr 6 - test changeBUILDERid and ChangeTitle with wildcard
     {
         Description => 'ChangeBuilderID',
         SearchData  => {
             ChangeBuilderIDs => [ $UserIDs[0] ],
-            Title            => '%' . $UniqueSignature,
+            ChangeTitle      => '%' . $UniqueSignature,
         },
         ResultData => {
             TestCount     => 1,
@@ -1546,7 +1546,7 @@ my @ChangeSearchTests = (
         SearchData  => {
             ChangeBuilderIDs => [ $UserIDs[0] ],
             ChangeManagerIDs => [ $InvalidUserIDs[0] ],
-            Title            => '%' . $UniqueSignature,
+            ChangeTitle      => '%' . $UniqueSignature,
         },
         ResultData => {
             TestCount => 1,
@@ -1558,8 +1558,8 @@ my @ChangeSearchTests = (
     {
         Description => 'CABAgent',
         SearchData  => {
-            CABAgents => [ $UserIDs[0] ],
-            Title     => '%' . $UniqueSignature,
+            CABAgents   => [ $UserIDs[0] ],
+            ChangeTitle => '%' . $UniqueSignature,
         },
         ResultData => {
             TestCount     => 1,
@@ -1572,7 +1572,7 @@ my @ChangeSearchTests = (
         Description => 'CABCustomer',
         SearchData  => {
             CABCustomers => [ $CustomerUserIDs[0] ],
-            Title        => '%' . $UniqueSignature,
+            ChangeTitle  => '%' . $UniqueSignature,
         },
         ResultData => {
             TestCount     => 1,
@@ -1586,7 +1586,7 @@ my @ChangeSearchTests = (
         SearchData  => {
             CABAgents    => [ $UserIDs[0] ],
             CABCustomers => [ $CustomerUserIDs[1] ],
-            Title        => '%' . $UniqueSignature,
+            ChangeTitle  => '%' . $UniqueSignature,
         },
         ResultData => {
             TestCount     => 1,
@@ -1631,11 +1631,11 @@ my @ChangeSearchTests = (
         },
     },
 
-    # Nr 14 - Title with wildcard
+    # Nr 14 - ChangeTitle with wildcard
     {
-        Description => 'Title with wildcard',
+        Description => 'ChangeTitle with wildcard',
         SearchData  => {
-            Title => ( 'T' x 250 ) . '%',
+            ChangeTitle => ( 'T' x 250 ) . '%',
         },
         ResultData => {
             TestExistence => 1,
@@ -1664,11 +1664,11 @@ my @ChangeSearchTests = (
         },
     },
 
-    # Nr 17 - Title, Description, Justification with wildcard
+    # Nr 17 - ChangeTitle, Description, Justification with wildcard
     {
-        Description => 'Title, Description, Justification with wildcard',
+        Description => 'ChangeTitle, Description, Justification with wildcard',
         SearchData  => {
-            Title         => ( 'T' x 250 ) . '%',
+            ChangeTitle   => ( 'T' x 250 ) . '%',
             Description   => ( 'D' x 250 ) . '%',
             Justification => ( 'J' x 250 ) . '%',
         },
@@ -1677,11 +1677,11 @@ my @ChangeSearchTests = (
         },
     },
 
-    # Nr 18 - Title with '0'
+    # Nr 18 - ChangeTitle with '0'
     {
-        Description => q{Title with '0'},
+        Description => q{ChangeTitle with '0'},
         SearchData  => {
-            Title => '0',
+            ChangeTitle => '0',
         },
         ResultData => {
             TestExistence => 1,
@@ -1710,11 +1710,11 @@ my @ChangeSearchTests = (
         },
     },
 
-    # Nr 21 - Title, Description, Justification with '0'
+    # Nr 21 - ChangeTitle, Description, Justification with '0'
     {
-        Description => q{Title, Description, Justification with '0'},
+        Description => q{ChangeTitle, Description, Justification with '0'},
         SearchData  => {
-            Title         => '0',
+            ChangeTitle   => '0',
             Description   => '0',
             Justification => '0',
         },
@@ -1824,12 +1824,12 @@ my @ChangeSearchTests = (
         },
     },
 
-    # Nr 30 - UsingWildcards => 0, Title
+    # Nr 30 - UsingWildcards => 0, ChangeTitle
     {
-        Description => q{UsingWildcards => 0, Title},
+        Description => q{UsingWildcards => 0, ChangeTitle},
         SearchData  => {
             UsingWildcards => 0,
-            Title          => 'UnitTest-ITSMChange-%NoWildcards%',
+            ChangeTitle    => 'UnitTest-ITSMChange-%NoWildcards%',
         },
         ResultData => {
             TestCount => 1,
@@ -1968,10 +1968,10 @@ if ($SearchTestID) {
             },
         },
         {
-            Description => 'ChangeNumber, Title with wildcard',
+            Description => 'ChangeNumber, ChangeTitle with wildcard',
             SearchData  => {
                 ChangeNumber => substr( $SearchTestChange->{ChangeNumber}, 0, 10 ) . '%',
-                Title        => substr( $SearchTestChange->{Title},        0, 1 ) . '%',
+                ChangeTitle  => substr( $SearchTestChange->{Title},        0, 1 ) . '%',
             },
             ResultData => {
                 TestExistence => 1,
@@ -1999,11 +1999,11 @@ if ($SearchTestID) {
             },
         },
         {
-            Description => 'Title, ChangeNumber, two creators',
+            Description => 'ChangeTitle, ChangeNumber, two creators',
             SearchData  => {
                 ChangeNumber => $SearchTestChange->{ChangeNumber},
                 CreateBy => [ $SearchTestChange->{CreateBy}, $SearchTestChange->{CreateBy} + 1 ],
-                Title => substr( $SearchTestChange->{Title}, 0, 1 ) . '%',
+                ChangeTitle => substr( $SearchTestChange->{ChangeTitle}, 0, 1 ) . '%',
             },
             ResultData => {
                 TestCount => 1,
@@ -2210,7 +2210,7 @@ for my $OrderByColumn (@OrderByColumns) {
     my $ReferenceList = Data::Dumper::Dumper( \@SortedIDs );
 
     my $SearchResult = $Self->{ChangeObject}->ChangeSearch(
-        Title            => 'OrderByChange - Title - ' . $UniqueSignature,
+        ChangeTitle      => 'OrderByChange - Title - ' . $UniqueSignature,
         OrderBy          => [$OrderByColumn],
         OrderByDirection => ['Up'],
         UserID           => 1,
@@ -2237,9 +2237,9 @@ for my $OrderByColumn (@OrderByColumns) {
     my $ReferenceListDown = Data::Dumper::Dumper( \@SortedIDsDown );
 
     my $SearchResultDown = $Self->{ChangeObject}->ChangeSearch(
-        Title   => 'OrderByChange - Title - ' . $UniqueSignature,
-        OrderBy => [$OrderByColumn],
-        UserID  => 1,
+        ChangeTitle => 'OrderByChange - Title - ' . $UniqueSignature,
+        OrderBy     => [$OrderByColumn],
+        UserID      => 1,
     );
 
     # dump the attribute from ChangeGet()
@@ -2253,10 +2253,10 @@ for my $OrderByColumn (@OrderByColumns) {
 
     # check if ITSMChange.pm handles non-existent OrderByDirection criteria correct
     my $SearchResultFooBar = $Self->{ChangeObject}->ChangeSearch(
-        Title   => 'OrderByChange - Title - ' . $UniqueSignature,
-        OrderBy => [$OrderByColumn],
-        OrderBy => ['FooBar'],
-        UserID  => 1,
+        ChangeTitle => 'OrderByChange - Title - ' . $UniqueSignature,
+        OrderBy     => [$OrderByColumn],
+        OrderBy     => ['FooBar'],
+        UserID      => 1,
     );
 
     $Self->Is(
@@ -2271,9 +2271,9 @@ for my $OrderByColumn (@OrderByColumns) {
 
     # check for 'OrderBy' with non-existent column
     my $SearchResultFooBarColumn = $Self->{ChangeObject}->ChangeSearch(
-        Title   => 'OrderByChange - Title - ' . $UniqueSignature,
-        OrderBy => ['FooBar'],
-        UserID  => 1,
+        ChangeTitle => 'OrderByChange - Title - ' . $UniqueSignature,
+        OrderBy     => ['FooBar'],
+        UserID      => 1,
     );
 
     $Self->Is(
@@ -2284,7 +2284,7 @@ for my $OrderByColumn (@OrderByColumns) {
 
     # check for 'OrderBy' with non-existent column
     my $SearchResultFooBarColumnDirection = $Self->{ChangeObject}->ChangeSearch(
-        Title            => 'OrderByChange - Title - ' . $UniqueSignature,
+        ChangeTitle      => 'OrderByChange - Title - ' . $UniqueSignature,
         OrderBy          => ['FooBar'],
         OrderByDirection => ['FooBar'],
         UserID           => 1,
@@ -2298,9 +2298,9 @@ for my $OrderByColumn (@OrderByColumns) {
 
     # check for 'OrderBy' with non-existent column
     my $SearchResultFooBarDoubleColumn = $Self->{ChangeObject}->ChangeSearch(
-        Title   => 'OrderByChange - Title - ' . $UniqueSignature,
-        OrderBy => [ 'ChangeID', 'ChangeID' ],
-        UserID  => 1,
+        ChangeTitle => 'OrderByChange - Title - ' . $UniqueSignature,
+        OrderBy     => [ 'ChangeID', 'ChangeID' ],
+        UserID      => 1,
     );
 
     $Self->Is(
@@ -2346,7 +2346,7 @@ for my $ChangeIDForSecondOrderByTests (@ChangeIDsForOrderByTests) {
     local $Data::Dumper::Useqq  = 1;
 
     my $SearchResult = $Self->{ChangeObject}->ChangeSearch(
-        Title            => 'OrderByChange - Title - ' . $UniqueSignature,
+        ChangeTitle      => 'OrderByChange - Title - ' . $UniqueSignature,
         OrderBy          => [ 'CreateTime', 'ChangeID' ],
         OrderByDirection => [ 'Up', 'Up' ],
         UserID           => 1,
@@ -2857,16 +2857,16 @@ my @StringSearchTests = (
                 UserID => 1,
             },
             WorkOrderAdd => {
-                UserID      => 1,
-                Title       => 'String Test 1 - Title - ' . $UniqueSignature,
-                Instruction => 'String Test 1 - Instruction - ' . $UniqueSignature,
-                Report      => 'String Test 1 - Report - ' . $UniqueSignature,
+                UserID         => 1,
+                WorkOrderTitle => 'String Test 1 - Title - ' . $UniqueSignature,
+                Instruction    => 'String Test 1 - Instruction - ' . $UniqueSignature,
+                Report         => 'String Test 1 - Report - ' . $UniqueSignature,
             },
         },
     },
 
     {
-        Description => 'Search for WorkOrder Title',
+        Description => 'Search for WorkOrderTitle',
         SourceData  => {
             ChangeSearch => {
                 UserID         => 1,
@@ -2877,7 +2877,7 @@ my @StringSearchTests = (
     },
 
     {
-        Description => 'Search for non-existing WorkOrder Title',
+        Description => 'Search for non-existing WorkOrderTitle',
         SourceData  => {
             ChangeSearch => {
                 UserID         => 1,

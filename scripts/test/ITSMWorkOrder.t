@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.67 2009-10-20 16:34:13 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.68 2009-10-21 08:34:47 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -205,13 +205,13 @@ my @ChangeTests     = (
         Description => 'Change for general testing of workorders.',
         SourceData  => {
             ChangeAdd => {
-                Title  => 'Change 1 - Title - ' . $UniqueSignature,
-                UserID => $UserIDs[0],
+                ChangeTitle => 'Change 1 - Title - ' . $UniqueSignature,
+                UserID      => $UserIDs[0],
             },
         },
         ReferenceData => {
             ChangeGet => {
-                Title => 'Change 1 - Title - ' . $UniqueSignature,
+                ChangeTitle => 'Change 1 - Title - ' . $UniqueSignature,
             },
         },
     },
@@ -221,13 +221,13 @@ my @ChangeTests     = (
         Description => 'Change for testing OrderBy workorder searches.',
         SourceData  => {
             ChangeAdd => {
-                Title  => 'Change 2 - Title - ' . $UniqueSignature,
-                UserID => $UserIDs[0],
+                ChangeTitle => 'Change 2 - Title - ' . $UniqueSignature,
+                UserID      => $UserIDs[0],
             },
         },
         ReferenceData => {
             ChangeGet => {
-                Title => 'Change 2 - Title - ' . $UniqueSignature,
+                ChangeTitle => 'Change 2 - Title - ' . $UniqueSignature,
             },
         },
     },
@@ -237,7 +237,7 @@ my @ChangeTests     = (
         Description => 'Change for testing string searches in change.',
         SourceData  => {
             ChangeAdd => {
-                Title         => 'Change 3 - Title - ' . $UniqueSignature,
+                ChangeTitle   => 'Change 3 - Title - ' . $UniqueSignature,
                 Description   => 'Change 3 - Description - ' . $UniqueSignature,
                 Justification => 'Change 3 - Justification - ' . $UniqueSignature,
                 UserID        => $UserIDs[0],
@@ -245,7 +245,7 @@ my @ChangeTests     = (
         },
         ReferenceData => {
             ChangeGet => {
-                Title         => 'Change 3 - Title - ' . $UniqueSignature,
+                ChangeTitle   => 'Change 3 - Title - ' . $UniqueSignature,
                 Description   => 'Change 3 - Description - ' . $UniqueSignature,
                 Justification => 'Change 3 - Justification - ' . $UniqueSignature,
             },
@@ -471,19 +471,19 @@ push @WorkOrderTests, (
         Description => 'WorkOrderAdd() with string parameters.',
         SourceData  => {
             WorkOrderAdd => {
-                UserID      => 1,
-                ChangeID    => $WorkOrderAddTestID,
-                Title       => 'WorkOrder 1 - Title - ' . $UniqueSignature,
-                Instruction => 'WorkOrder 1 - Instruction - ' . $UniqueSignature,
-                Report      => 'WorkOrder 1 - Report - ' . $UniqueSignature,
+                UserID         => 1,
+                ChangeID       => $WorkOrderAddTestID,
+                WorkOrderTitle => 'WorkOrder 1 - Title - ' . $UniqueSignature,
+                Instruction    => 'WorkOrder 1 - Instruction - ' . $UniqueSignature,
+                Report         => 'WorkOrder 1 - Report - ' . $UniqueSignature,
             },
         },
         ReferenceData => {
             WorkOrderGet => {
-                ChangeID    => $WorkOrderAddTestID,
-                Title       => 'WorkOrder 1 - Title - ' . $UniqueSignature,
-                Instruction => 'WorkOrder 1 - Instruction - ' . $UniqueSignature,
-                Report      => 'WorkOrder 1 - Report - ' . $UniqueSignature,
+                ChangeID       => $WorkOrderAddTestID,
+                WorkOrderTitle => 'WorkOrder 1 - Title - ' . $UniqueSignature,
+                Instruction    => 'WorkOrder 1 - Instruction - ' . $UniqueSignature,
+                Report         => 'WorkOrder 1 - Report - ' . $UniqueSignature,
             },
         },
         SearchTest => [ 2, 3, 4, 5, 6, 8, 11 ],
@@ -496,7 +496,8 @@ push @WorkOrderTests, (
                 UserID           => 1,
                 ChangeID         => $WorkOrderAddTestID,
                 WorkOrderStateID => $ReverseStatesList{ready},
-                Title       => 'WorkOrderAdd with WorkOrderStateID - Title - ' . $UniqueSignature,
+                WorkOrderTitle   => 'WorkOrderAdd with WorkOrderStateID - Title - '
+                    . $UniqueSignature,
                 Instruction => 'WorkOrderAdd with WorkOrderStateID - Instruction - '
                     . $UniqueSignature,
                 Report => 'WorkOrderAdd with WorkOrderStateID - Report - ' . $UniqueSignature,
@@ -506,7 +507,8 @@ push @WorkOrderTests, (
             WorkOrderGet => {
                 ChangeID         => $WorkOrderAddTestID,
                 WorkOrderStateID => $ReverseStatesList{ready},
-                Title       => 'WorkOrderAdd with WorkOrderStateID - Title - ' . $UniqueSignature,
+                WorkOrderTitle   => 'WorkOrderAdd with WorkOrderStateID - Title - '
+                    . $UniqueSignature,
                 Instruction => 'WorkOrderAdd with WorkOrderStateID - Instruction - '
                     . $UniqueSignature,
                 Report => 'WorkOrderAdd with WorkOrderStateID - Report - ' . $UniqueSignature,
@@ -521,8 +523,8 @@ push @WorkOrderTests, (
                 UserID          => 1,
                 ChangeID        => $WorkOrderAddTestID,
                 WorkOrderTypeID => $ReverseTypesList{approval},
-                Title       => 'WorkOrderAdd with WorkOrderTypeID - Title - ' . $UniqueSignature,
-                Instruction => 'WorkOrderAdd with WorkOrderTypeID - Instruction - '
+                WorkOrderTitle => 'WorkOrderAdd with WorkOrderTypeID - Title - ' . $UniqueSignature,
+                Instruction    => 'WorkOrderAdd with WorkOrderTypeID - Instruction - '
                     . $UniqueSignature,
                 Report => 'WorkOrderAdd with WorkOrderTypeID - Report - ' . $UniqueSignature,
             },
@@ -531,8 +533,8 @@ push @WorkOrderTests, (
             WorkOrderGet => {
                 ChangeID        => $WorkOrderAddTestID,
                 WorkOrderTypeID => $ReverseTypesList{approval},
-                Title       => 'WorkOrderAdd with WorkOrderTypeID - Title - ' . $UniqueSignature,
-                Instruction => 'WorkOrderAdd with WorkOrderTypeID - Instruction - '
+                WorkOrderTitle => 'WorkOrderAdd with WorkOrderTypeID - Title - ' . $UniqueSignature,
+                Instruction    => 'WorkOrderAdd with WorkOrderTypeID - Instruction - '
                     . $UniqueSignature,
                 Report => 'WorkOrderAdd with WorkOrderTypeID - Report - ' . $UniqueSignature,
             },
@@ -547,7 +549,8 @@ push @WorkOrderTests, (
                 ChangeID         => $WorkOrderAddTestID,
                 WorkOrderTypeID  => $ReverseTypesList{pir},
                 WorkOrderStateID => $ReverseStatesList{closed},
-                Title => 'WorkOrderAdd with WorkOrderTypeID and WorkOrderStateID - Title - '
+                WorkOrderTitle =>
+                    'WorkOrderAdd with WorkOrderTypeID and WorkOrderStateID - Title - '
                     . $UniqueSignature,
                 Instruction =>
                     'WorkOrderAdd with WorkOrderTypeID and WorkOrderStateID - Instruction - '
@@ -561,7 +564,8 @@ push @WorkOrderTests, (
                 ChangeID         => $WorkOrderAddTestID,
                 WorkOrderTypeID  => $ReverseTypesList{pir},
                 WorkOrderStateID => $ReverseStatesList{closed},
-                Title => 'WorkOrderAdd with WorkOrderTypeID and WorkOrderStateID - Title - '
+                WorkOrderTitle =>
+                    'WorkOrderAdd with WorkOrderTypeID and WorkOrderStateID - Title - '
                     . $UniqueSignature,
                 Instruction =>
                     'WorkOrderAdd with WorkOrderTypeID and WorkOrderStateID - Instruction - '
@@ -581,7 +585,8 @@ push @WorkOrderTests, (
                 ChangeID         => $WorkOrderAddTestID,
                 WorkOrderTypeID  => $ReverseTypesList{pir},
                 WorkOrderStateID => $ReverseStatesList{closed},
-                Title       => 'WorkOrderAdd with WorkOrderStateID - Title - ' . $UniqueSignature,
+                WorkOrderTitle   => 'WorkOrderAdd with WorkOrderStateID - Title - '
+                    . $UniqueSignature,
                 Instruction => 'WorkOrderAdd with WorkOrderStateID - Instruction - '
                     . $UniqueSignature,
                 Report => 'WorkOrderAdd with WorkOrderStateID - Report - ' . $UniqueSignature,
@@ -597,7 +602,8 @@ push @WorkOrderTests, (
                 ChangeID         => $WorkOrderAddTestID,
                 WorkOrderTypeID  => $ReverseTypesList{decision},
                 WorkOrderStateID => $ReverseStatesList{canceled},
-                Title       => 'WorkOrderAdd with WorkOrderStateID - Title - ' . $UniqueSignature,
+                WorkOrderTitle   => 'WorkOrderAdd with WorkOrderStateID - Title - '
+                    . $UniqueSignature,
                 Instruction => 'WorkOrderAdd with WorkOrderStateID - Instruction - '
                     . $UniqueSignature,
                 Report => 'WorkOrderAdd with WorkOrderStateID - Report - ' . $UniqueSignature,
@@ -610,19 +616,19 @@ push @WorkOrderTests, (
         Description => 'WorkOrderAdd() with empty string parameters.',
         SourceData  => {
             WorkOrderAdd => {
-                UserID      => 1,
-                ChangeID    => $WorkOrderAddTestID,
-                Title       => '',
-                Instruction => '',
-                Report      => '',
+                UserID         => 1,
+                ChangeID       => $WorkOrderAddTestID,
+                WorkOrderTitle => '',
+                Instruction    => '',
+                Report         => '',
             },
         },
         ReferenceData => {
             WorkOrderGet => {
-                ChangeID    => $WorkOrderAddTestID,
-                Title       => '',
-                Instruction => '',
-                Report      => '',
+                ChangeID       => $WorkOrderAddTestID,
+                WorkOrderTitle => '',
+                Instruction    => '',
+                Report         => '',
             },
         },
         SearchTest => [ 2, 8 ],
@@ -650,15 +656,15 @@ push @WorkOrderTests, (
                 ChangeID => $WorkOrderAddTestID,
             },
             WorkOrderUpdate => {
-                UserID      => 1,
-                Title       => 'T' x 250,
-                Instruction => 'I' x 3800,
-                Report      => 'R' x 3800,
+                UserID         => 1,
+                WorkOrderTitle => 'T' x 250,
+                Instruction    => 'I' x 3800,
+                Report         => 'R' x 3800,
             },
         },
         ReferenceData => {
             ChangeGet => {
-                Title       => 'T' x 250,
+                ChangeTitle => 'T' x 250,
                 Instruction => 'I' x 3800,
                 Report      => 'R' x 3800,
                 CreateBy    => $UserIDs[0],
@@ -677,17 +683,17 @@ push @WorkOrderTests, (
                 ChangeID => $WorkOrderAddTestID,
             },
             WorkOrderUpdate => {
-                UserID      => 1,
-                Title       => 'T' x 251,
-                Instruction => 'I' x 3801,
-                Report      => 'R' x 3801,
+                UserID         => 1,
+                WorkOrderTitle => 'T' x 251,
+                Instruction    => 'I' x 3801,
+                Report         => 'R' x 3801,
             },
         },
         ReferenceData => {
             WorkOrderGet => {
-                Title       => q{},
-                Instruction => q{},
-                Report      => q{},
+                WorkOrderTitle => q{},
+                Instruction    => q{},
+                Report         => q{},
             },
         },
         SearchTest => [8],
@@ -701,19 +707,19 @@ push @WorkOrderTests, (
                 ChangeID => $WorkOrderAddTestID,
             },
             WorkOrderUpdate => {
-                UserID      => 1,
-                Title       => 'T' x 25,
-                Instruction => 'I' x 38,
-                Report      => 'R' x 38,
+                UserID         => 1,
+                WorkOrderTitle => 'T' x 25,
+                Instruction    => 'I' x 38,
+                Report         => 'R' x 38,
             },
         },
         ReferenceData => {
             WorkOrderGet => {
-                Title       => 'T' x 25,
-                Instruction => 'I' x 38,
-                Report      => 'R' x 38,
-                CreateBy    => $UserIDs[0],
-                ChangeBy    => 1,
+                WorkOrderTitle => 'T' x 25,
+                Instruction    => 'I' x 38,
+                Report         => 'R' x 38,
+                CreateBy       => $UserIDs[0],
+                ChangeBy       => 1,
             },
         },
         SearchTest => [ 2, 8 ],
@@ -727,19 +733,19 @@ push @WorkOrderTests, (
                 ChangeID => $WorkOrderAddTestID,
             },
             WorkOrderUpdate => {
-                UserID      => 1,
-                Title       => 'T' x 25,
-                Instruction => 'I' x 38,
-                Report      => 'R' x 38,
+                UserID         => 1,
+                WorkOrderTitle => 'T' x 25,
+                Instruction    => 'I' x 38,
+                Report         => 'R' x 38,
             },
         },
         ReferenceData => {
             WorkOrderGet => {
-                Title       => 'T' x 25,
-                Instruction => 'I' x 38,
-                Report      => 'R' x 38,
-                CreateBy    => $UserIDs[0],
-                ChangeBy    => 1,
+                WorkOrderTitle => 'T' x 25,
+                Instruction    => 'I' x 38,
+                Report         => 'R' x 38,
+                CreateBy       => $UserIDs[0],
+                ChangeBy       => 1,
             },
         },
         SearchTest => [ 2, 8 ],
@@ -754,17 +760,17 @@ push @WorkOrderTests, (
                 ChangeID => $WorkOrderAddTestID,
             },
             WorkOrderUpdate => {
-                UserID      => 1,
-                Title       => 'T' x 251,
-                Instruction => 'I',
-                Report      => 'R',
+                UserID         => 1,
+                WorkOrderTitle => 'T' x 251,
+                Instruction    => 'I',
+                Report         => 'R',
             },
         },
         ReferenceData => {
             WorkOrderGet => {
-                Title       => q{},
-                Instruction => q{},
-                Report      => q{},
+                WorkOrderTitle => q{},
+                Instruction    => q{},
+                Report         => q{},
             },
         },
         SearchTest => [8],
@@ -779,17 +785,17 @@ push @WorkOrderTests, (
                 ChangeID => $WorkOrderAddTestID,
             },
             WorkOrderUpdate => {
-                UserID      => 1,
-                Title       => 'T',
-                Instruction => 'I' x 3801,
-                Report      => 'R',
+                UserID         => 1,
+                WorkOrderTitle => 'T',
+                Instruction    => 'I' x 3801,
+                Report         => 'R',
             },
         },
         ReferenceData => {
             WorkOrderGet => {
-                Title       => q{},
-                Instruction => q{},
-                Report      => q{},
+                WorkOrderTitle => q{},
+                Instruction    => q{},
+                Report         => q{},
             },
         },
         SearchTest => [8],
@@ -804,17 +810,17 @@ push @WorkOrderTests, (
                 ChangeID => $WorkOrderAddTestID,
             },
             WorkOrderUpdate => {
-                UserID      => 1,
-                Title       => 'T',
-                Instruction => 'I',
-                Report      => 'R' x 3801,
+                UserID         => 1,
+                WorkOrderTitle => 'T',
+                Instruction    => 'I',
+                Report         => 'R' x 3801,
             },
         },
         ReferenceData => {
             WorkOrderGet => {
-                Title       => q{},
-                Instruction => q{},
-                Report      => q{},
+                WorkOrderTitle => q{},
+                Instruction    => q{},
+                Report         => q{},
             },
         },
         SearchTest => [8],
@@ -831,17 +837,17 @@ push @WorkOrderTests, (
             },
             WorkOrderUpdate => {
                 PlannedStartTime => '2009-03-20 13:25:09',
-                Title            => 'Test',
+                WorkOrderTitle   => 'Test',
                 UserID           => 1,
             },
         },
         ReferenceData => {
             WorkOrderGet => {
-                Title       => q{},
-                Instruction => q{},
-                Report      => 'Report - just PlannedStartTime',
-                ChangeBy    => $UserIDs[0],
-                CreateBy    => $UserIDs[0],
+                WorkOrderTitle => q{},
+                Instruction    => q{},
+                Report         => 'Report - just PlannedStartTime',
+                ChangeBy       => $UserIDs[0],
+                CreateBy       => $UserIDs[0],
             },
         },
         SearchTest => [8],
@@ -858,17 +864,17 @@ push @WorkOrderTests, (
             },
             WorkOrderUpdate => {
                 PlannedEndTime => '2009-03-20 13:25:09',
-                Title          => 'Test',
+                WorkOrderTitle => 'Test',
                 UserID         => 1,
             },
         },
         ReferenceData => {
             WorkOrderGet => {
-                Title       => q{},
-                Instruction => q{},
-                Report      => 'Report - just PlannedEndTime',
-                ChangeBy    => $UserIDs[0],
-                CreateBy    => $UserIDs[0],
+                WorkOrderTitle => q{},
+                Instruction    => q{},
+                Report         => 'Report - just PlannedEndTime',
+                ChangeBy       => $UserIDs[0],
+                CreateBy       => $UserIDs[0],
             },
         },
         SearchTest => [8],
@@ -884,13 +890,13 @@ push @WorkOrderTests, (
             },
             WorkOrderUpdate => {
                 ActualStartTime => '2009-03-20 13:25:09',
-                Title           => 'Test',
+                WorkOrderTitle  => 'Test',
                 UserID          => 1,
             },
         },
         ReferenceData => {
             WorkOrderGet => {
-                Title           => 'Test',
+                WorkOrderTitle  => 'Test',
                 Instruction     => q{},
                 Report          => 'Report - just ActualStartTime',
                 ActualStartTime => '2009-03-20 13:25:09',
@@ -911,18 +917,18 @@ push @WorkOrderTests, (
                 Report   => 'Report - just ActualEndTime',
             },
             WorkOrderUpdate => {
-                ActualEndTime => '2009-03-20 13:25:09',
-                Title         => 'Test',
-                UserID        => 1,
+                ActualEndTime  => '2009-03-20 13:25:09',
+                WorkOrderTitle => 'Test',
+                UserID         => 1,
             },
         },
         ReferenceData => {
             WorkOrderGet => {
-                Title       => q{},
-                Instruction => q{},
-                Report      => 'Report - just ActualEndTime',
-                ChangeBy    => $UserIDs[0],
-                CreateBy    => $UserIDs[0],
+                WorkOrderTitle => q{},
+                Instruction    => q{},
+                Report         => 'Report - just ActualEndTime',
+                ChangeBy       => $UserIDs[0],
+                CreateBy       => $UserIDs[0],
             },
         },
         SearchTest => [8],
@@ -941,17 +947,17 @@ push @WorkOrderTests, (
             WorkOrderUpdate => {
                 ActualEndTime   => '2009-03-20 13:25:09',
                 ActualStartTime => '2009-03-21 13:25:09',
-                Title           => 'Test',
+                WorkOrderTitle  => 'Test',
                 UserID          => 1,
             },
         },
         ReferenceData => {
             WorkOrderGet => {
-                Title       => q{},
-                Instruction => q{},
-                Report      => 'Report - ActualStartTime > ActualEndTime',
-                ChangeBy    => $UserIDs[0],
-                CreateBy    => $UserIDs[0],
+                WorkOrderTitle => q{},
+                Instruction    => q{},
+                Report         => 'Report - ActualStartTime > ActualEndTime',
+                ChangeBy       => $UserIDs[0],
+                CreateBy       => $UserIDs[0],
             },
         },
         SearchTest => [8],
@@ -969,13 +975,13 @@ push @WorkOrderTests, (
             WorkOrderUpdate => {
                 ActualEndTime   => '2009-03-22 13:25:09',
                 ActualStartTime => '2009-03-21 13:25:09',
-                Title           => 'Test',
+                WorkOrderTitle  => 'Test',
                 UserID          => 1,
             },
         },
         ReferenceData => {
             WorkOrderGet => {
-                Title           => 'Test',
+                WorkOrderTitle  => 'Test',
                 Instruction     => q{},
                 Report          => 'Report - ActualStartTime < ActualEndTime',
                 ChangeBy        => 1,
@@ -995,17 +1001,17 @@ push @WorkOrderTests, (
                 ChangeID => $WorkOrderAddTestID,
             },
             WorkOrderUpdate => {
-                UserID      => 1,
-                Title       => '0',
-                Instruction => '0',
-                Report      => '0',
+                UserID         => 1,
+                WorkOrderTitle => '0',
+                Instruction    => '0',
+                Report         => '0',
             },
         },
         ReferenceData => {
             WorkOrderGet => {
-                Title       => '0',
-                Instruction => '0',
-                Report      => '0',
+                WorkOrderTitle => '0',
+                Instruction    => '0',
+                Report         => '0',
             },
         },
         SearchTest => [8],
@@ -1024,7 +1030,7 @@ push @WorkOrderTests, (
                 ChangeID         => $OrderByTestID,
                 WorkOrderTypeID  => $SortedTypeIDs[2],
                 WorkOrderStateID => $SortedStateIDs[0],
-                Title            => 'WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
+                WorkOrderTitle   => 'WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
             },
         },
         ReferenceData => {
@@ -1032,7 +1038,7 @@ push @WorkOrderTests, (
                 ChangeID         => $OrderByTestID,
                 WorkOrderTypeID  => $SortedTypeIDs[2],
                 WorkOrderStateID => $SortedStateIDs[0],
-                Title            => 'WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
+                WorkOrderTitle   => 'WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
             },
         },
         SearchTest => [999999],
@@ -1047,7 +1053,7 @@ push @WorkOrderTests, (
                 ChangeID         => $OrderByTestID,
                 WorkOrderTypeID  => $SortedTypeIDs[1],
                 WorkOrderStateID => $SortedStateIDs[1],
-                Title            => 'WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
+                WorkOrderTitle   => 'WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
             },
         },
         ReferenceData => {
@@ -1055,7 +1061,7 @@ push @WorkOrderTests, (
                 ChangeID         => $OrderByTestID,
                 WorkOrderTypeID  => $SortedTypeIDs[1],
                 WorkOrderStateID => $SortedStateIDs[1],
-                Title            => 'WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
+                WorkOrderTitle   => 'WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
             },
         },
         SearchTest => [999999],
@@ -1070,7 +1076,7 @@ push @WorkOrderTests, (
                 ChangeID         => $OrderByTestID,
                 WorkOrderTypeID  => $SortedTypeIDs[0],
                 WorkOrderStateID => $SortedStateIDs[2],
-                Title            => 'WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
+                WorkOrderTitle   => 'WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
             },
         },
         ReferenceData => {
@@ -1078,7 +1084,7 @@ push @WorkOrderTests, (
                 ChangeID         => $OrderByTestID,
                 WorkOrderTypeID  => $SortedTypeIDs[0],
                 WorkOrderStateID => $SortedStateIDs[2],
-                Title            => 'WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
+                WorkOrderTitle   => 'WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
             },
         },
 
@@ -1096,15 +1102,17 @@ push @WorkOrderTests, (
             'WorkOrderAdd() for string search in change.',
         SourceData => {
             WorkOrderAdd => {
-                UserID   => 1,
-                ChangeID => $StringSearchTestID,
-                Title => 'WorkOrderAdd() for string search in change - Title - ' . $UniqueSignature,
+                UserID         => 1,
+                ChangeID       => $StringSearchTestID,
+                WorkOrderTitle => 'WorkOrderAdd() for string search in change - Title - '
+                    . $UniqueSignature,
             },
         },
         ReferenceData => {
             WorkOrderGet => {
-                ChangeID => $StringSearchTestID,
-                Title => 'WorkOrderAdd() for string search in change - Title - ' . $UniqueSignature,
+                ChangeID       => $StringSearchTestID,
+                WorkOrderTitle => 'WorkOrderAdd() for string search in change - Title - '
+                    . $UniqueSignature,
             },
         },
         SearchTest => [ 15, 17, 19, 21, 22 ],
@@ -1382,9 +1390,9 @@ my @WorkOrderSearchTests = (
 
     # Nr 3 - search for title
     {
-        Description => 'Title',
+        Description => 'WorkOrderTitle',
         SearchData  => {
-            Title => 'WorkOrder 1 - Title - ' . $UniqueSignature,
+            WorkOrderTitle => 'WorkOrder 1 - Title - ' . $UniqueSignature,
         },
         ResultData => {
             TestExistence => 1,
@@ -1415,11 +1423,11 @@ my @WorkOrderSearchTests = (
 
     # Nr 6 - search for title, instruction and report
     {
-        Description => 'Title, Instruction, Report',
+        Description => 'WorkOrderTitle, Instruction, Report',
         SearchData  => {
-            Title       => 'WorkOrder 1 - Title - ' . $UniqueSignature,
-            Instruction => 'WorkOrder 1 - Instruction - ' . $UniqueSignature,
-            Report      => 'WorkOrder 1 - Report - ' . $UniqueSignature,
+            WorkOrderTitle => 'WorkOrder 1 - Title - ' . $UniqueSignature,
+            Instruction    => 'WorkOrder 1 - Instruction - ' . $UniqueSignature,
+            Report         => 'WorkOrder 1 - Report - ' . $UniqueSignature,
         },
         ResultData => {
             TestExistence => 1,
@@ -1428,9 +1436,9 @@ my @WorkOrderSearchTests = (
 
     # Nr 7 - search for title, which is not in database
     {
-        Description => 'Title does not exist',
+        Description => 'WorkOrderTitle does not exist',
         SearchData  => {
-            Title => 'NOT IN DATABASE ' . $UniqueSignature,
+            WorkOrderTitle => 'NOT IN DATABASE ' . $UniqueSignature,
         },
         ResultData => {
             TestCount => 1,
@@ -1465,8 +1473,8 @@ my @WorkOrderSearchTests = (
     {
         Description => 'All WorkOrders for Change 1_000_000 and an existing title',
         SearchData  => {
-            ChangeIDs => [1_000_000],
-            Title     => 'WorkOrder 1 - Title - ' . $UniqueSignature,
+            ChangeIDs      => [1_000_000],
+            WorkOrderTitle => 'WorkOrder 1 - Title - ' . $UniqueSignature,
         },
         ResultData => {
             TestCount => 1,
@@ -1474,12 +1482,12 @@ my @WorkOrderSearchTests = (
         },
     },
 
-    # Nr 11 - search for existing ChangeID and existing Title
+    # Nr 11 - search for existing ChangeID and existing WorkOrderTitle
     {
-        Description => 'ChangeID does exist, Title does exist',
+        Description => 'ChangeID does exist, WorkOrderTitle does exist',
         SearchData  => {
-            ChangeIDs => [$WorkOrderAddTestID],
-            Title     => 'WorkOrder 1 - Title - ' . $UniqueSignature,
+            ChangeIDs      => [$WorkOrderAddTestID],
+            WorkOrderTitle => 'WorkOrder 1 - Title - ' . $UniqueSignature,
         },
         ResultData => {
             TestExistence => 1,
@@ -1488,10 +1496,10 @@ my @WorkOrderSearchTests = (
 
     # Nr 12 - search for existing change id and for title, which is not in database
     {
-        Description => 'ChangeID does exist, Title does not exist',
+        Description => 'ChangeID does exist, WorkOrderTitle does not exist',
         SearchData  => {
-            ChangeIDs => [$WorkOrderAddTestID],
-            Title     => 'NOT IN DATABASE ' . $UniqueSignature,
+            ChangeIDs      => [$WorkOrderAddTestID],
+            WorkOrderTitle => 'NOT IN DATABASE ' . $UniqueSignature,
         },
         ResultData => {
             TestCount => 1,
@@ -1508,7 +1516,7 @@ my @WorkOrderSearchTests = (
                 $ReverseTypesList{approval},
                 $ReverseTypesList{pir},
             ],
-            Title => '%' . $UniqueSignature,
+            WorkOrderTitle => '%' . $UniqueSignature,
         },
         ResultData => {
             TestCount     => 1,
@@ -1806,10 +1814,10 @@ for my $OrderByColumn (@OrderByColumns) {
 
     # check if WorkOrder.pm handles non-existent OrderByDirection criteria correct
     my $SearchResultFooBar = $Self->{ChangeObject}->ChangeSearch(
-        Title   => 'OrderByWorkOrder - Title - ' . $UniqueSignature,
-        OrderBy => [$OrderByColumn],
-        OrderBy => ['FooBar'],
-        UserID  => 1,
+        ChangeTitle => 'OrderByWorkOrder - Title - ' . $UniqueSignature,
+        OrderBy     => [$OrderByColumn],
+        OrderBy     => ['FooBar'],
+        UserID      => 1,
     );
 
     $Self->Is(
@@ -1829,8 +1837,8 @@ my $ChangesTitle       = 'ChangeSearchOrderByTimes - ' . $UniqueSignature;
 my @ChangesForSortTest = (
     {
         Change => {
-            Title  => $ChangesTitle,
-            UserID => 1,
+            ChangeTitle => $ChangesTitle,
+            UserID      => 1,
         },
         Workorders => [
             {
@@ -1842,8 +1850,8 @@ my @ChangesForSortTest = (
     },
     {
         Change => {
-            Title  => $ChangesTitle,
-            UserID => 1,
+            ChangeTitle => $ChangesTitle,
+            UserID      => 1,
         },
         Workorders => [
             {
@@ -1864,15 +1872,15 @@ my @ChangesForSortTest = (
     },
     {
         Change => {
-            Title  => $ChangesTitle,
-            UserID => 1,
+            ChangeTitle => $ChangesTitle,
+            UserID      => 1,
         },
         Workorders => [],
     },
     {
         Change => {
-            Title  => $ChangesTitle,
-            UserID => 1,
+            ChangeTitle => $ChangesTitle,
+            UserID      => 1,
         },
         Workorders => [
             {
@@ -1962,7 +1970,7 @@ for my $OrderByColumn (qw(PlannedStartTime PlannedEndTime ActualStartTime Actual
 
     # search with direction 'DOWN'
     my $SearchResult = $Self->{ChangeObject}->ChangeSearch(
-        Title            => $ChangesTitle,
+        ChangeTitle      => $ChangesTitle,
         OrderBy          => [ $OrderByColumn, 'ChangeID' ],
         OrderByDirection => [ 'Down', 'Up' ],
         UserID           => 1,
@@ -2000,7 +2008,7 @@ for my $OrderByColumn (qw(PlannedStartTime PlannedEndTime ActualStartTime Actual
 
     # search with direction 'UP'
     my $SearchResultUp = $Self->{ChangeObject}->ChangeSearch(
-        Title            => $ChangesTitle,
+        ChangeTitle      => $ChangesTitle,
         OrderBy          => [ $OrderByColumn, 'ChangeID' ],
         OrderByDirection => [ 'Up', 'Down' ],
         UserID           => 1,
