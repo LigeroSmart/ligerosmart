@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderReport.pm - the OTRS::ITSM::ChangeManagement work order report module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderReport.pm,v 1.4 2009-10-20 16:07:55 reb Exp $
+# $Id: AgentITSMWorkOrderReport.pm,v 1.5 2009-10-21 08:59:39 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -98,7 +98,7 @@ sub Run {
     }
 
     # strip header on max 80 chars
-    $WorkOrder->{Title} =~ s{ \A (.{80}) .* \z }{ $1 }xms;
+    $WorkOrder->{WorkOrderTitle} =~ s{ \A (.{80}) .* \z }{ $1 }xms;
 
     # get change that workorder belongs to
     my $Change = $Self->{ChangeObject}->ChangeGet(
@@ -126,7 +126,7 @@ sub Run {
 
     # output header
     my $Output = $Self->{LayoutObject}->Header(
-        Title => $WorkOrder->{Title},
+        Title => $WorkOrder->{WorkOrderTitle},
     );
     $Output .= $Self->{LayoutObject}->NavigationBar();
 
