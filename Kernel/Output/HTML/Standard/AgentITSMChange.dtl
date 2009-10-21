@@ -2,9 +2,79 @@
 # AgentITSMChange.dtl - provides HTML form for AgentITSMChange
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChange.dtl,v 1.1 2009-10-11 23:16:35 ub Exp $
+# $Id: AgentITSMChange.dtl,v 1.2 2009-10-21 08:00:48 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+    <tr>
+        <td class="mainhead">
+            $Env{"Box0"}$Text{"Overview"}: $Text{"Change"} $Env{"Box1"}
+        </td>
+    </tr>
+    <tr>
+        <td class="menu">
+            $Text{"Changes shown"}: $QData{"Result"} -
+            $Text{"Page"}: $QData{"PageNull"}
+<!-- dtl:block:Page -->
+<!-- dtl:block:PageNormal -->
+            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Page=$LQData{"Page"}">$QData{"Page"}</a>
+<!-- dtl:block:PageNormal -->
+<!-- dtl:block:PageBold -->
+            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Page=$LQData{"Page"}"><b>$QData{"Page"}</b></a>
+<!-- dtl:block:PageBold -->
+<!-- dtl:block:Page -->
+            -
+            $Text{"Changes available"}: $QData{"ChangesAvail"}
+        </td>
+    </tr>
+<!-- dtl:block:Change -->
+    <tr>
+        <td class="mainbody" align="center">
+            <br>
+            <table border="0" cellspacing="0" cellpadding="3" style="margin-left:20px;margin-right:20px;">
+                <tr class="contenthead">
+                    <td class="contentkey" width="20">
+                    </td>
+                    <td class="contentkey" width="130">$Text{"Number#"}</td>
+                    <td class="contentkey">$Text{"Title"}</td>
+                    <td class="contentkey" width="300">$Text{"Change Builder"}</td>
+                    <td class="contentkey" width="60">$Text{"WorkOrders"}</td>
+                    <td class="contentkey" width="120">$Text{"State"}</td>
+                    <td class="contentkey" width="200">$Text{"Created"}</td>
+                </tr>
+<!-- dtl:block:ChangeRow -->
+                <tr class="contentbody">
+                    <td class="$QData{"CssClass"}" style="text-align:center;">
+                        <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"CurChangeSignal"}.png" title="$Text{"$QData{"CurChangeState"}"}" alt="$Text{"$QData{"CurChangeState"}"}">
+                    </td>
+                    <td class="$QData{"CssClass"}">
+                        <a href="$Env{"Baselink"}Action=AgentITSMChangeZoom&ChangeID=$LQData{"ChangeID"}">$QData{"ChangeNumber"}</a>
+                    </td>
+                    <td class="$QData{"CssClass"}">
+                        <div title="$Data{"Title"}">
+                            $QData{"Title","50"}
+                        </div>
+                    </td>
+                    <td class="$QData{"CssClass"}">
+                        <div title="$QData{"ChangeBuilderUserLogin"} $Quote{"$Data{"ChangeBuilderUserFirstname"} $Data{"ChangeBuilderUserLastname"}"}">
+                            $QData{"ChangeBuilderUserLogin","15"} $Quote{"$Data{"ChangeBuilderUserFirstname"} $Data{"ChangeBuilderUserLastname"}","15"}
+                        </div>
+                    </td>
+                    <td class="$QData{"CssClass"}" style="text-align:center;">$QData{"WorkOrderCount"}</td>
+                    <td class="$QData{"CssClass"}">$Text{"$QData{"CurChangeState"}"}</td>
+                    <td class="$QData{"CssClass"}">$TimeLong{"$QData{"CreateTime"}"}</td>
+                </tr>
+<!-- dtl:block:ChangeRow -->
+                <tr class="contentfooter">
+                    <td colspan="7">&nbsp;</td>
+                </tr>
+            </table>
+            <br>
+        </td>
+    </tr>
+<!-- dtl:block:Change -->
+</table>
