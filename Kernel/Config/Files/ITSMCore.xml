@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMCore.xml,v 1.24 2009-10-21 23:24:10 ub Exp $</CVS>
+    <CVS>$Id: ITSMCore.xml,v 1.25 2009-10-21 23:31:48 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -326,8 +326,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="LinkObject::PossibleLink###3301" Required="0" Valid="1">
-        <Description Lang="en">This setting defines that a 'ITSMWorkOrder' object can be linked with 'Service' objects using the 'Normal' link type.</Description>
-        <Description Lang="de">Definiert, dass ein 'ITSMWorkOrder'-Objekt mit dem Linktyp 'Normal' mit 'Service'-Objekten verlinkt werden kann.</Description>
+        <Description Lang="en">This setting defines that a 'ITSMWorkOrder' object can be linked with 'Service' objects using the 'DependsOn' link type.</Description>
+        <Description Lang="de">Definiert, dass ein 'ITSMWorkOrder'-Objekt mit dem Linktyp 'DependsOn' mit 'Service'-Objekten verlinkt werden kann.</Description>
         <Group>Framework</Group>
         <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
@@ -352,8 +352,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="LinkObject::PossibleLink###3311" Required="0" Valid="1">
-        <Description Lang="en">This setting defines that a 'ITSMWorkOrder' object can be linked with 'ITSMConfigItem' objects using the 'Normal' link type.</Description>
-        <Description Lang="de">Definiert, dass ein 'ITSMWorkOrder'-Objekt mit dem Linktyp 'Normal' mit 'ITSMConfigItem'-Objekten verlinkt werden kann.</Description>
+        <Description Lang="en">This setting defines that a 'ITSMWorkOrder' object can be linked with 'ITSMConfigItem' objects using the 'DependsOn' link type.</Description>
+        <Description Lang="de">Definiert, dass ein 'ITSMWorkOrder'-Objekt mit dem Linktyp 'DependsOn' mit 'ITSMConfigItem'-Objekten verlinkt werden kann.</Description>
         <Group>Framework</Group>
         <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
@@ -361,6 +361,19 @@
                 <Item Key="Object1">ITSMWorkOrder</Item>
                 <Item Key="Object2">ITSMConfigItem</Item>
                 <Item Key="Type">DependsOn</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="LinkObject::PossibleLink###3320" Required="0" Valid="1">
+        <Description Lang="en">This setting defines that a 'ITSMChange' object can be linked with 'Ticket' objects using the 'Normal' link type.</Description>
+        <Description Lang="de">Definiert, dass ein 'ITSMChange'-Objekt mit dem Linktyp 'Normal' mit 'Ticket'-Objekten verlinkt werden kann.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::LinkObject</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Object1">ITSMChange</Item>
+                <Item Key="Object2">Ticket</Item>
+                <Item Key="Type">Normal</Item>
             </Hash>
         </Setting>
     </ConfigItem>
