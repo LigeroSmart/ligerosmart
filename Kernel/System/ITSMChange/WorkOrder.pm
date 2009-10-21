@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.55 2009-10-21 08:23:28 ub Exp $
+# $Id: WorkOrder.pm,v 1.56 2009-10-21 21:24:04 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.55 $) [1];
+$VERSION = qw($Revision: 1.56 $) [1];
 
 =head1 NAME
 
@@ -570,8 +570,9 @@ return a list of workorder ids as an array reference
         # CreateTime, CreateBy, ChangeTime, ChangeBy)
 
         # Additional information for OrderBy:
-        # The OrderByDirection could specified for each OrderBy attribute.
-        # The pairing is made by the array idices.
+        # The OrderByDirection can be specified for
+        # each OrderBy attribute.
+        # The pairing is made by the array indices.
 
         OrderByDirection => [ 'Down', 'Up' ],                          # (optional)
         # default: [ 'Down' ],
@@ -896,7 +897,7 @@ sub WorkOrderSearch {
     }
 
     # if there is a possibility that the ordering is not determined
-    # we add an descending orderung by id
+    # we add an descending ordering by workorder id
     if ( !grep { $_ eq 'WorkOrderID' } ( @{ $Param{OrderBy} } ) ) {
         push @SQLOrderBy, "$OrderByTable{WorkOrderID} DESC";
     }
@@ -1472,6 +1473,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.55 $ $Date: 2009-10-21 08:23:28 $
+$Revision: 1.56 $ $Date: 2009-10-21 21:24:04 $
 
 =cut
