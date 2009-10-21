@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderZoom.pm - the OTRS::ITSM::ChangeManagement work order zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderZoom.pm,v 1.7 2009-10-21 09:02:27 reb Exp $
+# $Id: AgentITSMWorkOrderZoom.pm,v 1.8 2009-10-21 10:25:29 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -246,7 +246,7 @@ sub Run {
         rejected           => 'grayled',
         approved           => 'greenled',
         'in progress'      => 'yellowled',
-        successfull        => 'greenled',
+        successful         => 'greenled',
         failed             => 'redled',
         canceled           => 'grayled',
     );
