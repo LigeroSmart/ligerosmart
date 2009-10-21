@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LinkObjectITSMWorkOrder.pm - layout backend module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LinkObjectITSMWorkOrder.pm,v 1.8 2009-10-21 23:17:38 ub Exp $
+# $Id: LinkObjectITSMWorkOrder.pm,v 1.9 2009-10-21 23:25:52 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::Output::HTML::Layout;
 use Kernel::System::GeneralCatalog;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 =head1 NAME
 
@@ -70,6 +70,10 @@ sub new {
 
     return $Self;
 }
+
+#
+# TODO: Update POD when table layout is final
+#
 
 =item TableCreateComplex()
 
@@ -593,6 +597,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.8 $ $Date: 2009-10-21 23:17:38 $
+$Revision: 1.9 $ $Date: 2009-10-21 23:25:52 $
 
 =cut
