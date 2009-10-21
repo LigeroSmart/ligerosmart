@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LinkObjectITSMWorkOrder.pm - layout backend module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LinkObjectITSMWorkOrder.pm,v 1.4 2009-10-21 20:22:47 ub Exp $
+# $Id: LinkObjectITSMWorkOrder.pm,v 1.5 2009-10-21 21:23:19 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::Output::HTML::Layout;
 use Kernel::System::GeneralCatalog;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 =head1 NAME
 
@@ -205,10 +205,10 @@ sub TableCreateComplex {
         }
     }
 
-    # create the item list
+    # create the item list, sort by ChangeID Down, then by WorkOrderNumber Up
     my @ItemList;
     for my $WorkOrderID (
-        sort { $LinkList{$a}{Data}->{ChangeID} <=> $LinkList{$b}{Data}->{ChangeID} }
+        sort { $LinkList{$b}{Data}->{ChangeID} <=> $LinkList{$a}{Data}->{ChangeID} || $a <=> $b }
         keys %LinkList
         )
     {
@@ -351,10 +351,12 @@ sub TableCreateSimple {
             # extract direction list
             my $DirectionList = $Param{ObjectLinkListWithData}->{$LinkType}->{$Direction};
 
+            # create the item list, sort by ChangeID Down, then by WorkOrderNumber Up
             my @ItemList;
             for my $WorkOrderID (
                 sort {
-                    $DirectionList->{$a}->{ChangeID} <=> $DirectionList->{$b}->{ChangeID}
+                    $DirectionList->{$b}->{ChangeID} <=> $DirectionList->{$a}->{ChangeID}
+                        || $a <=> $b
                 } keys %{$DirectionList}
                 )
             {
@@ -576,6 +578,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2009-10-21 20:22:47 $
+$Revision: 1.5 $ $Date: 2009-10-21 21:23:19 $
 
 =cut

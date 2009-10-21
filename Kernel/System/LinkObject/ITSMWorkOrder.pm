@@ -2,7 +2,7 @@
 # Kernel/System/LinkObject/ITSMWorkOrder.pm - to link workorder objects
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.4 2009-10-21 13:07:15 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.5 2009-10-21 21:24:30 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -229,12 +229,11 @@ sub ObjectSearch {
     }
 
     # search the workorders
+    # no need to use OrderBy here, because it is sorted in TableCreateComplex and TableCreatSimple
     my $WorkOrderIDsRef = $Self->{WorkOrderObject}->WorkOrderSearch(
         %{ $Param{SearchParams} },
         %Search,
-        UsingWildcards   => 1,
-        OrderBy          => [ 'ChangeID', 'WorkOrderNumber' ],
-        OrderByDirection => [ 'Down', 'Up' ],
+        UsingWildcards => 1,
 
         # TODO:
         # use sysconfig option for 'limit' instead, decide wheater this option would be only
