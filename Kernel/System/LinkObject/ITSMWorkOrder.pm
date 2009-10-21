@@ -2,7 +2,7 @@
 # Kernel/System/LinkObject/ITSMWorkOrder.pm - to link workorder objects
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.5 2009-10-21 21:24:30 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.6 2009-10-21 23:17:16 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -128,8 +128,8 @@ return a hash of object descriptions
 
 Return
     %Description = (
-        Normal => "Change# 2009101610005402 - WorkOrder# 1",
-        Long   => "Change# 2009101610005402 - WorkOrder# 1: The WorkOrder Title",
+        Normal => "WorkOrder# 2009102110001674-1",
+        Long   => "WorkOrder# 2009102110001674-1: The WorkOrder Title",
     );
 
     %Description = $LinkObject->ObjectDescriptionGet(
@@ -170,9 +170,18 @@ sub ObjectDescriptionGet {
     return if !$WorkOrderData;
     return if !%{$WorkOrderData};
 
+    # get change data for this workorder
+    my $ChangeData = $Self->{ChangeObject}->ChangeGet(
+        ChangeID => $WorkOrderData->{ChangeID},
+        UserID   => $Param{UserID},
+    );
+
+    return if !$ChangeData;
+    return if !%{$ChangeData};
+
     # define description text
-    my $DescriptionText = "Change# $WorkOrderData->{ChangeData}->{ChangeNumber} - "
-        . "WorkOrder# $WorkOrderData->{WorkOrderNumber}";
+    my $DescriptionText = "WorkOrder# $ChangeData->{ChangeNumber}-"
+        . "$WorkOrderData->{WorkOrderNumber}";
 
     # create description
     %Description = (
