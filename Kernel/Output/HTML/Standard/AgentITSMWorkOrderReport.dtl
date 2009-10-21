@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderReport.dtl - provides HTML form for AgentITSMWorkOrderReport
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderReport.dtl,v 1.4 2009-10-20 15:33:24 reb Exp $
+# $Id: AgentITSMWorkOrderReport.dtl,v 1.5 2009-10-21 08:41:17 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -40,7 +40,7 @@
                                     <td class="contentvalue">
                                         <div class="yui-skin-sam">
 <!-- dtl:block:RichText -->
-$Include{"RichTextEditor"}
+$Include{"RichTextEditorITSM"}
 # set white background for buttons
 <style type="text/css">
 <!--
@@ -48,7 +48,7 @@ $Include{"RichTextEditor"}
                                             -->
                                             </style>
 <!-- dtl:block:RichText -->
-<textarea id="RichText" name="Report" rows="15" cols="$Config{"Ticket::Frontend::TextAreaEmail"}" wrap="$Env{"BrowserWrap"}">
+<textarea id="RichText1" name="Report" rows="15" cols="$Config{"Ticket::Frontend::TextAreaEmail"}" wrap="$Env{"BrowserWrap"}">
 $Data{"Report"}
 </textarea>
                                         </div>

@@ -1,8 +1,8 @@
 # --
 # RichTextEditorITSM.dtl - provides Rich Text Editor
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: RichTextEditorITSM.dtl,v 1.1 2009-10-21 08:04:22 reb Exp $
+# $Id: RichTextEditorITSM.dtl,v 1.2 2009-10-21 08:41:17 reb Exp $
 # $OldId: RichTextEditor.dtl,v 1.20.2.4 2009/09/23 09:21:19 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -56,7 +56,6 @@ function RichTextCleanup() {
 #    var oFCKeditor = new FCKeditor( 'RichText' );
 function InitRichTextITSM( Fieldname ) {
     var oFCKeditor = new FCKeditor( Fieldname );
-    alert( Fieldname );
 # ---
     oFCKeditor.Height                             = '$Config{"Frontend::RichTextHeight"}' || 320;
     oFCKeditor.Width                              = '$Config{"Frontend::RichTextWidth"}' || 620;
@@ -109,7 +108,6 @@ window.onload = function() {
 # ---
 #    InitRichText();
     for ( var i = 1; i <= 6; i++ ) {
-        alert( i );
         if ( document.getElementById('RichText' + i) ) {
             var myEditor = InitRichTextITSM('RichText' + i);
         }
