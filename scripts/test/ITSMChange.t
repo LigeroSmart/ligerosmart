@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.95 2009-10-21 10:11:52 bes Exp $
+# $Id: ITSMChange.t,v 1.96 2009-10-21 18:09:00 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -2367,13 +2367,15 @@ for my $ChangeIDForSecondOrderByTests (@ChangeIDsForOrderByTests) {
 # ------------------------------------------------------------ #
 # advanced search by tests for times
 # ------------------------------------------------------------ #
+my $TSTChangeTitle = 'TimeSearchTest - Title - ' . $UniqueSignature;
 my @TSTChangeIDs;
 my @TimeSearchTests = (
     {
         Description => 'Insert change with one workorder in the 11th century.',
         SourceData  => {
             ChangeAdd => {
-                UserID => 1,
+                ChangeTitle => $TSTChangeTitle,
+                UserID      => 1,
             },
             WorkOrderAdd => {
                 UserID           => 1,
@@ -2388,7 +2390,8 @@ my @TimeSearchTests = (
         Description => 'Insert change with one workorder in the 11th century.',
         SourceData  => {
             ChangeAdd => {
-                UserID => 1,
+                ChangeTitle => $TSTChangeTitle,
+                UserID      => 1,
             },
             WorkOrderAdd => {
                 UserID           => 1,
@@ -2403,7 +2406,8 @@ my @TimeSearchTests = (
         Description => 'Insert change with one workorder in the 11th century.',
         SourceData  => {
             ChangeAdd => {
-                UserID => 1,
+                ChangeTitle => $TSTChangeTitle,
+                UserID      => 1,
             },
             WorkOrderAdd => {
                 UserID           => 1,
@@ -2418,7 +2422,8 @@ my @TimeSearchTests = (
         Description => 'Insert change with one workorder in the 11th century.',
         SourceData  => {
             ChangeAdd => {
-                UserID => 1,
+                ChangeTitle => $TSTChangeTitle,
+                UserID      => 1,
             },
             WorkOrderAdd => {
                 UserID           => 1,
@@ -2437,6 +2442,7 @@ my @TimeSearchTests = (
         Description => 'Search for PlannedStartTimeNewerDate and PlannedStartTimeOlderDate.',
         SourceData  => {
             ChangeSearch => {
+                ChangeTitle               => $TSTChangeTitle,
                 UserID                    => 1,
                 PlannedStartTimeNewerDate => '1009-01-01 00:00:00',
                 PlannedStartTimeOlderDate => '1009-01-02 00:00:00',
@@ -2450,6 +2456,7 @@ my @TimeSearchTests = (
         Description => 'Search for PlannedStartTimeNewerDate and PlannedStartTimeOlderDate.',
         SourceData  => {
             ChangeSearch => {
+                ChangeTitle               => $TSTChangeTitle,
                 UserID                    => 1,
                 PlannedStartTimeNewerDate => '1008-12-01 00:00:00',
                 PlannedStartTimeOlderDate => '1008-12-31 00:00:00',
@@ -2461,6 +2468,7 @@ my @TimeSearchTests = (
         Description => 'Search for PlannedStartTimeNewerDate.',
         SourceData  => {
             ChangeSearch => {
+                ChangeTitle               => $TSTChangeTitle,
                 UserID                    => 1,
                 PlannedStartTimeNewerDate => '1009-02-01 00:00:00',
             },
@@ -2471,6 +2479,7 @@ my @TimeSearchTests = (
         Description => 'Search for PlannedStartTimeNewerDate.',
         SourceData  => {
             ChangeSearch => {
+                ChangeTitle               => $TSTChangeTitle,
                 UserID                    => 1,
                 PlannedStartTimeNewerDate => '1009-12-01 00:00:00',
             },
@@ -2481,6 +2490,7 @@ my @TimeSearchTests = (
         Description => 'Search for PlannedStartTimeOlderDate.',
         SourceData  => {
             ChangeSearch => {
+                ChangeTitle               => $TSTChangeTitle,
                 UserID                    => 1,
                 PlannedStartTimeOlderDate => '1009-01-10 00:00:00',
             },
@@ -2491,6 +2501,7 @@ my @TimeSearchTests = (
         Description => 'Search for PlannedStartTimeOlderDate.',
         SourceData  => {
             ChangeSearch => {
+                ChangeTitle               => $TSTChangeTitle,
                 UserID                    => 1,
                 PlannedStartTimeOlderDate => '1008-01-31 00:00:00',
             },
@@ -2501,6 +2512,7 @@ my @TimeSearchTests = (
         Description => 'Search for PlannedStartTimeNewerDate and PlannedStartTimeOlderDate.',
         SourceData  => {
             ChangeSearch => {
+                ChangeTitle               => $TSTChangeTitle,
                 UserID                    => 1,
                 PlannedStartTimeNewerDate => '1009-12-01 00:00:00',
                 PlannedStartTimeOlderDate => '1008-12-01 00:00:00',
@@ -2516,6 +2528,7 @@ my @TimeSearchTests = (
         Description => 'Search for PlannedEndTimeNewerDate and PlannedEndTimeOlderDate.',
         SourceData  => {
             ChangeSearch => {
+                ChangeTitle             => $TSTChangeTitle,
                 UserID                  => 1,
                 PlannedEndTimeNewerDate => '1009-01-30 00:00:00',
                 PlannedEndTimeOlderDate => '1009-01-31 00:00:00',
@@ -2529,6 +2542,7 @@ my @TimeSearchTests = (
         Description => 'Search for PlannedEndTimeNewerDate and PlannedEndTimeOlderDate.',
         SourceData  => {
             ChangeSearch => {
+                ChangeTitle             => $TSTChangeTitle,
                 UserID                  => 1,
                 PlannedEndTimeNewerDate => '1008-12-01 00:00:00',
                 PlannedEndTimeOlderDate => '1008-12-31 00:00:00',
@@ -2540,6 +2554,7 @@ my @TimeSearchTests = (
         Description => 'Search for PlannedEndTimeNewerDate.',
         SourceData  => {
             ChangeSearch => {
+                ChangeTitle             => $TSTChangeTitle,
                 UserID                  => 1,
                 PlannedEndTimeNewerDate => '1009-02-27 00:00:00',
             },
@@ -2550,6 +2565,7 @@ my @TimeSearchTests = (
         Description => 'Search for PlannedEndTimeNewerDate.',
         SourceData  => {
             ChangeSearch => {
+                ChangeTitle             => $TSTChangeTitle,
                 UserID                  => 1,
                 PlannedEndTimeNewerDate => '1009-05-01 00:00:00',
             },
@@ -2560,6 +2576,7 @@ my @TimeSearchTests = (
         Description => 'Search for PlannedEndTimeOlderDate.',
         SourceData  => {
             ChangeSearch => {
+                ChangeTitle             => $TSTChangeTitle,
                 UserID                  => 1,
                 PlannedEndTimeOlderDate => '1009-01-25 00:00:00',
             },
@@ -2570,6 +2587,7 @@ my @TimeSearchTests = (
         Description => 'Search for PlannedEndTimeOlderDate.',
         SourceData  => {
             ChangeSearch => {
+                ChangeTitle             => $TSTChangeTitle,
                 UserID                  => 1,
                 PlannedEndTimeOlderDate => '1008-01-31 00:00:00',
             },
@@ -2580,6 +2598,7 @@ my @TimeSearchTests = (
         Description => 'Search for PlannedEndTimeNewerDate and PlannedEndTimeOlderDate.',
         SourceData  => {
             ChangeSearch => {
+                ChangeTitle             => $TSTChangeTitle,
                 UserID                  => 1,
                 PlannedEndTimeNewerDate => '1009-05-01 00:00:00',
                 PlannedEndTimeOlderDate => '1008-12-01 00:00:00',
@@ -2595,6 +2614,7 @@ my @TimeSearchTests = (
         Description => 'Search for ActualStartTimeNewerDate and ActualStartTimeOlderDate.',
         SourceData  => {
             ChangeSearch => {
+                ChangeTitle              => $TSTChangeTitle,
                 UserID                   => 1,
                 ActualStartTimeNewerDate => '1009-01-02 00:00:00',
                 ActualStartTimeOlderDate => '1009-01-02 00:00:00',
@@ -2608,6 +2628,7 @@ my @TimeSearchTests = (
         Description => 'Search for ActualStartTimeNewerDate and ActualStartTimeOlderDate.',
         SourceData  => {
             ChangeSearch => {
+                ChangeTitle              => $TSTChangeTitle,
                 UserID                   => 1,
                 ActualStartTimeNewerDate => '1008-12-01 00:00:00',
                 ActualStartTimeOlderDate => '1008-12-31 00:00:00',
@@ -2619,6 +2640,7 @@ my @TimeSearchTests = (
         Description => 'Search for ActualStartTimeNewerDate.',
         SourceData  => {
             ChangeSearch => {
+                ChangeTitle              => $TSTChangeTitle,
                 UserID                   => 1,
                 ActualStartTimeNewerDate => '1009-02-01 00:00:00',
             },
@@ -2629,6 +2651,7 @@ my @TimeSearchTests = (
         Description => 'Search for ActualStartTimeNewerDate.',
         SourceData  => {
             ChangeSearch => {
+                ChangeTitle              => $TSTChangeTitle,
                 UserID                   => 1,
                 ActualStartTimeNewerDate => '1009-12-30 00:00:00',
             },
@@ -2639,6 +2662,7 @@ my @TimeSearchTests = (
         Description => 'Search for ActualStartTimeOlderDate.',
         SourceData  => {
             ChangeSearch => {
+                ChangeTitle              => $TSTChangeTitle,
                 UserID                   => 1,
                 ActualStartTimeOlderDate => '1009-01-12 00:00:00',
             },
@@ -2649,6 +2673,7 @@ my @TimeSearchTests = (
         Description => 'Search for ActualStartTimeOlderDate.',
         SourceData  => {
             ChangeSearch => {
+                ChangeTitle              => $TSTChangeTitle,
                 UserID                   => 1,
                 ActualStartTimeOlderDate => '1008-01-31 00:00:00',
             },
@@ -2659,6 +2684,7 @@ my @TimeSearchTests = (
         Description => 'Search for ActualStartTimeNewerDate and ActualStartTimeOlderDate.',
         SourceData  => {
             ChangeSearch => {
+                ChangeTitle              => $TSTChangeTitle,
                 UserID                   => 1,
                 ActualStartTimeNewerDate => '1009-12-01 00:00:00',
                 ActualStartTimeOlderDate => '1008-12-01 00:00:00',
@@ -2674,6 +2700,7 @@ my @TimeSearchTests = (
         Description => 'Search for ActualEndTimeNewerDate and ActualEndTimeOlderDate.',
         SourceData  => {
             ChangeSearch => {
+                ChangeTitle            => $TSTChangeTitle,
                 UserID                 => 1,
                 ActualEndTimeNewerDate => '1009-01-28 00:00:00',
                 ActualEndTimeOlderDate => '1009-01-29 00:00:00',
@@ -2687,6 +2714,7 @@ my @TimeSearchTests = (
         Description => 'Search for ActualEndTimeNewerDate and ActualEndTimeOlderDate.',
         SourceData  => {
             ChangeSearch => {
+                ChangeTitle            => $TSTChangeTitle,
                 UserID                 => 1,
                 ActualEndTimeNewerDate => '1008-12-01 00:00:00',
                 ActualEndTimeOlderDate => '1008-12-31 00:00:00',
@@ -2698,6 +2726,7 @@ my @TimeSearchTests = (
         Description => 'Search for ActualEndTimeNewerDate.',
         SourceData  => {
             ChangeSearch => {
+                ChangeTitle            => $TSTChangeTitle,
                 UserID                 => 1,
                 ActualEndTimeNewerDate => '1009-02-26 00:00:00',
             },
@@ -2708,6 +2737,7 @@ my @TimeSearchTests = (
         Description => 'Search for ActualEndTimeNewerDate.',
         SourceData  => {
             ChangeSearch => {
+                ChangeTitle            => $TSTChangeTitle,
                 UserID                 => 1,
                 ActualEndTimeNewerDate => '1009-12-01 00:00:00',
             },
@@ -2718,6 +2748,7 @@ my @TimeSearchTests = (
         Description => 'Search for ActualEndTimeOlderDate.',
         SourceData  => {
             ChangeSearch => {
+                ChangeTitle            => $TSTChangeTitle,
                 UserID                 => 1,
                 ActualEndTimeOlderDate => '1009-01-29 00:00:00',
             },
@@ -2728,6 +2759,7 @@ my @TimeSearchTests = (
         Description => 'Search for ActualEndTimeOlderDate.',
         SourceData  => {
             ChangeSearch => {
+                ChangeTitle            => $TSTChangeTitle,
                 UserID                 => 1,
                 ActualEndTimeOlderDate => '1008-12-01 00:00:00',
             },
@@ -2738,6 +2770,7 @@ my @TimeSearchTests = (
         Description => 'Search for ActualEndTimeNewerDate and ActualEndTimeOlderDate.',
         SourceData  => {
             ChangeSearch => {
+                ChangeTitle            => $TSTChangeTitle,
                 UserID                 => 1,
                 ActualEndTimeNewerDate => '1009-12-01 00:00:00',
                 ActualEndTimeOlderDate => '1008-12-31 00:00:00',
