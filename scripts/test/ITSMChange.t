@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.93 2009-10-21 08:34:47 bes Exp $
+# $Id: ITSMChange.t,v 1.94 2009-10-21 09:33:07 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -2371,7 +2371,7 @@ for my $ChangeIDForSecondOrderByTests (@ChangeIDsForOrderByTests) {
 my @TSTChangeIDs;
 my @TimeSearchTests = (
     {
-        Description => 'Insert change with one workorder in the first century.',
+        Description => 'Insert change with one workorder in the 11th century.',
         SourceData  => {
             ChangeAdd => {
                 UserID => 1,
@@ -2386,7 +2386,7 @@ my @TimeSearchTests = (
         },
     },
     {
-        Description => 'Insert change with one workorder in the first century.',
+        Description => 'Insert change with one workorder in the 11th century.',
         SourceData  => {
             ChangeAdd => {
                 UserID => 1,
@@ -2401,7 +2401,7 @@ my @TimeSearchTests = (
         },
     },
     {
-        Description => 'Insert change with one workorder in the first century.',
+        Description => 'Insert change with one workorder in the 11th century.',
         SourceData  => {
             ChangeAdd => {
                 UserID => 1,
@@ -2416,7 +2416,7 @@ my @TimeSearchTests = (
         },
     },
     {
-        Description => 'Insert change with one workorder in the first century.',
+        Description => 'Insert change with one workorder in the 11th century.',
         SourceData  => {
             ChangeAdd => {
                 UserID => 1,
