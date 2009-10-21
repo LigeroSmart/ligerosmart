@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeEdit.pm - the OTRS::ITSM::ChangeManagement change edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.pm,v 1.1 2009-10-11 23:22:20 ub Exp $
+# $Id: AgentITSMChangeEdit.pm,v 1.2 2009-10-21 06:58:27 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -43,19 +43,97 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    my $ChangeID = $Self->{ParamObject}->GetParam( Param => 'ChangeID' );
+
+    # check needed stuff
+    if ( !$ChangeID ) {
+        return $Self->{LayoutObject}->ErrorScreen(
+            Message => 'No ChangeID is given!',
+            Comment => 'Please contact the admin.',
+        );
+    }
+
+    # get workorder data
+    my $Change = $Self->{ChangeObject}->ChangeGet(
+        ChangeID => $ChangeID,
+        UserID   => $Self->{UserID},
+    );
+
+    if ( !$Change ) {
+        return $Self->{LayoutObject}->ErrorScreen(
+            Message => "Change $ChangeID not found in database!",
+            Comment => 'Please contact the admin.',
+        );
+    }
+
+    # store all needed parameters in %GetParam to make it reloadable
+    my %GetParam;
+    for my $ParamName (qw(Title Description Justification)) {
+        $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+    }
+
+    $Param{CurrentTitle} = $Change->{Title};
+
+    my $Title = $Self->{ParamObject}->GetParam( Param => 'Title' );
+
+    # update workorder
+    if ( $Self->{Subaction} eq 'Save' && $Title ) {
+        my $Success = $Self->{ChangeObject}->ChangeUpdate(
+            ChangeID      => $ChangeID,
+            Description   => $GetParam{Description},
+            Justification => $GetParam{Justification},
+            Title         => $Title,
+            UserID        => $Self->{UserID},
+        );
+
+        if ( !$Success ) {
+
+            # show error message
+            return $Self->{LayoutObject}->ErrorScreen(
+                Message => "Was not able to update Change $ChangeID!",
+                Comment => 'Please contact the admin.',
+            );
+        }
+        else {
+
+            # redirect to zoom mask
+            return $Self->{LayoutObject}->Redirect(
+                OP => "Action=AgentITSMChangeZoom&ChangeID=$ChangeID",
+            );
+        }
+    }
+    elsif ( $Self->{Subaction} eq 'Save' && !$Title ) {
+
+        # show invalid message
+        $Self->{LayoutObject}->Block(
+            Name => 'InvalidTitle',
+        );
+
+        # don't show title
+        $Param{CurrentTitle} = '';
+    }
+
     # output header
-    my $Output = $Self->{LayoutObject}->Header( Title => 'Edit' );
+    my $Output = $Self->{LayoutObject}->Header(
+        Title => 'Edit',
+    );
     $Output .= $Self->{LayoutObject}->NavigationBar();
+
+    $Self->{LayoutObject}->Block(
+        Name => 'RichText',
+    );
+
+    $Self->{LayoutObject}->Block(
+        Name => 'RichText2',
+    );
 
     # start template output
     $Output .= $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentITSMChangeEdit',
         Data         => {
-
-            # ...
             %Param,
-
-            # ...
+            %{$Change},
+            %GetParam,
         },
     );
 
