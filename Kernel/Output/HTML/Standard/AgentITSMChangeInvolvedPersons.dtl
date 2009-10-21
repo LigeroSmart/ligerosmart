@@ -2,9 +2,136 @@
 # AgentITSMChangeInvolvedPersons.dtl - provides HTML form for AgentITSMChangeInvolvedPersons
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.1 2009-10-11 23:16:35 ub Exp $
+# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.2 2009-10-21 06:50:36 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+    <tr>
+        <td class="mainhead">
+            $Env{"Box0"}$Text{"Edit"} $Text{"involved Persons of"} $Text{"Change#"}: $QData{"ChangeNumber"} $Env{"Box1"} $QData{"Title","70"}
+        </td>
+    </tr>
+    <tr>
+        <td class="menu">
+            <a href="#" class="menuitem">$Text{"Back"}</a>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="mainbody">
+            <br>
+            <form action="$Env{"CGIHandle"}" method="post">
+                <input type="hidden" name="Action"    value="$Env{"Action"}">
+                <input type="hidden" name="Subaction" value="Save">
+                <input type="hidden" name="ChangeID" value="$QData{"WorkOrderID"}">
+                <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
+                    <tr>
+                        <td class="contenthead">$Text{"Involved Persons"}</td>
+                    </tr>
+                    <tr class="contentbody">
+                        <td>
+                            <table border="0">
+                                <tr>
+                                    <td class="contentkey">
+                                        $Text{"Change Manager"}:
+                                        <font color="red" title="$Text{"Required"}">*</font>
+                                    </td>
+                                    <td class="contentvalue">
+                                        <input type="text" name="ChangeManager" value="$QData{"ChangeManager"}" size="70">
+<!-- dtl:block:InvalidChangeManager -->
+                                        <br />
+                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
+<!-- dtl:block:InvalidChangeManager -->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="contentkey">
+                                        $Text{"Change Builder"}:
+                                        <font color="red" title="$Text{"Required"}">*</font>
+                                    </td>
+                                    <td class="contentvalue">
+                                        <input type="text" name="ChangeBuilder" value="$QData{"ChangeBuilder"}" size="70">
+<!-- dtl:block:InvalidChangeBuilder -->
+                                        <br />
+                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
+<!-- dtl:block:InvalidChangeBuilder -->
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="contenthead">$Text{"Change Advisory Board"}</td>
+                    </tr>
+                    <tr class="contentbody">
+                        <td>
+                            <table border="0">
+                                <tr>
+                                    <td class="contentkey">
+                                        $Text{"Add CAB Template"}:
+                                    </td>
+                                    <td class="contentvalue">
+                                        $Data{"CABTemplateStrg"}
+                                    </td>
+                                    <td>
+                                        <input type="submit" class="button" name="AddCABTemplate" value="$Text{"Add"}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="contentkey">
+                                        $Text{"Add to CAB"}:
+                                    </td>
+                                    <td class="contentvalue">
+                                        <input type="text" name="NewCABMember" value="$QData{"NewCABMember"}" size="70">
+                                    </td>
+                                    <td class="contentvalue">
+                                        <input type="submit" class="button" name="AddCABMember" value="$Text{"Add"}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="contentkey">
+                                        $Text{"Current CAB"}:
+                                    </td>
+                                    <td class="contentkey">
+                                        $Text{"Agent"}:
+                                    </td>
+                                    <td class="contentvalue">&nbsp;</td>
+                                </tr>
+<!-- dtl:block:AgentCAB -->
+                                <tr>
+                                    <td class="contentkey">&nbsp;</td>
+                                    <td class="contentvalue">$Data{"UserLogin"} &lt;$Data{"UserEmail"}&gt;</td>
+                                    <td class="contentvalue"><input type="submit" class="button" name="ChangeAgentCABDelete$QData{"UserLogin"}" value="$Text{"Delete"}"></td>
+                                </tr>
+<!-- dtl:block:AgentCAB -->
+                                <tr>
+                                    <td class="contentkey">&nbsp;</td>
+                                    <td class="contentkey">$Text{"Customer"}:</td>
+                                    <td class="contentvalue">&nbsp;</td>
+                                </tr>
+<!-- dtl:block:CustomerCAB -->
+                                <tr>
+                                    <td class="contentkey">&nbsp;</td>
+                                    <td class="contentvalue">$Data{"CustomerLogin"} &lt;$Data{"CustomerEmail"}&gt;</td>
+                                    <td class="contentvalue"><input type="submit" class="button" name="ChangeCustomerCABDelete$QData{"CustomerLogin"}" value="$Text{"Delete"}"></td>
+                                </tr>
+<!-- dtl:block:CustomerCAB -->
+
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="contentfooter">
+                            <input class="button" type="submit" name="Submit" value="$Text{"Submit"}">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            <br>
+        </td>
+    </tr>
+</table>

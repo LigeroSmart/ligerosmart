@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeInvolvedPersons.pm - the OTRS::ITSM::ChangeManagement change involved persons module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.1 2009-10-11 23:23:00 ub Exp $
+# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.2 2009-10-21 06:50:36 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,9 +15,11 @@ use strict;
 use warnings;
 
 use Kernel::System::ITSMChange;
+use Kernel::System::User;
+use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -32,7 +34,10 @@ sub new {
             $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
         }
     }
-    $Self->{ChangeObject} = Kernel::System::ITSMChange->new(%Param);
+
+    $Self->{CustomerUserObject} = Kernel::System::CustomerUser->new(%Param);
+    $Self->{UserObject}         = Kernel::System::User->new(%Param);
+    $Self->{ChangeObject}       = Kernel::System::ITSMChange->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChangeManagement::Frontend::$Self->{Action}");
@@ -43,9 +48,125 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    my $ChangeID = $Self->{ParamObject}->GetParam( Param => 'ChangeID' );
+
+    # check needed stuff
+    if ( !$ChangeID ) {
+        return $Self->{LayoutObject}->ErrorScreen(
+            Message => 'No ChangeID is given!',
+            Comment => 'Please contact the admin.',
+        );
+    }
+
+    # get workorder data
+    my $Change = $Self->{ChangeObject}->ChangeGet(
+        ChangeID => $ChangeID,
+        UserID   => $Self->{UserID},
+    );
+
+    if ( !$Change ) {
+        return $Self->{LayoutObject}->ErrorScreen(
+            Message => "Change $ChangeID not found in database!",
+            Comment => 'Please contact the admin.',
+        );
+    }
+
+    # store all needed parameters in %GetParam to make it reloadable
+    my %GetParam;
+    for my $ParamName (qw(ChangeBuilder ChangeManager NewCABMember CABTemplate)) {
+        $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+    }
+
+    my $AllRequired = $GetParam{ChangeBuilder} && $GetParam{ChangeManager};
+    my $DeleteMember = 0;
+
+    # update workorder
+    if ( $Self->{ParamObject}->GetParam( Param => 'AddCABMember' ) ) {
+
+        # add a member
+    }
+    if ( $Self->{ParamObject}->GetParam( Param => 'AddCABTemplate' ) ) {
+
+        # add a template
+    }
+    elsif ( $Self->{Subaction} eq 'Save' && $AllRequired && !$DeleteMember ) {
+        my $Success = $Self->{ChangeObject}->ChangeCABUpdate(
+            ChangeID => $ChangeID,
+            UserID   => $Self->{UserID},
+        );
+
+        if ( !$Success ) {
+
+            # show error message
+            return $Self->{LayoutObject}->ErrorScreen(
+                Message => "Was not able to update Change $ChangeID!",
+                Comment => 'Please contact the admin.',
+            );
+        }
+        else {
+
+            # redirect to zoom mask
+            return $Self->{LayoutObject}->Redirect(
+                OP => "Action=AgentITSMChangeZoom&ChangeID=$ChangeID",
+            );
+        }
+    }
+    elsif ( $Self->{Subaction} eq 'Save' && !$AllRequired ) {
+
+        # show error message for change builder
+        if ( !$GetParam{ChangeBuilder} ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'InvalidChangeBuilder',
+            );
+        }
+
+        # show error message for change manager
+        if ( !$GetParam{ChangeManager} ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'InvalidChangeManager',
+            );
+        }
+    }
+
+    # show all customer members of CAB
+    CUSTOMERLOGIN:
+    for my $CustomerLogin ( @{ $Change->{CABCustomers} } ) {
+        my %CustomerUser = $Self->{CustomerUserObject}->GetCustomerUserData(
+            User  => $CustomerLogin,
+            Valid => 1,
+        );
+
+        next CUSTOMERLOGIN if !%CustomerUser;
+
+        $Self->{LayoutObject}->Block(
+            Name => 'CustomerCAB',
+            Data => {
+                %CustomerUser,
+            },
+        );
+    }
+
+    # show all agent members of CAB
+    USERID:
+    for my $UserID ( @{ $Change->{CABAgents} } ) {
+        my %User = $Self->{UserObject}->GetUserData(
+            UserID => $UserID,
+            Valid  => 1,
+        );
+
+        next USERID if !%User;
+
+        $Self->{LayoutObject}->Block(
+            Name => 'AgentCAB',
+            Data => {
+                %User,
+            },
+        );
+    }
+
     # output header
     my $Output = $Self->{LayoutObject}->Header(
-        Title =>    # ...,
+        Title => 'Involved Persons',
     );
     $Output .= $Self->{LayoutObject}->NavigationBar();
 
@@ -53,11 +174,9 @@ sub Run {
     $Output .= $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentITSMChangeInvolvedPersons',
         Data         => {
-
-            # ...
             %Param,
-
-            # ...
+            %{$Change},
+            %GetParam,
         },
     );
 
