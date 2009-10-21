@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.68 2009-10-21 08:34:47 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.69 2009-10-21 10:18:58 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -251,6 +251,24 @@ my @ChangeTests     = (
             },
         },
     },
+
+    # a change for testing time searches in workorders
+    {
+        Description => 'Change for testing time searches in workorders .',
+        SourceData  => {
+            ChangeAdd => {
+                ChangeTitle => 'Change 4 for testing time searches in workorder - Title - '
+                    . $UniqueSignature,
+                UserID => $UserIDs[0],
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                ChangeTitle => 'Change 4 for testing time searches in workorder - Title - '
+                    . $UniqueSignature,
+            },
+        },
+    },
 );
 
 # ------------------------------------------------------------ #
@@ -389,7 +407,8 @@ continue {
 # ------------------------------------------------------------ #
 my @WorkOrderTests;
 
-my ( $WorkOrderAddTestID, $OrderByTestID, $StringSearchTestID ) = sort keys %TestedChangeID;
+my ( $WorkOrderAddTestID, $OrderByTestID, $StringSearchTestID, $TimeSearchTestID )
+    = sort keys %TestedChangeID;
 
 # tests with only WorkOrderAdd();
 push @WorkOrderTests, (
@@ -1772,7 +1791,6 @@ for my $OrderByColumn (@OrderByColumns) {
         OrderBy          => [$OrderByColumn],
         OrderByDirection => ['Up'],
         UserID           => 1,
-        Huhu             => 1,
     );
 
     # dump the attribute from WorkOrderGet()
@@ -2046,6 +2064,467 @@ for my $OrderByColumn (qw(PlannedStartTime PlannedEndTime ActualStartTime Actual
 
     $OrderByTestCount++;
     $TestCount++;
+}
+
+# ------------------------------------------------------------ #
+# advanced search by tests for times
+# ------------------------------------------------------------ #
+my @TSTChangeIDs;
+my @TimeSearchTests = (
+    {
+        Description => 'First workorder in the first century.',
+        SourceData  => {
+            WorkOrderAdd => {
+                UserID           => 1,
+                PlannedStartTime => '1009-01-01 00:00:00',
+                PlannedEndTime   => '1009-01-30 00:00:00',
+                ActualStartTime  => '1009-01-02 00:00:00',
+                ActualEndTime    => '1009-01-29 00:00:00',
+            },
+        },
+    },
+    {
+        Description => 'Second workorder in the 11th century.',
+        SourceData  => {
+            ChangeAdd => {
+                UserID => 1,
+            },
+            WorkOrderAdd => {
+                UserID           => 1,
+                PlannedStartTime => '1009-01-10 00:00:00',
+                PlannedEndTime   => '1009-01-20 00:00:00',
+                ActualStartTime  => '1009-01-11 00:00:00',
+                ActualEndTime    => '1009-01-19 00:00:00',
+            },
+        },
+    },
+    {
+        Description => 'Third change with one workorder in the 11th century.',
+        SourceData  => {
+            ChangeAdd => {
+                UserID => 1,
+            },
+            WorkOrderAdd => {
+                UserID           => 1,
+                PlannedStartTime => '1009-02-01 00:00:00',
+                PlannedEndTime   => '1009-02-27 00:00:00',
+                ActualStartTime  => '1009-02-02 00:00:00',
+                ActualEndTime    => '1009-02-26 00:00:00',
+            },
+        },
+    },
+    {
+        Description => 'Fourth workorder in the 11th century.',
+        SourceData  => {
+            ChangeAdd => {
+                UserID => 1,
+            },
+            WorkOrderAdd => {
+                UserID           => 1,
+                PlannedStartTime => '1009-03-01 00:00:00',
+                PlannedEndTime   => '1009-04-07 00:00:00',
+                ActualStartTime  => '1009-02-20 00:00:00',
+                ActualEndTime    => '1009-05-01 00:00:00',
+            },
+        },
+    },
+
+    #---------------------------------#
+    # test for planned start time
+    #---------------------------------#
+    {
+        Description => 'Search for PlannedStartTimeNewerDate and PlannedStartTimeOlderDate.',
+        SourceData  => {
+            WorkOrderSearch => {
+                UserID                    => 1,
+                PlannedStartTimeNewerDate => '1009-01-01 00:00:00',
+                PlannedStartTimeOlderDate => '1009-01-02 00:00:00',
+            },
+        },
+        ReferenceData => [
+            0,
+        ],
+    },
+    {
+        Description => 'Search for PlannedStartTimeNewerDate and PlannedStartTimeOlderDate.',
+        SourceData  => {
+            WorkOrderSearch => {
+                UserID                    => 1,
+                PlannedStartTimeNewerDate => '1008-12-01 00:00:00',
+                PlannedStartTimeOlderDate => '1008-12-31 00:00:00',
+            },
+        },
+        ReferenceData => [],
+    },
+    {
+        Description => 'Search for PlannedStartTimeNewerDate.',
+        SourceData  => {
+            WorkOrderSearch => {
+                UserID                    => 1,
+                PlannedStartTimeNewerDate => '1009-02-01 00:00:00',
+            },
+        },
+        ReferenceData => [ 2, 3, ],
+    },
+    {
+        Description => 'Search for PlannedStartTimeNewerDate.',
+        SourceData  => {
+            WorkOrderSearch => {
+                UserID                    => 1,
+                PlannedStartTimeNewerDate => '1009-12-01 00:00:00',
+            },
+        },
+        ReferenceData => [],
+    },
+    {
+        Description => 'Search for PlannedStartTimeOlderDate.',
+        SourceData  => {
+            WorkOrderSearch => {
+                UserID                    => 1,
+                PlannedStartTimeOlderDate => '1009-01-10 00:00:00',
+            },
+        },
+        ReferenceData => [ 0, 1, ],
+    },
+    {
+        Description => 'Search for PlannedStartTimeOlderDate.',
+        SourceData  => {
+            WorkOrderSearch => {
+                UserID                    => 1,
+                PlannedStartTimeOlderDate => '1008-01-31 00:00:00',
+            },
+        },
+        ReferenceData => [],
+    },
+    {
+        Description => 'Search for PlannedStartTimeNewerDate and PlannedStartTimeOlderDate.',
+        SourceData  => {
+            WorkOrderSearch => {
+                UserID                    => 1,
+                PlannedStartTimeNewerDate => '1009-12-01 00:00:00',
+                PlannedStartTimeOlderDate => '1008-12-01 00:00:00',
+            },
+        },
+        ReferenceData => [],
+    },
+
+    #---------------------------------#
+    # test for planned end time
+    #---------------------------------#
+    {
+        Description => 'Search for PlannedEndTimeNewerDate and PlannedEndTimeOlderDate.',
+        SourceData  => {
+            WorkOrderSearch => {
+                UserID                  => 1,
+                PlannedEndTimeNewerDate => '1009-01-30 00:00:00',
+                PlannedEndTimeOlderDate => '1009-01-31 00:00:00',
+            },
+        },
+        ReferenceData => [
+            0,
+        ],
+    },
+    {
+        Description => 'Search for PlannedEndTimeNewerDate and PlannedEndTimeOlderDate.',
+        SourceData  => {
+            WorkOrderSearch => {
+                UserID                  => 1,
+                PlannedEndTimeNewerDate => '1008-12-01 00:00:00',
+                PlannedEndTimeOlderDate => '1008-12-31 00:00:00',
+            },
+        },
+        ReferenceData => [],
+    },
+    {
+        Description => 'Search for PlannedEndTimeNewerDate.',
+        SourceData  => {
+            WorkOrderSearch => {
+                UserID                  => 1,
+                PlannedEndTimeNewerDate => '1009-02-27 00:00:00',
+            },
+        },
+        ReferenceData => [ 2, 3, ],
+    },
+    {
+        Description => 'Search for PlannedEndTimeNewerDate.',
+        SourceData  => {
+            WorkOrderSearch => {
+                UserID                  => 1,
+                PlannedEndTimeNewerDate => '1009-05-01 00:00:00',
+            },
+        },
+        ReferenceData => [],
+    },
+    {
+        Description => 'Search for PlannedEndTimeOlderDate.',
+        SourceData  => {
+            WorkOrderSearch => {
+                UserID                  => 1,
+                PlannedEndTimeOlderDate => '1009-01-25 00:00:00',
+            },
+        },
+        ReferenceData => [ 1, ],
+    },
+    {
+        Description => 'Search for PlannedEndTimeOlderDate.',
+        SourceData  => {
+            WorkOrderSearch => {
+                UserID                  => 1,
+                PlannedEndTimeOlderDate => '1008-01-31 00:00:00',
+            },
+        },
+        ReferenceData => [],
+    },
+    {
+        Description => 'Search for PlannedEndTimeNewerDate and PlannedEndTimeOlderDate.',
+        SourceData  => {
+            WorkOrderSearch => {
+                UserID                  => 1,
+                PlannedEndTimeNewerDate => '1009-05-01 00:00:00',
+                PlannedEndTimeOlderDate => '1008-12-01 00:00:00',
+            },
+        },
+        ReferenceData => [],
+    },
+
+    #---------------------------------#
+    # test for actual start time
+    #---------------------------------#
+    {
+        Description => 'Search for ActualStartTimeNewerDate and ActualStartTimeOlderDate.',
+        SourceData  => {
+            WorkOrderSearch => {
+                UserID                   => 1,
+                ActualStartTimeNewerDate => '1009-01-02 00:00:00',
+                ActualStartTimeOlderDate => '1009-01-02 00:00:00',
+            },
+        },
+        ReferenceData => [
+            0,
+        ],
+    },
+    {
+        Description => 'Search for ActualStartTimeNewerDate and ActualStartTimeOlderDate.',
+        SourceData  => {
+            WorkOrderSearch => {
+                UserID                   => 1,
+                ActualStartTimeNewerDate => '1008-12-01 00:00:00',
+                ActualStartTimeOlderDate => '1008-12-31 00:00:00',
+            },
+        },
+        ReferenceData => [],
+    },
+    {
+        Description => 'Search for ActualStartTimeNewerDate.',
+        SourceData  => {
+            WorkOrderSearch => {
+                UserID                   => 1,
+                ActualStartTimeNewerDate => '1009-02-01 00:00:00',
+            },
+        },
+        ReferenceData => [ 2, 3, ],
+    },
+    {
+        Description => 'Search for ActualStartTimeNewerDate.',
+        SourceData  => {
+            WorkOrderSearch => {
+                UserID                   => 1,
+                ActualStartTimeNewerDate => '1009-12-30 00:00:00',
+            },
+        },
+        ReferenceData => [],
+    },
+    {
+        Description => 'Search for ActualStartTimeOlderDate.',
+        SourceData  => {
+            WorkOrderSearch => {
+                UserID                   => 1,
+                ActualStartTimeOlderDate => '1009-01-12 00:00:00',
+            },
+        },
+        ReferenceData => [ 0, 1, ],
+    },
+    {
+        Description => 'Search for ActualStartTimeOlderDate.',
+        SourceData  => {
+            WorkOrderSearch => {
+                UserID                   => 1,
+                ActualStartTimeOlderDate => '1008-01-31 00:00:00',
+            },
+        },
+        ReferenceData => [],
+    },
+    {
+        Description => 'Search for ActualStartTimeNewerDate and ActualStartTimeOlderDate.',
+        SourceData  => {
+            WorkOrderSearch => {
+                UserID                   => 1,
+                ActualStartTimeNewerDate => '1009-12-01 00:00:00',
+                ActualStartTimeOlderDate => '1008-12-01 00:00:00',
+            },
+        },
+        ReferenceData => [],
+    },
+
+    #---------------------------------#
+    # test for actual end time
+    #---------------------------------#
+    {
+        Description => 'Search for ActualEndTimeNewerDate and ActualEndTimeOlderDate.',
+        SourceData  => {
+            WorkOrderSearch => {
+                UserID                 => 1,
+                ActualEndTimeNewerDate => '1009-01-28 00:00:00',
+                ActualEndTimeOlderDate => '1009-01-29 00:00:00',
+            },
+        },
+        ReferenceData => [
+            0,
+        ],
+    },
+    {
+        Description => 'Search for ActualEndTimeNewerDate and ActualEndTimeOlderDate.',
+        SourceData  => {
+            WorkOrderSearch => {
+                UserID                 => 1,
+                ActualEndTimeNewerDate => '1008-12-01 00:00:00',
+                ActualEndTimeOlderDate => '1008-12-31 00:00:00',
+            },
+        },
+        ReferenceData => [],
+    },
+    {
+        Description => 'Search for ActualEndTimeNewerDate.',
+        SourceData  => {
+            WorkOrderSearch => {
+                UserID                 => 1,
+                ActualEndTimeNewerDate => '1009-02-26 00:00:00',
+            },
+        },
+        ReferenceData => [ 2, 3, ],
+    },
+    {
+        Description => 'Search for ActualEndTimeNewerDate.',
+        SourceData  => {
+            WorkOrderSearch => {
+                UserID                 => 1,
+                ActualEndTimeNewerDate => '1009-12-01 00:00:00',
+            },
+        },
+        ReferenceData => [],
+    },
+    {
+        Description => 'Search for ActualEndTimeOlderDate.',
+        SourceData  => {
+            WorkOrderSearch => {
+                UserID                 => 1,
+                ActualEndTimeOlderDate => '1009-01-29 00:00:00',
+            },
+        },
+        ReferenceData => [ 0, 1, ],
+    },
+    {
+        Description => 'Search for ActualEndTimeOlderDate.',
+        SourceData  => {
+            WorkOrderSearch => {
+                UserID                 => 1,
+                ActualEndTimeOlderDate => '1008-12-01 00:00:00',
+            },
+        },
+        ReferenceData => [],
+    },
+    {
+        Description => 'Search for ActualEndTimeNewerDate and ActualEndTimeOlderDate.',
+        SourceData  => {
+            WorkOrderSearch => {
+                UserID                 => 1,
+                ActualEndTimeNewerDate => '1009-12-01 00:00:00',
+                ActualEndTimeOlderDate => '1008-12-31 00:00:00',
+            },
+        },
+        ReferenceData => [],
+    },
+
+);
+
+my $TSTCounter = 1;
+my @TSTWorkOrderIDs;
+TSTEST:
+for my $TSTest (@TimeSearchTests) {
+    my $SourceData    = $TSTest->{SourceData};
+    my $ReferenceData = $TSTest->{ReferenceData};
+
+    my $WorkOrderID;
+
+    $Self->True(
+        1,
+        "Test $TestCount: $TSTest->{Description} (TSTest case: $TSTCounter)",
+    );
+
+    if ( $SourceData->{WorkOrderAdd} ) {
+        $WorkOrderID = $Self->{WorkOrderObject}->WorkOrderAdd(
+            %{ $SourceData->{WorkOrderAdd} },
+            ChangeID => $TimeSearchTestID,
+        );
+
+        $Self->True(
+            $WorkOrderID,
+            "Test $TestCount: |- WorkOrderAdd",
+        );
+
+        push @TSTWorkOrderIDs, $WorkOrderID;
+        push @{ $IDsToDelete{WorkOrder} }, $WorkOrderID;
+    }
+
+    my $SearchResult;
+    if ( $SourceData->{WorkOrderSearch} ) {
+        $SearchResult = $Self->{WorkOrderObject}->WorkOrderSearch(
+            %{ $SourceData->{WorkOrderSearch} },
+            ChangeIDs => [$TimeSearchTestID],
+        );
+
+        $Self->True(
+            $SearchResult && ref $SearchResult eq 'ARRAY',
+            "Test $TestCount: WorkOrderSearch() - List is an array reference.",
+        );
+
+        next TSTEST if !$SearchResult;
+
+        # check number of founded change
+        $Self->Is(
+            scalar @{$SearchResult},
+            scalar @{$ReferenceData},
+            "Test $TestCount: WorkOrderSearch() - correct number of found changes",
+        );
+
+        # map array index to WorkOrderID
+        my @ResultWorkOrderIDs;
+        for my $ResultWorkOrderID ( @{$ReferenceData} ) {
+            push @ResultWorkOrderIDs, $TSTWorkOrderIDs[$ResultWorkOrderID];
+        }
+
+        # turn off all pretty print
+        local $Data::Dumper::Indent = 0;
+        local $Data::Dumper::Useqq  = 1;
+
+        # dump the attribute from WorkOrderSearch()
+        my $SearchResultDump = Data::Dumper::Dumper( sort @{$SearchResult} );
+
+        # dump the reference attribute
+        my $ReferenceDump
+            = Data::Dumper::Dumper( sort @ResultWorkOrderIDs );
+
+        $Self->Is(
+            $SearchResultDump,
+            $ReferenceDump,
+            "Test $TestCount: |- WorkOrderSearch(): "
+                . Data::Dumper::Dumper( $SourceData->{WorkOrderSearch} )
+                . $SearchResultDump,
+        );
+    }
+
+    $TestCount++;
+    $TSTCounter++;
 }
 
 # ------------------------------------------------------------ #
