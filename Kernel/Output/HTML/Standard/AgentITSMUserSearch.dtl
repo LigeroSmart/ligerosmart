@@ -2,7 +2,7 @@
 # AgentITSMUserSearch.dtl - provides autocomplete feature for customer search
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMUserSearch.dtl,v 1.2 2009-10-21 08:44:29 reb Exp $
+# $Id: AgentITSMUserSearch.dtl,v 1.3 2009-10-21 13:07:02 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -28,12 +28,6 @@
 <!-- Source file -->
 <script type="text/javascript" src="$Config{"Frontend::YUIPath"}build/autocomplete/autocomplete-min.js"></script>
 
-<style type="text/css">
-.myAutoComplete {
-    width:36em; /* set width here or else widget will expand to fit its container */
-    padding-bottom:0.5em;
-}
-</style>
 
 <script type="text/javascript">
 
@@ -48,14 +42,16 @@
         document.body.className = "yui-skin-sam";
 
 <!-- dtl:block:UserSearchAutoComplete -->
+
+<!-- dtl:block:UserSearchAutoCompleteCode -->
         // define XHRDataSource for autocomplete object
-        var myDataSource = new YAHOO.util.XHRDataSource('');
-        myDataSource.responseType = YAHOO.util.XHRDataSource.TYPE_JSON;
-        myDataSource.maxCacheEntries = 100;
-        myDataSource.connXhrMode = 'cancelStaleRequests';
+        var myDataSource$Data{"InputNr"} = new YAHOO.util.XHRDataSource('');
+        myDataSource$Data{"InputNr"}.responseType = YAHOO.util.XHRDataSource.TYPE_JSON;
+        myDataSource$Data{"InputNr"}.maxCacheEntries = 100;
+        myDataSource$Data{"InputNr"}.connXhrMode = 'cancelStaleRequests';
 
         // define the schema of the results for autocomplete object
-        myDataSource.responseSchema = {
+        myDataSource$Data{"InputNr"}.responseSchema = {
             resultsList : "Response.Results", // String pointer to result data
             fields : [
                 { key: "UserKey" },
@@ -63,22 +59,21 @@
                 { key: "UserValuePlain" }
             ]
         };
-
         // define autocomplete object
-        var myAutoComp$Data{"InputNr"} = new YAHOO.widget.AutoComplete("myAutoCompleteInput$Data{"InputNr"}", "myAutoCompleteContainer$Data{"InputNr"}", myDataSource);
+        var myAutoComp$Data{"InputNr"} = new YAHOO.widget.AutoComplete("myAutoCompleteInput$Data{"InputNr"}", "myAutoCompleteContainer$Data{"InputNr"}", myDataSource$Data{"InputNr"});
         myAutoComp$Data{"InputNr"}.resultTypeList = false;
 
         // get groups the user should belong to
         var UserGroup$Data{"InputNr"} = document.compose.UserSearchGroups$Data{"InputNr"}.value;
 
         // define request parameters
-        myAutoComp$Data{"InputNr"}.generateRequest = function(sQuery) {
-          return "?Action=AgentITSMUserSearch&Search=" + sQuery + "&Groups=" + UserGroup$Data{"InputNr"};
+        myAutoComp$Data{"InputNr"}.generateRequest = function(sQuery$Data{"InputNr"}) {
+          return "?Action=AgentITSMUserSearch&Search=" + sQuery$Data{"InputNr"} + "&Groups=" + UserGroup$Data{"InputNr"};
         };
 
         // define output format for drop down list
-        myAutoComp$Data{"InputNr"}.formatResult = function(oResultData, sQuery, sResultMatch) {
-            return (oResultData.UserValue + " (" + oResultData.UserKey + ")");
+        myAutoComp$Data{"InputNr"}.formatResult = function(oResultData$Data{"InputNr"}, sQuery$Data{"InputNr"}, sResultMatch$Data{"InputNr"}) {
+            return (oResultData$Data{"InputNr"}.UserValue + " (" + oResultData$Data{"InputNr"}.UserKey + ")");
         };
 
         // define various autocomplete properties
@@ -95,17 +90,17 @@
         myAutoComp$Data{"InputNr"}.useIFrame = true;
 
         // define custom itemSelect handler function
-        var itemSelectHandler$Data{"InputNr"} = function(sType, aArgs) {
-            var oMyAcInstance = aArgs[0];  // your AutoComplete instance
-            var elListItem    = aArgs[1];  // the <li> element selected in the suggestion container
-            var oData         = aArgs[2];  // object literal of data for the result
+        var itemSelectHandler$Data{"InputNr"} = function(sType$Data{"InputNr"}, aArgs$Data{"InputNr"}) {
+            var oMyAcInstance$Data{"InputNr"} = aArgs$Data{"InputNr"}[0];  // your AutoComplete instance
+            var elListItem$Data{"InputNr"}    = aArgs$Data{"InputNr"}[1];  // the <li> element selected in the suggestion container
+            var oData$Data{"InputNr"}         = aArgs$Data{"InputNr"}[2];  // object literal of data for the result
 
             // set autocomplete field with selected value
-            oMyAcInstance.getInputEl().value = oData.UserValuePlain;
+            oMyAcInstance$Data{"InputNr"}.getInputEl().value = oData$Data{"InputNr"}.UserValuePlain;
 
             // set hidden field SelectedUser
             if (document.compose.SelectedUser$Data{"InputNr"}) {
-                document.compose.SelectedUser$Data{"InputNr"}.value = oData.UserKey;
+                document.compose.SelectedUser$Data{"InputNr"}.value = oData$Data{"InputNr"}.UserKey;
             }
         };
 
@@ -113,7 +108,7 @@
         myAutoComp$Data{"InputNr"}.itemSelectEvent.subscribe(itemSelectHandler$Data{"InputNr"});
 
         // dynamically adjust the width of the autocomplete container
-        myAutoComp$Data{"InputNr"}.doBeforeLoadData = function (oRequest, oResponse, oPayload) {
+        myAutoComp$Data{"InputNr"}.doBeforeLoadData = function (oRequest$Data{"InputNr"}, oResponse$Data{"InputNr"}, oPayload$Data{"InputNr"}) {
 
             // check if dynamic width is enabled
             if ( !Number('$Config{"Agent::Frontend::UserSearchAutoComplete::DynamicWidth"}') ) {
@@ -121,22 +116,22 @@
             }
 
             // find the longest result string
-            var MaxString = '';
-            for ( var i = 0; i < oResponse.results.length; i++ ) {
-                var Result = oResponse.results[i];
-                var String = Result["UserValuePlain"] + Result["UserKey"];
-                if ( String.length > MaxString.length ) {
-                    MaxString = String;
+            var MaxString$Data{"InputNr"} = '';
+            for ( var i = 0; i < oResponse$Data{"InputNr"}.results.length; i++ ) {
+                var Result$Data{"InputNr"} = oResponse$Data{"InputNr"}.results[i];
+                var String$Data{"InputNr"} = Result$Data{"InputNr"}["UserValuePlain"] + Result$Data{"InputNr"}["UserKey"];
+                if ( String$Data{"InputNr"}.length > MaxString$Data{"InputNr"}.length ) {
+                    MaxString$Data{"InputNr"} = String$Data{"InputNr"};
                 }
             }
 
             // build option element with the longest result string
             var DummyOption$Data{"InputNr"} = document.createElement("option");
-            DummyOption$Data{"InputNr"}.appendChild(document.createTextNode(MaxString));
+            DummyOption$Data{"InputNr"}.appendChild(document.createTextNode(MaxString$Data{"InputNr"}));
 
             // build invisible dummy select field to find the width
             var DummySelect$Data{"InputNr"} = document.createElement("select");
-            DummySelect$Data{"InputNr"}.setAttribute( 'id', 'DummySelectID' );
+            DummySelect$Data{"InputNr"}.setAttribute( 'id', 'DummySelectID$Data{"InputNr"}' );
             DummySelect$Data{"InputNr"}.setAttribute( 'style', 'visibility:hidden' );
             DummySelect$Data{"InputNr"}.appendChild(DummyOption$Data{"InputNr"});
             document.getElementsByTagName("body")[0].appendChild(DummySelect$Data{"InputNr"});
@@ -152,18 +147,18 @@
 
             // apply new width to container
             Container$Data{"InputNr"}.style.width = NewWidth$Data{"InputNr"} + 'px';
-
             return true;
         };
+<!-- dtl:block:UserSearchAutoCompleteCode -->
 <!-- dtl:block:UserSearchAutoComplete -->
 
 <!-- dtl:block:UserSearchAutoCompleteReturn -->
         return {
 <!-- dtl:block:UserSearchAutoCompleteReturnElements -->
             myDataSource$Data{"InputNr"}: myDataSource$Data{"InputNr"},
-            myAutoComp$Data{"InputNr"}  : myAutoComp$Data{"InputNr"}
-
+            myAutoComp$Data{"InputNr"}  : myAutoComp$Data{"InputNr"},
 <!-- dtl:block:UserSearchAutoCompleteReturnElements -->
+            dummy: 1
         };
 <!-- dtl:block:UserSearchAutoCompleteReturn -->
     });

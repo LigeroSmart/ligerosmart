@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeInvolvedPersons.pm - the OTRS::ITSM::ChangeManagement change involved persons module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.2 2009-10-21 06:50:36 reb Exp $
+# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.3 2009-10-21 13:07:02 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::User;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -73,7 +73,11 @@ sub Run {
 
     # store all needed parameters in %GetParam to make it reloadable
     my %GetParam;
-    for my $ParamName (qw(ChangeBuilder ChangeManager NewCABMember CABTemplate)) {
+    for my $ParamName (
+        qw(ChangeBuilder ChangeManager NewCABMember CABTemplate
+        ExpandBuilder1 ExpandBuilder2 ExpandManager1 ExpandManager2)
+        )
+    {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
@@ -161,6 +165,87 @@ sub Run {
             Data => {
                 %User,
             },
+        );
+
+    }
+
+    # build changebuilder and changemanager search autocomplete field
+    my $AutoCompleteConfig
+        = $Self->{ConfigObject}->Get('ITSMChange::Frontend::UserSearchAutoComplete');
+    if ( $AutoCompleteConfig->{Active} ) {
+
+        # general blocks
+        $Self->{LayoutObject}->Block(
+            Name => 'UserSearchAutoComplete',
+        );
+
+        # change manager
+        $Self->{LayoutObject}->Block(
+            Name => 'UserSearchAutoCompleteCode',
+            Data => {
+                minQueryLength      => $AutoCompleteConfig->{MinQueryLength}      || 2,
+                queryDelay          => $AutoCompleteConfig->{QueryDelay}          || 0.1,
+                typeAhead           => $AutoCompleteConfig->{TypeAhead}           || 'false',
+                maxResultsDisplayed => $AutoCompleteConfig->{MaxResultsDisplayed} || 20,
+                InputNr             => 1,
+            },
+        );
+
+        # change builder
+        $Self->{LayoutObject}->Block(
+            Name => 'UserSearchAutoCompleteCode',
+            Data => {
+                minQueryLength      => $AutoCompleteConfig->{MinQueryLength}      || 2,
+                queryDelay          => $AutoCompleteConfig->{QueryDelay}          || 0.1,
+                typeAhead           => $AutoCompleteConfig->{TypeAhead}           || 'false',
+                maxResultsDisplayed => $AutoCompleteConfig->{MaxResultsDisplayed} || 20,
+                InputNr             => 2,
+            },
+        );
+
+        # general block
+        $Self->{LayoutObject}->Block(
+            Name => 'UserSearchAutoCompleteReturn',
+        );
+
+        # change manager
+        $Self->{LayoutObject}->Block(
+            Name => 'UserSearchAutoCompleteReturnElements',
+            Data => {
+                InputNr => 1,
+            },
+        );
+
+        # change builder
+        $Self->{LayoutObject}->Block(
+            Name => 'UserSearchAutoCompleteReturnElements',
+            Data => {
+                InputNr => 2,
+            },
+        );
+
+        # change manager
+        $Self->{LayoutObject}->Block(
+            Name => 'UserSearchAutoCompleteDivStart1',
+        );
+        $Self->{LayoutObject}->Block(
+            Name => 'UserSearchAutoCompleteDivEnd1',
+        );
+
+        # change builder
+        $Self->{LayoutObject}->Block(
+            Name => 'UserSearchAutoCompleteDivStart2',
+        );
+        $Self->{LayoutObject}->Block(
+            Name => 'UserSearchAutoCompleteDivEnd2',
+        );
+    }
+    else {
+        $Self->{LayoutObject}->Block(
+            Name => 'SearchUserButton1',
+        );
+        $Self->{LayoutObject}->Block(
+            Name => 'SearchUserButton2',
         );
     }
 

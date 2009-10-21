@@ -2,12 +2,36 @@
 # AgentITSMChangeInvolvedPersons.dtl - provides HTML form for AgentITSMChangeInvolvedPersons
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.2 2009-10-21 06:50:36 reb Exp $
+# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.3 2009-10-21 13:07:02 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+$Include{"AJAX"}
+
+$Include{"AgentITSMUserSearch"}
+
+<style type="text/css">
+.myAutoComplete {
+width:32em; /* set width here or else widget will expand to fit its container */
+padding-bottom:0.5em;
+}
+</style>
+
+<script language="JavaScript" type="text/javascript">
+<!--
+function clear_field1() {
+    document.compose.ChangeManager.value = "";
+    document.compose.ChangeManager.focus();
+}
+function clear_field2() {
+    document.compose.ChangeBuilder.value = "";
+    document.compose.ChangeBuilder.focus();
+}
+//-->
+</script>
+
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
         <td class="mainhead">
@@ -23,10 +47,14 @@
     <tr>
         <td class="mainbody">
             <br>
-            <form action="$Env{"CGIHandle"}" method="post">
+            <form action="$Env{"CGIHandle"}" method="post" name="compose">
                 <input type="hidden" name="Action"    value="$Env{"Action"}">
                 <input type="hidden" name="Subaction" value="Save">
-                <input type="hidden" name="ChangeID" value="$QData{"WorkOrderID"}">
+                <input type="hidden" name="ChangeID" value="$QData{"ChangeID"}">
+                <input type="hidden" name="SelectedUser1" value="$QData{"ChangeManagerID"}">
+                <input type="hidden" name="UserSearchGroups1" value="itsm-change">
+                <input type="hidden" name="SelectedUser2" value="$QData{"ChangeBuilderID"}">
+                <input type="hidden" name="UserSearchGroups2" value="itsm-change">
                 <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
                     <tr>
                         <td class="contenthead">$Text{"Involved Persons"}</td>
@@ -40,11 +68,26 @@
                                         <font color="red" title="$Text{"Required"}">*</font>
                                     </td>
                                     <td class="contentvalue">
-                                        <input type="text" name="ChangeManager" value="$QData{"ChangeManager"}" size="70">
+<!-- dtl:block:UserSearchAutoCompleteDivStart1 -->
+                                        <div id="myAutoComplete1" class="myAutoComplete">
+<!-- dtl:block:UserSearchAutoCompleteDivStart1 -->
+                                            <input id="myAutoCompleteInput1" type="text" name="ChangeManager" value="$QData{"ChangeManager"}" size="70"/>
+<!-- dtl:block:UserSearchAutoCompleteDivEnd1 -->
+                                            <div id="myAutoCompleteContainer1"></div>
+                                        </div>
+<!-- dtl:block:UserSearchAutoCompleteDivEnd1 -->
 <!-- dtl:block:InvalidChangeManager -->
                                         <br />
                                         <font color="red" size="-2">$Text{"Input invalid"}</font>
 <!-- dtl:block:InvalidChangeManager -->
+                                        <br/>
+                                        $Data{"UserStrg"}
+                                        <dtl if ($Data{"UserStrg"} ne "") { $Data{"TakeThisUser"} = "<br/><input class="button" type="submit" name="ExpandManager2" value="$Text{"Take this User"}"/>"; }>
+                                        $Data{"TakeThisUser"}
+<!-- dtl:block:SearchUserButton1 -->
+                                        <input class="button" type="submit" name="ExpandManager1" value="$Text{"Search User"}"/>
+                                        <input class="button" type="submit" name="ClearUser1" value="$Text{"Clear User"}" onclick="javascript:clear_field1(); return false;"/>
+<!-- dtl:block:SearchUserButton1 -->
                                     </td>
                                 </tr>
                                 <tr>
@@ -53,11 +96,26 @@
                                         <font color="red" title="$Text{"Required"}">*</font>
                                     </td>
                                     <td class="contentvalue">
-                                        <input type="text" name="ChangeBuilder" value="$QData{"ChangeBuilder"}" size="70">
+<!-- dtl:block:UserSearchAutoCompleteDivStart2 -->
+                                        <div id="myAutoComplete2" class="myAutoComplete">
+<!-- dtl:block:UserSearchAutoCompleteDivStart2 -->
+                                            <input id="myAutoCompleteInput2" type="text" name="ChangeBuilder" value="$QData{"ChangeBuilder"}" size="70"/>
+<!-- dtl:block:UserSearchAutoCompleteDivEnd2 -->
+                                            <div id="myAutoCompleteContainer2"></div>
+                                        </div>
+<!-- dtl:block:UserSearchAutoCompleteDivEnd2 -->
 <!-- dtl:block:InvalidChangeBuilder -->
                                         <br />
                                         <font color="red" size="-2">$Text{"Input invalid"}</font>
 <!-- dtl:block:InvalidChangeBuilder -->
+                                        <br/>
+                                        $Data{"UserStrg"}
+                                        <dtl if ($Data{"UserStrg"} ne "") { $Data{"TakeThisUser"} = "<br/><input class="button" type="submit" name="ExpandBuilder2" value="$Text{"Take this User"}"/>"; }>
+                                        $Data{"TakeThisUser"}
+<!-- dtl:block:SearchUserButton2 -->
+                                        <input class="button" type="submit" name="ExpandBuilder1" value="$Text{"Search User"}"/>
+                                        <input class="button" type="submit" name="ClearUser2" value="$Text{"Clear User"}" onclick="javascript:clear_field1(); return false;"/>
+<!-- dtl:block:SearchUserButton2 -->
                                     </td>
                                 </tr>
                             </table>
