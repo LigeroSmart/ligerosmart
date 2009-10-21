@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.3 2009-10-21 08:05:41 reb Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.4 2009-10-21 09:06:17 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -44,14 +44,18 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    my $Title = $Self->{ParamObject}->GetParam( Param => 'Title' );
+    # save all GET parameters in %GetParam
+    my %GetParam;
+    for my $ParamName (qw(ChangeTitle Description Justification)) {
+        $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+    }
 
     # update workorder
-    if ( $Self->{Subaction} eq 'Save' && $Title ) {
+    if ( $Self->{Subaction} eq 'Save' && $GetParam{ChangeTitle} ) {
         my $ChangeID = $Self->{ChangeObject}->ChangeAdd(
-            Description   => $Self->{ParamObject}->GetParam( Param => 'Description' ),
-            Justification => $Self->{ParamObject}->GetParam( Param => 'Justification' ),
-            Title         => $Title,
+            Description   => $GetParam{Description},
+            Justification => $GetParam{Justification},
+            ChangeTitle   => $GetParam{ChangeTitle},
             UserID        => $Self->{UserID},
         );
 
@@ -71,7 +75,7 @@ sub Run {
             );
         }
     }
-    elsif ( $Self->{Subaction} eq 'Save' && !$Title ) {
+    elsif ( $Self->{Subaction} eq 'Save' && !$GetParam{ChangeTitle} ) {
 
         # show invalid message
         $Self->{LayoutObject}->Block(
@@ -94,6 +98,7 @@ sub Run {
         TemplateFile => 'AgentITSMChangeAdd',
         Data         => {
             %Param,
+            %GetParam,
         },
     );
 
