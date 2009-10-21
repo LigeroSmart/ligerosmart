@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.95 2009-10-20 17:43:36 ub Exp $
+# $Id: ITSMChange.pm,v 1.96 2009-10-21 08:22:33 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::CustomerUser;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.95 $) [1];
+$VERSION = qw($Revision: 1.96 $) [1];
 
 =head1 NAME
 
@@ -119,7 +119,7 @@ add a new change
     );
 or
     my $ChangeID = $ChangeObject->ChangeAdd(
-        Title           => 'Replacement of mail server',       # (optional)
+        ChangeTitle     => 'Replacement of mail server',       # (optional)
         Description     => 'New mail server is faster',        # (optional)
         Justification   => 'Old mail server too slow',         # (optional)
         ChangeStateID   => 4,                                  # (optional)
@@ -195,7 +195,7 @@ update a change
 
     my $Success = $ChangeObject->ChangeUpdate(
         ChangeID        => 123,
-        Title           => 'Replacement of slow mail server',  # (optional)
+        ChangeTitle     => 'Replacement of slow mail server',  # (optional)
         Description     => 'New mail server is faster',        # (optional)
         Justification   => 'Old mail server too slow',         # (optional)
         ChangeStateID   => 4,                                  # (optional)
@@ -232,7 +232,7 @@ sub ChangeUpdate {
 
     # map update attributes to column names
     my %Attribute = (
-        Title           => 'title',
+        ChangeTitle     => 'title',
         Description     => 'description',
         Justification   => 'justification',
         ChangeStateID   => 'change_state_id',
@@ -278,7 +278,7 @@ The returned hash reference contains following elements:
     $Change{ChangeID}
     $Change{ChangeNumber}
     $Change{ChangeStateID}
-    $Change{Title}
+    $Change{ChangeTitle}
     $Change{Description}
     $Change{Justification}
     $Change{ChangeManagerID}
@@ -335,7 +335,7 @@ sub ChangeGet {
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $ChangeData{ChangeID}        = $Row[0];
         $ChangeData{ChangeNumber}    = $Row[1];
-        $ChangeData{Title}           = defined( $Row[2] ) ? $Row[2] : '';
+        $ChangeData{ChangeTitle}     = defined( $Row[2] ) ? $Row[2] : '';
         $ChangeData{Description}     = defined( $Row[3] ) ? $Row[3] : '';
         $ChangeData{Justification}   = defined( $Row[4] ) ? $Row[4] : '';
         $ChangeData{ChangeStateID}   = $Row[5];
@@ -734,7 +734,7 @@ return list of change ids as an array reference
     my $ChangeIDsRef = $ChangeObject->ChangeSearch(
         ChangeNumber      => '2009100112345778',                 # (optional)
 
-        Title             => 'Replacement of slow mail server',  # (optional)
+        ChangeTitle       => 'Replacement of slow mail server',  # (optional)
         Description       => 'New mail server is faster',        # (optional)
         Justification     => 'Old mail server too slow',         # (optional)
 
@@ -744,11 +744,14 @@ return list of change ids as an array reference
         ChangeBuilderIDs  => [ 5, 7, 4 ],                        # (optional)
         CreateBy          => [ 5, 2, 3 ],                        # (optional)
         ChangeBy          => [ 3, 2, 1 ],                        # (optional)
-
         WorkOrderAgentIDs => [ 6, 2 ],                           # (optional)
-
         CABAgents         => [ 9, 13 ],                          # (optional)
         CABCustomers      => [ 'tt', 'xx' ],                     # (optional)
+
+        # search in text fields of workorder object
+        WorkOrderTitle            => 'Boot Mailserver',
+        WorkOrderInstruction      => 'Press the button.',
+        WorkOrderReport           => 'Mailserver has booted.',
 
         # changes with planned start time after ...
         PlannedStartTimeNewerDate => '2006-01-09 00:00:01',      # (optional)
@@ -779,11 +782,6 @@ return list of change ids as an array reference
         ChangeTimeNewerDate       => '2006-01-09 00:00:01',      # (optional)
         # changes with changed time before then ....
         ChangeTimeOlderDate       => '2006-01-19 23:59:59',      # (optional)
-
-        # Searching in the string fields of workorders
-        WorkOrderTitle            => 'Boot Mailserver',
-        WorkOrderInstruction      => 'Press the button.',
-        WorkOrderReport           => 'Mailserver has booted.',
 
         OrderBy => [ 'ChangeID', 'ChangeManagerID' ],            # (optional)
         # default: [ 'ChangeID' ]
@@ -910,7 +908,7 @@ sub ChangeSearch {
     # set string params
     my %StringParams = (
         ChangeNumber  => 'c.change_number',
-        Title         => 'c.title',
+        ChangeTitle   => 'c.title',
         Description   => 'c.description',
         Justification => 'c.justification',
     );
@@ -1647,7 +1645,7 @@ checks the params to ChangeAdd() and ChangeUpdate().
 There are no required parameters.
 
     my $Ok = $ChangeObject->_CheckChangeParams(
-        Title           => 'Replacement of mail server',       # (optional)
+        ChangeTitle     => 'Replacement of mail server',       # (optional)
         Description     => 'New mail server is faster',        # (optional)
         Justification   => 'Old mail server too slow',         # (optional)
         ChangeStateID   => 4,                                  # (optional)
@@ -1661,7 +1659,7 @@ These string parameters have length constraints:
 
     Parameter      | max. length
     ---------------+-----------------
-    Title          |  250 characters
+    ChangeTitle    |  250 characters
     Description    | 3800 characters
     Justification  | 3800 characters
 
@@ -1673,7 +1671,14 @@ sub _CheckChangeParams {
     # check the string and id parameters
     ARGUMENT:
     for my $Argument (
-        qw( Title Description Justification ChangeManagerID ChangeBuilderID ChangeStateID )
+        qw(
+        ChangeTitle
+        Description
+        Justification
+        ChangeManagerID
+        ChangeBuilderID
+        ChangeStateID
+        )
         )
     {
 
@@ -1699,7 +1704,7 @@ sub _CheckChangeParams {
         }
 
         # check the maximum length of title
-        if ( $Argument eq 'Title' && length( $Param{$Argument} ) > 250 ) {
+        if ( $Argument eq 'ChangeTitle' && length( $Param{$Argument} ) > 250 ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
                 Message  => "The parameter '$Argument' must be shorter than 250 characters!",
@@ -1825,6 +1830,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.95 $ $Date: 2009-10-20 17:43:36 $
+$Revision: 1.96 $ $Date: 2009-10-21 08:22:33 $
 
 =cut
