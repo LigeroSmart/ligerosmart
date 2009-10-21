@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderEdit.pm - the OTRS::ITSM::ChangeManagement work order edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderEdit.pm,v 1.3 2009-10-20 17:29:48 reb Exp $
+# $Id: AgentITSMWorkOrderEdit.pm,v 1.4 2009-10-21 06:49:43 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -72,14 +72,18 @@ sub Run {
     # currenttitle is the value for the title input
     $Param{CurrentTitle} = $WorkOrder->{Title};
 
-    my $Title = $Self->{ParamObject}->GetParam( Param => 'Title' );
+    # save the needed GET params in Hash
+    my %GetParam;
+    for my $ParamName (qw(Title Instruction)) {
+        $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+    }
 
     # update workorder
-    if ( $Self->{Subaction} eq 'Save' && $Title ) {
+    if ( $Self->{Subaction} eq 'Save' && $GetParam{Title} ) {
         my $Success = $Self->{WorkOrderObject}->WorkOrderUpdate(
             WorkOrderID => $WorkOrder->{WorkOrderID},
-            Instruction => $Self->{ParamObject}->GetParam( Param => 'Instruction' ),
-            Title       => $Title,
+            Instruction => $GetParam{Instruction},
+            Title       => $GetParam{Title},
             UserID      => $Self->{UserID},
         );
 
@@ -99,7 +103,7 @@ sub Run {
             );
         }
     }
-    elsif ( $Self->{Subaction} eq 'Save' && !$Title ) {
+    elsif ( $Self->{Subaction} eq 'Save' && !$GetParam{Title} ) {
 
         # show invalid message
         $Self->{LayoutObject}->Block(
@@ -133,6 +137,10 @@ sub Run {
         Name => 'RichText',
     );
 
+    # switch two parameters due to reload issues
+    $GetParam{CurrentTitle} = $GetParam{Title};
+    $GetParam{Title}        = $WorkOrder->{Title};
+
     # start template output
     $Output .= $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentITSMWorkOrderEdit',
@@ -140,6 +148,7 @@ sub Run {
             %Param,
             %{$Change},
             %{$WorkOrder},
+            %GetParam,
         },
     );
 
