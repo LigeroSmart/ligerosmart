@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.52 2009-10-20 17:37:05 ub Exp $
+# $Id: WorkOrder.pm,v 1.53 2009-10-21 07:59:50 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.52 $) [1];
+$VERSION = qw($Revision: 1.53 $) [1];
 
 =head1 NAME
 
@@ -524,6 +524,12 @@ return a list of workorder ids as an array reference
         CreateBy          => [ 5, 2, 3 ],                              # (optional)
         ChangeBy          => [ 3, 2, 1 ],                              # (optional)
 
+        # search in text fields of change object                       # (optional)
+        ChangeNumber        => 'Number of change',
+        ChangeTitle         => 'Title of change',
+        ChangeDescription   => 'Description of change',
+        ChangeJustification => 'Justification of change',
+
         # changes with planned start time after ...
         PlannedStartTimeNewerDate => '2006-01-09 00:00:01',            # (optional)
         # changes with planned start time before then ....
@@ -553,12 +559,6 @@ return a list of workorder ids as an array reference
         ChangeTimeNewerDate => '2006-01-09 00:00:01',                  # (optional)
         # changes with changed time before then ....
         ChangeTimeOlderDate => '2006-01-19 23:59:59',                  # (optional)
-
-        # string searches in change
-        ChangeNumber  => 'Number of change',
-        ChangeTitle  => 'Title of change',
-        ChangeDescription  => 'Description of change',
-        ChangeJustification  => 'Justification of change',
 
         OrderBy => [ 'ChangeID', 'WorkOrderNumber' ],                  # (optional)
         # default: [ 'WorkOrderID' ],
@@ -1471,6 +1471,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.52 $ $Date: 2009-10-20 17:37:05 $
+$Revision: 1.53 $ $Date: 2009-10-21 07:59:50 $
 
 =cut
