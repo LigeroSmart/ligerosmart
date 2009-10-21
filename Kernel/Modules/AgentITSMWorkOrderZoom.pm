@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderZoom.pm - the OTRS::ITSM::ChangeManagement work order zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderZoom.pm,v 1.6 2009-10-20 08:18:10 reb Exp $
+# $Id: AgentITSMWorkOrderZoom.pm,v 1.7 2009-10-21 09:02:27 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -74,7 +74,7 @@ sub Run {
     }
 
     # strip header on max 80 chars
-    $WorkOrder->{Title} =~ s{ \A (.{80}) .* \z }{ $1 }xms;
+    $WorkOrder->{WorkOrderTitle} =~ s{ \A (.{80}) .* \z }{ $1 }xms;
 
     # break words after 80 chars
     $WorkOrder->{Instruction} =~ s{ (\S{80}) }{ $1\n }xmsg;
@@ -115,7 +115,7 @@ sub Run {
 
     # output header
     my $Output = $Self->{LayoutObject}->Header(
-        Title => $WorkOrder->{Title},
+        Title => $WorkOrder->{WorkOrderTitle},
     );
     $Output .= $Self->{LayoutObject}->NavigationBar();
 
@@ -261,7 +261,7 @@ sub Run {
         Data         => {
             ChangeNumber    => $Change->{ChangeNumber},
             ChangeBuilder   => $Change->{ChangeBuilder},
-            ChangeTitle     => $Change->{Title},
+            ChangeTitle     => $Change->{ChangeTitle},
             CurChangeSignal => $CurChangeSignal{ $ChangeStateList->{ $Change->{ChangeStateID} } },
             CurChangeState  => $ChangeStateList->{ $Change->{ChangeStateID} },
             CurWorkOrderSignal => $CurWorkOrderSignal{ $WorkOrder->{WorkOrderStateID} },
