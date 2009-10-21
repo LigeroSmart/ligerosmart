@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeZoom.pm - the OTRS::ITSM::ChangeManagement change zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.pm,v 1.7 2009-10-21 07:58:43 mae Exp $
+# $Id: AgentITSMChangeZoom.pm,v 1.8 2009-10-21 09:19:24 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -103,7 +103,7 @@ sub Run {
     }
 
     # strip header on max 80 chars
-    $Change->{Title} =~ s{ \A (.{80}) (.*) \z }{ $1 }xms;
+    $Change->{ChangeTitle} =~ s{ \A (.{80}) (.*) \z }{ $1 }xms;
 
     # break words after 80 chars
     $Change->{Description}   =~ s{ (\S{80}) }{ $1\n }xmsg;
@@ -111,7 +111,7 @@ sub Run {
 
     # output header
     my $Output = $Self->{LayoutObject}->Header(
-        Value => $Change->{Title},
+        Value => $Change->{ChangeTitle},
     );
     $Output .= $Self->{LayoutObject}->NavigationBar();
 
