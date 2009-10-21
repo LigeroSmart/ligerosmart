@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderEdit.pm - the OTRS::ITSM::ChangeManagement work order edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderEdit.pm,v 1.4 2009-10-21 06:49:43 reb Exp $
+# $Id: AgentITSMWorkOrderEdit.pm,v 1.5 2009-10-21 08:57:53 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -70,20 +70,20 @@ sub Run {
     }
 
     # currenttitle is the value for the title input
-    $Param{CurrentTitle} = $WorkOrder->{Title};
+    $Param{CurrentTitle} = $WorkOrder->{WorkOrderTitle};
 
     # save the needed GET params in Hash
     my %GetParam;
-    for my $ParamName (qw(Title Instruction)) {
+    for my $ParamName (qw(WorkOrderTitle Instruction)) {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
     # update workorder
-    if ( $Self->{Subaction} eq 'Save' && $GetParam{Title} ) {
+    if ( $Self->{Subaction} eq 'Save' && $GetParam{WorkOrderTitle} ) {
         my $Success = $Self->{WorkOrderObject}->WorkOrderUpdate(
             WorkOrderID => $WorkOrder->{WorkOrderID},
             Instruction => $GetParam{Instruction},
-            Title       => $GetParam{Title},
+            Title       => $GetParam{WorkOrderTitle},
             UserID      => $Self->{UserID},
         );
 
@@ -103,7 +103,7 @@ sub Run {
             );
         }
     }
-    elsif ( $Self->{Subaction} eq 'Save' && !$GetParam{Title} ) {
+    elsif ( $Self->{Subaction} eq 'Save' && !$GetParam{WorkOrderTitle} ) {
 
         # show invalid message
         $Self->{LayoutObject}->Block(
@@ -129,7 +129,7 @@ sub Run {
 
     # output header
     my $Output = $Self->{LayoutObject}->Header(
-        Title => $WorkOrder->{Title},
+        Title => $WorkOrder->{WorkOrderTitle},
     );
     $Output .= $Self->{LayoutObject}->NavigationBar();
 
@@ -138,8 +138,8 @@ sub Run {
     );
 
     # switch two parameters due to reload issues
-    $GetParam{CurrentTitle} = $GetParam{Title};
-    $GetParam{Title}        = $WorkOrder->{Title};
+    $GetParam{CurrentTitle}   = $GetParam{WorkOrderTitle};
+    $GetParam{WorkOrderTitle} = $WorkOrder->{WorkOrderTitle};
 
     # start template output
     $Output .= $Self->{LayoutObject}->Output(
