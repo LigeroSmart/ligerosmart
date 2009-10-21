@@ -2,9 +2,163 @@
 # AgentITSMChangeAdd.dtl - provides HTML form for AgentITSMChangeAdd
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.dtl,v 1.1 2009-10-11 23:16:35 ub Exp $
+# $Id: AgentITSMChangeAdd.dtl,v 1.2 2009-10-21 06:57:51 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+    <tr>
+        <td class="mainhead">
+            $Env{"Box0"}$Text{"Change"}: $Text{"NEW"} $Env{"Box1"}
+        </td>
+    </tr>
+    <tr>
+        <td class="menu">
+            <a href="#" class="menuitem">$Text{"Back"}</a>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="mainbody">
+            <br>
+            <form action="$Env{"CGIHandle"}" method="post">
+                <input type="hidden" name="Action"    value="$Env{"Action"}">
+                <input type="hidden" name="Subaction" value="CreateFromTemplate">
+                <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
+                    <tr>
+                        <td class="contenthead">$Text{"Select Change Template"}</td>
+                    </tr>
+                    <tr class="contentbody">
+                        <td>
+                            <table border="0">
+                                <tr>
+                                    <td class="contentkey">
+                                        $Text{"Template"}:
+                                        <font color="red" title="$Text{"Required"}">*</font>
+                                    </td>
+                                    <td class="contentvalue">
+                                        $Data{"TemplatesStrg"}
+<!-- dtl:block:InvalidTemplate -->
+                                        <br />
+                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
+<!-- dtl:block:InvalidTemplate -->
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="contentfooter">
+                            <input class="button" type="submit" name="Submit" value="$Text{"Create"}">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            <br>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="mainbody">
+            <br>
+            <form action="$Env{"CGIHandle"}" method="post">
+                <input type="hidden" name="Action"    value="$Env{"Action"}">
+                <input type="hidden" name="Subaction" value="Save">
+                <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
+                    <tr>
+                        <td class="contenthead">$Text{"Change"}</td>
+                    </tr>
+                    <tr class="contentbody">
+                        <td>
+                            <table border="0">
+                                <tr>
+                                    <td class="contentkey">
+                                        $Text{"Title"}:
+                                        <font color="red" title="$Text{"Required"}">*</font>
+                                    </td>
+                                    <td class="contentvalue">
+                                        <input type="text" name="Title" value="$QData{"CurrentTitle"}" size="70">
+<!-- dtl:block:InvalidTitle -->
+                                        <br />
+                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
+<!-- dtl:block:InvalidTitle -->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="contentkey">
+                                        $Text{"Description"}:
+                                    </td>
+                                    <td class="contentvalue">
+                                        <div class="yui-skin-sam">
+<!-- dtl:block:RichText -->
+$Include{"RichTextEditor"}
+# set white background for buttons
+<style type="text/css">
+<!--
+                                            .yui-skin-sam .yui-toolbar-container { background-color: #FFFFFF; }
+                                            -->
+                                            </style>
+<!-- dtl:block:RichText -->
+<textarea id="RichText" name="Description" rows="15" cols="$Config{"Ticket::Frontend::TextAreaEmail"}" wrap="$Env{"BrowserWrap"}">
+$Data{"Description"}
+</textarea>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="contentkey">
+                                        $Text{"Justification"}:
+                                    </td>
+                                    <td class="contentvalue">
+                                        <div class="yui-skin-sam">
+<!-- dtl:block:RichText2 -->
+$Include{"ITSMRichTextEditor2"}
+# set white background for buttons
+<style type="text/css">
+<!--
+                                            .yui-skin-sam .yui-toolbar-container { background-color: #FFFFFF; }
+                                            -->
+                                            </style>
+<!-- dtl:block:RichText2 -->
+<textarea id="RichText2" name="Justification" rows="15" cols="$Config{"Ticket::Frontend::TextAreaEmail"}" wrap="$Env{"BrowserWrap"}">
+$Data{"Justification"}
+</textarea>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="contentkey">
+                                        $Text{"Attachment"}:
+                                    </td>
+                                    <td class="contentvalue">
+                                        <table width="100%">
+<!-- dtl:block:AttachmentRow -->
+                                            <tr>
+                                                <td>$Data{"AttachmentName"}</td>
+                                                <td>$Data{"AttachmentSize"}</td>
+                                                <td></td>
+                                            </tr>
+<!-- dtl:block:AttachmentRow -->
+                                            <tr>
+                                                <td colspan="2"><input type="file" name="AttachmentNew"></td>
+                                                <td><input type="submit" class="button" name="SaveAttachment" value="$Text{"Attach"}"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="contentfooter">
+                            <input class="button" type="submit" name="Submit" value="$Text{"Submit"}">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            <br>
+        </td>
+    </tr>
+</table>
