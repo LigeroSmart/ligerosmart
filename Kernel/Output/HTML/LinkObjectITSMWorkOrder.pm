@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LinkObjectITSMWorkOrder.pm - layout backend module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LinkObjectITSMWorkOrder.pm,v 1.6 2009-10-21 22:14:52 ub Exp $
+# $Id: LinkObjectITSMWorkOrder.pm,v 1.7 2009-10-21 22:30:18 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::Output::HTML::Layout;
 use Kernel::System::GeneralCatalog;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 =head1 NAME
 
@@ -233,14 +233,6 @@ sub TableCreateComplex {
             },
             {
                 Type    => 'Text',
-                Content => $WorkOrder->{ChangeData}->{ChangeNumber},
-            },
-            {
-                Type    => 'Text',
-                Content => $WorkOrder->{ChangeData}->{ChangeTitle},
-            },
-            {
-                Type    => 'Text',
                 Content => $WorkOrder->{WorkOrderNumber},
             },
             {
@@ -252,6 +244,14 @@ sub TableCreateComplex {
             {
                 Type    => 'Text',
                 Content => $WorkOrder->{WorkOrderStateID},
+            },
+            {
+                Type    => 'Text',
+                Content => $WorkOrder->{ChangeData}->{ChangeNumber},
+            },
+            {
+                Type    => 'Text',
+                Content => $WorkOrder->{ChangeData}->{ChangeTitle},
             },
             {
                 Type    => 'TimeLong',
@@ -274,12 +274,6 @@ sub TableCreateComplex {
                 Width   => 20,
             },
             {
-                Content => 'Change#',
-            },
-            {
-                Content => 'Change Title',
-            },
-            {
                 Content => 'WorkOrder#',
                 Width   => 100,
             },
@@ -290,6 +284,12 @@ sub TableCreateComplex {
             {
                 Content => 'WorkOrderStateID',
                 Width   => 100,
+            },
+            {
+                Content => 'Change#',
+            },
+            {
+                Content => 'Change Title',
             },
             {
                 Content => 'Changed',
@@ -588,6 +588,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.6 $ $Date: 2009-10-21 22:14:52 $
+$Revision: 1.7 $ $Date: 2009-10-21 22:30:18 $
 
 =cut
