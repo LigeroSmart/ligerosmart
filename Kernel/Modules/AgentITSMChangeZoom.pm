@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeZoom.pm - the OTRS::ITSM::ChangeManagement change zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.pm,v 1.6 2009-10-19 20:26:19 mae Exp $
+# $Id: AgentITSMChangeZoom.pm,v 1.7 2009-10-21 07:58:43 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -193,7 +193,7 @@ sub Run {
         rejected           => 'grayled',
         approved           => 'greenled',
         'in progress'      => 'yellowled',
-        successfull        => 'greenled',
+        successful         => 'greenled',
         failed             => 'redled',
         canceled           => 'grayled',
     );
