@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeEdit.pm - the OTRS::ITSM::ChangeManagement change edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.pm,v 1.2 2009-10-21 06:58:27 reb Exp $
+# $Id: AgentITSMChangeEdit.pm,v 1.3 2009-10-21 08:05:41 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -121,10 +121,6 @@ sub Run {
 
     $Self->{LayoutObject}->Block(
         Name => 'RichText',
-    );
-
-    $Self->{LayoutObject}->Block(
-        Name => 'RichText2',
     );
 
     # start template output

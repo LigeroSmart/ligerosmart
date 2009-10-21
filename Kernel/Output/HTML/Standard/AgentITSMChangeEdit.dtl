@@ -2,7 +2,7 @@
 # AgentITSMChangeEdit.dtl - provides HTML form for AgentITSMChangeEdit
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.dtl,v 1.2 2009-10-21 06:58:27 reb Exp $
+# $Id: AgentITSMChangeEdit.dtl,v 1.3 2009-10-21 08:05:42 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -54,7 +54,7 @@
                                     <td class="contentvalue">
                                         <div class="yui-skin-sam">
 <!-- dtl:block:RichText -->
-$Include{"RichTextEditor"}
+$Include{"RichTextEditorITSM"}
 # set white background for buttons
 <style type="text/css">
 <!--
@@ -62,9 +62,7 @@ $Include{"RichTextEditor"}
                                             -->
                                             </style>
 <!-- dtl:block:RichText -->
-<textarea id="RichText" name="Description" rows="15" cols="$Config{"Ticket::Frontend::TextAreaEmail"}" wrap="$Env{"BrowserWrap"}">
-$Data{"Description"}
-</textarea>
+                                            <textarea id="RichText1" name="Description" rows="15" cols="$Config{"Ticket::Frontend::TextAreaEmail"}" wrap="$Env{"BrowserWrap"}">$Data{"Description"}</textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -74,18 +72,7 @@ $Data{"Description"}
                                     </td>
                                     <td class="contentvalue">
                                         <div class="yui-skin-sam">
-<!-- dtl:block:RichText2 -->
-$Include{"ITSMRichTextEditor2"}
-# set white background for buttons
-<style type="text/css">
-<!--
-                                            .yui-skin-sam .yui-toolbar-container { background-color: #FFFFFF; }
-                                            -->
-                                            </style>
-<!-- dtl:block:RichText2 -->
-<textarea id="RichText2" name="Justification" rows="15" cols="$Config{"Ticket::Frontend::TextAreaEmail"}" wrap="$Env{"BrowserWrap"}">
-$Data{"Justification"}
-</textarea>
+                                            <textarea id="RichText2" name="Justification" rows="15" cols="$Config{"Ticket::Frontend::TextAreaEmail"}" wrap="$Env{"BrowserWrap"}">$Data{"Justification"}</textarea>
                                         </div>
                                     </td>
                                 </tr>
