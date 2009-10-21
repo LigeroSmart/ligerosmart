@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAdd.pm - the OTRS::ITSM::ChangeManagement work order add module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.pm,v 1.2 2009-10-20 17:47:23 reb Exp $
+# $Id: AgentITSMWorkOrderAdd.pm,v 1.3 2009-10-21 08:52:53 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -69,15 +69,19 @@ sub Run {
         );
     }
 
-    my $Title = $Self->{ParamObject}->GetParam( Param => 'Title' );
+    # save all GET parameters in %GetParam
+    my %GetParam;
+    for my $ParamName (qw(WorkOrderTitle Instruction)) {
+        $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+    }
 
     # update workorder
-    if ( $Self->{Subaction} eq 'Save' && $Title ) {
+    if ( $Self->{Subaction} eq 'Save' && $GetParam{WorkOrderTitle} ) {
         my $WorkOrderID = $Self->{WorkOrderObject}->WorkOrderAdd(
-            ChangeID    => $ChangeID,
-            Instruction => $Self->{ParamObject}->GetParam( Param => 'Instruction' ),
-            Title       => $Title,
-            UserID      => $Self->{UserID},
+            ChangeID       => $ChangeID,
+            Instruction    => $GetParam{Instruction},
+            WorkOrderTitle => $GetParam{WorkOrderTitle},
+            UserID         => $Self->{UserID},
         );
 
         if ( !$WorkOrderID ) {
@@ -96,7 +100,7 @@ sub Run {
             );
         }
     }
-    elsif ( $Self->{Subaction} eq 'Save' && !$Title ) {
+    elsif ( $Self->{Subaction} eq 'Save' && !$GetParam{WorkOrderTitle} ) {
 
         # show invalid message
         $Self->{LayoutObject}->Block(
@@ -109,7 +113,7 @@ sub Run {
 
     # output header
     my $Output = $Self->{LayoutObject}->Header(
-        Title => '',
+        Title => 'Add',
     );
     $Output .= $Self->{LayoutObject}->NavigationBar();
 
@@ -123,6 +127,7 @@ sub Run {
         Data         => {
             %Param,
             %{$Change},
+            %GetParam,
         },
     );
 
