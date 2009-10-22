@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMCABMemberSearch.pm - a module used for the autocomplete feature
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMCABMemberSearch.pm,v 1.1 2009-10-21 21:16:30 reb Exp $
+# $Id: AgentITSMCABMemberSearch.pm,v 1.2 2009-10-22 13:07:26 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::CustomerUser;
 use Kernel::System::Group;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -116,32 +116,32 @@ sub Run {
         }
 
         # get customer list
-        my %CustomerUserList = $Self->{CustomerUserObject}->CustomerUserSearch(
+        my %CustomerUserList = $Self->{CustomerUserObject}->CustomerSearch(
             Search => $Search,
             Valid  => 1,
         );
 
         CUSTOMERUSERLOGIN:
         for my $CustomerUserLogin (
-            sort { $UserList{$a} cmp $UserList{$b} }
-            keys %UserList
+            sort { $CustomerUserList{$a} cmp $CustomerUserList{$b} }
+            keys %CustomerUserList
             )
         {
 
             # if groups are required and user is not member of one of the groups
             # the skip the user
-            next USERID if $Groups && !$GroupUsers{$UserID};
+            next USERID if $Groups && !$GroupUsers{$CustomerUserLogin};
 
             # html quote characters like <>
-            my $UserValuePlain = $UserList{$UserID};
-            $UserList{$UserID} = $Self->{LayoutObject}->Ascii2Html(
-                Text => $UserList{$UserID},
+            my $CustomerUserValuePlain = $CustomerUserList{$CustomerUserLogin};
+            $CustomerUserList{$CustomerUserLogin} = $Self->{LayoutObject}->Ascii2Html(
+                Text => $CustomerUserList{$CustomerUserLogin},
             );
 
             push @Data, {
-                UserKey        => $UserID,
-                UserValue      => $UserList{$UserID},
-                UserValuePlain => $UserValuePlain,
+                UserKey        => $CustomerUserLogin,
+                UserValue      => $CustomerUserList{$CustomerUserLogin},
+                UserValuePlain => $CustomerUserValuePlain,
                 UserType       => 'CABCustomers',
             };
         }

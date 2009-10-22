@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeInvolvedPersons.pm - the OTRS::ITSM::ChangeManagement change involved persons module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.4 2009-10-21 20:40:43 reb Exp $
+# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.5 2009-10-22 13:07:26 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::User;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -279,9 +279,9 @@ sub Run {
     }
 
     # build changebuilder and changemanager search autocomplete field
-    my $AutoCompleteConfig
+    my $UserAutoCompleteConfig
         = $Self->{ConfigObject}->Get('ITSMChange::Frontend::UserSearchAutoComplete');
-    if ( $AutoCompleteConfig->{Active} ) {
+    if ( $UserAutoCompleteConfig->{Active} ) {
 
         # general blocks
         $Self->{LayoutObject}->Block(
@@ -292,10 +292,10 @@ sub Run {
         $Self->{LayoutObject}->Block(
             Name => 'UserSearchAutoCompleteCode',
             Data => {
-                minQueryLength      => $AutoCompleteConfig->{MinQueryLength}      || 2,
-                queryDelay          => $AutoCompleteConfig->{QueryDelay}          || 0.1,
-                typeAhead           => $AutoCompleteConfig->{TypeAhead}           || 'false',
-                maxResultsDisplayed => $AutoCompleteConfig->{MaxResultsDisplayed} || 20,
+                minQueryLength      => $UserAutoCompleteConfig->{MinQueryLength}      || 2,
+                queryDelay          => $UserAutoCompleteConfig->{QueryDelay}          || 0.1,
+                typeAhead           => $UserAutoCompleteConfig->{TypeAhead}           || 'false',
+                maxResultsDisplayed => $UserAutoCompleteConfig->{MaxResultsDisplayed} || 20,
                 InputNr             => 1,
             },
         );
@@ -304,10 +304,10 @@ sub Run {
         $Self->{LayoutObject}->Block(
             Name => 'UserSearchAutoCompleteCode',
             Data => {
-                minQueryLength      => $AutoCompleteConfig->{MinQueryLength}      || 2,
-                queryDelay          => $AutoCompleteConfig->{QueryDelay}          || 0.1,
-                typeAhead           => $AutoCompleteConfig->{TypeAhead}           || 'false',
-                maxResultsDisplayed => $AutoCompleteConfig->{MaxResultsDisplayed} || 20,
+                minQueryLength      => $UserAutoCompleteConfig->{MinQueryLength}      || 2,
+                queryDelay          => $UserAutoCompleteConfig->{QueryDelay}          || 0.1,
+                typeAhead           => $UserAutoCompleteConfig->{TypeAhead}           || 'false',
+                maxResultsDisplayed => $UserAutoCompleteConfig->{MaxResultsDisplayed} || 20,
                 InputNr             => 2,
             },
         );
@@ -348,8 +348,6 @@ sub Run {
         $Self->{LayoutObject}->Block(
             Name => 'UserSearchAutoCompleteDivEnd2',
         );
-
-        # TODO: autocomplete for newcabmember
     }
     else {
 
@@ -362,8 +360,52 @@ sub Run {
         $Self->{LayoutObject}->Block(
             Name => 'SearchUserButton2',
         );
+    }
 
-        # TODO: show usersearch buttons for newcabmember
+    # build CAB member search autocomplete field
+    my $CABMemberAutoCompleteConfig
+        = $Self->{ConfigObject}->Get('ITSMChange::Frontend::CABMemberSearchAutoComplete');
+    if ( $CABMemberAutoCompleteConfig->{Active} ) {
+
+        # general blocks
+        $Self->{LayoutObject}->Block(
+            Name => 'CABMemberSearchAutoComplete',
+        );
+
+        # CABMember
+        $Self->{LayoutObject}->Block(
+            Name => 'CABMemberSearchAutoCompleteCode',
+            Data => {
+                minQueryLength => $CABMemberAutoCompleteConfig->{MinQueryLength} || 2,
+                queryDelay     => $CABMemberAutoCompleteConfig->{QueryDelay}     || 0.1,
+                typeAhead      => $CABMemberAutoCompleteConfig->{TypeAhead}      || 'false',
+                maxResultsDisplayed => $CABMemberAutoCompleteConfig->{MaxResultsDisplayed} || 20,
+            },
+        );
+
+        # general block
+        $Self->{LayoutObject}->Block(
+            Name => 'CABMemberSearchAutoCompleteReturn',
+        );
+
+        # CAB member
+        $Self->{LayoutObject}->Block(
+            Name => 'CABMemberSearchAutoCompleteReturnElements',
+        );
+
+        $Self->{LayoutObject}->Block(
+            Name => 'CABMemberSearchAutoCompleteDivStart',
+        );
+        $Self->{LayoutObject}->Block(
+            Name => 'CABMemberSearchAutoCompleteDivEnd',
+        );
+    }
+    else {
+
+        # show usersearch buttons for CAB member
+        $Self->{LayoutObject}->Block(
+            Name => 'SearchCABMemberButton',
+        );
     }
 
     # output header

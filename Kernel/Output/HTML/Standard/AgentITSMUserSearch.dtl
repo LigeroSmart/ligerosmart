@@ -2,7 +2,7 @@
 # AgentITSMUserSearch.dtl - provides autocomplete feature for customer search
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMUserSearch.dtl,v 1.3 2009-10-21 13:07:02 reb Exp $
+# $Id: AgentITSMUserSearch.dtl,v 1.4 2009-10-22 13:07:26 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -111,7 +111,7 @@
         myAutoComp$Data{"InputNr"}.doBeforeLoadData = function (oRequest$Data{"InputNr"}, oResponse$Data{"InputNr"}, oPayload$Data{"InputNr"}) {
 
             // check if dynamic width is enabled
-            if ( !Number('$Config{"Agent::Frontend::UserSearchAutoComplete::DynamicWidth"}') ) {
+            if ( !Number('$Config{"ITSMChange::Frontend::UserSearchAutoComplete::DynamicWidth"}') ) {
                 return true;
             }
 

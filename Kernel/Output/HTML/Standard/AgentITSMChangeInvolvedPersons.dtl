@@ -2,7 +2,7 @@
 # AgentITSMChangeInvolvedPersons.dtl - provides HTML form for AgentITSMChangeInvolvedPersons
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.4 2009-10-21 20:40:43 reb Exp $
+# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.5 2009-10-22 13:07:26 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -11,6 +11,7 @@
 $Include{"AJAX"}
 
 $Include{"AgentITSMUserSearch"}
+$Include{"AgentITSMCABMemberSearch"}
 
 <style type="text/css">
 .myAutoComplete {
@@ -28,6 +29,10 @@ function clear_field1() {
 function clear_field2() {
     document.compose.ChangeBuilder.value = "";
     document.compose.ChangeBuilder.focus();
+}
+function clear_field3() {
+    document.compose.NewCABMember.value = "";
+    document.compose.NewCABMember.focus();
 }
 //-->
 </script>
@@ -48,15 +53,23 @@ function clear_field2() {
         <td class="mainbody">
             <br>
             <form action="$Env{"CGIHandle"}" method="post" name="compose">
-                <input type="hidden" name="Action"    value="$Env{"Action"}">
-                <input type="hidden" name="Subaction" value="Save">
-                <input type="hidden" name="ChangeID" value="$QData{"ChangeID"}">
-                <input type="hidden" name="SelectedUser1" value="$QData{"SelectedUser1"}">
+
+                <input type="hidden" name="Action"            value="$Env{"Action"}">
+                <input type="hidden" name="Subaction"         value="Save">
+                <input type="hidden" name="ChangeID"          value="$QData{"ChangeID"}">
+
+<!--        ## HiddenFields for ChangeManager Autocompletion ##            -->
+                <input type="hidden" name="SelectedUser1"     value="$QData{"SelectedUser1"}">
                 <input type="hidden" name="UserSearchGroups1" value="itsm-change">
-                <input type="hidden" name="SelectedUser2" value="$QData{"SelectedUser2"}">
+
+<!--        ## HiddenFields for ChangeBuilder Autocompletion ##            -->
+                <input type="hidden" name="SelectedUser2"     value="$QData{"SelectedUser2"}">
                 <input type="hidden" name="UserSearchGroups2" value="itsm-change">
-                <input type="hidden" name="" value="">
-                <input type="hidden" name="" value="">
+
+<!--        ## HiddenFields for CABMember Autocompletion ##                -->
+                <input type="hidden" name="CABMemberType"     value="$QData{"CABMemberType"}">
+                <input type="hidden" name="CABMemberID"       value="$QData{"CABMemberID"}">
+
                 <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
                     <tr>
                         <td class="contenthead">$Text{"Involved Persons"}</td>
@@ -112,11 +125,11 @@ function clear_field2() {
 <!-- dtl:block:InvalidChangeBuilder -->
                                         <br/>
                                         $Data{"UserStrg"}
-                                        <dtl if ($Data{"UserStrg"} ne "") { $Data{"TakeThisUser"} = "<br/><input class="button" type="submit" name="ExpandBuilder2" value="$Text{"Take this User"}"/>"; }>
-                                        $Data{"TakeThisUser"}
+                                        <dtl if ($Data{"UserStrg2"} ne "") { $Data{"TakeThisUser2"} = "<br/><input class="button" type="submit" name="ExpandBuilder2" value="$Text{"Take this User"}"/>"; }>
+                                        $Data{"TakeThisUser2"}
 <!-- dtl:block:SearchUserButton2 -->
                                         <input class="button" type="submit" name="ExpandBuilder1" value="$Text{"Search User"}"/>
-                                        <input class="button" type="submit" name="ClearUser2" value="$Text{"Clear User"}" onclick="javascript:clear_field1(); return false;"/>
+                                        <input class="button" type="submit" name="ClearUser2" value="$Text{"Clear User"}" onclick="javascript:clear_field2(); return false;"/>
 <!-- dtl:block:SearchUserButton2 -->
                                     </td>
                                 </tr>
@@ -144,8 +157,27 @@ function clear_field2() {
                                     <td class="contentkey">
                                         $Text{"Add to CAB"}:
                                     </td>
-                                    <td class="contentvalue">
-                                        <input type="text" name="NewCABMember" value="$QData{"NewCABMember"}" size="70">
+                                    <td class="contentvalue" width="65%">
+<!-- dtl:block:CABMemberSearchAutoCompleteDivStart -->
+                                        <div id="myCABAutoComplete" class="myCABAutoComplete">
+<!-- dtl:block:CABMemberSearchAutoCompleteDivStart -->
+                                            <input id="myCABAutoCompleteInput" type="text" name="NewCABMember" value="$QData{"NewCABMember"}" size="70"/>
+<!-- dtl:block:CABMemberSearchAutoCompleteDivEnd -->
+                                            <div id="myCABAutoCompleteContainer"></div>
+                                        </div>
+<!-- dtl:block:CABMemberSearchAutoCompleteDivEnd -->
+<!-- dtl:block:InvalidCABMember -->
+                                        <br />
+                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
+<!-- dtl:block:InvalidCABMember -->
+                                        <br/>
+                                        $Data{"UserStrg"}
+                                        <dtl if ($Data{"CABMemberStrg"} ne "") { $Data{"TakeThisCABMember"} = "<br/><input class="button" type="submit" name="ExpandCABMember2" value="$Text{"Take this User"}"/>"; }>
+                                        $Data{"TakeThisCABMember"}
+<!-- dtl:block:SearchCABMemberButton -->
+                                        <input class="button" type="submit" name="ExpandCABMember1" value="$Text{"Search User"}"/>
+                                        <input class="button" type="submit" name="ClearCABMember" value="$Text{"Clear User"}" onclick="javascript:clear_field3(); return false;"/>
+<!-- dtl:block:SearchCABMemberButton -->
                                     </td>
                                     <td class="contentvalue">
                                         <input type="submit" class="button" name="AddCABMember" value="$Text{"Add"}">
