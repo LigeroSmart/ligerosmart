@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderZoom.pm - the OTRS::ITSM::ChangeManagement work order zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderZoom.pm,v 1.10 2009-10-22 12:12:35 ub Exp $
+# $Id: AgentITSMWorkOrderZoom.pm,v 1.11 2009-10-22 12:55:59 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -155,17 +155,15 @@ sub Run {
         ItemID => $WorkOrder->{WorkOrderStateID},
     ) || {};
 
-    # TODO: replace this hard coded hash with preferences in General catalog
-    # when implemented...
-    # temp color for changes
-    $WorkOrderState->{Signal} = 'greenled';
+    # get all workorder state signals
+    my $WorkOrderStateSignal = $Self->{ConfigObject}->Get('ITSMWorkOder::State::Signal');
 
     # output meta block
     $Self->{LayoutObject}->Block(
         Name => 'Meta',
         Data => {
             %{$WorkOrder},
-            WorkOrderStateSignal => $WorkOrderState->{Signal},
+            WorkOrderStateSignal => $WorkOrderStateSignal->{ $WorkOrderState->{Name} },
             WorkOrderState       => $WorkOrderState->{Name},
             WorkOrderType        => $WorkOrderType->{Name},
         },
@@ -262,18 +260,17 @@ sub Run {
         ItemID => $Change->{ChangeStateID},
     ) || {};
 
-    # TODO: GeneralCatalog-Preferences definition of LED color
-    # temp color for changes
-    $ChangeState->{Signal} = 'greenled';
+    # get all change state signals
+    my $ChangeStateSignal = $Self->{ConfigObject}->Get('ITSMChange::State::Signal');
 
     # start template output
     $Output .= $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentITSMWorkOrderZoom',
         Data         => {
             ChangeState          => $ChangeState->{Name},
-            ChangeStateSignal    => $ChangeState->{Signal},
+            ChangeStateSignal    => $ChangeStateSignal->{ $ChangeState->{Name} },
             WorkOrderState       => $WorkOrderState->{Name},
-            WorkOrderStateSignal => $WorkOrderState->{Signal},
+            WorkOrderStateSignal => $WorkOrderStateSignal->{ $WorkOrderState->{Name} },
             %{$Change},
             %{$WorkOrder},
         },
