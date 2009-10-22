@@ -2,12 +2,13 @@
 # AgentITSMChangeEdit.dtl - provides HTML form for AgentITSMChangeEdit
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.dtl,v 1.5 2009-10-22 07:07:59 reb Exp $
+# $Id: AgentITSMChangeEdit.dtl,v 1.6 2009-10-22 09:02:44 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
         <td class="mainhead">
@@ -23,7 +24,7 @@
     <tr>
         <td class="mainbody">
             <br>
-            <form action="$Env{"CGIHandle"}" method="post">
+            <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
                 <input type="hidden" name="Action"    value="$Env{"Action"}">
                 <input type="hidden" name="Subaction" value="Save">
                 <input type="hidden" name="ChangeID"  value="$QData{"ChangeID"}">
@@ -52,16 +53,12 @@
                                         $Text{"Description"}:
                                     </td>
                                     <td class="contentvalue">
-                                        <div class="yui-skin-sam">
+                                        <div>
 <!-- dtl:block:RichText -->
 $Include{"RichTextEditorITSM"}
-# set white background for buttons
-<style type="text/css">
-<!--
-                                            .yui-skin-sam .yui-toolbar-container { background-color: #FFFFFF; }
-                                            -->
-                                            </style>
 <!-- dtl:block:RichText -->
+<!-- TODO: set own ITSM config -->
+<!-- ITSM::Frontend::TextArea -->
                                             <textarea id="RichText1" name="Description" rows="15" cols="$Config{"Ticket::Frontend::TextAreaEmail"}" wrap="$Env{"BrowserWrap"}">$Data{"Description"}</textarea>
                                         </div>
                                     </td>
@@ -71,7 +68,7 @@ $Include{"RichTextEditorITSM"}
                                         $Text{"Justification"}:
                                     </td>
                                     <td class="contentvalue">
-                                        <div class="yui-skin-sam">
+                                        <div>
                                             <textarea id="RichText2" name="Justification" rows="15" cols="$Config{"Ticket::Frontend::TextAreaEmail"}" wrap="$Env{"BrowserWrap"}">$Data{"Justification"}</textarea>
                                         </div>
                                     </td>
@@ -101,7 +98,7 @@ $Include{"RichTextEditorITSM"}
                     </tr>
                     <tr>
                         <td class="contentfooter">
-                            <input class="button" type="submit" name="Submit" value="$Text{"Submit"}">
+                            <input class="button" type="submit" name="Submit" value="$Text{"Save"}">
                         </td>
                     </tr>
                 </table>
