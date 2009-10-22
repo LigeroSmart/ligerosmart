@@ -2,7 +2,7 @@
 # AgentITSMChangeZoom.dtl - provides HTML form for AgentITSMChangeZoom
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.dtl,v 1.8 2009-10-21 09:19:24 reb Exp $
+# $Id: AgentITSMChangeZoom.dtl,v 1.9 2009-10-22 13:07:41 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -103,18 +103,18 @@
 <!-- dtl:block:Meta -->
             <table border="0" cellspacing="1" cellpadding="0" width="100%">
                 <tr>
-                    <td><b>$Text{"Current State Change"}: </b></td>
+                    <td><b>$Text{"Change State"}: </b></td>
                     <td>
                         <table border="0" cellpadding="0" cellspacing="0">
                             <tbody>
                                 <tr>
                                     <td>
-                                        <div title="$QData{"CurChangeState"}">
-                                            $QData{"CurChangeState"}&nbsp;&nbsp;
+                                        <div title="$QData{"ChangeState"}">
+                                            $QData{"ChangeState"}&nbsp;&nbsp;
                                         </div>
                                     </td>
                                     <td>
-                                        <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"CurChangeSignal"}.png" title="$Text{"$QData{"CurInciState"}"}" alt="$Text{"$QData{"CurInciState"}"}">
+                                        <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"ChangeStateSignal"}.png" title="$Text{"$QData{"ChangeState"}"}" alt="$Text{"$QData{"ChangeState"}"}">
                                     </td>
                                 </tr>
                             </tbody>

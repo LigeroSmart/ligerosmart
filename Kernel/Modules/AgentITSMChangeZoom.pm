@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeZoom.pm - the OTRS::ITSM::ChangeManagement change zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.pm,v 1.10 2009-10-22 09:43:53 bes Exp $
+# $Id: AgentITSMChangeZoom.pm,v 1.11 2009-10-22 13:07:41 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -183,32 +183,21 @@ sub Run {
         $Change->{ 'Change' . $Postfix } = $ChangeUser{$Postfix};
     }
 
-    # TODO: GeneralCatalog-Preferences definition of LED color
-    #  CurInciSignal => $InciSignals{ $LastVersion->{CurInciStateType} },
-    # temp color for changes
-    my %CurChangeSignal = (
-        requested          => 'yellowled',
-        accepted           => 'greenled',
-        'pending approval' => 'yellowled',
-        rejected           => 'grayled',
-        approved           => 'greenled',
-        'in progress'      => 'yellowled',
-        successful         => 'greenled',
-        failed             => 'redled',
-        canceled           => 'grayled',
-    );
-
-    my $CurChangeState = $Self->{GeneralCatalogObject}->ItemGet(
+    # get change state
+    my $ChangeState = $Self->{GeneralCatalogObject}->ItemGet(
         ItemID => $Change->{ChangeStateID},
     ) || {};
+
+    # get all change state signals
+    my $ChangeStateSignal = $Self->{ConfigObject}->Get('ITSMChange::State::Signal');
 
     # output meta block
     $Self->{LayoutObject}->Block(
         Name => 'Meta',
         Data => {
             %{$Change},
-            CurChangeState  => $CurChangeState->{Name},
-            CurChangeSignal => $CurChangeSignal{ $CurChangeState->{Name} },
+            ChangeState       => $ChangeState->{Name},
+            ChangeStateSignal => $ChangeStateSignal->{ $ChangeState->{Name} },
         },
     );
 
