@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderEdit.pm - the OTRS::ITSM::ChangeManagement work order edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderEdit.pm,v 1.12 2009-10-22 15:16:58 bes Exp $
+# $Id: AgentITSMWorkOrderEdit.pm,v 1.13 2009-10-22 17:36:56 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -87,7 +87,7 @@ sub Run {
 
         # update only if WorkOrderTitle is given
         if ( !$GetParam{WorkOrderTitle} ) {
-            $Invalid{Title} = 1;
+            $Invalid{Title} = 'missing';
         }
 
         # check whether complete times are passed and build the time stamps
@@ -102,17 +102,21 @@ sub Run {
                     next TIMETYPE;
                 }
             }
-            my $Y = $GetParam{ $TimeType . 'Year' };
-            my $M = $GetParam{ $TimeType . 'Month' };
-            my $D = $GetParam{ $TimeType . 'Day' };
-            my $h = $GetParam{ $TimeType . 'Hour' };
-            my $m = $GetParam{ $TimeType . 'Minute' };
-            $GetParam{$TimeType}   = "$Y-$M-$D $h:$m:00";
+
+            # format as timestamp
+            $GetParam{$TimeType} = sprintf '%04d-%02d-%02d %02d:%02d:00',
+                $GetParam{ $TimeType . 'Year' },
+                $GetParam{ $TimeType . 'Month' },
+                $GetParam{ $TimeType . 'Day' },
+                $GetParam{ $TimeType . 'Hour' },
+                $GetParam{ $TimeType . 'Minute' };
+
+            # sanity check the assembled timestamp
             $SystemTime{$TimeType} = $Self->{TimeObject}->TimeStamp2SystemTime(
                 String => $GetParam{$TimeType},
             );
             if ( !$SystemTime{$TimeType} ) {
-                $Invalid{$TimeType} = 1;
+                $Invalid{$TimeType} = 'invalid format';
             }
         }
 
@@ -123,7 +127,7 @@ sub Run {
             && $SystemTime{PlannedStartTime} >= $SystemTime{PlannedEndTime}
             )
         {
-            $Invalid{PlannedEndTime} = 1;
+            $Invalid{PlannedEndTime} = 'Start time is equal or greater that the end time.';
         }
 
         if ( !%Invalid ) {
@@ -201,6 +205,7 @@ sub Run {
         Name => 'RichText',
     );
 
+    # set the time selection
     for my $TimeType (qw(PlannedStartTime PlannedEndTime)) {
 
         # set default value for $DiffTime
