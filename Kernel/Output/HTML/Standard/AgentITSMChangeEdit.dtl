@@ -2,7 +2,7 @@
 # AgentITSMChangeEdit.dtl - provides HTML form for AgentITSMChangeEdit
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.dtl,v 1.6 2009-10-22 09:02:44 mae Exp $
+# $Id: AgentITSMChangeEdit.dtl,v 1.7 2009-10-22 10:14:26 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@
     </tr>
     <tr>
         <td class="menu">
-            <a href="#" class="menuitem">$Text{"Back"}</a>
+            <a class="menuitem" href="$Env{"Baselink"}Action=AgentITSMChangeZoom&ChangeID=$QData{"ChangeID"}" onclick="javascript:history.back(); return false;">$Text{"Back"}</a>
         </td>
     </tr>
 
