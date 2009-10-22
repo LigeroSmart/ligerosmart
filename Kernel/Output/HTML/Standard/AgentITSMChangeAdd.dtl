@@ -2,7 +2,7 @@
 # AgentITSMChangeAdd.dtl - provides HTML form for AgentITSMChangeAdd
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.dtl,v 1.4 2009-10-21 09:06:17 reb Exp $
+# $Id: AgentITSMChangeAdd.dtl,v 1.5 2009-10-22 17:42:52 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -91,15 +91,9 @@
                                         $Text{"Description"}:
                                     </td>
                                     <td class="contentvalue">
-                                        <div class="yui-skin-sam">
+                                        <div>
 <!-- dtl:block:RichText -->
 $Include{"RichTextEditorITSM"}
-# set white background for buttons
-<style type="text/css">
-<!--
-                                            .yui-skin-sam .yui-toolbar-container { background-color: #FFFFFF; }
-                                            -->
-                                            </style>
 <!-- dtl:block:RichText -->
 <textarea id="RichText1" name="Description" rows="15" cols="$Config{"Ticket::Frontend::TextAreaEmail"}" wrap="$Env{"BrowserWrap"}">
 $Data{"Description"}
