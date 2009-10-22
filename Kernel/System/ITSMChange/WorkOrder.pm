@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.57 2009-10-22 16:14:23 ub Exp $
+# $Id: WorkOrder.pm,v 1.58 2009-10-22 21:05:35 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,11 +19,10 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 use Kernel::System::EventHandler;
 
-# TODO: use base instead of push ISA, also change this in OTRS framework
 use base qw(Kernel::System::EventHandler);
 
-use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.57 $) [1];
+use vars qw($VERSION);
+$VERSION = qw($Revision: 1.58 $) [1];
 
 =head1 NAME
 
@@ -121,7 +120,7 @@ sub new {
 
     # init of event handler
     $Self->EventHandlerInit(
-        Config     => 'ITSM::EventModule',
+        Config     => 'ITSMWorkOrder::EventModule',
         BaseObject => 'WorkOrderObject',
         Objects    => {
             %{$Self},
@@ -176,6 +175,15 @@ sub WorkOrderAdd {
 
     # check change parameters
     return if !$Self->_CheckWorkOrderParams(%Param);
+
+    # trigger WorkOrderAddPre-Event
+    $Self->EventHandler(
+        Event => 'WorkOrderAddPre',
+        Data  => {
+            %Param,
+        },
+        UserID => $Param{UserID},
+    );
 
     # set default WorkOrderStateID
     my $WorkOrderStateID = $Param{WorkOrderStateID};
@@ -280,7 +288,7 @@ sub WorkOrderAdd {
 
     # trigger WorkOrderAdd-Event (yes, we want do do this before the WorkOrderUpdate!)
     $Self->EventHandler(
-        Event => 'WorkOrderAdd',
+        Event => 'WorkOrderAddPost',
         Data  => {
             WorkOrderID => $WorkOrderID,
         },
@@ -1505,6 +1513,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.57 $ $Date: 2009-10-22 16:14:23 $
+$Revision: 1.58 $ $Date: 2009-10-22 21:05:35 $
 
 =cut

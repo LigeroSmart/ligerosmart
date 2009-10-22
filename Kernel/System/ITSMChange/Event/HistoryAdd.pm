@@ -1,8 +1,8 @@
 # --
-# Kernel/System/ITSMChange/Event/HistoryAdd.pm - HistoryAdd event module for ITSMChangeManagement
+# Kernel/System/ITSMChange/Event/HistoryAdd.pm - HistoryAdd event module for ITSMChange
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: HistoryAdd.pm,v 1.1 2009-10-22 16:08:35 ub Exp $
+# $Id: HistoryAdd.pm,v 1.2 2009-10-22 21:06:28 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,15 +17,15 @@ use warnings;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
-Kernel::System::ITSMChange::History - ITSMChangeManagement history add lib
+Kernel::System::ITSMChange::History - ITSMChange history add lib
 
 =head1 SYNOPSIS
 
-All functions for history add in ITSMChangeManagement.
+Event handler module for history add in ITSMChange.
 
 =head1 PUBLIC INTERFACE
 
@@ -41,13 +41,8 @@ sub new {
     bless( $Self, $Type );
 
     # get needed objects
-    for (qw(DBObject ConfigObject EncodeObject LogObject MainObject TimeObject)) {
+    for (qw(DBObject ConfigObject EncodeObject LogObject MainObject TimeObject ChangeObject)) {
         $Self->{$_} = $Param{$_} || die "Got no $_!";
-    }
-
-    # we need either a change object or a workorder object
-    if ( !$Param{ChangeObject} && !$Param{WorkOrderObject} ) {
-        die 'Either ChangeObject or WorkOrderObject is needed!';
     }
 
     # create additional objects
@@ -60,35 +55,17 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(Event Config)) {
+    for (qw(ChangeID Event Config)) {
         if ( !$Param{$_} ) {
             $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
             return;
         }
     }
 
-    # check for either ChangeID or WorkOrderID
-    if ( !$Param{ChangeID} && !$Param{WorkOrderID} ) {
-        $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
-        return;
-    }
+    # do history stuff
 
-    # do history stuff for Change-Events
-    if ( $Param{Event} =~ m{ \A Change .+ \z }xms ) {
-
-        # ... do history update for change add, change update, change...
-
-        #$Self->{LogObject}->Dum_per( '', "ChangeEvent: $Param{Event} " );
-
-    }
-
-    # do history stuff for WorkOrder-Events
-    elsif ( $Param{Event} =~ m{ \A WorkOrder .+ \z  }xms ) {
-
-        # ... do history update for workorderAdd, etc...
-
-        #$Self->{LogObject}->Dum_per( '', "WorkOrderEvent: $Param{Event} " );
-    }
+    # ... do history update for change add, change update, change...
+    #$Self->{LogObject}->Dum_per( '', "ChangeEvent: $Param{Event} " );
 
     return 1;
 }
@@ -109,6 +86,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2009-10-22 16:08:35 $
+$Revision: 1.2 $ $Date: 2009-10-22 21:06:28 $
 
 =cut

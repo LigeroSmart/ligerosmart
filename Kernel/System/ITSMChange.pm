@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.98 2009-10-22 16:13:58 ub Exp $
+# $Id: ITSMChange.pm,v 1.99 2009-10-22 21:04:11 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.98 $) [1];
+$VERSION = qw($Revision: 1.99 $) [1];
 
 =head1 NAME
 
@@ -111,7 +111,7 @@ sub new {
 
     # init of event handler
     $Self->EventHandlerInit(
-        Config     => 'ITSM::EventModule',
+        Config     => 'ITSMChange::EventModule',
         BaseObject => 'ChangeObject',
         Objects    => {
             %{$Self},
@@ -158,6 +158,15 @@ sub ChangeAdd {
     # check change parameters
     return if !$Self->_CheckChangeParams(%Param);
 
+    # trigger WorkOrderAddPre-Event
+    $Self->EventHandler(
+        Event => 'ChangeAddPre',
+        Data  => {
+            %Param,
+        },
+        UserID => $Param{UserID},
+    );
+
     # create a new change number
     my $ChangeNumber = $Self->_ChangeNumberCreate();
 
@@ -191,7 +200,7 @@ sub ChangeAdd {
 
     # trigger ChangeAdd-Event (yes, we want do do this before the ChangeUpdate!)
     $Self->EventHandler(
-        Event => 'ChangeAdd',
+        Event => 'ChangeAddPost',
         Data  => {
             ChangeID => $ChangeID,
         },
@@ -1860,6 +1869,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.98 $ $Date: 2009-10-22 16:13:58 $
+$Revision: 1.99 $ $Date: 2009-10-22 21:04:11 $
 
 =cut
