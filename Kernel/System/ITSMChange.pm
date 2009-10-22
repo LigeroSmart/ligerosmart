@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.97 2009-10-22 15:31:55 ub Exp $
+# $Id: ITSMChange.pm,v 1.98 2009-10-22 16:13:58 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,8 +21,10 @@ use Kernel::System::User;
 use Kernel::System::CustomerUser;
 use Kernel::System::ITSMChange::WorkOrder;
 
+use base qw(Kernel::System::EventHandler);
+
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.97 $) [1];
+$VERSION = qw($Revision: 1.98 $) [1];
 
 =head1 NAME
 
@@ -107,6 +109,15 @@ sub new {
     $Self->{CustomerUserObject}   = Kernel::System::CustomerUser->new( %{$Self} );
     $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::WorkOrder->new( %{$Self} );
 
+    # init of event handler
+    $Self->EventHandlerInit(
+        Config     => 'ITSM::EventModule',
+        BaseObject => 'ChangeObject',
+        Objects    => {
+            %{$Self},
+        },
+    );
+
     return $Self;
 }
 
@@ -178,13 +189,32 @@ sub ChangeAdd {
 
     return if !$ChangeID;
 
-    # TODO: trigger ChangeAdd-Event
+    # trigger ChangeAdd-Event (yes, we want do do this before the ChangeUpdate!)
+    $Self->EventHandler(
+        Event => 'ChangeAdd',
+        Data  => {
+            ChangeID => $ChangeID,
+        },
+        UserID => $Param{UserID},
+    );
 
     # update change with remaining parameters
-    return if !$Self->ChangeUpdate(
+    my $UpdateSuccess = $Self->ChangeUpdate(
         ChangeID => $ChangeID,
         %Param,
     );
+
+    # check update error
+    if ( !$UpdateSuccess ) {
+
+        # delete change if it could not be updated
+        $Self->ChangeDelete(
+            ChangeID => $ChangeID,
+            UserID   => $Param{UserID},
+        );
+
+        return;
+    }
 
     return $ChangeID;
 }
@@ -1830,6 +1860,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.97 $ $Date: 2009-10-22 15:31:55 $
+$Revision: 1.98 $ $Date: 2009-10-22 16:13:58 $
 
 =cut
