@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderEdit.pm - the OTRS::ITSM::ChangeManagement work order edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderEdit.pm,v 1.10 2009-10-22 13:49:50 bes Exp $
+# $Id: AgentITSMWorkOrderEdit.pm,v 1.11 2009-10-22 14:19:05 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -69,7 +69,7 @@ sub Run {
         );
     }
 
-    # save the needed GET params in Hash
+    # store all needed parameters in %GetParam to make it reloadable
     my %GetParam;
     for my $ParamName (qw(WorkOrderTitle Instruction)) {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
@@ -82,57 +82,85 @@ sub Run {
     }
 
     # update workorder
-    if ( $Self->{Subaction} eq 'Save' && $GetParam{WorkOrderTitle} ) {
+    if ( $Self->{Subaction} eq 'Save' ) {
 
-        # check whether complete times are passed and build the time stamps
-        TIMETYPE:
-        for my $TimeType (qw(PlannedStartTime PlannedEndTime)) {
-            for my $TimePart (qw(Year Month Day Hour Minute)) {
-                my $ParamName = $TimeType . $TimePart;
-                if ( !defined $GetParam{$ParamName} ) {
-                    $Self->{LogObject}->Log( Priority => 'error', Message => "Need $ParamName!" );
-                    next TIMETYPE;
+        # update only if WorkOrderTitle is given
+        if ( $GetParam{WorkOrderTitle} ) {
+
+            # check whether complete times are passed and build the time stamps
+            TIMETYPE:
+            for my $TimeType (qw(PlannedStartTime PlannedEndTime)) {
+                for my $TimePart (qw(Year Month Day Hour Minute)) {
+                    my $ParamName = $TimeType . $TimePart;
+                    if ( !defined $GetParam{$ParamName} ) {
+                        $Self->{LogObject}
+                            ->Log( Priority => 'error', Message => "Need $ParamName!" );
+                        next TIMETYPE;
+                    }
                 }
+                $GetParam{$TimeType} =
+                    join q{}, $GetParam{ $TimeType . 'Year' }, '-',
+                    $GetParam{ $TimeType . 'Month' },
+                    '-', $GetParam{ $TimeType . 'Day' }, q{ }, $GetParam{ $TimeType . 'Hour' }, ':',
+                    $GetParam{ $TimeType . 'Minute' }, ':', '00';
             }
-            $GetParam{$TimeType} =
-                join q{}, $GetParam{ $TimeType . 'Year' }, '-', $GetParam{ $TimeType . 'Month' },
-                '-', $GetParam{ $TimeType . 'Day' }, q{ }, $GetParam{ $TimeType . 'Hour' }, ':',
-                $GetParam{ $TimeType . 'Minute' }, ':', '00';
-        }
 
-        my $CouldUpdateWorkOrder = $Self->{WorkOrderObject}->WorkOrderUpdate(
-            WorkOrderID => $WorkOrder->{WorkOrderID},
-            UserID      => $Self->{UserID},
-            %GetParam,
-        );
-
-        if ($CouldUpdateWorkOrder) {
-
-            # redirect to zoom mask
-            return $Self->{LayoutObject}->Redirect(
-                OP => "Action=AgentITSMWorkOrderZoom&WorkOrderID=$WorkOrder->{WorkOrderID}",
+            my $CouldUpdateWorkOrder = $Self->{WorkOrderObject}->WorkOrderUpdate(
+                WorkOrderID => $WorkOrder->{WorkOrderID},
+                UserID      => $Self->{UserID},
+                %GetParam,
             );
+
+            if ($CouldUpdateWorkOrder) {
+
+                # redirect to zoom mask
+                return $Self->{LayoutObject}->Redirect(
+                    OP => "Action=AgentITSMWorkOrderZoom&WorkOrderID=$WorkOrder->{WorkOrderID}",
+                );
+            }
+            else {
+
+                # show error message
+                return $Self->{LayoutObject}->ErrorScreen(
+                    Message => "Was not able to update WorkOrder $WorkOrder->{WorkOrderID}!",
+                    Comment => 'Please contact the admin.',
+                );
+            }
         }
         else {
 
-            # show error message
-            return $Self->{LayoutObject}->ErrorScreen(
-                Message => "Was not able to update WorkOrder $WorkOrder->{WorkOrderID}!",
-                Comment => 'Please contact the admin.',
+            # show invalid message
+            $Self->{LayoutObject}->Block(
+                Name => 'InvalidTitle',
             );
         }
     }
-    elsif ( $Self->{Subaction} eq 'Save' && !$GetParam{WorkOrderTitle} ) {
 
-        # show invalid message
-        $Self->{LayoutObject}->Block(
-            Name => 'InvalidTitle',
-        );
-    }
-
-    # delete all keys from GetParam when it is not Subaction 'Save'
-    if ( $Self->{Subaction} ne 'Save' ) {
+    # delete all keys from GetParam when it is no Subaction
+    else {
         %GetParam = ();
+        for my $TimeType (qw(PlannedStartTime PlannedEndTime)) {
+
+            if ( $WorkOrder->{$TimeType} ) {
+
+                # get planned start time from workorder
+                my $SystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
+                    String => $WorkOrder->{$TimeType},
+                );
+                my ( $Second, $Minute, $Hour, $Day, $Month, $Year )
+                    = $Self->{TimeObject}->SystemTime2Date(
+                    SystemTime => $SystemTime,
+                    );
+
+                # set the parameter hash for BuildDateSelection()
+                $WorkOrder->{ $TimeType . 'Used' }   = 1;
+                $WorkOrder->{ $TimeType . 'Minute' } = $Minute;
+                $WorkOrder->{ $TimeType . 'Hour' }   = $Hour;
+                $WorkOrder->{ $TimeType . 'Day' }    = $Day;
+                $WorkOrder->{ $TimeType . 'Month' }  = $Month;
+                $WorkOrder->{ $TimeType . 'Year' }   = $Year;
+            }
+        }
     }
 
     # get change that workorder belongs to
@@ -162,33 +190,13 @@ sub Run {
 
         # set default value for $DiffTime
         # When no time is given yet, then use the current time plus the difftime
+        # When an explicit time was retrieved, $DiffTime is not used
         my $DiffTime = $TimeType eq 'PlannedStartTime' ? 0 : 60 * 60;
 
-        if ( $WorkOrder->{$TimeType} ) {
-
-            # get planned start time from workorder
-            my $SystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
-                String => $WorkOrder->{$TimeType},
-            );
-            my ( $Second, $Minute, $Hour, $Day, $Month, $Year )
-                = $Self->{TimeObject}->SystemTime2Date(
-                SystemTime => $SystemTime,
-                );
-
-            # set the parameter hash for BuildDateSelection()
-            $WorkOrder->{ $TimeType . 'Used' }   = 1;
-            $WorkOrder->{ $TimeType . 'Minute' } = $Minute;
-            $WorkOrder->{ $TimeType . 'Hour' }   = $Hour;
-            $WorkOrder->{ $TimeType . 'Day' }    = $Day;
-            $WorkOrder->{ $TimeType . 'Month' }  = $Month;
-            $WorkOrder->{ $TimeType . 'Year' }   = $Year;
-
-            $DiffTime = 0;
-        }
-
-        # add selection for planned start time
+        # add selection for the time
         my $TimeSelectionString = $Self->{LayoutObject}->BuildDateSelection(
             %{$WorkOrder},
+            %GetParam,
             Format   => 'DateInputFormatLong',
             Prefix   => $TimeType,
             DiffTime => $DiffTime,
