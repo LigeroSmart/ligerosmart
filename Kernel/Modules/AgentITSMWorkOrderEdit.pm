@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderEdit.pm - the OTRS::ITSM::ChangeManagement work order edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderEdit.pm,v 1.11 2009-10-22 14:19:05 bes Exp $
+# $Id: AgentITSMWorkOrderEdit.pm,v 1.12 2009-10-22 15:16:58 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -82,29 +82,51 @@ sub Run {
     }
 
     # update workorder
+    my %Invalid;
     if ( $Self->{Subaction} eq 'Save' ) {
 
         # update only if WorkOrderTitle is given
-        if ( $GetParam{WorkOrderTitle} ) {
+        if ( !$GetParam{WorkOrderTitle} ) {
+            $Invalid{Title} = 1;
+        }
 
-            # check whether complete times are passed and build the time stamps
-            TIMETYPE:
-            for my $TimeType (qw(PlannedStartTime PlannedEndTime)) {
-                for my $TimePart (qw(Year Month Day Hour Minute)) {
-                    my $ParamName = $TimeType . $TimePart;
-                    if ( !defined $GetParam{$ParamName} ) {
-                        $Self->{LogObject}
-                            ->Log( Priority => 'error', Message => "Need $ParamName!" );
-                        next TIMETYPE;
-                    }
+        # check whether complete times are passed and build the time stamps
+        my %SystemTime;
+        TIMETYPE:
+        for my $TimeType (qw(PlannedStartTime PlannedEndTime)) {
+            for my $TimePart (qw(Year Month Day Hour Minute)) {
+                my $ParamName = $TimeType . $TimePart;
+                if ( !defined $GetParam{$ParamName} ) {
+                    $Self->{LogObject}
+                        ->Log( Priority => 'error', Message => "Need $ParamName!" );
+                    next TIMETYPE;
                 }
-                $GetParam{$TimeType} =
-                    join q{}, $GetParam{ $TimeType . 'Year' }, '-',
-                    $GetParam{ $TimeType . 'Month' },
-                    '-', $GetParam{ $TimeType . 'Day' }, q{ }, $GetParam{ $TimeType . 'Hour' }, ':',
-                    $GetParam{ $TimeType . 'Minute' }, ':', '00';
             }
+            my $Y = $GetParam{ $TimeType . 'Year' };
+            my $M = $GetParam{ $TimeType . 'Month' };
+            my $D = $GetParam{ $TimeType . 'Day' };
+            my $h = $GetParam{ $TimeType . 'Hour' };
+            my $m = $GetParam{ $TimeType . 'Minute' };
+            $GetParam{$TimeType}   = "$Y-$M-$D $h:$m:00";
+            $SystemTime{$TimeType} = $Self->{TimeObject}->TimeStamp2SystemTime(
+                String => $GetParam{$TimeType},
+            );
+            if ( !$SystemTime{$TimeType} ) {
+                $Invalid{$TimeType} = 1;
+            }
+        }
 
+        # check the ordering of the times
+        if (
+            $SystemTime{PlannedStartTime}
+            && $SystemTime{PlannedEndTime}
+            && $SystemTime{PlannedStartTime} >= $SystemTime{PlannedEndTime}
+            )
+        {
+            $Invalid{PlannedEndTime} = 1;
+        }
+
+        if ( !%Invalid ) {
             my $CouldUpdateWorkOrder = $Self->{WorkOrderObject}->WorkOrderUpdate(
                 WorkOrderID => $WorkOrder->{WorkOrderID},
                 UserID      => $Self->{UserID},
@@ -126,13 +148,6 @@ sub Run {
                     Comment => 'Please contact the admin.',
                 );
             }
-        }
-        else {
-
-            # show invalid message
-            $Self->{LayoutObject}->Block(
-                Name => 'InvalidTitle',
-            );
         }
     }
 
@@ -207,6 +222,16 @@ sub Run {
             Data => {
                 $TimeType . 'String' => $TimeSelectionString,
                 }
+        );
+    }
+
+    # The blocks InvalidPlannedStartTime and InvalidPlannedEndTime need to be filled after
+    # the blocks PlannedStartTime and PlannedEndTime
+    for my $Param ( keys %Invalid ) {
+
+        # show invalid message
+        $Self->{LayoutObject}->Block(
+            Name => 'Invalid' . $Param,
         );
     }
 
