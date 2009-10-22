@@ -2,7 +2,7 @@
 # AgentITSMCABMemberSearch.dtl - provides autocomplete feature for customer search
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMCABMemberSearch.dtl,v 1.1 2009-10-22 13:07:26 reb Exp $
+# $Id: AgentITSMCABMemberSearch.dtl,v 1.2 2009-10-22 15:26:45 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -77,7 +77,21 @@
 
         // define output format for drop down list
         myCABAutoComp$Data{"InputNr"}.formatResult = function(oCABResultData$Data{"InputNr"}, sCABQuery$Data{"InputNr"}, sCABResultMatch$Data{"InputNr"}) {
-            return (oCABResultData$Data{"InputNr"}.UserValue + " (" + oCABResultData$Data{"InputNr"}.UserKey + ") - " + oCABResultData$Data{"InputNr"}.UserType);
+            var CABMaxLength$Data{"InputNr"} = 35;
+
+            var CABUserValue$Data{"InputNr"} = oCABResultData$Data{"InputNr"}.UserValue;
+            if( CABUserValue$Data{"InputNr"}.length > CABMaxLength$Data{"InputNr"} ) {
+                CABUserValue$Data{"InputNr"} = CABUserValue$Data{"InputNr"}.substring( 0, CABMaxLength$Data{"InputNr"} ) + '[..]';
+            }
+
+            var CABUserKey$Data{"InputNr"} = oCABResultData$Data{"InputNr"}.UserKey;
+            if( CABUserKey$Data{"InputNr"}.length > CABMaxLength$Data{"InputNr"} ) {
+                CABUserKey$Data{"InputNr"} = CABUserKey$Data{"InputNr"}.substring( 0, CABMaxLength$Data{"InputNr"} ) + '[..]';
+            }
+
+            var CABFormattedString = CABUserValue$Data{"InputNr"} + " (" + CABUserKey$Data{"InputNr"} + ")";
+
+            return (CABFormattedString + " - " + oCABResultData$Data{"InputNr"}.UserType);
         };
 
         // define various autocomplete properties

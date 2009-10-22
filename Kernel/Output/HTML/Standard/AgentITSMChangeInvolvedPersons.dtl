@@ -2,7 +2,7 @@
 # AgentITSMChangeInvolvedPersons.dtl - provides HTML form for AgentITSMChangeInvolvedPersons
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.5 2009-10-22 13:07:26 reb Exp $
+# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.6 2009-10-22 15:26:45 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -167,10 +167,10 @@ function clear_field3() {
                                         </div>
 <!-- dtl:block:CABMemberSearchAutoCompleteDivEnd -->
 <!-- dtl:block:InvalidCABMember -->
-                                        <br />
+                                        <br><br>
                                         <font color="red" size="-2">$Text{"Input invalid"}</font>
 <!-- dtl:block:InvalidCABMember -->
-                                        <br/>
+                                        <br>
                                         $Data{"UserStrg"}
                                         <dtl if ($Data{"CABMemberStrg"} ne "") { $Data{"TakeThisCABMember"} = "<br/><input class="button" type="submit" name="ExpandCABMember2" value="$Text{"Take this User"}"/>"; }>
                                         $Data{"TakeThisCABMember"}

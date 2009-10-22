@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeInvolvedPersons.pm - the OTRS::ITSM::ChangeManagement change involved persons module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.5 2009-10-22 13:07:26 reb Exp $
+# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.6 2009-10-22 15:26:45 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::User;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -76,7 +76,7 @@ sub Run {
     for my $ParamName (
         qw(ChangeBuilder ChangeManager NewCABMember CABTemplate
         ExpandBuilder1 ExpandBuilder2 ExpandManager1 ExpandManager2
-        ExpandMember1 ExpandMember2 NewMemberType NewMemberID
+        ExpandMember1 ExpandMember2 CABMemberType CABMemberID
         SelectedUser1 SelectedUser2
         AddCABMember AddCABTemplate)
         )
@@ -84,106 +84,154 @@ sub Run {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
-    # changemanager and changebuilder is required for an update
-    my %ErrorAllRequired = $Self->_CheckChangeManagerAndChangeBuilder(
-        %GetParam,
-    );
+    if ( $Self->{Subaction} eq 'Save' ) {
 
-    # is a "search user" button clicked
-    my $ExpandUser = 0;
-
-    # is cab member delete requested
-    my %DeleteMember = $Self->_IsMemberDeletion(
-        Change => $Change,
-    );
-
-    # update workorder
-    if ( $GetParam{AddCABMember} && $GetParam{NewCABMember} ) {
-
-        # add a member
-    }
-    elsif ( $GetParam{AddCABTemplate} ) {
-
-        # add a template
-    }
-    elsif (%DeleteMember) {
-
-        # find users who are still member of CAB
-        my $Type = $DeleteMember{Type};
-        my @StillMembers = grep { $_ ne $DeleteMember{ID} } @{ $Change->{$Type} };
-
-        # update ChangeCAB
-        my $CouldUpdateCABMember = $Self->{ChangeObject}->ChangeCABUpdate(
-            ChangeID => $Change->{ChangeID},
-            $Type    => \@StillMembers,
-            UserID   => $Self->{UserID},
+        # changemanager and changebuilder is required for an update
+        my %ErrorAllRequired = $Self->_CheckChangeManagerAndChangeBuilder(
+            %GetParam,
         );
 
-        # check successful update
-        if ( !$CouldUpdateCABMember ) {
+        # is a "search user" button clicked
+        my $ExpandUser = 0;
 
-            # show error message
-            return $Self->{LayoutObject}->ErrorScreen(
-                Message => "Was not able to update Change CAB for Change $ChangeID!",
-                Comment => 'Please contact the admin.',
-            );
-        }
-
-        # get new change data as a member was removed
-        $Change = $Self->{ChangeObject}->ChangeGet(
-            ChangeID => $Change->{ChangeID},
-            UserID   => $Self->{UserID},
+        # is cab member delete requested
+        my %DeleteMember = $Self->_IsMemberDeletion(
+            Change => $Change,
         );
-    }
-    elsif ($ExpandUser) {
-
-    }
-    elsif ( $Self->{Subaction} eq 'Save' && !%ErrorAllRequired ) {
 
         # update change
-        my $CanUpdateChange = $Self->{ChangeObject}->ChangeUpdate(
-            ChangeID        => $ChangeID,
-            ChangeManagerID => $GetParam{SelectedUser1},
-            ChangeBuilderID => $GetParam{SelectedUser2},
-            UserID          => $Self->{UserID},
-        );
+        if ( $GetParam{AddCABMember} && $GetParam{NewCABMember} ) {
 
-        # check successful update
-        if ( !$CanUpdateChange ) {
+            # add a member
+            my %CABUpdateInfo = $Self->_IsNewCABMemberOk(
+                %GetParam,
+                Change => $Change,
+            );
 
-            # show error message
-            return $Self->{LayoutObject}->ErrorScreen(
-                Message => "Was not able to update Change $ChangeID!",
-                Comment => 'Please contact the admin.',
+            # if member is valid
+            if (%CABUpdateInfo) {
+
+                # update change CAB
+                my $CouldUpdateCAB = $Self->{ChangeObject}->ChangeCABUpdate(
+                    %CABUpdateInfo,
+                    ChangeID => $Change->{ChangeID},
+                    UserID   => $Self->{UserID},
+                );
+
+                # if update was successful
+                if ($CouldUpdateCAB) {
+
+                    # get new change data as a member was added
+                    $Change = $Self->{ChangeObject}->ChangeGet(
+                        ChangeID => $Change->{ChangeID},
+                        UserID   => $Self->{UserID},
+                    );
+
+                    # do not display a name in autocomplete field
+                    # and do not set values in hidden fields as the
+                    # user was already added
+                    delete @GetParam{qw(NewCABMember CABMemberType CABMemberID)};
+                }
+                else {
+
+                    # show error message
+                    return $Self->{LayoutObject}->ErrorScreen(
+                        Message => "Was not able to update Change CAB for Change $ChangeID!",
+                        Comment => 'Please contact the admin.',
+                    );
+                }
+            }
+
+            # if member is invalid
+            else {
+                $Self->{LayoutObject}->Block(
+                    Name => 'InvalidCABMember',
+                );
+            }
+        }
+        elsif ( $GetParam{AddCABTemplate} ) {
+
+            # TODO: add a template
+        }
+        elsif (%DeleteMember) {
+
+            # find users who are still member of CAB
+            my $Type = $DeleteMember{Type};
+            my @StillMembers = grep { $_ ne $DeleteMember{ID} } @{ $Change->{$Type} };
+
+            # update ChangeCAB
+            my $CouldUpdateCABMember = $Self->{ChangeObject}->ChangeCABUpdate(
+                ChangeID => $Change->{ChangeID},
+                $Type    => \@StillMembers,
+                UserID   => $Self->{UserID},
+            );
+
+            # check successful update
+            if ( !$CouldUpdateCABMember ) {
+
+                # show error message
+                return $Self->{LayoutObject}->ErrorScreen(
+                    Message => "Was not able to update Change CAB for Change $ChangeID!",
+                    Comment => 'Please contact the admin.',
+                );
+            }
+
+            # get new change data as a member was removed
+            $Change = $Self->{ChangeObject}->ChangeGet(
+                ChangeID => $Change->{ChangeID},
+                UserID   => $Self->{UserID},
             );
         }
-        else {
+        elsif ($ExpandUser) {
 
-            # redirect to zoom mask
-            return $Self->{LayoutObject}->Redirect(
-                OP => "Action=AgentITSMChangeZoom&ChangeID=$ChangeID",
-            );
         }
-    }
-    elsif ( $Self->{Subaction} eq 'Save' && %ErrorAllRequired ) {
+        elsif ( !%ErrorAllRequired ) {
 
-        # show error message for change builder
-        if ( $ErrorAllRequired{ChangeBuilder} ) {
-            $Self->{LayoutObject}->Block(
-                Name => 'InvalidChangeBuilder',
+            # update change
+            my $CanUpdateChange = $Self->{ChangeObject}->ChangeUpdate(
+                ChangeID        => $ChangeID,
+                ChangeManagerID => $GetParam{SelectedUser1},
+                ChangeBuilderID => $GetParam{SelectedUser2},
+                UserID          => $Self->{UserID},
             );
+
+            # check successful update
+            if ( !$CanUpdateChange ) {
+
+                # show error message
+                return $Self->{LayoutObject}->ErrorScreen(
+                    Message => "Was not able to update Change $ChangeID!",
+                    Comment => 'Please contact the admin.',
+                );
+            }
+            else {
+
+                # redirect to zoom mask
+                return $Self->{LayoutObject}->Redirect(
+                    OP => "Action=AgentITSMChangeZoom&ChangeID=$ChangeID",
+                );
+            }
         }
+        elsif (%ErrorAllRequired) {
 
-        # show error message for change manager
-        if ( $ErrorAllRequired{ChangeManager} ) {
-            $Self->{LayoutObject}->Block(
-                Name => 'InvalidChangeManager',
-            );
+            # show error message for change builder
+            if ( $ErrorAllRequired{ChangeBuilder} ) {
+                $Self->{LayoutObject}->Block(
+                    Name => 'InvalidChangeBuilder',
+                );
+            }
+
+            # show error message for change manager
+            if ( $ErrorAllRequired{ChangeManager} ) {
+                $Self->{LayoutObject}->Block(
+                    Name => 'InvalidChangeManager',
+                );
+            }
         }
     }
 
     # set default values if it is not 'Save' subaction
-    if ( $Self->{Subaction} ne 'Save' ) {
+    else {
 
         # initialize variables
         my $ChangeManager = '';
@@ -480,6 +528,7 @@ sub _IsMemberDeletion {
 sub _CheckChangeManagerAndChangeBuilder {
     my ( $Self, %Param ) = @_;
 
+    # hash for error info
     my %Errors;
 
     # check change manager
@@ -543,6 +592,71 @@ sub _CheckChangeManagerAndChangeBuilder {
     }
 
     return %Errors
+}
+
+sub _IsNewCABMemberOk {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    return if !$Param{Change};
+
+    my %MemberInfo;
+
+    # CABCustomers or CABAgents?
+    my $MemberType = $Param{CABMemberType};
+
+    # current members
+    my $CurrentMembers = $Param{Change}->{$MemberType};
+
+    my %User;
+
+    # an agent is requested to be added
+    if ( $MemberType eq 'CABAgents' ) {
+        %User = $Self->{UserObject}->GetUserData(
+            UserID => $Param{CABMemberID},
+        );
+
+        if (%User) {
+
+            # compare input value with user data
+            my $CheckString = sprintf '%s %s %s ',
+                $User{UserLogin},
+                $User{UserFirstname},
+                $User{UserLastname};
+
+            # save member infos
+            if ( $CheckString eq $Param{NewCABMember} ) {
+                %MemberInfo = (
+                    $MemberType => [ @$CurrentMembers, $User{UserID} ],
+                );
+            }
+        }
+    }
+
+    # an customer is requested to be added
+    else {
+        %User = $Self->{CustomerUserObject}->CustomerUserDataGet(
+            User => $Param{CABMemberID},
+        );
+
+        if (%User) {
+
+            # compare input value with user data
+            my $CheckString = sprintf '%s %s %s ',
+                $User{UserFirstname},
+                $User{UserLastname},
+                $User{UserEmail};
+
+            # save member infos
+            if ( $CheckString eq $Param{NewCABMember} ) {
+                %MemberInfo = (
+                    $MemberType => [ @$CurrentMembers, $User{UserLogin} ],
+                );
+            }
+        }
+    }
+
+    return %MemberInfo;
 }
 
 1;
