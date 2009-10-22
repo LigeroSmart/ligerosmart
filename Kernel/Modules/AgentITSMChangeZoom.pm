@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeZoom.pm - the OTRS::ITSM::ChangeManagement change zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.pm,v 1.8 2009-10-21 09:19:24 reb Exp $
+# $Id: AgentITSMChangeZoom.pm,v 1.9 2009-10-22 09:04:48 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -133,7 +133,7 @@ sub Run {
 
     my @Postfixes = qw(UserLogin UserFirstname UserLastname);
 
-    if ( $Change->{ChangeManager} ) {
+    if ( $Change->{ChangeManagerID} ) {
 
         # get change manager data
         my %ChangeManagerUser = $Self->{UserObject}->GetUserData(
