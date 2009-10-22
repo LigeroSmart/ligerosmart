@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeEdit.pm - the OTRS::ITSM::ChangeManagement change edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.pm,v 1.5 2009-10-22 07:07:59 reb Exp $
+# $Id: AgentITSMChangeEdit.pm,v 1.6 2009-10-22 09:03:55 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -32,6 +32,8 @@ sub new {
             $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
         }
     }
+
+    # create needed objects
     $Self->{ChangeObject} = Kernel::System::ITSMChange->new(%Param);
 
     # get config of frontend module
@@ -72,42 +74,46 @@ sub Run {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
-    # update workorder
-    if ( $Self->{Subaction} eq 'Save' && $GetParam{ChangeTitle} ) {
-        my $CouldUpdateChange = $Self->{ChangeObject}->ChangeUpdate(
-            ChangeID      => $ChangeID,
-            Description   => $GetParam{Description},
-            Justification => $GetParam{Justification},
-            ChangeTitle   => $GetParam{ChangeTitle},
-            UserID        => $Self->{UserID},
-        );
+    # update change
+    if ( $Self->{Subaction} eq 'Save' ) {
 
-        if ( !$CouldUpdateChange ) {
-
-            # show error message
-            return $Self->{LayoutObject}->ErrorScreen(
-                Message => "Was not able to update Change $ChangeID!",
-                Comment => 'Please contact the admin.',
+        # update only if ChangeTitle is given
+        if ( $GetParam{ChangeTitle} ) {
+            my $CouldUpdateChange = $Self->{ChangeObject}->ChangeUpdate(
+                UserID   => $Self->{UserID},
+                ChangeID => $ChangeID,
+                %GetParam,
             );
+
+            if ($CouldUpdateChange) {
+
+                # redirect to zoom mask
+                return $Self->{LayoutObject}->Redirect(
+                    OP => "Action=AgentITSMChangeZoom&ChangeID=$ChangeID",
+                );
+            }
+            else {
+
+                # show error message
+                return $Self->{LayoutObject}->ErrorScreen(
+                    Message => "Was not able to update Change $ChangeID!",
+                    Comment => 'Please contact the admin.',
+                );
+            }
         }
+
+        # no ChangeTitle given
         else {
 
-            # redirect to zoom mask
-            return $Self->{LayoutObject}->Redirect(
-                OP => "Action=AgentITSMChangeZoom&ChangeID=$ChangeID",
+            # show invalid message
+            $Self->{LayoutObject}->Block(
+                Name => 'InvalidTitle',
             );
         }
     }
-    elsif ( $Self->{Subaction} eq 'Save' && !$GetParam{ChangeTitle} ) {
 
-        # show invalid message
-        $Self->{LayoutObject}->Block(
-            Name => 'InvalidTitle',
-        );
-    }
-
-    # delete all keys from GetParam when it is not Subaction 'Save'
-    if ( $Self->{Subaction} ne 'Save' ) {
+    # delete all keys from GetParam when it is no Subaction
+    else {
         %GetParam = ();
     }
 
@@ -117,9 +123,12 @@ sub Run {
     );
     $Output .= $Self->{LayoutObject}->NavigationBar();
 
-    $Self->{LayoutObject}->Block(
-        Name => 'RichText',
-    );
+    # add rich text editor
+    if ( $Self->{ConfigObject}->Get('Frontend::RichText') ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'RichText',
+        );
+    }
 
     # start template output
     $Output .= $Self->{LayoutObject}->Output(
