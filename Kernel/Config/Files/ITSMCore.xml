@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMCore.xml,v 1.25 2009-10-21 23:31:48 ub Exp $</CVS>
+    <CVS>$Id: ITSMCore.xml,v 1.26 2009-10-22 09:21:14 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -378,6 +378,15 @@
         </Setting>
     </ConfigItem>
 
+    <ConfigItem Name="ITSM::Frontend::TextArea" Required="1" Valid="1">
+        <Description Lang="en">Width of ITSM textareas.</Description>
+        <Description Lang="de">Anzahl der Zeichen pro Zeile in ITSM TextAreas.</Description>
+        <Group>ITSM Core</Group>
+        <SubGroup>Frontend::Agent</SubGroup>
+        <Setting>
+            <String Regex="^[0-9]{1,3}$">78</String>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="GeneralCatalogPreferences###IncidentStates" Required="0" Valid="1">
         <Description Lang="en">Parameters for the incident states in the preference view.</Description>
         <Description Lang="de">Parameter für den Vorfallsstatus in der Ansicht für die Einstellungen.</Description>
