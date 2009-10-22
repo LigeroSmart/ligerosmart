@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderEdit.pm - the OTRS::ITSM::ChangeManagement work order edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderEdit.pm,v 1.6 2009-10-21 09:09:28 reb Exp $
+# $Id: AgentITSMWorkOrderEdit.pm,v 1.7 2009-10-22 07:18:46 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -69,9 +69,6 @@ sub Run {
         );
     }
 
-    # currenttitle is the value for the title input
-    $Param{CurrentTitle} = $WorkOrder->{WorkOrderTitle};
-
     # save the needed GET params in Hash
     my %GetParam;
     for my $ParamName (qw(WorkOrderTitle Instruction)) {
@@ -80,14 +77,14 @@ sub Run {
 
     # update workorder
     if ( $Self->{Subaction} eq 'Save' && $GetParam{WorkOrderTitle} ) {
-        my $Success = $Self->{WorkOrderObject}->WorkOrderUpdate(
+        my $CouldUpdateWorkOrder = $Self->{WorkOrderObject}->WorkOrderUpdate(
             WorkOrderID    => $WorkOrder->{WorkOrderID},
             Instruction    => $GetParam{Instruction},
             WorkOrderTitle => $GetParam{WorkOrderTitle},
             UserID         => $Self->{UserID},
         );
 
-        if ( !$Success ) {
+        if ( !$CouldUpdateWorkOrder ) {
 
             # show error message
             return $Self->{LayoutObject}->ErrorScreen(
@@ -109,9 +106,6 @@ sub Run {
         $Self->{LayoutObject}->Block(
             Name => 'InvalidTitle',
         );
-
-        # don't show title
-        $Param{CurrentTitle} = '';
     }
 
     # get change that workorder belongs to
@@ -136,10 +130,6 @@ sub Run {
     $Self->{LayoutObject}->Block(
         Name => 'RichText',
     );
-
-    # switch two parameters due to reload issues
-    $GetParam{CurrentTitle}   = $GetParam{WorkOrderTitle};
-    $GetParam{WorkOrderTitle} = $WorkOrder->{WorkOrderTitle};
 
     # start template output
     $Output .= $Self->{LayoutObject}->Output(
