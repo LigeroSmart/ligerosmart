@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.21 2009-10-22 13:07:26 reb Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.22 2009-10-22 16:16:28 ub Exp $</CVS>
     <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
         <Description Lang="en">Logfile for the itsm change counter.</Description>
         <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
@@ -596,4 +596,18 @@
             <String>100</String>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="ITSM::EventModule###01-HistoryAdd" Required="0" Valid="1">
+        <Description Lang="en">ITSM event module updates the history for Change and WorkOrder objects.</Description>
+        <Description Lang="de">ITSM Event Modul aktualisiert die History von Change und WorkOrder Objekten.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMEvent</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::System::ITSMChange::Event::HistoryAdd</Item>
+                <Item Key="Event">(ChangeUpdate|WorkOrderUpdate|ChangeAdd|WorkOrderAdd)</Item>
+                <Item Key="Transaction">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+
 </otrs_config>
