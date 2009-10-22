@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderEdit.pm - the OTRS::ITSM::ChangeManagement work order edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderEdit.pm,v 1.8 2009-10-22 07:21:22 reb Exp $
+# $Id: AgentITSMWorkOrderEdit.pm,v 1.9 2009-10-22 07:28:08 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -121,7 +121,7 @@ sub Run {
 
     if ( !$Change ) {
         return $Self->{LayoutObject}->ErrorScreen(
-            Message => "Could not find Change for WorkOrder $WorkOrder!",
+            Message => "Could not find Change for WorkOrder $WorkOrderID!",
             Comment => 'Please contact the admin.',
         );
     }

@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderReport.pm - the OTRS::ITSM::ChangeManagement work order report module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderReport.pm,v 1.5 2009-10-21 08:59:39 reb Exp $
+# $Id: AgentITSMWorkOrderReport.pm,v 1.6 2009-10-22 07:28:08 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -71,16 +71,22 @@ sub Run {
         );
     }
 
+    # save the needed GET params in Hash
+    my %GetParam;
+    for my $ParamName (qw(Report WorkOrderStateID)) {
+        $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+    }
+
     # update workorder
     if ( $Self->{Subaction} eq 'Save' ) {
-        my $Success = $Self->{WorkOrderObject}->WorkOrderUpdate(
+        my $CouldUpdateWorkOrder = $Self->{WorkOrderObject}->WorkOrderUpdate(
             WorkOrderID      => $WorkOrder->{WorkOrderID},
-            Report           => $Self->{ParamObject}->GetParam( Param => 'Report' ),
-            WorkOrderStateID => $Self->{ParamObject}->GetParam( Param => 'WorkOrderStateID' ),
+            Report           => $GetParam{Report},
+            WorkOrderStateID => $GetParam{WorkOrderStateID},
             UserID           => $Self->{UserID},
         );
 
-        if ( !$Success ) {
+        if ( !$CouldUpdateWorkOrder ) {
 
             # show error message
             return $Self->{LayoutObject}->ErrorScreen(
@@ -97,9 +103,6 @@ sub Run {
         }
     }
 
-    # strip header on max 80 chars
-    $WorkOrder->{WorkOrderTitle} =~ s{ \A (.{80}) .* \z }{ $1 }xms;
-
     # get change that workorder belongs to
     my $Change = $Self->{ChangeObject}->ChangeGet(
         ChangeID => $WorkOrder->{ChangeID},
@@ -108,7 +111,7 @@ sub Run {
 
     if ( !$Change ) {
         return $Self->{LayoutObject}->ErrorScreen(
-            Message => "Could not find Change for WorkOrder $WorkOrder!",
+            Message => "Could not find Change for WorkOrder $WorkOrderID!",
             Comment => 'Please contact the admin.',
         );
     }
