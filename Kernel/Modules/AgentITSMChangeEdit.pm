@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeEdit.pm - the OTRS::ITSM::ChangeManagement change edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.pm,v 1.4 2009-10-21 09:17:38 reb Exp $
+# $Id: AgentITSMChangeEdit.pm,v 1.5 2009-10-22 07:07:59 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -72,11 +72,9 @@ sub Run {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
-    $Param{CurrentTitle} = $Change->{ChangeTitle};
-
     # update workorder
     if ( $Self->{Subaction} eq 'Save' && $GetParam{ChangeTitle} ) {
-        my $Success = $Self->{ChangeObject}->ChangeUpdate(
+        my $CouldUpdateChange = $Self->{ChangeObject}->ChangeUpdate(
             ChangeID      => $ChangeID,
             Description   => $GetParam{Description},
             Justification => $GetParam{Justification},
@@ -84,7 +82,7 @@ sub Run {
             UserID        => $Self->{UserID},
         );
 
-        if ( !$Success ) {
+        if ( !$CouldUpdateChange ) {
 
             # show error message
             return $Self->{LayoutObject}->ErrorScreen(
@@ -106,9 +104,11 @@ sub Run {
         $Self->{LayoutObject}->Block(
             Name => 'InvalidTitle',
         );
+    }
 
-        # don't show title
-        $Param{CurrentTitle} = '';
+    # delete all keys from GetParam when it is not Subaction 'Save'
+    if ( $Self->{Subaction} ne 'Save' ) {
+        %GetParam = ();
     }
 
     # output header
