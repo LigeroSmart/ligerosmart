@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.56 2009-10-21 21:24:04 ub Exp $
+# $Id: WorkOrder.pm,v 1.57 2009-10-22 16:14:23 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,9 +17,13 @@ use warnings;
 use Kernel::System::Valid;
 use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
+use Kernel::System::EventHandler;
+
+# TODO: use base instead of push ISA, also change this in OTRS framework
+use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.56 $) [1];
+$VERSION = qw($Revision: 1.57 $) [1];
 
 =head1 NAME
 
@@ -114,6 +118,15 @@ sub new {
     $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
     $Self->{LinkObject}           = Kernel::System::LinkObject->new( %{$Self} );
+
+    # init of event handler
+    $Self->EventHandlerInit(
+        Config     => 'ITSM::EventModule',
+        BaseObject => 'WorkOrderObject',
+        Objects    => {
+            %{$Self},
+        },
+    );
 
     return $Self;
 }
@@ -265,13 +278,32 @@ sub WorkOrderAdd {
         return;
     }
 
-    # TODO: trigger WorkOrderAdd-Event
+    # trigger WorkOrderAdd-Event (yes, we want do do this before the WorkOrderUpdate!)
+    $Self->EventHandler(
+        Event => 'WorkOrderAdd',
+        Data  => {
+            WorkOrderID => $WorkOrderID,
+        },
+        UserID => $Param{UserID},
+    );
 
     # update WorkOrder with remaining parameters
-    return if !$Self->WorkOrderUpdate(
+    my $UpdateSuccess = $Self->WorkOrderUpdate(
         WorkOrderID => $WorkOrderID,
         %Param,
     );
+
+    # check update error
+    if ( !$UpdateSuccess ) {
+
+        # delete workorder if it could not be updated
+        $Self->WorkOrderDelete(
+            WorkOrderID => $WorkOrderID,
+            UserID      => $Param{UserID},
+        );
+
+        return;
+    }
 
     return $WorkOrderID;
 }
@@ -1473,6 +1505,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.56 $ $Date: 2009-10-21 21:24:04 $
+$Revision: 1.57 $ $Date: 2009-10-22 16:14:23 $
 
 =cut
