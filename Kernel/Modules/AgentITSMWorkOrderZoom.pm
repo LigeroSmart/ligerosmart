@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderZoom.pm - the OTRS::ITSM::ChangeManagement work order zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderZoom.pm,v 1.9 2009-10-21 17:57:04 mae Exp $
+# $Id: AgentITSMWorkOrderZoom.pm,v 1.10 2009-10-22 12:12:35 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -92,8 +92,8 @@ sub Run {
     );
 
     # run work order menu modules
-    if ( ref $Self->{ConfigObject}->Get('ITSMChange::WorkOrder::Frontend::MenuModule') eq 'HASH' ) {
-        my %Menus = %{ $Self->{ConfigObject}->Get('ITSMChange::WorkOrder::Frontend::MenuModule') };
+    if ( ref $Self->{ConfigObject}->Get('ITSMWorkOrder::Frontend::MenuModule') eq 'HASH' ) {
+        my %Menus   = %{ $Self->{ConfigObject}->Get('ITSMWorkOrder::Frontend::MenuModule') };
         my $Counter = 0;
         for my $Menu ( sort keys %Menus ) {
 
