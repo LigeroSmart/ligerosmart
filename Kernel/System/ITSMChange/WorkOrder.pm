@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.58 2009-10-22 21:05:35 ub Exp $
+# $Id: WorkOrder.pm,v 1.59 2009-10-23 08:50:09 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::EventHandler;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.58 $) [1];
+$VERSION = qw($Revision: 1.59 $) [1];
 
 =head1 NAME
 
@@ -286,11 +286,13 @@ sub WorkOrderAdd {
         return;
     }
 
-    # trigger WorkOrderAdd-Event (yes, we want do do this before the WorkOrderUpdate!)
+    # trigger WorkOrderAddPost-Event
+    # (yes, we want do do this before the WorkOrderUpdate!)
     $Self->EventHandler(
         Event => 'WorkOrderAddPost',
         Data  => {
             WorkOrderID => $WorkOrderID,
+            %Param,
         },
         UserID => $Param{UserID},
     );
@@ -364,6 +366,21 @@ sub WorkOrderUpdate {
     # check if the timestamps are correct
     return if !$Self->_CheckTimestamps(%Param);
 
+    # trigger WorkOrderUpdatePre-Event
+    $Self->EventHandler(
+        Event => 'WorkOrderUpdatePre',
+        Data  => {
+            %Param,
+        },
+        UserID => $Param{UserID},
+    );
+
+    # get old workorder data to be given to post event handler
+    my $OldWorkOrderData = $Self->WorkOrderGet(
+        WorkOrderID => $Param{WorkOrderID},
+        UserID      => $Param{UserID},
+    );
+
     # map update attributes to column names
     my %Attribute = (
         WorkOrderTitle   => 'title',
@@ -404,7 +421,15 @@ sub WorkOrderUpdate {
         Bind => \@Bind,
     );
 
-    # TODO: trigger WorkOrderUpdate-Event
+    # trigger WorkOrderUpdatePost-Event
+    $Self->EventHandler(
+        Event => 'WorkOrderUpdatePost',
+        Data  => {
+            OldWorkOrderData => $OldWorkOrderData,
+            %Param,
+        },
+        UserID => $Param{UserID},
+    );
 
     return 1;
 }
@@ -1025,6 +1050,21 @@ sub WorkOrderDelete {
         }
     }
 
+    # trigger WorkOrderDeletePre-Event
+    $Self->EventHandler(
+        Event => 'WorkOrderDeletePre',
+        Data  => {
+            %Param,
+        },
+        UserID => $Param{UserID},
+    );
+
+    # get old workorder data to be given to post event handler
+    my $OldWorkOrderData = $Self->WorkOrderGet(
+        WorkOrderID => $Param{WorkOrderID},
+        UserID      => $Param{UserID},
+    );
+
     # delete all links to this workorder
     return if !$Self->{LinkObject}->LinkDeleteAll(
         Object => 'ITSMWorkOrder',
@@ -1032,12 +1072,20 @@ sub WorkOrderDelete {
         UserID => 1,
     );
 
-    # TODO: trigger WorkOrder delete event
-
     # delete the workorder
     return if !$Self->{DBObject}->Do(
         SQL  => 'DELETE FROM change_workorder WHERE id = ? ',
         Bind => [ \$Param{WorkOrderID} ],
+    );
+
+    # trigger WorkOrderDeletePost-Event
+    $Self->EventHandler(
+        Event => 'WorkOrderDeletePost',
+        Data  => {
+            OldWorkOrderData => $OldWorkOrderData,
+            %Param,
+        },
+        UserID => $Param{UserID},
     );
 
     return 1;
@@ -1513,6 +1561,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.58 $ $Date: 2009-10-22 21:05:35 $
+$Revision: 1.59 $ $Date: 2009-10-23 08:50:09 $
 
 =cut
