@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.101 2009-10-23 08:54:40 ub Exp $
+# $Id: ITSMChange.pm,v 1.102 2009-10-23 09:09:29 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.101 $) [1];
+$VERSION = qw($Revision: 1.102 $) [1];
 
 =head1 NAME
 
@@ -276,7 +276,7 @@ sub ChangeUpdate {
     );
 
     # get old change data to be given to post event handler
-    my $OldChangeData = $Self->{ChangeObject}->ChangeGet(
+    my $ChangeData = $Self->ChangeGet(
         ChangeID => $Param{ChangeID},
         UserID   => $Param{UserID},
     );
@@ -324,7 +324,7 @@ sub ChangeUpdate {
     $Self->EventHandler(
         Event => 'ChangeUpdatePost',
         Data  => {
-            OldChangeData => $OldChangeData,
+            OldChangeData => $ChangeData,
             %Param,
         },
         UserID => $Param{UserID},
@@ -1455,12 +1455,6 @@ sub ChangeDelete {
         UserID => $Param{UserID},
     );
 
-    # get old change data to be given to post event handler
-    my $OldChangeData = $Self->ChangeGet(
-        ChangeID => $Param{ChangeID},
-        UserID   => $Param{UserID},
-    );
-
     # lookup if change exists
     return if !$Self->ChangeLookup(
         ChangeID => $Param{ChangeID},
@@ -1476,7 +1470,8 @@ sub ChangeDelete {
 
     # TODO: delete the history
 
-    # get change data to get the work order ids
+    # get change data to get the work order ids,
+    # and to be given to post event handler
     my $ChangeData = $Self->ChangeGet(
         ChangeID => $Param{ChangeID},
         UserID   => $Param{UserID},
@@ -1516,7 +1511,7 @@ sub ChangeDelete {
     $Self->EventHandler(
         Event => 'ChangeDeletePost',
         Data  => {
-            OldChangeData => $OldChangeData,
+            OldChangeData => $ChangeData,
             %Param,
         },
         UserID => $Param{UserID},
@@ -1967,6 +1962,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.101 $ $Date: 2009-10-23 08:54:40 $
+$Revision: 1.102 $ $Date: 2009-10-23 09:09:29 $
 
 =cut

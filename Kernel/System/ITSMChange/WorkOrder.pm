@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.59 2009-10-23 08:50:09 ub Exp $
+# $Id: WorkOrder.pm,v 1.60 2009-10-23 09:09:29 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::EventHandler;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.59 $) [1];
+$VERSION = qw($Revision: 1.60 $) [1];
 
 =head1 NAME
 
@@ -376,7 +376,7 @@ sub WorkOrderUpdate {
     );
 
     # get old workorder data to be given to post event handler
-    my $OldWorkOrderData = $Self->WorkOrderGet(
+    my $WorkOrderData = $Self->WorkOrderGet(
         WorkOrderID => $Param{WorkOrderID},
         UserID      => $Param{UserID},
     );
@@ -425,7 +425,7 @@ sub WorkOrderUpdate {
     $Self->EventHandler(
         Event => 'WorkOrderUpdatePost',
         Data  => {
-            OldWorkOrderData => $OldWorkOrderData,
+            OldWorkOrderData => $WorkOrderData,
             %Param,
         },
         UserID => $Param{UserID},
@@ -1060,7 +1060,7 @@ sub WorkOrderDelete {
     );
 
     # get old workorder data to be given to post event handler
-    my $OldWorkOrderData = $Self->WorkOrderGet(
+    my $WorkOrderData = $Self->WorkOrderGet(
         WorkOrderID => $Param{WorkOrderID},
         UserID      => $Param{UserID},
     );
@@ -1082,7 +1082,7 @@ sub WorkOrderDelete {
     $Self->EventHandler(
         Event => 'WorkOrderDeletePost',
         Data  => {
-            OldWorkOrderData => $OldWorkOrderData,
+            OldWorkOrderData => $WorkOrderData,
             %Param,
         },
         UserID => $Param{UserID},
@@ -1561,6 +1561,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.59 $ $Date: 2009-10-23 08:50:09 $
+$Revision: 1.60 $ $Date: 2009-10-23 09:09:29 $
 
 =cut
