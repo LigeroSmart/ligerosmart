@@ -2,7 +2,7 @@
 # AgentITSMChangeInvolvedPersons.dtl - provides HTML form for AgentITSMChangeInvolvedPersons
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.6 2009-10-22 15:26:45 reb Exp $
+# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.7 2009-10-23 12:44:03 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -96,8 +96,8 @@ function clear_field3() {
                                         <font color="red" size="-2">$Text{"Input invalid"}</font>
 <!-- dtl:block:InvalidChangeManager -->
                                         <br/>
-                                        $Data{"UserStrg"}
-                                        <dtl if ($Data{"UserStrg"} ne "") { $Data{"TakeThisUser"} = "<br/><input class="button" type="submit" name="ExpandManager2" value="$Text{"Take this User"}"/>"; }>
+                                        $Data{"ChangeManagerStrg"}
+                                        <dtl if ($Data{"ChangeManagerStrg"} ne "") { $Data{"TakeThisUser"} = "<br/><input class="button" type="submit" name="ExpandManager2" value="$Text{"Take this User"}"/>"; }>
                                         $Data{"TakeThisUser"}
 <!-- dtl:block:SearchUserButton1 -->
                                         <input class="button" type="submit" name="ExpandManager1" value="$Text{"Search User"}"/>
@@ -124,8 +124,8 @@ function clear_field3() {
                                         <font color="red" size="-2">$Text{"Input invalid"}</font>
 <!-- dtl:block:InvalidChangeBuilder -->
                                         <br/>
-                                        $Data{"UserStrg"}
-                                        <dtl if ($Data{"UserStrg2"} ne "") { $Data{"TakeThisUser2"} = "<br/><input class="button" type="submit" name="ExpandBuilder2" value="$Text{"Take this User"}"/>"; }>
+                                        $Data{"ChangeBuilderStrg"}
+                                        <dtl if ($Data{"ChangeBuilderStrg"} ne "") { $Data{"TakeThisUser2"} = "<br/><input class="button" type="submit" name="ExpandBuilder2" value="$Text{"Take this User"}"/>"; }>
                                         $Data{"TakeThisUser2"}
 <!-- dtl:block:SearchUserButton2 -->
                                         <input class="button" type="submit" name="ExpandBuilder1" value="$Text{"Search User"}"/>

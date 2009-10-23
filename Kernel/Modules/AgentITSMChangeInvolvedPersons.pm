@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeInvolvedPersons.pm - the OTRS::ITSM::ChangeManagement change involved persons module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.6 2009-10-22 15:26:45 reb Exp $
+# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.7 2009-10-23 12:44:03 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::User;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -84,6 +84,10 @@ sub Run {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
+    # this is needed to handle user requests when autocompletion is turned off
+    # %ExpandInfo gets info about chosen user and all available users
+    my %ExpandInfo;
+
     if ( $Self->{Subaction} eq 'Save' ) {
 
         # changemanager and changebuilder is required for an update
@@ -92,7 +96,9 @@ sub Run {
         );
 
         # is a "search user" button clicked
-        my $ExpandUser = 0;
+        my $ExpandUser = $GetParam{ExpandBuilder1} || $GetParam{ExpandBuilder2}
+            || $GetParam{ExpandManager1} || $GetParam{ExpandManager2}
+            || $GetParam{ExpandMember1}  || $GetParam{ExpandMember2};
 
         # is cab member delete requested
         my %DeleteMember = $Self->_IsMemberDeletion(
@@ -153,6 +159,11 @@ sub Run {
 
             # TODO: add a template
         }
+        elsif ($ExpandUser) {
+
+            # get user info when
+            %ExpandInfo = $Self->_GetExpandInfo(%GetParam);
+        }
         elsif (%DeleteMember) {
 
             # find users who are still member of CAB
@@ -181,9 +192,6 @@ sub Run {
                 ChangeID => $Change->{ChangeID},
                 UserID   => $Self->{UserID},
             );
-        }
-        elsif ($ExpandUser) {
-
         }
         elsif ( !%ErrorAllRequired ) {
 
@@ -469,6 +477,7 @@ sub Run {
             %Param,
             %{$Change},
             %GetParam,
+            %ExpandInfo,
         },
     );
 
@@ -657,6 +666,125 @@ sub _IsNewCABMemberOk {
     }
 
     return %MemberInfo;
+}
+
+sub _GetExpandInfo {
+    my ( $Self, %Param ) = @_;
+
+    my %Info;
+
+    for my $Name (qw(Builder Manager)) {
+
+        # the fields in .dtl have a number at the end
+        my $Key = $Name eq 'Manager' ? 1 : 2;
+
+        # handle the "search user" button for either ExpandBuilder or ExpandManager
+        if ( $Param{ 'Expand' . $Name . '1' } ) {
+
+            # search agents
+            my %UserFound = $Self->{UserObject}->UserSearch(
+                Search => $Param{ 'Change' . $Name },
+                Valid  => 1,
+            );
+
+            # get group of group itsm-change
+            my $GroupID = $Self->{GroupObject}->GroupLookup(
+                Group => 'itsm-change',
+            );
+
+            # get members of group
+            my %ITSMChangeUsers = $Self->{GroupObject}->GroupMemberList(
+                GroupID => $GroupID,
+                Type    => 'ro',
+                Result  => 'HASH',
+                Cached  => 1,
+            );
+
+            # filter the itsm-change users in found users
+            my %UserList;
+            CHANGEUSERID:
+            for my $ChangeUserID ( keys %ITSMChangeUsers ) {
+                next CHANGEUSERID if !$UserFound{$ChangeUserID};
+
+                $UserList{$ChangeUserID} = $UserFound{$ChangeUserID};
+            }
+
+            # check if just one customer user exists
+            # if just one, fillup CustomerUserID and CustomerID
+            my @KeysUserList = keys %UserList;
+            if ( 1 == scalar @KeysUserList ) {
+
+                # if user is found, display the name
+                $Info{ 'Change' . $Name } = $UserList{ $KeysUserList[0] };
+
+                # get user
+                my %UserData = $Self->{UserObject}->GetUserData(
+                    UserID => $KeysUserList[0],
+                );
+
+                # if user is found set hidden field
+                if ( $UserData{UserID} ) {
+                    $Info{ 'SelectedUser' . $Key } = $UserData{UserID};
+                }
+            }
+
+            # if more the one user exists, show list
+            # and clean UserID
+            else {
+
+                # reset input field
+                $Info{ 'SelectedUser' . $Key } = '';
+
+                # build drop down with found users
+                $Info{ 'Change' . $Name . 'Strg' } = $Self->{LayoutObject}->BuildSelection(
+                    Name => 'Change' . $Name . 'ID',
+                    Data => \%UserList,
+                );
+
+                # clear to if there is no customer found
+                if ( !%UserList ) {
+                    $Info{ 'Change' . $Name }      = '';
+                    $Info{ 'SelectedUser' . $Key } = '';
+                }
+            }
+        }
+
+        # handle the "take this user" button
+        elsif ( $Param{ 'Expand' . $Name . '2' } ) {
+
+            # show user data
+            my $UserID   = $Param{ 'Change' . $Name . 'ID' };
+            my %UserData = $Self->{UserObject}->GetUserData(
+                UserID => $UserID,
+            );
+
+            # if user is found
+            if (%UserData) {
+
+                # set hidden field
+                $Info{ 'SelectedUser' . $Key } = $UserID;
+                $Info{ 'Change' . $Name }      = sprintf '%s %s %s',
+                    $UserData{UserLogin},
+                    $UserData{UserFirstname},
+                    $UserData{UserLastname};
+            }
+        }
+    }
+
+    if ( $Param{ExpandCABMember1} ) {
+
+    }
+    elsif ( $Param{ExpandCABMember2} ) {
+
+    }
+
+    use Data::Dumper;
+    $Self->{LogObject}->Log(
+        Priority => 'error',
+        Message => Dumper( [ \%Param, \%Info ] ),
+    );
+
+    return %Info;
 }
 
 1;
