@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.102 2009-10-23 09:09:29 ub Exp $
+# $Id: ITSMChange.pm,v 1.103 2009-10-23 11:26:19 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.102 $) [1];
+$VERSION = qw($Revision: 1.103 $) [1];
 
 =head1 NAME
 
@@ -520,7 +520,7 @@ sub ChangeCABUpdate {
     );
 
     # get old CAB data to be given to post event handler
-    my $OldChangeCABData = $Self->ChangeCABGet(
+    my $ChangeCABData = $Self->ChangeCABGet(
         ChangeID => $Param{ChangeID},
         UserID   => $Param{UserID},
     );
@@ -575,7 +575,7 @@ sub ChangeCABUpdate {
     $Self->EventHandler(
         Event => 'ChangeCABUpdatePost',
         Data  => {
-            OldChangeCABData => $OldChangeCABData,
+            OldChangeCABData => $ChangeCABData,
             %Param,
         },
         UserID => $Param{UserID},
@@ -696,7 +696,7 @@ sub ChangeCABDelete {
     );
 
     # get old CAB data to be given to post event handler
-    my $OldChangeCABData = $Self->ChangeCABGet(
+    my $ChangeCABData = $Self->ChangeCABGet(
         ChangeID => $Param{ChangeID},
         UserID   => $Param{UserID},
     );
@@ -711,7 +711,7 @@ sub ChangeCABDelete {
     $Self->EventHandler(
         Event => 'ChangeCABDeletePost',
         Data  => {
-            OldChangeCABData => $OldChangeCABData,
+            OldChangeCABData => $ChangeCABData,
             %Param,
         },
         UserID => $Param{UserID},
@@ -1962,6 +1962,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.102 $ $Date: 2009-10-23 09:09:29 $
+$Revision: 1.103 $ $Date: 2009-10-23 11:26:19 $
 
 =cut
