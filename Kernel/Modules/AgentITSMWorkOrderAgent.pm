@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAgent.pm - the OTRS::ITSM::ChangeManagement work order agent edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAgent.pm,v 1.12 2009-10-22 11:43:56 reb Exp $
+# $Id: AgentITSMWorkOrderAgent.pm,v 1.13 2009-10-23 10:32:21 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -72,14 +72,21 @@ sub Run {
         );
     }
 
+    # find out whether 'Search User' was clicked
     my $ExpandUserName1 = $Self->{ParamObject}->GetParam( Param => 'ExpandUserName1' );
+
+    # find out whether 'Take this User' was clicked
     my $ExpandUserName2 = $Self->{ParamObject}->GetParam( Param => 'ExpandUserName2' );
-    my $ClearUser       = $Self->{ParamObject}->GetParam( Param => 'ClearUser' );
+
+    # find out whether 'Take this User' was clicked
+    my $ClearUser = $Self->{ParamObject}->GetParam( Param => 'ClearUser' );
+
+    # $ExpandUserName implies the the user should not be saved as workorder agent
     my $ExpandUserName = $ExpandUserName1 || $ExpandUserName2 || $ClearUser || 0;
 
     my $WorkOrderAgentID = $Self->{ParamObject}->GetParam( Param => 'SelectedUser' );
 
-    if ( $Self->{Subaction} eq 'Save' && !$WorkOrderAgentID ) {
+    if ( $Self->{Subaction} eq 'Save' && !$WorkOrderAgentID && !$ExpandUserName ) {
         $Self->{LayoutObject}->Block(
             Name => 'InvalidUser',
         );
@@ -114,9 +121,10 @@ sub Run {
     elsif ($ExpandUserName1) {
 
         # search agents
+        my $Search = $Self->{ParamObject}->GetParam( Param => 'User' ) . '*';
         my %UserFound = $Self->{UserObject}->UserSearch(
-            Search => $Self->{ParamObject}->GetParam( Param => 'User' ),
-            Valid => 1,
+            Search => $Search,
+            Valid  => 1,
         );
 
         # get group of group itsm-change
@@ -133,19 +141,19 @@ sub Run {
         );
 
         # filter the itsm-change users in found users
-        my %UserList;
+        my %FilteredUserList;
         CHANGEUSERID:
         for my $ChangeUserID ( keys %ITSMChangeUsers ) {
             next CHANGEUSERID if !$UserFound{$ChangeUserID};
 
-            $UserList{$ChangeUserID} = $UserFound{$ChangeUserID};
+            $FilteredUserList{$ChangeUserID} = $UserFound{$ChangeUserID};
         }
 
         # check if just one customer user exists
         # if just one, fillup CustomerUserID and CustomerID
-        my @KeysUserList = keys %UserList;
+        my @KeysUserList = keys %FilteredUserList;
         if ( 1 == scalar @KeysUserList ) {
-            $Param{User} = $UserList{ $KeysUserList[0] };
+            $Param{User} = $FilteredUserList{ $KeysUserList[0] };
 
             my %UserData = $Self->{UserObject}->GetUserData(
                 UserID => $KeysUserList[0],
@@ -162,13 +170,13 @@ sub Run {
 
             $Param{UserID} = '';
 
-            $Param{"UserStrg"} = $Self->{LayoutObject}->BuildSelection(
+            $Param{UserStrg} = $Self->{LayoutObject}->BuildSelection(
                 Name => 'UserID',
-                Data => \%UserList,
+                Data => \%FilteredUserList,
             );
 
             # clear to if there is no customer found
-            if ( !%UserList ) {
+            if ( !%FilteredUserList ) {
                 $Param{User}   = '';
                 $Param{UserID} = '';
             }
