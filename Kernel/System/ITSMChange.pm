@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.100 2009-10-23 08:43:50 ub Exp $
+# $Id: ITSMChange.pm,v 1.101 2009-10-23 08:54:40 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.100 $) [1];
+$VERSION = qw($Revision: 1.101 $) [1];
 
 =head1 NAME
 
@@ -277,7 +277,7 @@ sub ChangeUpdate {
 
     # get old change data to be given to post event handler
     my $OldChangeData = $Self->{ChangeObject}->ChangeGet(
-        ChangeID => $ChangeID,
+        ChangeID => $Param{ChangeID},
         UserID   => $Param{UserID},
     );
 
@@ -1967,6 +1967,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.100 $ $Date: 2009-10-23 08:43:50 $
+$Revision: 1.101 $ $Date: 2009-10-23 08:54:40 $
 
 =cut
