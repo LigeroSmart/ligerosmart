@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAgent.pm - the OTRS::ITSM::ChangeManagement work order agent edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAgent.pm,v 1.13 2009-10-23 10:32:21 bes Exp $
+# $Id: AgentITSMWorkOrderAgent.pm,v 1.14 2009-10-23 12:19:49 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -72,53 +72,76 @@ sub Run {
         );
     }
 
-    # find out whether 'Search User' was clicked
-    my $ExpandUserName1 = $Self->{ParamObject}->GetParam( Param => 'ExpandUserName1' );
+    # store all needed parameters in %GetParam to make it reloadable
+    # ExpandUserName1: find out whether 'Search User' was clicked
+    # ExpandUserName2: find out whether 'Take this User' was clicked
+    # ClearUser: find out whether 'Take this User' was clicked
+    my %GetParam;
+    for my $ParamName (qw(User ExpandUserName1 ExpandUserName2 SelectedUser ClearUser)) {
+        $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+    }
 
-    # find out whether 'Take this User' was clicked
-    my $ExpandUserName2 = $Self->{ParamObject}->GetParam( Param => 'ExpandUserName2' );
+    # the autocompleter seems to add an extra space, the button version does not
+    $GetParam{User} =~ s{ \s+ \z }{}xms;
 
-    # find out whether 'Take this User' was clicked
-    my $ClearUser = $Self->{ParamObject}->GetParam( Param => 'ClearUser' );
-
-    # $ExpandUserName implies the the user should not be saved as workorder agent
-    my $ExpandUserName = $ExpandUserName1 || $ExpandUserName2 || $ClearUser || 0;
+    # $DoNotSave implies the the user should not be saved as workorder agent
+    my $DoNotSave
+        = $GetParam{ExpandUserName1}
+        || $GetParam{ExpandUserName2}
+        || $GetParam{ClearUser}
+        || 0;
 
     my $WorkOrderAgentID = $Self->{ParamObject}->GetParam( Param => 'SelectedUser' );
 
-    if ( $Self->{Subaction} eq 'Save' && !$WorkOrderAgentID && !$ExpandUserName ) {
+    if ( $Self->{Subaction} eq 'Save' && !$WorkOrderAgentID && !$DoNotSave ) {
         $Self->{LayoutObject}->Block(
             Name => 'InvalidUser',
         );
 
-        $ExpandUserName = 1;
+        $DoNotSave = 1;
     }
 
     # update workorder
-    if ( $Self->{Subaction} eq 'Save' && !$ExpandUserName && $WorkOrderAgentID ) {
-        my $Success = $Self->{WorkOrderObject}->WorkOrderUpdate(
-            WorkOrderID      => $WorkOrder->{WorkOrderID},
-            WorkOrderAgentID => $WorkOrderAgentID,
-            UserID           => $Self->{UserID},
+    if ( $Self->{Subaction} eq 'Save' && !$DoNotSave && $WorkOrderAgentID ) {
+
+        # workorder agent is required for an update
+        my %ErrorAllRequired = $Self->_CheckWorkOrderAgent(
+            %GetParam,
         );
 
-        if ( !$Success ) {
+        if ( !%ErrorAllRequired ) {
 
-            # show error message
-            return $Self->{LayoutObject}->ErrorScreen(
-                Message => "Was not able to update WorkOrder $WorkOrder->{WorkOrderID}!",
-                Comment => 'Please contact the admin.',
+            my $Success = $Self->{WorkOrderObject}->WorkOrderUpdate(
+                WorkOrderID      => $WorkOrder->{WorkOrderID},
+                WorkOrderAgentID => $WorkOrderAgentID,
+                UserID           => $Self->{UserID},
             );
+
+            if ( !$Success ) {
+
+                # show error message
+                return $Self->{LayoutObject}->ErrorScreen(
+                    Message => "Was not able to update WorkOrder $WorkOrder->{WorkOrderID}!",
+                    Comment => 'Please contact the admin.',
+                );
+            }
+            else {
+
+                # redirect to zoom mask
+                return $Self->{LayoutObject}->Redirect(
+                    OP => "Action=AgentITSMWorkOrderZoom&WorkOrderID=$WorkOrder->{WorkOrderID}",
+                );
+            }
         }
         else {
-
-            # redirect to zoom mask
-            return $Self->{LayoutObject}->Redirect(
-                OP => "Action=AgentITSMWorkOrderZoom&WorkOrderID=$WorkOrder->{WorkOrderID}",
-            );
+            if ( $ErrorAllRequired{User} ) {
+                $Self->{LayoutObject}->Block(
+                    Name => 'InvalidUser',
+                );
+            }
         }
     }
-    elsif ($ExpandUserName1) {
+    elsif ( $GetParam{ExpandUserName1} ) {
 
         # search agents
         my $Search = $Self->{ParamObject}->GetParam( Param => 'User' ) . '*';
@@ -182,7 +205,7 @@ sub Run {
             }
         }
     }
-    elsif ($ExpandUserName2) {
+    elsif ( $GetParam{ExpandUserName2} ) {
 
         # show user data
         my $UserID = $Self->{ParamObject}->GetParam( Param => 'UserID' );
@@ -200,7 +223,7 @@ sub Run {
     }
 
     # show current workorder agent
-    if ( !$ExpandUserName && $WorkOrder->{WorkOrderAgentID} ) {
+    if ( !$DoNotSave && $WorkOrder->{WorkOrderAgentID} ) {
         my %UserData = $Self->{UserObject}->GetUserData(
             UserID => $WorkOrder->{WorkOrderAgentID},
         );
@@ -282,6 +305,45 @@ sub Run {
     $Output .= $Self->{LayoutObject}->Footer();
 
     return $Output;
+}
+
+sub _CheckWorkOrderAgent {
+    my ( $Self, %Param ) = @_;
+
+    # hash for error info
+    my %Errors;
+
+    # check change manager
+    if ( !$Param{User} || !$Param{SelectedUser} ) {
+        $Errors{User} = 1;
+    }
+    else {
+
+        # get changemanager data
+        my %User = $Self->{UserObject}->GetUserData(
+            UserID => $Param{SelectedUser},
+        );
+
+        # show error if user not exists
+        if ( !%User ) {
+            $Errors{User} = 1;
+        }
+        else {
+
+            # compare input value with user data
+            my $CheckString = sprintf '%s %s %s',
+                $User{UserLogin},
+                $User{UserFirstname},
+                $User{UserLastname};
+
+            # show error
+            if ( $CheckString ne $Param{User} ) {
+                $Errors{User} = 1;
+            }
+        }
+    }
+
+    return %Errors
 }
 
 1;
