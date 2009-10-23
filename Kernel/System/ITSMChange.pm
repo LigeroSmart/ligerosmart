@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.99 2009-10-22 21:04:11 ub Exp $
+# $Id: ITSMChange.pm,v 1.100 2009-10-23 08:43:50 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.99 $) [1];
+$VERSION = qw($Revision: 1.100 $) [1];
 
 =head1 NAME
 
@@ -158,7 +158,7 @@ sub ChangeAdd {
     # check change parameters
     return if !$Self->_CheckChangeParams(%Param);
 
-    # trigger WorkOrderAddPre-Event
+    # trigger ChangeAddPre-Event
     $Self->EventHandler(
         Event => 'ChangeAddPre',
         Data  => {
@@ -198,11 +198,13 @@ sub ChangeAdd {
 
     return if !$ChangeID;
 
-    # trigger ChangeAdd-Event (yes, we want do do this before the ChangeUpdate!)
+    # trigger ChangeAddPost-Event
+    # (yes, we want do do this before the ChangeUpdate!)
     $Self->EventHandler(
         Event => 'ChangeAddPost',
         Data  => {
             ChangeID => $ChangeID,
+            %Param,
         },
         UserID => $Param{UserID},
     );
@@ -264,6 +266,21 @@ sub ChangeUpdate {
     # check change parameters
     return if !$Self->_CheckChangeParams(%Param);
 
+    # trigger ChangeUpdatePre-Event
+    $Self->EventHandler(
+        Event => 'ChangeUpdatePre',
+        Data  => {
+            %Param,
+        },
+        UserID => $Param{UserID},
+    );
+
+    # get old change data to be given to post event handler
+    my $OldChangeData = $Self->{ChangeObject}->ChangeGet(
+        ChangeID => $ChangeID,
+        UserID   => $Param{UserID},
+    );
+
     # update CAB
     if ( exists $Param{CABAgents} || exists $Param{CABCustomers} ) {
         return if !$Self->ChangeCABUpdate(%Param);
@@ -303,7 +320,15 @@ sub ChangeUpdate {
         Bind => \@Bind,
     );
 
-    # TODO: trigger ChangeUpdate-Event
+    # trigger ChangeUpdatePost-Event
+    $Self->EventHandler(
+        Event => 'ChangeUpdatePost',
+        Data  => {
+            OldChangeData => $OldChangeData,
+            %Param,
+        },
+        UserID => $Param{UserID},
+    );
 
     return 1;
 }
@@ -485,6 +510,21 @@ sub ChangeCABUpdate {
     # check if CABAgents and CABCustomers exist in the agents and customer databases
     return if !$Self->_CheckChangeParams(%Param);
 
+    # trigger ChangeCABUpdatePre-Event
+    $Self->EventHandler(
+        Event => 'ChangeCABUpdatePre',
+        Data  => {
+            %Param,
+        },
+        UserID => $Param{UserID},
+    );
+
+    # get old CAB data to be given to post event handler
+    my $OldChangeCABData = $Self->ChangeCABGet(
+        ChangeID => $Param{ChangeID},
+        UserID   => $Param{UserID},
+    );
+
     # enter the CAB Agents
     if ( $Param{CABAgents} ) {
 
@@ -531,7 +571,15 @@ sub ChangeCABUpdate {
         }
     }
 
-    # TODO: trigger ChangeCABUpdate-Event
+    # trigger ChangeCABUpdatePost-Event
+    $Self->EventHandler(
+        Event => 'ChangeCABUpdatePost',
+        Data  => {
+            OldChangeCABData => $OldChangeCABData,
+            %Param,
+        },
+        UserID => $Param{UserID},
+    );
 
     return 1;
 }
@@ -638,10 +686,35 @@ sub ChangeCABDelete {
         }
     }
 
+    # trigger ChangeCABDeletePre-Event
+    $Self->EventHandler(
+        Event => 'ChangeCABDeletePre',
+        Data  => {
+            %Param,
+        },
+        UserID => $Param{UserID},
+    );
+
+    # get old CAB data to be given to post event handler
+    my $OldChangeCABData = $Self->ChangeCABGet(
+        ChangeID => $Param{ChangeID},
+        UserID   => $Param{UserID},
+    );
+
     # delete CAB
     return if !$Self->{DBObject}->Do(
         SQL  => 'DELETE FROM change_cab WHERE change_id = ?',
         Bind => [ \$Param{ChangeID} ],
+    );
+
+    # trigger ChangeCABDeletePost-Event
+    $Self->EventHandler(
+        Event => 'ChangeCABDeletePost',
+        Data  => {
+            OldChangeCABData => $OldChangeCABData,
+            %Param,
+        },
+        UserID => $Param{UserID},
     );
 
     return 1;
@@ -1373,6 +1446,21 @@ sub ChangeDelete {
         }
     }
 
+    # trigger ChangeDeletePre-Event
+    $Self->EventHandler(
+        Event => 'ChangeDeletePre',
+        Data  => {
+            %Param,
+        },
+        UserID => $Param{UserID},
+    );
+
+    # get old change data to be given to post event handler
+    my $OldChangeData = $Self->ChangeGet(
+        ChangeID => $Param{ChangeID},
+        UserID   => $Param{UserID},
+    );
+
     # lookup if change exists
     return if !$Self->ChangeLookup(
         ChangeID => $Param{ChangeID},
@@ -1422,6 +1510,16 @@ sub ChangeDelete {
     return if !$Self->{DBObject}->Do(
         SQL  => 'DELETE FROM change_item WHERE id = ? ',
         Bind => [ \$Param{ChangeID} ],
+    );
+
+    # trigger ChangeDeletePost-Event
+    $Self->EventHandler(
+        Event => 'ChangeDeletePost',
+        Data  => {
+            OldChangeData => $OldChangeData,
+            %Param,
+        },
+        UserID => $Param{UserID},
     );
 
     return 1;
@@ -1869,6 +1967,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.99 $ $Date: 2009-10-22 21:04:11 $
+$Revision: 1.100 $ $Date: 2009-10-23 08:43:50 $
 
 =cut
