@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.107 2009-10-26 15:21:54 reb Exp $
+# $Id: ITSMChange.pm,v 1.108 2009-10-26 15:24:54 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.107 $) [1];
+$VERSION = qw($Revision: 1.108 $) [1];
 
 =head1 NAME
 
@@ -265,17 +265,8 @@ sub ChangeUpdate {
         }
     }
 
-    # check if State or StateID is given
-    if ( !$Param{State} && !$Param{StateID} ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => 'Need State or StateID!',
-        );
-        return;
-    }
-
     # check that not both State and StateID are given
-    elsif ( $Param{State} && $Param{StateID} ) {
+    if ( $Param{State} && $Param{StateID} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message  => 'Need either State OR StateID - not both!',
@@ -2051,6 +2042,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.107 $ $Date: 2009-10-26 15:21:54 $
+$Revision: 1.108 $ $Date: 2009-10-26 15:24:54 $
 
 =cut
