@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.61 2009-10-26 15:48:26 bes Exp $
+# $Id: WorkOrder.pm,v 1.62 2009-10-26 16:08:01 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::EventHandler;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.61 $) [1];
+$VERSION = qw($Revision: 1.62 $) [1];
 
 =head1 NAME
 
@@ -147,9 +147,10 @@ or
         WorkOrderTitle   => 'Replacement of mail server',              # (optional)
         Instruction      => 'Install the the new server',              # (optional)
         Report           => 'Installed new server without problems',   # (optional)
-        WorkOrderStateID => 157,                                       # (optional) or WorkOrder => 'ready'
+        WorkOrderStateID => 157,                                       # (optional) or WorkOrderState => 'ready'
         WorkOrderState   => 'ready',                                   # (optional) or WorkOrderStateID => 157
-        WorkOrderTypeID  => 12,                                        # (optional)
+        WorkOrderTypeID => 161,                                        # (optional) or WorkOrderType => 'pir'
+        WorkOrderType   => 'ready',                                    # (optional) or WorkOrderStateID => 161
         WorkOrderAgentID => 8,                                         # (optional)
         PlannedStartTime => '2009-10-12 00:00:01',                     # (optional)
         PlannedEndTime   => '2009-10-15 15:00:00',                     # (optional)
@@ -187,6 +188,22 @@ sub WorkOrderAdd {
     if ( $Param{WorkOrderState} ) {
         $Param{WorkOrderStateID} = $Self->WorkOrderStateLookup(
             WorkOrderState => $Param{WorkOrderState},
+        );
+    }
+
+    # check that not both WorkOrderType and WorkOrderTypeID are given
+    if ( $Param{WorkOrderType} && $Param{WorkOrderTypeID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need either WorkOrderType OR WorkOrderTypeID - not both!',
+        );
+        return;
+    }
+
+    # if Type is given "translate" it
+    if ( $Param{WorkOrderType} ) {
+        $Param{WorkOrderTypeID} = $Self->WorkOrderTypeLookup(
+            WorkOrderType => $Param{WorkOrderType},
         );
     }
 
@@ -348,6 +365,8 @@ update a WorkOrder
         Report           => 'Installed new server without problems',   # (optional)
         WorkOrderStateID => 157,                                       # (optional) or WorkOrder => 'ready'
         WorkOrderState   => 'ready',                                   # (optional) or WorkOrderStateID => 157
+        WorkOrderTypeID  => 161,                                       # (optional) or WorkOrderType => 'pir'
+        WorkOrderType    => 'ready',                                   # (optional) or WorkOrderStateID => 161
         WorkOrderTypeID  => 12,                                        # (optional)
         WorkOrderAgentID => 8,                                         # (optional)
         PlannedStartTime => '2009-10-12 00:00:01',                     # (optional)
@@ -391,6 +410,22 @@ sub WorkOrderUpdate {
     if ( $Param{WorkOrderState} ) {
         $Param{WorkOrderStateID} = $Self->WorkOrderStateLookup(
             WorkOrderState => $Param{WorkOrderState},
+        );
+    }
+
+    # check that not both Type and TypeID are given
+    if ( $Param{WorkOrderType} && $Param{WorkOrderTypeID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need either WorkOrderType OR WorkOrderTypeID - not both!',
+        );
+        return;
+    }
+
+    # if Type is given "translate" it
+    if ( $Param{WorkOrderType} ) {
+        $Param{WorkOrderTypeID} = $Self->WorkOrderTypeLookup(
+            WorkOrderType => $Param{WorkOrderType},
         );
     }
 
@@ -1311,6 +1346,69 @@ sub WorkOrderStateLookup {
     return $List{ $Param{$Key} };
 }
 
+=item WorkOrderTypeLookup()
+
+This method does a lookup for a workorder type. If a workorder type id is given,
+it returns the name of the workorder type. If a workorder type name is given,
+the appropriate id is returned.
+
+    my $WorkOrderType = $WorkOrderObject->WorkOrderTypeLookup(
+        WorkOrderTypeID => 157,
+    );
+
+    my $WorkOrderTypeID = $WorkOrderObject->WorkOrderTypeLookup(
+        WorkOrderType => 'ready',
+    );
+
+=cut
+
+sub WorkOrderTypeLookup {
+    my ( $Self, %Param ) = @_;
+
+    # get the key
+    my ($Key) = grep { $Param{$_} } qw(WorkOrderTypeID WorkOrderType);
+
+    # check for needed stuff
+    if ( !$Key ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need WorkOrderTypeID or WorkOrderType!',
+        );
+        return;
+    }
+
+    if ( $Param{WorkOrderTypeID} && $Param{WorkOrderType} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need WorkOrderTypeID OR WorkOrderType - not both!',
+        );
+        return;
+    }
+
+    # get change state from general catalog
+    my $WorkOrderTypes = $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::ChangeManagement::WorkOrder::Type',
+    );
+
+    # check the change states hash
+    if ( !$WorkOrderTypes || ref $WorkOrderTypes ne 'HASH' ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Could not retrieve change states from the general catalog.',
+        );
+        return;
+    }
+
+    my %List = %{$WorkOrderTypes};
+
+    # reverse key - value pairs to have the name as keys
+    if ( $Key eq 'WorkOrderType' ) {
+        %List = reverse %List;
+    }
+
+    return $List{ $Param{$Key} };
+}
+
 =item _CheckWorkOrderStateID()
 
 check if a given workorder state id is valid
@@ -1371,21 +1469,15 @@ sub _CheckWorkOrderTypeID {
         return;
     }
 
-    # get workorder type list
-    my $WorkOrderTypeList = $Self->{GeneralCatalogObject}->ItemList(
-        Class => 'ITSM::ChangeManagement::WorkOrder::Type',
+    # check if WorkOrderTypeID belongs to correct general catalog class
+    my $Type = $Self->WorkOrderTypeLookup(
+        WorkOrderTypeID => $Param{WorkOrderTypeID},
     );
 
-    # check if WorkOrderTypeID belongs to correct general catalog class
-    if (
-        !$WorkOrderTypeList
-        || ref $WorkOrderTypeList ne 'HASH'
-        || !$WorkOrderTypeList->{ $Param{WorkOrderTypeID} }
-        )
-    {
+    if ( !$Type ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "No valid WorkOrderTypeID id given!",
+            Message  => "No valid WorkOrderTypeID given!",
         );
         return;
     }
@@ -1657,6 +1749,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.61 $ $Date: 2009-10-26 15:48:26 $
+$Revision: 1.62 $ $Date: 2009-10-26 16:08:01 $
 
 =cut
