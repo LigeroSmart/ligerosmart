@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.108 2009-10-26 15:24:54 reb Exp $
+# $Id: ITSMChange.pm,v 1.109 2009-10-26 15:45:49 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.108 $) [1];
+$VERSION = qw($Revision: 1.109 $) [1];
 
 =head1 NAME
 
@@ -133,7 +133,7 @@ or
         ChangeTitle     => 'Replacement of mail server',       # (optional)
         Description     => 'New mail server is faster',        # (optional)
         Justification   => 'Old mail server too slow',         # (optional)
-        ChangeStateID   => 4,                                  # (optional) or Change => 'accepted'
+        ChangeStateID   => 4,                                  # (optional) or ChangeState => 'accepted'
         ChangeState     => 'accepted',                         # (optional) or ChangeStateID => 4
         ChangeManagerID => 5,                                  # (optional)
         ChangeBuilderID => 6,                                  # (optional)
@@ -2042,6 +2042,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.108 $ $Date: 2009-10-26 15:24:54 $
+$Revision: 1.109 $ $Date: 2009-10-26 15:45:49 $
 
 =cut
