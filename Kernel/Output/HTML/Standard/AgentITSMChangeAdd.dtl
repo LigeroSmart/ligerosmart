@@ -2,7 +2,7 @@
 # AgentITSMChangeAdd.dtl - provides HTML form for AgentITSMChangeAdd
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.dtl,v 1.8 2009-10-26 13:48:35 bes Exp $
+# $Id: AgentITSMChangeAdd.dtl,v 1.9 2009-10-26 15:13:27 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -12,7 +12,9 @@
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
         <td class="mainhead">
-            $Env{"Box0"}$Text{"Change"}: $Text{"NEW"} $Env{"Box1"}
+            <div title="$Env{"Box0"}$Text{"Change"}: $Text{"NEW"} $Env{"Box1"}">
+                $Env{"Box0"}$Text{"Change"}: $Text{"NEW"} $Env{"Box1"}
+            </div>
         </td>
     </tr>
     <tr>
