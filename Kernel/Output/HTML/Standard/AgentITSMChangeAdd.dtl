@@ -2,12 +2,13 @@
 # AgentITSMChangeAdd.dtl - provides HTML form for AgentITSMChangeAdd
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.dtl,v 1.5 2009-10-22 17:42:52 bes Exp $
+# $Id: AgentITSMChangeAdd.dtl,v 1.6 2009-10-26 13:00:24 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
         <td class="mainhead">
@@ -16,7 +17,7 @@
     </tr>
     <tr>
         <td class="menu">
-            <a href="#" class="menuitem">$Text{"Back"}</a>
+            <a class="menuitem" href="$Env{"Baselink"}Action=AgentITSMChange" onclick="javascript:history.back(); return false;">$Text{"Back"}</a>
         </td>
     </tr>
 
@@ -63,7 +64,7 @@
     <tr>
         <td class="mainbody">
             <br>
-            <form action="$Env{"CGIHandle"}" method="post">
+            <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
                 <input type="hidden" name="Action"    value="$Env{"Action"}">
                 <input type="hidden" name="Subaction" value="Save">
                 <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
@@ -95,9 +96,7 @@
 <!-- dtl:block:RichText -->
 $Include{"RichTextEditorITSM"}
 <!-- dtl:block:RichText -->
-<textarea id="RichText1" name="Description" rows="15" cols="$Config{"Ticket::Frontend::TextAreaEmail"}" wrap="$Env{"BrowserWrap"}">
-$Data{"Description"}
-</textarea>
+                                            <textarea id="RichText1" name="Description" rows="15" cols="$Config{"Ticket::Frontend::TextAreaEmail"}" wrap="$Env{"BrowserWrap"}">$Data{"Description"}</textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -106,7 +105,7 @@ $Data{"Description"}
                                         $Text{"Justification"}:
                                     </td>
                                     <td class="contentvalue">
-                                        <div class="yui-skin-sam">
+                                        <div>
 <textarea id="RichText2" name="Justification" rows="15" cols="$Config{"Ticket::Frontend::TextAreaEmail"}" wrap="$Env{"BrowserWrap"}">
 $Data{"Justification"}
 </textarea>

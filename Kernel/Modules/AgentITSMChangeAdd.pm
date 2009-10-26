@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.5 2009-10-22 18:28:22 bes Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.6 2009-10-26 13:00:24 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -33,6 +33,7 @@ sub new {
         }
     }
 
+    # create needed objects
     $Self->{ChangeObject} = Kernel::System::ITSMChange->new(%Param);
 
     # get config of frontend module
@@ -44,13 +45,13 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    # save all GET parameters in %GetParam
+    # store all needed parameters in %GetParam to make it reloadable
     my %GetParam;
     for my $ParamName (qw(ChangeTitle Description Justification)) {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
-    # update workorder
+    # update change
     if ( $Self->{Subaction} eq 'Save' ) {
 
         # add only if ChangeTitle is given
@@ -66,7 +67,7 @@ sub Run {
 
                 # show error message
                 return $Self->{LayoutObject}->ErrorScreen(
-                    Message => "Was not able to add Change!",
+                    Message => 'Was not able to add Change!',
                     Comment => 'Please contact the admin.',
                 );
             }
@@ -93,9 +94,12 @@ sub Run {
     );
     $Output .= $Self->{LayoutObject}->NavigationBar();
 
-    $Self->{LayoutObject}->Block(
-        Name => 'RichText',
-    );
+    # add rich text editor
+    if ( $Self->{ConfigObject}->Get('Frontend::RichText') ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'RichText',
+        );
+    }
 
     # start template output
     $Output .= $Self->{LayoutObject}->Output(
