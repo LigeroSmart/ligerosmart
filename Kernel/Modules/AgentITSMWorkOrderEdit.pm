@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderEdit.pm - the OTRS::ITSM::ChangeManagement work order edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderEdit.pm,v 1.13 2009-10-22 17:36:56 bes Exp $
+# $Id: AgentITSMWorkOrderEdit.pm,v 1.14 2009-10-26 09:47:00 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -132,9 +132,12 @@ sub Run {
 
         if ( !%Invalid ) {
             my $CouldUpdateWorkOrder = $Self->{WorkOrderObject}->WorkOrderUpdate(
-                WorkOrderID => $WorkOrder->{WorkOrderID},
-                UserID      => $Self->{UserID},
-                %GetParam,
+                WorkOrderID      => $WorkOrder->{WorkOrderID},
+                WorkOrderTitle   => $GetParam{WorkOrderTitle},
+                Instruction      => $GetParam{Instruction},
+                PlannedStartTime => $GetParam{PlannedStartTime},
+                PlannedEndTime   => $GetParam{PlannedEndTime},
+                UserID           => $Self->{UserID},
             );
 
             if ($CouldUpdateWorkOrder) {

@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeEdit.pm - the OTRS::ITSM::ChangeManagement change edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.pm,v 1.7 2009-10-22 12:19:24 bes Exp $
+# $Id: AgentITSMChangeEdit.pm,v 1.8 2009-10-26 09:47:00 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -80,9 +80,11 @@ sub Run {
         # update only if ChangeTitle is given
         if ( $GetParam{ChangeTitle} ) {
             my $CouldUpdateChange = $Self->{ChangeObject}->ChangeUpdate(
-                UserID   => $Self->{UserID},
-                ChangeID => $ChangeID,
-                %GetParam,
+                ChangeID      => $ChangeID,
+                Description   => $GetParam{Description},
+                Justification => $GetParam{Justification},
+                ChangeTitle   => $GetParam{ChangeTitle},
+                UserID        => $Self->{UserID},
             );
 
             if ($CouldUpdateChange) {
