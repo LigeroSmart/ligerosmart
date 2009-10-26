@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderEdit.pm - the OTRS::ITSM::ChangeManagement work order edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderEdit.pm,v 1.14 2009-10-26 09:47:00 bes Exp $
+# $Id: AgentITSMWorkOrderEdit.pm,v 1.15 2009-10-26 11:40:25 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -34,6 +34,7 @@ sub new {
         }
     }
 
+    # create needed objects
     $Self->{WorkOrderObject} = Kernel::System::ITSMChange::WorkOrder->new(%Param);
     $Self->{ChangeObject}    = Kernel::System::ITSMChange->new(%Param);
 
@@ -46,6 +47,7 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    # get needed WorkOrderID
     my $WorkOrderID = $Self->{ParamObject}->GetParam( Param => 'WorkOrderID' );
 
     # check needed stuff
@@ -62,6 +64,7 @@ sub Run {
         UserID      => $Self->{UserID},
     );
 
+    # check error
     if ( !$WorkOrder ) {
         return $Self->{LayoutObject}->ErrorScreen(
             Message => "WorkOrder $WorkOrderID not found in database!",
@@ -74,6 +77,8 @@ sub Run {
     for my $ParamName (qw(WorkOrderTitle Instruction)) {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
+
+    # store time related fields in %GetParam
     for my $TimeType (qw(PlannedStartTime PlannedEndTime)) {
         for my $TimePart (qw(Year Month Day Hour Minute)) {
             my $ParamName = $TimeType . $TimePart;
@@ -96,9 +101,13 @@ sub Run {
         for my $TimeType (qw(PlannedStartTime PlannedEndTime)) {
             for my $TimePart (qw(Year Month Day Hour Minute)) {
                 my $ParamName = $TimeType . $TimePart;
+
+                # if a time field is not defined
                 if ( !defined $GetParam{$ParamName} ) {
-                    $Self->{LogObject}
-                        ->Log( Priority => 'error', Message => "Need $ParamName!" );
+                    $Self->{LogObject}->Log(
+                        Priority => 'error',
+                        Message  => "Need $ParamName!",
+                    );
                     next TIMETYPE;
                 }
             }
@@ -115,6 +124,8 @@ sub Run {
             $SystemTime{$TimeType} = $Self->{TimeObject}->TimeStamp2SystemTime(
                 String => $GetParam{$TimeType},
             );
+
+            # time has invalid format
             if ( !$SystemTime{$TimeType} ) {
                 $Invalid{$TimeType} = 'invalid format';
             }
@@ -130,6 +141,7 @@ sub Run {
             $Invalid{PlannedEndTime} = 'Start time is equal or greater that the end time.';
         }
 
+        # if all passed data is valid
         if ( !%Invalid ) {
             my $CouldUpdateWorkOrder = $Self->{WorkOrderObject}->WorkOrderUpdate(
                 WorkOrderID      => $WorkOrder->{WorkOrderID},
@@ -140,6 +152,7 @@ sub Run {
                 UserID           => $Self->{UserID},
             );
 
+            # if updated was successful
             if ($CouldUpdateWorkOrder) {
 
                 # redirect to zoom mask
@@ -161,6 +174,8 @@ sub Run {
     # delete all keys from GetParam when it is no Subaction
     else {
         %GetParam = ();
+
+        # also reset the time fields
         for my $TimeType (qw(PlannedStartTime PlannedEndTime)) {
 
             if ( $WorkOrder->{$TimeType} ) {
@@ -191,6 +206,7 @@ sub Run {
         UserID   => $Self->{UserID},
     );
 
+    # check if change is found
     if ( !$Change ) {
         return $Self->{LayoutObject}->ErrorScreen(
             Message => "Could not find Change for WorkOrder $WorkOrderID!",
@@ -204,6 +220,7 @@ sub Run {
     );
     $Output .= $Self->{LayoutObject}->NavigationBar();
 
+    # load richtext editor
     $Self->{LayoutObject}->Block(
         Name => 'RichText',
     );
@@ -225,6 +242,7 @@ sub Run {
             DiffTime => $DiffTime,
         );
 
+        # show time fields
         $Self->{LayoutObject}->Block(
             Name => $TimeType,
             Data => {

@@ -2,17 +2,18 @@
 # AgentITSMWorkOrderEdit.dtl - provides HTML form for AgentITSMWorkOrderEdit
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderEdit.dtl,v 1.8 2009-10-22 15:16:58 bes Exp $
+# $Id: AgentITSMWorkOrderEdit.dtl,v 1.9 2009-10-26 11:40:25 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
         <td class="mainhead">
-            <div title="$Env{"Box0"}$Text{"Edit"} $Text{"Work Order#"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"}">
-                $Env{"Box0"}$Text{"Edit"} $Text{"Work Order#"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"}
+            <div title="$Env{"Box0"}$Text{"Edit"} $Text{"WorkOrder#"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"}">
+                $Env{"Box0"}$Text{"Edit"} $Text{"WorkOrder#"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"}
             </div>
         </td>
     </tr>
@@ -29,6 +30,7 @@
                 <input type="hidden" name="Action"    value="$Env{"Action"}">
                 <input type="hidden" name="Subaction" value="Save">
                 <input type="hidden" name="WorkOrderID" value="$QData{"WorkOrderID"}">
+
                 <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
                     <tr>
                         <td class="contenthead">$Text{"WorkOrder"}</td>
@@ -58,7 +60,7 @@
 <!-- dtl:block:RichText -->
 $Include{"RichTextEditorITSM"}
 <!-- dtl:block:RichText -->
-                                            <textarea id="RichText1" name="Instruction" rows="15" cols="$Config{"Ticket::Frontend::TextAreaEmail"}" wrap="$Env{"BrowserWrap"}">$Data{"Instruction"}</textarea>
+                                            <textarea id="RichText1" name="Instruction" rows="15" cols="$Config{"ITSM::Frontend::TextArea"}" wrap="$Env{"BrowserWrap"}">$Data{"Instruction"}</textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -72,7 +74,7 @@ $Include{"RichTextEditorITSM"}
                                         $Data{"PlannedStartTimeString"}
 <!-- dtl:block:InvalidPlannedStartTime -->
                                         <br />
-                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
+                                        <font color="red" size="-2">$Text{"$Data{"PlannedStartTime"}"}</font>
 <!-- dtl:block:InvalidPlannedStartTime -->
                                     </td>
                                 </tr>
@@ -87,7 +89,7 @@ $Include{"RichTextEditorITSM"}
                                         $Data{"PlannedEndTimeString"}
 <!-- dtl:block:InvalidPlannedEndTime -->
                                         <br />
-                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
+                                        <font color="red" size="-2">$Text{"$Data{"PlannedEndTime"}"}</font>
 <!-- dtl:block:InvalidPlannedEndTime -->
                                     </td>
                                 </tr>
@@ -117,7 +119,7 @@ $Include{"RichTextEditorITSM"}
                     </tr>
                     <tr>
                         <td class="contentfooter">
-                            <input class="button" type="submit" name="Submit" value="$Text{"Submit"}">
+                            <input class="button" type="submit" name="Submit" value="$Text{"Save"}">
                         </td>
                     </tr>
                 </table>
