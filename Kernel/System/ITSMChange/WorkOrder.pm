@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.60 2009-10-23 09:09:29 ub Exp $
+# $Id: WorkOrder.pm,v 1.61 2009-10-26 15:48:26 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::EventHandler;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.60 $) [1];
+$VERSION = qw($Revision: 1.61 $) [1];
 
 =head1 NAME
 
@@ -147,7 +147,8 @@ or
         WorkOrderTitle   => 'Replacement of mail server',              # (optional)
         Instruction      => 'Install the the new server',              # (optional)
         Report           => 'Installed new server without problems',   # (optional)
-        WorkOrderStateID => 4,                                         # (optional)
+        WorkOrderStateID => 157,                                       # (optional) or WorkOrder => 'ready'
+        WorkOrderState   => 'ready',                                   # (optional) or WorkOrderStateID => 157
         WorkOrderTypeID  => 12,                                        # (optional)
         WorkOrderAgentID => 8,                                         # (optional)
         PlannedStartTime => '2009-10-12 00:00:01',                     # (optional)
@@ -171,6 +172,22 @@ sub WorkOrderAdd {
             );
             return;
         }
+    }
+
+    # check that not both WorkOrderState and WorkOrderStateID are given
+    if ( $Param{WorkOrderState} && $Param{WorkOrderStateID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need either WorkOrderState OR WorkOrderStateID - not both!',
+        );
+        return;
+    }
+
+    # if State is given "translate" it
+    if ( $Param{WorkOrderState} ) {
+        $Param{WorkOrderStateID} = $Self->WorkOrderStateLookup(
+            WorkOrderState => $Param{WorkOrderState},
+        );
     }
 
     # check change parameters
@@ -329,7 +346,8 @@ update a WorkOrder
         WorkOrderTitle   => 'Replacement of mail server',              # (optional)
         Instruction      => 'Install the the new server',              # (optional)
         Report           => 'Installed new server without problems',   # (optional)
-        WorkOrderStateID => 4,                                         # (optional)
+        WorkOrderStateID => 157,                                       # (optional) or WorkOrder => 'ready'
+        WorkOrderState   => 'ready',                                   # (optional) or WorkOrderStateID => 157
         WorkOrderTypeID  => 12,                                        # (optional)
         WorkOrderAgentID => 8,                                         # (optional)
         PlannedStartTime => '2009-10-12 00:00:01',                     # (optional)
@@ -358,6 +376,22 @@ sub WorkOrderUpdate {
             );
             return;
         }
+    }
+
+    # check that not both State and StateID are given
+    if ( $Param{WorkOrderState} && $Param{WorkOrderStateID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need either WorkOrderState OR WorkOrderStateID - not both!',
+        );
+        return;
+    }
+
+    # if State is given "translate" it
+    if ( $Param{WorkOrderState} ) {
+        $Param{WorkOrderStateID} = $Self->WorkOrderStateLookup(
+            WorkOrderState => $Param{WorkOrderState},
+        );
     }
 
     # check the given parameters
@@ -528,6 +562,11 @@ sub WorkOrderGet {
             $WorkOrderData{$Time} = '';
         }
     }
+
+    # add the name of the workorder state
+    $Param{WorkOrderState} = $Self->WorkOrderStateLookup(
+        StateID => $Param{WorkOrderStateID},
+    );
 
     return \%WorkOrderData;
 }
@@ -1209,6 +1248,69 @@ sub WorkOrderChangeTimeGet {
     return \%TimeReturn;
 }
 
+=item WorkOrderStateLookup()
+
+This method does a lookup for a workorder state. If a workorder state id is given,
+it returns the name of the workorder state. If a workorder state name is given,
+the appropriate id is returned.
+
+    my $WorkOrderState = $WorkOrderObject->WorkOrderStateLookup(
+        WorkOrderStateID => 157,
+    );
+
+    my $WorkOrderStateID = $WorkOrderObject->WorkOrderStateLookup(
+        WorkOrderState => 'ready',
+    );
+
+=cut
+
+sub WorkOrderStateLookup {
+    my ( $Self, %Param ) = @_;
+
+    # get the key
+    my ($Key) = grep { $Param{$_} } qw(WorkOrderStateID WorkOrderState);
+
+    # check for needed stuff
+    if ( !$Key ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need WorkOrderStateID or WorkOrderState!',
+        );
+        return;
+    }
+
+    if ( $Param{WorkOrderStateID} && $Param{WorkOrderState} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need WorkOrderStateID OR WorkOrderState - not both!',
+        );
+        return;
+    }
+
+    # get change state from general catalog
+    my $WorkOrderStates = $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::ChangeManagement::WorkOrder::State',
+    );
+
+    # check the change states hash
+    if ( !$WorkOrderStates || ref $WorkOrderStates ne 'HASH' ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Could not retrieve change states from the general catalog.',
+        );
+        return;
+    }
+
+    my %List = %{$WorkOrderStates};
+
+    # reverse key - value pairs to have the name as keys
+    if ( $Key eq 'WorkOrderState' ) {
+        %List = reverse %List;
+    }
+
+    return $List{ $Param{$Key} };
+}
+
 =item _CheckWorkOrderStateID()
 
 check if a given workorder state id is valid
@@ -1231,18 +1333,12 @@ sub _CheckWorkOrderStateID {
         return;
     }
 
-    # get workorder state list
-    my $WorkOrderStateList = $Self->{GeneralCatalogObject}->ItemList(
-        Class => 'ITSM::ChangeManagement::WorkOrder::State',
+    # check if WorkOrderStateID belongs to correct general catalog class
+    my $State = $Self->WorkOrderStateLookup(
+        WorkOrderStateID => $Param{WorkOrderStateID},
     );
 
-    # check if WorkOrderStateID belongs to correct general catalog class
-    if (
-        !$WorkOrderStateList
-        || ref $WorkOrderStateList ne 'HASH'
-        || !$WorkOrderStateList->{ $Param{WorkOrderStateID} }
-        )
-    {
+    if ( !$State ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message  => "No valid WorkOrderStateID given!",
@@ -1561,6 +1657,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.60 $ $Date: 2009-10-23 09:09:29 $
+$Revision: 1.61 $ $Date: 2009-10-26 15:48:26 $
 
 =cut
