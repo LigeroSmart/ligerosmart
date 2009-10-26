@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderReport.dtl - provides HTML form for AgentITSMWorkOrderReport
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderReport.dtl,v 1.7 2009-10-22 17:42:52 bes Exp $
+# $Id: AgentITSMWorkOrderReport.dtl,v 1.8 2009-10-26 11:16:50 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -11,7 +11,7 @@
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
         <td class="mainhead">
-            $Env{"Box0"}$Text{"Edit"} $Text{"Report of"} $Text{"Work Order#"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"} $QData{"WorkOrderTitle","70"}
+            $Env{"Box0"}$Text{"Edit"} $Text{"Report of"} $Text{"WorkOrder#"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"} $QData{"WorkOrderTitle","70"}
         </td>
     </tr>
     <tr>
@@ -42,7 +42,7 @@
 <!-- dtl:block:RichText -->
 $Include{"RichTextEditorITSM"}
 <!-- dtl:block:RichText -->
-<textarea id="RichText1" name="Report" rows="15" cols="$Config{"Ticket::Frontend::TextAreaEmail"}" wrap="$Env{"BrowserWrap"}">
+<textarea id="RichText1" name="Report" rows="15" cols="$Config{"ITSM::Frontend::TextArea"}" wrap="$Env{"BrowserWrap"}">
 $Data{"Report"}
 </textarea>
                                         </div>
@@ -57,7 +57,7 @@ $Data{"Report"}
                     </tr>
                     <tr>
                         <td class="contentfooter">
-                            <input class="button" type="submit" name="Submit" value="$Text{"Submit"}">
+                            <input class="button" type="submit" name="Submit" value="$Text{"Save"}">
                         </td>
                     </tr>
                 </form>

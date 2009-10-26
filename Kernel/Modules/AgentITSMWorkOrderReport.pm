@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderReport.pm - the OTRS::ITSM::ChangeManagement work order report module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderReport.pm,v 1.6 2009-10-22 07:28:08 reb Exp $
+# $Id: AgentITSMWorkOrderReport.pm,v 1.7 2009-10-26 11:16:10 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -35,6 +35,7 @@ sub new {
         }
     }
 
+    # create needed objects
     $Self->{ChangeObject}         = Kernel::System::ITSMChange->new(%Param);
     $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::WorkOrder->new(%Param);
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
@@ -48,6 +49,7 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    # get needed WorkOrderID
     my $WorkOrderID = $Self->{ParamObject}->GetParam( Param => 'WorkOrderID' );
 
     # check needed stuff
@@ -64,6 +66,7 @@ sub Run {
         UserID      => $Self->{UserID},
     );
 
+    # check error
     if ( !$WorkOrder ) {
         return $Self->{LayoutObject}->ErrorScreen(
             Message => "WorkOrder $WorkOrderID not found in database!",
@@ -86,7 +89,15 @@ sub Run {
             UserID           => $Self->{UserID},
         );
 
-        if ( !$CouldUpdateWorkOrder ) {
+        # if workorder update was successful
+        if ($CouldUpdateWorkOrder) {
+
+            # redirect to zoom mask
+            return $Self->{LayoutObject}->Redirect(
+                OP => "Action=AgentITSMWorkOrderZoom&WorkOrderID=$WorkOrder->{WorkOrderID}",
+            );
+        }
+        else {
 
             # show error message
             return $Self->{LayoutObject}->ErrorScreen(
@@ -94,21 +105,15 @@ sub Run {
                 Comment => 'Please contact the admin.',
             );
         }
-        else {
-
-            # redirect to zoom mask
-            return $Self->{LayoutObject}->Redirect(
-                OP => "Action=AgentITSMWorkOrderZoom&WorkOrderID=$WorkOrder->{WorkOrderID}",
-            );
-        }
     }
 
-    # get change that workorder belongs to
+    # get change that the workorder belongs to
     my $Change = $Self->{ChangeObject}->ChangeGet(
         ChangeID => $WorkOrder->{ChangeID},
         UserID   => $Self->{UserID},
     );
 
+    # no change found
     if ( !$Change ) {
         return $Self->{LayoutObject}->ErrorScreen(
             Message => "Could not find Change for WorkOrder $WorkOrderID!",
@@ -121,6 +126,7 @@ sub Run {
         Class => 'ITSM::ChangeManagement::WorkOrder::State',
     ) || {};
 
+    # build drop-down with workorder states
     $Param{StateSelect} = $Self->{LayoutObject}->BuildSelection(
         Data       => $WorkOrderStateList,
         Name       => 'WorkOrderStateID',
@@ -133,6 +139,7 @@ sub Run {
     );
     $Output .= $Self->{LayoutObject}->NavigationBar();
 
+    # load richtext editor
     $Self->{LayoutObject}->Block(
         Name => 'RichText',
     );
