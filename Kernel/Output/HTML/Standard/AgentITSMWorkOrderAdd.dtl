@@ -2,21 +2,24 @@
 # AgentITSMWorkOrderAdd.dtl - provides HTML form for AgentITSMWorkOrderAdd
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.dtl,v 1.10 2009-10-26 13:16:34 bes Exp $
+# $Id: AgentITSMWorkOrderAdd.dtl,v 1.11 2009-10-26 13:37:48 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
         <td class="mainhead">
-            $Env{"Box0"}$Text{"Add WorkOrder to"} $Text{"Change#"}: $QData{"ChangeNumber"} $Env{"Box1"}
+            <div title="$Env{"Box0"}$Text{"Add WorkOrder to"} $Text{"Change#"}: $QData{"ChangeNumber"} $Env{"Box1"}">
+                $Env{"Box0"}$Text{"Add WorkOrder to"} $Text{"Change#"}: $QData{"ChangeNumber"} $Env{"Box1"}
+            </div>
         </td>
     </tr>
     <tr>
         <td class="menu">
-            <a href="#" class="menuitem">$Text{"Back"}</a>
+            <a href="$Env{"Baselink"}Action=AgentITSMChangeZoom&ChangeID=$QData{"ChangeID"}" class="menuitem">$Text{"Back"}</a>
         </td>
     </tr>
 
@@ -64,7 +67,7 @@
     <tr>
         <td class="mainbody">
             <br>
-            <form action="$Env{"CGIHandle"}" method="post">
+            <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="Action"    value="$Env{"Action"}">
                 <input type="hidden" name="Subaction" value="Save">
                 <input type="hidden" name="ChangeID"  value="$QData{"ChangeID"}">
@@ -156,7 +159,7 @@ $Include{"RichTextEditorITSM"}
                     </tr>
                     <tr>
                         <td class="contentfooter">
-                            <input class="button" type="submit" name="Submit" value="$Text{"Submit"}">
+                            <input class="button" type="submit" name="Submit" value="$Text{"Save"}">
                         </td>
                     </tr>
                 </table>

@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAdd.pm - the OTRS::ITSM::ChangeManagement work order add module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.pm,v 1.6 2009-10-26 13:03:16 bes Exp $
+# $Id: AgentITSMWorkOrderAdd.pm,v 1.7 2009-10-26 13:37:48 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -34,6 +34,7 @@ sub new {
         }
     }
 
+    # create needed objects
     $Self->{WorkOrderObject} = Kernel::System::ITSMChange::WorkOrder->new(%Param);
     $Self->{ChangeObject}    = Kernel::System::ITSMChange->new(%Param);
 
@@ -46,6 +47,7 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    # get needed ChangeID
     my $ChangeID = $Self->{ParamObject}->GetParam( Param => 'ChangeID' );
 
     # check needed stuff
@@ -62,6 +64,7 @@ sub Run {
         UserID   => $Self->{UserID},
     );
 
+    # check error
     if ( !$Change ) {
         return $Self->{LayoutObject}->ErrorScreen(
             Message => "Change $ChangeID not found in database!",
@@ -74,6 +77,8 @@ sub Run {
     for my $ParamName (qw(WorkOrderTitle Instruction)) {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
+
+    # store time related fields in %GetParam
     for my $TimeType (qw(PlannedStartTime PlannedEndTime)) {
         for my $TimePart (qw(Year Month Day Hour Minute)) {
             my $ParamName = $TimeType . $TimePart;
@@ -117,6 +122,8 @@ sub Run {
             $SystemTime{$TimeType} = $Self->{TimeObject}->TimeStamp2SystemTime(
                 String => $GetParam{$TimeType},
             );
+
+            # if time format is invalid
             if ( !$SystemTime{$TimeType} ) {
                 $Invalid{$TimeType} = 'invalid format';
             }
@@ -132,6 +139,7 @@ sub Run {
             $Invalid{PlannedEndTime} = 'Start time is equal or greater that the end time.';
         }
 
+        # if everything is valid
         if ( !%Invalid ) {
             my $WorkOrderID = $Self->{WorkOrderObject}->WorkOrderAdd(
                 ChangeID         => $ChangeID,
@@ -142,19 +150,20 @@ sub Run {
                 UserID           => $Self->{UserID},
             );
 
-            if ( !$WorkOrderID ) {
+            # insert was successful
+            if ($WorkOrderID) {
+
+                # redirect to zoom mask
+                return $Self->{LayoutObject}->Redirect(
+                    OP => "Action=AgentITSMWorkOrderZoom&WorkOrderID=$WorkOrderID",
+                );
+            }
+            else {
 
                 # show error message
                 return $Self->{LayoutObject}->ErrorScreen(
                     Message => "Was not able to add WorkOrder!",
                     Comment => 'Please contact the admin.',
-                );
-            }
-            else {
-
-                # redirect to zoom mask
-                return $Self->{LayoutObject}->Redirect(
-                    OP => "Action=AgentITSMWorkOrderZoom&WorkOrderID=$WorkOrderID",
                 );
             }
         }
@@ -166,6 +175,7 @@ sub Run {
     );
     $Output .= $Self->{LayoutObject}->NavigationBar();
 
+    # use richtext editor
     $Self->{LayoutObject}->Block(
         Name => 'RichText',
     );
@@ -186,6 +196,7 @@ sub Run {
             DiffTime => $DiffTime,
         );
 
+        # show time related fields
         $Self->{LayoutObject}->Block(
             Name => $TimeType,
             Data => {
