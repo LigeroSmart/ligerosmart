@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.103 2009-10-23 11:26:19 ub Exp $
+# $Id: ITSMChange.pm,v 1.104 2009-10-26 14:50:06 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.103 $) [1];
+$VERSION = qw($Revision: 1.104 $) [1];
 
 =head1 NAME
 
@@ -133,7 +133,8 @@ or
         ChangeTitle     => 'Replacement of mail server',       # (optional)
         Description     => 'New mail server is faster',        # (optional)
         Justification   => 'Old mail server too slow',         # (optional)
-        ChangeStateID   => 4,                                  # (optional)
+        ChangeStateID   => 4,                                  # (optional) or Change => 'accepted'
+        ChangeState     => 'accepted',                         # (optional) or ChangeStateID => 4
         ChangeManagerID => 5,                                  # (optional)
         ChangeBuilderID => 6,                                  # (optional)
         CABAgents       => [ 1, 2, 4 ],     # UserIDs          # (optional)
@@ -239,7 +240,8 @@ update a change
         ChangeTitle     => 'Replacement of slow mail server',  # (optional)
         Description     => 'New mail server is faster',        # (optional)
         Justification   => 'Old mail server too slow',         # (optional)
-        ChangeStateID   => 4,                                  # (optional)
+        ChangeStateID   => 4,                                  # (optional) or Change => 'accepted'
+        ChangeState     => 'accepted',                         # (optional) or ChangeStateID => 4
         ChangeManagerID => 5,                                  # (optional)
         ChangeBuilderID => 6,                                  # (optional)
         CABAgents       => [ 1, 2, 4 ],     # UserIDs          # (optional)
@@ -1946,6 +1948,60 @@ sub _CheckChangeParams {
     return 1;
 }
 
+=item ChangeStateLookup()
+
+This method does a lookup for a change state. If a change state id is given,
+it returns the name of the change state. If a change state name is given,
+the appropriate id is returned.
+
+    my $Name = $ChangeObject->ChangeStateLookup(
+        StateID => 1234,
+    );
+
+    my $ID = $ChangeObject->ChangeStateLookup(
+        State => 'accepted',
+    );
+
+=cut
+
+sub ChangeStateLookup {
+    my ( $Self, %Param ) = @_;
+
+    # get the key
+    my ($Key) = grep { $Param{$_} } qw(StateID State);
+
+    # check for needed stuff
+    if ( !$Key ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need StateID or State!',
+        );
+        return;
+    }
+
+    if ( $Param{StateID} && $Param{State} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need StateID OR State - not both!',
+        );
+        return;
+    }
+
+    # get change state from general catalog
+    my $ChangeStates = $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::ChangeManagement::Change::State',
+    ) || {};
+
+    my %List = %{$ChangeStates};
+
+    # reverse key - value pairs to have the name as keys
+    if ( $Key eq 'State' ) {
+        %List = reverse %List;
+    }
+
+    return $List{ $Param{$Key} };
+}
+
 1;
 
 =back
@@ -1962,6 +2018,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.103 $ $Date: 2009-10-23 11:26:19 $
+$Revision: 1.104 $ $Date: 2009-10-26 14:50:06 $
 
 =cut
