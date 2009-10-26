@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChange.pm - the OTRS::ITSM::ChangeManagement change overview module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChange.pm,v 1.5 2009-10-26 15:16:20 reb Exp $
+# $Id: AgentITSMChange.pm,v 1.6 2009-10-26 15:19:18 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -71,20 +71,8 @@ sub Run {
         );
     }
 
-    # TODO: SysConfig-Preferences definition of LED color
-    #  InciSignal => $InciSignals{ $LastVersion->{InciStateType} },
-    # temp color for changes
-    my %ChangeSignal = (
-        requested          => 'yellowled',
-        accepted           => 'greenled',
-        'pending approval' => 'yellowled',
-        rejected           => 'grayled',
-        approved           => 'greenled',
-        'in progress'      => 'yellowled',
-        successful         => 'greenled',
-        failed             => 'redled',
-        canceled           => 'grayled',
-    );
+    # get state signals from SysConfig
+    my $ChangeStateSignal = $Self->{ConfigObject}->Get('ITSMChange::State::Signal');
 
     my $CssClass = '';
     for my $ChangeID ( @{$Changes} ) {
@@ -134,7 +122,7 @@ sub Run {
                 %SearchResult,
                 %{$Change},
                 CssClass     => $CssClass,
-                ChangeSignal => $ChangeSignal{ $Change->{ChangeState} },
+                ChangeSignal => $ChangeStateSignal->{ $Change->{ChangeState} },
             },
         );
     }
