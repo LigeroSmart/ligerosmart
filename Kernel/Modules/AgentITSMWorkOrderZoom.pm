@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderZoom.pm - the OTRS::ITSM::ChangeManagement work order zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderZoom.pm,v 1.13 2009-10-26 14:09:46 reb Exp $
+# $Id: AgentITSMWorkOrderZoom.pm,v 1.14 2009-10-26 16:28:34 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,11 +16,10 @@ use warnings;
 
 use Kernel::System::ITSMChange::WorkOrder;
 use Kernel::System::ITSMChange;
-use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -37,10 +36,9 @@ sub new {
     }
 
     # create needed objects
-    $Self->{ChangeObject}         = Kernel::System::ITSMChange->new(%Param);
-    $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::WorkOrder->new(%Param);
-    $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
-    $Self->{LinkObject}           = Kernel::System::LinkObject->new(%Param);
+    $Self->{ChangeObject}    = Kernel::System::ITSMChange->new(%Param);
+    $Self->{WorkOrderObject} = Kernel::System::ITSMChange::WorkOrder->new(%Param);
+    $Self->{LinkObject}      = Kernel::System::LinkObject->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChangeManagement::Frontend::$Self->{Action}");
@@ -150,16 +148,6 @@ sub Run {
         $WorkOrder->{ 'Change' . $Postfix } = $ChangeUser{$Postfix};
     }
 
-    # get work order type
-    my $WorkOrderType = $Self->{GeneralCatalogObject}->ItemGet(
-        ItemID => $WorkOrder->{WorkOrderTypeID},
-    ) || {};
-
-    # get work order state
-    my $WorkOrderState = $Self->{GeneralCatalogObject}->ItemGet(
-        ItemID => $WorkOrder->{WorkOrderStateID},
-    ) || {};
-
     # get all workorder state signals
     my $WorkOrderStateSignal = $Self->{ConfigObject}->Get('ITSMWorkOder::State::Signal');
 
@@ -168,9 +156,7 @@ sub Run {
         Name => 'Meta',
         Data => {
             %{$WorkOrder},
-            WorkOrderStateSignal => $WorkOrderStateSignal->{ $WorkOrderState->{Name} },
-            WorkOrderState       => $WorkOrderState->{Name},
-            WorkOrderType        => $WorkOrderType->{Name},
+            WorkOrderStateSignal => $WorkOrderStateSignal->{ $WorkOrder->{WorkOrderState} },
         },
     );
 
@@ -267,11 +253,6 @@ sub Run {
         );
     }
 
-    # get change state
-    my $ChangeState = $Self->{GeneralCatalogObject}->ItemGet(
-        ItemID => $Change->{ChangeStateID},
-    ) || {};
-
     # get all change state signals
     my $ChangeStateSignal = $Self->{ConfigObject}->Get('ITSMChange::State::Signal');
 
@@ -279,10 +260,8 @@ sub Run {
     $Output .= $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentITSMWorkOrderZoom',
         Data         => {
-            ChangeState          => $ChangeState->{Name},
-            ChangeStateSignal    => $ChangeStateSignal->{ $ChangeState->{Name} },
-            WorkOrderState       => $WorkOrderState->{Name},
-            WorkOrderStateSignal => $WorkOrderStateSignal->{ $WorkOrderState->{Name} },
+            ChangeStateSignal    => $ChangeStateSignal->{ $Change->{ChangeState} },
+            WorkOrderStateSignal => $WorkOrderStateSignal->{ $WorkOrder->{WorkOrderState} },
             %{$Change},
             %{$WorkOrder},
         },

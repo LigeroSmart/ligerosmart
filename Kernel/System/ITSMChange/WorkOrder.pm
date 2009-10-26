@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.62 2009-10-26 16:08:01 bes Exp $
+# $Id: WorkOrder.pm,v 1.63 2009-10-26 16:28:34 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::EventHandler;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.62 $) [1];
+$VERSION = qw($Revision: 1.63 $) [1];
 
 =head1 NAME
 
@@ -149,8 +149,8 @@ or
         Report           => 'Installed new server without problems',   # (optional)
         WorkOrderStateID => 157,                                       # (optional) or WorkOrderState => 'ready'
         WorkOrderState   => 'ready',                                   # (optional) or WorkOrderStateID => 157
-        WorkOrderTypeID => 161,                                        # (optional) or WorkOrderType => 'pir'
-        WorkOrderType   => 'ready',                                    # (optional) or WorkOrderStateID => 161
+        WorkOrderTypeID  => 161,                                       # (optional) or WorkOrderType => 'pir'
+        WorkOrderType    => 'ready',                                   # (optional) or WorkOrderTypeID => 161
         WorkOrderAgentID => 8,                                         # (optional)
         PlannedStartTime => '2009-10-12 00:00:01',                     # (optional)
         PlannedEndTime   => '2009-10-15 15:00:00',                     # (optional)
@@ -599,9 +599,18 @@ sub WorkOrderGet {
     }
 
     # add the name of the workorder state
-    $Param{WorkOrderState} = $Self->WorkOrderStateLookup(
-        StateID => $Param{WorkOrderStateID},
-    );
+    if ( $WorkOrderData{WorkOrderStateID} ) {
+        $WorkOrderData{WorkOrderState} = $Self->WorkOrderStateLookup(
+            WorkOrderStateID => $WorkOrderData{WorkOrderStateID},
+        );
+    }
+
+    # add the name of the workorder type
+    if ( $WorkOrderData{WorkOrderTypeID} ) {
+        $WorkOrderData{WorkOrderType} = $Self->WorkOrderTypeLookup(
+            WorkOrderTypeID => $WorkOrderData{WorkOrderTypeID},
+        );
+    }
 
     return \%WorkOrderData;
 }
@@ -1749,6 +1758,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.62 $ $Date: 2009-10-26 16:08:01 $
+$Revision: 1.63 $ $Date: 2009-10-26 16:28:34 $
 
 =cut
