@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderReport.pm - the OTRS::ITSM::ChangeManagement work order report module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderReport.pm,v 1.7 2009-10-26 11:16:10 reb Exp $
+# $Id: AgentITSMWorkOrderReport.pm,v 1.8 2009-10-26 16:50:20 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,12 +14,11 @@ package Kernel::Modules::AgentITSMWorkOrderReport;
 use strict;
 use warnings;
 
-use Kernel::System::GeneralCatalog;
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -36,9 +35,8 @@ sub new {
     }
 
     # create needed objects
-    $Self->{ChangeObject}         = Kernel::System::ITSMChange->new(%Param);
-    $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::WorkOrder->new(%Param);
-    $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
+    $Self->{ChangeObject}    = Kernel::System::ITSMChange->new(%Param);
+    $Self->{WorkOrderObject} = Kernel::System::ITSMChange::WorkOrder->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChangeManagement::Frontend::$Self->{Action}");
@@ -122,9 +120,10 @@ sub Run {
     }
 
     # get work order state list
-    my $WorkOrderStateList = $Self->{GeneralCatalogObject}->ItemList(
-        Class => 'ITSM::ChangeManagement::WorkOrder::State',
-    ) || {};
+    my $WorkOrderStateList = $Self->{WorkOrderObject}->PossibleStatesListGet(
+        WorkOrderID => $WorkOrderID,
+        UserID      => $Self->{UserID},
+    );
 
     # build drop-down with workorder states
     $Param{StateSelect} = $Self->{LayoutObject}->BuildSelection(

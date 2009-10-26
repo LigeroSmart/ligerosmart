@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.63 2009-10-26 16:28:34 bes Exp $
+# $Id: WorkOrder.pm,v 1.64 2009-10-26 16:50:20 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::EventHandler;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.63 $) [1];
+$VERSION = qw($Revision: 1.64 $) [1];
 
 =head1 NAME
 
@@ -1355,6 +1355,41 @@ sub WorkOrderStateLookup {
     return $List{ $Param{$Key} };
 }
 
+=item PossibleStatesListGet()
+
+This method returns a list for possible workorder states.
+For now the required parameter WorkOrderID is checked,
+but not used for assembling the list.
+
+    my $WorkOrderStateList = $WorkOrderObject->PossibleStatesListGet(
+        WorkOrderID => 123,
+        UserID      => 1,
+    );
+
+=cut
+
+sub PossibleStatesListGet {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Attribute (qw(WorkOrderID UserID)) {
+        if ( !$Param{$Attribute} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Attribute!",
+            );
+            return;
+        }
+    }
+
+    # get work order state list
+    my $WorkOrderStateList = $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::ChangeManagement::WorkOrder::State',
+    ) || {};
+
+    return $WorkOrderStateList;
+}
+
 =item WorkOrderTypeLookup()
 
 This method does a lookup for a workorder type. If a workorder type id is given,
@@ -1758,6 +1793,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.63 $ $Date: 2009-10-26 16:28:34 $
+$Revision: 1.64 $ $Date: 2009-10-26 16:50:20 $
 
 =cut
