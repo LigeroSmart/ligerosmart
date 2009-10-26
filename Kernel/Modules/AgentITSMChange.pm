@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChange.pm - the OTRS::ITSM::ChangeManagement change overview module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChange.pm,v 1.4 2009-10-26 11:09:28 bes Exp $
+# $Id: AgentITSMChange.pm,v 1.5 2009-10-26 15:16:20 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,12 +14,10 @@ package Kernel::Modules::AgentITSMChange;
 use strict;
 use warnings;
 
-# TODO: GeneralCatalog only in backend
-use Kernel::System::GeneralCatalog;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -36,8 +34,7 @@ sub new {
     }
 
     # create needed objects
-    $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
-    $Self->{ChangeObject}         = Kernel::System::ITSMChange->new(%Param);
+    $Self->{ChangeObject} = Kernel::System::ITSMChange->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChangeManagement::Frontend::$Self->{Action}");
@@ -98,11 +95,6 @@ sub Run {
             ChangeID => $ChangeID,
         ) || {};
 
-        # get change state from general catalog
-        my $ChangeState = $Self->{GeneralCatalogObject}->ItemGet(
-            ItemID => $Change->{ChangeStateID},
-        ) || {};
-
         # set CSS-class of the row
         $CssClass = $CssClass eq 'searchpassive' ? 'searchactive' : 'searchpassive';
 
@@ -142,8 +134,7 @@ sub Run {
                 %SearchResult,
                 %{$Change},
                 CssClass     => $CssClass,
-                ChangeState  => $ChangeState->{Name},
-                ChangeSignal => $ChangeSignal{ $ChangeState->{Name} },
+                ChangeSignal => $ChangeSignal{ $Change->{ChangeState} },
             },
         );
     }
