@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeZoom.pm - the OTRS::ITSM::ChangeManagement change zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.pm,v 1.11 2009-10-22 13:07:41 ub Exp $
+# $Id: AgentITSMChangeZoom.pm,v 1.12 2009-10-26 14:09:46 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -36,6 +36,8 @@ sub new {
             $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
         }
     }
+
+    # create needed objects
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
     $Self->{LinkObject}           = Kernel::System::LinkObject->new(%Param);
     $Self->{CustomerUserObject}   = Kernel::System::CustomerUser->new(%Param);
@@ -68,6 +70,7 @@ sub Run {
         UserID   => $Self->{UserID},
     );
 
+    # check error
     if ( !$Change ) {
         return $Self->{LayoutObject}->ErrorScreen(
             Message => "Change $Change not found in database!",
@@ -77,8 +80,11 @@ sub Run {
 
     # run change menu modules
     if ( ref $Self->{ConfigObject}->Get('ITSMChange::Frontend::MenuModule') eq 'HASH' ) {
+
+        # get items for menu
         my %Menus   = %{ $Self->{ConfigObject}->Get('ITSMChange::Frontend::MenuModule') };
         my $Counter = 0;
+
         for my $Menu ( sort keys %Menus ) {
 
             # load module
@@ -102,12 +108,15 @@ sub Run {
         }
     }
 
-    # strip header on max 80 chars
-    $Change->{ChangeTitle} =~ s{ \A (.{80}) (.*) \z }{ $1 }xms;
+    # break Description after 80 chars
+    if ( $Change->{Description} ) {
+        $Change->{Description} =~ s{ (\S{80}) }{ $1\n }xmsg;
+    }
 
-    # break words after 80 chars
-    $Change->{Description}   =~ s{ (\S{80}) }{ $1\n }xmsg;
-    $Change->{Justification} =~ s{ (\S{80}) }{ $1\n }xmsg;
+    # break Justification after 80 chars
+    if ( $Change->{Justification} ) {
+        $Change->{Justification} =~ s{ (\S{80}) }{ $1\n }xmsg;
+    }
 
     # output header
     my $Output = $Self->{LayoutObject}->Header(
@@ -131,36 +140,16 @@ sub Run {
         );
     }
 
+    # all postfixes needed for information
     my @Postfixes = qw(UserLogin UserFirstname UserLastname);
-
-    if ( $Change->{ChangeManagerID} ) {
-
-        # get change manager data
-        my %ChangeManagerUser = $Self->{UserObject}->GetUserData(
-            UserID => $Change->{ChangeManagerID},
-            Cached => 1,
-        );
-        for my $Postfix (@Postfixes) {
-            if ( $Postfix eq 'UserFirstname' ) {
-                $Change->{ 'ChangeManager' . $Postfix } = '(' . $ChangeManagerUser{$Postfix};
-            }
-            elsif ( $Postfix eq 'UserLastname' ) {
-                $Change->{ 'ChangeManager' . $Postfix } = $ChangeManagerUser{$Postfix} . ')';
-            }
-            else {
-                $Change->{ 'ChangeManager' . $Postfix } = $ChangeManagerUser{$Postfix};
-            }
-        }
-    }
-    else {
-        $Change->{ChangeManagerUserLogin} = '-';
-    }
 
     # get change builder data
     my %ChangeBuilderUser = $Self->{UserObject}->GetUserData(
         UserID => $Change->{ChangeBuilderID},
         Cached => 1,
     );
+
+    # get ChangeBuilder user information
     for my $Postfix (@Postfixes) {
         $Change->{ 'ChangeBuilder' . $Postfix } = $ChangeBuilderUser{$Postfix};
     }
@@ -170,6 +159,8 @@ sub Run {
         UserID => $Change->{CreateBy},
         Cached => 1,
     );
+
+    # get CreateBy user information
     for my $Postfix (@Postfixes) {
         $Change->{ 'Create' . $Postfix } = $CreateUser{$Postfix};
     }
@@ -179,6 +170,8 @@ sub Run {
         UserID => $Change->{ChangeBy},
         Cached => 1,
     );
+
+    # get ChangeBy user information
     for my $Postfix (@Postfixes) {
         $Change->{ 'Change' . $Postfix } = $ChangeUser{$Postfix};
     }
@@ -200,6 +193,42 @@ sub Run {
             ChangeStateSignal => $ChangeStateSignal->{ $ChangeState->{Name} },
         },
     );
+
+    # get change manager data
+    my %ChangeManagerUser;
+    if ( $Change->{ChangeManagerID} ) {
+
+        # get change manager data
+        %ChangeManagerUser = $Self->{UserObject}->GetUserData(
+            UserID => $Change->{ChangeManagerID},
+            Cached => 1,
+        );
+    }
+
+    # get change manager information
+    for my $Postfix (qw(UserLogin UserFirstname UserLastname)) {
+        $Change->{ 'ChangeManager' . $Postfix } = $ChangeManagerUser{$Postfix} || '';
+    }
+
+    # output change manager block
+    if (%ChangeManagerUser) {
+
+        # show name and mail address if user exists
+        $Self->{LayoutObject}->Block(
+            Name => 'ChangeManager',
+            Data => {
+                %{$Change},
+            },
+        );
+    }
+    else {
+
+        # show dash if no change manager exists
+        $Self->{LayoutObject}->Block(
+            Name => 'EmptyChangeManager',
+            Data => {},
+        );
+    }
 
     # output CAB block
     $Self->{LayoutObject}->Block(
@@ -247,13 +276,13 @@ sub Run {
 
         next CABCUSTOMER if !%CABCustomerUserData;
 
-        # build content for customer block
+        # build content for CAB customer block
         my %CABCustomerData;
         for my $Postfix (@Postfixes) {
             $CABCustomerData{ 'CABCustomer' . $Postfix } = $CABCustomerUserData{$Postfix};
         }
 
-        # output agent block
+        # output CAB customer block
         $Self->{LayoutObject}->Block(
             Name => 'CABCustomer',
             Data => {

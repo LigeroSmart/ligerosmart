@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderZoom.pm - the OTRS::ITSM::ChangeManagement work order zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderZoom.pm,v 1.12 2009-10-26 10:38:30 reb Exp $
+# $Id: AgentITSMWorkOrderZoom.pm,v 1.13 2009-10-26 14:09:46 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -175,10 +175,13 @@ sub Run {
     );
 
     # get change builder user
-    my %ChangeBuilderUser = $Self->{UserObject}->GetUserData(
-        UserID => $Change->{ChangeBuilderID},
-        Cached => 1,
-    );
+    my %ChangeBuilderUser;
+    if ( $Change->{ChangeBuilderID} ) {
+        %ChangeBuilderUser = $Self->{UserObject}->GetUserData(
+            UserID => $Change->{ChangeBuilderID},
+            Cached => 1,
+        );
+    }
 
     # get change builder information
     for my $Postfix (qw(UserLogin UserFirstname UserLastname)) {

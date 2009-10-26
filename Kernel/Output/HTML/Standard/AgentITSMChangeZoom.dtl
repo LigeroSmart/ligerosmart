@@ -2,7 +2,7 @@
 # AgentITSMChangeZoom.dtl - provides HTML form for AgentITSMChangeZoom
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.dtl,v 1.9 2009-10-22 13:07:41 ub Exp $
+# $Id: AgentITSMChangeZoom.dtl,v 1.10 2009-10-26 14:09:46 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -144,7 +144,7 @@
                     <td colspan="2">&nbsp;</td>
                 </tr>
                 <tr>
-                    <td class="mainkey">$Text{"Change Initiators(s):"}</td>
+                    <td class="mainkey">$Text{"Change Initiator(s):"}</td>
                     <td class="mainvalue"><div title="$QData{"Change Initiators"}"></div></td>
                 </tr>
                 <tr>
@@ -153,9 +153,16 @@
                 <tr>
                     <td class="mainkey">$Text{"Change Manager:"}</td>
                     <td class="mainvalue">
-                        <div title="$QData{"ChangeManagerUserLogin"} ($Quote{"$Data{"ChangeManagerUserFirstname"} $Data{"ChangeManagerUserLastname"}"})">
-                            $QData{"ChangeManagerUserLogin","15"} $Quote{"$Data{"ChangeManagerUserFirstname"} $Data{"ChangeManagerUserLastname"}","15"}
+<!-- dtl:block:EmptyChangeManager -->
+                        <div title="-">
+                            -
                         </div>
+<!-- dtl:block:EmptyChangeManager -->
+<!-- dtl:block:ChangeManager -->
+                        <div title="$QData{"ChangeManagerUserLogin"} ($Quote{"$Data{"ChangeManagerUserFirstname"} $Data{"ChangeManagerUserLastname"}"})">
+                            $QData{"ChangeManagerUserLogin","15"} ($Quote{"$Data{"ChangeManagerUserFirstname"} $Data{"ChangeManagerUserLastname"}","15"})
+                        </div>
+<!-- dtl:block:ChangeManager -->
                     </td>
                 </tr>
                 <tr>
