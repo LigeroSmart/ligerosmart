@@ -2,7 +2,7 @@
 # AgentITSMChange.dtl - provides HTML form for AgentITSMChange
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChange.dtl,v 1.4 2009-10-21 09:20:59 reb Exp $
+# $Id: AgentITSMChange.dtl,v 1.5 2009-10-26 10:25:37 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -37,8 +37,7 @@
             <br>
             <table border="0" cellspacing="0" cellpadding="3" style="margin-left:20px;margin-right:20px;">
                 <tr class="contenthead">
-                    <td class="contentkey" width="20">
-                    </td>
+                    <td class="contentkey" width="20"></td>
                     <td class="contentkey" width="130">$Text{"Number#"}</td>
                     <td class="contentkey">$Text{"Title"}</td>
                     <td class="contentkey" width="300">$Text{"Change Builder"}</td>
@@ -49,7 +48,7 @@
 <!-- dtl:block:ChangeRow -->
                 <tr class="contentbody">
                     <td class="$QData{"CssClass"}" style="text-align:center;">
-                        <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"CurChangeSignal"}.png" title="$Text{"$QData{"CurChangeState"}"}" alt="$Text{"$QData{"CurChangeState"}"}">
+                        <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"ChangeSignal"}.png" title="$Text{"$QData{"ChangeState"}"}" alt="$Text{"$QData{"ChangeState"}"}">
                     </td>
                     <td class="$QData{"CssClass"}">
                         <a href="$Env{"Baselink"}Action=AgentITSMChangeZoom&ChangeID=$LQData{"ChangeID"}">$QData{"ChangeNumber"}</a>
@@ -65,7 +64,7 @@
                         </div>
                     </td>
                     <td class="$QData{"CssClass"}" style="text-align:center;">$QData{"WorkOrderCount"}</td>
-                    <td class="$QData{"CssClass"}">$Text{"$QData{"CurChangeState"}"}</td>
+                    <td class="$QData{"CssClass"}">$Text{"$QData{"ChangeState"}"}</td>
                     <td class="$QData{"CssClass"}">$TimeLong{"$QData{"CreateTime"}"}</td>
                 </tr>
 <!-- dtl:block:ChangeRow -->

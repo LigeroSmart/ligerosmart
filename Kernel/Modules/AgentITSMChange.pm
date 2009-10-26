@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChange.pm - the OTRS::ITSM::ChangeManagement change overview module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChange.pm,v 1.2 2009-10-21 07:59:31 mae Exp $
+# $Id: AgentITSMChange.pm,v 1.3 2009-10-26 10:25:37 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,11 +14,12 @@ package Kernel::Modules::AgentITSMChange;
 use strict;
 use warnings;
 
+# TODO: GeneralCatalog only in backend
 use Kernel::System::GeneralCatalog;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -34,6 +35,7 @@ sub new {
         }
     }
 
+    # create needed objects
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
     $Self->{ChangeObject}         = Kernel::System::ITSMChange->new(%Param);
 
@@ -46,6 +48,7 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    # TODO: implement paging
     # get page
     my $Page = $Self->{ParamObject}->GetParam( Param => 'Page' ) || 1;
 
@@ -54,16 +57,14 @@ sub Run {
         ChangesAvail => 0,
     );
 
-    # get change object
+    # get list of change ids
     my $Changes = $Self->{ChangeObject}->ChangeSearch(
         UserID => $Self->{UserID},
-    );
+    ) || [];
 
-    $Changes ||= [];
+    $SearchResult{ChangesAvail} = scalar @{$Changes};
 
-    $SearchResult{ChangesAvail} = scalar @{$Changes} || 0;
-
-    if ($Changes) {
+    if ( $SearchResult{ChangesAvail} ) {
         $Self->{LayoutObject}->Block(
             Name => 'Change',
             Data => {
@@ -73,10 +74,10 @@ sub Run {
         );
     }
 
-    # TODO: GeneralCatalog-Preferences definition of LED color
-    #  CurInciSignal => $InciSignals{ $LastVersion->{CurInciStateType} },
+    # TODO: SysConfig-Preferences definition of LED color
+    #  InciSignal => $InciSignals{ $LastVersion->{InciStateType} },
     # temp color for changes
-    my %CurChangeSignal = (
+    my %ChangeSignal = (
         requested          => 'yellowled',
         accepted           => 'greenled',
         'pending approval' => 'yellowled',
@@ -98,11 +99,11 @@ sub Run {
         ) || {};
 
         # get change state from general catalog
-        my $CurChangeState = $Self->{GeneralCatalogObject}->ItemGet(
+        my $ChangeState = $Self->{GeneralCatalogObject}->ItemGet(
             ItemID => $Change->{ChangeStateID},
         ) || {};
 
-        # set output object
+        # set CSS-class of the row
         $CssClass = $CssClass eq 'searchpassive' ? 'searchactive' : 'searchpassive';
 
         # set work order count
@@ -115,7 +116,7 @@ sub Run {
 
         if ( $Change->{ChangeBuilderID} ) {
 
-            # get change manager data
+            # get change builder data
             my %ChangeBuilderUser = $Self->{UserObject}->GetUserData(
                 UserID => $Change->{ChangeBuilderID},
                 Cached => 1,
@@ -142,9 +143,9 @@ sub Run {
                 %Param,
                 %SearchResult,
                 %{$Change},
-                CssClass        => $CssClass,
-                CurChangeState  => $CurChangeState->{Name},
-                CurChangeSignal => $CurChangeSignal{ $CurChangeState->{Name} },
+                CssClass     => $CssClass,
+                ChangeState  => $ChangeState->{Name},
+                ChangeSignal => $ChangeSignal{ $ChangeState->{Name} },
             },
         );
     }
