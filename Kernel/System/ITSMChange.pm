@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.106 2009-10-26 15:08:22 reb Exp $
+# $Id: ITSMChange.pm,v 1.107 2009-10-26 15:21:54 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.106 $) [1];
+$VERSION = qw($Revision: 1.107 $) [1];
 
 =head1 NAME
 
@@ -255,7 +255,7 @@ sub ChangeUpdate {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(UserID)) {
+    for my $Argument (qw(UserID ChangeID)) {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -2051,6 +2051,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.106 $ $Date: 2009-10-26 15:08:22 $
+$Revision: 1.107 $ $Date: 2009-10-26 15:21:54 $
 
 =cut
