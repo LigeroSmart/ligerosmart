@@ -2,7 +2,7 @@
 # AgentITSMChangeEdit.dtl - provides HTML form for AgentITSMChangeEdit
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.dtl,v 1.7 2009-10-22 10:14:26 bes Exp $
+# $Id: AgentITSMChangeEdit.dtl,v 1.8 2009-10-26 13:16:34 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -59,7 +59,7 @@ $Include{"RichTextEditorITSM"}
 <!-- dtl:block:RichText -->
 <!-- TODO: set own ITSM config -->
 <!-- ITSM::Frontend::TextArea -->
-                                            <textarea id="RichText1" name="Description" rows="15" cols="$Config{"Ticket::Frontend::TextAreaEmail"}" wrap="$Env{"BrowserWrap"}">$Data{"Description"}</textarea>
+                                            <textarea id="RichText1" name="Description" rows="15" cols="$Config{"ITSM::Frontend::TextArea"}" wrap="$Env{"BrowserWrap"}">$Data{"Description"}</textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -69,7 +69,7 @@ $Include{"RichTextEditorITSM"}
                                     </td>
                                     <td class="contentvalue">
                                         <div>
-                                            <textarea id="RichText2" name="Justification" rows="15" cols="$Config{"Ticket::Frontend::TextAreaEmail"}" wrap="$Env{"BrowserWrap"}">$Data{"Justification"}</textarea>
+                                            <textarea id="RichText2" name="Justification" rows="15" cols="$Config{"ITSM::Frontend::TextArea"}" wrap="$Env{"BrowserWrap"}">$Data{"Justification"}</textarea>
                                         </div>
                                     </td>
                                 </tr>

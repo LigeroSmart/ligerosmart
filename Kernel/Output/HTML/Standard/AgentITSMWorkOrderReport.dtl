@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderReport.dtl - provides HTML form for AgentITSMWorkOrderReport
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderReport.dtl,v 1.9 2009-10-26 11:24:08 reb Exp $
+# $Id: AgentITSMWorkOrderReport.dtl,v 1.10 2009-10-26 13:16:34 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -45,9 +45,7 @@
 <!-- dtl:block:RichText -->
 $Include{"RichTextEditorITSM"}
 <!-- dtl:block:RichText -->
-<textarea id="RichText1" name="Report" rows="15" cols="$Config{"ITSM::Frontend::TextArea"}" wrap="$Env{"BrowserWrap"}">
-$Data{"Report"}
-</textarea>
+                                            <textarea id="RichText1" name="Report" rows="15" cols="$Config{"ITSM::Frontend::TextArea"}" wrap="$Env{"BrowserWrap"}">$Data{"Report"}</textarea>
                                         </div>
                                     </td>
                                 </tr>
