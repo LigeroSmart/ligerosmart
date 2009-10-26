@@ -2,7 +2,7 @@
 # AgentITSMChange.dtl - provides HTML form for AgentITSMChange
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChange.dtl,v 1.5 2009-10-26 10:25:37 bes Exp $
+# $Id: AgentITSMChange.dtl,v 1.6 2009-10-26 11:09:28 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -59,8 +59,8 @@
                         </div>
                     </td>
                     <td class="$QData{"CssClass"}">
-                        <div title="$QData{"ChangeBuilderUserLogin"} $Quote{"$Data{"ChangeBuilderUserFirstname"} $Data{"ChangeBuilderUserLastname"}"}">
-                            $QData{"ChangeBuilderUserLogin","15"} $Quote{"$Data{"ChangeBuilderUserFirstname"} $Data{"ChangeBuilderUserLastname"}","15"}
+                        <div title="$QData{"ChangeBuilderUserLogin"} $QData{"ChangeBuilderOpenParen"}$QData{"ChangeBuilderUserFirstname"} $QData{"ChangeBuilderUserLastname"}$QData{"ChangeBuilderCloseParen"}" >
+                            $QData{"ChangeBuilderUserLogin","15"} $QData{"ChangeBuilderOpenParen"}$Quote{"$Data{"ChangeBuilderUserFirstname"}", "15"} $Quote{"$Data{"ChangeBuilderUserLastname"}","15"}$QData{"ChangeBuilderCloseParen"}
                         </div>
                     </td>
                     <td class="$QData{"CssClass"}" style="text-align:center;">$QData{"WorkOrderCount"}</td>

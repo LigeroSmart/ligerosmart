@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChange.pm - the OTRS::ITSM::ChangeManagement change overview module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChange.pm,v 1.3 2009-10-26 10:25:37 bes Exp $
+# $Id: AgentITSMChange.pm,v 1.4 2009-10-26 11:09:28 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -122,18 +122,16 @@ sub Run {
                 Cached => 1,
             );
             for my $Postfix (@Postfixes) {
-                if ( $Postfix eq 'UserFirstname' ) {
-                    $Change->{ 'ChangeBuilder' . $Postfix } = '(' . $ChangeBuilderUser{$Postfix};
-                }
-                elsif ( $Postfix eq 'UserLastname' ) {
-                    $Change->{ 'ChangeBuilder' . $Postfix } = $ChangeBuilderUser{$Postfix} . ')';
-                }
-                else {
-                    $Change->{ 'ChangeBuilder' . $Postfix } = $ChangeBuilderUser{$Postfix};
-                }
+                $Change->{ 'ChangeBuilder' . $Postfix } = $ChangeBuilderUser{$Postfix};
             }
+
+            # parenthesis are shown only when there is a change builder
+            $Change->{'ChangeBuilderOpenParen'}  = '(';
+            $Change->{'ChangeBuilderCloseParen'} = ')';
         }
         else {
+
+            # show a placeholder, when there is no change builder
             $Change->{ChangeBuilderUserLogin} = '-';
         }
 
