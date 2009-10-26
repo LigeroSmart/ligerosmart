@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.105 2009-10-26 14:59:26 reb Exp $
+# $Id: ITSMChange.pm,v 1.106 2009-10-26 15:08:22 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.105 $) [1];
+$VERSION = qw($Revision: 1.106 $) [1];
 
 =head1 NAME
 
@@ -449,9 +449,9 @@ sub ChangeGet {
     }
 
     # get name of change state
-    if ( $ChangeData{ChageStateID} ) {
-        $ChangeData{ChangeSate} = $Self->ChangeStateLookup(
-            ChangeStateID => $ChangeData{ChangeStateID},
+    if ( $ChangeData{ChangeStateID} ) {
+        $ChangeData{ChangeState} = $Self->ChangeStateLookup(
+            StateID => $ChangeData{ChangeStateID},
         );
     }
 
@@ -2051,6 +2051,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.105 $ $Date: 2009-10-26 14:59:26 $
+$Revision: 1.106 $ $Date: 2009-10-26 15:08:22 $
 
 =cut

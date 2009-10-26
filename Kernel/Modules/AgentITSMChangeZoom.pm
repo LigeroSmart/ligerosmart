@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeZoom.pm - the OTRS::ITSM::ChangeManagement change zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.pm,v 1.12 2009-10-26 14:09:46 reb Exp $
+# $Id: AgentITSMChangeZoom.pm,v 1.13 2009-10-26 15:08:22 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,14 +14,13 @@ package Kernel::Modules::AgentITSMChangeZoom;
 use strict;
 use warnings;
 
-use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 use Kernel::System::CustomerUser;
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -38,11 +37,10 @@ sub new {
     }
 
     # create needed objects
-    $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
-    $Self->{LinkObject}           = Kernel::System::LinkObject->new(%Param);
-    $Self->{CustomerUserObject}   = Kernel::System::CustomerUser->new(%Param);
-    $Self->{ChangeObject}         = Kernel::System::ITSMChange->new(%Param);
-    $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::WorkOrder->new(%Param);
+    $Self->{LinkObject}         = Kernel::System::LinkObject->new(%Param);
+    $Self->{CustomerUserObject} = Kernel::System::CustomerUser->new(%Param);
+    $Self->{ChangeObject}       = Kernel::System::ITSMChange->new(%Param);
+    $Self->{WorkOrderObject}    = Kernel::System::ITSMChange::WorkOrder->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChangeManagement::Frontend::$Self->{Action}");
@@ -176,11 +174,6 @@ sub Run {
         $Change->{ 'Change' . $Postfix } = $ChangeUser{$Postfix};
     }
 
-    # get change state
-    my $ChangeState = $Self->{GeneralCatalogObject}->ItemGet(
-        ItemID => $Change->{ChangeStateID},
-    ) || {};
-
     # get all change state signals
     my $ChangeStateSignal = $Self->{ConfigObject}->Get('ITSMChange::State::Signal');
 
@@ -189,8 +182,7 @@ sub Run {
         Name => 'Meta',
         Data => {
             %{$Change},
-            ChangeState       => $ChangeState->{Name},
-            ChangeStateSignal => $ChangeStateSignal->{ $ChangeState->{Name} },
+            ChangeStateSignal => $ChangeStateSignal->{ $Change->{ChangeState} },
         },
     );
 
