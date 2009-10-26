@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderZoom.pm - the OTRS::ITSM::ChangeManagement work order zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderZoom.pm,v 1.11 2009-10-22 12:55:59 ub Exp $
+# $Id: AgentITSMWorkOrderZoom.pm,v 1.12 2009-10-26 10:38:30 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -36,6 +36,7 @@ sub new {
         }
     }
 
+    # create needed objects
     $Self->{ChangeObject}         = Kernel::System::ITSMChange->new(%Param);
     $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::WorkOrder->new(%Param);
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
@@ -93,8 +94,11 @@ sub Run {
 
     # run work order menu modules
     if ( ref $Self->{ConfigObject}->Get('ITSMWorkOrder::Frontend::MenuModule') eq 'HASH' ) {
+
+        # get items for menu
         my %Menus   = %{ $Self->{ConfigObject}->Get('ITSMWorkOrder::Frontend::MenuModule') };
         my $Counter = 0;
+
         for my $Menu ( sort keys %Menus ) {
 
             # load module
@@ -130,6 +134,7 @@ sub Run {
         Cached => 1,
     );
 
+    # get CreateBy user information
     for my $Postfix (qw(UserLogin UserFirstname UserLastname)) {
         $WorkOrder->{ 'Create' . $Postfix } = $CreateUser{$Postfix};
     }
@@ -182,6 +187,8 @@ sub Run {
 
     # output change builder block
     if (%ChangeBuilderUser) {
+
+        # show name and mail address if user exists
         $Self->{LayoutObject}->Block(
             Name => 'ChangeBuilder',
             Data => {
@@ -190,6 +197,8 @@ sub Run {
         );
     }
     else {
+
+        # show dash if no change builder exists
         $Self->{LayoutObject}->Block(
             Name => 'EmptyChangeBuilder',
             Data => {},
