@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAdd.pm - the OTRS::ITSM::ChangeManagement work order add module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.pm,v 1.5 2009-10-26 09:47:00 bes Exp $
+# $Id: AgentITSMWorkOrderAdd.pm,v 1.6 2009-10-26 13:03:16 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -97,8 +97,10 @@ sub Run {
             for my $TimePart (qw(Year Month Day Hour Minute)) {
                 my $ParamName = $TimeType . $TimePart;
                 if ( !defined $GetParam{$ParamName} ) {
-                    $Self->{LogObject}
-                        ->Log( Priority => 'error', Message => "Need $ParamName!" );
+                    $Self->{LogObject}->Log(
+                        Priority => 'error',
+                        Message  => "Need $ParamName!"
+                    );
                     next TIMETYPE;
                 }
             }
