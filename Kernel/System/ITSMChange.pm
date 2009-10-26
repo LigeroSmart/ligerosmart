@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.104 2009-10-26 14:50:06 reb Exp $
+# $Id: ITSMChange.pm,v 1.105 2009-10-26 14:59:26 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.104 $) [1];
+$VERSION = qw($Revision: 1.105 $) [1];
 
 =head1 NAME
 
@@ -255,7 +255,7 @@ sub ChangeUpdate {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(ChangeID UserID)) {
+    for my $Argument (qw(UserID)) {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -263,6 +263,31 @@ sub ChangeUpdate {
             );
             return;
         }
+    }
+
+    # check if State or StateID is given
+    if ( !$Param{State} && !$Param{StateID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need State or StateID!',
+        );
+        return;
+    }
+
+    # check that not both State and StateID are given
+    elsif ( $Param{State} && $Param{StateID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need either State OR StateID - not both!',
+        );
+        return;
+    }
+
+    # if State is given "translate" it
+    if ( $Param{State} ) {
+        $Param{StateID} = $Self->ChangeStateLookup(
+            State => $Param{State},
+        );
     }
 
     # check change parameters
@@ -344,6 +369,7 @@ The returned hash reference contains following elements:
     $Change{ChangeID}
     $Change{ChangeNumber}
     $Change{ChangeStateID}
+    $Change{ChangeState}
     $Change{ChangeTitle}
     $Change{Description}
     $Change{Justification}
@@ -420,6 +446,13 @@ sub ChangeGet {
             Message  => "Change with ID $Param{ChangeID} does not exist.",
         );
         return;
+    }
+
+    # get name of change state
+    if ( $ChangeData{ChageStateID} ) {
+        $ChangeData{ChangeSate} = $Self->ChangeStateLookup(
+            ChangeStateID => $ChangeData{ChangeStateID},
+        );
     }
 
     # get CAB data
@@ -2018,6 +2051,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.104 $ $Date: 2009-10-26 14:50:06 $
+$Revision: 1.105 $ $Date: 2009-10-26 14:59:26 $
 
 =cut
