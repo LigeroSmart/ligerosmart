@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAgent.pm - the OTRS::ITSM::ChangeManagement work order agent edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAgent.pm,v 1.14 2009-10-23 12:19:49 bes Exp $
+# $Id: AgentITSMWorkOrderAgent.pm,v 1.15 2009-10-26 13:13:40 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -35,6 +35,8 @@ sub new {
             $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
         }
     }
+
+    # create needed objects
     $Self->{WorkOrderObject} = Kernel::System::ITSMChange::WorkOrder->new(%Param);
     $Self->{ChangeObject}    = Kernel::System::ITSMChange->new(%Param);
     $Self->{UserObject}      = Kernel::System::User->new(%Param);
@@ -49,6 +51,7 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    # get needed WorkOrderID
     my $WorkOrderID = $Self->{ParamObject}->GetParam( Param => 'WorkOrderID' );
 
     # check needed stuff
@@ -65,9 +68,10 @@ sub Run {
         UserID      => $Self->{UserID},
     );
 
+    # check error
     if ( !$WorkOrder ) {
         return $Self->{LayoutObject}->ErrorScreen(
-            Message => "WorkOrder $WorkOrder not found in database!",
+            Message => "WorkOrder $WorkOrderID not found in database!",
             Comment => 'Please contact the admin.',
         );
     }
@@ -75,7 +79,7 @@ sub Run {
     # store all needed parameters in %GetParam to make it reloadable
     # ExpandUserName1: find out whether 'Search User' was clicked
     # ExpandUserName2: find out whether 'Take this User' was clicked
-    # ClearUser: find out whether 'Take this User' was clicked
+    # ClearUser: find out whether 'Clear User' was clicked
     my %GetParam;
     for my $ParamName (qw(User ExpandUserName1 ExpandUserName2 SelectedUser ClearUser)) {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
@@ -84,141 +88,151 @@ sub Run {
     # the autocompleter seems to add an extra space, the button version does not
     $GetParam{User} =~ s{ \s+ \z }{}xms;
 
-    # $DoNotSave implies the the user should not be saved as workorder agent
-    my $DoNotSave
-        = $GetParam{ExpandUserName1}
+    # $DoNotSave implies that the user should not be saved as workorder agent
+    my $DoNotSave = $GetParam{ExpandUserName1}
         || $GetParam{ExpandUserName2}
         || $GetParam{ClearUser}
         || 0;
 
-    my $WorkOrderAgentID = $Self->{ParamObject}->GetParam( Param => 'SelectedUser' );
+    # handle the 'Save' subaction
+    if ( $Self->{Subaction} eq 'Save' ) {
 
-    if ( $Self->{Subaction} eq 'Save' && !$WorkOrderAgentID && !$DoNotSave ) {
-        $Self->{LayoutObject}->Block(
-            Name => 'InvalidUser',
-        );
+        # if a work order agent is selected and no button but the 'Save' button is clicked
+        if ( $GetParam{SelectedUser} && !$DoNotSave ) {
 
-        $DoNotSave = 1;
-    }
-
-    # update workorder
-    if ( $Self->{Subaction} eq 'Save' && !$DoNotSave && $WorkOrderAgentID ) {
-
-        # workorder agent is required for an update
-        my %ErrorAllRequired = $Self->_CheckWorkOrderAgent(
-            %GetParam,
-        );
-
-        if ( !%ErrorAllRequired ) {
-
-            my $Success = $Self->{WorkOrderObject}->WorkOrderUpdate(
-                WorkOrderID      => $WorkOrder->{WorkOrderID},
-                WorkOrderAgentID => $WorkOrderAgentID,
-                UserID           => $Self->{UserID},
+            # workorder agent is required for an update
+            my %ErrorAllRequired = $Self->_CheckWorkOrderAgent(
+                %GetParam,
             );
 
-            if ( !$Success ) {
+            # if everything is fine
+            if ( !%ErrorAllRequired ) {
 
-                # show error message
-                return $Self->{LayoutObject}->ErrorScreen(
-                    Message => "Was not able to update WorkOrder $WorkOrder->{WorkOrderID}!",
-                    Comment => 'Please contact the admin.',
+                my $CouldUpdateWorkOrder = $Self->{WorkOrderObject}->WorkOrderUpdate(
+                    WorkOrderID      => $WorkOrder->{WorkOrderID},
+                    WorkOrderAgentID => $WorkOrderAgentID,
+                    UserID           => $Self->{UserID},
                 );
+
+                if ($CouldUpdateWorkOrder) {
+
+                    # redirect to zoom mask
+                    return $Self->{LayoutObject}->Redirect(
+                        OP => "Action=AgentITSMWorkOrderZoom&WorkOrderID=$WorkOrder->{WorkOrderID}",
+                    );
+                }
+                else {
+
+                    # show error message
+                    return $Self->{LayoutObject}->ErrorScreen(
+                        Message => "Was not able to update WorkOrder $WorkOrder->{WorkOrderID}!",
+                        Comment => 'Please contact the admin.',
+                    );
+                }
             }
             else {
-
-                # redirect to zoom mask
-                return $Self->{LayoutObject}->Redirect(
-                    OP => "Action=AgentITSMWorkOrderZoom&WorkOrderID=$WorkOrder->{WorkOrderID}",
-                );
+                if ( $ErrorAllRequired{User} ) {
+                    $Self->{LayoutObject}->Block(
+                        Name => 'InvalidUser',
+                    );
+                }
             }
         }
-        else {
-            if ( $ErrorAllRequired{User} ) {
-                $Self->{LayoutObject}->Block(
-                    Name => 'InvalidUser',
-                );
-            }
-        }
-    }
-    elsif ( $GetParam{ExpandUserName1} ) {
+        elsif ( !$GetParam{SelectedUser} && !$DoNotSave ) {
 
-        # search agents
-        my $Search = $Self->{ParamObject}->GetParam( Param => 'User' ) . '*';
-        my %UserFound = $Self->{UserObject}->UserSearch(
-            Search => $Search,
-            Valid  => 1,
-        );
-
-        # get group of group itsm-change
-        my $GroupID = $Self->{GroupObject}->GroupLookup(
-            Group => 'itsm-change',
-        );
-
-        # get members of group
-        my %ITSMChangeUsers = $Self->{GroupObject}->GroupMemberList(
-            GroupID => $GroupID,
-            Type    => 'ro',
-            Result  => 'HASH',
-            Cached  => 1,
-        );
-
-        # filter the itsm-change users in found users
-        my %FilteredUserList;
-        CHANGEUSERID:
-        for my $ChangeUserID ( keys %ITSMChangeUsers ) {
-            next CHANGEUSERID if !$UserFound{$ChangeUserID};
-
-            $FilteredUserList{$ChangeUserID} = $UserFound{$ChangeUserID};
-        }
-
-        # check if just one customer user exists
-        # if just one, fillup CustomerUserID and CustomerID
-        my @KeysUserList = keys %FilteredUserList;
-        if ( 1 == scalar @KeysUserList ) {
-            $Param{User} = $FilteredUserList{ $KeysUserList[0] };
-
-            my %UserData = $Self->{UserObject}->GetUserData(
-                UserID => $KeysUserList[0],
+            # if no user is given and it is clicked 'Save'
+            $Self->{LayoutObject}->Block(
+                Name => 'InvalidUser',
             );
-
-            if ( $UserData{UserID} ) {
-                $Param{UserID} = $UserData{UserID};
-            }
         }
 
-        # if more the one user exists, show list
-        # and clean UserID
-        else {
+        # one of the buttons 'take this user', 'search user', 'clear user' is clicked
+        elsif ($DoNotSave) {
 
-            $Param{UserID} = '';
+            # if 'search user' is clicked
+            if ( $GetParam{ExpandUserName1} ) {
 
-            $Param{UserStrg} = $Self->{LayoutObject}->BuildSelection(
-                Name => 'UserID',
-                Data => \%FilteredUserList,
-            );
+                # search agents
+                my $Search = $Self->{ParamObject}->GetParam( Param => 'User' ) . '*';
+                my %UserFound = $Self->{UserObject}->UserSearch(
+                    Search => $Search,
+                    Valid  => 1,
+                );
 
-            # clear to if there is no customer found
-            if ( !%FilteredUserList ) {
-                $Param{User}   = '';
-                $Param{UserID} = '';
+                # get group of group itsm-change
+                my $GroupID = $Self->{GroupObject}->GroupLookup(
+                    Group => 'itsm-change',
+                );
+
+                # get members of group
+                my %ITSMChangeUsers = $Self->{GroupObject}->GroupMemberList(
+                    GroupID => $GroupID,
+                    Type    => 'ro',
+                    Result  => 'HASH',
+                    Cached  => 1,
+                );
+
+                # filter the itsm-change users in found users
+                my %FilteredUserList;
+                CHANGEUSERID:
+                for my $ChangeUserID ( keys %ITSMChangeUsers ) {
+                    next CHANGEUSERID if !$UserFound{$ChangeUserID};
+
+                    $FilteredUserList{$ChangeUserID} = $UserFound{$ChangeUserID};
+                }
+
+                # check if just one customer user exists
+                # if just one, fillup CustomerUserID and CustomerID
+                my @KeysUserList = keys %FilteredUserList;
+                if ( 1 == scalar @KeysUserList ) {
+                    $Param{User} = $FilteredUserList{ $KeysUserList[0] };
+
+                    my %UserData = $Self->{UserObject}->GetUserData(
+                        UserID => $KeysUserList[0],
+                    );
+
+                    if ( $UserData{UserID} ) {
+                        $Param{UserID} = $UserData{UserID};
+                    }
+                }
+
+                # if more the one user exists, show list
+                # and clean UserID
+                else {
+
+                    $Param{UserID} = '';
+
+                    $Param{UserStrg} = $Self->{LayoutObject}->BuildSelection(
+                        Name => 'UserID',
+                        Data => \%FilteredUserList,
+                    );
+
+                    # clear to if there is no customer found
+                    if ( !%FilteredUserList ) {
+                        $Param{User}   = '';
+                        $Param{UserID} = '';
+                    }
+                }
             }
-        }
-    }
-    elsif ( $GetParam{ExpandUserName2} ) {
 
-        # show user data
-        my $UserID = $Self->{ParamObject}->GetParam( Param => 'UserID' );
-        my %UserData = $Self->{UserObject}->GetUserData(
-            UserID => $UserID,
-        );
+            # 'take this user' button is clicked
+            elsif ( $GetParam{ExpandUserName2} ) {
 
-        if (%UserData) {
-            $Param{UserID} = $UserID;
-            $Param{User}   = sprintf '%s %s %s',
-                $UserData{UserLogin},
-                $UserData{UserFirstname},
-                $UserData{UserLastname};
+                # show user data
+                my $UserID = $Self->{ParamObject}->GetParam( Param => 'UserID' );
+                my %UserData = $Self->{UserObject}->GetUserData(
+                    UserID => $UserID,
+                );
+
+                # an appropriate user is found fill the textfield
+                if (%UserData) {
+                    $Param{UserID} = $UserID;
+                    $Param{User}   = sprintf '%s %s %s',
+                        $UserData{UserLogin},
+                        $UserData{UserFirstname},
+                        $UserData{UserLastname};
+                }
+            }
         }
     }
 
@@ -241,6 +255,7 @@ sub Run {
         UserID   => $Self->{UserID},
     );
 
+    # check error
     if ( !$Change ) {
         return $Self->{LayoutObject}->ErrorScreen(
             Message => "Could not find Change for WorkOrder $WorkOrderID!",
@@ -251,7 +266,11 @@ sub Run {
     # build user search autocomplete field
     my $AutoCompleteConfig
         = $Self->{ConfigObject}->Get('ITSMChange::Frontend::UserSearchAutoComplete');
+
+    # if autocompletion is turned on
     if ( $AutoCompleteConfig->{Active} ) {
+
+        # show javascript parts for autocompletion
         $Self->{LayoutObject}->Block(
             Name => 'UserSearchAutoComplete',
         );
@@ -272,6 +291,8 @@ sub Run {
             Name => 'UserSearchAutoCompleteReturnElements',
             Data => {},
         );
+
+        # show html part for autocompletion
         $Self->{LayoutObject}->Block(
             Name => 'UserSearchAutoCompleteDivStart',
         );
@@ -280,6 +301,8 @@ sub Run {
         );
     }
     else {
+
+        # show buttons when autocompletion is turned off
         $Self->{LayoutObject}->Block(
             Name => 'SearchUserButton',
         );
