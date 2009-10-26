@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeInvolvedPersons.pm - the OTRS::ITSM::ChangeManagement change involved persons module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.8 2009-10-26 10:20:20 reb Exp $
+# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.9 2009-10-26 15:00:07 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::User;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -49,6 +49,7 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    # get needed ChangeID
     my $ChangeID = $Self->{ParamObject}->GetParam( Param => 'ChangeID' );
 
     # check needed stuff
@@ -59,12 +60,13 @@ sub Run {
         );
     }
 
-    # get workorder data
+    # get change data
     my $Change = $Self->{ChangeObject}->ChangeGet(
         ChangeID => $ChangeID,
         UserID   => $Self->{UserID},
     );
 
+    # check if change is found
     if ( !$Change ) {
         return $Self->{LayoutObject}->ErrorScreen(
             Message => "Change $ChangeID not found in database!",
@@ -92,7 +94,7 @@ sub Run {
 
     if ( $Self->{Subaction} eq 'Save' ) {
 
-        # changemanager and changebuilder is required for an update
+        # change manager and change builder are required for an update
         my %ErrorAllRequired = $Self->_CheckChangeManagerAndChangeBuilder(
             %GetParam,
         );
@@ -224,19 +226,19 @@ sub Run {
             );
 
             # check successful update
-            if ( !$CanUpdateChange ) {
+            if ($CanUpdateChange) {
+
+                # redirect to change zoom mask
+                return $Self->{LayoutObject}->Redirect(
+                    OP => "Action=AgentITSMChangeZoom&ChangeID=$ChangeID",
+                );
+            }
+            else {
 
                 # show error message
                 return $Self->{LayoutObject}->ErrorScreen(
                     Message => "Was not able to update Change $ChangeID!",
                     Comment => 'Please contact the admin.',
-                );
-            }
-            else {
-
-                # redirect to zoom mask
-                return $Self->{LayoutObject}->Redirect(
-                    OP => "Action=AgentITSMChangeZoom&ChangeID=$ChangeID",
                 );
             }
         }
@@ -329,7 +331,6 @@ sub Run {
                 %User,
             },
         );
-
     }
 
     # show all customer members of CAB
@@ -836,9 +837,9 @@ sub _GetExpandInfo {
         if ( 1 == scalar @UserList ) {
 
             # if user is found, display the name
-            $Info{'NewCABMember'}  = $UserList[0]->{Name};
-            $Info{'CABMemberID'}   = $UserList[0]->{ID};
-            $Info{'CABMemberType'} = $UserList[0]->{Type};
+            $Info{NewCABMember}  = $UserList[0]->{Name};
+            $Info{CABMemberID}   = $UserList[0]->{ID};
+            $Info{CABMemberType} = $UserList[0]->{Type};
         }
 
         # if more the one user exists, show list
@@ -855,10 +856,10 @@ sub _GetExpandInfo {
             }
 
             # reset input field
-            $Info{'NewCABMember'} = '';
+            $Info{NewCABMember} = '';
 
             # build drop down with found users
-            $Info{'CABMemberStrg'} = $Self->{LayoutObject}->BuildSelection(
+            $Info{CABMemberStrg} = $Self->{LayoutObject}->BuildSelection(
                 Name => 'MemberID',
                 Data => \@UserListForDropDown,
             );

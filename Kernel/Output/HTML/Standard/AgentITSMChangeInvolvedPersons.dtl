@@ -2,12 +2,13 @@
 # AgentITSMChangeInvolvedPersons.dtl - provides HTML form for AgentITSMChangeInvolvedPersons
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.9 2009-10-26 13:50:18 bes Exp $
+# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.10 2009-10-26 15:00:07 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+
 $Include{"AJAX"}
 
 $Include{"AgentITSMUserSearch"}
@@ -15,8 +16,8 @@ $Include{"AgentITSMCABMemberSearch"}
 
 <style type="text/css">
 .myAutoComplete {
-width:32em; /* set width here or else widget will expand to fit its container */
-padding-bottom:0.5em;
+    width:          32em;    /* set width here or else widget will expand to fit its container */
+    padding-bottom: 0.5em;
 }
 </style>
 
@@ -40,7 +41,7 @@ function clear_field3() {
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
         <td class="mainhead">
-            $Env{"Box0"}$Text{"Edit"} $Text{"involved Persons of"} $Text{"Change#"}: $QData{"ChangeNumber"} $Env{"Box1"} $QData{"Title","70"}
+            $Env{"Box0"}$Text{"Edit"} $Text{"Involved Persons of"} $Text{"Change#"}: $QData{"ChangeNumber"} $Env{"Box1"} $QData{"Title","70"}
         </td>
     </tr>
     <tr>
