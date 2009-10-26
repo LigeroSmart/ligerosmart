@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeInvolvedPersons.pm - the OTRS::ITSM::ChangeManagement change involved persons module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.7 2009-10-23 12:44:03 reb Exp $
+# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.8 2009-10-26 10:20:20 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::User;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -35,6 +35,7 @@ sub new {
         }
     }
 
+    # create needed objects
     $Self->{CustomerUserObject} = Kernel::System::CustomerUser->new(%Param);
     $Self->{UserObject}         = Kernel::System::User->new(%Param);
     $Self->{ChangeObject}       = Kernel::System::ITSMChange->new(%Param);
@@ -76,8 +77,9 @@ sub Run {
     for my $ParamName (
         qw(ChangeBuilder ChangeManager NewCABMember CABTemplate
         ExpandBuilder1 ExpandBuilder2 ExpandManager1 ExpandManager2
-        ExpandMember1 ExpandMember2 CABMemberType CABMemberID
-        SelectedUser1 SelectedUser2
+        ExpandCABMember1 ExpandCABMember2 CABMemberType CABMemberID
+        ChangeBuilderID ChangeManagerID SelectedUser1 SelectedUser2
+        MemberID ClearCABMember ClearUser1 ClearUser2
         AddCABMember AddCABTemplate)
         )
     {
@@ -97,8 +99,11 @@ sub Run {
 
         # is a "search user" button clicked
         my $ExpandUser = $GetParam{ExpandBuilder1} || $GetParam{ExpandBuilder2}
-            || $GetParam{ExpandManager1} || $GetParam{ExpandManager2}
-            || $GetParam{ExpandMember1}  || $GetParam{ExpandMember2};
+            || $GetParam{ExpandManager1}   || $GetParam{ExpandManager2}
+            || $GetParam{ExpandCABMember1} || $GetParam{ExpandCABMember2};
+
+        # is a "clear user" button clicked
+        my $ClearUser = $GetParam{ClearUser1} || $GetParam{ClearUser2} || $GetParam{ClearCABMember};
 
         # is cab member delete requested
         my %DeleteMember = $Self->_IsMemberDeletion(
@@ -163,6 +168,21 @@ sub Run {
 
             # get user info when
             %ExpandInfo = $Self->_GetExpandInfo(%GetParam);
+        }
+        elsif ($ClearUser) {
+
+            # which fields to clear
+            my %FieldMap = (
+                ClearUser1     => [qw(ChangeManager SelectedUser1)],
+                ClearUser2     => [qw(ChangeManager SelectedUser2)],
+                ClearCABMember => [qw(NewCABMember CABMemberID CABMemberType)],
+            );
+
+            # actually clear the fields associated with the button that was clicked
+            my $Fields = $FieldMap{$ClearUser} || [];
+            for my $Field ( @{$Fields} ) {
+                $GetParam{$Field} = '';
+            }
         }
         elsif (%DeleteMember) {
 
@@ -496,6 +516,7 @@ sub _IsMemberDeletion {
     # check needed stuff
     return if !$Param{Change};
 
+    # info about what to delete
     my %DeleteInfo;
 
     # check possible agent ids
@@ -644,22 +665,22 @@ sub _IsNewCABMemberOk {
 
     # an customer is requested to be added
     else {
-        %User = $Self->{CustomerUserObject}->CustomerUserDataGet(
+        my %CustomerUser = $Self->{CustomerUserObject}->CustomerUserDataGet(
             User => $Param{CABMemberID},
         );
 
-        if (%User) {
+        if (%CustomerUser) {
 
             # compare input value with user data
             my $CheckString = sprintf '%s %s %s ',
-                $User{UserFirstname},
-                $User{UserLastname},
-                $User{UserEmail};
+                $CustomerUser{UserFirstname},
+                $CustomerUser{UserLastname},
+                $CustomerUser{UserEmail};
 
             # save member infos
             if ( $CheckString eq $Param{NewCABMember} ) {
                 %MemberInfo = (
-                    $MemberType => [ @$CurrentMembers, $User{UserLogin} ],
+                    $MemberType => [ @$CurrentMembers, $CustomerUser{UserLogin} ],
                 );
             }
         }
@@ -673,6 +694,19 @@ sub _GetExpandInfo {
 
     my %Info;
 
+    # get group of group itsm-change
+    my $GroupID = $Self->{GroupObject}->GroupLookup(
+        Group => 'itsm-change',
+    );
+
+    # get members of group
+    my %ITSMChangeUsers = $Self->{GroupObject}->GroupMemberList(
+        GroupID => $GroupID,
+        Type    => 'ro',
+        Result  => 'HASH',
+        Cached  => 1,
+    );
+
     for my $Name (qw(Builder Manager)) {
 
         # the fields in .dtl have a number at the end
@@ -683,21 +717,8 @@ sub _GetExpandInfo {
 
             # search agents
             my %UserFound = $Self->{UserObject}->UserSearch(
-                Search => $Param{ 'Change' . $Name },
+                Search => $Param{ 'Change' . $Name } . '*',
                 Valid  => 1,
-            );
-
-            # get group of group itsm-change
-            my $GroupID = $Self->{GroupObject}->GroupLookup(
-                Group => 'itsm-change',
-            );
-
-            # get members of group
-            my %ITSMChangeUsers = $Self->{GroupObject}->GroupMemberList(
-                GroupID => $GroupID,
-                Type    => 'ro',
-                Result  => 'HASH',
-                Cached  => 1,
             );
 
             # filter the itsm-change users in found users
@@ -763,7 +784,7 @@ sub _GetExpandInfo {
 
                 # set hidden field
                 $Info{ 'SelectedUser' . $Key } = $UserID;
-                $Info{ 'Change' . $Name }      = sprintf '%s %s %s',
+                $Info{ 'Change' . $Name }      = sprintf '%s %s %s ',
                     $UserData{UserLogin},
                     $UserData{UserFirstname},
                     $UserData{UserLastname};
@@ -773,16 +794,131 @@ sub _GetExpandInfo {
 
     if ( $Param{ExpandCABMember1} ) {
 
+        # search agents
+        my %UserFound = $Self->{UserObject}->UserSearch(
+            Search => $Param{'NewCABMember'} . '*',
+            Valid  => 1,
+        );
+
+        # filter the itsm-change users in found users
+        my @UserList;
+        CHANGEUSERID:
+        for my $ChangeUserID ( keys %UserFound ) {
+
+            # save found user in @UserList
+            push @UserList, {
+                Name => $UserFound{$ChangeUserID},
+                ID   => $ChangeUserID,
+                Type => 'CABAgents',
+            };
+        }
+
+        # search customers
+        my %CustomerUserFound = $Self->{CustomerUserObject}->CustomerSearch(
+            Search => $Param{'NewCABMember'} . '*',
+            Valid  => 1,
+        );
+
+        # filter the itsm-change users in found customer users
+        CHANGECUSTOMERUSERID:
+        for my $ChangeCustomerUserID ( keys %CustomerUserFound ) {
+
+            # save found user in @UserList
+            push @UserList, {
+                Name => $CustomerUserFound{$ChangeCustomerUserID},
+                ID   => $ChangeCustomerUserID,
+                Type => 'CABCustomers',
+            };
+        }
+
+        # check if just one customer user exists
+        # if just one, fillup CustomerUserID and CustomerID
+        if ( 1 == scalar @UserList ) {
+
+            # if user is found, display the name
+            $Info{'NewCABMember'}  = $UserList[0]->{Name};
+            $Info{'CABMemberID'}   = $UserList[0]->{ID};
+            $Info{'CABMemberType'} = $UserList[0]->{Type};
+        }
+
+        # if more the one user exists, show list
+        # and clean UserID
+        else {
+
+            # build list for drop down
+            my @UserListForDropDown;
+            for my $User (@UserList) {
+                push @UserListForDropDown, {
+                    Key   => $User->{ID},
+                    Value => $User->{Name},
+                };
+            }
+
+            # reset input field
+            $Info{'NewCABMember'} = '';
+
+            # build drop down with found users
+            $Info{'CABMemberStrg'} = $Self->{LayoutObject}->BuildSelection(
+                Name => 'MemberID',
+                Data => \@UserListForDropDown,
+            );
+
+            # clear to if there is no customer found
+            if ( !@UserList ) {
+                $Info{'NewCABMember'}  = '';
+                $Info{'CABMemberID'}   = '';
+                $Info{'CABMemberType'} = '';
+            }
+        }
     }
+
+    # handle the "take this user" button
     elsif ( $Param{ExpandCABMember2} ) {
 
-    }
+        # show user data
+        my $UserID = $Param{'MemberID'};
+        my %UserData;
 
-    use Data::Dumper;
-    $Self->{LogObject}->Log(
-        Priority => 'error',
-        Message => Dumper( [ \%Param, \%Info ] ),
-    );
+        if ( $UserID =~ m{ \A \d+ \z }xms ) {
+            %UserData = $Self->{UserObject}->GetUserData(
+                UserID => $UserID,
+            );
+        }
+
+        # if user is found
+        if (%UserData) {
+
+            # set hidden field
+            $Info{'CABMemberID'}   = $UserID;
+            $Info{'CABMemberType'} = 'CABAgents';
+            $Info{'NewCABMember'}  = sprintf '%s %s %s ',
+                $UserData{UserLogin},
+                $UserData{UserFirstname},
+                $UserData{UserLastname};
+        }
+
+        # maybe it's a customer user
+        else {
+
+            # get customer user data
+            my %CustomerUserData = $Self->{CustomerUserObject}->CustomerUserDataGet(
+                User  => $UserID,
+                Valid => 1,
+            );
+
+            # if user is found
+            if (%CustomerUserData) {
+
+                # set hidden field
+                $Info{'CABMemberID'}   = $UserID;
+                $Info{'CABMemberType'} = 'CABCustomers';
+                $Info{'NewCABMember'}  = sprintf '%s %s %s ',
+                    $CustomerUserData{UserFirstname},
+                    $CustomerUserData{UserLastname},
+                    $CustomerUserData{UserEmail};
+            }
+        }
+    }
 
     return %Info;
 }
