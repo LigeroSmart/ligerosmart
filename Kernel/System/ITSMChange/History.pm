@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/History.pm - all change and workorder history functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: History.pm,v 1.4 2009-10-27 15:43:35 reb Exp $
+# $Id: History.pm,v 1.5 2009-10-27 16:37:52 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 =head1 NAME
 
@@ -28,6 +28,50 @@ All history functions.
 =head1 PUBLIC INTERFACE
 
 =over 4
+
+=item new()
+
+create an object
+
+    use Kernel::Config;
+    use Kernel::System::Encode;
+    use Kernel::System::Log;
+    use Kernel::System::DB;
+    use Kernel::System::Main;
+    use Kernel::System::Time;
+    use Kernel::System::ITSMChange::History;
+
+    my $ConfigObject = Kernel::Config->new();
+    my $EncodeObject = Kernel::System::Encode->new(
+        ConfigObject => $ConfigObject,
+    );
+    my $LogObject = Kernel::System::Log->new(
+        ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
+    );
+    my $MainObject = Kernel::System::Main->new(
+        ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
+        LogObject    => $LogObject,
+    );
+    my $TimeObject = Kernel::System::Time->new(
+        ConfigObject => $ConfigObject,
+        LogObject    => $LogObject,
+    );
+    my $DBObject = Kernel::System::DB->new(
+        ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
+        LogObject    => $LogObject,
+        MainObject   => $MainObject,
+    );
+    my $HistoryObject = Kernel::System::ITSMChange::History->new(
+        ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
+        LogObject    => $LogObject,
+        DBObject     => $DBObject,
+        TimeObject   => $TimeObject,
+        MainObject   => $MainObject,
+    );
 
 =cut
 
@@ -50,7 +94,7 @@ sub new {
     $Self->{Debug} ||= 0;
 
     # create additional objects
-    # ...
+    $Self->{UserObject} = Kernel::System::User->new( %{$Self} );
 
     return $Self;
 }
@@ -147,15 +191,15 @@ list contains hash references with these information:
     $Info{HistoryType}
     $Info{HistoryTypeID}
     $Info{Content}
-    $Info{CreatedBy}
-    $Info{CreatedTime}
+    $Info{CreateBy}
+    $Info{CreateTime}
     $Info{UserID}
     $Info{UserLogin}
     $Info{UserLastname}
     $Info{UserFirstname}
 
     my $HistoryEntries = $HistoryObject->WorkOrderHistoryGet(
-        ChangeID => 123,
+        WorkOrderID => 123,
         UserID   => 1,
     );
 
@@ -174,6 +218,53 @@ sub WorkOrderHistoryGet {
             return;
         }
     }
+
+    # run the sql statement to get history
+    return if !$Self->{DBObject}->Prepare(
+        SQL => 'SELECT change_history.id, change_id, workorder_id, content, '
+            . 'create_by, create_time, type_id, change_history_type.name '
+            . 'FROM change_history, change_history_type '
+            . 'WHERE change_history.type_id = change_history_type.id '
+            . 'AND workorder_id = ? ',
+        Bind => [ \$Param{WorkOrderID} ],
+    );
+
+    # fetch the entries and save information in array
+    my @HistoryEntries;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        my %HistoryEntry = (
+            HistoryEntryID => $Row[0],
+            ChangeID       => $Row[1],
+            WorkOrderID    => $Row[2],
+            Content        => $Row[3],
+            CreateBy       => $Row[4],
+            CreateTime     => $Row[5],
+            HistoryTypeID  => $Row[6],
+            HistoryType    => $Row[7],
+        );
+
+        push @HistoryEntries, \%HistoryEntry;
+    }
+
+    # get more information about user who created entry
+    for my $HistoryEntry (@HistoryEntries) {
+
+        # get user name
+        my %User = $Self->{UserObject}->GetUserData(
+            User  => $HistoryEntry->{CreateBy},
+            Cache => 1,
+        );
+
+        # save user info in history entry
+        if (%User) {
+            $HistoryEntry->{UserID}        = $User{UserID};
+            $HistoryEntry->{UserLogin}     = $User{UserLogin};
+            $HistoryEntry->{UserFirstname} = $User{UserFirstname};
+            $HistoryEntry->{UserLastname}  = $User{UserLastname};
+        }
+    }
+
+    return \@HistoryEntries;
 }
 
 =item ChangeHistoryGet()
@@ -187,8 +278,8 @@ history entries for workorders. The list contains hash references with these inf
     $Info{HistoryType}
     $Info{HistoryTypeID}
     $Info{Content}
-    $Info{CreatedBy}
-    $Info{CreatedTime}
+    $Info{CreateBy}
+    $Info{CreateTime}
     $Info{UserID}
     $Info{UserLogin}
     $Info{UserLastname}
@@ -214,6 +305,53 @@ sub ChangeHistoryGet {
             return;
         }
     }
+
+    # run the sql statement to get history
+    return if !$Self->{DBObject}->Prepare(
+        SQL => 'SELECT change_history.id, change_id, workorder_id, content, '
+            . 'create_by, create_time, type_id, change_history_type.name '
+            . 'FROM change_history, change_history_type '
+            . 'WHERE change_history.type_id = change_history_type.id '
+            . 'AND change_id = ? ',
+        Bind => [ \$Param{ChangeID} ],
+    );
+
+    # fetch the entries and save information in array
+    my @HistoryEntries;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        my %HistoryEntry = (
+            HistoryEntryID => $Row[0],
+            ChangeID       => $Row[1],
+            WorkOrderID    => $Row[2],
+            Content        => $Row[3],
+            CreateBy       => $Row[4],
+            CreateTime     => $Row[5],
+            HistoryTypeID  => $Row[6],
+            HistoryType    => $Row[7],
+        );
+
+        push @HistoryEntries, \%HistoryEntry;
+    }
+
+    # get more information about user who created entry
+    for my $HistoryEntry (@HistoryEntries) {
+
+        # get user name
+        my %User = $Self->{UserObject}->GetUserData(
+            User  => $HistoryEntry->{CreateBy},
+            Cache => 1,
+        );
+
+        # save user info in history entry
+        if (%User) {
+            $HistoryEntry->{UserID}        = $User{UserID};
+            $HistoryEntry->{UserLogin}     = $User{UserLogin};
+            $HistoryEntry->{UserFirstname} = $User{UserFirstname};
+            $HistoryEntry->{UserLastname}  = $User{UserLastname};
+        }
+    }
+
+    return \@HistoryEntries;
 }
 
 =item WorkOrderHistoryDelete()
@@ -359,6 +497,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2009-10-27 15:43:35 $
+$Revision: 1.5 $ $Date: 2009-10-27 16:37:52 $
 
 =cut
