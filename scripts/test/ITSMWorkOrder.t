@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.70 2009-10-27 12:01:33 reb Exp $
+# $Id: ITSMWorkOrder.t,v 1.71 2009-10-27 12:11:59 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -708,7 +708,7 @@ push @WorkOrderTests, (
             WorkOrderAdd => {
                 UserID         => 1,
                 ChangeID       => $WorkOrderAddTestID,
-                Title          => 'WorkOrderState - ' . $UniqueSignature,
+                WorkOrderTitle => 'WorkOrderState - ' . $UniqueSignature,
                 WorkOrderState => 'closed',
             },
         },
@@ -716,7 +716,7 @@ push @WorkOrderTests, (
             WorkOrderGet => {
                 ChangeID         => $WorkOrderAddTestID,
                 CreateBy         => 1,
-                Title            => 'WorkOrderState - ' . $UniqueSignature,
+                WorkOrderTitle   => 'WorkOrderState - ' . $UniqueSignature,
                 WorkOrderState   => 'closed',
                 WorkOrderStateID => $ReverseStatesList{closed},
             },
@@ -756,18 +756,19 @@ push @WorkOrderTests, (
                 UserID         => 1,
                 ChangeID       => $WorkOrderAddTestID,
                 WorkOrderTitle => 'WorkOrderType - ' . $UniqueSignature,
-                WorkOrderState => 'pir',
+                WorkOrderType  => 'pir',
             },
         },
         ReferenceData => {
             WorkOrderGet => {
-                UserID          => 1,
+                CreateBy        => 1,
                 ChangeID        => $WorkOrderAddTestID,
                 WorkOrderTitle  => 'WorkOrderType - ' . $UniqueSignature,
                 WorkOrderType   => 'pir',
                 WorkOrderTypeID => $ReverseTypesList{pir},
             },
         },
+        SearchTest => [13],
     },
 
     {
@@ -791,7 +792,7 @@ push @WorkOrderTests, (
                 ChangeBy        => 1,
                 WorkOrderTitle  => 'WorkOrderType - ' . $UniqueSignature,
                 WorkOrderType   => 'decision',
-                WorkOrderTypeID => $ReverseStatesList{decision},
+                WorkOrderTypeID => $ReverseTypesList{decision},
             },
         },
     },
