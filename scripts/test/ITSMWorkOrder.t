@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.69 2009-10-21 10:18:58 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.70 2009-10-27 12:01:33 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -123,6 +123,9 @@ my @ObjectMethods = qw(
     WorkOrderList
     WorkOrderSearch
     WorkOrderUpdate
+    WorkOrderStateLookup
+    WorkOrderTypeLookup
+    PossibleStatesListGet
 );
 
 # check if subs are available
@@ -162,6 +165,29 @@ for my $DefaultWorkOrderState (@DefaultWorkOrderStates) {
     );
 }
 
+# test lookup method
+for my $State (@DefaultWorkOrderStates) {
+    my $StateID = $Self->{WorkOrderObject}->WorkOrderStateLookup(
+        WorkOrderState => $State,
+    );
+
+    $Self->Is(
+        $StateID,
+        $ReverseStatesList{$State},
+        "Lookup $State",
+    );
+
+    my $StateName = $Self->{WorkOrderObject}->WorkOrderStateLookup(
+        WorkOrderStateID => $StateID,
+    );
+
+    $Self->Is(
+        $StateName,
+        $State,
+        "Lookup $StateID",
+    );
+}
+
 # ------------------------------------------------------------ #
 # search for default ITSMWorkOrder-types
 # ------------------------------------------------------------ #
@@ -188,6 +214,29 @@ for my $DefaultWorkOrderType (@DefaultWorkOrderTypes) {
     $Self->True(
         $ReverseTypesList{$DefaultWorkOrderType},
         "Test " . $TestCount++ . " - check type '$DefaultWorkOrderType'"
+    );
+}
+
+# test lookup method
+for my $DefaultWorkOrderType (@DefaultWorkOrderTypes) {
+    my $TypeID = $Self->{WorkOrderObject}->WorkOrderTypeLookup(
+        WorkOrderType => $DefaultWorkOrderType,
+    );
+
+    $Self->Is(
+        $TypeID,
+        $ReverseTypesList{$DefaultWorkOrderType},
+        "Lookup $DefaultWorkOrderType",
+    );
+
+    my $TypeName = $Self->{WorkOrderObject}->WorkOrderTypeLookup(
+        WorkOrderTypeID => $TypeID,
+    );
+
+    $Self->Is(
+        $TypeName,
+        $DefaultWorkOrderType,
+        "Lookup $TypeID",
     );
 }
 
@@ -651,6 +700,100 @@ push @WorkOrderTests, (
             },
         },
         SearchTest => [ 2, 8 ],
+    },
+
+    {
+        Description => 'Test for States (no ids) in WOAdd()',
+        SourceData  => {
+            WorkOrderAdd => {
+                UserID         => 1,
+                ChangeID       => $WorkOrderAddTestID,
+                Title          => 'WorkOrderState - ' . $UniqueSignature,
+                WorkOrderState => 'closed',
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                ChangeID         => $WorkOrderAddTestID,
+                CreateBy         => 1,
+                Title            => 'WorkOrderState - ' . $UniqueSignature,
+                WorkOrderState   => 'closed',
+                WorkOrderStateID => $ReverseStatesList{closed},
+            },
+        },
+    },
+
+    {
+        Description => 'Test for States (no ids) in WOAdd() and WOUpdate()',
+        SourceData  => {
+            WorkOrderAdd => {
+                UserID         => 1,
+                ChangeID       => $WorkOrderAddTestID,
+                WorkOrderTitle => 'WorkOrderState - ' . $UniqueSignature,
+                WorkOrderState => 'closed',
+            },
+            WorkOrderUpdate => {
+                WorkOrderState => 'canceled',
+                UserID         => 1,
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                ChangeID         => $WorkOrderAddTestID,
+                CreateBy         => 1,
+                ChangeBy         => 1,
+                WorkOrderTitle   => 'WorkOrderState - ' . $UniqueSignature,
+                WorkOrderState   => 'canceled',
+                WorkOrderStateID => $ReverseStatesList{canceled},
+            },
+        },
+    },
+
+    {
+        Description => 'Test for Types (no ids) in WOAdd()',
+        SourceData  => {
+            WorkOrderAdd => {
+                UserID         => 1,
+                ChangeID       => $WorkOrderAddTestID,
+                WorkOrderTitle => 'WorkOrderType - ' . $UniqueSignature,
+                WorkOrderState => 'pir',
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                UserID          => 1,
+                ChangeID        => $WorkOrderAddTestID,
+                WorkOrderTitle  => 'WorkOrderType - ' . $UniqueSignature,
+                WorkOrderType   => 'pir',
+                WorkOrderTypeID => $ReverseTypesList{pir},
+            },
+        },
+    },
+
+    {
+        Description => 'Test for Types (no ids) in WOAdd() and WOUpdate()',
+        SourceData  => {
+            WorkOrderAdd => {
+                ChangeID       => $WorkOrderAddTestID,
+                UserID         => 1,
+                WorkOrderTitle => 'WorkOrderType - ' . $UniqueSignature,
+                WorkOrderType  => 'pir',
+            },
+            WorkOrderUpdate => {
+                WorkOrderType => 'decision',
+                UserID        => 1,
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                ChangeID        => $WorkOrderAddTestID,
+                CreateBy        => 1,
+                ChangeBy        => 1,
+                WorkOrderTitle  => 'WorkOrderType - ' . $UniqueSignature,
+                WorkOrderType   => 'decision',
+                WorkOrderTypeID => $ReverseStatesList{decision},
+            },
+        },
     },
 );
 
