@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.26 2009-10-27 09:12:43 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.27 2009-10-27 16:49:27 bes Exp $</CVS>
     <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
         <Description Lang="en">Logfile for the itsm change counter.</Description>
         <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
@@ -29,7 +29,7 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMWorkOder::State::Signal" Required="1" Valid="1">
+    <ConfigItem Name="ITSMWorkOrder::State::Signal" Required="1" Valid="1">
         <Description Lang="en">Define the signal for ITSMWorkOrder states.</Description>
         <Description Lang="de">Definieren des Signals für jeden ITSMWorkOrder-Status.</Description>
         <Group>ITSM Change Management</Group>
