@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.74 2009-10-27 13:55:37 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.75 2009-10-27 14:23:41 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -642,7 +642,7 @@ push @WorkOrderTests, (
                     . $UniqueSignature,
             },
         },
-        SearchTest => [ 2, 8, 13, 23, 24, 25 ],
+        SearchTest => [ 2, 8, 13, 23, 24, 25, 27, 28, 29 ],
     },
     {
         Description =>
@@ -721,6 +721,7 @@ push @WorkOrderTests, (
                 WorkOrderStateID => $ReverseStatesList{closed},
             },
         },
+        SearchTest => [ 27, 28, 29 ],
     },
 
     {
@@ -1856,7 +1857,6 @@ my @WorkOrderSearchTests = (
             ChangeIDs       => [$WorkOrderAddTestID],
             WorkOrderStates => ['non-existent'],
             WorkOrderTitle  => '%' . $UniqueSignature,
-            Huhu            => 1,
         },
         ResultData => {
             TestCount     => 1,
@@ -1866,10 +1866,10 @@ my @WorkOrderSearchTests = (
 
     # Nr 27 - search for workorder states
     {
-        Description => 'Search for WorkOrder states "accepted" and "ready"',
+        Description => 'Search for WorkOrder states "closed" and "ready"',
         SearchData  => {
             ChangeIDs       => [$WorkOrderAddTestID],
-            WorkOrderStates => [ 'accepted', 'ready' ],
+            WorkOrderStates => [ 'closed', 'ready' ],
             WorkOrderTitle  => '%' . $UniqueSignature,
         },
         ResultData => {
@@ -1878,12 +1878,12 @@ my @WorkOrderSearchTests = (
         },
     },
 
-    # Nr 28 - search for workorder states
+    # Nr 28 - Search for WorkOrder states "closed" and "ready" (two times)
     {
-        Description => 'Search for WorkOrder states "accepted" and "ready" (several times)',
+        Description => 'Search for WorkOrder states "closed" and "ready" (two times)',
         SearchData  => {
             ChangeIDs       => [$WorkOrderAddTestID],
-            WorkOrderStates => [ 'accepted', 'ready', 'accepted', 'ready' ],
+            WorkOrderStates => [ 'closed', 'ready', 'closed', 'ready' ],
             WorkOrderTitle  => '%' . $UniqueSignature,
         },
         ResultData => {
@@ -1892,13 +1892,13 @@ my @WorkOrderSearchTests = (
         },
     },
 
-    # Nr 29 - Search for WorkOrder states "accepted", "ready" and "non-existent"
+    # Nr 29 - Search for WorkOrder states "closed", "ready" and "non-existent"
     # TODO: the behavior with non-existent states is not specified yet
     {
-        Description => 'Search for WorkOrder states "accepted", "ready" and "non-existent"',
+        Description => 'Search for WorkOrder states "closed", "ready" and "non-existent"',
         SearchData  => {
             ChangeIDs       => [$WorkOrderAddTestID],
-            WorkOrderStates => [ 'accepted', 'ready', 'non-existent' ],
+            WorkOrderStates => [ 'closed', 'ready', 'non-existent' ],
             WorkOrderTitle  => '%' . $UniqueSignature,
         },
         ResultData => {
