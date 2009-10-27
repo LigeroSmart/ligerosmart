@@ -1,15 +1,15 @@
 # --
-# Kernel/Output/HTML/ITSMChangeWorkOrderMenuGeneric.pm
+# Kernel/Output/HTML/ITSMWorkOrderMenuGeneric.pm
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeWorkOrderMenuGeneric.pm,v 1.1 2009-10-19 19:31:19 reb Exp $
+# $Id: ITSMWorkOrderMenuGeneric.pm,v 1.1 2009-10-27 21:06:44 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::ITSMChangeWorkOrderMenuGeneric;
+package Kernel::Output::HTML::ITSMWorkOrderMenuGeneric;
 
 use strict;
 use warnings;
