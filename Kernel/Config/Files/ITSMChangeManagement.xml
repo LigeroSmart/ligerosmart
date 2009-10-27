@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.27 2009-10-27 16:49:27 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.28 2009-10-27 21:11:02 ub Exp $</CVS>
     <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
         <Description Lang="en">Logfile for the itsm change counter.</Description>
         <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
@@ -340,14 +340,29 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###000-Back" Required="0" Valid="1">
-        <Description Lang="en">Module to show back link in work order menu.</Description>
-        <Description Lang="de">Über dieses Modul wird der Zurück-Link in der Linkleiste der WorkOrder-Ansicht angezeigt.</Description>
+    <ConfigItem Name="ITSMChange::Frontend::MenuModule###070-Link" Required="0" Valid="1">
+        <Description Lang="en">Module to show link link in change menu.</Description>
+        <Description Lang="de">Über dieses Modul wird der Link-Link in der Linkleiste der Change-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChangeManagement::WorkOrder::MenuModule</SubGroup>
+        <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMChangeWorkOrderMenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMChangeMenuGeneric</Item>
+                <Item Key="Name">Link</Item>
+                <Item Key="Description">Link</Item>
+                <Item Key="Action">AgentLinkObject</Item>
+                <Item Key="Link">Action=AgentLinkObject&amp;SourceObject=ITSMChange&amp;SourceKey=$QData{"ChangeID"}</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###000-Back" Required="0" Valid="1">
+        <Description Lang="en">Module to show back link in workorder menu.</Description>
+        <Description Lang="de">Über dieses Modul wird der Zurück-Link in der Linkleiste der WorkOrder-Ansicht angezeigt.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrderMenuGeneric</Item>
                 <Item Key="Name">Back</Item>
                 <Item Key="Description">Back</Item>
                 <Item Key="Action"></Item>
@@ -357,13 +372,13 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###010-History" Required="0" Valid="1">
-        <Description Lang="en">Module to show history link in work order menu.</Description>
+        <Description Lang="en">Module to show history link in workorder menu.</Description>
         <Description Lang="de">Über dieses Modul wird der Historie-Link in der Linkleiste der WorkOrder-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChangeManagement::WorkOrder::MenuModule</SubGroup>
+        <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMChangeWorkOrderMenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrderMenuGeneric</Item>
                 <Item Key="Name">History</Item>
                 <Item Key="Description">History</Item>
                 <Item Key="Action">AgentITSMWorkOrderHistory</Item>
@@ -372,13 +387,13 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###020-Print" Required="0" Valid="1">
-        <Description Lang="en">Module to show print link in work order menu.</Description>
+        <Description Lang="en">Module to show print link in workorder menu.</Description>
         <Description Lang="de">Über dieses Modul wird der Drucken-Link in der Linkleiste der WorkOrder-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChangeManagement::WorkOrder::MenuModule</SubGroup>
+        <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMChangeWorkOrderMenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrderMenuGeneric</Item>
                 <Item Key="Name">Print</Item>
                 <Item Key="Description">Print</Item>
                 <Item Key="Action">AgentITSMWorkOrderPrint</Item>
@@ -387,13 +402,13 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###030-Edit" Required="0" Valid="1">
-        <Description Lang="en">Module to show edit link in work order menu.</Description>
+        <Description Lang="en">Module to show edit link in workorder menu.</Description>
         <Description Lang="de">Über dieses Modul wird der Bearbeiten-Link in der Linkleiste der WorkOrder-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChangeManagement::WorkOrder::MenuModule</SubGroup>
+        <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMChangeWorkOrderMenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrderMenuGeneric</Item>
                 <Item Key="Name">Edit</Item>
                 <Item Key="Description">Edit</Item>
                 <Item Key="Action">AgentITSMWorkOrderEdit</Item>
@@ -402,13 +417,13 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###040-WorkOrderAgent" Required="0" Valid="1">
-        <Description Lang="en">Module to show WorkOrderAgent link in work order menu.</Description>
+        <Description Lang="en">Module to show WorkOrderAgent link in workorder menu.</Description>
         <Description Lang="de">Über dieses Modul wird der WorkOrderAgent-Link in der Linkleiste der WorkOrder-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChangeManagement::WorkOrder::MenuModule</SubGroup>
+        <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMChangeWorkOrderMenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrderMenuGeneric</Item>
                 <Item Key="Name">WorkOrderAgent</Item>
                 <Item Key="Description">WorkOrderAgent</Item>
                 <Item Key="Action">AgentITSMWorkOrderAgent</Item>
@@ -417,13 +432,13 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###050-Report" Required="0" Valid="1">
-        <Description Lang="en">Module to show report link in work order menu.</Description>
+        <Description Lang="en">Module to show report link in workorder menu.</Description>
         <Description Lang="de">Über dieses Modul wird der Report-Link in der Linkleiste der WorkOrder-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChangeManagement::WorkOrder::MenuModule</SubGroup>
+        <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMChangeWorkOrderMenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrderMenuGeneric</Item>
                 <Item Key="Name">Report</Item>
                 <Item Key="Description">Report</Item>
                 <Item Key="Action">AgentITSMWorkOrderReport</Item>
@@ -432,13 +447,13 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###060-Link" Required="0" Valid="1">
-        <Description Lang="en">Module to show link link in work order menu.</Description>
+        <Description Lang="en">Module to show link link in workorder menu.</Description>
         <Description Lang="de">Über dieses Modul wird der Link-Link in der Linkleiste der WorkOrder-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChangeManagement::WorkOrder::MenuModule</SubGroup>
+        <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMChangeWorkOrderMenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrderMenuGeneric</Item>
                 <Item Key="Name">Link</Item>
                 <Item Key="Description">Link</Item>
                 <Item Key="Action">AgentLinkObject</Item>
@@ -447,13 +462,13 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###070-MoveTimeSlot" Required="0" Valid="1">
-        <Description Lang="en">Module to show report link in work order menu.</Description>
+        <Description Lang="en">Module to show report link in workorder menu.</Description>
         <Description Lang="de">Über dieses Modul wird der Report-Link in der Linkleiste der WorkOrder-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChangeManagement::WorkOrder::MenuModule</SubGroup>
+        <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMChangeWorkOrderMenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrderMenuGeneric</Item>
                 <Item Key="Name">MoveTimeSlot</Item>
                 <Item Key="Description">Move Time Slot</Item>
                 <Item Key="Action">AgentITSMWorkOrderXXX</Item>
@@ -462,13 +477,13 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###080-Template" Required="0" Valid="1">
-        <Description Lang="en">Module to show template link in work order menu.</Description>
+        <Description Lang="en">Module to show template link in workorder menu.</Description>
         <Description Lang="de">Über dieses Modul wird der Template-Link in der Linkleiste der WorkOrder-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChangeManagement::WorkOrder::MenuModule</SubGroup>
+        <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMChangeWorkOrderMenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrderMenuGeneric</Item>
                 <Item Key="Name">Template</Item>
                 <Item Key="Description">Template</Item>
                 <Item Key="Action">AgentITSMWorkOrderXXX</Item>
