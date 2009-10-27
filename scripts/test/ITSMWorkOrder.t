@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.71 2009-10-27 12:11:59 reb Exp $
+# $Id: ITSMWorkOrder.t,v 1.72 2009-10-27 12:25:27 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -582,7 +582,7 @@ push @WorkOrderTests, (
                 Report => 'WorkOrderAdd with WorkOrderStateID - Report - ' . $UniqueSignature,
             },
         },
-        SearchTest => [ 2, 8 ],
+        SearchTest => [ 2, 8, 27, 28 ],
     },
     {
         Description => 'WorkOrderAdd() with WorkOrderTypeID.',
@@ -607,7 +607,7 @@ push @WorkOrderTests, (
                 Report => 'WorkOrderAdd with WorkOrderTypeID - Report - ' . $UniqueSignature,
             },
         },
-        SearchTest => [ 2, 8, 13 ],
+        SearchTest => [ 2, 8, 13, 23, 24, 25 ],
     },
     {
         Description => 'WorkOrderAdd() with WorkOrderTypeID and WorkOrderStateID.',
@@ -642,7 +642,7 @@ push @WorkOrderTests, (
                     . $UniqueSignature,
             },
         },
-        SearchTest => [ 2, 8, 13 ],
+        SearchTest => [ 2, 8, 13, 23, 24, 25 ],
     },
     {
         Description =>
@@ -768,7 +768,7 @@ push @WorkOrderTests, (
                 WorkOrderTypeID => $ReverseTypesList{pir},
             },
         },
-        SearchTest => [13],
+        SearchTest => [ 13, 23, 24, 25 ],
     },
 
     {
@@ -1800,6 +1800,90 @@ my @WorkOrderSearchTests = (
             ChangeTitle         => 'Change 3 - Title - ' . $UniqueSignature,
             ChangeDescription   => 'Change 3 - Description - ' . $UniqueSignature,
             ChangeJustification => 'Change 3 - Justification - ' . $UniqueSignature,
+        },
+        ResultData => {
+            TestCount     => 1,
+            TestExistence => 1,
+        },
+    },
+
+    # Nr 23 - search for workorder types
+    {
+        Description => 'Search for WorkOrder types "approval" and "pir"',
+        SearchData  => {
+            ChangeIDs      => [$WorkOrderAddTestID],
+            WorkOrderTypes => [ 'approval', 'pir' ],
+            WorkOrderTitle => '%' . $UniqueSignature,
+        },
+        ResultData => {
+            TestCount     => 1,
+            TestExistence => 1,
+        },
+    },
+
+    # Nr 24 - search for workorder types
+    {
+        Description => 'Search for WorkOrder types (same types several times)',
+        SearchData  => {
+            ChangeIDs      => [$WorkOrderAddTestID],
+            WorkOrderTypes => [ 'approval', 'pir', 'approval', 'pir' ],
+            WorkOrderTitle => '%' . $UniqueSignature,
+        },
+        ResultData => {
+            TestCount     => 1,
+            TestExistence => 1,
+        },
+    },
+
+    # Nr 25 - search for workorder types
+    {
+        Description => 'Search for WorkOrder type (non-existent type)',
+        SearchData  => {
+            ChangeIDs      => [$WorkOrderAddTestID],
+            WorkOrderTypes => [ 'approval', 'pir', 'non-existent' ],
+            WorkOrderTitle => '%' . $UniqueSignature,
+        },
+        ResultData => {
+            TestCount     => 1,
+            TestExistence => 1,
+        },
+    },
+
+    # Nr 26 - search for workorder states
+    {
+        Description => 'Search for WorkOrder state (non-existent state)',
+        SearchData  => {
+            ChangeIDs       => [$WorkOrderAddTestID],
+            WorkOrderStates => [ 'accepted', 'non-existent' ],
+            WorkOrderTitle  => '%' . $UniqueSignature,
+        },
+        ResultData => {
+            TestCount     => 1,
+            TestExistence => 1,
+        },
+    },
+
+    # Nr 27 - search for workorder states
+    {
+        Description => 'Search for WorkOrder states "accepted" and "ready"',
+        SearchData  => {
+            ChangeIDs       => [$WorkOrderAddTestID],
+            WorkOrderStates => [ 'accepted', 'ready' ],
+            WorkOrderTitle  => '%' . $UniqueSignature,
+        },
+        ResultData => {
+            TestCount     => 1,
+            TestExistence => 1,
+        },
+    },
+
+    # Nr 28 - search for workorder states
+    {
+        Description => 'Search for WorkOrder states "accepted" and "ready" (several times)',
+        SearchData  => {
+            ChangeIDs       => [$WorkOrderAddTestID],
+            WorkOrderStates => [ 'accepted', 'ready', 'accepted', 'ready' ],
+            WorkOrderTitle  => '%' . $UniqueSignature,
         },
         ResultData => {
             TestCount     => 1,
