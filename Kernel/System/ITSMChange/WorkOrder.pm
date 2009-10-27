@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.72 2009-10-27 16:15:05 bes Exp $
+# $Id: WorkOrder.pm,v 1.73 2009-10-27 16:23:08 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::EventHandler;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.72 $) [1];
+$VERSION = qw($Revision: 1.73 $) [1];
 
 =head1 NAME
 
@@ -48,7 +48,6 @@ create an object
     use Kernel::System::DB;
     use Kernel::System::Main;
     use Kernel::System::Time;
-    use Kernel::System::User;
     use Kernel::System::ITSMChange::WorkOrder;
 
     my $ConfigObject = Kernel::Config->new();
@@ -73,14 +72,6 @@ create an object
         EncodeObject => $EncodeObject,
         LogObject    => $LogObject,
         MainObject   => $MainObject,
-    );
-    my $UserObject = Kernel::System::User->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-        TimeObject   => $TimeObject,
-        DBObject     => $DBObject,
-        EncodeObject => $EncodeObject,
     );
     my $WorkOrderObject = Kernel::System::ITSMChange::WorkOrder->new(
         ConfigObject => $ConfigObject,
@@ -1973,6 +1964,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.72 $ $Date: 2009-10-27 16:15:05 $
+$Revision: 1.73 $ $Date: 2009-10-27 16:23:08 $
 
 =cut
