@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LinkObjectITSMChange.pm - layout backend module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LinkObjectITSMChange.pm,v 1.1 2009-10-27 21:10:31 ub Exp $
+# $Id: LinkObjectITSMChange.pm,v 1.2 2009-10-27 22:38:45 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::Output::HTML::Layout;
 use Kernel::System::GeneralCatalog;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -91,9 +91,15 @@ Return
             },
             {
                 Content => 'Change#',
+                Width   => 200,
             },
             {
                 Content => 'Change Title',
+                Width   => 200,
+            },
+            {
+                Content => 'ChangeState',
+                Width   => 100,
             },
             {
                 Content => 'Changed',
@@ -104,19 +110,22 @@ Return
             [
                 {
                     Type    => 'ChangeStateSignal',
-                    Key     => 2,
-                    Content => 'ready',
+                    Key     => 123,
+                    Content => 'requested',
                 },
                 {
                     Type    => 'Text',
                     Content => '2009100112345778',
-                    Link      => 'Action=AgentITSMChangeZoom&ChangeID=123',
-                    MaxLength => 70,
+                    Link    => 'Action=AgentITSMChangeZoom&ChangeID=123',
                 },
                 {
                     Type      => 'Text',
                     Content   => 'Change Title',
                     MaxLength => 70,
+                },
+                {
+                    Type      => 'Text',
+                    Content   => 'requested',
                 },
                 {
                     Type    => 'TimeLong',
@@ -126,19 +135,22 @@ Return
             [
                 {
                     Type    => 'ChangeStateSignal',
-                    Key     => 4,
+                    Key     => 456,
                     Content => 'closed',
                 },
                 {
                     Type    => 'Text',
-                    Content => '2009100112345779',
-                    Link      => 'Action=AgentITSMChangeZoom&ChangeID=456',
-                    MaxLength => 70,
+                    Content => '2009100112345774',
+                    Link    => 'Action=AgentITSMChangeZoom&ChangeID=456',
                 },
                 {
                     Type      => 'Text',
                     Content   => 'Change Title',
                     MaxLength => 70,
+                },
+                {
+                    Type      => 'Text',
+                    Content   => 'closed',
                 },
                 {
                     Type    => 'TimeLong',
@@ -178,58 +190,50 @@ sub TableCreateComplex {
             # extract direction list
             my $DirectionList = $Param{ObjectLinkListWithData}->{$LinkType}->{$Direction};
 
-            for my $WorkOrderID ( keys %{$DirectionList} ) {
+            for my $ChangeID ( keys %{$DirectionList} ) {
 
-                $LinkList{$WorkOrderID}->{Data} = $DirectionList->{$WorkOrderID};
+                $LinkList{$ChangeID}->{Data} = $DirectionList->{$ChangeID};
             }
         }
     }
 
-    # create the item list, sort by ChangeID Down, then by WorkOrderID Up
+    # create the item list, sort by ChangeID Down
     my @ItemList;
-    for my $WorkOrderID (
+    for my $ChangeID (
         sort {
             $LinkList{$b}{Data}->{ChangeID} <=> $LinkList{$a}{Data}->{ChangeID}
-                || $a <=> $b
         } keys %LinkList
         )
     {
 
-        # extract workorder data
-        my $WorkOrder = $LinkList{$WorkOrderID}{Data};
+        # extract change data
+        my $Change = $LinkList{$ChangeID}{Data};
 
         my @ItemColumns = (
             {
-                Type           => 'WorkOrderStateSignal',
-                Key            => $WorkOrderID,
-                Content        => $WorkOrder->{WorkOrderStateSignal},
-                WorkOrderState => $WorkOrder->{WorkOrderState},
+                Type        => 'ChangeStateSignal',
+                Key         => $ChangeID,
+                Content     => $Change->{ChangeStateSignal},
+                ChangeState => $Change->{ChangeState},
             },
             {
                 Type    => 'Link',
-                Content => $WorkOrder->{ChangeData}->{ChangeNumber}
-                    . '-' . $WorkOrder->{WorkOrderNumber},
-                Link => '$Env{"Baselink"}Action=AgentITSMWorkOrderZoom&WorkOrderID=' . $WorkOrderID,
+                Content => $Change->{ChangeNumber},
+                Link    => '$Env{"Baselink"}Action=AgentITSMChangeZoom&ChangeID=' . $ChangeID,
             },
             {
                 Type      => 'Text',
-                Content   => $WorkOrder->{WorkOrderTitle},
-                MaxLength => 70,
-            },
-            {
-                Type      => 'Text',
-                Content   => $WorkOrder->{ChangeData}->{ChangeTitle},
+                Content   => $Change->{ChangeTitle},
                 MaxLength => 70,
             },
             {
                 Type    => 'Text',
-                Content => $WorkOrder->{WorkOrderState},
+                Content => $Change->{ChangeState},
             },
-
-            #            {
-            #                Type    => 'TimeLong',
-            #                Content => $WorkOrder->{ChangeTime},
-            #            },
+            {
+                Type    => 'TimeLong',
+                Content => $Change->{ChangeTime},
+            },
         );
 
         push @ItemList, \@ItemColumns;
@@ -247,11 +251,7 @@ sub TableCreateComplex {
                 Width   => 20,
             },
             {
-                Content => 'WorkOrder#',
-                Width   => 200,
-            },
-            {
-                Content => 'WorkOrder Title',
+                Content => 'Change#',
                 Width   => 200,
             },
             {
@@ -259,14 +259,13 @@ sub TableCreateComplex {
                 Width   => 200,
             },
             {
-                Content => 'WorkOrderState',
-                Width   => 200,
+                Content => 'ChangeState',
+                Width   => 100,
             },
-
-            #            {
-            #                Content => 'Changed',
-            #                Width   => 150,
-            #            },
+            {
+                Content => 'Changed',
+                Width   => 150,
+            },
         ],
         ItemList => \@ItemList,
     );
@@ -282,26 +281,26 @@ Return
 
     %LinkOutputData = (
         Normal::Source => {
-            ITSMWorkOrder => [
+            ITSMChange => [
                 {
                     Type    => 'Link',
-                    Content => 'WO:2009100112354321-1',
-                    Title   => 'Change# 2009101610005402 - WorkOrder# 1: The WorkOrder Title',
+                    Content => 'CH:2009100112354321-1',
+                    Title   => 'Change# 2009101610005402: The Change Title',
                     Css     => 'style="text-decoration: line-through"',
                 },
                 {
                     Type    => 'Link',
-                    Content => 'WO:2009100112354321-6',
-                    Title   => 'Change# 2009101610007634 - WorkOrder# 6: The WorkOrder Title',
+                    Content => 'CH:2009100112354321-6',
+                    Title   => 'Change# 2009101610007634: The Change Title',
                 },
             ],
         },
         ParentChild::Target => {
-            ITSMWorkOrder => [
+            ITSMChange => [
                 {
                     Type    => 'Link',
-                    Content => 'WO:2009100112354321-3',
-                    Title   => 'Change# 20091016100044331 - WorkOrder# 3: The WorkOrder Title',
+                    Content => 'CH:2009100112354321-3',
+                    Title   => 'Change# 20091016100044331: The Change Title',
                 },
             ],
         },
@@ -333,30 +332,27 @@ sub TableCreateSimple {
             # extract direction list
             my $DirectionList = $Param{ObjectLinkListWithData}->{$LinkType}->{$Direction};
 
-            # create the item list, sort by ChangeID Down, then by WorkOrderNumber Up
+            # create the item list, sort by ChangeID Down
             my @ItemList;
-            for my $WorkOrderID (
+            for my $ChangeID (
                 sort {
                     $DirectionList->{$b}->{ChangeID} <=> $DirectionList->{$a}->{ChangeID}
-                        || $a <=> $b
                 } keys %{$DirectionList}
                 )
             {
 
-                # extract workorder data
-                my $WorkOrder = $DirectionList->{$WorkOrderID};
+                # extract change data
+                my $Change = $DirectionList->{$ChangeID};
 
                 # define item data
                 my %Item = (
                     Type    => 'Link',
-                    Content => 'WO:' . $WorkOrder->{ChangeData}->{ChangeNumber} . '-'
-                        . $WorkOrder->{WorkOrderNumber},
-                    Title => 'Change# ' . $WorkOrder->{ChangeData}->{ChangeNumber} . '-'
-                        . 'WorkOrder# '
-                        . $WorkOrder->{WorkOrderNumber} . ': '
-                        . $WorkOrder->{WorkOrderTitle},
-                    Link => '$Env{"Baselink"}Action=AgentITSMWorkOrderZoom&WorkOrderID='
-                        . $WorkOrderID,
+                    Content => 'CH:' . $Change->{ChangeNumber},
+                    Title   => 'Change# '
+                        . $Change->{ChangeNumber}
+                        . ': ' . $Change->{ChangeTitle},
+                    Link => '$Env{"Baselink"}Action=AgentITSMChangeZoom&ChangeID='
+                        . $ChangeID,
                     MaxLength => 20,
                 );
 
@@ -364,7 +360,7 @@ sub TableCreateSimple {
             }
 
             # add item list to link output data
-            $LinkOutputData{ $LinkType . '::' . $Direction }->{ITSMWorkOrder} = \@ItemList;
+            $LinkOutputData{ $LinkType . '::' . $Direction }->{ITSMChange} = \@ItemList;
         }
     }
 
@@ -393,15 +389,15 @@ sub ContentStringCreate {
     # extract content
     my $Content = $Param{ContentData};
 
-    return if $Content->{Type} ne 'WorkOrderStateSignal';
+    return if $Content->{Type} ne 'ChangeStateSignal';
 
     # build html for signal LED
     my $String = $Self->{LayoutObject}->Output(
-        Template => '<img border="0" src="$Env{"Images"}$QData{"WorkOrderStateSignal"}.png" '
-            . 'title="$Text{"$QData{"WorkOrderState"}"}" alt="$Text{"$QData{"WorkOrderState"}"}">',
+        Template => '<img border="0" src="$Env{"Images"}$QData{"ChangeStateSignal"}.png" '
+            . 'title="$Text{"$QData{"ChangeState"}"}" alt="$Text{"$QData{"ChangeState"}"}">',
         Data => {
-            WorkOrderStateSignal => $Content->{Content},
-            WorkOrderState => $Content->{WorkOrderState} || '',
+            ChangeStateSignal => $Content->{Content},
+            ChangeState => $Content->{ChangeState} || '',
         },
     );
 
@@ -416,8 +412,8 @@ Return
 
     @SelectableObjectList = (
         {
-            Key   => 'ITSMWorkOrder',
-            Value => 'WorkOrder',
+            Key   => 'ITSMChange',
+            Value => 'Change',
         },
     );
 
@@ -455,16 +451,22 @@ Return
 
     @SearchOptionList = (
         {
-            Key       => 'WorkOrderNumber',
-            Name      => 'WorkOrder#',
+            Key       => 'ChangeNumber',
+            Name      => 'Change#',
             InputStrg => $FormString,
             FormData  => '12',
+        },
+        {
+            Key       => 'ChangeTitle',
+            Name      => 'Change Title',
+            InputStrg => $FormString,
+            FormData  => 'MailServer needs update',
         },
         {
             Key       => 'WorkOrderTitle',
             Name      => 'WorkOrder Title',
             InputStrg => $FormString,
-            FormData  => 'MailServer needs update',
+            FormData  => 'Shutdown old mail server',
         },
     );
 
@@ -485,11 +487,6 @@ sub SearchOptionList {
         {
             Key  => 'ChangeTitle',
             Name => 'Change Title',
-            Type => 'Text',
-        },
-        {
-            Key  => 'WorkOrderNumber',
-            Name => 'WorkOrder#',
             Type => 'Text',
         },
         {
@@ -547,6 +544,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2009-10-27 21:10:31 $
+$Revision: 1.2 $ $Date: 2009-10-27 22:38:45 $
 
 =cut
