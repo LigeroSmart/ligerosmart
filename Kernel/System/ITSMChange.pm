@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.112 2009-10-27 09:48:34 reb Exp $
+# $Id: ITSMChange.pm,v 1.113 2009-10-27 10:57:04 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.112 $) [1];
+$VERSION = qw($Revision: 1.113 $) [1];
 
 =head1 NAME
 
@@ -867,7 +867,12 @@ sub ChangeList {
 
 =item ChangeSearch()
 
-return list of change ids as an array reference
+Return a list of the found change ids as an array reference.
+The search criteria are logically AND connected.
+When a list is passed as criterium, the individual members are OR connected.
+When an undef or a reference to an empty array is passed, then the search criterium
+is ignored.
+okup
 
     my $ChangeIDsRef = $ChangeObject->ChangeSearch(
         ChangeNumber      => '2009100112345778',                 # (optional)
@@ -1039,6 +1044,41 @@ sub ChangeSearch {
         $Param{UsingWildcards} = 1;
     }
 
+    # if ChangeState is given "translate" it
+    if ( $Param{ChangeState} ) {
+
+        # 'ChangeState' is an array option
+        if ( ref $Param{ChangeState} ne 'ARRAY' ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "ChangeState must be an array reference!",
+            );
+            return;
+        }
+
+        # ignore empty lists
+        if ( @{ $Param{ChangeState} } ) {
+
+            # prepare for pushing
+            $Param{ChangeStateIDs} ||= [];
+
+            # translate and thus check the ChangeStates
+            for my $ChangeState ( @{ $Param{ChangeState} } ) {
+                my $ChangeStateID = $Self->ChangeStateLookup(
+                    State => $Param{ChangeState},
+                );
+                if ( !$ChangeStateID ) {
+                    $Self->{LogObject}->Log(
+                        Priority => 'error',
+                        Message  => "The change state $ChangeState is not known!",
+                    );
+                    return;
+                }
+                push @{ $Param{ChangeStateIDs} }, $ChangeStateID;
+            }
+        }
+    }
+
     my @SQLWhere;           # assemble the conditions used in the WHERE clause
     my @SQLHaving;          # assemble the conditions used in the HAVING clause
     my @InnerJoinTables;    # keep track of the tables that need to be inner joined
@@ -1130,6 +1170,7 @@ sub ChangeSearch {
 
         next ARRAYPARAM if !$Param{$ArrayParam};
 
+        # verify that an arrayref was passed
         if ( ref $Param{$ArrayParam} ne 'ARRAY' ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -1138,6 +1179,7 @@ sub ChangeSearch {
             return;
         }
 
+        # ignore empty lists
         next ARRAYPARAM if !@{ $Param{$ArrayParam} };
 
         # quote
@@ -2071,6 +2113,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.112 $ $Date: 2009-10-27 09:48:34 $
+$Revision: 1.113 $ $Date: 2009-10-27 10:57:04 $
 
 =cut

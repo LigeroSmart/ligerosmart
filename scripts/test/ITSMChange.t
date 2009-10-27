@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.97 2009-10-27 10:15:07 reb Exp $
+# $Id: ITSMChange.t,v 1.98 2009-10-27 10:57:04 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -313,7 +313,7 @@ my @ChangeTests = (
                 ChangeBy        => $UserIDs[0],
             },
         },
-        SearchTest => [ 4, 25, 26, 33 ],
+        SearchTest => [ 4, 25, 26, 33, 36 ],
     },
 
     # ChangeUpdate with named ChangeState
@@ -346,7 +346,7 @@ my @ChangeTests = (
                 ChangeBy        => $UserIDs[0],
             },
         },
-        SearchTest => [ 4, 25, 26, 33, 34 ],
+        SearchTest => [ 4, 25, 26, 33, 34, 36, 37 ],
     },
 
     # change contains all data - (all attributes)
@@ -932,7 +932,7 @@ my @ChangeTests = (
                 ],
             },
         },
-        SearchTest => [ 6, 8, 9, 10, 22, 28, 29 ],
+        SearchTest => [ 6, 8, 9, 10, 22, 28, 29, 33, 34, 35 ],
     },
 
     # Test for ChangeCABUpdate and ChangeCABGet
@@ -1118,7 +1118,7 @@ my @ChangeTests = (
                 ChangeStateID => $ReverseClassList{rejected},
             },
         },
-        SearchTest => [29],
+        SearchTest => [ 29, 35 ],
     },
 
     #----------------------------------------#
@@ -1880,7 +1880,7 @@ my @ChangeSearchTests = (
         },
     },
 
-    # Nr 28 - ChangeStateID (three IDs)
+    # Nr 28 - ChangeStateID (same ID three times)
     {
         Description => q{ChangeStateID (same ID three times)},
         SearchData  => {
@@ -1949,7 +1949,51 @@ my @ChangeSearchTests = (
         },
     },
 
-    # Nr 33 - ChangeStates (names not ids)
+    # Nr 33 - ChangeState (names, not IDs)
+    {
+        Description => q{ChangeState (names, not IDs)},
+        SearchData  => {
+            ChangeStates => [qw(requested)],
+        },
+        ResultData => {
+            TestExistence => 1,
+        },
+    },
+
+    # Nr 34 - ChangeState (same name three times)
+    {
+        Description => q{ChangeState (same name three times)},
+        SearchData  => {
+            ChangeStates => [qw(requested requested requested)],
+        },
+        ResultData => {
+            TestExistence => 1,
+        },
+    },
+
+    # Nr 35 - ChangeState (three different names)
+    {
+        Description => q{ChangeState (three different names)},
+        SearchData  => {
+            ChangeStates => [qw(requested approved rejected)],
+        },
+        ResultData => {
+            TestExistence => 1,
+        },
+    },
+
+    # Nr 35 - ChangeState (non-existent state)
+    {
+        Description => q{ChangeState (non-existent state)},
+        SearchData  => {
+            ChangeStates => [qw(requested approved rejected non-existent)],
+        },
+        ResultData => {
+            TestExistence => 1,
+        },
+    },
+
+    # Nr 36 - ChangeStates (names not ids)
     {
         Description => q{ChangeStates (names not ids) - failed + requested},
         SearchData  => {
@@ -1961,7 +2005,7 @@ my @ChangeSearchTests = (
         },
     },
 
-    # Nr 34 - ChangeStates (names not ids)
+    # Nr 37 - ChangeStates (names not ids)
     {
         Description => q{ChangeStates (names not ids) - failed},
         SearchData  => {
@@ -1972,7 +2016,6 @@ my @ChangeSearchTests = (
             TestCount => 1,
         },
     },
-
 );
 
 # get a sample change we created above for some 'special' test cases
