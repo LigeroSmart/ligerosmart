@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.64 2009-10-26 16:50:20 bes Exp $
+# $Id: WorkOrder.pm,v 1.65 2009-10-27 12:06:46 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::EventHandler;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.64 $) [1];
+$VERSION = qw($Revision: 1.65 $) [1];
 
 =head1 NAME
 
@@ -189,6 +189,10 @@ sub WorkOrderAdd {
         $Param{WorkOrderStateID} = $Self->WorkOrderStateLookup(
             WorkOrderState => $Param{WorkOrderState},
         );
+
+        # delete the workorder state otherwise the update fails
+        # as both WorkOrderState and WorkOrderStateID exists then
+        delete $Param{WorkOrderState};
     }
 
     # check that not both WorkOrderType and WorkOrderTypeID are given
@@ -205,6 +209,10 @@ sub WorkOrderAdd {
         $Param{WorkOrderTypeID} = $Self->WorkOrderTypeLookup(
             WorkOrderType => $Param{WorkOrderType},
         );
+
+        # delete the workorder type otherwise the update fails
+        # as both WorkOrderType and WorkOrderTypeID exists then
+        delete $Param{WorkOrderType};
     }
 
     # check change parameters
@@ -1793,6 +1801,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.64 $ $Date: 2009-10-26 16:50:20 $
+$Revision: 1.65 $ $Date: 2009-10-27 12:06:46 $
 
 =cut
