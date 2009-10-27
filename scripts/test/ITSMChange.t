@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.96 2009-10-21 18:09:00 bes Exp $
+# $Id: ITSMChange.t,v 1.97 2009-10-27 10:15:07 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -145,6 +145,7 @@ my @ObjectMethods = qw(
     ChangeLookup
     ChangeSearch
     ChangeUpdate
+    ChangeStateLookup
 );
 
 # check if subs are available
@@ -183,6 +184,29 @@ for my $DefaultChangeState (@DefaultChangeStates) {
     $Self->True(
         $ReverseClassList{$DefaultChangeState},
         "Test " . $TestCount++ . " - check state '$DefaultChangeState'"
+    );
+}
+
+# test lookup method
+for my $State (@DefaultChangeStates) {
+    my $StateID = $Self->{ChangeObject}->ChangeStateLookup(
+        State => $State,
+    );
+
+    $Self->Is(
+        $StateID,
+        $ReverseClassList{$State},
+        "Lookup $State",
+    );
+
+    my $StateName = $Self->{ChangeObject}->ChangeStateLookup(
+        StateID => $StateID,
+    );
+
+    $Self->Is(
+        $StateName,
+        $State,
+        "Lookup $StateID",
     );
 }
 
@@ -261,6 +285,68 @@ my @ChangeTests = (
             },
         },
         SearchTest => [ 4, 25, 26 ],
+    },
+
+    # Change with named ChangeState
+    {
+        Description => 'Test for Statenames - ' . $UniqueSignature,
+        SourceData  => {
+            ChangeAdd => {
+                UserID      => $UserIDs[0],
+                Description => 'ChangeStates - ' . $UniqueSignature,
+                ChangeState => 'requested',
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                ChangeTitle     => q{},
+                Description     => 'ChangeStates - ' . $UniqueSignature,
+                Justification   => q{},
+                ChangeManagerID => undef,
+                ChangeBuilderID => $UserIDs[0],
+                ChangeStateID   => $ReverseClassList{requested},
+                ChangeState     => 'requested',
+                WorkOrderIDs    => [],
+                CABAgents       => [],
+                CABCustomers    => [],
+                CreateBy        => $UserIDs[0],
+                ChangeBy        => $UserIDs[0],
+            },
+        },
+        SearchTest => [ 4, 25, 26, 33 ],
+    },
+
+    # ChangeUpdate with named ChangeState
+    {
+        Description => 'Test for Statenames in ChangeUpdate - ' . $UniqueSignature,
+        SourceData  => {
+            ChangeAdd => {
+                UserID      => $UserIDs[0],
+                Description => 'ChangeStates - ' . $UniqueSignature,
+                ChangeState => 'requested',
+            },
+            ChangeUpdate => {
+                UserID      => $UserIDs[0],
+                ChangeState => 'failed',
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                ChangeTitle     => q{},
+                Description     => 'ChangeStates - ' . $UniqueSignature,
+                Justification   => q{},
+                ChangeManagerID => undef,
+                ChangeBuilderID => $UserIDs[0],
+                ChangeStateID   => $ReverseClassList{failed},
+                ChangeState     => 'failed',
+                WorkOrderIDs    => [],
+                CABAgents       => [],
+                CABCustomers    => [],
+                CreateBy        => $UserIDs[0],
+                ChangeBy        => $UserIDs[0],
+            },
+        },
+        SearchTest => [ 4, 25, 26, 33, 34 ],
     },
 
     # change contains all data - (all attributes)
@@ -1860,6 +1946,30 @@ my @ChangeSearchTests = (
         ResultData => {
             TestCount => 1,
             Count     => 1,
+        },
+    },
+
+    # Nr 33 - ChangeStates (names not ids)
+    {
+        Description => q{ChangeStates (names not ids) - failed + requested},
+        SearchData  => {
+            Description  => 'ChangeStates - ' . $UniqueSignature,
+            ChangeStates => [qw(requested failed)],
+        },
+        ResultData => {
+            TestCount => 1,
+        },
+    },
+
+    # Nr 34 - ChangeStates (names not ids)
+    {
+        Description => q{ChangeStates (names not ids) - failed},
+        SearchData  => {
+            Description  => 'ChangeStates - ' . $UniqueSignature,
+            ChangeStates => ['failed'],
+        },
+        ResultData => {
+            TestCount => 1,
         },
     },
 
