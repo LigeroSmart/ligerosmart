@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LinkObjectITSMWorkOrder.pm - layout backend module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LinkObjectITSMWorkOrder.pm,v 1.9 2009-10-21 23:25:52 ub Exp $
+# $Id: LinkObjectITSMWorkOrder.pm,v 1.10 2009-10-27 12:13:43 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::Output::HTML::Layout;
 use Kernel::System::GeneralCatalog;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 =head1 NAME
 
@@ -209,7 +209,7 @@ sub TableCreateComplex {
         }
     }
 
-    # create the item list, sort by ChangeID Down, then by WorkOrderNumber Up
+    # create the item list, sort by ChangeID Down, then by WorkOrderID Up
     my @ItemList;
     for my $WorkOrderID (
         sort {
@@ -236,28 +236,24 @@ sub TableCreateComplex {
                 Content          => $WorkOrderStateName,
             },
             {
-                Type    => 'Text',
-                Key     => $WorkOrderID,
-                Content => $WorkOrder->{WorkOrderNumber},
-            },
-            {
-                Type    => 'Text',
-                Content => $WorkOrderStateName,
-            },
-            {
                 Type    => 'Link',
-                Content => $WorkOrder->{WorkOrderTitle},
+                Content => $WorkOrder->{ChangeData}->{ChangeNumber}
+                    . '-' . $WorkOrder->{WorkOrderNumber},
                 Link => '$Env{"Baselink"}Action=AgentITSMWorkOrderZoom&WorkOrderID=' . $WorkOrderID,
-                MaxLength => 70,
             },
             {
-                Type    => 'Text',
-                Content => $WorkOrder->{ChangeData}->{ChangeNumber},
+                Type      => 'Text',
+                Content   => $WorkOrder->{WorkOrderTitle},
+                MaxLength => 70,
             },
             {
                 Type      => 'Text',
                 Content   => $WorkOrder->{ChangeData}->{ChangeTitle},
                 MaxLength => 70,
+            },
+            {
+                Type    => 'Text',
+                Content => $WorkOrderStateName,
             },
 
             #            {
@@ -282,10 +278,6 @@ sub TableCreateComplex {
             },
             {
                 Content => 'WorkOrder#',
-                Width   => 100,
-            },
-            {
-                Content => 'WorkOrderState',
                 Width   => 200,
             },
             {
@@ -293,10 +285,11 @@ sub TableCreateComplex {
                 Width   => 200,
             },
             {
-                Content => 'Change#',
+                Content => 'Change Title',
+                Width   => 200,
             },
             {
-                Content => 'Change Title',
+                Content => 'WorkOrderState',
                 Width   => 200,
             },
 
@@ -597,6 +590,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.9 $ $Date: 2009-10-21 23:25:52 $
+$Revision: 1.10 $ $Date: 2009-10-27 12:13:43 $
 
 =cut
