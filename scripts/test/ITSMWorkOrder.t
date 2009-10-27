@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.72 2009-10-27 12:25:27 reb Exp $
+# $Id: ITSMWorkOrder.t,v 1.73 2009-10-27 12:48:23 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -3256,6 +3256,46 @@ for my $WOCTGTest (@WOCTGTests) {
     $TestCount++;
     $WOCTGTestCount++;
 }
+
+# ------------------------------------------------------------ #
+# test for PossibleStatesListGet
+# ------------------------------------------------------------ #
+
+# create change for this test
+my $ChangeIDForPossibleStatesTest = $Self->{ChangeObject}->ChangeAdd(
+    UserID => 1,
+);
+
+# create workorder for this test
+my $WorkOrderIDForPossibleStatesTest = $Self->{WorkOrderObject}->WorkOrderAdd(
+    ChangeID       => $ChangeIDForPossibleStatesTest,
+    UserID         => 1,
+    WorkOrderState => 'accepted',
+);
+
+# define what state ids should be possible
+# at the moment PossibleStatesListGet should return a list of all states
+# so all state ids should be possible
+# this has to be adapted when PossibleStatesListGet changes its behaviour
+my @PossibleStateIDsReference = @SortedStateIDs;
+
+# get possible states
+my $PossibleStates = $Self->{WorkOrderObject}->PossibleStatesListGet(
+    WorkOrderID => $WorkOrderIDForPossibleStatesTest,
+    UserID      => 1,
+) || {};
+
+# do the checks
+for my $PossibleStateID (@PossibleStateIDsReference) {
+    $Self->True(
+        $PossibleStates->{$PossibleStateID},
+        "Check for PossibleState $PossibleStateID",
+    );
+}
+
+# these objects should be deleted
+push @{ $IDsToDelete{Change} },    $ChangeIDForPossibleStatesTest;
+push @{ $IDsToDelete{WorkOrder} }, $WorkOrderIDForPossibleStatesTest;
 
 # ------------------------------------------------------------ #
 # clean the system
