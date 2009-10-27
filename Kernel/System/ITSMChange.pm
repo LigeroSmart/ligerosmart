@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.111 2009-10-26 16:06:46 reb Exp $
+# $Id: ITSMChange.pm,v 1.112 2009-10-27 09:48:34 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.111 $) [1];
+$VERSION = qw($Revision: 1.112 $) [1];
 
 =head1 NAME
 
@@ -878,6 +878,7 @@ return list of change ids as an array reference
 
         # array parameters are used with logical OR operator
         ChangeStateIDs    => [ 11, 12, 13 ],                     # (optional)
+        ChangeStates      => [ 'requested','failed' ],           # (optional)
         ChangeManagerIDs  => [ 1, 2, 3 ],                        # (optional)
         ChangeBuilderIDs  => [ 5, 7, 4 ],                        # (optional)
         CreateBy          => [ 5, 2, 3 ],                        # (optional)
@@ -1083,6 +1084,34 @@ sub ChangeSearch {
         else {
             push @SQLWhere,
                 "LOWER($StringParams{$StringParam}) = LOWER('$Param{$StringParam}')";
+        }
+    }
+
+    # 'translate' state names to ids
+    if ( $Param{ChangeStates} ) {
+
+        if ( ref $Param{ChangeStates} ne 'ARRAY' ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => 'ChangeStates must be an array reference!',
+            );
+            return;
+        }
+
+        if ( $Param{ChangeStateIDs} && ref $Param{ChangeStateIDs} ne 'ARRAY' ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => 'ChangeStateIDs must be an array reference!',
+            );
+            return;
+        }
+
+        for my $StateName ( @{ $Param{ChangeStates} } ) {
+            my $StateID = $Self->ChangeStateLookup(
+                State => $StateName,
+            );
+
+            push @{ $Param{ChangeStateIDs} }, $StateID if $StateID;
         }
     }
 
@@ -2042,6 +2071,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.111 $ $Date: 2009-10-26 16:06:46 $
+$Revision: 1.112 $ $Date: 2009-10-27 09:48:34 $
 
 =cut
