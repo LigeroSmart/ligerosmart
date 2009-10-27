@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAgent.pm - the OTRS::ITSM::ChangeManagement work order agent edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAgent.pm,v 1.16 2009-10-26 13:18:57 reb Exp $
+# $Id: AgentITSMWorkOrderAgent.pm,v 1.17 2009-10-27 20:17:54 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -86,7 +86,9 @@ sub Run {
     }
 
     # the autocompleter seems to add an extra space, the button version does not
-    $GetParam{User} =~ s{ \s+ \z }{}xms;
+    if ( $GetParam{User} ) {
+        $GetParam{User} =~ s{ \s+ \z }{}xms;
+    }
 
     # $DoNotSave implies that the user should not be saved as workorder agent
     my $DoNotSave = $GetParam{ExpandUserName1}
