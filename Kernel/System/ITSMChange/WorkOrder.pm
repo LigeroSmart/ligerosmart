@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.71 2009-10-27 15:41:47 bes Exp $
+# $Id: WorkOrder.pm,v 1.72 2009-10-27 16:15:05 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::EventHandler;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.71 $) [1];
+$VERSION = qw($Revision: 1.72 $) [1];
 
 =head1 NAME
 
@@ -1409,11 +1409,8 @@ the appropriate id is returned.
 sub WorkOrderStateLookup {
     my ( $Self, %Param ) = @_;
 
-    # get the key
-    my ($Key) = grep { $Param{$_} } qw(WorkOrderStateID WorkOrderState);
-
-    # check for needed stuff
-    if ( !$Key ) {
+    # either WorkOrderStateID or WorkOrderState must be passed
+    if ( !$Param{WorkOrderStateID} && !$Param{WorkOrderState} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message  => 'Need WorkOrderStateID or WorkOrderState!',
@@ -1429,28 +1426,34 @@ sub WorkOrderStateLookup {
         return;
     }
 
-    # get change state from general catalog
-    my $WorkOrderStates = $Self->{GeneralCatalogObject}->ItemList(
-        Class => 'ITSM::ChangeManagement::WorkOrder::State',
-    );
+    # get workorder type from general catalog
+    # mapping of the id to the name
+    my %WorkOrderState = %{
+        $Self->{GeneralCatalogObject}->ItemList(
+            Class => 'ITSM::ChangeManagement::WorkOrder::State',
+            )
+        };
 
-    # check the change states hash
-    if ( !$WorkOrderStates || ref $WorkOrderStates ne 'HASH' ) {
+    # check the workorder state hash
+    if ( !%WorkOrderState ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'Could not retrieve change states from the general catalog.',
+            Message  => 'Could not retrieve workorder states from the general catalog.',
         );
+
         return;
     }
 
-    my %List = %{$WorkOrderStates};
-
-    # reverse key - value pairs to have the name as keys
-    if ( $Key eq 'WorkOrderState' ) {
-        %List = reverse %List;
+    if ( $Param{WorkOrderStateID} ) {
+        return $WorkOrderState{ $Param{WorkOrderStateID} };
     }
+    else {
 
-    return $List{ $Param{$Key} };
+        # reverse key - value pairs to have the name as keys
+        my %ReversedWorkOrderState = reverse %WorkOrderState;
+
+        return $ReversedWorkOrderState{ $Param{WorkOrderState} };
+    }
 }
 
 =item WorkOrderPossibleStatesGet()
@@ -1529,11 +1532,8 @@ the appropriate id is returned.
 sub WorkOrderTypeLookup {
     my ( $Self, %Param ) = @_;
 
-    # get the key
-    my ($Key) = grep { $Param{$_} } qw(WorkOrderTypeID WorkOrderType);
-
-    # check for needed stuff
-    if ( !$Key ) {
+    # either WorkOrderTypeID or WorkOrderType must be passed
+    if ( !$Param{WorkOrderTypeID} && !$Param{WorkOrderType} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message  => 'Need WorkOrderTypeID or WorkOrderType!',
@@ -1549,28 +1549,34 @@ sub WorkOrderTypeLookup {
         return;
     }
 
-    # get change state from general catalog
-    my $WorkOrderTypes = $Self->{GeneralCatalogObject}->ItemList(
-        Class => 'ITSM::ChangeManagement::WorkOrder::Type',
-    );
+    # get workorder type from general catalog
+    # mapping of the id to the name
+    my %WorkOrderType = %{
+        $Self->{GeneralCatalogObject}->ItemList(
+            Class => 'ITSM::ChangeManagement::WorkOrder::Type',
+            )
+        };
 
-    # check the change states hash
-    if ( !$WorkOrderTypes || ref $WorkOrderTypes ne 'HASH' ) {
+    # check the workorder types hash
+    if ( !%WorkOrderType ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'Could not retrieve change states from the general catalog.',
+            Message  => 'Could not retrieve workorder types from the general catalog.',
         );
+
         return;
     }
 
-    my %List = %{$WorkOrderTypes};
-
-    # reverse key - value pairs to have the name as keys
-    if ( $Key eq 'WorkOrderType' ) {
-        %List = reverse %List;
+    if ( $Param{WorkOrderTypeID} ) {
+        return $WorkOrderType{ $Param{WorkOrderTypeID} };
     }
+    else {
 
-    return $List{ $Param{$Key} };
+        # reverse key - value pairs to have the name as keys
+        my %ReversedWorkOrderType = reverse %WorkOrderType;
+
+        return $ReversedWorkOrderType{ $Param{WorkOrderType} };
+    }
 }
 
 =item WorkOrderTypeList()
@@ -1967,6 +1973,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.71 $ $Date: 2009-10-27 15:41:47 $
+$Revision: 1.72 $ $Date: 2009-10-27 16:15:05 $
 
 =cut
