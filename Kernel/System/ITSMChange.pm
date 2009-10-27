@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.118 2009-10-27 13:55:37 bes Exp $
+# $Id: ITSMChange.pm,v 1.119 2009-10-27 15:53:37 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.118 $) [1];
+$VERSION = qw($Revision: 1.119 $) [1];
 
 =head1 NAME
 
@@ -2042,11 +2042,8 @@ the appropriate id is returned.
 sub ChangeStateLookup {
     my ( $Self, %Param ) = @_;
 
-    # get the key
-    my ($Key) = grep { $Param{$_} } qw(StateID State);
-
-    # check for needed stuff
-    if ( !$Key ) {
+    # either StateID or State must be passed
+    if ( !$Param{StateID} && !$Param{State} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message  => 'Need StateID or State!',
@@ -2063,18 +2060,23 @@ sub ChangeStateLookup {
     }
 
     # get change state from general catalog
-    my $ChangeStates = $Self->{GeneralCatalogObject}->ItemList(
-        Class => 'ITSM::ChangeManagement::Change::State',
-    ) || {};
+    # mapping of the id to the name
+    my %ChangeStates = %{
+        $Self->{GeneralCatalogObject}->ItemList(
+            Class => 'ITSM::ChangeManagement::Change::State',
+            ) || {}
+        };
 
-    my %List = %{$ChangeStates};
-
-    # reverse key - value pairs to have the name as keys
-    if ( $Key eq 'State' ) {
-        %List = reverse %List;
+    if ( $Param{StateID} ) {
+        return $ChangeStates{ $Param{StateID} };
     }
+    else {
 
-    return $List{ $Param{$Key} };
+        # reverse key - value pairs to have the name as keys
+        my %ReversedChangeStates = reverse %ChangeStates;
+
+        return $ReversedChangeStates{ $Param{State} };
+    }
 }
 
 1;
@@ -2093,6 +2095,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.118 $ $Date: 2009-10-27 13:55:37 $
+$Revision: 1.119 $ $Date: 2009-10-27 15:53:37 $
 
 =cut
