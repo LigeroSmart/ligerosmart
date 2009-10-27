@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderAdd.dtl - provides HTML form for AgentITSMWorkOrderAdd
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.dtl,v 1.12 2009-10-26 13:48:35 bes Exp $
+# $Id: AgentITSMWorkOrderAdd.dtl,v 1.13 2009-10-27 13:04:37 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -67,7 +67,7 @@
     <tr>
         <td class="mainbody">
             <br>
-            <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data">
+            <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
                 <input type="hidden" name="Action"    value="$Env{"Action"}">
                 <input type="hidden" name="Subaction" value="Save">
                 <input type="hidden" name="ChangeID"  value="$QData{"ChangeID"}">
