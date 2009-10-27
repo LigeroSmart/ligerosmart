@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.73 2009-10-27 12:48:23 reb Exp $
+# $Id: ITSMWorkOrder.t,v 1.74 2009-10-27 13:55:37 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -582,7 +582,7 @@ push @WorkOrderTests, (
                 Report => 'WorkOrderAdd with WorkOrderStateID - Report - ' . $UniqueSignature,
             },
         },
-        SearchTest => [ 2, 8, 27, 28 ],
+        SearchTest => [ 2, 8, 27, 28, 29 ],
     },
     {
         Description => 'WorkOrderAdd() with WorkOrderTypeID.',
@@ -1854,8 +1854,9 @@ my @WorkOrderSearchTests = (
         Description => 'Search for WorkOrder state (non-existent state)',
         SearchData  => {
             ChangeIDs       => [$WorkOrderAddTestID],
-            WorkOrderStates => [ 'accepted', 'non-existent' ],
+            WorkOrderStates => ['non-existent'],
             WorkOrderTitle  => '%' . $UniqueSignature,
+            Huhu            => 1,
         },
         ResultData => {
             TestCount     => 1,
@@ -1883,6 +1884,21 @@ my @WorkOrderSearchTests = (
         SearchData  => {
             ChangeIDs       => [$WorkOrderAddTestID],
             WorkOrderStates => [ 'accepted', 'ready', 'accepted', 'ready' ],
+            WorkOrderTitle  => '%' . $UniqueSignature,
+        },
+        ResultData => {
+            TestCount     => 1,
+            TestExistence => 1,
+        },
+    },
+
+    # Nr 29 - Search for WorkOrder states "accepted", "ready" and "non-existent"
+    # TODO: the behavior with non-existent states is not specified yet
+    {
+        Description => 'Search for WorkOrder states "accepted", "ready" and "non-existent"',
+        SearchData  => {
+            ChangeIDs       => [$WorkOrderAddTestID],
+            WorkOrderStates => [ 'accepted', 'ready', 'non-existent' ],
             WorkOrderTitle  => '%' . $UniqueSignature,
         },
         ResultData => {

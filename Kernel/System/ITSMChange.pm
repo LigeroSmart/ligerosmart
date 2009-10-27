@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.117 2009-10-27 13:23:59 bes Exp $
+# $Id: ITSMChange.pm,v 1.118 2009-10-27 13:55:37 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.117 $) [1];
+$VERSION = qw($Revision: 1.118 $) [1];
 
 =head1 NAME
 
@@ -1172,8 +1172,6 @@ sub ChangeSearch {
         # create string
         my $InString = join q{, }, @{ $Param{$ArrayParam} };
 
-        next ARRAYPARAM if !$InString;
-
         push @SQLWhere, "$ArrayParams{$ArrayParam} IN ($InString)";
     }
 
@@ -2095,6 +2093,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.117 $ $Date: 2009-10-27 13:23:59 $
+$Revision: 1.118 $ $Date: 2009-10-27 13:55:37 $
 
 =cut

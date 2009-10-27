@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.67 2009-10-27 13:23:59 bes Exp $
+# $Id: WorkOrder.pm,v 1.68 2009-10-27 13:55:37 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::EventHandler;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.67 $) [1];
+$VERSION = qw($Revision: 1.68 $) [1];
 
 =head1 NAME
 
@@ -1008,8 +1008,6 @@ sub WorkOrderSearch {
         # create string
         my $InString = join q{, }, @{ $Param{$ArrayParam} };
 
-        next ARRAYPARAM if !$InString;
-
         push @SQLWhere, "$ArrayParams{$ArrayParam} IN ($InString)";
     }
 
@@ -1893,6 +1891,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.67 $ $Date: 2009-10-27 13:23:59 $
+$Revision: 1.68 $ $Date: 2009-10-27 13:55:37 $
 
 =cut
