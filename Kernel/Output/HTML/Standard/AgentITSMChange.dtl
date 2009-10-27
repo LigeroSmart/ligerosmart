@@ -2,7 +2,7 @@
 # AgentITSMChange.dtl - provides HTML form for AgentITSMChange
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChange.dtl,v 1.7 2009-10-26 15:13:27 reb Exp $
+# $Id: AgentITSMChange.dtl,v 1.8 2009-10-27 16:40:47 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -50,7 +50,7 @@
 <!-- dtl:block:ChangeRow -->
                 <tr class="contentbody">
                     <td class="$QData{"CssClass"}" style="text-align:center;">
-                        <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"ChangeSignal"}.png" title="$Text{"$QData{"ChangeState"}"}" alt="$Text{"$QData{"ChangeState"}"}">
+                        <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"ChangeStateSignal"}.png" title="$Text{"$QData{"ChangeState"}"}" alt="$Text{"$QData{"ChangeState"}"}">
                     </td>
                     <td class="$QData{"CssClass"}">
                         <a href="$Env{"Baselink"}Action=AgentITSMChangeZoom&ChangeID=$LQData{"ChangeID"}">$QData{"ChangeNumber"}</a>

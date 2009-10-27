@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeZoom.pm - the OTRS::ITSM::ChangeManagement change zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.pm,v 1.13 2009-10-26 15:08:22 reb Exp $
+# $Id: AgentITSMChangeZoom.pm,v 1.14 2009-10-27 16:40:47 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -174,15 +174,11 @@ sub Run {
         $Change->{ 'Change' . $Postfix } = $ChangeUser{$Postfix};
     }
 
-    # get all change state signals
-    my $ChangeStateSignal = $Self->{ConfigObject}->Get('ITSMChange::State::Signal');
-
     # output meta block
     $Self->{LayoutObject}->Block(
         Name => 'Meta',
         Data => {
             %{$Change},
-            ChangeStateSignal => $ChangeStateSignal->{ $Change->{ChangeState} },
         },
     );
 

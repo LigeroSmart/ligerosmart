@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.120 2009-10-27 16:15:05 bes Exp $
+# $Id: ITSMChange.pm,v 1.121 2009-10-27 16:40:47 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.120 $) [1];
+$VERSION = qw($Revision: 1.121 $) [1];
 
 =head1 NAME
 
@@ -444,6 +444,15 @@ sub ChangeGet {
         $ChangeData{ChangeState} = $Self->ChangeStateLookup(
             StateID => $ChangeData{ChangeStateID},
         );
+    }
+
+    # add the change state signal
+    if ( $ChangeData{ChangeState} ) {
+
+        # get all change state signals
+        my $StateSignal = $Self->{ConfigObject}->Get('ITSMChange::State::Signal');
+
+        $ChangeData{ChangeStateSignal} = $StateSignal->{ $ChangeData{ChangeState} };
     }
 
     # get CAB data
@@ -2095,6 +2104,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.120 $ $Date: 2009-10-27 16:15:05 $
+$Revision: 1.121 $ $Date: 2009-10-27 16:40:47 $
 
 =cut

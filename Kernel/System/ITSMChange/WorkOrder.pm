@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.74 2009-10-27 16:23:27 reb Exp $
+# $Id: WorkOrder.pm,v 1.75 2009-10-27 16:40:47 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::EventHandler;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.74 $) [1];
+$VERSION = qw($Revision: 1.75 $) [1];
 
 =head1 NAME
 
@@ -601,6 +601,15 @@ sub WorkOrderGet {
         $WorkOrderData{WorkOrderState} = $Self->WorkOrderStateLookup(
             WorkOrderStateID => $WorkOrderData{WorkOrderStateID},
         );
+    }
+
+    # add the workorder state signal
+    if ( $WorkOrderData{WorkOrderState} ) {
+
+        # get all change state signals
+        my $StateSignal = $Self->{ConfigObject}->Get('ITSMWorkOder::State::Signal');
+
+        $WorkOrderData{WorkOrderStateSignal} = $StateSignal->{ $WorkOrderData{WorkOrderState} };
     }
 
     # add the name of the workorder type
@@ -1963,6 +1972,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.74 $ $Date: 2009-10-27 16:23:27 $
+$Revision: 1.75 $ $Date: 2009-10-27 16:40:47 $
 
 =cut

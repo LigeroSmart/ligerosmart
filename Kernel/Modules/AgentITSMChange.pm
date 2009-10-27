@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChange.pm - the OTRS::ITSM::ChangeManagement change overview module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChange.pm,v 1.6 2009-10-26 15:19:18 reb Exp $
+# $Id: AgentITSMChange.pm,v 1.7 2009-10-27 16:40:47 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -71,9 +71,6 @@ sub Run {
         );
     }
 
-    # get state signals from SysConfig
-    my $ChangeStateSignal = $Self->{ConfigObject}->Get('ITSMChange::State::Signal');
-
     my $CssClass = '';
     for my $ChangeID ( @{$Changes} ) {
 
@@ -121,8 +118,7 @@ sub Run {
                 %Param,
                 %SearchResult,
                 %{$Change},
-                CssClass     => $CssClass,
-                ChangeSignal => $ChangeStateSignal->{ $Change->{ChangeState} },
+                CssClass => $CssClass,
             },
         );
     }

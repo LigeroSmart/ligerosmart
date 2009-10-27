@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderZoom.pm - the OTRS::ITSM::ChangeManagement work order zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderZoom.pm,v 1.14 2009-10-26 16:28:34 bes Exp $
+# $Id: AgentITSMWorkOrderZoom.pm,v 1.15 2009-10-27 16:40:47 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -148,15 +148,11 @@ sub Run {
         $WorkOrder->{ 'Change' . $Postfix } = $ChangeUser{$Postfix};
     }
 
-    # get all workorder state signals
-    my $WorkOrderStateSignal = $Self->{ConfigObject}->Get('ITSMWorkOder::State::Signal');
-
     # output meta block
     $Self->{LayoutObject}->Block(
         Name => 'Meta',
         Data => {
             %{$WorkOrder},
-            WorkOrderStateSignal => $WorkOrderStateSignal->{ $WorkOrder->{WorkOrderState} },
         },
     );
 
@@ -253,15 +249,10 @@ sub Run {
         );
     }
 
-    # get all change state signals
-    my $ChangeStateSignal = $Self->{ConfigObject}->Get('ITSMChange::State::Signal');
-
     # start template output
     $Output .= $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentITSMWorkOrderZoom',
         Data         => {
-            ChangeStateSignal    => $ChangeStateSignal->{ $Change->{ChangeState} },
-            WorkOrderStateSignal => $WorkOrderStateSignal->{ $WorkOrder->{WorkOrderState} },
             %{$Change},
             %{$WorkOrder},
         },
