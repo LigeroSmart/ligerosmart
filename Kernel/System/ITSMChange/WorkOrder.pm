@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.73 2009-10-27 16:23:08 reb Exp $
+# $Id: WorkOrder.pm,v 1.74 2009-10-27 16:23:27 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::EventHandler;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.73 $) [1];
+$VERSION = qw($Revision: 1.74 $) [1];
 
 =head1 NAME
 
@@ -80,7 +80,6 @@ create an object
         DBObject     => $DBObject,
         TimeObject   => $TimeObject,
         MainObject   => $MainObject,
-        UserObject   => $UserObject,
     );
 
 =cut
@@ -1964,6 +1963,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.73 $ $Date: 2009-10-27 16:23:08 $
+$Revision: 1.74 $ $Date: 2009-10-27 16:23:27 $
 
 =cut
