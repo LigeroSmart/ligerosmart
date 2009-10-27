@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.75 2009-10-27 14:23:41 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.76 2009-10-27 15:00:15 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -125,7 +125,7 @@ my @ObjectMethods = qw(
     WorkOrderUpdate
     WorkOrderStateLookup
     WorkOrderTypeLookup
-    PossibleStatesListGet
+    WorkOrderPossibleStatesGet
 );
 
 # check if subs are available
@@ -150,12 +150,13 @@ my @DefaultWorkOrderStates = (
 );
 
 # get class list with swapped keys and values
-my %ReverseStatesList = reverse %{
+my %StatesList = %{
     $Self->{GeneralCatalogObject}->ItemList(
         Class => 'ITSM::ChangeManagement::WorkOrder::State',
         ) || {}
     };
-my @SortedStateIDs = sort values %ReverseStatesList;
+my %ReverseStatesList = reverse %StatesList;
+my @SortedStateIDs    = sort keys %StatesList;
 
 # check if states are in GeneralCatalog
 for my $DefaultWorkOrderState (@DefaultWorkOrderStates) {
@@ -3274,7 +3275,7 @@ for my $WOCTGTest (@WOCTGTests) {
 }
 
 # ------------------------------------------------------------ #
-# test for PossibleStatesListGet
+# test for WorkOrderPossibleStatesGet
 # ------------------------------------------------------------ #
 
 # create change for this test
@@ -3289,24 +3290,44 @@ my $WorkOrderIDForPossibleStatesTest = $Self->{WorkOrderObject}->WorkOrderAdd(
     WorkOrderState => 'accepted',
 );
 
-# define what state ids should be possible
-# at the moment PossibleStatesListGet should return a list of all states
-# so all state ids should be possible
-# this has to be adapted when PossibleStatesListGet changes its behaviour
+# TODO: define what state ids should be possible
+# At the moment WorkOrderPossibleStatesGet() should return a list of all states.
+# So all state ids should be possible.
+# This has to be adapted when WorkOrderPossibleStatesGet() changes its behaviour.
 my @PossibleStateIDsReference = @SortedStateIDs;
 
 # get possible states
-my $PossibleStates = $Self->{WorkOrderObject}->PossibleStatesListGet(
+my $PossibleStates = $Self->{WorkOrderObject}->WorkOrderPossibleStatesGet(
     WorkOrderID => $WorkOrderIDForPossibleStatesTest,
     UserID      => 1,
 ) || {};
 
 # do the checks
 for my $PossibleStateID (@PossibleStateIDsReference) {
+    my ( $FirstHashRef, $SecondHashRef )
+        = grep { $_->{Key} == $PossibleStateID } @{$PossibleStates};
+
+    # a match is expected
     $Self->True(
-        $PossibleStates->{$PossibleStateID},
-        "Check for PossibleState $PossibleStateID",
+        $FirstHashRef,
+        "Check for possible state id $PossibleStateID",
     );
+
+    # the name should also match
+    $FirstHashRef ||= {};
+    my $PossibleStateName = $StatesList{$PossibleStateID};
+    $Self->Is(
+        $FirstHashRef->{Value},
+        $PossibleStateName,
+        "Check for possible state name $PossibleStateID",
+    );
+
+    # only one match is expected
+    $Self->False(
+        $SecondHashRef,
+        "Check that the state id $PossibleStateID is returned only once.",
+    );
+
 }
 
 # these objects should be deleted

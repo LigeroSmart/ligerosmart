@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderReport.pm - the OTRS::ITSM::ChangeManagement work order report module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderReport.pm,v 1.8 2009-10-26 16:50:20 bes Exp $
+# $Id: AgentITSMWorkOrderReport.pm,v 1.9 2009-10-27 15:00:15 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -120,14 +120,14 @@ sub Run {
     }
 
     # get work order state list
-    my $WorkOrderStateList = $Self->{WorkOrderObject}->PossibleStatesListGet(
+    my $WorkOrderPossibleStates = $Self->{WorkOrderObject}->WorkOrderPossibleStatesGet(
         WorkOrderID => $WorkOrderID,
         UserID      => $Self->{UserID},
     );
 
     # build drop-down with workorder states
     $Param{StateSelect} = $Self->{LayoutObject}->BuildSelection(
-        Data       => $WorkOrderStateList,
+        Data       => $WorkOrderPossibleStates,
         Name       => 'WorkOrderStateID',
         SelectedID => $WorkOrder->{WorkOrderStateID},
     );
