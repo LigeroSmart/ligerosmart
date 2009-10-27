@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LinkObjectITSMWorkOrder.pm - layout backend module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LinkObjectITSMWorkOrder.pm,v 1.12 2009-10-27 20:19:49 ub Exp $
+# $Id: LinkObjectITSMWorkOrder.pm,v 1.13 2009-10-27 22:38:02 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::Output::HTML::Layout;
 use Kernel::System::GeneralCatalog;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 =head1 NAME
 
@@ -90,17 +90,19 @@ Return
                 Width   => 20,
             },
             {
-                Content => 'Change#',
-            },
-            {
-                Content => 'Change Title',
-            },
-            {
                 Content => 'WorkOrder#',
-                Width   => 5,
+                Width   => 200,
             },
             {
                 Content => 'WorkOrder Title',
+                Width   => 200,
+            },
+            {
+                Content => 'Change Title',
+                Width   => 200,
+            },
+            {
+                Content => 'WorkOrderState',
                 Width   => 100,
             },
             {
@@ -113,11 +115,17 @@ Return
                 {
                     Type    => 'WorkOrderStateSignal',
                     Key     => 2,
-                    Content => 'in progress',
+                    Content => 'ready',
                 },
                 {
                     Type    => 'Text',
-                    Content => '2009100112345778',
+                    Content => '2009100112345778-3',
+                    Link    => 'Action=AgentITSMWorkOrderZoom&WorkOrderID=2',
+                },
+                {
+                    Type      => 'Text',
+                    Content   => 'WorkOrder Title',
+                    MaxLength => 70,
                 },
                 {
                     Type      => 'Text',
@@ -126,28 +134,28 @@ Return
                 },
                 {
                     Type    => 'Text',
-                    Content => '5',
-                },
-                {
-                    Type      => 'Link',
-                    Content   => 'WorkOrder Title',
-                    Link      => 'Action=AgentITSMWorkOrderZoom&WorkOrderID=123',
-                    MaxLength => 70,
+                    Content => 'ready',
                 },
                 {
                     Type    => 'TimeLong',
-                    Content => '2008-01-01 12:12:00',
+                    Content => '2009-01-01 12:12:00',
                 },
             ],
             [
                 {
                     Type    => 'WorkOrderStateSignal',
-                    Key     => 3,
-                    Content => 'ready',
+                    Key     => 4,
+                    Content => 'accepted',
                 },
                 {
                     Type    => 'Text',
-                    Content => '2009100112354321',
+                    Content => '2009100112345778-4',
+                    Link    => 'Action=AgentITSMWorkOrderZoom&WorkOrderID=4',
+                },
+                {
+                    Type      => 'Text',
+                    Content   => 'WorkOrder Title',
+                    MaxLength => 70,
                 },
                 {
                     Type      => 'Text',
@@ -156,17 +164,11 @@ Return
                 },
                 {
                     Type    => 'Text',
-                    Content => '6',
-                },
-                {
-                    Type      => 'Link',
-                    Content   => 'WorkOrder Title',
-                    Link      => 'Action=AgentITSMWorkOrderZoom&WorkOrderID=321',
-                    MaxLength => 70,
+                    Content => 'accepted',
                 },
                 {
                     Type    => 'TimeLong',
-                    Content => '2008-03-03 13:13:00',
+                    Content => '2009-02-02 13:13:00',
                 },
             ],
         ],
@@ -249,11 +251,10 @@ sub TableCreateComplex {
                 Type    => 'Text',
                 Content => $WorkOrder->{WorkOrderState},
             },
-
-            #            {
-            #                Type    => 'TimeLong',
-            #                Content => $WorkOrder->{ChangeTime},
-            #            },
+            {
+                Type    => 'TimeLong',
+                Content => $WorkOrder->{ChangeTime},
+            },
         );
 
         push @ItemList, \@ItemColumns;
@@ -284,13 +285,12 @@ sub TableCreateComplex {
             },
             {
                 Content => 'WorkOrderState',
-                Width   => 200,
+                Width   => 100,
             },
-
-            #            {
-            #                Content => 'Changed',
-            #                Width   => 150,
-            #            },
+            {
+                Content => 'Changed',
+                Width   => 150,
+            },
         ],
         ItemList => \@ItemList,
     );
@@ -479,6 +479,18 @@ Return
 
     @SearchOptionList = (
         {
+            Key       => 'ChangeNumber',
+            Name      => 'Change#',
+            InputStrg => $FormString,
+            FormData  => '2009100112354321'
+        },
+        {
+            Key       => 'ChangeTitle',
+            Name      => 'Change Title',
+            InputStrg => $FormString,
+            FormData  => 'Mail server needs update',
+        },
+        {
             Key       => 'WorkOrderNumber',
             Name      => 'WorkOrder#',
             InputStrg => $FormString,
@@ -488,7 +500,7 @@ Return
             Key       => 'WorkOrderTitle',
             Name      => 'WorkOrder Title',
             InputStrg => $FormString,
-            FormData  => 'MailServer needs update',
+            FormData  => 'Shutdown old mail server',
         },
     );
 
@@ -571,6 +583,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.12 $ $Date: 2009-10-27 20:19:49 $
+$Revision: 1.13 $ $Date: 2009-10-27 22:38:02 $
 
 =cut
