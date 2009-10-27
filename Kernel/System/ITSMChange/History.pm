@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/History.pm - all change and workorder history functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: History.pm,v 1.3 2009-10-27 15:30:09 reb Exp $
+# $Id: History.pm,v 1.4 2009-10-27 15:43:35 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 =head1 NAME
 
@@ -104,10 +104,10 @@ sub HistoryAdd {
 
     # get history type id from history type if history type is given.
     if ( $Param{HistoryType} ) {
-        my $Id = $Self->HistoryTypeLookup( HistoryType => $Param{HistoryType} );
+        my $ID = $Self->HistoryTypeLookup( HistoryType => $Param{HistoryType} );
 
         # no valid history type given
-        if ( !$Id ) {
+        if ( !$ID ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
                 Message  => 'Invalid history type given!',
@@ -115,7 +115,7 @@ sub HistoryAdd {
             return;
         }
 
-        $Param{HistoryTypeID} = $Id;
+        $Param{HistoryTypeID} = $ID;
     }
 
     # should change id be saved when it is a workorder entry?
@@ -289,10 +289,8 @@ id is returned.
 sub HistoryTypeLookup {
     my ( $Self, %Param ) = @_;
 
-    my ($Key) = grep { $Param{$_} } qw(HistoryTypeID HistoryType);
-
     # check for needed stuff
-    if ( !$Key ) {
+    if ( !$Param{HistoryTypeID} && !$Param{HistoryType} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message  => 'Need HistoryTypeID or HistoryType!',
@@ -307,6 +305,13 @@ sub HistoryTypeLookup {
             Message  => 'Need either HistoryTypeID OR HistoryType - not both!',
         );
         return;
+    }
+
+    # find out what the used key is
+    my $Key = 'HistoryType';
+
+    if ( $Param{HistoryTypeID} ) {
+        $Key = 'HistoryTypeID';
     }
 
     # if result is cached return that result
@@ -354,6 +359,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2009-10-27 15:30:09 $
+$Revision: 1.4 $ $Date: 2009-10-27 15:43:35 $
 
 =cut
