@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.66 2009-10-27 12:53:54 bes Exp $
+# $Id: WorkOrder.pm,v 1.67 2009-10-27 13:23:59 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::EventHandler;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.66 $) [1];
+$VERSION = qw($Revision: 1.67 $) [1];
 
 =head1 NAME
 
@@ -868,13 +868,16 @@ sub WorkOrderSearch {
                 my $WorkOrderStateID = $Self->WorkOrderStateLookup(
                     WorkOrderState => $WorkOrderState,
                 );
-                if ( !$WorkOrderStateID ) {
-                    $Self->{LogObject}->Log(
-                        Priority => 'error',
-                        Message  => "The workorder state $WorkOrderState is not known!",
-                    );
-                    return;
-                }
+                $WorkOrderStateID ||= 0;
+
+                # TODO: decide whether the WorkOrderState should be checked
+                #if ( !$WorkOrderStateID ) {
+                #    $Self->{LogObject}->Log(
+                #        Priority => 'error',
+                #        Message  => "The workorder state $WorkOrderState is not known!",
+                #    );
+                #    return;
+                #}
                 push @{ $Param{WorkOrderStateIDs} }, $WorkOrderStateID;
             }
         }
@@ -910,13 +913,16 @@ sub WorkOrderSearch {
                 my $WorkOrderTypeID = $Self->WorkOrderTypeLookup(
                     WorkOrderType => $WorkOrderType,
                 );
-                if ( !$WorkOrderTypeID ) {
-                    $Self->{LogObject}->Log(
-                        Priority => 'error',
-                        Message  => "The workorder type $WorkOrderType is not known!",
-                    );
-                    return;
-                }
+                $WorkOrderTypeID ||= 0;
+
+                # TODO: decide whether the WorkOrderType should be checked
+                #if ( !$WorkOrderTypeID ) {
+                #    $Self->{LogObject}->Log(
+                #        Priority => 'error',
+                #        Message  => "The workorder type $WorkOrderType is not known!",
+                #    );
+                #    return;
+                #}
                 push @{ $Param{WorkOrderTypeIDs} }, $WorkOrderTypeID;
             }
         }
@@ -1887,6 +1893,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.66 $ $Date: 2009-10-27 12:53:54 $
+$Revision: 1.67 $ $Date: 2009-10-27 13:23:59 $
 
 =cut

@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.116 2009-10-27 12:43:13 bes Exp $
+# $Id: ITSMChange.pm,v 1.117 2009-10-27 13:23:59 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.116 $) [1];
+$VERSION = qw($Revision: 1.117 $) [1];
 
 =head1 NAME
 
@@ -1074,13 +1074,16 @@ sub ChangeSearch {
                 my $ChangeStateID = $Self->ChangeStateLookup(
                     State => $ChangeState,
                 );
-                if ( !$ChangeStateID ) {
-                    $Self->{LogObject}->Log(
-                        Priority => 'error',
-                        Message  => "The change state $ChangeState is not known!",
-                    );
-                    return;
-                }
+                $ChangeStateID ||= 0;
+
+                # TODO: decide whether the ChangeState should be checked
+                #if ( !$ChangeStateID ) {
+                #    $Self->{LogObject}->Log(
+                #        Priority => 'error',
+                #        Message  => "The change state $ChangeState is not known!",
+                #    );
+                #    return;
+                #}
                 push @{ $Param{ChangeStateIDs} }, $ChangeStateID;
             }
         }
@@ -2092,6 +2095,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.116 $ $Date: 2009-10-27 12:43:13 $
+$Revision: 1.117 $ $Date: 2009-10-27 13:23:59 $
 
 =cut
