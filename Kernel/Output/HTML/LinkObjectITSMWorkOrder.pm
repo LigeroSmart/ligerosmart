@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LinkObjectITSMWorkOrder.pm - layout backend module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LinkObjectITSMWorkOrder.pm,v 1.11 2009-10-27 16:40:47 bes Exp $
+# $Id: LinkObjectITSMWorkOrder.pm,v 1.12 2009-10-27 20:19:49 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::Output::HTML::Layout;
 use Kernel::System::GeneralCatalog;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 =head1 NAME
 
@@ -222,18 +222,12 @@ sub TableCreateComplex {
         # extract workorder data
         my $WorkOrder = $LinkList{$WorkOrderID}{Data};
 
-        # get the workorder state name from general catalog
-        my $ItemDataRef = $Self->{GeneralCatalogObject}->ItemGet(
-            ItemID => $WorkOrder->{WorkOrderStateID},
-        );
-        my $WorkOrderStateName = $ItemDataRef->{Name};
-
         my @ItemColumns = (
             {
-                Type             => 'WorkOrderStateSignal',
-                Key              => $WorkOrderID,
-                WorkOrderStateID => $WorkOrder->{WorkOrderStateID},
-                Content          => $WorkOrderStateName,
+                Type           => 'WorkOrderStateSignal',
+                Key            => $WorkOrderID,
+                Content        => $WorkOrder->{WorkOrderStateSignal},
+                WorkOrderState => $WorkOrder->{WorkOrderState},
             },
             {
                 Type    => 'Link',
@@ -253,7 +247,7 @@ sub TableCreateComplex {
             },
             {
                 Type    => 'Text',
-                Content => $WorkOrderStateName,
+                Content => $WorkOrder->{WorkOrderState},
             },
 
             #            {
@@ -425,26 +419,13 @@ sub ContentStringCreate {
 
     return if $Content->{Type} ne 'WorkOrderStateSignal';
 
-    # TODO:
-    # get LED-color for change state name from Sysconfig
-    # and not from %ChangeStateSignals hash below!
-    # set change state signals (only examples so far, not the final colors)
-    my %WorkOrderStateSignals = (
-        'accepted'    => 'redled',
-        'in progress' => 'greenled',
-        'closed'      => 'grayled',
-        'canceled'    => 'redled',
-    );
-
-    # TODO:
-    my $WorkOrderStateSignal = $WorkOrderStateSignals{ $Content->{Content} } || 'greenled';
-
+    # build html for signal LED
     my $String = $Self->{LayoutObject}->Output(
         Template => '<img border="0" src="$Env{"Images"}$QData{"WorkOrderStateSignal"}.png" '
             . 'title="$Text{"$QData{"WorkOrderState"}"}" alt="$Text{"$QData{"WorkOrderState"}"}">',
         Data => {
-            WorkOrderStateSignal => $WorkOrderStateSignal,
-            WorkOrderState => $Content->{Content} || '',
+            WorkOrderStateSignal => $Content->{Content},
+            WorkOrderState => $Content->{WorkOrderState} || '',
         },
     );
 
@@ -590,6 +571,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.11 $ $Date: 2009-10-27 16:40:47 $
+$Revision: 1.12 $ $Date: 2009-10-27 20:19:49 $
 
 =cut
