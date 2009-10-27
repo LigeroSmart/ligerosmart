@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.25 2009-10-23 12:44:03 reb Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.26 2009-10-27 09:12:43 ub Exp $</CVS>
     <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
         <Description Lang="en">Logfile for the itsm change counter.</Description>
         <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
@@ -600,7 +600,7 @@
         <Description Lang="en">ITSM event module updates the history of change objects.</Description>
         <Description Lang="de">ITSM Event Modul aktualisiert die History von Change Objekten.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMEvent</SubGroup>
+        <SubGroup>Core::ITSMChange::Event</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::ITSMChange::Event::HistoryAdd</Item>
@@ -613,11 +613,24 @@
         <Description Lang="en">ITSM event module updates the history of workorder objects.</Description>
         <Description Lang="de">ITSM Event Modul aktualisiert die History von WorkOrder Objekten.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMEvent</SubGroup>
+        <SubGroup>Core::ITSMWorkOrder::Event</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::ITSMChange::WorkOrder::Event::HistoryAdd</Item>
                 <Item Key="Event">(WorkOrderAddPost|WorkOrderUpdatePost|WorkOrderDeletePost)</Item>
+                <Item Key="Transaction">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMWorkOrder::EventModule###02-LinkHistoryAdd" Required="0" Valid="1">
+        <Description Lang="en">ITSM event module updates the history of workorder objects when linked or unlinked with other objects.</Description>
+        <Description Lang="de">ITSM Event Modul aktualisiert die History von WorkOrder Objekten beim Erstellen oder Löschen von Verknüpfungen mit anderen Objekten.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::Event</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::System::ITSMChange::WorkOrder::Event::LinkHistoryAdd</Item>
+                <Item Key="Event">(WorkOrderLinkAddPost|WorkOrderLinkDeletePost)</Item>
                 <Item Key="Transaction">0</Item>
             </Hash>
         </Setting>
