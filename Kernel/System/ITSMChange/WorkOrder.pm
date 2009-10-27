@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.65 2009-10-27 12:06:46 reb Exp $
+# $Id: WorkOrder.pm,v 1.66 2009-10-27 12:53:54 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::EventHandler;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.65 $) [1];
+$VERSION = qw($Revision: 1.66 $) [1];
 
 =head1 NAME
 
@@ -675,8 +675,10 @@ return a list of workorder ids as an array reference
         Instruction       => 'Install the the new server',             # (optional)
         Report            => 'Installed new server without problems',  # (optional)
 
-        WorkOrderStateIDs => [ 11, 12, 13 ],                           # (optional)
-        WorkOrderTypeIDs  => [ 21, 22, 23 ],                           # (optional)
+        WorkOrderStateIDs => [ 11, 12],                                # (optional)
+        WorkOrderStates   => [ 'closed', 'canceled' ],                 # (optional)
+        WorkOrderTypeIDs  => [ 21, 22 ],                               # (optional)
+        WorkOrderTypes    => [ 'approval', 'workorder' ],              # (optional)
         WorkOrderAgentIDs => [ 1, 2, 3 ],                              # (optional)
         CreateBy          => [ 5, 2, 3 ],                              # (optional)
         ChangeBy          => [ 3, 2, 1 ],                              # (optional)
@@ -834,6 +836,90 @@ sub WorkOrderSearch {
     # set default values
     if ( !defined $Param{UsingWildcards} ) {
         $Param{UsingWildcards} = 1;
+    }
+
+    # if WorkOrderState is given "translate" it
+    if ( $Param{WorkOrderStates} ) {
+
+        # 'WorkOrderState' is an array option
+        if ( ref $Param{WorkOrderStates} ne 'ARRAY' ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "WorkOrderStates must be an array reference!",
+            );
+            return;
+        }
+
+        # ignore empty lists
+        if ( @{ $Param{WorkOrderStates} } ) {
+
+            # prepare for pushing
+            $Param{WorkOrderStateIDs} ||= [];
+            if ( ref $Param{WorkOrderStateIDs} ne 'ARRAY' ) {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => 'WorkOrderStateIDs must be an array reference!',
+                );
+                return;
+            }
+
+            # translate and thus check the WorkOrderStates
+            for my $WorkOrderState ( @{ $Param{WorkOrderStates} } ) {
+                my $WorkOrderStateID = $Self->WorkOrderStateLookup(
+                    WorkOrderState => $WorkOrderState,
+                );
+                if ( !$WorkOrderStateID ) {
+                    $Self->{LogObject}->Log(
+                        Priority => 'error',
+                        Message  => "The workorder state $WorkOrderState is not known!",
+                    );
+                    return;
+                }
+                push @{ $Param{WorkOrderStateIDs} }, $WorkOrderStateID;
+            }
+        }
+    }
+
+    # if WorkOrderType is given "translate" it
+    if ( $Param{WorkOrderTypes} ) {
+
+        # 'WorkOrderType' is an array option
+        if ( ref $Param{WorkOrderTypes} ne 'ARRAY' ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "WorkOrderTypes must be an array reference!",
+            );
+            return;
+        }
+
+        # ignore empty lists
+        if ( @{ $Param{WorkOrderTypes} } ) {
+
+            # prepare for pushing
+            $Param{WorkOrderTypeIDs} ||= [];
+            if ( ref $Param{WorkOrderTypeIDs} ne 'ARRAY' ) {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => 'WorkOrderTypeIDs must be an array reference!',
+                );
+                return;
+            }
+
+            # translate and thus check the WorkOrderTypes
+            for my $WorkOrderType ( @{ $Param{WorkOrderTypes} } ) {
+                my $WorkOrderTypeID = $Self->WorkOrderTypeLookup(
+                    WorkOrderType => $WorkOrderType,
+                );
+                if ( !$WorkOrderTypeID ) {
+                    $Self->{LogObject}->Log(
+                        Priority => 'error',
+                        Message  => "The workorder type $WorkOrderType is not known!",
+                    );
+                    return;
+                }
+                push @{ $Param{WorkOrderTypeIDs} }, $WorkOrderTypeID;
+            }
+        }
     }
 
     my @SQLWhere;           # assemble the conditions used in the WHERE clause
@@ -1801,6 +1887,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.65 $ $Date: 2009-10-27 12:06:46 $
+$Revision: 1.66 $ $Date: 2009-10-27 12:53:54 $
 
 =cut
