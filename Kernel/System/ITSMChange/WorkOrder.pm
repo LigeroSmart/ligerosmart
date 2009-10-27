@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.70 2009-10-27 15:15:11 bes Exp $
+# $Id: WorkOrder.pm,v 1.71 2009-10-27 15:41:47 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::EventHandler;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.70 $) [1];
+$VERSION = qw($Revision: 1.71 $) [1];
 
 =head1 NAME
 
@@ -1573,6 +1573,60 @@ sub WorkOrderTypeLookup {
     return $List{ $Param{$Key} };
 }
 
+=item WorkOrderTypeList()
+
+This method returns a list for possible workorder types.
+
+    my $WorkOrderTypeList = $WorkOrderObject->WorkOrderTypeList(
+        UserID      => 1,
+    );
+
+The return value is a reference to an array of hashrefs. The Element 'Key' is then
+the TypeID and die Element 'Value' is the name of the type. The array elements
+are sorted by type id.
+
+    my $WorkOrderTypeList = [
+        { Key   => 171,
+          Value => 'workorder',
+        },
+        { Key   => 172,
+          Value => 'backout',
+        },
+    ];
+
+=cut
+
+sub WorkOrderTypeList {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Attribute (qw(UserID)) {
+        if ( !$Param{$Attribute} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Attribute!",
+            );
+            return;
+        }
+    }
+
+    # get work order type list
+    my $WorkOrderTypeList = $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::ChangeManagement::WorkOrder::Type',
+    ) || {};
+
+    # assemble a an array of hash refs
+    my @ArrayHashRef;
+    for my $TypeID ( sort keys %{$WorkOrderTypeList} ) {
+        push @ArrayHashRef, {
+            Key   => $TypeID,
+            Value => $WorkOrderTypeList->{$TypeID},
+        };
+    }
+
+    return \@ArrayHashRef;
+}
+
 =item _CheckWorkOrderStateID()
 
 check if a given workorder state id is valid
@@ -1913,6 +1967,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.70 $ $Date: 2009-10-27 15:15:11 $
+$Revision: 1.71 $ $Date: 2009-10-27 15:41:47 $
 
 =cut

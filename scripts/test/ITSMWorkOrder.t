@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.76 2009-10-27 15:00:15 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.77 2009-10-27 15:41:47 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -124,6 +124,7 @@ my @ObjectMethods = qw(
     WorkOrderSearch
     WorkOrderUpdate
     WorkOrderStateLookup
+    WorkOrderTypeList
     WorkOrderTypeLookup
     WorkOrderPossibleStatesGet
 );
@@ -203,14 +204,15 @@ my @DefaultWorkOrderTypes = (
 );
 
 # get class list with swapped keys and values
-my %ReverseTypesList = reverse %{
+my %TypesList = %{
     $Self->{GeneralCatalogObject}->ItemList(
         Class => 'ITSM::ChangeManagement::WorkOrder::Type',
         ) || {}
     };
-my @SortedTypeIDs = sort values %ReverseTypesList;
+my %ReverseTypesList = reverse %TypesList;
+my @SortedTypeIDs    = sort keys %TypesList;
 
-# check if states are in GeneralCatalog
+# check if types are in GeneralCatalog
 for my $DefaultWorkOrderType (@DefaultWorkOrderTypes) {
     $Self->True(
         $ReverseTypesList{$DefaultWorkOrderType},
@@ -239,6 +241,40 @@ for my $DefaultWorkOrderType (@DefaultWorkOrderTypes) {
         $DefaultWorkOrderType,
         "Lookup $TypeID",
     );
+}
+
+# Text the method WorkOrderTypeList(). It should return a list of all types.
+# get possible states
+my $TypesListUnderTest = $Self->{WorkOrderObject}->WorkOrderTypeList(
+    UserID => 1,
+) || {};
+
+# do the checks
+for my $TypeID (@SortedTypeIDs) {
+    my ( $FirstHashRef, $SecondHashRef )
+        = grep { $_->{Key} == $TypeID } @{$TypesListUnderTest};
+
+    # a match is expected
+    $Self->True(
+        $FirstHashRef,
+        "Check for type id $TypeID",
+    );
+
+    # the name should also match
+    $FirstHashRef ||= {};
+    my $TypeName = $TypesList{$TypeID};
+    $Self->Is(
+        $FirstHashRef->{Value},
+        $TypeName,
+        "Check for type name $TypeID",
+    );
+
+    # only one match is expected
+    $Self->False(
+        $SecondHashRef,
+        "Check that the type id $TypeID is returned only once.",
+    );
+
 }
 
 # ------------------------------------------------------------ #
