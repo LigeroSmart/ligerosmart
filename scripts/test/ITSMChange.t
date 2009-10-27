@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.98 2009-10-27 10:57:04 bes Exp $
+# $Id: ITSMChange.t,v 1.99 2009-10-27 11:03:23 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -313,7 +313,7 @@ my @ChangeTests = (
                 ChangeBy        => $UserIDs[0],
             },
         },
-        SearchTest => [ 4, 25, 26, 33, 36 ],
+        SearchTest => [ 4, 25, 26, 33, 37 ],
     },
 
     # ChangeUpdate with named ChangeState
@@ -346,7 +346,7 @@ my @ChangeTests = (
                 ChangeBy        => $UserIDs[0],
             },
         },
-        SearchTest => [ 4, 25, 26, 33, 34, 36, 37 ],
+        SearchTest => [ 4, 25, 26, 37, 38 ],
     },
 
     # change contains all data - (all attributes)
@@ -1982,7 +1982,7 @@ my @ChangeSearchTests = (
         },
     },
 
-    # Nr 35 - ChangeState (non-existent state)
+    # Nr 36 - ChangeState (non-existent state)
     {
         Description => q{ChangeState (non-existent state)},
         SearchData  => {
@@ -1993,7 +1993,7 @@ my @ChangeSearchTests = (
         },
     },
 
-    # Nr 36 - ChangeStates (names not ids)
+    # Nr 37 - ChangeStates (names not ids)
     {
         Description => q{ChangeStates (names not ids) - failed + requested},
         SearchData  => {
@@ -2005,7 +2005,7 @@ my @ChangeSearchTests = (
         },
     },
 
-    # Nr 37 - ChangeStates (names not ids)
+    # Nr 38 - ChangeStates (names not ids)
     {
         Description => q{ChangeStates (names not ids) - failed},
         SearchData  => {
