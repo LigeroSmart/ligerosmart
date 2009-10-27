@@ -2,7 +2,7 @@
 # Kernel/System/LinkObject/ITSMWorkOrder.pm - to link workorder objects
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.6 2009-10-21 23:17:16 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.7 2009-10-27 09:19:17 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,8 +17,10 @@ use warnings;
 use Kernel::System::ITSMChange::WorkOrder;
 use Kernel::System::ITSMChange;
 
+use base qw(Kernel::System::EventHandler);
+
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -38,6 +40,15 @@ sub new {
     # create additional objects
     $Self->{WorkOrderObject} = Kernel::System::ITSMChange::WorkOrder->new( %{$Self} );
     $Self->{ChangeObject}    = Kernel::System::ITSMChange->new( %{$Self} );
+
+    # init of event handler
+    $Self->EventHandlerInit(
+        Config     => 'ITSMWorkOrder::EventModule',
+        BaseObject => 'LinkObject',
+        Objects    => {
+            %{$Self},
+        },
+    );
 
     return $Self;
 }
@@ -325,6 +336,7 @@ sub LinkAddPre {
         }
     }
 
+    # do not trigger event for temporary links
     return 1 if $Param{State} eq 'Temporary';
 
     return 1;
@@ -370,21 +382,25 @@ sub LinkAddPost {
         }
     }
 
-    # trigger LinkAdd event
-    my $Key    = $Param{TargetKey}    || $Param{SourceKey};
+    # do not trigger event for temporary links
+    return 1 if $Param{State} eq 'Temporary';
+
+    # get information about linked object
+    my $ID     = $Param{TargetKey}    || $Param{SourceKey};
     my $Object = $Param{TargetObject} || $Param{SourceObject};
 
-    # TODO:
-    # replace code below with new event handling
-
-    #    $Self->{ConfigItemObject}->ConfigItemEventHandlerPost(
-    #        ConfigItemID => $Param{Key},
-    #        Event        => 'LinkAdd',
-    #        UserID       => $Param{UserID},
-    #        Comment      => $Key . '%%' . $Object,
-    #    );
-
-    return 1 if $Param{State} eq 'Temporary';
+    # trigger WorkOrderLinkAddPost-Event
+    $Self->EventHandler(
+        Event => 'WorkOrderLinkAddPost',
+        Data  => {
+            WorkOrderID => $Param{Key},
+            Object      => $Object,         # the other object of the link
+            ID          => $ID,             # id of the other object
+            Type        => $Param{Type},    # the link type
+            %Param,
+        },
+        UserID => $Param{UserID},
+    );
 
     return 1;
 }
@@ -429,6 +445,7 @@ sub LinkDeletePre {
         }
     }
 
+    # do not trigger event for temporary links
     return 1 if $Param{State} eq 'Temporary';
 
     return 1;
@@ -474,21 +491,25 @@ sub LinkDeletePost {
         }
     }
 
-    # trigger LinkDelete event
-    my $Key    = $Param{TargetKey}    || $Param{SourceKey};
+    # do not trigger event for temporary links
+    return 1 if $Param{State} eq 'Temporary';
+
+    # get information about linked object
+    my $ID     = $Param{TargetKey}    || $Param{SourceKey};
     my $Object = $Param{TargetObject} || $Param{SourceObject};
 
-    # TODO:
-    # replace code below with new event handling
-
-    #    $Self->{ConfigItemObject}->ConfigItemEventHandlerPost(
-    #        ConfigItemID => $Param{Key},
-    #        Event        => 'LinkDelete',
-    #        UserID       => $Param{UserID},
-    #        Comment      => $Key . '%%' . $Object,
-    #    );
-
-    return 1 if $Param{State} eq 'Temporary';
+    # trigger WorkOrderLinkDeletePost-Event
+    $Self->EventHandler(
+        Event => 'WorkOrderLinkDeletePost',
+        Data  => {
+            WorkOrderID => $Param{Key},
+            Object      => $Object,         # the other object of the link
+            ID          => $ID,             # id of the other object
+            Type        => $Param{Type},    # the link type
+            %Param,
+        },
+        UserID => $Param{UserID},
+    );
 
     return 1;
 }
