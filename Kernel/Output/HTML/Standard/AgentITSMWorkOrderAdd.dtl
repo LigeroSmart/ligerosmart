@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderAdd.dtl - provides HTML form for AgentITSMWorkOrderAdd
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.dtl,v 1.15 2009-10-28 09:58:09 reb Exp $
+# $Id: AgentITSMWorkOrderAdd.dtl,v 1.16 2009-10-28 10:12:52 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -146,12 +146,13 @@ $Include{"RichTextEditorITSM"}
                                             <tr>
                                                 <td>$Data{"AttachmentName"}</td>
                                                 <td>$Data{"AttachmentSize"}</td>
-                                                <td></td>
+<!-- TODO: set correct name for Delete button with unique name -->
+                                                <td><input class="button" type="submit" name="DeleteAttachmentxxx" value="$Text{"Delete"}"></td>
                                             </tr>
 <!-- dtl:block:AttachmentRow -->
                                             <tr>
-                                                <td><input type="file" name="AttachmentNew"></td>
-                                                <td colspan="2" width="100%"><input type="submit" class="button" name="SaveAttachment" value="$Text{"Attach"}"></td>
+                                                <td colspan="2"><input type="file" name="AttachmentNew"></td>
+                                                <td width="100%"><input type="submit" class="button" name="SaveAttachment" value="$Text{"Attach"}"></td>
                                             </tr>
                                         </table>
                                     </td>
