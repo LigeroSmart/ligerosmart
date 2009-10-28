@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.78 2009-10-28 09:54:32 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.79 2009-10-28 15:05:04 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1416,7 +1416,7 @@ for my $Test (@WorkOrderTests) {
         {
             $Self->False(
                 $WorkOrderUpdateSuccess,
-                "Test $TestCount: WorkOrderUpdate()",
+                "Test $TestCount: WorkOrderUpdate() is expected to fail",
             );
         }
         else {
@@ -1894,10 +1894,7 @@ my @WorkOrderSearchTests = (
             WorkOrderStates => ['non-existent'],
             WorkOrderTitle  => '%' . $UniqueSignature,
         },
-        ResultData => {
-            TestCount     => 1,
-            TestExistence => 1,
-        },
+        SearchFails => 1,
     },
 
     # Nr 27 - search for workorder states
@@ -1929,7 +1926,6 @@ my @WorkOrderSearchTests = (
     },
 
     # Nr 29 - Search for WorkOrder states "closed", "ready" and "non-existent"
-    # TODO: the behavior with non-existent states is not specified yet
     {
         Description => 'Search for WorkOrder states "closed", "ready" and "non-existent"',
         SearchData  => {
@@ -1937,10 +1933,7 @@ my @WorkOrderSearchTests = (
             WorkOrderStates => [ 'closed', 'ready', 'non-existent' ],
             WorkOrderTitle  => '%' . $UniqueSignature,
         },
-        ResultData => {
-            TestCount     => 1,
-            TestExistence => 1,
-        },
+        SearchFails => 1,
     },
 );
 
@@ -1973,10 +1966,18 @@ for my $SearchTest (@WorkOrderSearchTests) {
         ChangeID => $WorkOrderAddTestID,
     );
 
-    $Self->True(
-        defined($WorkOrderIDs) && ref($WorkOrderIDs) eq 'ARRAY',
-        "Test $TestCount: |- array reference for WorkOrderIDs.",
-    );
+    if ( $SearchTest->{SearchFails} ) {
+        $Self->True(
+            !defined($WorkOrderIDs),
+            "Test $TestCount: WorkOrderSearch() is expected to fail",
+        );
+    }
+    else {
+        $Self->True(
+            defined($WorkOrderIDs) && ref($WorkOrderIDs) eq 'ARRAY',
+            "Test $TestCount: |- array reference for WorkOrderIDs.",
+        );
+    }
 
     $WorkOrderIDs ||= [];
 

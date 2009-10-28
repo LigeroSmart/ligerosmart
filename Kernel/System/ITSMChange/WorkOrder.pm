@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.81 2009-10-28 14:45:38 bes Exp $
+# $Id: WorkOrder.pm,v 1.82 2009-10-28 15:05:04 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::EventHandler;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.81 $) [1];
+$VERSION = qw($Revision: 1.82 $) [1];
 
 =head1 NAME
 
@@ -853,20 +853,22 @@ sub WorkOrderSearch {
 
     # translate and thus check the WorkOrderStates
     for my $WorkOrderState ( @{ $Param{WorkOrderStates} } ) {
+
+        # get the ID for the name
         my $WorkOrderStateID = $Self->WorkOrderStateLookup(
             WorkOrderState => $WorkOrderState,
         );
 
-        # TODO: WorkOrderState should be checked
-        $WorkOrderStateID ||= 0;
+        # check whether the ID was found, whether the name exists
+        if ( !$WorkOrderStateID ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "The workorder state $WorkOrderState is not known!",
+            );
 
-        #if ( !$WorkOrderStateID ) {
-        #    $Self->{LogObject}->Log(
-        #        Priority => 'error',
-        #        Message  => "The workorder state $WorkOrderState is not known!",
-        #    );
-        #    return;
-        #}
+            return;
+        }
+
         push @{ $Param{WorkOrderStateIDs} }, $WorkOrderStateID;
     }
 
@@ -1866,6 +1868,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.81 $ $Date: 2009-10-28 14:45:38 $
+$Revision: 1.82 $ $Date: 2009-10-28 15:05:04 $
 
 =cut
