@@ -2,9 +2,80 @@
 # AgentITSMChangeHistory.dtl - provides HTML form for AgentITSMChangeHistory
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeHistory.dtl,v 1.1 2009-10-11 23:16:35 ub Exp $
+# $Id: AgentITSMChangeHistory.dtl,v 1.2 2009-10-28 15:03:10 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+    <tr>
+        <td class="mainhead">
+            <div title="$Env{"Box0"}$Text{"History of"} $Text{"Change#"}: $QData{"ChangeNumber"}$Env{"Box1"} - $QData{"ChangeTitle"}">
+                $Env{"Box0"}$Text{"History of"} $Text{"Change#"}: $QData{"ChangeNumber"}$Env{"Box1"} - $QData{"ChangeTitle","70"}
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td class="menu">
+            <a href="$Env{"Baselink"}Action=AgentITSMChangeZoom&ConfigItemID=$Data{"ConfigItemID"}&VersionID=$Data{"VersionID"}" onmouseover="window.status='$JSText{"Back"}'; return true;" onmouseout="window.status='';" class="menuitem">$Text{"Back"}</a>
+        </td>
+    </tr>
+    <tr>
+        <td class="mainbody">
+            <table border="0" cellspacing="0" cellpadding="2" width="100%">
+                <tr class="contenthead">
+                    <td>
+                        $Text{"Action"}:
+                    </td>
+                    <td>
+                        $Text{"Comment"}:
+                    </td>
+                    <td WIDTH="60" ALIGN="CENTER">
+                        $Text{"Zoom"}:
+                    </td>
+                    <td>
+                        $Text{"User"}:
+                    </td>
+                    <td>
+                        $Text{"Createtime"}:
+                    </td>
+                </tr>
+<!-- dtl:block:Row -->
+# should i show  the zoom link?
+                <tr class="$QData{"css"}">
+                    <td>
+                        $Quote{"$Data{"HistoryType"}"}
+                    </td>
+                    <td>
+                        <div title="$QData{"Content"}">$QData{"Content","100"}</div>
+                    </td>
+                    <td align="CENTER">
+<!-- dtl:block:Dash -->
+                        -
+<!-- dtl:block:Dash -->
+<!-- dtl:block:WorkOrderZoom -->
+                        <a href="$Env{"Baselink"}Action=AgentITSMWorkOrderZoom&WorkOrderID=$Data{"WorkOrderID"}" onmouseover="window.status='$JSText{"Zoom"}'; return true;" onmouseout="window.status='';">x</a>
+<!-- dtl:block:WorkOrderZoom -->
+<!-- dtl:block:ChangeZoom -->
+                        <a href="$Env{"Baselink"}Action=AgentITSMChangeZoom&ChangeID=$Data{"ChangeID"}" onmouseover="window.status='$JSText{"Zoom"}'; return true;" onmouseout="window.status='';">x</a>
+<!-- dtl:block:ChangeZoom -->
+                    </td>
+                    <td>
+                        <div title="$Quote{"$Data{"UserLogin"} ($Data{"UserFirstname"} $Data{"UserLastname"})"}">
+                            $Quote{"$Data{"UserLogin"}"} ($Quote{"$Data{"UserFirstname"} $Data{"UserLastname"}","20"})
+                        </div>
+                    </td>
+                    <td>
+                        $TimeLong{"$Data{"CreateTime"}"}
+                    </td>
+                </tr>
+<!-- dtl:block:Row -->
+                <tr class="contenthead">
+                    <td colspan="5">&nbsp;</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

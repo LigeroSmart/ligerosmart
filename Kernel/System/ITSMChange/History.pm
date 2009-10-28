@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/History.pm - all change and workorder history functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: History.pm,v 1.6 2009-10-28 08:59:02 reb Exp $
+# $Id: History.pm,v 1.7 2009-10-28 15:03:11 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 =head1 NAME
 
@@ -221,10 +221,10 @@ sub WorkOrderHistoryGet {
 
     # run the sql statement to get history
     return if !$Self->{DBObject}->Prepare(
-        SQL => 'SELECT change_history.id, change_id, workorder_id, content, '
-            . 'create_by, create_time, type_id, change_history_type.name '
-            . 'FROM change_history, change_history_type '
-            . 'WHERE change_history.type_id = change_history_type.id '
+        SQL => 'SELECT ch.id, change_id, workorder_id, content_new, content_old, '
+            . 'ch.create_by, ch.create_time, type_id, cht.name '
+            . 'FROM change_history ch, change_history_type cht '
+            . 'WHERE ch.type_id = cht.id '
             . 'AND workorder_id = ? ',
         Bind => [ \$Param{WorkOrderID} ],
     );
@@ -236,11 +236,12 @@ sub WorkOrderHistoryGet {
             HistoryEntryID => $Row[0],
             ChangeID       => $Row[1],
             WorkOrderID    => $Row[2],
-            Content        => $Row[3],
-            CreateBy       => $Row[4],
-            CreateTime     => $Row[5],
-            HistoryTypeID  => $Row[6],
-            HistoryType    => $Row[7],
+            ContentNew     => $Row[3],
+            ContentOld     => $Row[4],
+            CreateBy       => $Row[5],
+            CreateTime     => $Row[6],
+            HistoryTypeID  => $Row[7],
+            HistoryType    => $Row[8],
         );
 
         push @HistoryEntries, \%HistoryEntry;
@@ -308,10 +309,10 @@ sub ChangeHistoryGet {
 
     # run the sql statement to get history
     return if !$Self->{DBObject}->Prepare(
-        SQL => 'SELECT change_history.id, change_id, workorder_id, content, '
-            . 'create_by, create_time, type_id, change_history_type.name '
-            . 'FROM change_history, change_history_type '
-            . 'WHERE change_history.type_id = change_history_type.id '
+        SQL => 'SELECT ch.id, change_id, workorder_id, content_new, content_old, '
+            . 'ch.create_by, ch.create_time, type_id, cht.name '
+            . 'FROM change_history ch, change_history_type cht '
+            . 'WHERE ch.type_id = cht.id '
             . 'AND change_id = ? ',
         Bind => [ \$Param{ChangeID} ],
     );
@@ -323,11 +324,12 @@ sub ChangeHistoryGet {
             HistoryEntryID => $Row[0],
             ChangeID       => $Row[1],
             WorkOrderID    => $Row[2],
-            Content        => $Row[3],
-            CreateBy       => $Row[4],
-            CreateTime     => $Row[5],
-            HistoryTypeID  => $Row[6],
-            HistoryType    => $Row[7],
+            ContentNew     => $Row[3],
+            ContentOld     => $Row[4],
+            CreateBy       => $Row[5],
+            CreateTime     => $Row[6],
+            HistoryTypeID  => $Row[7],
+            HistoryType    => $Row[8],
         );
 
         push @HistoryEntries, \%HistoryEntry;
@@ -338,8 +340,8 @@ sub ChangeHistoryGet {
 
         # get user name
         my %User = $Self->{UserObject}->GetUserData(
-            User  => $HistoryEntry->{CreateBy},
-            Cache => 1,
+            UserID => $HistoryEntry->{CreateBy},
+            Cache  => 1,
         );
 
         # save user info in history entry
@@ -515,6 +517,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.6 $ $Date: 2009-10-28 08:59:02 $
+$Revision: 1.7 $ $Date: 2009-10-28 15:03:11 $
 
 =cut

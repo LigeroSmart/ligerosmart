@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.32 2009-10-28 13:41:48 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.33 2009-10-28 15:03:10 reb Exp $</CVS>
     <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
         <Description Lang="en">Logfile for the itsm change counter.</Description>
         <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
@@ -156,6 +156,20 @@
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentITSMChangeHistory" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AgentITSMChangeHistory object in the agent interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration des AgentITSMChangeHistory-Objekts im Agent-Interface.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <GroupRw>itsm-change</GroupRw>
+                <Description>Change History</Description>
+                <Title>History</Title>
+                <NavBarName>Change</NavBarName>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="Frontend::Module###AgentITSMChangeSearch" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AgentITSMChangeSearch object in the agent interface.</Description>
         <Description Lang="de">Frontendmodul-Registration des AgentITSMChangeSearch-Objekts im Agent-Interface.</Description>
@@ -291,6 +305,21 @@
                 <Item Key="Description">Back</Item>
                 <Item Key="Action"></Item>
                 <Item Key="Link">$Env{"LastScreenChanges"}</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::MenuModule###010-History" Required="0" Valid="1">
+        <Description Lang="en">Module to show history link in change menu.</Description>
+        <Description Lang="de">Über dieses Modul wird der Historie-Link in der Linkleiste der Change-Ansicht angezeigt.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ITSMChangeMenuGeneric</Item>
+                <Item Key="Name">History</Item>
+                <Item Key="Description">History</Item>
+                <Item Key="Action">AgentITSMChangeHistory</Item>
+                <Item Key="Link">Action=AgentITSMChangeHistory&amp;ChangeID=$QData{"ChangeID"}</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -658,6 +687,18 @@
                 <Item Key="Event">(WorkOrderLinkAddPost|WorkOrderLinkDeletePost)</Item>
                 <Item Key="Transaction">0</Item>
             </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::HistoryOrder" Required="1" Valid="1">
+        <Description Lang="en">Show history order reverse in the agent interface under change history.</Description>
+        <Description Lang="de">Zeige die Historie normal oder rückwärts sortiert im Agent-Interface unter der Change-Historie.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ViewHistory</SubGroup>
+        <Setting>
+            <Option SelectedID="normal">
+                <Item Key="reverse">reverse</Item>
+                <Item Key="normal">normal</Item>
+            </Option>
         </Setting>
     </ConfigItem>
 </otrs_config>
