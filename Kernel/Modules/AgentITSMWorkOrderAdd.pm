@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAdd.pm - the OTRS::ITSM::ChangeManagement work order add module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.pm,v 1.9 2009-10-28 10:35:26 bes Exp $
+# $Id: AgentITSMWorkOrderAdd.pm,v 1.10 2009-10-28 10:51:06 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -190,10 +190,12 @@ sub Run {
         },
     );
 
-    # use richtext editor
-    $Self->{LayoutObject}->Block(
-        Name => 'RichText',
-    );
+    # add rich text editor
+    if ( $Self->{ConfigObject}->Get('Frontend::RichText') ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'RichText',
+        );
+    }
 
     # set the time selection
     for my $TimeType (qw(PlannedStartTime PlannedEndTime)) {
