@@ -2,7 +2,7 @@
 # AgentITSMChangeInvolvedPersons.dtl - provides HTML form for AgentITSMChangeInvolvedPersons
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.11 2009-10-28 08:56:43 bes Exp $
+# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.12 2009-10-28 09:37:24 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -148,7 +148,9 @@ function clear_field3() {
                                         $Text{"Add CAB Template"}:
                                     </td>
                                     <td class="contentvalue">
+<!-- dtl:block:CABTemplate -->
                                         $Data{"CABTemplateStrg"}
+<!-- dtl:block:CABTemplate -->
                                     </td>
                                     <td>
                                         <input type="submit" class="button" name="AddCABTemplate" value="$Text{"Add"}">

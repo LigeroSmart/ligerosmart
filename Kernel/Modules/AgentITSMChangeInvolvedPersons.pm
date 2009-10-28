@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeInvolvedPersons.pm - the OTRS::ITSM::ChangeManagement change involved persons module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.9 2009-10-26 15:00:07 bes Exp $
+# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.10 2009-10-28 09:37:24 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::User;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -438,6 +438,21 @@ sub Run {
             Name => 'SearchUserButton2',
         );
     }
+
+    # build template dropdown
+    # TODO: fill dropdown with data
+    my $TemplateDropDown = $Self->{LayoutObject}->BuildSelection(
+        Name => 'CABTemplate',
+        Data => {},
+    );
+
+    # show block with template dropdown
+    $Self->{LayoutObject}->Block(
+        Name => 'CABTemplate',
+        Data => {
+            CABTemplateStrg => $TemplateDropDown,
+        },
+    );
 
     # build CAB member search autocomplete field
     my $CABMemberAutoCompleteConfig
