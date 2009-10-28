@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.3 2009-10-20 18:14:37 ub Exp $
+# $Id: ITSMChangeManagement.pm,v 1.4 2009-10-28 23:21:44 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::Config;
 use Kernel::System::CSV;
 use Kernel::System::Group;
 use Kernel::System::ITSMChange;
-use Kernel::System::ITSMChange::WorkOrder;
+use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::LinkObject;
 use Kernel::System::State;
 use Kernel::System::Stats;
@@ -28,7 +28,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 =head1 NAME
 
@@ -148,7 +148,7 @@ sub new {
     $Self->{ValidObject}     = Kernel::System::Valid->new( %{$Self} );
     $Self->{LinkObject}      = Kernel::System::LinkObject->new( %{$Self} );
     $Self->{ChangeObject}    = Kernel::System::ITSMChange->new( %{$Self} );
-    $Self->{WorkOrderObject} = Kernel::System::ITSMChange::WorkOrder->new( %{$Self} );
+    $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
     $Self->{StatsObject}     = Kernel::System::Stats->new(
         %{$Self},
         UserID => 1,
@@ -484,6 +484,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2009-10-20 18:14:37 $
+$Revision: 1.4 $ $Date: 2009-10-28 23:21:44 $
 
 =cut

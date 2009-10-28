@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderEdit.pm - the OTRS::ITSM::ChangeManagement work order edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderEdit.pm,v 1.17 2009-10-28 10:51:06 bes Exp $
+# $Id: AgentITSMWorkOrderEdit.pm,v 1.18 2009-10-28 23:20:32 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,11 +14,11 @@ package Kernel::Modules::AgentITSMWorkOrderEdit;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange::WorkOrder;
 use Kernel::System::ITSMChange;
+use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -35,8 +35,8 @@ sub new {
     }
 
     # create needed objects
-    $Self->{WorkOrderObject} = Kernel::System::ITSMChange::WorkOrder->new(%Param);
     $Self->{ChangeObject}    = Kernel::System::ITSMChange->new(%Param);
+    $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChangeManagement::Frontend::$Self->{Action}");

@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.124 2009-10-28 17:50:58 bes Exp $
+# $Id: ITSMChange.pm,v 1.125 2009-10-28 23:19:00 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,12 +18,12 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 use Kernel::System::User;
 use Kernel::System::CustomerUser;
-use Kernel::System::ITSMChange::WorkOrder;
+use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.124 $) [1];
+$VERSION = qw($Revision: 1.125 $) [1];
 
 =head1 NAME
 
@@ -105,7 +105,7 @@ sub new {
     $Self->{LinkObject}           = Kernel::System::LinkObject->new( %{$Self} );
     $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
     $Self->{CustomerUserObject}   = Kernel::System::CustomerUser->new( %{$Self} );
-    $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::WorkOrder->new( %{$Self} );
+    $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
 
     # init of event handler
     $Self->EventHandlerInit(
@@ -2074,6 +2074,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.124 $ $Date: 2009-10-28 17:50:58 $
+$Revision: 1.125 $ $Date: 2009-10-28 23:19:00 $
 
 =cut

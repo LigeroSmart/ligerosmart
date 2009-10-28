@@ -2,7 +2,7 @@
 # Kernel/System/LinkObject/ITSMWorkOrder.pm - to link workorder objects
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.7 2009-10-27 09:19:17 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.8 2009-10-28 23:21:44 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,13 +14,13 @@ package Kernel::System::LinkObject::ITSMWorkOrder;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange::WorkOrder;
+use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange;
 
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -38,7 +38,7 @@ sub new {
     }
 
     # create additional objects
-    $Self->{WorkOrderObject} = Kernel::System::ITSMChange::WorkOrder->new( %{$Self} );
+    $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
     $Self->{ChangeObject}    = Kernel::System::ITSMChange->new( %{$Self} );
 
     # init of event handler

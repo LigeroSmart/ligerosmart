@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.101 2009-10-28 17:50:58 bes Exp $
+# $Id: ITSMChange.t,v 1.102 2009-10-28 23:21:44 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::User;
 use Kernel::System::CustomerUser;
 use Kernel::System::GeneralCatalog;
 use Kernel::System::ITSMChange;
-use Kernel::System::ITSMChange::WorkOrder;
+use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 # ------------------------------------------------------------ #
 # make preparations
@@ -32,7 +32,7 @@ $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
 $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
 $Self->{CustomerUserObject}   = Kernel::System::CustomerUser->new( %{$Self} );
 $Self->{ChangeObject}         = Kernel::System::ITSMChange->new( %{$Self} );
-$Self->{WorkOrderObject}      = Kernel::System::ITSMChange::WorkOrder->new( %{$Self} );
+$Self->{WorkOrderObject}      = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
 $Self->{ValidObject}          = Kernel::System::Valid->new( %{$Self} );
 
 # test if change object was created successfully

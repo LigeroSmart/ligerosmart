@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.82 2009-10-28 15:37:08 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.83 2009-10-28 23:21:44 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Data::Dumper;
 use Kernel::System::User;
 use Kernel::System::GeneralCatalog;
 use Kernel::System::ITSMChange;
-use Kernel::System::ITSMChange::WorkOrder;
+use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 # ------------------------------------------------------------ #
 # make preparations
@@ -30,7 +30,7 @@ my $TestCount = 1;
 $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
 $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
 $Self->{ChangeObject}         = Kernel::System::ITSMChange->new( %{$Self} );
-$Self->{WorkOrderObject}      = Kernel::System::ITSMChange::WorkOrder->new( %{$Self} );
+$Self->{WorkOrderObject}      = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
 $Self->{ValidObject}          = Kernel::System::Valid->new( %{$Self} );
 
 # test if workorder object was created successfully
@@ -40,7 +40,7 @@ $Self->True(
 );
 $Self->Is(
     ref $Self->{WorkOrderObject},
-    'Kernel::System::ITSMChange::WorkOrder',
+    'Kernel::System::ITSMChange::ITSMWorkOrder',
     "Test " . $TestCount++ . ' - class of workorder object'
 );
 
@@ -60,10 +60,10 @@ for my $Counter ( 1 .. 3 ) {
 
     # create new users for the tests
     my $UserID = $Self->{UserObject}->UserAdd(
-        UserFirstname => 'ITSMChange::Workorder' . $Counter,
+        UserFirstname => 'ITSMChange::ITSMWorkOrder' . $Counter,
         UserLastname  => 'UnitTest',
-        UserLogin     => 'UnitTest-ITSMChange::Workorder-' . $Counter . int rand 1_000_000,
-        UserEmail     => 'UnitTest-ITSMChange::Workorder-' . $Counter . '@localhost',
+        UserLogin     => 'UnitTest-ITSMChange::ITSMWorkOrder-' . $Counter . int rand 1_000_000,
+        UserEmail     => 'UnitTest-ITSMChange::ITSMWorkOrder-' . $Counter . '@localhost',
         ValidID       => $Self->{ValidObject}->ValidLookup( Valid => 'valid' ),
         ChangeUserID  => 1,
     );
@@ -282,7 +282,7 @@ for my $TypeID (@SortedTypeIDs) {
 
 # store current TestCount for better test case recognition
 my $TestCountMisc   = $TestCount;
-my $UniqueSignature = 'UnitTest-ITSMChange::WorkOrder-' . int( rand 1_000_000 ) . '_' . time;
+my $UniqueSignature = 'UnitTest-ITSMChange::ITSMWorkOrder-' . int( rand 1_000_000 ) . '_' . time;
 my @ChangeTests     = (
 
     # a change for general workorder testing

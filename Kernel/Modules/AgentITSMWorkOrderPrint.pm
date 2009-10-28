@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderPrint.pm - the OTRS::ITSM::ChangeManagement work order print module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderPrint.pm,v 1.1 2009-10-11 23:15:11 ub Exp $
+# $Id: AgentITSMWorkOrderPrint.pm,v 1.2 2009-10-28 23:20:32 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,10 +14,10 @@ package Kernel::Modules::AgentITSMWorkOrderPrint;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange::WorkOrder;
+use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -32,7 +32,7 @@ sub new {
             $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
         }
     }
-    $Self->{WorkOrderObject} = Kernel::System::ITSMChange::WorkOrder->new(%Param);
+    $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChangeManagement::Frontend::$Self->{Action}");

@@ -1,15 +1,15 @@
 # --
-# Kernel/System/ITSMChange/WorkOrder.pm - all workorder functions
+# Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.85 2009-10-28 15:37:08 bes Exp $
+# $Id: ITSMWorkOrder.pm,v 1.1 2009-10-28 23:19:00 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::System::ITSMChange::WorkOrder;
+package Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use strict;
 use warnings;
@@ -21,11 +21,11 @@ use Kernel::System::EventHandler;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.85 $) [1];
+$VERSION = qw($Revision: 1.1 $) [1];
 
 =head1 NAME
 
-Kernel::System::ITSMChange::WorkOrder - workorder lib
+Kernel::System::ITSMChange::ITSMWorkOrder - workorder lib
 
 =head1 SYNOPSIS
 
@@ -47,7 +47,7 @@ create an object
     use Kernel::System::DB;
     use Kernel::System::Main;
     use Kernel::System::Time;
-    use Kernel::System::ITSMChange::WorkOrder;
+    use Kernel::System::ITSMChange::ITSMWorkOrder;
 
     my $ConfigObject = Kernel::Config->new();
     my $EncodeObject = Kernel::System::Encode->new(
@@ -72,7 +72,7 @@ create an object
         LogObject    => $LogObject,
         MainObject   => $MainObject,
     );
-    my $WorkOrderObject = Kernel::System::ITSMChange::WorkOrder->new(
+    my $WorkOrderObject = Kernel::System::ITSMChange::ITSMWorkOrder->new(
         ConfigObject => $ConfigObject,
         EncodeObject => $EncodeObject,
         LogObject    => $LogObject,
@@ -1900,6 +1900,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.85 $ $Date: 2009-10-28 15:37:08 $
+$Revision: 1.1 $ $Date: 2009-10-28 23:19:00 $
 
 =cut

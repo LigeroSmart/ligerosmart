@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeZoom.pm - the OTRS::ITSM::ChangeManagement change zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.pm,v 1.18 2009-10-28 14:25:29 reb Exp $
+# $Id: AgentITSMChangeZoom.pm,v 1.19 2009-10-28 23:20:32 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,10 +17,10 @@ use warnings;
 use Kernel::System::LinkObject;
 use Kernel::System::CustomerUser;
 use Kernel::System::ITSMChange;
-use Kernel::System::ITSMChange::WorkOrder;
+use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -40,7 +40,7 @@ sub new {
     $Self->{LinkObject}         = Kernel::System::LinkObject->new(%Param);
     $Self->{CustomerUserObject} = Kernel::System::CustomerUser->new(%Param);
     $Self->{ChangeObject}       = Kernel::System::ITSMChange->new(%Param);
-    $Self->{WorkOrderObject}    = Kernel::System::ITSMChange::WorkOrder->new(%Param);
+    $Self->{WorkOrderObject}    = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChangeManagement::Frontend::$Self->{Action}");
@@ -304,6 +304,8 @@ sub Run {
     # get all linked objects that are linked with a workorder of this change
     for my $WorkOrderID ( @{ $Change->{WorkOrderIDs} } ) {
 
+        # TODO @Udo: Fix this, this does not work correctly!
+
         # get linked objects of this config item
         my $LinkListWithDatafromWorkOrder = $Self->{LinkObject}->LinkListWithData(
             Object => 'ITSMWorkOrder',
@@ -316,7 +318,7 @@ sub Run {
         $LinkListWithData = {
             %{$LinkListWithData},
             %{$LinkListWithDatafromWorkOrder},
-            }
+        };
     }
 
     # get link table view mode
