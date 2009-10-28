@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/History.pm - all change and workorder history functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: History.pm,v 1.5 2009-10-27 16:37:52 reb Exp $
+# $Id: History.pm,v 1.6 2009-10-28 08:59:02 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 =head1 NAME
 
@@ -379,6 +379,15 @@ sub WorkOrderHistoryDelete {
             return;
         }
     }
+
+    # delete entries for the given workorder
+    return if !$Self->{DBObject}->prepare(
+        SQL  => 'DELETE FROM change_history WHERE workorder_id = ?',
+        Bind => [ \$Param{WorkOrderID} ],
+    );
+
+    # success
+    return 1;
 }
 
 =item ChangeHistoryDelete()
@@ -406,6 +415,15 @@ sub ChangeHistoryDelete {
             return;
         }
     }
+
+    # delete entries for the given change
+    return if !$Self->{DBObject}->prepare(
+        SQL  => 'DELETE FROM change_history WHERE change_id = ?',
+        Bind => [ \$Param{ChangeID} ],
+    );
+
+    # success
+    return 1;
 }
 
 =item HistoryTypeLookup()
@@ -418,7 +436,7 @@ id is returned.
         HistoryTypeID => 1234,
     );
 
-    my $Id = $HistoryObject->HistoryTypeLookup(
+    my $ID = $HistoryObject->HistoryTypeLookup(
         HistoryType => 'WorkOrderAdd',
     );
 
@@ -497,6 +515,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2009-10-27 16:37:52 $
+$Revision: 1.6 $ $Date: 2009-10-28 08:59:02 $
 
 =cut
