@@ -2,7 +2,7 @@
 # AgentITSMChangeZoom.dtl - provides HTML form for AgentITSMChangeZoom
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.dtl,v 1.12 2009-10-28 01:08:54 ub Exp $
+# $Id: AgentITSMChangeZoom.dtl,v 1.13 2009-10-28 01:17:58 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -36,9 +36,7 @@
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
         <td rowspan="2" valign="top" width="75%" class="mainbody">
-
             <table border="0" width="100%" cellspacing="0" cellpadding="0">
-
                 <tr>
                     <td>
                         <table border="0" cellspacing="0" cellpadding="0">
@@ -48,7 +46,6 @@
                         </table>
                     </td>
                 </tr>
-
 <!-- dtl:block:WorkOrderListItem -->
                 <tr>
                     <td>
@@ -62,11 +59,9 @@
                     </td>
                 </tr>
 <!-- dtl:block:WorkOrderListItem -->
-
             </table>
             <hr size="2">
             <table border="0" width="100%" cellspacing="0" cellpadding="1">
-
                 <tr>
                     <td class="contentkey" width="16%">
                         <div title="$Text{"$QData{"Description"}"}">
