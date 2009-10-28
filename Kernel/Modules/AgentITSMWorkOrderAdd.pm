@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAdd.pm - the OTRS::ITSM::ChangeManagement work order add module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.pm,v 1.7 2009-10-26 13:37:48 reb Exp $
+# $Id: AgentITSMWorkOrderAdd.pm,v 1.8 2009-10-28 09:52:33 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -174,6 +174,21 @@ sub Run {
         Title => 'Add',
     );
     $Output .= $Self->{LayoutObject}->NavigationBar();
+
+    # build template dropdown
+    # TODO: fill dropdown with data
+    my $TemplateDropDown = $Self->{LayoutObject}->BuildSelection(
+        Name => 'WorkOrderTemplate',
+        Data => {},
+    );
+
+    # show block with template dropdown
+    $Self->{LayoutObject}->Block(
+        Name => 'WorkOrderTemplate',
+        Data => {
+            TemplatesStrg => $TemplateDropDown,
+        },
+    );
 
     # use richtext editor
     $Self->{LayoutObject}->Block(
