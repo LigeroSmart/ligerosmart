@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.76 2009-10-27 16:49:27 bes Exp $
+# $Id: WorkOrder.pm,v 1.77 2009-10-28 08:36:47 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::EventHandler;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.76 $) [1];
+$VERSION = qw($Revision: 1.77 $) [1];
 
 =head1 NAME
 
@@ -364,8 +364,7 @@ update a WorkOrder
         WorkOrderStateID => 157,                                       # (optional) or WorkOrder => 'ready'
         WorkOrderState   => 'ready',                                   # (optional) or WorkOrderStateID => 157
         WorkOrderTypeID  => 161,                                       # (optional) or WorkOrderType => 'pir'
-        WorkOrderType    => 'ready',                                   # (optional) or WorkOrderStateID => 161
-        WorkOrderTypeID  => 12,                                        # (optional)
+        WorkOrderType    => 'pir',                                     # (optional) or WorkOrderStateID => 161
         WorkOrderAgentID => 8,                                         # (optional)
         PlannedStartTime => '2009-10-12 00:00:01',                     # (optional)
         PlannedEndTime   => '2009-10-15 15:00:00',                     # (optional)
@@ -514,7 +513,10 @@ Return
     $WorkOrder{Instruction}
     $WorkOrder{Report}
     $WorkOrder{WorkOrderStateID}
+    $WorkOrder{WorkOrderState}
+    $WorkOrder{WorkOrderStateSignal}
     $WorkOrder{WorkOrderTypeID}
+    $WorkOrder{WorkOrderType}
     $WorkOrder{WorkOrderAgentID}
     $WorkOrder{PlannedStartTime}
     $WorkOrder{PlannedEndTime}
@@ -561,23 +563,26 @@ sub WorkOrderGet {
     # fetch the result
     my %WorkOrderData;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $WorkOrderData{WorkOrderID}      = $Row[0];
-        $WorkOrderData{ChangeID}         = $Row[1];
-        $WorkOrderData{WorkOrderNumber}  = $Row[2];
-        $WorkOrderData{WorkOrderTitle}   = defined $Row[3] ? $Row[3] : '';
-        $WorkOrderData{Instruction}      = defined $Row[4] ? $Row[4] : '';
-        $WorkOrderData{Report}           = defined $Row[5] ? $Row[5] : '';
-        $WorkOrderData{WorkOrderStateID} = $Row[6];
-        $WorkOrderData{WorkOrderTypeID}  = $Row[7];
-        $WorkOrderData{WorkOrderAgentID} = $Row[8];
-        $WorkOrderData{PlannedStartTime} = $Row[9];
-        $WorkOrderData{PlannedEndTime}   = $Row[10];
-        $WorkOrderData{ActualStartTime}  = $Row[11];
-        $WorkOrderData{ActualEndTime}    = $Row[12];
-        $WorkOrderData{CreateTime}       = $Row[13];
-        $WorkOrderData{CreateBy}         = $Row[14];
-        $WorkOrderData{ChangeTime}       = $Row[15];
-        $WorkOrderData{ChangeBy}         = $Row[16];
+        $WorkOrderData{WorkOrderID}          = $Row[0];
+        $WorkOrderData{ChangeID}             = $Row[1];
+        $WorkOrderData{WorkOrderNumber}      = $Row[2];
+        $WorkOrderData{WorkOrderTitle}       = defined $Row[3] ? $Row[3] : '';
+        $WorkOrderData{Instruction}          = defined $Row[4] ? $Row[4] : '';
+        $WorkOrderData{Report}               = defined $Row[5] ? $Row[5] : '';
+        $WorkOrderData{WorkOrderStateID}     = $Row[6];
+        $WorkOrderData{WorkOrderState}       = undef;
+        $WorkOrderData{WorkOrderStateSignal} = undef;
+        $WorkOrderData{WorkOrderTypeID}      = $Row[7];
+        $WorkOrderData{WorkOrderType}        = undef;
+        $WorkOrderData{WorkOrderAgentID}     = $Row[8];
+        $WorkOrderData{PlannedStartTime}     = $Row[9];
+        $WorkOrderData{PlannedEndTime}       = $Row[10];
+        $WorkOrderData{ActualStartTime}      = $Row[11];
+        $WorkOrderData{ActualEndTime}        = $Row[12];
+        $WorkOrderData{CreateTime}           = $Row[13];
+        $WorkOrderData{CreateBy}             = $Row[14];
+        $WorkOrderData{ChangeTime}           = $Row[15];
+        $WorkOrderData{ChangeBy}             = $Row[16];
     }
 
     # check error
@@ -1207,7 +1212,7 @@ sub WorkOrderSearch {
 
 delete a workorder
 
-NOTE: This function must first remove all links to this WorkOrderObject,
+This function first removes all links to the WorkOrder with the passed workorder id.
 
     my $Success = $WorkOrderObject->WorkOrderDelete(
         WorkOrderID => 123,
@@ -1457,9 +1462,9 @@ sub WorkOrderStateLookup {
 
 =item WorkOrderPossibleStatesGet()
 
-This method returns a list for possible workorder states.
+This method returns a list of possible workorder states.
 For now the required parameter WorkOrderID is checked,
-but not used for assembling the list.
+but not yet used for producing the list.
 
     my $WorkOrderStateList = $WorkOrderObject->WorkOrderPossibleStatesGet(
         WorkOrderID => 123,
@@ -1580,7 +1585,7 @@ sub WorkOrderTypeLookup {
 
 =item WorkOrderTypeList()
 
-This method returns a list for possible workorder types.
+This method returns a list of all workorder types.
 
     my $WorkOrderTypeList = $WorkOrderObject->WorkOrderTypeList(
         UserID      => 1,
@@ -1972,6 +1977,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.76 $ $Date: 2009-10-27 16:49:27 $
+$Revision: 1.77 $ $Date: 2009-10-28 08:36:47 $
 
 =cut

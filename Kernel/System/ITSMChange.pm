@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.121 2009-10-27 16:40:47 bes Exp $
+# $Id: ITSMChange.pm,v 1.122 2009-10-28 08:36:47 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.121 $) [1];
+$VERSION = qw($Revision: 1.122 $) [1];
 
 =head1 NAME
 
@@ -361,6 +361,7 @@ The returned hash reference contains following elements:
     $Change{ChangeNumber}
     $Change{ChangeStateID}
     $Change{ChangeState}
+    $Change{ChangeStateSignal}
     $Change{ChangeTitle}
     $Change{Description}
     $Change{Justification}
@@ -416,18 +417,20 @@ sub ChangeGet {
     # fetch the result
     my %ChangeData;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $ChangeData{ChangeID}        = $Row[0];
-        $ChangeData{ChangeNumber}    = $Row[1];
-        $ChangeData{ChangeTitle}     = defined( $Row[2] ) ? $Row[2] : '';
-        $ChangeData{Description}     = defined( $Row[3] ) ? $Row[3] : '';
-        $ChangeData{Justification}   = defined( $Row[4] ) ? $Row[4] : '';
-        $ChangeData{ChangeStateID}   = $Row[5];
-        $ChangeData{ChangeManagerID} = $Row[6];
-        $ChangeData{ChangeBuilderID} = $Row[7];
-        $ChangeData{CreateTime}      = $Row[8];
-        $ChangeData{CreateBy}        = $Row[9];
-        $ChangeData{ChangeTime}      = $Row[10];
-        $ChangeData{ChangeBy}        = $Row[11];
+        $ChangeData{ChangeID}          = $Row[0];
+        $ChangeData{ChangeNumber}      = $Row[1];
+        $ChangeData{ChangeTitle}       = defined( $Row[2] ) ? $Row[2] : '';
+        $ChangeData{Description}       = defined( $Row[3] ) ? $Row[3] : '';
+        $ChangeData{Justification}     = defined( $Row[4] ) ? $Row[4] : '';
+        $ChangeData{ChangeStateID}     = $Row[5];
+        $ChangeData{ChangeState}       = undef;
+        $ChangeData{ChangeStateSignal} = undef;
+        $ChangeData{ChangeManagerID}   = $Row[6];
+        $ChangeData{ChangeBuilderID}   = $Row[7];
+        $ChangeData{CreateTime}        = $Row[8];
+        $ChangeData{CreateBy}          = $Row[9];
+        $ChangeData{ChangeTime}        = $Row[10];
+        $ChangeData{ChangeBy}          = $Row[11];
     }
 
     # check error
@@ -439,14 +442,14 @@ sub ChangeGet {
         return;
     }
 
-    # get name of change state
+    # set name of change state
     if ( $ChangeData{ChangeStateID} ) {
         $ChangeData{ChangeState} = $Self->ChangeStateLookup(
             StateID => $ChangeData{ChangeStateID},
         );
     }
 
-    # add the change state signal
+    # set the change state signal
     if ( $ChangeData{ChangeState} ) {
 
         # get all change state signals
@@ -1505,11 +1508,12 @@ sub ChangeSearch {
 
 delete a change
 
-NOTE: This function must first remove all links to this ChangeObject,
-      delete the history of this ChangeObject, delete the CAB,
-      then get a list of all WorkOrderObjects of this change and
-      call WorkorderDelete for each WorkOrder (which will itself delete
-      all links to the WorkOrder).
+This function first removes all links to this ChangeObject.
+Then it deletes the history of this ChangeObject.
+Then it gets a list of all WorkOrderObjects of this change and
+calls WorkorderDelete for each WorkOrder (which will itself delete
+all links to the WorkOrder).
+Then it deletes the CAB.
 
     my $Success = $ChangeObject->ChangeDelete(
         ChangeID => 123,
@@ -2104,6 +2108,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.121 $ $Date: 2009-10-27 16:40:47 $
+$Revision: 1.122 $ $Date: 2009-10-28 08:36:47 $
 
 =cut
