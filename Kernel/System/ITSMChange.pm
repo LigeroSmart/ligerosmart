@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.123 2009-10-28 09:54:31 bes Exp $
+# $Id: ITSMChange.pm,v 1.124 2009-10-28 17:50:58 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.123 $) [1];
+$VERSION = qw($Revision: 1.124 $) [1];
 
 =head1 NAME
 
@@ -975,9 +975,23 @@ sub ChangeSearch {
         return;
     }
 
-    # check parameters, OrderBy and OrderByDirection are array references
+    # verify that all passed array parameters contain an arrayref
     ARGUMENT:
-    for my $Argument (qw(OrderBy OrderByDirection)) {
+    for my $Argument (
+        qw(
+        OrderBy
+        OrderByDirection
+        ChangeStateIDs
+        ChangeStates
+        ChangeManagerIDs
+        ChangeBuilderIDs
+        CreateBy
+        ChangeBy
+        CABAgents
+        CABCustomers
+        WorkOrderAgentIDs )
+        )
+    {
         if ( !defined $Param{$Argument} ) {
             $Param{$Argument} ||= [];
         }
@@ -1010,43 +1024,39 @@ sub ChangeSearch {
     );
 
     # check if OrderBy contains only unique valid values
-    if ( @{ $Param{OrderBy} } ) {
-        my %OrderBySeen;
-        ORDERBY:
-        for my $OrderBy ( @{ $Param{OrderBy} } ) {
+    my %OrderBySeen;
+    ORDERBY:
+    for my $OrderBy ( @{ $Param{OrderBy} } ) {
 
-            if ( !$OrderBy || !$OrderByTable{$OrderBy} || $OrderBySeen{$OrderBy} ) {
-
-                # found an error
-                $Self->{LogObject}->Log(
-                    Priority => 'error',
-                    Message  => "OrderByDirection contains invalid value '$OrderBy' "
-                        . " or the value is used more than once!",
-                );
-                return;
-            }
-
-            # remember the value to check if it appears more than once
-            $OrderBySeen{$OrderBy} = 1;
-        }
-    }
-
-    # check if OrderByDirection array contains only 'Up' or 'Down'
-    if ( @{ $Param{OrderByDirection} } ) {
-        DIRECTION:
-        for my $Direction ( @{ $Param{OrderByDirection} } ) {
-
-            # only 'Up' or 'Down' allowed
-            next DIRECTION if $Direction eq 'Up';
-            next DIRECTION if $Direction eq 'Down';
+        if ( !$OrderBy || !$OrderByTable{$OrderBy} || $OrderBySeen{$OrderBy} ) {
 
             # found an error
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "OrderByDirection can only contain 'Up' or 'Down'!",
+                Message  => "OrderByDirection contains invalid value '$OrderBy' "
+                    . " or the value is used more than once!",
             );
             return;
         }
+
+        # remember the value to check if it appears more than once
+        $OrderBySeen{$OrderBy} = 1;
+    }
+
+    # check if OrderByDirection array contains only 'Up' or 'Down'
+    DIRECTION:
+    for my $Direction ( @{ $Param{OrderByDirection} } ) {
+
+        # only 'Up' or 'Down' allowed
+        next DIRECTION if $Direction eq 'Up';
+        next DIRECTION if $Direction eq 'Down';
+
+        # found an error
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "OrderByDirection can only contain 'Up' or 'Down'!",
+        );
+        return;
     }
 
     # set default values
@@ -1054,49 +1064,29 @@ sub ChangeSearch {
         $Param{UsingWildcards} = 1;
     }
 
-    # if ChangeStates is given "translate" it
-    if ( $Param{ChangeStates} ) {
+    # check whether all of the given ChangeStateIDs are valid
+    return if !$Self->_CheckChangeStateIDs( ChangeStateIDs => $Param{ChangeStateIDs} );
 
-        # 'ChangeStates' is an array option
-        if ( ref $Param{ChangeStates} ne 'ARRAY' ) {
+    # if ChangeStates is given "translate" it
+    # translate and thus check the ChangeStates
+    for my $ChangeState ( @{ $Param{ChangeStates} } ) {
+
+        # get the ID for the name
+        my $ChangeStateID = $Self->ChangeStateLookup(
+            State => $ChangeState,
+        );
+
+        # check whether the ID was found, whether the name exists
+        if ( !$ChangeStateID ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "ChangeStates must be an array reference!",
+                Message  => "The change state $ChangeState is not known!",
             );
+
             return;
         }
 
-        # ignore empty lists
-        if ( @{ $Param{ChangeStates} } ) {
-
-            # prepare for pushing
-            $Param{ChangeStateIDs} ||= [];
-            if ( ref $Param{ChangeStateIDs} ne 'ARRAY' ) {
-                $Self->{LogObject}->Log(
-                    Priority => 'error',
-                    Message  => 'ChangeStateIDs must be an array reference!',
-                );
-                return;
-            }
-
-            # translate and thus check the ChangeStates
-            for my $ChangeState ( @{ $Param{ChangeStates} } ) {
-                my $ChangeStateID = $Self->ChangeStateLookup(
-                    State => $ChangeState,
-                );
-                $ChangeStateID ||= 0;
-
-                # TODO: decide whether the ChangeState should be checked
-                #if ( !$ChangeStateID ) {
-                #    $Self->{LogObject}->Log(
-                #        Priority => 'error',
-                #        Message  => "The change state $ChangeState is not known!",
-                #    );
-                #    return;
-                #}
-                push @{ $Param{ChangeStateIDs} }, $ChangeStateID;
-            }
-        }
+        push @{ $Param{ChangeStateIDs} }, $ChangeStateID;
     }
 
     my @SQLWhere;           # assemble the conditions used in the WHERE clause
@@ -1159,17 +1149,6 @@ sub ChangeSearch {
     # add array params to sql-where-array
     ARRAYPARAM:
     for my $ArrayParam ( keys %ArrayParams ) {
-
-        next ARRAYPARAM if !$Param{$ArrayParam};
-
-        # verify that an arrayref was passed
-        if ( ref $Param{$ArrayParam} ne 'ARRAY' ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "$ArrayParam must be an array reference!",
-            );
-            return;
-        }
 
         # ignore empty lists
         next ARRAYPARAM if !@{ $Param{$ArrayParam} };
@@ -1255,17 +1234,7 @@ sub ChangeSearch {
     # add cab params to sql-where-array
     CABPARAM:
     for my $CABParam ( keys %CABParams ) {
-        next CABPARAM if !$Param{$CABParam};
-
-        if ( ref $Param{$CABParam} ne 'ARRAY' ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "$CABParam must be an array reference!",
-            );
-            return;
-        }
-
-        next CAPPARAM if !@{ $Param{$CABParam} };
+        next CABPARAM if !@{ $Param{$CABParam} };
 
         # quote
         for my $OneParam ( @{ $Param{$CABParam} } ) {
@@ -1333,28 +1302,18 @@ sub ChangeSearch {
     }
 
     # add work order agent id params to sql-where-array
-    if ( $Param{WorkOrderAgentIDs} ) {
-        if ( ref $Param{WorkOrderAgentIDs} ne 'ARRAY' ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "WorkOrderAgentID must be an array reference!",
-            );
-            return;
+    if ( @{ $Param{WorkOrderAgentIDs} } ) {
+
+        # quote
+        for my $OneParam ( @{ $Param{WorkOrderAgentIDs} } ) {
+            $OneParam = $Self->{DBObject}->Quote($OneParam);
         }
 
-        if ( @{ $Param{WorkOrderAgentIDs} } ) {
+        # create string
+        my $InString = join q{, }, @{ $Param{WorkOrderAgentIDs} };
 
-            # quote
-            for my $OneParam ( @{ $Param{WorkOrderAgentIDs} } ) {
-                $OneParam = $Self->{DBObject}->Quote($OneParam);
-            }
-
-            # create string
-            my $InString = join q{, }, @{ $Param{WorkOrderAgentIDs} };
-
-            push @SQLWhere,        "wo2.workorder_agent_id IN ( $InString )";
-            push @InnerJoinTables, 'wo2';
-        }
+        push @SQLWhere,        "wo2.workorder_agent_id IN ( $InString )";
+        push @InnerJoinTables, 'wo2';
     }
 
     # define which parameter require a join with work order table
@@ -1668,24 +1627,32 @@ sub ChangeWorkflowList {
     return;
 }
 
-=item _CheckChangeStateID()
+=item _CheckChangeStateIDs()
 
-check if a given change state id is valid
+check if all of the given change state ids are valid
 
-    my $Ok = $ChangeObject->_CheckChangeStateID(
-        ChangeStateID => 25,
+    my $Ok = $ChangeObject->_CheckChangeStateIDs(
+        ChangeStateIDs => [ 25, 26 ],
     );
 
 =cut
 
-sub _CheckChangeStateID {
+sub _CheckChangeStateIDs {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    if ( !$Param{ChangeStateID} ) {
+    if ( !$Param{ChangeStateIDs} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'Need ChangeStateID!',
+            Message  => 'Need ChangeStateIDs!',
+        );
+        return;
+    }
+
+    if ( ref $Param{ChangeStateIDs} ne 'ARRAY' ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'The param ChangeStateIDs must be an array reference!',
         );
         return;
     }
@@ -1695,19 +1662,20 @@ sub _CheckChangeStateID {
         Class => 'ITSM::ChangeManagement::Change::State',
     );
 
-    # check the change state id
-    if (
-        !$ChangeStateList
-        || ref $ChangeStateList ne 'HASH'
-        || !$ChangeStateList->{ $Param{ChangeStateID} }
-        )
-    {
-
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "ChangeStateID $Param{ChangeStateID} is not a valid change state id!",
+    # check if WorkOrderStateIDs belongs to correct general catalog class
+    for my $StateID ( @{ $Param{ChangeStateIDs} } ) {
+        my $State = $Self->ChangeStateLookup(
+            StateID => $StateID,
         );
-        return;
+
+        if ( !$State ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "The state id $StateID is not valid!",
+            );
+
+            return;
+        }
     }
 
     return 1;
@@ -1946,8 +1914,8 @@ sub _CheckChangeParams {
 
     # check if given ChangeStateID is valid
     if ( $Param{ChangeStateID} ) {
-        return if !$Self->_CheckChangeStateID(
-            ChangeStateID => $Param{ChangeStateID},
+        return if !$Self->_CheckChangeStateIDs(
+            ChangeStateIDs => [ $Param{ChangeStateID} ],
         );
     }
 
@@ -2106,6 +2074,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.123 $ $Date: 2009-10-28 09:54:31 $
+$Revision: 1.124 $ $Date: 2009-10-28 17:50:58 $
 
 =cut

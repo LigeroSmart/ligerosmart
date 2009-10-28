@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.100 2009-10-28 09:54:32 bes Exp $
+# $Id: ITSMChange.t,v 1.101 2009-10-28 17:50:58 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1987,9 +1987,7 @@ my @ChangeSearchTests = (
         SearchData  => {
             ChangeStates => [qw(requested approved rejected non-existent)],
         },
-        ResultData => {
-            TestExistence => 1,
-        },
+        SearchFails => 1,
     },
 
     # Nr 37 - ChangeStates (names not ids)
@@ -2015,6 +2013,26 @@ my @ChangeSearchTests = (
             TestCount => 1,
         },
     },
+
+    # Nr 39 - ChangeState (non-existent state only)
+    {
+        Description => q{ChangeState (non-existent state)},
+        SearchData  => {
+            ChangeStates => [qw(non-existent)],
+        },
+        SearchFails => 1,
+    },
+
+    # Nr 40 - Search for an invalid change state id
+    {
+        Description => 'Search for an invalid change state id',
+        SearchData  => {
+            ChangeStateIDs => [-11],
+            Description    => 'ChangeStates - ' . $UniqueSignature,
+        },
+        SearchFails => 1,
+    },
+
 );
 
 # get a sample change we created above for some 'special' test cases
@@ -2258,10 +2276,18 @@ for my $SearchTest (@ChangeSearchTests) {
         UserID => 1,
     );
 
-    $Self->True(
-        defined($ChangeIDs) && ref($ChangeIDs) eq 'ARRAY',
-        "Test $TestCount: |- array reference for ChangeIDs.",
-    );
+    if ( $SearchTest->{SearchFails} ) {
+        $Self->True(
+            !defined($ChangeIDs),
+            "Test $TestCount: ChangeSearch() is expected to fail",
+        );
+    }
+    else {
+        $Self->True(
+            defined($ChangeIDs) && ref($ChangeIDs) eq 'ARRAY',
+            "Test $TestCount: |- array reference for ChangeIDs.",
+        );
+    }
 
     $ChangeIDs ||= [];
 
