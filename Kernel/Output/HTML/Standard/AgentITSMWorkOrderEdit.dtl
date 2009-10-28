@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderEdit.dtl - provides HTML form for AgentITSMWorkOrderEdit
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderEdit.dtl,v 1.14 2009-10-28 10:12:52 reb Exp $
+# $Id: AgentITSMWorkOrderEdit.dtl,v 1.15 2009-10-28 13:41:48 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@
     </tr>
     <tr>
         <td class="menu">
-            <a href="$Env{"Baselink"}Action=AgentITSMWorkOrderZoom&WorkOrderID=$QData{"WorkOrderID"}" class="menuitem">$Text{"Back"}</a>
+            <a href="$Env{"Baselink"}$Env{"LastScreenView"}" onmouseover="window.status='$JSText{"Back"}'; return true;" onmouseout="window.status='';" class="menuitem">$Text{"Back"}</a>
         </td>
     </tr>
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.31 2009-10-28 13:33:44 reb Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.32 2009-10-28 13:41:48 bes Exp $</CVS>
     <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
         <Description Lang="en">Logfile for the itsm change counter.</Description>
         <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
@@ -365,8 +365,7 @@
                 <Item Key="Name">Back</Item>
                 <Item Key="Description">Back</Item>
                 <Item Key="Action"></Item>
-                <Item Key="Link">Action=AgentITSMChangeZoom&amp;ChangeID=$QData{"ChangeID"}</Item>
-                <Item Key="LinkParam">onclick="javascript:history.back(); return false;"</Item>
+                <Item Key="Link">$Env{"LastScreenWorkOrders"}</Item>
             </Hash>
         </Setting>
     </ConfigItem>
