@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.78 2009-10-28 09:54:31 bes Exp $
+# $Id: WorkOrder.pm,v 1.79 2009-10-28 14:21:07 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::EventHandler;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.78 $) [1];
+$VERSION = qw($Revision: 1.79 $) [1];
 
 =head1 NAME
 
@@ -760,20 +760,36 @@ sub WorkOrderSearch {
         return;
     }
 
-    # check parameters, OrderBy and OrderByDirection are array references
+    # verify that all passed array parameters contain an arrayref
     ARGUMENT:
-    for my $Argument (qw(OrderBy OrderByDirection)) {
+    for my $Argument (
+        qw(
+        OrderBy
+        OrderByDirection
+        WorkOrderStates
+        WorkOrderStateIDs
+        WorkOrderTypes
+        WorkOrderTypeIDs
+        ChangeIDs
+        WorkOrderStateIDs
+        WorkOrderTypeIDs
+        WorkOrderAgentIDs
+        CreateBy
+        ChangeBy )
+        )
+    {
         if ( !defined $Param{$Argument} ) {
             $Param{$Argument} ||= [];
+
+            next ARGUMENT;
         }
-        else {
-            if ( ref $Param{$Argument} ne 'ARRAY' ) {
-                $Self->{LogObject}->Log(
-                    Priority => 'error',
-                    Message  => "$Argument must be an array reference!",
-                );
-                return;
-            }
+
+        if ( ref $Param{$Argument} ne 'ARRAY' ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "$Argument must be an array reference!",
+            );
+            return;
         }
     }
 
@@ -796,43 +812,38 @@ sub WorkOrderSearch {
     );
 
     # check if OrderBy contains only unique valid values
-    if ( @{ $Param{OrderBy} } ) {
-        my %OrderBySeen;
-        ORDERBY:
-        for my $OrderBy ( @{ $Param{OrderBy} } ) {
+    my %OrderBySeen;
+    for my $OrderBy ( @{ $Param{OrderBy} } ) {
 
-            if ( !$OrderBy || !$OrderByTable{$OrderBy} || $OrderBySeen{$OrderBy} ) {
-
-                # found an error
-                $Self->{LogObject}->Log(
-                    Priority => 'error',
-                    Message  => "OrderByDirection contains invalid value '$OrderBy' "
-                        . "or the value is used more than once!",
-                );
-                return;
-            }
-
-            # remember the value to check if it appears more than once
-            $OrderBySeen{$OrderBy} = 1;
-        }
-    }
-
-    # check if OrderByDirection array contains only 'Up' or 'Down'
-    if ( @{ $Param{OrderByDirection} } ) {
-        DIRECTION:
-        for my $Direction ( @{ $Param{OrderByDirection} } ) {
-
-            # only 'Up' or 'Down' allowed
-            next DIRECTION if $Direction eq 'Up';
-            next DIRECTION if $Direction eq 'Down';
+        if ( !$OrderBy || !$OrderByTable{$OrderBy} || $OrderBySeen{$OrderBy} ) {
 
             # found an error
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "OrderByDirection can only contain 'Up' or 'Down'!",
+                Message  => "OrderByDirection contains invalid value '$OrderBy' "
+                    . "or the value is used more than once!",
             );
             return;
         }
+
+        # remember the value to check if it appears more than once
+        $OrderBySeen{$OrderBy} = 1;
+    }
+
+    # check if OrderByDirection array contains only 'Up' or 'Down'
+    DIRECTION:
+    for my $Direction ( @{ $Param{OrderByDirection} } ) {
+
+        # only 'Up' or 'Down' allowed
+        next DIRECTION if $Direction eq 'Up';
+        next DIRECTION if $Direction eq 'Down';
+
+        # found an error
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "OrderByDirection can only contain 'Up' or 'Down'!",
+        );
+        return;
     }
 
     # set default values
@@ -840,94 +851,42 @@ sub WorkOrderSearch {
         $Param{UsingWildcards} = 1;
     }
 
-    # if WorkOrderState is given "translate" it
-    if ( $Param{WorkOrderStates} ) {
+    # translate and thus check the WorkOrderStates
+    for my $WorkOrderState ( @{ $Param{WorkOrderStates} } ) {
+        my $WorkOrderStateID = $Self->WorkOrderStateLookup(
+            WorkOrderState => $WorkOrderState,
+        );
 
-        # 'WorkOrderState' is an array option
-        if ( ref $Param{WorkOrderStates} ne 'ARRAY' ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "WorkOrderStates must be an array reference!",
-            );
-            return;
-        }
+        # TODO: WorkOrderState should be checked
+        $WorkOrderStateID ||= 0;
 
-        # ignore empty lists
-        if ( @{ $Param{WorkOrderStates} } ) {
-
-            # prepare for pushing
-            $Param{WorkOrderStateIDs} ||= [];
-            if ( ref $Param{WorkOrderStateIDs} ne 'ARRAY' ) {
-                $Self->{LogObject}->Log(
-                    Priority => 'error',
-                    Message  => 'WorkOrderStateIDs must be an array reference!',
-                );
-                return;
-            }
-
-            # translate and thus check the WorkOrderStates
-            for my $WorkOrderState ( @{ $Param{WorkOrderStates} } ) {
-                my $WorkOrderStateID = $Self->WorkOrderStateLookup(
-                    WorkOrderState => $WorkOrderState,
-                );
-                $WorkOrderStateID ||= 0;
-
-                # TODO: decide whether the WorkOrderState should be checked
-                #if ( !$WorkOrderStateID ) {
-                #    $Self->{LogObject}->Log(
-                #        Priority => 'error',
-                #        Message  => "The workorder state $WorkOrderState is not known!",
-                #    );
-                #    return;
-                #}
-                push @{ $Param{WorkOrderStateIDs} }, $WorkOrderStateID;
-            }
-        }
+        #if ( !$WorkOrderStateID ) {
+        #    $Self->{LogObject}->Log(
+        #        Priority => 'error',
+        #        Message  => "The workorder state $WorkOrderState is not known!",
+        #    );
+        #    return;
+        #}
+        push @{ $Param{WorkOrderStateIDs} }, $WorkOrderStateID;
     }
 
-    # if WorkOrderType is given "translate" it
-    if ( $Param{WorkOrderTypes} ) {
+    # translate and thus check the WorkOrderTypes
+    for my $WorkOrderType ( @{ $Param{WorkOrderTypes} } ) {
+        my $WorkOrderTypeID = $Self->WorkOrderTypeLookup(
+            WorkOrderType => $WorkOrderType,
+        );
 
-        # 'WorkOrderType' is an array option
-        if ( ref $Param{WorkOrderTypes} ne 'ARRAY' ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "WorkOrderTypes must be an array reference!",
-            );
-            return;
-        }
+        # TODO: the WorkOrderType should be checked as well
+        $WorkOrderTypeID ||= 0;
 
-        # ignore empty lists
-        if ( @{ $Param{WorkOrderTypes} } ) {
-
-            # prepare for pushing
-            $Param{WorkOrderTypeIDs} ||= [];
-            if ( ref $Param{WorkOrderTypeIDs} ne 'ARRAY' ) {
-                $Self->{LogObject}->Log(
-                    Priority => 'error',
-                    Message  => 'WorkOrderTypeIDs must be an array reference!',
-                );
-                return;
-            }
-
-            # translate and thus check the WorkOrderTypes
-            for my $WorkOrderType ( @{ $Param{WorkOrderTypes} } ) {
-                my $WorkOrderTypeID = $Self->WorkOrderTypeLookup(
-                    WorkOrderType => $WorkOrderType,
-                );
-                $WorkOrderTypeID ||= 0;
-
-                # TODO: decide whether the WorkOrderType should be checked
-                #if ( !$WorkOrderTypeID ) {
-                #    $Self->{LogObject}->Log(
-                #        Priority => 'error',
-                #        Message  => "The workorder type $WorkOrderType is not known!",
-                #    );
-                #    return;
-                #}
-                push @{ $Param{WorkOrderTypeIDs} }, $WorkOrderTypeID;
-            }
-        }
+        #if ( !$WorkOrderTypeID ) {
+        #    $Self->{LogObject}->Log(
+        #        Priority => 'error',
+        #        Message  => "The workorder type $WorkOrderType is not known!",
+        #    );
+        #    return;
+        #}
+        push @{ $Param{WorkOrderTypeIDs} }, $WorkOrderTypeID;
     }
 
     my @SQLWhere;           # assemble the conditions used in the WHERE clause
@@ -989,16 +948,6 @@ sub WorkOrderSearch {
     # add array params to sql-where-array
     ARRAYPARAM:
     for my $ArrayParam ( keys %ArrayParams ) {
-
-        next ARRAYPARAM if !$Param{$ArrayParam};
-
-        if ( ref $Param{$ArrayParam} ne 'ARRAY' ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "$ArrayParam must be an array reference!",
-            );
-            return;
-        }
 
         next ARRAYPARAM if !@{ $Param{$ArrayParam} };
 
@@ -1975,6 +1924,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.78 $ $Date: 2009-10-28 09:54:31 $
+$Revision: 1.79 $ $Date: 2009-10-28 14:21:07 $
 
 =cut
