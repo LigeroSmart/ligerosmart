@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.99 2009-10-27 11:03:23 bes Exp $
+# $Id: ITSMChange.t,v 1.100 2009-10-28 09:54:32 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,6 +33,7 @@ $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
 $Self->{CustomerUserObject}   = Kernel::System::CustomerUser->new( %{$Self} );
 $Self->{ChangeObject}         = Kernel::System::ITSMChange->new( %{$Self} );
 $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::WorkOrder->new( %{$Self} );
+$Self->{ValidObject}          = Kernel::System::Valid->new( %{$Self} );
 
 # test if change object was created successfully
 $Self->True(
@@ -66,7 +67,7 @@ for my $Counter ( 1 .. 3 ) {
         UserLastname  => 'UnitTest',
         UserLogin     => 'UnitTest-ITSMChange-' . $Counter . int rand 1_000_000,
         UserEmail     => 'UnitTest-ITSMChange-' . $Counter . '@localhost',
-        ValidID       => 1,
+        ValidID       => $Self->{ValidObject}->ValidLookup( Valid => 'valid' ),
         ChangeUserID  => 1,
     );
     push @UserIDs, $UserID;
@@ -82,8 +83,8 @@ for my $Counter ( 1 .. 3 ) {
             . $Counter
             . int( rand 1_000_000 )
             . '@localhost',
-        ValidID => 1,
-        UserID  => 1,
+        ValidID => $Self->{ValidObject}->ValidLookup( Valid => 'valid' ),
+        UserID => 1,
     );
     push @CustomerUserIDs, $CustomerUserID;
 }
@@ -117,9 +118,7 @@ $Self->{UserObject}->UserUpdate(
     $Self->{UserObject}->GetUserData(
         UserID => $UserIDs[2],
     ),
-    ValidID => $Self->{ChangeObject}->{ValidObject}->ValidLookup(
-        Valid => 'invalid',
-    ),
+    ValidID => $Self->{ValidObject}->ValidLookup( Valid => 'invalid' ),
     ChangeUserID => 1,
 );
 push @InvalidUserIDs, pop @UserIDs;
@@ -3235,9 +3234,7 @@ for my $UnittestUserID (@UserIDs) {
     # update user
     $Self->{UserObject}->UserUpdate(
         %User,
-        ValidID => $Self->{ChangeObject}->{ValidObject}->ValidLookup(
-            Valid => 'invalid',
-        ),
+        ValidID => $Self->{ValidObject}->ValidLookup( Valid => 'invalid' ),
         ChangeUserID => 1,
     );
 }

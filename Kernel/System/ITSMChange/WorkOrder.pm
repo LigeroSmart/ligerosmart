@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.77 2009-10-28 08:36:47 bes Exp $
+# $Id: WorkOrder.pm,v 1.78 2009-10-28 09:54:31 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,7 +14,6 @@ package Kernel::System::ITSMChange::WorkOrder;
 use strict;
 use warnings;
 
-use Kernel::System::Valid;
 use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 use Kernel::System::EventHandler;
@@ -22,7 +21,7 @@ use Kernel::System::EventHandler;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.77 $) [1];
+$VERSION = qw($Revision: 1.78 $) [1];
 
 =head1 NAME
 
@@ -103,7 +102,6 @@ sub new {
     $Self->{Debug} ||= 0;
 
     # create additional objects
-    $Self->{ValidObject}          = Kernel::System::Valid->new( %{$Self} );
     $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
     $Self->{LinkObject}           = Kernel::System::LinkObject->new( %{$Self} );
@@ -1977,6 +1975,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.77 $ $Date: 2009-10-28 08:36:47 $
+$Revision: 1.78 $ $Date: 2009-10-28 09:54:31 $
 
 =cut

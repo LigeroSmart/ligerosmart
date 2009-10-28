@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.77 2009-10-27 15:41:47 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.78 2009-10-28 09:54:32 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -31,6 +31,7 @@ $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
 $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
 $Self->{ChangeObject}         = Kernel::System::ITSMChange->new( %{$Self} );
 $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::WorkOrder->new( %{$Self} );
+$Self->{ValidObject}          = Kernel::System::Valid->new( %{$Self} );
 
 # test if workorder object was created successfully
 $Self->True(
@@ -63,7 +64,7 @@ for my $Counter ( 1 .. 3 ) {
         UserLastname  => 'UnitTest',
         UserLogin     => 'UnitTest-ITSMChange::Workorder-' . $Counter . int rand 1_000_000,
         UserEmail     => 'UnitTest-ITSMChange::Workorder-' . $Counter . '@localhost',
-        ValidID       => 1,
+        ValidID       => $Self->{ValidObject}->ValidLookup( Valid => 'valid' ),
         ChangeUserID  => 1,
     );
     push @UserIDs, $UserID;
@@ -97,9 +98,7 @@ $Self->{UserObject}->UserUpdate(
     $Self->{UserObject}->GetUserData(
         UserID => $UserIDs[2],
     ),
-    ValidID => $Self->{ChangeObject}->{ValidObject}->ValidLookup(
-        Valid => 'invalid',
-    ),
+    ValidID => $Self->{ValidObject}->ValidLookup( Valid => 'invalid' ),
     ChangeUserID => 1,
 );
 push @InvalidUserIDs, pop @UserIDs;
@@ -3392,9 +3391,7 @@ for my $UnittestUserID (@UserIDs) {
     # update user
     $Self->{UserObject}->UserUpdate(
         %User,
-        ValidID => $Self->{ChangeObject}->{ValidObject}->ValidLookup(
-            Valid => 'invalid',
-        ),
+        ValidID => $Self->{ValidObject}->ValidLookup( Valid => 'invalid' ),
         ChangeUserID => 1,
     );
 }
