@@ -2,7 +2,7 @@
 # AgentITSMChangeZoom.dtl - provides HTML form for AgentITSMChangeZoom
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.dtl,v 1.11 2009-10-26 15:13:27 reb Exp $
+# $Id: AgentITSMChangeZoom.dtl,v 1.12 2009-10-28 01:08:54 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -90,6 +90,7 @@
                 </tr>
                 <tr><td colspan="2">&nbsp;</td></tr>
             </table>
+<!-- dtl:block:LinkTableComplex -->
             <hr size="2">
             <br>
             <table width="98%" align="center" border="0" cellspacing="0" cellpadding="0">
@@ -100,6 +101,7 @@
                 </tr>
             </table>
             <br>
+<!-- dtl:block:LinkTableComplex -->
         </td>
         <td width="25%" valign="top" class="menu">
 <!-- dtl:block:Meta -->
