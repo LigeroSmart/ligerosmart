@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeZoom.pm - the OTRS::ITSM::ChangeManagement change zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.pm,v 1.14 2009-10-27 16:40:47 bes Exp $
+# $Id: AgentITSMChangeZoom.pm,v 1.15 2009-10-28 02:11:45 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -279,13 +279,31 @@ sub Run {
         );
     }
 
-    # get linked objects
+    # get linked objects which are directly linked with this change object
     my $LinkListWithData = $Self->{LinkObject}->LinkListWithData(
         Object => 'ITSMChange',
         Key    => $ChangeID,
         State  => 'Valid',
         UserID => $Self->{UserID},
     );
+
+    # get all linked objects that are linked with a workorder of this change
+    for my $WorkOrderID ( @{ $Change->{WorkOrderIDs} } ) {
+
+        # get linked objects of this config item
+        my $LinkListWithDatafromWorkOrder = $Self->{LinkObject}->LinkListWithData(
+            Object => 'ITSMWorkOrder',
+            Key    => $WorkOrderID,
+            State  => 'Valid',
+            UserID => $Self->{UserID},
+        );
+
+        # add to linklistwithdata from change object
+        $LinkListWithData = {
+            %{$LinkListWithData},
+            %{$LinkListWithDatafromWorkOrder},
+            }
+    }
 
     # get link table view mode
     my $LinkTableViewMode = $Self->{ConfigObject}->Get('LinkObject::ViewMode');
