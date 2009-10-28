@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeZoom.pm - the OTRS::ITSM::ChangeManagement change zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.pm,v 1.17 2009-10-28 13:41:48 bes Exp $
+# $Id: AgentITSMChangeZoom.pm,v 1.18 2009-10-28 14:25:29 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::WorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -71,7 +71,7 @@ sub Run {
     # check error
     if ( !$Change ) {
         return $Self->{LayoutObject}->ErrorScreen(
-            Message => "Change $Change not found in database!",
+            Message => "Change $ChangeID not found in database!",
             Comment => 'Please contact the admin.',
         );
     }
