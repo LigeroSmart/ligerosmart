@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.79 2009-10-28 15:05:04 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.80 2009-10-28 15:13:36 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -618,7 +618,7 @@ push @WorkOrderTests, (
                 Report => 'WorkOrderAdd with WorkOrderStateID - Report - ' . $UniqueSignature,
             },
         },
-        SearchTest => [ 2, 8, 27, 28, 29 ],
+        SearchTest => [ 2, 8, 27, 28 ],
     },
     {
         Description => 'WorkOrderAdd() with WorkOrderTypeID.',
@@ -643,7 +643,7 @@ push @WorkOrderTests, (
                 Report => 'WorkOrderAdd with WorkOrderTypeID - Report - ' . $UniqueSignature,
             },
         },
-        SearchTest => [ 2, 8, 13, 23, 24, 25 ],
+        SearchTest => [ 2, 8, 13, 23, 24 ],
     },
     {
         Description => 'WorkOrderAdd() with WorkOrderTypeID and WorkOrderStateID.',
@@ -678,7 +678,7 @@ push @WorkOrderTests, (
                     . $UniqueSignature,
             },
         },
-        SearchTest => [ 2, 8, 13, 23, 24, 25, 27, 28, 29 ],
+        SearchTest => [ 2, 8, 13, 23, 24, 27, 28 ],
     },
     {
         Description =>
@@ -757,7 +757,7 @@ push @WorkOrderTests, (
                 WorkOrderStateID => $ReverseStatesList{closed},
             },
         },
-        SearchTest => [ 27, 28, 29 ],
+        SearchTest => [ 27, 28 ],
     },
 
     {
@@ -805,7 +805,7 @@ push @WorkOrderTests, (
                 WorkOrderTypeID => $ReverseTypesList{pir},
             },
         },
-        SearchTest => [ 13, 23, 24, 25 ],
+        SearchTest => [ 13, 23, 24 ],
     },
 
     {
@@ -1880,10 +1880,7 @@ my @WorkOrderSearchTests = (
             WorkOrderTypes => [ 'approval', 'pir', 'non-existent' ],
             WorkOrderTitle => '%' . $UniqueSignature,
         },
-        ResultData => {
-            TestCount     => 1,
-            TestExistence => 1,
-        },
+        SearchFails => 1,
     },
 
     # Nr 26 - search for workorder states
