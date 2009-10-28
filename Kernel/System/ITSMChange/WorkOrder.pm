@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.84 2009-10-28 15:29:04 bes Exp $
+# $Id: WorkOrder.pm,v 1.85 2009-10-28 15:37:08 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::EventHandler;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.84 $) [1];
+$VERSION = qw($Revision: 1.85 $) [1];
 
 =head1 NAME
 
@@ -852,7 +852,7 @@ sub WorkOrderSearch {
         $Param{UsingWildcards} = 1;
     }
 
-    # check whether the given WorkOrderStateIDs are valid
+    # check whether the given WorkOrderStateIDs are all valid
     return if !$Self->_CheckWorkOrderStateIDs( WorkOrderStateIDs => $Param{WorkOrderStateIDs} );
 
     # translate and thus check the WorkOrderStates
@@ -875,6 +875,9 @@ sub WorkOrderSearch {
 
         push @{ $Param{WorkOrderStateIDs} }, $WorkOrderStateID;
     }
+
+    # check whether the given WorkOrderTypeIDs are all valid
+    return if !$Self->_CheckWorkOrderTypeIDs( WorkOrderTypeIDs => $Param{WorkOrderTypeIDs} );
 
     # translate and thus check the WorkOrderTypes
     for my $WorkOrderType ( @{ $Param{WorkOrderTypes} } ) {
@@ -1535,7 +1538,7 @@ sub WorkOrderTypeList {
 
 =item _CheckWorkOrderStateIDs()
 
-check if the given workorder state ids are valid
+check if the given workorder state ids are all valid
 
     my $Ok = $WorkOrderObject->_CheckWorkOrderStateIDs(
         WorkOrderStateIDs => [ 25 ],
@@ -1582,39 +1585,52 @@ sub _CheckWorkOrderStateIDs {
     return 1;
 }
 
-=item _CheckWorkOrderTypeID()
+=item _CheckWorkOrderTypeIDs()
 
-check if a given workorder type id is valid
+check whether the given workorder type ids are all valid
 
-    my $Ok = $WorkOrderObject->_CheckWorkOrderTypeID(
-        WorkOrderTypeID => 2,
+    my $Ok = $WorkOrderObject->_CheckWorkOrderTypeIDs(
+        WorkOrderTypeIDs => [ 2, 500 ],
     );
 
 =cut
 
-sub _CheckWorkOrderTypeID {
+sub _CheckWorkOrderTypeIDs {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    if ( !$Param{WorkOrderTypeID} ) {
+    if ( !$Param{WorkOrderTypeIDs} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'Need WorkOrderTypeID!',
+            Message  => 'Need WorkOrderTypeIDs!',
         );
+
         return;
     }
 
-    # check if WorkOrderTypeID belongs to correct general catalog class
-    my $Type = $Self->WorkOrderTypeLookup(
-        WorkOrderTypeID => $Param{WorkOrderTypeID},
-    );
-
-    if ( !$Type ) {
+    if ( ref $Param{WorkOrderTypeIDs} ne 'ARRAY' ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "No valid WorkOrderTypeID given!",
+            Message  => 'The param WorkOrderTypeIDs must be an array reference!',
         );
+
         return;
+    }
+
+    # check if WorkOrderTypeIDs belongs to correct general catalog class
+    for my $TypeID ( @{ $Param{WorkOrderTypeIDs} } ) {
+        my $Type = $Self->WorkOrderTypeLookup(
+            WorkOrderTypeID => $TypeID,
+        );
+
+        if ( !$Type ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "The type id $TypeID is not valid!",
+            );
+
+            return;
+        }
     }
 
     return 1;
@@ -1667,7 +1683,7 @@ sub _GetWorkOrderNumber {
 
 =item _CheckWorkOrderParams()
 
-Checks if the various parameters are valid.
+Checks if the various parameters are all valid.
 
     my $Ok = $WorkOrderObject->_CheckWorkOrderParams(
         ChangeID         => 123,                                       # (optional)
@@ -1790,8 +1806,8 @@ sub _CheckWorkOrderParams {
 
     # check if given WorkOrderTypeID is valid
     if ( exists $Param{WorkOrderTypeID} ) {
-        return if !$Self->_CheckWorkOrderTypeID(
-            WorkOrderTypeID => $Param{WorkOrderTypeID},
+        return if !$Self->_CheckWorkOrderTypeIDs(
+            WorkOrderTypeIDs => [ $Param{WorkOrderTypeID} ],
         );
     }
 
@@ -1884,6 +1900,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.84 $ $Date: 2009-10-28 15:29:04 $
+$Revision: 1.85 $ $Date: 2009-10-28 15:37:08 $
 
 =cut
