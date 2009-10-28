@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.83 2009-10-28 15:13:36 bes Exp $
+# $Id: WorkOrder.pm,v 1.84 2009-10-28 15:29:04 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::EventHandler;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.83 $) [1];
+$VERSION = qw($Revision: 1.84 $) [1];
 
 =head1 NAME
 
@@ -843,6 +843,7 @@ sub WorkOrderSearch {
             Priority => 'error',
             Message  => "OrderByDirection can only contain 'Up' or 'Down'!",
         );
+
         return;
     }
 
@@ -850,6 +851,9 @@ sub WorkOrderSearch {
     if ( !defined $Param{UsingWildcards} ) {
         $Param{UsingWildcards} = 1;
     }
+
+    # check whether the given WorkOrderStateIDs are valid
+    return if !$Self->_CheckWorkOrderStateIDs( WorkOrderStateIDs => $Param{WorkOrderStateIDs} );
 
     # translate and thus check the WorkOrderStates
     for my $WorkOrderState ( @{ $Param{WorkOrderStates} } ) {
@@ -1529,21 +1533,21 @@ sub WorkOrderTypeList {
     return \@ArrayHashRef;
 }
 
-=item _CheckWorkOrderStateID()
+=item _CheckWorkOrderStateIDs()
 
-check if a given workorder state id is valid
+check if the given workorder state ids are valid
 
-    my $Ok = $WorkOrderObject->_CheckWorkOrderStateID(
-        WorkOrderStateID => 25,
+    my $Ok = $WorkOrderObject->_CheckWorkOrderStateIDs(
+        WorkOrderStateIDs => [ 25 ],
     );
 
 =cut
 
-sub _CheckWorkOrderStateID {
+sub _CheckWorkOrderStateIDs {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    if ( !$Param{WorkOrderStateID} ) {
+    if ( !$Param{WorkOrderStateIDs} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message  => 'Need WorkOrderStateID!',
@@ -1551,17 +1555,28 @@ sub _CheckWorkOrderStateID {
         return;
     }
 
-    # check if WorkOrderStateID belongs to correct general catalog class
-    my $State = $Self->WorkOrderStateLookup(
-        WorkOrderStateID => $Param{WorkOrderStateID},
-    );
-
-    if ( !$State ) {
+    if ( ref $Param{WorkOrderStateIDs} ne 'ARRAY' ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "No valid WorkOrderStateID given!",
+            Message  => 'The param WorkOrderStateIDs must be an array reference!',
         );
         return;
+    }
+
+    # check if WorkOrderStateIDs belongs to correct general catalog class
+    for my $StateID ( @{ $Param{WorkOrderStateIDs} } ) {
+        my $State = $Self->WorkOrderStateLookup(
+            WorkOrderStateID => $StateID,
+        );
+
+        if ( !$State ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "The state id $StateID is not valid!",
+            );
+
+            return;
+        }
     }
 
     return 1;
@@ -1768,8 +1783,8 @@ sub _CheckWorkOrderParams {
 
     # check if given WorkOrderStateID is valid
     if ( exists $Param{WorkOrderStateID} ) {
-        return if !$Self->_CheckWorkOrderStateID(
-            WorkOrderStateID => $Param{WorkOrderStateID},
+        return if !$Self->_CheckWorkOrderStateIDs(
+            WorkOrderStateIDs => [ $Param{WorkOrderStateID} ],
         );
     }
 
@@ -1869,6 +1884,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.83 $ $Date: 2009-10-28 15:13:36 $
+$Revision: 1.84 $ $Date: 2009-10-28 15:29:04 $
 
 =cut

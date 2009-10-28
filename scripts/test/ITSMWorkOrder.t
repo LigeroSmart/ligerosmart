@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.80 2009-10-28 15:13:36 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.81 2009-10-28 15:29:04 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1929,6 +1929,17 @@ my @WorkOrderSearchTests = (
             ChangeIDs       => [$WorkOrderAddTestID],
             WorkOrderStates => [ 'closed', 'ready', 'non-existent' ],
             WorkOrderTitle  => '%' . $UniqueSignature,
+        },
+        SearchFails => 1,
+    },
+
+    # Nr 29 - Search for an invalid WorkOrder state id
+    {
+        Description => 'Search for an invalid WorkOrder state id',
+        SearchData  => {
+            ChangeIDs         => [$WorkOrderAddTestID],
+            WorkOrderStateIDs => [-11],
+            WorkOrderTitle    => '%' . $UniqueSignature,
         },
         SearchFails => 1,
     },
