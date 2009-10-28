@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrder.pm,v 1.80 2009-10-28 14:27:57 bes Exp $
+# $Id: WorkOrder.pm,v 1.81 2009-10-28 14:45:38 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::EventHandler;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.80 $) [1];
+$VERSION = qw($Revision: 1.81 $) [1];
 
 =head1 NAME
 
@@ -894,10 +894,18 @@ sub WorkOrderSearch {
 
     # set string params
     my %StringParams = (
+
+        # in workorder table
         WorkOrderNumber => 'wo.workorder_number',
         WorkOrderTitle  => 'wo.title',
         Instruction     => 'wo.instruction',
         Report          => 'wo.report',
+
+        # in change table
+        ChangeNumber        => 'c.change_number',
+        ChangeTitle         => 'c.title',
+        ChangeDescription   => 'c.description',
+        ChangeJustification => 'c.justification',
     );
 
     # add string params to sql-where-array
@@ -932,6 +940,11 @@ sub WorkOrderSearch {
         else {
             push @SQLWhere,
                 "LOWER($StringParams{$StringParam}) = LOWER('$Param{$StringParam}')";
+        }
+
+        # join the change table, when it is needed in the WHERE clause
+        if ( $StringParams{$StringParam} =~ m{ \A c[.] }xms ) {
+            push @InnerJoinTables, 'c';
         }
     }
 
@@ -994,51 +1007,6 @@ sub WorkOrderSearch {
         $Param{$TimeParam} = $Self->{DBObject}->Quote( $Param{$TimeParam} );
 
         push @SQLWhere, "$TimeParams{$TimeParam} '$Param{$TimeParam}'";
-    }
-
-    # set change string params
-    my %ChangeStringParams = (
-        ChangeNumber        => 'c.change_number',
-        ChangeTitle         => 'c.title',
-        ChangeDescription   => 'c.description',
-        ChangeJustification => 'c.justification',
-    );
-
-    # add string params to sql-where-array
-    CHANGESTRINGPARAM:
-    for my $ChangeStringParam ( keys %ChangeStringParams ) {
-
-        # check string params for useful values, the string q{0} is allowed
-        next CHANGESTRINGPARAM if !exists $Param{$ChangeStringParam};
-        next CHANGESTRINGPARAM if !defined $Param{$ChangeStringParam};
-        next CHANGESTRINGPARAM if $Param{$ChangeStringParam} eq '';
-
-        # quote
-        $Param{$ChangeStringParam} = $Self->{DBObject}->Quote( $Param{$ChangeStringParam} );
-
-        # wildcards are used
-        if ( $Param{UsingWildcards} ) {
-
-            # Quote
-            $Param{$ChangeStringParam}
-                = $Self->{DBObject}->Quote( $Param{$ChangeStringParam}, 'Like' );
-
-            # replace * with %
-            $Param{$ChangeStringParam} =~ s{ \*+ }{%}xmsg;
-
-            # do not use string params which contain only %
-            next CHANGESTRINGPARAM if $Param{$ChangeStringParam} =~ m{ \A %* \z }xms;
-
-            push @SQLWhere,
-                "LOWER($ChangeStringParams{$ChangeStringParam}) LIKE LOWER('$Param{$ChangeStringParam}')";
-        }
-
-        # no wildcards are used
-        else {
-            push @SQLWhere,
-                "LOWER($ChangeStringParams{$ChangeStringParam}) = LOWER('$Param{$ChangeStringParam}')";
-        }
-        push @InnerJoinTables, 'c';
     }
 
     # assemble the ORDER BY clause
@@ -1898,6 +1866,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.80 $ $Date: 2009-10-28 14:27:57 $
+$Revision: 1.81 $ $Date: 2009-10-28 14:45:38 $
 
 =cut
