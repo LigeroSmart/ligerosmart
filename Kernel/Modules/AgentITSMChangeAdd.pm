@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.6 2009-10-26 13:00:24 bes Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.7 2009-10-28 09:42:42 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -87,6 +87,21 @@ sub Run {
             );
         }
     }
+
+    # build template dropdown
+    # TODO: fill dropdown with data
+    my $TemplateDropDown = $Self->{LayoutObject}->BuildSelection(
+        Name => 'ChangeTemplate',
+        Data => {},
+    );
+
+    # show block with template dropdown
+    $Self->{LayoutObject}->Block(
+        Name => 'ChangeTemplate',
+        Data => {
+            TemplatesStrg => $TemplateDropDown,
+        },
+    );
 
     # output header
     my $Output = $Self->{LayoutObject}->Header(
