@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.28 2009-10-27 21:11:02 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.29 2009-10-28 10:35:26 bes Exp $</CVS>
     <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
         <Description Lang="en">Logfile for the itsm change counter.</Description>
         <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
@@ -609,6 +609,18 @@
         <SubGroup>Frontend::Agent::CABMemberSearch</SubGroup>
         <Setting>
             <String>100</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMWorkOrder::TimePeriod" Required="1" Valid="1">
+        <Description Lang="en">Define the period, in which start and end times can be selected.</Description>
+        <Description Lang="de">Definition der Zeitspanne, in der Start- und Endzeiten ausgewählt werden können.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="YearPeriodPast">5</Item>
+                <Item Key="YearPeriodFuture">5</Item>
+            </Hash>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::EventModule###01-HistoryAdd" Required="0" Valid="1">

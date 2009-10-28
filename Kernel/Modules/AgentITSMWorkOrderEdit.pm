@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderEdit.pm - the OTRS::ITSM::ChangeManagement work order edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderEdit.pm,v 1.15 2009-10-26 11:40:25 reb Exp $
+# $Id: AgentITSMWorkOrderEdit.pm,v 1.16 2009-10-28 10:35:26 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -225,6 +225,9 @@ sub Run {
         Name => 'RichText',
     );
 
+    # time period that can be selected from the GUI
+    my %TimePeriod = %{ $Self->{ConfigObject}->Get('ITSMWorkOrder::TimePeriod') };
+
     # set the time selection
     for my $TimeType (qw(PlannedStartTime PlannedEndTime)) {
 
@@ -240,6 +243,7 @@ sub Run {
             Format   => 'DateInputFormatLong',
             Prefix   => $TimeType,
             DiffTime => $DiffTime,
+            %TimePeriod,
         );
 
         # show time fields

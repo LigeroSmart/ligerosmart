@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAdd.pm - the OTRS::ITSM::ChangeManagement work order add module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.pm,v 1.8 2009-10-28 09:52:33 reb Exp $
+# $Id: AgentITSMWorkOrderAdd.pm,v 1.9 2009-10-28 10:35:26 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange::WorkOrder;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -203,12 +203,16 @@ sub Run {
         # When an explicit time was retrieved, $DiffTime is not used
         my $DiffTime = $TimeType eq 'PlannedStartTime' ? 0 : 60 * 60;
 
+        # time period that can be selected from the GUI
+        my %TimePeriod = %{ $Self->{ConfigObject}->Get('ITSMWorkOrder::TimePeriod') };
+
         # add selection for the time
         my $TimeSelectionString = $Self->{LayoutObject}->BuildDateSelection(
             %GetParam,
             Format   => 'DateInputFormatLong',
             Prefix   => $TimeType,
             DiffTime => $DiffTime,
+            %TimePeriod,
         );
 
         # show time related fields
