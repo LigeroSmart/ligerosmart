@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.30 2009-10-28 13:18:00 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.31 2009-10-28 13:33:44 reb Exp $</CVS>
     <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
         <Description Lang="en">Logfile for the itsm change counter.</Description>
         <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
@@ -541,13 +541,13 @@
             <String>20</String>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::UserSearchAutoComplete###DynamicWidth" Required="1" Valid="1">
+    <ConfigItem Name="ITSMChange::Frontend::UserSearchAutoComplete::DynamicWidth" Required="1" Valid="1">
         <Description Lang="en">Set number of search results for the autocomplete feature.</Description>
         <Description Lang="de">Anzahl der Suchergebnisse für die Autocomplete-Funktionalitaet.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::UserSearch</SubGroup>
         <Setting>
-            <String>100</String>
+            <String>1</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::CABMemberSearchAutoComplete###Active" Required="1" Valid="1">
@@ -601,13 +601,13 @@
             <String>20</String>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::CABMemberSearchAutoComplete###DynamicWidth" Required="1" Valid="1">
+    <ConfigItem Name="ITSMChange::Frontend::CABMemberSearchAutoComplete::DynamicWidth" Required="1" Valid="1">
         <Description Lang="en">Set number of search results for the autocomplete feature.</Description>
         <Description Lang="de">Anzahl der Suchergebnisse für die Autocomplete-Funktionalitaet.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::CABMemberSearch</SubGroup>
         <Setting>
-            <String>100</String>
+            <String>1</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::TimePeriod" Required="1" Valid="1">

@@ -2,7 +2,7 @@
 # AgentITSMCABMemberSearch.dtl - provides autocomplete feature for customer search
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMCABMemberSearch.dtl,v 1.3 2009-10-26 10:20:20 reb Exp $
+# $Id: AgentITSMCABMemberSearch.dtl,v 1.4 2009-10-28 13:33:44 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -143,6 +143,7 @@
             for ( var i = 0; i < oCABResponse$Data{"InputNr"}.results.length; i++ ) {
                 var CABResult$Data{"InputNr"} = oCABResponse$Data{"InputNr"}.results[i];
                 var CABString$Data{"InputNr"} = CABResult$Data{"InputNr"}["UserValuePlain"] + CABResult$Data{"InputNr"}["UserKey"];
+                    CABString$Data{"InputNr"} = CABString$Data{"InputNr"} + CABResult$Data{"InputNr"}["UserType"] + "     ";
                 if ( CABString$Data{"InputNr"}.length > CABMaxString$Data{"InputNr"}.length ) {
                     CABMaxString$Data{"InputNr"} = CABString$Data{"InputNr"};
                 }
