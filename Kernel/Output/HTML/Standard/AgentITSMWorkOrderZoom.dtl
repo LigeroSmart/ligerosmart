@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderZoom.dtl - provides HTML form for AgentITSMWorkOrderZoom
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderZoom.dtl,v 1.10 2009-10-28 10:12:52 reb Exp $
+# $Id: AgentITSMWorkOrderZoom.dtl,v 1.11 2009-10-28 10:14:21 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -90,8 +90,6 @@
                             <tr>
                                 <td>$Data{"AttachmentName"}</td>
                                 <td>$Data{"AttachmentSize"}</td>
-<!-- TODO: set correct name for Delete button with unique name -->
-                                <td><input class="button" type="submit" name="DeleteAttachmentxxx" value="$Text{"Delete"}"></td>
                             </tr>
 <!-- dtl:block:AttachmentRow -->
                         </table>
