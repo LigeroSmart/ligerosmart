@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderAdd.dtl - provides HTML form for AgentITSMWorkOrderAdd
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.dtl,v 1.16 2009-10-28 10:12:52 reb Exp $
+# $Id: AgentITSMWorkOrderAdd.dtl,v 1.17 2009-10-28 13:18:00 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@
     </tr>
     <tr>
         <td class="menu">
-            <a href="$Env{"Baselink"}Action=AgentITSMChangeZoom&ChangeID=$QData{"ChangeID"}" class="menuitem">$Text{"Back"}</a>
+            <a class="menuitem" href="$Env{"Baselink"}Action=AgentITSMChangeZoom&ChangeID=$QData{"ChangeID"}">$Text{"Back"}</a>
         </td>
     </tr>
 

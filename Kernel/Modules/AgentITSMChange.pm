@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChange.pm - the OTRS::ITSM::ChangeManagement change overview module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChange.pm,v 1.7 2009-10-27 16:40:47 bes Exp $
+# $Id: AgentITSMChange.pm,v 1.8 2009-10-28 13:18:00 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -48,6 +48,13 @@ sub Run {
     # TODO: implement paging
     # get page
     my $Page = $Self->{ParamObject}->GetParam( Param => 'Page' ) || 1;
+
+    # store last screen, used for backlinks
+    $Self->{SessionObject}->UpdateSessionID(
+        SessionID => $Self->{SessionID},
+        Key       => 'LastScreenChanges',
+        Value     => $Self->{RequestedURL},
+    );
 
     my %SearchResult = (
         Result       => 0,
