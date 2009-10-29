@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.126 2009-10-29 08:34:48 bes Exp $
+# $Id: ITSMChange.pm,v 1.127 2009-10-29 08:46:13 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.126 $) [1];
+$VERSION = qw($Revision: 1.127 $) [1];
 
 =head1 NAME
 
@@ -1169,34 +1169,14 @@ sub ChangeSearch {
 
     # set time params
     my %TimeParams = (
+
+        # times in change_item
         CreateTimeNewerDate => 'c.create_time >=',
         CreateTimeOlderDate => 'c.create_time <=',
         ChangeTimeNewerDate => 'c.change_time >=',
         ChangeTimeOlderDate => 'c.change_time <=',
-    );
 
-    # add change time params to sql-where-array
-    TIMEPARAM:
-    for my $TimeParam ( keys %TimeParams ) {
-
-        next TIMEPARAM if !$Param{$TimeParam};
-
-        if ( $Param{$TimeParam} !~ m{ \A \d\d\d\d-\d\d-\d\d \s \d\d:\d\d:\d\d \z }xms ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => 'Invalid date format found!',
-            );
-            return;
-        }
-
-        # quote
-        $Param{$TimeParam} = $Self->{DBObject}->Quote( $Param{$TimeParam} );
-
-        push @SQLWhere, "$TimeParams{$TimeParam} '$Param{$TimeParam}'";
-    }
-
-    # set time params in workorder table
-    my %WorkOrderTimeParams = (
+        # times in change_workorder
         PlannedStartTimeNewerDate => 'min(wo1.planned_start_time) >=',
         PlannedStartTimeOlderDate => 'min(wo1.planned_start_time) <=',
         PlannedEndTimeNewerDate   => 'max(wo1.planned_end_time) >=',
@@ -1207,25 +1187,34 @@ sub ChangeSearch {
         ActualEndTimeOlderDate    => 'max(wo1.actual_end_time) <=',
     );
 
-    # add work order time params to sql-having-array
+    # check and add time params to WHERE or HAVING clause
     TIMEPARAM:
-    for my $TimeParam ( keys %WorkOrderTimeParams ) {
+    for my $TimeParam ( keys %TimeParams ) {
 
         next TIMEPARAM if !$Param{$TimeParam};
 
         if ( $Param{$TimeParam} !~ m{ \A \d\d\d\d-\d\d-\d\d \s \d\d:\d\d:\d\d \z }xms ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => 'Invalid date format found!',
+                Message  => "The parameter $TimeParam has an invalid date format!",
             );
+
             return;
         }
 
-        # quote
         $Param{$TimeParam} = $Self->{DBObject}->Quote( $Param{$TimeParam} );
 
-        push @SQLHaving,       "$WorkOrderTimeParams{$TimeParam} '$Param{$TimeParam}'";
-        push @OuterJoinTables, 'wo1';
+        if ( $TimeParams{$TimeParam} =~ m{ wo1 }xms ) {
+
+            # the change_workorder table needs to be joined, when it occurs in the HAVING clause
+            push @SQLHaving,       "$TimeParams{$TimeParam} '$Param{$TimeParam}'";
+            push @OuterJoinTables, 'wo1';
+        }
+        else {
+
+            # the time attributes of change_item show up in the WHERE clause
+            push @SQLWhere, "$TimeParams{$TimeParam} '$Param{$TimeParam}'";
+        }
     }
 
     # conditions for CAB searches
@@ -2086,6 +2075,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.126 $ $Date: 2009-10-29 08:34:48 $
+$Revision: 1.127 $ $Date: 2009-10-29 08:46:13 $
 
 =cut
