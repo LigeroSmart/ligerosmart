@@ -2,7 +2,7 @@
 # AgentITSMChangeZoom.dtl - provides HTML form for AgentITSMChangeZoom
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.dtl,v 1.15 2009-10-28 10:14:21 reb Exp $
+# $Id: AgentITSMChangeZoom.dtl,v 1.16 2009-10-29 11:41:19 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -162,7 +162,13 @@
                 </tr>
                 <tr>
                     <td class="mainkey">$Text{"Change Initiator(s):"}</td>
-                    <td class="mainvalue"><div title="$QData{"Change Initiators"}"></div></td>
+                    <td class="mainvalue">
+                        <div title="$QData{"Change Initiators"}">
+<!-- dtl:block:ChangeInitiator -->
+                            <div title="$QData{"UserLogin"} ($Quote{"$Data{"UserFirstname"} $Data{"UserLastname"}"})">$QData{"UserLogin","15"} ($Quote{"$Data{"UserFirstname"} $Data{"UserLastname"}","15"})</div>
+<!-- dtl:block:ChangeInitiator -->
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="2">&nbsp;</td>

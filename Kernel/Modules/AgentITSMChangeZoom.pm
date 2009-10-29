@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeZoom.pm - the OTRS::ITSM::ChangeManagement change zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.pm,v 1.19 2009-10-28 23:20:32 ub Exp $
+# $Id: AgentITSMChangeZoom.pm,v 1.20 2009-10-29 11:41:19 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -300,6 +300,41 @@ sub Run {
         State  => 'Valid',
         UserID => $Self->{UserID},
     );
+
+    # get change initiators (customer users of linked tickets)
+    my $TicketsRef = $LinkListWithData->{Ticket} || {};
+    my %ChangeInitiatorsID;
+    for my $LinkType ( keys %{$TicketsRef} ) {
+
+        my $TicketRef = $TicketsRef->{$LinkType}->{Source};
+        for my $TicketID ( keys %{$TicketRef} ) {
+            my $CustomerUserID = $TicketRef->{$TicketID}->{CustomerUserID};
+            $ChangeInitiatorsID{$CustomerUserID} = 1;
+        }
+    }
+
+    # get change initiators info
+    my $ChangeInitiators = '';
+    for my $CustomerUserID ( keys %ChangeInitiatorsID ) {
+        my %CustomerUser = $Self->{CustomerUserObject}->CustomerUserDataGet(
+            User => $CustomerUserID,
+        );
+
+        if (%CustomerUser) {
+            $Self->{LayoutObject}->Block(
+                Name => 'ChangeInitiator',
+                Data => {%CustomerUser},
+            );
+
+            $ChangeInitiators .= sprintf "%s (%s %s)",
+                $CustomerUser{UserLogin},
+                $CustomerUser{UserFirstname},
+                $CustomerUser{UserLastname};
+        }
+    }
+
+    # display a string with all changeinitiators
+    $Change->{'Change Initators'} = $ChangeInitiators;
 
     # get all linked objects that are linked with a workorder of this change
     for my $WorkOrderID ( @{ $Change->{WorkOrderIDs} } ) {
