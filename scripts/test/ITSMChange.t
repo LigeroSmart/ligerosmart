@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.102 2009-10-28 23:21:44 ub Exp $
+# $Id: ITSMChange.t,v 1.103 2009-10-29 16:10:36 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -710,6 +710,40 @@ my @ChangeTests = (
         },
     },
 
+    # test on invalid RealizeTime
+    {
+        Description => 'Test on invalid RealizeTime for ChangeAdd.',
+        Fails       => 1,
+        SourceData  => {
+            ChangeAdd => {
+                UserID      => 1,
+                RealizeTime => 'anything invalid',
+            },
+        },
+        ReferenceData => {
+            ChangeGet => undef,
+        },
+    },
+
+    # test on valid RealizeTime
+    {
+        Description => 'Test on valid RealizeTime for ChangeAdd.',
+        SourceData  => {
+            ChangeAdd => {
+                UserID      => 1,
+                RealizeTime => '2009-10-29 13:33:33',
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                CreateBy    => 1,
+                ChangeBy    => 1,
+                ChangeTitle => q{},
+                RealizeTime => '2009-10-29 13:33:33',
+            },
+        },
+    },
+
     #------------------------------#
     # Tests on ChangeUpdate
     #------------------------------#
@@ -868,6 +902,53 @@ my @ChangeTests = (
                 ChangeTitle   => '0',
                 Description   => '0',
                 Justification => '0',
+            },
+        },
+    },
+
+    # test on valid RealizeTime
+    {
+        Description => 'Test on valid RealizeTime for ChangeUpdate.',
+        SourceData  => {
+            ChangeAdd => {
+                UserID      => 1,
+                RealizeTime => '2009-10-29 13:33:33',
+            },
+            ChangeUpdate => {
+                RealizeTime => '2009-11-06 08:15:22',
+                UserID      => $UserIDs[0],
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                CreateBy    => 1,
+                ChangeBy    => $UserIDs[0],
+                ChangeTitle => q{},
+                RealizeTime => '2009-11-06 08:15:22',
+            },
+        },
+    },
+
+    # test on invalid RealizeTime
+    {
+        Description => 'Test on invalid RealizeTime for ChangeUpdate.',
+        UpdateFails => 1,
+        SourceData  => {
+            ChangeAdd => {
+                UserID      => 1,
+                RealizeTime => '2009-10-29 13:33:33',
+            },
+            ChangeUpdate => {
+                RealizeTime => 'anything',
+                UserID      => $UserIDs[0],
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                CreateBy    => 1,
+                ChangeBy    => 1,
+                ChangeTitle => q{},
+                RealizeTime => '2009-10-29 13:33:33',
             },
         },
     },

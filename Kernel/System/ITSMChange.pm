@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.129 2009-10-29 15:55:23 bes Exp $
+# $Id: ITSMChange.pm,v 1.130 2009-10-29 16:10:36 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.129 $) [1];
+$VERSION = qw($Revision: 1.130 $) [1];
 
 =head1 NAME
 
@@ -139,6 +139,7 @@ or
         ChangeBuilderID => 6,                                  # (optional)
         CABAgents       => [ 1, 2, 4 ],     # UserIDs          # (optional)
         CABCustomers    => [ 'tt', 'mm' ],  # CustomerUserIDs  # (optional)
+        RealizeTime     => '2006-01-19 23:59:59',              # (optional)
         UserID          => 1,
     );
 
@@ -246,6 +247,7 @@ update a change
         ChangeBuilderID => 6,                                  # (optional)
         CABAgents       => [ 1, 2, 4 ],     # UserIDs          # (optional)
         CABCustomers    => [ 'tt', 'mm' ],  # CustomerUserIDs  # (optional)
+        RealizeTime     => '2006-01-19 23:59:59',              # (optional)
         UserID          => 1,
     );
 
@@ -312,6 +314,7 @@ sub ChangeUpdate {
         ChangeStateID   => 'change_state_id',
         ChangeManagerID => 'change_manager_id',
         ChangeBuilderID => 'change_builder_id',
+        RealizeTime     => 'realize_time',
     );
 
     # build SQL to update change
@@ -379,6 +382,7 @@ The returned hash reference contains following elements:
     $Change{PlannedEndTime}     # determined from the workorders
     $Change{ActualStartTime}    # determined from the workorders
     $Change{ActualEndTime}      # determined from the workorders
+    $Change{RealizeTime}
     $Change{CreateTime}
     $Change{CreateBy}
     $Change{ChangeTime}
@@ -403,7 +407,7 @@ sub ChangeGet {
     # build SQL
     my $SQL = 'SELECT id, change_number, title, description, justification, '
         . 'change_state_id, change_manager_id, change_builder_id, '
-        . 'create_time, create_by, change_time, change_by '
+        . 'create_time, create_by, change_time, change_by, realize_time '
         . 'FROM change_item '
         . 'WHERE id = ? ';
 
@@ -431,6 +435,7 @@ sub ChangeGet {
         $ChangeData{CreateBy}          = $Row[9];
         $ChangeData{ChangeTime}        = $Row[10];
         $ChangeData{ChangeBy}          = $Row[11];
+        $ChangeData{RealizeTime}       = $Row[12];
     }
 
     # check error
@@ -940,6 +945,11 @@ is ignored.
         # changes with changed time before then ....
         ChangeTimeOlderDate       => '2006-01-19 23:59:59',      # (optional)
 
+        # changes with realize time after ...
+        RealizeTimeNewerDate      => '2006-01-09 00:00:01',      # (optional)
+        # changes with realize time before then ....
+        RealizeTimeOlderDate      => '2006-01-19 23:59:59',      # (optional)
+
         OrderBy => [ 'ChangeID', 'ChangeManagerID' ],            # (optional)
         # default: [ 'ChangeID' ]
         # (ChangeID, ChangeNumber, ChangeStateID,
@@ -1183,10 +1193,12 @@ sub ChangeSearch {
     my %TimeParams = (
 
         # times in change_item
-        CreateTimeNewerDate => 'c.create_time >=',
-        CreateTimeOlderDate => 'c.create_time <=',
-        ChangeTimeNewerDate => 'c.change_time >=',
-        ChangeTimeOlderDate => 'c.change_time <=',
+        CreateTimeNewerDate  => 'c.create_time >=',
+        CreateTimeOlderDate  => 'c.create_time <=',
+        ChangeTimeNewerDate  => 'c.change_time >=',
+        ChangeTimeOlderDate  => 'c.change_time <=',
+        RealizeTimeNewerDate => 'c.realize_time >=',
+        RealizeTimeOlderDate => 'c.realize_time <=',
 
         # times in change_workorder
         PlannedStartTimeNewerDate => 'min(wo1.planned_start_time) >=',
@@ -1891,6 +1903,7 @@ sub _CheckChangeParams {
         ChangeManagerID
         ChangeBuilderID
         ChangeStateID
+        RealizeTime
         )
         )
     {
@@ -1934,6 +1947,19 @@ sub _CheckChangeParams {
                 );
                 return;
             }
+        }
+
+        # check if realize_time has correct format
+        if (
+            $Argument eq 'RealizeTime'
+            && $Param{$Argument} !~ m{ \A \d\d\d\d-\d\d-\d\d \s \d\d:\d\d:\d\d \z }xms
+            )
+        {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => 'Invalid format for RealizeTime!',
+            );
+            return;
         }
     }
 
@@ -2043,6 +2069,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.129 $ $Date: 2009-10-29 15:55:23 $
+$Revision: 1.130 $ $Date: 2009-10-29 16:10:36 $
 
 =cut

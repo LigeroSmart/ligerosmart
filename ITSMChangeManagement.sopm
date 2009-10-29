@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.39 2009-10-29 12:05:14 reb Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.40 2009-10-29 16:10:36 reb Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -76,6 +76,7 @@
             <Column Name="change_state_id" Required="true" Type="INTEGER"/>
             <Column Name="change_manager_id" Required="false" Type="INTEGER"/>
             <Column Name="change_builder_id" Required="true" Type="INTEGER"/>
+            <Column Name="realize_time" Required="false" Type="DATE"/>
             <Column Name="create_time" Required="true" Type="DATE"/>
             <Column Name="create_by" Required="true" Type="INTEGER"/>
             <Column Name="change_time" Required="true" Type="DATE"/>
