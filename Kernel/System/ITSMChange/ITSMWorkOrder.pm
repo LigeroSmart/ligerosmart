@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.1 2009-10-28 23:19:00 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.2 2009-10-29 08:40:43 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::EventHandler;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -775,7 +775,8 @@ sub WorkOrderSearch {
         WorkOrderTypeIDs
         WorkOrderAgentIDs
         CreateBy
-        ChangeBy )
+        ChangeBy
+        )
         )
     {
         if ( !defined $Param{$Argument} ) {
@@ -1375,11 +1376,13 @@ the StateID and die Element 'Value' is the name of the state. The array elements
 are sorted by state id.
 
     my $WorkOrderStateList = [
-        { Key   => 156,
-          Value => 'approved',
+        {
+            Key   => 156,
+            Value => 'approved',
         },
-        { Key   => 157,
-          Value => 'in progress',
+        {
+            Key   => 157,
+            Value => 'in progress',
         },
     ];
 
@@ -1495,11 +1498,13 @@ the TypeID and die Element 'Value' is the name of the type. The array elements
 are sorted by type id.
 
     my $WorkOrderTypeList = [
-        { Key   => 171,
-          Value => 'workorder',
+        {
+            Key   => 171,
+            Value => 'workorder',
         },
-        { Key   => 172,
-          Value => 'backout',
+        {
+            Key   => 172,
+            Value => 'backout',
         },
     ];
 
@@ -1900,6 +1905,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2009-10-28 23:19:00 $
+$Revision: 1.2 $ $Date: 2009-10-29 08:40:43 $
 
 =cut
