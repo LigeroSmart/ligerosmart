@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.125 2009-10-28 23:19:00 ub Exp $
+# $Id: ITSMChange.pm,v 1.126 2009-10-29 08:34:48 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.125 $) [1];
+$VERSION = qw($Revision: 1.126 $) [1];
 
 =head1 NAME
 
@@ -126,7 +126,9 @@ add a new change
     my $ChangeID = $ChangeObject->ChangeAdd(
         UserID => 1,
     );
+
 or
+
     my $ChangeID = $ChangeObject->ChangeAdd(
         ChangeTitle     => 'Replacement of mail server',       # (optional)
         Description     => 'New mail server is faster',        # (optional)
@@ -353,34 +355,34 @@ sub ChangeUpdate {
 
 return a change as a hash reference
 
+    my $ChangeRef = $ChangeObject->ChangeGet(
+        ChangeID => 123,
+        UserID   => 1,
+    );
+
 The returned hash reference contains following elements:
 
     $Change{ChangeID}
     $Change{ChangeNumber}
     $Change{ChangeStateID}
     $Change{ChangeState}
-    $Change{ChangeStateSignal}
+    $Change{ChangeStateSignal}  # fetched from SysConfig
     $Change{ChangeTitle}
     $Change{Description}
     $Change{Justification}
     $Change{ChangeManagerID}
     $Change{ChangeBuilderID}
-    $Change{WorkOrderIDs}     # array reference with WorkOrderIDs
-    $Change{CABAgents}        # array reference with CAB Agent UserIDs
-    $Change{CABCustomers}     # array reference with CAB CustomerUserIDs
-    $Change{PlannedStartTime}
-    $Change{PlannedEndTime}
-    $Change{ActualStartTime}
-    $Change{ActualEndTime}
+    $Change{WorkOrderIDs}       # array reference with WorkOrderIDs
+    $Change{CABAgents}          # array reference with CAB Agent UserIDs
+    $Change{CABCustomers}       # array reference with CAB CustomerUserIDs
+    $Change{PlannedStartTime}   # determined from the workorders
+    $Change{PlannedEndTime}     # determined from the workorders
+    $Change{ActualStartTime}    # determined from the workorders
+    $Change{ActualEndTime}      # determined from the workorders
     $Change{CreateTime}
     $Change{CreateBy}
     $Change{ChangeTime}
     $Change{ChangeBy}
-
-    my $ChangeRef = $ChangeObject->ChangeGet(
-        ChangeID => 123,
-        UserID   => 1,
-    );
 
 =cut
 
@@ -496,7 +498,7 @@ sub ChangeGet {
 =item ChangeCABUpdate()
 
 Add or update the CAB of a change.
-One of CABAgents and CABCustomers must be passed.
+One or both of CABAgents and CABCustomers must be passed.
 Passing a reference to an empty array deletes the part of the CAB (CABAgents or CABCustomers)
 When agents or customers are passed multiple times, they will be inserted only once.
 
@@ -622,18 +624,20 @@ sub ChangeCABUpdate {
 
 =item ChangeCABGet()
 
-return the CAB of a change as hasharray reference, the returned array references are sorted
-
-Return
-    $ChangeCAB = {
-        CABAgents    => [ 1, 2, 4 ],
-        CABCustomers => [ 'aa', 'bb' ],
-    }
+Return the CAB of a change as a hashref, where the values are arrayrefs.
+The returned array references are sorted.
 
     my $ChangeCAB = $ChangeObject->ChangeCABGet(
         ChangeID => 123,
         UserID   => 1,
     );
+
+Returns:
+
+    $ChangeCAB = {
+        CABAgents    => [ 1, 2, 4 ],
+        CABCustomers => [ 'aa', 'bb' ],
+    }
 
 =cut
 
@@ -699,7 +703,7 @@ sub ChangeCABGet {
 
 =item ChangeCABDelete()
 
-delete the CAB of a change
+Delete the CAB of a change.
 
     my $Success = $ChangeObject->ChangeCABDelete(
         ChangeID => 123,
@@ -842,7 +846,7 @@ sub ChangeLookup {
 
 =item ChangeList()
 
-return a change id list of all changes as array reference
+Return a change id list of all changes as an array reference.
 
     my $ChangeIDsRef = $ChangeObject->ChangeList(
         UserID => 1,
@@ -882,7 +886,6 @@ The search criteria are logically AND connected.
 When a list is passed as criterium, the individual members are OR connected.
 When an undef or a reference to an empty array is passed, then the search criterium
 is ignored.
-okup
 
     my $ChangeIDsRef = $ChangeObject->ChangeSearch(
         ChangeNumber      => '2009100112345778',                 # (optional)
@@ -1463,7 +1466,7 @@ sub ChangeSearch {
 
 =item ChangeDelete()
 
-delete a change
+Delete a change.
 
 This function first removes all links to this ChangeObject.
 Then it deletes the history of this ChangeObject.
@@ -1569,7 +1572,7 @@ sub ChangeDelete {
 
 =item ChangeWorkflowEdit()
 
-edit the workflow of a change
+Edit the workflow of a change.
 
 NOTE: To be defined in more detail!
 
@@ -1599,7 +1602,7 @@ sub ChangeWorkflowEdit {
 
 =item ChangeWorkflowList()
 
-list the workflow of a change
+List the workflows of a change.
 
 NOTE: To be defined in more detail!
 
@@ -1627,9 +1630,73 @@ sub ChangeWorkflowList {
     return;
 }
 
+=item ChangeStateLookup()
+
+This method does a lookup for a change state. If a change state id is given,
+it returns the name of the change state. If a change state name is given,
+the appropriate id is returned.
+
+    my $Name = $ChangeObject->ChangeStateLookup(
+        StateID => 1234,
+    );
+
+    my $ID = $ChangeObject->ChangeStateLookup(
+        State => 'accepted',
+    );
+
+=cut
+
+sub ChangeStateLookup {
+    my ( $Self, %Param ) = @_;
+
+    # either StateID or State must be passed
+    if ( !$Param{StateID} && !$Param{State} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need StateID or State!',
+        );
+        return;
+    }
+
+    if ( $Param{StateID} && $Param{State} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need StateID OR State - not both!',
+        );
+        return;
+    }
+
+    # get change state from general catalog
+    # mapping of the id to the name
+    my %ChangeState = %{
+        $Self->{GeneralCatalogObject}->ItemList(
+            Class => 'ITSM::ChangeManagement::Change::State',
+            ) || {}
+        };
+
+    if ( $Param{StateID} ) {
+        return $ChangeState{ $Param{StateID} };
+    }
+    else {
+
+        # reverse key - value pairs to have the name as keys
+        my %ReversedChangeState = reverse %ChangeState;
+
+        return $ReversedChangeState{ $Param{State} };
+    }
+}
+
+=back
+
+=head1 INTERNAL METHODS
+
+=over 4
+
+=cut
+
 =item _CheckChangeStateIDs()
 
-check if all of the given change state ids are valid
+Check whether all of the given change state ids are valid.
 
     my $Ok = $ChangeObject->_CheckChangeStateIDs(
         ChangeStateIDs => [ 25, 26 ],
@@ -1662,7 +1729,7 @@ sub _CheckChangeStateIDs {
         Class => 'ITSM::ChangeManagement::Change::State',
     );
 
-    # check if WorkOrderStateIDs belongs to correct general catalog class
+    # check if ChangeStateIDs belongs to correct general catalog class
     for my $StateID ( @{ $Param{ChangeStateIDs} } ) {
         my $State = $Self->ChangeStateLookup(
             StateID => $StateID,
@@ -1683,7 +1750,7 @@ sub _CheckChangeStateIDs {
 
 =item _ChangeNumberCreate()
 
-create a new change number
+Create a new unique change number. Used in ChangeAdd().
 
     my $ChangeNumber = $ChangeObject->_ChangeNumberCreate();
 
@@ -1829,7 +1896,7 @@ sub _ChangeTicksGet {
 
 =item _CheckChangeParams()
 
-checks the params to ChangeAdd() and ChangeUpdate().
+Checks the params to ChangeAdd() and ChangeUpdate().
 There are no required parameters.
 
     my $Ok = $ChangeObject->_CheckChangeParams(
@@ -1843,7 +1910,8 @@ There are no required parameters.
         CABCustomers    => [ 'tt', 'mm' ],  # CustomerUserIDs  # (optional)
     );
 
-These string parameters have length constraints:
+The ChangeStateID is checked for existence in the general catalog.
+The string parameters have length constraints:
 
     Parameter      | max. length
     ---------------+-----------------
@@ -2002,62 +2070,6 @@ sub _CheckChangeParams {
     return 1;
 }
 
-=item ChangeStateLookup()
-
-This method does a lookup for a change state. If a change state id is given,
-it returns the name of the change state. If a change state name is given,
-the appropriate id is returned.
-
-    my $Name = $ChangeObject->ChangeStateLookup(
-        StateID => 1234,
-    );
-
-    my $ID = $ChangeObject->ChangeStateLookup(
-        State => 'accepted',
-    );
-
-=cut
-
-sub ChangeStateLookup {
-    my ( $Self, %Param ) = @_;
-
-    # either StateID or State must be passed
-    if ( !$Param{StateID} && !$Param{State} ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => 'Need StateID or State!',
-        );
-        return;
-    }
-
-    if ( $Param{StateID} && $Param{State} ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => 'Need StateID OR State - not both!',
-        );
-        return;
-    }
-
-    # get change state from general catalog
-    # mapping of the id to the name
-    my %ChangeState = %{
-        $Self->{GeneralCatalogObject}->ItemList(
-            Class => 'ITSM::ChangeManagement::Change::State',
-            ) || {}
-        };
-
-    if ( $Param{StateID} ) {
-        return $ChangeState{ $Param{StateID} };
-    }
-    else {
-
-        # reverse key - value pairs to have the name as keys
-        my %ReversedChangeState = reverse %ChangeState;
-
-        return $ReversedChangeState{ $Param{State} };
-    }
-}
-
 1;
 
 =back
@@ -2074,6 +2086,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.125 $ $Date: 2009-10-28 23:19:00 $
+$Revision: 1.126 $ $Date: 2009-10-29 08:34:48 $
 
 =cut
