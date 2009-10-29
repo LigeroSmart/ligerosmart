@@ -2,12 +2,30 @@
 # AgentITSMChangeAdd.dtl - provides HTML form for AgentITSMChangeAdd
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.dtl,v 1.12 2009-10-28 10:12:52 reb Exp $
+# $Id: AgentITSMChangeAdd.dtl,v 1.13 2009-10-29 10:57:35 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+
+<!-- start form -->
+<script language="JavaScript" type="text/javascript">
+<!--
+
+function submit_compose() {
+    if (document.compose.ChangeTitle.value == "") {
+        alert('$JSText{"A change must have a title!"}');
+        document.compose.ChangeTitle.focus();
+
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+//-->
+</script>
 
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
@@ -140,7 +158,7 @@ $Include{"RichTextEditorITSM"}
                     </tr>
                     <tr>
                         <td class="contentfooter">
-                            <input class="button" type="submit" name="Submit" value="$Text{"Submit"}">
+                            <input class="button" id="submitAddChange" accesskey="g" type="submit" name="AddChange" value="$Text{"Submit"}" onclick="return submit_compose();"/>
                         </td>
                     </tr>
                 </table>
