@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.2 2009-10-29 08:40:43 mae Exp $
+# $Id: ITSMWorkOrder.pm,v 1.3 2009-10-29 15:55:23 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::EventHandler;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
@@ -172,7 +172,7 @@ sub WorkOrderAdd {
         return;
     }
 
-    # if State is given "translate" it
+    # if a State is given, then look up the ID
     if ( $Param{WorkOrderState} ) {
         $Param{WorkOrderStateID} = $Self->WorkOrderStateLookup(
             WorkOrderState => $Param{WorkOrderState},
@@ -192,7 +192,7 @@ sub WorkOrderAdd {
         return;
     }
 
-    # if Type is given "translate" it
+    # if Type is given, then look up the ID
     if ( $Param{WorkOrderType} ) {
         $Param{WorkOrderTypeID} = $Self->WorkOrderTypeLookup(
             WorkOrderType => $Param{WorkOrderType},
@@ -401,7 +401,7 @@ sub WorkOrderUpdate {
         return;
     }
 
-    # if State is given "translate" it
+    # if State is given, then look up the ID
     if ( $Param{WorkOrderState} ) {
         $Param{WorkOrderStateID} = $Self->WorkOrderStateLookup(
             WorkOrderState => $Param{WorkOrderState},
@@ -417,7 +417,7 @@ sub WorkOrderUpdate {
         return;
     }
 
-    # if Type is given "translate" it
+    # if Type is given, then look up the ID
     if ( $Param{WorkOrderType} ) {
         $Param{WorkOrderTypeID} = $Self->WorkOrderTypeLookup(
             WorkOrderType => $Param{WorkOrderType},
@@ -856,7 +856,7 @@ sub WorkOrderSearch {
     # check whether the given WorkOrderStateIDs are all valid
     return if !$Self->_CheckWorkOrderStateIDs( WorkOrderStateIDs => $Param{WorkOrderStateIDs} );
 
-    # translate and thus check the WorkOrderStates
+    # look up and thus check the WorkOrderStates
     for my $WorkOrderState ( @{ $Param{WorkOrderStates} } ) {
 
         # get the ID for the name
@@ -880,7 +880,7 @@ sub WorkOrderSearch {
     # check whether the given WorkOrderTypeIDs are all valid
     return if !$Self->_CheckWorkOrderTypeIDs( WorkOrderTypeIDs => $Param{WorkOrderTypeIDs} );
 
-    # translate and thus check the WorkOrderTypes
+    # look up and thus check the WorkOrderTypes
     for my $WorkOrderType ( @{ $Param{WorkOrderTypes} } ) {
 
         # get the ID for the name
@@ -1905,6 +1905,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2009-10-29 08:40:43 $
+$Revision: 1.3 $ $Date: 2009-10-29 15:55:23 $
 
 =cut

@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.128 2009-10-29 08:54:05 bes Exp $
+# $Id: ITSMChange.pm,v 1.129 2009-10-29 15:55:23 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.128 $) [1];
+$VERSION = qw($Revision: 1.129 $) [1];
 
 =head1 NAME
 
@@ -274,7 +274,7 @@ sub ChangeUpdate {
         return;
     }
 
-    # if ChangeState is given "translate" it
+    # when ChangeState is given then look up the ID
     if ( $Param{ChangeState} ) {
         $Param{ChangeStateID} = $Self->ChangeStateLookup(
             State => $Param{ChangeState},
@@ -764,7 +764,7 @@ sub ChangeCABDelete {
 
 Return the change id when the change number is passed.
 Return the change number when the change id is passed.
-When no change id or change number is found, the undefined value is returned.
+When no change id or change number is found, then the undefined value is returned.
 
     my $ChangeID = $ChangeObject->ChangeLookup(
         ChangeNumber => '2009091742000465',
@@ -1070,11 +1070,10 @@ sub ChangeSearch {
     # check whether all of the given ChangeStateIDs are valid
     return if !$Self->_CheckChangeStateIDs( ChangeStateIDs => $Param{ChangeStateIDs} );
 
-    # if ChangeStates is given "translate" it
-    # translate and thus check the ChangeStates
+    # if ChangeStates are given then look up their IDs
     for my $ChangeState ( @{ $Param{ChangeStates} } ) {
 
-        # get the ID for the name
+        # look up the ID for the name
         my $ChangeStateID = $Self->ChangeStateLookup(
             State => $ChangeState,
         );
@@ -1463,7 +1462,7 @@ sub ChangeDelete {
         UserID => $Param{UserID},
     );
 
-    # lookup if change exists
+    # the change does not exist, when it can't be looked up
     return if !$Self->ChangeLookup(
         ChangeID => $Param{ChangeID},
         UserID   => $Param{UserID},
@@ -2044,6 +2043,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.128 $ $Date: 2009-10-29 08:54:05 $
+$Revision: 1.129 $ $Date: 2009-10-29 15:55:23 $
 
 =cut
