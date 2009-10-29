@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.34 2009-10-28 23:22:10 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.35 2009-10-29 13:01:54 reb Exp $</CVS>
     <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
         <Description Lang="en">Logfile for the itsm change counter.</Description>
         <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
@@ -252,8 +252,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Frontend::Module###AgentITSMWorkOrderAdd" Required="0" Valid="1">
-        <Description Lang="en">Frontend module registration for the AgentITSMWorkOrderEdit object in the agent interface.</Description>
-        <Description Lang="de">Frontendmodul-Registration des AgentITSMWorkOrderEdit-Objekts im Agent-Interface.</Description>
+        <Description Lang="en">Frontend module registration for the AgentITSMWorkOrderAdd object in the agent interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration des AgentITSMWorkOrderAdd-Objekts im Agent-Interface.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
@@ -261,6 +261,20 @@
                 <GroupRo>itsm-change</GroupRo>
                 <Description>WorkOrder Add</Description>
                 <Title>Add</Title>
+                <NavBarName>Change</NavBarName>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentITSMWorkOrderHistory" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AgentITSMWorkOrderHistory object in the agent interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration des AgentITSMWorkOrderHistory-Objekts im Agent-Interface.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <GroupRo>itsm-change</GroupRo>
+                <Description>WorkOrder History</Description>
+                <Title>History</Title>
                 <NavBarName>Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
@@ -570,8 +584,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::UserSearchAutoComplete::DynamicWidth" Required="1" Valid="1">
-        <Description Lang="en">Set number of search results for the autocomplete feature.</Description>
-        <Description Lang="de">Anzahl der Suchergebnisse für die Autocomplete-Funktionalitaet.</Description>
+        <Description Lang="en">Adapt width of autocomplete drop down to length of the longest option.</Description>
+        <Description Lang="de">Passe die Breite des Autocomplete-DropDowns an die längste Option an.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::UserSearch</SubGroup>
         <Setting>
@@ -630,8 +644,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::CABMemberSearchAutoComplete::DynamicWidth" Required="1" Valid="1">
-        <Description Lang="en">Set number of search results for the autocomplete feature.</Description>
-        <Description Lang="de">Anzahl der Suchergebnisse für die Autocomplete-Funktionalitaet.</Description>
+        <Description Lang="en">Adapt width of autocomplete drop down to length of the longest option.</Description>
+        <Description Lang="de">Passe die Breite des Autocomplete-DropDowns an die längste Option an.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::CABMemberSearch</SubGroup>
         <Setting>
