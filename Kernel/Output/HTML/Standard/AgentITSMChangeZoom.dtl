@@ -2,7 +2,7 @@
 # AgentITSMChangeZoom.dtl - provides HTML form for AgentITSMChangeZoom
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.dtl,v 1.16 2009-10-29 11:41:19 reb Exp $
+# $Id: AgentITSMChangeZoom.dtl,v 1.17 2009-10-29 17:34:54 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -156,6 +156,13 @@
                 <tr>
                     <td class="mainkey">$Text{"Actual End"}:</td>
                     <td class="mainvalue"><div title="$QData{"Actual End"}">$TimeLong{"$Data{"ActualEndTime"}"}</div></td>
+                </tr>
+                <tr>
+                    <td colspan="2">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="mainkey">$Text{"Realize Time"}:</td>
+                    <td class="mainvalue"><div title="$QData{"RealizeTime"}">$TimeLong{"$Data{"RealizeTime"}"}</div></td>
                 </tr>
                 <tr>
                     <td colspan="2">&nbsp;</td>

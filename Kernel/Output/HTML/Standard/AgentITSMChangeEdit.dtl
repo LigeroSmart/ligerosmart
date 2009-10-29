@@ -2,7 +2,7 @@
 # AgentITSMChangeEdit.dtl - provides HTML form for AgentITSMChangeEdit
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.dtl,v 1.15 2009-10-29 11:06:17 bes Exp $
+# $Id: AgentITSMChangeEdit.dtl,v 1.16 2009-10-29 17:34:54 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,9 +19,33 @@ function submit_compose() {
 
         return false;
     }
-    else {
-        return true;
+
+    /* check the realize time */
+    var StartYear   = document.compose.RealizeTimeYear.value;
+    var StartMonth  = document.compose.RealizeTimeMonth.value;
+    var StartDay    = document.compose.RealizeTimeDay.value;
+    var StartHour   = document.compose.RealizeTimeHour.value;
+    var StartMinute = document.compose.RealizeTimeMinute.value;
+    if (
+        0
+        || isNaN(StartYear)
+        || isNaN(StartMonth)
+        || isNaN(StartDay)
+        || isNaN(StartHour)
+        || isNaN(StartMinute)
+        || ( StartYear   < 999 || StartYear   > 10000 )
+        || ( StartMonth  < 1   || StartMonth  > 12 )
+        || ( StartDay    < 1   || StartDay    > 31 )
+        || ( StartHour   < 0   || StartHour   > 23 )
+        || ( StartMinute < 0   || StartMinute > 59 )
+        )
+    {
+        alert('$JSText{"The realize time is invalid!"}');
+
+        return false;
     }
+
+    return true;
 }
 //-->
 </script>
@@ -92,6 +116,20 @@ $Include{"RichTextEditorITSM"}
                                         </div>
                                     </td>
                                 </tr>
+<!-- dtl:block:RealizeTime -->
+                                <tr>
+                                    <td class="contentkey">
+                                        $Text{"Realize time"}:
+                                    </td>
+                                    <td class="contentvalue">
+                                        $Data{"RealizeTimeString"}
+<!-- dtl:block:InvalidRealizeTime -->
+                                        <br />
+                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
+<!-- dtl:block:InvalidRealizeTime -->
+                                    </td>
+                                </tr>
+<!-- dtl:block:RealizeTime -->
                                 <tr>
                                     <td class="contentkey">
                                         $Text{"Attachment"}:

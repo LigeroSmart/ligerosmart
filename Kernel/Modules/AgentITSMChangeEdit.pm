@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeEdit.pm - the OTRS::ITSM::ChangeManagement change edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.pm,v 1.11 2009-10-26 15:00:07 bes Exp $
+# $Id: AgentITSMChangeEdit.pm,v 1.12 2009-10-29 17:34:54 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -76,16 +76,53 @@ sub Run {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
+    # store time related fields in %GetParam
+    for my $TimePart (qw(Year Month Day Hour Minute Used)) {
+        my $ParamName = 'RealizeTime' . $TimePart;
+        $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+    }
+
+    my $CheckTime = $GetParam{RealizeTimeYear} && $GetParam{RealizeTimeMonth}
+        && $GetParam{RealizeTimeDay} && $GetParam{RealizeTimeHour}
+        && $GetParam{RealizeTimeMinute} && $GetParam{RealizeTimeUsed};
+    my $DoSave = 1;
+
     # update change
     if ( $Self->{Subaction} eq 'Save' ) {
 
+        # check whether complete times are passed and build the time stamps
+        my %SystemTime;
+
+        # if the parameters are set
+        if ($CheckTime) {
+
+            # format as timestamp
+            $GetParam{RealizeTime} = sprintf '%04d-%02d-%02d %02d:%02d:00',
+                $GetParam{RealizeTimeYear},
+                $GetParam{RealizeTimeMonth},
+                $GetParam{RealizeTimeDay},
+                $GetParam{RealizeTimeHour},
+                $GetParam{RealizeTimeMinute};
+
+            # sanity check the assembled timestamp
+            $SystemTime{RealizeTime} = $Self->{TimeObject}->TimeStamp2SystemTime(
+                String => $GetParam{RealizeTime},
+            );
+
+            # do not save when time is invalid
+            if ( !$SystemTime{RealizeTime} ) {
+                $DoSave = 0;
+            }
+        }
+
         # update only if ChangeTitle is given
-        if ( $GetParam{ChangeTitle} ) {
+        if ( $GetParam{ChangeTitle} && $DoSave ) {
             my $CouldUpdateChange = $Self->{ChangeObject}->ChangeUpdate(
                 ChangeID      => $ChangeID,
                 Description   => $GetParam{Description},
                 Justification => $GetParam{Justification},
                 ChangeTitle   => $GetParam{ChangeTitle},
+                RealizeTime   => $GetParam{RealizeTime},
                 UserID        => $Self->{UserID},
             );
 
@@ -106,19 +143,53 @@ sub Run {
             }
         }
 
-        # no ChangeTitle given
+        # any error occured
         else {
 
-            # show invalid message
-            $Self->{LayoutObject}->Block(
-                Name => 'InvalidTitle',
-            );
+            # no title given
+            if ( !$Param{ChangeTitle} ) {
+
+                # show invalid message
+                $Self->{LayoutObject}->Block(
+                    Name => 'InvalidTitle',
+                );
+            }
+
+            # time has invalid format
+            if ( $CheckTime && !$SystemTime{RealizeTime} ) {
+
+                # show invalid message
+                $Self->{LayoutObject}->Block(
+                    Name => 'InvalidRealizeTime',
+                );
+            }
         }
     }
 
     # delete all keys from %GetParam when it is no Subaction
     else {
         %GetParam = ();
+
+        if ( $Change->{RealizeTime} ) {
+
+            # get planned start time from workorder
+            my $SystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
+                String => $Change->{RealizeTime},
+            );
+
+            my ( $Second, $Minute, $Hour, $Day, $Month, $Year )
+                = $Self->{TimeObject}->SystemTime2Date(
+                SystemTime => $SystemTime,
+                );
+
+            # set the parameter hash for BuildDateSelection()
+            $Change->{RealizeTimeUsed}   = 1;
+            $Change->{RealizeTimeMinute} = $Minute;
+            $Change->{RealizeTimeHour}   = $Hour;
+            $Change->{RealizeTimeDay}    = $Day;
+            $Change->{RealizeTimeMonth}  = $Month;
+            $Change->{RealizeTimeYear}   = $Year;
+        }
     }
 
     # output header
@@ -133,6 +204,27 @@ sub Run {
             Name => 'RichText',
         );
     }
+
+    # time period that can be selected from the GUI
+    my %TimePeriod = %{ $Self->{ConfigObject}->Get('ITSMWorkOrder::TimePeriod') };
+
+    # add selection for the time
+    my $TimeSelectionString = $Self->{LayoutObject}->BuildDateSelection(
+        %{$Change},
+        %GetParam,
+        Format              => 'DateInputFormatLong',
+        Prefix              => 'RealizeTime',
+        RealizeTimeOptional => 1,
+        %TimePeriod,
+    );
+
+    # show time fields
+    $Self->{LayoutObject}->Block(
+        Name => 'RealizeTime',
+        Data => {
+            'RealizeTimeString' => $TimeSelectionString,
+        },
+    );
 
     # start template output
     $Output .= $Self->{LayoutObject}->Output(
