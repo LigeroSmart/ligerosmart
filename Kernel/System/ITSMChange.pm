@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.127 2009-10-29 08:46:13 bes Exp $
+# $Id: ITSMChange.pm,v 1.128 2009-10-29 08:54:05 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.127 $) [1];
+$VERSION = qw($Revision: 1.128 $) [1];
 
 =head1 NAME
 
@@ -1097,12 +1097,19 @@ sub ChangeSearch {
     my @InnerJoinTables;    # keep track of the tables that need to be inner joined
     my @OuterJoinTables;    # keep track of the tables that need to be outer joined
 
-    # set string params
+    # add string params to the WHERE clause
     my %StringParams = (
+
+        # strings in change_item
         ChangeNumber  => 'c.change_number',
         ChangeTitle   => 'c.title',
         Description   => 'c.description',
         Justification => 'c.justification',
+
+        # strings in change_workorder
+        WorkOrderTitle       => 'wo2.title',
+        WorkOrderInstruction => 'wo2.instruction',
+        WorkOrderReport      => 'wo2.report',
     );
 
     # add string params to sql-where-array
@@ -1137,6 +1144,12 @@ sub ChangeSearch {
         else {
             push @SQLWhere,
                 "LOWER($StringParams{$StringParam}) = LOWER('$Param{$StringParam}')";
+        }
+
+        if ( $StringParams{$StringParam} =~ m{ wo2 }xms ) {
+
+            # the change_workorder table needs to be joined, when it occurs in the WHERE clause
+            push @InnerJoinTables, 'wo2';
         }
     }
 
@@ -1247,50 +1260,6 @@ sub ChangeSearch {
             push @SQLWhere,        "$CABParams{$CABParam} IN ($InString)";
             push @InnerJoinTables, 'cab2';
         }
-    }
-
-    # conditions for workorder string searches
-    my %WOStringParams = (
-        WorkOrderTitle       => 'wo2.title',
-        WorkOrderInstruction => 'wo2.instruction',
-        WorkOrderReport      => 'wo2.report',
-    );
-
-    # add workorder string params to sql-where-array
-    WOSTRINGPARAM:
-    for my $WOStringParam ( keys %WOStringParams ) {
-
-        # check string params for useful values, the string q{0} is allowed
-        next WOSTRINGPARAM if !exists $Param{$WOStringParam};
-        next WOSTRINGPARAM if !defined $Param{$WOStringParam};
-        next WOSTRINGPARAM if $Param{$WOStringParam} eq '';
-
-        # quote
-        $Param{$WOStringParam} = $Self->{DBObject}->Quote( $Param{$WOStringParam} );
-
-        # wildcards are used
-        if ( $Param{UsingWildcards} ) {
-
-            # Quote
-            $Param{$WOStringParam} = $Self->{DBObject}->Quote( $Param{$WOStringParam}, 'Like' );
-
-            # replace * with %
-            $Param{$WOStringParam} =~ s{ \*+ }{%}xmsg;
-
-            # do not use string params which contain only %
-            next WOSTRINGPARAM if $Param{$WOStringParam} =~ m{ \A %* \z }xms;
-
-            push @SQLWhere,
-                "LOWER($WOStringParams{$WOStringParam}) LIKE LOWER('$Param{$WOStringParam}')";
-        }
-
-        # no wildcards are used
-        else {
-            push @SQLWhere,
-                "LOWER($WOStringParams{$WOStringParam}) = LOWER('$Param{$WOStringParam}')";
-        }
-
-        push @InnerJoinTables, 'wo2';
     }
 
     # add work order agent id params to sql-where-array
@@ -2075,6 +2044,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.127 $ $Date: 2009-10-29 08:46:13 $
+$Revision: 1.128 $ $Date: 2009-10-29 08:54:05 $
 
 =cut
