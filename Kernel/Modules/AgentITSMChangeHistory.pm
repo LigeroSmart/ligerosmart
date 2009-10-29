@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeHistory.pm - the OTRS::ITSM::ChangeManagement change history module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeHistory.pm,v 1.2 2009-10-28 15:03:10 reb Exp $
+# $Id: AgentITSMChangeHistory.pm,v 1.3 2009-10-29 14:04:35 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,10 +15,11 @@ use strict;
 use warnings;
 
 use Kernel::System::ITSMChange;
+use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -35,8 +36,9 @@ sub new {
     }
 
     # create needed objects
-    $Self->{ChangeObject}  = Kernel::System::ITSMChange->new(%Param);
-    $Self->{HistoryObject} = Kernel::System::ITSMChange::History->new(%Param);
+    $Self->{ChangeObject}    = Kernel::System::ITSMChange->new(%Param);
+    $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
+    $Self->{HistoryObject}   = Kernel::System::ITSMChange::History->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChangeManagement::Frontend::$Self->{Action}");
@@ -86,6 +88,9 @@ sub Run {
         @HistoryLines = reverse @{$HistoryEntriesRef};
     }
 
+    # max length of strings
+    my $MaxLength = 50;
+
     # create table
     my $Counter = 1;
     for my $HistoryEntry (@HistoryLines) {
@@ -103,21 +108,56 @@ sub Run {
         );
 
         # seperate each searchresult line by using several css
-        if ( $Counter % 2 ) {
-            $Data{css} = 'searchpassive';
-        }
-        else {
-            $Data{css} = 'searchactive';
-        }
+        $Data{css} = $Counter % 2 ? 'searchpassive' : 'searchactive';
+
+        # show a history entry
         $Self->{LayoutObject}->Block(
             Name => 'Row',
             Data => {%Data},
         );
 
-        $Self->{LayoutObject}->Block(
-            Name => 'ChangeZoom',
-            Data => {%Data},
-        );
+        # show a 'more info' link
+        if (
+            length $HistoryEntry->{ContentNew} > $MaxLength
+            || length $HistoryEntry->{ContentOld} > $MaxLength
+            )
+        {
+            $Self->{LayoutObject}->Block(
+                Name => 'MoreInfo',
+                Data => {%Data},
+            );
+        }
+
+        # show link to workorder for WorkOrderAdd event - if the workorder still exists
+        elsif ( $HistoryEntry->{HistoryType} eq 'WorkOrderAdd' ) {
+            my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+                WorkOrderID => $HistoryEntry->{WorkOrderID},
+                UserID      => $Self->{UserID},
+            );
+
+            # show link
+            if ($WorkOrder) {
+                $Self->{LayoutObject}->Block(
+                    Name => 'WorkOrderZoom',
+                    Data => {%Data},
+                );
+            }
+        }
+
+        # show link to change for ChangeAdd event
+        elsif ( $HistoryEntry->{HistoryType} eq 'ChangeAdd' ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'ChangeZoom',
+                Data => {%Data},
+            );
+        }
+
+        # don't show any link
+        else {
+            $Self->{LayoutObject}->Block(
+                Name => 'Dash',
+            );
+        }
     }
 
     # output header

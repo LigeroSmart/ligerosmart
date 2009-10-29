@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderHistory.pm - the OTRS::ITSM::ChangeManagement workorder history module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderHistory.pm,v 1.1 2009-10-29 13:01:54 reb Exp $
+# $Id: AgentITSMWorkOrderHistory.pm,v 1.2 2009-10-29 14:04:35 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -119,19 +119,15 @@ sub Run {
         );
 
         # seperate each searchresult line by using several css
-        if ( $Counter % 2 ) {
-            $Data{css} = 'searchpassive';
-        }
-        else {
-            $Data{css} = 'searchactive';
-        }
+        $Data{css} = $Counter % 2 ? 'searchpassive' : 'searchactive';
+
         $Self->{LayoutObject}->Block(
             Name => 'Row',
             Data => {%Data},
         );
 
         $Self->{LayoutObject}->Block(
-            Name => 'ChangeZoom',
+            Name => 'WorkOrderZoom',
             Data => {%Data},
         );
     }
