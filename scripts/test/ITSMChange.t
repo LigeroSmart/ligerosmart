@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.103 2009-10-29 16:10:36 reb Exp $
+# $Id: ITSMChange.t,v 1.104 2009-10-29 16:21:25 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -732,6 +732,7 @@ my @ChangeTests = (
             ChangeAdd => {
                 UserID      => 1,
                 RealizeTime => '2009-10-29 13:33:33',
+                Description => 'RealizeTime - ' . $UniqueSignature,
             },
         },
         ReferenceData => {
@@ -740,8 +741,10 @@ my @ChangeTests = (
                 ChangeBy    => 1,
                 ChangeTitle => q{},
                 RealizeTime => '2009-10-29 13:33:33',
+                Description => 'RealizeTime - ' . $UniqueSignature,
             },
         },
+        SearchTest => [42],
     },
 
     #------------------------------#
@@ -913,6 +916,7 @@ my @ChangeTests = (
             ChangeAdd => {
                 UserID      => 1,
                 RealizeTime => '2009-10-29 13:33:33',
+                Description => 'RealizeTime - ' . $UniqueSignature,
             },
             ChangeUpdate => {
                 RealizeTime => '2009-11-06 08:15:22',
@@ -925,6 +929,7 @@ my @ChangeTests = (
                 ChangeBy    => $UserIDs[0],
                 ChangeTitle => q{},
                 RealizeTime => '2009-11-06 08:15:22',
+                Description => 'RealizeTime - ' . $UniqueSignature,
             },
         },
     },
@@ -937,6 +942,7 @@ my @ChangeTests = (
             ChangeAdd => {
                 UserID      => 1,
                 RealizeTime => '2009-10-29 13:33:33',
+                Description => 'RealizeTime - ' . $UniqueSignature,
             },
             ChangeUpdate => {
                 RealizeTime => 'anything',
@@ -949,8 +955,10 @@ my @ChangeTests = (
                 ChangeBy    => 1,
                 ChangeTitle => q{},
                 RealizeTime => '2009-10-29 13:33:33',
+                Description => 'RealizeTime - ' . $UniqueSignature,
             },
         },
+        SearchTest => [42],
     },
 
     #------------------------------#
@@ -2112,6 +2120,27 @@ my @ChangeSearchTests = (
             Description    => 'ChangeStates - ' . $UniqueSignature,
         },
         SearchFails => 1,
+    },
+
+    # Nr 41 - Search for an invalid change state id
+    {
+        Description => 'Search for an invalid RealizeTime',
+        SearchData  => {
+            RealizeTime => 'anything',
+        },
+        SearchFails => 1,
+    },
+
+    # Nr 42 - Search for an invalid change state id
+    {
+        Description => 'Search for an valid RealizeTime',
+        SearchData  => {
+            RealizeTime => '2009-10-29 13:33:33',
+            Description => 'RealizeTime - ' . $UniqueSignature,
+        },
+        ResultData => {
+            TestCount => 1,
+        },
     },
 
 );
