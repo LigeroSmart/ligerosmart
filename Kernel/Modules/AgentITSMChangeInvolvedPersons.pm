@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeInvolvedPersons.pm - the OTRS::ITSM::ChangeManagement change involved persons module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.10 2009-10-28 09:37:24 reb Exp $
+# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.11 2009-10-30 11:02:31 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::User;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -778,6 +778,11 @@ sub _GetExpandInfo {
                     Data => \%UserList,
                 );
 
+                # show 'take this user' button
+                $Self->{LayoutObject}->Block(
+                    Name => 'TakeChange' . $Name,
+                );
+
                 # clear to if there is no customer found
                 if ( !%UserList ) {
                     $Info{ 'Change' . $Name }      = '';
@@ -877,6 +882,11 @@ sub _GetExpandInfo {
             $Info{CABMemberStrg} = $Self->{LayoutObject}->BuildSelection(
                 Name => 'MemberID',
                 Data => \@UserListForDropDown,
+            );
+
+            # show 'take this user' button
+            $Self->{LayoutObject}->Block(
+                Name => 'TakeCABMember',
             );
 
             # clear to if there is no customer found

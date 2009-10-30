@@ -2,7 +2,7 @@
 # AgentITSMChangeInvolvedPersons.dtl - provides HTML form for AgentITSMChangeInvolvedPersons
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.14 2009-10-29 13:50:33 ub Exp $
+# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.15 2009-10-30 11:02:31 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -98,8 +98,9 @@ function clear_field3() {
 <!-- dtl:block:InvalidChangeManager -->
                                         <br/>
                                         $Data{"ChangeManagerStrg"}
-                                        <dtl if ($Data{"ChangeManagerStrg"} ne "") { $Data{"TakeThisUser"} = "<br/><input class="button" type="submit" name="ExpandManager2" value="$Text{"Take this User"}"/>"; }>
-                                        $Data{"TakeThisUser"}
+<!-- dtl:block:TakeChangeManager -->
+                                        <br/><input class="button" type="submit" name="ExpandManager2" value="$Text{"Take this User"}"/>
+<!-- dtl:block:TakeChangeManager -->
 <!-- dtl:block:SearchUserButton1 -->
                                         <input class="button" type="submit" name="ExpandManager1" value="$Text{"Search User"}"/>
                                         <input class="button" type="submit" name="ClearUser1" value="$Text{"Clear User"}" onclick="javascript:clear_field1(); return false;"/>
@@ -126,8 +127,9 @@ function clear_field3() {
 <!-- dtl:block:InvalidChangeBuilder -->
                                         <br/>
                                         $Data{"ChangeBuilderStrg"}
-                                        <dtl if ($Data{"ChangeBuilderStrg"} ne "") { $Data{"TakeThisUser2"} = "<br/><input class="button" type="submit" name="ExpandBuilder2" value="$Text{"Take this User"}"/>"; }>
-                                        $Data{"TakeThisUser2"}
+<!-- dtl:block:TakeChangeBuilder -->
+                                        <br/><input class="button" type="submit" name="ExpandBuilder2" value="$Text{"Take this User"}"/>
+<!-- dtl:block:TakeChangeBuilder -->
 <!-- dtl:block:SearchUserButton2 -->
                                         <input class="button" type="submit" name="ExpandBuilder1" value="$Text{"Search User"}"/>
                                         <input class="button" type="submit" name="ClearUser2" value="$Text{"Clear User"}" onclick="javascript:clear_field2(); return false;"/>
@@ -175,8 +177,9 @@ function clear_field3() {
 <!-- dtl:block:InvalidCABMember -->
                                         <br>
                                         $Data{"CABMemberStrg"}
-                                        <dtl if ($Data{"CABMemberStrg"} ne "") { $Data{"TakeThisCABMember"} = "<br/><input class="button" type="submit" name="ExpandCABMember2" value="$Text{"Take this User"}"/>"; }>
-                                        $Data{"TakeThisCABMember"}
+<!-- dtl:block:TakeCABMember -->
+                                        <br/><input class="button" type="submit" name="ExpandCABMember2" value="$Text{"Take this User"}"/>
+<!-- dtl:block:TakeCABMember -->
 <!-- dtl:block:SearchCABMemberButton -->
                                         <input class="button" type="submit" name="ExpandCABMember1" value="$Text{"Search User"}"/>
                                         <input class="button" type="submit" name="ClearCABMember" value="$Text{"Clear User"}" onclick="javascript:clear_field3(); return false;"/>
