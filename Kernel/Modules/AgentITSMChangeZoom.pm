@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeZoom.pm - the OTRS::ITSM::ChangeManagement change zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.pm,v 1.20 2009-10-29 11:41:19 reb Exp $
+# $Id: AgentITSMChangeZoom.pm,v 1.21 2009-10-30 09:54:29 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -308,28 +308,51 @@ sub Run {
 
         my $TicketRef = $TicketsRef->{$LinkType}->{Source};
         for my $TicketID ( keys %{$TicketRef} ) {
+
+            # get id of customer user
             my $CustomerUserID = $TicketRef->{$TicketID}->{CustomerUserID};
-            $ChangeInitiatorsID{$CustomerUserID} = 1;
+
+            # if a customer
+            if ($CustomerUserID) {
+                $ChangeInitiatorsID{$CustomerUserID} = 'CustomerUser';
+            }
+            else {
+                my $OwnerID = $TicketRef->{$TicketID}->{OwnerID};
+                $ChangeInitiatorsID{$OwnerID} = 'User';
+            }
         }
     }
 
     # get change initiators info
     my $ChangeInitiators = '';
-    for my $CustomerUserID ( keys %ChangeInitiatorsID ) {
-        my %CustomerUser = $Self->{CustomerUserObject}->CustomerUserDataGet(
-            User => $CustomerUserID,
-        );
+    for my $UserID ( keys %ChangeInitiatorsID ) {
+        my %User;
 
-        if (%CustomerUser) {
+        # get customer user info if CI is a customer user
+        if ( $ChangeInitiatorsID{$UserID} eq 'CustomerUser' ) {
+            %User = $Self->{CustomerUserObject}->CustomerUserDataGet(
+                User => $UserID,
+            );
+        }
+
+        # otherwise get user info
+        else {
+            %User = $Self->{UserObject}->GetUserData(
+                UserID => $UserID,
+            );
+        }
+
+        # if user info exist
+        if (%User) {
             $Self->{LayoutObject}->Block(
                 Name => 'ChangeInitiator',
-                Data => {%CustomerUser},
+                Data => {%User},
             );
 
             $ChangeInitiators .= sprintf "%s (%s %s)",
-                $CustomerUser{UserLogin},
-                $CustomerUser{UserFirstname},
-                $CustomerUser{UserLastname};
+                $User{UserLogin},
+                $User{UserFirstname},
+                $User{UserLastname};
         }
     }
 
