@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurvey.pm - a survey module
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurvey.pm,v 1.36 2009-04-02 16:22:19 mh Exp $
+# $Id: AgentSurvey.pm,v 1.37 2009-10-30 08:27:10 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.36 $) [1];
+$VERSION = qw($Revision: 1.37 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -71,19 +71,19 @@ sub Run {
         if ( defined($Message) && $Message eq 'NoQuestion' ) {
             $Output .= $Self->{LayoutObject}->Notify(
                 Priority => 'Error',
-                Info     => 'Can\'t set new Status! No Question definied.',
+                Info     => 'Can\'t set new status! No questions defined.',
             );
         }
         elsif ( defined($Message) && $Message eq 'IncompleteQuestion' ) {
             $Output .= $Self->{LayoutObject}->Notify(
                 Priority => 'Error',
-                Info     => 'Can\'t set new Status! Question(s) incomplete.',
+                Info     => 'Can\'t set new status! Questions incomplete.',
             );
         }
         elsif ( defined($Message) && $Message eq 'StatusSet' ) {
             $Output .= $Self->{LayoutObject}->Notify(
                 Priority => 'Notice',
-                Info     => 'New Status aktiv!',
+                Info     => 'Status changed.',
             );
         }
 
