@@ -2,7 +2,7 @@
 # Kernel/Language/bg_AgentSurvey.pm - the bulgarian language for AgentSurvey
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: bg_AgentSurvey.pm,v 1.5 2009-04-02 16:22:19 mh Exp $
+# $Id: bg_AgentSurvey.pm,v 1.6 2009-10-30 08:28:52 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,20 +15,20 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub Data {
     my $Self = shift;
 
     $Self->{Translation}->{'Survey'} = 'Анкета';
-    $Self->{Translation}->{'Can\'t set new Status! No Question definied.'}
+    $Self->{Translation}->{'Can\'t set new status! No questions defined.'}
         = 'Не мога да установя нов статус! Няма дефинирани въпроси.';
-    $Self->{Translation}->{'Can\'t set new Status! Question(s) incomplete.'}
+    $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'}
         = 'Не мога да установя нов статус! Въпросите са непълни.';
-    $Self->{Translation}->{'New Status aktiv!'} = 'Нов Активен статус!';
+    $Self->{Translation}->{'Status changed.'} = 'Нов Активен статус!';
     $Self->{Translation}->{'Change Status'}     = 'Промени статуса';
-    $Self->{Translation}->{'Sended Requests'}   = 'Изпратени заявки';
-    $Self->{Translation}->{'Received Votes'}    = 'Получени гласувания';
+    $Self->{Translation}->{'Sent requests'}   = 'Изпратени заявки';
+    $Self->{Translation}->{'Received surveys'}    = 'Получени гласувания';
     $Self->{Translation}->{'answered'}          = 'отговорили';
     $Self->{Translation}->{'not answered'}      = 'неотговорили';
     $Self->{Translation}->{'Surveys'}           = 'Проучвания';

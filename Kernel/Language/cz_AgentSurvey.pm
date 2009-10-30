@@ -2,7 +2,7 @@
 # Kernel/Language/cz_AgentSurvey.pm - the czech language for AgentSurvey
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: cz_AgentSurvey.pm,v 1.4 2009-04-02 16:22:19 mh Exp $
+# $Id: cz_AgentSurvey.pm,v 1.5 2009-10-30 08:28:52 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,20 +15,20 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub Data {
     my $Self = shift;
 
     $Self->{Translation}->{'Survey'} = 'Průzkum,';
-    $Self->{Translation}->{'Can\'t set new Status! No Question definied.'}
+    $Self->{Translation}->{'Can\'t set new status! No questions defined.'}
         = 'Nelze nastavit nový stav! Neexistují definovány dotazy.';
-    $Self->{Translation}->{'Can\'t set new Status! Question(s) incomplete.'}
+    $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'}
         = 'Nelze nastavit nový stav!Dotazy nejsou kompletní.';
-    $Self->{Translation}->{'New Status aktiv!'} = 'Nový aktivní stav!';
+    $Self->{Translation}->{'Status changed.'} = 'Nový aktivní stav!';
     $Self->{Translation}->{'Change Status'}     = 'Změny stavu';
-    $Self->{Translation}->{'Sended Requests'}   = 'Zaslány požadavky';
-    $Self->{Translation}->{'Received Votes'}    = 'Obdrženy hlasy';
+    $Self->{Translation}->{'Sent requests'}   = 'Zaslány požadavky';
+    $Self->{Translation}->{'Received surveys'}    = 'Obdrženy hlasy';
     $Self->{Translation}->{'answered'}          = 'Odpovědli';
     $Self->{Translation}->{'not answered'}      = 'Neodpovědli';
     $Self->{Translation}->{'Surveys'}           = 'Průzkumy';
