@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.130 2009-10-29 16:10:36 reb Exp $
+# $Id: ITSMChange.pm,v 1.131 2009-10-30 09:37:05 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.130 $) [1];
+$VERSION = qw($Revision: 1.131 $) [1];
 
 =head1 NAME
 
@@ -1875,6 +1875,7 @@ There are no required parameters.
         ChangeStateID   => 4,                                  # (optional)
         ChangeManagerID => 5,                                  # (optional)
         ChangeBuilderID => 6,                                  # (optional)
+        RealizeTime     => '2009-10-23 08:57:12',              # (optional)
         CABAgents       => [ 1, 2, 4 ],     # UserIDs          # (optional)
         CABCustomers    => [ 'tt', 'mm' ],  # CustomerUserIDs  # (optional)
     );
@@ -1903,7 +1904,6 @@ sub _CheckChangeParams {
         ChangeManagerID
         ChangeBuilderID
         ChangeStateID
-        RealizeTime
         )
         )
     {
@@ -1948,19 +1948,19 @@ sub _CheckChangeParams {
                 return;
             }
         }
+    }
 
-        # check if realize_time has correct format
-        if (
-            $Argument eq 'RealizeTime'
-            && $Param{$Argument} !~ m{ \A \d\d\d\d-\d\d-\d\d \s \d\d:\d\d:\d\d \z }xms
-            )
-        {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => 'Invalid format for RealizeTime!',
-            );
-            return;
-        }
+    # check if realize_time has correct format
+    if (
+        defined $Param{RealizeTime}
+        && $Param{RealizeTime} !~ m{ \A \d\d\d\d-\d\d-\d\d \s \d\d:\d\d:\d\d \z }xms
+        )
+    {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Invalid format for RealizeTime!',
+        );
+        return;
     }
 
     # check if given ChangeStateID is valid
@@ -2069,6 +2069,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.130 $ $Date: 2009-10-29 16:10:36 $
+$Revision: 1.131 $ $Date: 2009-10-30 09:37:05 $
 
 =cut
