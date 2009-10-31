@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.131 2009-10-30 09:37:05 reb Exp $
+# $Id: ITSMChange.pm,v 1.132 2009-10-31 17:08:04 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.131 $) [1];
+$VERSION = qw($Revision: 1.132 $) [1];
 
 =head1 NAME
 
@@ -121,7 +121,8 @@ sub new {
 
 =item ChangeAdd()
 
-add a new change
+Add a new change. The UserId is the only required parameter.
+Internally first a minimal change is created, then ChangeUpdate() is called.
 
     my $ChangeID = $ChangeObject->ChangeAdd(
         UserID => 1,
@@ -234,7 +235,8 @@ sub ChangeAdd {
 
 =item ChangeUpdate()
 
-update a change
+Update a change.
+Leading and trailing whitespace is removed from ChangeTitle.
 
     my $Success = $ChangeObject->ChangeUpdate(
         ChangeID        => 123,
@@ -281,6 +283,16 @@ sub ChangeUpdate {
         $Param{ChangeStateID} = $Self->ChangeStateLookup(
             State => $Param{ChangeState},
         );
+    }
+
+    # normalize the ChangeTitle, when it is given
+    if ( $Param{ChangeTitle} && !ref $Param{ChangeTitle} ) {
+
+        # remove leading whitespace
+        $Param{ChangeTitle} =~ s{ \A \s+ }{}xms;
+
+        # remove trailing whitespace
+        $Param{ChangeTitle} =~ s{ \s+ \z }{}xms;
     }
 
     # check change parameters
@@ -2069,6 +2081,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.131 $ $Date: 2009-10-30 09:37:05 $
+$Revision: 1.132 $ $Date: 2009-10-31 17:08:04 $
 
 =cut

@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.105 2009-10-29 16:26:45 reb Exp $
+# $Id: ITSMChange.t,v 1.106 2009-10-31 17:08:04 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -601,6 +601,80 @@ my @ChangeTests = (
             },
         },
         SearchTest => [ 18, 19, 20, 21 ],
+    },
+
+    # Test title with leading whitespace
+    {
+        Description => 'Test for title with leading whitespace',
+        SourceData  => {
+            ChangeAdd => {
+                UserID      => $UserIDs[0],
+                ChangeTitle => "  \t \n  Title with leading whitespace - " . $UniqueSignature,
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                ChangeTitle     => "Title with leading whitespace - " . $UniqueSignature,
+                ChangeBuilderID => $UserIDs[0],
+            },
+        },
+        SearchTest => [ 6, 45 ],
+    },
+
+    # Test title with trailing whitespace
+    {
+        Description => 'Test for title with trailing whitespace',
+        SourceData  => {
+            ChangeAdd => {
+                UserID      => $UserIDs[0],
+                ChangeTitle => "Title with trailing whitespace - " . $UniqueSignature . "  \t \n  ",
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                ChangeTitle     => "Title with trailing whitespace - " . $UniqueSignature,
+                ChangeBuilderID => $UserIDs[0],
+            },
+        },
+        SearchTest => [ 6, 46 ],
+    },
+
+    # Test title with leading and trailing whitespace
+    {
+        Description => 'Test for title with leading and trailing whitespace',
+        SourceData  => {
+            ChangeAdd => {
+                UserID      => $UserIDs[0],
+                ChangeTitle => "  \t \n  Title with leading and trailing whitespace - "
+                    . $UniqueSignature
+                    . "  \t \n  ",
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                ChangeTitle => "Title with leading and trailing whitespace - " . $UniqueSignature,
+                ChangeBuilderID => $UserIDs[0],
+            },
+        },
+        SearchTest => [ 6, 47 ],
+    },
+
+    # Test title with only whitespace
+    {
+        Description => 'Test for title with only whitespace',
+        SourceData  => {
+            ChangeAdd => {
+                UserID      => $UserIDs[0],
+                ChangeTitle => qq{  \t \n  },
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                ChangeTitle     => q{},
+                ChangeBuilderID => $UserIDs[0],
+            },
+        },
+        SearchTest => [],
     },
 
     # a change for the 'UsingWildcards => 0' test
@@ -2165,6 +2239,44 @@ my @ChangeSearchTests = (
         SearchFails => 1,
     },
 
+    # Nr 45 - Search for normalized title, leading whitespace
+    {
+        Description => 'Search for normalized title, leading whitespace',
+        SearchData  => {
+            ChangeTitle    => "Title with leading whitespace - " . $UniqueSignature,
+            UsingWildcards => 0,
+        },
+        ResultData => {
+            TestExistence => 1,
+            TestCount     => 1,
+        },
+    },
+
+    # Nr 46 - Search for normalized title, trailing whitespace
+    {
+        Description => 'Search for normalized title, trailing whitespace',
+        SearchData  => {
+            ChangeTitle    => "Title with trailing whitespace - " . $UniqueSignature,
+            UsingWildcards => 0,
+        },
+        ResultData => {
+            TestExistence => 1,
+            TestCount     => 1,
+        },
+    },
+
+    # Nr 47 - Search for normalized title, leading and trailing whitespace
+    {
+        Description => 'Search for normalized title, leading and trailing whitespace',
+        SearchData  => {
+            ChangeTitle    => "Title with leading and trailing whitespace - " . $UniqueSignature,
+            UsingWildcards => 0,
+        },
+        ResultData => {
+            TestExistence => 1,
+            TestCount     => 1,
+        },
+    },
 );
 
 # get a sample change we created above for some 'special' test cases
