@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.83 2009-10-28 23:21:44 ub Exp $
+# $Id: ITSMWorkOrder.t,v 1.84 2009-10-31 17:34:47 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1216,6 +1216,84 @@ push @WorkOrderTests, (
         },
         SearchTest => [8],
     },
+
+    # Test title with leading whitespace
+    {
+        Description => 'Test for title with leading whitespace',
+        SourceData  => {
+            WorkOrderAdd => {
+                UserID         => $UserIDs[0],
+                WorkOrderTitle => "  \t \n  Title with leading whitespace - " . $UniqueSignature,
+                ChangeID       => $WorkOrderAddTestID,
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                WorkOrderTitle => "Title with leading whitespace - " . $UniqueSignature,
+            },
+        },
+        SearchTest => [32],
+    },
+
+    # Test title with trailing whitespace
+    {
+        Description => 'Test for title with trailing whitespace',
+        SourceData  => {
+            WorkOrderAdd => {
+                WorkOrderTitle => "Title with trailing whitespace - "
+                    . $UniqueSignature
+                    . "  \t \n  ",
+                UserID   => $UserIDs[0],
+                ChangeID => $WorkOrderAddTestID,
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                WorkOrderTitle => "Title with trailing whitespace - " . $UniqueSignature,
+            },
+        },
+        SearchTest => [33],
+    },
+
+    # Test title with leading and trailing whitespace
+    {
+        Description => 'Test for title with leading and trailing whitespace',
+        SourceData  => {
+            WorkOrderAdd => {
+                UserID         => $UserIDs[0],
+                WorkOrderTitle => "  \t \n  Title with leading and trailing whitespace - "
+                    . $UniqueSignature
+                    . "  \t \n  ",
+                ChangeID => $WorkOrderAddTestID,
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                WorkOrderTitle => "Title with leading and trailing whitespace - "
+                    . $UniqueSignature,
+            },
+        },
+        SearchTest => [34],
+    },
+
+    # Test title with only whitespace
+    {
+        Description => 'Test for title with only whitespace',
+        SourceData  => {
+            WorkOrderAdd => {
+                UserID         => $UserIDs[0],
+                WorkOrderTitle => qq{  \t \n  },
+                ChangeID       => $WorkOrderAddTestID,
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                WorkOrderTitle => q{},
+            },
+        },
+        SearchTest => [],
+    },
+
 );
 
 # workorders tests for WorkOrderSearch() with OrderBy
@@ -1830,7 +1908,7 @@ my @WorkOrderSearchTests = (
 
     # Nr 22 - search for change title, change number, description and justification
     {
-        Description => 'Search for change justification',
+        Description => 'Search for change title, change number, description and justification',
         SearchData  => {
             ChangeIDs           => [$StringSearchTestID],
             ChangeNumber        => $StringSearchTestChange->{ChangeNumber},
@@ -1844,7 +1922,7 @@ my @WorkOrderSearchTests = (
         },
     },
 
-    # Nr 23 - search for workorder types
+    # Nr 23 - search for workorder types "approval" and "pir"',
     {
         Description => 'Search for WorkOrder types "approval" and "pir"',
         SearchData  => {
@@ -1858,7 +1936,7 @@ my @WorkOrderSearchTests = (
         },
     },
 
-    # Nr 24 - search for workorder types
+    # Nr 24 - search for workorder types (same types several times)
     {
         Description => 'Search for WorkOrder types (same types several times)',
         SearchData  => {
@@ -1883,7 +1961,7 @@ my @WorkOrderSearchTests = (
         SearchFails => 1,
     },
 
-    # Nr 26 - search for workorder states
+    # Nr 26 - search for workorder state (non-existent state)
     {
         Description => 'Search for WorkOrder state (non-existent state)',
         SearchData  => {
@@ -1933,7 +2011,7 @@ my @WorkOrderSearchTests = (
         SearchFails => 1,
     },
 
-    # Nr 29 - Search for an invalid WorkOrder state id
+    # Nr 30 - Search for an invalid WorkOrder state id
     {
         Description => 'Search for an invalid WorkOrder state id',
         SearchData  => {
@@ -1944,7 +2022,7 @@ my @WorkOrderSearchTests = (
         SearchFails => 1,
     },
 
-    # Nr 30 - Search for an invalid WorkOrder type id
+    # Nr 31 - Search for an invalid WorkOrder type id
     {
         Description => 'Search for an invalid WorkOrder type id',
         SearchData  => {
@@ -1953,6 +2031,45 @@ my @WorkOrderSearchTests = (
             WorkOrderTitle   => '%' . $UniqueSignature,
         },
         SearchFails => 1,
+    },
+
+    # Nr 32 - Search for normalized title, leading whitespace
+    {
+        Description => 'Search for normalized title, leading whitespace',
+        SearchData  => {
+            WorkOrderTitle => "Title with leading whitespace - " . $UniqueSignature,
+            UsingWildcards => 0,
+        },
+        ResultData => {
+            TestExistence => 1,
+            TestCount     => 1,
+        },
+    },
+
+    # Nr 33 - Search for normalized title, trailing whitespace
+    {
+        Description => 'Search for normalized title, trailing whitespace',
+        SearchData  => {
+            WorkOrderTitle => "Title with trailing whitespace - " . $UniqueSignature,
+            UsingWildcards => 0,
+        },
+        ResultData => {
+            TestExistence => 1,
+            TestCount     => 1,
+        },
+    },
+
+    # Nr 34 - Search for normalized title, leading and trailing whitespace
+    {
+        Description => 'Search for normalized title, leading and trailing whitespace',
+        SearchData  => {
+            WorkOrderTitle => "Title with leading and trailing whitespace - " . $UniqueSignature,
+            UsingWildcards => 0,
+        },
+        ResultData => {
+            TestExistence => 1,
+            TestCount     => 1,
+        },
     },
 );
 

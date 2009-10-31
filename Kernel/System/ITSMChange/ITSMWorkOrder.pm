@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.3 2009-10-29 15:55:23 bes Exp $
+# $Id: ITSMWorkOrder.pm,v 1.4 2009-10-31 17:34:46 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::EventHandler;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 =head1 NAME
 
@@ -120,7 +120,8 @@ sub new {
 
 =item WorkOrderAdd()
 
-add a new workorder
+Add a new workorder.
+Internally first a minimal workorder is created, then WorkOrderUpdate() is called.
 
     my $WorkOrderID = $WorkOrderObject->WorkOrderAdd(
         ChangeID => 123,
@@ -350,7 +351,8 @@ sub WorkOrderAdd {
 
 =item WorkOrderUpdate()
 
-update a WorkOrder
+Update a WorkOrder.
+Leading and trailing whitespace is removed from WorkOrderTitle.
 
     my $Success = $WorkOrderObject->WorkOrderUpdate(
         WorkOrderID      => 4,
@@ -422,6 +424,16 @@ sub WorkOrderUpdate {
         $Param{WorkOrderTypeID} = $Self->WorkOrderTypeLookup(
             WorkOrderType => $Param{WorkOrderType},
         );
+    }
+
+    # normalize the WorkOrderTitle, when it is given
+    if ( $Param{WorkOrderTitle} && !ref $Param{WorkOrderTitle} ) {
+
+        # remove leading whitespace
+        $Param{WorkOrderTitle} =~ s{ \A \s+ }{}xms;
+
+        # remove trailing whitespace
+        $Param{WorkOrderTitle} =~ s{ \s+ \z }{}xms;
     }
 
     # check the given parameters
@@ -1905,6 +1917,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2009-10-29 15:55:23 $
+$Revision: 1.4 $ $Date: 2009-10-31 17:34:46 $
 
 =cut
