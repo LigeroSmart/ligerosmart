@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Permission/ChangeManagerCheck.pm - change manager based permission check
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ChangeManagerCheck.pm,v 1.1 2009-11-02 15:26:09 bes Exp $
+# $Id: ChangeManagerCheck.pm,v 1.2 2009-11-02 16:57:35 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -36,7 +36,7 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(UserID)) {
+    for (qw(UserID Type)) {
         if ( !$Param{$_} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -47,10 +47,36 @@ sub Run {
         }
     }
 
-    # TODO: implement the actual check
-    return 1 if 1;
+    # the check is based upon the change manager
+    my $GroupID = $Self->{GroupObject}->GroupLookup( Group => 'itsm-changemanager' );
 
-    # return no access
+    # get user groups, where the user has the appropriate privilege
+    my %Groups = $Self->{GroupObject}->GroupMemberList(
+        UserID => $Param{UserID},
+        Type   => $Param{Type},
+        Result => 'HASH',
+        Cached => 1,
+    );
+
+    # deny access if the agent doens't have the appropriate type in the appropriate group
+    return if !$Groups{$GroupID};
+
+    # change managers always get read access
+    return 1 if $Param{Type} eq 'ro';
+
+    # Allow a change manager to create a change, when there isn't a change yet.
+    return 1 if !$Param{ChangeID};
+
+    # there already is a change. e.g. AgentITSMChangeEdit
+    my %Change = $Self->{ChangeObject}->ChangeGet(
+        UserID   => $Param{UserID},
+        ChangeID => $Param{ChangeID},
+    );
+
+    # allow access, when the agent is the change manager of the change
+    return 1 if $Change{ChangeManagerID} && $Change{ChangeManagerID} == $Param{UserID};
+
+    # deny rw access otherwise
     return;
 }
 
@@ -64,7 +90,7 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Id: ChangeManagerCheck.pm,v 1.1 2009-11-02 15:26:09 bes Exp $
+$Id: ChangeManagerCheck.pm,v 1.2 2009-11-02 16:57:35 bes Exp $
 
 =cut
 
