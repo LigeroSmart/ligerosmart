@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.36 2009-10-30 18:25:58 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.37 2009-11-02 13:32:14 ub Exp $</CVS>
     <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
         <Description Lang="en">Logfile for the itsm change counter.</Description>
         <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
@@ -334,6 +334,21 @@
                 <Item Key="Description">History</Item>
                 <Item Key="Action">AgentITSMChangeHistory</Item>
                 <Item Key="Link">Action=AgentITSMChangeHistory&amp;ChangeID=$QData{"ChangeID"}</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::MenuModule###020-Print" Required="0" Valid="1">
+        <Description Lang="en">Module to show print link in change menu.</Description>
+        <Description Lang="de">Über dieses Modul wird der Drucken-Link in der Linkleiste der Change-Ansicht angezeigt.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ITSMChangeMenuGeneric</Item>
+                <Item Key="Name">Print</Item>
+                <Item Key="Description">Print</Item>
+                <Item Key="Action">AgentITSMChangePrint</Item>
+                <Item Key="Link">Action=AgentITSMChangePrint&amp;ChangeID=$QData{"ChangeID"}</Item>
             </Hash>
         </Setting>
     </ConfigItem>
