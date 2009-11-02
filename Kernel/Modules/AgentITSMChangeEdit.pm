@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeEdit.pm - the OTRS::ITSM::ChangeManagement change edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.pm,v 1.12 2009-10-29 17:34:54 reb Exp $
+# $Id: AgentITSMChangeEdit.pm,v 1.13 2009-11-02 15:26:09 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -53,6 +53,21 @@ sub Run {
         return $Self->{LayoutObject}->ErrorScreen(
             Message => 'No ChangeID is given!',
             Comment => 'Please contact the admin.',
+        );
+    }
+
+    # check permissions
+    my $Access = $Self->{ChangeObject}->Permission(
+        Type     => $Self->{Config}->{Permission},
+        ChangeID => $ChangeID,
+        UserID   => $Self->{UserID}
+    );
+
+    # error screen, don't show ticket
+    if ( !$Access ) {
+        return $Self->{LayoutObject}->NoPermission(
+            Message    => "You need $Self->{Config}->{Permission} permissions!",
+            WithHeader => 'yes',
         );
     }
 

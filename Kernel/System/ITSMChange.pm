@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.132 2009-10-31 17:08:04 bes Exp $
+# $Id: ITSMChange.pm,v 1.133 2009-11-02 15:26:09 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,13 +17,14 @@ use warnings;
 use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 use Kernel::System::User;
+use Kernel::System::Group;
 use Kernel::System::CustomerUser;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.132 $) [1];
+$VERSION = qw($Revision: 1.133 $) [1];
 
 =head1 NAME
 
@@ -97,13 +98,14 @@ sub new {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
-    # set default debug flag
-    $Self->{Debug} ||= 0;
+    # set the debug flag
+    $Self->{Debug} = $Param{Debug} || 0;
 
     # create additional objects
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
     $Self->{LinkObject}           = Kernel::System::LinkObject->new( %{$Self} );
     $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
+    $Self->{GroupObject}          = Kernel::System::Group->new( %{$Self} );
     $Self->{CustomerUserObject}   = Kernel::System::CustomerUser->new( %{$Self} );
     $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
 
@@ -1667,6 +1669,122 @@ sub ChangeStateLookup {
     }
 }
 
+=item Permission()
+
+Returns whether the agent has permissions or not.
+
+    my $Access = $ChangeObject->Permission(
+        Type     => 'ro',       # 'ro' and 'rw' are supported
+        ChangeID => 123,        # optional
+        UserID   => 123,
+    );
+
+The option LogNo turns off logging.
+This is useful when it is only checked whether a link/action should be shown.
+
+    my $Access = $TicketObject->Permission(
+        Type     => 'ro',
+        ChangeID => 123,
+        LogNo    => 1,
+        UserID   => 123,
+    );
+
+=cut
+
+sub Permission {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for (qw(Type UserID)) {
+        if ( !$Param{$_} ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+            return;
+        }
+    }
+
+    # The ChangeID can be unknown. For example for ChangeAdd().
+    $Param{ChangeID} ||= q{};
+
+    # run all TicketPermission modules
+    if ( ref $Self->{ConfigObject}->Get('ITSMChange::Permission') eq 'HASH' ) {
+        my %Modules = %{ $Self->{ConfigObject}->Get('ITSMChange::Permission') };
+        for my $Module ( sort keys %Modules ) {
+
+            # log try of load module
+            if ( $Self->{Debug} > 1 ) {
+                $Self->{LogObject}->Log(
+                    Priority => 'debug',
+                    Message  => "Try to load module: $Modules{$Module}->{Module}!",
+                );
+            }
+
+            # load module
+            next if !$Self->{MainObject}->Require( $Modules{$Module}->{Module} );
+
+            # create object
+            my $ModuleObject = $Modules{$Module}->{Module}->new(
+                ConfigObject => $Self->{ConfigObject},
+                LogObject    => $Self->{LogObject},
+                DBObject     => $Self->{DBObject},
+                ChangeObject => $Self,
+                UserObject   => $Self->{UserObject},
+                GroupObject  => $Self->{GroupObject},
+                Debug        => $Self->{Debug},
+            );
+
+            # execute Run()
+            my $AccessOk = $ModuleObject->Run(%Param);
+
+            # check granted option (should I say ok)
+            if ( $AccessOk && $Modules{$Module}->{Granted} ) {
+                if ( $Self->{Debug} > 0 ) {
+                    $Self->{LogObject}->Log(
+                        Priority => 'debug',
+                        Message  => "Granted access '$Param{Type}' true for "
+                            . "TicketID '$Param{TicketID}' "
+                            . "through $Modules{$Module}->{Module} (no more checks)!",
+                    );
+                }
+
+                # access ok
+                return 1;
+            }
+
+            # return because access is false but it's required
+            if ( !$AccessOk && $Modules{$Module}->{Required} ) {
+                if ( !$Param{LogNo} ) {
+                    $Self->{LogObject}->Log(
+                        Priority => 'notice',
+                        Message  => "Permission denied because module "
+                            . "($Modules{$Module}->{Module}) is required "
+                            . "(UserID: $Param{UserID} '$Param{Type}' on "
+                            . "TicketID: $Param{TicketID})!",
+                    );
+                }
+
+                # access not ok
+                return;
+            }
+        }
+    }
+
+    # TODO: decide about the semantics
+    # At this point no required module has denied permission,
+    # so it seems logical to allow access.
+    # Kernel::System::Ticket::Permission however denies access at this point.
+
+    # don't grant access to the ticket
+    if ( !$Param{LogNo} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'notice',
+            Message  => "Permission denied (UserID: $Param{UserID} '$Param{Type}' "
+                . "on ChangeID: $Param{ChangeID})!",
+        );
+    }
+
+    return;
+}
+
 =back
 
 =head1 INTERNAL METHODS
@@ -2081,6 +2199,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.132 $ $Date: 2009-10-31 17:08:04 $
+$Revision: 1.133 $ $Date: 2009-11-02 15:26:09 $
 
 =cut

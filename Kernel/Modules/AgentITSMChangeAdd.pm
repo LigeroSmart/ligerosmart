@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.8 2009-10-30 09:37:05 reb Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.9 2009-11-02 15:26:09 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -44,6 +44,20 @@ sub new {
 
 sub Run {
     my ( $Self, %Param ) = @_;
+
+    # check permissions
+    my $Access = $Self->{ChangeObject}->Permission(
+        Type   => $Self->{Config}->{Permission},
+        UserID => $Self->{UserID}
+    );
+
+    # error screen, don't show ticket
+    if ( !$Access ) {
+        return $Self->{LayoutObject}->NoPermission(
+            Message    => "You need $Self->{Config}->{Permission} permissions!",
+            WithHeader => 'yes',
+        );
+    }
 
     # store all needed parameters in %GetParam to make it reloadable
     my %GetParam;

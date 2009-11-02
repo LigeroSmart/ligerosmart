@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.37 2009-11-02 13:32:14 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.38 2009-11-02 15:26:09 bes Exp $</CVS>
     <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
         <Description Lang="en">Logfile for the itsm change counter.</Description>
         <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
@@ -734,6 +734,76 @@
                 <Item Key="reverse">reverse</Item>
                 <Item Key="normal">normal</Item>
             </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChangeManagement::Frontend::AgentITSMChangeAdd###Permission" Required="1" Valid="1">
+        <Description Lang="en">Required permissions to use create changes.</Description>
+        <Description Lang="de">Benötigte Rechte zum Erstellen von Änderungen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChangeManagement::ViewChangeAdd</SubGroup>
+        <Setting>
+            <String Regex="">rw</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Permission###10-ChangeManagerCheck" Required="0" Valid="1">
+        <Description Lang="en">Module to check the change manager.</Description>
+        <Description Lang="de">Modul zum Überprüfen des Change Managers.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::System::ITSMChange::Permission::ChangeManagerCheck</Item>
+                <Item Key="Required">0</Item>
+                <Item Key="Granted">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChangeManagement::Frontend::AgentITSMChangeEdit###Permission" Required="1" Valid="1">
+        <Description Lang="en">Required permissions to edit changes.</Description>
+        <Description Lang="de">Benötigte Rechte zum Bearbeiten von Änderungen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChangeManagement::ViewChangeEdit</SubGroup>
+        <Setting>
+            <String Regex="">rw</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Permission###10-ChangeManagerCheck" Required="0" Valid="1">
+        <Description Lang="en">Module to check the change manager.</Description>
+        <Description Lang="de">Modul zum Überprüfen des Change Managers.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::System::ITSMChange::Permission::ChangeManagerCheck</Item>
+                <Item Key="Required">0</Item>
+                <Item Key="Granted">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Permission###20-ChangeBuilder" Required="0" Valid="1">
+        <Description Lang="en">Module to check the change builder.</Description>
+        <Description Lang="de">Modul zum Überprüfen des Change Builders.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::System::ITSMChange::Permission::ChangeBuilderCheck</Item>
+                <Item Key="Required">0</Item>
+                <Item Key="Granted">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Permission###30-ChangeAgentCheck" Required="0" Valid="1">
+        <Description Lang="en">Module to check the agent.</Description>
+        <Description Lang="de">Modul zum Überprüfen des Agenten.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Core::ITSMChange</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::System::ITSMChange::Permission::ChangeAgentCheck</Item>
+                <Item Key="Required">0</Item>
+                <Item Key="Granted">1</Item>
+            </Hash>
         </Setting>
     </ConfigItem>
 </otrs_config>
