@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.133 2009-11-02 15:26:09 bes Exp $
+# $Id: ITSMChange.pm,v 1.134 2009-11-02 17:54:43 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.133 $) [1];
+$VERSION = qw($Revision: 1.134 $) [1];
 
 =head1 NAME
 
@@ -1682,7 +1682,7 @@ Returns whether the agent has permissions or not.
 The option LogNo turns off logging.
 This is useful when it is only checked whether a link/action should be shown.
 
-    my $Access = $TicketObject->Permission(
+    my $Access = $ChangeObject->Permission(
         Type     => 'ro',
         ChangeID => 123,
         LogNo    => 1,
@@ -1705,7 +1705,7 @@ sub Permission {
     # The ChangeID can be unknown. For example for ChangeAdd().
     $Param{ChangeID} ||= q{};
 
-    # run all TicketPermission modules
+    # run all ITSMChange permission modules
     if ( ref $Self->{ConfigObject}->Get('ITSMChange::Permission') eq 'HASH' ) {
         my %Modules = %{ $Self->{ConfigObject}->Get('ITSMChange::Permission') };
         for my $Module ( sort keys %Modules ) {
@@ -1741,7 +1741,7 @@ sub Permission {
                     $Self->{LogObject}->Log(
                         Priority => 'debug',
                         Message  => "Granted access '$Param{Type}' true for "
-                            . "TicketID '$Param{TicketID}' "
+                            . "ChangeID '$Param{ChangeID}' "
                             . "through $Modules{$Module}->{Module} (no more checks)!",
                     );
                 }
@@ -1758,7 +1758,7 @@ sub Permission {
                         Message  => "Permission denied because module "
                             . "($Modules{$Module}->{Module}) is required "
                             . "(UserID: $Param{UserID} '$Param{Type}' on "
-                            . "TicketID: $Param{TicketID})!",
+                            . "ChangeID: $Param{ChangeID})!",
                     );
                 }
 
@@ -1772,8 +1772,6 @@ sub Permission {
     # At this point no required module has denied permission,
     # so it seems logical to allow access.
     # Kernel::System::Ticket::Permission however denies access at this point.
-
-    # don't grant access to the ticket
     if ( !$Param{LogNo} ) {
         $Self->{LogObject}->Log(
             Priority => 'notice',
@@ -1921,7 +1919,7 @@ sub _ChangeNumberCreate {
             }
         }
 
-        # pad ticket number with leading '0' to length 5
+        # pad change number with leading '0' to length 5
         $Count = sprintf "%05d", $Count;
 
         # create new change number
@@ -2199,6 +2197,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.133 $ $Date: 2009-11-02 15:26:09 $
+$Revision: 1.134 $ $Date: 2009-11-02 17:54:43 $
 
 =cut
