@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMUserSearch.pm - a module used for the autocomplete feature
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMUserSearch.pm,v 1.3 2009-10-23 12:07:12 ub Exp $
+# $Id: AgentITSMUserSearch.pm,v 1.4 2009-11-02 17:34:01 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::User;
 use Kernel::System::Group;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -39,7 +39,7 @@ sub new {
     $Self->{GroupObject} = Kernel::System::Group->new(%Param);
 
     # get config
-    $Self->{Config} = $Self->{ConfigObject}->Get("Agent::Frontend::$Self->{Action}");
+    $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
 
     return $Self;
 }

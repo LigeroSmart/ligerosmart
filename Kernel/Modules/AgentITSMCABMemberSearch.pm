@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMCABMemberSearch.pm - a module used for the autocomplete feature
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMCABMemberSearch.pm,v 1.2 2009-10-22 13:07:26 reb Exp $
+# $Id: AgentITSMCABMemberSearch.pm,v 1.3 2009-11-02 17:34:01 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::CustomerUser;
 use Kernel::System::Group;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -41,7 +41,7 @@ sub new {
     $Self->{CustomerUserObject} = Kernel::System::CustomerUser->new(%Param);
 
     # get config
-    $Self->{Config} = $Self->{ConfigObject}->Get("Agent::Frontend::$Self->{Action}");
+    $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
 
     return $Self;
 }
