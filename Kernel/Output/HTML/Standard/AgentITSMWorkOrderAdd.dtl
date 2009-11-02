@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderAdd.dtl - provides HTML form for AgentITSMWorkOrderAdd
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.dtl,v 1.20 2009-10-29 13:27:34 bes Exp $
+# $Id: AgentITSMWorkOrderAdd.dtl,v 1.21 2009-11-02 09:18:40 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,8 +14,8 @@
 
 function submit_compose() {
 
-    /* check the title */
-    if (document.compose.WorkOrderTitle.value == "") {
+    /* check the title, all whitespace counts as empty */
+    if (document.compose.WorkOrderTitle.value.match(/^\s*$/)) {
         alert('$JSText{"A workorder must have a title!"}');
         document.compose.WorkOrderTitle.focus();
 
