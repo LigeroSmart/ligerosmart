@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeZoom.pm - the OTRS::ITSM::ChangeManagement change zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.pm,v 1.21 2009-10-30 09:54:29 reb Exp $
+# $Id: AgentITSMChangeZoom.pm,v 1.22 2009-11-02 16:56:42 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.21 $) [1];
+$VERSION = qw($Revision: 1.22 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -359,25 +359,52 @@ sub Run {
     # display a string with all changeinitiators
     $Change->{'Change Initators'} = $ChangeInitiators;
 
-    # get all linked objects that are linked with a workorder of this change
+    # store the combined linked objects from all workorders of this change
+    my $LinkListWithDataCombinedWorkOrders = {};
     for my $WorkOrderID ( @{ $Change->{WorkOrderIDs} } ) {
 
-        # TODO @Udo: Fix this, this does not work correctly!
-
-        # get linked objects of this config item
-        my $LinkListWithDatafromWorkOrder = $Self->{LinkObject}->LinkListWithData(
+        # get linked objects of this workorder
+        my $LinkListWithDataWorkOrder = $Self->{LinkObject}->LinkListWithData(
             Object => 'ITSMWorkOrder',
             Key    => $WorkOrderID,
             State  => 'Valid',
             UserID => $Self->{UserID},
         );
 
-        # add to linklistwithdata from change object
-        $LinkListWithData = {
-            %{$LinkListWithData},
-            %{$LinkListWithDatafromWorkOrder},
-        };
+        OBJECT:
+        for my $Object ( keys %{$LinkListWithDataWorkOrder} ) {
+
+            # only show linked services and config items of workorder
+            next OBJECT if ( $Object ne 'Service' && $Object ne 'ITSMConfigItem' );
+
+            LINKTYPE:
+            for my $LinkType ( keys %{ $LinkListWithDataWorkOrder->{$Object} } ) {
+
+                DIRECTION:
+                for my $Direction ( keys %{ $LinkListWithDataWorkOrder->{$Object}->{$LinkType} } ) {
+
+                    ID:
+                    for my $ID (
+                        keys %{ $LinkListWithDataWorkOrder->{$Object}->{$LinkType}->{$Direction} }
+                        )
+                    {
+
+                        # combine the linked object data from all workorders
+                        $LinkListWithDataCombinedWorkOrders->{$Object}->{$LinkType}->{$Direction}
+                            ->{$ID}
+                            = $LinkListWithDataWorkOrder->{$Object}->{$LinkType}->{$Direction}
+                            ->{$ID};
+                    }
+                }
+            }
+        }
     }
+
+    # add combined linked objects from workorder to linked objects from change object
+    $LinkListWithData = {
+        %{$LinkListWithData},
+        %{$LinkListWithDataCombinedWorkOrders},
+    };
 
     # get link table view mode
     my $LinkTableViewMode = $Self->{ConfigObject}->Get('LinkObject::ViewMode');
