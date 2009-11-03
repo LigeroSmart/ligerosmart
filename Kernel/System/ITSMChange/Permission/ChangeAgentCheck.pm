@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Permission/ChangeAgentCheck.pm - change agent based permission check
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ChangeAgentCheck.pm,v 1.5 2009-11-03 12:42:31 bes Exp $
+# $Id: ChangeAgentCheck.pm,v 1.6 2009-11-03 16:22:49 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 =head1 NAME
 
@@ -141,7 +141,7 @@ sub Run {
         }
     }
 
-    # the check is based upon the change builder
+    # the check is based upon the change agent
     my $GroupID = $Self->{GroupObject}->GroupLookup( Group => 'itsm-change' );
 
     # deny access, when the group is not found
@@ -164,7 +164,7 @@ sub Run {
     # change agents only granted ro access
     return 1 if $Param{Type} eq 'ro';
 
-    # deny rw access otherwise
+    # deny rw access
     return;
 }
 
@@ -180,7 +180,7 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Id: ChangeAgentCheck.pm,v 1.5 2009-11-03 12:42:31 bes Exp $
+$Id: ChangeAgentCheck.pm,v 1.6 2009-11-03 16:22:49 bes Exp $
 
 =cut
 

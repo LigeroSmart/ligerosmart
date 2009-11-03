@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Permission/ChangeManagerCheck.pm - change manager based permission check
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ChangeManagerCheck.pm,v 1.6 2009-11-03 12:42:31 bes Exp $
+# $Id: ChangeManagerCheck.pm,v 1.7 2009-11-03 16:22:49 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 =head1 NAME
 
@@ -155,25 +155,12 @@ sub Run {
         Cached => 1,
     );
 
-    # deny access if the agent doens't have the appropriate type in the appropriate group
-    return if !$Groups{$GroupID};
+    # allow ro and rw access if the agent is a change manager
+    return 1 if $Groups{$GroupID};
 
-    # change managers always get ro access
-    return 1 if $Param{Type} eq 'ro';
+    # no need to check whether the agent is the actual manager of the change
 
-    # Allow a change manager to create a change, when there isn't a change yet.
-    return 1 if !$Param{ChangeID};
-
-    # there already is a change. e.g. AgentITSMChangeEdit
-    my $Change = $Self->{ChangeObject}->ChangeGet(
-        UserID   => $Param{UserID},
-        ChangeID => $Param{ChangeID},
-    );
-
-    # allow access, when the agent is the change manager of the change
-    return 1 if $Change->{ChangeManagerID} && $Change->{ChangeManagerID} == $Param{UserID};
-
-    # deny rw access otherwise
+    # deny access otherwise
     return;
 }
 
@@ -189,7 +176,7 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Id: ChangeManagerCheck.pm,v 1.6 2009-11-03 12:42:31 bes Exp $
+$Id: ChangeManagerCheck.pm,v 1.7 2009-11-03 16:22:49 bes Exp $
 
 =cut
 

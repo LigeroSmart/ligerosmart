@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.134 2009-11-02 17:54:43 bes Exp $
+# $Id: ITSMChange.pm,v 1.135 2009-11-03 16:22:49 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.134 $) [1];
+$VERSION = qw($Revision: 1.135 $) [1];
 
 =head1 NAME
 
@@ -1768,10 +1768,7 @@ sub Permission {
         }
     }
 
-    # TODO: decide about the semantics
-    # At this point no required module has denied permission,
-    # so it seems logical to allow access.
-    # Kernel::System::Ticket::Permission however denies access at this point.
+    # Deny access when neither a 'Granted'-Check nor a 'Required'-Check has reached a conclusion.
     if ( !$Param{LogNo} ) {
         $Self->{LogObject}->Log(
             Priority => 'notice',
@@ -2197,6 +2194,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.134 $ $Date: 2009-11-02 17:54:43 $
+$Revision: 1.135 $ $Date: 2009-11-03 16:22:49 $
 
 =cut
