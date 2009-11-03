@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Permission/ChangeAgentCheck.pm - change agent based permission check
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ChangeAgentCheck.pm,v 1.3 2009-11-02 17:16:45 bes Exp $
+# $Id: ChangeAgentCheck.pm,v 1.4 2009-11-03 11:59:42 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,89 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
+
+=head1 NAME
+
+Kernel::System::ITSMChange::Permission::ChangeAgentCheck - change agent based permission check
+
+=head1 SYNOPSIS
+
+=head1 PUBLIC INTERFACE
+
+=over 4
+
+=cut
+
+=item new()
+
+create an object
+
+    use Kernel::Config;
+    use Kernel::System::Encode;
+    use Kernel::System::Log;
+    use Kernel::System::Main;
+    use Kernel::System::Time;
+    use Kernel::System::DB;
+    use Kernel::System::ITSMChange;
+    use Kernel::System::User;
+    use Kernel::System::Group;
+    use Kernel::System::ITSMChange::Permission::ChangeAgentCheck;
+
+    my $ConfigObject = Kernel::Config->new();
+    my $EncodeObject = Kernel::System::Encode->new(
+        ConfigObject => $ConfigObject,
+    );
+    my $LogObject = Kernel::System::Log->new(
+        ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
+    );
+    my $MainObject = Kernel::System::Main->new(
+        ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
+        LogObject    => $LogObject,
+    );
+    my $TimeObject = Kernel::System::Time->new(
+        ConfigObject => $ConfigObject,
+        LogObject    => $LogObject,
+    );
+    my $DBObject = Kernel::System::DB->new(
+        ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
+        LogObject    => $LogObject,
+        MainObject   => $MainObject,
+    );
+    my $ChangeObject = Kernel::System::ITSMChange->new(
+        ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
+        LogObject    => $LogObject,
+        DBObject     => $DBObject,
+        TimeObject   => $TimeObject,
+        MainObject   => $MainObject,
+    );
+    my $UserObject = Kernel::System::User->new(
+        ConfigObject => $ConfigObject,
+        LogObject    => $LogObject,
+        MainObject   => $MainObject,
+        TimeObject   => $TimeObject,
+        DBObject     => $DBObject,
+        EncodeObject => $EncodeObject,
+    );
+    my $GroupObject = Kernel::System::Group->new(
+        ConfigObject => $ConfigObject,
+        LogObject    => $LogObject,
+        DBObject     => $DBObject,
+    );
+    my $CheckObject = Kernel::System::ITSMChange::Permission::ChangeAgentCheck->new(
+        ConfigObject         => $ConfigObject,
+        LogObject            => $LogObject,
+        DBObject             => $DBObject,
+        ChangeObject         => $ChangeObject,
+        UserObject           => $UserObject,
+        GroupObject          => $GroupObject,
+    );
+
+=cut
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -31,6 +113,18 @@ sub new {
 
     return $Self;
 }
+
+=item Run()
+
+this method does the check
+
+    my $HasAccess = $CheckObject->Run(
+        UserID   => 123,
+        Type     => 'rw',     # 'ro' or 'rw'
+        ChangeID => 3333,     # optional for ChangeAdd
+    );
+
+=cut
 
 sub Run {
     my ( $Self, %Param ) = @_;
@@ -70,9 +164,11 @@ sub Run {
     # change agents only granted ro access
     return 1 if $Param{Type} eq 'ro';
 
-    # deny rw access
+    # deny rw access otherwise
     return;
 }
+
+=back
 
 =head1 TERMS AND CONDITIONS
 
@@ -84,7 +180,7 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Id: ChangeAgentCheck.pm,v 1.3 2009-11-02 17:16:45 bes Exp $
+$Id: ChangeAgentCheck.pm,v 1.4 2009-11-03 11:59:42 bes Exp $
 
 =cut
 
