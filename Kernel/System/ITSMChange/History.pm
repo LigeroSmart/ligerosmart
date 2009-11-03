@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/History.pm - all change and workorder history functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: History.pm,v 1.9 2009-11-03 14:19:07 reb Exp $
+# $Id: History.pm,v 1.10 2009-11-03 17:14:31 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 =head1 NAME
 
@@ -384,7 +384,7 @@ sub WorkOrderHistoryDelete {
     }
 
     # delete entries for the given workorder
-    return if !$Self->{DBObject}->prepare(
+    return if !$Self->{DBObject}->Prepare(
         SQL  => 'DELETE FROM change_history WHERE workorder_id = ?',
         Bind => [ \$Param{WorkOrderID} ],
     );
@@ -420,7 +420,7 @@ sub ChangeHistoryDelete {
     }
 
     # delete entries for the given change
-    return if !$Self->{DBObject}->prepare(
+    return if !$Self->{DBObject}->Prepare(
         SQL  => 'DELETE FROM change_history WHERE change_id = ?',
         Bind => [ \$Param{ChangeID} ],
     );
@@ -518,6 +518,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.9 $ $Date: 2009-11-03 14:19:07 $
+$Revision: 1.10 $ $Date: 2009-11-03 17:14:31 $
 
 =cut
