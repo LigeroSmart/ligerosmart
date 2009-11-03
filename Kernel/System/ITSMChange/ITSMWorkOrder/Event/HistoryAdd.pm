@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder/Event/HistoryAdd.pm - HistoryAdd event module for WorkOrder
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: HistoryAdd.pm,v 1.3 2009-11-03 14:19:07 reb Exp $
+# $Id: HistoryAdd.pm,v 1.4 2009-11-03 14:21:45 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 =head1 NAME
 
@@ -30,6 +30,60 @@ Event handler module for history add in WorkOrder.
 =head1 PUBLIC INTERFACE
 
 =over 4
+
+=item new()
+
+create an object
+
+    use Kernel::Config;
+    use Kernel::System::Encode;
+    use Kernel::System::Log;
+    use Kernel::System::DB;
+    use Kernel::System::Main;
+    use Kernel::System::Time;
+    use Kernel::System::ITSMChange::ITSMWorkOrder;
+    use Kernel::System::ITSMChange::ITSMWorkOrder::Event::HistoryAdd;
+
+    my $ConfigObject = Kernel::Config->new();
+    my $EncodeObject = Kernel::System::Encode->new(
+        ConfigObject => $ConfigObject,
+    );
+    my $LogObject = Kernel::System::Log->new(
+        ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
+    );
+    my $MainObject = Kernel::System::Main->new(
+        ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
+        LogObject    => $LogObject,
+    );
+    my $TimeObject = Kernel::System::Time->new(
+        ConfigObject => $ConfigObject,
+        LogObject    => $LogObject,
+    );
+    my $DBObject = Kernel::System::DB->new(
+        ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
+        LogObject    => $LogObject,
+        MainObject   => $MainObject,
+    );
+    my $WorkOrderObject = Kernel::System::ITSMChange::ITSMWorkOrder->new(
+        ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
+        LogObject    => $LogObject,
+        DBObject     => $DBObject,
+        TimeObject   => $TimeObject,
+        MainObject   => $MainObject,
+    );
+    my $HistoryObject = Kernel::System::ITSMChange::ITSMWorkOrder::Event::HistoryAdd->new(
+        ConfigObject    => $ConfigObject,
+        EncodeObject    => $EncodeObject,
+        LogObject       => $LogObject,
+        DBObject        => $DBObject,
+        TimeObject      => $TimeObject,
+        MainObject      => $MainObject,
+        WorkOrderObject => $WorkOrderObject,
+    );
 
 =cut
 
@@ -220,6 +274,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2009-11-03 14:19:07 $
+$Revision: 1.4 $ $Date: 2009-11-03 14:21:45 $
 
 =cut
