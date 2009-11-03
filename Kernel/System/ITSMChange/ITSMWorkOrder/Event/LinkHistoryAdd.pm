@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder/Event/LinkHistoryAdd.pm.pm - LinkHistoryAdd event module for WorkOrder
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LinkHistoryAdd.pm,v 1.1 2009-10-28 23:19:00 ub Exp $
+# $Id: LinkHistoryAdd.pm,v 1.2 2009-11-03 15:18:58 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,9 +15,10 @@ use strict;
 use warnings;
 
 use Kernel::System::ITSMChange::History;
+use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -30,6 +31,60 @@ Event handler module for history add for link events in WorkOrder.
 =head1 PUBLIC INTERFACE
 
 =over 4
+
+=item new()
+
+create an object
+
+    use Kernel::Config;
+    use Kernel::System::Encode;
+    use Kernel::System::Log;
+    use Kernel::System::DB;
+    use Kernel::System::Main;
+    use Kernel::System::Time;
+    use Kernel::System::LinkObject;
+    use Kernel::System::ITSMChange::ITSMWorkOrder::Event::LinkHistoryAdd;
+
+    my $ConfigObject = Kernel::Config->new();
+    my $EncodeObject = Kernel::System::Encode->new(
+        ConfigObject => $ConfigObject,
+    );
+    my $LogObject = Kernel::System::Log->new(
+        ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
+    );
+    my $MainObject = Kernel::System::Main->new(
+        ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
+        LogObject    => $LogObject,
+    );
+    my $TimeObject = Kernel::System::Time->new(
+        ConfigObject => $ConfigObject,
+        LogObject    => $LogObject,
+    );
+    my $DBObject = Kernel::System::DB->new(
+        ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
+        LogObject    => $LogObject,
+        MainObject   => $MainObject,
+    );
+    my $LinkObject = Kernel::System::LinkObject->new(
+        ConfigObject => $ConfigObject,
+        LogObject    => $LogObject,
+        DBObject     => $DBObject,
+        TimeObject   => $TimeObject,
+        MainObject   => $MainObject,
+        EncodeObject => $EncodeObject,
+    );
+    my $HistoryObject = Kernel::System::ITSMChange::ITSMWorkOrder::Event::LinkHistoryAdd->new(
+        ConfigObject  => $ConfigObject,
+        EncodeObject  => $EncodeObject,
+        LogObject     => $LogObject,
+        DBObject      => $DBObject,
+        TimeObject    => $TimeObject,
+        MainObject    => $MainObject,
+        LinkObject    => $LinkObject,
+    );
 
 =cut
 
@@ -46,36 +101,79 @@ sub new {
     }
 
     # create additional objects
-    $Self->{HistoryObject} = Kernel::System::ITSMChange::History->new( %{$Self} );
+    $Self->{HistoryObject}   = Kernel::System::ITSMChange::History->new( %{$Self} );
+    $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
 
     return $Self;
 }
+
+=item Run()
+
+The C<Run()> method handles the events that are created when the workorder is
+(un-)linked to anything.
+
+It returns 1 on success, C<undef> otherwise.
+
+    my $Success = $HistoryObject->Run(
+        WorkOrderID  => 123,
+        SourceObject => 'Ticket',
+        SourceKey    => 9,
+        Key          => 123,
+        UserID       => 1,
+        Config       => ...,
+    );
+
+=cut
 
 sub Run {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(WorkOrderID Event Config)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+    for my $Needed (qw(WorkOrderID Event Config)) {
+        if ( !$Param{$Needed} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Needed!",
+            );
             return;
         }
     }
 
-    # TODO:
-    # Look in ConfigItem how the history entry should
-    # look like, e.g.:
-    #        Comment      => $ID . '%%' . $Object,
+    # in history we use Event name without 'Post'
+    $Param{Event} =~ s/Post$//;
 
-    # ... a link to a workorder object was added or deleted
-    #    $Self->{LogObject}->Du_mper(
-    #        '',
-    #        "LinkWorkOrderEvent: $Param{Event}",
-    #        "Object: WorkOrder with ID: $Param{Data}->{WorkOrderID}",
-    #        "Object: $Param{Data}->{Object} with ID: $Param{Data}->{ID}",
-    #        "LinkType: $Param{Type}",
-    #        " Data: ", $Param{Data},
-    #    );
+    # do history stuff
+    if ( $Param{Event} eq 'WorkOrderLinkAdd' || $Param{Event} eq 'WorkOrderLinkDelete' ) {
+
+        # get workorder
+        my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+            WorkOrderID => $Param{Data}->{WorkOrderID},
+            UserID      => $Param{UserID},
+        );
+
+        return if !$WorkOrder;
+
+        # tell history that a change was added
+        return if !$Self->{HistoryObject}->HistoryAdd(
+            HistoryType => $Param{Event},
+            WorkOrderID => $Param{Data}->{WorkOrderID},
+            UserID      => $Param{UserID},
+            ContentNew  => join( '%%', $Param{SourceKey}, $Param{SourceObject} ),
+            ChangeID    => $WorkOrder->{ChangeID},
+        );
+    }
+
+    # error
+    else {
+
+        # a non-known event
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "$Param{Event} is a non-known event!",
+        );
+
+        return;
+    }
 
     return 1;
 }
@@ -96,6 +194,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2009-10-28 23:19:00 $
+$Revision: 1.2 $ $Date: 2009-11-03 15:18:58 $
 
 =cut
