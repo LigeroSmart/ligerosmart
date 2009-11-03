@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/HistoryAdd.pm - HistoryAdd event module for ITSMChange
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: HistoryAdd.pm,v 1.5 2009-11-03 13:22:02 reb Exp $
+# $Id: HistoryAdd.pm,v 1.6 2009-11-03 13:28:06 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 =head1 NAME
 
@@ -30,6 +30,60 @@ Event handler module for history add in ITSMChange.
 =head1 PUBLIC INTERFACE
 
 =over 4
+
+=item new()
+
+create an object
+
+    use Kernel::Config;
+    use Kernel::System::Encode;
+    use Kernel::System::Log;
+    use Kernel::System::DB;
+    use Kernel::System::Main;
+    use Kernel::System::Time;
+    use Kernel::System::ITSMChange;
+    use Kernel::System::ITSMChange::Event::HistoryAdd;
+
+    my $ConfigObject = Kernel::Config->new();
+    my $EncodeObject = Kernel::System::Encode->new(
+        ConfigObject => $ConfigObject,
+    );
+    my $LogObject = Kernel::System::Log->new(
+        ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
+    );
+    my $MainObject = Kernel::System::Main->new(
+        ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
+        LogObject    => $LogObject,
+    );
+    my $TimeObject = Kernel::System::Time->new(
+        ConfigObject => $ConfigObject,
+        LogObject    => $LogObject,
+    );
+    my $DBObject = Kernel::System::DB->new(
+        ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
+        LogObject    => $LogObject,
+        MainObject   => $MainObject,
+    );
+    my $ChangeObject = Kernel::System::ITSMChange->new(
+        ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
+        LogObject    => $LogObject,
+        DBObject     => $DBObject,
+        TimeObject   => $TimeObject,
+        MainObject   => $MainObject,
+    );
+    my $HistoryObject = Kernel::System::ITSMChange::Event::HistoryAdd->new(
+        ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
+        LogObject    => $LogObject,
+        DBObject     => $DBObject,
+        TimeObject   => $TimeObject,
+        MainObject   => $MainObject,
+        ChangeObject => $ChangeObject,
+    );
 
 =cut
 
@@ -50,6 +104,24 @@ sub new {
 
     return $Self;
 }
+
+=item Run()
+
+The C<Run()> method handles the events and adds/deletes the history entries for
+the given change object.
+
+It returns 1 on success, C<undef> otherwise.
+
+    my $Success = $HistoryObject->Run(
+        ChangeID => 123,
+        Data     => {
+            ChangeID => 123,
+            ChangeTitle => 'test',
+        },
+        Config => ...
+    );
+
+=cut
 
 sub Run {
     my ( $Self, %Param ) = @_;
@@ -163,6 +235,18 @@ sub Run {
     return 1;
 }
 
+=item HasFieldChanged()
+
+This method checks whether a field was changed or not. It returns 1 when field
+was changed, 0 otherwise
+
+    my $FieldHasChanged = $HistoryObject->HasFieldChanged(
+        Old => 'old value', # can be array reference or hash reference as well
+        New => 'new value', # can be array reference or hash reference as well
+    );
+
+=cut
+
 sub HasFieldChanged {
     my ( $Self, %Param ) = @_;
 
@@ -227,6 +311,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2009-11-03 13:22:02 $
+$Revision: 1.6 $ $Date: 2009-11-03 13:28:06 $
 
 =cut
