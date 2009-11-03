@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/HistoryAdd.pm - HistoryAdd event module for ITSMChange
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: HistoryAdd.pm,v 1.6 2009-11-03 13:28:06 reb Exp $
+# $Id: HistoryAdd.pm,v 1.7 2009-11-03 14:19:07 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 =head1 NAME
 
@@ -118,7 +118,8 @@ It returns 1 on success, C<undef> otherwise.
             ChangeID => 123,
             ChangeTitle => 'test',
         },
-        Config => ...
+        Config => ...,
+        UserID => 1,
     );
 
 =cut
@@ -151,7 +152,7 @@ sub Run {
             ContentNew  => $Param{Data}->{ChangeID},
         );
     }
-    if ( $Param{Event} eq 'ChangeUpdate' ) {
+    elsif ( $Param{Event} eq 'ChangeUpdate' ) {
 
         # get old data
         my $OldData = delete $Param{Data}->{OldChangeData};
@@ -213,8 +214,8 @@ sub Run {
                 $Self->{HistoryObject}->HistoryAdd(
                     ChangeID    => $Param{Data}->{ChangeID},
                     Field       => $Field,
-                    ContentNew  => join( '::', @{ $Param{Data}->{$Field} } ),
-                    ContentOld  => join( '::', @{ $OldData->{$Field} } ),
+                    ContentNew  => join( '%%', @{ $Param{Data}->{$Field} } ),
+                    ContentOld  => join( '%%', @{ $OldData->{$Field} } ),
                     UserID      => $Param{Data}->{UserID},
                     HistoryType => $Param{Event},
                 );
@@ -250,16 +251,8 @@ was changed, 0 otherwise
 sub HasFieldChanged {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
-    for my $Needed (qw(New Old)) {
-        if ( !$Param{$Needed} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Needed!",
-            );
-            return;
-        }
-    }
+    # field has changed when either 'new' or 'old is not set
+    return 1 if !( $Param{New} && $Param{Old} ) && ( $Param{New} || $Param{Old} );
 
     # return result of 'eq' when both params are scalars
     return $Param{New} ne $Param{Old} if !ref( $Param{New} ) && !ref( $Param{Old} );
@@ -311,6 +304,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.6 $ $Date: 2009-11-03 13:28:06 $
+$Revision: 1.7 $ $Date: 2009-11-03 14:19:07 $
 
 =cut

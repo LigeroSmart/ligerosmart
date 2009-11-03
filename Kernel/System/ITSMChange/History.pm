@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/History.pm - all change and workorder history functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: History.pm,v 1.8 2009-11-03 13:22:01 reb Exp $
+# $Id: History.pm,v 1.9 2009-11-03 14:19:07 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 =head1 NAME
 
@@ -109,8 +109,8 @@ Adds a single history entry to the history. Returns 1 on success, C<undef> other
         HistoryType   => 'WorkOrderAdd', # either HistoryType or HistoryTypeID is needed
         HistoryTypeID => 1,              # either HistoryType or HistoryTypeID is needed
         UserID        => 1,
-        ContentNew    => 'Any useful information',
-        ContentOld    => 'Old value of field',
+        ContentNew    => 'Any useful information', # optional
+        ContentOld    => 'Old value of field',     # optional
     );
 
 =cut
@@ -119,7 +119,7 @@ sub HistoryAdd {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Needed (qw(UserID ContentNew ContentOld)) {
+    for my $Needed (qw(UserID ChangeID)) {
         if ( !$Param{$Needed} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -162,8 +162,6 @@ sub HistoryAdd {
 
         $Param{HistoryTypeID} = $ID;
     }
-
-    # should change id be saved when it is a workorder entry?
 
     # insert history entry
     return if !$Self->{DBObject}->Do(
@@ -520,6 +518,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.8 $ $Date: 2009-11-03 13:22:01 $
+$Revision: 1.9 $ $Date: 2009-11-03 14:19:07 $
 
 =cut
