@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeHistory.pm - the OTRS::ITSM::ChangeManagement change history module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeHistory.pm,v 1.4 2009-11-02 17:34:01 bes Exp $
+# $Id: AgentITSMChangeHistory.pm,v 1.5 2009-11-03 16:40:12 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -59,6 +59,20 @@ sub Run {
         return $Self->{LayoutObject}->ErrorScreen(
             Message => 'Can\'t show history, no ChangeID is given!',
             Comment => 'Please contact the admin.',
+        );
+    }
+
+    # check permissions
+    my $Access = $Self->{ChangeObject}->Permission(
+        Type   => $Self->{Config}->{Permission},
+        UserID => $Self->{UserID}
+    );
+
+    # error screen, don't show change add mask
+    if ( !$Access ) {
+        return $Self->{LayoutObject}->NoPermission(
+            Message    => "You need $Self->{Config}->{Permission} permissions!",
+            WithHeader => 'yes',
         );
     }
 

@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChange.pm - the OTRS::ITSM::ChangeManagement change overview module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChange.pm,v 1.9 2009-11-02 17:34:01 bes Exp $
+# $Id: AgentITSMChange.pm,v 1.10 2009-11-03 16:40:12 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -44,6 +44,20 @@ sub new {
 
 sub Run {
     my ( $Self, %Param ) = @_;
+
+    # check permissions
+    my $Access = $Self->{ChangeObject}->Permission(
+        Type   => $Self->{Config}->{Permission},
+        UserID => $Self->{UserID}
+    );
+
+    # error screen, don't show change add mask
+    if ( !$Access ) {
+        return $Self->{LayoutObject}->NoPermission(
+            Message    => "You need $Self->{Config}->{Permission} permissions!",
+            WithHeader => 'yes',
+        );
+    }
 
     # TODO: implement paging
     # get page
