@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.40 2009-11-02 17:34:01 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.41 2009-11-03 08:07:21 bes Exp $</CVS>
     <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
         <Description Lang="en">Logfile for the itsm change counter.</Description>
         <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
@@ -769,7 +769,7 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChange::Permission###20-ChangeBuilder" Required="0" Valid="1">
+    <ConfigItem Name="ITSMChange::Permission###20-ChangeBuilderCheck" Required="0" Valid="1">
         <Description Lang="en">Module to check the change builder.</Description>
         <Description Lang="de">Modul zum Überprüfen des Change Builders.</Description>
         <Group>ITSM Change Management</Group>
@@ -785,7 +785,7 @@
     <ConfigItem Name="ITSMChange::Permission###30-ChangeAgentCheck" Required="0" Valid="1">
         <Description Lang="en">Module to check the agent.</Description>
         <Description Lang="de">Modul zum Überprüfen des Agenten.</Description>
-        <Group>Ticket</Group>
+        <Group>ITSM Change Management</Group>
         <SubGroup>Core::ITSMChange</SubGroup>
         <Setting>
             <Hash>
