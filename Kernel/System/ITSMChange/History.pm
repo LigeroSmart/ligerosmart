@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/History.pm - all change and workorder history functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: History.pm,v 1.7 2009-10-28 15:03:11 reb Exp $
+# $Id: History.pm,v 1.8 2009-11-03 13:22:01 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 =head1 NAME
 
@@ -109,7 +109,8 @@ Adds a single history entry to the history. Returns 1 on success, C<undef> other
         HistoryType   => 'WorkOrderAdd', # either HistoryType or HistoryTypeID is needed
         HistoryTypeID => 1,              # either HistoryType or HistoryTypeID is needed
         UserID        => 1,
-        Content       => 'Any useful information',
+        ContentNew    => 'Any useful information',
+        ContentOld    => 'Old value of field',
     );
 
 =cut
@@ -118,7 +119,7 @@ sub HistoryAdd {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Needed (qw(UserID Content)) {
+    for my $Needed (qw(UserID ContentNew ContentOld)) {
         if ( !$Param{$Needed} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -166,12 +167,14 @@ sub HistoryAdd {
 
     # insert history entry
     return if !$Self->{DBObject}->Do(
-        SQL => 'INSERT INTO change_history ( change_id, workorder_id, content, create_by, '
-            . 'create_time, type_id ) VALUES ( ?, ?, ?, ?, current_timestamp, ? )',
+        SQL => 'INSERT INTO change_history ( change_id, workorder_id, content_new, '
+            . 'content_old, create_by, create_time, type_id ) '
+            . 'VALUES ( ?, ?, ?, ?, ?, current_timestamp, ? )',
         Bind => [
             \$Param{ChangeID},
             \$Param{WorkOrderID},
-            \$Param{Content},
+            \$Param{ContentNew},
+            \$Param{ContentOld},
             \$Param{UserID},
             \$Param{HistoryTypeID},
         ],
@@ -517,6 +520,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.7 $ $Date: 2009-10-28 15:03:11 $
+$Revision: 1.8 $ $Date: 2009-11-03 13:22:01 $
 
 =cut
