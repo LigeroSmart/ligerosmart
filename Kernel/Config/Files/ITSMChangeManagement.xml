@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.41 2009-11-03 08:07:21 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.42 2009-11-03 09:22:09 bes Exp $</CVS>
     <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
         <Description Lang="en">Logfile for the itsm change counter.</Description>
         <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
@@ -736,22 +736,33 @@
             </Option>
         </Setting>
     </ConfigItem>
+
+    <!-- required privileges for fronted modules -->
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeAdd###Permission" Required="1" Valid="1">
-        <Description Lang="en">Required permissions to use create changes.</Description>
-        <Description Lang="de">Benötigte Rechte zum Erstellen von Änderungen.</Description>
+        <Description Lang="en">Required privilege to create changes.</Description>
+        <Description Lang="de">Benötigtes Recht zum Erstellen von Änderungen.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChangeManagement::ViewChangeAdd</SubGroup>
         <Setting>
-            <String Regex="">rw</String>
+            <String Regex="^(rw|ro)$">rw</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeEdit###Permission" Required="1" Valid="1">
-        <Description Lang="en">Required permissions to edit changes.</Description>
-        <Description Lang="de">Benötigte Rechte zum Bearbeiten von Änderungen.</Description>
+        <Description Lang="en">Required privilege to edit changes.</Description>
+        <Description Lang="de">Benötigtes Recht zum Bearbeiten von Änderungen.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChangeManagement::ViewChangeEdit</SubGroup>
         <Setting>
-            <String Regex="">rw</String>
+            <String Regex="^(rw|ro)$">rw</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeZoom###Permission" Required="1" Valid="1">
+        <Description Lang="en">Required privilege to view changes.</Description>
+        <Description Lang="de">Benötigtes Recht zum Ansehen von Änderungen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChangeManagement::ViewChangeZoom</SubGroup>
+        <Setting>
+            <String Regex="^(rw|ro)$">ro</String>
         </Setting>
     </ConfigItem>
 
