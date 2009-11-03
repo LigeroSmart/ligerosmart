@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeInvolvedPersons.pm - the OTRS::ITSM::ChangeManagement change involved persons module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.13 2009-11-03 16:40:12 bes Exp $
+# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.14 2009-11-03 17:08:48 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::User;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -62,8 +62,9 @@ sub Run {
 
     # check permissions
     my $Access = $Self->{ChangeObject}->Permission(
-        Type   => $Self->{Config}->{Permission},
-        UserID => $Self->{UserID}
+        Type     => $Self->{Config}->{Permission},
+        ChangeID => $ChangeID,
+        UserID   => $Self->{UserID}
     );
 
     # error screen, don't show change add mask
