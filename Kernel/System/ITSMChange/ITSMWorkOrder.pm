@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.6 2009-11-04 09:59:46 bes Exp $
+# $Id: ITSMWorkOrder.pm,v 1.7 2009-11-04 10:18:43 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::Group;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 =head1 NAME
 
@@ -30,7 +30,7 @@ Kernel::System::ITSMChange::ITSMWorkOrder - workorder lib
 
 =head1 SYNOPSIS
 
-All workorder functions.
+All functions for workorders in ITSMChangeManagement.
 
 =head1 PUBLIC INTERFACE
 
@@ -92,21 +92,18 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Object (
-        qw(DBObject ConfigObject EncodeObject LogObject MainObject TimeObject)
-        )
-    {
+    for my $Object (qw(DBObject ConfigObject EncodeObject LogObject MainObject TimeObject)) {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
-    # set default debug flag
-    $Self->{Debug} ||= 0;
+    # set the debug flag
+    $Self->{Debug} = $Param{Debug} || 0;
 
     # create additional objects
-    $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
-    $Self->{GroupObject}          = Kernel::System::Group->new( %{$Self} );
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
     $Self->{LinkObject}           = Kernel::System::LinkObject->new( %{$Self} );
+    $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
+    $Self->{GroupObject}          = Kernel::System::Group->new( %{$Self} );
 
     # init of event handler
     $Self->EventHandlerInit(
@@ -1663,6 +1660,14 @@ sub Permission {
     return;
 }
 
+=back
+
+=head1 INTERNAL METHODS
+
+=over 4
+
+=cut
+
 =item _CheckWorkOrderStateIDs()
 
 check if the given workorder state ids are all valid
@@ -2027,6 +2032,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.6 $ $Date: 2009-11-04 09:59:46 $
+$Revision: 1.7 $ $Date: 2009-11-04 10:18:43 $
 
 =cut
