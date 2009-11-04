@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/HistoryAdd.pm - HistoryAdd event module for ITSMChange
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: HistoryAdd.pm,v 1.8 2009-11-03 15:18:58 reb Exp $
+# $Id: HistoryAdd.pm,v 1.9 2009-11-04 10:53:58 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 =head1 NAME
 
@@ -75,7 +75,7 @@ create an object
         TimeObject   => $TimeObject,
         MainObject   => $MainObject,
     );
-    my $HistoryObject = Kernel::System::ITSMChange::Event::HistoryAdd->new(
+    my $HistoryAddObject = Kernel::System::ITSMChange::Event::HistoryAdd->new(
         ConfigObject => $ConfigObject,
         EncodeObject => $EncodeObject,
         LogObject    => $LogObject,
@@ -112,13 +112,17 @@ the given change object.
 
 It returns 1 on success, C<undef> otherwise.
 
-    my $Success = $HistoryObject->Run(
-        ChangeID => 123,
-        Data     => {
-            ChangeID => 123,
+    my $Success = $HistoryAddObject->Run(
+        Event => 'ChangeUpdatePost',
+        Data => {
+            ChangeID    => 123,
             ChangeTitle => 'test',
         },
-        Config => ...,
+        Config => {
+            Event       => '(ChangeAddPost|ChangeUpdatePost|ChangeCABUpdatePost|ChangeCABDeletePost|ChangeDeletePost)',
+            Module      => 'Kernel::System::ITSMChange::Event::HistoryAdd',
+            Transaction => '0',
+        },
         UserID => 1,
     );
 
@@ -226,10 +230,10 @@ sub Run {
     # error
     else {
 
-        # a non-known event
+        # an unknown event
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "$Param{Event} is a non-known event!",
+            Message  => "$Param{Event} is an unknown event!",
         );
 
         return;
@@ -306,6 +310,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.8 $ $Date: 2009-11-03 15:18:58 $
+$Revision: 1.9 $ $Date: 2009-11-04 10:53:58 $
 
 =cut
