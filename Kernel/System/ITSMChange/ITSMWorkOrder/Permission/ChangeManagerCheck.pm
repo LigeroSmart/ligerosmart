@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder/Permission/ChangeManagerCheck.pm - change manager based permission check
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ChangeManagerCheck.pm,v 1.3 2009-11-04 13:52:41 bes Exp $
+# $Id: ChangeManagerCheck.pm,v 1.4 2009-11-04 14:16:27 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 =head1 NAME
 
@@ -136,7 +136,7 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(UserID Type)) {
+    for (qw(UserID Type WorkOrderID)) {
         if ( !$Param{$_} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -182,7 +182,7 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Id: ChangeManagerCheck.pm,v 1.3 2009-11-04 13:52:41 bes Exp $
+$Id: ChangeManagerCheck.pm,v 1.4 2009-11-04 14:16:27 bes Exp $
 
 =cut
 

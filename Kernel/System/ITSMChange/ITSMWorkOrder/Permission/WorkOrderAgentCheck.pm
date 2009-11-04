@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder/Permission/WorkOrderAgentCheck.pm - workorder agent based permission check
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrderAgentCheck.pm,v 1.3 2009-11-04 13:52:41 bes Exp $
+# $Id: WorkOrderAgentCheck.pm,v 1.4 2009-11-04 14:16:27 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 =head1 NAME
 
@@ -136,7 +136,7 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(UserID Type)) {
+    for (qw(UserID Type WorkOrderID)) {
         if ( !$Param{$_} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -163,9 +163,6 @@ sub Run {
 
     # deny access if the agent doens't have the appropriate type in the appropriate group
     return if !$Groups{$GroupID};
-
-    # workorder agents are not allowed to create workorders
-    return if !$Param{WorkOrderID};
 
     # workorder agents are granted ro access
     return 1 if $Param{Type} eq 'ro';
@@ -198,7 +195,7 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Id: WorkOrderAgentCheck.pm,v 1.3 2009-11-04 13:52:41 bes Exp $
+$Id: WorkOrderAgentCheck.pm,v 1.4 2009-11-04 14:16:27 bes Exp $
 
 =cut
 
