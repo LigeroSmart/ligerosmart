@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder/Permission/ChangeBuilderCheck.pm - change builder based permission check
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ChangeBuilderCheck.pm,v 1.1 2009-11-04 09:53:33 bes Exp $
+# $Id: ChangeBuilderCheck.pm,v 1.2 2009-11-04 13:35:46 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -39,6 +39,7 @@ create an object
     use Kernel::System::Main;
     use Kernel::System::Time;
     use Kernel::System::DB;
+    use Kernel::System::ITSMChange;
     use Kernel::System::ITSMChange::ITSMWorkOrder;
     use Kernel::System::User;
     use Kernel::System::Group;
@@ -67,6 +68,14 @@ create an object
         LogObject    => $LogObject,
         MainObject   => $MainObject,
     );
+    my $ChangeObject = Kernel::System::ITSMChange->new(
+        ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
+        LogObject    => $LogObject,
+        DBObject     => $DBObject,
+        TimeObject   => $TimeObject,
+        MainObject   => $MainObject,
+    );
     my $WorkOrderObject = Kernel::System::ITSMChange::ITSMWorkOrder->new(
         ConfigObject => $ConfigObject,
         EncodeObject => $EncodeObject,
@@ -92,6 +101,7 @@ create an object
         ConfigObject         => $ConfigObject,
         LogObject            => $LogObject,
         DBObject             => $DBObject,
+        ChangeObject         => $ChangeObject,
         WorkOrderObject      => $WorkOrderObject,
         UserObject           => $UserObject,
         GroupObject          => $GroupObject,
@@ -107,12 +117,9 @@ sub new {
     bless( $Self, $Type );
 
     # get needed objects
-    for (qw(ConfigObject LogObject DBObject WorkOrderObject UserObject GroupObject)) {
+    for (qw(ConfigObject LogObject DBObject ChangeObject WorkOrderObject UserObject GroupObject)) {
         $Self->{$_} = $Param{$_} || die "Got no $_!";
     }
-
-    # create needed objects
-    $Self->{ChangeObject} = Kernel::System::ITSMChange->new( %{$Self} );
 
     return $Self;
 }
@@ -198,7 +205,7 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Id: ChangeBuilderCheck.pm,v 1.1 2009-11-04 09:53:33 bes Exp $
+$Id: ChangeBuilderCheck.pm,v 1.2 2009-11-04 13:35:46 bes Exp $
 
 =cut
 
