@@ -1,8 +1,8 @@
 # --
-# Kernel/Modules/AgentITSMWorkOrderZoom.pm - the OTRS::ITSM::ChangeManagement work order zoom module
+# Kernel/Modules/AgentITSMWorkOrderZoom.pm - the OTRS::ITSM::ChangeManagement workorder zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderZoom.pm,v 1.19 2009-11-04 11:26:51 bes Exp $
+# $Id: AgentITSMWorkOrderZoom.pm,v 1.20 2009-11-04 15:19:30 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -112,7 +112,7 @@ sub Run {
         UserID   => $Self->{UserID},
     );
 
-    # run work order menu modules
+    # run workorder menu modules
     if ( ref $Self->{ConfigObject}->Get('ITSMWorkOrder::Frontend::MenuModule') eq 'HASH' ) {
 
         # get items for menu
@@ -212,7 +212,7 @@ sub Run {
         );
     }
 
-    # get work order agent user
+    # get workorder agent user
     if ( $WorkOrder->{WorkOrderAgentID} ) {
         my %WorkOrderAgentUser = $Self->{UserObject}->GetUserData(
             UserID => $WorkOrder->{WorkOrderAgentID},

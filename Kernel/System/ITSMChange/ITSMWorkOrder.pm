@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.9 2009-11-04 13:52:41 bes Exp $
+# $Id: ITSMWorkOrder.pm,v 1.10 2009-11-04 15:19:31 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::Group;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 =head1 NAME
 
@@ -1413,7 +1413,7 @@ sub WorkOrderPossibleStatesGet {
         }
     }
 
-    # get work order state list
+    # get workorder state list
     my $WorkOrderStateList = $Self->{GeneralCatalogObject}->ItemList(
         Class => 'ITSM::ChangeManagement::WorkOrder::State',
     ) || {};
@@ -1535,7 +1535,7 @@ sub WorkOrderTypeList {
         }
     }
 
-    # get work order type list
+    # get workorder type list
     my $WorkOrderTypeList = $Self->{GeneralCatalogObject}->ItemList(
         Class => 'ITSM::ChangeManagement::WorkOrder::Type',
     ) || {};
@@ -2035,6 +2035,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.9 $ $Date: 2009-11-04 13:52:41 $
+$Revision: 1.10 $ $Date: 2009-11-04 15:19:31 $
 
 =cut

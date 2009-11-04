@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.5 2009-11-03 12:42:31 bes Exp $
+# $Id: ITSMChangeManagement.pm,v 1.6 2009-11-04 15:19:31 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -28,7 +28,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 =head1 NAME
 
@@ -450,13 +450,13 @@ sub _LinkDelete {
         }
     }
 
-    # get all work order object ids
+    # get all workorder object ids
     my $WorkOrderIDs = $Self->{WorkOrderObject}->WorkOrderList();
 
     return if !$WorkOrderIDs;
     return if ref $WorkOrderIDs ne 'ARRAY';
 
-    # delete all work order links
+    # delete all workorder links
     for my $WorkOrderID ( @{$WorkOrderIDs} ) {
         $Self->{LinkObject}->LinkDeleteAll(
             Object => 'ITSMWorkOrder',
@@ -484,6 +484,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2009-11-03 12:42:31 $
+$Revision: 1.6 $ $Date: 2009-11-04 15:19:31 $
 
 =cut

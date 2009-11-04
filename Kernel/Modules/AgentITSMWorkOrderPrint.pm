@@ -1,8 +1,8 @@
 # --
-# Kernel/Modules/AgentITSMWorkOrderPrint.pm - the OTRS::ITSM::ChangeManagement work order print module
+# Kernel/Modules/AgentITSMWorkOrderPrint.pm - the OTRS::ITSM::ChangeManagement workorder print module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderPrint.pm,v 1.3 2009-11-02 17:34:01 bes Exp $
+# $Id: AgentITSMWorkOrderPrint.pm,v 1.4 2009-11-04 15:19:30 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;

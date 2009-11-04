@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder/Permission/ChangeBuilderCheck.pm - change builder based permission check
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ChangeBuilderCheck.pm,v 1.3 2009-11-04 13:52:41 bes Exp $
+# $Id: ChangeBuilderCheck.pm,v 1.4 2009-11-04 15:19:31 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 use Kernel::System::ITSMChange;
 
@@ -175,7 +175,7 @@ sub Run {
         WorkOrderID => $Param{WorkOrderID},
     );
 
-    # deny access, when no work order was found
+    # deny access, when no workorder was found
     return if !$WorkOrder || !%{$WorkOrder} || !$WorkOrder->{ChangeID};
 
     # for checking the change builder, we need information on the change
@@ -206,7 +206,7 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Id: ChangeBuilderCheck.pm,v 1.3 2009-11-04 13:52:41 bes Exp $
+$Id: ChangeBuilderCheck.pm,v 1.4 2009-11-04 15:19:31 bes Exp $
 
 =cut
 
