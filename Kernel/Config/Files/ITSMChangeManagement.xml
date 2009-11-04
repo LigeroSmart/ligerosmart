@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.48 2009-11-04 11:26:51 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.49 2009-11-04 14:10:55 bes Exp $</CVS>
     <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
         <Description Lang="en">Logfile for the itsm change counter.</Description>
         <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
@@ -929,7 +929,7 @@
         <SubGroup>Core::ITSMWorkOrder</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::System::ITSMChange::ITSMWorkOrder::Permission::ChangeAgentCheck</Item>
+                <Item Key="Module">Kernel::System::ITSMChange::ITSMWorkOrder::Permission::WorkOrderAgentCheck</Item>
                 <Item Key="Required">0</Item>
                 <Item Key="Granted">1</Item>
             </Hash>
