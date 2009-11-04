@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.45 2009-11-04 09:53:33 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.46 2009-11-04 09:57:07 bes Exp $</CVS>
     <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
         <Description Lang="en">Logfile for the itsm change counter.</Description>
         <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
@@ -736,8 +736,6 @@
             </Option>
         </Setting>
     </ConfigItem>
-
-    <!-- required privileges for fronted modules, sorted alphabetically -->
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMChange###Permission" Required="1" Valid="1">
         <Description Lang="en">Required privilege to view list of changes.</Description>
         <Description Lang="de">Benötigtes Recht zum Einsehen der Liste von Änderungen.</Description>
