@@ -2,7 +2,7 @@
 # Kernel/System/LinkObject/ITSMWorkOrder.pm - to link workorder objects
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.9 2009-11-04 17:05:44 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.10 2009-11-04 18:32:26 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,10 +17,8 @@ use warnings;
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
-use base qw(Kernel::System::EventHandler);
-
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -40,15 +38,6 @@ sub new {
     # create additional objects
     $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
     $Self->{ChangeObject}    = Kernel::System::ITSMChange->new( %{$Self} );
-
-    # init of event handler
-    $Self->EventHandlerInit(
-        Config     => 'ITSMWorkOrder::EventModule',
-        BaseObject => 'LinkObject',
-        Objects    => {
-            %{$Self},
-        },
-    );
 
     return $Self;
 }
@@ -390,7 +379,7 @@ sub LinkAddPost {
     my $Object = $Param{TargetObject} || $Param{SourceObject};
 
     # trigger WorkOrderLinkAddPost-Event
-    $Self->EventHandler(
+    $Self->{WorkOrderObject}->EventHandler(
         Event => 'WorkOrderLinkAddPost',
         Data  => {
             WorkOrderID => $Param{Key},
@@ -499,7 +488,7 @@ sub LinkDeletePost {
     my $Object = $Param{TargetObject} || $Param{SourceObject};
 
     # trigger WorkOrderLinkDeletePost-Event
-    $Self->EventHandler(
+    $Self->{WorkOrderObject}->EventHandler(
         Event => 'WorkOrderLinkDeletePost',
         Data  => {
             WorkOrderID => $Param{Key},

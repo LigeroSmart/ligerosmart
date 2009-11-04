@@ -2,7 +2,7 @@
 # Kernel/System/LinkObject/ITSMChange.pm - to link change objects
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.1 2009-10-27 21:10:31 ub Exp $
+# $Id: ITSMChange.pm,v 1.2 2009-11-04 18:32:41 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,10 +16,8 @@ use warnings;
 
 use Kernel::System::ITSMChange;
 
-use base qw(Kernel::System::EventHandler);
-
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -38,15 +36,6 @@ sub new {
 
     # create additional objects
     $Self->{ChangeObject} = Kernel::System::ITSMChange->new( %{$Self} );
-
-    # init of event handler
-    $Self->EventHandlerInit(
-        Config     => 'ITSMChange::EventModule',
-        BaseObject => 'LinkObject',
-        Objects    => {
-            %{$Self},
-        },
-    );
 
     return $Self;
 }
@@ -346,7 +335,7 @@ sub LinkAddPost {
     my $Object = $Param{TargetObject} || $Param{SourceObject};
 
     # trigger ChangeLinkAddPost-Event
-    $Self->EventHandler(
+    $Self->{ChangeObject}->EventHandler(
         Event => 'ChangeLinkAddPost',
         Data  => {
             ChangeID => $Param{Key},
@@ -455,7 +444,7 @@ sub LinkDeletePost {
     my $Object = $Param{TargetObject} || $Param{SourceObject};
 
     # trigger ChangeLinkDeletePost-Event
-    $Self->EventHandler(
+    $Self->{ChangeObject}->EventHandler(
         Event => 'ChangeLinkDeletePost',
         Data  => {
             ChangeID => $Param{Key},
