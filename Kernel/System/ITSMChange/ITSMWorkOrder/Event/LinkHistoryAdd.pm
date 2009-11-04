@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/WorkOrder/Event/LinkHistoryAdd.pm.pm - LinkHistoryAdd event module for WorkOrder
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LinkHistoryAdd.pm,v 1.2 2009-11-03 15:18:58 reb Exp $
+# $Id: LinkHistoryAdd.pm,v 1.3 2009-11-04 12:57:27 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange::History;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
@@ -140,10 +140,11 @@ sub Run {
     }
 
     # in history we use Event name without 'Post'
-    $Param{Event} =~ s/Post$//;
+    my $HistoryType = $Param{Event};
+    $HistoryType =~ s{ Post$ }{}xms;
 
     # do history stuff
-    if ( $Param{Event} eq 'WorkOrderLinkAdd' || $Param{Event} eq 'WorkOrderLinkDelete' ) {
+    if ( $HistoryType eq 'WorkOrderLinkAdd' || $HistoryType eq 'WorkOrderLinkDelete' ) {
 
         # get workorder
         my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
@@ -155,7 +156,7 @@ sub Run {
 
         # tell history that a change was added
         return if !$Self->{HistoryObject}->HistoryAdd(
-            HistoryType => $Param{Event},
+            HistoryType => $HistoryType,
             WorkOrderID => $Param{Data}->{WorkOrderID},
             UserID      => $Param{UserID},
             ContentNew  => join( '%%', $Param{SourceKey}, $Param{SourceObject} ),
@@ -194,6 +195,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2009-11-03 15:18:58 $
+$Revision: 1.3 $ $Date: 2009-11-04 12:57:27 $
 
 =cut

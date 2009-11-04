@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/HistoryAdd.pm - HistoryAdd event module for ITSMChange
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: HistoryAdd.pm,v 1.9 2009-11-04 10:53:58 ub Exp $
+# $Id: HistoryAdd.pm,v 1.10 2009-11-04 12:57:27 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 =head1 NAME
 
@@ -132,7 +132,7 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Needed (qw(ChangeID Event Config)) {
+    for my $Needed (qw(Data Event Config)) {
         if ( !$Param{$Needed} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -143,20 +143,21 @@ sub Run {
     }
 
     # in history we use Event name without 'Post'
-    $Param{Event} =~ s/Post$//;
+    my $HistoryType = $Param{Event};
+    $HistoryType =~ s{Post$}{}xms;
 
     # do history stuff
-    if ( $Param{Event} eq 'ChangeAdd' ) {
+    if ( $HistoryType eq 'ChangeAdd' ) {
 
         # tell history that a change was added
         return if !$Self->{HistoryObject}->HistoryAdd(
-            HistoryType => $Param{Event},
+            HistoryType => $HistoryType,
             ChangeID    => $Param{Data}->{ChangeID},
             UserID      => $Param{Data}->{UserID},
             ContentNew  => $Param{Data}->{ChangeID},
         );
     }
-    elsif ( $Param{Event} eq 'ChangeUpdate' ) {
+    elsif ( $HistoryType eq 'ChangeUpdate' ) {
 
         # get old data
         my $OldData = delete $Param{Data}->{OldChangeData};
@@ -177,16 +178,16 @@ sub Run {
             if ($FieldHasChanged) {
                 next FIELD if !$Self->{HistoryObject}->HistoryAdd(
                     ChangeID    => $Param{Data}->{ChangeID},
-                    Field       => $Field,
+                    Fieldname   => $Field,
                     ContentNew  => $Param{Data}->{$Field},
                     ContentOld  => $OldData->{$Field},
                     UserID      => $Param{Data}->{UserID},
-                    HistoryType => $Param{Event},
+                    HistoryType => $HistoryType,
                 );
             }
         }
     }
-    elsif ( $Param{Event} eq 'ChangeDelete' ) {
+    elsif ( $HistoryType eq 'ChangeDelete' ) {
 
         # delete history of change
         return if !$Self->{HistoryObject}->ChangeHistoryDelete(
@@ -196,7 +197,7 @@ sub Run {
     }
 
     # handle ChangeCAB events
-    elsif ( $Param{Event} eq 'ChangeCABUpdate' || $Param{Event} eq 'ChangeCABDelete' ) {
+    elsif ( $HistoryType eq 'ChangeCABUpdate' || $HistoryType eq 'ChangeCABDelete' ) {
 
         # get old data
         my $OldData = delete $Param{Data}->{OldChangeCABData};
@@ -217,11 +218,11 @@ sub Run {
             if ($FieldHasChanged) {
                 next FIELD if !$Self->{HistoryObject}->HistoryAdd(
                     ChangeID    => $Param{Data}->{ChangeID},
-                    Field       => $Field,
+                    Fieldname   => $Field,
                     ContentNew  => join( '%%', @{ $Param{Data}->{$Field} } ),
                     ContentOld  => join( '%%', @{ $OldData->{$Field} } ),
                     UserID      => $Param{Data}->{UserID},
-                    HistoryType => $Param{Event},
+                    HistoryType => $HistoryType,
                 );
             }
         }
@@ -267,7 +268,7 @@ sub HasFieldChanged {
     return 1 if ref( $Param{New} ) ne ref( $Param{Old} );
 
     # check hashes
-    if ( 'HASH' eq ref $Param{New} ) {
+    if ( ref $Param{New} eq 'HASH' ) {
 
         #field has changed when number of keys are different
         return 1 if scalar keys %{ $Param{New} } != scalar keys %{ $Param{Old} };
@@ -279,7 +280,7 @@ sub HasFieldChanged {
     }
 
     # check arrays
-    if ( 'ARRAY' eq ref $Param{New} ) {
+    if ( ref $Param{New} eq 'ARRAY' ) {
 
         # changed when number of elements differ
         return 1 if scalar @{ $Param{New} } != scalar @{ $Param{Old} };
@@ -310,6 +311,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.9 $ $Date: 2009-11-04 10:53:58 $
+$Revision: 1.10 $ $Date: 2009-11-04 12:57:27 $
 
 =cut

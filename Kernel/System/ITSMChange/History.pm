@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/History.pm - all change and workorder history functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: History.pm,v 1.12 2009-11-04 10:58:15 ub Exp $
+# $Id: History.pm,v 1.13 2009-11-04 12:57:27 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,10 +14,10 @@ package Kernel::System::ITSMChange::History;
 use strict;
 use warnings;
 
-# TODO : use Kernel::System::User;
+use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 =head1 NAME
 
@@ -77,6 +77,9 @@ create an object
 
 =cut
 
+# NOTE: Look at ITSMConfigurationManagement, but use new EventHandling Module
+# (currently in ITSMCore, will be in OTRS 2.5 framework later)
+
 sub new {
     my ( $Type, %Param ) = @_;
 
@@ -103,10 +106,11 @@ sub new {
 Adds a single history entry to the history. Returns 1 on success, C<undef> otherwise.
 
     my $Success = $HistoryObject->HistoryAdd(
-        ChangeID      => 1234,           # either ChangeID or WorkOrderID is needed
-        WorkOrderID   => 123,            # either ChangeID or WorkOrderID is needed
-        HistoryType   => 'WorkOrderAdd', # either HistoryType or HistoryTypeID is needed
-        HistoryTypeID => 1,              # either HistoryType or HistoryTypeID is needed
+        ChangeID      => 1234,            # either ChangeID or WorkOrderID is needed
+        WorkOrderID   => 123,             # either ChangeID or WorkOrderID is needed
+        HistoryType   => 'WorkOrderAdd',  # either HistoryType or HistoryTypeID is needed
+        HistoryTypeID => 1,               # either HistoryType or HistoryTypeID is needed
+        Fieldname     => 'Justification', # optional
         UserID        => 1,
         ContentNew    => 'Any useful information', # optional
         ContentOld    => 'Old value of field',     # optional
@@ -165,8 +169,8 @@ sub HistoryAdd {
     # insert history entry
     return if !$Self->{DBObject}->Do(
         SQL => 'INSERT INTO change_history ( change_id, workorder_id, content_new, '
-            . 'content_old, create_by, create_time, type_id ) '
-            . 'VALUES ( ?, ?, ?, ?, ?, current_timestamp, ? )',
+            . 'content_old, create_by, create_time, type_id, fieldname ) '
+            . 'VALUES ( ?, ?, ?, ?, ?, current_timestamp, ?, ? )',
         Bind => [
             \$Param{ChangeID},
             \$Param{WorkOrderID},
@@ -174,6 +178,7 @@ sub HistoryAdd {
             \$Param{ContentOld},
             \$Param{UserID},
             \$Param{HistoryTypeID},
+            \$Param{Fieldname},
         ],
     );
 
@@ -190,10 +195,9 @@ list contains hash references with these information:
     $Info{WorkOrderID}
     $Info{HistoryType}
     $Info{HistoryTypeID}
-    $Info{Content}
-
-    TODO: ContentOld, ContentNew
-
+    $Info{Fieldname}
+    $Info{ContentNew}
+    $Info{ContentOld}
     $Info{CreateBy}
     $Info{CreateTime}
     $Info{UserID}
@@ -225,7 +229,7 @@ sub WorkOrderHistoryGet {
     # run the sql statement to get history
     return if !$Self->{DBObject}->Prepare(
         SQL => 'SELECT ch.id, change_id, workorder_id, content_new, content_old, '
-            . 'ch.create_by, ch.create_time, type_id, cht.name '
+            . 'ch.create_by, ch.create_time, type_id, cht.name, fieldname '
             . 'FROM change_history ch, change_history_type cht '
             . 'WHERE ch.type_id = cht.id '
             . 'AND workorder_id = ? ',
@@ -245,6 +249,7 @@ sub WorkOrderHistoryGet {
             CreateTime     => $Row[6],
             HistoryTypeID  => $Row[7],
             HistoryType    => $Row[8],
+            Fieldname      => $Row[9],
         );
 
         push @HistoryEntries, \%HistoryEntry;
@@ -281,10 +286,9 @@ history entries for workorders. The list contains hash references with these inf
     $Info{WorkOrderID}
     $Info{HistoryType}
     $Info{HistoryTypeID}
-    $Info{Content}
-
-    TODO: ContentOld, ContentNew
-
+    $Info{Fieldname}
+    $Info{ContentNew}
+    $Info{ContentOld}
     $Info{CreateBy}
     $Info{CreateTime}
     $Info{UserID}
@@ -316,7 +320,7 @@ sub ChangeHistoryGet {
     # run the sql statement to get history
     return if !$Self->{DBObject}->Prepare(
         SQL => 'SELECT ch.id, change_id, workorder_id, content_new, content_old, '
-            . 'ch.create_by, ch.create_time, type_id, cht.name '
+            . 'ch.create_by, ch.create_time, type_id, cht.name, fieldname '
             . 'FROM change_history ch, change_history_type cht '
             . 'WHERE ch.type_id = cht.id '
             . 'AND change_id = ? ',
@@ -336,6 +340,7 @@ sub ChangeHistoryGet {
             CreateTime     => $Row[6],
             HistoryTypeID  => $Row[7],
             HistoryType    => $Row[8],
+            Fieldname      => $Row[9],
         );
 
         push @HistoryEntries, \%HistoryEntry;
@@ -523,6 +528,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.12 $ $Date: 2009-11-04 10:58:15 $
+$Revision: 1.13 $ $Date: 2009-11-04 12:57:27 $
 
 =cut
