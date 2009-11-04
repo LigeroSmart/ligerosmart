@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.137 2009-11-04 10:36:54 ub Exp $
+# $Id: ITSMChange.pm,v 1.138 2009-11-04 10:56:38 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.137 $) [1];
+$VERSION = qw($Revision: 1.138 $) [1];
 
 =head1 NAME
 
@@ -1287,7 +1287,7 @@ sub ChangeSearch {
         }
     }
 
-    # add work order agent id params to sql-where-array
+    # add workorder agent id params to sql-where-array
     if ( @{ $Param{WorkOrderAgentIDs} } ) {
 
         # quote
@@ -1302,7 +1302,7 @@ sub ChangeSearch {
         push @InnerJoinTables, 'wo2';
     }
 
-    # define which parameter require a join with work order table
+    # define which parameter require a join with workorder table
     my %TableRequiresJoin = (
         PlannedStartTime => 1,
         PlannedEndTime   => 1,
@@ -1502,13 +1502,13 @@ sub ChangeDelete {
         UserID => 1,
     );
 
-    # get change data to get the work order ids
+    # get change data to get the workorder ids
     my $ChangeData = $Self->ChangeGet(
         ChangeID => $Param{ChangeID},
         UserID   => $Param{UserID},
     );
 
-    # check if change contains work orders
+    # check if change contains workorders
     if (
         $ChangeData
         && ref $ChangeData eq 'HASH'
@@ -1517,7 +1517,7 @@ sub ChangeDelete {
         )
     {
 
-        # delete the work orders
+        # delete the workorders
         for my $WorkOrderID ( @{ $ChangeData->{WorkOrderIDs} } ) {
             return if !$Self->{WorkOrderObject}->WorkOrderDelete(
                 WorkOrderID => $WorkOrderID,
@@ -2191,6 +2191,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.137 $ $Date: 2009-11-04 10:36:54 $
+$Revision: 1.138 $ $Date: 2009-11-04 10:56:38 $
 
 =cut
