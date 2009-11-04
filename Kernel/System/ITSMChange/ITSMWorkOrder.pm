@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.4 2009-10-31 17:34:46 bes Exp $
+# $Id: ITSMWorkOrder.pm,v 1.5 2009-11-04 09:53:33 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,12 +16,14 @@ use warnings;
 
 use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
+use Kernel::System::User;
+use Kernel::System::Group;
 use Kernel::System::EventHandler;
 
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 =head1 NAME
 
@@ -103,6 +105,7 @@ sub new {
 
     # create additional objects
     $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
+    $Self->{GroupObject}          = Kernel::System::Group->new( %{$Self} );
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
     $Self->{LinkObject}           = Kernel::System::LinkObject->new( %{$Self} );
 
@@ -1553,6 +1556,114 @@ sub WorkOrderTypeList {
     return \@ArrayHashRef;
 }
 
+=item Permission()
+
+Returns whether the agent has permissions or not.
+
+    my $Access = $WorkOrderObject->Permission(
+        Type        => 'ro',     # 'ro' and 'rw' are supported
+        WorkOrderID => 4444,     # optional, do not pass for 'WorkOrderAdd'
+        UserID      => 123,
+    );
+
+The option LogNo turns off logging.
+This is useful when it is only checked whether a link/action should be shown.
+
+    my $Access = $WorkOrderObject->Permission(
+        Type        => 'ro',
+        WorkOrderID => 4444,
+        LogNo       => 1,
+        UserID      => 123,
+    );
+
+=cut
+
+sub Permission {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for (qw(Type UserID WorkOrderID)) {
+        if ( !$Param{$_} ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+            return;
+        }
+    }
+
+    # run all ITSMWorkOrder permission modules
+    if ( ref $Self->{ConfigObject}->Get('ITSMWorkOrder::Permission') eq 'HASH' ) {
+        my %Modules = %{ $Self->{ConfigObject}->Get('ITSMWorkOrder::Permission') };
+        for my $Module ( sort keys %Modules ) {
+
+            # log try of load module
+            if ( $Self->{Debug} > 1 ) {
+                $Self->{LogObject}->Log(
+                    Priority => 'debug',
+                    Message  => "Try to load module: $Modules{$Module}->{Module}!",
+                );
+            }
+
+            # load module
+            next if !$Self->{MainObject}->Require( $Modules{$Module}->{Module} );
+
+            # create object
+            my $ModuleObject = $Modules{$Module}->{Module}->new(
+                ConfigObject    => $Self->{ConfigObject},
+                LogObject       => $Self->{LogObject},
+                DBObject        => $Self->{DBObject},
+                WorkOrderObject => $Self,
+                UserObject      => $Self->{UserObject},
+                GroupObject     => $Self->{GroupObject},
+                Debug           => $Self->{Debug},
+            );
+
+            # execute Run()
+            my $AccessOk = $ModuleObject->Run(%Param);
+
+            # check granted option (should I say ok)
+            if ( $AccessOk && $Modules{$Module}->{Granted} ) {
+                if ( $Self->{Debug} > 0 ) {
+                    $Self->{LogObject}->Log(
+                        Priority => 'debug',
+                        Message  => "Granted access '$Param{Type}' true for "
+                            . "WorkOrderID '$Param{WorkOrderID}' "
+                            . "through $Modules{$Module}->{Module} (no more checks)!",
+                    );
+                }
+
+                # access granted
+                return 1;
+            }
+
+            # return because access is false but it's required
+            if ( !$AccessOk && $Modules{$Module}->{Required} ) {
+                if ( !$Param{LogNo} ) {
+                    $Self->{LogObject}->Log(
+                        Priority => 'notice',
+                        Message  => "Permission denied because module "
+                            . "($Modules{$Module}->{Module}) is required "
+                            . "(UserID: $Param{UserID} '$Param{Type}' on "
+                            . "WorkOrderID: $Param{WorkOrderID})!",
+                    );
+                }
+
+                # access denied
+                return;
+            }
+        }
+    }
+
+    # Deny access when neither a 'Granted'-Check nor a 'Required'-Check has reached a conclusion.
+    if ( !$Param{LogNo} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'notice',
+            Message  => "Permission denied (UserID: $Param{UserID} '$Param{Type}' "
+                . "on WorkOrderID: $Param{WorkOrderID})!",
+        );
+    }
+
+    return;
+}
+
 =item _CheckWorkOrderStateIDs()
 
 check if the given workorder state ids are all valid
@@ -1917,6 +2028,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2009-10-31 17:34:46 $
+$Revision: 1.5 $ $Date: 2009-11-04 09:53:33 $
 
 =cut

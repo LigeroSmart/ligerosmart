@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.135 2009-11-03 16:22:49 bes Exp $
+# $Id: ITSMChange.pm,v 1.136 2009-11-04 09:53:33 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.135 $) [1];
+$VERSION = qw($Revision: 1.136 $) [1];
 
 =head1 NAME
 
@@ -1674,8 +1674,8 @@ sub ChangeStateLookup {
 Returns whether the agent has permissions or not.
 
     my $Access = $ChangeObject->Permission(
-        Type     => 'ro',       # 'ro' and 'rw' are supported
-        ChangeID => 123,        # optional
+        Type     => 'ro',      # 'ro' and 'rw' are supported
+        ChangeID => 4444,      # optional, do not pass for 'ChangeAdd'
         UserID   => 123,
     );
 
@@ -2194,6 +2194,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.135 $ $Date: 2009-11-03 16:22:49 $
+$Revision: 1.136 $ $Date: 2009-11-04 09:53:33 $
 
 =cut

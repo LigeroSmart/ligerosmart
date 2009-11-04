@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.84 2009-10-31 17:34:47 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.85 2009-11-04 09:53:33 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -115,6 +115,7 @@ $Self->{ConfigObject}->Set(
 
 # define public interface (in alphabetical order)
 my @ObjectMethods = qw(
+    Permission
     WorkOrderAdd
     WorkOrderChangeTimeGet
     WorkOrderDelete

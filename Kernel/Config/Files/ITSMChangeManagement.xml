@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.44 2009-11-03 16:40:12 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.45 2009-11-04 09:53:33 bes Exp $</CVS>
     <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
         <Description Lang="en">Logfile for the itsm change counter.</Description>
         <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
@@ -792,8 +792,6 @@
             <String Regex="^(rw|ro)$">ro</String>
         </Setting>
     </ConfigItem>
-
-    <!-- The permission modules for ITSMChange -->
     <ConfigItem Name="ITSMChange::Permission###10-ChangeManagerCheck" Required="0" Valid="1">
         <Description Lang="en">Module to check the change manager.</Description>
         <Description Lang="de">Modul zum Überprüfen des Change Managers.</Description>
@@ -833,7 +831,43 @@
             </Hash>
         </Setting>
     </ConfigItem>
-
-    <!-- TODO: The permission modules for ITSMWorkOrder -->
-
+    <ConfigItem Name="ITSMWorkOrder::Permission###10-ChangeManagerCheck" Required="0" Valid="1">
+        <Description Lang="en">Module to check the change manager.</Description>
+        <Description Lang="de">Modul zum Überprüfen des Change Managers.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::System::ITSMChange::ITSMWorkOrder::Permission::ChangeManagerCheck</Item>
+                <Item Key="Required">0</Item>
+                <Item Key="Granted">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMWorkOrder::Permission###20-ChangeBuilderCheck" Required="0" Valid="1">
+        <Description Lang="en">Module to check the change builder.</Description>
+        <Description Lang="de">Modul zum Überprüfen des Change Builders.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::System::ITSMChange::ITSMWorkOrder::Permission::ChangeBuilderCheck</Item>
+                <Item Key="Required">0</Item>
+                <Item Key="Granted">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMWorkOrder::Permission###30-WorkOrderAgentCheck" Required="0" Valid="1">
+        <Description Lang="en">Module to check the workorder agent.</Description>
+        <Description Lang="de">Modul zum Überprüfen des Workorder-Agenten.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::System::ITSMChange::ITSMWorkOrder::Permission::ChangeAgentCheck</Item>
+                <Item Key="Required">0</Item>
+                <Item Key="Granted">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
 </otrs_config>
