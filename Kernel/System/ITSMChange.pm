@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.136 2009-11-04 09:53:33 bes Exp $
+# $Id: ITSMChange.pm,v 1.137 2009-11-04 10:36:54 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.136 $) [1];
+$VERSION = qw($Revision: 1.137 $) [1];
 
 =head1 NAME
 
@@ -1452,11 +1452,12 @@ sub ChangeSearch {
 Delete a change.
 
 This function first removes all links to this ChangeObject.
-Then it deletes the history of this ChangeObject.
 Then it gets a list of all WorkOrderObjects of this change and
 calls WorkorderDelete for each WorkOrder (which will itself delete
 all links to the WorkOrder).
 Then it deletes the CAB.
+The history of this ChangeObject will be deleted by the calling the
+ChangeDeletePostEvent.
 
     my $Success = $ChangeObject->ChangeDelete(
         ChangeID => 123,
@@ -1501,10 +1502,7 @@ sub ChangeDelete {
         UserID => 1,
     );
 
-    # TODO: delete the history
-
-    # get change data to get the work order ids,
-    # and to be given to post event handler
+    # get change data to get the work order ids
     my $ChangeData = $Self->ChangeGet(
         ChangeID => $Param{ChangeID},
         UserID   => $Param{UserID},
@@ -1544,7 +1542,6 @@ sub ChangeDelete {
     $Self->EventHandler(
         Event => 'ChangeDeletePost',
         Data  => {
-            OldChangeData => $ChangeData,
             %Param,
         },
         UserID => $Param{UserID},
@@ -2194,6 +2191,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.136 $ $Date: 2009-11-04 09:53:33 $
+$Revision: 1.137 $ $Date: 2009-11-04 10:36:54 $
 
 =cut
