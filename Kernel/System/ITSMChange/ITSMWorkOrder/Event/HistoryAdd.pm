@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder/Event/HistoryAdd.pm - HistoryAdd event module for WorkOrder
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: HistoryAdd.pm,v 1.7 2009-11-04 17:09:45 ub Exp $
+# $Id: HistoryAdd.pm,v 1.8 2009-11-04 18:48:54 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,9 +15,10 @@ use strict;
 use warnings;
 
 use Kernel::System::ITSMChange::History;
+use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 =head1 NAME
 
@@ -100,7 +101,8 @@ sub new {
     }
 
     # create additional objects
-    $Self->{HistoryObject} = Kernel::System::ITSMChange::History->new( %{$Self} );
+    $Self->{HistoryObject}   = Kernel::System::ITSMChange::History->new( %{$Self} );
+    $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
 
     return $Self;
 }
@@ -198,6 +200,27 @@ sub Run {
         );
     }
 
+    # handle link events
+    if ( $HistoryType eq 'WorkOrderLinkAdd' || $HistoryType eq 'WorkOrderLinkDelete' ) {
+
+        # get workorder
+        my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+            WorkOrderID => $Param{Data}->{WorkOrderID},
+            UserID      => $Param{UserID},
+        );
+
+        return if !$WorkOrder;
+
+        # tell history that a change was added
+        return if !$Self->{HistoryObject}->HistoryAdd(
+            HistoryType => $HistoryType,
+            WorkOrderID => $Param{Data}->{WorkOrderID},
+            UserID      => $Param{UserID},
+            ContentNew  => join( '%%', $Param{Data}->{SourceKey}, $Param{Data}->{SourceObject} ),
+            ChangeID    => $WorkOrder->{ChangeID},
+        );
+    }
+
     # error
     else {
 
@@ -281,6 +304,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.7 $ $Date: 2009-11-04 17:09:45 $
+$Revision: 1.8 $ $Date: 2009-11-04 18:48:54 $
 
 =cut
