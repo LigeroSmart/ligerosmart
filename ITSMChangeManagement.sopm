@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.44 2009-11-04 10:28:59 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.45 2009-11-04 10:34:43 ub Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -58,6 +58,7 @@
         <File Permission="644" Location="Kernel/System/ITSMChange/History.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/ITSMWorkOrder.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/Event/HistoryAdd.pm"/>
+        <File Permission="644" Location="Kernel/System/ITSMChange/Event/LinkHistoryAdd.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/Permission/ChangeAgentCheck.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/Permission/ChangeBuilderCheck.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/Permission/ChangeManagerCheck.pm"/>

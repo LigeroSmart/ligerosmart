@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.46 2009-11-04 09:57:07 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.47 2009-11-04 10:34:12 ub Exp $</CVS>
     <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
         <Description Lang="en">Logfile for the itsm change counter.</Description>
         <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
@@ -694,6 +694,19 @@
             <Hash>
                 <Item Key="Module">Kernel::System::ITSMChange::Event::HistoryAdd</Item>
                 <Item Key="Event">(ChangeAddPost|ChangeUpdatePost|ChangeCABUpdatePost|ChangeCABDeletePost|ChangeDeletePost)</Item>
+                <Item Key="Transaction">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::EventModule###02-LinkHistoryAdd" Required="0" Valid="1">
+        <Description Lang="en">ITSM event module updates the history of change objects when linked or unlinked with other objects.</Description>
+        <Description Lang="de">ITSM Event Modul aktualisiert die History von Change Objekten beim Erstellen oder Löschen von Verknüpfungen mit anderen Objekten.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::Event</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::System::ITSMChange::Event::LinkHistoryAdd</Item>
+                <Item Key="Event">(ChangeLinkAddPost|ChangeLinkDeletePost)</Item>
                 <Item Key="Transaction">0</Item>
             </Hash>
         </Setting>
