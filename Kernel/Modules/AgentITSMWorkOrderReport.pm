@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderReport.pm - the OTRS::ITSM::ChangeManagement work order report module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderReport.pm,v 1.12 2009-11-02 17:34:01 bes Exp $
+# $Id: AgentITSMWorkOrderReport.pm,v 1.13 2009-11-04 11:26:51 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -55,6 +55,21 @@ sub Run {
         return $Self->{LayoutObject}->ErrorScreen(
             Message => 'No WorkOrderID is given!',
             Comment => 'Please contact the admin.',
+        );
+    }
+
+    # check permissions
+    my $Access = $Self->{WorkOrderObject}->Permission(
+        Type        => $Self->{Config}->{Permission},
+        WorkOrderID => $WorkOrderID,
+        UserID      => $Self->{UserID}
+    );
+
+    # error screen
+    if ( !$Access ) {
+        return $Self->{LayoutObject}->NoPermission(
+            Message    => "You need $Self->{Config}->{Permission} permissions!",
+            WithHeader => 'yes',
         );
     }
 
