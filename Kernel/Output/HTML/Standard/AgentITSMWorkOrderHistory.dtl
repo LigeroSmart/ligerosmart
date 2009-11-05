@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderHistory.dtl - provides HTML form for AgentITSMWorkOrderHistory
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderHistory.dtl,v 1.1 2009-10-29 13:01:54 reb Exp $
+# $Id: AgentITSMWorkOrderHistory.dtl,v 1.2 2009-11-05 11:47:40 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -57,9 +57,9 @@
 <!-- dtl:block:WorkOrderZoom -->
                         <a href="$Env{"Baselink"}Action=AgentITSMWorkOrderZoom&WorkOrderID=$Data{"WorkOrderID"}" onmouseover="window.status='$JSText{"Zoom"}'; return true;" onmouseout="window.status='';">x</a>
 <!-- dtl:block:WorkOrderZoom -->
-<!-- dtl:block:MoreInfo -->
-                        <a href="$Env{"Baselink"}Action=AgentITSMWorkOrderHistory&Subaction=MoreInfo&ChangeID=$Data{"ChangeID"}" onmouseover="window.status='$JSText{"More Info"}'; return true;" onmouseout="window.status='';">x</a>
-<!-- dtl:block:MoreInfo -->
+<!-- dtl:block:HistoryZoom -->
+                        <a href="$Env{"Baselink"}Action=AgentITSMWorkOrderHistoryZoom&HistoryEntryID=$Data{"HistoryEntryID"}" onmouseover="window.status='$JSText{"More Info"}'; return true;" onmouseout="window.status='';">x</a>
+<!-- dtl:block:HistoryZoom -->
                     </td>
                     <td>
                         <div title="$Quote{"$Data{"UserLogin"} ($Data{"UserFirstname"} $Data{"UserLastname"})"}">

@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/History.pm - all change and workorder history functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: History.pm,v 1.14 2009-11-05 11:00:26 reb Exp $
+# $Id: History.pm,v 1.15 2009-11-05 11:48:21 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 =head1 NAME
 
@@ -260,8 +260,8 @@ sub WorkOrderHistoryGet {
 
         # get user name
         my %User = $Self->{UserObject}->GetUserData(
-            User  => $HistoryEntry->{CreateBy},
-            Cache => 1,
+            UserID => $HistoryEntry->{CreateBy},
+            Cache  => 1,
         );
 
         # save user info in history entry
@@ -612,6 +612,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.14 $ $Date: 2009-11-05 11:00:26 $
+$Revision: 1.15 $ $Date: 2009-11-05 11:48:21 $
 
 =cut

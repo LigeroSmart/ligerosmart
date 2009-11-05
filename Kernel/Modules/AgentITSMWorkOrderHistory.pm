@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderHistory.pm - the OTRS::ITSM::ChangeManagement workorder history module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderHistory.pm,v 1.4 2009-11-04 11:26:51 bes Exp $
+# $Id: AgentITSMWorkOrderHistory.pm,v 1.5 2009-11-05 11:47:40 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -117,6 +117,9 @@ sub Run {
         @HistoryLines = reverse @{$HistoryEntriesRef};
     }
 
+    # max length of strings
+    my $MaxLength = 50;
+
     # create table
     my $Counter = 1;
     for my $HistoryEntry (@HistoryLines) {
@@ -125,13 +128,58 @@ sub Run {
         # data for a single row
         my %Data = (
             %{$HistoryEntry},
-            Content => $HistoryEntry->{ContentNew},
         );
 
-        # show 'nice' output
-        $Data{Content} = $Self->{LayoutObject}->{LanguageObject}->Get(
-            'ChangeHistory::' . $Data{HistoryType} . '", ' . $Data{Content}
-        );
+        # determine what should be shown
+        my $HistoryType = $HistoryEntry->{HistoryType};
+        if ( $HistoryType =~ m{ Update \z }xms ) {
+
+            # tranlate fieldname for display
+            my $TranslatedFieldname = $Self->{LayoutObject}->{LanguageObject}->Get(
+                $HistoryEntry->{Fieldname},
+            );
+
+            $Data{Content} = join '%%', $TranslatedFieldname,
+                $HistoryEntry->{ContentNew},
+                $HistoryEntry->{ContentOld};
+        }
+        else {
+            $Data{Content} = $HistoryEntry->{ContentNew};
+        }
+
+        # replace text
+        if ( $Data{Content} ) {
+
+            # remove leading %%
+            $Data{Content} =~ s/^%%//g;
+
+            # split the content by %%
+            my @Values = split( /%%/, $Data{Content} );
+
+            $Data{Content} = '';
+
+            # clean the values
+            for my $Value (@Values) {
+                if ( $Data{Content} ) {
+                    $Data{Content} .= "\", ";
+                }
+
+                $Data{Content} .= "\"$Value";
+            }
+
+            # we need at least a double quote
+            if ( !$Data{Content} ) {
+                $Data{Content} = '" ';
+            }
+
+            # show 'nice' output
+            $Data{Content} = $Self->{LayoutObject}->{LanguageObject}->Get(
+                'WorkOrderHistory::' . $Data{HistoryType} . '", ' . $Data{Content}
+            );
+
+            # remove not needed place holder
+            $Data{Content} =~ s/\%s//g;
+        }
 
         # seperate each searchresult line by using several css
         $Data{css} = $Counter % 2 ? 'searchpassive' : 'searchactive';
@@ -141,10 +189,25 @@ sub Run {
             Data => {%Data},
         );
 
-        $Self->{LayoutObject}->Block(
-            Name => 'WorkOrderZoom',
-            Data => {%Data},
-        );
+        if (
+            ( $HistoryEntry->{ContentNew} && length( $HistoryEntry->{ContentNew} ) > $MaxLength )
+            || ( $HistoryEntry->{ContentOld} && length( $HistoryEntry->{ContentOld} ) > $MaxLength )
+            )
+        {
+
+            # show historyzoom block
+            $Self->{LayoutObject}->Block(
+                Name => 'HistoryZoom',
+                Data => {%Data},
+            );
+
+        }
+        else {
+            $Self->{LayoutObject}->Block(
+                Name => 'WorkOrderZoom',
+                Data => {%Data},
+            );
+        }
     }
 
     # output header

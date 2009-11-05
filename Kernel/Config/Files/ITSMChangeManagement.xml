@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.51 2009-11-05 10:59:34 reb Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.52 2009-11-05 11:47:40 reb Exp $</CVS>
     <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
         <Description Lang="en">Logfile for the itsm change counter.</Description>
         <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
@@ -289,6 +289,20 @@
                 <GroupRo>itsm-change</GroupRo>
                 <Description>WorkOrder History</Description>
                 <Title>History</Title>
+                <NavBarName>Change</NavBarName>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentITSMWorkOrderHistoryZoom" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AgentITSMWorkOrderHistoryZoom object in the agent interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration des AgentITSMWorkOrderHistoryZoom-Objekts im Agent-Interface.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <GroupRw>itsm-change</GroupRw>
+                <Description>WorkOrder HistoryZoom</Description>
+                <Title>HistoryZoom</Title>
                 <NavBarName>Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
@@ -773,6 +787,15 @@
             <String Regex="^(rw|ro)$">ro</String>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeHistoryZoom###Permission" Required="1" Valid="1">
+        <Description Lang="en">Required privilege to view the history zoom of a change.</Description>
+        <Description Lang="de">Benötigtes Recht zum Einsehen der Historiendetails einer Änderung.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeHistoryZoom</SubGroup>
+        <Setting>
+            <String Regex="^(rw|ro)$">ro</String>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeInvolvedPersons###Permission" Required="1" Valid="1">
         <Description Lang="en">Required privilege to edit the involved persons of a change.</Description>
         <Description Lang="de">Benötigtes Recht zum Ändern der beteiligten Personen.</Description>
@@ -823,6 +846,15 @@
         <Description Lang="de">Benötigtes Recht zum Betrachten der Historie einer Arbeitsanweisung.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::ViewWorkOrderHistory</SubGroup>
+        <Setting>
+            <String Regex="^(rw|ro)$">ro</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderHistoryZoom###Permission" Required="1" Valid="1">
+        <Description Lang="en">Required privilege to view the history zoom of a workorder.</Description>
+        <Description Lang="de">Benötigtes Recht zum Betrachten der Historiendetails einer Arbeitsanweisung.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewWorkOrderHistoryZoom</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">ro</String>
         </Setting>
