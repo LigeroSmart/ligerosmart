@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ITSMChangeMenuGeneric.pm
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeMenuGeneric.pm,v 1.1 2009-10-19 19:58:23 mae Exp $
+# $Id: ITSMChangeMenuGeneric.pm,v 1.2 2009-11-05 12:27:09 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -44,46 +44,24 @@ sub Run {
         return;
     }
 
-    # set access
-    my $Access = 1;
+    # get config for the relevant action
+    my $FrontendConfig
+        = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Param{Config}->{Action}");
 
-    # get groups
-    my $GroupsRo
-        = $Self->{ConfigObject}->Get('Frontend::Module')->{ $Param{Config}->{Action} }->{GroupRo}
-        || [];
-    my $GroupsRw
-        = $Self->{ConfigObject}->Get('Frontend::Module')->{ $Param{Config}->{Action} }->{Group}
-        || [];
+    my $Access;
+    if ( !$FrontendConfig || !$FrontendConfig->{Permission} ) {
 
-    # check permission
-    if ( $Param{Config}->{Action} && ( @{$GroupsRo} || @{$GroupsRw} ) ) {
+        # Display the menu-link, when no privilege is required
+        $Access = 1;
+    }
+    else {
 
-        # set access
-        $Access = 0;
-
-        # find read only groups
-        ROGROUP:
-        for my $RoGroup ( @{$GroupsRo} ) {
-
-            next ROGROUP if !$Self->{LayoutObject}->{"UserIsGroupRo[$RoGroup]"};
-            next ROGROUP if $Self->{LayoutObject}->{"UserIsGroupRo[$RoGroup]"} ne 'Yes';
-
-            # set access
-            $Access = 1;
-            last ROGROUP;
-        }
-
-        # find read write groups
-        RWGROUP:
-        for my $RwGroup ( @{$GroupsRw} ) {
-
-            next RWGROUP if !$Self->{LayoutObject}->{"UserIsGroup[$RwGroup]"};
-            next RWGROUP if $Self->{LayoutObject}->{"UserIsGroup[$RwGroup]"} ne 'Yes';
-
-            # set access
-            $Access = 1;
-            last RWGROUP;
-        }
+        # check permissions, based on the required privilege
+        $Access = $Self->{ChangeObject}->Permission(
+            Type     => $FrontendConfig->{Permission},
+            ChangeID => $Param{Change}->{ChangeID},
+            UserID   => $Self->{UserID},
+        );
     }
 
     return $Param{Counter} if !$Access;

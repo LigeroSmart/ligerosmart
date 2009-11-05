@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.52 2009-11-05 11:47:40 reb Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.53 2009-11-05 12:27:08 bes Exp $</CVS>
     <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
         <Description Lang="en">Logfile for the itsm change counter.</Description>
         <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
@@ -953,6 +953,15 @@
                 <Item Key="Required">0</Item>
                 <Item Key="Granted">1</Item>
             </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentLinkObject###Permission" Required="1" Valid="1">
+        <Description Lang="en">Required privilege to link to a change.</Description>
+        <Description Lang="de">Benötigtes Recht zum Linken auf eine Änderung.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewLinkObject</SubGroup>
+        <Setting>
+            <String Regex="^(rw|ro)$">rw</String>
         </Setting>
     </ConfigItem>
 </otrs_config>
