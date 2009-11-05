@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ITSMWorkOrderMenuGeneric.pm
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrderMenuGeneric.pm,v 1.1 2009-10-27 21:06:44 ub Exp $
+# $Id: ITSMWorkOrderMenuGeneric.pm,v 1.2 2009-11-05 16:28:25 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -44,46 +44,37 @@ sub Run {
         return;
     }
 
-    # set access
-    my $Access = 1;
+    # get config for the relevant action
+    my $FrontendConfig
+        = $Self->{ConfigObject}->Get("ITSMWorkOrder::Frontend::$Param{Config}->{Action}");
 
-    # get groups
-    my $GroupsRo
-        = $Self->{ConfigObject}->Get('Frontend::Module')->{ $Param{Config}->{Action} }->{GroupRo}
-        || [];
-    my $GroupsRw
-        = $Self->{ConfigObject}->Get('Frontend::Module')->{ $Param{Config}->{Action} }->{Group}
-        || [];
+    # get the required privilege, 'ro' or 'rw'
+    my $RequiredPriv;
+    if ( $FrontendConfig && $FrontendConfig->{Permission} ) {
 
-    # check permission
-    if ( $Param{Config}->{Action} && ( @{$GroupsRo} || @{$GroupsRw} ) ) {
+        # get the required priv from the frontend configuration
+        $RequiredPriv = $FrontendConfig->{Permission};
+    }
+    elsif ( $Param{Config}->{Action} eq 'AgentLinkObject' ) {
 
-        # set access
-        $Access = 0;
+        # the Link-link is a special case, as it is not specific to ITSMChange
+        $RequiredPriv = 'rw';
+    }
 
-        # find read only groups
-        ROGROUP:
-        for my $RoGroup ( @{$GroupsRo} ) {
+    my $Access;
+    if ( !$RequiredPriv ) {
 
-            next ROGROUP if !$Self->{LayoutObject}->{"UserIsGroupRo[$RoGroup]"};
-            next ROGROUP if $Self->{LayoutObject}->{"UserIsGroupRo[$RoGroup]"} ne 'Yes';
+        # Display the menu-link, when no privilege is required
+        $Access = 1;
+    }
+    else {
 
-            # set access
-            $Access = 1;
-            last ROGROUP;
-        }
-
-        # find read write groups
-        RWGROUP:
-        for my $RwGroup ( @{$GroupsRw} ) {
-
-            next RWGROUP if !$Self->{LayoutObject}->{"UserIsGroup[$RwGroup]"};
-            next RWGROUP if $Self->{LayoutObject}->{"UserIsGroup[$RwGroup]"} ne 'Yes';
-
-            # set access
-            $Access = 1;
-            last RWGROUP;
-        }
+        # check permissions, based on the required privilege
+        $Access = $Self->{WorkOrderObject}->Permission(
+            Type        => $RequiredPriv,
+            WorkOrderID => $Param{WorkOrder}->{WorkOrderID},
+            UserID      => $Self->{UserID},
+        );
     }
 
     return $Param{Counter} if !$Access;
@@ -91,7 +82,7 @@ sub Run {
     # output menu block
     $Self->{LayoutObject}->Block( Name => 'Menu' );
 
-    # output seperator
+    # output seperator, when this is not the first menu item
     if ( $Param{Counter} ) {
         $Self->{LayoutObject}->Block( Name => 'MenuItemSplit' );
     }
