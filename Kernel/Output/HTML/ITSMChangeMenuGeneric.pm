@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ITSMChangeMenuGeneric.pm
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeMenuGeneric.pm,v 1.2 2009-11-05 12:27:09 bes Exp $
+# $Id: ITSMChangeMenuGeneric.pm,v 1.3 2009-11-05 13:35:36 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -48,8 +48,21 @@ sub Run {
     my $FrontendConfig
         = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Param{Config}->{Action}");
 
+    # get the required privilege, 'ro' or 'rw'
+    my $RequiredPriv;
+    if ( $FrontendConfig && $FrontendConfig->{Permission} ) {
+
+        # get the required priv from the frontend configuration
+        $RequiredPriv = $FrontendConfig->{Permission};
+    }
+    elsif ( $Param{Config}->{Action} eq 'AgentLinkObject' ) {
+
+        # the Link-link is a special case, as it is not specific to ITSMChange
+        $RequiredPriv = 'rw';
+    }
+
     my $Access;
-    if ( !$FrontendConfig || !$FrontendConfig->{Permission} ) {
+    if ( !$RequiredPriv ) {
 
         # Display the menu-link, when no privilege is required
         $Access = 1;
@@ -58,7 +71,7 @@ sub Run {
 
         # check permissions, based on the required privilege
         $Access = $Self->{ChangeObject}->Permission(
-            Type     => $FrontendConfig->{Permission},
+            Type     => $RequiredPriv,
             ChangeID => $Param{Change}->{ChangeID},
             UserID   => $Self->{UserID},
         );
@@ -69,7 +82,7 @@ sub Run {
     # output menu block
     $Self->{LayoutObject}->Block( Name => 'Menu' );
 
-    # output seperator
+    # output seperator, when this is not the first menu item
     if ( $Param{Counter} ) {
         $Self->{LayoutObject}->Block( Name => 'MenuItemSplit' );
     }
