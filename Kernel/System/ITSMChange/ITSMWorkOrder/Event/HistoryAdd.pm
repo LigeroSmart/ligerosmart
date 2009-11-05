@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder/Event/HistoryAdd.pm - HistoryAdd event module for WorkOrder
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: HistoryAdd.pm,v 1.8 2009-11-04 18:48:54 reb Exp $
+# $Id: HistoryAdd.pm,v 1.9 2009-11-05 11:00:26 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,10 +15,9 @@ use strict;
 use warnings;
 
 use Kernel::System::ITSMChange::History;
-use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 =head1 NAME
 
@@ -96,13 +95,15 @@ sub new {
     bless( $Self, $Type );
 
     # get needed objects
-    for (qw(DBObject ConfigObject EncodeObject LogObject MainObject TimeObject WorkOrderObject)) {
-        $Self->{$_} = $Param{$_} || die "Got no $_!";
+    for my $Object (
+        qw(DBObject ConfigObject EncodeObject LogObject MainObject TimeObject WorkOrderObject)
+        )
+    {
+        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
     # create additional objects
-    $Self->{HistoryObject}   = Kernel::System::ITSMChange::History->new( %{$Self} );
-    $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
+    $Self->{HistoryObject} = Kernel::System::ITSMChange::History->new( %{$Self} );
 
     return $Self;
 }
@@ -201,7 +202,7 @@ sub Run {
     }
 
     # handle link events
-    if ( $HistoryType eq 'WorkOrderLinkAdd' || $HistoryType eq 'WorkOrderLinkDelete' ) {
+    elsif ( $HistoryType eq 'WorkOrderLinkAdd' || $HistoryType eq 'WorkOrderLinkDelete' ) {
 
         # get workorder
         my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
@@ -304,6 +305,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.8 $ $Date: 2009-11-04 18:48:54 $
+$Revision: 1.9 $ $Date: 2009-11-05 11:00:26 $
 
 =cut

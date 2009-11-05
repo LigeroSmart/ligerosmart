@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.50 2009-11-04 18:33:33 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.51 2009-11-05 10:59:34 reb Exp $</CVS>
     <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
         <Description Lang="en">Logfile for the itsm change counter.</Description>
         <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
@@ -166,6 +166,20 @@
                 <GroupRw>itsm-change</GroupRw>
                 <Description>Change History</Description>
                 <Title>History</Title>
+                <NavBarName>Change</NavBarName>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentITSMChangeHistoryZoom" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AgentITSMChangeHistoryZoom object in the agent interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration des AgentITSMChangeHistoryZoom-Objekts im Agent-Interface.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <GroupRw>itsm-change</GroupRw>
+                <Description>Change HistoryZoom</Description>
+                <Title>HistoryZoom</Title>
                 <NavBarName>Change</NavBarName>
             </FrontendModuleReg>
         </Setting>

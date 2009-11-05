@@ -1,0 +1,91 @@
+# --
+# AgentITSMChangeHistoryZoom.dtl - provides HTML form for AgentITSMChangeHistoryZoom
+# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# --
+# $Id: AgentITSMChangeHistoryZoom.dtl,v 1.1 2009-11-05 10:59:34 reb Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+    <tr>
+        <td class="mainhead">
+            <div title="$Env{"Box0"}$Text{"History of"} $Text{"Change#"}: $QData{"ChangeNumber"}$Env{"Box1"} - $QData{"ChangeTitle"}">
+                $Env{"Box0"}$Text{"History of"} $Text{"Change#"}: $QData{"ChangeNumber"}$Env{"Box1"} - $QData{"ChangeTitle","70"}
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td class="menu">
+            <a href="$Env{"Baselink"}$Env{"LastScreenView"}" onmouseover="window.status='$JSText{"Back"}'; return true;" onmouseout="window.status='';" class="menuitem">$Text{"Back"}</a>
+        </td>
+    </tr>
+    <tr>
+        <td class="mainbody">
+            <br>
+            <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
+                <tr>
+                    <td class="contenthead">
+                        $Text{"Detailed history information of"} ChangeUpdate
+                    </td>
+                </tr>
+                <tr class="contentbody">
+                    <td>
+                        <table border="0">
+                            <tr>
+                                <td class="contentkey">
+                                    $Text{"Modified"}:
+                                </td>
+                                <td class="contentvalue">
+                                    $QData{"Fieldname"}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="contentkey">
+                                    $Text{"Old Value"}:
+                                </td>
+                                <td class="contentvalue">
+                                    $Data{"ContentOld"}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="contentkey">
+                                    $Text{"New Value"}:
+                                </td>
+                                <td class="contentvalue">
+                                    $Data{"ContentNew"}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="contentkey">
+                                    $Text{"Changed"}:
+                                </td>
+                                <td class="contentvalue">
+                                    $QData{"ChangeTime"}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="contentkey">
+                                    $Text{"Changed by"}:
+                                </td>
+                                <td class="contentvalue">
+                                    <div title="$Quote{"$Data{"UserLogin"} ($Data{"UserFirstname"} $Data{"UserLastname"})"}">
+                                        $Quote{"$Data{"UserLogin"}"} ($Quote{"$Data{"UserFirstname"} $Data{"UserLastname"}","20"})
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="contentfooter">
+                        &nbsp;
+                    </td>
+                </tr>
+            </table>
+            <br>
+        </td>
+    </tr>
+</table>

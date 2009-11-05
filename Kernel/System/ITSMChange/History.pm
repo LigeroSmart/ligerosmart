@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/History.pm - all change and workorder history functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: History.pm,v 1.13 2009-11-04 12:57:27 reb Exp $
+# $Id: History.pm,v 1.14 2009-11-05 11:00:26 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 =head1 NAME
 
@@ -367,6 +367,90 @@ sub ChangeHistoryGet {
     return \@HistoryEntries;
 }
 
+=item HistoryEntryGet()
+
+Returns a single history entry. The hash reference has these information:
+
+    $Info{HistoryEntryID}
+    $Info{ChangeID}
+    $Info{WorkOrderID}
+    $Info{HistoryType}
+    $Info{HistoryTypeID}
+    $Info{Fieldname}
+    $Info{ContentNew}
+    $Info{ContentOld}
+    $Info{CreateBy}
+    $Info{CreateTime}
+    $Info{UserID}
+    $Info{UserLogin}
+    $Info{UserLastname}
+    $Info{UserFirstname}
+
+    my $HistoryEntry = $HistoryObject->HistoryEntryGet(
+        HistoryEntryID => 123,
+        UserID         => 1,
+    );
+
+=cut
+
+sub HistoryEntryGet {
+    my ( $Self, %Param ) = @_;
+
+    # check for needed stuff
+    for my $Attribute (qw(HistoryEntryID UserID)) {
+        if ( !$Param{$Attribute} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Attribute!",
+            );
+            return;
+        }
+    }
+
+    # run the sql statement to get history
+    return if !$Self->{DBObject}->Prepare(
+        SQL => 'SELECT ch.id, change_id, workorder_id, content_new, content_old, '
+            . 'ch.create_by, ch.create_time, type_id, cht.name, fieldname '
+            . 'FROM change_history ch, change_history_type cht '
+            . 'WHERE ch.type_id = cht.id '
+            . 'AND ch.id = ? ',
+        Bind => [ \$Param{HistoryEntryID} ],
+    );
+
+    # fetch the entries and save information in array
+    my %HistoryEntry;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        %HistoryEntry = (
+            HistoryEntryID => $Row[0],
+            ChangeID       => $Row[1],
+            WorkOrderID    => $Row[2],
+            ContentNew     => $Row[3],
+            ContentOld     => $Row[4],
+            CreateBy       => $Row[5],
+            CreateTime     => $Row[6],
+            HistoryTypeID  => $Row[7],
+            HistoryType    => $Row[8],
+            Fieldname      => $Row[9],
+        );
+    }
+
+    # get user name
+    my %User = $Self->{UserObject}->GetUserData(
+        UserID => $HistoryEntry{CreateBy},
+        Cache  => 1,
+    );
+
+    # save user info in history entry
+    if (%User) {
+        $HistoryEntry{UserID}        = $User{UserID};
+        $HistoryEntry{UserLogin}     = $User{UserLogin};
+        $HistoryEntry{UserFirstname} = $User{UserFirstname};
+        $HistoryEntry{UserLastname}  = $User{UserLastname};
+    }
+
+    return \%HistoryEntry;
+}
+
 =item WorkOrderHistoryDelete()
 
 Deletes all entries in history table that belongs to the given WorkOrderID.
@@ -528,6 +612,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.13 $ $Date: 2009-11-04 12:57:27 $
+$Revision: 1.14 $ $Date: 2009-11-05 11:00:26 $
 
 =cut
