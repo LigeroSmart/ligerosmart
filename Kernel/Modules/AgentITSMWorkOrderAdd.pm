@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAdd.pm - the OTRS::ITSM::ChangeManagement workorder add module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.pm,v 1.16 2009-11-06 14:40:48 bes Exp $
+# $Id: AgentITSMWorkOrderAdd.pm,v 1.17 2009-11-06 14:50:51 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -122,7 +122,7 @@ sub Run {
                 if ( !defined $GetParam{$ParamName} ) {
                     $Self->{LogObject}->Log(
                         Priority => 'error',
-                        Message  => "Need $ParamName!"
+                        Message  => "Need $ParamName!",
                     );
                     next TIMETYPE;
                 }
@@ -157,7 +157,7 @@ sub Run {
             push @ValidationErrors, 'InvalidPlannedEndTime';
         }
 
-        # if everything is valid
+        # if all passed data is valid
         if ( !@ValidationErrors ) {
             my $WorkOrderID = $Self->{WorkOrderObject}->WorkOrderAdd(
                 ChangeID         => $ChangeID,
@@ -215,6 +215,9 @@ sub Run {
         );
     }
 
+    # time period that can be selected from the GUI
+    my %TimePeriod = %{ $Self->{ConfigObject}->Get('ITSMWorkOrder::TimePeriod') };
+
     # set the time selection
     for my $TimeType (qw(PlannedStartTime PlannedEndTime)) {
 
@@ -222,9 +225,6 @@ sub Run {
         # When no time is given yet, then use the current time plus the difftime
         # When an explicit time was retrieved, $DiffTime is not used
         my $DiffTime = $TimeType eq 'PlannedStartTime' ? 0 : 60 * 60;
-
-        # time period that can be selected from the GUI
-        my %TimePeriod = %{ $Self->{ConfigObject}->Get('ITSMWorkOrder::TimePeriod') };
 
         # add selection for the time
         my $TimeSelectionString = $Self->{LayoutObject}->BuildDateSelection(
