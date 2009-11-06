@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.11 2009-11-02 17:54:43 bes Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.12 2009-11-06 12:17:56 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -59,7 +59,7 @@ sub Run {
         );
     }
 
-    # store all needed parameters in %GetParam to make it reloadable
+    # store needed parameters in %GetParam to make it reloadable
     my %GetParam;
     for my $ParamName (qw(ChangeTitle Description Justification)) {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
@@ -71,21 +71,30 @@ sub Run {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
-    my $CheckTime = $GetParam{RealizeTimeYear} && $GetParam{RealizeTimeMonth}
-        && $GetParam{RealizeTimeDay} && $GetParam{RealizeTimeHour}
-        && $GetParam{RealizeTimeMinute} && $GetParam{RealizeTimeUsed};
-    my $DoSave = 1;
+    # Remember the reason why saving was not attempted.
+    # This entries are the names of the dtl validation error blocks.
+    my @ValidationErrors;
 
     # update change
     if ( $Self->{Subaction} eq 'Save' ) {
 
-        # check whether complete times are passed and build the time stamps
-        my %SystemTime;
+        # check the title
+        if ( !$GetParam{ChangeTitle} ) {
+            push @ValidationErrors, 'InvalidTitle';
+        }
 
-        # if the parameters are set
-        if ($CheckTime) {
+        # check the realize time
+        if (
+            $GetParam{RealizeTimeYear}
+            && $GetParam{RealizeTimeMonth}
+            && $GetParam{RealizeTimeDay}
+            && $GetParam{RealizeTimeHour}
+            && $GetParam{RealizeTimeMinute}
+            && $GetParam{RealizeTimeUsed}
+            )
+        {
 
-            # format as timestamp
+            # format as timestamp, when all required time param were passed
             $GetParam{RealizeTime} = sprintf '%04d-%02d-%02d %02d:%02d:00',
                 $GetParam{RealizeTimeYear},
                 $GetParam{RealizeTimeMonth},
@@ -93,19 +102,25 @@ sub Run {
                 $GetParam{RealizeTimeHour},
                 $GetParam{RealizeTimeMinute};
 
-            # sanity check the assembled timestamp
-            $SystemTime{RealizeTime} = $Self->{TimeObject}->TimeStamp2SystemTime(
+            # sanity check of the assembled timestamp
+            my $SystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
                 String => $GetParam{RealizeTime},
             );
 
             # do not save when time is invalid
-            if ( !$SystemTime{RealizeTime} ) {
-                $DoSave = 0;
+            if ( !$SystemTime ) {
+                push @ValidationErrors, 'InvalidRealizeTime';
             }
         }
+        elsif ( $GetParam{RealizeTimeUser} ) {
 
-        # add only if ChangeTitle is given
-        if ( $GetParam{ChangeTitle} && $DoSave ) {
+            # it was indicated that the realize time should be set,
+            # but at least one of the required time params is missing
+            push @ValidationErrors, 'InvalidRealizeTime';
+        }
+
+        # add only if there are no input validation errors
+        if ( !@ValidationErrors ) {
             my $ChangeID = $Self->{ChangeObject}->ChangeAdd(
                 Description   => $GetParam{Description},
                 Justification => $GetParam{Justification},
@@ -127,26 +142,6 @@ sub Run {
                 # redirect to zoom mask
                 return $Self->{LayoutObject}->Redirect(
                     OP => "Action=AgentITSMChangeZoom&ChangeID=$ChangeID",
-                );
-            }
-        }
-        else {
-
-            # no title given
-            if ( !$Param{ChangeTitle} ) {
-
-                # show invalid message
-                $Self->{LayoutObject}->Block(
-                    Name => 'InvalidTitle',
-                );
-            }
-
-            # time has invalid format
-            if ( $CheckTime && !$SystemTime{RealizeTime} ) {
-
-                # show invalid message
-                $Self->{LayoutObject}->Block(
-                    Name => 'InvalidRealizeTime',
                 );
             }
         }
@@ -199,6 +194,16 @@ sub Run {
             'RealizeTimeString' => $TimeSelectionString,
         },
     );
+
+    # Add the validation error messages as late as possible
+    # as the enclosing blocks, e.g. 'RealizeTime' muss be set.
+    for my $BlockName (@ValidationErrors) {
+
+        # show validation error message
+        $Self->{LayoutObject}->Block(
+            Name => $BlockName,
+        );
+    }
 
     # start template output
     $Output .= $Self->{LayoutObject}->Output(
