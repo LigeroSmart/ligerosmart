@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.12 2009-11-06 12:17:56 bes Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.13 2009-11-06 12:32:33 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -119,7 +119,7 @@ sub Run {
             push @ValidationErrors, 'InvalidRealizeTime';
         }
 
-        # add only if there are no input validation errors
+        # add only when there are no input validation errors
         if ( !@ValidationErrors ) {
             my $ChangeID = $Self->{ChangeObject}->ChangeAdd(
                 Description   => $GetParam{Description},
@@ -129,19 +129,19 @@ sub Run {
                 UserID        => $Self->{UserID},
             );
 
-            if ( !$ChangeID ) {
+            if ($ChangeID) {
+
+                # redirect to zoom mask
+                return $Self->{LayoutObject}->Redirect(
+                    OP => "Action=AgentITSMChangeZoom&ChangeID=$ChangeID",
+                );
+            }
+            else {
 
                 # show error message
                 return $Self->{LayoutObject}->ErrorScreen(
                     Message => 'Was not able to add Change!',
                     Comment => 'Please contact the admin.',
-                );
-            }
-            else {
-
-                # redirect to zoom mask
-                return $Self->{LayoutObject}->Redirect(
-                    OP => "Action=AgentITSMChangeZoom&ChangeID=$ChangeID",
                 );
             }
         }
@@ -196,7 +196,7 @@ sub Run {
     );
 
     # Add the validation error messages as late as possible
-    # as the enclosing blocks, e.g. 'RealizeTime' muss be set.
+    # as the enclosing blocks, e.g. 'RealizeTime' muss first be set.
     for my $BlockName (@ValidationErrors) {
 
         # show validation error message
