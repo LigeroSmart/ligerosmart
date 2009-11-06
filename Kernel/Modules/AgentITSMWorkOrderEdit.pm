@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderEdit.pm - the OTRS::ITSM::ChangeManagement workorder edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderEdit.pm,v 1.21 2009-11-04 15:19:30 bes Exp $
+# $Id: AgentITSMWorkOrderEdit.pm,v 1.22 2009-11-06 14:53:54 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.21 $) [1];
+$VERSION = qw($Revision: 1.22 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -87,7 +87,7 @@ sub Run {
         );
     }
 
-    # store all needed parameters in %GetParam to make it reloadable
+    # store needed parameters in %GetParam to make it reloadable
     my %GetParam;
     for my $ParamName (qw(WorkOrderTitle Instruction)) {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
@@ -101,13 +101,16 @@ sub Run {
         }
     }
 
+    # Remember the reason why saving was not attempted.
+    # This entries are the names of the dtl validation error blocks.
+    my @ValidationErrors;
+
     # update workorder
-    my %Invalid;
     if ( $Self->{Subaction} eq 'Save' ) {
 
         # update only if WorkOrderTitle is given
         if ( !$GetParam{WorkOrderTitle} ) {
-            $Invalid{Title} = 'missing';
+            push @ValidationErrors, 'InvalidTitle';
         }
 
         # check whether complete times are passed and build the time stamps
@@ -116,8 +119,6 @@ sub Run {
         for my $TimeType (qw(PlannedStartTime PlannedEndTime)) {
             for my $TimePart (qw(Year Month Day Hour Minute)) {
                 my $ParamName = $TimeType . $TimePart;
-
-                # if a time field is not defined
                 if ( !defined $GetParam{$ParamName} ) {
                     $Self->{LogObject}->Log(
                         Priority => 'error',
@@ -140,9 +141,9 @@ sub Run {
                 String => $GetParam{$TimeType},
             );
 
-            # time has invalid format
+            # if time format is invalid
             if ( !$SystemTime{$TimeType} ) {
-                $Invalid{$TimeType} = 'invalid format';
+                push @ValidationErrors, "Invalid$TimeType";
             }
         }
 
@@ -153,11 +154,11 @@ sub Run {
             && $SystemTime{PlannedStartTime} >= $SystemTime{PlannedEndTime}
             )
         {
-            $Invalid{PlannedEndTime} = 'Start time is equal or greater that the end time.';
+            push @ValidationErrors, 'InvalidPlannedEndTime';
         }
 
         # if all passed data is valid
-        if ( !%Invalid ) {
+        if ( !@ValidationErrors ) {
             my $CouldUpdateWorkOrder = $Self->{WorkOrderObject}->WorkOrderUpdate(
                 WorkOrderID      => $WorkOrder->{WorkOrderID},
                 WorkOrderTitle   => $GetParam{WorkOrderTitle},
@@ -205,12 +206,12 @@ sub Run {
                     );
 
                 # set the parameter hash for BuildDateSelection()
-                $WorkOrder->{ $TimeType . 'Used' }   = 1;
-                $WorkOrder->{ $TimeType . 'Minute' } = $Minute;
-                $WorkOrder->{ $TimeType . 'Hour' }   = $Hour;
-                $WorkOrder->{ $TimeType . 'Day' }    = $Day;
-                $WorkOrder->{ $TimeType . 'Month' }  = $Month;
-                $WorkOrder->{ $TimeType . 'Year' }   = $Year;
+                $GetParam{ $TimeType . 'Used' }   = 1;
+                $GetParam{ $TimeType . 'Minute' } = $Minute;
+                $GetParam{ $TimeType . 'Hour' }   = $Hour;
+                $GetParam{ $TimeType . 'Day' }    = $Day;
+                $GetParam{ $TimeType . 'Month' }  = $Month;
+                $GetParam{ $TimeType . 'Year' }   = $Year;
             }
         }
     }
@@ -255,7 +256,6 @@ sub Run {
 
         # add selection for the time
         my $TimeSelectionString = $Self->{LayoutObject}->BuildDateSelection(
-            %{$WorkOrder},
             %GetParam,
             Format   => 'DateInputFormatLong',
             Prefix   => $TimeType,
@@ -263,7 +263,7 @@ sub Run {
             %TimePeriod,
         );
 
-        # show time fields
+        # show time related fields
         $Self->{LayoutObject}->Block(
             Name => $TimeType,
             Data => {
@@ -272,13 +272,13 @@ sub Run {
         );
     }
 
-    # The blocks InvalidPlannedStartTime and InvalidPlannedEndTime need to be filled after
-    # the blocks PlannedStartTime and PlannedEndTime
-    for my $Param ( keys %Invalid ) {
+    # Add the validation error messages as late as possible
+    # as the enclosing blocks, PlannedStartTime and PlannedEndTime muss be set first.
+    for my $BlockName (@ValidationErrors) {
 
-        # show invalid message
+        # show validation error message
         $Self->{LayoutObject}->Block(
-            Name => 'Invalid' . $Param,
+            Name => $BlockName,
         );
     }
 
