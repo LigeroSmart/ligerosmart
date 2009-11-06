@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAdd.pm - the OTRS::ITSM::ChangeManagement workorder add module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.pm,v 1.15 2009-11-04 15:19:30 bes Exp $
+# $Id: AgentITSMWorkOrderAdd.pm,v 1.16 2009-11-06 14:40:48 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -65,7 +65,7 @@ sub Run {
         UserID   => $Self->{UserID}
     );
 
-    # error screen, don't show change edit mask
+    # error screen, don't show workorder add mask
     if ( !$Access ) {
         return $Self->{LayoutObject}->NoPermission(
             Message    => "You need $Self->{Config}->{Permission} permissions!",
@@ -73,7 +73,7 @@ sub Run {
         );
     }
 
-    # get workorder data
+    # get change data
     my $Change = $Self->{ChangeObject}->ChangeGet(
         ChangeID => $ChangeID,
         UserID   => $Self->{UserID},
@@ -87,7 +87,7 @@ sub Run {
         );
     }
 
-    # store all needed parameters in %GetParam to make it reloadable
+    # store needed parameters in %GetParam to make it reloadable
     my %GetParam;
     for my $ParamName (qw(WorkOrderTitle Instruction)) {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
@@ -101,13 +101,16 @@ sub Run {
         }
     }
 
+    # Remember the reason why saving was not attempted.
+    # This entries are the names of the dtl validation error blocks.
+    my @ValidationErrors;
+
     # add workorder
-    my %Invalid;
     if ( $Self->{Subaction} eq 'Save' ) {
 
-        # add only if WorkOrderTitle is given
+        # add workorder only if WorkOrderTitle is given
         if ( !$GetParam{WorkOrderTitle} ) {
-            $Invalid{Title} = 'missing';
+            push @ValidationErrors, 'InvalidTitle';
         }
 
         # check whether complete times are passed and build the time stamps
@@ -140,7 +143,7 @@ sub Run {
 
             # if time format is invalid
             if ( !$SystemTime{$TimeType} ) {
-                $Invalid{$TimeType} = 'invalid format';
+                push @ValidationErrors, "Invalid$TimeType";
             }
         }
 
@@ -151,11 +154,11 @@ sub Run {
             && $SystemTime{PlannedStartTime} >= $SystemTime{PlannedEndTime}
             )
         {
-            $Invalid{PlannedEndTime} = 'Start time is equal or greater that the end time.';
+            push @ValidationErrors, 'InvalidPlannedEndTime';
         }
 
         # if everything is valid
-        if ( !%Invalid ) {
+        if ( !@ValidationErrors ) {
             my $WorkOrderID = $Self->{WorkOrderObject}->WorkOrderAdd(
                 ChangeID         => $ChangeID,
                 WorkOrderTitle   => $GetParam{WorkOrderTitle},
@@ -241,13 +244,13 @@ sub Run {
         );
     }
 
-    # The blocks InvalidPlannedStartTime and InvalidPlannedEndTime need to be filled after
-    # the blocks PlannedStartTime and PlannedEndTime
-    for my $Param ( keys %Invalid ) {
+    # Add the validation error messages as late as possible
+    # as the enclosing blocks, PlannedStartTime and PlannedEndTime muss be set first.
+    for my $BlockName (@ValidationErrors) {
 
-        # show invalid message
+        # show validation error message
         $Self->{LayoutObject}->Block(
-            Name => 'Invalid' . $Param,
+            Name => $BlockName,
         );
     }
 
