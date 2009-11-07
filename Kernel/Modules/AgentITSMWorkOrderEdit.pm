@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderEdit.pm - the OTRS::ITSM::ChangeManagement workorder edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderEdit.pm,v 1.22 2009-11-06 14:53:54 bes Exp $
+# $Id: AgentITSMWorkOrderEdit.pm,v 1.23 2009-11-07 08:11:23 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -168,17 +168,16 @@ sub Run {
                 UserID           => $Self->{UserID},
             );
 
-            # if updated was successful
             if ($CouldUpdateWorkOrder) {
 
-                # redirect to zoom mask
+                # redirect to zoom mask, when update was successful
                 return $Self->{LayoutObject}->Redirect(
                     OP => "Action=AgentITSMWorkOrderZoom&WorkOrderID=$WorkOrder->{WorkOrderID}",
                 );
             }
             else {
 
-                # show error message
+                # show error message, when update failed
                 return $Self->{LayoutObject}->ErrorScreen(
                     Message => "Was not able to update WorkOrder $WorkOrder->{WorkOrderID}!",
                     Comment => 'Please contact the admin.',
@@ -186,9 +185,9 @@ sub Run {
             }
         }
     }
-
-    # delete all keys from GetParam when it is no Subaction
     else {
+
+        # delete all keys from GetParam when it is no Subaction
         %GetParam = ();
 
         # also reset the time fields
@@ -246,7 +245,7 @@ sub Run {
     # time period that can be selected from the GUI
     my %TimePeriod = %{ $Self->{ConfigObject}->Get('ITSMWorkOrder::TimePeriod') };
 
-    # set the time selection
+    # set time selections
     for my $TimeType (qw(PlannedStartTime PlannedEndTime)) {
 
         # set default value for $DiffTime
@@ -255,25 +254,16 @@ sub Run {
         my $DiffTime = $TimeType eq 'PlannedStartTime' ? 0 : 60 * 60;
 
         # add selection for the time
-        my $TimeSelectionString = $Self->{LayoutObject}->BuildDateSelection(
+        $GetParam{ $TimeType . 'String' } = $Self->{LayoutObject}->BuildDateSelection(
             %GetParam,
             Format   => 'DateInputFormatLong',
             Prefix   => $TimeType,
             DiffTime => $DiffTime,
             %TimePeriod,
         );
-
-        # show time related fields
-        $Self->{LayoutObject}->Block(
-            Name => $TimeType,
-            Data => {
-                $TimeType . 'String' => $TimeSelectionString,
-                }
-        );
     }
 
-    # Add the validation error messages as late as possible
-    # as the enclosing blocks, PlannedStartTime and PlannedEndTime muss be set first.
+    # Add the validation error messages.
     for my $BlockName (@ValidationErrors) {
 
         # show validation error message

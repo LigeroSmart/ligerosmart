@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAdd.pm - the OTRS::ITSM::ChangeManagement workorder add module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.pm,v 1.17 2009-11-06 14:50:51 bes Exp $
+# $Id: AgentITSMWorkOrderAdd.pm,v 1.18 2009-11-07 08:11:23 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -168,17 +168,16 @@ sub Run {
                 UserID           => $Self->{UserID},
             );
 
-            # insert was successful
             if ($WorkOrderID) {
 
-                # redirect to zoom mask
+                # redirect to zoom mask, when adding was successful
                 return $Self->{LayoutObject}->Redirect(
                     OP => "Action=AgentITSMWorkOrderZoom&WorkOrderID=$WorkOrderID",
                 );
             }
             else {
 
-                # show error message
+                # show error message, when adding failed
                 return $Self->{LayoutObject}->ErrorScreen(
                     Message => "Was not able to add WorkOrder!",
                     Comment => 'Please contact the admin.',
@@ -227,25 +226,16 @@ sub Run {
         my $DiffTime = $TimeType eq 'PlannedStartTime' ? 0 : 60 * 60;
 
         # add selection for the time
-        my $TimeSelectionString = $Self->{LayoutObject}->BuildDateSelection(
+        $GetParam{ $TimeType . 'String' } = $Self->{LayoutObject}->BuildDateSelection(
             %GetParam,
             Format   => 'DateInputFormatLong',
             Prefix   => $TimeType,
             DiffTime => $DiffTime,
             %TimePeriod,
         );
-
-        # show time related fields
-        $Self->{LayoutObject}->Block(
-            Name => $TimeType,
-            Data => {
-                $TimeType . 'String' => $TimeSelectionString,
-                }
-        );
     }
 
-    # Add the validation error messages as late as possible
-    # as the enclosing blocks, PlannedStartTime and PlannedEndTime muss be set first.
+    # Add the validation error messages.
     for my $BlockName (@ValidationErrors) {
 
         # show validation error message

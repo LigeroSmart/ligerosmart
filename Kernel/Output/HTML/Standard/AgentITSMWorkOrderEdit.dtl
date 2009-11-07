@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderEdit.dtl - provides HTML form for AgentITSMWorkOrderEdit
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderEdit.dtl,v 1.17 2009-11-02 09:18:40 bes Exp $
+# $Id: AgentITSMWorkOrderEdit.dtl,v 1.18 2009-11-07 08:11:23 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -144,11 +144,10 @@ function submit_compose() {
     <tr>
         <td class="mainbody">
             <br>
-            <form action="$Env{"CGIHandle"}" method="post" enctypt="multipart/form-data" name="compose">
+            <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
                 <input type="hidden" name="Action"    value="$Env{"Action"}">
                 <input type="hidden" name="Subaction" value="Save">
                 <input type="hidden" name="WorkOrderID" value="$QData{"WorkOrderID"}">
-
                 <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
                     <tr>
                         <td class="contenthead">$Text{"WorkOrder"}</td>
@@ -182,7 +181,6 @@ $Include{"RichTextEditorITSM"}
                                         </div>
                                     </td>
                                 </tr>
-<!-- dtl:block:PlannedStartTime -->
                                 <tr>
                                     <td class="contentkey">
                                         $Text{"Planned start time"}:
@@ -196,8 +194,6 @@ $Include{"RichTextEditorITSM"}
 <!-- dtl:block:InvalidPlannedStartTime -->
                                     </td>
                                 </tr>
-<!-- dtl:block:PlannedStartTime -->
-<!-- dtl:block:PlannedEndTime -->
                                 <tr>
                                     <td class="contentkey">
                                         $Text{"Planned end time"}:
@@ -211,7 +207,6 @@ $Include{"RichTextEditorITSM"}
 <!-- dtl:block:InvalidPlannedEndTime -->
                                     </td>
                                 </tr>
-<!-- dtl:block:PlannedEndTime -->
                                 <tr>
                                     <td class="contentkey">
                                         $Text{"Attachment"}:
