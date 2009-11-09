@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.48 2009-11-04 18:48:54 reb Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.49 2009-11-09 13:39:27 ub Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -877,8 +877,8 @@
         All data from these tables will be irrevocably lost!
         &lt;br&gt;
         &lt;br&gt;
-        The group 'itsm-change' that was created during package installation will be deactivated.
-        You can activate this group again in the admin area.
+        The groups 'itsm-change', 'itsm-change-builder' and 'itsm-change-manager' that were created during package installation will be deactivated.
+        You can activate these groups again in the admin area.
         &lt;br&gt;
         &lt;br&gt;
         All links to change objects and workorder objects will be irrevocably deleted!
@@ -901,8 +901,8 @@
         Alle darin enthaltenen Daten gehen unwiderruflich verloren!
         &lt;br&gt;
         &lt;br&gt;
-        Die von diesem Paket angelegte Gruppe 'itsm-change' wird deaktiviert.
-        Sie kann jederzeit im Admin-Bereich wieder aktiviert werden.
+        Die von diesem Paket angelegten Gruppen 'itsm-change', 'itsm-change-builder' und 'itsm-change-manager' werden deaktiviert.
+        Sie können jederzeit im Admin-Bereich wieder aktiviert werden.
         &lt;br&gt;
         &lt;br&gt;
         Alle Verknüpfungen zu Change-Objekten und zu WorkOrder-Objekten werden unwiderruflich gelöscht!
