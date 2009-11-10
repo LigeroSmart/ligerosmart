@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeHistory.pm - the OTRS::ITSM::ChangeManagement change history module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeHistory.pm,v 1.8 2009-11-09 10:29:27 reb Exp $
+# $Id: AgentITSMChangeHistory.pm,v 1.9 2009-11-10 10:18:43 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -205,8 +205,15 @@ sub Run {
             );
         }
 
+        # don't show a link
+        else {
+            $Self->{LayoutObject}->Block(
+                Name => 'HistoryZoomDash',
+            );
+        }
+
         # show link to workorder for WorkOrderAdd event - if the workorder still exists
-        elsif ( $HistoryEntry->{HistoryType} eq 'WorkOrderAdd' ) {
+        if ( $HistoryEntry->{HistoryType} =~ m{ \A WorkOrder }xms ) {
             my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
                 WorkOrderID => $HistoryEntry->{WorkOrderID},
                 UserID      => $Self->{UserID},
@@ -219,14 +226,6 @@ sub Run {
                     Data => {%Data},
                 );
             }
-        }
-
-        # show link to change for ChangeAdd event
-        elsif ( $HistoryEntry->{HistoryType} eq 'ChangeAdd' ) {
-            $Self->{LayoutObject}->Block(
-                Name => 'ChangeZoom',
-                Data => {%Data},
-            );
         }
 
         # don't show any link

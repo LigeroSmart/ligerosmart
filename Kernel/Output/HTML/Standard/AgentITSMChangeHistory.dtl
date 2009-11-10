@@ -2,7 +2,7 @@
 # AgentITSMChangeHistory.dtl - provides HTML form for AgentITSMChangeHistory
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeHistory.dtl,v 1.7 2009-11-05 10:59:34 reb Exp $
+# $Id: AgentITSMChangeHistory.dtl,v 1.8 2009-11-10 10:18:43 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,7 +33,10 @@
                         $Text{"Comment"}:
                     </td>
                     <td WIDTH="60" ALIGN="CENTER">
-                        $Text{"Zoom"}:
+                        $Text{"HistoryZoom"}:
+                    </td>
+                    <td WIDTH="60" ALIGN="CENTER">
+                        $Text{"WorkOrder"}:
                     </td>
                     <td>
                         $Text{"User"}:
@@ -43,7 +46,6 @@
                     </td>
                 </tr>
 <!-- dtl:block:Row -->
-# should i show  the zoom link?
                 <tr class="$QData{"css"}">
                     <td>
                         $Quote{"$Data{"HistoryType"}"}
@@ -52,18 +54,20 @@
                         <div title="$QData{"Content"}">$QData{"Content","100"}</div>
                     </td>
                     <td align="CENTER">
+<!-- dtl:block:HistoryZoomDash -->
+                        -
+<!-- dtl:block:HistoryZoomDash -->
+<!-- dtl:block:HistoryZoom -->
+                        <a href="$Env{"Baselink"}Action=AgentITSM$Data{"ZoomType"}HistoryZoom&HistoryEntryID=$Data{"HistoryEntryID"}" onmouseover="window.status='$JSText{"More Info"}'; return true;" onmouseout="window.status='';">x</a>
+<!-- dtl:block:HistoryZoom -->
+                    </td>
+                    <td align="CENTER">
 <!-- dtl:block:Dash -->
                         -
 <!-- dtl:block:Dash -->
 <!-- dtl:block:WorkOrderZoom -->
                         <a href="$Env{"Baselink"}Action=AgentITSMWorkOrderZoom&WorkOrderID=$Data{"WorkOrderID"}" onmouseover="window.status='$JSText{"Zoom"}'; return true;" onmouseout="window.status='';">x</a>
 <!-- dtl:block:WorkOrderZoom -->
-<!-- dtl:block:ChangeZoom -->
-                        <a href="$Env{"Baselink"}Action=AgentITSMChangeZoom&ChangeID=$Data{"ChangeID"}" onmouseover="window.status='$JSText{"Zoom"}'; return true;" onmouseout="window.status='';">x</a>
-<!-- dtl:block:ChangeZoom -->
-<!-- dtl:block:HistoryZoom -->
-                        <a href="$Env{"Baselink"}Action=AgentITSM$Data{"ZoomType"}HistoryZoom&HistoryEntryID=$Data{"HistoryEntryID"}" onmouseover="window.status='$JSText{"More Info"}'; return true;" onmouseout="window.status='';">x</a>
-<!-- dtl:block:HistoryZoom -->
                     </td>
                     <td>
                         <div title="$Quote{"$Data{"UserLogin"} ($Data{"UserFirstname"} $Data{"UserLastname"})"}">
