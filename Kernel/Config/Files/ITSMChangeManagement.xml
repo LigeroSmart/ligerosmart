@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.55 2009-11-09 09:49:45 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.56 2009-11-10 11:59:16 bes Exp $</CVS>
     <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
         <Description Lang="en">Logfile for the itsm change counter.</Description>
         <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
@@ -916,6 +916,19 @@
             </Hash>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="ITSMChange::Permission###40-CABCheck" Required="0" Valid="1">
+        <Description Lang="en">Module to check the CAB members.</Description>
+        <Description Lang="de">Modul zum Überprüfen des Agenten im CAB.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::System::ITSMChange::Permission::CABCheck</Item>
+                <Item Key="Required">0</Item>
+                <Item Key="Granted">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Permission###10-ChangeManagerCheck" Required="0" Valid="1">
         <Description Lang="en">Module to check the change manager.</Description>
         <Description Lang="de">Modul zum Überprüfen des Change Managers.</Description>
@@ -950,6 +963,19 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::ITSMChange::ITSMWorkOrder::Permission::WorkOrderAgentCheck</Item>
+                <Item Key="Required">0</Item>
+                <Item Key="Granted">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMWorkOrder::Permission###40-CABCheck" Required="0" Valid="1">
+        <Description Lang="en">Module to check the CAB members.</Description>
+        <Description Lang="de">Modul zum Überprüfen des Agenten im CAB.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::System::ITSMChange::ITSMWorkOrder::Permission::CABCheck</Item>
                 <Item Key="Required">0</Item>
                 <Item Key="Granted">1</Item>
             </Hash>
