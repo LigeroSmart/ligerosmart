@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder/Permission/CABCheck.pm - CAB based permission check
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: CABCheck.pm,v 1.2 2009-11-10 12:15:00 bes Exp $
+# $Id: CABCheck.pm,v 1.3 2009-11-10 13:17:41 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,11 +15,11 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
-Kernel::System::ITSMChange::ITSMWorkOrder::Permission::CABCheck - change agent based permission check
+Kernel::System::ITSMChange::ITSMWorkOrder::Permission::CABCheck - CAB based permission check
 
 =head1 SYNOPSIS
 
@@ -160,20 +160,17 @@ sub Run {
     # deny access, when no workorder was found
     return if !$WorkOrder || !%{$WorkOrder} || !$WorkOrder->{ChangeID};
 
-    # for checking the change builder, we need information on the change
-    my $Change = $Self->{ChangeObject}->ChangeGet(
-        UserID   => $Param{UserID},
-        ChangeID => $WorkOrder->{ChangeID},
-    );
-
     # get the CAB of the change
     my $CAB = $Self->{ChangeObject}->ChangeCABGet(
         UserID   => $Param{UserID},
         ChangeID => $WorkOrder->{ChangeID},
     );
 
-    # check whether the agent is a member of the CAB
-    return 1 if grep { $_ == $Param{UserID} } @{ $CAB->{CABAgents} };
+    # look for a CAB member with the relevant UserID
+    my ($FoundCABMember) = grep { $_ == $Param{UserID} } @{ $CAB->{CABAgents} };
+
+    # allow access the the agent is a CAB member
+    return 1 if $FoundCABMember;
 
     # deny access otherwise
     return;
@@ -191,7 +188,7 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Id: CABCheck.pm,v 1.2 2009-11-10 12:15:00 bes Exp $
+$Id: CABCheck.pm,v 1.3 2009-11-10 13:17:41 bes Exp $
 
 =cut
 
