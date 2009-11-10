@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderHistory.pm - the OTRS::ITSM::ChangeManagement workorder history module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderHistory.pm,v 1.6 2009-11-09 10:29:27 reb Exp $
+# $Id: AgentITSMWorkOrderHistory.pm,v 1.7 2009-11-10 13:13:13 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,9 +17,10 @@ use warnings;
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::History;
+use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -39,6 +40,7 @@ sub new {
     $Self->{ChangeObject}    = Kernel::System::ITSMChange->new(%Param);
     $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
     $Self->{HistoryObject}   = Kernel::System::ITSMChange::History->new(%Param);
+    $Self->{HTMLUtilsObject} = Kernel::System::HTMLUtils->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMWorkOrder::Frontend::$Self->{Action}");
@@ -156,6 +158,11 @@ sub Run {
             # split the content by %%
             my @Values = split( /%%/, $Data{Content} );
 
+            # translate to ASCII representation
+            for my $Value (@Values) {
+                $Value = $Self->{HTMLUtilsObject}->ToAscii( String => $Value );
+            }
+
             $Data{Content} = '';
 
             # clean the values
@@ -202,12 +209,19 @@ sub Run {
             );
 
         }
+
+        # don't show a link
         else {
             $Self->{LayoutObject}->Block(
-                Name => 'WorkOrderZoom',
-                Data => {%Data},
+                Name => 'HistoryZoomDash',
             );
         }
+
+        $Self->{LayoutObject}->Block(
+            Name => 'WorkOrderZoom',
+            Data => {%Data},
+        );
+
     }
 
     # output header

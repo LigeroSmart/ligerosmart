@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeHistory.pm - the OTRS::ITSM::ChangeManagement change history module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeHistory.pm,v 1.9 2009-11-10 10:18:43 reb Exp $
+# $Id: AgentITSMChangeHistory.pm,v 1.10 2009-11-10 13:13:13 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,9 +17,10 @@ use warnings;
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::History;
+use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -39,6 +40,7 @@ sub new {
     $Self->{ChangeObject}    = Kernel::System::ITSMChange->new(%Param);
     $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
     $Self->{HistoryObject}   = Kernel::System::ITSMChange::History->new(%Param);
+    $Self->{HTMLUtilsObject} = Kernel::System::HTMLUtils->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
@@ -141,6 +143,11 @@ sub Run {
 
             # split the content by %%
             my @Values = split( /%%/, $Data{Content} );
+
+            # translate to ASCII representation
+            for my $Value (@Values) {
+                $Value = $Self->{HTMLUtilsObject}->ToAscii( String => $Value );
+            }
 
             $Data{Content} = '';
 
