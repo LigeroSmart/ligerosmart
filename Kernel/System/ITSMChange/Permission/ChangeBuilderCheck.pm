@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Permission/ChangeBuilderCheck.pm - change builder based permission check
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ChangeBuilderCheck.pm,v 1.8 2009-11-04 09:46:37 bes Exp $
+# $Id: ChangeBuilderCheck.pm,v 1.9 2009-11-10 12:47:07 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 =head1 NAME
 
@@ -116,7 +116,9 @@ sub new {
 
 =item Run()
 
-this method does the check
+This method does the check. When no ChangeID is passed, than 'ro' and 'rw' access is granted
+when the agent has the priv in the 'itsm-change-builder' group.
+When the ChangeID was passed, than the agent must additionally be the changebuilder of the change.
 
     my $HasAccess = $CheckObject->Run(
         UserID   => 123,
@@ -189,7 +191,7 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Id: ChangeBuilderCheck.pm,v 1.8 2009-11-04 09:46:37 bes Exp $
+$Id: ChangeBuilderCheck.pm,v 1.9 2009-11-10 12:47:07 bes Exp $
 
 =cut
 
