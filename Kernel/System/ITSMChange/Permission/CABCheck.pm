@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Permission/CABCheck.pm - CAB based permission check
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: CABCheck.pm,v 1.1 2009-11-10 11:59:16 bes Exp $
+# $Id: CABCheck.pm,v 1.2 2009-11-10 12:15:00 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -142,7 +142,7 @@ sub Run {
         }
     }
 
-    # change agents are granted at most ro access
+    # only 'ro' access might be granted by this module
     return if $Param{Type} ne 'ro';
 
     # deny access when there is no change, and thus no CAB
@@ -173,7 +173,7 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Id: CABCheck.pm,v 1.1 2009-11-10 11:59:16 bes Exp $
+$Id: CABCheck.pm,v 1.2 2009-11-10 12:15:00 bes Exp $
 
 =cut
 
