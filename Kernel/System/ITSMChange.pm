@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.138 2009-11-04 10:56:38 ub Exp $
+# $Id: ITSMChange.pm,v 1.139 2009-11-10 12:22:55 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.138 $) [1];
+$VERSION = qw($Revision: 1.139 $) [1];
 
 =head1 NAME
 
@@ -1700,7 +1700,7 @@ sub Permission {
     }
 
     # The ChangeID can be unknown. For example for ChangeAdd().
-    $Param{ChangeID} ||= q{};
+    $Param{ChangeID} ||= '';
 
     # run all ITSMChange permission modules
     if ( ref $Self->{ConfigObject}->Get('ITSMChange::Permission') eq 'HASH' ) {
@@ -2191,6 +2191,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.138 $ $Date: 2009-11-04 10:56:38 $
+$Revision: 1.139 $ $Date: 2009-11-10 12:22:55 $
 
 =cut
