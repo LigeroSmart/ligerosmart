@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeHistory.pm - the OTRS::ITSM::ChangeManagement change history module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeHistory.pm,v 1.10 2009-11-10 13:13:13 reb Exp $
+# $Id: AgentITSMChangeHistory.pm,v 1.11 2009-11-10 14:19:52 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::History;
 use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -106,7 +106,7 @@ sub Run {
     }
 
     # max length of strings
-    my $MaxLength = 50;
+    my $MaxLength = 30;
 
     # create table
     my $Counter = 1;
@@ -127,9 +127,24 @@ sub Run {
                 $HistoryEntry->{Fieldname},
             );
 
+            # trim strings to a max length of $MaxLength
+            my $ContentNew = $Self->{HTMLUtilsObject}->ToAscii(
+                String => $HistoryEntry->{ContentNew}
+            );
+            my $ContentOld = $Self->{HTMLUtilsObject}->ToAscii(
+                String => $HistoryEntry->{ContentOld}
+            );
+
+            for my $Content ( $ContentNew, $ContentOld ) {
+                if ( length $Content > $MaxLength ) {
+                    $Content = substr( $Content, 0, $MaxLength ) . '[...]';
+                }
+            }
+
+            # set description
             $Data{Content} = join '%%', $TranslatedFieldname,
-                $HistoryEntry->{ContentNew},
-                $HistoryEntry->{ContentOld};
+                $ContentNew,
+                $ContentOld;
         }
         else {
             $Data{Content} = $HistoryEntry->{ContentNew};
@@ -143,11 +158,6 @@ sub Run {
 
             # split the content by %%
             my @Values = split( /%%/, $Data{Content} );
-
-            # translate to ASCII representation
-            for my $Value (@Values) {
-                $Value = $Self->{HTMLUtilsObject}->ToAscii( String => $Value );
-            }
 
             $Data{Content} = '';
 

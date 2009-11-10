@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder/Event/HistoryAdd.pm - HistoryAdd event module for WorkOrder
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: HistoryAdd.pm,v 1.11 2009-11-10 13:13:14 reb Exp $
+# $Id: HistoryAdd.pm,v 1.12 2009-11-10 14:19:53 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 =head1 NAME
 
@@ -217,7 +217,7 @@ sub Run {
             HistoryType => $HistoryType,
             WorkOrderID => $Param{Data}->{WorkOrderID},
             UserID      => $Param{UserID},
-            ContentNew  => join( '%%', $Param{Data}->{SourceKey}, $Param{Data}->{SourceObject} ),
+            ContentNew  => join( '%%', $Param{Data}->{SourceObject}, $Param{Data}->{SourceKey} ),
             ChangeID    => $WorkOrder->{ChangeID},
         );
     }
@@ -308,6 +308,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.11 $ $Date: 2009-11-10 13:13:14 $
+$Revision: 1.12 $ $Date: 2009-11-10 14:19:53 $
 
 =cut
