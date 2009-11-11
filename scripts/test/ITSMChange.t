@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.108 2009-11-11 08:27:59 bes Exp $
+# $Id: ITSMChange.t,v 1.109 2009-11-11 08:39:54 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -46,7 +46,9 @@ $Self->Is(
     "Test " . $TestCount++ . ' - class of change object'
 );
 
+# ------------------------------------------------------------ #
 # create needed users and customer users
+# ------------------------------------------------------------ #
 my @UserIDs;               # a list of existing and valid user ids
 my @InvalidUserIDs;        # a list of existing but invalid user ids
 my @NonExistingUserIDs;    # a list of non-existion user ids
@@ -159,6 +161,7 @@ for my $ObjectMethod (@ObjectMethods) {
 # ------------------------------------------------------------ #
 # search for default ITSMChange-states
 # ------------------------------------------------------------ #
+
 # define default ITSMChange-states
 # can't use qw due to spaces in states
 my @DefaultChangeStates = (
@@ -172,14 +175,14 @@ my @DefaultChangeStates = (
     'retracted',
 );
 
-# get class list with swapped keys and values
+# get item list of the change states with swapped keys and values
 my %ChangeStateName2ID = reverse %{
     $Self->{GeneralCatalogObject}->ItemList(
         Class => 'ITSM::ChangeManagement::Change::State',
         )
     };
 
-# check if states are in GeneralCatalog
+# check if change states are in GeneralCatalog
 for my $DefaultChangeState (@DefaultChangeStates) {
     $Self->True(
         $ChangeStateName2ID{$DefaultChangeState},
@@ -187,7 +190,7 @@ for my $DefaultChangeState (@DefaultChangeStates) {
     );
 }
 
-# test lookup method
+# test the lookup method
 for my $State (@DefaultChangeStates) {
     my $StateID = $Self->{ChangeObject}->ChangeStateLookup(
         State => $State,
