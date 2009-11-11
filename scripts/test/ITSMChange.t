@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.109 2009-11-11 08:39:54 bes Exp $
+# $Id: ITSMChange.t,v 1.110 2009-11-11 09:35:29 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -263,6 +263,7 @@ my @ChangeTests = (
             },
         },
         SearchTest => [ 25, 26 ],
+        Label => 'ChangeLookupTest',    # this change will be used for testing ChangeLookup().
     },
 
     # Change contains only required data - default user (required attributes)
@@ -390,7 +391,8 @@ my @ChangeTests = (
                 ],
             },
         },
-        SearchTest => [ 2, 3, 4, 5, 6, 8, 9, 10, 12, 13, 23, 24, 27, 888888 ],
+        SearchTest => [ 2, 3, 4, 5, 6, 8, 9, 10, 12, 13, 23, 24, 27 ],
+        Label => 'SearchTest',    # this test will be used for search tests
     },
 
     # change contains title, description, justification, changemanagerid and changebuilderid
@@ -1314,10 +1316,7 @@ my @ChangeTests = (
                 ChangeStateID => $ChangeStateName2ID{successful},
             },
         },
-
-        # 999999 is a special test case. changes with searchtest 999999
-        # are used in 'OrderBy' search tests
-        SearchTest => [999999],
+        Label => 'OrderBySearchTest',    # this change will be used in order by search tests
     },
 
     #
@@ -1345,7 +1344,7 @@ my @ChangeTests = (
                 ChangeStateID => $ChangeStateName2ID{rejected},
             },
         },
-        SearchTest => [999999],
+        Label => 'OrderBySearchTest',    # this change will be used in order by search tests
     },
 
     #
@@ -1373,7 +1372,8 @@ my @ChangeTests = (
                 ChangeStateID => $ChangeStateName2ID{failed},
             },
         },
-        SearchTest => [ 6, 999999 ],
+        SearchTest => [6],
+        Label      => 'OrderBySearchTest',    # this change will be used in order by search tests
     },
 
 );
@@ -1384,6 +1384,7 @@ my @ChangeTests = (
 
 my %TestedChangeID;           # change ids of created changes
 my %ChangeIDForSearchTest;    # change ids that are expected to be found by a search test
+my %Label2ChangeIDs;          # change ids that are used for special tests
 
 TEST:
 for my $Test (@ChangeTests) {
@@ -1435,6 +1436,12 @@ for my $Test (@ChangeTests) {
                 for my $SearchTestNr (@SearchTests) {
                     $ChangeIDForSearchTest{$SearchTestNr}->{$ChangeID} = 1;
                 }
+            }
+
+            # save changeid for special tests
+            if ( exists $Test->{Label} ) {
+                $Label2ChangeIDs{ $Test->{Label} } ||= [];
+                push @{ $Label2ChangeIDs{ $Test->{Label} } }, $ChangeID;
             }
         }
 
@@ -1653,11 +1660,11 @@ continue {
 }
 
 # test for ChangeLookup
-my ($ChangeLookupTestID) = keys %TestedChangeID;
+my ($ChangeLookupTestChangeID) = @{ $Label2ChangeIDs{ChangeLookupTest} };
 
-if ($ChangeLookupTestID) {
+if ($ChangeLookupTestChangeID) {
     my $ChangeData = $Self->{ChangeObject}->ChangeGet(
-        ChangeID => $ChangeLookupTestID,
+        ChangeID => $ChangeLookupTestChangeID,
         UserID   => 1,
     );
 
@@ -1674,7 +1681,7 @@ if ($ChangeLookupTestID) {
     );
 
     my $ChangeNumber = $Self->{ChangeObject}->ChangeLookup(
-        ChangeID => $ChangeLookupTestID,
+        ChangeID => $ChangeLookupTestChangeID,
         UserID   => 1,
     );
 
@@ -1683,7 +1690,7 @@ if ($ChangeLookupTestID) {
         $ChangeData->{ChangeNumber},
         'Test '
             . $TestCount++
-            . ": ChangeLookup with ChangeID $ChangeLookupTestID successful.",
+            . ": ChangeLookup with ChangeID $ChangeLookupTestChangeID successful.",
     );
 }
 
@@ -2284,12 +2291,12 @@ my @ChangeSearchTests = (
 );
 
 # get a sample change we created above for some 'special' test cases
-my ($SearchTestID) = keys %{ $ChangeIDForSearchTest{888888} };
+my ($SearchTestChangeID) = @{ $Label2ChangeIDs{SearchTest} };
 my $NrOfGeneralSearchTests = scalar @ChangeSearchTests;
 
-if ($SearchTestID) {
+if ($SearchTestChangeID) {
     my $SearchTestChange = $Self->{ChangeObject}->ChangeGet(
-        ChangeID => $SearchTestID,
+        ChangeID => $SearchTestChangeID,
         UserID   => 1,
     );
 
@@ -2579,10 +2586,10 @@ continue {
 # ------------------------------------------------------------ #
 
 # get three change ids. Then get the data. That is needed for sorting
-my @ChangeIDsForOrderByTests = keys %{ $ChangeIDForSearchTest{999999} };
-my @ChangesForOrderByTests;
+my @OrderBySearchTestChangeIDs = @{ $Label2ChangeIDs{OrderBySearchTest} };
+my @OrderBySearchTestChanges;
 
-for my $ChangeIDForOrderByTests (@ChangeIDsForOrderByTests) {
+for my $ChangeIDForOrderByTests (@OrderBySearchTestChangeIDs) {
     my $ChangeData = $Self->{ChangeObject}->ChangeGet(
         ChangeID => $ChangeIDForOrderByTests,
         UserID   => 1,
@@ -2593,7 +2600,7 @@ for my $ChangeIDForOrderByTests (@ChangeIDsForOrderByTests) {
         $ChangeData->{$TimeColumn} =~ s{ \D }{}xmsg;
     }
 
-    push @ChangesForOrderByTests, $ChangeData;
+    push @OrderBySearchTestChanges, $ChangeData;
 }
 
 my @OrderByColumns = qw(
@@ -2629,7 +2636,7 @@ for my $OrderByColumn (@OrderByColumns) {
         = sort {
         $a->{$OrderByColumn} <=> $b->{$OrderByColumn}
             || $b->{ChangeID} <=> $a->{ChangeID}
-        } @ChangesForOrderByTests;
+        } @OrderBySearchTestChanges;
     my @SortedIDs = map { $_->{ChangeID} } @SortedChanges;
 
     # dump the reference attribute
@@ -2655,7 +2662,7 @@ for my $OrderByColumn (@OrderByColumns) {
         = sort {
         $b->{$OrderByColumn} <=> $a->{$OrderByColumn}
             || $b->{ChangeID} <=> $a->{ChangeID}
-        } @ChangesForOrderByTests;
+        } @OrderBySearchTestChanges;
     my @SortedIDsDown = map { $_->{ChangeID} } @SortedChangesDown;
 
     # dump the reference attribute
@@ -2739,12 +2746,12 @@ for my $OrderByColumn (@OrderByColumns) {
 # we do this to have two changes with the same create time. this is needed to test
 # the 'orderby' with two columns
 SetTimes(
-    ChangeID   => ( sort @ChangeIDsForOrderByTests )[1],
+    ChangeID   => ( sort @OrderBySearchTestChangeIDs )[1],
     CreateTime => '2009-10-01 01:00:00',
 );
 
 my @ChangesForSecondOrderByTests;
-for my $ChangeIDForSecondOrderByTests (@ChangeIDsForOrderByTests) {
+for my $ChangeIDForSecondOrderByTests (@OrderBySearchTestChangeIDs) {
     my $ChangeData = $Self->{ChangeObject}->ChangeGet(
         ChangeID => $ChangeIDForSecondOrderByTests,
         UserID   => 1,
