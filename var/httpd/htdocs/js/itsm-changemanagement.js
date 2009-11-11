@@ -6,7 +6,7 @@ function CheckTime( id_base ) {
     var Day    = document.getElementById( id_base + 'Day' ).value;
     var Hour   = document.getElementById( id_base + 'Hour' ).value;
     var Minute = document.getElementById( id_base + 'Minute' ).value;
-    
+
     if (
         0
         || isNaN(Year) || isNaN(Month) || isNaN(Day) || isNaN(Hour) || isNaN(Minute)
@@ -24,20 +24,19 @@ function CheckTime( id_base ) {
 }
 
 function CheckStartBeforeEnd ( StartPrefix, EndPrefix, ErrorMsg ) {
-    
-    
+
     var StartYear   = document.getElementById( StartPrefix + 'Year' ).value;
     var StartMonth  = document.getElementById( StartPrefix + 'Month' ).value;
     var StartDay    = document.getElementById( StartPrefix + 'Day' ).value;
     var StartHour   = document.getElementById( StartPrefix + 'Hour' ).value;
     var StartMinute = document.getElementById( StartPrefix + 'Minute' ).value;
-    
+
     var EndYear   = document.getElementById( EndPrefix + 'Year' ).value;
     var EndMonth  = document.getElementById( EndPrefix + 'Month' ).value;
     var EndDay    = document.getElementById( EndPrefix + 'Day' ).value;
     var EndHour   = document.getElementById( EndPrefix + 'Hour' ).value;
     var EndMinute = document.getElementById( EndPrefix + 'Minute' ).value;
-    
+
     if ( StartYear < EndYear ) {
         return true;
     }

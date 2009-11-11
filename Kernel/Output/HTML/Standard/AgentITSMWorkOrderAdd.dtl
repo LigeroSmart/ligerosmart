@@ -2,13 +2,14 @@
 # AgentITSMWorkOrderAdd.dtl - provides HTML form for AgentITSMWorkOrderAdd
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.dtl,v 1.22 2009-11-07 08:11:23 bes Exp $
+# $Id: AgentITSMWorkOrderAdd.dtl,v 1.23 2009-11-11 08:52:23 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
+<script type="text/javascript" src="$Config{"Frontend::JavaScriptPath"}itsm-changemanagement.js"></script>
 <script language="JavaScript" type="text/javascript">
 <!--
 
@@ -23,50 +24,14 @@ function submit_compose() {
     }
 
     /* check the planned start time */
-    var StartYear   = document.compose.PlannedStartTimeYear.value;
-    var StartMonth  = document.compose.PlannedStartTimeMonth.value;
-    var StartDay    = document.compose.PlannedStartTimeDay.value;
-    var StartHour   = document.compose.PlannedStartTimeHour.value;
-    var StartMinute = document.compose.PlannedStartTimeMinute.value;
-    if (
-        0
-        || isNaN(StartYear)
-        || isNaN(StartMonth)
-        || isNaN(StartDay)
-        || isNaN(StartHour)
-        || isNaN(StartMinute)
-        || ( StartYear   < 999 || StartYear   > 10000 )
-        || ( StartMonth  < 1   || StartMonth  > 12 )
-        || ( StartDay    < 1   || StartDay    > 31 )
-        || ( StartHour   < 0   || StartHour   > 23 )
-        || ( StartMinute < 0   || StartMinute > 59 )
-        )
-    {
+    if ( !CheckTime( 'PlannedStartTime' ) ) {
         alert('$JSText{"The planned start time is invalid!"}');
 
         return false;
     }
 
     /* check the planned end time */
-    var EndYear   = document.compose.PlannedEndTimeYear.value;
-    var EndMonth  = document.compose.PlannedEndTimeMonth.value;
-    var EndDay    = document.compose.PlannedEndTimeDay.value;
-    var EndHour   = document.compose.PlannedEndTimeHour.value;
-    var EndMinute = document.compose.PlannedEndTimeMinute.value;
-    if (
-        0
-        || isNaN(EndYear)
-        || isNaN(EndMonth)
-        || isNaN(EndDay)
-        || isNaN(EndHour)
-        || isNaN(EndMinute)
-        || ( EndYear   < 999 || EndYear   > 10000 )
-        || ( EndMonth  < 1   || EndMonth  > 12 )
-        || ( EndDay    < 1   || EndDay    > 31 )
-        || ( EndHour   < 0   || EndHour   > 23 )
-        || ( EndMinute < 0   || EndMinute > 59 )
-        )
-    {
+    if ( !CheckTime( 'PlannedEndTime' ) ) {
         alert('$JSText{"The planned end time is invalid!"}');
 
         return false;
@@ -74,55 +39,11 @@ function submit_compose() {
 
     /* check whether the planned start time is before the planned end time */
     var StartAfterEndMsg = '$JSText{"The planned start time must be before the planned end time!"}';
-    if ( StartYear < EndYear ) {
-        return true;
-    }
-    if ( StartYear > EndYear ) {
-        alert(StartAfterEndMsg);
-
+    if ( !CheckStartBeforeEnd( 'PlannedStartTime', 'PlannedEndTime', StartAfterEndMsg ) ) {
         return false;
     }
 
-    if ( StartMonth < EndMonth ) {
-        return true;
-    }
-    if ( StartMonth > EndMonth ) {
-        alert(StartAfterEndMsg);
-
-        return false;
-    }
-
-    if ( StartDay < EndDay ) {
-        return true;
-    }
-    if ( StartDay > EndDay ) {
-        alert(StartAfterEndMsg);
-
-        return false;
-    }
-
-    if ( StartHour < EndHour ) {
-        return true;
-    }
-    if ( StartHour > EndHour ) {
-        alert(StartAfterEndMsg);
-
-        return false;
-    }
-
-    if ( StartMinute < EndMinute ) {
-        return true;
-    }
-    if ( StartMinute > EndMinute ) {
-        alert(StartAfterEndMsg);
-
-        return false;
-    }
-
-    /* the times are equal */
-    alert(StartAfterEndMsg);
-
-    return false;
+    return true;
 }
 //-->
 </script>

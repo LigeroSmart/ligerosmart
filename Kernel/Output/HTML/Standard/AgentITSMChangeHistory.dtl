@@ -2,7 +2,7 @@
 # AgentITSMChangeHistory.dtl - provides HTML form for AgentITSMChangeHistory
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeHistory.dtl,v 1.9 2009-11-10 13:13:14 reb Exp $
+# $Id: AgentITSMChangeHistory.dtl,v 1.10 2009-11-11 08:52:23 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,7 +33,7 @@
                         $Text{"Comment"}:
                     </td>
                     <td WIDTH="60" ALIGN="CENTER">
-                        $Text{"HistoryZoom"}:
+                        $Text{"Details"}:
                     </td>
                     <td WIDTH="60" ALIGN="CENTER">
                         $Text{"WorkOrder"}:

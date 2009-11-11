@@ -2,13 +2,14 @@
 # AgentITSMChangeAdd.dtl - provides HTML form for AgentITSMChangeAdd
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.dtl,v 1.16 2009-11-02 09:18:40 bes Exp $
+# $Id: AgentITSMChangeAdd.dtl,v 1.17 2009-11-11 08:52:23 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
+<script type="text/javascript" src="$Config{"Frontend::JavaScriptPath"}itsm-changemanagement.js"></script>
 <script language="JavaScript" type="text/javascript">
 <!--
 
@@ -23,25 +24,7 @@ function submit_compose() {
     }
 
     /* check the realize time */
-    var StartYear   = document.compose.RealizeTimeYear.value;
-    var StartMonth  = document.compose.RealizeTimeMonth.value;
-    var StartDay    = document.compose.RealizeTimeDay.value;
-    var StartHour   = document.compose.RealizeTimeHour.value;
-    var StartMinute = document.compose.RealizeTimeMinute.value;
-    if (
-        0
-        || isNaN(StartYear)
-        || isNaN(StartMonth)
-        || isNaN(StartDay)
-        || isNaN(StartHour)
-        || isNaN(StartMinute)
-        || ( StartYear   < 999 || StartYear   > 10000 )
-        || ( StartMonth  < 1   || StartMonth  > 12 )
-        || ( StartDay    < 1   || StartDay    > 31 )
-        || ( StartHour   < 0   || StartHour   > 23 )
-        || ( StartMinute < 0   || StartMinute > 59 )
-        )
-    {
+    if (  !CheckTime( 'RealizeTime' ) && document.compose.RealizeTimeUsed.checked == true ) {
         alert('$JSText{"The realize time is invalid!"}');
 
         return false;
