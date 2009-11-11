@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.111 2009-11-11 09:43:25 bes Exp $
+# $Id: ITSMChange.t,v 1.112 2009-11-11 10:11:06 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1376,15 +1376,47 @@ my @ChangeTests = (
         Label      => 'OrderBySearchTest',    # this change will be used in order by search tests
     },
 
+    # Change for Permission tests.
+    {
+        Description => q{Change for 'Permission' tests.},
+        SourceData  => {
+            ChangeAdd => {
+                UserID          => $UserIDs[0],
+                ChangeTitle     => 'Permission - Title - ' . $UniqueSignature,
+                ChangeManagerID => $UserIDs[0],
+                CABAgents       => [
+                    $UserIDs[0],
+                    $UserIDs[1]
+                ],
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                ChangeTitle     => 'Permission - Title - ' . $UniqueSignature,
+                ChangeManagerID => $UserIDs[0],
+            },
+            ChangeCABGet => {
+                CABAgents => [
+                    $UserIDs[0],
+                    $UserIDs[1]
+                ],
+                CABCustomers => [
+                ],
+            },
+        },
+        SearchTest => [ 6, 8 ],
+        Label => 'PermissionTest',    # this change will be used in permission tests
+    },
+
 );
 
 # ------------------------------------------------------------ #
 # execute the general change tests
 # ------------------------------------------------------------ #
 
-my %TestedChangeID;           # change ids of created changes
-my %ChangeIDForSearchTest;    # change ids that are expected to be found by a search test
-my %Label2ChangeIDs;          # change ids that are used for special tests
+my %TestedChangeID;                   # change ids of created changes
+my %ChangeIDForSearchTest;            # change ids that are expected to be found by a search test
+my %Label2ChangeIDs;                  # change ids that are used for special tests
 
 TEST:
 for my $Test (@ChangeTests) {
@@ -3303,9 +3335,8 @@ for my $TSTest (@TimeSearchTests) {
 }
 
 # ------------------------------------------------------------ #
-# advanced search by tests for times
+# advanced search by tests for strings
 # ------------------------------------------------------------ #
-my @SSTChangeIDs;
 my @StringSearchTests = (
 
     {
@@ -3392,7 +3423,8 @@ my @StringSearchTests = (
 );
 
 my $SSTCounter = 1;
-my @SSTWorkOrderIDs;
+my @SSTChangeIDs;       # string search test change ids
+my @SSTWorkOrderIDs;    # string search test workorder ids
 SSTEST:
 for my $StringSearchTest (@StringSearchTests) {
     my $SourceData    = $StringSearchTest->{SourceData};
@@ -3484,6 +3516,17 @@ for my $StringSearchTest (@StringSearchTests) {
 
     $TestCount++;
     $SSTCounter++;
+}
+
+# ------------------------------------------------------------ #
+# testing the method Permission()
+# ------------------------------------------------------------ #
+
+my ($PermissionTestChangeID) = @{ $Label2ChangeIDs{PermissionTest} };
+my @PermissionTests = (
+);
+
+for my $Test (@PermissionTests) {
 }
 
 # ------------------------------------------------------------ #
