@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.113 2009-11-11 10:16:38 bes Exp $
+# $Id: ITSMChange.t,v 1.114 2009-11-11 10:42:08 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,6 +17,7 @@ use vars qw($Self);
 
 use Data::Dumper;
 use Kernel::System::User;
+use Kernel::System::Group;
 use Kernel::System::CustomerUser;
 use Kernel::System::GeneralCatalog;
 use Kernel::System::ITSMChange;
@@ -30,6 +31,7 @@ my $TestCount = 1;
 # create common objects
 $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
 $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
+$Self->{GroupObject}          = Kernel::System::Group->new( %{$Self} );
 $Self->{CustomerUserObject}   = Kernel::System::CustomerUser->new( %{$Self} );
 $Self->{ChangeObject}         = Kernel::System::ITSMChange->new( %{$Self} );
 $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
@@ -210,6 +212,21 @@ for my $State (@DefaultChangeStates) {
         $StateName,
         $State,
         "Lookup $StateID",
+    );
+}
+
+# ------------------------------------------------------------ #
+# check existence of the groups that are used for Permission
+# ------------------------------------------------------------ #
+
+# get mapping of the group name to the group id
+my %GroupName2ID = reverse $Self->{GroupObject}->GroupList( Valid => 1 );
+
+# check wheter the groups were found
+for my $Group (qw( itsm-change itsm-change-builder itsm-change-manager )) {
+    $Self->True(
+        $GroupName2ID{$Group},
+        "Test " . $TestCount++ . " - check group '$Group'"
     );
 }
 
@@ -1381,31 +1398,23 @@ my @ChangeTests = (
         Description => q{Change for 'Permission' tests.},
         SourceData  => {
             ChangeAdd => {
-                UserID          => $UserIDs[0],
-                ChangeTitle     => 'Permission - Title - ' . $UniqueSignature,
-                ChangeManagerID => $UserIDs[0],
-                CABAgents       => [
-                    $UserIDs[0],
-                    $UserIDs[1]
-                ],
+                UserID      => $UserIDs[0],
+                ChangeTitle => 'Permission - Title - ' . $UniqueSignature,
             },
         },
         ReferenceData => {
             ChangeGet => {
-                ChangeTitle     => 'Permission - Title - ' . $UniqueSignature,
-                ChangeManagerID => $UserIDs[0],
+                ChangeTitle => 'Permission - Title - ' . $UniqueSignature,
             },
             ChangeCABGet => {
                 CABAgents => [
-                    $UserIDs[0],
-                    $UserIDs[1]
                 ],
                 CABCustomers => [
                 ],
             },
         },
-        SearchTest => [ 6, 8 ],
-        Label => 'PermissionTest',    # this change will be used in permission tests
+        SearchTest => [6],
+        Label      => 'PermissionTest',    # this change will be used in permission tests
     },
 
 );
@@ -1414,9 +1423,9 @@ my @ChangeTests = (
 # execute the general change tests
 # ------------------------------------------------------------ #
 
-my %TestedChangeID;                   # change ids of created changes
-my %ChangeIDForSearchTest;            # change ids that are expected to be found by a search test
-my %Label2ChangeIDs;                  # change ids that are used for special tests
+my %TestedChangeID;           # change ids of created changes
+my %ChangeIDForSearchTest;    # change ids that are expected to be found by a search test
+my %Label2ChangeIDs;          # change ids that are used for special tests
 
 TEST:
 for my $Test (@ChangeTests) {
