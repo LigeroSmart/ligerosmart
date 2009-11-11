@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.114 2009-11-11 10:42:08 bes Exp $
+# $Id: ITSMChange.t,v 1.115 2009-11-11 14:00:43 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -3533,9 +3533,114 @@ for my $Test (@StringSearchTests) {
 
 my ($PermissionTestChangeID) = @{ $Label2ChangeIDs{PermissionTest} };
 my @PermissionTests = (
+    {
+        Description => q{0:builder:c'':b'':m''; 1::c'':b'':m''},
+        SourceData  => {
+        },
+        ReferenceData => {
+            Permissions => {
+                0 => { ro => 0, rw => 0 },
+                1 => { ro => 0, rw => 0 },
+            },
+        },
+    },
+
+    {
+        Description => q{0:builder:c'ro':b'':m''; 1::c'':b'':m''},
+        SourceData  => {
+            GroupMemberAdd => [
+                {
+                    GID        => $GroupName2ID{'itsm-change'},
+                    UID        => $UserIDs[0],
+                    Permission => { ro => 1, rw => 0, },
+                },
+            ],
+        },
+        ReferenceData => {
+            Permissions => {
+                0 => { ro => 1, rw => 0, },
+                1 => { ro => 0, rw => 0, },
+            },
+        },
+    },
+
+    {
+
+        # The type 'rw' implies all other types. See Kernel::System::Group_GetTypeString()
+        # Therefore User1 effectively has 'ro' in 'itsm-change' and
+        # the ChangeAgentCheck Permission module gives 'ro' access.
+        # Note that the ChangeAgentCheck Permission module never gives 'rw' access.
+        Description => q{0:builder:c'rw':b'':m''; 1::c'':b'':m''},
+        SourceData  => {
+            GroupMemberAdd => [
+                {
+                    GID        => $GroupName2ID{'itsm-change'},
+                    UID        => $UserIDs[0],
+                    Permission => { ro => 0, rw => 1, },
+                },
+            ],
+        },
+        ReferenceData => {
+            Permissions => {
+                0 => { ro => 1, rw => 0, },
+                1 => { ro => 0, rw => 0, },
+            },
+        },
+    },
+
 );
 
+my $PermissionTestCounter = 1;
 for my $Test (@PermissionTests) {
+    my $SourceData    = $Test->{SourceData};
+    my $ReferenceData = $Test->{ReferenceData};
+
+    $Self->True(
+        1,
+        "Test $TestCount: $Test->{Description} (Permission Test case: $PermissionTestCounter)",
+    );
+
+    # execute the source modifications
+    $SourceData->{GroupMemberAdd} ||= [];
+    for my $Params ( @{ $SourceData->{GroupMemberAdd} } ) {
+
+        # modify the group membership
+        my $Success = $Self->{GroupObject}->GroupMemberAdd(
+            %{$Params},
+            UserID => 1,
+        );
+        $Self->True( $Success, "Permission test $PermissionTestCounter: GroupMemberAdd()", );
+    }
+
+    # check the result
+    if ( $ReferenceData->{Permissions} ) {
+        while ( my ( $UserIndex, $Privs ) = each %{ $ReferenceData->{Permissions} } ) {
+            for my $Type ( keys %{$Privs} ) {
+                $Self->{ChangeObject}->{Debug} = 10;
+                my $Access = $Self->{ChangeObject}->Permission(
+                    Type     => $Type,
+                    ChangeID => $PermissionTestChangeID,
+                    UserID   => $UserIDs[$UserIndex],
+                );
+                if ( $Privs->{$Type} ) {
+                    $Self->True(
+                        $Access,
+                        "Permission test $PermissionTestCounter: User $UserIndex ($UserIDs[$UserIndex]) has $Type access",
+                    );
+                }
+                else {
+                    $Self->False(
+                        $Access,
+                        "Permission test $PermissionTestCounter: User $UserIndex ($UserIDs[$UserIndex]) has no $Type access",
+                    );
+                }
+            }
+        }
+    }
+}
+continue {
+    $PermissionTestCounter++;
+    $TestCount++;
 }
 
 # ------------------------------------------------------------ #
