@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.107 2009-11-02 15:26:09 bes Exp $
+# $Id: ITSMChange.t,v 1.108 2009-11-11 08:27:59 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -173,7 +173,7 @@ my @DefaultChangeStates = (
 );
 
 # get class list with swapped keys and values
-my %ReverseClassList = reverse %{
+my %ChangeStateName2ID = reverse %{
     $Self->{GeneralCatalogObject}->ItemList(
         Class => 'ITSM::ChangeManagement::Change::State',
         )
@@ -182,7 +182,7 @@ my %ReverseClassList = reverse %{
 # check if states are in GeneralCatalog
 for my $DefaultChangeState (@DefaultChangeStates) {
     $Self->True(
-        $ReverseClassList{$DefaultChangeState},
+        $ChangeStateName2ID{$DefaultChangeState},
         "Test " . $TestCount++ . " - check state '$DefaultChangeState'"
     );
 }
@@ -195,7 +195,7 @@ for my $State (@DefaultChangeStates) {
 
     $Self->Is(
         $StateID,
-        $ReverseClassList{$State},
+        $ChangeStateName2ID{$State},
         "Lookup $State",
     );
 
@@ -304,7 +304,7 @@ my @ChangeTests = (
                 Justification   => q{},
                 ChangeManagerID => undef,
                 ChangeBuilderID => $UserIDs[0],
-                ChangeStateID   => $ReverseClassList{requested},
+                ChangeStateID   => $ChangeStateName2ID{requested},
                 ChangeState     => 'requested',
                 WorkOrderIDs    => [],
                 CABAgents       => [],
@@ -337,7 +337,7 @@ my @ChangeTests = (
                 Justification   => q{},
                 ChangeManagerID => undef,
                 ChangeBuilderID => $UserIDs[0],
-                ChangeStateID   => $ReverseClassList{failed},
+                ChangeStateID   => $ChangeStateName2ID{failed},
                 ChangeState     => 'failed',
                 WorkOrderIDs    => [],
                 CABAgents       => [],
@@ -1274,12 +1274,12 @@ my @ChangeTests = (
             },
             ChangeUpdate => {
                 UserID        => 1,
-                ChangeStateID => $ReverseClassList{rejected},
+                ChangeStateID => $ChangeStateName2ID{rejected},
             },
         },
         ReferenceData => {
             ChangeGet => {
-                ChangeStateID => $ReverseClassList{rejected},
+                ChangeStateID => $ChangeStateName2ID{rejected},
             },
         },
         SearchTest => [ 29, 35 ],
@@ -1299,7 +1299,7 @@ my @ChangeTests = (
             },
             ChangeUpdate => {
                 UserID          => $UserIDs[0],
-                ChangeStateID   => $ReverseClassList{successful},
+                ChangeStateID   => $ChangeStateName2ID{successful},
                 ChangeManagerID => $UserIDs[1],
             },
             ChangeAddChangeTime => {
@@ -1308,7 +1308,7 @@ my @ChangeTests = (
         },
         ReferenceData => {
             ChangeGet => {
-                ChangeStateID => $ReverseClassList{successful},
+                ChangeStateID => $ChangeStateName2ID{successful},
             },
         },
 
@@ -1327,7 +1327,7 @@ my @ChangeTests = (
             },
             ChangeUpdate => {
                 UserID          => $UserIDs[1],
-                ChangeStateID   => $ReverseClassList{rejected},
+                ChangeStateID   => $ChangeStateName2ID{rejected},
                 ChangeManagerID => 1,
             },
             ChangeAddChangeTime => {
@@ -1339,7 +1339,7 @@ my @ChangeTests = (
         },
         ReferenceData => {
             ChangeGet => {
-                ChangeStateID => $ReverseClassList{rejected},
+                ChangeStateID => $ChangeStateName2ID{rejected},
             },
         },
         SearchTest => [999999],
@@ -1355,7 +1355,7 @@ my @ChangeTests = (
             },
             ChangeUpdate => {
                 UserID          => 1,
-                ChangeStateID   => $ReverseClassList{failed},
+                ChangeStateID   => $ChangeStateName2ID{failed},
                 ChangeManagerID => $UserIDs[0],
             },
             ChangeAddChangeTime => {
@@ -1367,7 +1367,7 @@ my @ChangeTests = (
         },
         ReferenceData => {
             ChangeGet => {
-                ChangeStateID => $ReverseClassList{failed},
+                ChangeStateID => $ChangeStateName2ID{failed},
             },
         },
         SearchTest => [ 6, 999999 ],
@@ -1977,7 +1977,7 @@ my @ChangeSearchTests = (
     {
         Description => q{ChangeStateID},
         SearchData  => {
-            ChangeStateIDs => [ $ReverseClassList{requested} ],
+            ChangeStateIDs => [ $ChangeStateName2ID{requested} ],
         },
         ResultData => {
             TestExistence => 1,
@@ -2049,9 +2049,9 @@ my @ChangeSearchTests = (
         Description => q{ChangeStateID (same ID three times)},
         SearchData  => {
             ChangeStateIDs => [
-                $ReverseClassList{requested},
-                $ReverseClassList{requested},
-                $ReverseClassList{requested},
+                $ChangeStateName2ID{requested},
+                $ChangeStateName2ID{requested},
+                $ChangeStateName2ID{requested},
             ],
         },
         ResultData => {
@@ -2064,9 +2064,9 @@ my @ChangeSearchTests = (
         Description => q{ChangeStateID (three different IDs)},
         SearchData  => {
             ChangeStateIDs => [
-                $ReverseClassList{requested},
-                $ReverseClassList{approved},
-                $ReverseClassList{rejected},
+                $ChangeStateName2ID{requested},
+                $ChangeStateName2ID{approved},
+                $ChangeStateName2ID{rejected},
             ],
         },
         ResultData => {
