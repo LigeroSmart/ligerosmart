@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.112 2009-11-11 10:11:06 bes Exp $
+# $Id: ITSMChange.t,v 1.113 2009-11-11 10:16:38 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -2538,10 +2538,10 @@ if ($SearchTestChangeID) {
 my $SearchTestCount = 1;
 
 SEARCHTEST:
-for my $SearchTest (@ChangeSearchTests) {
+for my $Test (@ChangeSearchTests) {
 
     # check SearchData attribute
-    if ( !$SearchTest->{SearchData} || ref( $SearchTest->{SearchData} ) ne 'HASH' ) {
+    if ( !$Test->{SearchData} || ref( $Test->{SearchData} ) ne 'HASH' ) {
 
         $Self->True(
             0,
@@ -2554,16 +2554,16 @@ for my $SearchTest (@ChangeSearchTests) {
     $Self->True(
         1,
         'call ChangeSearch with params: '
-            . $SearchTest->{Description}
+            . $Test->{Description}
             . " (SearchTestCase: $SearchTestCount)",
     );
 
     my $ChangeIDs = $Self->{ChangeObject}->ChangeSearch(
-        %{ $SearchTest->{SearchData} },
+        %{ $Test->{SearchData} },
         UserID => 1,
     );
 
-    if ( $SearchTest->{SearchFails} ) {
+    if ( $Test->{SearchFails} ) {
         $Self->True(
             !defined($ChangeIDs),
             "Test $TestCount: ChangeSearch() is expected to fail",
@@ -2578,14 +2578,14 @@ for my $SearchTest (@ChangeSearchTests) {
 
     $ChangeIDs ||= [];
 
-    if ( $SearchTest->{ResultData}->{TestCount} ) {
+    if ( $Test->{ResultData}->{TestCount} ) {
 
         # get number of change ids ChangeSearch should return
         my $Count = scalar keys %{ $ChangeIDForSearchTest{$SearchTestCount} };
 
         # get defined expected result count (defined in search test case!)
-        if ( exists $SearchTest->{ResultData}->{Count} ) {
-            $Count = $SearchTest->{ResultData}->{Count}
+        if ( exists $Test->{ResultData}->{Count} ) {
+            $Count = $Test->{ResultData}->{Count}
         }
 
         $Self->Is(
@@ -2595,7 +2595,7 @@ for my $SearchTest (@ChangeSearchTests) {
         );
     }
 
-    if ( $SearchTest->{ResultData}->{TestExistence} ) {
+    if ( $Test->{ResultData}->{TestExistence} ) {
 
         # check if all ids that belongs to this searchtest are returned
         my @ChangeIDs = keys %{ $ChangeIDForSearchTest{$SearchTestCount} };
@@ -3242,16 +3242,16 @@ my @TimeSearchTests = (
 my $TSTCounter = 1;
 my @TSTWorkOrderIDs;
 TSTEST:
-for my $TSTest (@TimeSearchTests) {
-    my $SourceData    = $TSTest->{SourceData};
-    my $ReferenceData = $TSTest->{ReferenceData};
+for my $Test (@TimeSearchTests) {
+    my $SourceData    = $Test->{SourceData};
+    my $ReferenceData = $Test->{ReferenceData};
 
     my $ChangeID;
     my $WorkOrderID;
 
     $Self->True(
         1,
-        "Test $TestCount: $TSTest->{Description} (TSTest case: $TSTCounter)",
+        "Test $TestCount: $Test->{Description} (TSTest case: $TSTCounter)",
     );
 
     if ( $SourceData->{ChangeAdd} ) {
@@ -3426,16 +3426,16 @@ my $SSTCounter = 1;
 my @SSTChangeIDs;       # string search test change ids
 my @SSTWorkOrderIDs;    # string search test workorder ids
 SSTEST:
-for my $StringSearchTest (@StringSearchTests) {
-    my $SourceData    = $StringSearchTest->{SourceData};
-    my $ReferenceData = $StringSearchTest->{ReferenceData};
+for my $Test (@StringSearchTests) {
+    my $SourceData    = $Test->{SourceData};
+    my $ReferenceData = $Test->{ReferenceData};
 
     my $ChangeID;
     my $WorkOrderID;
 
     $Self->True(
         1,
-        "Test $TestCount: $StringSearchTest->{Description} (SSTest case: $SSTCounter)",
+        "Test $TestCount: $Test->{Description} (SSTest case: $SSTCounter)",
     );
 
     if ( $SourceData->{ChangeAdd} ) {
