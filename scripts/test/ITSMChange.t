@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.115 2009-11-11 14:00:43 bes Exp $
+# $Id: ITSMChange.t,v 1.116 2009-11-11 14:58:25 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -3583,6 +3583,192 @@ my @PermissionTests = (
         ReferenceData => {
             Permissions => {
                 0 => { ro => 1, rw => 0, },
+                1 => { ro => 0, rw => 0, },
+            },
+        },
+    },
+
+    {
+
+        # ro in itsm-change-manager
+        Description => q{0:builder:c'':b'':m'ro'; 1::c'':b'':m''},
+        SourceData  => {
+            GroupMemberAdd => [
+                {
+                    GID        => $GroupName2ID{'itsm-change'},
+                    UID        => $UserIDs[0],
+                    Permission => { ro => 0, rw => 0, },
+                },
+                {
+                    GID        => $GroupName2ID{'itsm-change-manager'},
+                    UID        => $UserIDs[0],
+                    Permission => { ro => 1, rw => 0, },
+                },
+            ],
+        },
+        ReferenceData => {
+            Permissions => {
+                0 => { ro => 1, rw => 0, },
+                1 => { ro => 0, rw => 0, },
+            },
+        },
+    },
+
+    {
+
+        # rw in itsm-change-manager
+        Description => q{0:builder:c'':b'':m'rw'; 1::c'':b'':m''},
+        SourceData  => {
+            GroupMemberAdd => [
+                {
+                    GID        => $GroupName2ID{'itsm-change'},
+                    UID        => $UserIDs[0],
+                    Permission => { ro => 0, rw => 0, },
+                },
+                {
+                    GID        => $GroupName2ID{'itsm-change-manager'},
+                    UID        => $UserIDs[0],
+                    Permission => { ro => 1, rw => 1, },
+                },
+            ],
+        },
+        ReferenceData => {
+            Permissions => {
+                0 => { ro => 1, rw => 1, },
+                1 => { ro => 0, rw => 0, },
+            },
+        },
+    },
+
+    {
+
+        # ro in itsm-change-builder, Agent is the builder
+        Description => q{0:builder:c'':b'ro':m''; 1::c'':b'':m''},
+        SourceData  => {
+            GroupMemberAdd => [
+                {
+                    GID        => $GroupName2ID{'itsm-change'},
+                    UID        => $UserIDs[0],
+                    Permission => { ro => 0, rw => 0, },
+                },
+                {
+                    GID        => $GroupName2ID{'itsm-change-manager'},
+                    UID        => $UserIDs[0],
+                    Permission => { ro => 0, rw => 0, },
+                },
+                {
+                    GID        => $GroupName2ID{'itsm-change-builder'},
+                    UID        => $UserIDs[0],
+                    Permission => { ro => 1, rw => 0, },
+                },
+            ],
+        },
+        ReferenceData => {
+            Permissions => {
+                0 => { ro => 1, rw => 0, },
+                1 => { ro => 0, rw => 0, },
+            },
+        },
+    },
+
+    {
+
+        # rw in itsm-change-builder, Agent is the builder
+        Description => q{0:builder:c'':b'rw':m''; 1::c'':b'':m''},
+        SourceData  => {
+            GroupMemberAdd => [
+                {
+                    GID        => $GroupName2ID{'itsm-change'},
+                    UID        => $UserIDs[0],
+                    Permission => { ro => 0, rw => 0, },
+                },
+                {
+                    GID        => $GroupName2ID{'itsm-change-manager'},
+                    UID        => $UserIDs[0],
+                    Permission => { ro => 0, rw => 0, },
+                },
+                {
+                    GID        => $GroupName2ID{'itsm-change-builder'},
+                    UID        => $UserIDs[0],
+                    Permission => { ro => 0, rw => 1, },
+                },
+            ],
+        },
+        ReferenceData => {
+            Permissions => {
+                0 => { ro => 1, rw => 1, },
+                1 => { ro => 0, rw => 0, },
+            },
+        },
+    },
+
+    {
+
+        # ro in itsm-change-builder, Agent isn't the builder
+        Description => q{0:builder:c'':b'':m''; 1::c'':b'ro':m''},
+        SourceData  => {
+            GroupMemberAdd => [
+                {
+                    GID        => $GroupName2ID{'itsm-change'},
+                    UID        => $UserIDs[0],
+                    Permission => { ro => 0, rw => 0, },
+                },
+                {
+                    GID        => $GroupName2ID{'itsm-change-manager'},
+                    UID        => $UserIDs[0],
+                    Permission => { ro => 0, rw => 0, },
+                },
+                {
+                    GID        => $GroupName2ID{'itsm-change-builder'},
+                    UID        => $UserIDs[0],
+                    Permission => { ro => 0, rw => 0, },
+                },
+                {
+                    GID        => $GroupName2ID{'itsm-change-builder'},
+                    UID        => $UserIDs[1],
+                    Permission => { ro => 1, rw => 0, },
+                },
+            ],
+        },
+        ReferenceData => {
+            Permissions => {
+                0 => { ro => 0, rw => 0, },
+                1 => { ro => 0, rw => 0, },
+            },
+        },
+    },
+
+    {
+
+        # rw in itsm-change-builder, Agent isn't the builder
+        Description => q{0:builder:c'':b'':m''; 1::c'':b'rw':m''},
+        SourceData  => {
+            GroupMemberAdd => [
+                {
+                    GID        => $GroupName2ID{'itsm-change'},
+                    UID        => $UserIDs[0],
+                    Permission => { ro => 0, rw => 0, },
+                },
+                {
+                    GID        => $GroupName2ID{'itsm-change-manager'},
+                    UID        => $UserIDs[0],
+                    Permission => { ro => 0, rw => 0, },
+                },
+                {
+                    GID        => $GroupName2ID{'itsm-change-builder'},
+                    UID        => $UserIDs[0],
+                    Permission => { ro => 0, rw => 0, },
+                },
+                {
+                    GID        => $GroupName2ID{'itsm-change-builder'},
+                    UID        => $UserIDs[1],
+                    Permission => { ro => 0, rw => 0, },
+                },
+            ],
+        },
+        ReferenceData => {
+            Permissions => {
+                0 => { ro => 0, rw => 0, },
                 1 => { ro => 0, rw => 0, },
             },
         },
