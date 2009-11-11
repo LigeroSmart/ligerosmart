@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.110 2009-11-11 09:35:29 bes Exp $
+# $Id: ITSMChange.t,v 1.111 2009-11-11 09:43:25 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -2613,18 +2613,11 @@ my @OrderByColumns = qw(
     ChangeBy
     CreateTime
     ChangeTime
+    PlannedStartTime
+    PlannedEndTime
+    ActualStartTime
+    ActualEndTime
 );
-
-# TODO:
-# Add these 4 Start/End-Times as soon as the Change-Search was rewritten,
-# so that it can handle the problem with undefined start or end times
-
-# These columns can be added to lists above as soon as Workorder is implemented
-# and the time columns are set.
-#    PlannedStartTime
-#    PlannedEndTime
-#    ActualStartTime
-#    ActualEndTime
 
 for my $OrderByColumn (@OrderByColumns) {
 
