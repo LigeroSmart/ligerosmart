@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderHistoryZoom.pm - the OTRS::ITSM::ChangeManagement workorder history zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderHistoryZoom.pm,v 1.1 2009-11-05 11:47:40 reb Exp $
+# $Id: AgentITSMWorkOrderHistoryZoom.pm,v 1.2 2009-11-11 15:22:22 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -41,7 +41,7 @@ sub new {
     $Self->{HistoryObject}   = Kernel::System::ITSMChange::History->new(%Param);
 
     # get config of frontend module
-    $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
+    $Self->{Config} = $Self->{ConfigObject}->Get("ITSMWorkOrder::Frontend::$Self->{Action}");
 
     return $Self;
 }
