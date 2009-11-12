@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder/Permission/ChangeBuilderCheck.pm - change builder based permission check
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ChangeBuilderCheck.pm,v 1.6 2009-11-10 12:47:07 bes Exp $
+# $Id: ChangeBuilderCheck.pm,v 1.7 2009-11-12 11:17:46 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 =head1 NAME
 
@@ -165,7 +165,8 @@ sub Run {
         UserID => $Param{UserID},
         Type   => $Param{Type},
         Result => 'HASH',
-        Cached => 1,
+
+        # Cached => 1,    # disable caching for the sake of testability
     );
 
     # deny access if the agent doens't have the appropriate type in the appropriate group
@@ -208,7 +209,7 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Id: ChangeBuilderCheck.pm,v 1.6 2009-11-10 12:47:07 bes Exp $
+$Id: ChangeBuilderCheck.pm,v 1.7 2009-11-12 11:17:46 bes Exp $
 
 =cut
 
