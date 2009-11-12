@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.50 2009-11-10 11:59:16 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.51 2009-11-12 10:43:43 ub Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -69,6 +69,7 @@
         <File Permission="644" Location="Kernel/System/ITSMChange/ITSMWorkOrder/Permission/WorkOrderAgentCheck.pm"/>
         <File Permission="644" Location="Kernel/System/LinkObject/ITSMChange.pm"/>
         <File Permission="644" Location="Kernel/System/LinkObject/ITSMWorkOrder.pm"/>
+        <File Permission="644" Location="Kernel/System/Ticket/Acl/RestrictRFCTicketType.pm"/>
         <File Permission="644" Location="scripts/test/ITSMChange.t"/>
         <File Permission="644" Location="scripts/test/ITSMWorkOrder.t"/>
         <File Permission="644" Location="var/httpd/htdocs/images/Standard/itsm_change.png"/>
@@ -581,6 +582,14 @@
         </Insert>
         <Insert Table="change_history_type">
             <Data Key="name" Type="Quote">WorkOrderLinkDelete</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="ticket_type">
+            <Data Key="name" Type="Quote">RfC</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
