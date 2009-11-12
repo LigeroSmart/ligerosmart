@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Permission/ChangeBuilderCheck.pm - change builder based permission check
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ChangeBuilderCheck.pm,v 1.10 2009-11-12 11:17:46 bes Exp $
+# $Id: ChangeBuilderCheck.pm,v 1.11 2009-11-12 14:34:43 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 =head1 NAME
 
@@ -149,13 +149,15 @@ sub Run {
     # deny access, when the group is not found
     return if !$GroupID;
 
+    # Caching is turned on by default.
+    my $Cached = exists $Param{Cached} ? $Param{Cached} : 1;
+
     # get user groups, where the user has the appropriate privilege
     my %Groups = $Self->{GroupObject}->GroupMemberList(
         UserID => $Param{UserID},
         Type   => $Param{Type},
         Result => 'HASH',
-
-        # Cached => 1,    # disable caching for the sake of testability
+        Cached => $Cached,
     );
 
     # deny access if the agent doens't have the appropriate type in the appropriate group
@@ -192,7 +194,7 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Id: ChangeBuilderCheck.pm,v 1.10 2009-11-12 11:17:46 bes Exp $
+$Id: ChangeBuilderCheck.pm,v 1.11 2009-11-12 14:34:43 bes Exp $
 
 =cut
 

@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.142 2009-11-12 10:44:47 ub Exp $
+# $Id: ITSMChange.pm,v 1.143 2009-11-12 14:34:43 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.142 $) [1];
+$VERSION = qw($Revision: 1.143 $) [1];
 
 =head1 NAME
 
@@ -1668,22 +1668,20 @@ sub ChangeStateLookup {
 
 =item Permission()
 
-Returns whether the agent has permissions or not.
+Returns whether the agent C<UserID> has permissions of the type C<Type>
+on the change C<ChangeID>. The parameters are passed on to
+the permission modules that were registered under B<ITSMWorkOrder::Permission>.
+
+The optional option C<LogNo> turns off logging when access was denied.
+This is useful when the method is used for checking whether a link or an action should be shown.
 
     my $Access = $ChangeObject->Permission(
-        Type     => 'ro',      # 'ro' and 'rw' are supported
-        ChangeID => 4444,      # optional, do not pass for 'ChangeAdd'
-        UserID   => 123,
-    );
-
-The option LogNo turns off logging.
-This is useful when it is only checked whether a link/action should be shown.
-
-    my $Access = $ChangeObject->Permission(
-        Type     => 'ro',
-        ChangeID => 123,
-        LogNo    => 1,
-        UserID   => 123,
+        UserID      => 123,
+        Type        => 'ro',   # 'ro' and 'rw' are supported
+        ChangeID    => 3333,   # optional, do not pass for 'ChangeAdd'
+        Cached      => 0,      # optional with default 1,
+                               # passing the value 0 is useful in test scripts
+        LogNo       => 1,      # optional, turns off logging when access is denied
     );
 
 =cut
@@ -1729,11 +1727,11 @@ sub Permission {
                 Debug        => $Self->{Debug},
             );
 
-            # execute Run()
-            my $AccessOk = $ModuleObject->Run(%Param);
+            # ask for the opinion of the Permission module
+            my $Access = $ModuleObject->Run(%Param);
 
             # check granted option (should I say ok)
-            if ( $AccessOk && $Modules{$Module}->{Granted} ) {
+            if ( $Access && $Modules{$Module}->{Granted} ) {
                 if ( $Self->{Debug} > 0 ) {
                     $Self->{LogObject}->Log(
                         Priority => 'debug',
@@ -1748,8 +1746,8 @@ sub Permission {
                 return 1;
             }
 
-            # return because access is false but it's required
-            if ( !$AccessOk && $Modules{$Module}->{Required} ) {
+            # return because access is denied, but was required
+            if ( !$Access && $Modules{$Module}->{Required} ) {
                 if ( !$Param{LogNo} ) {
                     $Self->{LogObject}->Log(
                         Priority => 'notice',
@@ -2192,6 +2190,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.142 $ $Date: 2009-11-12 10:44:47 $
+$Revision: 1.143 $ $Date: 2009-11-12 14:34:43 $
 
 =cut

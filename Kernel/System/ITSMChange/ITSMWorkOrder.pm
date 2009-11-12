@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.11 2009-11-12 10:14:12 bes Exp $
+# $Id: ITSMWorkOrder.pm,v 1.12 2009-11-12 14:34:43 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::Group;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 =head1 NAME
 
@@ -1554,22 +1554,20 @@ sub WorkOrderTypeList {
 
 =item Permission()
 
-Returns whether the agent has permissions or not.
+Returns whether the agent C<UserID> has permissions of the type C<Type>
+on the workorder C<WorkOrderID>. The parameters are passed on to
+the permission modules that were registered under B<ITSMChange::Permission>.
+
+The optional option C<LogNo> turns off logging when access was denied.
+This is useful when the method is used for checking whether a link or an action should be shown.
 
     my $Access = $WorkOrderObject->Permission(
-        Type        => 'ro',     # 'ro' and 'rw' are supported
-        WorkOrderID => 4444,     # optional, do not pass for 'WorkOrderAdd'
         UserID      => 123,
-    );
-
-The option LogNo turns off logging.
-This is useful when it is only checked whether a link/action should be shown.
-
-    my $Access = $WorkOrderObject->Permission(
-        Type        => 'ro',
-        WorkOrderID => 4444,
-        LogNo       => 1,
-        UserID      => 123,
+        Type        => 'ro',   # 'ro' and 'rw' are supported
+        WorkOrderID => 4444,   # optional, do not pass for 'WorkOrderAdd'
+        Cached      => 0,      # optional with default 1,
+                               # passing the value 0 is useful in test scripts
+        LogNo       => 1,      # optional, turns off logging when access is denied
     );
 
 =cut
@@ -1615,7 +1613,7 @@ sub Permission {
                 Debug           => $Self->{Debug},
             );
 
-            # execute Run()
+            # ask for the opinion of the Permission module
             my $AccessOk = $ModuleObject->Run(%Param);
 
             # check granted option (should I say ok)
@@ -2036,6 +2034,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.11 $ $Date: 2009-11-12 10:14:12 $
+$Revision: 1.12 $ $Date: 2009-11-12 14:34:43 $
 
 =cut

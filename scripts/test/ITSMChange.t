@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.119 2009-11-12 13:28:21 bes Exp $
+# $Id: ITSMChange.t,v 1.120 2009-11-12 14:34:43 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -3807,6 +3807,7 @@ for my $Test (@PermissionTests) {
                     Type     => $Type,
                     ChangeID => $PermissionTestChangeID,
                     UserID   => $UserIDs[$UserIndex],
+                    Cached   => 0,
                 );
                 if ( $Privs->{$Type} ) {
                     $Self->True(
