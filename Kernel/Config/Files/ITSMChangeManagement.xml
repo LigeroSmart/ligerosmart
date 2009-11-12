@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.58 2009-11-12 09:00:56 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.59 2009-11-12 10:41:55 ub Exp $</CVS>
     <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
         <Description Lang="en">Logfile for the itsm change counter.</Description>
         <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
@@ -344,10 +344,9 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::TicketMenuITSMChange</Item>
                 <Item Key="Name">Add Change</Item>
-                <Item Key="Description">Create a Change from this ticket!</Item>
+                <Item Key="Description">Create a change from this ticket!</Item>
                 <Item Key="Action">AgentITSMChangeAdd</Item>
-                <!-- TODO: the CGI-params of Link need to be specified -->
-                <Item Key="Link">Action=AgentITSMChangeAdd&amp;SourceObject=Ticket&amp;SourceKey=$QData{"TicketID"}</Item>
+                <Item Key="Link">Action=AgentITSMChangeAdd&amp;TicketID=$QData{"TicketID"}</Item>
                 <Item Key="TicketTypes">
                     <Array>
                         <Item>RfC</Item>
@@ -999,6 +998,17 @@
                 <Item Key="Module">Kernel::System::ITSMChange::ITSMWorkOrder::Permission::CABCheck</Item>
                 <Item Key="Required">0</Item>
                 <Item Key="Granted">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Acl::Module###200-Ticket::Acl::Module" Required="0" Valid="0">
+        <Description Lang="en">This ACL module does not allow to use the ticket type 'RfC' if the user is not in one of the groups 'itsm-change', 'itsm-change-builder' or 'itsm-change-manager'.</Description>
+        <Description Lang="de">Dieses ACL Modul verhindert es, den Ticket-Typ 'RfC' zu verwenden, wenn der Benutzer nicht Mitglied in einer der Gruppen 'itsm-change', 'itsm-change-builder' oder 'itsm-change-manager' ist.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Core::TicketACL</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::System::Ticket::Acl::RestrictRFCTicketType</Item>
             </Hash>
         </Setting>
     </ConfigItem>
