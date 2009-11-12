@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.85 2009-11-04 09:53:33 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.86 2009-11-12 09:11:53 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -44,7 +44,9 @@ $Self->Is(
     "Test " . $TestCount++ . ' - class of workorder object'
 );
 
+# ------------------------------------------------------------ #
 # create needed users
+# ------------------------------------------------------------ #
 my @UserIDs;               # a list of existing and valid user ids
 my @InvalidUserIDs;        # a list of existing but invalid user ids
 my @NonExistingUserIDs;    # a list of non-existion user ids
@@ -110,7 +112,7 @@ $Self->{ConfigObject}->Set(
 );
 
 # ------------------------------------------------------------ #
-# test WorkOrder API
+# test ITSMWorkOrder API
 # ------------------------------------------------------------ #
 
 # define public interface (in alphabetical order)
@@ -151,18 +153,18 @@ my @DefaultWorkOrderStates = (
 );
 
 # get class list with swapped keys and values
-my %StatesList = %{
+my %WorkOrderStateID2Name = %{
     $Self->{GeneralCatalogObject}->ItemList(
         Class => 'ITSM::ChangeManagement::WorkOrder::State',
         ) || {}
     };
-my %ReverseStatesList = reverse %StatesList;
-my @SortedStateIDs    = sort keys %StatesList;
+my %WorkOrderStateName2ID = reverse %WorkOrderStateID2Name;
+my @SortedStateIDs        = sort keys %WorkOrderStateID2Name;
 
 # check if states are in GeneralCatalog
 for my $DefaultWorkOrderState (@DefaultWorkOrderStates) {
     $Self->True(
-        $ReverseStatesList{$DefaultWorkOrderState},
+        $WorkOrderStateName2ID{$DefaultWorkOrderState},
         "Test " . $TestCount++ . " - check state '$DefaultWorkOrderState'"
     );
 }
@@ -175,7 +177,7 @@ for my $State (@DefaultWorkOrderStates) {
 
     $Self->Is(
         $StateID,
-        $ReverseStatesList{$State},
+        $WorkOrderStateName2ID{$State},
         "Lookup $State",
     );
 
@@ -204,18 +206,18 @@ my @DefaultWorkOrderTypes = (
 );
 
 # get class list with swapped keys and values
-my %TypesList = %{
+my %WorkOrderTypeID2Name = %{
     $Self->{GeneralCatalogObject}->ItemList(
         Class => 'ITSM::ChangeManagement::WorkOrder::Type',
         ) || {}
     };
-my %ReverseTypesList = reverse %TypesList;
-my @SortedTypeIDs    = sort keys %TypesList;
+my %WorkOrderTypeName2ID = reverse %WorkOrderTypeID2Name;
+my @SortedTypeIDs        = sort keys %WorkOrderTypeID2Name;
 
 # check if types are in GeneralCatalog
 for my $DefaultWorkOrderType (@DefaultWorkOrderTypes) {
     $Self->True(
-        $ReverseTypesList{$DefaultWorkOrderType},
+        $WorkOrderTypeName2ID{$DefaultWorkOrderType},
         "Test " . $TestCount++ . " - check type '$DefaultWorkOrderType'"
     );
 }
@@ -228,7 +230,7 @@ for my $DefaultWorkOrderType (@DefaultWorkOrderTypes) {
 
     $Self->Is(
         $TypeID,
-        $ReverseTypesList{$DefaultWorkOrderType},
+        $WorkOrderTypeName2ID{$DefaultWorkOrderType},
         "Lookup $DefaultWorkOrderType",
     );
 
@@ -262,7 +264,7 @@ for my $TypeID (@SortedTypeIDs) {
 
     # the name should also match
     $FirstHashRef ||= {};
-    my $TypeName = $TypesList{$TypeID};
+    my $TypeName = $WorkOrderTypeID2Name{$TypeID};
     $Self->Is(
         $FirstHashRef->{Value},
         $TypeName,
@@ -600,7 +602,7 @@ push @WorkOrderTests, (
             WorkOrderAdd => {
                 UserID           => 1,
                 ChangeID         => $WorkOrderAddTestID,
-                WorkOrderStateID => $ReverseStatesList{ready},
+                WorkOrderStateID => $WorkOrderStateName2ID{ready},
                 WorkOrderTitle   => 'WorkOrderAdd with WorkOrderStateID - Title - '
                     . $UniqueSignature,
                 Instruction => 'WorkOrderAdd with WorkOrderStateID - Instruction - '
@@ -611,7 +613,7 @@ push @WorkOrderTests, (
         ReferenceData => {
             WorkOrderGet => {
                 ChangeID         => $WorkOrderAddTestID,
-                WorkOrderStateID => $ReverseStatesList{ready},
+                WorkOrderStateID => $WorkOrderStateName2ID{ready},
                 WorkOrderTitle   => 'WorkOrderAdd with WorkOrderStateID - Title - '
                     . $UniqueSignature,
                 Instruction => 'WorkOrderAdd with WorkOrderStateID - Instruction - '
@@ -627,7 +629,7 @@ push @WorkOrderTests, (
             WorkOrderAdd => {
                 UserID          => 1,
                 ChangeID        => $WorkOrderAddTestID,
-                WorkOrderTypeID => $ReverseTypesList{approval},
+                WorkOrderTypeID => $WorkOrderTypeName2ID{approval},
                 WorkOrderTitle => 'WorkOrderAdd with WorkOrderTypeID - Title - ' . $UniqueSignature,
                 Instruction    => 'WorkOrderAdd with WorkOrderTypeID - Instruction - '
                     . $UniqueSignature,
@@ -637,7 +639,7 @@ push @WorkOrderTests, (
         ReferenceData => {
             WorkOrderGet => {
                 ChangeID        => $WorkOrderAddTestID,
-                WorkOrderTypeID => $ReverseTypesList{approval},
+                WorkOrderTypeID => $WorkOrderTypeName2ID{approval},
                 WorkOrderTitle => 'WorkOrderAdd with WorkOrderTypeID - Title - ' . $UniqueSignature,
                 Instruction    => 'WorkOrderAdd with WorkOrderTypeID - Instruction - '
                     . $UniqueSignature,
@@ -652,8 +654,8 @@ push @WorkOrderTests, (
             WorkOrderAdd => {
                 UserID           => 1,
                 ChangeID         => $WorkOrderAddTestID,
-                WorkOrderTypeID  => $ReverseTypesList{pir},
-                WorkOrderStateID => $ReverseStatesList{closed},
+                WorkOrderTypeID  => $WorkOrderTypeName2ID{pir},
+                WorkOrderStateID => $WorkOrderStateName2ID{closed},
                 WorkOrderTitle =>
                     'WorkOrderAdd with WorkOrderTypeID and WorkOrderStateID - Title - '
                     . $UniqueSignature,
@@ -667,8 +669,8 @@ push @WorkOrderTests, (
         ReferenceData => {
             WorkOrderGet => {
                 ChangeID         => $WorkOrderAddTestID,
-                WorkOrderTypeID  => $ReverseTypesList{pir},
-                WorkOrderStateID => $ReverseStatesList{closed},
+                WorkOrderTypeID  => $WorkOrderTypeName2ID{pir},
+                WorkOrderStateID => $WorkOrderStateName2ID{closed},
                 WorkOrderTitle =>
                     'WorkOrderAdd with WorkOrderTypeID and WorkOrderStateID - Title - '
                     . $UniqueSignature,
@@ -688,8 +690,8 @@ push @WorkOrderTests, (
             WorkOrderAdd => {
                 UserID           => 1,
                 ChangeID         => $WorkOrderAddTestID,
-                WorkOrderTypeID  => $ReverseTypesList{pir},
-                WorkOrderStateID => $ReverseStatesList{closed},
+                WorkOrderTypeID  => $WorkOrderTypeName2ID{pir},
+                WorkOrderStateID => $WorkOrderStateName2ID{closed},
                 WorkOrderTitle   => 'WorkOrderAdd with WorkOrderStateID - Title - '
                     . $UniqueSignature,
                 Instruction => 'WorkOrderAdd with WorkOrderStateID - Instruction - '
@@ -698,15 +700,15 @@ push @WorkOrderTests, (
             },
             WorkOrderUpdate => {
                 UserID           => 1,
-                WorkOrderTypeID  => $ReverseTypesList{decision},
-                WorkOrderStateID => $ReverseStatesList{canceled},
+                WorkOrderTypeID  => $WorkOrderTypeName2ID{decision},
+                WorkOrderStateID => $WorkOrderStateName2ID{canceled},
             },
         },
         ReferenceData => {
             WorkOrderGet => {
                 ChangeID         => $WorkOrderAddTestID,
-                WorkOrderTypeID  => $ReverseTypesList{decision},
-                WorkOrderStateID => $ReverseStatesList{canceled},
+                WorkOrderTypeID  => $WorkOrderTypeName2ID{decision},
+                WorkOrderStateID => $WorkOrderStateName2ID{canceled},
                 WorkOrderTitle   => 'WorkOrderAdd with WorkOrderStateID - Title - '
                     . $UniqueSignature,
                 Instruction => 'WorkOrderAdd with WorkOrderStateID - Instruction - '
@@ -755,7 +757,7 @@ push @WorkOrderTests, (
                 CreateBy         => 1,
                 WorkOrderTitle   => 'WorkOrderState - ' . $UniqueSignature,
                 WorkOrderState   => 'closed',
-                WorkOrderStateID => $ReverseStatesList{closed},
+                WorkOrderStateID => $WorkOrderStateName2ID{closed},
             },
         },
         SearchTest => [ 27, 28 ],
@@ -782,7 +784,7 @@ push @WorkOrderTests, (
                 ChangeBy         => 1,
                 WorkOrderTitle   => 'WorkOrderState - ' . $UniqueSignature,
                 WorkOrderState   => 'canceled',
-                WorkOrderStateID => $ReverseStatesList{canceled},
+                WorkOrderStateID => $WorkOrderStateName2ID{canceled},
             },
         },
     },
@@ -803,7 +805,7 @@ push @WorkOrderTests, (
                 ChangeID        => $WorkOrderAddTestID,
                 WorkOrderTitle  => 'WorkOrderType - ' . $UniqueSignature,
                 WorkOrderType   => 'pir',
-                WorkOrderTypeID => $ReverseTypesList{pir},
+                WorkOrderTypeID => $WorkOrderTypeName2ID{pir},
             },
         },
         SearchTest => [ 13, 23, 24 ],
@@ -830,7 +832,7 @@ push @WorkOrderTests, (
                 ChangeBy        => 1,
                 WorkOrderTitle  => 'WorkOrderType - ' . $UniqueSignature,
                 WorkOrderType   => 'decision',
-                WorkOrderTypeID => $ReverseTypesList{decision},
+                WorkOrderTypeID => $WorkOrderTypeName2ID{decision},
             },
         },
     },
@@ -1792,8 +1794,8 @@ my @WorkOrderSearchTests = (
         SearchData  => {
             ChangeIDs        => [$WorkOrderAddTestID],
             WorkOrderTypeIDs => [
-                $ReverseTypesList{approval},
-                $ReverseTypesList{pir},
+                $WorkOrderTypeName2ID{approval},
+                $WorkOrderTypeName2ID{pir},
             ],
             WorkOrderTitle => '%' . $UniqueSignature,
         },
@@ -3488,7 +3490,7 @@ for my $PossibleStateID (@PossibleStateIDsReference) {
 
     # the name should also match
     $FirstHashRef ||= {};
-    my $PossibleStateName = $StatesList{$PossibleStateID};
+    my $PossibleStateName = $WorkOrderStateID2Name{$PossibleStateID};
     $Self->Is(
         $FirstHashRef->{Value},
         $PossibleStateName,

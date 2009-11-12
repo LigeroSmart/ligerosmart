@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.116 2009-11-11 14:58:25 bes Exp $
+# $Id: ITSMChange.t,v 1.117 2009-11-12 09:11:53 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -136,6 +136,7 @@ $Self->{ConfigObject}->Set(
 # ------------------------------------------------------------ #
 # test ITSMChange API
 # ------------------------------------------------------------ #
+
 # define public interface (in alphabetical order)
 my @ObjectMethods = qw(
     ChangeAdd
