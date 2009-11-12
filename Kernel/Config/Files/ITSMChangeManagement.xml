@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.59 2009-11-12 10:41:55 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.60 2009-11-12 16:00:20 bes Exp $</CVS>
     <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
         <Description Lang="en">Logfile for the itsm change counter.</Description>
         <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
@@ -8,6 +8,17 @@
         <SubGroup>Core::ITSMChange</SubGroup>
         <Setting>
             <String Regex="">&lt;OTRS_CONFIG_Home&gt;/var/log/ITSMChangeCounter.log</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::AddChangeLinkTicketTypes" Required="1" Valid="1">
+        <Description Lang="en">Types of tickets, from which a change can be generated.</Description>
+        <Description Lang="de">Typen der Tickets, aus denen eine Änderung erzeugt werden kann.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange</SubGroup>
+        <Setting>
+            <Array>
+                <Item>RfC</Item>
+            </Array>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::State::Signal" Required="1" Valid="1">
@@ -347,11 +358,6 @@
                 <Item Key="Description">Create a change from this ticket!</Item>
                 <Item Key="Action">AgentITSMChangeAdd</Item>
                 <Item Key="Link">Action=AgentITSMChangeAdd&amp;TicketID=$QData{"TicketID"}</Item>
-                <Item Key="TicketTypes">
-                    <Array>
-                        <Item>RfC</Item>
-                    </Array>
-                </Item>
             </Hash>
         </Setting>
     </ConfigItem>
