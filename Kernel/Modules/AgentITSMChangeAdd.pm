@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.14 2009-11-12 16:10:53 bes Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.15 2009-11-12 17:08:19 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -69,6 +69,59 @@ sub Run {
     for my $TimePart (qw(Year Month Day Hour Minute Used)) {
         my $ParamName = 'RealizeTime' . $TimePart;
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+    }
+
+    # The TicketID can be validated even without the Subaction 'Save',
+    # as it is passed as GET-param or in a hidden field.
+    if ( $GetParam{TicketID} ) {
+        my %Ticket = $Self->{TicketObject}->TicketGet(
+            TicketID => $GetParam{TicketID},
+        );
+        $Self->{LayoutObject}->Block(
+            Name => 'Ticket',
+            Data => {%Ticket},
+        );
+
+        my $TicketIsInvalid;
+        TICKETISINVALID:
+        {
+            if ( $GetParam{TicketID} !~ m{ \A \d+ \z }xms ) {
+                $TicketIsInvalid = 'TicketID must be an integer';
+                last TICKETISINVALID;
+            }
+
+            if ( !%Ticket ) {
+                $TicketIsInvalid = 'No ticket found';
+                last TICKETISINVALID;
+            }
+
+            # get and check the list of relevant ticket types
+            my $AddChangeLinkTicketTypes
+                = $Self->{ConfigObject}->Get('ITSMChange::AddChangeLinkTicketTypes');
+
+            if ( !$AddChangeLinkTicketTypes || ref $AddChangeLinkTicketTypes ne 'ARRAY' ) {
+                $TicketIsInvalid = q{Missing config entry 'ITSMChange::AddChangeLinkTicketTypes'};
+                last TICKETISINVALID;
+            }
+
+            # check whether the ticket's type is relevant
+            my %IsRelevant = map { $_ => 1 } @{$AddChangeLinkTicketTypes};
+
+            if ( !$IsRelevant{ $Ticket{Type} } ) {
+                $TicketIsInvalid = 'Invalid ticket type';
+                last TICKETISINVALID;
+            }
+        }
+
+        if ($TicketIsInvalid) {
+            $Self->{LayoutObject}->Block(
+                Name => 'InvalidTicketID',
+                Data => {
+                    TicketID => $GetParam{TicketID},
+                    Reason   => $TicketIsInvalid,
+                },
+            );
+        }
     }
 
     # Remember the reason why saving was not attempted.

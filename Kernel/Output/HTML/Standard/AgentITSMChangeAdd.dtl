@@ -2,7 +2,7 @@
 # AgentITSMChangeAdd.dtl - provides HTML form for AgentITSMChangeAdd
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.dtl,v 1.18 2009-11-12 16:10:53 bes Exp $
+# $Id: AgentITSMChangeAdd.dtl,v 1.19 2009-11-12 17:08:19 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -118,6 +118,20 @@ function submit_compose() {
 <!-- dtl:block:InvalidTitle -->
                                     </td>
                                 </tr>
+<!-- dtl:block:Ticket -->
+                                <tr>
+                                    <td class="contentkey">
+                                        $Text{"Ticket"}:
+                                    </td>
+                                    <td class="contentvalue">
+                                        $Text{"Ticket"}#: $QData{"TicketNumber"} $Text{"Type"}: $QData{"Type"}
+<!-- dtl:block:InvalidTicketID -->
+                                        <br />
+                                        <font color="red" size="-2">$Text{"Invalid ticket id"} $QData{"TicketID"} $QData{"Reason"}</font>
+<!-- dtl:block:InvalidTicketID -->
+                                    </td>
+                                </tr>
+<!-- dtl:block:Ticket -->
                                 <tr>
                                     <td class="contentkey">
                                         $Text{"Description"}:
