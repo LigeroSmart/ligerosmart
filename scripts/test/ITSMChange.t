@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.117 2009-11-12 09:11:53 bes Exp $
+# $Id: ITSMChange.t,v 1.118 2009-11-12 12:09:52 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -3534,8 +3534,10 @@ for my $Test (@StringSearchTests) {
 
 my ($PermissionTestChangeID) = @{ $Label2ChangeIDs{PermissionTest} };
 my @PermissionTests = (
+
+    # Permission test No. 1
     {
-        Description => q{0:builder:c'':b'':m''; 1::c'':b'':m''},
+        Description => q{Initially no priv in any group.},
         SourceData  => {
         },
         ReferenceData => {
@@ -3546,6 +3548,7 @@ my @PermissionTests = (
         },
     },
 
+    # Permission test No. 2
     {
         Description => q{0:builder:c'ro':b'':m''; 1::c'':b'':m''},
         SourceData  => {
@@ -3565,6 +3568,7 @@ my @PermissionTests = (
         },
     },
 
+    # Permission test No. 3
     {
 
         # The type 'rw' implies all other types. See Kernel::System::Group_GetTypeString()
@@ -3589,6 +3593,7 @@ my @PermissionTests = (
         },
     },
 
+    # Permission test No. 4
     {
 
         # ro in itsm-change-manager
@@ -3615,6 +3620,7 @@ my @PermissionTests = (
         },
     },
 
+    # Permission test No. 5
     {
 
         # rw in itsm-change-manager
@@ -3641,6 +3647,7 @@ my @PermissionTests = (
         },
     },
 
+    # Permission test No. 6
     {
 
         # ro in itsm-change-builder, Agent is the builder
@@ -3672,6 +3679,7 @@ my @PermissionTests = (
         },
     },
 
+    # Permission test No. 7
     {
 
         # rw in itsm-change-builder, Agent is the builder
@@ -3703,6 +3711,7 @@ my @PermissionTests = (
         },
     },
 
+    # Permission test No. 8
     {
 
         # ro in itsm-change-builder, Agent isn't the builder
@@ -3739,6 +3748,7 @@ my @PermissionTests = (
         },
     },
 
+    # Permission test No. 9
     {
 
         # rw in itsm-change-builder, Agent isn't the builder
@@ -3801,7 +3811,8 @@ for my $Test (@PermissionTests) {
 
     # check the result
     if ( $ReferenceData->{Permissions} ) {
-        while ( my ( $UserIndex, $Privs ) = each %{ $ReferenceData->{Permissions} } ) {
+        for my $UserIndex ( sort keys %{ $ReferenceData->{Permissions} } ) {
+            my $Privs = $ReferenceData->{Permissions}->{$UserIndex};
             for my $Type ( keys %{$Privs} ) {
                 $Self->{ChangeObject}->{Debug} = 10;
                 my $Access = $Self->{ChangeObject}->Permission(
@@ -3812,13 +3823,13 @@ for my $Test (@PermissionTests) {
                 if ( $Privs->{$Type} ) {
                     $Self->True(
                         $Access,
-                        "Permission test $PermissionTestCounter: User $UserIndex ($UserIDs[$UserIndex]) has $Type access",
+                        "Permission test $PermissionTestCounter: User $UserIndex, with UserUD $UserIDs[$UserIndex], has $Type access",
                     );
                 }
                 else {
                     $Self->False(
                         $Access,
-                        "Permission test $PermissionTestCounter: User $UserIndex ($UserIDs[$UserIndex]) has no $Type access",
+                        "Permission test $PermissionTestCounter: User $UserIndex, with UserID $UserIDs[$UserIndex], has no $Type access",
                     );
                 }
             }

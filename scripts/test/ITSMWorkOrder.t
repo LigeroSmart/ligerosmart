@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.89 2009-11-12 11:20:56 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.90 2009-11-12 12:09:52 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -3798,7 +3798,8 @@ for my $Test (@PermissionTests) {
 
     # check the result
     if ( $ReferenceData->{Permissions} ) {
-        while ( my ( $UserIndex, $Privs ) = each %{ $ReferenceData->{Permissions} } ) {
+        for my $UserIndex ( sort keys %{ $ReferenceData->{Permissions} } ) {
+            my $Privs = $ReferenceData->{Permissions}->{$UserIndex};
             for my $Type ( keys %{$Privs} ) {
                 $Self->{WorkOrderObject}->{Debug} = 10;
                 my $Access = $Self->{WorkOrderObject}->Permission(
@@ -3809,13 +3810,13 @@ for my $Test (@PermissionTests) {
                 if ( $Privs->{$Type} ) {
                     $Self->True(
                         $Access,
-                        "Permission test $PermissionTestCounter: User $UserIndex ($UserIDs[$UserIndex]) has $Type access",
+                        "Permission test $PermissionTestCounter: User $UserIndex, with UserUD $UserIDs[$UserIndex], has $Type access",
                     );
                 }
                 else {
                     $Self->False(
                         $Access,
-                        "Permission test $PermissionTestCounter: User $UserIndex ($UserIDs[$UserIndex]) has no $Type access",
+                        "Permission test $PermissionTestCounter: User $UserIndex, with UserID $UserIDs[$UserIndex], has no $Type access",
                     );
                 }
             }
