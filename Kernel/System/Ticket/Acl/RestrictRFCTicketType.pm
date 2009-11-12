@@ -1,9 +1,9 @@
 # --
 # Kernel/System/Ticket/Acl/RestrictRFCTicketType.pm - acl module
-# - resctrict the usage of the ticket type 'RfC' to certain groups -
+# - restrict the usage of the ticket type 'RfC' to certain groups -
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: RestrictRFCTicketType.pm,v 1.1 2009-11-12 10:42:46 ub Exp $
+# $Id: RestrictRFCTicketType.pm,v 1.2 2009-11-12 10:54:56 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -64,7 +64,7 @@ sub Run {
         return 1 if $Ticket{Type} eq 'RfC';
     }
 
-    # get user groups, where the user has the appropriate privilege
+    # get user groups, where the user has the rw privilege
     my %Groups = $Self->{GroupObject}->GroupMemberList(
         UserID => $Param{UserID},
         Type   => 'rw',
