@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.13 2009-11-06 12:32:33 bes Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.14 2009-11-12 16:10:53 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -48,7 +48,7 @@ sub Run {
     # check permissions
     my $Access = $Self->{ChangeObject}->Permission(
         Type   => $Self->{Config}->{Permission},
-        UserID => $Self->{UserID}
+        UserID => $Self->{UserID},
     );
 
     # error screen, don't show change add mask
@@ -61,7 +61,7 @@ sub Run {
 
     # store needed parameters in %GetParam to make it reloadable
     my %GetParam;
-    for my $ParamName (qw(ChangeTitle Description Justification)) {
+    for my $ParamName (qw(ChangeTitle Description Justification TicketID)) {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
