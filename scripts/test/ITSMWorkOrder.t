@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.87 2009-11-12 09:20:17 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.88 2009-11-12 09:59:20 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,6 +17,7 @@ use vars qw($Self);
 
 use Data::Dumper;
 use Kernel::System::User;
+use Kernel::System::Group;
 use Kernel::System::GeneralCatalog;
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
@@ -29,6 +30,7 @@ my $TestCount = 1;
 # create common objects
 $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
 $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
+$Self->{GroupObject}          = Kernel::System::Group->new( %{$Self} );
 $Self->{ChangeObject}         = Kernel::System::ITSMChange->new( %{$Self} );
 $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
 $Self->{ValidObject}          = Kernel::System::Valid->new( %{$Self} );
@@ -357,6 +359,28 @@ my @ChangeTests     = (
             },
         },
     },
+
+    # a change for testing the Permission() method
+    {
+        Description => 'Change for testing the Permission() method',
+        SourceData  => {
+            ChangeAdd => {
+                ChangeTitle => 'Change 5 for testing the Permission() method' . $UniqueSignature,
+                UserID      => $UserIDs[0],
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                ChangeTitle => 'Change 5 for testing the Permission() method' . $UniqueSignature,
+            },
+            ChangeCABGet => {
+                CABAgents => [
+                ],
+                CABCustomers => [
+                ],
+            },
+        },
+    },
 );
 
 # ------------------------------------------------------------ #
@@ -410,19 +434,11 @@ for my $Test (@ChangeTests) {
             $TestedChangeID{$ChangeID} = 1;
         }
 
-        if ( $Test->{Fails} ) {
-            $Self->False(
-                $ChangeID,
-                "Test $TestCount: ChangeAdd() - Add change should fail.",
-            );
-        }
-        else {
-            $Self->True(
-                $ChangeID,
-                "Test $TestCount: ChangeAdd() - Add change.",
-            );
-        }
-    }    # end if 'ChangeAdd'
+        $Self->True(
+            $ChangeID,
+            "Test $TestCount: ChangeAdd() - Add change.",
+        );
+    }
 
     # get a change and compare the retrieved data with the reference
     if ( exists $ReferenceData->{ChangeGet} ) {
@@ -493,13 +509,14 @@ continue {
 # ------------------------------------------------------------ #
 # Define the workorder tests
 # ------------------------------------------------------------ #
-my @WorkOrderTests;
-
-my ( $WorkOrderAddTestID, $OrderByTestID, $StringSearchTestID, $TimeSearchTestID )
+my (
+    $WorkOrderAddTestID, $OrderByTestID, $StringSearchTestID,
+    $TimeSearchTestID, $PermissionTestID
+    )
     = sort keys %TestedChangeID;
 
 # tests with only WorkOrderAdd();
-push @WorkOrderTests, (
+my @WorkOrderTests = (
 
     # Tests where the workorder doesn't contain all data (required attributes)
     {
@@ -1397,6 +1414,28 @@ push @WorkOrderTests, (
             },
         },
         SearchTest => [ 15, 17, 19, 21, 22 ],
+    },
+);
+
+# workorders tests for testing the Permission() method
+push @WorkOrderTests, (
+
+    {
+        Description =>
+            'WorkOrderAdd() for testing the Permission() method',
+        SourceData => {
+            WorkOrderAdd => {
+                UserID         => 1,
+                ChangeID       => $PermissionTestID,
+                WorkOrderTitle => 'WorkOrderAdd() for Permission()  - Title - ' . $UniqueSignature,
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                ChangeID       => $PermissionTestID,
+                WorkOrderTitle => 'WorkOrderAdd() for Permission()  - Title - ' . $UniqueSignature,
+            },
+        },
     },
 );
 
@@ -3447,6 +3486,312 @@ for my $WOCTGTest (@WOCTGTests) {
 
     $TestCount++;
     $WOCTGTestCount++;
+}
+
+# ------------------------------------------------------------ #
+# testing the method Permission()
+# ------------------------------------------------------------ #
+
+my ($PermissionTestWorkOrderID) = keys %{ $WorkOrderIDForChangeID{$PermissionTestID} };
+
+# get mapping of the group name to the group id
+my %GroupName2ID = reverse $Self->{GroupObject}->GroupList( Valid => 1 );
+
+my @PermissionTests = (
+    {
+        Description => q{0:builder:c'':b'':m''; 1::c'':b'':m''},
+        SourceData  => {
+        },
+        ReferenceData => {
+            Permissions => {
+                0 => { ro => 0, rw => 0 },
+                1 => { ro => 0, rw => 0 },
+            },
+        },
+    },
+
+    {
+        Description => q{0:builder:c'ro':b'':m''; 1::c'':b'':m''},
+        SourceData  => {
+            GroupMemberAdd => [
+                {
+                    GID        => $GroupName2ID{'itsm-change'},
+                    UID        => $UserIDs[0],
+                    Permission => { ro => 1, rw => 0, },
+                },
+            ],
+        },
+        ReferenceData => {
+            Permissions => {
+                0 => { ro => 1, rw => 0, },
+                1 => { ro => 0, rw => 0, },
+            },
+        },
+    },
+
+    {
+
+        # The type 'rw' implies all other types. See Kernel::System::Group_GetTypeString()
+        # Therefore User1 effectively has 'ro' in 'itsm-change' and
+        # the ChangeAgentCheck Permission module gives 'ro' access.
+        # Note that the ChangeAgentCheck Permission module never gives 'rw' access.
+        Description => q{0:builder:c'rw':b'':m''; 1::c'':b'':m''},
+        SourceData  => {
+            GroupMemberAdd => [
+                {
+                    GID        => $GroupName2ID{'itsm-change'},
+                    UID        => $UserIDs[0],
+                    Permission => { ro => 0, rw => 1, },
+                },
+            ],
+        },
+        ReferenceData => {
+            Permissions => {
+                0 => { ro => 1, rw => 0, },
+                1 => { ro => 0, rw => 0, },
+            },
+        },
+    },
+
+    {
+
+        # ro in itsm-change-manager
+        Description => q{0:builder:c'':b'':m'ro'; 1::c'':b'':m''},
+        SourceData  => {
+            GroupMemberAdd => [
+                {
+                    GID        => $GroupName2ID{'itsm-change'},
+                    UID        => $UserIDs[0],
+                    Permission => { ro => 0, rw => 0, },
+                },
+                {
+                    GID        => $GroupName2ID{'itsm-change-manager'},
+                    UID        => $UserIDs[0],
+                    Permission => { ro => 1, rw => 0, },
+                },
+            ],
+        },
+        ReferenceData => {
+            Permissions => {
+                0 => { ro => 1, rw => 0, },
+                1 => { ro => 0, rw => 0, },
+            },
+        },
+    },
+
+    {
+
+        # rw in itsm-change-manager
+        Description => q{0:builder:c'':b'':m'rw'; 1::c'':b'':m''},
+        SourceData  => {
+            GroupMemberAdd => [
+                {
+                    GID        => $GroupName2ID{'itsm-change'},
+                    UID        => $UserIDs[0],
+                    Permission => { ro => 0, rw => 0, },
+                },
+                {
+                    GID        => $GroupName2ID{'itsm-change-manager'},
+                    UID        => $UserIDs[0],
+                    Permission => { ro => 1, rw => 1, },
+                },
+            ],
+        },
+        ReferenceData => {
+            Permissions => {
+                0 => { ro => 1, rw => 1, },
+                1 => { ro => 0, rw => 0, },
+            },
+        },
+    },
+
+    {
+
+        # ro in itsm-change-builder, Agent is the builder
+        Description => q{0:builder:c'':b'ro':m''; 1::c'':b'':m''},
+        SourceData  => {
+            GroupMemberAdd => [
+                {
+                    GID        => $GroupName2ID{'itsm-change'},
+                    UID        => $UserIDs[0],
+                    Permission => { ro => 0, rw => 0, },
+                },
+                {
+                    GID        => $GroupName2ID{'itsm-change-manager'},
+                    UID        => $UserIDs[0],
+                    Permission => { ro => 0, rw => 0, },
+                },
+                {
+                    GID        => $GroupName2ID{'itsm-change-builder'},
+                    UID        => $UserIDs[0],
+                    Permission => { ro => 1, rw => 0, },
+                },
+            ],
+        },
+        ReferenceData => {
+            Permissions => {
+                0 => { ro => 1, rw => 0, },
+                1 => { ro => 0, rw => 0, },
+            },
+        },
+    },
+
+    {
+
+        # rw in itsm-change-builder, Agent is the builder
+        Description => q{0:builder:c'':b'rw':m''; 1::c'':b'':m''},
+        SourceData  => {
+            GroupMemberAdd => [
+                {
+                    GID        => $GroupName2ID{'itsm-change'},
+                    UID        => $UserIDs[0],
+                    Permission => { ro => 0, rw => 0, },
+                },
+                {
+                    GID        => $GroupName2ID{'itsm-change-manager'},
+                    UID        => $UserIDs[0],
+                    Permission => { ro => 0, rw => 0, },
+                },
+                {
+                    GID        => $GroupName2ID{'itsm-change-builder'},
+                    UID        => $UserIDs[0],
+                    Permission => { ro => 0, rw => 1, },
+                },
+            ],
+        },
+        ReferenceData => {
+            Permissions => {
+                0 => { ro => 1, rw => 1, },
+                1 => { ro => 0, rw => 0, },
+            },
+        },
+    },
+
+    {
+
+        # ro in itsm-change-builder, Agent isn't the builder
+        Description => q{0:builder:c'':b'':m''; 1::c'':b'ro':m''},
+        SourceData  => {
+            GroupMemberAdd => [
+                {
+                    GID        => $GroupName2ID{'itsm-change'},
+                    UID        => $UserIDs[0],
+                    Permission => { ro => 0, rw => 0, },
+                },
+                {
+                    GID        => $GroupName2ID{'itsm-change-manager'},
+                    UID        => $UserIDs[0],
+                    Permission => { ro => 0, rw => 0, },
+                },
+                {
+                    GID        => $GroupName2ID{'itsm-change-builder'},
+                    UID        => $UserIDs[0],
+                    Permission => { ro => 0, rw => 0, },
+                },
+                {
+                    GID        => $GroupName2ID{'itsm-change-builder'},
+                    UID        => $UserIDs[1],
+                    Permission => { ro => 1, rw => 0, },
+                },
+            ],
+        },
+        ReferenceData => {
+            Permissions => {
+                0 => { ro => 0, rw => 0, },
+                1 => { ro => 0, rw => 0, },
+            },
+        },
+    },
+
+    {
+
+        # rw in itsm-change-builder, Agent isn't the builder
+        Description => q{0:builder:c'':b'':m''; 1::c'':b'rw':m''},
+        SourceData  => {
+            GroupMemberAdd => [
+                {
+                    GID        => $GroupName2ID{'itsm-change'},
+                    UID        => $UserIDs[0],
+                    Permission => { ro => 0, rw => 0, },
+                },
+                {
+                    GID        => $GroupName2ID{'itsm-change-manager'},
+                    UID        => $UserIDs[0],
+                    Permission => { ro => 0, rw => 0, },
+                },
+                {
+                    GID        => $GroupName2ID{'itsm-change-builder'},
+                    UID        => $UserIDs[0],
+                    Permission => { ro => 0, rw => 0, },
+                },
+                {
+                    GID        => $GroupName2ID{'itsm-change-builder'},
+                    UID        => $UserIDs[1],
+                    Permission => { ro => 0, rw => 0, },
+                },
+            ],
+        },
+        ReferenceData => {
+            Permissions => {
+                0 => { ro => 0, rw => 0, },
+                1 => { ro => 0, rw => 0, },
+            },
+        },
+    },
+
+);
+
+my $PermissionTestCounter = 1;
+for my $Test (@PermissionTests) {
+    my $SourceData    = $Test->{SourceData};
+    my $ReferenceData = $Test->{ReferenceData};
+
+    $Self->True(
+        1,
+        "Test $TestCount: $Test->{Description} (Permission Test case: $PermissionTestCounter)",
+    );
+
+    # execute the source modifications
+    $SourceData->{GroupMemberAdd} ||= [];
+    for my $Params ( @{ $SourceData->{GroupMemberAdd} } ) {
+
+        # modify the group membership
+        my $Success = $Self->{GroupObject}->GroupMemberAdd(
+            %{$Params},
+            UserID => 1,
+        );
+        $Self->True( $Success, "Permission test $PermissionTestCounter: GroupMemberAdd()", );
+    }
+
+    # check the result
+    if ( $ReferenceData->{Permissions} ) {
+        while ( my ( $UserIndex, $Privs ) = each %{ $ReferenceData->{Permissions} } ) {
+            for my $Type ( keys %{$Privs} ) {
+                $Self->{ChangeObject}->{Debug} = 10;
+                my $Access = $Self->{ChangeObject}->Permission(
+                    Type     => $Type,
+                    ChangeID => $PermissionTestID,
+                    UserID   => $UserIDs[$UserIndex],
+                );
+                if ( $Privs->{$Type} ) {
+                    $Self->True(
+                        $Access,
+                        "Permission test $PermissionTestCounter: User $UserIndex ($UserIDs[$UserIndex]) has $Type access",
+                    );
+                }
+                else {
+                    $Self->False(
+                        $Access,
+                        "Permission test $PermissionTestCounter: User $UserIndex ($UserIDs[$UserIndex]) has no $Type access",
+                    );
+                }
+            }
+        }
+    }
+}
+continue {
+    $PermissionTestCounter++;
+    $TestCount++;
 }
 
 # ------------------------------------------------------------ #
