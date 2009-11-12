@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.90 2009-11-12 12:09:52 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.91 2009-11-12 13:28:21 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -3503,7 +3503,7 @@ my @PermissionTests = (
 
     # Permission test No. 1
     {
-        Description => q{0:builder:c'':b'':m''; 1::c'':b'':m''},
+        Description => 'Initially no priv in any group',
         SourceData  => {
         },
         ReferenceData => {
@@ -3516,7 +3516,7 @@ my @PermissionTests = (
 
     # Permission test No. 2
     {
-        Description => q{0:builder:c'ro':b'':m''; 1::c'':b'':m''},
+        Description => 'ro in itsm-change',
         SourceData  => {
             GroupMemberAdd => [
                 {
@@ -3541,7 +3541,7 @@ my @PermissionTests = (
         # Therefore User1 effectively has 'ro' in 'itsm-change' and
         # the ChangeAgentCheck Permission module gives 'ro' access.
         # Note that WorkOrderAgentCheck gives 'rw' access only to the workorder agent.
-        Description => q{0:builder:c'rw':b'':m''; 1::c'rw':b'':m''},
+        Description => 'rw in itsm-change grants ro, grants rw to workorder agent',
         SourceData  => {
             GroupMemberAdd => [
                 {
@@ -3568,7 +3568,7 @@ my @PermissionTests = (
     {
 
         # reset User1 after the previous test
-        Description => q{0:builder:c'rw':b'':m''; 1::c'':b'':m''},
+        Description => 'revoke privs for user 1',
         SourceData  => {
             GroupMemberAdd => [
                 {
@@ -3582,9 +3582,7 @@ my @PermissionTests = (
 
     # Permission test No. 5
     {
-
-        # ro in itsm-change-manager
-        Description => q{0:builder:c'':b'':m'ro'; 1::c'':b'':m''},
+        Description => 'ro in itsm-change-manager',
         SourceData  => {
             GroupMemberAdd => [
                 {
@@ -3610,8 +3608,7 @@ my @PermissionTests = (
     # Permission test No. 6
     {
 
-        # rw in itsm-change-manager
-        Description => q{0:builder:c'':b'':m'rw'; 1::c'':b'':m''},
+        Description => 'rw in itsm-change-manager',
         SourceData  => {
             GroupMemberAdd => [
                 {
@@ -3636,9 +3633,7 @@ my @PermissionTests = (
 
     # Permission test No. 7
     {
-
-        # ro in itsm-change-builder, Agent is the builder
-        Description => q{0:builder:c'':b'ro':m''; 1::c'':b'':m''},
+        Description => 'ro in itsm-change-builder, User 0 is the builder',
         SourceData  => {
             GroupMemberAdd => [
                 {
@@ -3668,9 +3663,7 @@ my @PermissionTests = (
 
     # Permission test No. 8
     {
-
-        # rw in itsm-change-builder, Agent is the builder
-        Description => q{0:builder:c'':b'rw':m''; 1::c'':b'':m''},
+        Description => 'rw in itsm-change-builder, Agent is the builder',
         SourceData  => {
             GroupMemberAdd => [
                 {
@@ -3700,9 +3693,7 @@ my @PermissionTests = (
 
     # Permission test No. 9
     {
-
-        # ro in itsm-change-builder, Agent isn't the builder
-        Description => q{0:builder:c'':b'':m''; 1::c'':b'ro':m''},
+        Description => q{ro in itsm-change-builder, user 1 isn't the builder},
         SourceData  => {
             GroupMemberAdd => [
                 {
@@ -3737,9 +3728,7 @@ my @PermissionTests = (
 
     # Permission test No. 10
     {
-
-        # rw in itsm-change-builder, Agent isn't the builder
-        Description => q{0:builder:c'':b'':m''; 1::c'':b'rw':m''},
+        Description => q{rw in itsm-change-builder, user 1 isn't the builder},
         SourceData  => {
             GroupMemberAdd => [
                 {
