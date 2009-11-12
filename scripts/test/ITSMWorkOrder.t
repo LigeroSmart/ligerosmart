@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.86 2009-11-12 09:11:53 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.87 2009-11-12 09:20:17 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -2489,7 +2489,7 @@ for my $OrderByColumn (qw(PlannedStartTime PlannedEndTime ActualStartTime Actual
 # ------------------------------------------------------------ #
 # advanced search by tests for times
 # ------------------------------------------------------------ #
-my @TSTChangeIDs;
+
 my @TimeSearchTests = (
     {
         Description => 'First workorder in the first century.',
