@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.57 2009-11-11 14:28:53 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.58 2009-11-12 09:00:56 bes Exp $</CVS>
     <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
         <Description Lang="en">Logfile for the itsm change counter.</Description>
         <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
@@ -335,7 +335,7 @@
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="Ticket::Frontend::MenuModule###330-ITSMChangeAdd" Required="0" Valid="1">
+    <ConfigItem Name="Ticket::Frontend::MenuModule###317-ITSMChangeAdd" Required="0" Valid="1">
         <Description Lang="en">Module to show a link to add a change.</Description>
         <Description Lang="de">Über dieses Modul wird ein Link im Menü der Ticketansicht angezeigt, mit dem ein Change erzeugt werden kann.</Description>
         <Group>Ticket</Group>
@@ -346,8 +346,13 @@
                 <Item Key="Name">Add Change</Item>
                 <Item Key="Description">Create a Change from this ticket!</Item>
                 <Item Key="Action">AgentITSMChangeAdd</Item>
-                <!-- TODO: the link needs to be specified -->
+                <!-- TODO: the CGI-params of Link need to be specified -->
                 <Item Key="Link">Action=AgentITSMChangeAdd&amp;SourceObject=Ticket&amp;SourceKey=$QData{"TicketID"}</Item>
+                <Item Key="TicketTypes">
+                    <Array>
+                        <Item>RfC</Item>
+                    </Array>
+                </Item>
             </Hash>
         </Setting>
     </ConfigItem>

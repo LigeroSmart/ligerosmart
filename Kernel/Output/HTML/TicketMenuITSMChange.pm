@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/TicketMenuITSMChange.pm - ITSMChange specific module for the ticket menu
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: TicketMenuITSMChange.pm,v 1.1 2009-11-11 14:28:53 bes Exp $
+# $Id: TicketMenuITSMChange.pm,v 1.2 2009-11-12 09:00:56 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 use Kernel::System::ITSMChange;
 
@@ -52,21 +52,35 @@ sub Run {
         return $Param{Counter} if !$Module;
     }
 
-    # TODO: check TicketType
+    # The link is shown only for the configured ticket types,
+    # so the Ticket needs to have a type.
+    return $Param{Counter} if !$Param{Ticket}->{Type};
+
+    # get and check the list of relevant ticket types
+    my $TicketTypes = $Param{Config}->{TicketTypes};
+
+    return $Param{Counter} if !$TicketTypes;
+    return $Param{Counter} if ref $TicketTypes ne 'ARRAY';
+
+    # check whether the ticket's type is relevant
+    my %IsRelevant = map { $_ => 1 } @{$TicketTypes};
+
+    return $Param{Counter} if !$IsRelevant{ $Param{Ticket}->{Type} };
 
     # check permission
-    my $Config = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Param{Config}->{Action}");
-    if ($Config) {
-        if ( $Config->{Permission} ) {
-            my $Access = $Self->{ChangeObject}->Permission(
-                Type   => $Config->{Permission},
-                UserID => $Self->{UserID},
-                LogNo  => 1,
-            );
-            return $Param{Counter} if !$Access;
-        }
+    my $FrontendConfig
+        = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Param{Config}->{Action}");
+    if ( $FrontendConfig && $FrontendConfig->{Permission} ) {
+        my $Access = $Self->{ChangeObject}->Permission(
+            Type   => $FrontendConfig->{Permission},
+            UserID => $Self->{UserID},
+            LogNo  => 1,
+        );
+
+        return $Param{Counter} if !$Access;
     }
 
+    # display the menu item
     $Self->{LayoutObject}->Block(
         Name => 'Menu',
         Data => {},
