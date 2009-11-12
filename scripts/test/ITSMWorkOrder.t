@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.88 2009-11-12 09:59:20 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.89 2009-11-12 11:20:56 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1428,12 +1428,14 @@ push @WorkOrderTests, (
                 UserID         => 1,
                 ChangeID       => $PermissionTestID,
                 WorkOrderTitle => 'WorkOrderAdd() for Permission()  - Title - ' . $UniqueSignature,
+                WorkOrderAgentID => $UserIDs[0],
             },
         },
         ReferenceData => {
             WorkOrderGet => {
                 ChangeID       => $PermissionTestID,
                 WorkOrderTitle => 'WorkOrderAdd() for Permission()  - Title - ' . $UniqueSignature,
+                WorkOrderAgentID => $UserIDs[0],
             },
         },
     },
@@ -3498,6 +3500,8 @@ my ($PermissionTestWorkOrderID) = keys %{ $WorkOrderIDForChangeID{$PermissionTes
 my %GroupName2ID = reverse $Self->{GroupObject}->GroupList( Valid => 1 );
 
 my @PermissionTests = (
+
+    # Permission test No. 1
     {
         Description => q{0:builder:c'':b'':m''; 1::c'':b'':m''},
         SourceData  => {
@@ -3510,6 +3514,7 @@ my @PermissionTests = (
         },
     },
 
+    # Permission test No. 2
     {
         Description => q{0:builder:c'ro':b'':m''; 1::c'':b'':m''},
         SourceData  => {
@@ -3529,13 +3534,14 @@ my @PermissionTests = (
         },
     },
 
+    # Permission test No. 3
     {
 
         # The type 'rw' implies all other types. See Kernel::System::Group_GetTypeString()
         # Therefore User1 effectively has 'ro' in 'itsm-change' and
         # the ChangeAgentCheck Permission module gives 'ro' access.
-        # Note that the ChangeAgentCheck Permission module never gives 'rw' access.
-        Description => q{0:builder:c'rw':b'':m''; 1::c'':b'':m''},
+        # Note that WorkOrderAgentCheck gives 'rw' access only to the workorder agent.
+        Description => q{0:builder:c'rw':b'':m''; 1::c'rw':b'':m''},
         SourceData  => {
             GroupMemberAdd => [
                 {
@@ -3543,16 +3549,38 @@ my @PermissionTests = (
                     UID        => $UserIDs[0],
                     Permission => { ro => 0, rw => 1, },
                 },
+                {
+                    GID        => $GroupName2ID{'itsm-change'},
+                    UID        => $UserIDs[1],
+                    Permission => { ro => 0, rw => 1, },
+                },
             ],
         },
         ReferenceData => {
             Permissions => {
-                0 => { ro => 1, rw => 0, },
-                1 => { ro => 0, rw => 0, },
+                0 => { ro => 1, rw => 1, },
+                1 => { ro => 1, rw => 0, },
             },
         },
     },
 
+    # Permission test No. 4
+    {
+
+        # reset User1 after the previous test
+        Description => q{0:builder:c'rw':b'':m''; 1::c'':b'':m''},
+        SourceData  => {
+            GroupMemberAdd => [
+                {
+                    GID        => $GroupName2ID{'itsm-change'},
+                    UID        => $UserIDs[1],
+                    Permission => { ro => 0, rw => 0, },
+                },
+            ],
+        },
+    },
+
+    # Permission test No. 5
     {
 
         # ro in itsm-change-manager
@@ -3579,6 +3607,7 @@ my @PermissionTests = (
         },
     },
 
+    # Permission test No. 6
     {
 
         # rw in itsm-change-manager
@@ -3605,6 +3634,7 @@ my @PermissionTests = (
         },
     },
 
+    # Permission test No. 7
     {
 
         # ro in itsm-change-builder, Agent is the builder
@@ -3636,6 +3666,7 @@ my @PermissionTests = (
         },
     },
 
+    # Permission test No. 8
     {
 
         # rw in itsm-change-builder, Agent is the builder
@@ -3667,6 +3698,7 @@ my @PermissionTests = (
         },
     },
 
+    # Permission test No. 9
     {
 
         # ro in itsm-change-builder, Agent isn't the builder
@@ -3703,6 +3735,7 @@ my @PermissionTests = (
         },
     },
 
+    # Permission test No. 10
     {
 
         # rw in itsm-change-builder, Agent isn't the builder
@@ -3767,11 +3800,11 @@ for my $Test (@PermissionTests) {
     if ( $ReferenceData->{Permissions} ) {
         while ( my ( $UserIndex, $Privs ) = each %{ $ReferenceData->{Permissions} } ) {
             for my $Type ( keys %{$Privs} ) {
-                $Self->{ChangeObject}->{Debug} = 10;
-                my $Access = $Self->{ChangeObject}->Permission(
-                    Type     => $Type,
-                    ChangeID => $PermissionTestID,
-                    UserID   => $UserIDs[$UserIndex],
+                $Self->{WorkOrderObject}->{Debug} = 10;
+                my $Access = $Self->{WorkOrderObject}->Permission(
+                    Type        => $Type,
+                    WorkOrderID => $PermissionTestWorkOrderID,
+                    UserID      => $UserIDs[$UserIndex],
                 );
                 if ( $Privs->{$Type} ) {
                     $Self->True(
