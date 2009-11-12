@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.140 2009-11-11 13:53:46 bes Exp $
+# $Id: ITSMChange.pm,v 1.141 2009-11-12 10:14:12 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.140 $) [1];
+$VERSION = qw($Revision: 1.141 $) [1];
 
 =head1 NAME
 
@@ -1736,10 +1736,10 @@ sub Permission {
             if ( $AccessOk && $Modules{$Module}->{Granted} ) {
                 if ( $Self->{Debug} > 0 ) {
                     $Self->{LogObject}->Log(
-                        Priority => 'notice',
-                        Message  => "Granted access '$Param{Type}' true for "
-                            . "(UserID: $Param{UserID} '$Param{Type}' on "
-                            . "ChangeID: $Param{ChangeID})!"
+                        Priority => 'debug',
+                        Message  => "Granted '$Param{Type}' access for "
+                            . "UserID: $Param{UserID} on "
+                            . "ChangeID '$Param{ChangeID}' "
                             . "through $Modules{$Module}->{Module} (no more checks)!",
                     );
                 }
@@ -1753,10 +1753,10 @@ sub Permission {
                 if ( !$Param{LogNo} ) {
                     $Self->{LogObject}->Log(
                         Priority => 'notice',
-                        Message  => "Permission denied because module "
-                            . "($Modules{$Module}->{Module}) is required "
-                            . "(UserID: $Param{UserID} '$Param{Type}' on "
-                            . "ChangeID: $Param{ChangeID})!",
+                        Message  => "Denied '$Param{Type}' access for "
+                            . "UserID: $Param{UserID} on "
+                            . "ChangeID '$Param{ChangeID}' "
+                            . "because $Modules{$Module}->{Module} is required!",
                     );
                 }
 
@@ -2192,6 +2192,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.140 $ $Date: 2009-11-11 13:53:46 $
+$Revision: 1.141 $ $Date: 2009-11-12 10:14:12 $
 
 =cut

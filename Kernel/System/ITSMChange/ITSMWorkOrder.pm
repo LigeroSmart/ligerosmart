@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.10 2009-11-04 15:19:31 bes Exp $
+# $Id: ITSMWorkOrder.pm,v 1.11 2009-11-12 10:14:12 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::Group;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 =head1 NAME
 
@@ -1623,7 +1623,8 @@ sub Permission {
                 if ( $Self->{Debug} > 0 ) {
                     $Self->{LogObject}->Log(
                         Priority => 'debug',
-                        Message  => "Granted access '$Param{Type}' true for "
+                        Message  => "Granted '$Param{Type}' access for "
+                            . "UserID: $Param{UserID} on "
                             . "WorkOrderID '$Param{WorkOrderID}' "
                             . "through $Modules{$Module}->{Module} (no more checks)!",
                     );
@@ -1638,10 +1639,10 @@ sub Permission {
                 if ( !$Param{LogNo} ) {
                     $Self->{LogObject}->Log(
                         Priority => 'notice',
-                        Message  => "Permission denied because module "
-                            . "($Modules{$Module}->{Module}) is required "
-                            . "(UserID: $Param{UserID} '$Param{Type}' on "
-                            . "WorkOrderID: $Param{WorkOrderID})!",
+                        Message  => "Denied '$Param{Type}' access for "
+                            . "UserID: $Param{UserID} on "
+                            . "WorkOrderID '$Param{WorkOrderID}' "
+                            . "because $Modules{$Module}->{Module} is required!",
                     );
                 }
 
@@ -2035,6 +2036,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.10 $ $Date: 2009-11-04 15:19:31 $
+$Revision: 1.11 $ $Date: 2009-11-12 10:14:12 $
 
 =cut
