@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.120 2009-11-12 14:34:43 bes Exp $
+# $Id: ITSMChange.t,v 1.121 2009-11-13 19:58:27 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,6 +22,7 @@ use Kernel::System::CustomerUser;
 use Kernel::System::GeneralCatalog;
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
+use Kernel::System::ITSMChange::History;
 
 # ------------------------------------------------------------ #
 # make preparations
@@ -36,6 +37,7 @@ $Self->{CustomerUserObject}   = Kernel::System::CustomerUser->new( %{$Self} );
 $Self->{ChangeObject}         = Kernel::System::ITSMChange->new( %{$Self} );
 $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
 $Self->{ValidObject}          = Kernel::System::Valid->new( %{$Self} );
+$Self->{ChangeHistoryObject}  = Kernel::System::ITSMChange::History->new( %{$Self} );
 
 # test if change object was created successfully
 $Self->True(
@@ -279,6 +281,9 @@ my @ChangeTests = (
                 CreateBy        => 1,
                 ChangeBy        => 1,
             },
+            HistoryGet => {
+                ChangeAdd => '',
+            },
         },
         SearchTest => [ 25, 26 ],
         Label => 'ChangeLookupTest',    # this change will be used for testing ChangeLookup().
@@ -309,6 +314,33 @@ my @ChangeTests = (
         SearchTest => [ 4, 25, 26 ],
     },
 
+    # Change contains HTML description and justification
+    {
+        Description => 'Test only needed params (UserID != 1) for ChangeAdd.',
+        SourceData  => {
+            ChangeAdd => {
+                UserID        => $UserIDs[0],
+                Description   => '<b>This <u>is</u> bold</b> - ' . $UniqueSignature,
+                Justification => '<b>This <u>is</u> bold</b> - ' . $UniqueSignature,
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                ChangeTitle     => q{},
+                Description     => '<b>This <u>is</u> bold</b> - ' . $UniqueSignature,
+                Justification   => '<b>This <u>is</u> bold</b> - ' . $UniqueSignature,
+                ChangeManagerID => undef,
+                ChangeBuilderID => $UserIDs[0],
+                WorkOrderIDs    => [],
+                CABAgents       => [],
+                CABCustomers    => [],
+                CreateBy        => $UserIDs[0],
+                ChangeBy        => $UserIDs[0],
+            },
+        },
+        SearchTest => [ 4, 25, 26, 48, 49, 50 ],
+    },
+
     # Change with named ChangeState
     {
         Description => 'Test for Statenames - ' . $UniqueSignature,
@@ -333,6 +365,20 @@ my @ChangeTests = (
                 CABCustomers    => [],
                 CreateBy        => $UserIDs[0],
                 ChangeBy        => $UserIDs[0],
+            },
+            HistoryGet => {
+                ChangeAdd    => '',
+                ChangeUpdate => {
+                    Description => [
+                        [ '', 'ChangeStates - ' . $UniqueSignature ],
+                    ],
+                    ChangeBuilderID => [
+                        [ undef, $UserIDs[0] ],
+                    ],
+                    ChangeStateID => [
+                        [ undef, $ChangeStateName2ID{requested} ],
+                    ],
+                },
             },
         },
         SearchTest => [ 4, 25, 26, 33, 37 ],
@@ -1118,6 +1164,17 @@ my @ChangeTests = (
                     $CustomerUserIDs[1],
                 ],
             },
+            HistoryGet => {
+                ChangeAdd       => '',
+                ChangeCABUpdate => {
+                    ChangeCABCustomers => [
+                        [ undef, join '%%', $CustomerUserIDs[0], $CustomerUserIDs[1] ]
+                    ],
+                    ChangeCABAgents => [
+                        [ undef, join '%%', $UserIDs[0], $UserIDs[1] ]
+                    ],
+                },
+            },
         },
         SearchTest => [ 6, 8, 9, 10, 22, 28, 29, 33, 34, 35 ],
     },
@@ -1694,6 +1751,55 @@ for my $Test (@ChangeTests) {
             );
         }
     }    # end if 'ChangeCABGet'
+
+    # test history entries
+    if ( $ReferenceData->{HistoryGet} ) {
+
+        # get subtree
+        my $CheckData = $ReferenceData->{HistoryGet};
+
+        # get all history entries
+        my $HistoryEntries = $Self->{ChangeHistoryObject}->ChangeHistoryGet(
+            ChangeID => $ChangeID,
+            UserID   => 1,
+        );
+
+        my %HistoryType2CheckIndex;
+
+        # check history entries
+        HISTORYENTRY:
+        for my $HistoryEntry ( @{$HistoryEntries} ) {
+            my $HistoryType = $HistoryEntry->{HistoryType};
+            my $DataForType = $CheckData->{$HistoryType};
+
+            if ( $HistoryType eq 'ChangeAdd' ) {
+                $Self->Is(
+                    $HistoryEntry->{ContentNew},
+                    $ChangeID,
+                    "Test $TestCount: |- Check ChangeAdd history entry ",
+                );
+            }
+            elsif ( $HistoryType eq 'ChangeUpdate' || $HistoryType eq 'ChangeCABUpdate' ) {
+
+                my $Index     = $HistoryType2CheckIndex{$HistoryType}++;
+                my $Fieldname = $HistoryEntry->{Fieldname};
+
+                next HISTORYENTRY if !$DataForType->{$Fieldname};
+
+                $Self->Is(
+                    $HistoryEntry->{ContentOld},
+                    $DataForType->{$Fieldname}->[$Index]->[0],
+                    "Test $TestCount: |- Check ChangeUpdate -> ContentOld ",
+                );
+
+                $Self->Is(
+                    $HistoryEntry->{ContentNew},
+                    $DataForType->{$Fieldname}->[$Index]->[1],
+                    "Test $TestCount: |- Check ChangeUpdate -> ContentNew for $Fieldname",
+                );
+            }
+        }
+    }
 }
 
 # get executed each loop, even on next
@@ -2323,6 +2429,46 @@ my @ChangeSearchTests = (
         Description => 'Search for normalized title, leading and trailing whitespace',
         SearchData  => {
             ChangeTitle    => "Title with leading and trailing whitespace - " . $UniqueSignature,
+            UsingWildcards => 0,
+        },
+        ResultData => {
+            TestExistence => 1,
+            TestCount     => 1,
+        },
+    },
+
+    # Nr 48 - Search for plain description
+    {
+        Description => 'Search for plain description',
+        SearchData  => {
+            Description    => 'This is bold - ' . $UniqueSignature,
+            UsingWildcards => 0,
+        },
+        ResultData => {
+            TestExistence => 1,
+            TestCount     => 1,
+        },
+    },
+
+    # Nr 49 - Search for plain justification
+    {
+        Description => 'Search for plain description',
+        SearchData  => {
+            Justification  => 'This is bold - ' . $UniqueSignature,
+            UsingWildcards => 0,
+        },
+        ResultData => {
+            TestExistence => 1,
+            TestCount     => 1,
+        },
+    },
+
+    # Nr 50 - Search for plain justification
+    {
+        Description => 'Search for plain description',
+        SearchData  => {
+            Description    => 'This is bold - ' . $UniqueSignature,
+            Justification  => 'This is bold - ' . $UniqueSignature,
             UsingWildcards => 0,
         },
         ResultData => {
