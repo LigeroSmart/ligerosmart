@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.17 2009-11-13 14:59:30 ub Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.18 2009-11-13 16:53:54 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -105,7 +105,7 @@ sub Run {
         {
 
             # set error message
-            my $Message = "Missing config entry 'ITSMChange::AddChangeLinkTicketTypes'";
+            my $Message = "Missing sysconfig option 'ITSMChange::AddChangeLinkTicketTypes'!";
 
             # log error
             $Self->{LogObject}->Log(
