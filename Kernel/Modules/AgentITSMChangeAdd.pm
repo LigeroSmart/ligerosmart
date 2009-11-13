@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.15 2009-11-12 17:08:19 bes Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.16 2009-11-13 14:12:17 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,9 +15,10 @@ use strict;
 use warnings;
 
 use Kernel::System::ITSMChange;
+use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -35,6 +36,7 @@ sub new {
 
     # create needed objects
     $Self->{ChangeObject} = Kernel::System::ITSMChange->new(%Param);
+    $Self->{LinkObject}   = Kernel::System::LinkObject->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
@@ -71,61 +73,81 @@ sub Run {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
-    # The TicketID can be validated even without the Subaction 'Save',
+    # the TicketID can be validated even without the Subaction 'Save',
     # as it is passed as GET-param or in a hidden field.
     if ( $GetParam{TicketID} ) {
+
+        # get ticket data
         my %Ticket = $Self->{TicketObject}->TicketGet(
             TicketID => $GetParam{TicketID},
         );
-        $Self->{LayoutObject}->Block(
-            Name => 'Ticket',
-            Data => {%Ticket},
-        );
 
-        my $TicketIsInvalid;
-        TICKETISINVALID:
-        {
-            if ( $GetParam{TicketID} !~ m{ \A \d+ \z }xms ) {
-                $TicketIsInvalid = 'TicketID must be an integer';
-                last TICKETISINVALID;
-            }
+        # check if ticket exists
+        if ( !%Ticket ) {
 
-            if ( !%Ticket ) {
-                $TicketIsInvalid = 'No ticket found';
-                last TICKETISINVALID;
-            }
-
-            # get and check the list of relevant ticket types
-            my $AddChangeLinkTicketTypes
-                = $Self->{ConfigObject}->Get('ITSMChange::AddChangeLinkTicketTypes');
-
-            if ( !$AddChangeLinkTicketTypes || ref $AddChangeLinkTicketTypes ne 'ARRAY' ) {
-                $TicketIsInvalid = q{Missing config entry 'ITSMChange::AddChangeLinkTicketTypes'};
-                last TICKETISINVALID;
-            }
-
-            # check whether the ticket's type is relevant
-            my %IsRelevant = map { $_ => 1 } @{$AddChangeLinkTicketTypes};
-
-            if ( !$IsRelevant{ $Ticket{Type} } ) {
-                $TicketIsInvalid = 'Invalid ticket type';
-                last TICKETISINVALID;
-            }
+            # show error message
+            return $Self->{LayoutObject}->ErrorScreen(
+                Message => "Ticket with TicketID $GetParam{TicketID} does not exist!",
+                Comment => 'Please contact the admin.',
+            );
         }
 
-        if ($TicketIsInvalid) {
-            $Self->{LayoutObject}->Block(
-                Name => 'InvalidTicketID',
-                Data => {
-                    TicketID => $GetParam{TicketID},
-                    Reason   => $TicketIsInvalid,
-                },
+        # get list of relevant ticket types
+        my $AddChangeLinkTicketTypes
+            = $Self->{ConfigObject}->Get('ITSMChange::AddChangeLinkTicketTypes');
+
+        # check the list of relevant ticket types
+        if (
+            !$AddChangeLinkTicketTypes
+            || ref $AddChangeLinkTicketTypes ne 'ARRAY'
+            || !@{$AddChangeLinkTicketTypes}
+            )
+        {
+
+            # set error message
+            my $Message = "Missing config entry 'ITSMChange::AddChangeLinkTicketTypes'";
+
+            # log error
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => $Message,
+            );
+
+            # show error message
+            return $Self->{LayoutObject}->ErrorScreen(
+                Message => $Message,
+                Comment => 'Please contact the admin.',
+            );
+        }
+
+        # get relevant ticket types
+        my %IsRelevant = map { $_ => 1 } @{$AddChangeLinkTicketTypes};
+
+        # check whether the ticket's type is relevant
+        if ( !$IsRelevant{ $Ticket{Type} } ) {
+
+            # set error message
+            my $Message
+                = "Invalid ticket type '$Ticket{Type}' for directly linking a ticket with a change."
+                . 'Only the following ticket type(s) are allowed for this operation: '
+                . join ',', @{$AddChangeLinkTicketTypes};
+
+            # log error
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => $Message,
+            );
+
+            # show error message
+            return $Self->{LayoutObject}->ErrorScreen(
+                Message => $Message,
+                Comment => 'Please contact the admin.',
             );
         }
     }
 
-    # Remember the reason why saving was not attempted.
-    # This entries are the names of the dtl validation error blocks.
+    # remember the reason why saving was not attempted.
+    # these entries are the names of the dtl validation error blocks.
     my @ValidationErrors;
 
     # update change
@@ -182,7 +204,43 @@ sub Run {
                 UserID        => $Self->{UserID},
             );
 
+            # change could be added successfully
             if ($ChangeID) {
+
+                # if the change add mask was called from the ticket zoom
+                if ( $GetParam{TicketID} ) {
+
+                    # link ticket with newly created change
+                    my $LinkSuccess = $Self->{LinkObject}->LinkAdd(
+                        SourceObject => 'Ticket',
+                        SourceKey    => $GetParam{TicketID},
+                        TargetObject => 'ITSMChange',
+                        TargetKey    => $ChangeID,
+                        Type         => 'Normal',
+                        State        => 'Valid',
+                        UserID       => $Self->{UserID},
+                    );
+
+                    # link could not be added
+                    if ( !$LinkSuccess ) {
+
+                        # set error message
+                        my $Message = "Change with ChangeID $ChangeID was successfully added, "
+                            . "but a link to Ticket with TicketID $GetParam{TicketID} could not be created!";
+
+                        # log error
+                        $Self->{LogObject}->Log(
+                            Priority => 'error',
+                            Message  => $Message,
+                        );
+
+                        # show error message
+                        return $Self->{LayoutObject}->ErrorScreen(
+                            Message => $Message,
+                            Comment => 'Please contact the admin.',
+                        );
+                    }
+                }
 
                 # redirect to zoom mask
                 return $Self->{LayoutObject}->Redirect(
