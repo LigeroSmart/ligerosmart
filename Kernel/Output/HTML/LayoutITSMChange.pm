@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LayoutITSMChange.pm,v 1.7 2009-11-13 12:57:23 mae Exp $
+# $Id: LayoutITSMChange.pm,v 1.8 2009-11-13 14:18:05 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use POSIX qw(ceil);
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 =item ITSMChangeBuildWorkOrderGraph()
 
@@ -63,7 +63,7 @@ sub ITSMChangeBuildWorkOrderGraph {
     $Self->{WorkOrderObject} = $Param{WorkOrderObject};
 
     # check if work orders are available
-    return if !$Change->{WorkOrderIDs} || scalar @{ $Change->{WorkOrderIDs} } == 0;
+    return if !$Change->{WorkOrderIDs} || !scalar @{ $Change->{WorkOrderIDs} };
 
     $Self->{LayoutObjectGraph} = Kernel::Output::HTML::Layout->new( %{$Self} );
 
@@ -199,7 +199,6 @@ sub _ITSMChangeGetChangeTicks {
     return if $Ticks <= 0;
 
     # get seconds per percent and round down
-    #$Ticks = int( $Ticks / 100 ) + 1;
     $Ticks = ceil( $Ticks / 100 );
 
     return $Ticks;
