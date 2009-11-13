@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/TicketMenuITSMChange.pm - ITSMChange specific module for the ticket menu
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: TicketMenuITSMChange.pm,v 1.3 2009-11-12 16:00:20 bes Exp $
+# $Id: TicketMenuITSMChange.pm,v 1.4 2009-11-13 16:55:41 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 use Kernel::System::ITSMChange;
 
@@ -52,8 +52,8 @@ sub Run {
         return $Param{Counter} if !$Module;
     }
 
-    # The link is shown only for the configured ticket types,
-    # so the Ticket needs to have a type.
+    # the link is shown only for the configured ticket types,
+    # so the ticket needs to have a type.
     return $Param{Counter} if !$Param{Ticket}->{Type};
 
     # get and check the list of relevant ticket types
@@ -62,6 +62,7 @@ sub Run {
 
     return $Param{Counter} if !$AddChangeLinkTicketTypes;
     return $Param{Counter} if ref $AddChangeLinkTicketTypes ne 'ARRAY';
+    return $Param{Counter} if !@{$AddChangeLinkTicketTypes};
 
     # check whether the ticket's type is relevant
     my %IsRelevant = map { $_ => 1 } @{$AddChangeLinkTicketTypes};
