@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.143 2009-11-12 14:34:43 bes Exp $
+# $Id: ITSMChange.pm,v 1.144 2009-11-13 07:43:05 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.143 $) [1];
+$VERSION = qw($Revision: 1.144 $) [1];
 
 =head1 NAME
 
@@ -1966,24 +1966,6 @@ sub _ChangeNumberCreate {
     return;
 }
 
-=item _ChangeTicksGet()
-
-NOTE: Maybe this function better belongs to Kernel/Output/HTML/LayoutITSMChange.pm
-
-short description of _ChangeTicksGet
-
-    my $Result = $ChangeObject->_ChangeTicksGet(
-        ChangeID => 123,
-    );
-
-=cut
-
-sub _ChangeTicksGet {
-    my ( $Self, %Param ) = @_;
-
-    return;
-}
-
 =item _CheckChangeParams()
 
 Checks the params to ChangeAdd() and ChangeUpdate().
@@ -2190,6 +2172,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.143 $ $Date: 2009-11-12 14:34:43 $
+$Revision: 1.144 $ $Date: 2009-11-13 07:43:05 $
 
 =cut
