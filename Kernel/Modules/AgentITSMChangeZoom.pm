@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeZoom.pm - the OTRS::ITSM::ChangeManagement change zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.pm,v 1.25 2009-11-03 17:08:48 bes Exp $
+# $Id: AgentITSMChangeZoom.pm,v 1.26 2009-11-13 07:38:38 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.25 $) [1];
+$VERSION = qw($Revision: 1.26 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -151,21 +151,18 @@ sub Run {
     );
     $Output .= $Self->{LayoutObject}->NavigationBar();
 
-    # build temporary workorder zoom
-    WORKORDERID:
-    for my $WorkOrderID ( @{ $Change->{WorkOrderIDs} } ) {
-        my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
-            WorkOrderID => $WorkOrderID,
-            UserID      => $Self->{UserID},
-        );
+    # build workorder graph
+    my $WorkOrderGraph = $Self->{LayoutObject}->ITSMChangeBuildWorkOrderGraph(
+        Change          => $Change,
+        WorkOrderObject => $Self->{WorkOrderObject},
+    );
 
-        $Self->{LayoutObject}->Block(
-            Name => 'WorkOrderListItem',
-            Data => {
-                %{$WorkOrder},
-            },
-        );
-    }
+    $Self->{LayoutObject}->Block(
+        Name => 'WorkOrderGraph',
+        Data => {
+            WorkOrderGraph => $WorkOrderGraph,
+        },
+    );
 
     # all postfixes needed for information
     my @Postfixes = qw(UserLogin UserFirstname UserLastname);
