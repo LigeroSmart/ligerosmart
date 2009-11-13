@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.13 2009-11-13 10:50:40 reb Exp $
+# $Id: ITSMWorkOrder.pm,v 1.14 2009-11-13 18:54:13 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 =head1 NAME
 
@@ -860,7 +860,7 @@ sub WorkOrderSearch {
             # found an error
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "OrderByDirection contains invalid value '$OrderBy' "
+                Message  => "OrderBy contains invalid value '$OrderBy' "
                     . "or the value is used more than once!",
             );
             return;
@@ -2062,6 +2062,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.13 $ $Date: 2009-11-13 10:50:40 $
+$Revision: 1.14 $ $Date: 2009-11-13 18:54:13 $
 
 =cut
