@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LayoutITSMChange.pm,v 1.3 2009-11-13 08:36:28 mae Exp $
+# $Id: LayoutITSMChange.pm,v 1.4 2009-11-13 08:42:57 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 =item ITSMChangeBuildWorkOrderGraph()
 
@@ -218,7 +218,7 @@ sub _ITSMChangeGetChangeScale {
         },
     );
 
-    for my $Interval ( keys %ScaleName ) {
+    for my $Interval ( sort keys %ScaleName ) {
 
         # translate timestamps in date format
         $ScaleName{$Interval} = $Self->{TimeObject}->SystemTime2TimeStamp(
