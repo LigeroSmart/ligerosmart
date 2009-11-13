@@ -3,7 +3,7 @@
 # - restrict the usage of the ticket type 'RfC' to certain groups -
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: RestrictRFCTicketType.pm,v 1.2 2009-11-12 10:54:56 ub Exp $
+# $Id: RestrictRFCTicketType.pm,v 1.3 2009-11-13 16:56:43 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -49,6 +49,17 @@ sub Run {
     # check if user id is given
     return 1 if !$Param{UserID};
 
+    # get and check the list of relevant ticket types
+    my $AddChangeLinkTicketTypes
+        = $Self->{ConfigObject}->Get('ITSMChange::AddChangeLinkTicketTypes');
+
+    return 1 if !$AddChangeLinkTicketTypes;
+    return 1 if ref $AddChangeLinkTicketTypes ne 'ARRAY';
+    return 1 if !@{$AddChangeLinkTicketTypes};
+
+    # create a lookup hash for the relevant ticket types
+    my %IsRelevant = map { $_ => 1 } @{$AddChangeLinkTicketTypes};
+
     # if ticket id was given
     if ( $Param{TicketID} ) {
 
@@ -60,8 +71,9 @@ sub Run {
         # check if ticket exists
         return 1 if !%Ticket;
 
-        # don't remove type 'RfC' from type list if ticket already has this type
-        return 1 if $Ticket{Type} eq 'RfC';
+        # don't remove relevant types from type list
+        # if the ticket type is already one of these types
+        return 1 if $IsRelevant{ $Ticket{Type} };
     }
 
     # get user groups, where the user has the rw privilege
@@ -87,10 +99,11 @@ sub Run {
     # generate acl
     $Param{Acl}->{RestrictRFCTicketType} = {
 
-        # remove ticket type 'RfC' from type dropdown list
+        # remove ticket types listed in sysconfig option 'ITSMChange::AddChangeLinkTicketTypes'
+        # from type dropdown list in all frontend modules
         PossibleNot => {
             Ticket => {
-                Type => ['RfC'],
+                Type => $AddChangeLinkTicketTypes,
             },
         },
     };
