@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeHistory.pm - the OTRS::ITSM::ChangeManagement change history module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeHistory.pm,v 1.14 2009-11-13 14:50:27 ub Exp $
+# $Id: AgentITSMChangeHistory.pm,v 1.15 2009-11-13 18:17:59 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::History;
 use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -127,16 +127,24 @@ sub Run {
                 $HistoryEntry->{Fieldname},
             );
 
+            # set default values for some keys
+            for my $Fieldname (qw(ContentNew ContentOld)) {
+                if ( !defined $HistoryEntry->{$Fieldname} ) {
+                    $HistoryEntry->{$Fieldname} = '';
+                }
+            }
+
             # trim strings to a max length of $MaxLength
             my $ContentNew = $Self->{HTMLUtilsObject}->ToAscii(
-                String => $HistoryEntry->{ContentNew}
+                String => $HistoryEntry->{ContentNew} || '',
             );
             my $ContentOld = $Self->{HTMLUtilsObject}->ToAscii(
-                String => $HistoryEntry->{ContentOld}
+                String => $HistoryEntry->{ContentOld} || '',
             );
 
+            # show [...] for too long strings
             for my $Content ( $ContentNew, $ContentOld ) {
-                if ( length $Content > $MaxLength ) {
+                if ( $Content && ( length $Content > $MaxLength ) ) {
                     $Content = substr( $Content, 0, $MaxLength ) . '[...]';
                 }
             }
