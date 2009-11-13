@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LayoutITSMChange.pm,v 1.4 2009-11-13 08:42:57 mae Exp $
+# $Id: LayoutITSMChange.pm,v 1.5 2009-11-13 08:52:08 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 =item ITSMChangeBuildWorkOrderGraph()
 
@@ -143,6 +143,9 @@ sub ITSMChangeBuildWorkOrderGraph {
 
         push @WorkOrders, $WorkOrder;
     }
+
+    # sort work order ascending to WorkOrderNumber
+    @WorkOrders = sort { $a->{WorkOrderNumber} <=> $b->{WorkOrderNumber} } @WorkOrders;
 
     # load graph sceleton
     $Self->{LayoutObjectGraph}->Block(
