@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.144 2009-11-13 07:43:05 mae Exp $
+# $Id: ITSMChange.pm,v 1.145 2009-11-13 10:50:39 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,11 +20,12 @@ use Kernel::System::User;
 use Kernel::System::Group;
 use Kernel::System::CustomerUser;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
+use Kernel::System::HTMLUtils;
 
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.144 $) [1];
+$VERSION = qw($Revision: 1.145 $) [1];
 
 =head1 NAME
 
@@ -108,6 +109,7 @@ sub new {
     $Self->{GroupObject}          = Kernel::System::Group->new( %{$Self} );
     $Self->{CustomerUserObject}   = Kernel::System::CustomerUser->new( %{$Self} );
     $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
+    $Self->{HTMLUtilsObject}      = Kernel::System::HTMLUtils->new( %{$Self} );
 
     # init of event handler
     $Self->EventHandlerInit(
@@ -320,15 +322,41 @@ sub ChangeUpdate {
         return if !$Self->ChangeCABUpdate(%Param);
     }
 
+    # get a plain ascii version of description
+    if ( exists $Param{Description} ) {
+        if ( !defined $Param{Description} ) {
+            $Param{DescriptionPlain} = undef;
+        }
+        else {
+            $Param{DescriptionPlain} = $Self->{HTMLUtilsObject}->ToAscii(
+                String => $Param{Description},
+            );
+        }
+    }
+
+    # get a plain ascii version of justification
+    if ( exists $Param{Justification} ) {
+        if ( !defined $Param{Justification} ) {
+            $Param{JustificationPlain} = undef;
+        }
+        else {
+            $Param{JustificationPlain} = $Self->{HTMLUtilsObject}->ToAscii(
+                String => $Param{Justification},
+            );
+        }
+    }
+
     # map update attributes to column names
     my %Attribute = (
-        ChangeTitle     => 'title',
-        Description     => 'description',
-        Justification   => 'justification',
-        ChangeStateID   => 'change_state_id',
-        ChangeManagerID => 'change_manager_id',
-        ChangeBuilderID => 'change_builder_id',
-        RealizeTime     => 'realize_time',
+        ChangeTitle        => 'title',
+        Description        => 'description',
+        Justification      => 'justification',
+        ChangeStateID      => 'change_state_id',
+        ChangeManagerID    => 'change_manager_id',
+        ChangeBuilderID    => 'change_builder_id',
+        RealizeTime        => 'realize_time',
+        DescriptionPlain   => 'description_plain',
+        JustificationPlain => 'justification_plain',
     );
 
     # build SQL to update change
@@ -1126,13 +1154,13 @@ sub ChangeSearch {
         # strings in change_item
         ChangeNumber  => 'c.change_number',
         ChangeTitle   => 'c.title',
-        Description   => 'c.description',
-        Justification => 'c.justification',
+        Description   => 'c.description_plain',
+        Justification => 'c.justification_plain',
 
         # strings in change_workorder
         WorkOrderTitle       => 'wo2.title',
-        WorkOrderInstruction => 'wo2.instruction',
-        WorkOrderReport      => 'wo2.report',
+        WorkOrderInstruction => 'wo2.instruction_plain',
+        WorkOrderReport      => 'wo2.report_plain',
     );
 
     # add string params to sql-where-array
@@ -2172,6 +2200,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.144 $ $Date: 2009-11-13 07:43:05 $
+$Revision: 1.145 $ $Date: 2009-11-13 10:50:39 $
 
 =cut

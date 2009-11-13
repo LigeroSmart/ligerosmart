@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.12 2009-11-12 14:34:43 bes Exp $
+# $Id: ITSMWorkOrder.pm,v 1.13 2009-11-13 10:50:40 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,11 +18,12 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 use Kernel::System::User;
 use Kernel::System::Group;
+use Kernel::System::HTMLUtils;
 
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 =head1 NAME
 
@@ -104,6 +105,7 @@ sub new {
     $Self->{LinkObject}           = Kernel::System::LinkObject->new( %{$Self} );
     $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
     $Self->{GroupObject}          = Kernel::System::Group->new( %{$Self} );
+    $Self->{HTMLUtilsObject}      = Kernel::System::HTMLUtils->new( %{$Self} );
 
     # init of event handler
     $Self->EventHandlerInit(
@@ -456,6 +458,30 @@ sub WorkOrderUpdate {
         UserID      => $Param{UserID},
     );
 
+    # get a plain ascii version of instruction
+    if ( exists $Param{Instruction} ) {
+        if ( !defined $Param{Instruction} ) {
+            $Param{InstructionPlain} = undef;
+        }
+        else {
+            $Param{InstructionPlain} = $Self->{HTMLUtilsObject}->ToAscii(
+                String => $Param{Instruction},
+            );
+        }
+    }
+
+    # get a plain ascii version of report
+    if ( exists $Param{Report} ) {
+        if ( !defined $Param{Report} ) {
+            $Param{ReportPlain} = undef;
+        }
+        else {
+            $Param{ReportPlain} = $Self->{HTMLUtilsObject}->ToAscii(
+                String => $Param{Report},
+            );
+        }
+    }
+
     # map update attributes to column names
     my %Attribute = (
         WorkOrderTitle   => 'title',
@@ -470,6 +496,8 @@ sub WorkOrderUpdate {
         PlannedEndTime   => 'planned_end_time',
         ActualStartTime  => 'actual_start_time',
         ActualEndTime    => 'actual_end_time',
+        InstructionPlain => 'instruction_plain',
+        ReportPlain      => 'report_plain',
     );
 
     # build SQL to update workorder
@@ -920,14 +948,14 @@ sub WorkOrderSearch {
         # in workorder table
         WorkOrderNumber => 'wo.workorder_number',
         WorkOrderTitle  => 'wo.title',
-        Instruction     => 'wo.instruction',
-        Report          => 'wo.report',
+        Instruction     => 'wo.instruction_plain',
+        Report          => 'wo.report_plain',
 
         # in change table
         ChangeNumber        => 'c.change_number',
         ChangeTitle         => 'c.title',
-        ChangeDescription   => 'c.description',
-        ChangeJustification => 'c.justification',
+        ChangeDescription   => 'c.description_plain',
+        ChangeJustification => 'c.justification_plain',
     );
 
     # add string params to sql-where-array
@@ -2034,6 +2062,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.12 $ $Date: 2009-11-12 14:34:43 $
+$Revision: 1.13 $ $Date: 2009-11-13 10:50:40 $
 
 =cut

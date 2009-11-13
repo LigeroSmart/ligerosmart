@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.52 2009-11-13 07:37:23 mae Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.53 2009-11-13 10:50:39 reb Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -83,7 +83,9 @@
             <Column Name="change_number" Required="true" Size="100" Type="VARCHAR"/>
             <Column Name="title" Required="false" Size="250" Type="VARCHAR"/>
             <Column Name="description" Required="false" Size="3800" Type="VARCHAR"/>
+            <Column Name="description_plain" Required="false" Size="3800" Type="VARCHAR"/>
             <Column Name="justification" Required="false" Size="3800" Type="VARCHAR"/>
+            <Column Name="justification_plain" Required="false" Size="3800" Type="VARCHAR"/>
             <Column Name="change_state_id" Required="true" Type="INTEGER"/>
             <Column Name="change_manager_id" Required="false" Type="INTEGER"/>
             <Column Name="change_builder_id" Required="true" Type="INTEGER"/>
@@ -98,11 +100,11 @@
             <Index Name="change_item_title">
                 <IndexColumn Name="title"/>
             </Index>
-            <Index Name="change_item_description">
-                <IndexColumn Name="description" Size="250"/>
+            <Index Name="change_item_description_plain">
+                <IndexColumn Name="description_plain" Size="250"/>
             </Index>
-            <Index Name="change_item_justification">
-                <IndexColumn Name="justification" Size="250"/>
+            <Index Name="change_item_justification_plain">
+                <IndexColumn Name="justification_plain" Size="250"/>
             </Index>
             <Index Name="change_item_change_state_id">
                 <IndexColumn Name="change_state_id"/>
@@ -138,7 +140,9 @@
             <Column Name="workorder_number" Required="true" Type="INTEGER"/>
             <Column Name="title" Required="false" Size="250" Type="VARCHAR"/>
             <Column Name="instruction" Required="false" Size="3800" Type="VARCHAR"/>
+            <Column Name="instruction_plain" Required="false" Size="3800" Type="VARCHAR"/>
             <Column Name="report" Required="false" Size="3800" Type="VARCHAR"/>
+            <Column Name="report_plain" Required="false" Size="3800" Type="VARCHAR"/>
             <Column Name="workorder_state_id" Required="true" Type="INTEGER"/>
             <Column Name="workorder_type_id" Required="true" Type="INTEGER"/>
             <Column Name="workorder_agent_id" Required="false" Type="INTEGER"/>
@@ -156,11 +160,11 @@
             <Index Name="change_workorder_title">
                 <IndexColumn Name="title"/>
             </Index>
-            <Index Name="change_workorder_instruction">
-                <IndexColumn Name="instruction" Size="250"/>
+            <Index Name="change_workorder_instruction_plain">
+                <IndexColumn Name="instruction_plain" Size="250"/>
             </Index>
-            <Index Name="change_workorder_report">
-                <IndexColumn Name="report" Size="250"/>
+            <Index Name="change_workorder_report_plain">
+                <IndexColumn Name="report_plain" Size="250"/>
             </Index>
             <Index Name="change_workorder_workorder_state_id">
                 <IndexColumn Name="workorder_state_id"/>
