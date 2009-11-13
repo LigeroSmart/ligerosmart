@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LayoutITSMChange.pm,v 1.6 2009-11-13 09:40:05 mae Exp $
+# $Id: LayoutITSMChange.pm,v 1.7 2009-11-13 12:57:23 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,10 +14,12 @@ package Kernel::Output::HTML::LayoutITSMChange;
 use strict;
 use warnings;
 
+use POSIX qw(ceil);
+
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 =item ITSMChangeBuildWorkOrderGraph()
 
@@ -197,7 +199,8 @@ sub _ITSMChangeGetChangeTicks {
     return if $Ticks <= 0;
 
     # get seconds per percent and round down
-    $Ticks = int( $Ticks / 100 ) + 1;
+    #$Ticks = int( $Ticks / 100 ) + 1;
+    $Ticks = ceil( $Ticks / 100 );
 
     return $Ticks;
 }
@@ -276,13 +279,30 @@ sub _ITSMChangeGetWorkOrderGraph {
     my %TickValue;
 
     # get values for planned span
-    $TickValue{PlannedPadding} = int( ( $PlannedStartTime - $Param{StartTime} ) / $Param{Ticks} );
-    $TickValue{PlannedTicks}   = int( ( $PlannedEndTime - $PlannedStartTime ) / $Param{Ticks} );
+    $TickValue{PlannedPadding} = ceil( ( $PlannedStartTime - $Param{StartTime} ) / $Param{Ticks} );
+    $TickValue{PlannedTicks} = ceil( ( $PlannedEndTime - $PlannedStartTime ) / $Param{Ticks} ) || 1;
+
+    # get at least 1 percent
+    $TickValue{PlannedPadding}
+        = ( $TickValue{PlannedTicks} == 1 && $TickValue{PlannedPadding} == 100 )
+        ? 99
+        : $TickValue{PlannedPadding}
+        ;
+
+    # get trailing space
     $TickValue{PlannedTrailing} = 100 - ( $TickValue{PlannedPadding} + $TickValue{PlannedTicks} );
 
     # get values for actual span
-    $TickValue{ActualPadding} = int( ( $ActualStartTime - $Param{StartTime} ) / $Param{Ticks} );
-    $TickValue{ActualTicks}   = int( ( $ActualEndTime - $ActualStartTime ) / $Param{Ticks} );
+    $TickValue{ActualPadding} = ceil( ( $ActualStartTime - $Param{StartTime} ) / $Param{Ticks} );
+    $TickValue{ActualTicks} = ceil( ( $ActualEndTime - $ActualStartTime ) / $Param{Ticks} ) || 1;
+
+    # get at least 1 percent
+    $TickValue{ActualPadding} = ( $TickValue{ActualTicks} == 1 && $TickValue{ActualPadding} == 100 )
+        ? 99
+        : $TickValue{ActualPadding}
+        ;
+
+    # get trailing space
     $TickValue{ActualTrailing} = 100 - ( $TickValue{ActualPadding} + $TickValue{ActualTicks} );
 
     # create work order item
