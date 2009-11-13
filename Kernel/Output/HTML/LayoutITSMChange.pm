@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LayoutITSMChange.pm,v 1.2 2009-11-13 07:56:04 mae Exp $
+# $Id: LayoutITSMChange.pm,v 1.3 2009-11-13 08:36:28 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =item ITSMChangeBuildWorkOrderGraph()
 
@@ -144,6 +144,13 @@ sub ITSMChangeBuildWorkOrderGraph {
         push @WorkOrders, $WorkOrder;
     }
 
+    # load graph sceleton
+    $Self->{LayoutObjectGraph}->Block(
+        Name => 'WorkOrderGraph',
+        Data => {
+        },
+    );
+
     # build graph of each work order
     WORKORDER:
     for my $WorkOrder (@WorkOrders) {
@@ -186,8 +193,8 @@ sub _ITSMChangeGetChangeTicks {
     # check for computing error
     return if $Ticks <= 0;
 
-    # get seconds per percent
-    $Ticks /= 100;
+    # get seconds per percent and round down
+    $Ticks = int( $Ticks / 100 ) + 1;
 
     return $Ticks;
 }
@@ -263,10 +270,12 @@ sub _ITSMChangeGetWorkOrderGraph {
 
     # determine length of work order
     my %TickValue;
-    $TickValue{PlannedPadding} = ( $PlannedStartTime - $Param{StartTime} ) / $Param{Ticks};
-    $TickValue{PlannedTicks}   = ( $PlannedEndTime - $PlannedStartTime ) / $Param{Ticks};
-    $TickValue{ActualPadding}  = ( $ActualStartTime - $Param{StartTime} ) / $Param{Ticks};
-    $TickValue{ActualTicks}    = ( $ActualEndTime - $ActualStartTime ) / $Param{Ticks};
+    $TickValue{PlannedPadding} = int( ( $PlannedStartTime - $Param{StartTime} ) / $Param{Ticks} );
+    $TickValue{PlannedTicks}   = int( ( $PlannedEndTime - $PlannedStartTime ) / $Param{Ticks} );
+    $TickValue{PlannedTrailing} = 100 - ( $TickValue{PlannedPadding} + $TickValue{PlannedTicks} );
+    $TickValue{ActualPadding} = int( ( $ActualStartTime - $Param{StartTime} ) / $Param{Ticks} );
+    $TickValue{ActualTicks}   = int( ( $ActualEndTime - $ActualStartTime ) / $Param{Ticks} );
+    $TickValue{ActualTrailing} = 100 - ( $TickValue{ActualPadding} + $TickValue{ActualTicks} );
 
     # create work order item
     $Self->{LayoutObjectGraph}->Block(
