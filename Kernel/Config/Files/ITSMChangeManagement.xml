@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.61 2009-11-13 16:54:52 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.62 2009-11-13 17:02:43 ub Exp $</CVS>
     <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
         <Description Lang="en">Logfile for the itsm change counter.</Description>
         <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
@@ -1014,7 +1014,7 @@
         <SubGroup>Core::TicketACL</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::System::Ticket::Acl::RestrictRFCTicketType</Item>
+                <Item Key="Module">Kernel::System::Ticket::Acl::RestrictTicketTypes</Item>
             </Hash>
         </Setting>
     </ConfigItem>
