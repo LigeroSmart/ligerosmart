@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.60 2009-11-12 16:00:20 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.61 2009-11-13 16:54:52 ub Exp $</CVS>
     <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
         <Description Lang="en">Logfile for the itsm change counter.</Description>
         <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
@@ -1008,8 +1008,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Acl::Module###200-Ticket::Acl::Module" Required="0" Valid="0">
-        <Description Lang="en">This ACL module does not allow to use the ticket type 'RfC' if the user is not in one of the groups 'itsm-change', 'itsm-change-builder' or 'itsm-change-manager'.</Description>
-        <Description Lang="de">Dieses ACL Modul verhindert es, den Ticket-Typ 'RfC' zu verwenden, wenn der Benutzer nicht Mitglied in einer der Gruppen 'itsm-change', 'itsm-change-builder' oder 'itsm-change-manager' ist.</Description>
+        <Description Lang="en">This ACL module does not allow to use the ticket types which are defined in the sysconfig option 'ITSMChange::AddChangeLinkTicketTypes', if the user is not in one of the groups 'itsm-change', 'itsm-change-builder' or 'itsm-change-manager'.</Description>
+        <Description Lang="de">Dieses ACL Modul verhindert es, die Ticket-Typen zu verwenden, die in der Sysconfig-Option 'ITSMChange::AddChangeLinkTicketTypes' definiert sind, zu verwenden, wenn der Benutzer nicht Mitglied in einer der Gruppen 'itsm-change', 'itsm-change-builder' oder 'itsm-change-manager' ist.</Description>
         <Group>Ticket</Group>
         <SubGroup>Core::TicketACL</SubGroup>
         <Setting>
