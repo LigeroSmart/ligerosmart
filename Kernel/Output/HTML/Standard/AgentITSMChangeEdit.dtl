@@ -2,7 +2,7 @@
 # AgentITSMChangeEdit.dtl - provides HTML form for AgentITSMChangeEdit
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.dtl,v 1.18 2009-11-11 08:52:23 reb Exp $
+# $Id: AgentITSMChangeEdit.dtl,v 1.19 2009-11-13 14:22:27 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ function submit_compose() {
 
     /* check the realize time */
     if ( !CheckTime( 'RealizeTime' ) && document.compose.RealizeTimeUsed.checked == true ) {
-        alert('$JSText{"The realize time is invalid!"}');
+        alert('$JSText{"The realization time is invalid!"}');
 
         return false;
     }
@@ -104,7 +104,7 @@ $Include{"RichTextEditorITSM"}
 <!-- dtl:block:RealizeTime -->
                                 <tr>
                                     <td class="contentkey">
-                                        $Text{"Realize time"}:
+                                        $Text{"Realization time"}:
                                     </td>
                                     <td class="contentvalue">
                                         $Data{"RealizeTimeString"}
