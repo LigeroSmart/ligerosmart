@@ -1,0 +1,88 @@
+# --
+# ITSMChange.dtl - provides HTML elements for work order graph
+# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# --
+# $Id: ITSMChange.dtl,v 1.1 2009-11-13 07:35:57 mae Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<style type="text/css" media="screen">
+    .pending       { opacity:0.5; }
+    .wo_approval   { background-color:#ff9933; }
+    .wo_approval_comp   { background-color:#804d1a; }
+    .wo_entry      { background-color:#4d9a00; }
+    .wo_entry_comp      { background-color:#2e4d0f; }
+    .wo_entry_pend      { background-color:#a1a1a1; }
+    .wo_pir_comp        { background-color:#806700; }
+    .wo_pir_pend        { background-color:#a1a1a1; }
+    .wo_pir        { background-color:#ffcc00; }
+    img.wo_status  { margin-top:2px; }
+    td.change_title { text-align:center; }
+    img.change_title { margin-top: 5px; margin-bottom: 5px; }
+    td.wo_status   { width: 20px; text-align: center; }
+    td.wo_nr       { width: 70px; text-align: left; }
+    td.wo          { height: 5px; font-size: 1pt; }
+    td.padding     { width: 10px; }
+</style>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<!-- dtl:block:WorkOrderItem -->
+    <tr>
+        <td class="wo_status">
+            <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"WorkOrderStateSignal"}-small.png" title="$Text{"$QData{"WorkOrderState"}"}" alt="$Text{"$QData{"WorkOrderState"}"}">
+        </td>
+        <td class="wo_nr">
+            <a href="$Env{"Baselink"}$Data{"Link"}&Action=AgentITSMWorkOrderZoom&WorkOrderID=$LQData{"WorkOrderID"}">
+            |--> $QData{"WorkOrderNumber"}.
+            </a>
+        </td>
+        <td>
+            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                    <td class="wo" width="$PlannedPadding%"></td>
+                    <td class="wo wo_pir pending" width="$PlannedTicks%">&nbsp;</td>
+                    <td class="wo" width="0%"></td>
+                </tr>
+            </table>
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-top:1px">
+                <tr>
+                    <td class="wo" width="ActualPadding%"></td>
+                    <td class="wo wo_pir_pend pending" width="$ActualTicks%">&nbsp;</td>
+                    <td class="wo" width="0%"></td>
+                </tr>
+            </table>
+        </td>
+        <td class="padding"></td>
+    </tr>
+<!-- dtl:block:WorkOrderItem -->
+<!-- dtl:block:Scale -->
+    <tr>
+        <td colspan="2">&nbsp;</td>
+        <td>
+            <div style="border-bottom:1px solid #000000; margin:0px; padding:0px;">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin:0px; padding:0px">
+                    <tr>
+                        <td width="10%" style="text-align:left">|</td>
+                        <td width="20%" style="text-align:center">|</td>
+                        <td width="20%" style="text-align:center">|</td>
+                        <td width="20%" style="text-align:center">|</td>
+                        <td width="20%" style="text-align:center">|</td>
+                        <td width="10%" style="text-align:right">|</td>
+                    </tr>
+                </table>
+            </div>
+            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                    <td width="10%" style="text-align:left">Start</td>
+<!-- dtl:block:ScaleLabel -->
+                    <td width="20%" style="text-align:center; font-size:8pt">$QData{"ScaleLabel"}</td>
+<!-- dtl:block:ScaleLabel -->
+                    <td width="10%" style="text-align:right">End</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+<!-- dtl:block:Scale -->
+</table>
