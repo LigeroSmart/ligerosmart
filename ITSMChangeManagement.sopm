@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.51 2009-11-12 10:43:43 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.52 2009-11-13 07:37:23 mae Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -34,6 +34,7 @@
         <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderZoom.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ITSMChangeMenuGeneric.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ITSMWorkOrderMenuGeneric.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/LayoutITSMChange.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/LinkObjectITSMChange.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/LinkObjectITSMWorkOrder.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMCABMemberSearch.dtl"/>
@@ -54,6 +55,7 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMWorkOrderPrint.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMWorkOrderReport.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMWorkOrderZoom.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/ITSMChange.dtl"/>
         <File Permission="644" Location="Kernel/System/ITSMChange.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/History.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/ITSMWorkOrder.pm"/>
