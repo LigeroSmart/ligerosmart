@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LayoutITSMChange.pm,v 1.5 2009-11-13 08:52:08 mae Exp $
+# $Id: LayoutITSMChange.pm,v 1.6 2009-11-13 09:40:05 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 =item ITSMChangeBuildWorkOrderGraph()
 
@@ -61,7 +61,7 @@ sub ITSMChangeBuildWorkOrderGraph {
     $Self->{WorkOrderObject} = $Param{WorkOrderObject};
 
     # check if work orders are available
-    return if !$Change->{WorkOrderIDs};
+    return if !$Change->{WorkOrderIDs} || scalar @{ $Change->{WorkOrderIDs} } == 0;
 
     $Self->{LayoutObjectGraph} = Kernel::Output::HTML::Layout->new( %{$Self} );
 
@@ -259,7 +259,8 @@ sub _ITSMChangeGetWorkOrderGraph {
     # set planned if no actual time is set
     $WorkOrder->{ActualStartTime} = $WorkOrder->{PlannedStartTime}
         if !$WorkOrder->{ActualStartTime};
-    $WorkOrder->{ActualEndTime} = $WorkOrder->{PlannedEndTime} if !$WorkOrder->{ActualEndTime};
+    $WorkOrder->{ActualEndTime} = $WorkOrder->{PlannedEndTime}
+        if !$WorkOrder->{ActualEndTime};
 
     # translate planned start time
     my $ActualStartTime = $Self->{TimeObject}->TimeStamp2SystemTime(
@@ -273,9 +274,13 @@ sub _ITSMChangeGetWorkOrderGraph {
 
     # determine length of work order
     my %TickValue;
+
+    # get values for planned span
     $TickValue{PlannedPadding} = int( ( $PlannedStartTime - $Param{StartTime} ) / $Param{Ticks} );
     $TickValue{PlannedTicks}   = int( ( $PlannedEndTime - $PlannedStartTime ) / $Param{Ticks} );
     $TickValue{PlannedTrailing} = 100 - ( $TickValue{PlannedPadding} + $TickValue{PlannedTicks} );
+
+    # get values for actual span
     $TickValue{ActualPadding} = int( ( $ActualStartTime - $Param{StartTime} ) / $Param{Ticks} );
     $TickValue{ActualTicks}   = int( ( $ActualEndTime - $ActualStartTime ) / $Param{Ticks} );
     $TickValue{ActualTrailing} = 100 - ( $TickValue{ActualPadding} + $TickValue{ActualTicks} );
