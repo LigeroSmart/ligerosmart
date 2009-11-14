@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.145 2009-11-13 10:50:39 reb Exp $
+# $Id: ITSMChange.pm,v 1.146 2009-11-14 18:06:00 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.145 $) [1];
+$VERSION = qw($Revision: 1.146 $) [1];
 
 =head1 NAME
 
@@ -2184,6 +2184,15 @@ sub _CheckChangeParams {
     return 1;
 }
 
+sub DESTROY {
+    my $Self = shift;
+
+    # execute all transaction events
+    $Self->EventHandlerTransaction();
+
+    return 1;
+}
+
 1;
 
 =back
@@ -2200,6 +2209,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.145 $ $Date: 2009-11-13 10:50:39 $
+$Revision: 1.146 $ $Date: 2009-11-14 18:06:00 $
 
 =cut
