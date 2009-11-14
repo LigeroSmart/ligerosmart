@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.147 2009-11-14 18:53:56 ub Exp $
+# $Id: ITSMChange.pm,v 1.148 2009-11-14 18:54:50 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.147 $) [1];
+$VERSION = qw($Revision: 1.148 $) [1];
 
 =head1 NAME
 
@@ -1033,7 +1033,17 @@ sub ChangeSearch {
     # verify that all passed array parameters contain an arrayref
     ARGUMENT:
     for my $Argument (
-        qw( OrderBy OrderByDirection ChangeStateIDs ChangeStates ChangeManagerIDs ChangeBuilderIDs CreateBy ChangeBy CABAgents CABCustomers WorkOrderAgentIDs )
+        qw(
+        OrderBy
+        OrderByDirection
+        ChangeStateIDs
+        ChangeStates
+        ChangeManagerIDs
+        ChangeBuilderIDs
+        CreateBy ChangeBy
+        CABAgents CABCustomers
+        WorkOrderAgentIDs
+        )
         )
     {
         if ( !defined $Param{$Argument} ) {
@@ -2198,6 +2208,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.147 $ $Date: 2009-11-14 18:53:56 $
+$Revision: 1.148 $ $Date: 2009-11-14 18:54:50 $
 
 =cut
