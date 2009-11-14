@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.63 2009-11-13 19:03:37 reb Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.64 2009-11-14 13:58:26 ub Exp $</CVS>
     <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
         <Description Lang="en">Logfile for the itsm change counter.</Description>
         <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
@@ -11,8 +11,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::AddChangeLinkTicketTypes" Required="1" Valid="1">
-        <Description Lang="en">Types of tickets, from which a change can be generated.</Description>
-        <Description Lang="de">Typen der Tickets, aus denen eine Änderung erzeugt werden kann.</Description>
+        <Description Lang="en">Types of tickets, where in the ticket zoom view a link to add a change will be displayed.</Description>
+        <Description Lang="de">Typen der Tickets, in denen im Ticket-Zoom ein Link angezeigt wird, um einen Change zu erstellen.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Core::ITSMChange</SubGroup>
         <Setting>
@@ -23,7 +23,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMChange::State::Signal" Required="1" Valid="1">
         <Description Lang="en">Define the signal for each ITSMChange state.</Description>
-        <Description Lang="de">Definieren des Signals für jeden ITSMChange-Status.</Description>
+        <Description Lang="de">Definieren eines Signals für einen ITSMChange-Status.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Core::ITSMChange</SubGroup>
         <Setting>
@@ -42,7 +42,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::State::Signal" Required="1" Valid="1">
         <Description Lang="en">Define the signal for ITSMWorkOrder states.</Description>
-        <Description Lang="de">Definieren des Signals für jeden ITSMWorkOrder-Status.</Description>
+        <Description Lang="de">Definieren eines Signals für einen ITSMWorkOrder-Status.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Core::ITSMWorkOrder</SubGroup>
         <Setting>
@@ -792,7 +792,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMChange###Permission" Required="1" Valid="1">
         <Description Lang="en">Required privilege to view list of changes.</Description>
-        <Description Lang="de">Benötigtes Recht zum Einsehen der Liste von Änderungen.</Description>
+        <Description Lang="de">Benötigtes Recht zum Einsehen der Liste von Changes.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::ViewChange</SubGroup>
         <Setting>
@@ -801,7 +801,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeAdd###Permission" Required="1" Valid="1">
         <Description Lang="en">Required privilege to create changes.</Description>
-        <Description Lang="de">Benötigtes Recht zum Erstellen von Änderungen.</Description>
+        <Description Lang="de">Benötigtes Recht zum Erstellen von Changes.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::ViewChangeAdd</SubGroup>
         <Setting>
@@ -810,7 +810,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeEdit###Permission" Required="1" Valid="1">
         <Description Lang="en">Required privilege to edit changes.</Description>
-        <Description Lang="de">Benötigtes Recht zum Bearbeiten von Änderungen.</Description>
+        <Description Lang="de">Benötigtes Recht zum Bearbeiten von Changes.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::ViewChangeEdit</SubGroup>
         <Setting>
@@ -819,7 +819,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeHistory###Permission" Required="1" Valid="1">
         <Description Lang="en">Required privilege to view the history of a change.</Description>
-        <Description Lang="de">Benötigtes Recht zum Einsehen der Historie einer Änderung.</Description>
+        <Description Lang="de">Benötigtes Recht zum Einsehen der Historie eines Change.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::ViewChangeHistory</SubGroup>
         <Setting>
@@ -828,7 +828,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeHistoryZoom###Permission" Required="1" Valid="1">
         <Description Lang="en">Required privilege to view the history zoom of a change.</Description>
-        <Description Lang="de">Benötigtes Recht zum Einsehen der Historiendetails einer Änderung.</Description>
+        <Description Lang="de">Benötigtes Recht zum Einsehen der Historiendetails eines Changes.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::ViewChangeHistoryZoom</SubGroup>
         <Setting>
@@ -846,7 +846,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeZoom###Permission" Required="1" Valid="1">
         <Description Lang="en">Required privilege to view changes.</Description>
-        <Description Lang="de">Benötigtes Recht zum Ansehen von Änderungen.</Description>
+        <Description Lang="de">Benötigtes Recht zum Ansehen von Changes.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::ViewChangeZoom</SubGroup>
         <Setting>
@@ -855,7 +855,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMWorkOrderAdd###Permission" Required="1" Valid="1">
         <Description Lang="en">Required privilege to add a workorder.</Description>
-        <Description Lang="de">Benötigtes Recht zum Hinzufügen einer Arbeitsanweisung.</Description>
+        <Description Lang="de">Benötigtes Recht zum Hinzufügen einer Workorder.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::ViewWorkOrderAdd</SubGroup>
         <Setting>
@@ -864,7 +864,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderAgent###Permission" Required="1" Valid="1">
         <Description Lang="en">Required privilege to change the workorder agent.</Description>
-        <Description Lang="de">Benötigtes Recht zum Ändern des Agenten einer Arbeitsanweisung.</Description>
+        <Description Lang="de">Benötigtes Recht zum Ändern des Agenten einer Workorder.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::ViewWorkOrderAgent</SubGroup>
         <Setting>
@@ -873,7 +873,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderEdit###Permission" Required="1" Valid="1">
         <Description Lang="en">Required privilege to edit a workorder.</Description>
-        <Description Lang="de">Benötigtes Recht zum Ändern einer Arbeitsanweisung.</Description>
+        <Description Lang="de">Benötigtes Recht zum Ändern einer Workorder.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::ViewWorkOrderEdit</SubGroup>
         <Setting>
@@ -882,7 +882,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderHistory###Permission" Required="1" Valid="1">
         <Description Lang="en">Required privilege to view the history of a workorder.</Description>
-        <Description Lang="de">Benötigtes Recht zum Betrachten der Historie einer Arbeitsanweisung.</Description>
+        <Description Lang="de">Benötigtes Recht zum Betrachten der Historie einer Workorder.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::ViewWorkOrderHistory</SubGroup>
         <Setting>
@@ -891,7 +891,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderHistoryZoom###Permission" Required="1" Valid="1">
         <Description Lang="en">Required privilege to view the history zoom of a workorder.</Description>
-        <Description Lang="de">Benötigtes Recht zum Betrachten der Historiendetails einer Arbeitsanweisung.</Description>
+        <Description Lang="de">Benötigtes Recht zum Betrachten der Historiendetails einer Workorder.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::ViewWorkOrderHistoryZoom</SubGroup>
         <Setting>
@@ -900,7 +900,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderReport###Permission" Required="1" Valid="1">
         <Description Lang="en">Required privilege to write a report for the workorder.</Description>
-        <Description Lang="de">Benötigtes Recht zum Verfassen eine Berichtes für eine Arbeitsanweisung.</Description>
+        <Description Lang="de">Benötigtes Recht zum Verfassen eines Berichtes für eine Workorder.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::ViewWorkOrderReport</SubGroup>
         <Setting>
@@ -909,7 +909,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderZoom###Permission" Required="1" Valid="1">
         <Description Lang="en">Required privilege to view a workorder.</Description>
-        <Description Lang="de">Benötigtes Recht zum Betrachten einer Arbeitsanweisung.</Description>
+        <Description Lang="de">Benötigtes Recht zum Betrachten einer Workorder.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::ViewWorkOrder</SubGroup>
         <Setting>
