@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.65 2009-11-15 12:23:28 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.66 2009-11-15 12:49:04 ub Exp $</CVS>
     <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
         <Description Lang="en">Logfile for the itsm change counter.</Description>
         <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
@@ -146,7 +146,7 @@
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <Group>itsm-change</Group>
+                <Group>itsm-change-builder</Group>
                 <Description>Change Edit</Description>
                 <Title>Edit</Title>
                 <NavBarName>Change</NavBarName>
@@ -160,7 +160,7 @@
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <Group>itsm-change</Group>
+                <Group>itsm-change-builder</Group>
                 <Description>Change Involved Persons</Description>
                 <Title>Involved Persons</Title>
                 <NavBarName>Change</NavBarName>
@@ -174,7 +174,7 @@
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <Group>itsm-change</Group>
+                <GroupRo>itsm-change</GroupRo>
                 <Description>Change History</Description>
                 <Title>History</Title>
                 <NavBarName>Change</NavBarName>
@@ -188,7 +188,7 @@
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <Group>itsm-change</Group>
+                <GroupRo>itsm-change</GroupRo>
                 <Description>Change HistoryZoom</Description>
                 <Title>HistoryZoom</Title>
                 <NavBarName>Change</NavBarName>
@@ -241,7 +241,7 @@
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <GroupRo>itsm-change</GroupRo>
+                <Group>itsm-change</Group>
                 <Description>WorkOrder Report</Description>
                 <Title>Report</Title>
                 <NavBarName>Change</NavBarName>
@@ -255,7 +255,7 @@
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <GroupRo>itsm-change</GroupRo>
+                <Group>itsm-change-builder</Group>
                 <Description>WorkOrder Agent</Description>
                 <Title>Agent</Title>
                 <NavBarName>Change</NavBarName>
@@ -269,7 +269,7 @@
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <GroupRo>itsm-change</GroupRo>
+                <Group>itsm-change-builder</Group>
                 <Description>WorkOrder Edit</Description>
                 <Title>Edit</Title>
                 <NavBarName>Change</NavBarName>
@@ -283,7 +283,7 @@
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <GroupRo>itsm-change</GroupRo>
+                <Group>itsm-change-builder</Group>
                 <Description>WorkOrder Add</Description>
                 <Title>Add</Title>
                 <NavBarName>Change</NavBarName>
@@ -297,7 +297,7 @@
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <GroupRo>itsm-change</GroupRo>
+                <Group>itsm-change-builder</Group>
                 <Description>WorkOrder Delete</Description>
                 <Title>Delete</Title>
                 <NavBarName>Change</NavBarName>
@@ -325,7 +325,7 @@
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <Group>itsm-change</Group>
+                <GroupRo>itsm-change</GroupRo>
                 <Description>WorkOrder HistoryZoom</Description>
                 <Title>HistoryZoom</Title>
                 <NavBarName>Change</NavBarName>
@@ -392,7 +392,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::MenuModule###010-History" Required="0" Valid="1">
         <Description Lang="en">Module to show history link in change menu.</Description>
-        <Description Lang="de">Über dieses Modul wird der Historie-Link in der Linkleiste der Change-Ansicht angezeigt.</Description>
+        <Description Lang="de">Über dieses Modul wird der History-Link in der Linkleiste der Change-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
         <Setting>
