@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.64 2009-11-14 13:58:26 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.65 2009-11-15 12:23:28 bes Exp $</CVS>
     <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
         <Description Lang="en">Logfile for the itsm change counter.</Description>
         <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
@@ -290,6 +290,20 @@
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentITSMWorkOrderDelete" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AgentITSMWorkOrderDelete object in the agent interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration des AgentITSMWorkOrderDelete-Objekts im Agent-Interface.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <GroupRo>itsm-change</GroupRo>
+                <Description>WorkOrder Delete</Description>
+                <Title>Delete</Title>
+                <NavBarName>Change</NavBarName>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="Frontend::Module###AgentITSMWorkOrderHistory" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AgentITSMWorkOrderHistory object in the agent interface.</Description>
         <Description Lang="de">Frontendmodul-Registration des AgentITSMWorkOrderHistory-Objekts im Agent-Interface.</Description>
@@ -448,6 +462,21 @@
                 <Item Key="Description">Add WorkOrder</Item>
                 <Item Key="Action">AgentITSMWorkOrderAdd</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderAdd&amp;ChangeID=$QData{"ChangeID"}</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::MenuModule###060-WorkOrderDelete" Required="0" Valid="1">
+        <Description Lang="en">Module to show 'Delete WorkOrder' link in change menu.</Description>
+        <Description Lang="de">Über dieses Modul wird der 'WorkOrder löschen'-Link in der Linkleiste der Change-Ansicht angezeigt.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ITSMChangeMenuGeneric</Item>
+                <Item Key="Name">Delete WorkOrder</Item>
+                <Item Key="Description">Delete WorkOrder</Item>
+                <Item Key="Action">AgentITSMWorkOrderDelete</Item>
+                <Item Key="Link">Action=AgentITSMWorkOrderDelete&amp;ChangeID=$QData{"ChangeID"}</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -867,6 +896,15 @@
         <Description Lang="de">Benötigtes Recht zum Ändern des Agenten einer Workorder.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::ViewWorkOrderAgent</SubGroup>
+        <Setting>
+            <String Regex="^(rw|ro)$">rw</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMWorkOrderDelete###Permission" Required="1" Valid="1">
+        <Description Lang="en">Required privilege to delete a workorder.</Description>
+        <Description Lang="de">Benötigtes Recht zum Löschen einer Workorder.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewWorkOrderDelete</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">rw</String>
         </Setting>
