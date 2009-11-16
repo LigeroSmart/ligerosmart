@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.150 2009-11-16 21:38:20 ub Exp $
+# $Id: ITSMChange.pm,v 1.151 2009-11-16 22:41:45 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.150 $) [1];
+$VERSION = qw($Revision: 1.151 $) [1];
 
 =head1 NAME
 
@@ -324,25 +324,25 @@ sub ChangeUpdate {
 
     # get a plain ascii version of description
     if ( exists $Param{Description} ) {
-        if ( !defined $Param{Description} ) {
-            $Param{DescriptionPlain} = undef;
-        }
-        else {
+        if ( defined $Param{Description} ) {
             $Param{DescriptionPlain} = $Self->{HTMLUtilsObject}->ToAscii(
                 String => $Param{Description},
             );
+        }
+        else {
+            $Param{DescriptionPlain} = undef;
         }
     }
 
     # get a plain ascii version of justification
     if ( exists $Param{Justification} ) {
-        if ( !defined $Param{Justification} ) {
-            $Param{JustificationPlain} = undef;
-        }
-        else {
+        if ( defined $Param{Justification} ) {
             $Param{JustificationPlain} = $Self->{HTMLUtilsObject}->ToAscii(
                 String => $Param{Justification},
             );
+        }
+        else {
+            $Param{JustificationPlain} = undef;
         }
     }
 
@@ -2270,6 +2270,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.150 $ $Date: 2009-11-16 21:38:20 $
+$Revision: 1.151 $ $Date: 2009-11-16 22:41:45 $
 
 =cut

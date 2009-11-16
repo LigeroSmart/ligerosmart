@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.19 2009-11-16 21:38:51 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.20 2009-11-16 22:42:30 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 =head1 NAME
 
@@ -460,25 +460,25 @@ sub WorkOrderUpdate {
 
     # get a plain ascii version of instruction
     if ( exists $Param{Instruction} ) {
-        if ( !defined $Param{Instruction} ) {
-            $Param{InstructionPlain} = undef;
-        }
-        else {
+        if ( defined $Param{Instruction} ) {
             $Param{InstructionPlain} = $Self->{HTMLUtilsObject}->ToAscii(
                 String => $Param{Instruction},
             );
+        }
+        else {
+            $Param{InstructionPlain} = undef;
         }
     }
 
     # get a plain ascii version of report
     if ( exists $Param{Report} ) {
-        if ( !defined $Param{Report} ) {
-            $Param{ReportPlain} = undef;
-        }
-        else {
+        if ( defined $Param{Report} ) {
             $Param{ReportPlain} = $Self->{HTMLUtilsObject}->ToAscii(
                 String => $Param{Report},
             );
+        }
+        else {
+            $Param{ReportPlain} = undef;
         }
     }
 
@@ -962,7 +962,7 @@ sub WorkOrderSearch {
     STRINGPARAM:
     for my $StringParam ( keys %StringParams ) {
 
-        # check string params for useful values, the string q{0} is allowed
+        # check string params for useful values, the string '0' is allowed
         next STRINGPARAM if !exists $Param{$StringParam};
         next STRINGPARAM if !defined $Param{$StringParam};
         next STRINGPARAM if $Param{$StringParam} eq '';
@@ -2112,6 +2112,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.19 $ $Date: 2009-11-16 21:38:51 $
+$Revision: 1.20 $ $Date: 2009-11-16 22:42:30 $
 
 =cut
