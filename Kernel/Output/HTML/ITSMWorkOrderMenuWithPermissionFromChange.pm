@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ITSMWorkOrderMenuWithPermissionFromChange.pm
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrderMenuWithPermissionFromChange.pm,v 1.1 2009-11-16 10:13:52 bes Exp $
+# $Id: ITSMWorkOrderMenuWithPermissionFromChange.pm,v 1.2 2009-11-16 12:30:26 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -53,15 +53,10 @@ sub Run {
 
     # get the required privilege, 'ro' or 'rw'
     my $RequiredPriv;
-    if ( $FrontendConfig && $FrontendConfig->{Permission} ) {
+    if ($FrontendConfig) {
 
         # get the required priv from the frontend configuration
         $RequiredPriv = $FrontendConfig->{Permission};
-    }
-    elsif ( $Param{Config}->{Action} eq 'AgentLinkObject' ) {
-
-        # the Link-link is a special case, as it is not specific to ITSMChange
-        $RequiredPriv = 'rw';
     }
 
     my $Access;
