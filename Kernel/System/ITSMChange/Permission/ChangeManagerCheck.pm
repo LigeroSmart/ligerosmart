@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Permission/ChangeManagerCheck.pm - change manager based permission check
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ChangeManagerCheck.pm,v 1.10 2009-11-12 14:34:43 bes Exp $
+# $Id: ChangeManagerCheck.pm,v 1.11 2009-11-16 22:31:07 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 =head1 NAME
 
@@ -149,7 +149,7 @@ sub Run {
     return if !$GroupID;
 
     # Caching is turned on by default.
-    my $Cached = exists $Param{Cached} ? $Param{Cached} : 1;
+    my $Cached = defined $Param{Cached} ? $Param{Cached} : 1;
 
     # get user groups, where the user has the appropriate privilege
     my %Groups = $Self->{GroupObject}->GroupMemberList(
@@ -180,7 +180,7 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Id: ChangeManagerCheck.pm,v 1.10 2009-11-12 14:34:43 bes Exp $
+$Id: ChangeManagerCheck.pm,v 1.11 2009-11-16 22:31:07 ub Exp $
 
 =cut
 
