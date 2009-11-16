@@ -1,11 +1,11 @@
 function CheckTime( id_base ) {
 
     /* check the planned end time */
-    var Year   = document.getElementById( id_base + 'Year' ).value;
-    var Month  = document.getElementById( id_base + 'Month' ).value;
-    var Day    = document.getElementById( id_base + 'Day' ).value;
-    var Hour   = document.getElementById( id_base + 'Hour' ).value;
-    var Minute = document.getElementById( id_base + 'Minute' ).value;
+    var Year   = document.getElementById( id_base + 'Year' ).value * 1;
+    var Month  = document.getElementById( id_base + 'Month' ).value * 1;
+    var Day    = document.getElementById( id_base + 'Day' ).value * 1;
+    var Hour   = document.getElementById( id_base + 'Hour' ).value * 1;
+    var Minute = document.getElementById( id_base + 'Minute' ).value * 1;
 
     if (
         0
@@ -25,17 +25,17 @@ function CheckTime( id_base ) {
 
 function CheckStartBeforeEnd ( StartPrefix, EndPrefix, ErrorMsg ) {
 
-    var StartYear   = document.getElementById( StartPrefix + 'Year' ).value;
-    var StartMonth  = document.getElementById( StartPrefix + 'Month' ).value;
-    var StartDay    = document.getElementById( StartPrefix + 'Day' ).value;
-    var StartHour   = document.getElementById( StartPrefix + 'Hour' ).value;
-    var StartMinute = document.getElementById( StartPrefix + 'Minute' ).value;
+    var StartYear   = document.getElementById( StartPrefix + 'Year' ).value * 1;
+    var StartMonth  = document.getElementById( StartPrefix + 'Month' ).value * 1;
+    var StartDay    = document.getElementById( StartPrefix + 'Day' ).value * 1;
+    var StartHour   = document.getElementById( StartPrefix + 'Hour' ).value * 1;
+    var StartMinute = document.getElementById( StartPrefix + 'Minute' ).value * 1;
 
-    var EndYear   = document.getElementById( EndPrefix + 'Year' ).value;
-    var EndMonth  = document.getElementById( EndPrefix + 'Month' ).value;
-    var EndDay    = document.getElementById( EndPrefix + 'Day' ).value;
-    var EndHour   = document.getElementById( EndPrefix + 'Hour' ).value;
-    var EndMinute = document.getElementById( EndPrefix + 'Minute' ).value;
+    var EndYear   = document.getElementById( EndPrefix + 'Year' ).value * 1;
+    var EndMonth  = document.getElementById( EndPrefix + 'Month' ).value * 1;
+    var EndDay    = document.getElementById( EndPrefix + 'Day' ).value * 1;
+    var EndHour   = document.getElementById( EndPrefix + 'Hour' ).value * 1;
+    var EndMinute = document.getElementById( EndPrefix + 'Minute' ).value * 1;
 
     if ( StartYear < EndYear ) {
         return true;
