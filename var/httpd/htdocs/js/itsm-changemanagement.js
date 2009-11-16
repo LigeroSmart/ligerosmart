@@ -1,3 +1,14 @@
+// --
+// itsm-changemanagement.js - provides JavaScript functions
+// Copyright (C) 2003-2009 OTRS AG, http://otrs.com/\n";
+// --
+// $Id: itsm-changemanagement.js,v 1.4 2009-11-16 11:04:18 reb Exp $
+// --
+// This software comes with ABSOLUTELY NO WARRANTY. For details, see
+// the enclosed file COPYING for license information (AGPL). If you
+// did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+// --
+
 function CheckTime( id_base ) {
 
     /* check the planned end time */
