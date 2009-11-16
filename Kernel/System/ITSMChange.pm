@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.151 2009-11-16 22:41:45 ub Exp $
+# $Id: ITSMChange.pm,v 1.152 2009-11-16 22:44:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.151 $) [1];
+$VERSION = qw($Revision: 1.152 $) [1];
 
 =head1 NAME
 
@@ -1166,7 +1166,7 @@ sub ChangeSearch {
     STRINGPARAM:
     for my $StringParam ( keys %StringParams ) {
 
-        # check string params for useful values, the string q{0} is allowed
+        # check string params for useful values, the string '0' is allowed
         next STRINGPARAM if !exists $Param{$StringParam};
         next STRINGPARAM if !defined $Param{$StringParam};
         next STRINGPARAM if $Param{$StringParam} eq '';
@@ -2270,6 +2270,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.151 $ $Date: 2009-11-16 22:41:45 $
+$Revision: 1.152 $ $Date: 2009-11-16 22:44:25 $
 
 =cut
