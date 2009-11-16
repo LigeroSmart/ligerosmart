@@ -2,7 +2,7 @@
 # AgentITSMChangeHistoryZoom.dtl - provides HTML form for AgentITSMChangeHistoryZoom
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeHistoryZoom.dtl,v 1.5 2009-11-16 13:23:56 reb Exp $
+# $Id: AgentITSMChangeHistoryZoom.dtl,v 1.6 2009-11-16 13:50:45 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -12,6 +12,12 @@
 <style type="text/css">
     .nowrap {
         white-space: nowrap;
+    }
+
+    .fieldvalues {
+        background-color: #ffffff;
+        border: 1px solid #000000;
+        padding: 4px;
     }
 </style>
 
@@ -53,7 +59,7 @@
                                     $Text{"Old Value"}:
                                 </td>
                                 <td class="contentvalue">
-                                    $Data{"ContentOld"}
+                                    <div class="fieldvalues">$Data{"ContentOld"}</div>
                                 </td>
                             </tr>
                             <tr>
@@ -61,7 +67,7 @@
                                     $Text{"New Value"}:
                                 </td>
                                 <td class="contentvalue">
-                                    $Data{"ContentNew"}
+                                    <div class="fieldvalues">$Data{"ContentNew"}</div>
                                 </td>
                             </tr>
                             <tr>
