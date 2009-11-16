@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.121 2009-11-13 19:58:27 reb Exp $
+# $Id: ITSMChange.t,v 1.122 2009-11-16 14:52:48 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -149,9 +149,10 @@ my @ObjectMethods = qw(
     ChangeGet
     ChangeList
     ChangeLookup
+    ChangePossibleStatesGet
     ChangeSearch
-    ChangeUpdate
     ChangeStateLookup
+    ChangeUpdate
     Permission
 );
 
@@ -181,11 +182,13 @@ my @DefaultChangeStates = (
 );
 
 # get item list of the change states with swapped keys and values
-my %ChangeStateName2ID = reverse %{
+my %ChangeStateID2Name = %{
     $Self->{GeneralCatalogObject}->ItemList(
         Class => 'ITSM::ChangeManagement::Change::State',
         )
     };
+my %ChangeStateName2ID   = reverse %ChangeStateID2Name;
+my @SortedChangeStateIDs = sort keys %ChangeStateID2Name;
 
 # check if change states are in GeneralCatalog
 for my $DefaultChangeState (@DefaultChangeStates) {
@@ -1475,6 +1478,23 @@ my @ChangeTests = (
         Label      => 'PermissionTest',    # this change will be used in permission tests
     },
 
+    # Change for ChangePossibleStatesGet tests.
+    {
+        Description => q{Change for 'ChangePossibleStatesGet' tests.},
+        SourceData  => {
+            ChangeAdd => {
+                UserID      => $UserIDs[0],
+                ChangeTitle => 'ChangePossibleStatesGet - Title - ' . $UniqueSignature,
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                ChangeTitle => 'ChangePossibleStatesGet - Title - ' . $UniqueSignature,
+            },
+        },
+        SearchTest => [6],
+        Label      => 'PossibleStatesTest',    # change for testing ChangePossibleStatesGet()
+    },
 );
 
 # ------------------------------------------------------------ #
@@ -3974,6 +3994,51 @@ for my $Test (@PermissionTests) {
 continue {
     $PermissionTestCounter++;
     $TestCount++;
+}
+
+# ------------------------------------------------------------ #
+# testing the method ChangePossibleStatesGet()
+# ------------------------------------------------------------ #
+
+my ($PossibleStatesTestChangeID) = @{ $Label2ChangeIDs{PossibleStatesTest} };
+
+# TODO: define what state ids should be possible
+# At the moment ChangePossibleStatesGet() should return a list of all states.
+# So all state ids should be possible.
+# This has to be adapted when ChangePossibleStatesGet() changes its behaviour.
+my @PossibleStateIDsReference = @SortedChangeStateIDs;
+
+# get possible states
+my $PossibleStates = $Self->{ChangeObject}->ChangePossibleStatesGet(
+    ChangeID => $PossibleStatesTestChangeID,
+    UserID   => 1,
+) || {};
+
+# do the checks
+for my $PossibleStateID (@PossibleStateIDsReference) {
+    my ( $FirstHashRef, $SecondHashRef )
+        = grep { $_->{Key} == $PossibleStateID } @{$PossibleStates};
+
+    # a match is expected
+    $Self->True(
+        $FirstHashRef,
+        "Check for possible state id $PossibleStateID",
+    );
+
+    # the name should also match
+    $FirstHashRef ||= {};
+    my $PossibleStateName = $ChangeStateID2Name{$PossibleStateID};
+    $Self->Is(
+        $FirstHashRef->{Value},
+        $PossibleStateName,
+        "Check for possible state name $PossibleStateID",
+    );
+
+    # only one match is expected
+    $Self->False(
+        $SecondHashRef,
+        "Check that the state id $PossibleStateID is returned only once.",
+    );
 }
 
 # ------------------------------------------------------------ #

@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.148 2009-11-14 18:54:50 ub Exp $
+# $Id: ITSMChange.pm,v 1.149 2009-11-16 14:52:48 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.148 $) [1];
+$VERSION = qw($Revision: 1.149 $) [1];
 
 =head1 NAME
 
@@ -1693,6 +1693,65 @@ sub ChangeStateLookup {
     }
 }
 
+=item ChangePossibleStatesGet()
+
+This method returns a list of possible change states.
+For now the required parameter ChangeID is checked,
+but not yet used for producing the list.
+
+    my $ChangeStateList = $ChangeObject->ChangePossibleStatesGet(
+        ChangeID => 123,
+        UserID      => 1,
+    );
+
+The return value is a reference to an array of hashrefs. The Element 'Key' is then
+the StateID and die Element 'Value' is the name of the state. The array elements
+are sorted by state id.
+
+    my $ChangeStateList = [
+        {
+            Key   => 156,
+            Value => 'approved',
+        },
+        {
+            Key   => 157,
+            Value => 'in progress',
+        },
+    ];
+
+=cut
+
+sub ChangePossibleStatesGet {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Attribute (qw(ChangeID UserID)) {
+        if ( !$Param{$Attribute} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Attribute!",
+            );
+            return;
+        }
+    }
+
+    # get workorder state list
+    my $StateList = $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::ChangeManagement::Change::State',
+    ) || {};
+
+    # assemble a an array of hash refs
+    my @ArrayHashRef;
+    for my $StateID ( sort keys %{$StateList} ) {
+        push @ArrayHashRef, {
+            Key   => $StateID,
+            Value => $StateList->{$StateID},
+        };
+    }
+
+    return \@ArrayHashRef;
+}
+
 =item Permission()
 
 Returns whether the agent C<UserID> has permissions of the type C<Type>
@@ -2208,6 +2267,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.148 $ $Date: 2009-11-14 18:54:50 $
+$Revision: 1.149 $ $Date: 2009-11-16 14:52:48 $
 
 =cut
