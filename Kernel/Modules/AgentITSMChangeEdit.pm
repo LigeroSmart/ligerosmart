@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeEdit.pm - the OTRS::ITSM::ChangeManagement change edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.pm,v 1.17 2009-11-16 15:47:54 bes Exp $
+# $Id: AgentITSMChangeEdit.pm,v 1.18 2009-11-16 22:23:40 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -60,7 +60,7 @@ sub Run {
     my $Access = $Self->{ChangeObject}->Permission(
         Type     => $Self->{Config}->{Permission},
         ChangeID => $ChangeID,
-        UserID   => $Self->{UserID}
+        UserID   => $Self->{UserID},
     );
 
     # error screen, don't show change edit mask

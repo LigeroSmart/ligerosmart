@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeHistoryZoom.pm - the OTRS::ITSM::ChangeManagement change history zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeHistoryZoom.pm,v 1.2 2009-11-16 10:18:43 reb Exp $
+# $Id: AgentITSMChangeHistoryZoom.pm,v 1.3 2009-11-16 22:23:41 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -79,7 +79,7 @@ sub Run {
     my $Access = $Self->{ChangeObject}->Permission(
         Type     => $Self->{Config}->{Permission},
         ChangeID => $HistoryEntry->{ChangeID},
-        UserID   => $Self->{UserID}
+        UserID   => $Self->{UserID},
     );
 
     # error screen, don't show change add mask
