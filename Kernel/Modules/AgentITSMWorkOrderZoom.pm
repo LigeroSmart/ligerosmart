@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderZoom.pm - the OTRS::ITSM::ChangeManagement workorder zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderZoom.pm,v 1.22 2009-11-16 10:13:52 bes Exp $
+# $Id: AgentITSMWorkOrderZoom.pm,v 1.23 2009-11-16 12:51:51 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -177,6 +177,26 @@ sub Run {
             %{$WorkOrder},
         },
     );
+
+    # show values or dash ('-')
+    for my $BlockName (
+        qw(WorkOrderType PlannedStartTime PlannedEndTime ActualStartTime ActualEndTime)
+        )
+    {
+        if ( $WorkOrder->{$BlockName} ) {
+            $Self->{LayoutObject}->Block(
+                Name => $BlockName,
+                Data => {
+                    $BlockName => $WorkOrder->{$BlockName},
+                },
+            );
+        }
+        else {
+            $Self->{LayoutObject}->Block(
+                Name => 'Empty' . $BlockName,
+            );
+        }
+    }
 
     # get change builder user
     my %ChangeBuilderUser;
