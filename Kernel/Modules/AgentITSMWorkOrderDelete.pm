@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderDelete.pm - the OTRS::ITSM::ChangeManagement workorder delete module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderDelete.pm,v 1.2 2009-11-16 10:13:52 bes Exp $
+# $Id: AgentITSMWorkOrderDelete.pm,v 1.3 2009-11-16 10:34:22 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -85,6 +85,30 @@ sub Run {
             Message    => "You need $Self->{Config}->{Permission} permissions on the change!",
             WithHeader => 'yes',
         );
+    }
+
+    if ( $Self->{Subaction} eq 'WorkOrderDelete' ) {
+
+        my $CouldDeleteWorkOrder = $Self->{WorkOrderObject}->WorkOrderDelete(
+            WorkOrderID => $WorkOrder->{WorkOrderID},
+            UserID      => $Self->{UserID},
+        );
+
+        if ($CouldDeleteWorkOrder) {
+
+            # redirect to change zoom mask, when update was successful
+            return $Self->{LayoutObject}->Redirect(
+                OP => "Action=AgentITSMChangeZoom&ChangeID=$WorkOrder->{ChangeID}",
+            );
+        }
+        else {
+
+            # show error message, when delete failed
+            return $Self->{LayoutObject}->ErrorScreen(
+                Message => "Was not able to delete WorkOrder $WorkOrder->{WorkOrderID}!",
+                Comment => 'Please contact the admin.',
+            );
+        }
     }
 
     # output header
