@@ -2,7 +2,7 @@
 # AgentITSMChangeEdit.dtl - provides HTML form for AgentITSMChangeEdit
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.dtl,v 1.20 2009-11-16 15:47:54 bes Exp $
+# $Id: AgentITSMChangeEdit.dtl,v 1.21 2009-11-16 18:11:48 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -101,6 +101,29 @@ $Include{"RichTextEditorITSM"}
                                         </div>
                                     </td>
                                 </tr>
+
+# TODO EXAMPLE code for Category - Impact - Priority
+# TODO Look how this is done in ITSMIncidentProblemManagement!
+# TODO also look at title attributes, and css styles !!!
+<!-- dtl:block:Category -->
+                                <tr>
+                                    <td class="contentkey">$Text{"Category"}:</td>
+                                    <td class="contentvalue">$Data{"CategoryStrg"}</td>
+                                </tr>
+<!-- dtl:block:Category -->
+<!-- dtl:block:Impact -->
+                                <tr>
+                                    <td class="contentkey">$Text{"Impact"}:</td>
+                                    <td class="contentvalue">$Data{"ImpactStrg"}</td>
+                                </tr>
+<!-- dtl:block:Impact -->
+<!-- dtl:block:Priority -->
+                                <tr>
+                                    <td class="contentkey">$Text{"Priority"}:</td>
+                                    <td class="contentvalue">$Data{"PriorityStrg"}</td>
+                                </tr>
+<!-- dtl:block:Priority -->
+
 <!-- dtl:block:State -->
                                 <tr>
                                     <td width="25%" class="contentkey">$Text{"State"}:</td>
