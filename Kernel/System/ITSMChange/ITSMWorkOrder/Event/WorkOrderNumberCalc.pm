@@ -3,7 +3,7 @@
 # event module for ITSMWorkOrder
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrderNumberCalc.pm,v 1.2 2009-11-14 17:25:38 ub Exp $
+# $Id: WorkOrderNumberCalc.pm,v 1.3 2009-11-16 10:50:43 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
@@ -147,9 +147,7 @@ sub Run {
     }
 
     # handle WorkOrderUpdate und WorkOrderDelete events
-    if ( $Param{Event} eq 'WorkOrderUpdatePost' || $Param{Event} eq 'WorkOrderDeletePost' ) {
-
-        # TODO: Should the new numbers be tracked in history?
+    if ( $Param{Event} eq 'WorkOrderUpdatePost' ) {
 
         # get WorkOrder
         my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
@@ -162,6 +160,17 @@ sub Run {
         # recalculate WorkOrder numbers
         return if !$Self->_WorkOrderNumberCalc(
             ChangeID => $WorkOrder->{ChangeID},
+            UserID   => $Param{UserID},
+        );
+
+    }
+
+    # handle WorkOrderDelete events
+    elsif ( $Param{Event} eq 'WorkOrderDeletePost' ) {
+
+        # recalculate WorkOrder numbers
+        return if !$Self->_WorkOrderNumberCalc(
+            ChangeID => $Param{OldWorkOrderData}->{ChangeID},
             UserID   => $Param{UserID},
         );
 
@@ -278,6 +287,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2009-11-14 17:25:38 $
+$Revision: 1.3 $ $Date: 2009-11-16 10:50:43 $
 
 =cut
