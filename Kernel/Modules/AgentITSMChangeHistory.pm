@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeHistory.pm - the OTRS::ITSM::ChangeManagement change history module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeHistory.pm,v 1.17 2009-11-16 15:55:24 reb Exp $
+# $Id: AgentITSMChangeHistory.pm,v 1.18 2009-11-16 17:29:38 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::History;
 use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -130,14 +130,12 @@ sub Run {
             # set default values for some keys
             for my $Fieldname (qw(ContentNew ContentOld)) {
                 if ( !defined $HistoryEntry->{$Fieldname} ) {
-                    $HistoryEntry->{$Fieldname} = '';
-                }
-            }
-
-            # set default values for some keys
-            for my $Fieldname (qw(ContentNew ContentOld)) {
-                if ( !defined $HistoryEntry->{$Fieldname} ) {
                     $HistoryEntry->{$Fieldname} = '-';
+                }
+                else {
+
+                    # replace html breaks with single space
+                    $HistoryEntry->{$Fieldname} =~ s{ < br \s*? /? >}{ }xmsg;
                 }
             }
 
@@ -197,7 +195,7 @@ sub Run {
 
             # show 'nice' output
             $Data{Content} = $Self->{LayoutObject}->{LanguageObject}->Get(
-                $HistoryItemType . 'History::' . $Data{HistoryType} . '", ' . $Data{Content}
+                $HistoryItemType . 'History::' . $Data{HistoryType} . '", ' . $Data{Content},
             );
 
             # remove not needed place holder
