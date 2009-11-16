@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.92 2009-11-12 14:34:43 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.93 2009-11-16 14:46:14 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -160,8 +160,8 @@ my %WorkOrderStateID2Name = %{
         Class => 'ITSM::ChangeManagement::WorkOrder::State',
         ) || {}
     };
-my %WorkOrderStateName2ID = reverse %WorkOrderStateID2Name;
-my @SortedStateIDs        = sort keys %WorkOrderStateID2Name;
+my %WorkOrderStateName2ID   = reverse %WorkOrderStateID2Name;
+my @SortedWorkOrderStateIDs = sort keys %WorkOrderStateID2Name;
 
 # check if states are in GeneralCatalog
 for my $DefaultWorkOrderState (@DefaultWorkOrderStates) {
@@ -1327,7 +1327,7 @@ push @WorkOrderTests, (
                 UserID           => 1,
                 ChangeID         => $OrderByTestID,
                 WorkOrderTypeID  => $SortedTypeIDs[2],
-                WorkOrderStateID => $SortedStateIDs[0],
+                WorkOrderStateID => $SortedWorkOrderStateIDs[0],
                 WorkOrderTitle   => 'WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
             },
         },
@@ -1335,7 +1335,7 @@ push @WorkOrderTests, (
             WorkOrderGet => {
                 ChangeID         => $OrderByTestID,
                 WorkOrderTypeID  => $SortedTypeIDs[2],
-                WorkOrderStateID => $SortedStateIDs[0],
+                WorkOrderStateID => $SortedWorkOrderStateIDs[0],
                 WorkOrderTitle   => 'WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
             },
         },
@@ -1350,7 +1350,7 @@ push @WorkOrderTests, (
                 UserID           => 1,
                 ChangeID         => $OrderByTestID,
                 WorkOrderTypeID  => $SortedTypeIDs[1],
-                WorkOrderStateID => $SortedStateIDs[1],
+                WorkOrderStateID => $SortedWorkOrderStateIDs[1],
                 WorkOrderTitle   => 'WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
             },
         },
@@ -1358,7 +1358,7 @@ push @WorkOrderTests, (
             WorkOrderGet => {
                 ChangeID         => $OrderByTestID,
                 WorkOrderTypeID  => $SortedTypeIDs[1],
-                WorkOrderStateID => $SortedStateIDs[1],
+                WorkOrderStateID => $SortedWorkOrderStateIDs[1],
                 WorkOrderTitle   => 'WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
             },
         },
@@ -1373,7 +1373,7 @@ push @WorkOrderTests, (
                 UserID           => 1,
                 ChangeID         => $OrderByTestID,
                 WorkOrderTypeID  => $SortedTypeIDs[0],
-                WorkOrderStateID => $SortedStateIDs[2],
+                WorkOrderStateID => $SortedWorkOrderStateIDs[2],
                 WorkOrderTitle   => 'WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
             },
         },
@@ -1381,7 +1381,7 @@ push @WorkOrderTests, (
             WorkOrderGet => {
                 ChangeID         => $OrderByTestID,
                 WorkOrderTypeID  => $SortedTypeIDs[0],
-                WorkOrderStateID => $SortedStateIDs[2],
+                WorkOrderStateID => $SortedWorkOrderStateIDs[2],
                 WorkOrderTitle   => 'WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
             },
         },
@@ -3819,7 +3819,7 @@ continue {
 }
 
 # ------------------------------------------------------------ #
-# test for WorkOrderPossibleStatesGet
+# testing the method WorkOrderPossibleStatesGet()
 # ------------------------------------------------------------ #
 
 # create change for this test
@@ -3838,7 +3838,7 @@ my $WorkOrderIDForPossibleStatesTest = $Self->{WorkOrderObject}->WorkOrderAdd(
 # At the moment WorkOrderPossibleStatesGet() should return a list of all states.
 # So all state ids should be possible.
 # This has to be adapted when WorkOrderPossibleStatesGet() changes its behaviour.
-my @PossibleStateIDsReference = @SortedStateIDs;
+my @PossibleStateIDsReference = @SortedWorkOrderStateIDs;
 
 # get possible states
 my $PossibleStates = $Self->{WorkOrderObject}->WorkOrderPossibleStatesGet(

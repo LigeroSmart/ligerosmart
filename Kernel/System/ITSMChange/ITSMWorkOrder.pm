@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.16 2009-11-16 09:54:43 reb Exp $
+# $Id: ITSMWorkOrder.pm,v 1.17 2009-11-16 14:46:15 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 =head1 NAME
 
@@ -1442,16 +1442,16 @@ sub WorkOrderPossibleStatesGet {
     }
 
     # get workorder state list
-    my $WorkOrderStateList = $Self->{GeneralCatalogObject}->ItemList(
+    my $StateList = $Self->{GeneralCatalogObject}->ItemList(
         Class => 'ITSM::ChangeManagement::WorkOrder::State',
     ) || {};
 
     # assemble a an array of hash refs
     my @ArrayHashRef;
-    for my $StateID ( sort keys %{$WorkOrderStateList} ) {
+    for my $StateID ( sort keys %{$StateList} ) {
         push @ArrayHashRef, {
             Key   => $StateID,
-            Value => $WorkOrderStateList->{$StateID},
+            Value => $StateList->{$StateID},
         };
     }
 
@@ -2111,6 +2111,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.16 $ $Date: 2009-11-16 09:54:43 $
+$Revision: 1.17 $ $Date: 2009-11-16 14:46:15 $
 
 =cut
