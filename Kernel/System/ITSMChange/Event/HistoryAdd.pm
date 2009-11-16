@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/HistoryAdd.pm - HistoryAdd event module for ITSMChange
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: HistoryAdd.pm,v 1.14 2009-11-10 14:19:53 reb Exp $
+# $Id: HistoryAdd.pm,v 1.15 2009-11-16 08:53:52 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 =head1 NAME
 
@@ -165,8 +165,10 @@ sub Run {
         FIELD:
         for my $Field ( keys %{ $Param{Data} } ) {
 
-            # we do not track the user id
+            # we do not track the user id and "plain" columns
             next FIELD if $Field eq 'UserID';
+            next FIELD if $Field eq 'JustificationPlain';
+            next FIELD if $Field eq 'DescriptionPlain';
 
             # check if field has changed
             my $FieldHasChanged = $Self->HasFieldChanged(
@@ -326,6 +328,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.14 $ $Date: 2009-11-10 14:19:53 $
+$Revision: 1.15 $ $Date: 2009-11-16 08:53:52 $
 
 =cut

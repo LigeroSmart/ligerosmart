@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder/Event/HistoryAdd.pm - HistoryAdd event module for WorkOrder
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: HistoryAdd.pm,v 1.12 2009-11-10 14:19:53 reb Exp $
+# $Id: HistoryAdd.pm,v 1.13 2009-11-16 08:53:52 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 =head1 NAME
 
@@ -169,8 +169,10 @@ sub Run {
         FIELD:
         for my $Field ( keys %{ $Param{Data} } ) {
 
-            # we do not track the user id
+            # we do not track the user id and "plain" columns
             next FIELD if $Field eq 'UserID';
+            next FIELD if $Field eq 'ReportPlain';
+            next FIELD if $Field eq 'InstructionPlain';
 
             # check if field has changed
             my $FieldHasChanged = $Self->HasFieldChanged(
@@ -308,6 +310,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.12 $ $Date: 2009-11-10 14:19:53 $
+$Revision: 1.13 $ $Date: 2009-11-16 08:53:52 $
 
 =cut
