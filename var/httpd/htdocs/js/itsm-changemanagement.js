@@ -2,7 +2,7 @@
 // itsm-changemanagement.js - provides JavaScript functions
 // Copyright (C) 2003-2009 OTRS AG, http://otrs.com/\n";
 // --
-// $Id: itsm-changemanagement.js,v 1.4 2009-11-16 11:04:18 reb Exp $
+// $Id: itsm-changemanagement.js,v 1.5 2009-11-16 11:16:06 reb Exp $
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -12,11 +12,11 @@
 function CheckTime( id_base ) {
 
     /* check the planned end time */
-    var Year   = document.getElementById( id_base + 'Year' ).value * 1;
-    var Month  = document.getElementById( id_base + 'Month' ).value * 1;
-    var Day    = document.getElementById( id_base + 'Day' ).value * 1;
-    var Hour   = document.getElementById( id_base + 'Hour' ).value * 1;
-    var Minute = document.getElementById( id_base + 'Minute' ).value * 1;
+    var Year   = parseInt( document.getElementById( id_base + 'Year' ).value );
+    var Month  = parseInt( document.getElementById( id_base + 'Month' ).value );
+    var Day    = parseInt( document.getElementById( id_base + 'Day' ).value );
+    var Hour   = parseInt( document.getElementById( id_base + 'Hour' ).value );
+    var Minute = parseInt( document.getElementById( id_base + 'Minute' ).value );
 
     if (
         0
@@ -36,17 +36,17 @@ function CheckTime( id_base ) {
 
 function CheckStartBeforeEnd ( StartPrefix, EndPrefix, ErrorMsg ) {
 
-    var StartYear   = document.getElementById( StartPrefix + 'Year' ).value * 1;
-    var StartMonth  = document.getElementById( StartPrefix + 'Month' ).value * 1;
-    var StartDay    = document.getElementById( StartPrefix + 'Day' ).value * 1;
-    var StartHour   = document.getElementById( StartPrefix + 'Hour' ).value * 1;
-    var StartMinute = document.getElementById( StartPrefix + 'Minute' ).value * 1;
+    var StartYear   = parseInt( document.getElementById( StartPrefix + 'Year' ).value );
+    var StartMonth  = parseInt( document.getElementById( StartPrefix + 'Month' ).value );
+    var StartDay    = parseInt( document.getElementById( StartPrefix + 'Day' ).value );
+    var StartHour   = parseInt( document.getElementById( StartPrefix + 'Hour' ).value );
+    var StartMinute = parseInt( document.getElementById( StartPrefix + 'Minute' ).value );
 
-    var EndYear   = document.getElementById( EndPrefix + 'Year' ).value * 1;
-    var EndMonth  = document.getElementById( EndPrefix + 'Month' ).value * 1;
-    var EndDay    = document.getElementById( EndPrefix + 'Day' ).value * 1;
-    var EndHour   = document.getElementById( EndPrefix + 'Hour' ).value * 1;
-    var EndMinute = document.getElementById( EndPrefix + 'Minute' ).value * 1;
+    var EndYear   = parseInt( document.getElementById( EndPrefix + 'Year' ).value );
+    var EndMonth  = parseInt( document.getElementById( EndPrefix + 'Month' ).value );
+    var EndDay    = parseInt( document.getElementById( EndPrefix + 'Day' ).value );
+    var EndHour   = parseInt( document.getElementById( EndPrefix + 'Hour' ).value );
+    var EndMinute = parseInt( document.getElementById( EndPrefix + 'Minute' ).value );
 
     if ( StartYear < EndYear ) {
         return true;
