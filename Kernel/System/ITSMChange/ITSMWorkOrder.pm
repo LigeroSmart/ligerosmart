@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.15 2009-11-14 18:06:00 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.16 2009-11-16 09:54:43 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 =head1 NAME
 
@@ -1530,6 +1530,8 @@ This method returns a list of all workorder types.
 
     my $WorkOrderTypeList = $WorkOrderObject->WorkOrderTypeList(
         UserID      => 1,
+        Default     => 1,   # optional - the default type is selected type (default: 0)
+        SelectedID  => 123, # optional - this id is selected
     );
 
 The return value is a reference to an array of hashrefs. The Element 'Key' is then
@@ -1563,6 +1565,37 @@ sub WorkOrderTypeList {
         }
     }
 
+    # what type is selected
+    my $SelectedID = $Param{Selected} || 0;
+
+    if ( $Param{Default} ) {
+
+        # set config option
+        my $ConfigOption = 'ITSMWorkOrder::Type::Default';
+
+        # get default workorder type from config
+        my $DefaultType = $Self->{ConfigObject}->Get($ConfigOption);
+
+        # check if default type exists in general catalog
+        my $ItemDataRef = $Self->{GeneralCatalogObject}->ItemGet(
+            Class => 'ITSM::ChangeManagement::WorkOrder::Type',
+            Name  => $DefaultType,
+        );
+
+        # error handling because of invalid config setting
+        if ( !$ItemDataRef || ref $ItemDataRef ne 'HASH' || !%{$ItemDataRef} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "The default WorkOrderType '$DefaultType' "
+                    . "in sysconfig option '$ConfigOption' is invalid! Check the general catalog!",
+            );
+            return;
+        }
+
+        # set default
+        $SelectedID = $ItemDataRef->{ItemID};
+    }
+
     # get workorder type list
     my $WorkOrderTypeList = $Self->{GeneralCatalogObject}->ItemList(
         Class => 'ITSM::ChangeManagement::WorkOrder::Type',
@@ -1571,9 +1604,16 @@ sub WorkOrderTypeList {
     # assemble a an array of hash refs
     my @ArrayHashRef;
     for my $TypeID ( sort keys %{$WorkOrderTypeList} ) {
+        my %SelectedInfo;
+
+        if ( $SelectedID && $SelectedID == $TypeID ) {
+            $SelectedInfo{Selected} = 1;
+        }
+
         push @ArrayHashRef, {
             Key   => $TypeID,
             Value => $WorkOrderTypeList->{$TypeID},
+            %SelectedInfo,
         };
     }
 
@@ -2071,6 +2111,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.15 $ $Date: 2009-11-14 18:06:00 $
+$Revision: 1.16 $ $Date: 2009-11-16 09:54:43 $
 
 =cut

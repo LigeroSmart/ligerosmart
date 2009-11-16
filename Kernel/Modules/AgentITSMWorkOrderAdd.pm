@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAdd.pm - the OTRS::ITSM::ChangeManagement workorder add module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.pm,v 1.18 2009-11-07 08:11:23 bes Exp $
+# $Id: AgentITSMWorkOrderAdd.pm,v 1.19 2009-11-16 09:54:43 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -89,7 +89,7 @@ sub Run {
 
     # store needed parameters in %GetParam to make it reloadable
     my %GetParam;
-    for my $ParamName (qw(WorkOrderTitle Instruction)) {
+    for my $ParamName (qw(WorkOrderTitle Instruction WorkOrderTypeID)) {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
@@ -111,6 +111,16 @@ sub Run {
         # add workorder only if WorkOrderTitle is given
         if ( !$GetParam{WorkOrderTitle} ) {
             push @ValidationErrors, 'InvalidTitle';
+        }
+
+        # check WorkOrderTypeID
+        my $WorkOrderType = $Self->{WorkOrderObject}->WorkOrderTypeLookup(
+            UserID          => $Self->{UserID},
+            WorkOrderTypeID => $GetParam{WorkOrderTypeID},
+        );
+
+        if ( !$WorkOrderType ) {
+            push @ValidationErrors, 'InvalidType';
         }
 
         # check whether complete times are passed and build the time stamps
@@ -165,6 +175,7 @@ sub Run {
                 Instruction      => $GetParam{Instruction},
                 PlannedStartTime => $GetParam{PlannedStartTime},
                 PlannedEndTime   => $GetParam{PlannedEndTime},
+                WorkOrderTypeID  => $GetParam{WorkOrderTypeID},
                 UserID           => $Self->{UserID},
             );
 
@@ -213,6 +224,35 @@ sub Run {
             Name => 'RichText',
         );
     }
+
+    # set selected type
+    my %SelectedInfo = (
+        Default => 1,
+    );
+
+    if ( $GetParam{WorkOrderTypeID} ) {
+        %SelectedInfo = ( Selected => $GetParam{WorkOrderTypeID}, )
+    }
+
+    # get WorkOrderType list
+    my $WorkOrderTypeList = $Self->{WorkOrderObject}->WorkOrderTypeList(
+        UserID => $Self->{UserID},
+        %SelectedInfo,
+    );
+
+    # build the dropdown
+    my $WorkOrderTypeDropDown = $Self->{LayoutObject}->BuildSelection(
+        Name => 'WorkOrderTypeID',
+        Data => $WorkOrderTypeList,
+    );
+
+    # show block with WorkOrderType dropdown
+    $Self->{LayoutObject}->Block(
+        Name => 'WorkOrderType',
+        Data => {
+            TypeStrg => $WorkOrderTypeDropDown,
+        },
+    );
 
     # time period that can be selected from the GUI
     my %TimePeriod = %{ $Self->{ConfigObject}->Get('ITSMWorkOrder::TimePeriod') };

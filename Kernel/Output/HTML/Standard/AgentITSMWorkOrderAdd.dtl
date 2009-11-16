@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderAdd.dtl - provides HTML form for AgentITSMWorkOrderAdd
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.dtl,v 1.23 2009-11-11 08:52:23 reb Exp $
+# $Id: AgentITSMWorkOrderAdd.dtl,v 1.24 2009-11-16 09:54:43 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -143,6 +143,21 @@ $Include{"RichTextEditorITSM"}
 <!-- dtl:block:RichText -->
                                             <textarea id="RichText1" name="Instruction" rows="15" cols="$Config{"ITSM::Frontend::TextArea"}" wrap="$Env{"BrowserWrap"}">$Data{"Instruction"}</textarea>
                                         </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="contentkey">
+                                        $Text{"WorkOrder Type"}:
+                                        <font color="red" title="$Text{"Required"}">*</font>
+                                    </td>
+                                    <td class="contentvalue">
+<!-- dtl:block:WorkOrderType -->
+                                        $Data{"TypeStrg"}
+<!-- dtl:block:WorkOrderType -->
+<!-- dtl:block:InvalidType -->
+                                        <br />
+                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
+<!-- dtl:block:InvalidType -->
                                     </td>
                                 </tr>
                                 <tr>
