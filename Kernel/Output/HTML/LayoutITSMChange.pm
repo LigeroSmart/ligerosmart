@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LayoutITSMChange.pm,v 1.8 2009-11-13 14:18:05 mae Exp $
+# $Id: LayoutITSMChange.pm,v 1.9 2009-11-16 10:14:55 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use POSIX qw(ceil);
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 =item ITSMChangeBuildWorkOrderGraph()
 
@@ -63,9 +63,10 @@ sub ITSMChangeBuildWorkOrderGraph {
     $Self->{WorkOrderObject} = $Param{WorkOrderObject};
 
     # check if work orders are available
-    return if !$Change->{WorkOrderIDs} || !scalar @{ $Change->{WorkOrderIDs} };
+    return if !$Change->{WorkOrderIDs};
 
-    $Self->{LayoutObjectGraph} = Kernel::Output::HTML::Layout->new( %{$Self} );
+    # check for ARRAY-ref and empty ARRAY-ref
+    return if ref $Change->{WorkOrderIDs} ne 'ARRAY' || !@{ $Change->{WorkOrderIDs} };
 
     # get smallest start time
     my $StartTime;
@@ -119,11 +120,13 @@ sub ITSMChangeBuildWorkOrderGraph {
             ;
     }
 
+    # calculate ticks for change
     my $ChangeTicks = $Self->_ITSMChangeGetChangeTicks(
         Start => $StartTime,
         End   => $EndTime,
     );
 
+    # check for valid ticks
     if ( !$ChangeTicks ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
@@ -150,7 +153,7 @@ sub ITSMChangeBuildWorkOrderGraph {
     @WorkOrders = sort { $a->{WorkOrderNumber} <=> $b->{WorkOrderNumber} } @WorkOrders;
 
     # load graph sceleton
-    $Self->{LayoutObjectGraph}->Block(
+    $Self->Block(
         Name => 'WorkOrderGraph',
         Data => {
         },
@@ -176,7 +179,8 @@ sub ITSMChangeBuildWorkOrderGraph {
         Ticks     => $ChangeTicks,
     );
 
-    return $Self->{LayoutObjectGraph}->Output(
+    # render graph and return HTML
+    return $Self->Output(
         TemplateFile => 'ITSMChange',
     );
 }
@@ -216,7 +220,7 @@ sub _ITSMChangeGetChangeScale {
     );
 
     # create scale block
-    $Self->{LayoutObjectGraph}->Block(
+    $Self->Block(
         Name => 'Scale',
         Data => {
             %ScaleName,
@@ -231,7 +235,7 @@ sub _ITSMChangeGetChangeScale {
         );
 
         # build scale label block
-        $Self->{LayoutObjectGraph}->Block(
+        $Self->Block(
             Name => 'ScaleLabel',
             Data => {
                 ScaleLabel => $ScaleName{$Interval},
@@ -305,7 +309,7 @@ sub _ITSMChangeGetWorkOrderGraph {
     $TickValue{ActualTrailing} = 100 - ( $TickValue{ActualPadding} + $TickValue{ActualTicks} );
 
     # create work order item
-    $Self->{LayoutObjectGraph}->Block(
+    $Self->Block(
         Name => 'WorkOrderItem',
         Data => {
             %{$WorkOrder},
