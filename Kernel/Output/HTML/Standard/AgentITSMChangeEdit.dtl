@@ -2,7 +2,7 @@
 # AgentITSMChangeEdit.dtl - provides HTML form for AgentITSMChangeEdit
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.dtl,v 1.19 2009-11-13 14:22:27 ub Exp $
+# $Id: AgentITSMChangeEdit.dtl,v 1.20 2009-11-16 15:47:54 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -101,6 +101,12 @@ $Include{"RichTextEditorITSM"}
                                         </div>
                                     </td>
                                 </tr>
+<!-- dtl:block:State -->
+                                <tr>
+                                    <td width="25%" class="contentkey">$Text{"State"}:</td>
+                                    <td width="75%" class="contentvalue">$Data{"StateSelectString"}</td>
+                                </tr>
+<!-- dtl:block:State -->
 <!-- dtl:block:RealizeTime -->
                                 <tr>
                                     <td class="contentkey">

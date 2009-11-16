@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeEdit.pm - the OTRS::ITSM::ChangeManagement change edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.pm,v 1.16 2009-11-06 12:43:56 bes Exp $
+# $Id: AgentITSMChangeEdit.pm,v 1.17 2009-11-16 15:47:54 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -97,6 +97,11 @@ sub Run {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
+    # keep ChangeStateID only if configured
+    if ( $Self->{Config}->{State} ) {
+        $GetParam{ChangeStateID} = $Self->{ParamObject}->GetParam( Param => 'ChangeStateID' );
+    }
+
     # Remember the reason why saving was not attempted.
     # This entries are the names of the dtl validation error blocks.
     my @ValidationErrors;
@@ -147,6 +152,10 @@ sub Run {
 
         # update only when there are no validation errors
         if ( !@ValidationErrors ) {
+            my %AdditionalParam;
+            if ( $Self->{Config}->{State} ) {
+                $AdditionalParam{ChangeStateID} = $GetParam{ChangeStateID};
+            }
             my $CouldUpdateChange = $Self->{ChangeObject}->ChangeUpdate(
                 ChangeID      => $ChangeID,
                 Description   => $GetParam{Description},
@@ -154,6 +163,7 @@ sub Run {
                 ChangeTitle   => $GetParam{ChangeTitle},
                 RealizeTime   => $GetParam{RealizeTime},
                 UserID        => $Self->{UserID},
+                %AdditionalParam,
             );
 
             if ($CouldUpdateChange) {
@@ -178,9 +188,13 @@ sub Run {
     else {
         %GetParam = ();
 
+        if ( $Self->{Connfig}->{State} ) {
+            $GetParam{ChangeStateID} = $Change->{ChangeStateID};
+        }
+
         if ( $Change->{RealizeTime} ) {
 
-            # get realize time from workorder
+            # get realize time from the change
             my $SystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
                 String => $Change->{RealizeTime},
             );
@@ -198,6 +212,30 @@ sub Run {
             $GetParam{RealizeTimeMonth}  = $Month;
             $GetParam{RealizeTimeYear}   = $Year;
         }
+    }
+
+    if ( $Self->{Config}->{State} ) {
+
+        # get change state list
+        my $ChangePossibleStates = $Self->{ChangeObject}->ChangePossibleStatesGet(
+            ChangeID => $ChangeID,
+            UserID   => $Self->{UserID},
+        );
+
+        # build drop-down with change states
+        my $StateSelectString = $Self->{LayoutObject}->BuildSelection(
+            Data       => $ChangePossibleStates,
+            Name       => 'ChangeStateID',
+            SelectedID => $GetParam{ChangeStateID},
+        );
+
+        $Self->{LayoutObject}->Block(
+            Name => 'State',
+            Data => {
+                StateSelectString => $StateSelectString,
+            },
+        );
+
     }
 
     # output header

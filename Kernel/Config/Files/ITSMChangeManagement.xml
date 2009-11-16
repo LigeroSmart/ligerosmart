@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.68 2009-11-16 10:13:52 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.69 2009-11-16 15:47:54 bes Exp $</CVS>
     <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
         <Description Lang="en">Logfile for the itsm change counter.</Description>
         <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
@@ -844,6 +844,18 @@
         <SubGroup>Frontend::Agent::ITSMChange::ViewChangeEdit</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">rw</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeEdit###State" Required="1" Valid="1">
+        <Description Lang="en">If you want to set the state.</Description>
+        <Description Lang="de">Wenn der Status gesetzt werden soll.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeEdit</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeHistory###Permission" Required="1" Valid="1">
