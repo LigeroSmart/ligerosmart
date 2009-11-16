@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderDelete.pm - the OTRS::ITSM::ChangeManagement workorder delete module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderDelete.pm,v 1.3 2009-11-16 10:34:22 bes Exp $
+# $Id: AgentITSMWorkOrderDelete.pm,v 1.4 2009-11-16 10:55:09 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -111,6 +111,20 @@ sub Run {
         }
     }
 
+    # get change that workorder belongs to
+    my $Change = $Self->{ChangeObject}->ChangeGet(
+        ChangeID => $WorkOrder->{ChangeID},
+        UserID   => $Self->{UserID},
+    );
+
+    # check if change is found
+    if ( !$Change ) {
+        return $Self->{LayoutObject}->ErrorScreen(
+            Message => "Could not find Change for WorkOrder $WorkOrderID!",
+            Comment => 'Please contact the admin.',
+        );
+    }
+
     # output header
     my $Output = $Self->{LayoutObject}->Header(
         Title => 'Delete',
@@ -122,6 +136,7 @@ sub Run {
         TemplateFile => 'AgentITSMWorkOrderDelete',
         Data         => {
             %Param,
+            %{$Change},
             %{$WorkOrder},
         },
     );
