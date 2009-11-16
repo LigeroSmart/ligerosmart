@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder/Event/HistoryAdd.pm - HistoryAdd event module for WorkOrder
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: HistoryAdd.pm,v 1.13 2009-11-16 08:53:52 reb Exp $
+# $Id: HistoryAdd.pm,v 1.14 2009-11-16 15:55:24 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 =head1 NAME
 
@@ -196,9 +196,30 @@ sub Run {
     }
     elsif ( $HistoryType eq 'WorkOrderDelete' ) {
 
-        # delete history of change
-        return if !$Self->{HistoryObject}->WorkOrderHistoryDelete(
-            WorkOrderID => $Param{Data}->{WorkOrderID},
+        # get old data
+        my $OldData = delete $Param{Data}->{OldWorkOrderData};
+
+        # get existing history entries for this workorder
+        my $HistoryEntries = $Self->{HistoryObject}->WorkOrderHistoryGet(
+            WorkOrderID => $OldData->{WorkOrderID},
+            UserID      => $Param{Data}->{UserID},
+        );
+
+        # update history entries: delete workorder id
+        HISTORYENTRY:
+        for my $HistoryEntry ( @{$HistoryEntries} ) {
+            $Self->{HistoryObject}->HistoryUpdate(
+                HistoryEntryID => $HistoryEntry->{HistoryEntryID},
+                WorkOrderID    => undef,
+                UserID         => $Param{Data}->{UserID},
+            );
+        }
+
+        # add history entry for WorkOrder deletion
+        return if !$Self->{HistoryObject}->HistoryAdd(
+            ChangeID    => $OldData->{ChangeID},
+            ContentNew  => $OldData->{WorkOrderID},
+            HistoryType => $HistoryType,
             UserID      => $Param{Data}->{UserID},
         );
     }
@@ -310,6 +331,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.13 $ $Date: 2009-11-16 08:53:52 $
+$Revision: 1.14 $ $Date: 2009-11-16 15:55:24 $
 
 =cut

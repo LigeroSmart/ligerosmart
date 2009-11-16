@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/History.pm - all change and workorder history functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: History.pm,v 1.17 2009-11-16 07:48:20 reb Exp $
+# $Id: History.pm,v 1.18 2009-11-16 15:55:24 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 =head1 NAME
 
@@ -523,6 +523,78 @@ sub ChangeHistoryDelete {
     return 1;
 }
 
+=item HistoryUpdate()
+
+This method updates a history entry. It returns 1 on success, and C<undef> otherwise.
+
+    my $Success = $HistoryObject->HistoryUpdate(
+        HistoryEntryID => 123,
+        WorkOrderID    => 3451,         # optional
+        ChangeID       => 1235,         # optional
+        ContentNew     => 'new value',  # optional
+        ContentOld     => 'old value',  # optional
+        UserID         => 1,
+    );
+
+=cut
+
+sub HistoryUpdate {
+    my ( $Self, %Param ) = @_;
+
+    # check for needed stuff
+    for my $Attribute (qw(HistoryEntryID UserID)) {
+        if ( !$Param{$Attribute} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Attribute!",
+            );
+            return;
+        }
+    }
+
+    # get history entry id and user id
+    my $HistoryEntryID = delete $Param{HistoryEntryID};
+    my $UserID         = delete $Param{UserID};
+
+    # we have to update at least one column
+    if ( !keys %Param ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need at least one column to update!',
+        );
+        return;
+    }
+
+    # what columns should be updated
+    my @Columns = keys %Param;
+    my @Bind;
+
+    # get bind variables
+    for my $Column (@Columns) {
+        push @Bind, \$Param{$Column};
+    }
+
+    # get bind string
+    my %ParamKey2ColumnName = (
+        ChangeID      => 'change_id',
+        WorkOrderID   => 'workorder_id',
+        ContentNew    => 'content_new',
+        ContentOld    => 'content_old',
+        HistoryTypeID => 'type_id',
+        Fieldname     => 'fieldname',
+    );
+    my $Binds = join ', ', map { $ParamKey2ColumnName{$_} . ' = ? ' } @Columns;
+
+    # do the update
+    return if !$Self->{DBObject}->Do(
+        SQL => 'UPDATE change_history SET ' . $Binds . ' '
+            . 'WHERE id = ?',
+        Bind => [ @Bind, \$HistoryEntryID ],
+    );
+
+    return 1;
+}
+
 =item HistoryTypeLookup()
 
 This method does a lookup for a history type. If a history type id is given,
@@ -612,6 +684,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.17 $ $Date: 2009-11-16 07:48:20 $
+$Revision: 1.18 $ $Date: 2009-11-16 15:55:24 $
 
 =cut
