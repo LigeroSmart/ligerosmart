@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderDelete.pm - the OTRS::ITSM::ChangeManagement workorder delete module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderDelete.pm,v 1.1 2009-11-15 12:23:28 bes Exp $
+# $Id: AgentITSMWorkOrderDelete.pm,v 1.2 2009-11-16 10:13:52 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -39,7 +39,7 @@ sub new {
     $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
 
     # get config of frontend module
-    $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
+    $Self->{Config} = $Self->{ConfigObject}->Get("ITSMWorkOrder::Frontend::$Self->{Action}");
 
     return $Self;
 }
@@ -48,12 +48,26 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     # get needed ChangeID
-    my $ChangeID = $Self->{ParamObject}->GetParam( Param => 'ChangeID' );
+    my $WorkOrderID = $Self->{ParamObject}->GetParam( Param => 'WorkOrderID' );
 
     # check needed stuff
-    if ( !$ChangeID ) {
+    if ( !$WorkOrderID ) {
         return $Self->{LayoutObject}->ErrorScreen(
-            Message => 'No ChangeID is given!',
+            Message => 'No WorkOrderID is given!',
+            Comment => 'Please contact the admin.',
+        );
+    }
+
+    # get workorder data
+    my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+        WorkOrderID => $WorkOrderID,
+        UserID      => $Self->{UserID},
+    );
+
+    # check error
+    if ( !$WorkOrder ) {
+        return $Self->{LayoutObject}->ErrorScreen(
+            Message => "WorkOrder $WorkOrderID not found in database!",
             Comment => 'Please contact the admin.',
         );
     }
@@ -61,14 +75,14 @@ sub Run {
     # check permissions
     my $Access = $Self->{ChangeObject}->Permission(
         Type     => $Self->{Config}->{Permission},
-        ChangeID => $ChangeID,
+        ChangeID => $WorkOrder->{ChangeID},
         UserID   => $Self->{UserID}
     );
 
     # error screen, don't show workorder delete mask
     if ( !$Access ) {
         return $Self->{LayoutObject}->NoPermission(
-            Message    => "You need $Self->{Config}->{Permission} permissions!",
+            Message    => "You need $Self->{Config}->{Permission} permissions on the change!",
             WithHeader => 'yes',
         );
     }
@@ -84,6 +98,7 @@ sub Run {
         TemplateFile => 'AgentITSMWorkOrderDelete',
         Data         => {
             %Param,
+            %{$WorkOrder},
         },
     );
 

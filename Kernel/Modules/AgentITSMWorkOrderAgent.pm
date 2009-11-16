@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAgent.pm - the OTRS::ITSM::ChangeManagement workorder agent edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAgent.pm,v 1.22 2009-11-04 15:19:30 bes Exp $
+# $Id: AgentITSMWorkOrderAgent.pm,v 1.23 2009-11-16 10:13:52 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -62,21 +62,6 @@ sub Run {
         );
     }
 
-    # check permissions
-    my $Access = $Self->{WorkOrderObject}->Permission(
-        Type        => $Self->{Config}->{Permission},
-        WorkOrderID => $WorkOrderID,
-        UserID      => $Self->{UserID}
-    );
-
-    # error screen
-    if ( !$Access ) {
-        return $Self->{LayoutObject}->NoPermission(
-            Message    => "You need $Self->{Config}->{Permission} permissions!",
-            WithHeader => 'yes',
-        );
-    }
-
     # get workorder data
     my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
         WorkOrderID => $WorkOrderID,
@@ -88,6 +73,21 @@ sub Run {
         return $Self->{LayoutObject}->ErrorScreen(
             Message => "WorkOrder $WorkOrderID not found in database!",
             Comment => 'Please contact the admin.',
+        );
+    }
+
+    # check permissions
+    my $Access = $Self->{ChangeObject}->Permission(
+        Type     => $Self->{Config}->{Permission},
+        ChangeID => $WorkOrder->{ChangeID},
+        UserID   => $Self->{UserID}
+    );
+
+    # error screen
+    if ( !$Access ) {
+        return $Self->{LayoutObject}->NoPermission(
+            Message    => "You need $Self->{Config}->{Permission} permissions on the change!",
+            WithHeader => 'yes',
         );
     }
 
