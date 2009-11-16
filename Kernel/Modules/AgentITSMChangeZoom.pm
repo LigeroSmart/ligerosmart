@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeZoom.pm - the OTRS::ITSM::ChangeManagement change zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.pm,v 1.28 2009-11-13 14:51:02 ub Exp $
+# $Id: AgentITSMChangeZoom.pm,v 1.29 2009-11-16 16:27:06 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.28 $) [1];
+$VERSION = qw($Revision: 1.29 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -209,6 +209,26 @@ sub Run {
         },
     );
 
+    # show values or dash ('-')
+    for my $BlockName (
+        qw(RealizeTime PlannedStartTime PlannedEndTime ActualStartTime ActualEndTime)
+        )
+    {
+        if ( $Change->{$BlockName} ) {
+            $Self->{LayoutObject}->Block(
+                Name => $BlockName,
+                Data => {
+                    $BlockName => $Change->{$BlockName},
+                },
+            );
+        }
+        else {
+            $Self->{LayoutObject}->Block(
+                Name => 'Empty' . $BlockName,
+            );
+        }
+    }
+
     # get change manager data
     my %ChangeManagerUser;
     if ( $Change->{ChangeManagerID} ) {
@@ -245,64 +265,75 @@ sub Run {
         );
     }
 
-    # output CAB block
-    $Self->{LayoutObject}->Block(
-        Name => 'CAB',
-        Data => {
-            %{$Change},
-        },
-    );
+    # show CAB block when there is a CAB
+    if ( @{ $Change->{CABAgents} } || @{ $Change->{CABCustomers} } ) {
 
-    # build and output CAB agents
-    CABAGENT:
-    for my $CABAgent ( @{ $Change->{CABAgents} } ) {
-        next CABAGENT if !$CABAgent;
-
-        my %CABAgentUserData = $Self->{UserObject}->GetUserData(
-            UserID => $CABAgent,
-            Cache  => 1,
-        );
-
-        next CABAGENT if !%CABAgentUserData;
-
-        # build content for agent block
-        my %CABAgentData;
-        for my $Postfix (@Postfixes) {
-            $CABAgentData{ 'CABAgent' . $Postfix } = $CABAgentUserData{$Postfix};
-        }
-
-        # output agent block
+        # output CAB block
         $Self->{LayoutObject}->Block(
-            Name => 'CABAgent',
+            Name => 'CAB',
             Data => {
-                %CABAgentData,
+                %{$Change},
             },
         );
+
+        # build and output CAB agents
+        CABAGENT:
+        for my $CABAgent ( @{ $Change->{CABAgents} } ) {
+            next CABAGENT if !$CABAgent;
+
+            my %CABAgentUserData = $Self->{UserObject}->GetUserData(
+                UserID => $CABAgent,
+                Cache  => 1,
+            );
+
+            next CABAGENT if !%CABAgentUserData;
+
+            # build content for agent block
+            my %CABAgentData;
+            for my $Postfix (@Postfixes) {
+                $CABAgentData{ 'CABAgent' . $Postfix } = $CABAgentUserData{$Postfix};
+            }
+
+            # output agent block
+            $Self->{LayoutObject}->Block(
+                Name => 'CABAgent',
+                Data => {
+                    %CABAgentData,
+                },
+            );
+        }
+
+        #build and output CAB customers
+        CABCUSTOMER:
+        for my $CABCustomer ( @{ $Change->{CABCustomers} } ) {
+            next CABCUSTOMER if !$CABCustomer;
+
+            my %CABCustomerUserData = $Self->{CustomerUserObject}->CustomerUserDataGet(
+                User => $CABCustomer,
+            );
+
+            next CABCUSTOMER if !%CABCustomerUserData;
+
+            # build content for CAB customer block
+            my %CABCustomerData;
+            for my $Postfix (@Postfixes) {
+                $CABCustomerData{ 'CABCustomer' . $Postfix } = $CABCustomerUserData{$Postfix};
+            }
+
+            # output CAB customer block
+            $Self->{LayoutObject}->Block(
+                Name => 'CABCustomer',
+                Data => {
+                    %CABCustomerData,
+                },
+            );
+        }
     }
 
-    # build and output CAB customers
-    CABCUSTOMER:
-    for my $CABCustomer ( @{ $Change->{CABCustomers} } ) {
-        next CABCUSTOMER if !$CABCustomer;
-
-        my %CABCustomerUserData = $Self->{CustomerUserObject}->CustomerUserDataGet(
-            User => $CABCustomer,
-        );
-
-        next CABCUSTOMER if !%CABCustomerUserData;
-
-        # build content for CAB customer block
-        my %CABCustomerData;
-        for my $Postfix (@Postfixes) {
-            $CABCustomerData{ 'CABCustomer' . $Postfix } = $CABCustomerUserData{$Postfix};
-        }
-
-        # output CAB customer block
+    # show dash when no CAB exists
+    else {
         $Self->{LayoutObject}->Block(
-            Name => 'CABCustomer',
-            Data => {
-                %CABCustomerData,
-            },
+            Name => 'EmptyCAB',
         );
     }
 
@@ -337,6 +368,12 @@ sub Run {
     }
 
     # get change initiators info
+    if ( keys %ChangeInitiatorsID ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'ChangeInitiatorExists',
+        );
+    }
+
     my $ChangeInitiators = '';
     for my $UserID ( keys %ChangeInitiatorsID ) {
         my %User;
@@ -367,6 +404,13 @@ sub Run {
                 $User{UserFirstname},
                 $User{UserLastname};
         }
+    }
+
+    # show dash if no change initiator exists
+    if ( !$ChangeInitiators ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'EmptyChangeInitiators',
+        );
     }
 
     # display a string with all changeinitiators
