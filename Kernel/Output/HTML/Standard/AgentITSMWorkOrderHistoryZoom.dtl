@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderHistoryZoom.dtl - provides HTML form for AgentITSMWorkOrderHistoryZoom
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderHistoryZoom.dtl,v 1.1 2009-11-05 11:47:40 reb Exp $
+# $Id: AgentITSMWorkOrderHistoryZoom.dtl,v 1.2 2009-11-16 08:15:42 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -35,7 +35,7 @@
                     <td>
                         <table border="0">
                             <tr>
-                                <td class="contentkey">
+                                <td class="contentkey" style="white-space: nowrap;">
                                     $Text{"Modified"}:
                                 </td>
                                 <td class="contentvalue">
@@ -43,7 +43,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="contentkey">
+                                <td class="contentkey" style="white-space: nowrap;">
                                     $Text{"Old Value"}:
                                 </td>
                                 <td class="contentvalue">
@@ -51,7 +51,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="contentkey">
+                                <td class="contentkey" style="white-space: nowrap;">
                                     $Text{"New Value"}:
                                 </td>
                                 <td class="contentvalue">
@@ -59,7 +59,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="contentkey">
+                                <td class="contentkey" style="white-space: nowrap;">
                                     $Text{"Changed"}:
                                 </td>
                                 <td class="contentvalue">
@@ -67,7 +67,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="contentkey">
+                                <td class="contentkey" style="white-space: nowrap;">
                                     $Text{"Changed by"}:
                                 </td>
                                 <td class="contentvalue">
