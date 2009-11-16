@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderEdit.dtl - provides HTML form for AgentITSMWorkOrderEdit
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderEdit.dtl,v 1.20 2009-11-16 10:01:10 reb Exp $
+# $Id: AgentITSMWorkOrderEdit.dtl,v 1.21 2009-11-16 16:57:18 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -51,8 +51,8 @@ function submit_compose() {
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
         <td class="mainhead">
-            <div title="$Env{"Box0"}$Text{"Edit"} $Text{"WorkOrder#"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"}">
-                $Env{"Box0"}$Text{"Edit"} $Text{"WorkOrder#"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"}
+            <div title="$Env{"Box0"}$Text{"Edit"} $Text{"Workorder#"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"}">
+                $Env{"Box0"}$Text{"Edit"} $Text{"Workorder#"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"}
             </div>
         </td>
     </tr>
@@ -71,7 +71,7 @@ function submit_compose() {
                 <input type="hidden" name="WorkOrderID" value="$QData{"WorkOrderID"}">
                 <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
                     <tr>
-                        <td class="contenthead">$Text{"WorkOrder"}</td>
+                        <td class="contenthead">$Text{"Workorder"}</td>
                     </tr>
                     <tr class="contentbody">
                         <td>
@@ -104,7 +104,7 @@ $Include{"RichTextEditorITSM"}
                                 </tr>
                                 <tr>
                                     <td class="contentkey">
-                                        $Text{"WorkOrder Type"}:
+                                        $Text{"Workorder Type"}:
                                     </td>
                                     <td class="contentvalue">
                                         $QData{"WorkOrderType"}

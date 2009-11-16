@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderAdd.dtl - provides HTML form for AgentITSMWorkOrderAdd
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.dtl,v 1.24 2009-11-16 09:54:43 reb Exp $
+# $Id: AgentITSMWorkOrderAdd.dtl,v 1.25 2009-11-16 16:54:33 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -51,8 +51,8 @@ function submit_compose() {
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
         <td class="mainhead">
-            <div title="$Env{"Box0"}$Text{"Add WorkOrder to"} $Text{"Change#"}: $QData{"ChangeNumber"} $Env{"Box1"}">
-                $Env{"Box0"}$Text{"Add WorkOrder to"} $Text{"Change#"}: $QData{"ChangeNumber"} $Env{"Box1"}
+            <div title="$Env{"Box0"}$Text{"Add Workorder to"} $Text{"Change#"}: $QData{"ChangeNumber"} $Env{"Box1"}">
+                $Env{"Box0"}$Text{"Add Workorder to"} $Text{"Change#"}: $QData{"ChangeNumber"} $Env{"Box1"}
             </div>
         </td>
     </tr>
@@ -71,7 +71,7 @@ function submit_compose() {
                 <input type="hidden" name="ChangeID"  value="$QData{"ChangeID"}">
                 <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
                     <tr>
-                        <td class="contenthead">$Text{"Select WorkOrder Template"}</td>
+                        <td class="contenthead">$Text{"Select Workorder Template"}</td>
                     </tr>
                     <tr class="contentbody">
                         <td>
@@ -114,7 +114,7 @@ function submit_compose() {
                 <input type="hidden" name="ChangeID"  value="$QData{"ChangeID"}">
                 <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
                     <tr>
-                        <td class="contenthead">$Text{"WorkOrder"}</td>
+                        <td class="contenthead">$Text{"Workorder"}</td>
                     </tr>
                     <tr class="contentbody">
                         <td>
@@ -147,7 +147,7 @@ $Include{"RichTextEditorITSM"}
                                 </tr>
                                 <tr>
                                     <td class="contentkey">
-                                        $Text{"WorkOrder Type"}:
+                                        $Text{"Workorder Type"}:
                                         <font color="red" title="$Text{"Required"}">*</font>
                                     </td>
                                     <td class="contentvalue">
