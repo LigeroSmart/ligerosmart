@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.149 2009-11-16 14:52:48 bes Exp $
+# $Id: ITSMChange.pm,v 1.150 2009-11-16 21:38:20 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.149 $) [1];
+$VERSION = qw($Revision: 1.150 $) [1];
 
 =head1 NAME
 
@@ -1559,19 +1559,21 @@ sub ChangeDelete {
         UserID   => $Param{UserID},
     );
 
-    # delete the change
-    return if !$Self->{DBObject}->Do(
-        SQL  => 'DELETE FROM change_item WHERE id = ? ',
-        Bind => [ \$Param{ChangeID} ],
-    );
-
     # trigger ChangeDeletePost-Event
+    # this must be done before deleting the change from the database,
+    # because of a foreign key constraint in the change_history table
     $Self->EventHandler(
         Event => 'ChangeDeletePost',
         Data  => {
             %Param,
         },
         UserID => $Param{UserID},
+    );
+
+    # delete the change
+    return if !$Self->{DBObject}->Do(
+        SQL  => 'DELETE FROM change_item WHERE id = ? ',
+        Bind => [ \$Param{ChangeID} ],
     );
 
     return 1;
@@ -2245,8 +2247,9 @@ sub _CheckChangeParams {
 sub DESTROY {
     my $Self = shift;
 
-    # execute all transaction events
-    $Self->EventHandlerTransaction();
+    # TODO (ub: this must be commented out until further investigation!)
+    #    # execute all transaction events
+    #    $Self->EventHandlerTransaction();
 
     return 1;
 }
@@ -2267,6 +2270,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.149 $ $Date: 2009-11-16 14:52:48 $
+$Revision: 1.150 $ $Date: 2009-11-16 21:38:20 $
 
 =cut
