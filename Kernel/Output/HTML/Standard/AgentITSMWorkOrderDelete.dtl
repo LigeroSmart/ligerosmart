@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderDelete.dtl - provides HTML form for AgentITSMWorkOrderDelete
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderDelete.dtl,v 1.4 2009-11-16 10:51:06 bes Exp $
+# $Id: AgentITSMWorkOrderDelete.dtl,v 1.5 2009-11-16 11:01:41 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@
     <tr>
         <td class="mainbody">
             <br>
-            <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
+            <table border="0" width="350" align="center" cellspacing="0" cellpadding="4">
                 <tr>
                     <td class="contenthead">$Text{"Delete WorkOrder"}</td>
                 </tr>
