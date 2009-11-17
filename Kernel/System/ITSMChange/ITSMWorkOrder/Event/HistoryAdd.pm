@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder/Event/HistoryAdd.pm - HistoryAdd event module for WorkOrder
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: HistoryAdd.pm,v 1.15 2009-11-16 21:52:47 ub Exp $
+# $Id: HistoryAdd.pm,v 1.16 2009-11-17 17:48:54 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 =head1 NAME
 
@@ -120,6 +120,7 @@ It returns 1 on success, C<undef> otherwise.
         Data => {
             WorkOrderID    => 123,
             WorkOrderTitle => 'test',
+            ChangeID       => 456,
         },
         Config => {
             Event       => '(WorkOrderAddPost|WorkOrderUpdatePost|WorkOrderDeletePost)',
@@ -239,19 +240,19 @@ sub Run {
         return if !$Self->{HistoryObject}->HistoryAdd(
             HistoryType => $HistoryType,
             WorkOrderID => $Param{Data}->{WorkOrderID},
+            ChangeID    => $WorkOrder->{ChangeID},
             UserID      => $Param{UserID},
             ContentNew  => join( '%%', $Param{Data}->{SourceObject}, $Param{Data}->{SourceKey} ),
-            ChangeID    => $WorkOrder->{ChangeID},
         );
     }
 
     # error
     else {
 
-        # a unknown event
+        # an unknown event
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "$Param{Event} is a unknown event!",
+            Message  => "$Param{Event} is an unknown event!",
         );
 
         return;
@@ -331,6 +332,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.15 $ $Date: 2009-11-16 21:52:47 $
+$Revision: 1.16 $ $Date: 2009-11-17 17:48:54 $
 
 =cut

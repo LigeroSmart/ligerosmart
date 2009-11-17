@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/HistoryAdd.pm - HistoryAdd event module for ITSMChange
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: HistoryAdd.pm,v 1.16 2009-11-16 21:52:47 ub Exp $
+# $Id: HistoryAdd.pm,v 1.17 2009-11-17 17:47:56 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 =head1 NAME
 
@@ -95,8 +95,11 @@ sub new {
     bless( $Self, $Type );
 
     # get needed objects
-    for (qw(DBObject ConfigObject EncodeObject LogObject MainObject TimeObject ChangeObject)) {
-        $Self->{$_} = $Param{$_} || die "Got no $_!";
+    for my $Object (
+        qw(DBObject ConfigObject EncodeObject LogObject MainObject TimeObject ChangeObject)
+        )
+    {
+        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
     # create additional objects
@@ -287,7 +290,7 @@ sub HasFieldChanged {
     # check hashes
     if ( ref $Param{New} eq 'HASH' ) {
 
-        #field has changed when number of keys are different
+        # field has changed when number of keys are different
         return 1 if scalar keys %{ $Param{New} } != scalar keys %{ $Param{Old} };
 
         # check the values for each key
@@ -328,6 +331,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.16 $ $Date: 2009-11-16 21:52:47 $
+$Revision: 1.17 $ $Date: 2009-11-17 17:47:56 $
 
 =cut
