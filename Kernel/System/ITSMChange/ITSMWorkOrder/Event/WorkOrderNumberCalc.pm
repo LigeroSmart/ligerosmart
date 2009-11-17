@@ -3,7 +3,7 @@
 # event module for ITSMWorkOrder
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrderNumberCalc.pm,v 1.3 2009-11-16 10:50:43 reb Exp $
+# $Id: WorkOrderNumberCalc.pm,v 1.4 2009-11-17 16:33:31 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,10 +15,8 @@ package Kernel::System::ITSMChange::ITSMWorkOrder::Event::WorkOrderNumberCalc;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange;
-
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 =head1 NAME
 
@@ -43,7 +41,7 @@ create an object
     use Kernel::System::DB;
     use Kernel::System::Main;
     use Kernel::System::Time;
-    use Kernel::System::ITSMChange;
+    use Kernel::System::ITSMChange::ITSMWorkOrder;
     use Kernel::System::ITSMChange::ITSMWorkOrder::Event::WorkOrderNumberCalc;
 
     my $ConfigObject = Kernel::Config->new();
@@ -69,7 +67,7 @@ create an object
         LogObject    => $LogObject,
         MainObject   => $MainObject,
     );
-    my $ChangeObject = Kernel::System::ITSMChange->new(
+    my $WorkOrderObject = Kernel::System::ITSMChange::ITSMWorkOrder->new(
         ConfigObject => $ConfigObject,
         EncodeObject => $EncodeObject,
         LogObject    => $LogObject,
@@ -78,13 +76,13 @@ create an object
         MainObject   => $MainObject,
     );
     my $HistoryAddObject = Kernel::System::ITSMChange::ITSMWorkOrder::Event::WorkOrderNumberCalc->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        DBObject     => $DBObject,
-        TimeObject   => $TimeObject,
-        MainObject   => $MainObject,
-        ChangeObject => $ChangeObject,
+        ConfigObject    => $ConfigObject,
+        EncodeObject    => $EncodeObject,
+        LogObject       => $LogObject,
+        DBObject        => $DBObject,
+        TimeObject      => $TimeObject,
+        MainObject      => $MainObject,
+        WorkOrderObject => $WorkOrderObject,
     );
 
 =cut
@@ -103,9 +101,6 @@ sub new {
     {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
-
-    # create additional objects
-    $Self->{ChangeObject} = Kernel::System::ITSMChange->new( %{$Self} );
 
     return $Self;
 }
@@ -287,6 +282,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2009-11-16 10:50:43 $
+$Revision: 1.4 $ $Date: 2009-11-17 16:33:31 $
 
 =cut
