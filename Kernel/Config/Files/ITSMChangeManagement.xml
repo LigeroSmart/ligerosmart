@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.69 2009-11-16 15:47:54 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.70 2009-11-17 16:54:20 ub Exp $</CVS>
     <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
         <Description Lang="en">Logfile for the itsm change counter.</Description>
         <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
@@ -256,7 +256,7 @@
         <Setting>
             <FrontendModuleReg>
                 <Group>itsm-change-builder</Group>
-                <Description>WorkOrder Agent</Description>
+                <Description>Workorder Agent</Description>
                 <Title>Agent</Title>
                 <NavBarName>Change</NavBarName>
             </FrontendModuleReg>
@@ -270,7 +270,7 @@
         <Setting>
             <FrontendModuleReg>
                 <Group>itsm-change-builder</Group>
-                <Description>WorkOrder Edit</Description>
+                <Description>Workorder Edit</Description>
                 <Title>Edit</Title>
                 <NavBarName>Change</NavBarName>
             </FrontendModuleReg>
@@ -284,7 +284,7 @@
         <Setting>
             <FrontendModuleReg>
                 <Group>itsm-change-builder</Group>
-                <Description>WorkOrder Add</Description>
+                <Description>Workorder Add</Description>
                 <Title>Add</Title>
                 <NavBarName>Change</NavBarName>
             </FrontendModuleReg>
@@ -298,7 +298,7 @@
         <Setting>
             <FrontendModuleReg>
                 <Group>itsm-change-builder</Group>
-                <Description>WorkOrder Delete</Description>
+                <Description>Workorder Delete</Description>
                 <Title>Delete</Title>
                 <NavBarName>Change</NavBarName>
             </FrontendModuleReg>
@@ -312,7 +312,7 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>WorkOrder History</Description>
+                <Description>Workorder History</Description>
                 <Title>History</Title>
                 <NavBarName>Change</NavBarName>
             </FrontendModuleReg>
@@ -326,7 +326,7 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>WorkOrder HistoryZoom</Description>
+                <Description>Workorder HistoryZoom</Description>
                 <Title>HistoryZoom</Title>
                 <NavBarName>Change</NavBarName>
             </FrontendModuleReg>
@@ -452,14 +452,14 @@
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::MenuModule###050-WorkOrderAdd" Required="0" Valid="1">
         <Description Lang="en">Module to show 'Add WorkOrder' link in change menu.</Description>
-        <Description Lang="de">Über dieses Modul wird der 'WorkOrder hinzufügen'-Link in der Linkleiste der Change-Ansicht angezeigt.</Description>
+        <Description Lang="de">Über dieses Modul wird der 'Workorder hinzufügen'-Link in der Linkleiste der Change-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMChangeMenuGeneric</Item>
-                <Item Key="Name">Add WorkOrder</Item>
-                <Item Key="Description">Add WorkOrder</Item>
+                <Item Key="Name">Add Workorder</Item>
+                <Item Key="Description">Add Workorder</Item>
                 <Item Key="Action">AgentITSMWorkOrderAdd</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderAdd&amp;ChangeID=$QData{"ChangeID"}</Item>
             </Hash>
@@ -482,7 +482,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###000-Back" Required="0" Valid="1">
         <Description Lang="en">Module to show back link in workorder menu.</Description>
-        <Description Lang="de">Über dieses Modul wird der Zurück-Link in der Linkleiste der WorkOrder-Ansicht angezeigt.</Description>
+        <Description Lang="de">Über dieses Modul wird der Zurück-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
@@ -497,7 +497,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###010-History" Required="0" Valid="1">
         <Description Lang="en">Module to show history link in workorder menu.</Description>
-        <Description Lang="de">Über dieses Modul wird der Historie-Link in der Linkleiste der WorkOrder-Ansicht angezeigt.</Description>
+        <Description Lang="de">Über dieses Modul wird der Historie-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
@@ -512,7 +512,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###020-Print" Required="0" Valid="1">
         <Description Lang="en">Module to show print link in workorder menu.</Description>
-        <Description Lang="de">Über dieses Modul wird der Drucken-Link in der Linkleiste der WorkOrder-Ansicht angezeigt.</Description>
+        <Description Lang="de">Über dieses Modul wird der Drucken-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
@@ -527,7 +527,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###030-Edit" Required="0" Valid="1">
         <Description Lang="en">Module to show edit link in workorder menu.</Description>
-        <Description Lang="de">Über dieses Modul wird der Bearbeiten-Link in der Linkleiste der WorkOrder-Ansicht angezeigt.</Description>
+        <Description Lang="de">Über dieses Modul wird der Bearbeiten-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
@@ -542,7 +542,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###040-WorkOrderAgent" Required="0" Valid="1">
         <Description Lang="en">Module to show WorkOrderAgent link in workorder menu.</Description>
-        <Description Lang="de">Über dieses Modul wird der WorkOrderAgent-Link in der Linkleiste der WorkOrder-Ansicht angezeigt.</Description>
+        <Description Lang="de">Über dieses Modul wird der WorkOrderAgent-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
@@ -557,7 +557,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###050-Report" Required="0" Valid="1">
         <Description Lang="en">Module to show report link in workorder menu.</Description>
-        <Description Lang="de">Über dieses Modul wird der Report-Link in der Linkleiste der WorkOrder-Ansicht angezeigt.</Description>
+        <Description Lang="de">Über dieses Modul wird der Report-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
@@ -572,7 +572,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###060-Link" Required="0" Valid="1">
         <Description Lang="en">Module to show link link in workorder menu.</Description>
-        <Description Lang="de">Über dieses Modul wird der Link-Link in der Linkleiste der WorkOrder-Ansicht angezeigt.</Description>
+        <Description Lang="de">Über dieses Modul wird der Link-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
@@ -587,7 +587,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###070-MoveTimeSlot" Required="0" Valid="1">
         <Description Lang="en">Module to show report link in workorder menu.</Description>
-        <Description Lang="de">Über dieses Modul wird der Report-Link in der Linkleiste der WorkOrder-Ansicht angezeigt.</Description>
+        <Description Lang="de">Über dieses Modul wird der Report-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
@@ -602,7 +602,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###080-Template" Required="0" Valid="1">
         <Description Lang="en">Module to show template link in workorder menu.</Description>
-        <Description Lang="de">Über dieses Modul wird der Template-Link in der Linkleiste der WorkOrder-Ansicht angezeigt.</Description>
+        <Description Lang="de">Über dieses Modul wird der Template-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
@@ -617,14 +617,14 @@
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###090-WorkOrderDelete" Required="0" Valid="1">
         <Description Lang="en">Module to show the 'Delete' link in the workorder menu.</Description>
-        <Description Lang="de">Über dieses Modul wird der 'Löschen'-Link in der Linkleiste der WorkOrder-Ansicht angezeigt.</Description>
+        <Description Lang="de">Über dieses Modul wird der 'Löschen'-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrderMenuWithPermissionFromChange</Item>
                 <Item Key="Name">Delete</Item>
-                <Item Key="Description">Delete WorkOrder</Item>
+                <Item Key="Description">Delete Workorder</Item>
                 <Item Key="Action">AgentITSMWorkOrderDelete</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderDelete&amp;WorkOrderID=$QData{"WorkOrderID"}</Item>
             </Hash>
@@ -783,7 +783,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::EventModule###01-HistoryAdd" Required="0" Valid="1">
         <Description Lang="en">ITSM event module updates the history of workorder objects.</Description>
-        <Description Lang="de">ITSM Event Modul aktualisiert die History von WorkOrder Objekten.</Description>
+        <Description Lang="de">ITSM Event Modul aktualisiert die History von Workorder Objekten.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Core::ITSMWorkOrder::Event</SubGroup>
         <Setting>
@@ -795,8 +795,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::EventModule###02-WorkOrderNumberCalc" Required="0" Valid="1">
-        <Description Lang="en">ITSM event module to recalculate the WorkOrder numbers.</Description>
-        <Description Lang="de">ITSM Event Modul, das die WorkOrder Nummern neu berechnet.</Description>
+        <Description Lang="en">ITSM event module to recalculate the Workorder numbers.</Description>
+        <Description Lang="de">ITSM Event Modul, das die Workorder Nummern neu berechnet.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Core::ITSMWorkOrder::Event</SubGroup>
         <Setting>
