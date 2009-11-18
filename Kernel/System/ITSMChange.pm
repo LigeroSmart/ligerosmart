@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.155 2009-11-18 11:55:50 bes Exp $
+# $Id: ITSMChange.pm,v 1.156 2009-11-18 13:20:29 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,8 +24,8 @@ use Kernel::System::HTMLUtils;
 
 use base qw(Kernel::System::EventHandler);
 
-use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.155 $) [1];
+use vars qw($VERSION);
+$VERSION = qw($Revision: 1.156 $) [1];
 
 =head1 NAME
 
@@ -263,7 +263,7 @@ sub ChangeUpdate {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(UserID ChangeID)) {
+    for my $Argument (qw(ChangeID UserID )) {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -282,7 +282,7 @@ sub ChangeUpdate {
         return;
     }
 
-    # when ChangeState is given then look up the ID
+    # when the State is given, then look up the ID
     if ( $Param{ChangeState} ) {
         $Param{ChangeStateID} = $Self->ChangeStateLookup(
             State => $Param{ChangeState},
@@ -446,16 +446,13 @@ sub ChangeGet {
         }
     }
 
-    # build SQL
-    my $SQL = 'SELECT id, change_number, title, description, justification, '
-        . 'change_state_id, change_manager_id, change_builder_id, '
-        . 'create_time, create_by, change_time, change_by, realize_time '
-        . 'FROM change_item '
-        . 'WHERE id = ? ';
-
-    # get change data from database
+    # get data from database
     return if !$Self->{DBObject}->Prepare(
-        SQL   => $SQL,
+        SQL => 'SELECT id, change_number, title, description, justification, '
+            . 'change_state_id, change_manager_id, change_builder_id, '
+            . 'create_time, create_by, change_time, change_by, realize_time '
+            . 'FROM change_item '
+            . 'WHERE id = ? ',
         Bind  => [ \$Param{ChangeID} ],
         Limit => 1,
     );
@@ -935,22 +932,22 @@ When an undef or a reference to an empty array is passed, then the search criter
 is ignored.
 
     my $ChangeIDsRef = $ChangeObject->ChangeSearch(
-        ChangeNumber      => '2009100112345778',                 # (optional)
+        ChangeNumber      => '2009100112345778',                       # (optional)
 
-        ChangeTitle       => 'Replacement of slow mail server',  # (optional)
-        Description       => 'New mail server is faster',        # (optional)
-        Justification     => 'Old mail server too slow',         # (optional)
+        ChangeTitle       => 'Replacement of slow mail server',        # (optional)
+        Description       => 'New mail server is faster',              # (optional)
+        Justification     => 'Old mail server too slow',               # (optional)
 
         # array parameters are used with logical OR operator
-        ChangeStateIDs    => [ 11, 12, 13 ],                     # (optional)
-        ChangeStates      => [ 'requested','failed' ],           # (optional)
-        ChangeManagerIDs  => [ 1, 2, 3 ],                        # (optional)
-        ChangeBuilderIDs  => [ 5, 7, 4 ],                        # (optional)
-        CreateBy          => [ 5, 2, 3 ],                        # (optional)
-        ChangeBy          => [ 3, 2, 1 ],                        # (optional)
-        WorkOrderAgentIDs => [ 6, 2 ],                           # (optional)
-        CABAgents         => [ 9, 13 ],                          # (optional)
-        CABCustomers      => [ 'tt', 'xx' ],                     # (optional)
+        ChangeStateIDs    => [ 11, 12, 13 ],                           # (optional)
+        ChangeStates      => [ 'requested','failed' ],                 # (optional)
+        ChangeManagerIDs  => [ 1, 2, 3 ],                              # (optional)
+        ChangeBuilderIDs  => [ 5, 7, 4 ],                              # (optional)
+        CreateBy          => [ 5, 2, 3 ],                              # (optional)
+        ChangeBy          => [ 3, 2, 1 ],                              # (optional)
+        WorkOrderAgentIDs => [ 6, 2 ],                                 # (optional)
+        CABAgents         => [ 9, 13 ],                                # (optional)
+        CABCustomers      => [ 'tt', 'xx' ],                           # (optional)
 
         # search in text fields of workorder object
         WorkOrderTitle            => 'Boot Mailserver',
@@ -958,41 +955,41 @@ is ignored.
         WorkOrderReport           => 'Mailserver has booted.',
 
         # changes with planned start time after ...
-        PlannedStartTimeNewerDate => '2006-01-09 00:00:01',      # (optional)
+        PlannedStartTimeNewerDate => '2006-01-09 00:00:01',            # (optional)
         # changes with planned start time before then ....
-        PlannedStartTimeOlderDate => '2006-01-19 23:59:59',      # (optional)
+        PlannedStartTimeOlderDate => '2006-01-19 23:59:59',            # (optional)
 
         # changes with planned end time after ...
-        PlannedEndTimeNewerDate   => '2006-01-09 00:00:01',      # (optional)
+        PlannedEndTimeNewerDate   => '2006-01-09 00:00:01',            # (optional)
         # changes with planned end time before then ....
-        PlannedEndTimeOlderDate   => '2006-01-19 23:59:59',      # (optional)
+        PlannedEndTimeOlderDate   => '2006-01-19 23:59:59',            # (optional)
 
         # changes with actual start time after ...
-        ActualStartTimeNewerDate  => '2006-01-09 00:00:01',      # (optional)
+        ActualStartTimeNewerDate  => '2006-01-09 00:00:01',            # (optional)
         # changes with actual start time before then ....
-        ActualStartTimeOlderDate  => '2006-01-19 23:59:59',      # (optional)
+        ActualStartTimeOlderDate  => '2006-01-19 23:59:59',            # (optional)
 
         # changes with actual end time after ...
-        ActualEndTimeNewerDate    => '2006-01-09 00:00:01',      # (optional)
+        ActualEndTimeNewerDate    => '2006-01-09 00:00:01',            # (optional)
         # changes with actual end time before then ....
-        ActualEndTimeOlderDate    => '2006-01-19 23:59:59',      # (optional)
+        ActualEndTimeOlderDate    => '2006-01-19 23:59:59',            # (optional)
 
         # changes with created time after ...
-        CreateTimeNewerDate       => '2006-01-09 00:00:01',      # (optional)
+        CreateTimeNewerDate       => '2006-01-09 00:00:01',            # (optional)
         # changes with created time before then ....
-        CreateTimeOlderDate       => '2006-01-19 23:59:59',      # (optional)
+        CreateTimeOlderDate       => '2006-01-19 23:59:59',            # (optional)
 
         # changes with changed time after ...
-        ChangeTimeNewerDate       => '2006-01-09 00:00:01',      # (optional)
+        ChangeTimeNewerDate       => '2006-01-09 00:00:01',            # (optional)
         # changes with changed time before then ....
-        ChangeTimeOlderDate       => '2006-01-19 23:59:59',      # (optional)
+        ChangeTimeOlderDate       => '2006-01-19 23:59:59',            # (optional)
 
         # changes with realize time after ...
-        RealizeTimeNewerDate      => '2006-01-09 00:00:01',      # (optional)
+        RealizeTimeNewerDate      => '2006-01-09 00:00:01',            # (optional)
         # changes with realize time before then ....
-        RealizeTimeOlderDate      => '2006-01-19 23:59:59',      # (optional)
+        RealizeTimeOlderDate      => '2006-01-19 23:59:59',            # (optional)
 
-        OrderBy => [ 'ChangeID', 'ChangeManagerID' ],            # (optional)
+        OrderBy => [ 'ChangeID', 'ChangeManagerID' ],                  # (optional)
         # default: [ 'ChangeID' ]
         # (ChangeID, ChangeNumber, ChangeStateID,
         # ChangeManagerID, ChangeBuilderID,
@@ -1004,14 +1001,14 @@ is ignored.
         # The OrderByDirection can be specified for each OrderBy attribute.
         # The pairing is made by the array indices.
 
-        OrderByDirection => [ 'Down', 'Up' ],                    # (optional)
+        OrderByDirection => [ 'Down', 'Up' ],                          # (optional)
         # default: [ 'Down' ]
         # (Down | Up)
 
-        UsingWildcards => 0,                                     # (optional)
-        # default 1
+        UsingWildcards => 1,                                           # (optional)
+        # (0 | 1) default 1
 
-        Limit => 100,                                            # (optional)
+        Limit => 100,                                                  # (optional)
 
         UserID => 1,
     );
@@ -1040,23 +1037,26 @@ sub ChangeSearch {
         ChangeStates
         ChangeManagerIDs
         ChangeBuilderIDs
-        CreateBy ChangeBy
-        CABAgents CABCustomers
+        CABAgents
+        CABCustomers
         WorkOrderAgentIDs
+        CreateBy
+        ChangeBy
         )
         )
     {
         if ( !defined $Param{$Argument} ) {
             $Param{$Argument} ||= [];
+
+            next ARGUMENT;
         }
-        else {
-            if ( ref $Param{$Argument} ne 'ARRAY' ) {
-                $Self->{LogObject}->Log(
-                    Priority => 'error',
-                    Message  => "$Argument must be an array reference!",
-                );
-                return;
-            }
+
+        if ( ref $Param{$Argument} ne 'ARRAY' ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "$Argument must be an array reference!",
+            );
+            return;
         }
     }
 
@@ -1079,7 +1079,6 @@ sub ChangeSearch {
 
     # check if OrderBy contains only unique valid values
     my %OrderBySeen;
-    ORDERBY:
     for my $OrderBy ( @{ $Param{OrderBy} } ) {
 
         if ( !$OrderBy || !$OrderByTable{$OrderBy} || $OrderBySeen{$OrderBy} ) {
@@ -1087,8 +1086,8 @@ sub ChangeSearch {
             # found an error
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "OrderByDirection contains invalid value '$OrderBy' "
-                    . " or the value is used more than once!",
+                Message  => "OrderBy contains invalid value '$OrderBy' "
+                    . "or the value is used more than once!",
             );
             return;
         }
@@ -1121,7 +1120,7 @@ sub ChangeSearch {
     # check whether all of the given ChangeStateIDs are valid
     return if !$Self->_CheckChangeStateIDs( ChangeStateIDs => $Param{ChangeStateIDs} );
 
-    # if ChangeStates are given then look up their IDs
+    # look up and thus check the States
     for my $ChangeState ( @{ $Param{ChangeStates} } ) {
 
         # look up the ID for the name
@@ -1341,7 +1340,6 @@ sub ChangeSearch {
     my @SQLOrderBy;
     my @SQLAliases;    # order by aliases, be on the save side with MySQL
     my $Count = 0;
-    ORDERBY:
     for my $OrderBy ( @{ $Param{OrderBy} } ) {
 
         # set the default order direction
@@ -1376,7 +1374,7 @@ sub ChangeSearch {
     }
 
     # if there is a possibility that the ordering is not determined
-    # we add an descending orderung by id
+    # we add an descending ordering by id
     if ( !grep { $_ eq 'ChangeID' } ( @{ $Param{OrderBy} } ) ) {
         push @SQLOrderBy, "$OrderByTable{ChangeID} DESC";
     }
@@ -1466,12 +1464,12 @@ sub ChangeSearch {
     );
 
     # fetch the result
-    my @ChangeIDList;
+    my @IDs;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        push @ChangeIDList, $Row[0];
+        push @IDs, $Row[0];
     }
 
-    return \@ChangeIDList;
+    return \@IDs;
 }
 
 =item ChangeDelete()
@@ -1778,9 +1776,9 @@ sub Permission {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(Type UserID)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+    for my $Argument (qw(Type UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $Argument!" );
             return;
         }
     }
@@ -2116,7 +2114,7 @@ sub _CheckChangeParams {
         if ( ref $Param{$Argument} ne '' ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "The parameter '$Argument' mustn't be a reference!",
+                Message  => "The parameter '$Argument' must be a scalar!",
             );
             return;
         }
@@ -2271,6 +2269,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.155 $ $Date: 2009-11-18 11:55:50 $
+$Revision: 1.156 $ $Date: 2009-11-18 13:20:29 $
 
 =cut

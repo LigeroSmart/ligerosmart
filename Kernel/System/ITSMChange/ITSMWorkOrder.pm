@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.24 2009-11-18 11:55:50 bes Exp $
+# $Id: ITSMWorkOrder.pm,v 1.25 2009-11-18 13:20:29 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.24 $) [1];
+$VERSION = qw($Revision: 1.25 $) [1];
 
 =head1 NAME
 
@@ -395,7 +395,7 @@ sub WorkOrderUpdate {
         }
     }
 
-    # check that not both State and StateID are given
+    # check that not both WorkOrderState and WorkOrderStateID are given
     if ( $Param{WorkOrderState} && $Param{WorkOrderStateID} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
@@ -404,7 +404,7 @@ sub WorkOrderUpdate {
         return;
     }
 
-    # if State is given, then look up the ID
+    # when the State is given, then look up the ID
     if ( $Param{WorkOrderState} ) {
         $Param{WorkOrderStateID} = $Self->WorkOrderStateLookup(
             WorkOrderState => $Param{WorkOrderState},
@@ -541,7 +541,12 @@ sub WorkOrderUpdate {
 
 return a WorkOrder as hash reference
 
-Return
+    my $WorkOrderRef = $WorkOrderObject->WorkOrderGet(
+        WorkOrderID => 123,
+        UserID      => 1,
+    );
+
+The returned hash reference contains following elements:
 
     $WorkOrder{WorkOrderID}
     $WorkOrder{ChangeID}
@@ -564,11 +569,6 @@ Return
     $WorkOrder{ChangeTime}
     $WorkOrder{ChangeBy}
 
-    my $WorkOrderRef = $WorkOrderObject->WorkOrderGet(
-        WorkOrderID => 123,
-        UserID      => 1,
-    );
-
 =cut
 
 sub WorkOrderGet {
@@ -585,7 +585,7 @@ sub WorkOrderGet {
         }
     }
 
-    # get workorder data from database
+    # get data from database
     return if !$Self->{DBObject}->Prepare(
         SQL => 'SELECT id, change_id, workorder_number, title, instruction, '
             . 'report, workorder_state_id, workorder_type_id, workorder_agent_id, '
@@ -736,29 +736,29 @@ return a list of workorder ids as an array reference
         PlannedStartTimeOlderDate => '2006-01-19 23:59:59',            # (optional)
 
         # changes with planned end time after ...
-        PlannedEndTimeNewerDate => '2006-01-09 00:00:01',              # (optional)
+        PlannedEndTimeNewerDate   => '2006-01-09 00:00:01',            # (optional)
         # changes with planned end time before then ....
-        PlannedEndTimeOlderDate => '2006-01-19 23:59:59',              # (optional)
+        PlannedEndTimeOlderDate   => '2006-01-19 23:59:59',            # (optional)
 
         # changes with actual start time after ...
-        ActualStartTimeNewerDate => '2006-01-09 00:00:01',             # (optional)
+        ActualStartTimeNewerDate  => '2006-01-09 00:00:01',            # (optional)
         # changes with actual start time before then ....
-        ActualStartTimeOlderDate => '2006-01-19 23:59:59',             # (optional)
+        ActualStartTimeOlderDate  => '2006-01-19 23:59:59',            # (optional)
 
         # changes with actual end time after ...
-        ActualEndTimeNewerDate => '2006-01-09 00:00:01',               # (optional)
+        ActualEndTimeNewerDate    => '2006-01-09 00:00:01',            # (optional)
         # changes with actual end time before then ....
-        ActualEndTimeOlderDate => '2006-01-19 23:59:59',               # (optional)
+        ActualEndTimeOlderDate    => '2006-01-19 23:59:59',            # (optional)
 
         # changes with created time after ...
-        CreateTimeNewerDate => '2006-01-09 00:00:01',                  # (optional)
+        CreateTimeNewerDate       => '2006-01-09 00:00:01',            # (optional)
         # changes with created time before then ....
-        CreateTimeOlderDate => '2006-01-19 23:59:59',                  # (optional)
+        CreateTimeOlderDate       => '2006-01-19 23:59:59',            # (optional)
 
         # changes with changed time after ...
-        ChangeTimeNewerDate => '2006-01-09 00:00:01',                  # (optional)
+        ChangeTimeNewerDate       => '2006-01-09 00:00:01',            # (optional)
         # changes with changed time before then ....
-        ChangeTimeOlderDate => '2006-01-19 23:59:59',                  # (optional)
+        ChangeTimeOlderDate       => '2006-01-19 23:59:59',            # (optional)
 
         OrderBy => [ 'ChangeID', 'WorkOrderNumber' ],                  # (optional)
         # default: [ 'WorkOrderID' ],
@@ -769,12 +769,11 @@ return a list of workorder ids as an array reference
         # CreateTime, CreateBy, ChangeTime, ChangeBy)
 
         # Additional information for OrderBy:
-        # The OrderByDirection can be specified for
-        # each OrderBy attribute.
+        # The OrderByDirection can be specified for each OrderBy attribute.
         # The pairing is made by the array indices.
 
         OrderByDirection => [ 'Down', 'Up' ],                          # (optional)
-        # default: [ 'Down' ],
+        # default: [ 'Down' ]
         # (Down | Up)
 
         UsingWildcards => 1,                                           # (optional)
@@ -805,13 +804,11 @@ sub WorkOrderSearch {
         qw(
         OrderBy
         OrderByDirection
-        WorkOrderStates
         WorkOrderStateIDs
+        WorkOrderStates
         WorkOrderTypes
         WorkOrderTypeIDs
         ChangeIDs
-        WorkOrderStateIDs
-        WorkOrderTypeIDs
         WorkOrderAgentIDs
         CreateBy
         ChangeBy
@@ -883,7 +880,6 @@ sub WorkOrderSearch {
             Priority => 'error',
             Message  => "OrderByDirection can only contain 'Up' or 'Down'!",
         );
-
         return;
     }
 
@@ -892,13 +888,13 @@ sub WorkOrderSearch {
         $Param{UsingWildcards} = 1;
     }
 
-    # check whether the given WorkOrderStateIDs are all valid
+    # check whether all of the given WorkOrderStateIDs are valid
     return if !$Self->_CheckWorkOrderStateIDs( WorkOrderStateIDs => $Param{WorkOrderStateIDs} );
 
-    # look up and thus check the WorkOrderStates
+    # look up and thus check the States
     for my $WorkOrderState ( @{ $Param{WorkOrderStates} } ) {
 
-        # get the ID for the name
+        # look up the ID for the name
         my $WorkOrderStateID = $Self->WorkOrderStateLookup(
             WorkOrderState => $WorkOrderState,
         );
@@ -942,7 +938,7 @@ sub WorkOrderSearch {
     my @SQLWhere;           # assemble the conditions used in the WHERE clause
     my @InnerJoinTables;    # keep track of the tables that need to be inner joined
 
-    # set string params
+    # add string params to the WHERE clause
     my %StringParams = (
 
         # in workorder table
@@ -1012,6 +1008,7 @@ sub WorkOrderSearch {
     ARRAYPARAM:
     for my $ArrayParam ( keys %ArrayParams ) {
 
+        # ignore empty lists
         next ARRAYPARAM if !@{ $Param{$ArrayParam} };
 
         # quote
@@ -1062,7 +1059,6 @@ sub WorkOrderSearch {
     # assemble the ORDER BY clause
     my @SQLOrderBy;
     my $Count = 0;
-    ORDERBY:
     for my $OrderBy ( @{ $Param{OrderBy} } ) {
 
         # set the default order direction
@@ -1086,7 +1082,7 @@ sub WorkOrderSearch {
     }
 
     # if there is a possibility that the ordering is not determined
-    # we add an descending ordering by workorder id
+    # we add an descending ordering by id
     if ( !grep { $_ eq 'WorkOrderID' } ( @{ $Param{OrderBy} } ) ) {
         push @SQLOrderBy, "$OrderByTable{WorkOrderID} DESC";
     }
@@ -1130,6 +1126,7 @@ sub WorkOrderSearch {
     if (@SQLOrderBy) {
         $SQL .= 'ORDER BY ';
         $SQL .= join q{, }, @SQLOrderBy;
+        $SQL .= ' ';
     }
 
     # ask database
@@ -1139,17 +1136,17 @@ sub WorkOrderSearch {
     );
 
     # fetch the result
-    my @WorkOrderIDList;
+    my @IDs;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        push @WorkOrderIDList, $Row[0];
+        push @IDs, $Row[0];
     }
 
-    return \@WorkOrderIDList;
+    return \@IDs;
 }
 
 =item WorkOrderDelete()
 
-delete a workorder
+Delete a workorder.
 
 This function first removes all links to the WorkOrder with the passed workorder id.
 
@@ -1644,9 +1641,9 @@ sub Permission {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(Type UserID WorkOrderID)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+    for my $Argument (qw(Type UserID WorkOrderID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $Argument!" );
             return;
         }
     }
@@ -1949,7 +1946,7 @@ sub _CheckWorkOrderParams {
         if ( ref $Param{$Argument} ne '' ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "The parameter '$Argument' must be a scalar!",
+                Message  => "The parameter '$Argument' mustn't be a reference!",
             );
             return;
         }
@@ -2114,6 +2111,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.24 $ $Date: 2009-11-18 11:55:50 $
+$Revision: 1.25 $ $Date: 2009-11-18 13:20:29 $
 
 =cut
