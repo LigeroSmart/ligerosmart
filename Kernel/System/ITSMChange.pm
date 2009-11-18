@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.152 2009-11-16 22:44:25 ub Exp $
+# $Id: ITSMChange.pm,v 1.153 2009-11-18 08:24:51 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.152 $) [1];
+$VERSION = qw($Revision: 1.153 $) [1];
 
 =head1 NAME
 
@@ -1902,11 +1902,6 @@ sub _CheckChangeStateIDs {
         return;
     }
 
-    # get change state list
-    my $ChangeStateList = $Self->{GeneralCatalogObject}->ItemList(
-        Class => 'ITSM::ChangeManagement::Change::State',
-    );
-
     # check if ChangeStateIDs belongs to correct general catalog class
     for my $StateID ( @{ $Param{ChangeStateIDs} } ) {
         my $State = $Self->ChangeStateLookup(
@@ -2270,6 +2265,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.152 $ $Date: 2009-11-16 22:44:25 $
+$Revision: 1.153 $ $Date: 2009-11-18 08:24:51 $
 
 =cut
