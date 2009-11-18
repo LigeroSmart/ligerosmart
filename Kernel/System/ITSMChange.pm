@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.156 2009-11-18 13:20:29 bes Exp $
+# $Id: ITSMChange.pm,v 1.157 2009-11-18 13:30:01 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.156 $) [1];
+$VERSION = qw($Revision: 1.157 $) [1];
 
 =head1 NAME
 
@@ -2114,7 +2114,7 @@ sub _CheckChangeParams {
         if ( ref $Param{$Argument} ne '' ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "The parameter '$Argument' must be a scalar!",
+                Message  => "The parameter '$Argument' mustn't be a reference!",
             );
             return;
         }
@@ -2269,6 +2269,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.156 $ $Date: 2009-11-18 13:20:29 $
+$Revision: 1.157 $ $Date: 2009-11-18 13:30:01 $
 
 =cut
