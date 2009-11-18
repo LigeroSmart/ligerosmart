@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Permission/CABCheck.pm - CAB based permission check
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: CABCheck.pm,v 1.4 2009-11-18 11:55:50 bes Exp $
+# $Id: CABCheck.pm,v 1.5 2009-11-18 12:35:13 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 =head1 NAME
 
@@ -111,11 +111,11 @@ sub new {
     bless( $Self, $Type );
 
     # get needed objects
-    for (
+    for my $Object (
         qw(ConfigObject EncodeObject LogObject MainObject TimeObject DBObject UserObject GroupObject ChangeObject)
         )
     {
-        $Self->{$_} = $Param{$_} || die "Got no $_!";
+        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
     return $Self;
@@ -138,11 +138,11 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(UserID Type)) {
-        if ( !$Param{$_} ) {
+    for my $Argument (qw(UserID Type)) {
+        if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $_!",
+                Message  => "Need $Argument!",
             );
 
             return;
@@ -183,7 +183,7 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Id: CABCheck.pm,v 1.4 2009-11-18 11:55:50 bes Exp $
+$Id: CABCheck.pm,v 1.5 2009-11-18 12:35:13 bes Exp $
 
 =cut
 

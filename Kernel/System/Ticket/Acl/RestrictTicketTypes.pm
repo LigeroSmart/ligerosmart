@@ -4,7 +4,7 @@
 # - sysconfig option 'ITSMChange::AddChangeLinkTicketTypes' to certain groups -
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: RestrictTicketTypes.pm,v 1.2 2009-11-13 17:22:46 ub Exp $
+# $Id: RestrictTicketTypes.pm,v 1.3 2009-11-18 12:35:15 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -27,9 +27,12 @@ sub new {
     bless( $Self, $Type );
 
     # get needed objects
-    for (qw(ConfigObject DBObject TicketObject LogObject UserObject MainObject TimeObject)) {
-        if ( !$Self->{$_} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $_!" );
+    for my $Object (
+        qw(ConfigObject DBObject TicketObject LogObject UserObject MainObject TimeObject)
+        )
+    {
+        if ( !$Self->{$Object} ) {
+            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
         }
     }
 
@@ -40,9 +43,9 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(Config Acl)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+    for my $Argument (qw(Config Acl)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $Argument!" );
             return;
         }
     }

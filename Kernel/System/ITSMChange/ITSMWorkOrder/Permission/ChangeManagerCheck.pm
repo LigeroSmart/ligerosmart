@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder/Permission/ChangeManagerCheck.pm - change manager based permission check
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ChangeManagerCheck.pm,v 1.10 2009-11-18 11:55:50 bes Exp $
+# $Id: ChangeManagerCheck.pm,v 1.11 2009-11-18 12:35:13 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 =head1 NAME
 
@@ -111,11 +111,11 @@ sub new {
     bless( $Self, $Type );
 
     # get needed objects
-    for (
+    for my $Object (
         qw(ConfigObject EncodeObject LogObject MainObject TimeObject DBObject UserObject GroupObject WorkOrderObject)
         )
     {
-        $Self->{$_} = $Param{$_} || die "Got no $_!";
+        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
     return $Self;
@@ -138,11 +138,11 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(UserID Type WorkOrderID)) {
-        if ( !$Param{$_} ) {
+    for my $Argument (qw(UserID Type WorkOrderID)) {
+        if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $_!",
+                Message  => "Need $Argument!",
             );
 
             return;
@@ -187,7 +187,7 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Id: ChangeManagerCheck.pm,v 1.10 2009-11-18 11:55:50 bes Exp $
+$Id: ChangeManagerCheck.pm,v 1.11 2009-11-18 12:35:13 bes Exp $
 
 =cut
 

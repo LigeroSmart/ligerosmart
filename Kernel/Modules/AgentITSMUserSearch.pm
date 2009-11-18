@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMUserSearch.pm - a module used for the autocomplete feature
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMUserSearch.pm,v 1.4 2009-11-02 17:34:01 bes Exp $
+# $Id: AgentITSMUserSearch.pm,v 1.5 2009-11-18 12:35:12 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::User;
 use Kernel::System::Group;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -28,9 +28,9 @@ sub new {
     bless( $Self, $Type );
 
     # check all needed objects
-    for (qw(ParamObject DBObject LayoutObject ConfigObject LogObject)) {
-        if ( !$Self->{$_} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $_!" );
+    for my $Object (qw(ParamObject DBObject LayoutObject ConfigObject LogObject)) {
+        if ( !$Self->{$Object} ) {
+            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
         }
     }
 
