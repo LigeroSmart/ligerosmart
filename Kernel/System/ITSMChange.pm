@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.153 2009-11-18 08:24:51 bes Exp $
+# $Id: ITSMChange.pm,v 1.154 2009-11-18 08:50:22 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.153 $) [1];
+$VERSION = qw($Revision: 1.154 $) [1];
 
 =head1 NAME
 
@@ -189,7 +189,7 @@ sub ChangeAdd {
     return if !$Self->{DBObject}->Do(
         SQL => 'INSERT INTO change_item '
             . '(change_number, change_state_id, change_builder_id, '
-            . ' create_time, create_by, change_time, change_by) '
+            . 'create_time, create_by, change_time, change_by) '
             . 'VALUES (?, ?, ?, current_timestamp, ?, current_timestamp, ?)',
         Bind => [
             \$ChangeNumber, \$ChangeStateID, \$Param{UserID},
@@ -1785,10 +1785,11 @@ sub Permission {
         }
     }
 
-    # the ChangeID can be unknown, for example for ChangeAdd().
+    # There are valid cases when no ChangeID is passed.
+    # E.g. for ChangeAdd() or ChangeSearch().
     $Param{ChangeID} ||= '';
 
-    # run all ITSMChange permission modules
+    # run the relevant permission modules
     if ( ref $Self->{ConfigObject}->Get('ITSMChange::Permission') eq 'HASH' ) {
         my %Modules = %{ $Self->{ConfigObject}->Get('ITSMChange::Permission') };
         for my $Module ( sort keys %Modules ) {
@@ -1818,7 +1819,8 @@ sub Permission {
             # ask for the opinion of the Permission module
             my $Access = $ModuleObject->Run(%Param);
 
-            # check granted option (should I say ok)
+            # Grant overall permission,
+            # when the module granted a sufficient permission.
             if ( $Access && $Modules{$Module}->{Granted} ) {
                 if ( $Self->{Debug} > 0 ) {
                     $Self->{LogObject}->Log(
@@ -1830,11 +1832,12 @@ sub Permission {
                     );
                 }
 
-                # access ok
+                # grant permission
                 return 1;
             }
 
-            # return because access is denied, but was required
+            # Deny overall permission,
+            # when the module denied a required permission.
             if ( !$Access && $Modules{$Module}->{Required} ) {
                 if ( !$Param{LogNo} ) {
                     $Self->{LogObject}->Log(
@@ -1846,7 +1849,7 @@ sub Permission {
                     );
                 }
 
-                # access not ok
+                # deny permission
                 return;
             }
         }
@@ -2265,6 +2268,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.153 $ $Date: 2009-11-18 08:24:51 $
+$Revision: 1.154 $ $Date: 2009-11-18 08:50:22 $
 
 =cut

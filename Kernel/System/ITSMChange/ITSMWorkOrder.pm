@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.22 2009-11-18 08:23:50 bes Exp $
+# $Id: ITSMWorkOrder.pm,v 1.23 2009-11-18 08:50:22 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 =head1 NAME
 
@@ -1651,7 +1651,7 @@ sub Permission {
         }
     }
 
-    # run all ITSMWorkOrder permission modules
+    # run the relevant permission modules
     if ( ref $Self->{ConfigObject}->Get('ITSMWorkOrder::Permission') eq 'HASH' ) {
         my %Modules = %{ $Self->{ConfigObject}->Get('ITSMWorkOrder::Permission') };
         for my $Module ( sort keys %Modules ) {
@@ -1670,9 +1670,9 @@ sub Permission {
             # create object
             my $ModuleObject = $Modules{$Module}->{Module}->new(
                 ConfigObject    => $Self->{ConfigObject},
-                EncodeObject    => $Self->{EncodeObject},
                 LogObject       => $Self->{LogObject},
                 DBObject        => $Self->{DBObject},
+                EncodeObject    => $Self->{EncodeObject},
                 MainObject      => $Self->{MainObject},
                 TimeObject      => $Self->{TimeObject},
                 WorkOrderObject => $Self,
@@ -1682,10 +1682,11 @@ sub Permission {
             );
 
             # ask for the opinion of the Permission module
-            my $AccessOk = $ModuleObject->Run(%Param);
+            my $Access = $ModuleObject->Run(%Param);
 
-            # check granted option (should I say ok)
-            if ( $AccessOk && $Modules{$Module}->{Granted} ) {
+            # Grant overall permission,
+            # when the module granted a sufficient permission.
+            if ( $Access && $Modules{$Module}->{Granted} ) {
                 if ( $Self->{Debug} > 0 ) {
                     $Self->{LogObject}->Log(
                         Priority => 'debug',
@@ -1696,12 +1697,13 @@ sub Permission {
                     );
                 }
 
-                # access granted
+                # grant permission
                 return 1;
             }
 
-            # return because access is false but it's required
-            if ( !$AccessOk && $Modules{$Module}->{Required} ) {
+            # Deny overall permission,
+            # when the module denied a required permission.
+            if ( !$Access && $Modules{$Module}->{Required} ) {
                 if ( !$Param{LogNo} ) {
                     $Self->{LogObject}->Log(
                         Priority => 'notice',
@@ -1712,7 +1714,7 @@ sub Permission {
                     );
                 }
 
-                # access denied
+                # deny permission
                 return;
             }
         }
@@ -2112,6 +2114,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.22 $ $Date: 2009-11-18 08:23:50 $
+$Revision: 1.23 $ $Date: 2009-11-18 08:50:22 $
 
 =cut
