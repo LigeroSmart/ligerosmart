@@ -2,16 +2,18 @@
 // itsm-changemanagement.js - provides JavaScript functions
 // Copyright (C) 2003-2009 OTRS AG, http://otrs.com/\n";
 // --
-// $Id: itsm-changemanagement.js,v 1.5 2009-11-16 11:16:06 reb Exp $
+// $Id: itsm-changemanagement.js,v 1.6 2009-11-18 09:29:02 reb Exp $
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
 // did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 // --
 
+
+// check if time is valid
 function CheckTime( id_base ) {
 
-    /* check the planned end time */
+    // check the planned end time
     var Year   = parseInt( document.getElementById( id_base + 'Year' ).value );
     var Month  = parseInt( document.getElementById( id_base + 'Month' ).value );
     var Day    = parseInt( document.getElementById( id_base + 'Day' ).value );
@@ -34,20 +36,24 @@ function CheckTime( id_base ) {
     return true;
 }
 
+// check if start time is before end time
 function CheckStartBeforeEnd ( StartPrefix, EndPrefix, ErrorMsg ) {
 
+    // get start time values
     var StartYear   = parseInt( document.getElementById( StartPrefix + 'Year' ).value );
     var StartMonth  = parseInt( document.getElementById( StartPrefix + 'Month' ).value );
     var StartDay    = parseInt( document.getElementById( StartPrefix + 'Day' ).value );
     var StartHour   = parseInt( document.getElementById( StartPrefix + 'Hour' ).value );
     var StartMinute = parseInt( document.getElementById( StartPrefix + 'Minute' ).value );
 
+    // get end time values
     var EndYear   = parseInt( document.getElementById( EndPrefix + 'Year' ).value );
     var EndMonth  = parseInt( document.getElementById( EndPrefix + 'Month' ).value );
     var EndDay    = parseInt( document.getElementById( EndPrefix + 'Day' ).value );
     var EndHour   = parseInt( document.getElementById( EndPrefix + 'Hour' ).value );
     var EndMinute = parseInt( document.getElementById( EndPrefix + 'Minute' ).value );
 
+    // check year
     if ( StartYear < EndYear ) {
         return true;
     }
@@ -57,6 +63,7 @@ function CheckStartBeforeEnd ( StartPrefix, EndPrefix, ErrorMsg ) {
         return false;
     }
 
+    // check month
     if ( StartMonth < EndMonth ) {
         return true;
     }
@@ -66,6 +73,7 @@ function CheckStartBeforeEnd ( StartPrefix, EndPrefix, ErrorMsg ) {
         return false;
     }
 
+    // check day
     if ( StartDay < EndDay ) {
         return true;
     }
@@ -75,6 +83,7 @@ function CheckStartBeforeEnd ( StartPrefix, EndPrefix, ErrorMsg ) {
         return false;
     }
 
+    // check hour
     if ( StartHour < EndHour ) {
         return true;
     }
@@ -84,6 +93,7 @@ function CheckStartBeforeEnd ( StartPrefix, EndPrefix, ErrorMsg ) {
         return false;
     }
 
+    // check minute
     if ( StartMinute < EndMinute ) {
         return true;
     }
@@ -93,7 +103,7 @@ function CheckStartBeforeEnd ( StartPrefix, EndPrefix, ErrorMsg ) {
         return false;
     }
 
-    /* the times are equal */
+    // the times are equal
     alert(ErrorMsg);
 
     return false;
