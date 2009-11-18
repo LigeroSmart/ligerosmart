@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder/Permission/CABCheck.pm - CAB based permission check
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: CABCheck.pm,v 1.5 2009-11-18 08:14:44 bes Exp $
+# $Id: CABCheck.pm,v 1.6 2009-11-18 11:55:50 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 =head1 NAME
 
@@ -67,14 +67,6 @@ create an object
         LogObject    => $LogObject,
         MainObject   => $MainObject,
     );
-    my $WorkOrderObject = Kernel::System::ITSMChange::ITSMWorkOrder->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        DBObject     => $DBObject,
-        TimeObject   => $TimeObject,
-        MainObject   => $MainObject,
-    );
     my $UserObject = Kernel::System::User->new(
         ConfigObject => $ConfigObject,
         LogObject    => $LogObject,
@@ -88,16 +80,25 @@ create an object
         LogObject    => $LogObject,
         DBObject     => $DBObject,
     );
+    my $WorkOrderObject = Kernel::System::ITSMChange::ITSMWorkOrder->new(
+        ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
+        LogObject    => $LogObject,
+        DBObject     => $DBObject,
+        TimeObject   => $TimeObject,
+        MainObject   => $MainObject,
+    );
+
     my $CheckObject = Kernel::System::ITSMChange::ITSMWorkOrder::Permission::CABCheck->new(
         ConfigObject         => $ConfigObject,
         EncodeObject         => $EncodeObject,
         LogObject            => $LogObject,
-        DBObject             => $DBObject,
         MainObject           => $MainObject,
         TimeObject           => $TimeObject,
-        WorkOrderObject      => $WorkOrderObject,
+        DBObject             => $DBObject,
         UserObject           => $UserObject,
         GroupObject          => $GroupObject,
+        WorkOrderObject      => $WorkOrderObject,
     );
 
 =cut
@@ -111,7 +112,7 @@ sub new {
 
     # get needed objects
     for (
-        qw(ConfigObject EncodeObject LogObject DBObject MainObject TimeObject WorkOrderObject UserObject GroupObject)
+        qw(ConfigObject EncodeObject LogObject MainObject TimeObject DBObject UserObject GroupObject WorkOrderObject)
         )
     {
         $Self->{$_} = $Param{$_} || die "Got no $_!";
@@ -191,7 +192,7 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Id: CABCheck.pm,v 1.5 2009-11-18 08:14:44 bes Exp $
+$Id: CABCheck.pm,v 1.6 2009-11-18 11:55:50 bes Exp $
 
 =cut
 
