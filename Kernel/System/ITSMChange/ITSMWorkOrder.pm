@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.21 2009-11-18 08:14:44 bes Exp $
+# $Id: ITSMWorkOrder.pm,v 1.22 2009-11-18 08:23:50 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.21 $) [1];
+$VERSION = qw($Revision: 1.22 $) [1];
 
 =head1 NAME
 
@@ -1740,7 +1740,7 @@ sub Permission {
 
 =item _CheckWorkOrderStateIDs()
 
-check if the given workorder state ids are all valid
+Check whether all of the given workorder state ids are valid.
 
     my $Ok = $WorkOrderObject->_CheckWorkOrderStateIDs(
         WorkOrderStateIDs => [ 25 ],
@@ -2112,6 +2112,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.21 $ $Date: 2009-11-18 08:14:44 $
+$Revision: 1.22 $ $Date: 2009-11-18 08:23:50 $
 
 =cut
