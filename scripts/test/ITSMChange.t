@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.122 2009-11-16 14:52:48 bes Exp $
+# $Id: ITSMChange.t,v 1.123 2009-11-18 15:58:14 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -560,21 +560,22 @@ my @ChangeTests = (
     },
 
     # test on max long params  (required attributes)
+    # The max plain string is only 3799, because ToAscii() adds a newline
     {
         Description => 'Test for max string length for ChangeAdd.',
         SourceData  => {
             ChangeAdd => {
                 UserID        => $UserIDs[0],
                 ChangeTitle   => 'T' x 250,
-                Description   => 'D' x 3800,
-                Justification => 'J' x 3800,
+                Description   => 'D' x 3799,
+                Justification => 'J' x 3799,
             },
         },
         ReferenceData => {
             ChangeGet => {
                 ChangeTitle     => 'T' x 250,
-                Description     => 'D' x 3800,
-                Justification   => 'J' x 3800,
+                Description     => 'D' x 3799,
+                Justification   => 'J' x 3799,
                 ChangeManagerID => undef,
                 ChangeBuilderID => $UserIDs[0],
                 WorkOrderIDs    => [],
@@ -595,6 +596,23 @@ my @ChangeTests = (
             ChangeAdd => {
                 UserID        => $UserIDs[0],
                 ChangeTitle   => 'T' x 251,
+                Description   => 'D' x 3800,
+                Justification => 'J' x 3800,
+            },
+        },
+        ReferenceData => {
+            ChangeGet => undef,
+        },
+    },
+
+    # test on max+2 long params  (required attributes)
+    {
+        Description => 'Test for max+2 string length for ChangeAdd.',
+        Fails       => 1,
+        SourceData  => {
+            ChangeAdd => {
+                UserID        => $UserIDs[0],
+                ChangeTitle   => 'T' x 252,
                 Description   => 'D' x 3801,
                 Justification => 'J' x 3801,
             },
@@ -629,7 +647,7 @@ my @ChangeTests = (
             ChangeAdd => {
                 UserID        => $UserIDs[0],
                 ChangeTitle   => 'T',
-                Description   => 'D' x 3801,
+                Description   => 'D' x 3800,
                 Justification => 'J',
             },
         },
@@ -647,7 +665,7 @@ my @ChangeTests = (
                 UserID        => $UserIDs[0],
                 ChangeTitle   => 'T',
                 Description   => 'D',
-                Justification => 'J' x 3801,
+                Justification => 'J' x 3800,
             },
         },
         ReferenceData => {
@@ -920,15 +938,15 @@ my @ChangeTests = (
             ChangeUpdate => {
                 UserID        => 1,
                 ChangeTitle   => 'T' x 250,
-                Description   => 'D' x 3800,
-                Justification => 'J' x 3800,
+                Description   => 'D' x 3799,
+                Justification => 'J' x 3799,
             },
         },
         ReferenceData => {
             ChangeGet => {
                 ChangeTitle     => 'T' x 250,
-                Description     => 'D' x 3800,
-                Justification   => 'J' x 3800,
+                Description     => 'D' x 3799,
+                Justification   => 'J' x 3799,
                 ChangeManagerID => undef,
                 ChangeBuilderID => $UserIDs[0],
                 WorkOrderIDs    => [],
@@ -952,8 +970,8 @@ my @ChangeTests = (
             ChangeUpdate => {
                 UserID        => 1,
                 ChangeTitle   => 'T' x 251,
-                Description   => 'D' x 3801,
-                Justification => 'J' x 3801,
+                Description   => 'D' x 3800,
+                Justification => 'J' x 3800,
             },
         },
         ReferenceData => {
@@ -998,7 +1016,7 @@ my @ChangeTests = (
             ChangeUpdate => {
                 UserID        => 1,
                 ChangeTitle   => 'T',
-                Description   => 'D' x 3801,
+                Description   => 'D' x 3800,
                 Justification => 'J',
             },
         },
@@ -1021,7 +1039,7 @@ my @ChangeTests = (
                 UserID        => 1,
                 ChangeTitle   => 'T',
                 Description   => 'D',
-                Justification => 'J' x 3801,
+                Justification => 'J' x 3800,
             },
         },
         ReferenceData => {
@@ -2023,10 +2041,11 @@ my @ChangeSearchTests = (
     },
 
     # Nr 11 - test Justification
+    # ToAscii() adds an extra newline
     {
         Description => 'Justification',
         SearchData  => {
-            Justification => 'J' x 3800,
+            Justification => 'J' x 3799 . "\n",
         },
         ResultData => {
             TestExistence => 1,

@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.157 2009-11-18 13:30:01 bes Exp $
+# $Id: ITSMChange.pm,v 1.158 2009-11-18 15:58:14 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.157 $) [1];
+$VERSION = qw($Revision: 1.158 $) [1];
 
 =head1 NAME
 
@@ -162,6 +162,22 @@ sub ChangeAdd {
         return;
     }
 
+    # get a plain text version of arguments which might contain HTML markup
+    ARGUMENT:
+    for my $Argument (qw(Description Justification)) {
+
+        next ARGUMENT if !exists $Param{$Argument};
+
+        if ( defined $Param{$Argument} ) {
+            $Param{"${Argument}Plain"} = $Self->{HTMLUtilsObject}->ToAscii(
+                String => $Param{$Argument},
+            );
+        }
+        else {
+            $Param{"${Argument}Plain"} = undef;
+        }
+    }
+
     # check change parameters
     return if !$Self->_CheckChangeParams(%Param);
 
@@ -273,7 +289,7 @@ sub ChangeUpdate {
         }
     }
 
-    # check that not both ChangeState and ChangeStateID are given
+    # check that not both State and StateID are given
     if ( $Param{ChangeState} && $Param{ChangeStateID} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
@@ -289,7 +305,7 @@ sub ChangeUpdate {
         );
     }
 
-    # normalize the ChangeTitle, when it is given
+    # normalize the Title, when it is given
     if ( $Param{ChangeTitle} && !ref $Param{ChangeTitle} ) {
 
         # remove leading whitespace
@@ -299,7 +315,23 @@ sub ChangeUpdate {
         $Param{ChangeTitle} =~ s{ \s+ \z }{}xms;
     }
 
-    # check change parameters
+    # get a plain text version of arguments which might contain HTML markup
+    ARGUMENT:
+    for my $Argument (qw(Description Justification)) {
+
+        next ARGUMENT if !exists $Param{$Argument};
+
+        if ( defined $Param{$Argument} ) {
+            $Param{"${Argument}Plain"} = $Self->{HTMLUtilsObject}->ToAscii(
+                String => $Param{$Argument},
+            );
+        }
+        else {
+            $Param{"${Argument}Plain"} = undef;
+        }
+    }
+
+    # check the given parameters
     return if !$Self->_CheckChangeParams(%Param);
 
     # trigger ChangeUpdatePre-Event
@@ -311,7 +343,7 @@ sub ChangeUpdate {
         UserID => $Param{UserID},
     );
 
-    # get old change data to be given to post event handler
+    # get old data to be given to post event handler
     my $ChangeData = $Self->ChangeGet(
         ChangeID => $Param{ChangeID},
         UserID   => $Param{UserID},
@@ -320,30 +352,6 @@ sub ChangeUpdate {
     # update CAB
     if ( exists $Param{CABAgents} || exists $Param{CABCustomers} ) {
         return if !$Self->ChangeCABUpdate(%Param);
-    }
-
-    # get a plain ascii version of description
-    if ( exists $Param{Description} ) {
-        if ( defined $Param{Description} ) {
-            $Param{DescriptionPlain} = $Self->{HTMLUtilsObject}->ToAscii(
-                String => $Param{Description},
-            );
-        }
-        else {
-            $Param{DescriptionPlain} = undef;
-        }
-    }
-
-    # get a plain ascii version of justification
-    if ( exists $Param{Justification} ) {
-        if ( defined $Param{Justification} ) {
-            $Param{JustificationPlain} = $Self->{HTMLUtilsObject}->ToAscii(
-                String => $Param{Justification},
-            );
-        }
-        else {
-            $Param{JustificationPlain} = undef;
-        }
     }
 
     # map update attributes to column names
@@ -363,21 +371,21 @@ sub ChangeUpdate {
     my $SQL = 'UPDATE change_item SET ';
     my @Bind;
 
-    CHANGEATTRIBUTE:
-    for my $ChangeAttribute ( keys %Attribute ) {
+    ATTRIBUTE:
+    for my $Attribute ( keys %Attribute ) {
 
         # do not use column if not in function parameters
-        next CHANGEATTRIBUTE if !exists $Param{$ChangeAttribute};
+        next ATTRIBUTE if !exists $Param{$Attribute};
 
-        $SQL .= "$Attribute{$ChangeAttribute} = ?, ";
-        push @Bind, \$Param{$ChangeAttribute};
+        $SQL .= "$Attribute{$Attribute} = ?, ";
+        push @Bind, \$Param{$Attribute};
     }
 
-    push @Bind, \$Param{UserID}, \$Param{ChangeID};
     $SQL .= 'change_time = current_timestamp, change_by = ? ';
     $SQL .= 'WHERE id = ?';
+    push @Bind, \$Param{UserID}, \$Param{ChangeID};
 
-    # add change to database
+    # update change
     return if !$Self->{DBObject}->Do(
         SQL  => $SQL,
         Bind => \@Bind,
@@ -2059,25 +2067,29 @@ Checks the params to ChangeAdd() and ChangeUpdate().
 There are no required parameters.
 
     my $Ok = $ChangeObject->_CheckChangeParams(
-        ChangeTitle     => 'Replacement of mail server',       # (optional)
-        Description     => 'New mail server is faster',        # (optional)
-        Justification   => 'Old mail server too slow',         # (optional)
-        ChangeStateID   => 4,                                  # (optional)
-        ChangeManagerID => 5,                                  # (optional)
-        ChangeBuilderID => 6,                                  # (optional)
-        RealizeTime     => '2009-10-23 08:57:12',              # (optional)
-        CABAgents       => [ 1, 2, 4 ],     # UserIDs          # (optional)
-        CABCustomers    => [ 'tt', 'mm' ],  # CustomerUserIDs  # (optional)
+        ChangeTitle          => 'Replacement of mail server',       # (optional)
+        Description          => 'New mail server <b>is</b> faster', # (optional)
+        DescriptionPlain     => 'New mail server is faster',        # (optional)
+        Justification        => 'Old mail server<b>too</b> slow',   # (optional)
+        JustificationPlain   => 'Old mail server too slow',         # (optional)
+        ChangeStateID        => 4,                                  # (optional)
+        ChangeManagerID      => 5,                                  # (optional)
+        ChangeBuilderID      => 6,                                  # (optional)
+        RealizeTime          => '2009-10-23 08:57:12',              # (optional)
+        CABAgents            => [ 1, 2, 4 ],     # UserIDs          # (optional)
+        CABCustomers         => [ 'tt', 'mm' ],  # CustomerUserIDs  # (optional)
     );
 
 The ChangeStateID is checked for existence in the general catalog.
-The string parameters have length constraints:
+These string parameters have length constraints:
 
-    Parameter      | max. length
-    ---------------+-----------------
-    ChangeTitle    |  250 characters
-    Description    | 3800 characters
-    Justification  | 3800 characters
+    Parameter           | max. length
+    --------------------+-----------------
+    ChangeTitle         |  250 characters
+    Description         | 3800 characters
+    DescriptionPlain    | 3800 characters
+    Justification       | 3800 characters
+    JustificationPlain  | 3800 characters
 
 =cut
 
@@ -2090,7 +2102,9 @@ sub _CheckChangeParams {
         qw(
         ChangeTitle
         Description
+        DescriptionPlain
         Justification
+        JustificationPlain
         ChangeManagerID
         ChangeBuilderID
         ChangeStateID
@@ -2129,7 +2143,13 @@ sub _CheckChangeParams {
         }
 
         # check the maximum length of description and justification
-        if ( $Argument eq 'Description' || $Argument eq 'Justification' ) {
+        if (
+            $Argument    eq 'Description'
+            || $Argument eq 'DescriptionPlain'
+            || $Argument eq 'JustificationPlain'
+            || $Argument eq 'JustificationPlain'
+            )
+        {
             if ( length( $Param{$Argument} ) > 3800 ) {
                 $Self->{LogObject}->Log(
                     Priority => 'error',
@@ -2269,6 +2289,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.157 $ $Date: 2009-11-18 13:30:01 $
+$Revision: 1.158 $ $Date: 2009-11-18 15:58:14 $
 
 =cut

@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.93 2009-11-16 14:46:14 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.94 2009-11-18 15:58:14 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -34,6 +34,7 @@ $Self->{GroupObject}          = Kernel::System::Group->new( %{$Self} );
 $Self->{ChangeObject}         = Kernel::System::ITSMChange->new( %{$Self} );
 $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
 $Self->{ValidObject}          = Kernel::System::Valid->new( %{$Self} );
+$Self->{HTMLUtilsObject}      = Kernel::System::HTMLUtils->new( %{$Self} );
 
 # test if workorder object was created successfully
 $Self->True(
@@ -878,17 +879,17 @@ push @WorkOrderTests, (
             WorkOrderUpdate => {
                 UserID         => 1,
                 WorkOrderTitle => 'T' x 250,
-                Instruction    => 'I' x 3800,
-                Report         => 'R' x 3800,
+                Instruction    => 'I' x 3799,
+                Report         => 'R' x 3799,
             },
         },
         ReferenceData => {
-            ChangeGet => {
-                ChangeTitle => 'T' x 250,
-                Instruction => 'I' x 3800,
-                Report      => 'R' x 3800,
-                CreateBy    => $UserIDs[0],
-                ChangeBy    => 1,
+            WorkOrderGet => {
+                WorkOrderTitle => 'T' x 250,
+                Instruction    => 'I' x 3799,
+                Report         => 'R' x 3799,
+                CreateBy       => $UserIDs[0],
+                ChangeBy       => 1,
             },
         },
         SearchTest => [ 1, 8 ],
@@ -905,15 +906,44 @@ push @WorkOrderTests, (
             WorkOrderUpdate => {
                 UserID         => 1,
                 WorkOrderTitle => 'T' x 251,
-                Instruction    => 'I' x 3801,
-                Report         => 'R' x 3801,
+                Instruction    => 'I' x 3800,
+                Report         => 'R' x 3800,
             },
         },
         ReferenceData => {
             WorkOrderGet => {
-                WorkOrderTitle => q{},
-                Instruction    => q{},
-                Report         => q{},
+                WorkOrderTitle => '',
+                Instruction    => '',
+                Report         => '',
+                CreateBy       => $UserIDs[0],
+                ChangeBy       => $UserIDs[0],
+            },
+        },
+        SearchTest => [ 1, 8 ],
+    },
+
+    {
+        Description => 'Test for max+2 string length for WorkOrderUpdate.',
+        UpdateFails => 1,
+        SourceData  => {
+            WorkOrderAdd => {
+                UserID   => $UserIDs[0],
+                ChangeID => $WorkOrderAddTestID,
+            },
+            WorkOrderUpdate => {
+                UserID         => 1,
+                WorkOrderTitle => 'T' x 252,
+                Instruction    => 'I' x 3800,
+                Report         => 'R' x 3800,
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                WorkOrderTitle => '',
+                Instruction    => '',
+                Report         => '',
+                CreateBy       => $UserIDs[0],
+                ChangeBy       => $UserIDs[0],
             },
         },
         SearchTest => [8],
@@ -1007,7 +1037,7 @@ push @WorkOrderTests, (
             WorkOrderUpdate => {
                 UserID         => 1,
                 WorkOrderTitle => 'T',
-                Instruction    => 'I' x 3801,
+                Instruction    => 'I' x 3800,
                 Report         => 'R',
             },
         },
@@ -1033,7 +1063,7 @@ push @WorkOrderTests, (
                 UserID         => 1,
                 WorkOrderTitle => 'T',
                 Instruction    => 'I',
-                Report         => 'R' x 3801,
+                Report         => 'R' x 3800,
             },
         },
         ReferenceData => {
@@ -1686,6 +1716,7 @@ my $StringSearchTestChange = $Self->{ChangeObject}->ChangeGet(
     UserID   => 1,
 );
 
+#use Data::Dumper; die Dumper( $Self->{HTMLUtilsObject}->ToAscii( String => 'WorkOrder 1 - Instruction - ' . $UniqueSignature ) );
 my @WorkOrderSearchTests = (
 
     # Nr 1 - a simple check if the search functions takes care of "Limit"
@@ -1722,10 +1753,11 @@ my @WorkOrderSearchTests = (
     },
 
     # Nr 4 - search for instruction
+    # Note the extra newlines injected by ToAscii()
     {
         Description => 'Instruction',
         SearchData  => {
-            Instruction => 'WorkOrder 1 - Instruction - ' . $UniqueSignature,
+            Instruction => "WorkOrder 1 - Instruction -\n$UniqueSignature\n",
         },
         ResultData => {
             TestExistence => 1,
@@ -1744,12 +1776,13 @@ my @WorkOrderSearchTests = (
     },
 
     # Nr 6 - search for title, instruction and report
+    # Note the extra newlines injected by ToAscii()
     {
         Description => 'WorkOrderTitle, Instruction, Report',
         SearchData  => {
             WorkOrderTitle => 'WorkOrder 1 - Title - ' . $UniqueSignature,
-            Instruction    => 'WorkOrder 1 - Instruction - ' . $UniqueSignature,
-            Report         => 'WorkOrder 1 - Report - ' . $UniqueSignature,
+            Instruction    => "WorkOrder 1 - Instruction -\n$UniqueSignature\n",
+            Report         => "WorkOrder 1 - Report - $UniqueSignature",
         },
         ResultData => {
             TestExistence => 1,
@@ -1916,7 +1949,7 @@ my @WorkOrderSearchTests = (
         Description => 'Search for change justification',
         SearchData  => {
             ChangeIDs           => [$StringSearchTestID],
-            ChangeJustification => 'Change 3 - Justification - ' . $UniqueSignature,
+            ChangeJustification => "Change 3 - Justification -\n$UniqueSignature\n",
         },
         ResultData => {
             TestCount     => 1,
@@ -1957,8 +1990,8 @@ my @WorkOrderSearchTests = (
             ChangeIDs           => [$StringSearchTestID],
             ChangeNumber        => $StringSearchTestChange->{ChangeNumber},
             ChangeTitle         => 'Change 3 - Title - ' . $UniqueSignature,
-            ChangeDescription   => 'Change 3 - Description - ' . $UniqueSignature,
-            ChangeJustification => 'Change 3 - Justification - ' . $UniqueSignature,
+            ChangeDescription   => "Change 3 - Description - $UniqueSignature",
+            ChangeJustification => "Change 3 - Justification -\n$UniqueSignature\n",
         },
         ResultData => {
             TestCount     => 1,

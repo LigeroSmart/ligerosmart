@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.25 2009-11-18 13:20:29 bes Exp $
+# $Id: ITSMWorkOrder.pm,v 1.26 2009-11-18 15:58:14 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.25 $) [1];
+$VERSION = qw($Revision: 1.26 $) [1];
 
 =head1 NAME
 
@@ -203,6 +203,22 @@ sub WorkOrderAdd {
         # delete the workorder type otherwise the update fails
         # as both WorkOrderType and WorkOrderTypeID exists then
         delete $Param{WorkOrderType};
+    }
+
+    # get a plain text version of arguments which might contain HTML markup
+    ARGUMENT:
+    for my $Argument (qw(Instruction Report)) {
+
+        next ARGUMENT if !exists $Param{$Argument};
+
+        if ( defined $Param{$Argument} ) {
+            $Param{"${Argument}Plain"} = $Self->{HTMLUtilsObject}->ToAscii(
+                String => $Param{$Argument},
+            );
+        }
+        else {
+            $Param{"${Argument}Plain"} = undef;
+        }
     }
 
     # check change parameters
@@ -395,7 +411,7 @@ sub WorkOrderUpdate {
         }
     }
 
-    # check that not both WorkOrderState and WorkOrderStateID are given
+    # check that not both State and StateID are given
     if ( $Param{WorkOrderState} && $Param{WorkOrderStateID} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
@@ -427,7 +443,7 @@ sub WorkOrderUpdate {
         );
     }
 
-    # normalize the WorkOrderTitle, when it is given
+    # normalize the Title, when it is given
     if ( $Param{WorkOrderTitle} && !ref $Param{WorkOrderTitle} ) {
 
         # remove leading whitespace
@@ -435,6 +451,22 @@ sub WorkOrderUpdate {
 
         # remove trailing whitespace
         $Param{WorkOrderTitle} =~ s{ \s+ \z }{}xms;
+    }
+
+    # get a plain text version of arguments which might contain HTML markup
+    ARGUMENT:
+    for my $Argument (qw(Instruction Report)) {
+
+        next ARGUMENT if !exists $Param{$Argument};
+
+        if ( defined $Param{$Argument} ) {
+            $Param{"${Argument}Plain"} = $Self->{HTMLUtilsObject}->ToAscii(
+                String => $Param{$Argument},
+            );
+        }
+        else {
+            $Param{"${Argument}Plain"} = undef;
+        }
     }
 
     # check the given parameters
@@ -452,35 +484,11 @@ sub WorkOrderUpdate {
         UserID => $Param{UserID},
     );
 
-    # get old workorder data to be given to post event handler
+    # get old data to be given to post event handler
     my $WorkOrderData = $Self->WorkOrderGet(
         WorkOrderID => $Param{WorkOrderID},
         UserID      => $Param{UserID},
     );
-
-    # get a plain ascii version of instruction
-    if ( exists $Param{Instruction} ) {
-        if ( defined $Param{Instruction} ) {
-            $Param{InstructionPlain} = $Self->{HTMLUtilsObject}->ToAscii(
-                String => $Param{Instruction},
-            );
-        }
-        else {
-            $Param{InstructionPlain} = undef;
-        }
-    }
-
-    # get a plain ascii version of report
-    if ( exists $Param{Report} ) {
-        if ( defined $Param{Report} ) {
-            $Param{ReportPlain} = $Self->{HTMLUtilsObject}->ToAscii(
-                String => $Param{Report},
-            );
-        }
-        else {
-            $Param{ReportPlain} = undef;
-        }
-    }
 
     # map update attributes to column names
     my %Attribute = (
@@ -504,14 +512,14 @@ sub WorkOrderUpdate {
     my $SQL = 'UPDATE change_workorder SET ';
     my @Bind;
 
-    WORKORDERATTRIBUTE:
-    for my $WorkOrderAttribute ( keys %Attribute ) {
+    ATTRIBUTE:
+    for my $Attribute ( keys %Attribute ) {
 
         # do not use column if not in function parameters
-        next WORKORDERATTRIBUTE if !exists $Param{$WorkOrderAttribute};
+        next ATTRIBUTE if !exists $Param{$Attribute};
 
-        $SQL .= "$Attribute{$WorkOrderAttribute} = ?, ";
-        push @Bind, \$Param{$WorkOrderAttribute};
+        $SQL .= "$Attribute{$Attribute} = ?, ";
+        push @Bind, \$Param{$Attribute};
     }
 
     $SQL .= 'change_time = current_timestamp, change_by = ? ';
@@ -1884,30 +1892,35 @@ sub _GetWorkOrderNumber {
 
 =item _CheckWorkOrderParams()
 
-Checks if the various parameters are all valid.
+Checks the params to WorkORderAdd() and WorkORderUpdate().
+There are no required parameters.
 
     my $Ok = $WorkOrderObject->_CheckWorkOrderParams(
-        ChangeID         => 123,                                       # (optional)
-        WorkOrderNumber  => 5,                                         # (optional)
-        WorkOrderTitle   => 'Replacement of mail server',              # (optional)
-        Instruction      => 'Install the the new server',              # (optional)
-        Report           => 'Installed new server without problems',   # (optional)
-        WorkOrderStateID => 4,                                         # (optional)
-        WorkOrderTypeID  => 12,                                        # (optional)
-        WorkOrderAgentID => 8,                                         # (optional)
-        PlannedStartTime => '2009-10-01 10:33:00',                     # (optional)
-        ActualStartTime  => '2009-10-01 10:33:00',                     # (optional)
-        PlannedEndTime   => '2009-10-01 10:33:00',                     # (optional)
-        ActualEndTime    => '2009-10-01 10:33:00',                     # (optional)
+        ChangeID         => 123,                                             # (optional)
+        WorkOrderNumber  => 5,                                               # (optional)
+        WorkOrderTitle   => 'Replacement of mail server',                    # (optional)
+        Instruction      => 'Install the <b>new</b> server',                 # (optional)
+        InstructionPlain => 'Install the new server',                        # (optional)
+        Report           => 'Installed new server <b>without</b> problems',  # (optional)
+        ReportPlain      => 'Installed new server without problems',         # (optional)
+        WorkOrderStateID => 4,                                               # (optional)
+        WorkOrderTypeID  => 12,                                              # (optional)
+        WorkOrderAgentID => 8,                                               # (optional)
+        PlannedStartTime => '2009-10-01 10:33:00',                           # (optional)
+        ActualStartTime  => '2009-10-01 10:33:00',                           # (optional)
+        PlannedEndTime   => '2009-10-01 10:33:00',                           # (optional)
+        ActualEndTime    => '2009-10-01 10:33:00',                           # (optional)
     );
 
 These string parameters have length constraints:
 
-    Parameter      | max. length
-    ---------------+-----------------
-    WorkOrderTitle |  250 characters
-    Instruction    | 3800 characters
-    Report         | 3800 characters
+    Parameter        | max. length
+    -----------------+-----------------
+    WorkOrderTitle   |  250 characters
+    Instruction      | 3800 characters
+    InstructionPlain | 3800 characters
+    Report           | 3800 characters
+    ReportPlain      | 3800 characters
 
 =cut
 
@@ -1920,7 +1933,9 @@ sub _CheckWorkOrderParams {
         qw(
         WorkOrderTitle
         Instruction
+        InstructionPlain
         Report
+        ReportPlain
         WorkOrderAgentID
         WorkOrderStateID
         WorkOrderTypeID
@@ -1961,7 +1976,13 @@ sub _CheckWorkOrderParams {
         }
 
         # check the maximum length of description and justification
-        if ( $Argument eq 'Instruction' || $Argument eq 'Report' ) {
+        if (
+            $Argument    eq 'Instruction'
+            || $Argument eq 'InstructionPlain'
+            || $Argument eq 'Report'
+            || $Argument eq 'ReportPlain'
+            )
+        {
             if ( length( $Param{$Argument} ) > 3800 ) {
                 $Self->{LogObject}->Log(
                     Priority => 'error',
@@ -1992,7 +2013,7 @@ sub _CheckWorkOrderParams {
         if ( !$UserData{UserID} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "The WorkOrderAgentID $Param{WorkOrderAgentID} is not a valid user id!",
+                Message  => "The WorkOrderAgent $Param{WorkOrderAgentID} is not a valid user id!",
             );
             return;
         }
@@ -2111,6 +2132,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.25 $ $Date: 2009-11-18 13:20:29 $
+$Revision: 1.26 $ $Date: 2009-11-18 15:58:14 $
 
 =cut
