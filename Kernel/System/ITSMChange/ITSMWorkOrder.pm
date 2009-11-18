@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.20 2009-11-16 22:42:30 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.21 2009-11-18 08:14:44 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 =head1 NAME
 
@@ -1632,7 +1632,7 @@ This is useful when the method is used for checking whether a link or an action 
     my $Access = $WorkOrderObject->Permission(
         UserID      => 123,
         Type        => 'ro',   # 'ro' and 'rw' are supported
-        WorkOrderID => 4444,   # optional, do not pass for 'WorkOrderAdd'
+        WorkOrderID => 4444,
         Cached      => 0,      # optional with default 1,
                                # passing the value 0 is useful in test scripts
         LogNo       => 1,      # optional, turns off logging when access is denied
@@ -2112,6 +2112,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.20 $ $Date: 2009-11-16 22:42:30 $
+$Revision: 1.21 $ $Date: 2009-11-18 08:14:44 $
 
 =cut

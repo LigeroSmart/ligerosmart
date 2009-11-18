@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder/Permission/CABCheck.pm - CAB based permission check
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: CABCheck.pm,v 1.4 2009-11-12 11:14:33 bes Exp $
+# $Id: CABCheck.pm,v 1.5 2009-11-18 08:14:44 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 =head1 NAME
 
@@ -131,7 +131,7 @@ of the CAB of the change of the workorder.
     my $HasAccess = $CheckObject->Run(
         UserID      => 123,
         Type        => 'rw',     # 'ro' or 'rw'
-        WorkOrderID => 4444,     # optional for WorkOrderAdd
+        WorkOrderID => 4444,
     );
 
 =cut
@@ -140,7 +140,7 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(UserID Type)) {
+    for (qw(UserID Type WorkOrderID)) {
         if ( !$Param{$_} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -191,7 +191,7 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Id: CABCheck.pm,v 1.4 2009-11-12 11:14:33 bes Exp $
+$Id: CABCheck.pm,v 1.5 2009-11-18 08:14:44 bes Exp $
 
 =cut
 
