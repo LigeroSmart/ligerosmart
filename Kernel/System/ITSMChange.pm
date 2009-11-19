@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.158 2009-11-18 15:58:14 bes Exp $
+# $Id: ITSMChange.pm,v 1.159 2009-11-19 09:40:44 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.158 $) [1];
+$VERSION = qw($Revision: 1.159 $) [1];
 
 =head1 NAME
 
@@ -174,7 +174,10 @@ sub ChangeAdd {
             );
         }
         else {
-            $Param{"${Argument}Plain"} = undef;
+
+            # TODO : Debug code for oracle unit test
+            #            $Param{"${Argument}Plain"} = undef;
+            $Param{"${Argument}Plain"} = '';
         }
     }
 
@@ -327,7 +330,10 @@ sub ChangeUpdate {
             );
         }
         else {
-            $Param{"${Argument}Plain"} = undef;
+
+            # TODO : Debug code for oracle unit test
+            #            $Param{"${Argument}Plain"} = undef;
+            $Param{"${Argument}Plain"} = '';
         }
     }
 
@@ -2289,6 +2295,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.158 $ $Date: 2009-11-18 15:58:14 $
+$Revision: 1.159 $ $Date: 2009-11-19 09:40:44 $
 
 =cut
