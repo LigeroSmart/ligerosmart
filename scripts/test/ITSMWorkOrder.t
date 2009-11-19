@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.94 2009-11-18 15:58:14 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.95 2009-11-19 09:23:12 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -34,7 +34,6 @@ $Self->{GroupObject}          = Kernel::System::Group->new( %{$Self} );
 $Self->{ChangeObject}         = Kernel::System::ITSMChange->new( %{$Self} );
 $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
 $Self->{ValidObject}          = Kernel::System::Valid->new( %{$Self} );
-$Self->{HTMLUtilsObject}      = Kernel::System::HTMLUtils->new( %{$Self} );
 
 # test if workorder object was created successfully
 $Self->True(
@@ -289,7 +288,8 @@ for my $TypeID (@SortedTypeIDs) {
 # store current TestCount for better test case recognition
 my $TestCountMisc   = $TestCount;
 my $UniqueSignature = 'UnitTest-ITSMChange::ITSMWorkOrder-' . int( rand 1_000_000 ) . '_' . time;
-my @ChangeTests     = (
+
+my @ChangeTests = (
 
     # a change for general workorder testing
     {
@@ -1716,7 +1716,6 @@ my $StringSearchTestChange = $Self->{ChangeObject}->ChangeGet(
     UserID   => 1,
 );
 
-#use Data::Dumper; die Dumper( $Self->{HTMLUtilsObject}->ToAscii( String => 'WorkOrder 1 - Instruction - ' . $UniqueSignature ) );
 my @WorkOrderSearchTests = (
 
     # Nr 1 - a simple check if the search functions takes care of "Limit"
@@ -1765,6 +1764,7 @@ my @WorkOrderSearchTests = (
     },
 
     # Nr 5 - search for report
+    # ToAscii() adds no newlines, as the string length is less than 78.
     {
         Description => 'Report',
         SearchData  => {
@@ -1776,7 +1776,7 @@ my @WorkOrderSearchTests = (
     },
 
     # Nr 6 - search for title, instruction and report
-    # Note the extra newlines injected by ToAscii()
+    # Note the extra newlines injected by ToAscii().
     {
         Description => 'WorkOrderTitle, Instruction, Report',
         SearchData  => {
