@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.6 2009-11-04 15:19:31 bes Exp $
+# $Id: ITSMChangeManagement.pm,v 1.7 2009-11-19 16:48:28 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,8 +17,10 @@ use warnings;
 use Kernel::Config;
 use Kernel::System::Config;
 use Kernel::System::CSV;
+use Kernel::System::GeneralCatalog;
 use Kernel::System::Group;
 use Kernel::System::ITSMChange;
+use Kernel::System::ITSMChangeCIPAllocate;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::LinkObject;
 use Kernel::System::State;
@@ -28,7 +30,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 =head1 NAME
 
@@ -139,17 +141,19 @@ sub new {
     }
 
     # create needed objects
-    $Self->{ConfigObject}    = Kernel::Config->new();
-    $Self->{CSVObject}       = Kernel::System::CSV->new( %{$Self} );
-    $Self->{GroupObject}     = Kernel::System::Group->new( %{$Self} );
-    $Self->{UserObject}      = Kernel::System::User->new( %{$Self} );
-    $Self->{StateObject}     = Kernel::System::State->new( %{$Self} );
-    $Self->{TypeObject}      = Kernel::System::Type->new( %{$Self} );
-    $Self->{ValidObject}     = Kernel::System::Valid->new( %{$Self} );
-    $Self->{LinkObject}      = Kernel::System::LinkObject->new( %{$Self} );
-    $Self->{ChangeObject}    = Kernel::System::ITSMChange->new( %{$Self} );
-    $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
-    $Self->{StatsObject}     = Kernel::System::Stats->new(
+    $Self->{ConfigObject}         = Kernel::Config->new();
+    $Self->{CSVObject}            = Kernel::System::CSV->new( %{$Self} );
+    $Self->{GroupObject}          = Kernel::System::Group->new( %{$Self} );
+    $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
+    $Self->{StateObject}          = Kernel::System::State->new( %{$Self} );
+    $Self->{TypeObject}           = Kernel::System::Type->new( %{$Self} );
+    $Self->{ValidObject}          = Kernel::System::Valid->new( %{$Self} );
+    $Self->{LinkObject}           = Kernel::System::LinkObject->new( %{$Self} );
+    $Self->{ChangeObject}         = Kernel::System::ITSMChange->new( %{$Self} );
+    $Self->{CIPAllocateObject}    = Kernel::System::ITSMChangeCIPAllocate->new( %{$Self} );
+    $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
+    $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
+    $Self->{StatsObject}          = Kernel::System::Stats->new(
         %{$Self},
         UserID => 1,
     );
@@ -194,6 +198,9 @@ sub CodeInstall {
         FilePrefix => $Self->{FilePrefix},
     );
 
+    # set default CIP matrix
+    $Self->_CIPDefaultMatrixSet();
+
     return 1;
 }
 
@@ -231,6 +238,9 @@ sub CodeReinstall {
         FilePrefix => $Self->{FilePrefix},
     );
 
+    # set default CIP matrix
+    $Self->_CIPDefaultMatrixSet();
+
     return 1;
 }
 
@@ -249,6 +259,9 @@ sub CodeUpgrade {
     $Self->{StatsObject}->StatsInstall(
         FilePrefix => $Self->{FilePrefix},
     );
+
+    # set default CIP matrix
+    $Self->_CIPDefaultMatrixSet();
 
     return 1;
 }
@@ -425,6 +438,112 @@ sub _GroupDeactivate {
     return 1;
 }
 
+=item _CIPDefaultMatrixSet()
+
+set the default CIP matrix
+
+    my $Result = $CodeObject->_CIPDefaultMatrixSet();
+
+=cut
+
+sub _CIPDefaultMatrixSet {
+    my ( $Self, %Param ) = @_;
+
+    # get current allocation list
+    my $List = $Self->{CIPAllocateObject}->AllocateList(
+        UserID => 1,
+    );
+
+    return if !$List;
+    return if ref $List ne 'HASH';
+
+    # set no matrix if already defined
+    return if %{$List};
+
+    # define the allocations
+    # $Allocation{Impact}->{Category} = Priority
+    my %Allocation;
+    $Allocation{'1 very low'}->{'1 very low'}   = '1 very low';
+    $Allocation{'1 very low'}->{'2 low'}        = '1 very low';
+    $Allocation{'1 very low'}->{'3 normal'}     = '2 low';
+    $Allocation{'1 very low'}->{'4 high'}       = '2 low';
+    $Allocation{'1 very low'}->{'5 very high'}  = '3 normal';
+    $Allocation{'2 low'}->{'1 very low'}        = '1 very low';
+    $Allocation{'2 low'}->{'2 low'}             = '2 low';
+    $Allocation{'2 low'}->{'3 normal'}          = '2 low';
+    $Allocation{'2 low'}->{'4 high'}            = '3 normal';
+    $Allocation{'2 low'}->{'5 very high'}       = '4 high';
+    $Allocation{'3 normal'}->{'1 very low'}     = '2 low';
+    $Allocation{'3 normal'}->{'2 low'}          = '2 low';
+    $Allocation{'3 normal'}->{'3 normal'}       = '3 normal';
+    $Allocation{'3 normal'}->{'4 high'}         = '4 high';
+    $Allocation{'3 normal'}->{'5 very high'}    = '4 high';
+    $Allocation{'4 high'}->{'1 very low'}       = '2 low';
+    $Allocation{'4 high'}->{'2 low'}            = '3 normal';
+    $Allocation{'4 high'}->{'3 normal'}         = '4 high';
+    $Allocation{'4 high'}->{'4 high'}           = '4 high';
+    $Allocation{'4 high'}->{'5 very high'}      = '5 very high';
+    $Allocation{'5 very high'}->{'1 very low'}  = '3 normal';
+    $Allocation{'5 very high'}->{'2 low'}       = '4 high';
+    $Allocation{'5 very high'}->{'3 normal'}    = '4 high';
+    $Allocation{'5 very high'}->{'4 high'}      = '5 very high';
+    $Allocation{'5 very high'}->{'5 very high'} = '5 very high';
+
+    # get impact list
+    my $ImpactList = $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::ChangeManagement::Impact',
+    );
+    my %ImpactListReverse = reverse %{$ImpactList};
+
+    # get category list
+    my $CategoryList = $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::ChangeManagement::Category',
+    );
+    my %CategoryListReverse = reverse %{$CategoryList};
+
+    # get priority list
+    my $PriorityList = $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::ChangeManagement::Priority',
+    );
+    my %PriorityListReverse = reverse %{$PriorityList};
+
+    # create the allocation matrix
+    my %AllocationMatrix;
+    IMPACT:
+    for my $Impact ( keys %Allocation ) {
+
+        next IMPACT if !$ImpactListReverse{$Impact};
+
+        # extract impact id
+        my $ImpactID = $ImpactListReverse{$Impact};
+
+        CATEGORY:
+        for my $Category ( keys %{ $Allocation{$Impact} } ) {
+
+            next CATEGORY if !$CategoryListReverse{$Category};
+
+            # extract priority
+            my $Priority = $Allocation{$Impact}->{$Category};
+
+            next CATEGORY if !$PriorityListReverse{$Priority};
+
+            # extract criticality id and priority id
+            my $CategoryID = $CategoryListReverse{$Category};
+            my $PriorityID = $PriorityListReverse{$Priority};
+
+            $AllocationMatrix{$ImpactID}->{$CategoryID} = $PriorityID;
+        }
+    }
+
+    # save the matrix
+    $Self->{CIPAllocateObject}->AllocateUpdate(
+        AllocateData => \%AllocationMatrix,
+        UserID       => 1,
+    );
+
+    return 1;
+}
+
 =item _LinkDelete()
 
 delete all existing links with change and workorder objects
@@ -484,6 +603,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.6 $ $Date: 2009-11-04 15:19:31 $
+$Revision: 1.7 $ $Date: 2009-11-19 16:48:28 $
 
 =cut

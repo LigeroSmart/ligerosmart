@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.63 2009-11-19 14:36:07 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.64 2009-11-19 16:48:28 reb Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -67,6 +67,7 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMWorkOrderZoom.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/ITSMChange.dtl"/>
         <File Permission="644" Location="Kernel/System/ITSMChange.pm"/>
+        <File Permission="644" Location="Kernel/System/ITSMChangeCIPAllocate.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/History.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/ITSMWorkOrder.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/Event/HistoryAdd.pm"/>
@@ -89,6 +90,25 @@
         <File Permission="644" Location="var/packagesetup/ITSMChangeManagement.pm"/>
     </Filelist>
     <DatabaseInstall Type="post">
+        <TableCreate Name="change_cip_allocate">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
+            <Column Name="category_id" Required="true" Type="INTEGER"/>
+            <Column Name="impact_id" Required="true" Type="INTEGER"/>
+            <Column Name="priority_id" Required="true" Type="INTEGER"/>
+            <Column Name="create_time" Required="false" Type="DATE"/>
+            <Column Name="create_by" Required="false" Type="INTEGER"/>
+            <Column Name="change_time" Required="false" Type="DATE"/>
+            <Column Name="change_by" Required="false" Type="INTEGER"/>
+            <ForeignKey ForeignTable="general_catalog">
+                <Reference Local="category_id" Foreign="id"/>
+                <Reference Local="impact_id" Foreign="id"/>
+                <Reference Local="priority_id" Foreign="id"/>
+            </ForeignKey>
+            <ForeignKey ForeignTable="users">
+                <Reference Local="create_by" Foreign="id"/>
+                <Reference Local="change_by" Foreign="id"/>
+            </ForeignKey>
+        </TableCreate>
         <TableCreate Name="change_item">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
             <Column Name="change_number" Required="true" Size="100" Type="VARCHAR"/>
@@ -335,6 +355,141 @@
                 <Reference Local="type_id" Foreign="id"/>
             </ForeignKey>
         </TableCreate>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Category</Data>
+            <Data Key="name" Type="Quote">1 very low</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Category</Data>
+            <Data Key="name" Type="Quote">2 low</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Category</Data>
+            <Data Key="name" Type="Quote">3 normal</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Category</Data>
+            <Data Key="name" Type="Quote">4 high</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Category</Data>
+            <Data Key="name" Type="Quote">5 very high</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Impact</Data>
+            <Data Key="name" Type="Quote">1 very low</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Impact</Data>
+            <Data Key="name" Type="Quote">2 low</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Impact</Data>
+            <Data Key="name" Type="Quote">3 normal</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Impact</Data>
+            <Data Key="name" Type="Quote">4 high</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Impact</Data>
+            <Data Key="name" Type="Quote">5 very high</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Priority</Data>
+            <Data Key="name" Type="Quote">1 very low</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Priority</Data>
+            <Data Key="name" Type="Quote">2 low</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Priority</Data>
+            <Data Key="name" Type="Quote">3 normal</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Priority</Data>
+            <Data Key="name" Type="Quote">4 high</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagemen::Priority</Data>
+            <Data Key="name" Type="Quote">5 very high</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Change::State</Data>
             <Data Key="name" Type="Quote">requested</Data>

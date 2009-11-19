@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.126 2009-11-19 15:25:47 bes Exp $
+# $Id: ITSMChange.t,v 1.127 2009-11-19 16:48:28 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,6 +21,7 @@ use Kernel::System::Group;
 use Kernel::System::CustomerUser;
 use Kernel::System::GeneralCatalog;
 use Kernel::System::ITSMChange;
+use Kernel::System::ITSMChangeCIPAllocate;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::History;
 
@@ -38,6 +39,7 @@ $Self->{ChangeObject}         = Kernel::System::ITSMChange->new( %{$Self} );
 $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
 $Self->{ValidObject}          = Kernel::System::Valid->new( %{$Self} );
 $Self->{ChangeHistoryObject}  = Kernel::System::ITSMChange::History->new( %{$Self} );
+$Self->{CIPAllocateObject}    = Kernel::System::ITSMChangeCIPAllocate->new( %{$Self} );
 
 # test if change object was created successfully
 $Self->True(
@@ -4195,6 +4197,113 @@ for my $PossibleStateID (@PossibleStateIDsReference) {
         "Check that the state id $PossibleStateID is returned only once.",
     );
 }
+
+# ------------------------------------------------------------ #
+# CIP allocate tests
+# ------------------------------------------------------------ #
+
+# get current allocation list (UserID is needed)
+my $EmptyAllocateData = $Self->{CIPAllocateObject}->AllocateList();
+
+# check the result
+$Self->False(
+    $EmptyAllocateData,
+    'Test ' . $TestCount++ . ': AllocateList()',
+);
+
+# get current allocation list
+my $CurrentAllocateData = $Self->{CIPAllocateObject}->AllocateList(
+    UserID => 1,
+);
+
+# check the result
+$Self->True(
+    $CurrentAllocateData,
+    'Test ' . $TestCount++ . ': AllocateList()',
+);
+
+# check the allocation hash
+my $HashIsOK = 1;
+if ( ref $CurrentAllocateData ne 'HASH' ) {
+    $HashIsOK = 0;
+}
+
+# check the allocation 2d hash
+if ($HashIsOK) {
+
+    IMPACTID:
+    for my $ImpactID ( keys %{$CurrentAllocateData} ) {
+
+        if ( ref $CurrentAllocateData->{$ImpactID} ne 'HASH' ) {
+            $HashIsOK = 0;
+            last IMPACTID;
+        }
+
+        CATEGORYID:
+        for my $CategoryID ( keys %{ $CurrentAllocateData->{$ImpactID} } ) {
+
+            if ( !$CategoryID || !$CurrentAllocateData->{$ImpactID}->{$CategoryID} ) {
+                $HashIsOK = 0;
+                last IMPACTID;
+            }
+        }
+    }
+}
+
+# check HashOK
+$Self->True(
+    $HashIsOK,
+    'Test ' . $TestCount++ . ': AllocateList()',
+);
+
+# update the allocation hash (not all needed arguments given)
+my $CIPAllocationUpdated = $Self->{CIPAllocateObject}->AllocateUpdate(
+    UserID => 1,
+);
+
+# check the result
+$Self->False(
+    $CIPAllocationUpdated,
+    'Test ' . $TestCount++ . ': AllocateUpdate()',
+);
+
+# update the allocation hash (not all needed arguments given)
+my $CIPAllocationIsUpdated = $Self->{CIPAllocateObject}->AllocateUpdate(
+    AllocateData => $CurrentAllocateData,
+);
+
+# check the result
+$Self->False(
+    $CIPAllocationIsUpdated,
+    'Test ' . $TestCount++ . ': AllocateUpdate()',
+);
+
+# update the allocation hash (allocation hash)
+my $CIPAllocationIsUpdatedNrThree = $Self->{CIPAllocateObject}->AllocateUpdate(
+    AllocateData => {
+        Test  => 'aaa',
+        Test2 => 'bbb',
+    },
+    UserID => 1,
+);
+
+# check the result
+$Self->False(
+    $CIPAllocationIsUpdatedNrThree,
+    'Test ' . $TestCount++ . ': AllocateUpdate()',
+);
+
+# update the allocation hash
+my $Success = $Self->{CIPAllocateObject}->AllocateUpdate(
+    AllocateData => $CurrentAllocateData,
+    UserID       => 1,
+);
+
+# check the result
+$Self->True(
+    $Success,
+    'Test ' . $TestCount++ . ': AllocateUpdate()',
+);
 
 # ------------------------------------------------------------ #
 # clean the system
