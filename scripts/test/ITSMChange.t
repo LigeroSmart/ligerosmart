@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.125 2009-11-19 13:40:50 bes Exp $
+# $Id: ITSMChange.t,v 1.126 2009-11-19 15:25:47 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1202,7 +1202,7 @@ my @ChangeTests = (
 
     # Test for ChangeCABUpdate and ChangeCABGet
     {
-        Description => 'Test checks removment of duplicate CAB members for ChangeCABUpdate',
+        Description => 'Test checks removal of duplicate CAB members for ChangeCABUpdate',
         SourceData  => {
             ChangeAdd => {
                 UserID      => $UserIDs[0],
@@ -1275,6 +1275,45 @@ my @ChangeTests = (
 
     # Test for ChangeCABUpdate and ChangeCABGet
     {
+        Description => 'Passing an integer as CABAgents to ChangeCABUpdate.',
+        SourceData  => {
+            ChangeAdd => {
+                UserID => $UserIDs[0],
+            },
+            ChangeCABUpdate => {
+                CABAgents => $UserIDs[0],
+            },
+            ChangeCABUpdateFail => 1,
+        },
+        ReferenceData => {
+            ChangeCABGet => {
+                CABAgents    => [],
+                CABCustomers => [],
+            },
+        },
+    },
+
+    # Test for ChangeCABUpdate and ChangeCABGet
+    {
+        Description => 'Neither CABAgents nor CABCustomers is passed.',
+        SourceData  => {
+            ChangeAdd => {
+                UserID => $UserIDs[0],
+            },
+            ChangeCABUpdate => {
+            },
+            ChangeCABUpdateFail => 1,
+        },
+        ReferenceData => {
+            ChangeCABGet => {
+                CABAgents    => [],
+                CABCustomers => [],
+            },
+        },
+    },
+
+    # Test for ChangeCABUpdate and ChangeCABGet
+    {
         Description => 'Test checks deaktivated CABAgents param for ChangeCABUpdate.',
         SourceData  => {
             ChangeAdd => {
@@ -1312,6 +1351,52 @@ my @ChangeTests = (
         ReferenceData => {
             ChangeCABGet => {
                 CABAgents    => [],
+                CABCustomers => [],
+            },
+        },
+    },
+
+    # Test for ChangeCABUpdate and ChangeCABGet
+    {
+        Description => 'A valid CABCustomer is passed to ChangeCABUpdate, no CABAgents.',
+        SourceData  => {
+            ChangeAdd => {
+                UserID => $UserIDs[0],
+            },
+            ChangeCABUpdate => {
+                CABCustomers => [
+                    $CustomerUserIDs[0],
+                ],
+            },
+        },
+        ReferenceData => {
+            ChangeCABGet => {
+                CABAgents    => [],
+                CABCustomers => [
+                    $CustomerUserIDs[0],
+                ],
+            },
+        },
+    },
+
+    # Test for ChangeCABUpdate and ChangeCABGet
+    {
+        Description => 'A valid CABAgent is passed to ChangeCABUpdate, no CABCustomers.',
+        SourceData  => {
+            ChangeAdd => {
+                UserID => $UserIDs[0],
+            },
+            ChangeCABUpdate => {
+                CABAgents => [
+                    $UserIDs[0],
+                ],
+            },
+        },
+        ReferenceData => {
+            ChangeCABGet => {
+                CABAgents => [
+                    $UserIDs[0],
+                ],
                 CABCustomers => [],
             },
         },
