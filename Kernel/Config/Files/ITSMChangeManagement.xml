@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.70 2009-11-17 16:54:20 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.71 2009-11-19 14:36:07 bes Exp $</CVS>
     <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
         <Description Lang="en">Logfile for the itsm change counter.</Description>
         <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
@@ -217,6 +217,20 @@
                     <AccessKey></AccessKey>
                     <Prio>300</Prio>
                 </NavBar>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentITSMChangeTimeSlot" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AgentITSMChangeTimeSlot object in the agent interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration des AgentITSMChangeTimeSlot-Objekts im Agent-Interface.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Group>itsm-change-builder</Group>
+                <Description>Move Time Slot</Description>
+                <Title>Time Slot</Title>
+                <NavBarName>Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -480,6 +494,21 @@
             </Hash>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::MenuModule###080-MoveTimeSlot" Required="0" Valid="1">
+        <Description Lang="en">Module to show move timeslot link in change menu.</Description>
+        <Description Lang="de">Über dieses Modul wird der 'Verschieben'-Link in der Linkleiste der Change-Ansicht angezeigt.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ITSMChangeMenuGeneric</Item>
+                <Item Key="Name">MoveTimeSlot</Item>
+                <Item Key="Description">Move Time Slot</Item>
+                <Item Key="Action">AgentITSMChangeTimeSlot</Item>
+                <Item Key="Link">Action=AgentITSMChangeTimeSlot&amp;ChangeID=$QData{"ChangeID"}</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###000-Back" Required="0" Valid="1">
         <Description Lang="en">Module to show back link in workorder menu.</Description>
         <Description Lang="de">Über dieses Modul wird der Zurück-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
@@ -582,21 +611,6 @@
                 <Item Key="Description">Link</Item>
                 <Item Key="Action">AgentLinkObject</Item>
                 <Item Key="Link">Action=AgentLinkObject&amp;SourceObject=ITSMWorkOrder&amp;SourceKey=$QData{"WorkOrderID"}</Item>
-            </Hash>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###070-MoveTimeSlot" Required="0" Valid="1">
-        <Description Lang="en">Module to show report link in workorder menu.</Description>
-        <Description Lang="de">Über dieses Modul wird der Report-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
-        <Setting>
-            <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrderMenuWithPermissionFromChange</Item>
-                <Item Key="Name">MoveTimeSlot</Item>
-                <Item Key="Description">Move Time Slot</Item>
-                <Item Key="Action">AgentITSMWorkOrderXXX</Item>
-                <Item Key="Link">Action=AgentITSMWorkOrderXXX&amp;WorkOrderID=$QData{"WorkOrderID"}</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -881,6 +895,15 @@
         <Description Lang="de">Benötigtes Recht zum Ändern der beteiligten Personen.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::ViewChangeInvolvedPersons</SubGroup>
+        <Setting>
+            <String Regex="^(rw|ro)$">rw</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeTimeSlot###Permission" Required="1" Valid="1">
+        <Description Lang="en">Required privilege to move changes in time.</Description>
+        <Description Lang="de">Benötigtes Recht zum zeitlichen Verschieben von Changes.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeTimeSlot</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">rw</String>
         </Setting>
