@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeTimeSlot.pm - the OTRS::ITSM::ChangeManagement move time slot module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeTimeSlot.pm,v 1.1 2009-11-19 14:36:07 bes Exp $
+# $Id: AgentITSMChangeTimeSlot.pm,v 1.2 2009-11-19 16:22:31 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -87,7 +87,13 @@ sub Run {
 
     # store needed parameters in %GetParam to make it reloadable
     my %GetParam;
-    for my $ParamName (qw()) {
+    for my $ParamName (qw(TimeType)) {
+        $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+    }
+
+    # store time related fields in %GetParam
+    for my $TimePart (qw(Year Month Day Hour Minute Used)) {
+        my $ParamName = 'Planned' . $TimePart;
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
@@ -97,6 +103,40 @@ sub Run {
 
     # update change
     if ( $Self->{Subaction} eq 'Save' ) {
+
+        # check the planned time
+        if (
+            $GetParam{PlannedYear}
+            && $GetParam{PlannedMonth}
+            && $GetParam{PlannedDay}
+            && $GetParam{PlannedHour}
+            && $GetParam{PlannedMinute}
+            )
+        {
+
+            # format as timestamp, when all required time param were passed
+            $GetParam{PlannedTime} = sprintf '%04d-%02d-%02d %02d:%02d:00',
+                $GetParam{PlannedYear},
+                $GetParam{PlannedMonth},
+                $GetParam{PlannedDay},
+                $GetParam{PlannedHour},
+                $GetParam{PlannedMinute};
+
+            # sanity check of the assembled timestamp
+            my $SystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
+                String => $GetParam{PlannedTime},
+            );
+
+            # do not save when time is invalid
+            if ( !$SystemTime ) {
+                push @ValidationErrors, 'InvalidPlannedTime';
+            }
+        }
+        else {
+
+            # at least one of the required time params is missing
+            push @ValidationErrors, 'InvalidPlannedTime';
+        }
 
         # update only when there are no validation errors
         if ( !@ValidationErrors ) {
@@ -119,10 +159,26 @@ sub Run {
         }
     }
 
-    # delete all keys from %GetParam when it is no Subaction
-    else {
-        %GetParam = ();
-    }
+    # build drop-down with time types
+    my $TimeTypeSelectionString = $Self->{LayoutObject}->BuildSelection(
+        Data => [
+            { Key => 'PlannedStartTime', Value => 'Planned start time' },
+            { Key => 'PlannedEndTime',   Value => 'Planned end time' },
+        ],
+        Name => 'TimeType',
+        SelectedID => $GetParam{TimeType} || 'PlannedStartTime',
+    );
+
+    # time period that can be selected from the GUI
+    my %TimePeriod = %{ $Self->{ConfigObject}->Get('ITSMWorkOrder::TimePeriod') };
+
+    # add selection for the time
+    my $TimeSelectionString = $Self->{LayoutObject}->BuildDateSelection(
+        %GetParam,
+        Format => 'DateInputFormatLong',
+        Prefix => 'Planned',
+        %TimePeriod,
+    );
 
     # output header
     my $Output = $Self->{LayoutObject}->Header(
@@ -130,8 +186,7 @@ sub Run {
     );
     $Output .= $Self->{LayoutObject}->NavigationBar();
 
-    # Add the validation error messages as late as possible
-    # as the enclosing blocks, e.g. 'RealizeTime' muss first be set.
+    # Add the validation error messages.
     for my $BlockName (@ValidationErrors) {
 
         # show validation error message
@@ -144,9 +199,9 @@ sub Run {
     $Output .= $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentITSMChangeTimeSlot',
         Data         => {
-            %Param,
             %{$Change},
-            %GetParam,
+            TimeTypeSelectionString => $TimeTypeSelectionString,
+            TimeSelectionString     => $TimeSelectionString,
         },
     );
 
