@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.64 2009-11-19 16:48:28 reb Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.65 2009-11-19 18:00:00 reb Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -14,6 +14,7 @@
         <File Permission="644" Location="Kernel/Config/Files/ITSMChangeManagement.xml"/>
         <File Permission="644" Location="Kernel/Language/de_ITSMChangeManagement.pm"/>
         <File Permission="644" Location="Kernel/Language/en_ITSMChangeManagement.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AdminITSMChangeCIPAllocate.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMCABMemberSearch.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMChange.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMChangeAdd.pm"/>
@@ -43,6 +44,7 @@
         <File Permission="644" Location="Kernel/Output/HTML/LayoutITSMChange.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/LinkObjectITSMChange.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/LinkObjectITSMWorkOrder.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminITSMChangeCIPAllocate.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMCABMemberSearch.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChange.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeAdd.dtl"/>
@@ -482,7 +484,7 @@
             <Data Key="change_by">1</Data>
         </Insert>
         <Insert Table="general_catalog">
-            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagemen::Priority</Data>
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Priority</Data>
             <Data Key="name" Type="Quote">5 very high</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
