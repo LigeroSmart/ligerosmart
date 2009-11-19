@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.96 2009-11-19 09:44:17 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.97 2009-11-19 13:40:50 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1064,6 +1064,81 @@ push @WorkOrderTests, (
                 WorkOrderTitle => 'T',
                 Instruction    => 'I',
                 Report         => 'R' x 3800,
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                WorkOrderTitle => q{},
+                Instruction    => q{},
+                Report         => q{},
+            },
+        },
+        SearchTest => [8],
+    },
+
+    {
+        Description => 'Test for undef param - Title - for WorkOrderUpdate.',
+        UpdateFails => 1,
+        SourceData  => {
+            WorkOrderAdd => {
+                UserID   => $UserIDs[0],
+                ChangeID => $WorkOrderAddTestID,
+            },
+            WorkOrderUpdate => {
+                UserID         => 1,
+                WorkOrderTitle => undef,
+                Instruction    => 'I',
+                Report         => 'R',
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                WorkOrderTitle => q{},
+                Instruction    => q{},
+                Report         => q{},
+            },
+        },
+        SearchTest => [8],
+    },
+
+    {
+        Description => 'Test for undef param - Instruction - for WorkOrderUpdate.',
+        UpdateFails => 1,
+        SourceData  => {
+            WorkOrderAdd => {
+                UserID   => $UserIDs[0],
+                ChangeID => $WorkOrderAddTestID,
+            },
+            WorkOrderUpdate => {
+                UserID         => 1,
+                WorkOrderTitle => 'T',
+                Instruction    => undef,
+                Report         => 'R',
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                WorkOrderTitle => q{},
+                Instruction    => q{},
+                Report         => q{},
+            },
+        },
+        SearchTest => [8],
+    },
+
+    {
+        Description => 'Test for undef param - Report - for WorkOrderUpdate.',
+        UpdateFails => 1,
+        SourceData  => {
+            WorkOrderAdd => {
+                UserID   => $UserIDs[0],
+                ChangeID => $WorkOrderAddTestID,
+            },
+            WorkOrderUpdate => {
+                UserID         => 1,
+                WorkOrderTitle => 'T',
+                Instruction    => 'I',
+                Report         => undef,
             },
         },
         ReferenceData => {

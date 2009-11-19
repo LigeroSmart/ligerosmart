@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.124 2009-11-19 09:44:17 bes Exp $
+# $Id: ITSMChange.t,v 1.125 2009-11-19 13:40:50 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -666,6 +666,57 @@ my @ChangeTests = (
                 ChangeTitle   => 'T',
                 Description   => 'D',
                 Justification => 'J' x 3800,
+            },
+        },
+        ReferenceData => {
+            ChangeGet => undef,
+        },
+    },
+
+    # test on undef params - title  (required attributes)
+    {
+        Description => 'Test for undef - title',
+        Fails       => 1,
+        SourceData  => {
+            ChangeAdd => {
+                UserID        => $UserIDs[0],
+                ChangeTitle   => undef,
+                Description   => 'D',
+                Justification => 'J',
+            },
+        },
+        ReferenceData => {
+            ChangeGet => undef,
+        },
+    },
+
+    # test on undef params - description (required attributes)
+    {
+        Description => 'Test for undef - description',
+        Fails       => 1,
+        SourceData  => {
+            ChangeAdd => {
+                UserID        => $UserIDs[0],
+                ChangeTitle   => 'T',
+                Description   => undef,
+                Justification => 'J',
+            },
+        },
+        ReferenceData => {
+            ChangeGet => undef,
+        },
+    },
+
+    # test on undef params - justification (required attributes)
+    {
+        Description => 'Test for undef - justification',
+        Fails       => 1,
+        SourceData  => {
+            ChangeAdd => {
+                UserID        => $UserIDs[0],
+                ChangeTitle   => 'T',
+                Description   => 'D',
+                Justification => undef,
             },
         },
         ReferenceData => {

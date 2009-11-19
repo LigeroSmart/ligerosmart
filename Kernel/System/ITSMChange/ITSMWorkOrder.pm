@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.27 2009-11-19 10:16:17 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.28 2009-11-19 13:40:50 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.27 $) [1];
+$VERSION = qw($Revision: 1.28 $) [1];
 
 =head1 NAME
 
@@ -217,11 +217,13 @@ sub WorkOrderAdd {
             );
         }
         else {
-            $Param{"${Argument}Plain"} = '';
+
+            # _CheckWorkOrderParams() will reject this
+            $Param{"${Argument}Plain"} = undef;
         }
     }
 
-    # check change parameters
+    # check the parameters
     return if !$Self->_CheckWorkOrderParams(%Param);
 
     # trigger WorkOrderAddPre-Event
@@ -370,6 +372,7 @@ sub WorkOrderAdd {
 
 Update a WorkOrder.
 Leading and trailing whitespace is removed from WorkOrderTitle.
+Passing undefined values is not allowed.
 
     my $Success = $WorkOrderObject->WorkOrderUpdate(
         WorkOrderID      => 4,
@@ -465,7 +468,9 @@ sub WorkOrderUpdate {
             );
         }
         else {
-            $Param{"${Argument}Plain"} = '';
+
+            # _CheckWorkOrderParams() will reject this
+            $Param{"${Argument}Plain"} = undef;
         }
     }
 
@@ -515,9 +520,10 @@ sub WorkOrderUpdate {
     ATTRIBUTE:
     for my $Attribute ( keys %Attribute ) {
 
-        # do not use column if not in function parameters
+        # preserve the old value, when the column isn't in function parameters
         next ATTRIBUTE if !exists $Param{$Attribute};
 
+        # param checking has already been done, so this is safe
         $SQL .= "$Attribute{$Attribute} = ?, ";
         push @Bind, \$Param{$Attribute};
     }
@@ -2132,6 +2138,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.27 $ $Date: 2009-11-19 10:16:17 $
+$Revision: 1.28 $ $Date: 2009-11-19 13:40:50 $
 
 =cut

@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.160 2009-11-19 10:15:49 ub Exp $
+# $Id: ITSMChange.pm,v 1.161 2009-11-19 13:40:50 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.160 $) [1];
+$VERSION = qw($Revision: 1.161 $) [1];
 
 =head1 NAME
 
@@ -174,11 +174,13 @@ sub ChangeAdd {
             );
         }
         else {
-            $Param{"${Argument}Plain"} = '';
+
+            # _CheckWorkOrderParams() will reject this
+            $Param{"${Argument}Plain"} = undef;
         }
     }
 
-    # check change parameters
+    # check the parameters
     return if !$Self->_CheckChangeParams(%Param);
 
     # trigger ChangeAddPre-Event
@@ -257,6 +259,7 @@ sub ChangeAdd {
 
 Update a change.
 Leading and trailing whitespace is removed from ChangeTitle.
+Passing undefined values is not allowed.
 
     my $Success = $ChangeObject->ChangeUpdate(
         ChangeID        => 123,
@@ -327,7 +330,9 @@ sub ChangeUpdate {
             );
         }
         else {
-            $Param{"${Argument}Plain"} = '';
+
+            # _CheckWorkOrderParams() will reject this
+            $Param{"${Argument}Plain"} = undef
         }
     }
 
@@ -374,9 +379,10 @@ sub ChangeUpdate {
     ATTRIBUTE:
     for my $Attribute ( keys %Attribute ) {
 
-        # do not use column if not in function parameters
+        # preserve the old value, when the column isn't in function parameters
         next ATTRIBUTE if !exists $Param{$Attribute};
 
+        # param checking has already been done, so this is safe
         $SQL .= "$Attribute{$Attribute} = ?, ";
         push @Bind, \$Param{$Attribute};
     }
@@ -2289,6 +2295,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.160 $ $Date: 2009-11-19 10:15:49 $
+$Revision: 1.161 $ $Date: 2009-11-19 13:40:50 $
 
 =cut
