@@ -4,7 +4,7 @@
 # - sysconfig option 'ITSMChange::AddChangeLinkTicketTypes' to certain groups -
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: RestrictTicketTypes.pm,v 1.3 2009-11-18 12:35:15 bes Exp $
+# $Id: RestrictTicketTypes.pm,v 1.4 2009-11-19 16:14:24 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -32,7 +32,9 @@ sub new {
         )
     {
         if ( !$Self->{$Object} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
+            $Self->{LayoutObject}->FatalError(
+                Message => "Got no $Object!",
+            );
         }
     }
 
@@ -45,7 +47,10 @@ sub Run {
     # check needed stuff
     for my $Argument (qw(Config Acl)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $Argument!" );
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
             return;
         }
     }
