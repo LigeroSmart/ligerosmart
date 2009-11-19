@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/History.pm - all change and workorder history functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: History.pm,v 1.19 2009-11-17 16:58:57 ub Exp $
+# $Id: History.pm,v 1.20 2009-11-19 10:01:50 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 =head1 NAME
 
@@ -240,8 +240,8 @@ sub WorkOrderHistoryGet {
             HistoryEntryID => $Row[0],
             ChangeID       => $Row[1],
             WorkOrderID    => $Row[2],
-            ContentNew     => $Row[3],
-            ContentOld     => $Row[4],
+            ContentNew     => defined( $Row[3] ) ? $Row[3] : '',
+            ContentOld     => defined( $Row[4] ) ? $Row[4] : '',
             CreateBy       => $Row[5],
             CreateTime     => $Row[6],
             HistoryTypeID  => $Row[7],
@@ -331,8 +331,8 @@ sub ChangeHistoryGet {
             HistoryEntryID => $Row[0],
             ChangeID       => $Row[1],
             WorkOrderID    => $Row[2],
-            ContentNew     => $Row[3],
-            ContentOld     => $Row[4],
+            ContentNew     => defined( $Row[3] ) ? $Row[3] : '',
+            ContentOld     => defined( $Row[4] ) ? $Row[4] : '',
             CreateBy       => $Row[5],
             CreateTime     => $Row[6],
             HistoryTypeID  => $Row[7],
@@ -681,6 +681,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.19 $ $Date: 2009-11-17 16:58:57 $
+$Revision: 1.20 $ $Date: 2009-11-19 10:01:50 $
 
 =cut
