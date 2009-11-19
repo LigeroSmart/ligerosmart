@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.95 2009-11-19 09:23:12 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.96 2009-11-19 09:44:17 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -154,7 +154,7 @@ my @DefaultWorkOrderStates = (
     'canceled',
 );
 
-# get class list with swapped keys and values
+# get item list of the workorder states with swapped keys and values
 my %WorkOrderStateID2Name = %{
     $Self->{GeneralCatalogObject}->ItemList(
         Class => 'ITSM::ChangeManagement::WorkOrder::State',
@@ -171,7 +171,7 @@ for my $DefaultWorkOrderState (@DefaultWorkOrderStates) {
     );
 }
 
-# test lookup method
+# test the lookup method
 for my $State (@DefaultWorkOrderStates) {
     my $StateID = $Self->{WorkOrderObject}->WorkOrderStateLookup(
         WorkOrderState => $State,
@@ -3568,12 +3568,12 @@ my @PermissionTests = (
     },
 
     # Permission test No. 3
+    # The type 'rw' implies all other types. See Kernel::System::Group_GetTypeString()
+    # Therefore User1 effectively has 'ro' in 'itsm-change' and
+    # the ChangeAgentCheck Permission module gives 'ro' access.
+    # Note that WorkOrderAgentCheck gives 'rw' access only to the workorder agent.
     {
 
-        # The type 'rw' implies all other types. See Kernel::System::Group_GetTypeString()
-        # Therefore User1 effectively has 'ro' in 'itsm-change' and
-        # the ChangeAgentCheck Permission module gives 'ro' access.
-        # Note that WorkOrderAgentCheck gives 'rw' access only to the workorder agent.
         Description => 'rw in itsm-change grants ro, grants rw to workorder agent',
         SourceData  => {
             GroupMemberAdd => [
@@ -3598,9 +3598,8 @@ my @PermissionTests = (
     },
 
     # Permission test No. 4
+    # reset User1 after the previous test
     {
-
-        # reset User1 after the previous test
         Description => 'revoke privs for user 1',
         SourceData  => {
             GroupMemberAdd => [
@@ -3640,7 +3639,6 @@ my @PermissionTests = (
 
     # Permission test No. 6
     {
-
         Description => 'rw in itsm-change-manager',
         SourceData  => {
             GroupMemberAdd => [

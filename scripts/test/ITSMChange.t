@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.123 2009-11-18 15:58:14 bes Exp $
+# $Id: ITSMChange.t,v 1.124 2009-11-19 09:44:17 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -185,12 +185,12 @@ my @DefaultChangeStates = (
 my %ChangeStateID2Name = %{
     $Self->{GeneralCatalogObject}->ItemList(
         Class => 'ITSM::ChangeManagement::Change::State',
-        )
+        ) || {}
     };
 my %ChangeStateName2ID   = reverse %ChangeStateID2Name;
 my @SortedChangeStateIDs = sort keys %ChangeStateID2Name;
 
-# check if change states are in GeneralCatalog
+# check if states are in GeneralCatalog
 for my $DefaultChangeState (@DefaultChangeStates) {
     $Self->True(
         $ChangeStateName2ID{$DefaultChangeState},
