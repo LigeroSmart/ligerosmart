@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMChangeManagement.pm - the german translation of ITSMChangeManagement
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: de_ITSMChangeManagement.pm,v 1.5 2009-11-14 13:57:32 ub Exp $
+# $Id: de_ITSMChangeManagement.pm,v 1.6 2009-11-20 07:38:29 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -31,6 +31,25 @@ sub Data {
     $Lang->{'The planned end time is invalid!'}   = 'Der geplante Endzeitpunkt ist ungültig!';
     $Lang->{'The planned start time must be before the planned end time!'}
         = 'Der geplante Start muss vor dem geplanten Ende liegen!';
+
+    # Change history entries
+    $Lang->{'ChangeHistory::ChangeAdd'}        = 'Neuer Change (ID=%s)';
+    $Lang->{'ChangeHistory::ChangeUpdate'}     = '%s: Neu: %s -> Alt: %s';
+    $Lang->{'ChangeHistory::ChangeLinkAdd'}    = 'Link zu %s (ID=%s) hinzugefügt';
+    $Lang->{'ChangeHistory::ChangeLinkDelete'} = 'Link zu %s (ID=%s) gelöscht';
+    $Lang->{'ChangeHistory::ChangeCABUpdate'}  = 'CAB %s';
+    $Lang->{'ChangeHistory::ChangeCABDelete'}  = 'CAB gelöscht %s';
+
+    # WorkOrder history entries
+    $Lang->{'WorkOrderHistory::WorkOrderAdd'}        = 'Neue Workorder (ID=%s)';
+    $Lang->{'WorkOrderHistory::WorkOrderUpdate'}     = '%s: Neu: %s -> Alt: %s';
+    $Lang->{'WorkOrderHistory::WorkOrderLinkAdd'}    = 'Link zu %s (ID=%s) hinzugefügt';
+    $Lang->{'WorkOrderHistory::WorkOrderLinkDelete'} = 'Link to %s (ID=%s) gelöscht';
+    $Lang->{'WorkOrderHistory::WorkOrderDelete'}     = 'Workorder (ID=%s) gelöscht';
+
+    # entries for CIP matrix
+    $Lang->{'Category'}                         = 'Kategorie';
+    $Lang->{'Category <-> Impact <-> Priority'} = 'Kategorie <-> Auswirkung <-> Priorität';
 
     return 1;
 }
