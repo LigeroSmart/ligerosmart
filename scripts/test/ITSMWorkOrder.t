@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.98 2009-11-20 10:53:11 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.99 2009-11-20 16:58:40 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -201,25 +201,45 @@ for my $State (@DefaultWorkOrderStates) {
 
 # now some param checks
 my $LookupOK = $Self->{WorkOrderObject}->WorkOrderStateLookup();
-$Self->False( $LookupOK, 'No params passed to WorkOrderStateLookup()' );
+
+$Self->False(
+    $LookupOK,
+    'No params passed to WorkOrderStateLookup()',
+);
 
 $LookupOK = $Self->{WorkOrderObject}->WorkOrderStateLookup(
     WorkOrderState   => 'approved',
-    WorkOrderStateID => 2
+    WorkOrderStateID => 2,
 );
-$Self->False( $LookupOK, 'Exclusive params passed to WorkOrderStateLookup()' );
 
-$LookupOK = $Self->{WorkOrderObject}->WorkOrderStateLookup( State => 'approved' );
-$Self->False( $LookupOK, q{Incorrect param 'State' passed to WorkOrderStateLookup()} );
+$Self->False(
+    $LookupOK,
+    'Exclusive params passed to WorkOrderStateLookup()',
+);
 
-$LookupOK = $Self->{WorkOrderObject}->WorkOrderStateLookup( StateID => 2 );
-$Self->False( $LookupOK, q{Incorrect param 'StateID' passed to WorkOrderStateLookup()} );
+$LookupOK = $Self->{WorkOrderObject}->WorkOrderStateLookup(
+    State => 'approved',
+);
+
+$Self->False(
+    $LookupOK,
+    "Incorrect param 'State' passed to WorkOrderStateLookup()",
+);
+
+$LookupOK = $Self->{WorkOrderObject}->WorkOrderStateLookup(
+    StateID => 2,
+);
+
+$Self->False(
+    $LookupOK,
+    "Incorrect param 'StateID' passed to WorkOrderStateLookup()",
+);
 
 # ------------------------------------------------------------ #
 # search for default ITSMWorkOrder-types
 # ------------------------------------------------------------ #
 # define default ITSMWorkOrder-states
-# can't use qw due to spaces in states
+# can't use qw due to spaces in types
 my @DefaultWorkOrderTypes = (
     'approval',
     'workorder',
@@ -1039,9 +1059,9 @@ push @WorkOrderTests, (
         },
         ReferenceData => {
             WorkOrderGet => {
-                WorkOrderTitle => q{},
-                Instruction    => q{},
-                Report         => q{},
+                WorkOrderTitle => '',
+                Instruction    => '',
+                Report         => '',
             },
         },
         SearchTest => [8],
@@ -1064,9 +1084,9 @@ push @WorkOrderTests, (
         },
         ReferenceData => {
             WorkOrderGet => {
-                WorkOrderTitle => q{},
-                Instruction    => q{},
-                Report         => q{},
+                WorkOrderTitle => '',
+                Instruction    => '',
+                Report         => '',
             },
         },
         SearchTest => [8],
@@ -1089,9 +1109,9 @@ push @WorkOrderTests, (
         },
         ReferenceData => {
             WorkOrderGet => {
-                WorkOrderTitle => q{},
-                Instruction    => q{},
-                Report         => q{},
+                WorkOrderTitle => '',
+                Instruction    => '',
+                Report         => '',
             },
         },
         SearchTest => [8],
@@ -1114,9 +1134,9 @@ push @WorkOrderTests, (
         },
         ReferenceData => {
             WorkOrderGet => {
-                WorkOrderTitle => q{},
-                Instruction    => q{},
-                Report         => q{},
+                WorkOrderTitle => '',
+                Instruction    => '',
+                Report         => '',
             },
         },
         SearchTest => [8],
@@ -1139,9 +1159,9 @@ push @WorkOrderTests, (
         },
         ReferenceData => {
             WorkOrderGet => {
-                WorkOrderTitle => q{},
-                Instruction    => q{},
-                Report         => q{},
+                WorkOrderTitle => '',
+                Instruction    => '',
+                Report         => '',
             },
         },
         SearchTest => [8],
@@ -1164,9 +1184,9 @@ push @WorkOrderTests, (
         },
         ReferenceData => {
             WorkOrderGet => {
-                WorkOrderTitle => q{},
-                Instruction    => q{},
-                Report         => q{},
+                WorkOrderTitle => '',
+                Instruction    => '',
+                Report         => '',
             },
         },
         SearchTest => [8],
@@ -1189,8 +1209,8 @@ push @WorkOrderTests, (
         },
         ReferenceData => {
             WorkOrderGet => {
-                WorkOrderTitle => q{},
-                Instruction    => q{},
+                WorkOrderTitle => '',
+                Instruction    => '',
                 Report         => 'Report - just PlannedStartTime',
                 ChangeBy       => $UserIDs[0],
                 CreateBy       => $UserIDs[0],
@@ -1216,8 +1236,8 @@ push @WorkOrderTests, (
         },
         ReferenceData => {
             WorkOrderGet => {
-                WorkOrderTitle => q{},
-                Instruction    => q{},
+                WorkOrderTitle => '',
+                Instruction    => '',
                 Report         => 'Report - just PlannedEndTime',
                 ChangeBy       => $UserIDs[0],
                 CreateBy       => $UserIDs[0],
@@ -1243,7 +1263,7 @@ push @WorkOrderTests, (
         ReferenceData => {
             WorkOrderGet => {
                 WorkOrderTitle  => 'Test',
-                Instruction     => q{},
+                Instruction     => '',
                 Report          => 'Report - just ActualStartTime',
                 ActualStartTime => '2009-03-20 13:25:09',
                 ChangeBy        => 1,
@@ -1270,8 +1290,8 @@ push @WorkOrderTests, (
         },
         ReferenceData => {
             WorkOrderGet => {
-                WorkOrderTitle => q{},
-                Instruction    => q{},
+                WorkOrderTitle => '',
+                Instruction    => '',
                 Report         => 'Report - just ActualEndTime',
                 ChangeBy       => $UserIDs[0],
                 CreateBy       => $UserIDs[0],
@@ -1299,8 +1319,8 @@ push @WorkOrderTests, (
         },
         ReferenceData => {
             WorkOrderGet => {
-                WorkOrderTitle => q{},
-                Instruction    => q{},
+                WorkOrderTitle => '',
+                Instruction    => '',
                 Report         => 'Report - ActualStartTime > ActualEndTime',
                 ChangeBy       => $UserIDs[0],
                 CreateBy       => $UserIDs[0],
@@ -1328,7 +1348,7 @@ push @WorkOrderTests, (
         ReferenceData => {
             WorkOrderGet => {
                 WorkOrderTitle  => 'Test',
-                Instruction     => q{},
+                Instruction     => '',
                 Report          => 'Report - ActualStartTime < ActualEndTime',
                 ChangeBy        => 1,
                 CreateBy        => $UserIDs[0],
@@ -1340,7 +1360,7 @@ push @WorkOrderTests, (
     },
 
     {
-        Description => q{Test for '0' string handling for WorkOrderUpdate.},
+        Description => "Test for '0' string handling for WorkOrderUpdate.",
         SourceData  => {
             WorkOrderAdd => {
                 UserID   => 1,
@@ -1428,13 +1448,13 @@ push @WorkOrderTests, (
         SourceData  => {
             WorkOrderAdd => {
                 UserID         => $UserIDs[0],
-                WorkOrderTitle => qq{  \t \n  },
+                WorkOrderTitle => "  \t \n  ",
                 ChangeID       => $WorkOrderAddTestID,
             },
         },
         ReferenceData => {
             WorkOrderGet => {
-                WorkOrderTitle => q{},
+                WorkOrderTitle => '',
             },
         },
         SearchTest => [],
@@ -3820,7 +3840,7 @@ my @PermissionTests = (
 
     # Permission test No. 9
     {
-        Description => q{ro in itsm-change-builder, user 1 isn't the builder},
+        Description => "ro in itsm-change-builder, user 1 isn't the builder",
         SourceData  => {
             GroupMemberAdd => [
                 {
@@ -3855,7 +3875,7 @@ my @PermissionTests = (
 
     # Permission test No. 10
     {
-        Description => q{rw in itsm-change-builder, user 1 isn't the builder},
+        Description => "rw in itsm-change-builder, user 1 isn't the builder",
         SourceData  => {
             GroupMemberAdd => [
                 {

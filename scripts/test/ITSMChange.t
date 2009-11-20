@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.128 2009-11-20 10:53:11 bes Exp $
+# $Id: ITSMChange.t,v 1.129 2009-11-20 16:57:14 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -232,19 +232,39 @@ for my $State (@DefaultChangeStates) {
 
 # now some param checks
 my $LookupOK = $Self->{ChangeObject}->ChangeStateLookup();
-$Self->False( $LookupOK, 'No params passed to ChangeStateLookup()' );
+
+$Self->False(
+    $LookupOK,
+    'No params passed to ChangeStateLookup()',
+);
 
 $LookupOK = $Self->{ChangeObject}->ChangeStateLookup(
     ChangeState   => 'approved',
-    ChangeStateID => 2
+    ChangeStateID => 2,
 );
-$Self->False( $LookupOK, 'Exclusive params passed to ChangeStateLookup()' );
 
-$LookupOK = $Self->{ChangeObject}->ChangeStateLookup( State => 'approved' );
-$Self->False( $LookupOK, q{Incorrect param 'State' passed to ChangeStateLookup()} );
+$Self->False(
+    $LookupOK,
+    'Exclusive params passed to ChangeStateLookup()',
+);
 
-$LookupOK = $Self->{ChangeObject}->ChangeStateLookup( StateID => 2 );
-$Self->False( $LookupOK, q{Incorrect param 'StateID' passed to ChangeStateLookup()} );
+$LookupOK = $Self->{ChangeObject}->ChangeStateLookup(
+    State => 'approved',
+);
+
+$Self->False(
+    $LookupOK,
+    "Incorrect param 'State' passed to ChangeStateLookup()",
+);
+
+$LookupOK = $Self->{ChangeObject}->ChangeStateLookup(
+    StateID => 2,
+);
+
+$Self->False(
+    $LookupOK,
+    "Incorrect param 'StateID' passed to ChangeStateLookup()",
+);
 
 # ------------------------------------------------------------ #
 # check existence of the groups that are used for Permission
@@ -298,9 +318,9 @@ my @ChangeTests = (
         },
         ReferenceData => {
             ChangeGet => {
-                ChangeTitle     => q{},
-                Description     => q{},
-                Justification   => q{},
+                ChangeTitle     => '',
+                Description     => '',
+                Justification   => '',
                 ChangeManagerID => undef,
                 ChangeBuilderID => 1,
                 WorkOrderIDs    => [],
@@ -327,9 +347,9 @@ my @ChangeTests = (
         },
         ReferenceData => {
             ChangeGet => {
-                ChangeTitle     => q{},
-                Description     => q{},
-                Justification   => q{},
+                ChangeTitle     => '',
+                Description     => '',
+                Justification   => '',
                 ChangeManagerID => undef,
                 ChangeBuilderID => $UserIDs[0],
                 WorkOrderIDs    => [],
@@ -354,7 +374,7 @@ my @ChangeTests = (
         },
         ReferenceData => {
             ChangeGet => {
-                ChangeTitle     => q{},
+                ChangeTitle     => '',
                 Description     => '<b>This <u>is</u> bold</b> - ' . $UniqueSignature,
                 Justification   => '<b>This <u>is</u> bold</b> - ' . $UniqueSignature,
                 ChangeManagerID => undef,
@@ -381,9 +401,9 @@ my @ChangeTests = (
         },
         ReferenceData => {
             ChangeGet => {
-                ChangeTitle     => q{},
+                ChangeTitle     => '',
                 Description     => 'ChangeStates - ' . $UniqueSignature,
-                Justification   => q{},
+                Justification   => '',
                 ChangeManagerID => undef,
                 ChangeBuilderID => $UserIDs[0],
                 ChangeStateID   => $ChangeStateName2ID{requested},
@@ -428,9 +448,9 @@ my @ChangeTests = (
         },
         ReferenceData => {
             ChangeGet => {
-                ChangeTitle     => q{},
+                ChangeTitle     => '',
                 Description     => 'ChangeStates - ' . $UniqueSignature,
-                Justification   => q{},
+                Justification   => '',
                 ChangeManagerID => undef,
                 ChangeBuilderID => $UserIDs[0],
                 ChangeStateID   => $ChangeStateName2ID{failed},
@@ -751,7 +771,7 @@ my @ChangeTests = (
 
     # test on '0' strings - default user  (required attributes)
     {
-        Description => q{Test for '0' string handling for ChangeAdd.},
+        Description => "Test for '0' string handling for ChangeAdd.",
         SourceData  => {
             ChangeAdd => {
                 UserID        => 1,
@@ -832,12 +852,12 @@ my @ChangeTests = (
         SourceData  => {
             ChangeAdd => {
                 UserID      => $UserIDs[0],
-                ChangeTitle => qq{  \t \n  },
+                ChangeTitle => "  \t \n  ",
             },
         },
         ReferenceData => {
             ChangeGet => {
-                ChangeTitle     => q{},
+                ChangeTitle     => '',
                 ChangeBuilderID => $UserIDs[0],
             },
         },
@@ -846,7 +866,7 @@ my @ChangeTests = (
 
     # a change for the 'UsingWildcards => 0' test
     {
-        Description => q{A change for the 'UsingWildcards => 0' test.},
+        Description => "A change for the 'UsingWildcards => 0' test.",
         SourceData  => {
             ChangeAdd => {
                 UserID        => 1,
@@ -980,7 +1000,7 @@ my @ChangeTests = (
             ChangeGet => {
                 CreateBy    => 1,
                 ChangeBy    => 1,
-                ChangeTitle => q{},
+                ChangeTitle => '',
                 RealizeTime => '2009-10-29 13:33:33',
                 Description => 'RealizeTime - ' . $UniqueSignature,
             },
@@ -1052,9 +1072,9 @@ my @ChangeTests = (
         },
         ReferenceData => {
             ChangeGet => {
-                ChangeTitle   => q{},
-                Description   => q{},
-                Justification => q{},
+                ChangeTitle   => '',
+                Description   => '',
+                Justification => '',
             },
         },
     },
@@ -1076,9 +1096,9 @@ my @ChangeTests = (
         },
         ReferenceData => {
             ChangeGet => {
-                ChangeTitle   => q{},
-                Description   => q{},
-                Justification => q{},
+                ChangeTitle   => '',
+                Description   => '',
+                Justification => '',
             },
         },
     },    # test on max+1 long params - description  (required attributes)
@@ -1098,9 +1118,9 @@ my @ChangeTests = (
         },
         ReferenceData => {
             ChangeGet => {
-                ChangeTitle   => q{},
-                Description   => q{},
-                Justification => q{},
+                ChangeTitle   => '',
+                Description   => '',
+                Justification => '',
             },
         },
     },    # test on max+1 long params  - justification - (required attributes)
@@ -1120,16 +1140,16 @@ my @ChangeTests = (
         },
         ReferenceData => {
             ChangeGet => {
-                ChangeTitle   => q{},
-                Description   => q{},
-                Justification => q{},
+                ChangeTitle   => '',
+                Description   => '',
+                Justification => '',
             },
         },
     },
 
     # test on '0' strings - default user  (required attributes)
     {
-        Description => q{Test for '0' string handling for ChangeUpdate.},
+        Description => "Test for '0' string handling for ChangeUpdate.",
         SourceData  => {
             ChangeAdd => {
                 UserID => 1,
@@ -1168,7 +1188,7 @@ my @ChangeTests = (
             ChangeGet => {
                 CreateBy    => 1,
                 ChangeBy    => $UserIDs[0],
-                ChangeTitle => q{},
+                ChangeTitle => '',
                 RealizeTime => '2009-11-06 08:15:22',
                 Description => 'RealizeTime - ' . $UniqueSignature,
             },
@@ -1195,7 +1215,7 @@ my @ChangeTests = (
             ChangeGet => {
                 CreateBy    => 1,
                 ChangeBy    => 1,
-                ChangeTitle => q{},
+                ChangeTitle => '',
                 RealizeTime => '2009-10-29 13:33:33',
                 Description => 'RealizeTime - ' . $UniqueSignature,
             },
@@ -1529,7 +1549,7 @@ my @ChangeTests = (
 
     # add change and update changestateid
     {
-        Description => q{Test setting new ChangeStateID in ChangeUpdate.},
+        Description => 'Test setting new ChangeStateID in ChangeUpdate.',
         SourceData  => {
             ChangeAdd => {
                 UserID => 1,
@@ -1553,7 +1573,7 @@ my @ChangeTests = (
 
     #
     {
-        Description => q{Change for 'OrderBy' tests (1).},
+        Description => "Change for 'OrderBy' tests (1).",
         SourceData  => {
             ChangeAdd => {
                 UserID      => 1,
@@ -1578,7 +1598,7 @@ my @ChangeTests = (
 
     #
     {
-        Description => q{Change for 'OrderBy' tests (2).},
+        Description => "Change for 'OrderBy' tests (2).",
         SourceData  => {
             ChangeAdd => {
                 UserID      => $UserIDs[1],
@@ -1606,7 +1626,7 @@ my @ChangeTests = (
 
     #
     {
-        Description => q{Change for 'OrderBy' tests (3).},
+        Description => "Change for 'OrderBy' tests (3).",
         SourceData  => {
             ChangeAdd => {
                 UserID      => $UserIDs[0],
@@ -1635,7 +1655,7 @@ my @ChangeTests = (
 
     # Change for Permission tests.
     {
-        Description => q{Change for 'Permission' tests.},
+        Description => "Change for 'Permission' tests.",
         SourceData  => {
             ChangeAdd => {
                 UserID      => $UserIDs[0],
@@ -1659,7 +1679,7 @@ my @ChangeTests = (
 
     # Change for ChangePossibleStatesGet tests.
     {
-        Description => q{Change for 'ChangePossibleStatesGet' tests.},
+        Description => "Change for 'ChangePossibleStatesGet' tests.",
         SourceData  => {
             ChangeAdd => {
                 UserID      => $UserIDs[0],
@@ -2287,7 +2307,7 @@ my @ChangeSearchTests = (
 
     # Nr 18 - ChangeTitle with '0'
     {
-        Description => q{ChangeTitle with '0'},
+        Description => "ChangeTitle with '0'",
         SearchData  => {
             ChangeTitle => '0',
         },
@@ -2298,7 +2318,7 @@ my @ChangeSearchTests = (
 
     # Nr 19 - Description with '0'
     {
-        Description => q{Description with '0'},
+        Description => "Description with '0'",
         SearchData  => {
             Description => '0',
         },
@@ -2309,7 +2329,7 @@ my @ChangeSearchTests = (
 
     # Nr 20 - Justification with '0'
     {
-        Description => q{Justification with '0'},
+        Description => "Justification with '0'",
         SearchData  => {
             Justification => '0',
         },
@@ -2320,7 +2340,7 @@ my @ChangeSearchTests = (
 
     # Nr 21 - ChangeTitle, Description, Justification with '0'
     {
-        Description => q{ChangeTitle, Description, Justification with '0'},
+        Description => "ChangeTitle, Description, Justification with '0'",
         SearchData  => {
             ChangeTitle   => '0',
             Description   => '0',
@@ -2333,7 +2353,7 @@ my @ChangeSearchTests = (
 
     # Nr 22 - ChangeStateID
     {
-        Description => q{ChangeStateID},
+        Description => 'ChangeStateID',
         SearchData  => {
             ChangeStateIDs => [ $ChangeStateName2ID{requested} ],
         },
@@ -2344,7 +2364,7 @@ my @ChangeSearchTests = (
 
     # Nr 23 - ChangeBuilderID
     {
-        Description => q{ChangeBuilderID (two builders)},
+        Description => 'ChangeBuilderID (two builders)',
         SearchData  => {
             ChangeBuilderIDs => [ $UserIDs[0], $UserIDs[1] ],
         },
@@ -2355,7 +2375,7 @@ my @ChangeSearchTests = (
 
     # Nr 24 - ChangeManagerID
     {
-        Description => q{ChangeManagerID (two manager)},
+        Description => 'ChangeManagerID (two manager)',
         SearchData  => {
             ChangeManagerIDs => [ $UserIDs[0], $UserIDs[1] ],
         },
@@ -2366,7 +2386,7 @@ my @ChangeSearchTests = (
 
     # Nr 25 - CreateBy
     {
-        Description => q{CreateBy (two creators)},
+        Description => 'CreateBy (two creators)',
         SearchData  => {
             CreateBy => [ 1, $UserIDs[0] ],
         },
@@ -2377,7 +2397,7 @@ my @ChangeSearchTests = (
 
     # Nr 26 - ChangeBy
     {
-        Description => q{ChangeBy (two creators)},
+        Description => 'ChangeBy (two creators)',
         SearchData  => {
             ChangeBy => [ 1, $UserIDs[0] ],
         },
@@ -2404,7 +2424,7 @@ my @ChangeSearchTests = (
 
     # Nr 28 - ChangeStateID (same ID three times)
     {
-        Description => q{ChangeStateID (same ID three times)},
+        Description => 'ChangeStateID (same ID three times)',
         SearchData  => {
             ChangeStateIDs => [
                 $ChangeStateName2ID{requested},
@@ -2419,7 +2439,7 @@ my @ChangeSearchTests = (
 
     # Nr 29 - ChangeStateID (three different IDs)
     {
-        Description => q{ChangeStateID (three different IDs)},
+        Description => 'ChangeStateID (three different IDs)',
         SearchData  => {
             ChangeStateIDs => [
                 $ChangeStateName2ID{requested},
@@ -2434,7 +2454,7 @@ my @ChangeSearchTests = (
 
     # Nr 30 - UsingWildcards => 0, ChangeTitle
     {
-        Description => q{UsingWildcards => 0, ChangeTitle},
+        Description => 'UsingWildcards => 0, ChangeTitle',
         SearchData  => {
             UsingWildcards => 0,
             ChangeTitle    => 'UnitTest-ITSMChange-%NoWildcards%',
@@ -2447,7 +2467,7 @@ my @ChangeSearchTests = (
 
     # Nr 31 - UsingWildcards => 0, Description
     {
-        Description => q{UsingWildcards => 0, Description},
+        Description => 'UsingWildcards => 0, Description',
         SearchData  => {
             UsingWildcards => 0,
             Description    => 'UnitTest-ITSMChange-%NoWildcards%',
@@ -2460,7 +2480,7 @@ my @ChangeSearchTests = (
 
     # Nr 32 - UsingWildcards => 0, Description
     {
-        Description => q{UsingWildcards => 0, Description},
+        Description => 'UsingWildcards => 0, Description',
         SearchData  => {
             UsingWildcards => 0,
             Description    => $NoWildcardsTestTitle,
@@ -2473,9 +2493,9 @@ my @ChangeSearchTests = (
 
     # Nr 33 - ChangeState (names, not IDs)
     {
-        Description => q{ChangeState (names, not IDs)},
+        Description => 'ChangeState (names, not IDs)',
         SearchData  => {
-            ChangeStates => [qw(requested)],
+            ChangeStates => ['requested'],
         },
         ResultData => {
             TestExistence => 1,
@@ -2484,7 +2504,7 @@ my @ChangeSearchTests = (
 
     # Nr 34 - ChangeState (same name three times)
     {
-        Description => q{ChangeState (same name three times)},
+        Description => 'ChangeState (same name three times)',
         SearchData  => {
             ChangeStates => [qw(requested requested requested)],
         },
@@ -2495,7 +2515,7 @@ my @ChangeSearchTests = (
 
     # Nr 35 - ChangeState (three different names)
     {
-        Description => q{ChangeState (three different names)},
+        Description => 'ChangeState (three different names)',
         SearchData  => {
             ChangeStates => [qw(requested approved rejected)],
         },
@@ -2506,7 +2526,7 @@ my @ChangeSearchTests = (
 
     # Nr 36 - ChangeState (non-existent state)
     {
-        Description => q{ChangeState (non-existent state)},
+        Description => 'ChangeState (non-existent state)',
         SearchData  => {
             ChangeStates => [qw(requested approved rejected non-existent)],
         },
@@ -2515,7 +2535,7 @@ my @ChangeSearchTests = (
 
     # Nr 37 - ChangeStates (names not ids)
     {
-        Description => q{ChangeStates (names not ids) - failed + requested},
+        Description => 'ChangeStates (names not ids) - failed + requested',
         SearchData  => {
             Description  => 'ChangeStates - ' . $UniqueSignature,
             ChangeStates => [qw(requested failed)],
@@ -2527,7 +2547,7 @@ my @ChangeSearchTests = (
 
     # Nr 38 - ChangeStates (names not ids)
     {
-        Description => q{ChangeStates (names not ids) - failed},
+        Description => 'ChangeStates (names not ids) - failed',
         SearchData  => {
             Description  => 'ChangeStates - ' . $UniqueSignature,
             ChangeStates => ['failed'],
@@ -2539,9 +2559,9 @@ my @ChangeSearchTests = (
 
     # Nr 39 - ChangeState (non-existent state only)
     {
-        Description => q{ChangeState (non-existent state)},
+        Description => 'ChangeState (non-existent state)',
         SearchData  => {
-            ChangeStates => [qw(non-existent)],
+            ChangeStates => ['non-existent'],
         },
         SearchFails => 1,
     },
@@ -4051,7 +4071,7 @@ my @PermissionTests = (
 
     # Permission test No. 8
     {
-        Description => q{ro in itsm-change-builder, user 1 isn't the builder},
+        Description => 'ro in itsm-change-builder, user 1 is not the builder',
         SourceData  => {
             GroupMemberAdd => [
                 {
@@ -4086,7 +4106,7 @@ my @PermissionTests = (
 
     # Permission test No. 9
     {
-        Description => q{rw in itsm-change-builder, user 1 isn't the builder},
+        Description => 'rw in itsm-change-builder, user 1 is not the builder',
         SourceData  => {
             GroupMemberAdd => [
                 {
