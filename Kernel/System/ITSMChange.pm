@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.166 2009-11-20 15:02:25 reb Exp $
+# $Id: ITSMChange.pm,v 1.167 2009-11-20 16:30:44 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.166 $) [1];
+$VERSION = qw($Revision: 1.167 $) [1];
 
 =head1 NAME
 
@@ -206,7 +206,8 @@ sub ChangeAdd {
 
     # get default Category if not defined
     if ( !defined $Param{CategoryID} ) {
-        my $DefaultCategory = $Self->{ConfigObject}->Get('ITSM::ChangeManagement::DefaultCategory');
+        my $DefaultCategory
+            = $Self->{ConfigObject}->Get('ITSM::ChangeManagement::Category::Default');
         $Param{CategoryID} = $Self->ChangeCIPLookup(
             CIP  => $DefaultCategory,
             Type => 'Category',
@@ -215,7 +216,7 @@ sub ChangeAdd {
 
     # get default Impact if not defined
     if ( !defined $Param{ImpactID} ) {
-        my $DefaultImpact = $Self->{ConfigObject}->Get('ITSM::ChangeManagement::DefaultImpact');
+        my $DefaultImpact = $Self->{ConfigObject}->Get('ITSM::ChangeManagement::Impact::Default');
         $Param{ImpactID} = $Self->ChangeCIPLookup(
             CIP  => $DefaultImpact,
             Type => 'Impact',
@@ -224,7 +225,8 @@ sub ChangeAdd {
 
     # get default Priority if not defined
     if ( !defined $Param{PriorityID} ) {
-        my $DefaultPriority = $Self->{ConfigObject}->Get('ITSM::ChangeManagement::DefaultPriority');
+        my $DefaultPriority
+            = $Self->{ConfigObject}->Get('ITSM::ChangeManagement::Priority::Default');
         $Param{PriorityID} = $Self->{CIPAllocateObject}->PriorityAllocationGet(
             CategoryID => $Param{CategoryID},
             ImpactID   => $Param{ImpactID},
@@ -2512,6 +2514,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.166 $ $Date: 2009-11-20 15:02:25 $
+$Revision: 1.167 $ $Date: 2009-11-20 16:30:44 $
 
 =cut
