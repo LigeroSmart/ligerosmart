@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.168 2009-11-20 17:44:06 ub Exp $
+# $Id: ITSMChange.pm,v 1.169 2009-11-20 17:46:45 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.168 $) [1];
+$VERSION = qw($Revision: 1.169 $) [1];
 
 =head1 NAME
 
@@ -206,8 +206,7 @@ sub ChangeAdd {
 
     # get default Category if not defined
     if ( !defined $Param{CategoryID} ) {
-        my $DefaultCategory
-            = $Self->{ConfigObject}->Get('ITSMChange::Category::Default');
+        my $DefaultCategory = $Self->{ConfigObject}->Get('ITSMChange::Category::Default');
         $Param{CategoryID} = $Self->ChangeCIPLookup(
             CIP  => $DefaultCategory,
             Type => 'Category',
@@ -225,8 +224,7 @@ sub ChangeAdd {
 
     # get default Priority if not defined
     if ( !defined $Param{PriorityID} ) {
-        my $DefaultPriority
-            = $Self->{ConfigObject}->Get('ITSMChange::Priority::Default');
+        my $DefaultPriority = $Self->{ConfigObject}->Get('ITSMChange::Priority::Default');
         $Param{PriorityID} = $Self->{CIPAllocateObject}->PriorityAllocationGet(
             CategoryID => $Param{CategoryID},
             ImpactID   => $Param{ImpactID},
@@ -2514,6 +2512,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.168 $ $Date: 2009-11-20 17:44:06 $
+$Revision: 1.169 $ $Date: 2009-11-20 17:46:45 $
 
 =cut
