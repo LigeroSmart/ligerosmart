@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.76 2009-11-20 16:29:48 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.77 2009-11-20 17:44:06 ub Exp $</CVS>
     <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
         <Description Lang="en">Logfile for the itsm change counter.</Description>
         <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
@@ -40,7 +40,7 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSM::ChangeManagement::Category::Default" Required="1" Valid="1">
+    <ConfigItem Name="ITSMChange::Category::Default" Required="1" Valid="1">
         <Description Lang="en">The default value for the category of a change.</Description>
         <Description Lang="de">Der Standard-Wert für die Kategorie eines Changes.</Description>
         <Group>ITSM Change Management</Group>
@@ -49,7 +49,7 @@
             <String Regex="">3 normal</String>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSM::ChangeManagement::Impact::Default" Required="1" Valid="1">
+    <ConfigItem Name="ITSMChange::Impact::Default" Required="1" Valid="1">
         <Description Lang="en">The default value for the impact of a change.</Description>
         <Description Lang="de">Der Standard-Wert für die Auswirkung eines Changes.</Description>
         <Group>ITSM Change Management</Group>
@@ -58,7 +58,7 @@
             <String Regex="">3 normal</String>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSM::ChangeManagement::Priority::Default" Required="1" Valid="1">
+    <ConfigItem Name="ITSMChange::Priority::Default" Required="1" Valid="1">
         <Description Lang="en">The default value for the priority of a change.</Description>
         <Description Lang="de">Der Standard-Wert für die Priorität eines Changes.</Description>
         <Group>ITSM Change Management</Group>
