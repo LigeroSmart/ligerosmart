@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.29 2009-11-20 10:53:11 bes Exp $
+# $Id: ITSMWorkOrder.pm,v 1.30 2009-11-20 14:08:08 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.29 $) [1];
+$VERSION = qw($Revision: 1.30 $) [1];
 
 =head1 NAME
 
@@ -211,16 +211,10 @@ sub WorkOrderAdd {
 
         next ARGUMENT if !exists $Param{$Argument};
 
-        if ( defined $Param{$Argument} ) {
-            $Param{"${Argument}Plain"} = $Self->{HTMLUtilsObject}->ToAscii(
-                String => $Param{$Argument},
-            );
-        }
-        else {
+        $Param{"${Argument}Plain"} = $Self->{HTMLUtilsObject}->ToAscii(
+            String => $Param{$Argument},
+        );
 
-            # _CheckWorkOrderParams() will reject this
-            $Param{"${Argument}Plain"} = undef;
-        }
     }
 
     # check the parameters
@@ -462,16 +456,9 @@ sub WorkOrderUpdate {
 
         next ARGUMENT if !exists $Param{$Argument};
 
-        if ( defined $Param{$Argument} ) {
-            $Param{"${Argument}Plain"} = $Self->{HTMLUtilsObject}->ToAscii(
-                String => $Param{$Argument},
-            );
-        }
-        else {
-
-            # _CheckWorkOrderParams() will reject this
-            $Param{"${Argument}Plain"} = undef;
-        }
+        $Param{"${Argument}Plain"} = $Self->{HTMLUtilsObject}->ToAscii(
+            String => $Param{$Argument},
+        );
     }
 
     # check the given parameters
@@ -2137,6 +2124,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.29 $ $Date: 2009-11-20 10:53:11 $
+$Revision: 1.30 $ $Date: 2009-11-20 14:08:08 $
 
 =cut
