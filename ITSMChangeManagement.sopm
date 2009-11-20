@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.66 2009-11-20 14:50:55 reb Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.67 2009-11-20 15:48:09 ub Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -92,25 +92,6 @@
         <File Permission="644" Location="var/packagesetup/ITSMChangeManagement.pm"/>
     </Filelist>
     <DatabaseInstall Type="post">
-        <TableCreate Name="change_cip_allocate">
-            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
-            <Column Name="category_id" Required="true" Type="INTEGER"/>
-            <Column Name="impact_id" Required="true" Type="INTEGER"/>
-            <Column Name="priority_id" Required="true" Type="INTEGER"/>
-            <Column Name="create_time" Required="false" Type="DATE"/>
-            <Column Name="create_by" Required="false" Type="INTEGER"/>
-            <Column Name="change_time" Required="false" Type="DATE"/>
-            <Column Name="change_by" Required="false" Type="INTEGER"/>
-            <ForeignKey ForeignTable="general_catalog">
-                <Reference Local="category_id" Foreign="id"/>
-                <Reference Local="impact_id" Foreign="id"/>
-                <Reference Local="priority_id" Foreign="id"/>
-            </ForeignKey>
-            <ForeignKey ForeignTable="users">
-                <Reference Local="create_by" Foreign="id"/>
-                <Reference Local="change_by" Foreign="id"/>
-            </ForeignKey>
-        </TableCreate>
         <TableCreate Name="change_item">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
             <Column Name="change_number" Required="true" Size="100" Type="VARCHAR"/>
@@ -370,6 +351,25 @@
             </ForeignKey>
             <ForeignKey ForeignTable="change_template_type">
                 <Reference Local="type_id" Foreign="id"/>
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Name="change_cip_allocate">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
+            <Column Name="category_id" Required="true" Type="INTEGER"/>
+            <Column Name="impact_id" Required="true" Type="INTEGER"/>
+            <Column Name="priority_id" Required="true" Type="INTEGER"/>
+            <Column Name="create_time" Required="false" Type="DATE"/>
+            <Column Name="create_by" Required="false" Type="INTEGER"/>
+            <Column Name="change_time" Required="false" Type="DATE"/>
+            <Column Name="change_by" Required="false" Type="INTEGER"/>
+            <ForeignKey ForeignTable="general_catalog">
+                <Reference Local="category_id" Foreign="id"/>
+                <Reference Local="impact_id" Foreign="id"/>
+                <Reference Local="priority_id" Foreign="id"/>
+            </ForeignKey>
+            <ForeignKey ForeignTable="users">
+                <Reference Local="create_by" Foreign="id"/>
+                <Reference Local="change_by" Foreign="id"/>
             </ForeignKey>
         </TableCreate>
         <Insert Table="general_catalog">
@@ -794,6 +794,7 @@
         <TableDrop Name="change_item"/>
         <TableDrop Name="change_template"/>
         <TableDrop Name="change_template_type"/>
+        <TableDrop Name="change_cip_allocate"/>
     </DatabaseUninstall>
     <CodeInstall Type="post">
 
