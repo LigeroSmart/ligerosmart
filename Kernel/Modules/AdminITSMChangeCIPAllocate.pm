@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminITSMChangeCIPAllocate.pm - admin frontend of criticality, impact and priority
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMChangeCIPAllocate.pm,v 1.1 2009-11-19 18:00:00 reb Exp $
+# $Id: AdminITSMChangeCIPAllocate.pm,v 1.2 2009-11-20 10:21:03 reb Exp $
 # $OldId: AdminITSMCIPAllocate.pm,v 1.11 2009/05/18 09:48:35 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -31,7 +31,7 @@ use Kernel::System::ITSMChangeCIPAllocate;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -125,7 +125,7 @@ sub Run {
                     Param => "PriorityID" . $ImpactID . '-' . $CategoryID
                 ) || '';
 
-                next CRITICALITYID if !$PriorityID;
+                next CATEGORYID if !$PriorityID;
 
                 $AllocateData->{$ImpactID}->{$CategoryID} = $PriorityID;
             }
@@ -218,7 +218,7 @@ sub Run {
             keys %{ $ObjectOption{CategoryList} }
             )
         {
-            $AllocateMatrix->[0]->[$Counter2]->{ObjectType}     = 'Category';
+            $AllocateMatrix->[0]->[$Counter2]->{ObjectType}  = 'Category';
             $AllocateMatrix->[0]->[$Counter2]->{CategoryKey} = $Category;
             $AllocateMatrix->[0]->[$Counter2]->{ObjectOption}
                 = $ObjectOption{CategoryList}{$Category};

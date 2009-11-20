@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.161 2009-11-19 13:40:50 bes Exp $
+# $Id: ITSMChange.pm,v 1.162 2009-11-20 10:21:03 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.161 $) [1];
+$VERSION = qw($Revision: 1.162 $) [1];
 
 =head1 NAME
 
@@ -1754,7 +1754,7 @@ sub ChangePossibleStatesGet {
         Class => 'ITSM::ChangeManagement::Change::State',
     ) || {};
 
-    # assemble a an array of hash refs
+    # assemble an array of hash refs
     my @ArrayHashRef;
     for my $StateID ( sort keys %{$StateList} ) {
         push @ArrayHashRef, {
@@ -1764,6 +1764,74 @@ sub ChangePossibleStatesGet {
     }
 
     return \@ArrayHashRef;
+}
+
+=item ChangeCIPLookup()
+
+This method does a lookup for a change category, impact or priority.
+If a change CIP-ID is given, it returns the name of the CIP.
+If a change CIP name is given, the appropriate ID is returned.
+
+    my $Name = $ChangeObject->ChangeCIPLookup(
+        ID   => 1234,
+        Type => 'Priority',
+    );
+
+    my $ID = $ChangeObject->ChangeCIPLookup(
+        CIP  => '1 very low',
+        Type => 'Category',
+    );
+
+=cut
+
+sub ChangeCIPLookup {
+    my ( $Self, %Param ) = @_;
+
+    # either StateID or State must be passed
+    if ( !$Param{ID} && !$Param{CIP} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need ID or CIP!',
+        );
+        return;
+    }
+
+    # check that not both ID and CIP are given
+    if ( $Param{ID} && $Param{CIP} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need either ID OR CIP - not both!',
+        );
+        return;
+    }
+
+    # check Type param for valid values
+    if ( $Param{Type} ne 'Category' || $Param{Type} ne 'Impact' || $Param{Type} ne 'Priority' ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'The param Type must be either "Category" or "Impact" or "Priority"!',
+        );
+        return;
+    }
+
+    # get change CIP from general catalog
+    # mapping of the id to the name
+    my %ChangeCIP = %{
+        $Self->{GeneralCatalogObject}->ItemList(
+            Class => 'ITSM::ChangeManagement::' . $Param{Type},
+            ) || {}
+        };
+
+    if ( $Param{ID} ) {
+        return $ChangeCIP{ $Param{ID} };
+    }
+    else {
+
+        # reverse key - value pairs to have the name as keys
+        my %ReversedChangeCIP = reverse %ChangeCIP;
+
+        return $ReversedChangeCIP{ $Param{CIP} };
+    }
 }
 
 =item Permission()
@@ -1939,6 +2007,68 @@ sub _CheckChangeStateIDs {
     return 1;
 }
 
+=item _CheckChangeCIPIDs()
+
+Check whether all of the given ids of category, impact or priority are valid.
+
+    my $Ok = $ChangeObject->_CheckChangeCIPIDs(
+        IDs  => [ 25, 26 ], # mandatory
+        Type => 'Priority', # mandatory (Category|Impact|Priority)
+    );
+
+=cut
+
+sub _CheckChangeCIPIDs {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Needed (qw(IDs Type)) {
+        if ( !$Param{$Needed} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Needed!",
+            );
+            return;
+        }
+    }
+
+    # check if IDs is an array reference
+    if ( ref $Param{IDs} ne 'ARRAY' ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'The param IDs must be an array reference!',
+        );
+        return;
+    }
+
+    # check Type param for valid values
+    if ( $Param{Type} ne 'Category' || $Param{Type} ne 'Impact' || $Param{Type} ne 'Priority' ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'The param Type must be either "Category" or "Impact" or "Priority"!',
+        );
+        return;
+    }
+
+    # check if IDs belongs to correct general catalog class
+    for my $ID ( @{ $Param{IDs} } ) {
+        my $CIP = $Self->ChangeCIPLookup(
+            ID => $ID,
+        );
+
+        if ( !$CIP ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "The state id $ID is not valid!",
+            );
+
+            return;
+        }
+    }
+
+    return 1;
+}
+
 =item _ChangeNumberCreate()
 
 Create a new unique change number. Used in ChangeAdd().
@@ -2081,6 +2211,9 @@ There are no required parameters.
         ChangeStateID        => 4,                                  # (optional)
         ChangeManagerID      => 5,                                  # (optional)
         ChangeBuilderID      => 6,                                  # (optional)
+        CategoryID           => 7,                                  # (optional)
+        ImpactID             => 8,                                  # (optional)
+        PriorityID           => 9,                                  # (optional)
         RealizeTime          => '2009-10-23 08:57:12',              # (optional)
         CABAgents            => [ 1, 2, 4 ],     # UserIDs          # (optional)
         CABCustomers         => [ 'tt', 'mm' ],  # CustomerUserIDs  # (optional)
@@ -2152,7 +2285,7 @@ sub _CheckChangeParams {
         if (
             $Argument    eq 'Description'
             || $Argument eq 'DescriptionPlain'
-            || $Argument eq 'JustificationPlain'
+            || $Argument eq 'Justification'
             || $Argument eq 'JustificationPlain'
             )
         {
@@ -2184,6 +2317,16 @@ sub _CheckChangeParams {
         return if !$Self->_CheckChangeStateIDs(
             ChangeStateIDs => [ $Param{ChangeStateID} ],
         );
+    }
+
+    # check if given category, impact or priority ID is valid
+    for my $Type (qw(Category Impact Priority)) {
+        if ( $Param{"${Type}ID"} ) {
+            return if !$Self->_CheckChangeCIPIDs(
+                IDs  => [ $Param{"${Type}ID"} ],
+                Type => $Type,
+            );
+        }
     }
 
     # change manager and change builder must be agents
@@ -2295,6 +2438,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.161 $ $Date: 2009-11-19 13:40:50 $
+$Revision: 1.162 $ $Date: 2009-11-20 10:21:03 $
 
 =cut
