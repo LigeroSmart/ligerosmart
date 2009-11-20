@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.28 2009-11-19 13:40:50 bes Exp $
+# $Id: ITSMWorkOrder.pm,v 1.29 2009-11-20 10:53:11 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.28 $) [1];
+$VERSION = qw($Revision: 1.29 $) [1];
 
 =head1 NAME
 
@@ -1380,16 +1380,15 @@ sub WorkOrderStateLookup {
         return;
     }
 
-    # get workorder type from general catalog
-    # mapping of the id to the name
-    my %WorkOrderState = %{
+    # get the workorder states from the general catalog
+    my %StateID2Name = %{
         $Self->{GeneralCatalogObject}->ItemList(
             Class => 'ITSM::ChangeManagement::WorkOrder::State',
             )
         };
 
-    # check the workorder state hash
-    if ( !%WorkOrderState ) {
+    # check the state hash
+    if ( !%StateID2Name ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message  => 'Could not retrieve workorder states from the general catalog.',
@@ -1399,14 +1398,14 @@ sub WorkOrderStateLookup {
     }
 
     if ( $Param{WorkOrderStateID} ) {
-        return $WorkOrderState{ $Param{WorkOrderStateID} };
+        return $StateID2Name{ $Param{WorkOrderStateID} };
     }
     else {
 
         # reverse key - value pairs to have the name as keys
-        my %ReversedWorkOrderState = reverse %WorkOrderState;
+        my %StateName2ID = reverse %StateID2Name;
 
-        return $ReversedWorkOrderState{ $Param{WorkOrderState} };
+        return $StateName2ID{ $Param{WorkOrderState} };
     }
 }
 
@@ -2138,6 +2137,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.28 $ $Date: 2009-11-19 13:40:50 $
+$Revision: 1.29 $ $Date: 2009-11-20 10:53:11 $
 
 =cut

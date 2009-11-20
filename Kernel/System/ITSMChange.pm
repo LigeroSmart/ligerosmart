@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.162 2009-11-20 10:21:03 reb Exp $
+# $Id: ITSMChange.pm,v 1.163 2009-11-20 10:53:11 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.162 $) [1];
+$VERSION = qw($Revision: 1.163 $) [1];
 
 =head1 NAME
 
@@ -292,7 +292,7 @@ sub ChangeUpdate {
         }
     }
 
-    # check that not both State and StateID are given
+    # check that not both ChangeState and ChangeStateID are given
     if ( $Param{ChangeState} && $Param{ChangeStateID} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
@@ -304,7 +304,7 @@ sub ChangeUpdate {
     # when the State is given, then look up the ID
     if ( $Param{ChangeState} ) {
         $Param{ChangeStateID} = $Self->ChangeStateLookup(
-            State => $Param{ChangeState},
+            ChangeState => $Param{ChangeState},
         );
     }
 
@@ -503,7 +503,7 @@ sub ChangeGet {
     # set name of change state
     if ( $ChangeData{ChangeStateID} ) {
         $ChangeData{ChangeState} = $Self->ChangeStateLookup(
-            StateID => $ChangeData{ChangeStateID},
+            ChangeStateID => $ChangeData{ChangeStateID},
         );
     }
 
@@ -1139,7 +1139,7 @@ sub ChangeSearch {
 
         # look up the ID for the name
         my $ChangeStateID = $Self->ChangeStateLookup(
-            State => $ChangeState,
+            ChangeState => $ChangeState,
         );
 
         # check whether the ID was found, whether the name exists
@@ -1657,12 +1657,12 @@ This method does a lookup for a change state. If a change state id is given,
 it returns the name of the change state. If a change state name is given,
 the appropriate id is returned.
 
-    my $Name = $ChangeObject->ChangeStateLookup(
-        StateID => 1234,
+    my $ChangeState = $ChangeObject->ChangeStateLookup(
+        ChangeStateID => 1234,
     );
 
-    my $ID = $ChangeObject->ChangeStateLookup(
-        State => 'accepted',
+    my $ChangeStateID = $ChangeObject->ChangeStateLookup(
+        ChangeState => 'accepted',
     );
 
 =cut
@@ -1670,40 +1670,48 @@ the appropriate id is returned.
 sub ChangeStateLookup {
     my ( $Self, %Param ) = @_;
 
-    # either StateID or State must be passed
-    if ( !$Param{StateID} && !$Param{State} ) {
+    # either ChangeStateID or State must be passed
+    if ( !$Param{ChangeStateID} && !$Param{ChangeState} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'Need StateID or State!',
+            Message  => 'Need ChangeStateID or ChangeState!',
         );
         return;
     }
 
-    if ( $Param{StateID} && $Param{State} ) {
+    if ( $Param{ChangeStateID} && $Param{ChangeState} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'Need StateID OR State - not both!',
+            Message  => 'Need ChangeStateID OR ChangeState - not both!',
         );
         return;
     }
 
-    # get change state from general catalog
-    # mapping of the id to the name
-    my %ChangeState = %{
+    # get the change states from the general catalog
+    my %StateID2Name = %{
         $Self->{GeneralCatalogObject}->ItemList(
             Class => 'ITSM::ChangeManagement::Change::State',
-            ) || {}
+            )
         };
 
-    if ( $Param{StateID} ) {
-        return $ChangeState{ $Param{StateID} };
+    # check the state hash
+    if ( !%StateID2Name ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Could not retrieve change states from the general catalog.',
+        );
+
+        return;
+    }
+    if ( $Param{ChangeStateID} ) {
+        return $StateID2Name{ $Param{ChangeStateID} };
     }
     else {
 
         # reverse key - value pairs to have the name as keys
-        my %ReversedChangeState = reverse %ChangeState;
+        my %StateName2ID = reverse %StateID2Name;
 
-        return $ReversedChangeState{ $Param{State} };
+        return $StateName2ID{ $Param{ChangeState} };
     }
 }
 
@@ -1719,7 +1727,7 @@ but not yet used for producing the list.
     );
 
 The return value is a reference to an array of hashrefs. The Element 'Key' is then
-the StateID and die Element 'Value' is the name of the state. The array elements
+the ChangeStateID and die Element 'Value' is the name of the state. The array elements
 are sorted by state id.
 
     my $ChangeStateList = [
@@ -1991,7 +1999,7 @@ sub _CheckChangeStateIDs {
     # check if ChangeStateIDs belongs to correct general catalog class
     for my $StateID ( @{ $Param{ChangeStateIDs} } ) {
         my $State = $Self->ChangeStateLookup(
-            StateID => $StateID,
+            ChangeStateID => $StateID,
         );
 
         if ( !$State ) {
@@ -2438,6 +2446,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.162 $ $Date: 2009-11-20 10:21:03 $
+$Revision: 1.163 $ $Date: 2009-11-20 10:53:11 $
 
 =cut

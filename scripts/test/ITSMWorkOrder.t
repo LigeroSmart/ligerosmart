@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.97 2009-11-19 13:40:50 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.98 2009-11-20 10:53:11 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -171,28 +171,49 @@ for my $DefaultWorkOrderState (@DefaultWorkOrderStates) {
     );
 }
 
-# test the lookup method
+# ------------------------------------------------------------ #
+# test the state lookup method
+# ------------------------------------------------------------ #
+
+# investigate the default states
 for my $State (@DefaultWorkOrderStates) {
-    my $StateID = $Self->{WorkOrderObject}->WorkOrderStateLookup(
+
+    # look up the state name
+    my $LookedUpStateID = $Self->{WorkOrderObject}->WorkOrderStateLookup(
         WorkOrderState => $State,
     );
-
     $Self->Is(
-        $StateID,
+        $LookedUpStateID,
         $WorkOrderStateName2ID{$State},
-        "Lookup $State",
+        "Look up state '$State'",
     );
 
-    my $StateName = $Self->{WorkOrderObject}->WorkOrderStateLookup(
-        WorkOrderStateID => $StateID,
+    # do the reverse lookup
+    my $LookedUpState = $Self->{WorkOrderObject}->WorkOrderStateLookup(
+        WorkOrderStateID => $LookedUpStateID,
     );
-
     $Self->Is(
-        $StateName,
+        $LookedUpState,
         $State,
-        "Lookup $StateID",
+        "Look up state id '$LookedUpStateID'",
     );
 }
+
+# now some param checks
+my $LookupOK = $Self->{WorkOrderObject}->WorkOrderStateLookup();
+$Self->False( $LookupOK, 'No params passed to WorkOrderStateLookup()' );
+
+$LookupOK = $Self->{WorkOrderObject}->WorkOrderStateLookup(
+    WorkOrderState   => 'approved',
+    WorkOrderStateID => 2
+);
+$Self->False( $LookupOK, 'Exclusive params passed to WorkOrderStateLookup()' );
+
+$LookupOK = $Self->{WorkOrderObject}->WorkOrderStateLookup( State => 'approved' );
+$Self->False( $LookupOK, q{Incorrect param 'State' passed to WorkOrderStateLookup()} );
+
+$LookupOK = $Self->{WorkOrderObject}->WorkOrderStateLookup( StateID => 2 );
+$Self->False( $LookupOK, q{Incorrect param 'StateID' passed to WorkOrderStateLookup()} );
 
 # ------------------------------------------------------------ #
 # search for default ITSMWorkOrder-types

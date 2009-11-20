@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.127 2009-11-19 16:48:28 reb Exp $
+# $Id: ITSMChange.t,v 1.128 2009-11-20 10:53:11 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -200,28 +200,51 @@ for my $DefaultChangeState (@DefaultChangeStates) {
     );
 }
 
-# test the lookup method
+# ------------------------------------------------------------ #
+# test the state lookup method
+# ------------------------------------------------------------ #
+
+# investigate the default states
 for my $State (@DefaultChangeStates) {
-    my $StateID = $Self->{ChangeObject}->ChangeStateLookup(
-        State => $State,
+
+    # look up the state name
+    my $LookedUpStateID = $Self->{ChangeObject}->ChangeStateLookup(
+        ChangeState => $State,
     );
 
     $Self->Is(
-        $StateID,
+        $LookedUpStateID,
         $ChangeStateName2ID{$State},
-        "Lookup $State",
+        "Look up state '$State'",
     );
 
-    my $StateName = $Self->{ChangeObject}->ChangeStateLookup(
-        StateID => $StateID,
+    # do the reverse lookup
+    my $LookedUpState = $Self->{ChangeObject}->ChangeStateLookup(
+        ChangeStateID => $LookedUpStateID,
     );
 
     $Self->Is(
-        $StateName,
+        $LookedUpState,
         $State,
-        "Lookup $StateID",
+        "Look up state id '$LookedUpStateID'",
     );
 }
+
+# now some param checks
+my $LookupOK = $Self->{ChangeObject}->ChangeStateLookup();
+$Self->False( $LookupOK, 'No params passed to ChangeStateLookup()' );
+
+$LookupOK = $Self->{ChangeObject}->ChangeStateLookup(
+    ChangeState   => 'approved',
+    ChangeStateID => 2
+);
+$Self->False( $LookupOK, 'Exclusive params passed to ChangeStateLookup()' );
+
+$LookupOK = $Self->{ChangeObject}->ChangeStateLookup( State => 'approved' );
+$Self->False( $LookupOK, q{Incorrect param 'State' passed to ChangeStateLookup()} );
+
+$LookupOK = $Self->{ChangeObject}->ChangeStateLookup( StateID => 2 );
+$Self->False( $LookupOK, q{Incorrect param 'StateID' passed to ChangeStateLookup()} );
 
 # ------------------------------------------------------------ #
 # check existence of the groups that are used for Permission
