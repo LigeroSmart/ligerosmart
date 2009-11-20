@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeHistory.pm - the OTRS::ITSM::ChangeManagement change history module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeHistory.pm,v 1.19 2009-11-16 22:23:41 ub Exp $
+# $Id: AgentITSMChangeHistory.pm,v 1.20 2009-11-20 08:13:14 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::History;
 use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -188,14 +188,26 @@ sub Run {
                 $Data{Content} = '" ';
             }
 
+            # for what item type is this history entry
             my $HistoryItemType = 'Change';
             if ( $HistoryType =~ m{ \A WorkOrder }xms ) {
                 $HistoryItemType = 'WorkOrder';
             }
 
+            # for workorder entries that still exists, show workorderid
+            my $HistoryEntryType = $Data{HistoryType};
+            if ( $HistoryEntry->{WorkOrderID} ) {
+                $HistoryEntryType .= 'WithWorkorderID';
+                $Data{Content} = '"' . $HistoryEntry->{WorkOrderID} . '", ' . $Data{Content};
+            }
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => $Data{Content},
+            );
+
             # show 'nice' output
             $Data{Content} = $Self->{LayoutObject}->{LanguageObject}->Get(
-                $HistoryItemType . 'History::' . $Data{HistoryType} . '", ' . $Data{Content},
+                $HistoryItemType . 'History::' . $HistoryEntryType . '", ' . $Data{Content},
             );
 
             # remove not needed place holder
