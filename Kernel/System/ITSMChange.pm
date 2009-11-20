@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.164 2009-11-20 14:04:15 ub Exp $
+# $Id: ITSMChange.pm,v 1.165 2009-11-20 14:50:55 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,13 +19,14 @@ use Kernel::System::LinkObject;
 use Kernel::System::User;
 use Kernel::System::Group;
 use Kernel::System::CustomerUser;
+use Kernel::System::ITSMChangeCIPAllocate;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::HTMLUtils;
 
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.164 $) [1];
+$VERSION = qw($Revision: 1.165 $) [1];
 
 =head1 NAME
 
@@ -110,6 +111,7 @@ sub new {
     $Self->{CustomerUserObject}   = Kernel::System::CustomerUser->new( %{$Self} );
     $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
     $Self->{HTMLUtilsObject}      = Kernel::System::HTMLUtils->new( %{$Self} );
+    $Self->{CIPAllocateObject}    = Kernel::System::ITSMChangeCIPAllocate->new( %{$Self} );
 
     # init of event handler
     $Self->EventHandlerInit(
@@ -142,6 +144,9 @@ or
         ChangeState     => 'accepted',                         # (optional) or ChangeStateID => 4
         ChangeManagerID => 5,                                  # (optional)
         ChangeBuilderID => 6,                                  # (optional)
+        CategoryID      => 7,                                  # (optional)
+        ImpactID        => 8,                                  # (optional)
+        PriorityID      => 9,                                  # (optional)
         CABAgents       => [ 1, 2, 4 ],     # UserIDs          # (optional)
         CABCustomers    => [ 'tt', 'mm' ],  # CustomerUserIDs  # (optional)
         RealizeTime     => '2006-01-19 23:59:59',              # (optional)
@@ -196,14 +201,43 @@ sub ChangeAdd {
     );
     my $ChangeStateID = $ItemDataRef->{ItemID};
 
+    # get default Category if not defined
+    if ( !defined $Param{CategoryID} ) {
+        my $DefaultCategory = $Self->{ConfigObject}->Get('ITSM::ChangeManagement::DefaultCategory');
+        $Param{CategoryID} = $Self->ChangeCIPLookup(
+            CIP  => $DefaultCategory,
+            Type => 'Category',
+        );
+    }
+
+    # get default Impact if not defined
+    if ( !defined $Param{ImpactID} ) {
+        my $DefaultImpact = $Self->{ConfigObject}->Get('ITSM::ChangeManagement::DefaultImpact');
+        $Param{ImpactID} = $Self->ChangeCIPLookup(
+            CIP  => $DefaultImpact,
+            Type => 'Impact',
+        );
+    }
+
+    # get default Priority if not defined
+    if ( !defined $Param{PriorityID} ) {
+        my $DefaultPriority = $Self->{ConfigObject}->Get('ITSM::ChangeManagement::DefaultPriority');
+        $Param{PriorityID} = $Self->{CIPAllocateObject}->PriorityAllocationGet(
+            CategoryID => $Param{CategoryID},
+            ImpactID   => $Param{ImpactID},
+        );
+    }
+
     # add change to database
     return if !$Self->{DBObject}->Do(
         SQL => 'INSERT INTO change_item '
             . '(change_number, change_state_id, change_builder_id, '
+            . 'category_id, impact_id, priority_id, '
             . 'create_time, create_by, change_time, change_by) '
-            . 'VALUES (?, ?, ?, current_timestamp, ?, current_timestamp, ?)',
+            . 'VALUES (?, ?, ?, ?, ?, ?, current_timestamp, ?, current_timestamp, ?)',
         Bind => [
             \$ChangeNumber, \$ChangeStateID, \$Param{UserID},
+            \$Param{CategoryID}, \$Param{ImpactID}, \$Param{PriorityID},
             \$Param{UserID}, \$Param{UserID},
         ],
     );
@@ -263,6 +297,9 @@ Passing undefined values is not allowed.
         ChangeState     => 'accepted',                         # (optional) or ChangeStateID => 4
         ChangeManagerID => 5,                                  # (optional)
         ChangeBuilderID => 6,                                  # (optional)
+        CategoryID      => 7,                                  # (optional)
+        ImpactID        => 8,                                  # (optional)
+        PriorityID      => 9,                                  # (optional)
         CABAgents       => [ 1, 2, 4 ],     # UserIDs          # (optional)
         CABCustomers    => [ 'tt', 'mm' ],  # CustomerUserIDs  # (optional)
         RealizeTime     => '2006-01-19 23:59:59',              # (optional)
@@ -353,6 +390,9 @@ sub ChangeUpdate {
         ChangeStateID      => 'change_state_id',
         ChangeManagerID    => 'change_manager_id',
         ChangeBuilderID    => 'change_builder_id',
+        CategoryID         => 'category_id',
+        ImpactID           => 'impact_id',
+        PriorityID         => 'priority_id',
         RealizeTime        => 'realize_time',
         DescriptionPlain   => 'description_plain',
         JustificationPlain => 'justification_plain',
@@ -417,6 +457,12 @@ The returned hash reference contains following elements:
     $Change{Justification}
     $Change{ChangeManagerID}
     $Change{ChangeBuilderID}
+    $Change{CategoryID}
+    $Change{Category}
+    $Change{ImpactID}
+    $Change{Impact}
+    $Change{PriorityID}
+    $Change{Priority}
     $Change{WorkOrderIDs}       # array reference with WorkOrderIDs
     $Change{CABAgents}          # array reference with CAB Agent UserIDs
     $Change{CABCustomers}       # array reference with CAB CustomerUserIDs
@@ -450,6 +496,7 @@ sub ChangeGet {
     return if !$Self->{DBObject}->Prepare(
         SQL => 'SELECT id, change_number, title, description, justification, '
             . 'change_state_id, change_manager_id, change_builder_id, '
+            . 'category_id, impact_id, priority_id, '
             . 'create_time, create_by, change_time, change_by, realize_time '
             . 'FROM change_item '
             . 'WHERE id = ? ',
@@ -470,11 +517,14 @@ sub ChangeGet {
         $ChangeData{ChangeStateSignal} = undef;
         $ChangeData{ChangeManagerID}   = $Row[6];
         $ChangeData{ChangeBuilderID}   = $Row[7];
-        $ChangeData{CreateTime}        = $Row[8];
-        $ChangeData{CreateBy}          = $Row[9];
-        $ChangeData{ChangeTime}        = $Row[10];
-        $ChangeData{ChangeBy}          = $Row[11];
-        $ChangeData{RealizeTime}       = $Row[12];
+        $ChangeData{CategoryID}        = $Row[8];
+        $ChangeData{ImpactID}          = $Row[9];
+        $ChangeData{PriorityID}        = $Row[10];
+        $ChangeData{CreateTime}        = $Row[11];
+        $ChangeData{CreateBy}          = $Row[12];
+        $ChangeData{ChangeTime}        = $Row[13];
+        $ChangeData{ChangeBy}          = $Row[14];
+        $ChangeData{RealizeTime}       = $Row[15];
     }
 
     # check error
@@ -491,6 +541,16 @@ sub ChangeGet {
         $ChangeData{ChangeState} = $Self->ChangeStateLookup(
             ChangeStateID => $ChangeData{ChangeStateID},
         );
+    }
+
+    # set names for CIP
+    for my $Type (q(Category Impact Priority)) {
+        if ( $ChangeData{"${Type}ID"} ) {
+            $ChangeData{$Type} = $Self->ChangeCIPLookup(
+                ID   => $ChangeData{"${Type}ID"},
+                Type => $Type,
+            );
+        }
     }
 
     # set the change state signal
@@ -1800,7 +1860,7 @@ sub ChangeCIPLookup {
     }
 
     # check Type param for valid values
-    if ( $Param{Type} ne 'Category' || $Param{Type} ne 'Impact' || $Param{Type} ne 'Priority' ) {
+    if ( $Param{Type} ne 'Category' && $Param{Type} ne 'Impact' && $Param{Type} ne 'Priority' ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message  => 'The param Type must be either "Category" or "Impact" or "Priority"!',
@@ -2036,7 +2096,7 @@ sub _CheckChangeCIPIDs {
     }
 
     # check Type param for valid values
-    if ( $Param{Type} ne 'Category' || $Param{Type} ne 'Impact' || $Param{Type} ne 'Priority' ) {
+    if ( $Param{Type} ne 'Category' && $Param{Type} ne 'Impact' && $Param{Type} ne 'Priority' ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message  => 'The param Type must be either "Category" or "Impact" or "Priority"!',
@@ -2047,13 +2107,14 @@ sub _CheckChangeCIPIDs {
     # check if IDs belongs to correct general catalog class
     for my $ID ( @{ $Param{IDs} } ) {
         my $CIP = $Self->ChangeCIPLookup(
-            ID => $ID,
+            ID   => $ID,
+            Type => $Param{Type},
         );
 
         if ( !$CIP ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "The state id $ID is not valid!",
+                Message  => "The $Param{Type} id $ID is not valid!",
             );
 
             return;
@@ -2315,7 +2376,7 @@ sub _CheckChangeParams {
 
     # check if given category, impact or priority ID is valid
     for my $Type (qw(Category Impact Priority)) {
-        if ( $Param{"${Type}ID"} ) {
+        if ( defined $Param{"${Type}ID"} ) {
             return if !$Self->_CheckChangeCIPIDs(
                 IDs  => [ $Param{"${Type}ID"} ],
                 Type => $Type,
@@ -2432,6 +2493,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.164 $ $Date: 2009-11-20 14:04:15 $
+$Revision: 1.165 $ $Date: 2009-11-20 14:50:55 $
 
 =cut

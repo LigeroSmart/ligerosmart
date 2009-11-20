@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.74 2009-11-20 10:20:10 mae Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.75 2009-11-20 14:50:55 reb Exp $</CVS>
     <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
         <Description Lang="en">Logfile for the itsm change counter.</Description>
         <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
@@ -1122,6 +1122,33 @@
             <Hash>
                 <Item Key="Module">Kernel::System::Ticket::Acl::RestrictTicketTypes</Item>
             </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSM::ChangeManagement::DefaultCategory" Required="1" Valid="1">
+        <Description Lang="en">The default value for the category of a change.</Description>
+        <Description Lang="de">Der Standard-Wert für die Kategorie eines Change.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core</SubGroup>
+        <Setting>
+            <String Regex="">3 normal</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSM::ChangeManagement::DefaultImpact" Required="1" Valid="1">
+        <Description Lang="en">The default value for the Impact of a change.</Description>
+        <Description Lang="de">Der Standard-Wert für die Auswirkung eines Change.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core</SubGroup>
+        <Setting>
+            <String Regex="">3 normal</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSM::ChangeManagement::DefaultPriority" Required="1" Valid="1">
+        <Description Lang="en">The default value for the priority of a change.</Description>
+        <Description Lang="de">Der Standard-Wert für die Priorität eines Change.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core</SubGroup>
+        <Setting>
+            <String Regex="">3 normal</String>
         </Setting>
     </ConfigItem>
 </otrs_config>
