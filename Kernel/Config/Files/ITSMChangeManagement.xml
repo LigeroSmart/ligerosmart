@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.72 2009-11-19 18:00:00 reb Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.73 2009-11-20 08:25:19 mae Exp $</CVS>
     <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
         <Description Lang="en">Logfile for the itsm change counter.</Description>
         <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
@@ -396,7 +396,7 @@
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::MenuModule###317-ITSMChangeAdd" Required="0" Valid="1">
         <Description Lang="en">Module to show a link to add a change.</Description>
-        <Description Lang="de">Über dieses Modul wird ein Link im Menü der Ticketansicht angezeigt, mit dem ein Change erzeugt werden kann.</Description>
+        <Description Lang="de">Mit diesem Modul wird ein Link im Menü der Ticketansicht angezeigt, mit dem ein Change erzeugt werden kann.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::MenuModule</SubGroup>
         <Setting>
@@ -411,7 +411,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::MenuModule###000-Back" Required="0" Valid="1">
         <Description Lang="en">Module to show back link in change menu.</Description>
-        <Description Lang="de">Über dieses Modul wird der Zurück-Link in der Linkleiste der Change-Ansicht angezeigt.</Description>
+        <Description Lang="de">Mit diesem Modul wird der Zurück-Link in der Linkleiste der Change-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
         <Setting>
@@ -426,7 +426,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::MenuModule###010-History" Required="0" Valid="1">
         <Description Lang="en">Module to show history link in change menu.</Description>
-        <Description Lang="de">Über dieses Modul wird der History-Link in der Linkleiste der Change-Ansicht angezeigt.</Description>
+        <Description Lang="de">Mit diesem Modul wird der History-Link in der Linkleiste der Change-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
         <Setting>
@@ -441,7 +441,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::MenuModule###020-Print" Required="0" Valid="1">
         <Description Lang="en">Module to show print link in change menu.</Description>
-        <Description Lang="de">Über dieses Modul wird der Drucken-Link in der Linkleiste der Change-Ansicht angezeigt.</Description>
+        <Description Lang="de">Mit diesem Modul wird der Drucken-Link in der Linkleiste der Change-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
         <Setting>
@@ -456,7 +456,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::MenuModule###030-Edit" Required="0" Valid="1">
         <Description Lang="en">Module to show edit link in change menu.</Description>
-        <Description Lang="de">Über dieses Modul wird der Bearbeiten-Link in der Linkleiste der Change-Ansicht angezeigt.</Description>
+        <Description Lang="de">Mit diesem Modul wird der Bearbeiten-Link in der Linkleiste der Change-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
         <Setting>
@@ -471,7 +471,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::MenuModule###040-InvolvedPersons" Required="0" Valid="1">
         <Description Lang="en">Module to show 'involved persons' link in change menu.</Description>
-        <Description Lang="de">Über dieses Modul wird der 'Involvierte Personen'-Link in der Linkleiste der Change-Ansicht angezeigt.</Description>
+        <Description Lang="de">Mit diesem Modul wird der 'Involvierte Personen'-Link in der Linkleiste der Change-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
         <Setting>
@@ -486,7 +486,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::MenuModule###050-WorkOrderAdd" Required="0" Valid="1">
         <Description Lang="en">Module to show 'Add WorkOrder' link in change menu.</Description>
-        <Description Lang="de">Über dieses Modul wird der 'Workorder hinzufügen'-Link in der Linkleiste der Change-Ansicht angezeigt.</Description>
+        <Description Lang="de">Mit diesem Modul wird der 'Workorder hinzufügen'-Link in der Linkleiste der Change-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
         <Setting>
@@ -501,7 +501,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::MenuModule###070-Link" Required="0" Valid="1">
         <Description Lang="en">Module to show link link in change menu.</Description>
-        <Description Lang="de">Über dieses Modul wird der Link-Link in der Linkleiste der Change-Ansicht angezeigt.</Description>
+        <Description Lang="de">Mit diesem Modul wird der Link-Link in der Linkleiste der Change-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
         <Setting>
@@ -516,7 +516,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::MenuModule###080-MoveTimeSlot" Required="0" Valid="1">
         <Description Lang="en">Module to show move timeslot link in change menu.</Description>
-        <Description Lang="de">Über dieses Modul wird der 'Verschieben'-Link in der Linkleiste der Change-Ansicht angezeigt.</Description>
+        <Description Lang="de">Mit diesem Modul wird der 'Verschieben'-Link in der Linkleiste der Change-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
         <Setting>
@@ -531,7 +531,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###000-Back" Required="0" Valid="1">
         <Description Lang="en">Module to show back link in workorder menu.</Description>
-        <Description Lang="de">Über dieses Modul wird der Zurück-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
+        <Description Lang="de">Mit diesem Modul wird der Zurück-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
@@ -546,7 +546,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###010-History" Required="0" Valid="1">
         <Description Lang="en">Module to show history link in workorder menu.</Description>
-        <Description Lang="de">Über dieses Modul wird der Historie-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
+        <Description Lang="de">Mit diesem Modul wird der Historie-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
@@ -561,7 +561,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###020-Print" Required="0" Valid="1">
         <Description Lang="en">Module to show print link in workorder menu.</Description>
-        <Description Lang="de">Über dieses Modul wird der Drucken-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
+        <Description Lang="de">Mit diesem Modul wird der Drucken-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
@@ -576,7 +576,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###030-Edit" Required="0" Valid="1">
         <Description Lang="en">Module to show edit link in workorder menu.</Description>
-        <Description Lang="de">Über dieses Modul wird der Bearbeiten-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
+        <Description Lang="de">Mit diesem Modul wird der Bearbeiten-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
@@ -591,7 +591,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###040-WorkOrderAgent" Required="0" Valid="1">
         <Description Lang="en">Module to show WorkOrderAgent link in workorder menu.</Description>
-        <Description Lang="de">Über dieses Modul wird der WorkOrderAgent-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
+        <Description Lang="de">Mit diesem Modul wird der WorkOrderAgent-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
@@ -606,7 +606,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###050-Report" Required="0" Valid="1">
         <Description Lang="en">Module to show report link in workorder menu.</Description>
-        <Description Lang="de">Über dieses Modul wird der Report-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
+        <Description Lang="de">Mit diesem Modul wird der Report-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
@@ -621,7 +621,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###060-Link" Required="0" Valid="1">
         <Description Lang="en">Module to show link link in workorder menu.</Description>
-        <Description Lang="de">Über dieses Modul wird der Link-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
+        <Description Lang="de">Mit diesem Modul wird der Link-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
@@ -636,7 +636,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###080-Template" Required="0" Valid="1">
         <Description Lang="en">Module to show template link in workorder menu.</Description>
-        <Description Lang="de">Über dieses Modul wird der Template-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
+        <Description Lang="de">Mit diesem Modul wird der Template-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
@@ -651,7 +651,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###090-WorkOrderDelete" Required="0" Valid="1">
         <Description Lang="en">Module to show the 'Delete' link in the workorder menu.</Description>
-        <Description Lang="de">Über dieses Modul wird der 'Löschen'-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
+        <Description Lang="de">Mit diesem Modul wird der 'Löschen'-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
@@ -1113,7 +1113,7 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="Ticket::Acl::Module###200-Ticket::Acl::Module" Required="0" Valid="0">
+    <ConfigItem Name="Ticket::Acl::Module###200-Ticket::Acl::Module" Required="0" Valid="1">
         <Description Lang="en">This ACL module does not allow to use the ticket types which are defined in the sysconfig option 'ITSMChange::AddChangeLinkTicketTypes', if the user is not in one of the groups 'itsm-change', 'itsm-change-builder' or 'itsm-change-manager'.</Description>
         <Description Lang="de">Dieses ACL Modul verhindert es, die Ticket-Typen zu verwenden, die in der Sysconfig-Option 'ITSMChange::AddChangeLinkTicketTypes' definiert sind, zu verwenden, wenn der Benutzer nicht Mitglied in einer der Gruppen 'itsm-change', 'itsm-change-builder' oder 'itsm-change-manager' ist.</Description>
         <Group>Ticket</Group>
