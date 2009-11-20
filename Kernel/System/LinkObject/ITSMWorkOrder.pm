@@ -2,7 +2,7 @@
 # Kernel/System/LinkObject/ITSMWorkOrder.pm - to link workorder objects
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.10 2009-11-04 18:32:26 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.11 2009-11-20 17:10:28 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -128,8 +128,8 @@ return a hash of object descriptions
 
 Return
     %Description = (
-        Normal => "WorkOrder# 2009102110001674-1",
-        Long   => "WorkOrder# 2009102110001674-1: The WorkOrder Title",
+        Normal => "Workorder# 2009102110001674-1",
+        Long   => "Workorder# 2009102110001674-1: The Workorder Title",
     );
 
     %Description = $LinkObject->ObjectDescriptionGet(
@@ -155,8 +155,8 @@ sub ObjectDescriptionGet {
 
     # create description
     my %Description = (
-        Normal => 'WorkOrder',
-        Long   => 'WorkOrder',
+        Normal => 'Workorder',
+        Long   => 'Workorder',
     );
 
     return %Description if $Param{Mode} && $Param{Mode} eq 'Temporary';
