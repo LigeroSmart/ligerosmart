@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.165 2009-11-20 14:50:55 reb Exp $
+# $Id: ITSMChange.pm,v 1.166 2009-11-20 15:02:25 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.165 $) [1];
+$VERSION = qw($Revision: 1.166 $) [1];
 
 =head1 NAME
 
@@ -144,9 +144,12 @@ or
         ChangeState     => 'accepted',                         # (optional) or ChangeStateID => 4
         ChangeManagerID => 5,                                  # (optional)
         ChangeBuilderID => 6,                                  # (optional)
-        CategoryID      => 7,                                  # (optional)
-        ImpactID        => 8,                                  # (optional)
-        PriorityID      => 9,                                  # (optional)
+        CategoryID      => 7,                                  # (optional) or Category => '3 normal'
+        Category        => '3 normal',                         # (optional) or CategoryID => 4
+        ImpactID        => 8,                                  # (optional) or Impact => '4 high'
+        Impact          => '4 high',                           # (optional) or ImpactID => 5
+        PriorityID      => 9,                                  # (optional) or Priority => '5 very high'
+        Priority        => '5 very high',                      # (optional) or PriorityID => 6
         CABAgents       => [ 1, 2, 4 ],     # UserIDs          # (optional)
         CABCustomers    => [ 'tt', 'mm' ],  # CustomerUserIDs  # (optional)
         RealizeTime     => '2006-01-19 23:59:59',              # (optional)
@@ -297,9 +300,12 @@ Passing undefined values is not allowed.
         ChangeState     => 'accepted',                         # (optional) or ChangeStateID => 4
         ChangeManagerID => 5,                                  # (optional)
         ChangeBuilderID => 6,                                  # (optional)
-        CategoryID      => 7,                                  # (optional)
-        ImpactID        => 8,                                  # (optional)
-        PriorityID      => 9,                                  # (optional)
+        CategoryID      => 7,                                  # (optional) or Category => '3 normal'
+        Category        => '3 normal',                         # (optional) or CategoryID => 4
+        ImpactID        => 8,                                  # (optional) or Impact => '4 high'
+        Impact          => '4 high',                           # (optional) or ImpactID => 5
+        PriorityID      => 9,                                  # (optional) or Priority => '5 very high'
+        Priority        => '5 very high',                      # (optional) or PriorityID => 6
         CABAgents       => [ 1, 2, 4 ],     # UserIDs          # (optional)
         CABCustomers    => [ 'tt', 'mm' ],  # CustomerUserIDs  # (optional)
         RealizeTime     => '2006-01-19 23:59:59',              # (optional)
@@ -336,6 +342,16 @@ sub ChangeUpdate {
         $Param{ChangeStateID} = $Self->ChangeStateLookup(
             ChangeState => $Param{ChangeState},
         );
+    }
+
+    # when CIP is given, then look up the ID
+    for my $Type (qw(Category Impact Priority)) {
+        if ( $Param{$Type} ) {
+            $Param{"${Type}ID"} = $Self->ChangeCIPLookup(
+                CIP  => $Param{$Type},
+                Type => $Type,
+            );
+        }
     }
 
     # normalize the Title, when it is given
@@ -518,8 +534,11 @@ sub ChangeGet {
         $ChangeData{ChangeManagerID}   = $Row[6];
         $ChangeData{ChangeBuilderID}   = $Row[7];
         $ChangeData{CategoryID}        = $Row[8];
+        $ChangeData{Category}          = undef;
         $ChangeData{ImpactID}          = $Row[9];
+        $ChangeData{Impact}            = undef;
         $ChangeData{PriorityID}        = $Row[10];
+        $ChangeData{Priority}          = undef;
         $ChangeData{CreateTime}        = $Row[11];
         $ChangeData{CreateBy}          = $Row[12];
         $ChangeData{ChangeTime}        = $Row[13];
@@ -2493,6 +2512,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.165 $ $Date: 2009-11-20 14:50:55 $
+$Revision: 1.166 $ $Date: 2009-11-20 15:02:25 $
 
 =cut
