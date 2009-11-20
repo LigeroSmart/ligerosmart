@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LayoutITSMChange.pm,v 1.10 2009-11-20 11:47:38 mae Exp $
+# $Id: LayoutITSMChange.pm,v 1.11 2009-11-20 12:15:07 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use POSIX qw(ceil);
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 =item ITSMChangeBuildWorkOrderGraph()
 
@@ -71,64 +71,46 @@ sub ITSMChangeBuildWorkOrderGraph {
     # check for ARRAY-ref and empty ARRAY-ref
     return if ref $Change->{WorkOrderIDs} ne 'ARRAY' || !@{ $Change->{WorkOrderIDs} };
 
-    # get smallest start time
-    my $StartTime;
+    # hash for smallest time
+    my %Time;
 
-    if ( !$Change->{ActualStartTime} ) {
+    TIMETYPE:
+    for my $TimeType (qw(Start End)) {
 
-        # translate to timestamp
-        $StartTime = $Self->{TimeObject}->TimeStamp2SystemTime(
-            String => $Change->{PlannedStartTime},
+        # actual time not set, so we can use planned
+        if ( !$Change->{"Actual${TimeType}Time"} ) {
+
+            # translate to timestamp
+            $Time{"${TimeType}Time"} = $Self->{TimeObject}->TimeStamp2SystemTime(
+                String => $Change->{"Planned${TimeType}Time"},
+            );
+
+            # jump to next type
+            next TIMETYPE;
+        }
+
+        # translate planned time to timestamp for equation
+        $Time{"Planned${TimeType}Time"} = $Self->{TimeObject}->TimeStamp2SystemTime(
+            String => $Change->{"Planned${TimeType}Time"},
         );
-    }
-    else {
 
-        # translate to timestamp for equation
-        my $PlannedStartTime = $Self->{TimeObject}->TimeStamp2SystemTime(
-            String => $Change->{PlannedStartTime},
-        );
-        my $ActualStartTime = $Self->{TimeObject}->TimeStamp2SystemTime(
-            String => $Change->{ActualStartTime},
+        # translate actual time to timestamp for equation
+        $Time{"Actual${TimeType}Time"} = $Self->{TimeObject}->TimeStamp2SystemTime(
+            String => $Change->{"Actual${TimeType}Time"},
         );
 
         # set start time
-        $StartTime = ( $PlannedStartTime > $ActualStartTime )
-            ? $ActualStartTime
-            : $PlannedStartTime
-            ;
-    }
-
-    # get highest end time
-    my $EndTime;
-
-    if ( !$Change->{ActualEndTime} ) {
-
-        # translate to timestamp
-        $EndTime = $Self->{TimeObject}->TimeStamp2SystemTime(
-            String => $Change->{PlannedEndTime},
-        );
-    }
-    else {
-
-        # translate to timestamp for equation
-        my $PlannedEndTime = $Self->{TimeObject}->TimeStamp2SystemTime(
-            String => $Change->{PlannedEndTime},
-        );
-        my $ActualEndTime = $Self->{TimeObject}->TimeStamp2SystemTime(
-            String => $Change->{ActualEndTime},
-        );
-
-        # set end time
-        $EndTime = ( $PlannedEndTime < $ActualEndTime )
-            ? $ActualEndTime
-            : $PlannedEndTime
+        $Time{"${TimeType}Time"} =
+            ( $Time{"Planned${TimeType}Time"} > $Time{"Actual${TimeType}Time"} )
+            ? $Time{"Actual${TimeType}Time"}
+            : $Time{"Planned${TimeType}Time"}
             ;
     }
 
     # calculate ticks for change
     my $ChangeTicks = $Self->_ITSMChangeGetChangeTicks(
-        Start => $StartTime,
-        End   => $EndTime,
+        Start => $Time{StartTime},
+        End   => $Time{EndTime},
     );
 
     # check for valid ticks
@@ -170,16 +152,16 @@ sub ITSMChangeBuildWorkOrderGraph {
 
         $Self->_ITSMChangeGetWorkOrderGraph(
             WorkOrder => $WorkOrder,
-            StartTime => $StartTime,
-            EndTime   => $EndTime,
+            StartTime => $Time{StartTime},
+            EndTime   => $Time{EndTime},
             Ticks     => $ChangeTicks,
         );
     }
 
     # build scale of graph
     $Self->_ITSMChangeGetChangeScale(
-        StartTime => $StartTime,
-        EndTime   => $EndTime,
+        StartTime => $Time{StartTime},
+        EndTime   => $Time{EndTime},
         Ticks     => $ChangeTicks,
     );
 
