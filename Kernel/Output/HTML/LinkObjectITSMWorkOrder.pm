@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LinkObjectITSMWorkOrder.pm - layout backend module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LinkObjectITSMWorkOrder.pm,v 1.14 2009-11-20 17:10:28 ub Exp $
+# $Id: LinkObjectITSMWorkOrder.pm,v 1.15 2009-11-20 17:18:32 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::Output::HTML::Layout;
 use Kernel::System::GeneralCatalog;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 =head1 NAME
 
@@ -65,7 +65,7 @@ sub new {
     # define needed variables
     $Self->{ObjectData} = {
         Object   => 'ITSMWorkOrder',
-        Realname => 'WorkOrder',
+        Realname => 'Workorder',
     };
 
     return $Self;
@@ -583,6 +583,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.14 $ $Date: 2009-11-20 17:10:28 $
+$Revision: 1.15 $ $Date: 2009-11-20 17:18:32 $
 
 =cut

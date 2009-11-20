@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LinkObjectITSMChange.pm - layout backend module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LinkObjectITSMChange.pm,v 1.2 2009-10-27 22:38:45 ub Exp $
+# $Id: LinkObjectITSMChange.pm,v 1.3 2009-11-20 17:18:32 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::Output::HTML::Layout;
 use Kernel::System::GeneralCatalog;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
@@ -464,7 +464,7 @@ Return
         },
         {
             Key       => 'WorkOrderTitle',
-            Name      => 'WorkOrder Title',
+            Name      => 'Workorder Title',
             InputStrg => $FormString,
             FormData  => 'Shutdown old mail server',
         },
@@ -491,7 +491,7 @@ sub SearchOptionList {
         },
         {
             Key  => 'WorkOrderTitle',
-            Name => 'WorkOrder Title',
+            Name => 'Workorder Title',
             Type => 'Text',
         },
     );
@@ -544,6 +544,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2009-10-27 22:38:45 $
+$Revision: 1.3 $ $Date: 2009-11-20 17:18:32 $
 
 =cut
