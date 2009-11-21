@@ -2,12 +2,15 @@
 # AgentITSMChangeTimeSlot.dtl - provides HTML form for AgentITSMChangeTimeSlot
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeTimeSlot.dtl,v 1.2 2009-11-19 16:22:31 bes Exp $
+# $Id: AgentITSMChangeTimeSlot.dtl,v 1.3 2009-11-21 15:36:05 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+
+# include AJAX lib
+$Include{"AJAX"}
 
 <script type="text/javascript" src="$Config{"Frontend::JavaScriptPath"}itsm-changemanagement.js"></script>
 <script language="JavaScript" type="text/javascript">
@@ -39,7 +42,7 @@ function submit_compose() {
             <br>
             <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
                 <input type="hidden" name="Action"    value="$Env{"Action"}">
-                <input type="hidden" name="Subaction" value="Save">
+                <input type="hidden" name="Subaction" value="MoveTimeSlot">
                 <input type="hidden" name="ChangeID"  value="$QData{"ChangeID"}">
                 <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
                     <tr>
@@ -51,6 +54,10 @@ function submit_compose() {
                                 <tr>
                                     <td class="contentkey">$Text{"Time"}:</td>
                                     <td class="contentvalue">$Data{"TimeTypeSelectionString"}</td>
+<!-- dtl:block:InvalidTimeType -->
+                                    <br />
+                                    <font color="red" size="-2">$Text{"Input invalid"}</font>
+<!-- dtl:block:InvalidTimeType -->
                                 </tr>
                                 <tr>
                                     <td class="contentkey">
@@ -68,7 +75,7 @@ function submit_compose() {
                     </tr>
                     <tr>
                         <td class="contentfooter">
-                            <input class="button" id="submitMoveTimeSlot" accesskey="g" type="submit" name="MoveTimeSlot" value="$Text{"Save"}" onclick="return submit_compose();"/>
+                            <input class="button" id="submitMoveTimeSlot" accesskey="g" type="submit" name="MoveTimeSlot" value="$Text{"Move"}" onclick="return submit_compose();"/>
                         </td>
                     </tr>
                 </table>
