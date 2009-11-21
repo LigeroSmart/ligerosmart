@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.100 2009-11-21 08:41:57 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.101 2009-11-21 08:52:25 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -2444,16 +2444,16 @@ for my $OrderByColumn (@OrderByColumns) {
 
     # check if WorkOrder.pm handles non-existent OrderByDirection criteria correct
     my $SearchResultFooBar = $Self->{ChangeObject}->ChangeSearch(
-        ChangeTitle => 'OrderByWorkOrder - Title - ' . $UniqueSignature,
-        OrderBy     => [$OrderByColumn],
-        OrderBy     => ['FooBar'],
-        UserID      => 1,
+        ChangeTitle      => 'OrderByWorkOrder - Title - ' . $UniqueSignature,
+        OrderBy          => [$OrderByColumn],
+        OrderByDirection => ['Sideways'],
+        UserID           => 1,
     );
 
     $Self->Is(
         $SearchResultFooBar,
         undef,
-        'Test ' . $TestCount++ . ": WorkOrderSearch() OrderBy $OrderByColumn (FooBar)."
+        'Test ' . $TestCount++ . ": WorkOrderSearch() OrderBy $OrderByColumn (Sideways)."
     );
 }
 
