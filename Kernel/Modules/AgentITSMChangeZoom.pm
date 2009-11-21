@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeZoom.pm - the OTRS::ITSM::ChangeManagement change zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.pm,v 1.29 2009-11-16 16:27:06 reb Exp $
+# $Id: AgentITSMChangeZoom.pm,v 1.30 2009-11-21 00:37:35 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.29 $) [1];
+$VERSION = qw($Revision: 1.30 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -227,6 +227,14 @@ sub Run {
                 Name => 'Empty' . $BlockName,
             );
         }
+    }
+
+    # show CIP
+    for my $Type (qw(Category Impact Priority)) {
+        $Self->{LayoutObject}->Block(
+            Name => $Type,
+            Data => { %{$Change} },
+        );
     }
 
     # get change manager data

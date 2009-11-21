@@ -2,7 +2,7 @@
 # AgentITSMChangeZoom.dtl - provides HTML form for AgentITSMChangeZoom
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.dtl,v 1.21 2009-11-16 18:11:48 ub Exp $
+# $Id: AgentITSMChangeZoom.dtl,v 1.22 2009-11-21 00:37:35 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -199,30 +199,33 @@
                     <td colspan="2">&nbsp;</td>
                 </tr>
 
-# TODO EXAMPLE code for Category - Impact - Priority
-# TODO Look how this is done in ITSMIncidentProblemManagement!
-# TODO also look at title attributes, and css styles !!!
-#<!-- dtl:block:Category -->
-#                <tr valign="top">
-#                  <td><b>Category:</b></td>
-#                  <td title="3 normal">3 normal</td>
-#                </tr>
-#<!-- dtl:block:Category -->
-#<!-- dtl:block:Impact -->
-#                <tr valign="top">
-#                  <td><b>Impact:</b></td>
-#                  <td title="4 high">4 high</td>
-#                </tr>
-#<!-- dtl:block:Impact -->
-#<!-- dtl:block:Priority -->
-#                <tr valign="top">
-#                  <td><b>Priority:</b></td>
-#                  <td title="4 high">5 high</td>
-#                </tr>
-#<!-- dtl:block:Priority -->
-#                <tr>
-#                  <td colspan="2">&nbsp;</td>
-#                </tr>
+<!-- dtl:block:Category -->
+                <tr valign="top">
+                    <td class="mainkey">$Text{"Category"}:</td>
+                    <td class="mainvalue">
+                        <div title="$Text{"$Data{"Category"}"}">$Text{"$Data{"Category"}"}</div>
+                    </td>
+                </tr>
+<!-- dtl:block:Category -->
+<!-- dtl:block:Impact -->
+                <tr valign="top">
+                    <td class="mainkey">$Text{"Impact"}:</td>
+                    <td class="mainvalue">
+                        <div title="$Text{"$Data{"Impact"}"}">$Text{"$Data{"Impact"}"}</div>
+                    </td>
+                </tr>
+<!-- dtl:block:Impact -->
+<!-- dtl:block:Priority -->
+                <tr valign="top">
+                    <td class="mainkey">$Text{"Priority"}:</td>
+                    <td class="mainvalue">
+                        <div title="$Text{"$Data{"Priority"}"}">$Text{"$Data{"Priority"}"}</div>
+                    </td>
+                </tr>
+<!-- dtl:block:Priority -->
+                <tr>
+                    <td colspan="2">&nbsp;</td>
+                </tr>
 
                 <tr>
                     <td class="mainkey">$Text{"Change Initiator(s):"}</td>
