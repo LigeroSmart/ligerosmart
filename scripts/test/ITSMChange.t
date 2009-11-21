@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.129 2009-11-20 16:57:14 ub Exp $
+# $Id: ITSMChange.t,v 1.130 2009-11-21 08:44:28 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -3099,7 +3099,7 @@ for my $OrderByColumn (@OrderByColumns) {
     );
 }
 
-# create an extra block as we use "local"
+# create an extra block, in order to limit scope of lexicals
 {
 
     # check for 'OrderBy' with non-existent column
