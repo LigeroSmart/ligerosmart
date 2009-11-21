@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.99 2009-11-20 16:58:40 ub Exp $
+# $Id: ITSMWorkOrder.t,v 1.100 2009-11-21 08:41:57 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -182,6 +182,7 @@ for my $State (@DefaultWorkOrderStates) {
     my $LookedUpStateID = $Self->{WorkOrderObject}->WorkOrderStateLookup(
         WorkOrderState => $State,
     );
+
     $Self->Is(
         $LookedUpStateID,
         $WorkOrderStateName2ID{$State},
@@ -192,6 +193,7 @@ for my $State (@DefaultWorkOrderStates) {
     my $LookedUpState = $Self->{WorkOrderObject}->WorkOrderStateLookup(
         WorkOrderStateID => $LookedUpStateID,
     );
+
     $Self->Is(
         $LookedUpState,
         $State,
