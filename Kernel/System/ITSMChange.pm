@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.171 2009-11-21 00:36:29 reb Exp $
+# $Id: ITSMChange.pm,v 1.172 2009-11-21 15:18:39 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.171 $) [1];
+$VERSION = qw($Revision: 1.172 $) [1];
 
 =head1 NAME
 
@@ -1165,7 +1165,7 @@ sub ChangeSearch {
             $Self->{LogObject}->Log(
                 Priority => 'error',
                 Message  => "OrderBy contains invalid value '$OrderBy' "
-                    . "or the value is used more than once!",
+                    . 'or the value is used more than once!',
             );
             return;
         }
@@ -2511,6 +2511,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.171 $ $Date: 2009-11-21 00:36:29 $
+$Revision: 1.172 $ $Date: 2009-11-21 15:18:39 $
 
 =cut
