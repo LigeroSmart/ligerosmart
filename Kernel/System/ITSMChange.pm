@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.170 2009-11-21 00:21:13 reb Exp $
+# $Id: ITSMChange.pm,v 1.171 2009-11-21 00:36:29 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.170 $) [1];
+$VERSION = qw($Revision: 1.171 $) [1];
 
 =head1 NAME
 
@@ -562,7 +562,7 @@ sub ChangeGet {
     }
 
     # set names for CIP
-    for my $Type (q(Category Impact Priority)) {
+    for my $Type (qw(Category Impact Priority)) {
         if ( $ChangeData{"${Type}ID"} ) {
             $ChangeData{$Type} = $Self->ChangeCIPLookup(
                 ID   => $ChangeData{"${Type}ID"},
@@ -2511,6 +2511,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.170 $ $Date: 2009-11-21 00:21:13 $
+$Revision: 1.171 $ $Date: 2009-11-21 00:36:29 $
 
 =cut
