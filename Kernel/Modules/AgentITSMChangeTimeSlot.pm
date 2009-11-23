@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeTimeSlot.pm - the OTRS::ITSM::ChangeManagement move time slot module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeTimeSlot.pm,v 1.3 2009-11-21 15:36:05 bes Exp $
+# $Id: AgentITSMChangeTimeSlot.pm,v 1.4 2009-11-23 08:36:18 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -84,6 +84,14 @@ sub Run {
         return $Self->{LayoutObject}->ErrorScreen(
             Message => "Change $ChangeID not found in database!",
             Comment => 'Please contact the admin.',
+        );
+    }
+
+    # check whether there are any workorders
+    if ( !@{ $Change->{WorkOrderIDs} } ) {
+        return $Self->{LayoutObject}->ErrorScreen(
+            Message => q{The change has no workorders, therefore it can't be moved.},
+            Comment => 'Add a workorder first.',
         );
     }
 
@@ -157,6 +165,18 @@ sub Run {
 
             # Determine the difference in seconds
             my $CurrentPlannedTime = $Change->{$TimeType};
+
+            # When there are no workorders, then there is no planned start or end time.
+            # In that case moving the time slot is not possible.
+            if ( !$CurrentPlannedTime ) {
+
+                # show error message
+                return $Self->{LayoutObject}->ErrorScreen(
+                    Message => "The current $TimeType could not be determined.",
+                    Comment => 'There has to be at least one workorder.',
+                );
+            }
+
             my $CurrentPlannedSystemTime
                 = $Self->{TimeObject}->TimeStamp2SystemTime( String => $CurrentPlannedTime );
             my $DiffSeconds = $PlannedSystemTime - $CurrentPlannedSystemTime;
