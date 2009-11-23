@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ITSMChangeMenuWorkOrdersNeeded.pm - Menu with check whether there are workorders
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeMenuWorkOrdersNeeded.pm,v 1.1 2009-11-23 11:05:50 bes Exp $
+# $Id: ITSMChangeMenuWorkOrdersNeeded.pm,v 1.2 2009-11-23 12:27:10 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -53,15 +53,10 @@ sub Run {
 
     # get the required privilege, 'ro' or 'rw'
     my $RequiredPriv;
-    if ( $FrontendConfig && $FrontendConfig->{Permission} ) {
+    if ($FrontendConfig) {
 
         # get the required priv from the frontend configuration
         $RequiredPriv = $FrontendConfig->{Permission};
-    }
-    elsif ( $Param{Config}->{Action} eq 'AgentLinkObject' ) {
-
-        # the Link-link is a special case, as it is not specific to ITSMChange
-        $RequiredPriv = 'rw';
     }
 
     my $Access;
