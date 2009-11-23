@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.132 2009-11-23 12:01:35 bes Exp $
+# $Id: ITSMChange.t,v 1.133 2009-11-23 12:22:20 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -3122,7 +3122,7 @@ for my $OrderByColumn (@OrderByColumns) {
     );
 
     # check if ITSMChange.pm handles non-existent OrderByDirection criteria correct
-    my $SearchResultFooBar = $Self->{ChangeObject}->ChangeSearch(
+    my $SearchResultSideways = $Self->{ChangeObject}->ChangeSearch(
         ChangeTitle      => 'OrderByChange - Title - ' . $UniqueSignature,
         OrderBy          => [$OrderByColumn],
         OrderByDirection => ['Sideways'],
@@ -3130,7 +3130,7 @@ for my $OrderByColumn (@OrderByColumns) {
     );
 
     $Self->Is(
-        $SearchResultFooBar,
+        $SearchResultSideways,
         undef,
         'Test ' . $TestCount++ . ": ChangeSearch() OrderBy $OrderByColumn (Sideways)."
     );
