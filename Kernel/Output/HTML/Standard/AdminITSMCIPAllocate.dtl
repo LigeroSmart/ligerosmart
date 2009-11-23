@@ -2,7 +2,7 @@
 # AdminITSMCIPAllocate.dtl - provides HTML form for AdminITSMCIPAllocate
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminITSMCIPAllocate.dtl,v 1.4 2009-05-18 09:48:46 mh Exp $
+# $Id: AdminITSMCIPAllocate.dtl,v 1.5 2009-11-23 14:20:32 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -10,56 +10,56 @@
 # --
 
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
-  <tr>
-    <td colspan="2" class="mainhead">
-      $Env{"Box0"}$Text{"Criticality <-> Impact <-> Priority"}$Env{"Box1"}
-    </td>
-  </tr>
-  <tr>
-    <td class="mainbody" align="center">
-      <br>
-      <form action="$Env{"CGIHandle"}" method="post">
-        <input type="hidden" name="Action" value="$Env{"Action"}">
-        <input type="hidden" name="Subaction" value="CIPAllocate">
-        <table width="800" cellspacing="0" cellpadding="4">
-          <tr>
-            <td class="contenthead">
-              $Text{"Priority"} $Text{"allocate"}:
-            </td>
-          </tr>
-          <tr>
-            <td class="contentbody">
-              <table border="0" cellspacing="0" cellpadding="3" width="100%">
+    <tr>
+        <td colspan="2" class="mainhead">
+            $Env{"Box0"}$Text{"Criticality <-> Impact <-> Priority"}$Env{"Box1"}
+        </td>
+    </tr>
+    <tr>
+        <td class="mainbody" align="center">
+            <br>
+            <form action="$Env{"CGIHandle"}" method="post">
+                <input type="hidden" name="Action" value="$Env{"Action"}">
+                <input type="hidden" name="Subaction" value="CIPAllocate">
+                <table width="800" cellspacing="0" cellpadding="4">
+                    <tr>
+                        <td class="contenthead">
+                            $Text{"Priority"} $Text{"allocate"}:
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="contentbody">
+                            <table border="0" cellspacing="0" cellpadding="3" width="100%">
 <!-- dtl:block:CIPAllocateRow -->
-                <tr>
+                                <tr>
 <!-- dtl:block:CIPAllocateRowColumnDescription -->
-                  <td>
-                    <table border="0" cellspacing="0" cellpadding="0" width="100%">
-                      <tr>
-                        <td class="contentkey" align="center">$Text{"$QData{"ObjectType"}"}</td>
-                        <tr>
-                        </tr>
-                        <td class="contentvalue" align="center">$Text{"$QData{"ObjectOption"}"}</td>
-                      </tr>
-                    </table>
-                  </td>
+                                    <td>
+                                        <table border="0" cellspacing="0" cellpadding="0" width="100%">
+                                            <tr>
+                                                <td class="contentkey" align="center">$Text{"$QData{"ObjectType"}"}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="contentvalue" align="center">$Text{"$QData{"ObjectOption"}"}</td>
+                                            </tr>
+                                        </table>
+                                    </td>
 <!-- dtl:block:CIPAllocateRowColumnDescription -->
 <!-- dtl:block:CIPAllocateRowColumnContent -->
-                  <td class="contentvalue" align="center">$Data{"OptionStrg"}</td>
+                                    <td class="contentvalue" align="center">$Data{"OptionStrg"}</td>
 <!-- dtl:block:CIPAllocateRowColumnContent -->
-                </tr>
+                                </tr>
 <!-- dtl:block:CIPAllocateRow -->
-              </table>
-            </td>
-          </tr>
-          <tr>
-            <td class="contentfooter">
-              <input class="button" type="submit" value="$Text{"Save"}">
-            </td>
-          </tr>
-        </table>
-      </form>
-      <br>
-    </td>
-  </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="contentfooter">
+                            <input class="button" type="submit" value="$Text{"Save"}">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            <br>
+        </td>
+    </tr>
 </table>
