@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.179 2009-11-23 18:19:21 ub Exp $
+# $Id: ITSMChange.pm,v 1.180 2009-11-23 22:11:35 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.179 $) [1];
+$VERSION = qw($Revision: 1.180 $) [1];
 
 =head1 NAME
 
@@ -1069,7 +1069,7 @@ is ignored.
 
         OrderBy => [ 'ChangeID', 'ChangeManagerID' ],                  # (optional)
         # default: [ 'ChangeID' ]
-        # (ChangeID, ChangeNumber, ChangeStateID,
+        # (ChangeID, ChangeNumber, ChangeTitle, ChangeStateID,
         # ChangeManagerID, ChangeBuilderID,
         # PlannedStartTime, PlannedEndTime,
         # ActualStartTime, ActualEndTime,
@@ -1142,6 +1142,7 @@ sub ChangeSearch {
     my %OrderByTable = (
         ChangeID         => 'c.id',
         ChangeNumber     => 'c.change_number',
+        ChangeTitle      => 'c.title',
         ChangeStateID    => 'c.change_state_id',
         ChangeManagerID  => 'c.change_manager_id',
         ChangeBuilderID  => 'c.change_builder_id',
@@ -2570,6 +2571,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.179 $ $Date: 2009-11-23 18:19:21 $
+$Revision: 1.180 $ $Date: 2009-11-23 22:11:35 $
 
 =cut
