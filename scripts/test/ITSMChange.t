@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.134 2009-11-23 15:52:35 bes Exp $
+# $Id: ITSMChange.t,v 1.135 2009-11-23 16:13:51 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -147,6 +147,7 @@ my @ObjectMethods = qw(
     ChangeCABDelete
     ChangeCABGet
     ChangeCABUpdate
+    ChangeCIPLookup
     ChangeDelete
     ChangeGet
     ChangeList
@@ -156,6 +157,7 @@ my @ObjectMethods = qw(
     ChangeStateLookup
     ChangeUpdate
     Permission
+    PossibleCIPGet
 );
 
 # check if subs are available
