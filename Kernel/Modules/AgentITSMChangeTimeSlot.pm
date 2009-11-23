@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeTimeSlot.pm - the OTRS::ITSM::ChangeManagement move time slot module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeTimeSlot.pm,v 1.5 2009-11-23 10:30:31 bes Exp $
+# $Id: AgentITSMChangeTimeSlot.pm,v 1.6 2009-11-23 10:39:50 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -197,7 +197,7 @@ sub Run {
                 next WORKORDERID if !%{$WorkOrder};
 
                 $WorkOrderID2Number{$WorkOrderID} = $WorkOrder->{WorkOrderNumber};
-                my %Params;
+                my %UpdateParams;
                 TYPE:
                 for my $Type (qw(PlannedStartTime PlannedEndTime)) {
 
@@ -210,17 +210,17 @@ sub Run {
 
                     # add the number of seconds that the time slot should be moved
                     $SystemTime += $DiffSeconds;
-                    $Params{$Type} = $Self->{TimeObject}->SystemTime2TimeStamp(
+                    $UpdateParams{$Type} = $Self->{TimeObject}->SystemTime2TimeStamp(
                         SystemTime => $SystemTime,
                     );
                 }
 
-                next WORKORDERID if !%Params;
+                next WORKORDERID if !%UpdateParams;
 
                 # remember the workorder that should be moved
-                $Params{WorkOrderID} = $WorkOrderID;
+                $UpdateParams{WorkOrderID} = $WorkOrderID;
 
-                push @CollectedUpdateParams, \%Params;
+                push @CollectedUpdateParams, \%UpdateParams;
             }
 
             UPDATEPARAMS:
