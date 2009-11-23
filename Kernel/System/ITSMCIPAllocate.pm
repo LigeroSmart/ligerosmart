@@ -2,7 +2,7 @@
 # Kernel/System/ITSMCIPAllocate.pm - all criticality, impact and priority allocation functions
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMCIPAllocate.pm,v 1.13 2009-08-18 22:20:52 mh Exp $
+# $Id: ITSMCIPAllocate.pm,v 1.14 2009-11-23 15:06:04 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,11 +15,11 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 =head1 NAME
 
-Kernel::System::CIPAllocate - criticality, impact and priority allocation lib
+Kernel::System::ITSMCIPAllocate - criticality, impact and priority allocation lib
 
 =head1 SYNOPSIS
 
@@ -38,7 +38,7 @@ create an object
     use Kernel::Config;
     use Kernel::System::Encode;
     use Kernel::System::Log;
-    use Kernel::System::CIPAllocate;
+    use Kernel::System::ITSMCIPAllocate;
     use Kernel::System::DB;
     use Kernel::System::Main;
 
@@ -61,7 +61,7 @@ create an object
         LogObject    => $LogObject,
         MainObject   => $MainObject,
     );
-    my $CIPAllocateObject = Kernel::System::CIPAllocate->new(
+    my $CIPAllocateObject = Kernel::System::ITSMCIPAllocate->new(
         ConfigObject => $ConfigObject,
         LogObject    => $LogObject,
         DBObject     => $DBObject,
@@ -162,7 +162,7 @@ sub AllocateUpdate {
 
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'AllocateData must be a 2D hash reference!'
+            Message  => 'AllocateData must be a 2D hash reference!',
         );
         return;
     }
@@ -253,6 +253,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.13 $ $Date: 2009-08-18 22:20:52 $
+$Revision: 1.14 $ $Date: 2009-11-23 15:06:04 $
 
 =cut
