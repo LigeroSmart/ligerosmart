@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeTimeSlot.pm - the OTRS::ITSM::ChangeManagement move time slot module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeTimeSlot.pm,v 1.4 2009-11-23 08:36:18 bes Exp $
+# $Id: AgentITSMChangeTimeSlot.pm,v 1.5 2009-11-23 10:30:31 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -97,16 +97,15 @@ sub Run {
 
     # store needed parameters in %GetParam to make it reloadable
     my %GetParam;
-    for my $ParamName (qw(TimeType)) {
-        $GetParam{$ParamName}
-            = $Self->{ParamObject}->GetParam( Param => $ParamName ) || 'PlannedStartTime';
-    }
+    $GetParam{TimeType} = $Self->{ParamObject}->GetParam(
+        Param => 'TimeType',
+    ) || 'PlannedStartTime';
 
     # store time related fields in %GetParam
     for my $TimePart (qw(Year Month Day Hour Minute)) {
         my $ParamName = 'Planned' . $TimePart;
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam(
-            Param => $ParamName
+            Param => $ParamName,
         );
     }
 
@@ -114,7 +113,7 @@ sub Run {
     # The items are the names of the dtl validation error blocks.
     my @ValidationErrors;
 
-    # move time slot change
+    # move time slot of change
     if ( $Self->{Subaction} eq 'MoveTimeSlot' ) {
 
         # check validity of the time type
@@ -152,8 +151,9 @@ sub Run {
                 $GetParam{PlannedMinute};
 
             # sanity check of the assembled timestamp
-            $PlannedSystemTime
-                = $Self->{TimeObject}->TimeStamp2SystemTime( String => $PlannedTime );
+            $PlannedSystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
+                String => $PlannedTime,
+            );
 
             if ( !$PlannedSystemTime ) {
                 push @ValidationErrors, 'InvalidPlannedTime';
@@ -177,12 +177,14 @@ sub Run {
                 );
             }
 
-            my $CurrentPlannedSystemTime
-                = $Self->{TimeObject}->TimeStamp2SystemTime( String => $CurrentPlannedTime );
+            my $CurrentPlannedSystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
+                String => $CurrentPlannedTime,
+            );
             my $DiffSeconds = $PlannedSystemTime - $CurrentPlannedSystemTime;
 
             # TODO: think about locking
-            my @CollectedUpdateParams;
+            my @CollectedUpdateParams;    # an array of params for WorkOrderUpdate()
+            my %WorkOrderID2Number;       # Used only for error messages.
             WORKORDERID:
             for my $WorkOrderID ( @{ $Change->{WorkOrderIDs} } ) {
                 my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
@@ -194,55 +196,58 @@ sub Run {
                 next WORKORDERID if ref $WorkOrder ne 'HASH';
                 next WORKORDERID if !%{$WorkOrder};
 
-                my %UpdateParams;
+                $WorkOrderID2Number{$WorkOrderID} = $WorkOrder->{WorkOrderNumber};
+                my %Params;
                 TYPE:
                 for my $Type (qw(PlannedStartTime PlannedEndTime)) {
 
                     next TYPE if !$WorkOrder->{$Type};
 
-                    my $SystemTime
-                        = $Self->{TimeObject}
-                        ->TimeStamp2SystemTime( String => $WorkOrder->{$Type} );
+                    my $SystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
+                        String => $WorkOrder->{$Type},
+                    );
                     next TYPE if !$SystemTime;
 
+                    # add the number of seconds that the time slot should be moved
                     $SystemTime += $DiffSeconds;
-                    $UpdateParams{$Type}
-                        = $Self->{TimeObject}->SystemTime2TimeStamp( SystemTime => $SystemTime );
+                    $Params{$Type} = $Self->{TimeObject}->SystemTime2TimeStamp(
+                        SystemTime => $SystemTime,
+                    );
                 }
 
-                next WORKORDERID if !%UpdateParams;
+                next WORKORDERID if !%Params;
 
-                $UpdateParams{WorkOrderID} = $WorkOrderID;
+                # remember the workorder that should be moved
+                $Params{WorkOrderID} = $WorkOrderID;
 
-                push @CollectedUpdateParams, \%UpdateParams;
+                push @CollectedUpdateParams, \%Params;
             }
 
-            my $UpdateOk = 1;
             UPDATEPARAMS:
             for my $UpdateParams (@CollectedUpdateParams) {
-                $UpdateOk = $Self->{WorkOrderObject}->WorkOrderUpdate(
+                my $UpdateOk = $Self->{WorkOrderObject}->WorkOrderUpdate(
                     %{$UpdateParams},
                     UserID => $Self->{UserID},
                 );
 
-                last UPDATEPARAMS if !$UpdateOk;
+                if ( !$UpdateOk ) {
+
+                    # show error message
+                    my $Number = $Change->{ChangeNumber}
+                        . '-'
+                        . $WorkOrderID2Number{ $UpdateParams->{WorkOrderID} };
+
+                    return $Self->{LayoutObject}->ErrorScreen(
+                        Message => "Was not able to move time slot for workorder #$Number!",
+                        Comment => 'Please contact the admin.',
+                    );
+                }
             }
 
-            if ($UpdateOk) {
-
-                # redirect to zoom mask
-                return $Self->{LayoutObject}->Redirect(
-                    OP => "Action=AgentITSMChangeZoom&ChangeID=$ChangeID",
-                );
-            }
-            else {
-
-                # show error message
-                return $Self->{LayoutObject}->ErrorScreen(
-                    Message => "Was not able to move time slot for Change $ChangeID!",
-                    Comment => 'Please contact the admin.',
-                );
-            }
+            # everything went well, redirect to zoom mask
+            return $Self->{LayoutObject}->Redirect(
+                OP => "Action=AgentITSMChangeZoom&ChangeID=$ChangeID",
+            );
         }
     }
     elsif ( $Self->{Subaction} eq 'AJAXUpdate' ) {
@@ -254,41 +259,42 @@ sub Run {
 
         # set the parameter hash for the answers
         # the seconds are ignored
-        # TODO: discuss this code with ub
-        ( undef, @GetParam{qw(PlannedMinute PlannedHour PlannedDay PlannedMonth PlannedYear)} )
-            = $Self->{TimeObject}->SystemTime2Date(
+        my ( $Second, $Minute, $Hour, $Day, $Month, $Year ) = $Self->{TimeObject}->SystemTime2Date(
             SystemTime => $SystemTime,
-            );
+        );
 
         # assemble the data that will be returned
-        my @Answers = (
-            {
-                Name       => 'PlannedMinute',
-                Data       => [ map { sprintf( '%02d', $_ ); } ( 0 .. 59 ) ],
-                SelectedID => $GetParam{PlannedMinute},
-            },
-            {
-                Name       => 'PlannedHour',
-                Data       => [ map { sprintf( '%02d', $_ ); } ( 0 .. 23 ) ],
-                SelectedID => $GetParam{PlannedHour},
-            },
-            {
-                Name       => 'PlannedDay',
-                Data       => [ map { sprintf( '%02d', $_ ); } ( 1 .. 31 ) ],
-                SelectedID => $GetParam{PlannedDay},
-            },
-            {
-                Name       => 'PlannedMonth',
-                Data       => [ map { sprintf( '%02d', $_ ); } ( 1 .. 12 ) ],
-                SelectedID => $GetParam{PlannedMonth},
-            },
-            {
-                Name       => 'PlannedYear',
-                Data       => [ $GetParam{PlannedYear} - 5 .. $GetParam{PlannedYear} + 5 ],
-                SelectedID => $GetParam{PlannedYear},
-            },
+        my $JSON = $Self->{LayoutObject}->BuildJSON(
+            [
+                {
+                    Name       => 'PlannedMinute',
+                    Data       => [ map { sprintf '%02d', $_ } ( 0 .. 59 ) ],
+                    SelectedID => $Minute,
+                },
+                {
+                    Name       => 'PlannedHour',
+                    Data       => [ map { sprintf '%02d', $_ } ( 0 .. 23 ) ],
+                    SelectedID => $Hour,
+                },
+                {
+                    Name       => 'PlannedDay',
+                    Data       => [ map { sprintf '%02d', $_ } ( 1 .. 31 ) ],
+                    SelectedID => $Day,
+                },
+                {
+                    Name       => 'PlannedMonth',
+                    Data       => [ map { sprintf '%02d', $_ } ( 1 .. 12 ) ],
+                    SelectedID => $Month,
+                },
+                {
+
+                    # TODO: use configured time period
+                    Name       => 'PlannedYear',
+                    Data       => [ $Year - 5 .. $Year + 5 ],
+                    SelectedID => $GetParam{PlannedYear},
+                },
+            ],
         );
-        my $JSON = $Self->{LayoutObject}->BuildJSON( \@Answers );
 
         return $Self->{LayoutObject}->Attachment(
             ContentType => 'text/plain; charset=' . $Self->{LayoutObject}->{Charset},
@@ -298,22 +304,23 @@ sub Run {
         );
     }
     else {
-        my $TimeType = $GetParam{TimeType};
-        if ( $Change->{$TimeType} ) {
 
-            # get planned start time or planned end time from the change
-            my $SystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
-                String => $Change->{$TimeType},
-            );
+        # no subaction,
+        # get planned start time or planned end time from the change
+        my $SystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
+            String => $Change->{ $GetParam{TimeType} },
+        );
 
-            # set the parameter hash for BuildDateSelection()
-            # the seconds are ignored
-            # TODO: discuss this code with ub
-            ( undef, @GetParam{qw(PlannedMinute PlannedHour PlannedDay PlannedMonth PlannedYear)} )
-                = $Self->{TimeObject}->SystemTime2Date(
-                SystemTime => $SystemTime,
-                );
-        }
+        # set the parameter hash for BuildDateSelection()
+        # the seconds are ignored
+        my ( $Second, $Minute, $Hour, $Day, $Month, $Year ) = $Self->{TimeObject}->SystemTime2Date(
+            SystemTime => $SystemTime,
+        );
+        $GetParam{PlannedMinute} = $Minute;
+        $GetParam{PlannedHour}   = $Hour;
+        $GetParam{PlannedDay}    = $Day;
+        $GetParam{PlannedMonth}  = $Month;
+        $GetParam{PlannedYear}   = $Year;
     }
 
     # build drop-down with time types
@@ -356,9 +363,7 @@ sub Run {
     for my $BlockName (@ValidationErrors) {
 
         # show validation error message
-        $Self->{LayoutObject}->Block(
-            Name => $BlockName,
-        );
+        $Self->{LayoutObject}->Block( Name => $BlockName );
     }
 
     # start template output
