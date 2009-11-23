@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.21 2009-11-23 13:21:05 reb Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.22 2009-11-23 16:28:41 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChangeCIPAllocate;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.21 $) [1];
+$VERSION = qw($Revision: 1.22 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -313,7 +313,7 @@ sub Run {
     elsif ( $Self->{Subaction} eq 'AJAXUpdate' ) {
 
         # get priorities
-        my $Priorities = $Self->{ChangeObject}->PossibleCIPGet(
+        my $Priorities = $Self->{ChangeObject}->ChangePossibleCIPGet(
             Type => 'Priority',
         );
 
@@ -386,7 +386,7 @@ sub Run {
     );
 
     # get categories
-    $Param{Categories} = $Self->{ChangeObject}->PossibleCIPGet(
+    $Param{Categories} = $Self->{ChangeObject}->ChangePossibleCIPGet(
         Type => 'Category',
     );
 
@@ -423,7 +423,7 @@ sub Run {
     }
 
     # get impacts
-    $Param{Impacts} = $Self->{ChangeObject}->PossibleCIPGet(
+    $Param{Impacts} = $Self->{ChangeObject}->ChangePossibleCIPGet(
         Type => 'Impact',
     );
 
@@ -460,7 +460,7 @@ sub Run {
     }
 
     # get priorities
-    $Param{Priorities} = $Self->{ChangeObject}->PossibleCIPGet(
+    $Param{Priorities} = $Self->{ChangeObject}->ChangePossibleCIPGet(
         Type => 'Priority',
     );
 

@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.177 2009-11-23 16:16:16 ub Exp $
+# $Id: ITSMChange.pm,v 1.178 2009-11-23 16:28:41 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.177 $) [1];
+$VERSION = qw($Revision: 1.178 $) [1];
 
 =head1 NAME
 
@@ -1838,11 +1838,11 @@ sub ChangePossibleStatesGet {
     return \@ArrayHashRef;
 }
 
-=item PossibleCIPGet()
+=item ChangePossibleCIPGet()
 
 This method returns a list of possible categories, impacts or priorities.
 
-    my $CIPList = $ChangeObject->PossibleCIPGet(
+    my $CIPList = $ChangeObject->ChangePossibleCIPGet(
         Type => 'Category', # mandatory - Category|Impact|Priority
     );
 
@@ -1863,7 +1863,7 @@ The array elements are sorted by id in ascending order.
 
 =cut
 
-sub PossibleCIPGet {
+sub ChangePossibleCIPGet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
@@ -2570,6 +2570,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.177 $ $Date: 2009-11-23 16:16:16 $
+$Revision: 1.178 $ $Date: 2009-11-23 16:28:41 $
 
 =cut
