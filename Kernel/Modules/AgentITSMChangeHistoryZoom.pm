@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeHistoryZoom.pm - the OTRS::ITSM::ChangeManagement change history zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeHistoryZoom.pm,v 1.3 2009-11-16 22:23:41 ub Exp $
+# $Id: AgentITSMChangeHistoryZoom.pm,v 1.4 2009-11-23 13:36:18 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -57,7 +57,7 @@ sub Run {
 
         # error page
         return $Self->{LayoutObject}->ErrorScreen(
-            Message => 'Can\'t show history zoom, no HistoryEntryID is given!',
+            Message => "Can't show history zoom, no HistoryEntryID is given!",
             Comment => 'Please contact the admin.',
         );
     }
