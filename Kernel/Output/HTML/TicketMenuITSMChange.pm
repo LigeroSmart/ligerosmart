@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/TicketMenuITSMChange.pm - ITSMChange specific module for the ticket menu
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: TicketMenuITSMChange.pm,v 1.6 2009-11-23 13:03:08 bes Exp $
+# $Id: TicketMenuITSMChange.pm,v 1.7 2009-11-23 13:30:43 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 use Kernel::System::ITSMChange;
 
@@ -47,7 +47,7 @@ sub Run {
     if ( !$Param{Ticket} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'Need Ticket!'
+            Message  => 'Need Ticket!',
         );
         return;
     }

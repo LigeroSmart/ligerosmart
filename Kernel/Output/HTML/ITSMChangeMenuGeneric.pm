@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ITSMChangeMenuGeneric.pm
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeMenuGeneric.pm,v 1.5 2009-11-23 13:03:08 bes Exp $
+# $Id: ITSMChangeMenuGeneric.pm,v 1.6 2009-11-23 13:30:43 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -42,7 +42,7 @@ sub Run {
     if ( !$Param{Change} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'Need Change!'
+            Message  => 'Need Change!',
         );
         return;
     }

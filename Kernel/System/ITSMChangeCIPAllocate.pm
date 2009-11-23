@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChangeCIPAllocate.pm - all criticality, impact and priority allocation functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeCIPAllocate.pm,v 1.1 2009-11-19 16:48:28 reb Exp $
+# $Id: ITSMChangeCIPAllocate.pm,v 1.2 2009-11-23 13:30:43 bes Exp $
 # $OldId: ITSMCIPAllocate.pm,v 1.13 2009/08/18 22:20:52 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -21,7 +21,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -199,7 +199,7 @@ sub AllocateUpdate {
 
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'AllocateData must be a 2D hash reference!'
+            Message  => 'AllocateData must be a 2D hash reference!',
         );
         return;
     }
@@ -346,6 +346,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/gpl-2.0.txt>.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2009-11-19 16:48:28 $
+$Revision: 1.2 $ $Date: 2009-11-23 13:30:43 $
 
 =cut

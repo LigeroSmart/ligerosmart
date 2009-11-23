@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.68 2009-11-23 11:05:50 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.69 2009-11-23 13:30:43 bes Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -817,7 +817,7 @@
                 if ( !$CodeObject-&gt;$FunctionName(%{$Self}) ) {
                     $Self-&gt;{LogObject}-&gt;Log(
                         Priority =&gt; 'error',
-                        Message  =&gt; "Could not call method $FunctionName() on $CodeModule.pm."
+                        Message  =&gt; "Could not call method $FunctionName() on $CodeModule.pm.",
                     );
                 }
             }
@@ -826,7 +826,7 @@
             else {
                 $Self-&gt;{LogObject}-&gt;Log(
                     Priority =&gt; 'error',
-                    Message  =&gt; "Could not call method new() on $CodeModule.pm."
+                    Message  =&gt; "Could not call method new() on $CodeModule.pm.",
                 );
             }
         }
@@ -852,7 +852,7 @@
                 if ( !$CodeObject-&gt;$FunctionName(%{$Self}) ) {
                     $Self-&gt;{LogObject}-&gt;Log(
                         Priority =&gt; 'error',
-                        Message  =&gt; "Could not call method $FunctionName() on $CodeModule.pm."
+                        Message  =&gt; "Could not call method $FunctionName() on $CodeModule.pm.",
                     );
                 }
             }
@@ -861,7 +861,7 @@
             else {
                 $Self-&gt;{LogObject}-&gt;Log(
                     Priority =&gt; 'error',
-                    Message  =&gt; "Could not call method new() on $CodeModule.pm."
+                    Message  =&gt; "Could not call method new() on $CodeModule.pm.",
                 );
             }
         }
@@ -887,7 +887,7 @@
                 if ( !$CodeObject-&gt;$FunctionName(%{$Self}) ) {
                     $Self-&gt;{LogObject}-&gt;Log(
                         Priority =&gt; 'error',
-                        Message  =&gt; "Could not call method $FunctionName() on $CodeModule.pm."
+                        Message  =&gt; "Could not call method $FunctionName() on $CodeModule.pm.",
                     );
                 }
             }
@@ -896,7 +896,7 @@
             else {
                 $Self-&gt;{LogObject}-&gt;Log(
                     Priority =&gt; 'error',
-                    Message  =&gt; "Could not call method new() on $CodeModule.pm."
+                    Message  =&gt; "Could not call method new() on $CodeModule.pm.",
                 );
             }
         }
@@ -922,7 +922,7 @@
                 if ( !$CodeObject-&gt;$FunctionName(%{$Self}) ) {
                     $Self-&gt;{LogObject}-&gt;Log(
                         Priority =&gt; 'error',
-                        Message  =&gt; "Could not call method $FunctionName() on $CodeModule.pm."
+                        Message  =&gt; "Could not call method $FunctionName() on $CodeModule.pm.",
                     );
                 }
             }
@@ -931,7 +931,7 @@
             else {
                 $Self-&gt;{LogObject}-&gt;Log(
                     Priority =&gt; 'error',
-                    Message  =&gt; "Could not call method new() on $CodeModule.pm."
+                    Message  =&gt; "Could not call method new() on $CodeModule.pm.",
                 );
             }
         }

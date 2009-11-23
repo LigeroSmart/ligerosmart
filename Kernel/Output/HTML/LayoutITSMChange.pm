@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LayoutITSMChange.pm,v 1.11 2009-11-20 12:15:07 mae Exp $
+# $Id: LayoutITSMChange.pm,v 1.12 2009-11-23 13:30:43 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use POSIX qw(ceil);
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 =item ITSMChangeBuildWorkOrderGraph()
 
@@ -117,7 +117,7 @@ sub ITSMChangeBuildWorkOrderGraph {
     if ( !$ChangeTicks ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'Unable to calculate time scale.'
+            Message  => 'Unable to calculate time scale.',
         );
         return;
     }

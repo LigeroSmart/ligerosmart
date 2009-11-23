@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderHistory.pm - the OTRS::ITSM::ChangeManagement workorder history module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderHistory.pm,v 1.12 2009-11-16 17:29:38 reb Exp $
+# $Id: AgentITSMWorkOrderHistory.pm,v 1.13 2009-11-23 13:30:43 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::History;
 use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -59,7 +59,7 @@ sub Run {
 
         # error page
         return $Self->{LayoutObject}->ErrorScreen(
-            Message => 'Can\'t show history, no WorkOrderID is given!',
+            Message => "Can't show history, no WorkOrderID is given!",
             Comment => 'Please contact the admin.',
         );
     }
@@ -68,7 +68,7 @@ sub Run {
     my $Access = $Self->{WorkOrderObject}->Permission(
         Type        => $Self->{Config}->{Permission},
         WorkOrderID => $WorkOrderID,
-        UserID      => $Self->{UserID}
+        UserID      => $Self->{UserID},
     );
 
     # error screen
