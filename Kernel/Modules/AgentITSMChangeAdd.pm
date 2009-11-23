@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.20 2009-11-23 12:54:45 reb Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.21 2009-11-23 13:21:05 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChangeCIPAllocate;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -171,6 +171,7 @@ sub Run {
     # remember the reason why saving was not attempted.
     # these entries are the names of the dtl validation error blocks.
     my @ValidationErrors;
+    my %CIPErrors;
 
     # set Subaction to non-existent value when we
     # should recalculate priority
@@ -184,6 +185,25 @@ sub Run {
         # check the title
         if ( !$GetParam{ChangeTitle} ) {
             push @ValidationErrors, 'InvalidTitle';
+        }
+
+        # check CIP
+        for my $Type (qw(Category Impact Priority)) {
+            if ( !$GetParam{"${Type}ID"} ) {
+                push @ValidationErrors, 'Invalid' . $Type;
+                $CIPErrors{$Type} = 1;
+            }
+            else {
+                my $CIPIsValid = $Self->{ChangeObject}->ChangeCIPLookup(
+                    ID   => $GetParam{"${Type}ID"},
+                    Type => $Type,
+                );
+
+                if ( !$CIPIsValid ) {
+                    push @ValidationErrors, 'Invalid' . $Type;
+                    $CIPErrors{$Type} = 1;
+                }
+            }
         }
 
         # check the realize time
@@ -228,6 +248,9 @@ sub Run {
                 Description   => $GetParam{Description},
                 Justification => $GetParam{Justification},
                 ChangeTitle   => $GetParam{ChangeTitle},
+                CategoryID    => $GetParam{CategoryID},
+                ImpactID      => $GetParam{ImpactID},
+                PriorityID    => $GetParam{PriorityID},
                 RealizeTime   => $GetParam{RealizeTime},
                 UserID        => $Self->{UserID},
             );
@@ -394,6 +417,11 @@ sub Run {
         },
     );
 
+    # show error block
+    if ( $CIPErrors{Category} ) {
+        $Self->{LayoutObject}->Block( Name => 'InvalidCategory' );
+    }
+
     # get impacts
     $Param{Impacts} = $Self->{ChangeObject}->PossibleCIPGet(
         Type => 'Impact',
@@ -426,6 +454,11 @@ sub Run {
         },
     );
 
+    # show error block
+    if ( $CIPErrors{Impact} ) {
+        $Self->{LayoutObject}->Block( Name => 'InvalidImpact' );
+    }
+
     # get priorities
     $Param{Priorities} = $Self->{ChangeObject}->PossibleCIPGet(
         Type => 'Priority',
@@ -455,6 +488,11 @@ sub Run {
             %Param,
         },
     );
+
+    # show error block
+    if ( $CIPErrors{Priority} ) {
+        $Self->{LayoutObject}->Block( Name => 'InvalidPriority' );
+    }
 
     # show time fields
     $Self->{LayoutObject}->Block(
