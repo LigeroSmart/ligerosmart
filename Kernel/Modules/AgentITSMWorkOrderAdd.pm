@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAdd.pm - the OTRS::ITSM::ChangeManagement workorder add module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.pm,v 1.21 2009-11-23 11:09:23 mae Exp $
+# $Id: AgentITSMWorkOrderAdd.pm,v 1.22 2009-11-23 13:03:08 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.21 $) [1];
+$VERSION = qw($Revision: 1.22 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -190,7 +190,7 @@ sub Run {
 
                 # show error message, when adding failed
                 return $Self->{LayoutObject}->ErrorScreen(
-                    Message => "Was not able to add WorkOrder!",
+                    Message => 'Was not able to add WorkOrder!',
                     Comment => 'Please contact the admin.',
                 );
             }

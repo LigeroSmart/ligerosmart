@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.173 2009-11-23 12:54:45 reb Exp $
+# $Id: ITSMChange.pm,v 1.174 2009-11-23 13:03:09 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.173 $) [1];
+$VERSION = qw($Revision: 1.174 $) [1];
 
 =head1 NAME
 
@@ -651,7 +651,7 @@ sub ChangeCABUpdate {
     if ( !$Param{CABAgents} && !$Param{CABCustomers} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Need parameter CABAgents or CABCustomers!",
+            Message  => 'Need parameter CABAgents or CABCustomers!',
         );
         return;
     }
@@ -1988,7 +1988,10 @@ sub Permission {
     # check needed stuff
     for my $Argument (qw(Type UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $Argument!" );
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!"
+            );
             return;
         }
     }
@@ -2567,6 +2570,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.173 $ $Date: 2009-11-23 12:54:45 $
+$Revision: 1.174 $ $Date: 2009-11-23 13:03:09 $
 
 =cut

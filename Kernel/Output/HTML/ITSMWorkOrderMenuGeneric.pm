@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ITSMWorkOrderMenuGeneric.pm
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrderMenuGeneric.pm,v 1.3 2009-11-12 10:10:05 bes Exp $
+# $Id: ITSMWorkOrderMenuGeneric.pm,v 1.4 2009-11-23 13:03:08 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -40,7 +40,10 @@ sub Run {
 
     # check needed stuff
     if ( !$Param{WorkOrder} ) {
-        $Self->{LogObject}->Log( Priority => 'error', Message => 'Need WorkOrder!' );
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need WorkOrder!'
+        );
         return;
     }
 

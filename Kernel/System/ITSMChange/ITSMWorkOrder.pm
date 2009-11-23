@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.30 2009-11-20 14:08:08 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.31 2009-11-23 13:03:09 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.30 $) [1];
+$VERSION = qw($Revision: 1.31 $) [1];
 
 =head1 NAME
 
@@ -859,7 +859,7 @@ sub WorkOrderSearch {
             $Self->{LogObject}->Log(
                 Priority => 'error',
                 Message  => "OrderBy contains invalid value '$OrderBy' "
-                    . "or the value is used more than once!",
+                    . 'or the value is used more than once!',
             );
             return;
         }
@@ -1643,7 +1643,10 @@ sub Permission {
     # check needed stuff
     for my $Argument (qw(Type UserID WorkOrderID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $Argument!" );
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!"
+            );
             return;
         }
     }
@@ -1762,7 +1765,7 @@ sub _CheckWorkOrderStateIDs {
     if ( ref $Param{WorkOrderStateIDs} ne 'ARRAY' ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'The param WorkOrderStateIDs must be an array reference!',
+            Message  => 'The param WorkOrderStateIDs must be an ARRAY reference!',
         );
         return;
     }
@@ -1812,7 +1815,7 @@ sub _CheckWorkOrderTypeIDs {
     if ( ref $Param{WorkOrderTypeIDs} ne 'ARRAY' ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'The param WorkOrderTypeIDs must be an array reference!',
+            Message  => 'The param WorkOrderTypeIDs must be an ARRAY reference!',
         );
 
         return;
@@ -2124,6 +2127,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.30 $ $Date: 2009-11-20 14:08:08 $
+$Revision: 1.31 $ $Date: 2009-11-23 13:03:09 $
 
 =cut

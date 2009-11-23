@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeZoom.pm - the OTRS::ITSM::ChangeManagement change zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.pm,v 1.30 2009-11-21 00:37:35 reb Exp $
+# $Id: AgentITSMChangeZoom.pm,v 1.31 2009-11-23 13:03:08 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.30 $) [1];
+$VERSION = qw($Revision: 1.31 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -57,7 +57,7 @@ sub Run {
     # check needed stuff
     if ( !$ChangeID ) {
         return $Self->{LayoutObject}->ErrorScreen(
-            Message => "No ChangeID is given!",
+            Message => 'No ChangeID is given!',
             Comment => 'Please contact the admin.',
         );
     }
