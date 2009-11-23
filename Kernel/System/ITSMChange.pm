@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.175 2009-11-23 13:30:43 bes Exp $
+# $Id: ITSMChange.pm,v 1.176 2009-11-23 13:41:24 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.175 $) [1];
+$VERSION = qw($Revision: 1.176 $) [1];
 
 =head1 NAME
 
@@ -1302,7 +1302,7 @@ sub ChangeSearch {
         }
 
         # create string
-        my $InString = join q{, }, @{ $Param{$ArrayParam} };
+        my $InString = join ', ', @{ $Param{$ArrayParam} };
 
         push @SQLWhere, "$ArrayParams{$ArrayParam} IN ($InString)";
     }
@@ -1378,14 +1378,14 @@ sub ChangeSearch {
         if ( $CABParam eq 'CABAgents' ) {
 
             # CABAgent is a integer, so no quotes are needed
-            my $InString = join q{, }, @{ $Param{$CABParam} };
+            my $InString = join ', ', @{ $Param{$CABParam} };
             push @SQLWhere,        "$CABParams{$CABParam} IN ($InString)";
             push @InnerJoinTables, 'cab1';
         }
         elsif ( $CABParam eq 'CABCustomers' ) {
 
             # CABCustomer is a string, so the single quotes are needed
-            my $InString = join q{, }, map {"'$_'"} @{ $Param{$CABParam} };
+            my $InString = join ', ', map {"'$_'"} @{ $Param{$CABParam} };
             push @SQLWhere,        "$CABParams{$CABParam} IN ($InString)";
             push @InnerJoinTables, 'cab2';
         }
@@ -1400,7 +1400,7 @@ sub ChangeSearch {
         }
 
         # create string
-        my $InString = join q{, }, @{ $Param{WorkOrderAgentIDs} };
+        my $InString = join ', ', @{ $Param{WorkOrderAgentIDs} };
 
         push @SQLWhere,        "wo2.workorder_agent_id IN ( $InString )";
         push @InnerJoinTables, 'wo2';
@@ -1531,7 +1531,7 @@ sub ChangeSearch {
     # add the ORDER BY clause
     if (@SQLOrderBy) {
         $SQL .= 'ORDER BY ';
-        $SQL .= join q{, }, @SQLOrderBy;
+        $SQL .= join ', ', @SQLOrderBy;
         $SQL .= ' ';
     }
 
@@ -2570,6 +2570,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.175 $ $Date: 2009-11-23 13:30:43 $
+$Revision: 1.176 $ $Date: 2009-11-23 13:41:24 $
 
 =cut

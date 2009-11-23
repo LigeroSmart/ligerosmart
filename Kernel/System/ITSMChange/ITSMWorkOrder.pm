@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.31 2009-11-23 13:03:09 bes Exp $
+# $Id: ITSMWorkOrder.pm,v 1.32 2009-11-23 13:41:24 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.31 $) [1];
+$VERSION = qw($Revision: 1.32 $) [1];
 
 =head1 NAME
 
@@ -1018,7 +1018,7 @@ sub WorkOrderSearch {
         }
 
         # create string
-        my $InString = join q{, }, @{ $Param{$ArrayParam} };
+        my $InString = join ', ', @{ $Param{$ArrayParam} };
 
         push @SQLWhere, "$ArrayParams{$ArrayParam} IN ($InString)";
     }
@@ -1126,7 +1126,7 @@ sub WorkOrderSearch {
     # add the ORDER BY clause
     if (@SQLOrderBy) {
         $SQL .= 'ORDER BY ';
-        $SQL .= join q{, }, @SQLOrderBy;
+        $SQL .= join ', ', @SQLOrderBy;
         $SQL .= ' ';
     }
 
@@ -2127,6 +2127,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.31 $ $Date: 2009-11-23 13:03:09 $
+$Revision: 1.32 $ $Date: 2009-11-23 13:41:24 $
 
 =cut
