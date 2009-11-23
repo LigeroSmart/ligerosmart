@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.131 2009-11-21 08:52:25 bes Exp $
+# $Id: ITSMChange.t,v 1.132 2009-11-23 12:01:35 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -38,7 +38,7 @@ $Self->{CustomerUserObject}   = Kernel::System::CustomerUser->new( %{$Self} );
 $Self->{ChangeObject}         = Kernel::System::ITSMChange->new( %{$Self} );
 $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
 $Self->{ValidObject}          = Kernel::System::Valid->new( %{$Self} );
-$Self->{ChangeHistoryObject}  = Kernel::System::ITSMChange::History->new( %{$Self} );
+$Self->{HistoryObject}        = Kernel::System::ITSMChange::History->new( %{$Self} );
 $Self->{CIPAllocateObject}    = Kernel::System::ITSMChangeCIPAllocate->new( %{$Self} );
 
 # test if change object was created successfully
@@ -265,6 +265,43 @@ $Self->False(
     $LookupOK,
     "Incorrect param 'StateID' passed to ChangeStateLookup()",
 );
+
+# ------------------------------------------------------------ #
+# check existence of the default history types
+# ------------------------------------------------------------ #
+
+my @DefaultHistoryTypes = qw(
+    ChangeAdd ChangeUpdate ChangeDelete
+    ChangeCABUpdate ChangeCABDelete
+    ChangeLinkAdd ChangeLinkDelete
+    WorkOrderAdd WorkOrderUpdate WorkOrderDelete
+    WorkOrderLinkAdd WorkOrderLinkDelete
+);
+
+# investigate the default history types
+for my $HistoryType (@DefaultHistoryTypes) {
+
+    # look up the name
+    my $LookedUpHistoryTypeID = $Self->{HistoryObject}->HistoryTypeLookup(
+        HistoryType => $HistoryType,
+    );
+
+    $Self->True(
+        $LookedUpHistoryTypeID,
+        "Look up history type '$HistoryType'",
+    );
+
+    # do the reverse lookup
+    my $LookedUpHistoryType = $Self->{HistoryObject}->HistoryTypeLookup(
+        HistoryTypeID => $LookedUpHistoryTypeID,
+    );
+
+    $Self->Is(
+        $LookedUpHistoryType,
+        $HistoryType,
+        "Look up history type id '$LookedUpHistoryTypeID'",
+    );
+}
 
 # ------------------------------------------------------------ #
 # check existence of the groups that are used for Permission
@@ -1978,7 +2015,7 @@ for my $Test (@ChangeTests) {
         my $CheckData = $ReferenceData->{HistoryGet};
 
         # get all history entries
-        my $HistoryEntries = $Self->{ChangeHistoryObject}->ChangeHistoryGet(
+        my $HistoryEntries = $Self->{HistoryObject}->ChangeHistoryGet(
             ChangeID => $ChangeID,
             UserID   => 1,
         );
