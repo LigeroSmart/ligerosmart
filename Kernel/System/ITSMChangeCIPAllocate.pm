@@ -2,8 +2,8 @@
 # Kernel/System/ITSMChangeCIPAllocate.pm - all criticality, impact and priority allocation functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeCIPAllocate.pm,v 1.2 2009-11-23 13:30:43 bes Exp $
-# $OldId: ITSMCIPAllocate.pm,v 1.13 2009/08/18 22:20:52 mh Exp $
+# $Id: ITSMChangeCIPAllocate.pm,v 1.3 2009-11-23 15:07:25 reb Exp $
+# $OldId: ITSMCIPAllocate.pm,v 1.14 2009/11/23 15:06:04 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,14 +21,14 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
 # ---
 # ITSM Change Management
 # ---
-#Kernel::System::CIPAllocate - criticality, impact and priority allocation lib
+#Kernel::System::ITSMCIPAllocate - criticality, impact and priority allocation lib
 Kernel::System::ITSMChangeCIPAllocate - category, impact and priority allocation lib
 # ---
 
@@ -57,7 +57,7 @@ create an object
 # ---
 # ITSM Change Management
 # ---
-#    use Kernel::System::CIPAllocate;
+#    use Kernel::System::ITSMCIPAllocate;
     use Kernel::System::ITSMChangeCIPAllocate;
 # ---
     use Kernel::System::DB;
@@ -85,7 +85,7 @@ create an object
 # ---
 # ITSM Change Management
 # ---
-#    my $CIPAllocateObject = Kernel::System::CIPAllocate->new(
+#    my $CIPAllocateObject = Kernel::System::ITSMCIPAllocate->new(
     my $CIPAllocateObject = Kernel::System::ITSMChangeCIPAllocate->new(
 # ---
         ConfigObject => $ConfigObject,
@@ -346,6 +346,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/gpl-2.0.txt>.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2009-11-23 13:30:43 $
+$Revision: 1.3 $ $Date: 2009-11-23 15:07:25 $
 
 =cut
