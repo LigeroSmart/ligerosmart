@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.133 2009-11-23 12:22:20 bes Exp $
+# $Id: ITSMChange.t,v 1.134 2009-11-23 15:52:35 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -3748,9 +3748,9 @@ for my $Test (@TimeSearchTests) {
 }
 
 # ------------------------------------------------------------ #
-# advanced search by tests for strings
+# advanced search by tests for workorder strings and agent id
 # ------------------------------------------------------------ #
-my @StringSearchTests = (
+my @WOStringAndAgentSearchTests = (
 
     {
         Description => 'Insert change with one workorder and with set string fields.',
@@ -3759,10 +3759,11 @@ my @StringSearchTests = (
                 UserID => 1,
             },
             WorkOrderAdd => {
-                UserID         => 1,
-                WorkOrderTitle => 'String Test 1 - Title - ' . $UniqueSignature,
-                Instruction    => 'String Test 1 - Instruction - ' . $UniqueSignature,
-                Report         => 'String Test 1 - Report - ' . $UniqueSignature,
+                UserID           => 1,
+                WorkOrderTitle   => 'String Test 1 - Title - ' . $UniqueSignature,
+                Instruction      => 'String Test 1 - Instruction - ' . $UniqueSignature,
+                Report           => 'String Test 1 - Report - ' . $UniqueSignature,
+                WorkOrderAgentID => $UserIDs[1],
             },
         },
     },
@@ -3833,13 +3834,46 @@ my @StringSearchTests = (
         },
         ReferenceData => [],
     },
+
+    {
+        Description => 'Search for existing WorkOrderAgentID',
+        SourceData  => {
+            ChangeSearch => {
+                UserID            => 1,
+                WorkOrderAgentIDs => [ $UserIDs[1] ],
+            },
+        },
+        ReferenceData => [0],
+    },
+
+    {
+        Description => 'Search for existing and non-existing WorkOrderAgentID',
+        SourceData  => {
+            ChangeSearch => {
+                UserID => 1,
+                WorkOrderAgentIDs => [ @UserIDs[ 0, 1 ] ],
+            },
+        },
+        ReferenceData => [0],
+    },
+
+    {
+        Description => 'Search for non-existing WorkOrderAgentID',
+        SourceData  => {
+            ChangeSearch => {
+                UserID            => 1,
+                WorkOrderAgentIDs => [ $UserIDs[0] ],
+            },
+        },
+        ReferenceData => [],
+    },
 );
 
-my $SSTCounter = 1;
-my @SSTChangeIDs;       # string search test change ids
-my @SSTWorkOrderIDs;    # string search test workorder ids
-SSTEST:
-for my $Test (@StringSearchTests) {
+my $WOSTCounter = 1;
+my @WOSTChangeIDs;       # search in workorder test change ids
+my @WOSTWorkOrderIDs;    # search in workorder test workorder ids
+WOSTEST:
+for my $Test (@WOStringAndAgentSearchTests) {
     my $SourceData    = $Test->{SourceData};
     my $ReferenceData = $Test->{ReferenceData};
 
@@ -3848,7 +3882,7 @@ for my $Test (@StringSearchTests) {
 
     $Self->True(
         1,
-        "Test $TestCount: $Test->{Description} (SSTest case: $SSTCounter)",
+        "Test $TestCount: $Test->{Description} (WOSTest case: $WOSTCounter)",
     );
 
     if ( $SourceData->{ChangeAdd} ) {
@@ -3863,7 +3897,7 @@ for my $Test (@StringSearchTests) {
 
         if ($ChangeID) {
             $TestedChangeID{$ChangeID} = 1;
-            push @SSTChangeIDs, $ChangeID;
+            push @WOSTChangeIDs, $ChangeID;
         }
     }
 
@@ -3878,7 +3912,7 @@ for my $Test (@StringSearchTests) {
             "Test $TestCount: |- WorkOrderAdd",
         );
 
-        push @SSTWorkOrderIDs, $WorkOrderID;
+        push @WOSTWorkOrderIDs, $WorkOrderID;
     }
 
     my $SearchResult;
@@ -3892,7 +3926,7 @@ for my $Test (@StringSearchTests) {
             "Test $TestCount: ChangeSearch() - List is an array reference.",
         );
 
-        next SSTEST if !$SearchResult;
+        next WOSTEST if !$SearchResult;
 
         # check number of founded change
         $Self->Is(
@@ -3904,7 +3938,7 @@ for my $Test (@StringSearchTests) {
         # map array index to ChangeID
         my @ResultChangeIDs;
         for my $ResultChangeID ( @{$ReferenceData} ) {
-            push @ResultChangeIDs, $SSTChangeIDs[$ResultChangeID];
+            push @ResultChangeIDs, $WOSTChangeIDs[$ResultChangeID];
         }
 
         # turn off all pretty print
@@ -3928,7 +3962,7 @@ for my $Test (@StringSearchTests) {
     }
 
     $TestCount++;
-    $SSTCounter++;
+    $WOSTCounter++;
 }
 
 # ------------------------------------------------------------ #
