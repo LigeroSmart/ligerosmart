@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.32 2009-11-23 13:41:24 bes Exp $
+# $Id: ITSMWorkOrder.pm,v 1.33 2009-11-23 18:19:43 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.32 $) [1];
+$VERSION = qw($Revision: 1.33 $) [1];
 
 =head1 NAME
 
@@ -725,11 +725,11 @@ return a list of workorder ids as an array reference
         CreateBy          => [ 5, 2, 3 ],                              # (optional)
         ChangeBy          => [ 3, 2, 1 ],                              # (optional)
 
-        # search in text fields of change object                       # (optional)
-        ChangeNumber        => 'Number of change',
-        ChangeTitle         => 'Title of change',
-        ChangeDescription   => 'Description of change',
-        ChangeJustification => 'Justification of change',
+        # search in text fields of change object
+        ChangeNumber        => 'Number of change',                     # (optional)
+        ChangeTitle         => 'Title of change',                      # (optional)
+        ChangeDescription   => 'Description of change',                # (optional)
+        ChangeJustification => 'Justification of change',              # (optional)
 
         # changes with planned start time after ...
         PlannedStartTimeNewerDate => '2006-01-09 00:00:01',            # (optional)
@@ -2127,6 +2127,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.32 $ $Date: 2009-11-23 13:41:24 $
+$Revision: 1.33 $ $Date: 2009-11-23 18:19:43 $
 
 =cut

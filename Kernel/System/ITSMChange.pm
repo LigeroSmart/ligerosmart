@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.178 2009-11-23 16:28:41 bes Exp $
+# $Id: ITSMChange.pm,v 1.179 2009-11-23 18:19:21 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.178 $) [1];
+$VERSION = qw($Revision: 1.179 $) [1];
 
 =head1 NAME
 
@@ -1028,9 +1028,9 @@ is ignored.
         CABCustomers      => [ 'tt', 'xx' ],                           # (optional)
 
         # search in text fields of workorder object
-        WorkOrderTitle            => 'Boot Mailserver',
-        WorkOrderInstruction      => 'Press the button.',
-        WorkOrderReport           => 'Mailserver has booted.',
+        WorkOrderTitle            => 'Boot Mailserver',                # (optional)
+        WorkOrderInstruction      => 'Press the button.',              # (optional)
+        WorkOrderReport           => 'Mailserver has booted.',         # (optional)
 
         # changes with planned start time after ...
         PlannedStartTimeNewerDate => '2006-01-09 00:00:01',            # (optional)
@@ -2570,6 +2570,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.178 $ $Date: 2009-11-23 16:28:41 $
+$Revision: 1.179 $ $Date: 2009-11-23 18:19:21 $
 
 =cut
