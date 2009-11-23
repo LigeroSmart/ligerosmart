@@ -2,7 +2,7 @@
 # AgentITSMChangeEdit.dtl - provides HTML form for AgentITSMChangeEdit
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.dtl,v 1.24 2009-11-23 13:55:06 reb Exp $
+# $Id: AgentITSMChangeEdit.dtl,v 1.25 2009-11-23 19:40:26 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -105,7 +105,9 @@ $Include{"RichTextEditorITSM"}
                                         </div>
                                     </td>
                                 </tr>
-
+                                <tr>
+                                    <td colspan="2">&nbsp;</td>
+                                </tr>
 <!-- dtl:block:Category -->
                                 <tr>
                                     <td class="contentkey">
@@ -151,11 +153,16 @@ $Include{"RichTextEditorITSM"}
                                     </td>
                                 </tr>
 <!-- dtl:block:Priority -->
-
+                                <tr>
+                                    <td colspan="2">&nbsp;</td>
+                                </tr>
 <!-- dtl:block:State -->
                                 <tr>
                                     <td class="contentkey">$Text{"State"}:</td>
                                     <td class="contentvalue">$Data{"StateSelectString"}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">&nbsp;</td>
                                 </tr>
 <!-- dtl:block:State -->
 <!-- dtl:block:RealizeTime -->
@@ -172,6 +179,9 @@ $Include{"RichTextEditorITSM"}
                                     </td>
                                 </tr>
 <!-- dtl:block:RealizeTime -->
+                                <tr>
+                                    <td colspan="2">&nbsp;</td>
+                                </tr>
                                 <tr>
                                     <td class="contentkey">
                                         $Text{"Attachment"}:
