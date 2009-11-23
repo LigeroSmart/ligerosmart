@@ -2,7 +2,7 @@
 # Kernel/Language/en_ITSMChangeManagement.pm - the english translation of ITSMChangeManagement
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: en_ITSMChangeManagement.pm,v 1.6 2009-11-20 10:20:41 mae Exp $
+# $Id: en_ITSMChangeManagement.pm,v 1.7 2009-11-23 11:09:23 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -50,6 +50,13 @@ sub Data {
     $Lang->{'WorkOrderHistory::WorkOrderLinkAddWithWorkorderID'}    = '(ID=%s) Link to %s (ID=%s) added';
     $Lang->{'WorkOrderHistory::WorkOrderLinkDeleteWithWorkorderID'} = '(ID=%s) Link to %s (ID=%s) deleted';
     $Lang->{'WorkOrderHistory::WorkOrderDeleteWithWorkorderID'}     = 'Workorder (ID=%s) deleted';
+
+    # entries for workorder states
+    $Lang->{'approval'}  = 'Approval';
+    $Lang->{'decision'}  = 'Decision';
+    $Lang->{'workorder'} = 'Workorder';
+    $Lang->{'backout'}   = 'Backout';
+    $Lang->{'pir'}       = 'PIR (Post Implementation Review)';
 
     return 1;
 }
