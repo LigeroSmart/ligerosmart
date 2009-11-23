@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeTimeSlot.pm - the OTRS::ITSM::ChangeManagement move time slot module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeTimeSlot.pm,v 1.6 2009-11-23 10:39:50 bes Exp $
+# $Id: AgentITSMChangeTimeSlot.pm,v 1.7 2009-11-23 10:48:01 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -263,6 +263,11 @@ sub Run {
             SystemTime => $SystemTime,
         );
 
+        # get config for the number of years which should be selectable
+        my $TimePeriod = $Self->{ConfigObject}->Get('ITSMWorkOrder::TimePeriod');
+        my $StartYear  = $Year - $TimePeriod->{YearPeriodPast};
+        my $EndYear    = $Year + $TimePeriod->{YearPeriodFuture};
+
         # assemble the data that will be returned
         my $JSON = $Self->{LayoutObject}->BuildJSON(
             [
@@ -290,7 +295,7 @@ sub Run {
 
                     # TODO: use configured time period
                     Name       => 'PlannedYear',
-                    Data       => [ $Year - 5 .. $Year + 5 ],
+                    Data       => [ $StartYear .. $EndYear ],
                     SelectedID => $GetParam{PlannedYear},
                 },
             ],
