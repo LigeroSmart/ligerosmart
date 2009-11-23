@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeEdit.pm - the OTRS::ITSM::ChangeManagement change edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.pm,v 1.19 2009-11-20 08:49:39 bes Exp $
+# $Id: AgentITSMChangeEdit.pm,v 1.20 2009-11-23 13:55:06 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,9 +15,10 @@ use strict;
 use warnings;
 
 use Kernel::System::ITSMChange;
+use Kernel::System::ITSMChangeCIPAllocate;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -34,7 +35,8 @@ sub new {
     }
 
     # create needed objects
-    $Self->{ChangeObject} = Kernel::System::ITSMChange->new(%Param);
+    $Self->{ChangeObject}      = Kernel::System::ITSMChange->new(%Param);
+    $Self->{CIPAllocateObject} = Kernel::System::ITSMChangeCIPAllocate->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
@@ -87,7 +89,14 @@ sub Run {
 
     # store needed parameters in %GetParam to make it reloadable
     my %GetParam;
-    for my $ParamName (qw(ChangeTitle Description Justification)) {
+    for my $ParamName (
+        qw(
+        ChangeTitle Description Justification TicketID
+        OldCategoryID CategoryID OldImpactID ImpactID OldPriorityID PriorityID
+        PriorityRC ElementChanged
+        )
+        )
+    {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
@@ -97,6 +106,10 @@ sub Run {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
+    # set default values for category and impact
+    $Param{CategoryID} = $Change->{CategoryID};
+    $Param{ImpactID}   = $Change->{ImpactID};
+
     # keep ChangeStateID only if configured
     if ( $Self->{Config}->{State} ) {
         $GetParam{ChangeStateID} = $Self->{ParamObject}->GetParam( Param => 'ChangeStateID' );
@@ -105,6 +118,13 @@ sub Run {
     # Remember the reason why saving was not attempted.
     # This entries are the names of the dtl validation error blocks.
     my @ValidationErrors;
+    my %CIPErrors;
+
+    # set Subaction to non-existent value when we
+    # should recalculate priority
+    if ( $GetParam{PriorityRC} && $Self->{Subaction} ne 'AJAXUpdate' ) {
+        $Self->{Subaction} = '';
+    }
 
     # update change
     if ( $Self->{Subaction} eq 'Save' ) {
@@ -112,6 +132,25 @@ sub Run {
         # check the title
         if ( !$GetParam{ChangeTitle} ) {
             push @ValidationErrors, 'InvalidTitle';
+        }
+
+        # check CIP
+        for my $Type (qw(Category Impact Priority)) {
+            if ( !$GetParam{"${Type}ID"} ) {
+                push @ValidationErrors, 'Invalid' . $Type;
+                $CIPErrors{$Type} = 1;
+            }
+            else {
+                my $CIPIsValid = $Self->{ChangeObject}->ChangeCIPLookup(
+                    ID   => $GetParam{"${Type}ID"},
+                    Type => $Type,
+                );
+
+                if ( !$CIPIsValid ) {
+                    push @ValidationErrors, 'Invalid' . $Type;
+                    $CIPErrors{$Type} = 1;
+                }
+            }
         }
 
         # check the realize time
@@ -161,6 +200,9 @@ sub Run {
                 Description   => $GetParam{Description},
                 Justification => $GetParam{Justification},
                 ChangeTitle   => $GetParam{ChangeTitle},
+                CategoryID    => $GetParam{CategoryID},
+                ImpactID      => $GetParam{ImpactID},
+                PriorityID    => $GetParam{PriorityID},
                 RealizeTime   => $GetParam{RealizeTime},
                 UserID        => $Self->{UserID},
                 %AdditionalParam,
@@ -182,6 +224,42 @@ sub Run {
                 );
             }
         }
+    }
+
+    # handle AJAXUpdate
+    elsif ( $Self->{Subaction} eq 'AJAXUpdate' ) {
+
+        # get priorities
+        my $Priorities = $Self->{ChangeObject}->PossibleCIPGet(
+            Type => 'Priority',
+        );
+
+        # get selected priority
+        my $SelectedPriority = $Self->{CIPAllocateObject}->PriorityAllocationGet(
+            CategoryID => $GetParam{CategoryID},
+            ImpactID   => $GetParam{ImpactID},
+        );
+
+        # build json
+        my $JSON = $Self->{LayoutObject}->BuildJSON(
+            [
+                {
+                    Name        => 'PriorityID',
+                    Data        => $Priorities,
+                    SelectedID  => $SelectedPriority,
+                    Translation => 1,
+                    Max         => 100,
+                },
+            ],
+        );
+
+        # return json
+        return $Self->{LayoutObject}->Attachment(
+            ContentType => 'text/plain; charset=' . $Self->{LayoutObject}->{Charset},
+            Content     => $JSON,
+            Type        => 'inline',
+            NoCache     => 1,
+        );
     }
 
     # delete all keys from %GetParam when it is no Subaction
@@ -270,6 +348,114 @@ sub Run {
             'RealizeTimeString' => $TimeSelectionString,
         },
     );
+
+    # get categories
+    $Param{Categories} = $Self->{ChangeObject}->PossibleCIPGet(
+        Type => 'Category',
+    );
+
+    # create impact string
+    $Param{'CategoryStrg'} = $Self->{LayoutObject}->BuildSelection(
+        Data       => $Param{Categories},
+        Name       => 'CategoryID',
+        SelectedID => $Param{CategoryID},
+        OnChange   => "document.compose.PriorityRC.value='1'; "
+            . "document.compose.submit(); return false;",
+        Ajax => {
+            Update => [
+                'PriorityID',
+            ],
+            Depend => [
+                'ChangeID',
+                'CategoryID',
+                'ImpactID',
+            ],
+            Subaction => 'AJAXUpdate',
+        },
+    );
+
+    # show category dropdown
+    $Self->{LayoutObject}->Block(
+        Name => 'Category',
+        Data => {
+            %Param,
+        },
+    );
+
+    # show error block
+    if ( $CIPErrors{Category} ) {
+        $Self->{LayoutObject}->Block( Name => 'InvalidCategory' );
+    }
+
+    # get impacts
+    $Param{Impacts} = $Self->{ChangeObject}->PossibleCIPGet(
+        Type => 'Impact',
+    );
+
+    # create impact string
+    $Param{'ImpactStrg'} = $Self->{LayoutObject}->BuildSelection(
+        Data       => $Param{Impacts},
+        Name       => 'ImpactID',
+        SelectedID => $Param{ImpactID},
+        OnChange   => "document.compose.PriorityRC.value='1'; "
+            . "document.compose.submit(); return false;",
+        Ajax => {
+            Update => [
+                'PriorityID',
+            ],
+            Depend => [
+                'ChangeID',
+                'CategoryID',
+                'ImpactID',
+            ],
+            Subaction => 'AJAXUpdate',
+        },
+    );
+
+    # show impact dropdown
+    $Self->{LayoutObject}->Block(
+        Name => 'Impact',
+        Data => {
+            %Param,
+        },
+    );
+
+    # show error block
+    if ( $CIPErrors{Impact} ) {
+        $Self->{LayoutObject}->Block( Name => 'InvalidImpact' );
+    }
+
+    # get priorities
+    $Param{Priorities} = $Self->{ChangeObject}->PossibleCIPGet(
+        Type => 'Priority',
+    );
+
+    # get selected priority
+    my $SelectedPriority = $Change->{PriorityID};
+
+    if ( $GetParam{PriorityID} && !$GetParam{PriorityRC} ) {
+        $SelectedPriority = $GetParam{PriorityID};
+    }
+
+    # create impact string
+    $Param{'PriorityStrg'} = $Self->{LayoutObject}->BuildSelection(
+        Data       => $Param{Priorities},
+        Name       => 'PriorityID',
+        SelectedID => $SelectedPriority,
+    );
+
+    # show priority dropdown
+    $Self->{LayoutObject}->Block(
+        Name => 'Priority',
+        Data => {
+            %Param,
+        },
+    );
+
+    # show error block
+    if ( $CIPErrors{Priority} ) {
+        $Self->{LayoutObject}->Block( Name => 'InvalidPriority' );
+    }
 
     # Add the validation error messages as late as possible
     # as the enclosing blocks, e.g. 'RealizeTime' muss first be set.

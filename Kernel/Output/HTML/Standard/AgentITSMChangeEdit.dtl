@@ -2,12 +2,15 @@
 # AgentITSMChangeEdit.dtl - provides HTML form for AgentITSMChangeEdit
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.dtl,v 1.23 2009-11-19 15:40:02 bes Exp $
+# $Id: AgentITSMChangeEdit.dtl,v 1.24 2009-11-23 13:55:06 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+
+# include AJAX lib
+$Include{"AJAX"}
 
 <script type="text/javascript" src="$Config{"Frontend::JavaScriptPath"}itsm-changemanagement.js"></script>
 <script language="JavaScript" type="text/javascript">
@@ -53,9 +56,10 @@ function submit_compose() {
         <td class="mainbody">
             <br>
             <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
-                <input type="hidden" name="Action"    value="$Env{"Action"}">
-                <input type="hidden" name="Subaction" value="Save">
-                <input type="hidden" name="ChangeID"  value="$QData{"ChangeID"}">
+                <input type="hidden" name="Action"     value="$Env{"Action"}">
+                <input type="hidden" name="Subaction"  value="Save">
+                <input type="hidden" name="ChangeID"   value="$QData{"ChangeID"}">
+                <input type="hidden" name="PriorityRC" value="0">
                 <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
                     <tr>
                         <td class="contenthead">$Text{"Change"}</td>
@@ -102,25 +106,49 @@ $Include{"RichTextEditorITSM"}
                                     </td>
                                 </tr>
 
-# TODO EXAMPLE code for Category - Impact - Priority
-# TODO Look how this is done in ITSMIncidentProblemManagement!
-# TODO also look at title attributes, and css styles !!!
 <!-- dtl:block:Category -->
                                 <tr>
-                                    <td class="contentkey">$Text{"Category"}:</td>
-                                    <td class="contentvalue">$Data{"CategoryStrg"}</td>
+                                    <td class="contentkey">
+                                        $Text{"Category"}:
+                                        <font color="red" title="$Text{"Required"}">*</font>
+                                    </td>
+                                    <td class="contentvalue">
+                                        $Data{"CategoryStrg"}
+<!-- dtl:block:InvalidCategory -->
+                                        <br />
+                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
+<!-- dtl:block:InvalidCategory -->
+                                    </td>
                                 </tr>
 <!-- dtl:block:Category -->
 <!-- dtl:block:Impact -->
                                 <tr>
-                                    <td class="contentkey">$Text{"Impact"}:</td>
-                                    <td class="contentvalue">$Data{"ImpactStrg"}</td>
+                                    <td class="contentkey">
+                                        $Text{"Impact"}:
+                                        <font color="red" title="$Text{"Required"}">*</font>
+                                    </td>
+                                    <td class="contentvalue">
+                                        $Data{"ImpactStrg"}
+<!-- dtl:block:InvalidImpact -->
+                                        <br />
+                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
+<!-- dtl:block:InvalidImpact -->
+                                    </td>
                                 </tr>
 <!-- dtl:block:Impact -->
 <!-- dtl:block:Priority -->
                                 <tr>
-                                    <td class="contentkey">$Text{"Priority"}:</td>
-                                    <td class="contentvalue">$Data{"PriorityStrg"}</td>
+                                    <td class="contentkey">
+                                        $Text{"Priority"}:
+                                        <font color="red" title="$Text{"Required"}">*</font>
+                                    </td>
+                                    <td class="contentvalue">
+                                        $Data{"PriorityStrg"}
+<!-- dtl:block:InvalidPriority -->
+                                        <br />
+                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
+<!-- dtl:block:InvalidPriority -->
+                                    </td>
                                 </tr>
 <!-- dtl:block:Priority -->
 

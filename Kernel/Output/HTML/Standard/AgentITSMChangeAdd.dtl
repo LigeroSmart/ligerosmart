@@ -2,7 +2,7 @@
 # AgentITSMChangeAdd.dtl - provides HTML form for AgentITSMChangeAdd
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.dtl,v 1.25 2009-11-23 13:21:05 reb Exp $
+# $Id: AgentITSMChangeAdd.dtl,v 1.26 2009-11-23 13:55:06 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -98,13 +98,10 @@ function submit_compose() {
         <td class="mainbody">
             <br>
             <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
-                <input type="hidden" name="Action"        value="$Env{"Action"}">
-                <input type="hidden" name="TicketID"      value="$QData{"TicketID"}">
-                <input type="hidden" name="Subaction"     value="Save">
-                <input type="hidden" name="OldCategoryID" value="$QData{"CategoryID"}">
-                <input type="hidden" name="OldImpactID"   value="$QData{"ImpactID"}">
-                <input type="hidden" name="OldPriorityID" value="$QData{"PriorityID"}">
-                <input type="hidden" name="PriorityRC"    value="0">
+                <input type="hidden" name="Action"     value="$Env{"Action"}">
+                <input type="hidden" name="TicketID"   value="$QData{"TicketID"}">
+                <input type="hidden" name="Subaction"  value="Save">
+                <input type="hidden" name="PriorityRC" value="0">
                 <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
                     <tr>
                         <td class="contenthead">$Text{"Change"}</td>
