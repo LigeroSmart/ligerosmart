@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.19 2009-11-20 08:49:39 bes Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.20 2009-11-23 12:54:45 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,10 +15,11 @@ use strict;
 use warnings;
 
 use Kernel::System::ITSMChange;
+use Kernel::System::ITSMChangeCIPAllocate;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -35,8 +36,9 @@ sub new {
     }
 
     # create needed objects
-    $Self->{ChangeObject} = Kernel::System::ITSMChange->new(%Param);
-    $Self->{LinkObject}   = Kernel::System::LinkObject->new(%Param);
+    $Self->{ChangeObject}      = Kernel::System::ITSMChange->new(%Param);
+    $Self->{LinkObject}        = Kernel::System::LinkObject->new(%Param);
+    $Self->{CIPAllocateObject} = Kernel::System::ITSMChangeCIPAllocate->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
@@ -63,7 +65,14 @@ sub Run {
 
     # store needed parameters in %GetParam to make it reloadable
     my %GetParam;
-    for my $ParamName (qw(ChangeTitle Description Justification TicketID)) {
+    for my $ParamName (
+        qw(
+        ChangeTitle Description Justification TicketID
+        OldCategoryID CategoryID OldImpactID ImpactID OldPriorityID PriorityID
+        PriorityRC ElementChanged
+        )
+        )
+    {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
@@ -72,6 +81,19 @@ sub Run {
         my $ParamName = 'RealizeTime' . $TimePart;
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
+
+    # set default values for category and impact
+    my $DefaultCategory = $Self->{ConfigObject}->Get('ITSMChange::Category::Default');
+    $Param{CategoryID} = $GetParam{CategoryID} || $Self->{ChangeObject}->ChangeCIPLookup(
+        CIP  => $DefaultCategory,
+        Type => 'Category',
+    );
+
+    my $DefaultImpact = $Self->{ConfigObject}->Get('ITSMChange::Impact::Default');
+    $Param{ImpactID} = $GetParam{ImpactID} || $Self->{ChangeObject}->ChangeCIPLookup(
+        CIP  => $DefaultImpact,
+        Type => 'Impact',
+    );
 
     # the TicketID can be validated even without the Subaction 'Save',
     # as it is passed as GET-param or in a hidden field.
@@ -149,6 +171,12 @@ sub Run {
     # remember the reason why saving was not attempted.
     # these entries are the names of the dtl validation error blocks.
     my @ValidationErrors;
+
+    # set Subaction to non-existent value when we
+    # should recalculate priority
+    if ( $GetParam{PriorityRC} && $Self->{Subaction} ne 'AJAXUpdate' ) {
+        $Self->{Subaction} = '';
+    }
 
     # update change
     if ( $Self->{Subaction} eq 'Save' ) {
@@ -258,6 +286,42 @@ sub Run {
         }
     }
 
+    # handle AJAXUpdate
+    elsif ( $Self->{Subaction} eq 'AJAXUpdate' ) {
+
+        # get priorities
+        my $Priorities = $Self->{ChangeObject}->PossibleCIPGet(
+            Type => 'Priority',
+        );
+
+        # get selected priority
+        my $SelectedPriority = $Self->{CIPAllocateObject}->PriorityAllocationGet(
+            CategoryID => $GetParam{CategoryID},
+            ImpactID   => $GetParam{ImpactID},
+        );
+
+        # build json
+        my $JSON = $Self->{LayoutObject}->BuildJSON(
+            [
+                {
+                    Name        => 'PriorityID',
+                    Data        => $Priorities,
+                    SelectedID  => $SelectedPriority,
+                    Translation => 1,
+                    Max         => 100,
+                },
+            ],
+        );
+
+        # return json
+        return $Self->{LayoutObject}->Attachment(
+            ContentType => 'text/plain; charset=' . $Self->{LayoutObject}->{Charset},
+            Content     => $JSON,
+            Type        => 'inline',
+            NoCache     => 1,
+        );
+    }
+
     # build template dropdown
     # TODO: fill dropdown with data
     my $TemplateDropDown = $Self->{LayoutObject}->BuildSelection(
@@ -296,6 +360,100 @@ sub Run {
         Prefix              => 'RealizeTime',
         RealizeTimeOptional => 1,
         %TimePeriod,
+    );
+
+    # get categories
+    $Param{Categories} = $Self->{ChangeObject}->PossibleCIPGet(
+        Type => 'Category',
+    );
+
+    # create impact string
+    $Param{'CategoryStrg'} = $Self->{LayoutObject}->BuildSelection(
+        Data       => $Param{Categories},
+        Name       => 'CategoryID',
+        SelectedID => $Param{CategoryID},
+        OnChange   => "document.compose.PriorityRC.value='1'; "
+            . "document.compose.submit(); return false;",
+        Ajax => {
+            Update => [
+                'PriorityID',
+            ],
+            Depend => [
+                'CategoryID',
+                'ImpactID',
+            ],
+            Subaction => 'AJAXUpdate',
+        },
+    );
+
+    # show category dropdown
+    $Self->{LayoutObject}->Block(
+        Name => 'Category',
+        Data => {
+            %Param,
+        },
+    );
+
+    # get impacts
+    $Param{Impacts} = $Self->{ChangeObject}->PossibleCIPGet(
+        Type => 'Impact',
+    );
+
+    # create impact string
+    $Param{'ImpactStrg'} = $Self->{LayoutObject}->BuildSelection(
+        Data       => $Param{Impacts},
+        Name       => 'ImpactID',
+        SelectedID => $Param{ImpactID},
+        OnChange   => "document.compose.PriorityRC.value='1'; "
+            . "document.compose.submit(); return false;",
+        Ajax => {
+            Update => [
+                'PriorityID',
+            ],
+            Depend => [
+                'CategoryID',
+                'ImpactID',
+            ],
+            Subaction => 'AJAXUpdate',
+        },
+    );
+
+    # show impact dropdown
+    $Self->{LayoutObject}->Block(
+        Name => 'Impact',
+        Data => {
+            %Param,
+        },
+    );
+
+    # get priorities
+    $Param{Priorities} = $Self->{ChangeObject}->PossibleCIPGet(
+        Type => 'Priority',
+    );
+
+    # get selected priority
+    my $SelectedPriority = $Self->{CIPAllocateObject}->PriorityAllocationGet(
+        CategoryID => $Param{CategoryID},
+        ImpactID   => $Param{ImpactID},
+    );
+
+    if ( $GetParam{PriorityID} && !$GetParam{PriorityRC} ) {
+        $SelectedPriority = $GetParam{PriorityID};
+    }
+
+    # create impact string
+    $Param{'PriorityStrg'} = $Self->{LayoutObject}->BuildSelection(
+        Data       => $Param{Priorities},
+        Name       => 'PriorityID',
+        SelectedID => $SelectedPriority,
+    );
+
+    # show priority dropdown
+    $Self->{LayoutObject}->Block(
+        Name => 'Priority',
+        Data => {
+            %Param,
+        },
     );
 
     # show time fields
