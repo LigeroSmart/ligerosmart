@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.183 2009-11-24 09:21:45 bes Exp $
+# $Id: ITSMChange.pm,v 1.184 2009-11-24 10:53:40 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.183 $) [1];
+$VERSION = qw($Revision: 1.184 $) [1];
 
 =head1 NAME
 
@@ -1076,6 +1076,7 @@ is ignored.
         RealizeTimeOlderDate      => '2006-01-19 23:59:59',            # (optional)
 
         OrderBy => [ 'ChangeID', 'ChangeManagerID' ],                  # (optional)
+        # ignored when the result type is 'COUNT'
         # default: [ 'ChangeID' ]
         # (ChangeID, ChangeNumber, ChangeTitle, ChangeStateID,
         # ChangeManagerID, ChangeBuilderID,
@@ -1089,6 +1090,7 @@ is ignored.
         # The pairing is made by the array indices.
 
         OrderByDirection => [ 'Down', 'Up' ],                          # (optional)
+        # ignored when the result type is 'COUNT'
         # default: [ 'Down' ]
         # (Down | Up)
 
@@ -1100,6 +1102,7 @@ is ignored.
         # COUNT returns a scalar with the number of found changes
 
         Limit => 100,                                                  # (optional)
+        # ignored when the result type is 'COUNT'
 
         UserID => 1,
     );
@@ -1532,9 +1535,9 @@ sub ChangeSearch {
     # assemble the SQL query
     my $SQL = 'SELECT ' . join( ', ', ( 'c.id', @SQLAliases ) ) . ' FROM change_item c ';
 
-    # modify SQL if result type is 'COUNT'
-    if ( $Result eq 'COUNT' ) {
-        $SQL        = 'SELECT DISTINCT COUNT(*) FROM change_item c ';
+    # modify SQL when the result type is 'COUNT', and when there are no joins
+    if ( $Result eq 'COUNT' && !@InnerJoinTables && !@OuterJoinTables ) {
+        $SQL        = 'SELECT COUNT(c.id) FROM change_item c ';
         @SQLOrderBy = ();
     }
 
@@ -1613,6 +1616,11 @@ sub ChangeSearch {
         $SQL .= ' ';
     }
 
+    # ignore the parameter 'Limit' when result type is 'COUNT'
+    if ( $Result eq 'COUNT' ) {
+        delete $Param{Limit};
+    }
+
     # ask database
     return if !$Self->{DBObject}->Prepare(
         SQL   => $SQL,
@@ -1625,10 +1633,19 @@ sub ChangeSearch {
         push @IDs, $Row[0];
     }
 
-    # return the count as scalar
-    return $IDs[0] if $Result eq 'COUNT';
+    if ( $Result eq 'COUNT' && !@InnerJoinTables && !@OuterJoinTables ) {
 
-    return \@IDs;
+        # return the COUNT(c.id) attribute
+        return $IDs[0];
+    }
+    elsif ( $Result eq 'COUNT' ) {
+
+        # return the count as the number of IDs
+        return scalar @IDs;
+    }
+    else {
+        return \@IDs;
+    }
 }
 
 =item ChangeDelete()
@@ -2651,6 +2668,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.183 $ $Date: 2009-11-24 09:21:45 $
+$Revision: 1.184 $ $Date: 2009-11-24 10:53:40 $
 
 =cut
