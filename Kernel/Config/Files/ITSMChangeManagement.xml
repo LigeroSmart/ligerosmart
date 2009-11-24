@@ -1,99 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.82 2009-11-24 03:10:01 ub Exp $</CVS>
-    <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
-        <Description Lang="en">Logfile for the itsm change counter.</Description>
-        <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMChange</SubGroup>
-        <Setting>
-            <String Regex="">&lt;OTRS_CONFIG_Home&gt;/var/log/ITSMChangeCounter.log</String>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::AddChangeLinkTicketTypes" Required="1" Valid="1">
-        <Description Lang="en">Types of tickets, where in the ticket zoom view a link to add a change will be displayed.</Description>
-        <Description Lang="de">Typen der Tickets, in denen im Ticket-Zoom ein Link angezeigt wird, um einen Change zu erstellen.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMChange</SubGroup>
-        <Setting>
-            <Array>
-                <Item>RfC</Item>
-            </Array>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::State::Signal" Required="1" Valid="1">
-        <Description Lang="en">Define the signal for each ITSMChange state.</Description>
-        <Description Lang="de">Definieren eines Signals für einen ITSMChange-Status.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMChange</SubGroup>
-        <Setting>
-            <Hash>
-                <Item Key="requested">grayled</Item>
-                <Item Key="accepted">greenled</Item>
-                <Item Key="pending approval">yellowled</Item>
-                <Item Key="rejected">grayled</Item>
-                <Item Key="approved">greenled</Item>
-                <Item Key="in progress">yellowled</Item>
-                <Item Key="successful">greenled</Item>
-                <Item Key="failed">redled</Item>
-                <Item Key="canceled">grayled</Item>
-            </Hash>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::Category::Default" Required="1" Valid="1">
-        <Description Lang="en">The default value for the category of a change.</Description>
-        <Description Lang="de">Der Standard-Wert für die Kategorie eines Changes.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMChange</SubGroup>
-        <Setting>
-            <String Regex="">3 normal</String>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::Impact::Default" Required="1" Valid="1">
-        <Description Lang="en">The default value for the impact of a change.</Description>
-        <Description Lang="de">Der Standard-Wert für die Auswirkung eines Changes.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMChange</SubGroup>
-        <Setting>
-            <String Regex="">3 normal</String>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMWorkOrder::State::Signal" Required="1" Valid="1">
-        <Description Lang="en">Define the signal for ITSMWorkOrder states.</Description>
-        <Description Lang="de">Definieren eines Signals für einen ITSMWorkOrder-Status.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMWorkOrder</SubGroup>
-        <Setting>
-            <Hash>
-                <Item Key="accepted">grayled</Item>
-                <Item Key="ready">yellowled</Item>
-                <Item Key="in progress">yellowled</Item>
-                <Item Key="closed">greenled</Item>
-                <Item Key="canceled">redled</Item>
-            </Hash>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMWorkOrder::Type::Default" Required="1" Valid="1">
-        <Description Lang="en">Default type for a workorder. This entry must exist in general catalog class 'ITSM::ChangeManagement::WorkOrder::Type'.</Description>
-        <Description Lang="de">Standard-Typ für eine Workorder. Dieser Eintrag muss in der General Catalog Klasse 'ITSM::ChangeManagement::WorkOrder::Type' existieren.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMWorkOrder</SubGroup>
-        <Setting>
-            <String Regex="">workorder</String>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMWorkOrder::TimePeriod" Required="1" Valid="1">
-        <Description Lang="en">Define the period, in which start and end times can be selected.</Description>
-        <Description Lang="de">Definition der Zeitspanne, in der Start- und Endzeiten ausgewählt werden können.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMWorkOrder</SubGroup>
-        <Setting>
-            <Hash>
-                <Item Key="YearPeriodPast">5</Item>
-                <Item Key="YearPeriodFuture">5</Item>
-            </Hash>
-        </Setting>
-    </ConfigItem>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.83 2009-11-24 08:49:13 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -871,6 +778,99 @@
                 <Item Key="Module">Kernel::System::ITSMChange::ITSMWorkOrder::Event::WorkOrderNumberCalc</Item>
                 <Item Key="Event">(WorkOrderUpdatePost|WorkOrderDeletePost)</Item>
                 <Item Key="Transaction">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
+        <Description Lang="en">Logfile for the itsm change counter.</Description>
+        <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange</SubGroup>
+        <Setting>
+            <String Regex="">&lt;OTRS_CONFIG_Home&gt;/var/log/ITSMChangeCounter.log</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::AddChangeLinkTicketTypes" Required="1" Valid="1">
+        <Description Lang="en">Types of tickets, where in the ticket zoom view a link to add a change will be displayed.</Description>
+        <Description Lang="de">Typen der Tickets, in denen im Ticket-Zoom ein Link angezeigt wird, um einen Change zu erstellen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange</SubGroup>
+        <Setting>
+            <Array>
+                <Item>RfC</Item>
+            </Array>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::State::Signal" Required="1" Valid="1">
+        <Description Lang="en">Define the signal for each ITSMChange state.</Description>
+        <Description Lang="de">Definieren eines Signals für einen ITSMChange-Status.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="requested">grayled</Item>
+                <Item Key="accepted">greenled</Item>
+                <Item Key="pending approval">yellowled</Item>
+                <Item Key="rejected">grayled</Item>
+                <Item Key="approved">greenled</Item>
+                <Item Key="in progress">yellowled</Item>
+                <Item Key="successful">greenled</Item>
+                <Item Key="failed">redled</Item>
+                <Item Key="canceled">grayled</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Category::Default" Required="1" Valid="1">
+        <Description Lang="en">The default value for the category of a change.</Description>
+        <Description Lang="de">Der Standard-Wert für die Kategorie eines Changes.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange</SubGroup>
+        <Setting>
+            <String Regex="">3 normal</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Impact::Default" Required="1" Valid="1">
+        <Description Lang="en">The default value for the impact of a change.</Description>
+        <Description Lang="de">Der Standard-Wert für die Auswirkung eines Changes.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange</SubGroup>
+        <Setting>
+            <String Regex="">3 normal</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMWorkOrder::State::Signal" Required="1" Valid="1">
+        <Description Lang="en">Define the signal for ITSMWorkOrder states.</Description>
+        <Description Lang="de">Definieren eines Signals für einen ITSMWorkOrder-Status.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="accepted">grayled</Item>
+                <Item Key="ready">yellowled</Item>
+                <Item Key="in progress">yellowled</Item>
+                <Item Key="closed">greenled</Item>
+                <Item Key="canceled">redled</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMWorkOrder::Type::Default" Required="1" Valid="1">
+        <Description Lang="en">Default type for a workorder. This entry must exist in general catalog class 'ITSM::ChangeManagement::WorkOrder::Type'.</Description>
+        <Description Lang="de">Standard-Typ für eine Workorder. Dieser Eintrag muss in der General Catalog Klasse 'ITSM::ChangeManagement::WorkOrder::Type' existieren.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder</SubGroup>
+        <Setting>
+            <String Regex="">workorder</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMWorkOrder::TimePeriod" Required="1" Valid="1">
+        <Description Lang="en">Define the period, in which start and end times can be selected.</Description>
+        <Description Lang="de">Definition der Zeitspanne, in der Start- und Endzeiten ausgewählt werden können.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="YearPeriodPast">5</Item>
+                <Item Key="YearPeriodFuture">5</Item>
             </Hash>
         </Setting>
     </ConfigItem>
