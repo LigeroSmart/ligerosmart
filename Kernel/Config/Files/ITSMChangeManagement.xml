@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.83 2009-11-24 08:49:13 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.84 2009-11-24 12:47:34 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -893,6 +893,37 @@
         <SubGroup>Frontend::Agent::ITSMChange::ViewChangeOverview</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">ro</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChange###SortBy::Default" Required="1" Valid="1">
+        <Description Lang="en">Change sort by default in the change overview.</Description>
+        <Description Lang="de">Standard Sortierung der Changes in der Change-Übersicht.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeOverview</SubGroup>
+        <Setting>
+            <Option SelectedID="ChangeNumber">
+                <Item Key="ChangeNumber">ChangeNumber</Item>
+                <Item Key="ChangeTitle">ChangeTitle</Item>
+                <Item Key="ChangeStateID">ChangeStateID</Item>
+                <Item Key="PlannedStartTime">PlannedStartTime</Item>
+                <Item Key="PlannedEndTime">PlannedEndTime</Item>
+                <Item Key="ActualStartTime">ActualStartTime</Item>
+                <Item Key="ActualEndTime">ActualEndTime</Item>
+                <Item Key="Priority">Priority</Item>
+                <Item Key="CreateTime">CreateTime</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChange###Order::Default" Required="1" Valid="1">
+        <Description Lang="en">Order default in the change overview.</Description>
+        <Description Lang="de">Standard Reihenfolge der Changes in der Change-Übersicht.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeOverview</SubGroup>
+        <Setting>
+            <Option SelectedID="Up">
+                <Item Key="Down">Down</Item>
+                <Item Key="Up">Up</Item>
+            </Option>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeAdd###Permission" Required="1" Valid="1">
