@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LayoutITSMChange.pm,v 1.12 2009-11-23 13:30:43 bes Exp $
+# $Id: LayoutITSMChange.pm,v 1.13 2009-11-24 01:40:36 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use POSIX qw(ceil);
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 =item ITSMChangeBuildWorkOrderGraph()
 
@@ -141,8 +141,7 @@ sub ITSMChangeBuildWorkOrderGraph {
     # load graph sceleton
     $Self->Block(
         Name => 'WorkOrderGraph',
-        Data => {
-        },
+        Data => {},
     );
 
     # build graph of each work order
@@ -168,6 +167,7 @@ sub ITSMChangeBuildWorkOrderGraph {
     # render graph and return HTML with ITSMChange.dtl template
     return $Self->Output(
         TemplateFile => 'ITSMChange',
+        Data         => {%Param},
     );
 }
 
@@ -310,6 +310,263 @@ sub _ITSMChangeGetWorkOrderGraph {
             %TickValue,
         },
     );
+}
+
+=item ITSMChangeListShow()
+
+Returns a list of changes as sortable list with pagination.
+
+(This function is similar to TicketListShow() in Kernel/Output/HTML/LayoutTicket.pm)
+
+    my $Output = $LayoutObject->ITSMChangeListShow(
+        ChangeIDs  => $ChangeIDsRef,
+        Total      => scalar @{ $ChangeIDsRef },
+        View       => $Self->{View},
+        Filter     => 'All',
+        Filters    => \%NavBarFilter,
+        FilterLink => $LinkFilter,
+        TitleName  => 'Overview: Change',
+        TitleValue => $Self->{Filter},
+        Env        => $Self,
+        LinkPage   => $LinkPage,
+        LinkSort   => $LinkSort,
+    );
+
+=cut
+
+sub ITSMChangeListShow {
+    my ( $Self, %Param ) = @_;
+
+    # take object ref to local, remove it from %Param (prevent memory leak)
+    my $Env = $Param{Env};
+    delete $Param{Env};
+
+    # lookup latest used view mode
+    if ( !$Param{View} && $Self->{ 'UserITSMChangeOverview' . $Env->{Action} } ) {
+        $Param{View} = $Self->{ 'UserITSMChangeOverview' . $Env->{Action} };
+    }
+
+    # set defaut view mode to 'small'
+    my $View = $Param{View} || 'Small';
+
+    # store latest view mode
+    $Self->{SessionObject}->UpdateSessionID(
+        SessionID => $Self->{SessionID},
+        Key       => 'UserITSMChangeOverview' . $Env->{Action},
+        Value     => $View,
+    );
+
+    # check backends
+    my $Backends = $Self->{ConfigObject}->Get('ITSMChange::Frontend::Overview');
+    if ( !$Backends ) {
+        return $Env->{LayoutObject}->FatalError(
+            Message => 'Need config option ITSMChange::Frontend::Overview',
+        );
+    }
+    if ( ref $Backends ne 'HASH' ) {
+        return $Env->{LayoutObject}->FatalError(
+            Message => 'Config option ITSMChange::Frontend::Overview needs to be a HASH ref!',
+        );
+    }
+    if ( !$Backends->{$View} ) {
+        return $Env->{LayoutObject}->FatalError(
+            Message => "No Config option found for $View!",
+        );
+    }
+
+    # nav bar
+    my $StartHit = $Self->{ParamObject}->GetParam( Param => 'StartHit' ) || 1;
+
+    # check start option, if higher then elements available, set
+    # it to the last overview page (Thanks to Stefan Schmidt!)
+    my $PageShown = $Backends->{$View}->{PageShown};
+    if ( $StartHit > $Param{Total} ) {
+        my $Pages = int( ( $Param{Total} / $PageShown ) + 0.99999 );
+        $StartHit = ( ( $Pages - 1 ) * $PageShown ) + 1;
+    }
+
+    my $Limit = $Param{Limit} || 20_000;
+    my %PageNav = $Env->{LayoutObject}->PageNavBar(
+        Limit     => $Limit,
+        StartHit  => $StartHit,
+        PageShown => $PageShown,
+        AllHits   => $Param{Total} || 0,
+        Action    => 'Action=' . $Env->{LayoutObject}->{Action},
+        Link      => $Param{LinkPage},
+    );
+
+    $Env->{LayoutObject}->Block(
+        Name => 'OverviewNavBar',
+        Data => \%Param,
+    );
+
+    # back link
+    if ( $Param{LinkBack} ) {
+        $Env->{LayoutObject}->Block(
+            Name => 'OverviewNavBarPageBack',
+            Data => \%Param,
+        );
+    }
+
+    # filter
+    if ( $Param{Filters} ) {
+        my @NavBarFilters;
+        for my $Prio ( sort keys %{ $Param{Filters} } ) {
+            push @NavBarFilters, $Param{Filters}->{$Prio};
+        }
+        $Env->{LayoutObject}->Block(
+            Name => 'OverviewNavBarFilter',
+            Data => {
+                %Param,
+            },
+        );
+        my $Count = 0;
+        for my $Filter (@NavBarFilters) {
+            if ($Count) {
+                $Env->{LayoutObject}->Block(
+                    Name => 'OverviewNavBarFilterItemSplit',
+                    Data => {
+                        %Param,
+                        %{$Filter},
+                    },
+                );
+            }
+            $Count++;
+            $Env->{LayoutObject}->Block(
+                Name => 'OverviewNavBarFilterItem',
+                Data => {
+                    %Param,
+                    %{$Filter},
+                },
+            );
+            if ( $Filter->{Filter} eq $Param{Filter} ) {
+                $Env->{LayoutObject}->Block(
+                    Name => 'OverviewNavBarFilterItemSelected',
+                    Data => {
+                        %Param,
+                        %{$Filter},
+                    },
+                );
+            }
+            else {
+                $Env->{LayoutObject}->Block(
+                    Name => 'OverviewNavBarFilterItemSelectedNot',
+                    Data => {
+                        %Param,
+                        %{$Filter},
+                    },
+                );
+            }
+        }
+    }
+
+    # mode
+    for my $Backend ( keys %{$Backends} ) {
+        $Env->{LayoutObject}->Block(
+            Name => 'OverviewNavBarViewMode',
+            Data => {
+                %Param,
+                %{ $Backends->{$Backend} },
+                Filter => $Param{Filter},
+                View   => $Backend,
+            },
+        );
+        if ( $View eq $Backend ) {
+            $Env->{LayoutObject}->Block(
+                Name => 'OverviewNavBarViewModeSelected',
+                Data => {
+                    %Param,
+                    %{ $Backends->{$Backend} },
+                    Filter => $Param{Filter},
+                    View   => $Backend,
+                },
+            );
+        }
+        else {
+            $Env->{LayoutObject}->Block(
+                Name => 'OverviewNavBarViewModeNotSelected',
+                Data => {
+                    %Param,
+                    %{ $Backends->{$Backend} },
+                    Filter => $Param{Filter},
+                    View   => $Backend,
+                },
+            );
+        }
+    }
+
+    if (%PageNav) {
+        $Env->{LayoutObject}->Block(
+            Name => 'OverviewNavBarPageNavBar',
+            Data => \%PageNav,
+        );
+    }
+
+    if ( $Param{NavBar} ) {
+        if ( $Param{NavBar}->{MainName} ) {
+            $Env->{LayoutObject}->Block(
+                Name => 'OverviewNavBarMain',
+                Data => $Param{NavBar},
+            );
+        }
+    }
+
+    my $OutputNavBar = $Env->{LayoutObject}->Output(
+        TemplateFile => 'AgentITSMChangeOverviewNavBar',
+        Data         => {%Param},
+    );
+    my $OutputRaw = '';
+    if ( !$Param{Output} ) {
+        $Env->{LayoutObject}->Print( Output => \$OutputNavBar );
+    }
+    else {
+        $OutputRaw .= $OutputNavBar;
+    }
+
+    # load module
+    if ( !$Self->{MainObject}->Require( $Backends->{$View}->{Module} ) ) {
+        return $Env->{LayoutObject}->FatalError();
+    }
+    my $Object = $Backends->{$View}->{Module}->new( %{$Env} );
+    return if !$Object;
+
+    # run module
+    my $Output = $Object->Run(
+        %Param,
+        Limit     => $Limit,
+        StartHit  => $StartHit,
+        PageShown => $PageShown,
+        AllHits   => $Param{Total} || 0,
+    );
+    if ( !$Param{Output} ) {
+        $Env->{LayoutObject}->Print( Output => \$Output );
+    }
+    else {
+        $OutputRaw .= $Output;
+    }
+
+    $Env->{LayoutObject}->Block(
+        Name => 'OverviewNavBar',
+        Data => {%Param},
+    );
+    if (%PageNav) {
+        $Env->{LayoutObject}->Block(
+            Name => 'OverviewNavBarPageNavBar',
+            Data => {%PageNav},
+        );
+    }
+    my $OutputNavBarSmall = $Env->{LayoutObject}->Output(
+        TemplateFile => 'AgentITSMChangeOverviewNavBarSmall',
+        Data         => {%Param},
+    );
+    if ( !$Param{Output} ) {
+        $Env->{LayoutObject}->Print( Output => \$OutputNavBarSmall );
+    }
+    else {
+        $OutputRaw .= $OutputNavBarSmall;
+    }
+
+    return $OutputRaw;
 }
 
 1;
