@@ -2,7 +2,7 @@
 # AgentITSMChangeHistoryZoom.dtl - provides HTML form for AgentITSMChangeHistoryZoom
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeHistoryZoom.dtl,v 1.6 2009-11-16 13:50:45 reb Exp $
+# $Id: AgentITSMChangeHistoryZoom.dtl,v 1.7 2009-11-24 12:39:49 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -37,7 +37,7 @@
     <tr>
         <td class="mainbody">
             <br>
-            <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
+            <table border="0" width="800" align="center" cellspacing="0" cellpadding="3">
                 <tr>
                     <td class="contenthead">
                         $Text{"Detailed history information of"} ChangeUpdate
@@ -45,12 +45,12 @@
                 </tr>
                 <tr class="contentbody">
                     <td>
-                        <table border="0">
+                        <table border="0" width="100%" cellspacing="0" cellpadding="3">
                             <tr>
-                                <td class="contentkey nowrap">
+                                <td width="130px" class="contentkey nowrap">
                                     $Text{"Modified"}:
                                 </td>
-                                <td class="contentvalue">
+                                <td width="*" class="contentvalue">
                                     $QData{"Fieldname"}
                                 </td>
                             </tr>
@@ -75,7 +75,7 @@
                                     $Text{"Changed"}:
                                 </td>
                                 <td class="contentvalue">
-                                    $QData{"ChangeTime"}
+                                    $TimeLong{"$QData{"ChangeTime"}"}
                                 </td>
                             </tr>
                             <tr>
