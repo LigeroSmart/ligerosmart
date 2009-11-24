@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.143 2009-11-24 14:46:20 bes Exp $
+# $Id: ITSMChange.t,v 1.144 2009-11-24 15:21:26 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -4751,7 +4751,7 @@ $LookupOk = $Self->{ChangeObject}->ChangeCIPLookup(
 
 $Self->False(
     $LookupOk,
-    'Parameter type not passed to ChangeCIPLookup()',
+    'Parameter Type not passed to ChangeCIPLookup()',
 );
 
 $LookupOk = $Self->{ChangeObject}->ChangeCIPLookup(
@@ -4773,6 +4773,46 @@ $Self->False(
     $LookupOk,
     'Exclusive parameters ID and CID passed to ChangeCIPLookup()',
 );
+
+# ------------------------------------------------------------ #
+# ChangePossibleCIPGet() tests
+# ------------------------------------------------------------ #
+
+my $PossibleCIPGetOk = $Self->{ChangeObject}->ChangePossibleCIPGet(
+    Type => 'non-existent',
+);
+
+$Self->False(
+    $PossibleCIPGetOk,
+    'Invalid type passed to ChangePossibleCIPGet()',
+);
+
+$PossibleCIPGetOk = $Self->{ChangeObject}->ChangePossibleCIPGet();
+
+$Self->False(
+    $PossibleCIPGetOk,
+    'Parameter Type not passed to ChangePossibleCIPGet()',
+);
+
+# The possible values are the same for all three types.
+my $PossibleCIPReference = join ', ', @CIPValues;
+for my $Type (qw(Category Impact Priority)) {
+    my $PossibleCIPs = $Self->{ChangeObject}->ChangePossibleCIPGet(
+        Type => $Type,
+    );
+
+    $Self->Is(
+        ref $PossibleCIPs,
+        'ARRAY',
+        'Test ' . $TestCount++ . " - ChangePossibleCIPGet() returned array ref for '$Type'",
+    );
+
+    $Self->Is(
+        join( ', ', map { $_->{Value} } @{$PossibleCIPs} ),
+        $PossibleCIPReference,
+        "Test $TestCount - ChangePossibleCIPGet() returned expected values for '$Type'",
+    );
+}
 
 # ------------------------------------------------------------ #
 # clean the system
