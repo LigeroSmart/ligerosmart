@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.142 2009-11-24 14:39:42 bes Exp $
+# $Id: ITSMChange.t,v 1.143 2009-11-24 14:46:20 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -233,38 +233,38 @@ for my $State (@DefaultChangeStates) {
 }
 
 # now some param checks for ChangeStateLookup
-my $LoopupOk = $Self->{ChangeObject}->ChangeStateLookup();
+my $LookupOk = $Self->{ChangeObject}->ChangeStateLookup();
 
 $Self->False(
-    $LoopupOk,
+    $LookupOk,
     'No params passed to ChangeStateLookup()',
 );
 
-$LoopupOk = $Self->{ChangeObject}->ChangeStateLookup(
+$LookupOk = $Self->{ChangeObject}->ChangeStateLookup(
     ChangeState   => 'approved',
     ChangeStateID => 2,
 );
 
 $Self->False(
-    $LoopupOk,
+    $LookupOk,
     'Exclusive params passed to ChangeStateLookup()',
 );
 
-$LoopupOk = $Self->{ChangeObject}->ChangeStateLookup(
+$LookupOk = $Self->{ChangeObject}->ChangeStateLookup(
     State => 'approved',
 );
 
 $Self->False(
-    $LoopupOk,
+    $LookupOk,
     "Incorrect param 'State' passed to ChangeStateLookup()",
 );
 
-$LoopupOk = $Self->{ChangeObject}->ChangeStateLookup(
+$LookupOk = $Self->{ChangeObject}->ChangeStateLookup(
     StateID => 2,
 );
 
 $Self->False(
-    $LoopupOk,
+    $LookupOk,
     "Incorrect param 'StateID' passed to ChangeStateLookup()",
 );
 
@@ -2298,23 +2298,23 @@ if ($ChangeLookupTestChangeID) {
     );
 
     # now some param checks for ChangeLookup()
-    my $LoopupOk = $Self->{ChangeObject}->ChangeLookup(
+    my $LookupOk = $Self->{ChangeObject}->ChangeLookup(
         UserID => 1,
     );
 
     $Self->False(
-        $LoopupOk,
+        $LookupOk,
         'No params passed to ChangeLookup()',
     );
 
-    $LoopupOk = $Self->{ChangeObject}->ChangeLookup(
+    $LookupOk = $Self->{ChangeObject}->ChangeLookup(
         ChangeID     => $ChangeLookupTestChangeID,
         ChangeNumber => $ChangeData->{ChangeNumber},
         UserID       => 1,
     );
 
     $Self->False(
-        $LoopupOk,
+        $LookupOk,
         'Exclusive params passed to ChangeLookup()',
     );
 }
@@ -4735,42 +4735,42 @@ $Self->True(
 # CIP lookup tests
 # ------------------------------------------------------------ #
 
-$LoopupOk = $Self->{ChangeObject}->ChangeCIPLookup(
+$LookupOk = $Self->{ChangeObject}->ChangeCIPLookup(
     CID  => '1 very high',
     Type => 'non-existent',
 );
 
 $Self->False(
-    $LoopupOk,
+    $LookupOk,
     'Invalid type passed to ChangeCIPLookup()',
 );
 
-$LoopupOk = $Self->{ChangeObject}->ChangeCIPLookup(
+$LookupOk = $Self->{ChangeObject}->ChangeCIPLookup(
     CID => '1 very high',
 );
 
 $Self->False(
-    $LoopupOk,
+    $LookupOk,
     'Parameter type not passed to ChangeCIPLookup()',
 );
 
-$LoopupOk = $Self->{ChangeObject}->ChangeCIPLookup(
+$LookupOk = $Self->{ChangeObject}->ChangeCIPLookup(
     Type => 'Priority',
 );
 
 $Self->False(
-    $LoopupOk,
+    $LookupOk,
     'Parameter ID or CID not passed to ChangeCIPLookup()',
 );
 
-$LoopupOk = $Self->{ChangeObject}->ChangeCIPLookup(
+$LookupOk = $Self->{ChangeObject}->ChangeCIPLookup(
     Type => 'Priority',
     CID  => '1 very high',
     ID   => 123,
 );
 
 $Self->False(
-    $LoopupOk,
+    $LookupOk,
     'Exclusive parameters ID and CID passed to ChangeCIPLookup()',
 );
 
