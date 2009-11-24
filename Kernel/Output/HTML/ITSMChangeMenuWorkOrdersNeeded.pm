@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ITSMChangeMenuWorkOrdersNeeded.pm - Menu with check whether there are workorders
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeMenuWorkOrdersNeeded.pm,v 1.4 2009-11-23 13:30:43 bes Exp $
+# $Id: ITSMChangeMenuWorkOrdersNeeded.pm,v 1.5 2009-11-24 12:14:50 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -48,7 +48,7 @@ sub Run {
     }
 
     # check whether there are any workorders yet
-    return $Param{Counter} if !@{ $Param{Change}->{WorkOrderIDs} };
+    return $Param{Counter} if !$Param{Change}->{WorkOrderCount};
 
     # get config for the relevant action
     my $FrontendConfig

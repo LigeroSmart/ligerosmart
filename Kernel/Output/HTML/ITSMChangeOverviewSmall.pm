@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ITSMChangeOverviewSmall.pm.pm
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeOverviewSmall.pm,v 1.1 2009-11-24 02:33:31 ub Exp $
+# $Id: ITSMChangeOverviewSmall.pm,v 1.2 2009-11-24 12:14:50 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -71,7 +71,7 @@ sub Run {
             my %Data;
 
             # set workorder count
-            $Data{WorkOrderCount} = scalar @{ $Change->{WorkOrderIDs} } || 0;
+            $Data{WorkOrderCount} = $Change->{WorkOrderCount};
 
             # get change builder data
             my %ChangeBuilderUser = $Self->{UserObject}->GetUserData(
