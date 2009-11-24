@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.181 2009-11-24 01:21:19 ub Exp $
+# $Id: ITSMChange.pm,v 1.182 2009-11-24 07:54:37 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.181 $) [1];
+$VERSION = qw($Revision: 1.182 $) [1];
 
 =head1 NAME
 
@@ -1026,6 +1026,12 @@ is ignored.
         WorkOrderAgentIDs => [ 6, 2 ],                                 # (optional)
         CABAgents         => [ 9, 13 ],                                # (optional)
         CABCustomers      => [ 'tt', 'xx' ],                           # (optional)
+        Categories        => [ '1 very low', '2 low' ],                # (optional)
+        CategoryIDs       => [ 135, 173 ],                             # (optional)
+        Impacts           => [ '1 very low', '2 low' ],                # (optional)
+        ImpactIDs         => [ 136, 174 ],                             # (optional)
+        Priorities        => [ '1 very low', '2 low' ],                # (optional)
+        PriorityIDs       => [ 137, 175 ],                             # (optional)
 
         # search in text fields of workorder object
         WorkOrderTitle            => 'Boot Mailserver',                # (optional)
@@ -1073,6 +1079,7 @@ is ignored.
         # ChangeManagerID, ChangeBuilderID,
         # PlannedStartTime, PlannedEndTime,
         # ActualStartTime, ActualEndTime,
+        # CategoryID, ImpactID, PriorityID
         # CreateTime, CreateBy, ChangeTime, ChangeBy)
 
         # Additional information for OrderBy:
@@ -1124,6 +1131,12 @@ sub ChangeSearch {
         WorkOrderAgentIDs
         CreateBy
         ChangeBy
+        Categories
+        CategoryIDs
+        Impacts
+        ImpactIDs
+        Priorities
+        PriorityIDs
         )
         )
     {
@@ -1154,6 +1167,9 @@ sub ChangeSearch {
         CreateBy         => 'c.create_by',
         ChangeTime       => 'c.change_time',
         ChangeBy         => 'c.change_by',
+        CategoryID       => 'c.category_id',
+        ImpactID         => 'c.impact_id',
+        PriorityID       => 'c.priority_id',
         PlannedStartTime => 'MIN(wo1.planned_start_time)',
         PlannedEndTime   => 'MAX(wo1.planned_end_time)',
         ActualStartTime  => 'MIN(wo1.actual_start_time)',
@@ -1206,6 +1222,14 @@ sub ChangeSearch {
     # check whether all of the given ChangeStateIDs are valid
     return if !$Self->_CheckChangeStateIDs( ChangeStateIDs => $Param{ChangeStateIDs} );
 
+    # check whether all of the given CategoryIDs, ImpactIDs and PriorityIDs are valid
+    for my $Type (qw(Category Impact Priority)) {
+        return if !$Self->_CheckChangeCIPIDs(
+            IDs  => $Param{"${Type}IDs"},
+            Type => $Type,
+        );
+    }
+
     # look up and thus check the States
     for my $ChangeState ( @{ $Param{ChangeStates} } ) {
 
@@ -1225,6 +1249,36 @@ sub ChangeSearch {
         }
 
         push @{ $Param{ChangeStateIDs} }, $ChangeStateID;
+    }
+
+    # look up and thus check the CIPs
+    my %CIPSingular2Plural = (
+        Category => 'Categories',
+        Impact   => 'Impacts',
+        Priority => 'Priorities',
+    );
+
+    for my $CIPSingular ( keys %CIPSingular2Plural ) {
+        for my $CIP ( @{ $Param{ $CIPSingular2Plural{$CIPSingular} } } ) {
+
+            # look up the ID for the name
+            my $CIPID = $Self->ChangeCIPLookup(
+                CIP  => $CIP,
+                Type => $CIPSingular,
+            );
+
+            # check whether the ID was found, whether the name exists
+            if ( !$CIPID ) {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "The $CIPSingular $CIP is not known!",
+                );
+
+                return;
+            }
+
+            push @{ $Param{"${CIPSingular}IDs"} }, $CIPID;
+        }
     }
 
     my @SQLWhere;           # assemble the conditions used in the WHERE clause
@@ -1293,6 +1347,9 @@ sub ChangeSearch {
         ChangeStateIDs   => 'c.change_state_id',
         ChangeManagerIDs => 'c.change_manager_id',
         ChangeBuilderIDs => 'c.change_builder_id',
+        CategoryIDs      => 'c.category_id',
+        ImpactIDs        => 'c.impact_id',
+        PriorityIDs      => 'c.priority_id',
         CreateBy         => 'c.create_by',
         ChangeBy         => 'c.change_by',
     );
@@ -2592,6 +2649,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.181 $ $Date: 2009-11-24 01:21:19 $
+$Revision: 1.182 $ $Date: 2009-11-24 07:54:37 $
 
 =cut

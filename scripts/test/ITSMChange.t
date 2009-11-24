@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.136 2009-11-23 16:28:41 bes Exp $
+# $Id: ITSMChange.t,v 1.137 2009-11-24 07:54:37 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -302,6 +302,61 @@ for my $HistoryType (@DefaultHistoryTypes) {
         $LookedUpHistoryType,
         $HistoryType,
         "Look up history type id '$LookedUpHistoryTypeID'",
+    );
+}
+
+# ------------------------------------------------------------ #
+# check existence of the default CIP
+# ------------------------------------------------------------ #
+
+my @CIPValues = ( '1 very low', '2 low', '3 normal', '4 high', '5 very high' );
+
+# get list of the categories with swapped keys and values
+my %ChangeCategoryID2Name = %{
+    $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::ChangeManagement::Category',
+        ) || {}
+    };
+my %ChangeCategoryName2ID   = reverse %ChangeCategoryID2Name;
+my @SortedChangeCategoryIDs = sort keys %ChangeCategoryID2Name;
+
+# get list of the impacts with swapped keys and values
+my %ChangeImpactID2Name = %{
+    $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::ChangeManagement::Impact',
+        ) || {}
+    };
+my %ChangeImpactName2ID   = reverse %ChangeImpactID2Name;
+my @SortedChangeImpactIDs = sort keys %ChangeImpactID2Name;
+
+# get list of the priorities with swapped keys and values
+my %ChangePriorityID2Name = %{
+    $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::ChangeManagement::Priority',
+        ) || {}
+    };
+my %ChangePriorityName2ID   = reverse %ChangePriorityID2Name;
+my @SortedChangePriorityIDs = sort keys %ChangePriorityID2Name;
+
+# check if CIP values are in GeneralCatalog
+for my $CIPValue (@CIPValues) {
+
+    # test category
+    $Self->True(
+        $ChangeCategoryName2ID{$CIPValue},
+        "Test " . $TestCount++ . " - check category '$CIPValue'"
+    );
+
+    # test impact
+    $Self->True(
+        $ChangeImpactName2ID{$CIPValue},
+        "Test " . $TestCount++ . " - check impact '$CIPValue'"
+    );
+
+    # test priority
+    $Self->True(
+        $ChangePriorityName2ID{$CIPValue},
+        "Test " . $TestCount++ . " - check priority '$CIPValue'"
     );
 }
 
@@ -1045,6 +1100,111 @@ my @ChangeTests = (
             },
         },
         SearchTest => [ 42, 43 ],
+    },
+
+    # Test category
+    {
+        Description => 'Test category "1 very low"',
+        SourceData  => {
+            ChangeAdd => {
+                UserID      => $UserIDs[0],
+                ChangeTitle => 'Test CIP (Category) - ' . $UniqueSignature,
+                Category    => '1 very low',
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                ChangeTitle     => 'Test CIP (Category) - ' . $UniqueSignature,
+                ChangeBuilderID => $UserIDs[0],
+                Category        => '1 very low',
+                CategoryID      => $ChangeCategoryName2ID{'1 very low'},
+            },
+        },
+        SearchTest => [ 6, 51 ],
+    },
+
+    # Test invalid category
+    {
+        Description => 'Test invalid category "18 super high"',
+        Fails       => 1,
+        SourceData  => {
+            ChangeAdd => {
+                UserID      => $UserIDs[0],
+                ChangeTitle => 'Test CIP (Category) - ' . $UniqueSignature,
+                Category    => '18 super high',
+            },
+        },
+        SearchTest => [],
+    },
+
+    # Test impact
+    {
+        Description => 'Test priority "1 very low"',
+        SourceData  => {
+            ChangeAdd => {
+                UserID      => $UserIDs[0],
+                ChangeTitle => 'Test CIP (Impact) - ' . $UniqueSignature,
+                Impact      => '1 very low',
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                ChangeTitle     => 'Test CIP (Impact) - ' . $UniqueSignature,
+                ChangeBuilderID => $UserIDs[0],
+                Impact          => '1 very low',
+                ImpactID        => $ChangeImpactName2ID{'1 very low'},
+            },
+        },
+        SearchTest => [ 6, 52 ],
+    },
+
+    # Test invalid impact
+    {
+        Description => 'Test invalid impact "18 super high"',
+        Fails       => 1,
+        SourceData  => {
+            ChangeAdd => {
+                UserID      => $UserIDs[0],
+                ChangeTitle => 'Test CIP (Impact) - ' . $UniqueSignature,
+                Impact      => '18 super high',
+            },
+        },
+        SearchTest => [],
+    },
+
+    # Test priority
+    {
+        Description => 'Test priority "1 very low"',
+        SourceData  => {
+            ChangeAdd => {
+                UserID      => $UserIDs[0],
+                ChangeTitle => 'Test CIP (Priority) - ' . $UniqueSignature,
+                Priority    => '1 very low',
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                ChangeTitle     => 'Test CIP (Priority) - ' . $UniqueSignature,
+                ChangeBuilderID => $UserIDs[0],
+                Priority        => '1 very low',
+                PriorityID      => $ChangePriorityName2ID{'1 very low'},
+            },
+        },
+        SearchTest => [ 6, 53 ],
+    },
+
+    # Test invalid priority
+    {
+        Description => 'Test invalid priority "18 super high"',
+        Fails       => 1,
+        SourceData  => {
+            ChangeAdd => {
+                UserID      => $UserIDs[0],
+                ChangeTitle => 'Test CIP (Priority) - ' . $UniqueSignature,
+                Priority    => '18 super high',
+            },
+        },
+        SearchTest => [],
     },
 
     #------------------------------#
@@ -2729,6 +2889,45 @@ my @ChangeSearchTests = (
             Description    => 'This is bold - ' . $UniqueSignature,
             Justification  => 'This is bold - ' . $UniqueSignature,
             UsingWildcards => 0,
+        },
+        ResultData => {
+            TestExistence => 1,
+            TestCount     => 1,
+        },
+    },
+
+    # Nr 51 - Search for category
+    {
+        Description => 'Search for category',
+        SearchData  => {
+            Categories  => ['1 very low'],
+            ChangeTitle => 'Test CIP%' . $UniqueSignature,
+        },
+        ResultData => {
+            TestExistence => 1,
+            TestCount     => 1,
+        },
+    },
+
+    # Nr 52 - Search for impact
+    {
+        Description => 'Search for impact',
+        SearchData  => {
+            Impacts     => ['1 very low'],
+            ChangeTitle => 'Test CIP%' . $UniqueSignature,
+        },
+        ResultData => {
+            TestExistence => 1,
+            TestCount     => 1,
+        },
+    },
+
+    # Nr 53 - Search for priority
+    {
+        Description => 'Search for priority',
+        SearchData  => {
+            Priorities  => ['1 very low'],
+            ChangeTitle => 'Test CIP%' . $UniqueSignature,
         },
         ResultData => {
             TestExistence => 1,
