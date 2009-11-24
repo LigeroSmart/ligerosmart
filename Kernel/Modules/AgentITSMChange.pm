@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChange.pm - the OTRS::ITSM::ChangeManagement change overview module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChange.pm,v 1.13 2009-11-23 16:04:10 ub Exp $
+# $Id: AgentITSMChange.pm,v 1.14 2009-11-24 02:41:30 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -39,6 +39,10 @@ sub new {
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
 
+    # gret filter and view params
+    $Self->{Filter} = $Self->{ParamObject}->GetParam( Param => 'Filter' ) || 'All';
+    $Self->{View}   = $Self->{ParamObject}->GetParam( Param => 'View' )   || '';
+
     return $Self;
 }
 
@@ -59,10 +63,6 @@ sub Run {
         );
     }
 
-    # TODO: implement paging
-    # get page
-    my $Page = $Self->{ParamObject}->GetParam( Param => 'Page' ) || 1;
-
     # store last screen, used for backlinks
     $Self->{SessionObject}->UpdateSessionID(
         SessionID => $Self->{SessionID},
@@ -70,102 +70,125 @@ sub Run {
         Value     => $Self->{RequestedURL},
     );
 
-    my %SearchResult = (
-        Result       => 0,
-        ChangesAvail => 0,
-    );
+    # get sorting parameters
+    my $SortBy = $Self->{ParamObject}->GetParam( Param => 'SortBy' )
+        || $Self->{Config}->{'SortBy::Default'}
+        || 'PlannedStartTime';
 
-    # get list of change ids
-    my $Changes = $Self->{ChangeObject}->ChangeSearch(
-        UserID => $Self->{UserID},
-    ) || [];
-
-    $SearchResult{ChangesAvail} = scalar @{$Changes};
-
-    if ( $SearchResult{ChangesAvail} ) {
-        $Self->{LayoutObject}->Block(
-            Name => 'Change',
-            Data => {
-                %Param,
-                %SearchResult,
-            },
-        );
-    }
-
-    my $CssClass = '';
-    for my $ChangeID ( @{$Changes} ) {
-
-        # get current change
-        my $Change = $Self->{ChangeObject}->ChangeGet(
-            UserID   => $Self->{UserID},
-            ChangeID => $ChangeID,
-        ) || {};
-
-        # set CSS-class of the row
-        $CssClass = $CssClass eq 'searchpassive' ? 'searchactive' : 'searchpassive';
-
-        # set workorder count
-        $Change->{WorkOrderIDs} ||= [];
-        $Change->{WorkOrderCount} = scalar @{ $Change->{WorkOrderIDs} } || 0;
-
-        # set change builder
-        # user Postfixes
-        my @Postfixes = qw(UserLogin UserFirstname UserLastname);
-
-        if ( $Change->{ChangeBuilderID} ) {
-
-            # get change builder data
-            my %ChangeBuilderUser = $Self->{UserObject}->GetUserData(
-                UserID => $Change->{ChangeBuilderID},
-                Cached => 1,
-            );
-            for my $Postfix (@Postfixes) {
-                $Change->{ 'ChangeBuilder' . $Postfix } = $ChangeBuilderUser{$Postfix};
-            }
-
-            # parenthesis are shown only when there is a change builder
-            $Change->{'ChangeBuilderOpenParen'}  = '(';
-            $Change->{'ChangeBuilderCloseParen'} = ')';
-        }
-        else {
-
-            # show a placeholder, when there is no change builder
-            $Change->{ChangeBuilderUserLogin} = '-';
-        }
-
-        $Self->{LayoutObject}->Block(
-            Name => 'ChangeRow',
-            Data => {
-                %Param,
-                %SearchResult,
-                %{$Change},
-                CssClass => $CssClass,
-            },
-        );
-    }
+    # get ordering parameters
+    my $OrderBy = $Self->{ParamObject}->GetParam( Param => 'OrderBy' )
+        || $Self->{Config}->{'Order::Default'}
+        || 'Up';
 
     # investigate refresh
     my $Refresh = $Self->{UserRefreshTime} ? 60 * $Self->{UserRefreshTime} : undef;
 
-    # output header
-    my $Output = $Self->{LayoutObject}->Header(
-        Title   => 'Overview',
-        Refresh => $Refresh,
-    );
+    # starting with page ...
+    my $Output = $Self->{LayoutObject}->Header( Refresh => $Refresh );
     $Output .= $Self->{LayoutObject}->NavigationBar();
+    $Self->{LayoutObject}->Print( Output => \$Output );
+    $Output = '';
 
-    # start template output
-    $Output .= $Self->{LayoutObject}->Output(
-        TemplateFile => 'AgentITSMChange',
-        Data         => {
-            %Param,
-            %SearchResult,
+    # set search filters
+    my %Filters = (
+        All => {
+            Name   => 'All',
+            Prio   => 1000,
+            Search => {
+                OrderBy          => [$SortBy],
+                OrderByDirection => [$OrderBy],
+                Limit            => 1000,
+                UserID           => $Self->{UserID},
+            },
+        },
+
+        # TODO these are just examples
+        # think about using sysconfig for configurable filter settings
+        'successful' => {
+            Name   => 'successful',
+            Prio   => 1001,
+            Search => {
+                OrderBy          => [$SortBy],
+                OrderByDirection => [$OrderBy],
+                ChangeStates     => ['successful'],
+                Limit            => 1000,
+                UserID           => $Self->{UserID},
+            },
+        },
+        'requested' => {
+            Name   => 'requested',
+            Prio   => 1002,
+            Search => {
+                OrderBy          => [$SortBy],
+                OrderByDirection => [$OrderBy],
+                ChangeStates     => ['requested'],
+                Limit            => 1000,
+                UserID           => $Self->{UserID},
+            },
         },
     );
 
-    # add footer
-    $Output .= $Self->{LayoutObject}->Footer();
+    # check if filter is valid
+    if ( !$Filters{ $Self->{Filter} } ) {
+        $Self->{LayoutObject}->FatalError( Message => "Invalid Filter: $Self->{Filter}!" );
+    }
 
+    # search changes which match the selected filter
+    my $ChangeIDsRef = $Self->{ChangeObject}->ChangeSearch(
+        %{ $Filters{ $Self->{Filter} }->{Search} },
+    );
+
+    my %NavBarFilter;
+    for my $Filter ( keys %Filters ) {
+
+        # count the number of changes for each filter
+        my $Count = $Self->{ChangeObject}->ChangeSearch(
+            %{ $Filters{$Filter}->{Search} },
+            Result => 'COUNT',
+        );
+
+        # display the navbar filter
+        $NavBarFilter{ $Filters{$Filter}->{Prio} } = {
+            Count  => $Count,
+            Filter => $Filter,
+            %{ $Filters{$Filter} },
+        };
+    }
+
+    # show changes
+    my $LinkPage = 'Filter='
+        . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
+        . '&View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
+        . '&SortBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $SortBy )
+        . '&OrderBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $OrderBy )
+        . '&';
+    my $LinkSort = 'Filter='
+        . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
+        . '&View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
+        . '&';
+    my $LinkFilter = 'SortBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $SortBy )
+        . '&OrderBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $OrderBy )
+        . '&View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
+        . '&';
+    $Output .= $Self->{LayoutObject}->ITSMChangeListShow(
+        ChangeIDs => $ChangeIDsRef,
+        Total     => scalar @{$ChangeIDsRef},
+
+        View => $Self->{View},
+
+        Filter     => $Self->{Filter},
+        Filters    => \%NavBarFilter,
+        FilterLink => $LinkFilter,
+
+        TitleName  => 'Overview: Change',
+        TitleValue => $Self->{Filter},
+
+        Env      => $Self,
+        LinkPage => $LinkPage,
+        LinkSort => $LinkSort,
+    );
+
+    $Output .= $Self->{LayoutObject}->Footer();
     return $Output;
 }
 
