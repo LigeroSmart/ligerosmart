@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.140 2009-11-24 11:59:48 bes Exp $
+# $Id: ITSMChange.t,v 1.141 2009-11-24 13:42:35 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -232,7 +232,7 @@ for my $State (@DefaultChangeStates) {
     );
 }
 
-# now some param checks
+# now some param checks for ChangeStateLookup
 my $LookupOK = $Self->{ChangeObject}->ChangeStateLookup();
 
 $Self->False(
@@ -2232,7 +2232,10 @@ continue {
     $TestCount++;
 }
 
+# ------------------------------------------------------------ #
 # test for ChangeLookup
+# ------------------------------------------------------------ #
+
 my ($ChangeLookupTestChangeID) = @{ $Label2ChangeIDs{ChangeLookupTest} };
 
 if ($ChangeLookupTestChangeID) {
@@ -2264,6 +2267,27 @@ if ($ChangeLookupTestChangeID) {
         'Test '
             . $TestCount++
             . ": ChangeLookup with ChangeID $ChangeLookupTestChangeID successful.",
+    );
+
+    # now some param checks for ChangeLookup()
+    my $LookupOK = $Self->{ChangeObject}->ChangeLookup(
+        UserID => 1,
+    );
+
+    $Self->False(
+        $LookupOK,
+        'No params passed to ChangeLookup()',
+    );
+
+    $LookupOK = $Self->{ChangeObject}->ChangeLookup(
+        ChangeID     => $ChangeLookupTestChangeID,
+        ChangeNumber => $ChangeData->{ChangeNumber},
+        UserID       => 1,
+    );
+
+    $Self->False(
+        $LookupOK,
+        'Exclusive params passed to ChangeLookup()',
     );
 }
 
