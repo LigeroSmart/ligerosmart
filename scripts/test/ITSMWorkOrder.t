@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.105 2009-11-24 11:59:48 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.106 2009-11-24 12:12:52 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -2351,10 +2351,6 @@ for my $Test (@WorkOrderSearchTests) {
         # When a 'Limit' has been passed, then the returned count not necessarily matches
         # the number of IDs in the returned array. In that case testing is futile.
         if ( !$Test->{SearchData}->{Limit} ) {
-
-           #if ( $CountWorkOrderIDs != $ExpectedCount ) {
-           #use Data::Dumper; die Dumper($CountWorkOrderIDs, $ExpectedCount, $WorkOrderIDs, $Test );
-           #}
             $Self->Is(
                 $CountWorkOrderIDs,
                 $ExpectedCount,
