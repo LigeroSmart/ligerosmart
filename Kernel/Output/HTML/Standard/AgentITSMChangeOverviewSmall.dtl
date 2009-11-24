@@ -2,7 +2,7 @@
 # AgentITSMChangeOverviewSmall.dtl - html for change overview table
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeOverviewSmall.dtl,v 1.1 2009-11-24 02:33:31 ub Exp $
+# $Id: AgentITSMChangeOverviewSmall.dtl,v 1.2 2009-11-24 02:36:37 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -41,7 +41,7 @@
                         <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"ChangeStateSignal"}.png" title="$Text{"$QData{"ChangeState"}"}" alt="$Text{"$QData{"ChangeState"}"}">
                     </td>
                     <td>
-                        <a href="$Env{"Baselink"}Action=AgentITSMChangeZoom&ChangeID=$Data{"ChangeID"}" onmouseover="window.status='$JSText{"Zoom"}'; return true;" onmouseout="window.status='';" title="$Data{"ChangeNumber"}">$Data{"ChangeNumber"}</a>
+                        <a href="$Env{"Baselink"}Action=AgentITSMChangeZoom&ChangeID=$Data{"ChangeID"}" onmouseover="window.status='$JSText{"Zoom"}'; return true;" onmouseout="window.status='';" title="$QData{"ChangeNumber"}">$QData{"ChangeNumber"}</a>
                     </td>
                     <td>
                         <div title="$QData{"ChangeTitle"}">$QData{"ChangeTitle","50"}</div>
