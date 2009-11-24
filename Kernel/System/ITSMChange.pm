@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.187 2009-11-24 14:38:35 bes Exp $
+# $Id: ITSMChange.pm,v 1.188 2009-11-24 15:19:30 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.187 $) [1];
+$VERSION = qw($Revision: 1.188 $) [1];
 
 =head1 NAME
 
@@ -1966,18 +1966,20 @@ The array elements are sorted by id in ascending order.
 sub ChangePossibleCIPGet {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
-    for my $Attribute (qw(Type)) {
-        if ( !$Param{$Attribute} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Attribute!",
-            );
-            return;
-        }
+    # check Type param for valid values
+    if (
+        !$Param{Type}
+        || ( $Param{Type} ne 'Category' && $Param{Type} ne 'Impact' && $Param{Type} ne 'Priority' )
+        )
+    {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'The param Type must be either "Category" or "Impact" or "Priority"!',
+        );
+        return;
     }
 
-    # get workorder state list
+    # get item list for the requested type
     my $CIPList = $Self->{GeneralCatalogObject}->ItemList(
         Class => 'ITSM::ChangeManagement::' . $Param{Type},
     ) || {};
@@ -2678,6 +2680,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.187 $ $Date: 2009-11-24 14:38:35 $
+$Revision: 1.188 $ $Date: 2009-11-24 15:19:30 $
 
 =cut
