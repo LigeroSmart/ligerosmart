@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.144 2009-11-24 15:21:26 bes Exp $
+# $Id: ITSMChange.t,v 1.145 2009-11-24 15:32:51 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -4736,7 +4736,7 @@ $Self->True(
 # ------------------------------------------------------------ #
 
 $LookupOk = $Self->{ChangeObject}->ChangeCIPLookup(
-    CID  => '1 very high',
+    CIP  => '1 very high',
     Type => 'non-existent',
 );
 
@@ -4746,7 +4746,7 @@ $Self->False(
 );
 
 $LookupOk = $Self->{ChangeObject}->ChangeCIPLookup(
-    CID => '1 very high',
+    CIP => '1 very high',
 );
 
 $Self->False(
@@ -4760,18 +4760,18 @@ $LookupOk = $Self->{ChangeObject}->ChangeCIPLookup(
 
 $Self->False(
     $LookupOk,
-    'Parameter ID or CID not passed to ChangeCIPLookup()',
+    'Parameter ID or CIP not passed to ChangeCIPLookup()',
 );
 
 $LookupOk = $Self->{ChangeObject}->ChangeCIPLookup(
     Type => 'Priority',
-    CID  => '1 very high',
+    CIP  => '1 very high',
     ID   => 123,
 );
 
 $Self->False(
     $LookupOk,
-    'Exclusive parameters ID and CID passed to ChangeCIPLookup()',
+    'Exclusive parameters ID and CIP passed to ChangeCIPLookup()',
 );
 
 # ------------------------------------------------------------ #
