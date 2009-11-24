@@ -2,7 +2,7 @@
 # AgentITSMChangeEdit.dtl - provides HTML form for AgentITSMChangeEdit
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.dtl,v 1.25 2009-11-23 19:40:26 mae Exp $
+# $Id: AgentITSMChangeEdit.dtl,v 1.26 2009-11-24 13:51:05 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -62,7 +62,7 @@ function submit_compose() {
                 <input type="hidden" name="PriorityRC" value="0">
                 <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
                     <tr>
-                        <td class="contenthead">$Text{"Change"}</td>
+                        <td class="contenthead">$Text{"ITSM Change"}</td>
                     </tr>
                     <tr class="contentbody">
                         <td>
@@ -183,15 +183,13 @@ $Include{"RichTextEditorITSM"}
                                     <td colspan="2">&nbsp;</td>
                                 </tr>
                                 <tr>
-                                    <td class="contentkey">
-                                        $Text{"Attachment"}:
-                                    </td>
+                                    <td class="contentkey">$Text{"Attachment"}:</td>
                                     <td class="contentvalue">
-                                        <table width="100%">
+                                        <table width="100%" cellspacing="0" cellpadding="0">
 <!-- dtl:block:AttachmentRow -->
                                             <tr>
-                                                <td>$Data{"AttachmentName"}</td>
-                                                <td>$Data{"AttachmentSize"}</td>
+                                                <td>$QData{"AttachmentName"}</td>
+                                                <td>$QData{"AttachmentSize"}</td>
 <!-- TODO: set correct name for Delete button with unique name -->
                                                 <td><input class="button" type="submit" name="DeleteAttachmentxxx" value="$Text{"Delete"}"></td>
                                             </tr>
