@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ITSMChangeOverviewSmall.pm.pm
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeOverviewSmall.pm,v 1.3 2009-11-24 12:46:49 ub Exp $
+# $Id: ITSMChangeOverviewSmall.pm,v 1.4 2009-11-24 20:37:38 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -49,6 +49,22 @@ sub Run {
         }
     }
 
+    # check ShowColumns parameter
+    my @ShowColumns;
+    if ( $Param{ShowColumns} && ref $Param{ShowColumns} eq 'ARRAY' && @{ $Param{ShowColumns} } ) {
+        @ShowColumns = @{ $Param{ShowColumns} };
+    }
+
+    # build column header blocks
+    if (@ShowColumns) {
+        for my $Column (@ShowColumns) {
+            $Self->{LayoutObject}->Block(
+                Name => 'Record' . $Column . 'Header',
+                Data => \%Param,
+            );
+        }
+    }
+
     my $Output   = '';
     my $Counter  = 0;
     my $CssClass = '';
@@ -68,6 +84,7 @@ sub Run {
             # set CSS-class of the row
             $CssClass = $CssClass eq 'searchpassive' ? 'searchactive' : 'searchpassive';
 
+            # to store data which comes not from change
             my %Data;
 
             # get change builder data
@@ -79,14 +96,31 @@ sub Run {
                 $Data{ 'ChangeBuilder' . $Postfix } = $ChangeBuilderUser{$Postfix};
             }
 
+            # build record block
             $Self->{LayoutObject}->Block(
                 Name => 'Record',
                 Data => {
+                    %Param,
                     %{$Change},
                     %Data,
                     CssClass => $CssClass,
                 },
             );
+
+            # build column record blocks
+            if (@ShowColumns) {
+                for my $Column (@ShowColumns) {
+                    $Self->{LayoutObject}->Block(
+                        Name => 'Record' . $Column,
+                        Data => {
+                            %Param,
+                            %{$Change},
+                            %Data,
+                            CssClass => $CssClass,
+                        },
+                    );
+                }
+            }
         }
     }
 
