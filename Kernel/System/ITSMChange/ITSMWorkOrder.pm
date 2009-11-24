@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.34 2009-11-23 22:11:35 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.35 2009-11-24 01:22:16 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.34 $) [1];
+$VERSION = qw($Revision: 1.35 $) [1];
 
 =head1 NAME
 
@@ -780,6 +780,10 @@ return a list of workorder ids as an array reference
         UsingWildcards => 1,                                           # (optional)
         # (0 | 1) default 1
 
+        Result => 'ARRAY' || 'COUNT',                                  # (optional)
+        # default: ARRAY, returns an array of workorder ids
+        # COUNT returns a scalar with the number of found workorders
+
         Limit => 100,                                                  # (optional)
 
         UserID => 1,
@@ -889,6 +893,9 @@ sub WorkOrderSearch {
     if ( !defined $Param{UsingWildcards} ) {
         $Param{UsingWildcards} = 1;
     }
+
+    # set the default behaviour for the return type
+    my $Result = $Param{Result} || 'ARRAY';
 
     # check whether all of the given WorkOrderStateIDs are valid
     return if !$Self->_CheckWorkOrderStateIDs( WorkOrderStateIDs => $Param{WorkOrderStateIDs} );
@@ -1058,6 +1065,11 @@ sub WorkOrderSearch {
         push @SQLWhere, "$TimeParams{$TimeParam} '$Param{$TimeParam}'";
     }
 
+    # delete the OrderBy parameter when the result type is 'COUNT'
+    if ( $Result eq 'COUNT' ) {
+        $Param{OrderBy} = [];
+    }
+
     # assemble the ORDER BY clause
     my @SQLOrderBy;
     my $Count = 0;
@@ -1091,6 +1103,12 @@ sub WorkOrderSearch {
 
     # assemble the SQL query
     my $SQL = 'SELECT wo.id FROM change_workorder wo ';
+
+    # modify SQL if result type is 'COUNT'
+    if ( $Result eq 'COUNT' ) {
+        $SQL        = 'SELECT DISTINCT COUNT(*) FROM change_workorder wo ';
+        @SQLOrderBy = ();
+    }
 
     # add the joins
     my %LongTableName = (
@@ -1142,6 +1160,9 @@ sub WorkOrderSearch {
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         push @IDs, $Row[0];
     }
+
+    # return the count as scalar
+    return $IDs[0] if $Result eq 'COUNT';
 
     return \@IDs;
 }
@@ -2128,6 +2149,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.34 $ $Date: 2009-11-23 22:11:35 $
+$Revision: 1.35 $ $Date: 2009-11-24 01:22:16 $
 
 =cut

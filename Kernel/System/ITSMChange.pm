@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.180 2009-11-23 22:11:35 ub Exp $
+# $Id: ITSMChange.pm,v 1.181 2009-11-24 01:21:19 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.180 $) [1];
+$VERSION = qw($Revision: 1.181 $) [1];
 
 =head1 NAME
 
@@ -1018,7 +1018,7 @@ is ignored.
 
         # array parameters are used with logical OR operator
         ChangeStateIDs    => [ 11, 12, 13 ],                           # (optional)
-        ChangeStates      => [ 'requested','failed' ],                 # (optional)
+        ChangeStates      => [ 'requested', 'failed' ],                # (optional)
         ChangeManagerIDs  => [ 1, 2, 3 ],                              # (optional)
         ChangeBuilderIDs  => [ 5, 7, 4 ],                              # (optional)
         CreateBy          => [ 5, 2, 3 ],                              # (optional)
@@ -1085,6 +1085,10 @@ is ignored.
 
         UsingWildcards => 1,                                           # (optional)
         # (0 | 1) default 1
+
+        Result => 'ARRAY' || 'COUNT',                                  # (optional)
+        # default: ARRAY, returns an array of change ids
+        # COUNT returns a scalar with the number of found changes
 
         Limit => 100,                                                  # (optional)
 
@@ -1195,6 +1199,9 @@ sub ChangeSearch {
     if ( !defined $Param{UsingWildcards} ) {
         $Param{UsingWildcards} = 1;
     }
+
+    # set the default behaviour for the return type
+    my $Result = $Param{Result} || 'ARRAY';
 
     # check whether all of the given ChangeStateIDs are valid
     return if !$Self->_CheckChangeStateIDs( ChangeStateIDs => $Param{ChangeStateIDs} );
@@ -1415,6 +1422,11 @@ sub ChangeSearch {
         ActualEndTime    => 1,
     );
 
+    # delete the OrderBy parameter when the result type is 'COUNT'
+    if ( $Result eq 'COUNT' ) {
+        $Param{OrderBy} = [];
+    }
+
     # assemble the ORDER BY clause
     my @SQLOrderBy;
     my @SQLAliases;    # order by aliases, be on the save side with MySQL
@@ -1460,6 +1472,12 @@ sub ChangeSearch {
 
     # assemble the SQL query
     my $SQL = 'SELECT ' . join( ', ', ( 'c.id', @SQLAliases ) ) . ' FROM change_item c ';
+
+    # modify SQL if result type is 'COUNT'
+    if ( $Result eq 'COUNT' ) {
+        $SQL        = 'SELECT DISTINCT COUNT(*) FROM change_item c ';
+        @SQLOrderBy = ();
+    }
 
     # add the joins
     my %LongTableName = (
@@ -1547,6 +1565,9 @@ sub ChangeSearch {
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         push @IDs, $Row[0];
     }
+
+    # return the count as scalar
+    return $IDs[0] if $Result eq 'COUNT';
 
     return \@IDs;
 }
@@ -2571,6 +2592,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.180 $ $Date: 2009-11-23 22:11:35 $
+$Revision: 1.181 $ $Date: 2009-11-24 01:21:19 $
 
 =cut
