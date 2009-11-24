@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChange.pm - the OTRS::ITSM::ChangeManagement change overview module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChange.pm,v 1.16 2009-11-24 12:50:49 ub Exp $
+# $Id: AgentITSMChange.pm,v 1.17 2009-11-24 20:36:42 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -73,7 +73,7 @@ sub Run {
     # get sorting parameters
     my $SortBy = $Self->{ParamObject}->GetParam( Param => 'SortBy' )
         || $Self->{Config}->{'SortBy::Default'}
-        || 'PlannedStartTime';
+        || 'ChangeNumber';
 
     # get ordering parameters
     my $OrderBy = $Self->{ParamObject}->GetParam( Param => 'OrderBy' )
@@ -155,6 +155,17 @@ sub Run {
         };
     }
 
+    # define which columns should be shown in this overview
+    my @ShowColumns = qw(
+        ChangeStateSignal
+        ChangeNumber
+        ChangeTitle
+        ChangeBuilder
+        ChangeWorkOrderCount
+        ChangeState
+        CreateTime
+    );
+
     # show changes
     my $LinkPage = 'Filter='
         . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
@@ -186,6 +197,8 @@ sub Run {
         Env      => $Self,
         LinkPage => $LinkPage,
         LinkSort => $LinkSort,
+
+        ShowColumns => \@ShowColumns,
     );
 
     $Output .= $Self->{LayoutObject}->Footer();
