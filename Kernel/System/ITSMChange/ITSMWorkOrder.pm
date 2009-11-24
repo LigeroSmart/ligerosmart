@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.36 2009-11-24 09:21:45 bes Exp $
+# $Id: ITSMWorkOrder.pm,v 1.37 2009-11-24 10:56:13 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.36 $) [1];
+$VERSION = qw($Revision: 1.37 $) [1];
 
 =head1 NAME
 
@@ -768,6 +768,7 @@ is ignored.
         ChangeTimeOlderDate       => '2006-01-19 23:59:59',            # (optional)
 
         OrderBy => [ 'ChangeID', 'WorkOrderNumber' ],                  # (optional)
+        # ignored when the result type is 'COUNT'
         # default: [ 'WorkOrderID' ],
         # (WorkOrderID, ChangeID, WorkOrderNumber, WorkOrderTitle
         # WorkOrderStateID, WorkOrderTypeID, WorkOrderAgentID,
@@ -780,6 +781,7 @@ is ignored.
         # The pairing is made by the array indices.
 
         OrderByDirection => [ 'Down', 'Up' ],                          # (optional)
+        # ignored when the result type is 'COUNT'
         # default: [ 'Down' ]
         # (Down | Up)
 
@@ -791,6 +793,7 @@ is ignored.
         # COUNT returns a scalar with the number of found workorders
 
         Limit => 100,                                                  # (optional)
+        # ignored when the result type is 'COUNT'
 
         UserID => 1,
     );
@@ -1110,9 +1113,10 @@ sub WorkOrderSearch {
     # assemble the SQL query
     my $SQL = 'SELECT wo.id FROM change_workorder wo ';
 
-    # modify SQL if result type is 'COUNT'
+    # modify SQL when the result type is 'COUNT'.
+    # There is no 'GROUP BY' SQL-clause, therefore COUNT(c.id) always give the wanted count
     if ( $Result eq 'COUNT' ) {
-        $SQL        = 'SELECT DISTINCT COUNT(*) FROM change_workorder wo ';
+        $SQL        = 'SELECT COUNT(wo.id) FROM change_workorder wo ';
         @SQLOrderBy = ();
     }
 
@@ -1153,6 +1157,11 @@ sub WorkOrderSearch {
         $SQL .= 'ORDER BY ';
         $SQL .= join ', ', @SQLOrderBy;
         $SQL .= ' ';
+    }
+
+    # ignore the parameter 'Limit' when result type is 'COUNT'
+    if ( $Result eq 'COUNT' ) {
+        $Param{Limit} = 1;
     }
 
     # ask database
@@ -2155,6 +2164,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.36 $ $Date: 2009-11-24 09:21:45 $
+$Revision: 1.37 $ $Date: 2009-11-24 10:56:13 $
 
 =cut
