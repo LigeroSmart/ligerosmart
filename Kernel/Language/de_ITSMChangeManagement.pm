@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMChangeManagement.pm - the german translation of ITSMChangeManagement
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: de_ITSMChangeManagement.pm,v 1.10 2009-11-24 00:05:02 ub Exp $
+# $Id: de_ITSMChangeManagement.pm,v 1.11 2009-11-24 11:50:11 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -67,6 +67,11 @@ sub Data {
     $Lang->{'workorder'} = 'Arbeitsanweisung';
     $Lang->{'backout'}   = 'Alternative Arbeitsanweisung';
     $Lang->{'pir'}       = 'PIR (nachgelagerte QS)';
+
+    # Change Overviews
+    $Lang->{'Small'}     = 'Klein';
+    $Lang->{'Medium'}    = 'Mittel';
+    $Lang->{'Preview'}   = 'Vorschau';
 
     return 1;
 }
