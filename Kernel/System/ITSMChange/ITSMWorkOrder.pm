@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.35 2009-11-24 01:22:16 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.36 2009-11-24 09:21:45 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.35 $) [1];
+$VERSION = qw($Revision: 1.36 $) [1];
 
 =head1 NAME
 
@@ -707,7 +707,13 @@ sub WorkOrderList {
 
 =item WorkOrderSearch()
 
-return a list of workorder ids as an array reference
+Returns either a list, as an arrayref, or a count of found workorder ids.
+The count of results is returned when the parameter C<Result = 'COUNT'> is passed.
+
+The search criteria are logically AND connected.
+When a list is passed as criterium, the individual members are OR connected.
+When an undef or a reference to an empty array is passed, then the search criterium
+is ignored.
 
     my $WorkOrderIDsRef = $WorkOrderObject->WorkOrderSearch(
         ChangeIDs         => [ 123, 122 ]                              # (optional)
@@ -2149,6 +2155,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.35 $ $Date: 2009-11-24 01:22:16 $
+$Revision: 1.36 $ $Date: 2009-11-24 09:21:45 $
 
 =cut

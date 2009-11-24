@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.182 2009-11-24 07:54:37 reb Exp $
+# $Id: ITSMChange.pm,v 1.183 2009-11-24 09:21:45 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.182 $) [1];
+$VERSION = qw($Revision: 1.183 $) [1];
 
 =head1 NAME
 
@@ -1003,7 +1003,9 @@ sub ChangeList {
 
 =item ChangeSearch()
 
-Return a list of the found change ids as an array reference.
+Returns either a list, as an arrayref, or a count of found change ids.
+The count of results is returned when the parameter C<Result = 'COUNT'> is passed.
+
 The search criteria are logically AND connected.
 When a list is passed as criterium, the individual members are OR connected.
 When an undef or a reference to an empty array is passed, then the search criterium
@@ -2649,6 +2651,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.182 $ $Date: 2009-11-24 07:54:37 $
+$Revision: 1.183 $ $Date: 2009-11-24 09:21:45 $
 
 =cut
