@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.37 2009-11-24 10:56:13 bes Exp $
+# $Id: ITSMWorkOrder.pm,v 1.38 2009-11-24 16:50:04 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.37 $) [1];
+$VERSION = qw($Revision: 1.38 $) [1];
 
 =head1 NAME
 
@@ -601,26 +601,23 @@ sub WorkOrderGet {
     # fetch the result
     my %WorkOrderData;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $WorkOrderData{WorkOrderID}          = $Row[0];
-        $WorkOrderData{ChangeID}             = $Row[1];
-        $WorkOrderData{WorkOrderNumber}      = $Row[2];
-        $WorkOrderData{WorkOrderTitle}       = defined $Row[3] ? $Row[3] : '';
-        $WorkOrderData{Instruction}          = defined $Row[4] ? $Row[4] : '';
-        $WorkOrderData{Report}               = defined $Row[5] ? $Row[5] : '';
-        $WorkOrderData{WorkOrderStateID}     = $Row[6];
-        $WorkOrderData{WorkOrderState}       = undef;
-        $WorkOrderData{WorkOrderStateSignal} = undef;
-        $WorkOrderData{WorkOrderTypeID}      = $Row[7];
-        $WorkOrderData{WorkOrderType}        = undef;
-        $WorkOrderData{WorkOrderAgentID}     = $Row[8];
-        $WorkOrderData{PlannedStartTime}     = $Row[9];
-        $WorkOrderData{PlannedEndTime}       = $Row[10];
-        $WorkOrderData{ActualStartTime}      = $Row[11];
-        $WorkOrderData{ActualEndTime}        = $Row[12];
-        $WorkOrderData{CreateTime}           = $Row[13];
-        $WorkOrderData{CreateBy}             = $Row[14];
-        $WorkOrderData{ChangeTime}           = $Row[15];
-        $WorkOrderData{ChangeBy}             = $Row[16];
+        $WorkOrderData{WorkOrderID}      = $Row[0];
+        $WorkOrderData{ChangeID}         = $Row[1];
+        $WorkOrderData{WorkOrderNumber}  = $Row[2];
+        $WorkOrderData{WorkOrderTitle}   = defined $Row[3] ? $Row[3] : '';
+        $WorkOrderData{Instruction}      = defined $Row[4] ? $Row[4] : '';
+        $WorkOrderData{Report}           = defined $Row[5] ? $Row[5] : '';
+        $WorkOrderData{WorkOrderStateID} = $Row[6];
+        $WorkOrderData{WorkOrderTypeID}  = $Row[7];
+        $WorkOrderData{WorkOrderAgentID} = $Row[8];
+        $WorkOrderData{PlannedStartTime} = $Row[9];
+        $WorkOrderData{PlannedEndTime}   = $Row[10];
+        $WorkOrderData{ActualStartTime}  = $Row[11];
+        $WorkOrderData{ActualEndTime}    = $Row[12];
+        $WorkOrderData{CreateTime}       = $Row[13];
+        $WorkOrderData{CreateBy}         = $Row[14];
+        $WorkOrderData{ChangeTime}       = $Row[15];
+        $WorkOrderData{ChangeBy}         = $Row[16];
     }
 
     # check error
@@ -2164,6 +2161,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.37 $ $Date: 2009-11-24 10:56:13 $
+$Revision: 1.38 $ $Date: 2009-11-24 16:50:04 $
 
 =cut

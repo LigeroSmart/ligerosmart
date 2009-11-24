@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.188 2009-11-24 15:19:30 bes Exp $
+# $Id: ITSMChange.pm,v 1.189 2009-11-24 16:50:05 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.188 $) [1];
+$VERSION = qw($Revision: 1.189 $) [1];
 
 =head1 NAME
 
@@ -523,27 +523,22 @@ sub ChangeGet {
     # fetch the result
     my %ChangeData;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $ChangeData{ChangeID}          = $Row[0];
-        $ChangeData{ChangeNumber}      = $Row[1];
-        $ChangeData{ChangeTitle}       = defined( $Row[2] ) ? $Row[2] : '';
-        $ChangeData{Description}       = defined( $Row[3] ) ? $Row[3] : '';
-        $ChangeData{Justification}     = defined( $Row[4] ) ? $Row[4] : '';
-        $ChangeData{ChangeStateID}     = $Row[5];
-        $ChangeData{ChangeState}       = undef;
-        $ChangeData{ChangeStateSignal} = undef;
-        $ChangeData{ChangeManagerID}   = $Row[6];
-        $ChangeData{ChangeBuilderID}   = $Row[7];
-        $ChangeData{CategoryID}        = $Row[8];
-        $ChangeData{Category}          = undef;
-        $ChangeData{ImpactID}          = $Row[9];
-        $ChangeData{Impact}            = undef;
-        $ChangeData{PriorityID}        = $Row[10];
-        $ChangeData{Priority}          = undef;
-        $ChangeData{CreateTime}        = $Row[11];
-        $ChangeData{CreateBy}          = $Row[12];
-        $ChangeData{ChangeTime}        = $Row[13];
-        $ChangeData{ChangeBy}          = $Row[14];
-        $ChangeData{RealizeTime}       = $Row[15];
+        $ChangeData{ChangeID}        = $Row[0];
+        $ChangeData{ChangeNumber}    = $Row[1];
+        $ChangeData{ChangeTitle}     = defined( $Row[2] ) ? $Row[2] : '';
+        $ChangeData{Description}     = defined( $Row[3] ) ? $Row[3] : '';
+        $ChangeData{Justification}   = defined( $Row[4] ) ? $Row[4] : '';
+        $ChangeData{ChangeStateID}   = $Row[5];
+        $ChangeData{ChangeManagerID} = $Row[6];
+        $ChangeData{ChangeBuilderID} = $Row[7];
+        $ChangeData{CategoryID}      = $Row[8];
+        $ChangeData{ImpactID}        = $Row[9];
+        $ChangeData{PriorityID}      = $Row[10];
+        $ChangeData{CreateTime}      = $Row[11];
+        $ChangeData{CreateBy}        = $Row[12];
+        $ChangeData{ChangeTime}      = $Row[13];
+        $ChangeData{ChangeBy}        = $Row[14];
+        $ChangeData{RealizeTime}     = $Row[15];
     }
 
     # check error
@@ -2680,6 +2675,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.188 $ $Date: 2009-11-24 15:19:30 $
+$Revision: 1.189 $ $Date: 2009-11-24 16:50:05 $
 
 =cut
