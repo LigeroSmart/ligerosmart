@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChange.pm - the OTRS::ITSM::ChangeManagement change overview module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChange.pm,v 1.15 2009-11-24 03:08:10 ub Exp $
+# $Id: AgentITSMChange.pm,v 1.16 2009-11-24 12:50:49 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -69,8 +69,6 @@ sub Run {
         Key       => 'LastScreenChanges',
         Value     => $Self->{RequestedURL},
     );
-
-    # TODO Add config options for 'SortBy::Default' and 'Order::Default'
 
     # get sorting parameters
     my $SortBy = $Self->{ParamObject}->GetParam( Param => 'SortBy' )
