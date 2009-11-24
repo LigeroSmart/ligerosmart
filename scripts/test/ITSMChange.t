@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.139 2009-11-24 10:59:16 bes Exp $
+# $Id: ITSMChange.t,v 1.140 2009-11-24 11:59:48 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -418,6 +418,7 @@ my @ChangeTests = (
                 ChangeManagerID => undef,
                 ChangeBuilderID => 1,
                 WorkOrderIDs    => [],
+                WorkOrderCount  => 0,
                 CABAgents       => [],
                 CABCustomers    => [],
                 CreateBy        => 1,
@@ -447,6 +448,7 @@ my @ChangeTests = (
                 ChangeManagerID => undef,
                 ChangeBuilderID => $UserIDs[0],
                 WorkOrderIDs    => [],
+                WorkOrderCount  => 0,
                 CABAgents       => [],
                 CABCustomers    => [],
                 CreateBy        => $UserIDs[0],
@@ -474,6 +476,7 @@ my @ChangeTests = (
                 ChangeManagerID => undef,
                 ChangeBuilderID => $UserIDs[0],
                 WorkOrderIDs    => [],
+                WorkOrderCount  => 0,
                 CABAgents       => [],
                 CABCustomers    => [],
                 CreateBy        => $UserIDs[0],
@@ -503,6 +506,7 @@ my @ChangeTests = (
                 ChangeStateID   => $ChangeStateName2ID{requested},
                 ChangeState     => 'requested',
                 WorkOrderIDs    => [],
+                WorkOrderCount  => 0,
                 CABAgents       => [],
                 CABCustomers    => [],
                 CreateBy        => $UserIDs[0],
@@ -550,6 +554,7 @@ my @ChangeTests = (
                 ChangeStateID   => $ChangeStateName2ID{failed},
                 ChangeState     => 'failed',
                 WorkOrderIDs    => [],
+                WorkOrderCount  => 0,
                 CABAgents       => [],
                 CABCustomers    => [],
                 CreateBy        => $UserIDs[0],
@@ -718,6 +723,7 @@ my @ChangeTests = (
                 ChangeManagerID => undef,
                 ChangeBuilderID => $UserIDs[0],
                 WorkOrderIDs    => [],
+                WorkOrderCount  => 0,
                 CABAgents       => [],
                 CABCustomers    => [],
                 CreateBy        => $UserIDs[0],
@@ -1245,6 +1251,7 @@ my @ChangeTests = (
                 ChangeManagerID => undef,
                 ChangeBuilderID => $UserIDs[0],
                 WorkOrderIDs    => [],
+                WorkOrderCount  => 0,
                 CABAgents       => [],
                 CABCustomers    => [],
                 CreateBy        => $UserIDs[0],
@@ -4203,6 +4210,19 @@ for my $Test (@WOStringAndAgentSearchTests) {
 
     $TestCount++;
     $WOSTCounter++;
+}
+
+# each of the changes should have one workorder
+for my $ChangeID (@WOSTChangeIDs) {
+    my $ChangeData = $Self->{ChangeObject}->ChangeGet(
+        ChangeID => $ChangeID,
+        UserID   => 1,
+    );
+    $Self->Is(
+        $ChangeData->{WorkOrderCount},
+        1,
+        "Test $TestCount: |- ChangeGet(): one workorder was added"
+    );
 }
 
 # ------------------------------------------------------------ #

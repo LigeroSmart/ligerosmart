@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.104 2009-11-24 10:59:16 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.105 2009-11-24 11:59:48 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -2611,6 +2611,17 @@ for my $Change (@ChangesForSortTest) {
 
         $WorkOrderCount++;
     }
+
+    # check whether the workorders were added
+    my $ChangeData = $Self->{ChangeObject}->ChangeGet(
+        ChangeID => $ChangeID,
+        UserID   => 1,
+    );
+    $Self->Is(
+        $ChangeData->{WorkOrderCount},
+        scalar @{ $Change->{Workorders} },
+        "Test $TestCount: |- ChangeGet(): workorders were added"
+    );
 }
 continue {
     $TestCount++;

@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.184 2009-11-24 10:53:40 bes Exp $
+# $Id: ITSMChange.pm,v 1.185 2009-11-24 11:59:48 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.184 $) [1];
+$VERSION = qw($Revision: 1.185 $) [1];
 
 =head1 NAME
 
@@ -479,6 +479,7 @@ The returned hash reference contains following elements:
     $Change{PriorityID}
     $Change{Priority}
     $Change{WorkOrderIDs}       # array reference with WorkOrderIDs
+    $Change{WorkOrderCount}     # number of workorders
     $Change{CABAgents}          # array reference with CAB Agent UserIDs
     $Change{CABCustomers}       # array reference with CAB CustomerUserIDs
     $Change{PlannedStartTime}   # determined from the workorders
@@ -597,6 +598,7 @@ sub ChangeGet {
 
     # add result to change data
     $ChangeData{WorkOrderIDs} = $WorkOrderIDsRef || [];
+    $ChangeData{WorkOrderCount} = scalar @{ $ChangeData{WorkOrderIDs} };
 
     # get timestamps for the change
     my $ChangeTime = $Self->{WorkOrderObject}->WorkOrderChangeTimeGet(
@@ -2668,6 +2670,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.184 $ $Date: 2009-11-24 10:53:40 $
+$Revision: 1.185 $ $Date: 2009-11-24 11:59:48 $
 
 =cut
