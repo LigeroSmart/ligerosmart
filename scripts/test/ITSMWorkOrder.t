@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.102 2009-11-23 12:22:20 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.103 2009-11-24 09:23:47 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1476,7 +1476,7 @@ push @WorkOrderTests, (
                 ChangeID         => $OrderByTestID,
                 WorkOrderTypeID  => $SortedTypeIDs[2],
                 WorkOrderStateID => $SortedWorkOrderStateIDs[0],
-                WorkOrderTitle   => 'WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
+                WorkOrderTitle   => 'AAA WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
             },
         },
         ReferenceData => {
@@ -1484,9 +1484,12 @@ push @WorkOrderTests, (
                 ChangeID         => $OrderByTestID,
                 WorkOrderTypeID  => $SortedTypeIDs[2],
                 WorkOrderStateID => $SortedWorkOrderStateIDs[0],
-                WorkOrderTitle   => 'WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
+                WorkOrderTitle   => 'AAA WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
             },
         },
+
+        # 999999 is a special test case.
+        # Workorders with searchtest 999999 are used in 'OrderBy' search tests.
         SearchTest => [999999],
     },
 
@@ -1499,7 +1502,7 @@ push @WorkOrderTests, (
                 ChangeID         => $OrderByTestID,
                 WorkOrderTypeID  => $SortedTypeIDs[1],
                 WorkOrderStateID => $SortedWorkOrderStateIDs[1],
-                WorkOrderTitle   => 'WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
+                WorkOrderTitle   => 'BBB WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
             },
         },
         ReferenceData => {
@@ -1507,7 +1510,7 @@ push @WorkOrderTests, (
                 ChangeID         => $OrderByTestID,
                 WorkOrderTypeID  => $SortedTypeIDs[1],
                 WorkOrderStateID => $SortedWorkOrderStateIDs[1],
-                WorkOrderTitle   => 'WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
+                WorkOrderTitle   => 'BBB WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
             },
         },
         SearchTest => [999999],
@@ -1522,7 +1525,7 @@ push @WorkOrderTests, (
                 ChangeID         => $OrderByTestID,
                 WorkOrderTypeID  => $SortedTypeIDs[0],
                 WorkOrderStateID => $SortedWorkOrderStateIDs[2],
-                WorkOrderTitle   => 'WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
+                WorkOrderTitle   => 'CCC WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
             },
         },
         ReferenceData => {
@@ -1530,12 +1533,9 @@ push @WorkOrderTests, (
                 ChangeID         => $OrderByTestID,
                 WorkOrderTypeID  => $SortedTypeIDs[0],
                 WorkOrderStateID => $SortedWorkOrderStateIDs[2],
-                WorkOrderTitle   => 'WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
+                WorkOrderTitle   => 'CCC WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
             },
         },
-
-        # 999999 is a special test case. changes with searchtest 999999
-        # are used in 'OrderBy' search tests
         SearchTest => [999999],
     },
 );
@@ -2373,6 +2373,7 @@ for my $WorkOrderIDForOrderByTests (@WorkOrderIDsForOrderByTests) {
 my @OrderByColumns = qw(
     WorkOrderID
     WorkOrderNumber
+    WorkOrderTitle
     WorkOrderStateID
     WorkOrderTypeID
     CreateBy
@@ -2387,13 +2388,22 @@ for my $OrderByColumn (@OrderByColumns) {
     local $Data::Dumper::Indent = 0;
     local $Data::Dumper::Useqq  = 1;
 
+    # WorkOrderSearch() sorts the ID-Fields numerically, the string fields alphabetically.
     # the sorting is completely determined by the second comparison
-    my @WorkOrders
-        = sort {
-        $a->{$OrderByColumn} <=> $b->{$OrderByColumn}
-            || $b->{WorkOrderID} <=> $a->{WorkOrderID}
+    my @SortedWorkOrders;
+    if ( $OrderByColumn eq 'WorkOrderTitle' ) {
+        @SortedWorkOrders = sort {
+            $a->{$OrderByColumn} cmp $b->{$OrderByColumn}
+                || $b->{WorkOrderID} <=> $a->{WorkOrderID}
         } @WorkOrdersForOrderByTests;
-    my @SortedIDs = map { $_->{WorkOrderID} } @WorkOrders;
+    }
+    else {
+        @SortedWorkOrders = sort {
+            $a->{$OrderByColumn} <=> $b->{$OrderByColumn}
+                || $b->{WorkOrderID} <=> $a->{WorkOrderID}
+        } @WorkOrdersForOrderByTests;
+    }
+    my @SortedIDs = map { $_->{WorkOrderID} } @SortedWorkOrders;
 
     # dump the reference attribute
     my $ReferenceList = Data::Dumper::Dumper( \@SortedIDs );

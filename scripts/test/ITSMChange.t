@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.137 2009-11-24 07:54:37 reb Exp $
+# $Id: ITSMChange.t,v 1.138 2009-11-24 09:23:47 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -3252,6 +3252,7 @@ for my $ChangeIDForOrderByTests (@OrderBySearchTestChangeIDs) {
 my @OrderByColumns = qw(
     ChangeID
     ChangeNumber
+    ChangeTitle
     ChangeStateID
     ChangeManagerID
     ChangeBuilderID
@@ -3276,6 +3277,18 @@ for my $OrderByColumn (@OrderByColumns) {
         $a->{$OrderByColumn} <=> $b->{$OrderByColumn}
             || $b->{ChangeID} <=> $a->{ChangeID}
         } @OrderBySearchTestChanges;
+    if ( $OrderByColumn eq 'ChangeTitle' ) {
+        @SortedChanges = sort {
+            $a->{$OrderByColumn} cmp $b->{$OrderByColumn}
+                || $b->{ChangeID} <=> $a->{ChangeID}
+        } @OrderBySearchTestChanges;
+    }
+    else {
+        @SortedChanges = sort {
+            $a->{$OrderByColumn} <=> $b->{$OrderByColumn}
+                || $b->{ChangeID} <=> $a->{ChangeID}
+        } @OrderBySearchTestChanges;
+    }
     my @SortedIDs = map { $_->{ChangeID} } @SortedChanges;
 
     # dump the reference attribute
