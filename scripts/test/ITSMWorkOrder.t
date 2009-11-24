@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.103 2009-11-24 09:23:47 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.104 2009-11-24 10:59:16 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -2270,37 +2270,51 @@ my @WorkOrderSearchTests = (
 
 my $SearchTestCount = 1;
 
-SEARCHTEST:
-for my $SearchTest (@WorkOrderSearchTests) {
+TEST:
+for my $Test (@WorkOrderSearchTests) {
 
     # check SearchData attribute
-    if ( !$SearchTest->{SearchData} || ref( $SearchTest->{SearchData} ) ne 'HASH' ) {
+    if ( !$Test->{SearchData} || ref( $Test->{SearchData} ) ne 'HASH' ) {
 
         $Self->True(
             0,
             "Test $TestCount: SearchData found for this test.",
         );
 
-        next SEARCHTEST;
+        next TEST;
     }
 
     $Self->True(
         1,
         'call WorkOrderSearch with params: '
-            . $SearchTest->{Description}
+            . $Test->{Description}
             . " (SearchTestCase: $SearchTestCount)",
     );
 
+    # get a ref to an array of found ids
     my $WorkOrderIDs = $Self->{WorkOrderObject}->WorkOrderSearch(
-        %{ $SearchTest->{SearchData} },
+        %{ $Test->{SearchData} },
+        Result   => 'ARRAY',
         UserID   => 1,
         ChangeID => $WorkOrderAddTestID,
     );
 
-    if ( $SearchTest->{SearchFails} ) {
+    # get a count of found ids
+    my $CountWorkOrderIDs = $Self->{WorkOrderObject}->WorkOrderSearch(
+        %{ $Test->{SearchData} },
+        Result   => 'COUNT',
+        UserID   => 1,
+        ChangeID => $WorkOrderAddTestID,
+    );
+
+    if ( $Test->{SearchFails} ) {
         $Self->True(
             !defined($WorkOrderIDs),
-            "Test $TestCount: WorkOrderSearch() is expected to fail",
+            "Test $TestCount: WorkOrderSearch() is expected to fail (Result => 'ARRAY')",
+        );
+        $Self->True(
+            !defined($CountWorkOrderIDs),
+            "Test $TestCount: WorkOrderSearch() is expected to fail (Result => 'COUNT')",
         );
     }
     else {
@@ -2308,28 +2322,48 @@ for my $SearchTest (@WorkOrderSearchTests) {
             defined($WorkOrderIDs) && ref($WorkOrderIDs) eq 'ARRAY',
             "Test $TestCount: |- array reference for WorkOrderIDs.",
         );
-    }
-
-    $WorkOrderIDs ||= [];
-
-    if ( $SearchTest->{ResultData}->{TestCount} ) {
-
-        # get number of workorder ids WorkOrderSearch should return
-        my $Count = scalar keys %{ $WorkOrderIDForSearchTest{$SearchTestCount} };
-
-        # get defined expected result count (defined in search test case!)
-        if ( exists $SearchTest->{ResultData}->{Count} ) {
-            $Count = $SearchTest->{ResultData}->{Count}
-        }
-
-        $Self->Is(
-            scalar @{$WorkOrderIDs},
-            $Count,
-            "Test $TestCount: |- Number of found workorders.",
+        $Self->True(
+            defined($CountWorkOrderIDs) && ref $CountWorkOrderIDs eq '',
+            "Test $TestCount: |- scalar for CountWorkOrderIDs.",
         );
     }
 
-    if ( $SearchTest->{ResultData}->{TestExistence} ) {
+    $WorkOrderIDs ||= [];
+    $CountWorkOrderIDs ||= 0;
+
+    if ( $Test->{ResultData}->{TestCount} ) {
+
+        # get number of workorder ids WorkOrderSearch should return
+        my $ExpectedCount = scalar keys %{ $WorkOrderIDForSearchTest{$SearchTestCount} };
+
+        # get defined expected result count (defined in search test case!)
+        if ( exists $Test->{ResultData}->{Count} ) {
+            $ExpectedCount = $Test->{ResultData}->{Count}
+        }
+
+        # check the number of IDs in the returned arrayref
+        $Self->Is(
+            scalar @{$WorkOrderIDs},
+            $ExpectedCount,
+            "Test $TestCount: |- Number of found workorders.",
+        );
+
+        # When a 'Limit' has been passed, then the returned count not necessarily matches
+        # the number of IDs in the returned array. In that case testing is futile.
+        if ( !$Test->{SearchData}->{Limit} ) {
+
+           #if ( $CountWorkOrderIDs != $ExpectedCount ) {
+           #use Data::Dumper; die Dumper($CountWorkOrderIDs, $ExpectedCount, $WorkOrderIDs, $Test );
+           #}
+            $Self->Is(
+                $CountWorkOrderIDs,
+                $ExpectedCount,
+                "Test $TestCount: |- Number of found workorders (Result => 'COUNT').",
+            );
+        }
+    }
+
+    if ( $Test->{ResultData}->{TestExistence} ) {
 
         # check if all ids that belongs to this searchtest are returned
         my @WorkOrderIDs = keys %{ $WorkOrderIDForSearchTest{$SearchTestCount} };

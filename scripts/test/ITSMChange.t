@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.138 2009-11-24 09:23:47 bes Exp $
+# $Id: ITSMChange.t,v 1.139 2009-11-24 10:59:16 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -3156,7 +3156,6 @@ for my $Test (@ChangeSearchTests) {
 
     # check SearchData attribute
     if ( !$Test->{SearchData} || ref( $Test->{SearchData} ) ne 'HASH' ) {
-
         $Self->True(
             0,
             "Test $TestCount: SearchData found for this test.",
@@ -3167,46 +3166,73 @@ for my $Test (@ChangeSearchTests) {
 
     $Self->True(
         1,
-        'call ChangeSearch with params: '
-            . $Test->{Description}
-            . " (SearchTestCase: $SearchTestCount)",
+        "ChangeSearch() with params: $Test->{Description} (SearchTestCase: $SearchTestCount)",
     );
 
+    # get a ref to an array of found ids
     my $ChangeIDs = $Self->{ChangeObject}->ChangeSearch(
         %{ $Test->{SearchData} },
+        Result => 'ARRAY',
+        UserID => 1,
+    );
+
+    # get a count of found ids
+    my $CountChangeIDs = $Self->{ChangeObject}->ChangeSearch(
+        %{ $Test->{SearchData} },
+        Result => 'COUNT',
         UserID => 1,
     );
 
     if ( $Test->{SearchFails} ) {
         $Self->True(
             !defined($ChangeIDs),
-            "Test $TestCount: ChangeSearch() is expected to fail",
+            "Test $TestCount: ChangeSearch() is expected to fail (Result => 'ARRAY')",
+        );
+        $Self->True(
+            !defined($CountChangeIDs),
+            "Test $TestCount: ChangeSearch() is expected to fail (Result => 'COUNT')",
         );
     }
     else {
         $Self->True(
-            defined($ChangeIDs) && ref($ChangeIDs) eq 'ARRAY',
+            defined($ChangeIDs) && ref $ChangeIDs eq 'ARRAY',
             "Test $TestCount: |- array reference for ChangeIDs.",
+        );
+        $Self->True(
+            defined($CountChangeIDs) && ref $CountChangeIDs eq '',
+            "Test $TestCount: |- scalar for CountChangeIDs.",
         );
     }
 
     $ChangeIDs ||= [];
+    $CountChangeIDs ||= 0;
 
     if ( $Test->{ResultData}->{TestCount} ) {
 
         # get number of change ids ChangeSearch should return
-        my $Count = scalar keys %{ $ChangeIDForSearchTest{$SearchTestCount} };
+        my $ExpectedCount = scalar keys %{ $ChangeIDForSearchTest{$SearchTestCount} };
 
         # get defined expected result count (defined in search test case!)
         if ( exists $Test->{ResultData}->{Count} ) {
-            $Count = $Test->{ResultData}->{Count}
+            $ExpectedCount = $Test->{ResultData}->{Count}
         }
 
+        # check the number of IDs in the returned arrayref
         $Self->Is(
             scalar @{$ChangeIDs},
-            $Count,
-            "Test $TestCount: |- Number of found changes.",
+            $ExpectedCount,
+            "Test $TestCount: |- Number of found changes (Result => 'ARRAY').",
         );
+
+        # When a 'Limit' has been passed, then the returned count not necessarily matches
+        # the number of IDs in the returned array. In that case testing is futile.
+        if ( !$Test->{SearchData}->{Limit} ) {
+            $Self->Is(
+                $CountChangeIDs,
+                $ExpectedCount,
+                "Test $TestCount: |- Number of found changes (Result => 'COUNT').",
+            );
+        }
     }
 
     if ( $Test->{ResultData}->{TestExistence} ) {
