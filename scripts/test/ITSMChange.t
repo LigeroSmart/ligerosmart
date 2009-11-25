@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.145 2009-11-24 15:32:51 bes Exp $
+# $Id: ITSMChange.t,v 1.146 2009-11-25 07:43:31 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -402,6 +402,16 @@ for my $Group (qw( itsm-change itsm-change-builder itsm-change-manager )) {
         "Test " . $TestCount++ . " - check group '$Group'"
     );
 }
+
+# ------------------------------------------------------------ #
+# get variables for test
+# ------------------------------------------------------------ #
+my $DefaultCategory = $Self->{ConfigObject}->Get('ITSMChange::Category::Default');
+my $DefaultImpact   = $Self->{ConfigObject}->Get('ITSMChange::Impact::Default');
+my $DefaultPriority = $Self->{CIPAllocateObject}->PriorityAllocationGet(
+    CategoryID => $ChangeCategoryName2ID{$DefaultCategory},
+    ImpactID   => $ChangeImpactName2ID{$DefaultImpact},
+);
 
 # ------------------------------------------------------------ #
 # define general change tests
@@ -1136,6 +1146,31 @@ my @ChangeTests = (
         SearchTest => [ 42, 43 ],
     },
 
+    # Test default CIP values
+    {
+        Description => 'Test default CIP values',
+        SourceData  => {
+            ChangeAdd => {
+                UserID      => $UserIDs[0],
+                ChangeTitle => 'Test default CIP - ' . $UniqueSignature,
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                ChangeTitle     => 'Test default CIP - ' . $UniqueSignature,
+                ChangeBuilderID => $UserIDs[0],
+                Category        => $DefaultCategory,
+                CategoryID      => $ChangeCategoryName2ID{$DefaultCategory},
+                Impact          => $DefaultImpact,
+                ImpactID        => $ChangeImpactName2ID{$DefaultImpact},
+                PriorityID      => $DefaultPriority,
+                Priority        => $ChangePriorityID2Name{$DefaultPriority},
+
+            },
+        },
+        SearchTest => [6],
+    },
+
     # Test category
     {
         Description => 'Test category "1 very low"',
@@ -1173,7 +1208,7 @@ my @ChangeTests = (
 
     # Test impact
     {
-        Description => 'Test priority "1 very low"',
+        Description => 'Test impact "1 very low"',
         SourceData  => {
             ChangeAdd => {
                 UserID      => $UserIDs[0],
@@ -1455,6 +1490,171 @@ my @ChangeTests = (
             },
         },
         SearchTest => [ 42, 43 ],
+    },
+
+    # Test category
+    {
+        Description => 'Test category update "5 very high"',
+        SourceData  => {
+            ChangeAdd => {
+                UserID      => $UserIDs[0],
+                ChangeTitle => 'Test CIP (Category) - ' . $UniqueSignature,
+                Category    => '2 low',
+            },
+            ChangeUpdate => {
+                UserID   => 1,
+                Category => '5 very high',
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                ChangeTitle     => 'Test CIP (Category) - ' . $UniqueSignature,
+                ChangeBuilderID => $UserIDs[0],
+                Category        => '5 very high',
+                CategoryID      => $ChangeCategoryName2ID{'5 very high'},
+                CreateBy        => $UserIDs[0],
+                ChangeBy        => 1,
+            },
+        },
+        SearchTest => [6],
+    },
+
+    # Test invalid category
+    {
+        Description => 'Test invalid category update "18 super high"',
+        UpdateFails => 1,
+        SourceData  => {
+            ChangeAdd => {
+                UserID      => $UserIDs[0],
+                ChangeTitle => 'Test invalid update CIP (Category) - ' . $UniqueSignature,
+                Category    => '2 low',
+            },
+            ChangeUpdate => {
+                UserID   => 1,
+                Category => '18 super high',
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                ChangeTitle     => 'Test invalid update CIP (Category) - ' . $UniqueSignature,
+                ChangeBuilderID => $UserIDs[0],
+                Category        => '2 low',
+                CategoryID      => $ChangeCategoryName2ID{'2 low'},
+                CreateBy        => $UserIDs[0],
+                ChangeBy        => $UserIDs[0],
+            },
+        },
+        SearchTest => [6],
+    },
+
+    # Test impact
+    {
+        Description => 'Test impact update "5 very high"',
+        SourceData  => {
+            ChangeAdd => {
+                UserID      => $UserIDs[0],
+                ChangeTitle => 'Test update CIP (Impact) - ' . $UniqueSignature,
+                Impact      => '2 low',
+            },
+            ChangeUpdate => {
+                UserID => 1,
+                Impact => '5 very high',
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                ChangeTitle     => 'Test update CIP (Impact) - ' . $UniqueSignature,
+                ChangeBuilderID => $UserIDs[0],
+                Impact          => '5 very high',
+                ImpactID        => $ChangeImpactName2ID{'5 very high'},
+                CreateBy        => $UserIDs[0],
+                ChangeBy        => 1,
+            },
+        },
+        SearchTest => [6],
+    },
+
+    # Test invalid impact
+    {
+        Description => 'Test invalid impact update "18 super high"',
+        UpdateFails => 1,
+        SourceData  => {
+            ChangeAdd => {
+                UserID      => $UserIDs[0],
+                ChangeTitle => 'Test update invalid CIP (Impact) - ' . $UniqueSignature,
+                Impact      => '2 low',
+            },
+            ChangeUpdate => {
+                UserID => 1,
+                Impact => '18 super high',
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                ChangeTitle     => 'Test update invalid CIP (Impact) - ' . $UniqueSignature,
+                ChangeBuilderID => $UserIDs[0],
+                Impact          => '2 low',
+                ImpactID        => $ChangeImpactName2ID{'2 low'},
+                CreateBy        => $UserIDs[0],
+                ChangeBy        => $UserIDs[0],
+            },
+        },
+        SearchTest => [6],
+    },
+
+    # Test priority
+    {
+        Description => 'Test priority update "5 very high"',
+        SourceData  => {
+            ChangeAdd => {
+                UserID      => $UserIDs[0],
+                ChangeTitle => 'Test update CIP (Priority) - ' . $UniqueSignature,
+                Priority    => '2 low',
+            },
+            ChangeUpdate => {
+                UserID   => 1,
+                Priority => '5 very high',
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                ChangeTitle     => 'Test update CIP (Priority) - ' . $UniqueSignature,
+                ChangeBuilderID => $UserIDs[0],
+                Priority        => '5 very high',
+                PriorityID      => $ChangePriorityName2ID{'5 very high'},
+                CreateBy        => $UserIDs[0],
+                ChangeBy        => 1,
+            },
+        },
+        SearchTest => [6],
+    },
+
+    # Test invalid priority
+    {
+        Description => 'Test invalid priority update "18 super high"',
+        UpdateFails => 1,
+        SourceData  => {
+            ChangeAdd => {
+                UserID      => $UserIDs[0],
+                ChangeTitle => 'Test invalid update CIP (Priority) - ' . $UniqueSignature,
+                Priority    => '2 low',
+            },
+            ChangeUpdate => {
+                UserID   => 1,
+                Priority => '18 super high',
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                ChangeTitle     => 'Test invalid update CIP (Priority) - ' . $UniqueSignature,
+                ChangeBuilderID => $UserIDs[0],
+                Priority        => '2 low',
+                PriorityID      => $ChangePriorityName2ID{'2 low'},
+                CreateBy        => $UserIDs[0],
+                ChangeBy        => $UserIDs[0],
+            },
+        },
+        SearchTest => [6],
     },
 
     #------------------------------#
