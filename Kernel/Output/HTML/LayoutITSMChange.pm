@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LayoutITSMChange.pm,v 1.14 2009-11-24 12:14:50 bes Exp $
+# $Id: LayoutITSMChange.pm,v 1.15 2009-11-25 17:31:28 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,9 @@ use POSIX qw(ceil);
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
+
+=over 4
 
 =item ITSMChangeBuildWorkOrderGraph()
 
@@ -168,147 +170,6 @@ sub ITSMChangeBuildWorkOrderGraph {
     return $Self->Output(
         TemplateFile => 'ITSMChange',
         Data         => {%Param},
-    );
-}
-
-sub _ITSMChangeGetChangeTicks {
-    my ( $Self, %Param ) = @_;
-
-    # check for start and end
-    return if !$Param{Start} || !$Param{End};
-
-    # make sure we got integers
-    return if $Param{Start} !~ m{ \A \d+ \z }xms;
-    return if $Param{End} !~ m{ \A \d+ \z }xms;
-
-    # calculate time span in sec
-    my $Ticks;
-    $Ticks = $Param{End} - $Param{Start};
-
-    # check for computing error
-    return if $Ticks <= 0;
-
-    # get seconds per percent and round down
-    $Ticks = ceil( $Ticks / 100 );
-
-    return $Ticks;
-}
-
-sub _ITSMChangeGetChangeScale {
-    my ( $Self, %Param ) = @_;
-
-    # check for start time
-    return if !$Param{StartTime};
-
-    # check for start time is an integer value
-    return if $Param{StartTime} !~ m{\A \d+ \z}xms;
-
-    # calculate scale naming
-    my %ScaleName = (
-        Scale20 => ( $Param{StartTime} + 20 * $Param{Ticks} ),
-        Scale40 => ( $Param{StartTime} + 40 * $Param{Ticks} ),
-        Scale60 => ( $Param{StartTime} + 60 * $Param{Ticks} ),
-        Scale80 => ( $Param{StartTime} + 80 * $Param{Ticks} ),
-    );
-
-    # create scale block
-    $Self->Block(
-        Name => 'Scale',
-        Data => {
-            %ScaleName,
-        },
-    );
-
-    INTERVAL:
-    for my $Interval ( sort keys %ScaleName ) {
-
-        # translate timestamps in date format
-        $ScaleName{$Interval} = $Self->{TimeObject}->SystemTime2TimeStamp(
-            SystemTime => $ScaleName{$Interval},
-        );
-
-        # do not display scale if translating failed
-        next INTERVAL if !$ScaleName{$Interval};
-
-        # build scale label block
-        $Self->Block(
-            Name => 'ScaleLabel',
-            Data => {
-                ScaleLabel => $ScaleName{$Interval},
-            },
-        );
-    }
-}
-
-sub _ITSMChangeGetWorkOrderGraph {
-    my ( $Self, %Param ) = @_;
-
-    # check for work order
-    return if !$Param{WorkOrder};
-
-    # extract work order
-    my $WorkOrder = $Param{WorkOrder};
-
-    # set planned if no actual time is set
-    $WorkOrder->{ActualStartTime} = $WorkOrder->{PlannedStartTime}
-        if !$WorkOrder->{ActualStartTime};
-    $WorkOrder->{ActualEndTime} = $WorkOrder->{PlannedEndTime}
-        if !$WorkOrder->{ActualEndTime};
-
-    # hash for time values
-    my %Time;
-
-    for my $TimeType (
-        qw(
-        PlannedStartTime
-        PlannedEndTime
-        ActualStartTime
-        ActualEndTime
-        )
-        )
-    {
-
-        # translate time
-        $Time{$TimeType} = $Self->{TimeObject}->TimeStamp2SystemTime(
-            String => $WorkOrder->{$TimeType},
-        );
-    }
-
-    # determine length of work order
-    my %TickValue;
-
-    for my $TimeType (qw( Planned Actual )) {
-
-        # get values for padding span
-        $TickValue{"${TimeType}Padding"} = ceil(
-            ( $Time{"${TimeType}StartTime"} - $Param{StartTime} ) / $Param{Ticks}
-        );
-
-        # get values for display span
-        $TickValue{"${TimeType}Ticks"} = ceil(
-            ( $Time{"${TimeType}EndTime"} - $Time{"${TimeType}StartTime"} ) / $Param{Ticks}
-        ) || 1;
-
-        # get at least 1 percent for display span
-        # if padding would gain 100 percent
-        $TickValue{"${TimeType}Padding"} =
-            ( $TickValue{"${TimeType}Ticks"} == 1 && $TickValue{"${TimeType}Padding"} == 100 )
-            ? 99
-            : $TickValue{"${TimeType}Padding"}
-            ;
-
-        # get trailing space
-        $TickValue{"${TimeType}Trailing"} =
-            100 - ( $TickValue{"${TimeType}Padding"} + $TickValue{"${TimeType}Ticks"} );
-    }
-
-    # create work order item
-    $Self->Block(
-        Name => 'WorkOrderItem',
-        Data => {
-            %{$WorkOrder},
-            %TickValue,
-        },
     );
 }
 
@@ -568,5 +429,172 @@ sub ITSMChangeListShow {
 
     return $OutputRaw;
 }
+
+=begin Internal:
+
+=item _ITSMChangeGetChangeTicks()
+
+a helper method for the workorder graph of a change
+
+=cut
+
+sub _ITSMChangeGetChangeTicks {
+    my ( $Self, %Param ) = @_;
+
+    # check for start and end
+    return if !$Param{Start} || !$Param{End};
+
+    # make sure we got integers
+    return if $Param{Start} !~ m{ \A \d+ \z }xms;
+    return if $Param{End} !~ m{ \A \d+ \z }xms;
+
+    # calculate time span in sec
+    my $Ticks;
+    $Ticks = $Param{End} - $Param{Start};
+
+    # check for computing error
+    return if $Ticks <= 0;
+
+    # get seconds per percent and round down
+    $Ticks = ceil( $Ticks / 100 );
+
+    return $Ticks;
+}
+
+=item _ITSMChangeGetChangeScale()
+
+a helper method for the workorder graph of a change
+
+=cut
+
+sub _ITSMChangeGetChangeScale {
+    my ( $Self, %Param ) = @_;
+
+    # check for start time
+    return if !$Param{StartTime};
+
+    # check for start time is an integer value
+    return if $Param{StartTime} !~ m{\A \d+ \z}xms;
+
+    # calculate scale naming
+    my %ScaleName = (
+        Scale20 => ( $Param{StartTime} + 20 * $Param{Ticks} ),
+        Scale40 => ( $Param{StartTime} + 40 * $Param{Ticks} ),
+        Scale60 => ( $Param{StartTime} + 60 * $Param{Ticks} ),
+        Scale80 => ( $Param{StartTime} + 80 * $Param{Ticks} ),
+    );
+
+    # create scale block
+    $Self->Block(
+        Name => 'Scale',
+        Data => {
+            %ScaleName,
+        },
+    );
+
+    INTERVAL:
+    for my $Interval ( sort keys %ScaleName ) {
+
+        # translate timestamps in date format
+        $ScaleName{$Interval} = $Self->{TimeObject}->SystemTime2TimeStamp(
+            SystemTime => $ScaleName{$Interval},
+        );
+
+        # do not display scale if translating failed
+        next INTERVAL if !$ScaleName{$Interval};
+
+        # build scale label block
+        $Self->Block(
+            Name => 'ScaleLabel',
+            Data => {
+                ScaleLabel => $ScaleName{$Interval},
+            },
+        );
+    }
+}
+
+=item _ITSMChangeGetWorkOrderGraph()
+
+a helper method for the workorder graph of a change
+
+=cut
+
+sub _ITSMChangeGetWorkOrderGraph {
+    my ( $Self, %Param ) = @_;
+
+    # check for work order
+    return if !$Param{WorkOrder};
+
+    # extract work order
+    my $WorkOrder = $Param{WorkOrder};
+
+    # set planned if no actual time is set
+    $WorkOrder->{ActualStartTime} = $WorkOrder->{PlannedStartTime}
+        if !$WorkOrder->{ActualStartTime};
+    $WorkOrder->{ActualEndTime} = $WorkOrder->{PlannedEndTime}
+        if !$WorkOrder->{ActualEndTime};
+
+    # hash for time values
+    my %Time;
+
+    for my $TimeType (
+        qw(
+        PlannedStartTime
+        PlannedEndTime
+        ActualStartTime
+        ActualEndTime
+        )
+        )
+    {
+
+        # translate time
+        $Time{$TimeType} = $Self->{TimeObject}->TimeStamp2SystemTime(
+            String => $WorkOrder->{$TimeType},
+        );
+    }
+
+    # determine length of work order
+    my %TickValue;
+
+    for my $TimeType (qw( Planned Actual )) {
+
+        # get values for padding span
+        $TickValue{"${TimeType}Padding"} = ceil(
+            ( $Time{"${TimeType}StartTime"} - $Param{StartTime} ) / $Param{Ticks}
+        );
+
+        # get values for display span
+        $TickValue{"${TimeType}Ticks"} = ceil(
+            ( $Time{"${TimeType}EndTime"} - $Time{"${TimeType}StartTime"} ) / $Param{Ticks}
+        ) || 1;
+
+        # get at least 1 percent for display span
+        # if padding would gain 100 percent
+        $TickValue{"${TimeType}Padding"} =
+            ( $TickValue{"${TimeType}Ticks"} == 1 && $TickValue{"${TimeType}Padding"} == 100 )
+            ? 99
+            : $TickValue{"${TimeType}Padding"}
+            ;
+
+        # get trailing space
+        $TickValue{"${TimeType}Trailing"} =
+            100 - ( $TickValue{"${TimeType}Padding"} + $TickValue{"${TimeType}Ticks"} );
+    }
+
+    # create work order item
+    $Self->Block(
+        Name => 'WorkOrderItem',
+        Data => {
+            %{$WorkOrder},
+            %TickValue,
+        },
+    );
+}
+
+=end Internal:
+
+=back
+
+=cut
 
 1;
