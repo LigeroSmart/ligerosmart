@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.148 2009-11-25 08:44:40 reb Exp $
+# $Id: ITSMChange.t,v 1.149 2009-11-25 09:54:01 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1190,7 +1190,7 @@ my @ChangeTests = (
                 CategoryID      => $ChangeCategoryName2ID{'1 very low'},
             },
         },
-        SearchTest => [ 6, 51, 54, 57, 60 ],
+        SearchTest => [ 6, 51, 54, 57, 60, 63, 64 ],
         Label => 'OrderByCIPTests',    # this change will be used in order by search tests
     },
 
@@ -1549,7 +1549,7 @@ my @ChangeTests = (
                 ChangeBy        => $UserIDs[0],
             },
         },
-        SearchTest => [ 6, 54, 60 ],
+        SearchTest => [ 6, 54, 60, 63, 64 ],
         Label => 'OrderByCIPTests',    # this change will be used in order by search tests
     },
 
@@ -3324,6 +3324,43 @@ my @ChangeSearchTests = (
                 $ChangePriorityName2ID{'1 very low'},
                 $ChangePriorityName2ID{'2 low'},
                 $ChangePriorityName2ID{'5 very high'},
+            ],
+            ChangeTitle => 'Test%CIP%' . $UniqueSignature,
+        },
+        ResultData => {
+            TestExistence => 1,
+            TestCount     => 1,
+        },
+    },
+
+    # Nr 63 - Search for CIPs
+    {
+        Description => 'Search for all CIP columns',
+        SearchData  => {
+            Categories => [ '1 very low', '2 low' ],
+            Impacts    => ['3 normal'],
+            Priorities => ['3 normal'],
+            ChangeTitle => 'Test%CIP%' . $UniqueSignature,
+        },
+        ResultData => {
+            TestExistence => 1,
+            TestCount     => 1,
+        },
+    },
+
+    # Nr 64 - Search for CIP ids
+    {
+        Description => 'Search for all CIP id columns',
+        SearchData  => {
+            CategoryIDs => [
+                $ChangeCategoryName2ID{'1 very low'},
+                $ChangeCategoryName2ID{'2 low'},
+            ],
+            ImpactIDs => [
+                $ChangeImpactName2ID{'3 normal'},
+            ],
+            PriorityIDs => [
+                $ChangePriorityName2ID{'3 normal'},
             ],
             ChangeTitle => 'Test%CIP%' . $UniqueSignature,
         },
