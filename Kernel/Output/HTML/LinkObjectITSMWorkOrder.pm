@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LinkObjectITSMWorkOrder.pm - layout backend module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LinkObjectITSMWorkOrder.pm,v 1.16 2009-11-23 13:03:08 bes Exp $
+# $Id: LinkObjectITSMWorkOrder.pm,v 1.17 2009-11-25 09:49:22 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::Output::HTML::Layout;
 use Kernel::System::GeneralCatalog;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 =head1 NAME
 
@@ -344,7 +344,7 @@ sub TableCreateSimple {
     if ( !$Param{ObjectLinkListWithData} || ref $Param{ObjectLinkListWithData} ne 'HASH' ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'Need ObjectLinkListWithData!'
+            Message  => 'Need ObjectLinkListWithData!',
         );
         return;
     }
@@ -415,7 +415,7 @@ sub ContentStringCreate {
     if ( !$Param{ContentData} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'Need ContentData!'
+            Message  => 'Need ContentData!',
         );
         return;
     }
@@ -488,7 +488,7 @@ Return
             Key       => 'ChangeNumber',
             Name      => 'Change#',
             InputStrg => $FormString,
-            FormData  => '2009100112354321'
+            FormData  => '2009100112354321',
         },
         {
             Key       => 'ChangeTitle',
@@ -589,6 +589,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.16 $ $Date: 2009-11-23 13:03:08 $
+$Revision: 1.17 $ $Date: 2009-11-25 09:49:22 $
 
 =cut
