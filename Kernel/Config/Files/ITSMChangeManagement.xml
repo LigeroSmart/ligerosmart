@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.84 2009-11-24 12:47:34 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.85 2009-11-25 17:50:32 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -809,7 +809,6 @@
         <Setting>
             <Hash>
                 <Item Key="requested">grayled</Item>
-                <Item Key="accepted">greenled</Item>
                 <Item Key="pending approval">yellowled</Item>
                 <Item Key="rejected">grayled</Item>
                 <Item Key="approved">greenled</Item>
@@ -817,6 +816,7 @@
                 <Item Key="successful">greenled</Item>
                 <Item Key="failed">redled</Item>
                 <Item Key="canceled">grayled</Item>
+                <Item Key="retracted">grayled</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -904,7 +904,11 @@
             <Option SelectedID="ChangeNumber">
                 <Item Key="ChangeNumber">ChangeNumber</Item>
                 <Item Key="ChangeTitle">ChangeTitle</Item>
-                <Item Key="ChangeStateID">ChangeStateID</Item>
+                <Item Key="ChangeStateID">ChangeState</Item>
+                <Item Key="CategoryID">Category</Item>
+                <Item Key="ImpactID">Impact</Item>
+                <Item Key="PriorityID">Priority</Item>
+                <Item Key="RealizeTime">RealizeTime</Item>
                 <Item Key="PlannedStartTime">PlannedStartTime</Item>
                 <Item Key="PlannedEndTime">PlannedEndTime</Item>
                 <Item Key="ActualStartTime">ActualStartTime</Item>
@@ -924,6 +928,51 @@
                 <Item Key="Down">Down</Item>
                 <Item Key="Up">Up</Item>
             </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChange###ShowColumns" Required="1" Valid="1">
+        <Description Lang="en">Defines the shown columns in the change overview. This option has no effect on the position of the column.</Description>
+        <Description Lang="de">Definiert die angezeigten Tabellenspalten in der Change-Übersicht. Dies Option hat keinen Effekt auf die Position der Spalten.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeOverview</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="ChangeStateSignal">1</Item>
+                <Item Key="ChangeNumber">1</Item>
+                <Item Key="ChangeTitle">1</Item>
+                <Item Key="ChangeBuilder">1</Item>
+                <Item Key="ChangeManager">0</Item>
+                <Item Key="WorkOrderCount">1</Item>
+                <Item Key="ChangeState">1</Item>
+                <Item Key="Category">0</Item>
+                <Item Key="Impact">0</Item>
+                <Item Key="Priority">1</Item>
+                <Item Key="RealizeTime">0</Item>
+                <Item Key="PlannedStartTime">0</Item>
+                <Item Key="PlannedEndTime">0</Item>
+                <Item Key="ActualStartTime">0</Item>
+                <Item Key="ActualEndTime">0</Item>
+                <Item Key="CreateTime">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChange###ChangeStateFilter" Required="1" Valid="1">
+        <Description Lang="en">Defines the change states that will be used as filters in the change overview.</Description>
+        <Description Lang="de">Definiert die Change-States die als Filter in der Change-Übersicht verwendet werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeOverview</SubGroup>
+        <Setting>
+            <Array>
+                <Item>requested</Item>
+                <Item>pending approval</Item>
+                <Item>rejected</Item>
+                <Item>approved</Item>
+                <Item>in progress</Item>
+                <Item>successful</Item>
+                <Item>failed</Item>
+                <Item>canceled</Item>
+                <Item>retracted</Item>
+            </Array>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeAdd###Permission" Required="1" Valid="1">

@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChange.pm - the OTRS::ITSM::ChangeManagement change overview module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChange.pm,v 1.17 2009-11-24 20:36:42 ub Exp $
+# $Id: AgentITSMChange.pm,v 1.18 2009-11-25 17:51:13 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -83,13 +83,28 @@ sub Run {
     # investigate refresh
     my $Refresh = $Self->{UserRefreshTime} ? 60 * $Self->{UserRefreshTime} : undef;
 
+    # find out which columns should be shown
+    my @ShowColumns;
+    if ( $Self->{Config}->{'ShowColumns'} ) {
+
+        # get all possible columns from config
+        my %PossibleColumn = %{ $Self->{Config}->{'ShowColumns'} };
+
+        # get the column names that should be shown
+        COLUMNNAME:
+        for my $Name ( keys %PossibleColumn ) {
+            next COLUMNNAME if !$PossibleColumn{$Name};
+            push @ShowColumns, $Name;
+        }
+    }
+
     # starting with page ...
     my $Output = $Self->{LayoutObject}->Header( Refresh => $Refresh );
     $Output .= $Self->{LayoutObject}->NavigationBar();
     $Self->{LayoutObject}->Print( Output => \$Output );
     $Output = '';
 
-    # set search filters
+    # set default search filter
     my %Filters = (
         All => {
             Name   => 'All',
@@ -101,32 +116,46 @@ sub Run {
                 UserID           => $Self->{UserID},
             },
         },
-
-        # TODO these are just examples
-        # think about using sysconfig for configurable filter settings
-        'successful' => {
-            Name   => 'successful',
-            Prio   => 1001,
-            Search => {
-                OrderBy          => [$SortBy],
-                OrderByDirection => [$OrderBy],
-                ChangeStates     => ['successful'],
-                Limit            => 1000,
-                UserID           => $Self->{UserID},
-            },
-        },
-        'requested' => {
-            Name   => 'requested',
-            Prio   => 1002,
-            Search => {
-                OrderBy          => [$SortBy],
-                OrderByDirection => [$OrderBy],
-                ChangeStates     => ['requested'],
-                Limit            => 1000,
-                UserID           => $Self->{UserID},
-            },
-        },
     );
+
+    # set other filters based on change state
+    if ( $Self->{Config}->{'ChangeStateFilter'} ) {
+
+        # define position of the filter in the frontend
+        my $PrioCounter = 1000;
+
+        # get all change states that should be used as filters
+        CHANGESTATE:
+        for my $ChangeState ( @{ $Self->{Config}->{ChangeStateFilter} } ) {
+
+            # do not use empty change states
+            next CHANGESTATE if !$ChangeState;
+
+            # check if state is valid by looking up the state id
+            my $ChangeStateID = $Self->{ChangeObject}->ChangeStateLookup(
+                ChangeState => $ChangeState,
+            );
+
+            # do not use invalid change states
+            next CHANGESTATE if !$ChangeStateID;
+
+            # increase the PrioCounter
+            $PrioCounter++;
+
+            # add filter for the current change state
+            $Filters{$ChangeState} = {
+                Name   => $ChangeState,
+                Prio   => $PrioCounter,
+                Search => {
+                    ChangeStates     => [$ChangeState],
+                    OrderBy          => [$SortBy],
+                    OrderByDirection => [$OrderBy],
+                    Limit            => 1000,
+                    UserID           => $Self->{UserID},
+                },
+            };
+        }
+    }
 
     # check if filter is valid
     if ( !$Filters{ $Self->{Filter} } ) {
@@ -154,17 +183,6 @@ sub Run {
             %{ $Filters{$Filter} },
         };
     }
-
-    # define which columns should be shown in this overview
-    my @ShowColumns = qw(
-        ChangeStateSignal
-        ChangeNumber
-        ChangeTitle
-        ChangeBuilder
-        ChangeWorkOrderCount
-        ChangeState
-        CreateTime
-    );
 
     # show changes
     my $LinkPage = 'Filter='

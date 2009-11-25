@@ -2,7 +2,7 @@
 # AgentITSMChangeOverviewSmall.dtl - html for change overview table
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeOverviewSmall.dtl,v 1.3 2009-11-24 20:38:03 ub Exp $
+# $Id: AgentITSMChangeOverviewSmall.dtl,v 1.4 2009-11-25 17:52:49 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,35 +18,86 @@
                     <th width="1%"></th>
 <!-- dtl:block:RecordChangeStateSignalHeader -->
 <!-- dtl:block:RecordChangeNumberHeader -->
-                    <th width="10%">$Text{"Change#"}<br/>
+                    <th>$Text{"Change#"}<br/>
                     <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=ChangeNumber&OrderBy=Up" onmouseover="window.status='$JSText{"sort upward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}up-small.png" alt="$Text{"up"}"></a> /
                     <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=ChangeNumber&OrderBy=Down" onmouseover="window.status='$JSText{"sort downward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}down-small.png" alt="$Text{"down"}"></a>
                     </th>
 <!-- dtl:block:RecordChangeNumberHeader -->
 <!-- dtl:block:RecordChangeTitleHeader -->
-                    <th width="25%">$Text{"Title"}<br/>
+                    <th>$Text{"Title"}<br/>
                     <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=ChangeTitle&OrderBy=Down" onmouseover="window.status='$JSText{"sort upward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}up-small.png" alt="$Text{"up"}"></a> /
                     <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=ChangeTitle&OrderBy=Up" onmouseover="window.status='$JSText{"sort downward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}down-small.png" alt="$Text{"down"}"></a>
                     </th>
 <!-- dtl:block:RecordChangeTitleHeader -->
 <!-- dtl:block:RecordChangeBuilderHeader -->
-                    <th width="20%">$Text{"Change Builder"}</th>
+                    <th>$Text{"Change Builder"}</th>
 <!-- dtl:block:RecordChangeBuilderHeader -->
-<!-- dtl:block:RecordChangeWorkOrderCountHeader -->
-                    <th width="10%" style="text-align:center;">$Text{"WorkOrders"}</th>
-<!-- dtl:block:RecordChangeWorkOrderCountHeader -->
+<!-- dtl:block:RecordChangeManagerHeader -->
+                    <th>$Text{"Change Manager"}</th>
+<!-- dtl:block:RecordChangeManagerHeader -->
+<!-- dtl:block:RecordWorkOrderCountHeader -->
+                    <th style="text-align:center;">$Text{"Workorders"}</th>
+<!-- dtl:block:RecordWorkOrderCountHeader -->
 <!-- dtl:block:RecordChangeStateHeader -->
-                    <th width="10%">$Text{"State"}<br/>
+                    <th>$Text{"State"}<br/>
                     <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=ChangeStateID&OrderBy=Up" onmouseover="window.status='$JSText{"sort upward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}up-small.png" alt="$Text{"up"}"></a> /
                     <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=ChangeStateID&OrderBy=Down" onmouseover="window.status='$JSText{"sort downward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}down-small.png" alt="$Text{"down"}"></a>
                     </th>
 <!-- dtl:block:RecordChangeStateHeader -->
-<!-- dtl:block:RecordChangeCreateTimeHeader -->
-                    <th width="10%">$Text{"Created"}<br/>
+<!-- dtl:block:RecordCategoryHeader -->
+                    <th>$Text{"Category"}<br/>
+                    <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=CategoryID&OrderBy=Up" onmouseover="window.status='$JSText{"sort upward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}up-small.png" alt="$Text{"up"}"></a> /
+                    <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=CategoryID&OrderBy=Down" onmouseover="window.status='$JSText{"sort downward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}down-small.png" alt="$Text{"down"}"></a>
+                    </th>
+<!-- dtl:block:RecordCategoryHeader -->
+<!-- dtl:block:RecordImpactHeader -->
+                    <th>$Text{"Impact"}<br/>
+                    <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=ImpactID&OrderBy=Up" onmouseover="window.status='$JSText{"sort upward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}up-small.png" alt="$Text{"up"}"></a> /
+                    <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=ImpactID&OrderBy=Down" onmouseover="window.status='$JSText{"sort downward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}down-small.png" alt="$Text{"down"}"></a>
+                    </th>
+<!-- dtl:block:RecordImpactHeader -->
+<!-- dtl:block:RecordPriorityHeader -->
+                    <th>$Text{"Priority"}<br/>
+                    <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=PriorityID&OrderBy=Up" onmouseover="window.status='$JSText{"sort upward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}up-small.png" alt="$Text{"up"}"></a> /
+                    <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=PriorityID&OrderBy=Down" onmouseover="window.status='$JSText{"sort downward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}down-small.png" alt="$Text{"down"}"></a>
+                    </th>
+<!-- dtl:block:RecordPriorityHeader -->
+<!-- dtl:block:RecordRealizeTimeHeader -->
+                    <th>$Text{"Realization Time"}<br/>
+                    <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=RealizeTime&OrderBy=Up" onmouseover="window.status='$JSText{"sort upward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}up-small.png" alt="$Text{"up"}"></a> /
+                    <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=RealizeTime&OrderBy=Down" onmouseover="window.status='$JSText{"sort downward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}down-small.png" alt="$Text{"down"}"></a>
+                    </th>
+<!-- dtl:block:RecordRealizeTimeHeader -->
+<!-- dtl:block:RecordPlannedStartTimeHeader -->
+                    <th>$Text{"Planned Start"}<br/>
+                    <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=PlannedStartTime&OrderBy=Up" onmouseover="window.status='$JSText{"sort upward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}up-small.png" alt="$Text{"up"}"></a> /
+                    <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=PlannedStartTime&OrderBy=Down" onmouseover="window.status='$JSText{"sort downward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}down-small.png" alt="$Text{"down"}"></a>
+                    </th>
+<!-- dtl:block:RecordPlannedStartTimeHeader -->
+<!-- dtl:block:RecordPlannedEndTimeHeader -->
+                    <th>$Text{"Planned End"}<br/>
+                    <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=PlannedEndTime&OrderBy=Up" onmouseover="window.status='$JSText{"sort upward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}up-small.png" alt="$Text{"up"}"></a> /
+                    <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=PlannedEndTime&OrderBy=Down" onmouseover="window.status='$JSText{"sort downward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}down-small.png" alt="$Text{"down"}"></a>
+                    </th>
+<!-- dtl:block:RecordPlannedEndTimeHeader -->
+<!-- dtl:block:RecordActualStartTimeHeader -->
+                    <th>$Text{"Actual Start"}<br/>
+                    <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=ActualStartTime&OrderBy=Up" onmouseover="window.status='$JSText{"sort upward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}up-small.png" alt="$Text{"up"}"></a> /
+                    <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=ActualStartTime&OrderBy=Down" onmouseover="window.status='$JSText{"sort downward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}down-small.png" alt="$Text{"down"}"></a>
+                    </th>
+<!-- dtl:block:RecordActualStartTimeHeader -->
+<!-- dtl:block:RecordActualEndTimeHeader -->
+                    <th>$Text{"Actual End"}<br/>
+                    <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=ActualEndTime&OrderBy=Up" onmouseover="window.status='$JSText{"sort upward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}up-small.png" alt="$Text{"up"}"></a> /
+                    <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=ActualEndTime&OrderBy=Down" onmouseover="window.status='$JSText{"sort downward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}down-small.png" alt="$Text{"down"}"></a>
+                    </th>
+<!-- dtl:block:RecordActualEndTimeHeader -->
+<!-- dtl:block:RecordCreateTimeHeader -->
+                    <th>$Text{"Created"}<br/>
                     <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=CreateTime&OrderBy=Up" onmouseover="window.status='$JSText{"sort upward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}up-small.png" alt="$Text{"up"}"></a> /
                     <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=CreateTime&OrderBy=Down" onmouseover="window.status='$JSText{"sort downward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}down-small.png" alt="$Text{"down"}"></a>
                     </th>
-<!-- dtl:block:RecordChangeCreateTimeHeader -->
+<!-- dtl:block:RecordCreateTimeHeader -->
                 </tr>
 <!-- dtl:block:Record -->
                 <tr class="$QData{"CssClass"}">
@@ -62,35 +113,83 @@
 <!-- dtl:block:RecordChangeNumber -->
 <!-- dtl:block:RecordChangeTitle -->
                     <td>
-                        <div title="$QData{"ChangeTitle"}">$QData{"ChangeTitle","50"}</div>
+                        <div title="$QData{"ChangeTitle"}">$QData{"ChangeTitle","40"}</div>
                     </td>
 <!-- dtl:block:RecordChangeTitle -->
 <!-- dtl:block:RecordChangeBuilder -->
                     <td>
-                        <div title="$QData{"ChangeBuilderUserLogin"} ($QData{"ChangeBuilderUserFirstname"} $QData{"ChangeBuilderUserLastname"})}" >
-                            $QData{"ChangeBuilderUserLogin","15"} ($Quote{"$Data{"ChangeBuilderUserFirstname"}", "15"} $Quote{"$Data{"ChangeBuilderUserLastname"}","15"})
+                        <div title="$QData{"ChangeBuilderUserLogin"} $QData{"ChangeBuilderLeftParenthesis"}$QData{"ChangeBuilderUserFirstname"} $QData{"ChangeBuilderUserLastname"}$QData{"ChangeBuilderRightParenthesis"}">
+                            $QData{"ChangeBuilderUserLogin","15"} $QData{"ChangeBuilderLeftParenthesis"}$Quote{"$Data{"ChangeBuilderUserFirstname"}", "15"} $Quote{"$Data{"ChangeBuilderUserLastname"}","15"}$QData{"ChangeBuilderRightParenthesis"}
                         </div>
                     </td>
 <!-- dtl:block:RecordChangeBuilder -->
-<!-- dtl:block:RecordChangeWorkOrderCount -->
+<!-- dtl:block:RecordChangeManager -->
+                    <td>
+                        <div title="$QData{"ChangeManagerUserLogin"} $QData{"ChangeManagerLeftParenthesis"}$QData{"ChangeManagerUserFirstname"} $QData{"ChangeManagerUserLastname"}$QData{"ChangeManagerRightParenthesis"}">
+                            $QData{"ChangeManagerUserLogin","15"} $QData{"ChangeManagerLeftParenthesis"}$Quote{"$Data{"ChangeManagerUserFirstname"}", "15"} $Quote{"$Data{"ChangeManagerUserLastname"}","15"}$QData{"ChangeManagerRightParenthesis"}
+                        </div>
+
+                    </td>
+<!-- dtl:block:RecordChangeManager -->
+<!-- dtl:block:RecordWorkOrderCount -->
                     <td>
                         <div title="$QData{"WorkOrderCount"}" style="text-align:center;">$QData{"WorkOrderCount"}</div>
                     </td>
-<!-- dtl:block:RecordChangeWorkOrderCount -->
+<!-- dtl:block:RecordWorkOrderCount -->
 <!-- dtl:block:RecordChangeState -->
                     <td>
                         <div title="$Text{"$QData{"ChangeState"}"}">$Text{"$QData{"ChangeState"}"}</div>
                     </td>
 <!-- dtl:block:RecordChangeState -->
-<!-- dtl:block:RecordChangeCreateTime -->
+<!-- dtl:block:RecordCategory -->
+                    <td>
+                        <div title="$Text{"$QData{"Category"}"}">$Text{"$QData{"Category"}"}</div>
+                    </td>
+<!-- dtl:block:RecordCategory -->
+<!-- dtl:block:RecordImpact -->
+                    <td>
+                        <div title="$Text{"$QData{"Impact"}"}">$Text{"$QData{"Impact"}"}</div>
+                    </td>
+<!-- dtl:block:RecordImpact -->
+<!-- dtl:block:RecordPriority -->
+                    <td>
+                        <div title="$Text{"$QData{"Priority"}"}">$Text{"$QData{"Priority"}"}</div>
+                    </td>
+<!-- dtl:block:RecordPriority -->
+<!-- dtl:block:RecordRealizeTime -->
+                    <td>
+                        <div title="$TimeLong{"$QData{"RealizeTime"}"}">$TimeLong{"$QData{"RealizeTime"}"}</div>
+                    </td>
+<!-- dtl:block:RecordRealizeTime -->
+<!-- dtl:block:RecordPlannedStartTime -->
+                    <td>
+                        <div title="$TimeLong{"$QData{"PlannedStartTime"}"}">$TimeLong{"$QData{"PlannedStartTime"}"}</div>
+                    </td>
+<!-- dtl:block:RecordPlannedStartTime -->
+<!-- dtl:block:RecordPlannedEndTime -->
+                    <td>
+                        <div title="$TimeLong{"$QData{"PlannedEndTime"}"}">$TimeLong{"$QData{"PlannedEndTime"}"}</div>
+                    </td>
+<!-- dtl:block:RecordPlannedEndTime -->
+<!-- dtl:block:RecordActualStartTime -->
+                    <td>
+                        <div title="$TimeLong{"$QData{"ActualStartTime"}"}">$TimeLong{"$QData{"ActualStartTime"}"}</div>
+                    </td>
+<!-- dtl:block:RecordActualStartTime -->
+<!-- dtl:block:RecordActualEndTime -->
+                    <td>
+                        <div title="$TimeLong{"$QData{"ActualEndTime"}"}">$TimeLong{"$QData{"ActualEndTime"}"}</div>
+                    </td>
+<!-- dtl:block:RecordActualEndTime -->
+<!-- dtl:block:RecordCreateTime -->
                     <td>
                         <div title="$TimeLong{"$QData{"CreateTime"}"}">$TimeLong{"$QData{"CreateTime"}"}</div>
                     </td>
-<!-- dtl:block:RecordChangeCreateTime -->
+<!-- dtl:block:RecordCreateTime -->
                 </tr>
 <!-- dtl:block:Record -->
                 <tr class="contentfooter">
-                    <td align="left" colspan="9">
+                    <td align="left" colspan="$QData{"ColumnCount"}">
                         &nbsp;
                     </td>
                 </tr>

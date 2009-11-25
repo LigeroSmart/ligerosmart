@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ITSMChangeOverviewSmall.pm.pm
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeOverviewSmall.pm,v 1.4 2009-11-24 20:37:38 ub Exp $
+# $Id: ITSMChangeOverviewSmall.pm,v 1.5 2009-11-25 17:51:47 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -81,19 +81,30 @@ sub Run {
 
             next CHANGEID if !$Change;
 
-            # set CSS-class of the row
+            # set css class of the row
             $CssClass = $CssClass eq 'searchpassive' ? 'searchactive' : 'searchpassive';
 
-            # to store data which comes not from change
+            # to store data which does not come from change
             my %Data;
 
-            # get change builder data
-            my %ChangeBuilderUser = $Self->{UserObject}->GetUserData(
-                UserID => $Change->{ChangeBuilderID},
-                Cached => 1,
-            );
-            for my $Postfix (qw(UserLogin UserFirstname UserLastname)) {
-                $Data{ 'ChangeBuilder' . $Postfix } = $ChangeBuilderUser{$Postfix};
+            # get user data for change builder and change manager
+            USERTYPE:
+            for my $UserType (qw(ChangeBuilder ChangeManager)) {
+
+                next USERTYPE if !$Change->{ $UserType . 'ID' };
+
+                # get user data
+                my %User = $Self->{UserObject}->GetUserData(
+                    UserID => $Change->{ $UserType . 'ID' },
+                    Cached => 1,
+                );
+
+                # set user data
+                $Data{ $UserType . 'UserLogin' }        = $User{UserLogin};
+                $Data{ $UserType . 'UserFirstname' }    = $User{UserFirstname};
+                $Data{ $UserType . 'UserLastname' }     = $User{UserLastname};
+                $Data{ $UserType . 'LeftParenthesis' }  = '(';
+                $Data{ $UserType . 'RightParenthesis' } = ')';
             }
 
             # build record block
@@ -129,7 +140,8 @@ sub Run {
         TemplateFile => 'AgentITSMChangeOverviewSmall',
         Data         => {
             %Param,
-            Type => $Self->{ViewType},
+            Type        => $Self->{ViewType},
+            ColumnCount => scalar @ShowColumns,
         },
     );
 
