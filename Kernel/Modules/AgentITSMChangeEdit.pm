@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeEdit.pm - the OTRS::ITSM::ChangeManagement change edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.pm,v 1.21 2009-11-23 16:28:41 bes Exp $
+# $Id: AgentITSMChangeEdit.pm,v 1.22 2009-11-25 09:46:12 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChangeCIPAllocate;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.21 $) [1];
+$VERSION = qw($Revision: 1.22 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -354,7 +354,7 @@ sub Run {
         Type => 'Category',
     );
 
-    # create impact string
+    # create category selection string
     $Param{'CategoryStrg'} = $Self->{LayoutObject}->BuildSelection(
         Data       => $Param{Categories},
         Name       => 'CategoryID',
