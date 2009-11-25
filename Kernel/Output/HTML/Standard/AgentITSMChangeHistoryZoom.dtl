@@ -2,7 +2,7 @@
 # AgentITSMChangeHistoryZoom.dtl - provides HTML form for AgentITSMChangeHistoryZoom
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeHistoryZoom.dtl,v 1.7 2009-11-24 12:39:49 mae Exp $
+# $Id: AgentITSMChangeHistoryZoom.dtl,v 1.8 2009-11-25 07:05:06 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -31,7 +31,7 @@
     </tr>
     <tr>
         <td class="menu">
-            <a href="$Env{"Baselink"}$Env{"LastScreenView"}" onmouseover="window.status='$JSText{"Back"}'; return true;" onmouseout="window.status='';" class="menuitem">$Text{"Back"}</a>
+            <a href="$Env{"Baselink"}$Env{"LastScreenHistory"}" onmouseover="window.status='$JSText{"Back"}'; return true;" onmouseout="window.status='';" class="menuitem">$Text{"Back"}</a>
         </td>
     </tr>
     <tr>

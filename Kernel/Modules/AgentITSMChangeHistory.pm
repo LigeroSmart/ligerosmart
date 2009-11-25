@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeHistory.pm - the OTRS::ITSM::ChangeManagement change history module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeHistory.pm,v 1.23 2009-11-24 08:16:25 reb Exp $
+# $Id: AgentITSMChangeHistory.pm,v 1.24 2009-11-25 07:05:05 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::History;
 use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.23 $) [1];
+$VERSION = qw($Revision: 1.24 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -92,6 +92,13 @@ sub Run {
             Comment => 'Please contact the admin.',
         );
     }
+
+    # Store LastScreenView, for backlinks
+    $Self->{SessionObject}->UpdateSessionID(
+        SessionID => $Self->{SessionID},
+        Key       => 'LastScreenHistory',
+        Value     => $Self->{RequestedURL},
+    );
 
     # get history entries
     my $HistoryEntriesRef = $Self->{HistoryObject}->ChangeHistoryGet(
