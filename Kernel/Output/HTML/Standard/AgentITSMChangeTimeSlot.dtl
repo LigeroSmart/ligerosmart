@@ -2,7 +2,7 @@
 # AgentITSMChangeTimeSlot.dtl - provides HTML form for AgentITSMChangeTimeSlot
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeTimeSlot.dtl,v 1.4 2009-11-23 13:47:01 ub Exp $
+# $Id: AgentITSMChangeTimeSlot.dtl,v 1.5 2009-11-25 08:54:22 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -44,16 +44,16 @@ function submit_compose() {
                 <input type="hidden" name="Action"    value="$Env{"Action"}">
                 <input type="hidden" name="Subaction" value="MoveTimeSlot">
                 <input type="hidden" name="ChangeID"  value="$QData{"ChangeID"}">
-                <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
+                <table border="0" width="800" align="center" cellspacing="0" cellpadding="3">
                     <tr>
                         <td class="contenthead">$Text{"Move Time Slot"}</td>
                     </tr>
                     <tr class="contentbody">
                         <td>
-                            <table border="0">
+                            <table border="0" cellspacing="0" cellpadding="3">
                                 <tr>
-                                    <td class="contentkey">$Text{"Time type"}:</td>
-                                    <td class="contentvalue">$Data{"TimeTypeSelectionString"}</td>
+                                    <td width="130px" class="contentkey">$Text{"Time type"}:</td>
+                                    <td width="*" class="contentvalue">$Data{"TimeTypeSelectionString"}</td>
 <!-- dtl:block:InvalidTimeType -->
                                     <br />
                                     <font color="red" size="-2">$Text{"Input invalid"}</font>
