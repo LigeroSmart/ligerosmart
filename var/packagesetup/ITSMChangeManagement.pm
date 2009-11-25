@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.7 2009-11-19 16:48:28 reb Exp $
+# $Id: ITSMChangeManagement.pm,v 1.8 2009-11-25 17:40:04 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -30,7 +30,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 =head1 NAME
 
@@ -296,6 +296,8 @@ sub CodeUninstall {
     );
     return 1;
 }
+
+=begin Internal:
 
 =item _GroupAdd()
 
@@ -589,6 +591,8 @@ sub _LinkDelete {
 
 1;
 
+=end Internal:
+
 =back
 
 =head1 TERMS AND CONDITIONS
@@ -603,6 +607,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.7 $ $Date: 2009-11-19 16:48:28 $
+$Revision: 1.8 $ $Date: 2009-11-25 17:40:04 $
 
 =cut
