@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.149 2009-11-25 09:54:01 reb Exp $
+# $Id: ITSMChange.t,v 1.150 2009-11-25 10:19:22 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -3368,6 +3368,48 @@ my @ChangeSearchTests = (
             TestExistence => 1,
             TestCount     => 1,
         },
+    },
+
+    # Nr 65 - Search for invalid CIPs
+    {
+        Description => 'Search for invalid CIPs',
+        SearchData  => {
+            Categories  => ['FooBar'],
+            Impacts     => ['FooBar'],
+            Priorities  => ['FooBar'],
+            ChangeTitle => 'Test%CIP%' . $UniqueSignature,
+        },
+        SearchFails => 1,
+    },
+
+    # Nr 66 - Search for invalid Categories
+    {
+        Description => 'Search for invalid Categories',
+        SearchData  => {
+            Categories  => ['FooBar'],
+            ChangeTitle => 'Test%CIP%' . $UniqueSignature,
+        },
+        SearchFails => 1,
+    },
+
+    # Nr 67 - Search for invalid CIPs
+    {
+        Description => 'Search for invalid Impacts',
+        SearchData  => {
+            Impacts     => ['FooBar'],
+            ChangeTitle => 'Test%CIP%' . $UniqueSignature,
+        },
+        SearchFails => 1,
+    },
+
+    # Nr 68 - Search for invalid Priorities
+    {
+        Description => 'Search for invalid CIPs',
+        SearchData  => {
+            Priorities  => ['FooBar'],
+            ChangeTitle => 'Test%CIP%' . $UniqueSignature,
+        },
+        SearchFails => 1,
     },
 );
 
