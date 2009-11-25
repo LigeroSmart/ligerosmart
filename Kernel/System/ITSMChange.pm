@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.191 2009-11-25 15:22:19 ub Exp $
+# $Id: ITSMChange.pm,v 1.192 2009-11-25 17:33:50 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.191 $) [1];
+$VERSION = qw($Revision: 1.192 $) [1];
 
 =head1 NAME
 
@@ -2183,13 +2183,7 @@ sub Permission {
     return;
 }
 
-=back
-
-=head1 INTERNAL METHODS
-
-=over 4
-
-=cut
+=begin Internal:
 
 =item _CheckChangeStateIDs()
 
@@ -2662,6 +2656,8 @@ sub DESTROY {
 
 1;
 
+=end Internal:
+
 =back
 
 =head1 TERMS AND CONDITIONS
@@ -2676,6 +2672,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.191 $ $Date: 2009-11-25 15:22:19 $
+$Revision: 1.192 $ $Date: 2009-11-25 17:33:50 $
 
 =cut

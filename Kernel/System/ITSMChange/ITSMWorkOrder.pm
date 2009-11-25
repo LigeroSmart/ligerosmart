@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.38 2009-11-24 16:50:04 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.39 2009-11-25 17:33:50 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.38 $) [1];
+$VERSION = qw($Revision: 1.39 $) [1];
 
 =head1 NAME
 
@@ -1766,13 +1766,7 @@ sub Permission {
     return;
 }
 
-=back
-
-=head1 INTERNAL METHODS
-
-=over 4
-
-=cut
+=begin Internal:
 
 =item _CheckWorkOrderStateIDs()
 
@@ -2147,6 +2141,8 @@ sub DESTROY {
 
 1;
 
+=end Internal:
+
 =back
 
 =head1 TERMS AND CONDITIONS
@@ -2161,6 +2157,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.38 $ $Date: 2009-11-24 16:50:04 $
+$Revision: 1.39 $ $Date: 2009-11-25 17:33:50 $
 
 =cut
