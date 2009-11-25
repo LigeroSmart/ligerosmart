@@ -2,7 +2,7 @@
 # AgentITSMChangeEdit.dtl - provides HTML form for AgentITSMChangeEdit
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.dtl,v 1.26 2009-11-24 13:51:05 ub Exp $
+# $Id: AgentITSMChangeEdit.dtl,v 1.27 2009-11-25 12:32:46 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -59,7 +59,6 @@ function submit_compose() {
                 <input type="hidden" name="Action"     value="$Env{"Action"}">
                 <input type="hidden" name="Subaction"  value="Save">
                 <input type="hidden" name="ChangeID"   value="$QData{"ChangeID"}">
-                <input type="hidden" name="PriorityRC" value="0">
                 <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
                     <tr>
                         <td class="contenthead">$Text{"ITSM Change"}</td>

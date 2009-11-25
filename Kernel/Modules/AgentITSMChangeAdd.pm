@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.23 2009-11-25 09:57:12 bes Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.24 2009-11-25 12:32:45 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChangeCIPAllocate;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.23 $) [1];
+$VERSION = qw($Revision: 1.24 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -69,7 +69,7 @@ sub Run {
         qw(
         ChangeTitle Description Justification TicketID
         OldCategoryID CategoryID OldImpactID ImpactID OldPriorityID PriorityID
-        PriorityRC ElementChanged
+        ElementChanged
         )
         )
     {
@@ -172,12 +172,6 @@ sub Run {
     # these entries are the names of the dtl validation error blocks.
     my @ValidationErrors;
     my %CIPErrors;
-
-    # set Subaction to non-existent value when we
-    # should recalculate priority
-    if ( $GetParam{PriorityRC} && $Self->{Subaction} ne 'AJAXUpdate' ) {
-        $Self->{Subaction} = '';
-    }
 
     # update change
     if ( $Self->{Subaction} eq 'Save' ) {
@@ -460,15 +454,12 @@ sub Run {
         Type => 'Priority',
     );
 
-    # get selected priority
-    my $SelectedPriority = $Self->{CIPAllocateObject}->PriorityAllocationGet(
+    # get selected priority, or the default value
+    my $SelectedPriority = $GetParam{PriorityID};
+    $SelectedPriority ||= $Self->{CIPAllocateObject}->PriorityAllocationGet(
         CategoryID => $Param{CategoryID},
         ImpactID   => $Param{ImpactID},
     );
-
-    if ( $GetParam{PriorityID} && !$GetParam{PriorityRC} ) {
-        $SelectedPriority = $GetParam{PriorityID};
-    }
 
     # create impact string
     $Param{'PriorityStrg'} = $Self->{LayoutObject}->BuildSelection(
