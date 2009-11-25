@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.22 2009-11-23 16:28:41 bes Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.23 2009-11-25 09:57:12 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChangeCIPAllocate;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -395,9 +395,7 @@ sub Run {
         Data       => $Param{Categories},
         Name       => 'CategoryID',
         SelectedID => $Param{CategoryID},
-        OnChange   => "document.compose.PriorityRC.value='1'; "
-            . "document.compose.submit(); return false;",
-        Ajax => {
+        Ajax       => {
             Update => [
                 'PriorityID',
             ],
@@ -432,9 +430,7 @@ sub Run {
         Data       => $Param{Impacts},
         Name       => 'ImpactID',
         SelectedID => $Param{ImpactID},
-        OnChange   => "document.compose.PriorityRC.value='1'; "
-            . "document.compose.submit(); return false;",
-        Ajax => {
+        Ajax       => {
             Update => [
                 'PriorityID',
             ],
