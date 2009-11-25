@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.189 2009-11-24 16:50:05 ub Exp $
+# $Id: ITSMChange.pm,v 1.190 2009-11-25 14:51:26 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.189 $) [1];
+$VERSION = qw($Revision: 1.190 $) [1];
 
 =head1 NAME
 
@@ -1077,9 +1077,9 @@ is ignored.
         # default: [ 'ChangeID' ]
         # (ChangeID, ChangeNumber, ChangeTitle, ChangeStateID,
         # ChangeManagerID, ChangeBuilderID,
-        # PlannedStartTime, PlannedEndTime,
-        # ActualStartTime, ActualEndTime,
         # CategoryID, ImpactID, PriorityID
+        # PlannedStartTime, PlannedEndTime,
+        # ActualStartTime, ActualEndTime, RealizeTime,
         # CreateTime, CreateBy, ChangeTime, ChangeBy)
 
         # Additional information for OrderBy:
@@ -1165,17 +1165,19 @@ sub ChangeSearch {
         ChangeStateID    => 'c.change_state_id',
         ChangeManagerID  => 'c.change_manager_id',
         ChangeBuilderID  => 'c.change_builder_id',
+        CategoryID       => 'c.category_id',
+        ImpactID         => 'c.impact_id',
+        PriorityID       => 'c.priority_id',
         CreateTime       => 'c.create_time',
         CreateBy         => 'c.create_by',
         ChangeTime       => 'c.change_time',
         ChangeBy         => 'c.change_by',
-        CategoryID       => 'c.category_id',
-        ImpactID         => 'c.impact_id',
-        PriorityID       => 'c.priority_id',
+        RealizeTime      => 'c.realize_time',
         PlannedStartTime => 'MIN(wo1.planned_start_time)',
         PlannedEndTime   => 'MAX(wo1.planned_end_time)',
         ActualStartTime  => 'MIN(wo1.actual_start_time)',
         ActualEndTime    => 'MAX(wo1.actual_end_time)',
+
     );
 
     # check if OrderBy contains only unique valid values
@@ -2654,7 +2656,7 @@ sub DESTROY {
 
     # TODO (ub: this must be commented out until further investigation!)
     #    # execute all transaction events
-    #    $Self->EventHandlerTransaction();
+    # $Self->EventHandlerTransaction();
 
     return 1;
 }
@@ -2675,6 +2677,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.189 $ $Date: 2009-11-24 16:50:05 $
+$Revision: 1.190 $ $Date: 2009-11-25 14:51:26 $
 
 =cut
