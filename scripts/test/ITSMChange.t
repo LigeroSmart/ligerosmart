@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.146 2009-11-25 07:43:31 reb Exp $
+# $Id: ITSMChange.t,v 1.147 2009-11-25 08:04:16 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1169,6 +1169,7 @@ my @ChangeTests = (
             },
         },
         SearchTest => [6],
+        Label      => 'OrderByCIPTests',    # this change will be used in order by search tests
     },
 
     # Test category
@@ -1190,6 +1191,7 @@ my @ChangeTests = (
             },
         },
         SearchTest => [ 6, 51 ],
+        Label => 'OrderByCIPTests',    # this change will be used in order by search tests
     },
 
     # Test invalid category
@@ -1225,6 +1227,7 @@ my @ChangeTests = (
             },
         },
         SearchTest => [ 6, 52 ],
+        Label => 'OrderByCIPTests',    # this change will be used in order by search tests
     },
 
     # Test invalid impact
@@ -1260,6 +1263,7 @@ my @ChangeTests = (
             },
         },
         SearchTest => [ 6, 53 ],
+        Label => 'OrderByCIPTests',    # this change will be used in order by search tests
     },
 
     # Test invalid priority
@@ -1517,6 +1521,7 @@ my @ChangeTests = (
             },
         },
         SearchTest => [6],
+        Label      => 'OrderByCIPTests',    # this change will be used in order by search tests
     },
 
     # Test invalid category
@@ -1545,6 +1550,7 @@ my @ChangeTests = (
             },
         },
         SearchTest => [6],
+        Label      => 'OrderByCIPTests',    # this change will be used in order by search tests
     },
 
     # Test impact
@@ -1572,6 +1578,7 @@ my @ChangeTests = (
             },
         },
         SearchTest => [6],
+        Label      => 'OrderByCIPTests',    # this change will be used in order by search tests
     },
 
     # Test invalid impact
@@ -1600,6 +1607,7 @@ my @ChangeTests = (
             },
         },
         SearchTest => [6],
+        Label      => 'OrderByCIPTests',    # this change will be used in order by search tests
     },
 
     # Test priority
@@ -1627,6 +1635,7 @@ my @ChangeTests = (
             },
         },
         SearchTest => [6],
+        Label      => 'OrderByCIPTests',    # this change will be used in order by search tests
     },
 
     # Test invalid priority
@@ -1655,6 +1664,7 @@ my @ChangeTests = (
             },
         },
         SearchTest => [6],
+        Label      => 'OrderByCIPTests',    # this change will be used in order by search tests
     },
 
     #------------------------------#
@@ -4244,6 +4254,103 @@ for my $Test (@TimeSearchTests) {
 
     $TestCount++;
     $TSTCounter++;
+}
+
+# ------------------------------------------------------------ #
+# 'OrderBy' tests for CIP columns
+# ------------------------------------------------------------ #
+
+# get three change ids. Then get the data. That is needed for sorting
+my @OrderByCIPChangeIDs = @{ $Label2ChangeIDs{OrderByCIPTests} };
+my @OrderByCIPChanges;
+
+for my $ChangeIDForOrderByCIPTests (@OrderByCIPChangeIDs) {
+    my $ChangeData = $Self->{ChangeObject}->ChangeGet(
+        ChangeID => $ChangeIDForOrderByCIPTests,
+        UserID   => 1,
+    );
+
+    push @OrderByCIPChanges, $ChangeData;
+}
+
+my @OrderByCIPColumns = qw(
+    CategoryID
+    ImpactID
+    PriorityID
+);
+
+for my $CIPColumn (@OrderByCIPColumns) {
+
+    # turn off all pretty print
+    local $Data::Dumper::Indent = 0;
+    local $Data::Dumper::Useqq  = 1;
+
+    my @SortedChanges
+        = sort {
+        $a->{$CIPColumn} <=> $b->{$CIPColumn}
+            || $b->{ChangeID} <=> $a->{ChangeID}
+        } @OrderByCIPChanges;
+
+    my @SortedIDs = map { $_->{ChangeID} } @SortedChanges;
+
+    # dump the reference attribute
+    my $ReferenceList = Data::Dumper::Dumper( \@SortedIDs );
+
+    my $SearchResult = $Self->{ChangeObject}->ChangeSearch(
+        ChangeTitle      => '%CIP%' . $UniqueSignature,
+        OrderBy          => [$CIPColumn],
+        OrderByDirection => ['Up'],
+        UserID           => 1,
+    );
+
+    # dump the attribute from ChangeGet()
+    my $SearchList = Data::Dumper::Dumper($SearchResult);
+
+    $Self->Is(
+        $SearchList,
+        $ReferenceList,
+        'Test ' . $TestCount++ . ": ChangeSearch() OrderBy $CIPColumn (Up)."
+    );
+
+    my @SortedChangesDown
+        = sort {
+        $b->{$CIPColumn} <=> $a->{$CIPColumn}
+            || $b->{ChangeID} <=> $a->{ChangeID}
+        } @OrderByCIPChanges;
+
+    my @SortedIDsDown = map { $_->{ChangeID} } @SortedChangesDown;
+
+    # dump the reference attribute
+    my $ReferenceListDown = Data::Dumper::Dumper( \@SortedIDsDown );
+
+    my $SearchResultDown = $Self->{ChangeObject}->ChangeSearch(
+        ChangeTitle => '%CIP%' . $UniqueSignature,
+        OrderBy     => [$CIPColumn],
+        UserID      => 1,
+    );
+
+    # dump the attribute from ChangeGet()
+    my $SearchListDown = Data::Dumper::Dumper($SearchResultDown);
+
+    $Self->Is(
+        $SearchListDown,
+        $ReferenceListDown,
+        'Test ' . $TestCount++ . ": ChangeSearch() OrderBy $CIPColumn (Down)."
+    );
+
+    # check if ITSMChange.pm handles non-existent OrderByDirection criteria correct
+    my $SearchResultSideways = $Self->{ChangeObject}->ChangeSearch(
+        ChangeTitle      => '%CIP%' . $UniqueSignature,
+        OrderBy          => [$CIPColumn],
+        OrderByDirection => ['Sideways'],
+        UserID           => 1,
+    );
+
+    $Self->Is(
+        $SearchResultSideways,
+        undef,
+        'Test ' . $TestCount++ . ": ChangeSearch() OrderBy $CIPColumn (Sideways)."
+    );
 }
 
 # ------------------------------------------------------------ #
