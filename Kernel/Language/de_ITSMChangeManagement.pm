@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMChangeManagement.pm - the german translation of ITSMChangeManagement
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: de_ITSMChangeManagement.pm,v 1.11 2009-11-24 11:50:11 ub Exp $
+# $Id: de_ITSMChangeManagement.pm,v 1.12 2009-11-25 18:13:04 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -32,10 +32,10 @@ sub Data {
     $Lang->{'The planned start time must be before the planned end time!'}
         = 'Der geplante Start muss vor dem geplanten Ende liegen!';
 
-    # Change menu entry
+    # Change menu
     $Lang->{'ITSM Change'} = 'Change';
 
-    # Change history entries
+    # Change history
     $Lang->{'ChangeHistory::ChangeAdd'}        = 'Neuer Change (ID=%s)';
     $Lang->{'ChangeHistory::ChangeUpdate'}     = '%s: Neu: %s -> Alt: %s';
     $Lang->{'ChangeHistory::ChangeLinkAdd'}    = 'Link zu %s (ID=%s) hinzugefügt';
@@ -43,35 +43,35 @@ sub Data {
     $Lang->{'ChangeHistory::ChangeCABUpdate'}  = 'CAB %s';
     $Lang->{'ChangeHistory::ChangeCABDelete'}  = 'CAB gelöscht %s';
 
-    # WorkOrder history entries
+    # WorkOrder history
     $Lang->{'WorkOrderHistory::WorkOrderAdd'}        = 'Neue Workorder (ID=%s)';
     $Lang->{'WorkOrderHistory::WorkOrderUpdate'}     = '%s: Neu: %s -> Alt: %s';
     $Lang->{'WorkOrderHistory::WorkOrderLinkAdd'}    = 'Link zu %s (ID=%s) hinzugefügt';
     $Lang->{'WorkOrderHistory::WorkOrderLinkDelete'} = 'Link to %s (ID=%s) gelöscht';
     $Lang->{'WorkOrderHistory::WorkOrderDelete'}     = 'Workorder (ID=%s) gelöscht';
 
-    # long WorkOrder history entries
+    # long WorkOrder history
     $Lang->{'WorkOrderHistory::WorkOrderAddWithWorkorderID'}        = 'Neue Workorder (ID=%s)';
     $Lang->{'WorkOrderHistory::WorkOrderUpdateWithWorkorderID'}     = '(ID=%s) %s: Neu: %s -> Alt: %s';
     $Lang->{'WorkOrderHistory::WorkOrderLinkAddWithWorkorderID'}    = '(ID=%s) Link zu %s (ID=%s) hinzugefügt';
     $Lang->{'WorkOrderHistory::WorkOrderLinkDeleteWithWorkorderID'} = '(ID=%s) Link to %s (ID=%s) gelöscht';
     $Lang->{'WorkOrderHistory::WorkOrderDeleteWithWorkorderID'}     = 'Workorder (ID=%s) gelöscht';
 
-    # entries for CIP matrix
+    # CIP matrix
     $Lang->{'Category'}                         = 'Kategorie';
     $Lang->{'Category <-> Impact <-> Priority'} = 'Kategorie <-> Auswirkung <-> Priorität';
 
-    # entries for workorder types
+    # WorkOrder types
     $Lang->{'approval'}  = 'Genehmigung';
     $Lang->{'decision'}  = 'Entscheidung';
     $Lang->{'workorder'} = 'Arbeitsanweisung';
     $Lang->{'backout'}   = 'Alternative Arbeitsanweisung';
     $Lang->{'pir'}       = 'PIR (nachgelagerte QS)';
 
-    # Change Overviews
-    $Lang->{'Small'}     = 'Klein';
-    $Lang->{'Medium'}    = 'Mittel';
-    $Lang->{'Preview'}   = 'Vorschau';
+    # Change overviews
+    $Lang->{'Small'}   = 'Klein';
+    $Lang->{'Medium'}  = 'Mittel';
+    $Lang->{'Preview'} = 'Vorschau';
 
     return 1;
 }
