@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderHistoryZoom.pm - the OTRS::ITSM::ChangeManagement workorder history zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderHistoryZoom.pm,v 1.5 2009-11-23 13:36:18 bes Exp $
+# $Id: AgentITSMWorkOrderHistoryZoom.pm,v 1.6 2009-11-26 11:49:17 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -76,13 +76,13 @@ sub Run {
     }
 
     # check permissions
-    my $Access = $Self->{ChangeObject}->Permission(
+    my $Access = $Self->{WorkOrderObject}->Permission(
         Type        => $Self->{Config}->{Permission},
         WorkOrderID => $HistoryEntry->{WorkOrderID},
         UserID      => $Self->{UserID},
     );
 
-    # error screen, don't show change add mask
+    # error screen
     if ( !$Access ) {
         return $Self->{LayoutObject}->NoPermission(
             Message    => "You need $Self->{Config}->{Permission} permissions!",
