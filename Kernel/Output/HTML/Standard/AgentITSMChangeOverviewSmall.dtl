@@ -2,7 +2,7 @@
 # AgentITSMChangeOverviewSmall.dtl - html for change overview table
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeOverviewSmall.dtl,v 1.6 2009-11-27 09:56:25 ub Exp $
+# $Id: AgentITSMChangeOverviewSmall.dtl,v 1.7 2009-11-27 10:10:01 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -167,7 +167,7 @@
 <!-- dtl:block:RecordWorkOrderTitle -->
 <!-- dtl:block:RecordChangeTitle -->
                     <td>
-                        <a href="$Env{"Baselink"}Action=AgentITSMChangeZoom&ChangeID=$QData{"ChangeID"}" onmouseover="window.status='$JSText{"Zoom"}'; return true;" onmouseout="window.status='';" title="$QData{"ChangeTitle"}">$QData{"ChangeTitle","40"}</a>
+                        <a style="text-decoration:none; color:black;" href="$Env{"Baselink"}Action=AgentITSMChangeZoom&ChangeID=$QData{"ChangeID"}" onmouseover="window.status='$JSText{"Zoom"}'; return true;" onmouseout="window.status='';" title="$QData{"ChangeTitle"}">$QData{"ChangeTitle","40"}</a>
 #                        <div title="$QData{"ChangeTitle"}">$QData{"ChangeTitle","40"}</div>
                     </td>
 <!-- dtl:block:RecordChangeTitle -->
