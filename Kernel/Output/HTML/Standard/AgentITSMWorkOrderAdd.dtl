@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderAdd.dtl - provides HTML form for AgentITSMWorkOrderAdd
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.dtl,v 1.28 2009-11-27 10:19:01 bes Exp $
+# $Id: AgentITSMWorkOrderAdd.dtl,v 1.29 2009-11-27 15:00:33 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -125,7 +125,7 @@ function submit_compose() {
                                         <font color="red" title="$Text{"Required"}">*</font>
                                     </td>
                                     <td class="contentvalue">
-                                        <input type="text" name="WorkOrderTitle" value="$QData{"WorkOrderTitle"}" size="70" maxsize="250">
+                                        <input type="text" name="WorkOrderTitle" value="$QData{"WorkOrderTitle"}" size="70" maxlength="250">
 <!-- dtl:block:InvalidTitle -->
                                         <br />
                                         <font color="red" size="-2">$Text{"Input invalid"}</font>
