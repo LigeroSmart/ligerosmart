@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.39 2009-11-25 17:33:50 bes Exp $
+# $Id: ITSMWorkOrder.pm,v 1.40 2009-11-27 08:46:33 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.39 $) [1];
+$VERSION = qw($Revision: 1.40 $) [1];
 
 =head1 NAME
 
@@ -841,8 +841,13 @@ sub WorkOrderSearch {
         }
     }
 
+    my @SQLWhere;           # assemble the conditions used in the WHERE clause
+    my @InnerJoinTables;    # keep track of the tables that need to be inner joined
+
     # define order table
     my %OrderByTable = (
+
+        # workorder attributes
         ChangeID         => 'wo.change_id',
         WorkOrderID      => 'wo.id',
         WorkOrderNumber  => 'wo.workorder_number',
@@ -858,6 +863,17 @@ sub WorkOrderSearch {
         CreateBy         => 'wo.create_by',
         ChangeTime       => 'wo.change_time',
         ChangeBy         => 'wo.change_by',
+
+        # change attributes
+        ChangeNumber    => 'c.change_number',
+        ChangeTitle     => 'c.title',
+        ChangeStateID   => 'c.change_state_id',
+        ChangeManagerID => 'c.change_manager_id',
+        ChangeBuilderID => 'c.change_builder_id',
+        CategoryID      => 'c.category_id',
+        ImpactID        => 'c.impact_id',
+        PriorityID      => 'c.priority_id',
+        RealizeTime     => 'c.realize_time',
     );
 
     # check if OrderBy contains only unique valid values
@@ -877,6 +893,11 @@ sub WorkOrderSearch {
 
         # remember the value to check if it appears more than once
         $OrderBySeen{$OrderBy} = 1;
+
+        # join the change table, when it is needed in the for the OrderBy clause
+        if ( $OrderByTable{$OrderBy} =~ m{ \A c[.] }xms ) {
+            push @InnerJoinTables, 'c';
+        }
     }
 
     # check if OrderByDirection array contains only 'Up' or 'Down'
@@ -949,9 +970,6 @@ sub WorkOrderSearch {
 
         push @{ $Param{WorkOrderTypeIDs} }, $WorkOrderTypeID;
     }
-
-    my @SQLWhere;           # assemble the conditions used in the WHERE clause
-    my @InnerJoinTables;    # keep track of the tables that need to be inner joined
 
     # add string params to the WHERE clause
     my %StringParams = (
@@ -2157,6 +2175,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.39 $ $Date: 2009-11-25 17:33:50 $
+$Revision: 1.40 $ $Date: 2009-11-27 08:46:33 $
 
 =cut
