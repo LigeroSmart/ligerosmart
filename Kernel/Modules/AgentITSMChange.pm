@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChange.pm - the OTRS::ITSM::ChangeManagement change overview module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChange.pm,v 1.18 2009-11-25 17:51:13 ub Exp $
+# $Id: AgentITSMChange.pm,v 1.19 2009-11-27 08:56:27 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -80,15 +80,18 @@ sub Run {
         || $Self->{Config}->{'Order::Default'}
         || 'Up';
 
+    my @SortByArray  = ($SortBy);
+    my @OrderByArray = ($OrderBy);
+
     # investigate refresh
     my $Refresh = $Self->{UserRefreshTime} ? 60 * $Self->{UserRefreshTime} : undef;
 
     # find out which columns should be shown
     my @ShowColumns;
-    if ( $Self->{Config}->{'ShowColumns'} ) {
+    if ( $Self->{Config}->{ShowColumns} ) {
 
         # get all possible columns from config
-        my %PossibleColumn = %{ $Self->{Config}->{'ShowColumns'} };
+        my %PossibleColumn = %{ $Self->{Config}->{ShowColumns} };
 
         # get the column names that should be shown
         COLUMNNAME:
@@ -110,8 +113,8 @@ sub Run {
             Name   => 'All',
             Prio   => 1000,
             Search => {
-                OrderBy          => [$SortBy],
-                OrderByDirection => [$OrderBy],
+                OrderBy          => \@SortByArray,
+                OrderByDirection => \@OrderByArray,
                 Limit            => 1000,
                 UserID           => $Self->{UserID},
             },
@@ -119,14 +122,14 @@ sub Run {
     );
 
     # set other filters based on change state
-    if ( $Self->{Config}->{'ChangeStateFilter'} ) {
+    if ( $Self->{Config}->{'Filter::ChangeState'} ) {
 
         # define position of the filter in the frontend
         my $PrioCounter = 1000;
 
         # get all change states that should be used as filters
         CHANGESTATE:
-        for my $ChangeState ( @{ $Self->{Config}->{ChangeStateFilter} } ) {
+        for my $ChangeState ( @{ $Self->{Config}->{'Filter::ChangeState'} } ) {
 
             # do not use empty change states
             next CHANGESTATE if !$ChangeState;
@@ -148,8 +151,8 @@ sub Run {
                 Prio   => $PrioCounter,
                 Search => {
                     ChangeStates     => [$ChangeState],
-                    OrderBy          => [$SortBy],
-                    OrderByDirection => [$OrderBy],
+                    OrderBy          => \@SortByArray,
+                    OrderByDirection => \@OrderByArray,
                     Limit            => 1000,
                     UserID           => $Self->{UserID},
                 },
@@ -167,6 +170,7 @@ sub Run {
         %{ $Filters{ $Self->{Filter} }->{Search} },
     );
 
+    # display all navbar filters
     my %NavBarFilter;
     for my $Filter ( keys %Filters ) {
 
@@ -200,6 +204,7 @@ sub Run {
         . '&View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
         . '&';
     $Output .= $Self->{LayoutObject}->ITSMChangeListShow(
+
         ChangeIDs => $ChangeIDsRef,
         Total     => scalar @{$ChangeIDsRef},
 
