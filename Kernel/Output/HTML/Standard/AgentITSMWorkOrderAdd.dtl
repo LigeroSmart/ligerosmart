@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderAdd.dtl - provides HTML form for AgentITSMWorkOrderAdd
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.dtl,v 1.27 2009-11-23 08:36:56 mae Exp $
+# $Id: AgentITSMWorkOrderAdd.dtl,v 1.28 2009-11-27 10:19:01 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -69,7 +69,7 @@ function submit_compose() {
                 <input type="hidden" name="Action"    value="$Env{"Action"}">
                 <input type="hidden" name="Subaction" value="CreateFromTemplate">
                 <input type="hidden" name="ChangeID"  value="$QData{"ChangeID"}">
-                <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
+                <table border="0" width="800px" align="center" cellspacing="0" cellpadding="4">
                     <tr>
                         <td class="contenthead">$Text{"Select Workorder Template"}</td>
                     </tr>
@@ -112,7 +112,7 @@ function submit_compose() {
                 <input type="hidden" name="Action"    value="$Env{"Action"}">
                 <input type="hidden" name="Subaction" value="Save">
                 <input type="hidden" name="ChangeID"  value="$QData{"ChangeID"}">
-                <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
+                <table border="0" width="800px" align="center" cellspacing="0" cellpadding="4">
                     <tr>
                         <td class="contenthead">$Text{"Workorder"}</td>
                     </tr>

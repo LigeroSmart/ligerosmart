@@ -2,7 +2,7 @@
 # AgentITSMChangeTimeSlot.dtl - provides HTML form for AgentITSMChangeTimeSlot
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeTimeSlot.dtl,v 1.7 2009-11-27 09:44:35 bes Exp $
+# $Id: AgentITSMChangeTimeSlot.dtl,v 1.8 2009-11-27 10:19:01 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -44,7 +44,7 @@ function submit_compose() {
                 <input type="hidden" name="Action"    value="$Env{"Action"}">
                 <input type="hidden" name="Subaction" value="MoveTimeSlot">
                 <input type="hidden" name="ChangeID"  value="$QData{"ChangeID"}">
-                <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
+                <table border="0" width="800px" align="center" cellspacing="0" cellpadding="4">
                     <tr>
                         <td class="contenthead">$Text{"Move Time Slot"}</td>
                     </tr>

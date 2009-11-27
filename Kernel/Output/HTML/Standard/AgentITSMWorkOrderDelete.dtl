@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderDelete.dtl - provides HTML form for AgentITSMWorkOrderDelete
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderDelete.dtl,v 1.8 2009-11-27 08:58:07 bes Exp $
+# $Id: AgentITSMWorkOrderDelete.dtl,v 1.9 2009-11-27 10:19:01 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@
     <tr>
         <td class="mainbody">
             <br>
-            <table border="0" width="350" align="center" cellspacing="0" cellpadding="4">
+            <table border="0" width="350px" align="center" cellspacing="0" cellpadding="4">
                 <tr>
                     <td class="contenthead">$Text{"Delete"} $Text{"Workorder#"} $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"}</td>
                 </tr>
@@ -58,7 +58,7 @@
                                         <input class="button" type="submit" value="$Text{"No"}"/>
                                     </form>
                                 </td>
-                                <td width="10" class="contentfooter">
+                                <td width="10px" class="contentfooter">
                                     <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data">
                                         <input type="hidden" name="Action" value="$Env{"Action"}"/>
                                         <input type="hidden" name="Subaction" value="WorkOrderDelete"/>
