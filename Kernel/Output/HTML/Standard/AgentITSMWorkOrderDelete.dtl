@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderDelete.dtl - provides HTML form for AgentITSMWorkOrderDelete
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderDelete.dtl,v 1.9 2009-11-27 10:19:01 bes Exp $
+# $Id: AgentITSMWorkOrderDelete.dtl,v 1.10 2009-11-27 11:01:42 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,9 +33,13 @@
                 <tr class="contentbody">
                     <td class="contentbody">
                         <table border="0" width="100%" cellspacing="0" cellpadding="3">
+                            <colgroup>
+                            <col width="130px">
+                            <col>
+                            </colgroup>
                             <tr>
-                                <td width="130px" class="contentkey">$Text{"Title"}:</td>
-                                <td width="*" class="contentvalue">$QData{"WorkOrderTitle"}</td>
+                                <td class="contentkey">$Text{"Title"}:</td>
+                                <td class="contentvalue">$QData{"WorkOrderTitle"}</td>
                             </tr>
                             <tr>
                                 <td colspan="2">&nbsp;</td>
@@ -49,6 +53,10 @@
                 <tr>
                     <td class="contentfooter">
                         <table width="100%" border="0" cellspacing="0" cellpadding="1">
+                            <colgroup>
+                            <col width="130px">
+                            <col>
+                            </colgroup>
                             <tr>
                                 <td class="contentfooter">
                                     <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data">
@@ -58,7 +66,7 @@
                                         <input class="button" type="submit" value="$Text{"No"}"/>
                                     </form>
                                 </td>
-                                <td width="10px" class="contentfooter">
+                                <td class="contentfooter">
                                     <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data">
                                         <input type="hidden" name="Action" value="$Env{"Action"}"/>
                                         <input type="hidden" name="Subaction" value="WorkOrderDelete"/>

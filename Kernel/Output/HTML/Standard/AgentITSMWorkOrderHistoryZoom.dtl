@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderHistoryZoom.dtl - provides HTML form for AgentITSMWorkOrderHistoryZoom
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderHistoryZoom.dtl,v 1.10 2009-11-27 10:19:01 bes Exp $
+# $Id: AgentITSMWorkOrderHistoryZoom.dtl,v 1.11 2009-11-27 11:01:42 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -46,11 +46,15 @@
                 <tr class="contentbody">
                     <td>
                         <table border="0" width="100%" cellspacing="0" cellpadding="3">
+                            <colgroup>
+                            <col width="130px">
+                            <col>
+                            </colgroup>
                             <tr>
-                                <td width="130px" class="contentkey nowrap">
+                                <td class="contentkey nowrap">
                                     $Text{"Modified"}:
                                 </td>
-                                <td width="*" class="contentvalue">
+                                <td class="contentvalue">
                                     $QData{"Fieldname"}
                                 </td>
                             </tr>
