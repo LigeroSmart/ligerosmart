@@ -2,7 +2,7 @@
 # AgentITSMChangeZoom.dtl - provides HTML form for AgentITSMChangeZoom
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.dtl,v 1.23 2009-11-27 11:06:31 bes Exp $
+# $Id: AgentITSMChangeZoom.dtl,v 1.24 2009-11-27 12:25:54 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -35,7 +35,11 @@
 </table>
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
-        <td rowspan="2" valign="top" width="75%" class="mainbody">
+        <colgroup>
+        <col width="75%">
+        <col width="25%">
+        </colgroup>
+        <td valign="top" class="mainbody">
             <table border="0" width="100%" cellspacing="0" cellpadding="0">
                 <tr>
                     <td>&nbsp;</td>
@@ -51,7 +55,11 @@
             <hr size="2">
             <table border="0" width="100%" cellspacing="0" cellpadding="1">
                 <tr>
-                    <td class="contentkey" width="16%">
+                    <colgroup>
+                    <col width="130px">
+                    <col>
+                    </colgroup>
+                    <td class="contentkey">
                         <div title="$Text{"$QData{"Description"}"}">
                             $Text{"Description:"}&nbsp;&nbsp;&nbsp;&nbsp;
                         </div>
@@ -62,7 +70,7 @@
                 </tr>
                 <tr><td colspan="2">&nbsp;</td></tr>
                 <tr>
-                    <td class="contentkey" width="16%">
+                    <td class="contentkey">
                         <div title="$Text{"$QData{"Justification"}"}">
                             $Text{"Justification:"}&nbsp;&nbsp;&nbsp;&nbsp;
                         </div>
@@ -73,7 +81,7 @@
                 </tr>
                 <tr><td colspan="2">&nbsp;</td></tr>
                 <tr>
-                    <td class="contentkey" width="16%" style="vertical-align: top">
+                    <td class="contentkey" style="vertical-align: top">
                         <div title="$Text{"$QData{"Attachment"}"}">
                             $Text{"Attachment:"}&nbsp;&nbsp;&nbsp;&nbsp;
                         </div>
@@ -104,7 +112,7 @@
             <br>
 <!-- dtl:block:LinkTableComplex -->
         </td>
-        <td width="25%" valign="top" class="menu">
+        <td valign="top" class="menu">
 <!-- dtl:block:Meta -->
             <table border="0" cellspacing="1" cellpadding="0" width="100%">
                 <tr>
