@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.86 2009-11-27 09:57:30 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.87 2009-11-27 10:05:37 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -1251,7 +1251,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Permission###10-ChangeManagerCheck" Required="0" Valid="1">
         <Description Lang="en">Module to check the change manager.</Description>
-        <Description Lang="de">Modul zum überprüfen des Change Managers.</Description>
+        <Description Lang="de">Modul zum Überprüfen des Change Managers.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Core::ITSMChange</SubGroup>
         <Setting>
