@@ -2,7 +2,7 @@
 # AgentITSMChangeOverviewSmall.dtl - html for change overview table
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeOverviewSmall.dtl,v 1.5 2009-11-27 08:58:46 ub Exp $
+# $Id: AgentITSMChangeOverviewSmall.dtl,v 1.6 2009-11-27 09:56:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -32,18 +32,18 @@
                     <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=WorkOrderNumber&OrderBy=Down" onmouseover="window.status='$JSText{"sort downward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}down-small.png" alt="$Text{"down"}"></a>
                     </th>
 <!-- dtl:block:RecordWorkOrderNumberHeader -->
-<!-- dtl:block:RecordChangeTitleHeader -->
-                    <th>$Text{"Change Title"}<br/>
-                    <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=ChangeTitle&OrderBy=Down" onmouseover="window.status='$JSText{"sort upward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}up-small.png" alt="$Text{"up"}"></a> /
-                    <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=ChangeTitle&OrderBy=Up" onmouseover="window.status='$JSText{"sort downward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}down-small.png" alt="$Text{"down"}"></a>
-                    </th>
-<!-- dtl:block:RecordChangeTitleHeader -->
 <!-- dtl:block:RecordWorkOrderTitleHeader -->
                     <th>$Text{"WorkOrder Title"}<br/>
                     <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=WorkOrderTitle&OrderBy=Down" onmouseover="window.status='$JSText{"sort upward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}up-small.png" alt="$Text{"up"}"></a> /
                     <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=WorkOrderTitle&OrderBy=Up" onmouseover="window.status='$JSText{"sort downward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}down-small.png" alt="$Text{"down"}"></a>
                     </th>
 <!-- dtl:block:RecordWorkOrderTitleHeader -->
+<!-- dtl:block:RecordChangeTitleHeader -->
+                    <th>$Text{"Change Title"}<br/>
+                    <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=ChangeTitle&OrderBy=Down" onmouseover="window.status='$JSText{"sort upward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}up-small.png" alt="$Text{"up"}"></a> /
+                    <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=ChangeTitle&OrderBy=Up" onmouseover="window.status='$JSText{"sort downward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}down-small.png" alt="$Text{"down"}"></a>
+                    </th>
+<!-- dtl:block:RecordChangeTitleHeader -->
 <!-- dtl:block:RecordWorkOrderAgentHeader -->
                     <th>$Text{"Workorder Agent"}
                     <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=WorkOrderAgentID&OrderBy=Up" onmouseover="window.status='$JSText{"sort upward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}up-small.png" alt="$Text{"up"}"></a> /
@@ -157,19 +157,20 @@
 <!-- dtl:block:RecordChangeNumber -->
 <!-- dtl:block:RecordWorkOrderNumber -->
                     <td>
-                        <a href="$Env{"Baselink"}Action=AgentITSMWorkOrderZoom&WorkOrderID=$QData{"WorkOrderID"}" onmouseover="window.status='$JSText{"Zoom"}'; return true;" onmouseout="window.status='';" title="$QData{"WorkOrderNumber"}">$QData{"WorkOrderNumber"}</a>
+                        <a href="$Env{"Baselink"}Action=AgentITSMWorkOrderZoom&WorkOrderID=$QData{"WorkOrderID"}" onmouseover="window.status='$JSText{"Zoom"}'; return true;" onmouseout="window.status='';" title="$QData{"ChangeNumber"}-$QData{"WorkOrderNumber"}">$QData{"ChangeNumber"}-$QData{"WorkOrderNumber"}</a>
                     </td>
 <!-- dtl:block:RecordWorkOrderNumber -->
-<!-- dtl:block:RecordChangeTitle -->
-                    <td>
-                        <div title="$QData{"ChangeTitle"}">$QData{"ChangeTitle","40"}</div>
-                    </td>
-<!-- dtl:block:RecordChangeTitle -->
 <!-- dtl:block:RecordWorkOrderTitle -->
                     <td>
                         <div title="$QData{"WorkOrderTitle"}">$QData{"WorkOrderTitle","40"}</div>
                     </td>
 <!-- dtl:block:RecordWorkOrderTitle -->
+<!-- dtl:block:RecordChangeTitle -->
+                    <td>
+                        <a href="$Env{"Baselink"}Action=AgentITSMChangeZoom&ChangeID=$QData{"ChangeID"}" onmouseover="window.status='$JSText{"Zoom"}'; return true;" onmouseout="window.status='';" title="$QData{"ChangeTitle"}">$QData{"ChangeTitle","40"}</a>
+#                        <div title="$QData{"ChangeTitle"}">$QData{"ChangeTitle","40"}</div>
+                    </td>
+<!-- dtl:block:RecordChangeTitle -->
 <!-- dtl:block:RecordWorkOrderAgent -->
                     <td>
                         <div title="$QData{"WorkOrderAgentUserLogin"} $QData{"WorkOrderAgentLeftParenthesis"}$QData{"WorkOrderAgentUserFirstname"} $QData{"WorkOrderAgentUserLastname"}$QData{"WorkOrderAgentRightParenthesis"}">
