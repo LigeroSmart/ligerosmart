@@ -2,7 +2,7 @@
 # AgentITSMChangeOverviewSmall.dtl - html for change overview table
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeOverviewSmall.dtl,v 1.8 2009-11-27 10:10:40 ub Exp $
+# $Id: AgentITSMChangeOverviewSmall.dtl,v 1.9 2009-11-27 12:59:15 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -189,7 +189,6 @@
                         <div title="$QData{"ChangeManagerUserLogin"} $QData{"ChangeManagerLeftParenthesis"}$QData{"ChangeManagerUserFirstname"} $QData{"ChangeManagerUserLastname"}$QData{"ChangeManagerRightParenthesis"}">
                             $QData{"ChangeManagerUserLogin","15"} $QData{"ChangeManagerLeftParenthesis"}$Quote{"$Data{"ChangeManagerUserFirstname"}", "15"} $Quote{"$Data{"ChangeManagerUserLastname"}","15"}$QData{"ChangeManagerRightParenthesis"}
                         </div>
-
                     </td>
 <!-- dtl:block:RecordChangeManager -->
 <!-- dtl:block:RecordWorkOrderCount -->
