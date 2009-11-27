@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.85 2009-11-25 17:50:32 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.86 2009-11-27 09:57:30 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -44,7 +44,7 @@
                     <Prio>3400</Prio>
                 </NavBar>
                 <NavBar>
-                    <Description>Overview</Description>
+                    <Description>Change Overview</Description>
                     <Name>Overview</Name>
                     <Image>overview.png</Image>
                     <Link>Action=AgentITSMChange</Link>
@@ -53,6 +53,31 @@
                     <NavBar>Change</NavBar>
                     <AccessKey></AccessKey>
                     <Prio>100</Prio>
+                </NavBar>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentITSMChangePIR" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AgentITSMChangePIR object in the agent interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration des AgentITSMChangePIR-Objekts im Agent-Interface.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <GroupRo>itsm-change</GroupRo>
+                <Description>ITSM Change PIR Overview</Description>
+                <NavBarName>Change</NavBarName>
+                <Title>Change</Title>
+                <NavBar>
+                    <Description>PIR (Post Implementation Review)</Description>
+                    <Name>PIR</Name>
+                    <Image>overview.png</Image>
+                    <Link>Action=AgentITSMChangePIR</Link>
+                    <Type></Type>
+                    <Block></Block>
+                    <NavBar>Change</NavBar>
+                    <AccessKey></AccessKey>
+                    <Prio>200</Prio>
                 </NavBar>
             </FrontendModuleReg>
         </Setting>
@@ -91,7 +116,7 @@
                     <Block></Block>
                     <NavBar>Change</NavBar>
                     <AccessKey></AccessKey>
-                    <Prio>200</Prio>
+                    <Prio>300</Prio>
                 </NavBar>
             </FrontendModuleReg>
         </Setting>
@@ -956,7 +981,7 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChange###ChangeStateFilter" Required="1" Valid="1">
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChange###Filter::ChangeState" Required="1" Valid="1">
         <Description Lang="en">Defines the change states that will be used as filters in the change overview.</Description>
         <Description Lang="de">Definiert die Change-States die als Filter in der Change-Übersicht verwendet werden.</Description>
         <Group>ITSM Change Management</Group>
@@ -972,6 +997,108 @@
                 <Item>failed</Item>
                 <Item>canceled</Item>
                 <Item>retracted</Item>
+            </Array>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangePIR###Permission" Required="1" Valid="1">
+        <Description Lang="en">Required privilege to view list of changes with an upcoming PIR (Post Implementation Review).</Description>
+        <Description Lang="de">Benötigtes Recht zum Einsehen der Liste von Changes mit einem anstehenden PIR (Post Implementation Review).</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewPIROverview</SubGroup>
+        <Setting>
+            <String Regex="^(rw|ro)$">ro</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangePIR###SortBy::Default" Required="1" Valid="1">
+        <Description Lang="en">Change sort by default in the PIR overview.</Description>
+        <Description Lang="de">Standard Sortierung der Changes in der PIR-Übersicht.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewPIROverview</SubGroup>
+        <Setting>
+            <Option SelectedID="PlannedStartTime">
+                <Item Key="ChangeNumber">ChangeNumber</Item>
+                <Item Key="ChangeTitle">ChangeTitle</Item>
+                <Item Key="ChangeStateID">ChangeState</Item>
+                <Item Key="CategoryID">Category</Item>
+                <Item Key="ImpactID">Impact</Item>
+                <Item Key="PriorityID">Priority</Item>
+                <Item Key="RealizeTime">RealizeTime</Item>
+                <Item Key="PlannedStartTime">PlannedStartTime</Item>
+                <Item Key="PlannedEndTime">PlannedEndTime</Item>
+                <Item Key="ActualStartTime">ActualStartTime</Item>
+                <Item Key="ActualEndTime">ActualEndTime</Item>
+                <Item Key="Priority">Priority</Item>
+                <Item Key="CreateTime">CreateTime</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangePIR###Order::Default" Required="1" Valid="1">
+        <Description Lang="en">Order default in the PIR overview.</Description>
+        <Description Lang="de">Standard Reihenfolge der Changes in der PIR-Übersicht.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewPIROverview</SubGroup>
+        <Setting>
+            <Option SelectedID="Down">
+                <Item Key="Down">Down</Item>
+                <Item Key="Up">Up</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangePIR###ShowColumns" Required="1" Valid="1">
+        <Description Lang="en">Defines the shown columns in the PIR overview. This option has no effect on the position of the column.</Description>
+        <Description Lang="de">Definiert die angezeigten Tabellenspalten in der PIR-Übersicht. Dies Option hat keinen Effekt auf die Position der Spalten.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewPIROverview</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="ChangeStateSignal">0</Item>
+                <Item Key="ChangeNumber">0</Item>
+                <Item Key="ChangeTitle">1</Item>
+                <Item Key="ChangeBuilder">0</Item>
+                <Item Key="ChangeManager">0</Item>
+                <Item Key="WorkOrderCount">0</Item>
+                <Item Key="ChangeState">1</Item>
+                <Item Key="Category">0</Item>
+                <Item Key="Impact">0</Item>
+                <Item Key="Priority">0</Item>
+                <Item Key="RealizeTime">0</Item>
+                <Item Key="PlannedStartTime">1</Item>
+                <Item Key="PlannedEndTime">1</Item>
+                <Item Key="ActualStartTime">0</Item>
+                <Item Key="ActualEndTime">0</Item>
+                <Item Key="CreateTime">0</Item>
+                <Item Key="WorkOrderStateSignal">1</Item>
+                <Item Key="WorkOrderNumber">1</Item>
+                <Item Key="WorkOrderTitle">1</Item>
+                <Item Key="WorkOrderAgent">1</Item>
+                <Item Key="WorkOrderState">1</Item>
+                <Item Key="WorkOrderType">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangePIR###Filter::WorkOrderState" Required="1" Valid="1">
+        <Description Lang="en">Defines the workorder states that will be used as filters in the PIR overview.</Description>
+        <Description Lang="de">Definiert die Workorder-States die als Filter in der PIR-Übersicht verwendet werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewPIROverview</SubGroup>
+        <Setting>
+            <Array>
+                <Item>accepted</Item>
+                <Item>ready</Item>
+                <Item>in progress</Item>
+                <Item>closed</Item>
+                <Item>canceled</Item>
+            </Array>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangePIR###WorkOrderType" Required="1" Valid="1">
+        <Description Lang="en">Defines the workorder types that will be used to show the PIR overview.</Description>
+        <Description Lang="de">Definiert die Workorder-Typen die für die PIR-Übersicht verwendet werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewPIROverview</SubGroup>
+        <Setting>
+            <Array>
+                <Item>pir</Item>
             </Array>
         </Setting>
     </ConfigItem>
@@ -1124,7 +1251,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Permission###10-ChangeManagerCheck" Required="0" Valid="1">
         <Description Lang="en">Module to check the change manager.</Description>
-        <Description Lang="de">Modul zum Überprüfen des Change Managers.</Description>
+        <Description Lang="de">Modul zum überprüfen des Change Managers.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Core::ITSMChange</SubGroup>
         <Setting>
