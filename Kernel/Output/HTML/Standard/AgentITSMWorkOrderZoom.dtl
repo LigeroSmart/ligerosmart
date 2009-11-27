@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderZoom.dtl - provides HTML form for AgentITSMWorkOrderZoom
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderZoom.dtl,v 1.16 2009-11-27 11:13:36 mae Exp $
+# $Id: AgentITSMWorkOrderZoom.dtl,v 1.17 2009-11-27 11:43:08 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -35,7 +35,11 @@
 </table>
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
-        <td rowspan="2" valign="top" width="75%" class="mainbody">
+        <colgroup>
+        <col width="75%">
+        <col width="25%">
+        </colgroup>
+        <td valign="top" width="75%" class="mainbody">
             <table border="0" width="100%" cellspacing="0" cellpadding="1">
                 <colgroup>
                 <col width="30px">
@@ -122,7 +126,7 @@
             <br>
 <!-- dtl:block:LinkTableComplex -->
         </td>
-        <td width="25%" valign="top" class="menu">
+        <td valign="top" class="menu">
 <!-- dtl:block:Meta -->
             <table border="0" cellspacing="1" cellpadding="0" width="100%">
                 <tr>
