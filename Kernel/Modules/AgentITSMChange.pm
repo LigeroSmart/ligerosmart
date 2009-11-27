@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChange.pm - the OTRS::ITSM::ChangeManagement change overview module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChange.pm,v 1.19 2009-11-27 08:56:27 ub Exp $
+# $Id: AgentITSMChange.pm,v 1.20 2009-11-27 17:02:09 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -86,6 +86,12 @@ sub Run {
     # investigate refresh
     my $Refresh = $Self->{UserRefreshTime} ? 60 * $Self->{UserRefreshTime} : undef;
 
+    # starting with page ...
+    my $Output = $Self->{LayoutObject}->Header( Refresh => $Refresh );
+    $Output .= $Self->{LayoutObject}->NavigationBar();
+    $Self->{LayoutObject}->Print( Output => \$Output );
+    $Output = '';
+
     # find out which columns should be shown
     my @ShowColumns;
     if ( $Self->{Config}->{ShowColumns} ) {
@@ -100,12 +106,6 @@ sub Run {
             push @ShowColumns, $Name;
         }
     }
-
-    # starting with page ...
-    my $Output = $Self->{LayoutObject}->Header( Refresh => $Refresh );
-    $Output .= $Self->{LayoutObject}->NavigationBar();
-    $Self->{LayoutObject}->Print( Output => \$Output );
-    $Output = '';
 
     # set default search filter
     my %Filters = (
