@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ITSMChangeOverviewSmall.pm.pm
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeOverviewSmall.pm,v 1.5 2009-11-25 17:51:47 ub Exp $
+# $Id: ITSMChangeOverviewSmall.pm,v 1.6 2009-11-27 09:00:18 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -39,7 +39,7 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Needed (qw(ChangeIDs PageShown StartHit)) {
+    for my $Needed (qw(PageShown StartHit)) {
         if ( !$Param{$Needed} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -49,9 +49,36 @@ sub Run {
         }
     }
 
+    # need ChangeIDs or WorkOrderIDs
+    if ( !$Param{ChangeIDs} && !$Param{WorkOrderIDs} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need the ChangeIDs or the WorkOrderIDs!',
+        );
+        return;
+    }
+
+    # only one of ChangeIDs or WorkOrderIDs can be used
+    if ( $Param{ChangeIDs} && $Param{WorkOrderIDs} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need either the ChangeIDs or the WorkOrderIDs, not both!',
+        );
+        return;
+    }
+
+    # store either the ChangeIDs or the WorkOrderIDs
+    my @IDs;
+    if ( $Param{ChangeIDs} && ref $Param{ChangeIDs} eq 'ARRAY' ) {
+        @IDs = @{ $Param{ChangeIDs} };
+    }
+    elsif ( $Param{WorkOrderIDs} && ref $Param{WorkOrderIDs} eq 'ARRAY' ) {
+        @IDs = @{ $Param{WorkOrderIDs} };
+    }
+
     # check ShowColumns parameter
     my @ShowColumns;
-    if ( $Param{ShowColumns} && ref $Param{ShowColumns} eq 'ARRAY' && @{ $Param{ShowColumns} } ) {
+    if ( $Param{ShowColumns} && ref $Param{ShowColumns} eq 'ARRAY' ) {
         @ShowColumns = @{ $Param{ShowColumns} };
     }
 
@@ -68,34 +95,65 @@ sub Run {
     my $Output   = '';
     my $Counter  = 0;
     my $CssClass = '';
-    CHANGEID:
-    for my $ChangeID ( @{ $Param{ChangeIDs} } ) {
+    ID:
+    for my $ID (@IDs) {
         $Counter++;
         if ( $Counter >= $Param{StartHit} && $Counter < ( $Param{PageShown} + $Param{StartHit} ) ) {
 
-            # get current change
+            # to store all data
+            my %Data;
+
+            my $ChangeID;
+            if ( $Param{ChangeIDs} ) {
+
+                # set change id
+                $ChangeID = $ID;
+            }
+            elsif ( $Param{WorkOrderIDs} ) {
+
+                # get workorder data
+                my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+                    WorkOrderID => $ID,
+                    UserID      => $Self->{UserID},
+                );
+
+                next ID if !$WorkOrder;
+
+                # add workorder data
+                %Data = ( %Data, %{$WorkOrder} );
+
+                # set change id from workorder data
+                $ChangeID = $WorkOrder->{ChangeID};
+            }
+
+            # get change data
             my $Change = $Self->{ChangeObject}->ChangeGet(
                 UserID   => $Self->{UserID},
                 ChangeID => $ChangeID,
             );
 
-            next CHANGEID if !$Change;
+            next ID if !$Change;
+
+            # add change data,
+            # ( let workorder data overwrite
+            # some change attributes, i.e. PlannedStartTime, etc... )
+            %Data = ( %{$Change}, %Data );
 
             # set css class of the row
             $CssClass = $CssClass eq 'searchpassive' ? 'searchactive' : 'searchpassive';
 
-            # to store data which does not come from change
-            my %Data;
-
             # get user data for change builder and change manager
             USERTYPE:
-            for my $UserType (qw(ChangeBuilder ChangeManager)) {
+            for my $UserType (qw(ChangeBuilder ChangeManager WorkOrderAgent)) {
 
-                next USERTYPE if !$Change->{ $UserType . 'ID' };
+                # check if UserType attribute exists either in change or workorder
+                if ( !$Change->{ $UserType . 'ID' } && !$Data{ $UserType . 'ID' } ) {
+                    next USERTYPE;
+                }
 
                 # get user data
                 my %User = $Self->{UserObject}->GetUserData(
-                    UserID => $Change->{ $UserType . 'ID' },
+                    UserID => $Change->{ $UserType . 'ID' } || $Data{ $UserType . 'ID' },
                     Cached => 1,
                 );
 
@@ -112,7 +170,6 @@ sub Run {
                 Name => 'Record',
                 Data => {
                     %Param,
-                    %{$Change},
                     %Data,
                     CssClass => $CssClass,
                 },
@@ -125,7 +182,6 @@ sub Run {
                         Name => 'Record' . $Column,
                         Data => {
                             %Param,
-                            %{$Change},
                             %Data,
                             CssClass => $CssClass,
                         },
