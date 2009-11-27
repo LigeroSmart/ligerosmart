@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderReport.dtl - provides HTML form for AgentITSMWorkOrderReport
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderReport.dtl,v 1.12 2009-11-16 16:56:07 ub Exp $
+# $Id: AgentITSMWorkOrderReport.dtl,v 1.13 2009-11-27 08:58:07 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,21 +26,21 @@
     <tr>
         <td class="mainbody">
             <br>
-            <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
-                <form action="$Env{"CGIHandle"}" method="post">
-                    <input type="hidden" name="Action"    value="$Env{"Action"}">
-                    <input type="hidden" name="Subaction" value="Save">
-                    <input type="hidden" name="WorkOrderID" value="$QData{"WorkOrderID"}">
+            <form action="$Env{"CGIHandle"}" method="post">
+                <input type="hidden" name="Action"    value="$Env{"Action"}">
+                <input type="hidden" name="Subaction" value="Save">
+                <input type="hidden" name="WorkOrderID" value="$QData{"WorkOrderID"}">
+                <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
                     <tr>
                         <td class="contenthead">$Text{"Report"}</td>
                     </tr>
                     <tr class="contentbody">
                         <td>
-                            <table border="0">
+                            <table border="0" width="100%" cellspacing="0" cellpadding="3">
                                 <tr>
-                                    <td class="contentkey">$Text{"Report"}:</td>
+                                    <td width="130px" class="contentkey">$Text{"Report"}:</td>
 
-                                    <td class="contentvalue">
+                                    <td width="*" class="contentvalue">
                                         <div>
 <!-- dtl:block:RichText -->
 $Include{"RichTextEditorITSM"}
@@ -61,8 +61,8 @@ $Include{"RichTextEditorITSM"}
                             <input class="button" type="submit" name="Submit" value="$Text{"Save"}">
                         </td>
                     </tr>
-                </form>
-            </table>
+                </table>
+            </form>
             <br>
         </td>
     </tr>
