@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.192 2009-11-25 17:33:50 bes Exp $
+# $Id: ITSMChange.pm,v 1.193 2009-11-27 08:25:26 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.192 $) [1];
+$VERSION = qw($Revision: 1.193 $) [1];
 
 =head1 NAME
 
@@ -1177,7 +1177,6 @@ sub ChangeSearch {
         PlannedEndTime   => 'MAX(wo1.planned_end_time)',
         ActualStartTime  => 'MIN(wo1.actual_start_time)',
         ActualEndTime    => 'MAX(wo1.actual_end_time)',
-
     );
 
     # check if OrderBy contains only unique valid values
@@ -2672,6 +2671,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.192 $ $Date: 2009-11-25 17:33:50 $
+$Revision: 1.193 $ $Date: 2009-11-27 08:25:26 $
 
 =cut
