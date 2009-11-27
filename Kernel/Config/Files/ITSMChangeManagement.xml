@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.89 2009-11-27 12:13:48 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.90 2009-11-27 12:20:58 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -1039,7 +1039,7 @@
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::ViewPIROverview</SubGroup>
         <Setting>
-            <Option SelectedID="Down">
+            <Option SelectedID="Up">
                 <Item Key="Down">Down</Item>
                 <Item Key="Up">Up</Item>
             </Option>
