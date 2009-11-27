@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LayoutITSMChange.pm,v 1.15 2009-11-25 17:31:28 bes Exp $
+# $Id: LayoutITSMChange.pm,v 1.16 2009-11-27 15:48:13 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use POSIX qw(ceil);
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 =over 4
 
@@ -476,13 +476,22 @@ sub _ITSMChangeGetChangeScale {
     # check for start time is an integer value
     return if $Param{StartTime} !~ m{\A \d+ \z}xms;
 
-    # calculate scale naming
+    # add start and end time and calculate scale naming
     my %ScaleName = (
-        Scale20 => ( $Param{StartTime} + 20 * $Param{Ticks} ),
-        Scale40 => ( $Param{StartTime} + 40 * $Param{Ticks} ),
-        Scale60 => ( $Param{StartTime} + 60 * $Param{Ticks} ),
-        Scale80 => ( $Param{StartTime} + 80 * $Param{Ticks} ),
+        StartTime => $Param{StartTime},
+        EndTime   => $Param{EndTime},
+        Scale20   => ( $Param{StartTime} + 20 * $Param{Ticks} ),
+        Scale40   => ( $Param{StartTime} + 40 * $Param{Ticks} ),
+        Scale60   => ( $Param{StartTime} + 60 * $Param{Ticks} ),
+        Scale80   => ( $Param{StartTime} + 80 * $Param{Ticks} ),
     );
+
+    # translate timestamps in date format
+    map {
+        $ScaleName{$_} = $Self->{TimeObject}->SystemTime2TimeStamp(
+            SystemTime => $ScaleName{$_}
+            )
+    } keys %ScaleName;
 
     # create scale block
     $Self->Block(
@@ -495,13 +504,11 @@ sub _ITSMChangeGetChangeScale {
     INTERVAL:
     for my $Interval ( sort keys %ScaleName ) {
 
-        # translate timestamps in date format
-        $ScaleName{$Interval} = $Self->{TimeObject}->SystemTime2TimeStamp(
-            SystemTime => $ScaleName{$Interval},
-        );
-
         # do not display scale if translating failed
         next INTERVAL if !$ScaleName{$Interval};
+
+        # do not display start or end
+        next INTERVAL if $Interval =~ m{\A ( Start | End ) Time \z}xms;
 
         # build scale label block
         $Self->Block(

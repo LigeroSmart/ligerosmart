@@ -2,7 +2,7 @@
 # ITSMChange.dtl - provides HTML elements for work order graph
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.dtl,v 1.3 2009-11-13 11:30:13 mae Exp $
+# $Id: ITSMChange.dtl,v 1.4 2009-11-27 15:48:13 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -11,22 +11,27 @@
 
 <!-- dtl:block:WorkOrderGraph -->
 <style type="text/css" media="screen">
-    .pending       { opacity:0.5; }
-    .wo_approval   { background-color:#ff9933; }
-    .wo_approval_comp   { background-color:#804d1a; }
-    .wo_entry      { background-color:#4d9a00; }
-    .wo_entry_comp      { background-color:#2e4d0f; }
-    .wo_entry_pend      { background-color:#a1a1a1; }
-    .wo_pir_comp        { background-color:#806700; }
-    .wo_pir_pend        { background-color:#a1a1a1; }
-    .wo_pir        { background-color:#ffcc00; }
-    img.wo_status  { margin-top:2px; }
-    td.change_title { text-align:center; }
-    img.change_title { margin-top: 5px; margin-bottom: 5px; }
-    td.wo_status   { width: 20px; text-align: center; }
-    td.wo_nr       { width: 70px; text-align: left; }
-    td.wo          { height: 5px; font-size: 1pt; }
-    td.padding     { width: 10px; }
+    .pending          { opacity:0.5; }
+    .wo_approval      { background-color:#ff9933; }
+    .wo_approval_comp { background-color:#804d1a; }
+    .wo_entry         { background-color:#4d9a00; }
+    .wo_entry_comp    { background-color:#2e4d0f; }
+    .wo_entry_pend    { background-color:#a1a1a1; }
+    .wo_pir_comp      { background-color:#806700; }
+    .wo_pir_pend      { background-color:#a1a1a1; }
+    .wo_pir           { background-color:#ffcc00; }
+    img.wo_status     { margin-top:2px; }
+    td.change_title   { text-align:center; }
+    img.change_title  { margin-top: 5px; margin-bottom: 5px; }
+    td.wo_status      { width: 20px; text-align: center; }
+    td.wo_nr          { width: 70px; text-align: left; }
+    td.wo             { height: 5px; font-size: 1pt; }
+    td.padding        { width: 10px; }
+    div#scale         { border-bottom:1px solid #000000; margin:0px; padding:0px; }
+    div#scale table   { margin:0px; padding:0px; border-spacing:0px; border-collapse: collapse; }
+    td.scale_pailing  { height: 5px; font-size: 4pt; width: 10%; }
+    td.scale_line     { height: 5px; font-size: 4pt; width: 20%; text-align: center; }
+    span.scale_line   { border-left:1px solid black; }
 </style>
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
 <!-- dtl:block:WorkOrderItem -->
@@ -35,7 +40,7 @@
             <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"WorkOrderStateSignal"}-small.png" title="$Text{"$QData{"WorkOrderState"}"}" alt="$Text{"$QData{"WorkOrderState"}"}">
         </td>
         <td class="wo_nr">
-            <a href="$Env{"Baselink"}$Data{"Link"}&Action=AgentITSMWorkOrderZoom&WorkOrderID=$LQData{"WorkOrderID"}">
+            <a href="$Env{"Baselink"}$Data{"Link"}&amp;Action=AgentITSMWorkOrderZoom&amp;WorkOrderID=$LQData{"WorkOrderID"}">
             |--> $QData{"WorkOrderNumber"}.
             </a>
         </td>
@@ -62,25 +67,29 @@
     <tr>
         <td colspan="2">&nbsp;</td>
         <td>
-            <div style="border-bottom:1px solid #000000; margin:0px; padding:0px;">
-                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin:0px; padding:0px">
+            <div id="scale">
+                <table  border="0" cellpadding="0" cellspacing="0" width="100%">
                     <tr>
-                        <td width="10%" style="text-align:left">|</td>
-                        <td width="20%" style="text-align:center">|</td>
-                        <td width="20%" style="text-align:center">|</td>
-                        <td width="20%" style="text-align:center">|</td>
-                        <td width="20%" style="text-align:center">|</td>
-                        <td width="10%" style="text-align:right">|</td>
+                        <td class="scale_pailing" style="text-align:left;"><span class="scale_line"></span></td>
+                        <td class="scale_line"><span class="scale_line"></span></td>
+                        <td class="scale_line"><span class="scale_line"></span></span></td>
+                        <td class="scale_line"><span class="scale_line"></span></span></td>
+                        <td class="scale_line"><span class="scale_line"></span></td>
+                        <td class="scale_pailing" style="text-align:right"><span class="scale_line"></span></td>
                     </tr>
                 </table>
             </div>
             <table border="0" cellpadding="0" cellspacing="0" width="100%">
                 <tr>
-                    <td width="10%" style="text-align:left">Start</td>
+                    <td width="10%" style="text-align:left; font-size:8pt; vertical-align:top;">
+                        $TimeLong{"$Data{"StartTime"}"}
+                    </td>
 <!-- dtl:block:ScaleLabel -->
-                    <td width="20%" style="text-align:center; font-size:8pt">$TimeLong{"$Data{"ScaleLabel"}"}</td>
+                    <td width="20%" style="text-align:center; font-size:8pt; vertical-align:top;">$TimeLong{"$Data{"ScaleLabel"}"}</td>
 <!-- dtl:block:ScaleLabel -->
-                    <td width="10%" style="text-align:right">End</td>
+                    <td width="10%" style="text-align:right; font-size:8pt; vertical-align:top;">
+                        $TimeLong{"$Data{"EndTime"}"}
+                    </td>
                 </tr>
             </table>
         </td>
