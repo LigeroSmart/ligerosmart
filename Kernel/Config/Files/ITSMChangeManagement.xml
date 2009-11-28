@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.93 2009-11-28 16:31:37 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.94 2009-11-28 16:40:50 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -107,6 +107,8 @@
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
+
+
     <ConfigItem Name="Frontend::Module###AgentITSMChangeAdd" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AgentITSMChangeAdd object in the agent interface.</Description>
         <Description Lang="de">Frontendmodul-Registration des AgentITSMChangeAdd-Objekts im Agent-Interface.</Description>
@@ -128,7 +130,7 @@
                     <Block></Block>
                     <NavBar>Change</NavBar>
                     <AccessKey></AccessKey>
-                    <Prio>400</Prio>
+                    <Prio>500</Prio>
                 </NavBar>
             </FrontendModuleReg>
         </Setting>
@@ -153,7 +155,7 @@
                     <Block></Block>
                     <NavBar>Change</NavBar>
                     <AccessKey></AccessKey>
-                    <Prio>500</Prio>
+                    <Prio>600</Prio>
                 </NavBar>
             </FrontendModuleReg>
         </Setting>
@@ -179,7 +181,7 @@
                     <Block></Block>
                     <NavBar>Change</NavBar>
                     <AccessKey></AccessKey>
-                    <Prio>600</Prio>
+                    <Prio>700</Prio>
                 </NavBar>
             </FrontendModuleReg>
         </Setting>
@@ -205,7 +207,7 @@
                     <Block></Block>
                     <NavBar>Change</NavBar>
                     <AccessKey></AccessKey>
-                    <Prio>700</Prio>
+                    <Prio>800</Prio>
                 </NavBar>
             </FrontendModuleReg>
         </Setting>
@@ -230,7 +232,7 @@
                     <Block></Block>
                     <NavBar>Change</NavBar>
                     <AccessKey></AccessKey>
-                    <Prio>800</Prio>
+                    <Prio>900</Prio>
                 </NavBar>
             </FrontendModuleReg>
         </Setting>
