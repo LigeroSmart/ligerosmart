@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangePIR.pm - the OTRS::ITSM::ChangeManagement PIR overview module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePIR.pm,v 1.2 2009-11-27 12:20:58 ub Exp $
+# $Id: AgentITSMChangePIR.pm,v 1.3 2009-11-28 09:36:23 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -117,9 +117,9 @@ sub Run {
 
     # find out which workorder types should be used to show PIR
     my @WorkOrderTypes;
-    if ( $Self->{Config}->{WorkOrderType} ) {
+    if ( $Self->{Config}->{WorkOrderTypes} ) {
         WORKORDERTYPE:
-        for my $WorkOrderType ( @{ $Self->{Config}->{WorkOrderType} } ) {
+        for my $WorkOrderType ( @{ $Self->{Config}->{WorkOrderTypes} } ) {
 
             # check if workorder type is valid by looking up the type id
             my $WorkOrderTypeID = $Self->{WorkOrderObject}->WorkOrderTypeLookup(
@@ -149,14 +149,14 @@ sub Run {
     );
 
     # set other filters based on workorder state
-    if ( $Self->{Config}->{'Filter::WorkOrderState'} ) {
+    if ( $Self->{Config}->{'Filter::WorkOrderStates'} ) {
 
         # define position of the filter in the frontend
         my $PrioCounter = 1000;
 
         # get all workorder states that should be used as filters
         WORKORDERSTATE:
-        for my $WorkOrderState ( @{ $Self->{Config}->{'Filter::WorkOrderState'} } ) {
+        for my $WorkOrderState ( @{ $Self->{Config}->{'Filter::WorkOrderStates'} } ) {
 
             # do not use empty workorder states
             next WORKORDERSTATE if !$WorkOrderState;
