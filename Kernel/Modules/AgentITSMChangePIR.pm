@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangePIR.pm - the OTRS::ITSM::ChangeManagement PIR overview module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePIR.pm,v 1.3 2009-11-28 09:36:23 ub Exp $
+# $Id: AgentITSMChangePIR.pm,v 1.4 2009-11-28 14:37:04 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;

@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeFSC.pm - the OTRS::ITSM::ChangeManagement change FSC overview module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeFSC.pm,v 1.1 2009-11-28 09:35:45 ub Exp $
+# $Id: AgentITSMChangeFSC.pm,v 1.2 2009-11-28 14:37:04 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
