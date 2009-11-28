@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.40 2009-11-27 08:46:33 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.41 2009-11-28 14:35:27 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.40 $) [1];
+$VERSION = qw($Revision: 1.41 $) [1];
 
 =head1 NAME
 
@@ -720,7 +720,7 @@ is ignored.
         Instruction       => 'Install the the new server',             # (optional)
         Report            => 'Installed new server without problems',  # (optional)
 
-        WorkOrderStateIDs => [ 11, 12],                                # (optional)
+        WorkOrderStateIDs => [ 11, 12 ],                               # (optional)
         WorkOrderStates   => [ 'closed', 'canceled' ],                 # (optional)
         WorkOrderTypeIDs  => [ 21, 22 ],                               # (optional)
         WorkOrderTypes    => [ 'approval', 'workorder' ],              # (optional)
@@ -2175,6 +2175,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.40 $ $Date: 2009-11-27 08:46:33 $
+$Revision: 1.41 $ $Date: 2009-11-28 14:35:27 $
 
 =cut
