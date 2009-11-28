@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.91 2009-11-27 13:38:31 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.92 2009-11-28 09:38:35 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -57,6 +57,31 @@
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentITSMChangeFSC" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AgentITSMChangeFSC object in the agent interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration des AgentITSMChangeFSC-Objekts im Agent-Interface.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <GroupRo>itsm-change</GroupRo>
+                <Description>ITSM Change FSC Overview</Description>
+                <NavBarName>Change</NavBarName>
+                <Title>Change</Title>
+                <NavBar>
+                    <Description>FSC (Forward Schedule Of Changes)</Description>
+                    <Name>FSC</Name>
+                    <Image>overview.png</Image>
+                    <Link>Action=AgentITSMChangeFSC</Link>
+                    <Type></Type>
+                    <Block></Block>
+                    <NavBar>Change</NavBar>
+                    <AccessKey></AccessKey>
+                    <Prio>200</Prio>
+                </NavBar>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="Frontend::Module###AgentITSMChangePIR" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AgentITSMChangePIR object in the agent interface.</Description>
         <Description Lang="de">Frontendmodul-Registration des AgentITSMChangePIR-Objekts im Agent-Interface.</Description>
@@ -77,7 +102,7 @@
                     <Block></Block>
                     <NavBar>Change</NavBar>
                     <AccessKey></AccessKey>
-                    <Prio>200</Prio>
+                    <Prio>300</Prio>
                 </NavBar>
             </FrontendModuleReg>
         </Setting>
@@ -117,7 +142,7 @@
                     <Block></Block>
                     <NavBar>Change</NavBar>
                     <AccessKey></AccessKey>
-                    <Prio>300</Prio>
+                    <Prio>400</Prio>
                 </NavBar>
             </FrontendModuleReg>
         </Setting>
@@ -982,11 +1007,113 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChange###Filter::ChangeState" Required="1" Valid="1">
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChange###Filter::ChangeStates" Required="1" Valid="1">
         <Description Lang="en">Defines the change states that will be used as filters in the change overview.</Description>
         <Description Lang="de">Definiert die Change-States die als Filter in der Change-Übersicht verwendet werden.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::ViewChangeOverview</SubGroup>
+        <Setting>
+            <Array>
+                <Item>requested</Item>
+                <Item>pending approval</Item>
+                <Item>rejected</Item>
+                <Item>approved</Item>
+                <Item>in progress</Item>
+                <Item>successful</Item>
+                <Item>failed</Item>
+                <Item>canceled</Item>
+                <Item>retracted</Item>
+            </Array>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeFSC###Permission" Required="1" Valid="1">
+        <Description Lang="en">Required privilege to view list of FSC.</Description>
+        <Description Lang="de">Benötigtes Recht zum Einsehen der FSC Liste.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewFSCOverview</SubGroup>
+        <Setting>
+            <String Regex="^(rw|ro)$">ro</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeFSC###SortBy::Default" Required="1" Valid="1">
+        <Description Lang="en">Change sort by default in the FSC overview.</Description>
+        <Description Lang="de">Standard Sortierung der Changes in der FSC-Übersicht.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewFSCOverview</SubGroup>
+        <Setting>
+            <Option SelectedID="PlannedStartTime">
+                <Item Key="ChangeNumber">ChangeNumber</Item>
+                <Item Key="ChangeTitle">ChangeTitle</Item>
+                <Item Key="ChangeStateID">ChangeState</Item>
+                <Item Key="CategoryID">Category</Item>
+                <Item Key="ImpactID">Impact</Item>
+                <Item Key="PriorityID">Priority</Item>
+                <Item Key="RealizeTime">RealizeTime</Item>
+                <Item Key="PlannedStartTime">PlannedStartTime</Item>
+                <Item Key="PlannedEndTime">PlannedEndTime</Item>
+                <Item Key="ActualStartTime">ActualStartTime</Item>
+                <Item Key="ActualEndTime">ActualEndTime</Item>
+                <Item Key="Priority">Priority</Item>
+                <Item Key="CreateTime">CreateTime</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeFSC###Order::Default" Required="1" Valid="1">
+        <Description Lang="en">Order default in the FSC overview.</Description>
+        <Description Lang="de">Standard Reihenfolge der Changes in der FSC-Übersicht.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewFSCOverview</SubGroup>
+        <Setting>
+            <Option SelectedID="Up">
+                <Item Key="Down">Down</Item>
+                <Item Key="Up">Up</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeFSC###ShowColumns" Required="1" Valid="1">
+        <Description Lang="en">Defines the shown columns in the FSC overview. This option has no effect on the position of the column.</Description>
+        <Description Lang="de">Definiert die angezeigten Tabellenspalten in der FSC-Übersicht. Dies Option hat keinen Effekt auf die Position der Spalten.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewFSCOverview</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="ChangeStateSignal">1</Item>
+                <Item Key="ChangeNumber">1</Item>
+                <Item Key="ChangeTitle">1</Item>
+                <Item Key="ChangeBuilder">1</Item>
+                <Item Key="ChangeManager">0</Item>
+                <Item Key="WorkOrderCount">1</Item>
+                <Item Key="ChangeState">1</Item>
+                <Item Key="Category">0</Item>
+                <Item Key="Impact">0</Item>
+                <Item Key="Priority">1</Item>
+                <Item Key="RealizeTime">0</Item>
+                <Item Key="PlannedStartTime">1</Item>
+                <Item Key="PlannedEndTime">1</Item>
+                <Item Key="ActualStartTime">0</Item>
+                <Item Key="ActualEndTime">0</Item>
+                <Item Key="CreateTime">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeFSC###ChangeStates" Required="1" Valid="1">
+        <Description Lang="en">Defines the change states that will be used to show the FSC overview.</Description>
+        <Description Lang="de">Definiert die Change-States die für die FSC-Übersicht verwendet werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewFSCOverview</SubGroup>
+        <Setting>
+            <Array>
+                <Item>requested</Item>
+                <Item>pending approval</Item>
+                <Item>approved</Item>
+            </Array>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeFSC###Filter::ChangeStates" Required="1" Valid="1">
+        <Description Lang="en">Defines the change states that will be used as filters in the FSC overview. To be used as a filter, a change state needs to be also defined in ITSMChange::Frontend::AgentITSMChangeFSC###ChangeStates.</Description>
+        <Description Lang="de">Definiert die Change-States die als Filter in der FSC-Übersicht verwendet werden. Um als Filter verwendet werden zu können, muss ein Change-State ebenfalls in ITSMChange::Frontend::AgentITSMChangeFSC###ChangeStates definert sein.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewFSCOverview</SubGroup>
         <Setting>
             <Array>
                 <Item>requested</Item>
@@ -1077,7 +1204,18 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangePIR###Filter::WorkOrderState" Required="1" Valid="1">
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangePIR###WorkOrderTypes" Required="1" Valid="1">
+        <Description Lang="en">Defines the workorder types that will be used to show the PIR overview.</Description>
+        <Description Lang="de">Definiert die Workorder-Typen die für die PIR-Übersicht verwendet werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewPIROverview</SubGroup>
+        <Setting>
+            <Array>
+                <Item>pir</Item>
+            </Array>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangePIR###Filter::WorkOrderStates" Required="1" Valid="1">
         <Description Lang="en">Defines the workorder states that will be used as filters in the PIR overview.</Description>
         <Description Lang="de">Definiert die Workorder-States die als Filter in der PIR-Übersicht verwendet werden.</Description>
         <Group>ITSM Change Management</Group>
@@ -1089,17 +1227,6 @@
                 <Item>in progress</Item>
                 <Item>closed</Item>
                 <Item>canceled</Item>
-            </Array>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangePIR###WorkOrderType" Required="1" Valid="1">
-        <Description Lang="en">Defines the workorder types that will be used to show the PIR overview.</Description>
-        <Description Lang="de">Definiert die Workorder-Typen die für die PIR-Übersicht verwendet werden.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewPIROverview</SubGroup>
-        <Setting>
-            <Array>
-                <Item>pir</Item>
             </Array>
         </Setting>
     </ConfigItem>
