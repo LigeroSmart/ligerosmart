@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChange.pm - the OTRS::ITSM::ChangeManagement change overview module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChange.pm,v 1.20 2009-11-27 17:02:09 ub Exp $
+# $Id: AgentITSMChange.pm,v 1.21 2009-11-28 09:35:13 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -122,14 +122,14 @@ sub Run {
     );
 
     # set other filters based on change state
-    if ( $Self->{Config}->{'Filter::ChangeState'} ) {
+    if ( $Self->{Config}->{'Filter::ChangeStates'} ) {
 
         # define position of the filter in the frontend
         my $PrioCounter = 1000;
 
         # get all change states that should be used as filters
         CHANGESTATE:
-        for my $ChangeState ( @{ $Self->{Config}->{'Filter::ChangeState'} } ) {
+        for my $ChangeState ( @{ $Self->{Config}->{'Filter::ChangeStates'} } ) {
 
             # do not use empty change states
             next CHANGESTATE if !$ChangeState;
