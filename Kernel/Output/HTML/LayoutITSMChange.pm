@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LayoutITSMChange.pm,v 1.17 2009-11-30 09:55:23 mae Exp $
+# $Id: LayoutITSMChange.pm,v 1.18 2009-11-30 10:16:11 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use POSIX qw(ceil);
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 =over 4
 
@@ -538,6 +538,14 @@ sub _ITSMChangeGetWorkOrderGraph {
 
     # extract workorder
     my $WorkOrder = $Param{WorkOrder};
+
+    # translate workorder type
+    $WorkOrder->{TranslatedWorkOrderType} =
+        $Self->{LanguageObject}->Get( $WorkOrder->{WorkOrderType} );
+
+    # build label for link in graph
+    $WorkOrder->{WorkOrderLabel} =
+        "Title: $WorkOrder->{WorkOrderTitle} | Type: $WorkOrder->{TranslatedWorkOrderType}";
 
     # create workorder item
     $Self->Block(
