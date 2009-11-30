@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderAgent.dtl - provides HTML form for AgentITSMWorkOrderAgent
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAgent.dtl,v 1.13 2009-11-27 11:01:42 bes Exp $
+# $Id: AgentITSMWorkOrderAgent.dtl,v 1.14 2009-11-30 09:59:09 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -100,8 +100,8 @@ function clear_field() {
                             <input class="button" type="submit" name="Submit" value="$Text{"Save"}">
                         </td>
                     </tr>
-                </form>
-            </table>
+                </table>
+            </form>
             <br>
         </td>
     </tr>
