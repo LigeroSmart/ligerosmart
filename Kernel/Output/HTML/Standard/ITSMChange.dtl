@@ -2,7 +2,7 @@
 # ITSMChange.dtl - provides HTML elements for work order graph
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.dtl,v 1.9 2009-11-30 10:38:54 mae Exp $
+# $Id: ITSMChange.dtl,v 1.10 2009-11-30 11:43:37 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,12 +27,13 @@
     td.wo_nr           { width: 70px; text-align: left; }
     td.wo              { height: 5px; font-size: 1pt; }
     td.padding         { width: 10px; }
-    div#scale          { border-bottom:1px solid #000000; margin:0px; padding:0px; }
+    div#scale          { border-bottom:1px solid #000000; margin:5px 0px 0px 0px; padding:0px; }
     div#scale table    { margin:0px; padding:0px; border-spacing:0px; border-collapse: collapse; }
-    div#scale table tr td:first-child { text-align:left; width:10%; }
-    div#scale table tr td:last-child  { text-align:right; width:10%; }
     td.scale_line      { height: 5px; font-size: 4pt; width: 20%; text-align: center; }
-    td.scale_line span { border-left:1px solid black; }
+    td#first_scale     { text-align:left; width:10%;}
+    td#last_scale      { text-align:right; width:10%;}
+    td.scale_line span { width:2px; border-left:1px solid black; }
+    td#last_scale span { border-left: 0px hidden black; border-right:1px solid black;}
 </style>
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
 <!-- dtl:block:WorkOrderItem -->
@@ -47,7 +48,7 @@
                 </a>
             </div>
         </td>
-        <td>
+        <td width="90%">
 <!-- dtl:block:WorkOrderItemGraph -->
             <table border="0" cellpadding="0" cellspacing="0" width="100%">
                 <tr>
@@ -75,12 +76,12 @@
             <div id="scale">
                 <table  border="0" cellpadding="0" cellspacing="0" width="100%">
                     <tr>
-                        <td class="scale_line"><span></span></td>
-                        <td class="scale_line"><span></span></td>
-                        <td class="scale_line"><span></span></td>
-                        <td class="scale_line"><span></span></td>
-                        <td class="scale_line"><span></span></td>
-                        <td class="scale_line"><span></span></td>
+                        <td class="scale_line" id="first_scale"><span>&nbsp;</span></td>
+                        <td class="scale_line"><span>&nbsp;</span></td>
+                        <td class="scale_line"><span>&nbsp;</span></td>
+                        <td class="scale_line"><span>&nbsp;</span></td>
+                        <td class="scale_line"><span>&nbsp;</span></td>
+                        <td class="scale_line" id="last_scale"><span>&nbsp;</span></td>
                     </tr>
                 </table>
             </div>
