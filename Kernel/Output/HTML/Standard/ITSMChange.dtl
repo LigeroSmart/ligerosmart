@@ -2,7 +2,7 @@
 # ITSMChange.dtl - provides HTML elements for work order graph
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.dtl,v 1.8 2009-11-30 10:17:27 mae Exp $
+# $Id: ITSMChange.dtl,v 1.9 2009-11-30 10:38:54 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -11,27 +11,28 @@
 
 <!-- dtl:block:WorkOrderGraph -->
 <style type="text/css" media="screen">
-    .pending          { opacity:0.5; }
-    .wo_approval      { background-color:#ff9933; }
-    .wo_approval_comp { background-color:#804d1a; }
-    .wo_entry         { background-color:#4d9a00; }
-    .wo_entry_comp    { background-color:#2e4d0f; }
-    .wo_entry_pend    { background-color:#a1a1a1; }
-    .wo_pir_comp      { background-color:#806700; }
-    .wo_pir_pend      { background-color:#a1a1a1; }
-    .wo_pir           { background-color:#ffcc00; }
-    img.wo_status     { margin-top:2px; }
-    td.change_title   { text-align:center; }
-    img.change_title  { margin-top: 5px; margin-bottom: 5px; }
-    td.wo_status      { width: 20px; text-align: center; }
-    td.wo_nr          { width: 70px; text-align: left; }
-    td.wo             { height: 5px; font-size: 1pt; }
-    td.padding        { width: 10px; }
-    div#scale         { border-bottom:1px solid #000000; margin:0px; padding:0px; }
-    div#scale table   { margin:0px; padding:0px; border-spacing:0px; border-collapse: collapse; }
-    td.scale_pailing  { height: 5px; font-size: 4pt; width: 10%; }
-    td.scale_line     { height: 5px; font-size: 4pt; width: 20%; text-align: center; }
-    span.scale_line   { border-left:1px solid black; }
+    .pending           { opacity:0.5; }
+    .wo_approval       { background-color:#ff9933; }
+    .wo_approval_comp  { background-color:#804d1a; }
+    .wo_entry          { background-color:#4d9a00; }
+    .wo_entry_comp     { background-color:#2e4d0f; }
+    .wo_entry_pend     { background-color:#a1a1a1; }
+    .wo_pir_comp       { background-color:#806700; }
+    .wo_pir_pend       { background-color:#a1a1a1; }
+    .wo_pir            { background-color:#ffcc00; }
+    img.wo_status      { margin-top:2px; }
+    td.change_title    { text-align:center; }
+    img.change_title   { margin-top: 5px; margin-bottom: 5px; }
+    td.wo_status       { width: 20px; text-align: center; }
+    td.wo_nr           { width: 70px; text-align: left; }
+    td.wo              { height: 5px; font-size: 1pt; }
+    td.padding         { width: 10px; }
+    div#scale          { border-bottom:1px solid #000000; margin:0px; padding:0px; }
+    div#scale table    { margin:0px; padding:0px; border-spacing:0px; border-collapse: collapse; }
+    div#scale table tr td:first-child { text-align:left; width:10%; }
+    div#scale table tr td:last-child  { text-align:right; width:10%; }
+    td.scale_line      { height: 5px; font-size: 4pt; width: 20%; text-align: center; }
+    td.scale_line span { border-left:1px solid black; }
 </style>
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
 <!-- dtl:block:WorkOrderItem -->
@@ -74,12 +75,12 @@
             <div id="scale">
                 <table  border="0" cellpadding="0" cellspacing="0" width="100%">
                     <tr>
-                        <td class="scale_pailing" style="text-align:left;"><span class="scale_line"></span></td>
-                        <td class="scale_line"><span class="scale_line"></span></td>
-                        <td class="scale_line"><span class="scale_line"></span></td>
-                        <td class="scale_line"><span class="scale_line"></span></td>
-                        <td class="scale_line"><span class="scale_line"></span></td>
-                        <td class="scale_pailing" style="text-align:right"><span class="scale_line"></span></td>
+                        <td class="scale_line"><span></span></td>
+                        <td class="scale_line"><span></span></td>
+                        <td class="scale_line"><span></span></td>
+                        <td class="scale_line"><span></span></td>
+                        <td class="scale_line"><span></span></td>
+                        <td class="scale_line"><span></span></td>
                     </tr>
                 </table>
             </div>
