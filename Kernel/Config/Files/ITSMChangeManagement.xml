@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.94 2009-11-28 16:40:50 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.95 2009-11-30 11:54:21 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -1210,13 +1210,8 @@
             <Array>
                 <Item>requested</Item>
                 <Item>pending approval</Item>
-                <Item>rejected</Item>
                 <Item>approved</Item>
                 <Item>in progress</Item>
-                <Item>successful</Item>
-                <Item>failed</Item>
-                <Item>canceled</Item>
-                <Item>retracted</Item>
             </Array>
         </Setting>
     </ConfigItem>
@@ -1299,13 +1294,8 @@
             <Array>
                 <Item>requested</Item>
                 <Item>pending approval</Item>
-                <Item>rejected</Item>
                 <Item>approved</Item>
                 <Item>in progress</Item>
-                <Item>successful</Item>
-                <Item>failed</Item>
-                <Item>canceled</Item>
-                <Item>retracted</Item>
             </Array>
         </Setting>
     </ConfigItem>
@@ -1388,13 +1378,8 @@
             <Array>
                 <Item>requested</Item>
                 <Item>pending approval</Item>
-                <Item>rejected</Item>
                 <Item>approved</Item>
                 <Item>in progress</Item>
-                <Item>successful</Item>
-                <Item>failed</Item>
-                <Item>canceled</Item>
-                <Item>retracted</Item>
             </Array>
         </Setting>
     </ConfigItem>
@@ -1484,8 +1469,6 @@
                 <Item>accepted</Item>
                 <Item>ready</Item>
                 <Item>in progress</Item>
-                <Item>closed</Item>
-                <Item>canceled</Item>
             </Array>
         </Setting>
     </ConfigItem>
