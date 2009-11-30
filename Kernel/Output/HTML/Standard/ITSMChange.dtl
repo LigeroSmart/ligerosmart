@@ -2,7 +2,7 @@
 # ITSMChange.dtl - provides HTML elements for work order graph
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.dtl,v 1.10 2009-11-30 11:43:37 mae Exp $
+# $Id: ITSMChange.dtl,v 1.11 2009-11-30 14:01:05 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -30,10 +30,13 @@
     div#scale          { border-bottom:1px solid #000000; margin:5px 0px 0px 0px; padding:0px; }
     div#scale table    { margin:0px; padding:0px; border-spacing:0px; border-collapse: collapse; }
     td.scale_line      { height: 5px; font-size: 4pt; width: 20%; text-align: center; }
-    td#first_scale     { text-align:left; width:10%;}
-    td#last_scale      { text-align:right; width:10%;}
+    td#scale_first     { text-align:left; width:10%;}
+    td#scale_last      { text-align:right; width:10%;}
     td.scale_line span { width:2px; border-left:1px solid black; }
-    td#last_scale span { border-left: 0px hidden black; border-right:1px solid black;}
+    td#scale_last span { border-left: 0px hidden black; border-right:1px solid black;}
+    td.scale_label     { width:20%; text-align:center; font-size:8pt; vertical-align:top; }
+    td#label_first     { width:10%; text-align:left; }
+    td#label_last      { width:10%; text-align:right; }
 </style>
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
 <!-- dtl:block:WorkOrderItem -->
@@ -76,26 +79,26 @@
             <div id="scale">
                 <table  border="0" cellpadding="0" cellspacing="0" width="100%">
                     <tr>
-                        <td class="scale_line" id="first_scale"><span>&nbsp;</span></td>
+                        <td class="scale_line" id="scale_first"><span>&nbsp;</span></td>
                         <td class="scale_line"><span>&nbsp;</span></td>
                         <td class="scale_line"><span>&nbsp;</span></td>
                         <td class="scale_line"><span>&nbsp;</span></td>
                         <td class="scale_line"><span>&nbsp;</span></td>
-                        <td class="scale_line" id="last_scale"><span>&nbsp;</span></td>
+                        <td class="scale_line" id="scale_last"><span>&nbsp;</span></td>
                     </tr>
                 </table>
             </div>
             <table border="0" cellpadding="0" cellspacing="0" width="100%">
                 <tr>
-                    <td width="10%" style="text-align:left; font-size:8pt; vertical-align:top;">
+                    <td class="scale_label" id="label_first">
                         $TimeLong{"$Data{"StartTime"}"}
                     </td>
 <!-- dtl:block:ScaleLabel -->
-                    <td width="20%" style="text-align:center; font-size:8pt; vertical-align:top;">
+                    <td class="scale_label">
                         $TimeShort{"$Data{"ScaleLabel"}"}
                     </td>
 <!-- dtl:block:ScaleLabel -->
-                    <td width="10%" style="text-align:right; font-size:8pt; vertical-align:top;">
+                    <td class="scale_label" id="label_last">
                         $TimeLong{"$Data{"EndTime"}"}
                     </td>
                 </tr>
