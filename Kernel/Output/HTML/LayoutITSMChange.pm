@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LayoutITSMChange.pm,v 1.16 2009-11-27 15:48:13 mae Exp $
+# $Id: LayoutITSMChange.pm,v 1.17 2009-11-30 09:55:23 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use POSIX qw(ceil);
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 =over 4
 
@@ -57,7 +57,7 @@ sub ITSMChangeBuildWorkOrderGraph {
         return;
     }
 
-    # check work order object
+    # check workorder object
     if ( !$Param{WorkOrderObject} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
@@ -65,9 +65,11 @@ sub ITSMChangeBuildWorkOrderGraph {
         );
         return;
     }
+
+    # store workorder object locally
     $Self->{WorkOrderObject} = $Param{WorkOrderObject};
 
-    # check if work orders are available
+    # check if workorders are available
     return if !$Change->{WorkOrderCount};
 
     # extra check for ARRAY-ref
@@ -81,6 +83,9 @@ sub ITSMChangeBuildWorkOrderGraph {
 
         # actual time not set, so we can use planned
         if ( !$Change->{"Actual${TimeType}Time"} ) {
+
+            # check if time is set
+            next TIMETYPE if !$Change->{"Planned${TimeType}Time"};
 
             # translate to timestamp
             $Time{"${TimeType}Time"} = $Self->{TimeObject}->TimeStamp2SystemTime(
@@ -121,10 +126,9 @@ sub ITSMChangeBuildWorkOrderGraph {
             Priority => 'error',
             Message  => 'Unable to calculate time scale.',
         );
-        return;
     }
 
-    # get work orders of change
+    # get workorders of change
     my @WorkOrders;
     WORKORDERID:
     for my $WorkOrderID ( @{ $Change->{WorkOrderIDs} } ) {
@@ -137,7 +141,7 @@ sub ITSMChangeBuildWorkOrderGraph {
         push @WorkOrders, $WorkOrder;
     }
 
-    # sort work order ascending to WorkOrderNumber
+    # sort workorder ascending to WorkOrderNumber
     @WorkOrders = sort { $a->{WorkOrderNumber} <=> $b->{WorkOrderNumber} } @WorkOrders;
 
     # load graph sceleton
@@ -146,7 +150,7 @@ sub ITSMChangeBuildWorkOrderGraph {
         Data => {},
     );
 
-    # build graph of each work order
+    # build graph of each workorder
     WORKORDER:
     for my $WorkOrder (@WorkOrders) {
         next WORKORDER if !$WorkOrder;
@@ -529,11 +533,22 @@ a helper method for the workorder graph of a change
 sub _ITSMChangeGetWorkOrderGraph {
     my ( $Self, %Param ) = @_;
 
-    # check for work order
+    # check for workorder
     return if !$Param{WorkOrder};
 
-    # extract work order
+    # extract workorder
     my $WorkOrder = $Param{WorkOrder};
+
+    # create workorder item
+    $Self->Block(
+        Name => 'WorkOrderItem',
+        Data => {
+            %{$WorkOrder},
+        },
+    );
+
+    # check if ticks are calculated
+    return if !$Param{Ticks};
 
     # set planned if no actual time is set
     $WorkOrder->{ActualStartTime} = $WorkOrder->{PlannedStartTime}
@@ -560,7 +575,7 @@ sub _ITSMChangeGetWorkOrderGraph {
         );
     }
 
-    # determine length of work order
+    # determine length of workorder
     my %TickValue;
 
     for my $TimeType (qw( Planned Actual )) {
@@ -588,9 +603,9 @@ sub _ITSMChangeGetWorkOrderGraph {
             100 - ( $TickValue{"${TimeType}Padding"} + $TickValue{"${TimeType}Ticks"} );
     }
 
-    # create work order item
+    # create graph of workorder item
     $Self->Block(
-        Name => 'WorkOrderItem',
+        Name => 'WorkOrderItemGraph',
         Data => {
             %{$WorkOrder},
             %TickValue,
