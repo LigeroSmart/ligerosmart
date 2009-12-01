@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeMyWorkOrders.pm - the OTRS::ITSM::ChangeManagement MyWorkOrders overview module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeMyWorkOrders.pm,v 1.1 2009-11-28 16:30:30 ub Exp $
+# $Id: AgentITSMChangeMyWorkOrders.pm,v 1.2 2009-12-01 00:56:31 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -122,6 +122,7 @@ sub Run {
             Prio   => 1000,
             Search => {
                 WorkOrderAgentIDs => [ $Self->{UserID} ],
+                WorkOrderStates   => $Self->{Config}->{'Filter::WorkOrderStates'},
                 OrderBy           => \@SortByArray,
                 OrderByDirection  => \@OrderByArray,
                 Limit             => 1000,
