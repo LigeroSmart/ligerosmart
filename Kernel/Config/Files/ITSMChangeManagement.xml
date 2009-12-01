@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.95 2009-11-30 11:54:21 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.96 2009-12-01 00:58:03 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -107,8 +107,6 @@
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
-
-
     <ConfigItem Name="Frontend::Module###AgentITSMChangeAdd" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AgentITSMChangeAdd object in the agent interface.</Description>
         <Description Lang="de">Frontendmodul-Registration des AgentITSMChangeAdd-Objekts im Agent-Interface.</Description>
@@ -146,43 +144,20 @@
                 <Description>ITSM Change Manager Overview</Description>
                 <NavBarName>Change</NavBarName>
                 <Title>Change</Title>
-                <NavBar>
-                    <Description>Change Manager</Description>
-                    <Name>Change Manager</Name>
-                    <Image>new-message.png</Image>
-                    <Link>Action=AgentITSMChangeManager</Link>
-                    <Type></Type>
-                    <Block></Block>
-                    <NavBar>Change</NavBar>
-                    <AccessKey></AccessKey>
-                    <Prio>600</Prio>
-                </NavBar>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Frontend::Module###AgentITSMChangeMyCAB" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AgentITSMChangeMyCAB object in the agent interface.</Description>
-        <Description Lang="de">Frontendmodul-Registration des AgentITSMChangeMyChanges-Objekts im Agent-Interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration des AgentITSMChangeMyCAB-Objekts im Agent-Interface.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <GroupRo>itsm-change-builder</GroupRo>
-                <GroupRo>itsm-change-manager</GroupRo>
+                <GroupRo>itsm-change</GroupRo>
                 <Description>ITSM MyCAB Overview</Description>
                 <NavBarName>Change</NavBarName>
                 <Title>Change</Title>
-                <NavBar>
-                    <Description>My CAB</Description>
-                    <Name>My CAB</Name>
-                    <Image>new-message.png</Image>
-                    <Link>Action=AgentITSMChangeMyCAB</Link>
-                    <Type></Type>
-                    <Block></Block>
-                    <NavBar>Change</NavBar>
-                    <AccessKey></AccessKey>
-                    <Prio>700</Prio>
-                </NavBar>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -198,23 +173,12 @@
                 <Description>ITSM MyChanges Overview</Description>
                 <NavBarName>Change</NavBarName>
                 <Title>Change</Title>
-                <NavBar>
-                    <Description>My Changes (Change Builder)</Description>
-                    <Name>My Changes</Name>
-                    <Image>new-message.png</Image>
-                    <Link>Action=AgentITSMChangeMyChanges</Link>
-                    <Type></Type>
-                    <Block></Block>
-                    <NavBar>Change</NavBar>
-                    <AccessKey></AccessKey>
-                    <Prio>800</Prio>
-                </NavBar>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Frontend::Module###AgentITSMChangeMyWorkOrders" Required="0" Valid="1">
-        <Description Lang="en">Frontend module registration for the AgentITSMChangeMyChanges object in the agent interface.</Description>
-        <Description Lang="de">Frontendmodul-Registration des AgentITSMChangeMyChanges-Objekts im Agent-Interface.</Description>
+        <Description Lang="en">Frontend module registration for the AgentITSMChangeMyWorkOrders object in the agent interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration des AgentITSMChangeMyWorkOrders-Objekts im Agent-Interface.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
@@ -223,17 +187,6 @@
                 <Description>ITSM MyWorkorders Overview</Description>
                 <NavBarName>Change</NavBarName>
                 <Title>Change</Title>
-                <NavBar>
-                    <Description>My Workorders</Description>
-                    <Name>My Workorders</Name>
-                    <Image>new-message.png</Image>
-                    <Link>Action=AgentITSMChangeMyWorkOrders</Link>
-                    <Type></Type>
-                    <Block></Block>
-                    <NavBar>Change</NavBar>
-                    <AccessKey></AccessKey>
-                    <Prio>900</Prio>
-                </NavBar>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -484,6 +437,50 @@
                 <Title>CABMember Search</Title>
                 <NavBarName>Change</NavBarName>
             </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::NavBarModule###101-ITSMChangeManagement::MyChanges" Required="0" Valid="1">
+        <Description Lang="en">Agent interface module to show the MyChanges overview icon.</Description>
+        <Description Lang="de">Modul zum Anzeigen des MyChanges-Übersichts-Icons.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::NavBarModule</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::NavBarMyChanges</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::NavBarModule###102-ITSMChangeManagement::MyWorkOrders" Required="0" Valid="1">
+        <Description Lang="en">Agent interface module to show the MyWorkOrders overview icon.</Description>
+        <Description Lang="de">Modul zum Anzeigen des MyWorkOrders-Übersichts-Icons.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::NavBarModule</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::NavBarMyWorkOrders</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::NavBarModule###103-ITSMChangeManagement::MyCAB" Required="0" Valid="1">
+        <Description Lang="en">Agent interface module to show the MyCAB overview icon.</Description>
+        <Description Lang="de">Modul zum Anzeigen des MyCAB-Übersichts-Icons.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::NavBarModule</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::NavBarMyCAB</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::NavBarModule###104-ITSMChangeManagement::ChangeManager" Required="0" Valid="1">
+        <Description Lang="en">Agent interface module to show the ChangeManager overview icon.</Description>
+        <Description Lang="de">Modul zum Anzeigen des ChangeManager-Übersichts-Icons.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::NavBarModule</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::NavBarChangeManager</Item>
+            </Hash>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::Overview###Small" Required="0" Valid="1">
@@ -1361,11 +1358,11 @@
                 <Item Key="Impact">0</Item>
                 <Item Key="Priority">1</Item>
                 <Item Key="RealizeTime">0</Item>
-                <Item Key="PlannedStartTime">0</Item>
-                <Item Key="PlannedEndTime">0</Item>
+                <Item Key="PlannedStartTime">1</Item>
+                <Item Key="PlannedEndTime">1</Item>
                 <Item Key="ActualStartTime">0</Item>
                 <Item Key="ActualEndTime">0</Item>
-                <Item Key="CreateTime">1</Item>
+                <Item Key="CreateTime">0</Item>
             </Hash>
         </Setting>
     </ConfigItem>
