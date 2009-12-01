@@ -2,7 +2,7 @@
 # AgentITSMChangeZoom.dtl - provides HTML form for AgentITSMChangeZoom
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.dtl,v 1.26 2009-11-27 14:37:44 bes Exp $
+# $Id: AgentITSMChangeZoom.dtl,v 1.27 2009-12-01 10:50:52 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -60,7 +60,7 @@
                 </colgroup>
                 <tr>
                     <td class="contentkey">
-                        <div title="$Text{"$QData{"Description"}"}">
+                        <div title="$QData{"DescriptionPlain"}">
                             $Text{"Description:"}&nbsp;&nbsp;&nbsp;&nbsp;
                         </div>
                     </td>
@@ -71,7 +71,7 @@
                 <tr><td colspan="2">&nbsp;</td></tr>
                 <tr>
                     <td class="contentkey">
-                        <div title="$Text{"$QData{"Justification"}"}">
+                        <div title="$QData{"JustificationPlain"}">
                             $Text{"Justification:"}&nbsp;&nbsp;&nbsp;&nbsp;
                         </div>
                     </td>
@@ -259,9 +259,7 @@
                     <td class="mainkey">$Text{"Change Manager:"}</td>
                     <td class="mainvalue">
 <!-- dtl:block:EmptyChangeManager -->
-                        <div title="-">
-                            -
-                        </div>
+                        <div title="-">-</div>
 <!-- dtl:block:EmptyChangeManager -->
 <!-- dtl:block:ChangeManager -->
                         <div title="$QData{"ChangeManagerUserLogin"} ($Quote{"$Data{"ChangeManagerUserFirstname"} $Data{"ChangeManagerUserLastname"}"})">
