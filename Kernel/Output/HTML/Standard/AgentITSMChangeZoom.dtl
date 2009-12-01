@@ -2,7 +2,7 @@
 # AgentITSMChangeZoom.dtl - provides HTML form for AgentITSMChangeZoom
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.dtl,v 1.27 2009-12-01 10:50:52 bes Exp $
+# $Id: AgentITSMChangeZoom.dtl,v 1.28 2009-12-01 13:26:27 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -60,7 +60,7 @@
                 </colgroup>
                 <tr>
                     <td class="contentkey">
-                        <div title="$QData{"DescriptionPlain"}">
+                        <div title="$Text{"Description"}">
                             $Text{"Description:"}&nbsp;&nbsp;&nbsp;&nbsp;
                         </div>
                     </td>
@@ -71,7 +71,7 @@
                 <tr><td colspan="2">&nbsp;</td></tr>
                 <tr>
                     <td class="contentkey">
-                        <div title="$QData{"JustificationPlain"}">
+                        <div title="$Text{"Justification"}">
                             $Text{"Justification:"}&nbsp;&nbsp;&nbsp;&nbsp;
                         </div>
                     </td>
@@ -82,7 +82,7 @@
                 <tr><td colspan="2">&nbsp;</td></tr>
                 <tr>
                     <td class="contentkey" style="vertical-align: top">
-                        <div title="$Text{"$QData{"Attachment"}"}">
+                        <div title="$Text{"Attachment"}">
                             $Text{"Attachment:"}&nbsp;&nbsp;&nbsp;&nbsp;
                         </div>
                     </td>
