@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.76 2009-12-01 01:06:17 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.77 2009-12-01 14:57:15 mae Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -596,6 +596,15 @@
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Change::State</Data>
             <Data Key="name" Type="Quote">retracted</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::WorkOrder::State</Data>
+            <Data Key="name" Type="Quote">created</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
