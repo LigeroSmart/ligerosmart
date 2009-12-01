@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeEdit.pm - the OTRS::ITSM::ChangeManagement change edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.pm,v 1.26 2009-12-01 08:40:15 bes Exp $
+# $Id: AgentITSMChangeEdit.pm,v 1.27 2009-12-01 14:28:57 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChangeCIPAllocate;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.26 $) [1];
+$VERSION = qw($Revision: 1.27 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -65,7 +65,7 @@ sub Run {
         UserID   => $Self->{UserID},
     );
 
-    # error screen, don't show change edit mask
+    # error screen
     if ( !$Access ) {
         return $Self->{LayoutObject}->NoPermission(
             Message    => "You need $Self->{Config}->{Permission} permissions!",
@@ -101,9 +101,11 @@ sub Run {
     }
 
     # store time related fields in %GetParam
-    for my $TimePart (qw(Year Month Day Hour Minute Used)) {
-        my $ParamName = 'RealizeTime' . $TimePart;
-        $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+    if ( $Self->{Config}->{RealizeTime} ) {
+        for my $TimePart (qw(Year Month Day Hour Minute Used)) {
+            my $ParamName = 'RealizeTime' . $TimePart;
+            $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+        }
     }
 
     # set default values for category and impact
@@ -116,7 +118,7 @@ sub Run {
     }
 
     # Remember the reason why saving was not attempted.
-    # This entries are the names of the dtl validation error blocks.
+    # The entries are the names of the dtl validation error blocks.
     my @ValidationErrors;
     my %CIPErrors;
 
@@ -148,47 +150,55 @@ sub Run {
         }
 
         # check the realize time
-        if (
-            $GetParam{RealizeTimeYear}
-            && $GetParam{RealizeTimeMonth}
-            && $GetParam{RealizeTimeDay}
-            && $GetParam{RealizeTimeHour}
-            && $GetParam{RealizeTimeMinute}
-            && $GetParam{RealizeTimeUsed}
-            )
-        {
+        if ( $Self->{Config}->{RealizeTime} && $GetParam{RealizeTimeUsed} ) {
 
-            # format as timestamp, when all required time param were passed
-            $GetParam{RealizeTime} = sprintf '%04d-%02d-%02d %02d:%02d:00',
-                $GetParam{RealizeTimeYear},
-                $GetParam{RealizeTimeMonth},
-                $GetParam{RealizeTimeDay},
-                $GetParam{RealizeTimeHour},
-                $GetParam{RealizeTimeMinute};
+            if (
+                $GetParam{RealizeTimeYear}
+                && $GetParam{RealizeTimeMonth}
+                && $GetParam{RealizeTimeDay}
+                && $GetParam{RealizeTimeHour}
+                && $GetParam{RealizeTimeMinute}
+                )
+            {
 
-            # sanity check of the assembled timestamp
-            my $SystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
-                String => $GetParam{RealizeTime},
-            );
+                # format as timestamp, when all required time param were passed
+                $GetParam{RealizeTime} = sprintf '%04d-%02d-%02d %02d:%02d:00',
+                    $GetParam{RealizeTimeYear},
+                    $GetParam{RealizeTimeMonth},
+                    $GetParam{RealizeTimeDay},
+                    $GetParam{RealizeTimeHour},
+                    $GetParam{RealizeTimeMinute};
 
-            # do not save when time is invalid
-            if ( !$SystemTime ) {
+                # sanity check of the assembled timestamp
+                my $SystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
+                    String => $GetParam{RealizeTime},
+                );
+
+                # do not save when time is invalid
+                if ( !$SystemTime ) {
+                    push @ValidationErrors, 'InvalidRealizeTime';
+                }
+            }
+            else {
+
+                # it was indicated that the realize time should be set,
+                # but at least one of the required time params is missing
                 push @ValidationErrors, 'InvalidRealizeTime';
             }
         }
-        elsif ( $GetParam{RealizeTimeUsed} ) {
 
-            # it was indicated that the realize time should be set,
-            # but at least one of the required time params is missing
-            push @ValidationErrors, 'InvalidRealizeTime';
-        }
-
-        # update only when there are no validation errors
+        # update only when there are no input validation errors
         if ( !@ValidationErrors ) {
             my %AdditionalParam;
+
             if ( $Self->{Config}->{State} ) {
                 $AdditionalParam{ChangeStateID} = $GetParam{ChangeStateID};
             }
+
+            if ( $Self->{Config}->{RealizeTime} ) {
+                $AdditionalParam{RealizeTime} = $GetParam{RealizeTime};
+            }
+
             my $CouldUpdateChange = $Self->{ChangeObject}->ChangeUpdate(
                 ChangeID      => $ChangeID,
                 Description   => $GetParam{Description},
@@ -197,7 +207,6 @@ sub Run {
                 CategoryID    => $GetParam{CategoryID},
                 ImpactID      => $GetParam{ImpactID},
                 PriorityID    => $GetParam{PriorityID},
-                RealizeTime   => $GetParam{RealizeTime},
                 UserID        => $Self->{UserID},
                 %AdditionalParam,
             );
@@ -264,7 +273,7 @@ sub Run {
             $GetParam{ChangeStateID} = $Change->{ChangeStateID};
         }
 
-        if ( $Change->{RealizeTime} ) {
+        if ( $Self->{Config}->{RealizeTime} && $Change->{RealizeTime} ) {
 
             # get realize time from the change
             my $SystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
@@ -272,9 +281,7 @@ sub Run {
             );
 
             my ( $Second, $Minute, $Hour, $Day, $Month, $Year )
-                = $Self->{TimeObject}->SystemTime2Date(
-                SystemTime => $SystemTime,
-                );
+                = $Self->{TimeObject}->SystemTime2Date( SystemTime => $SystemTime );
 
             # set the parameter hash for BuildDateSelection()
             $GetParam{RealizeTimeUsed}   = 1;
@@ -323,25 +330,28 @@ sub Run {
         );
     }
 
-    # time period that can be selected from the GUI
-    my %TimePeriod = %{ $Self->{ConfigObject}->Get('ITSMWorkOrder::TimePeriod') };
+    if ( $Self->{Config}->{RealizeTime} ) {
 
-    # add selection for the time
-    my $TimeSelectionString = $Self->{LayoutObject}->BuildDateSelection(
-        %GetParam,
-        Format              => 'DateInputFormatLong',
-        Prefix              => 'RealizeTime',
-        RealizeTimeOptional => 1,
-        %TimePeriod,
-    );
+        # time period that can be selected from the GUI
+        my %TimePeriod = %{ $Self->{ConfigObject}->Get('ITSMWorkOrder::TimePeriod') };
 
-    # show time fields
-    $Self->{LayoutObject}->Block(
-        Name => 'RealizeTime',
-        Data => {
-            'RealizeTimeString' => $TimeSelectionString,
-        },
-    );
+        # add selection for the time
+        my $TimeSelectionString = $Self->{LayoutObject}->BuildDateSelection(
+            %GetParam,
+            Format              => 'DateInputFormatLong',
+            Prefix              => 'RealizeTime',
+            RealizeTimeOptional => 1,
+            %TimePeriod,
+        );
+
+        # show time fields
+        $Self->{LayoutObject}->Block(
+            Name => 'RealizeTime',
+            Data => {
+                'RealizeTimeString' => $TimeSelectionString,
+            },
+        );
+    }
 
     # get categories
     $Param{Categories} = $Self->{ChangeObject}->ChangePossibleCIPGet(

@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.25 2009-11-26 11:54:35 ub Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.26 2009-12-01 14:28:57 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChangeCIPAllocate;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.25 $) [1];
+$VERSION = qw($Revision: 1.26 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -77,9 +77,11 @@ sub Run {
     }
 
     # store time related fields in %GetParam
-    for my $TimePart (qw(Year Month Day Hour Minute Used)) {
-        my $ParamName = 'RealizeTime' . $TimePart;
-        $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+    if ( $Self->{Config}->{RealizeTime} ) {
+        for my $TimePart (qw(Year Month Day Hour Minute Used)) {
+            my $ParamName = 'RealizeTime' . $TimePart;
+            $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+        }
     }
 
     # set default values for category and impact
@@ -168,8 +170,8 @@ sub Run {
         }
     }
 
-    # remember the reason why saving was not attempted.
-    # these entries are the names of the dtl validation error blocks.
+    # Remember the reason why saving was not attempted.
+    # The entries are the names of the dtl validation error blocks.
     my @ValidationErrors;
     my %CIPErrors;
 
@@ -201,43 +203,51 @@ sub Run {
         }
 
         # check the realize time
-        if (
-            $GetParam{RealizeTimeYear}
-            && $GetParam{RealizeTimeMonth}
-            && $GetParam{RealizeTimeDay}
-            && $GetParam{RealizeTimeHour}
-            && $GetParam{RealizeTimeMinute}
-            && $GetParam{RealizeTimeUsed}
-            )
-        {
+        if ( $Self->{Config}->{RealizeTime} && $GetParam{RealizeTimeUsed} ) {
 
-            # format as timestamp, when all required time param were passed
-            $GetParam{RealizeTime} = sprintf '%04d-%02d-%02d %02d:%02d:00',
-                $GetParam{RealizeTimeYear},
-                $GetParam{RealizeTimeMonth},
-                $GetParam{RealizeTimeDay},
-                $GetParam{RealizeTimeHour},
-                $GetParam{RealizeTimeMinute};
+            if (
+                $GetParam{RealizeTimeYear}
+                && $GetParam{RealizeTimeMonth}
+                && $GetParam{RealizeTimeDay}
+                && $GetParam{RealizeTimeHour}
+                && $GetParam{RealizeTimeMinute}
+                )
+            {
 
-            # sanity check of the assembled timestamp
-            my $SystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
-                String => $GetParam{RealizeTime},
-            );
+                # format as timestamp, when all required time param were passed
+                $GetParam{RealizeTime} = sprintf '%04d-%02d-%02d %02d:%02d:00',
+                    $GetParam{RealizeTimeYear},
+                    $GetParam{RealizeTimeMonth},
+                    $GetParam{RealizeTimeDay},
+                    $GetParam{RealizeTimeHour},
+                    $GetParam{RealizeTimeMinute};
 
-            # do not save when time is invalid
-            if ( !$SystemTime ) {
+                # sanity check of the assembled timestamp
+                my $SystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
+                    String => $GetParam{RealizeTime},
+                );
+
+                # do not save when time is invalid
+                if ( !$SystemTime ) {
+                    push @ValidationErrors, 'InvalidRealizeTime';
+                }
+            }
+            else {
+
+                # it was indicated that the realize time should be set,
+                # but at least one of the required time params is missing
                 push @ValidationErrors, 'InvalidRealizeTime';
             }
-        }
-        elsif ( $GetParam{RealizeTimeUsed} ) {
-
-            # it was indicated that the realize time should be set,
-            # but at least one of the required time params is missing
-            push @ValidationErrors, 'InvalidRealizeTime';
         }
 
         # add only when there are no input validation errors
         if ( !@ValidationErrors ) {
+            my %AdditionalParam;
+
+            if ( $Self->{Config}->{RealizeTime} ) {
+                $AdditionalParam{RealizeTime} = $GetParam{RealizeTime};
+            }
+
             my $ChangeID = $Self->{ChangeObject}->ChangeAdd(
                 Description   => $GetParam{Description},
                 Justification => $GetParam{Justification},
@@ -245,8 +255,8 @@ sub Run {
                 CategoryID    => $GetParam{CategoryID},
                 ImpactID      => $GetParam{ImpactID},
                 PriorityID    => $GetParam{PriorityID},
-                RealizeTime   => $GetParam{RealizeTime},
                 UserID        => $Self->{UserID},
+                %AdditionalParam,
             );
 
             # change could be added successfully
@@ -367,24 +377,35 @@ sub Run {
         );
     }
 
-    # time period that can be selected from the GUI
-    my %TimePeriod = %{ $Self->{ConfigObject}->Get('ITSMWorkOrder::TimePeriod') };
+    if ( $Self->{Config}->{RealizeTime} ) {
 
-    # add selection for the time
-    my $TimeSelectionString = $Self->{LayoutObject}->BuildDateSelection(
-        %GetParam,
-        Format              => 'DateInputFormatLong',
-        Prefix              => 'RealizeTime',
-        RealizeTimeOptional => 1,
-        %TimePeriod,
-    );
+        # time period that can be selected from the GUI
+        my %TimePeriod = %{ $Self->{ConfigObject}->Get('ITSMWorkOrder::TimePeriod') };
+
+        # add selection for the time
+        my $TimeSelectionString = $Self->{LayoutObject}->BuildDateSelection(
+            %GetParam,
+            Format              => 'DateInputFormatLong',
+            Prefix              => 'RealizeTime',
+            RealizeTimeOptional => 1,
+            %TimePeriod,
+        );
+
+        # show time fields
+        $Self->{LayoutObject}->Block(
+            Name => 'RealizeTime',
+            Data => {
+                'RealizeTimeString' => $TimeSelectionString,
+            },
+        );
+    }
 
     # get categories
     $Param{Categories} = $Self->{ChangeObject}->ChangePossibleCIPGet(
         Type => 'Category',
     );
 
-    # create impact string
+    # create category selection string
     $Param{'CategoryStrg'} = $Self->{LayoutObject}->BuildSelection(
         Data       => $Param{Categories},
         Name       => 'CategoryID',
@@ -480,14 +501,6 @@ sub Run {
     if ( $CIPErrors{Priority} ) {
         $Self->{LayoutObject}->Block( Name => 'InvalidPriority' );
     }
-
-    # show time fields
-    $Self->{LayoutObject}->Block(
-        Name => 'RealizeTime',
-        Data => {
-            'RealizeTimeString' => $TimeSelectionString,
-        },
-    );
 
     # Add the validation error messages as late as possible
     # as the enclosing blocks, e.g. 'RealizeTime' muss first be set.

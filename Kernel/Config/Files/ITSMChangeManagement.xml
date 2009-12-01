@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.96 2009-12-01 00:58:03 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.97 2009-12-01 14:28:57 bes Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -1682,6 +1682,18 @@
             <String Regex="^(rw|ro)$">rw</String>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeAdd###RealizeTime" Required="1" Valid="1">
+        <Description Lang="en">If you want to set the realization time.</Description>
+        <Description Lang="de">Wenn die gewünschte Fertigstellungszeit gesetzt werden soll.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeAdd</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeEdit###Permission" Required="1" Valid="1">
         <Description Lang="en">Required privilege to edit changes.</Description>
         <Description Lang="de">Benötigtes Recht zum Bearbeiten von Changes.</Description>
@@ -1689,6 +1701,18 @@
         <SubGroup>Frontend::Agent::ITSMChange::ViewChangeEdit</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">rw</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeEdit###RealizeTime" Required="1" Valid="1">
+        <Description Lang="en">If you want to set the realization time.</Description>
+        <Description Lang="de">Wenn die gewünschte Fertigstellungszeit gesetzt werden soll.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeEdit</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeEdit###State" Required="1" Valid="1">
@@ -1746,6 +1770,18 @@
         <SubGroup>Frontend::Agent::ITSMChange::ViewChangeZoom</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">ro</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeZoom###RealizeTime" Required="1" Valid="1">
+        <Description Lang="en">If you want to show the realization time.</Description>
+        <Description Lang="de">Wenn die gewünschte Fertigstellungszeit angezeigt werden soll.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeZoom</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMWorkOrderAdd###Permission" Required="1" Valid="1">
