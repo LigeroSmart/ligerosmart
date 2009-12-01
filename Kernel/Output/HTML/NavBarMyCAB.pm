@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/NavBarMyCAB.pm
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: NavBarMyCAB.pm,v 1.1 2009-12-01 01:02:21 ub Exp $
+# $Id: NavBarMyCAB.pm,v 1.2 2009-12-01 15:49:00 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -43,7 +43,7 @@ sub Run {
     # define action, group, label, image and prio
     my $Action = 'AgentITSMChangeMyCAB';
     my $Group  = 'itsm-change';
-    my $Label  = 'My CAB';
+    my $Label  = 'My CABs';
     my $Image  = 'new-message.png';
     my $Prio   = '0992000';
 
