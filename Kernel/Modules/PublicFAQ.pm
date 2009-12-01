@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/PublicFAQ.pm - faq module
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQ.pm,v 1.9 2008-09-23 21:15:25 ub Exp $
+# $Id: PublicFAQ.pm,v 1.10 2009-12-01 08:40:28 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::Modules::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 our @ISA = qw(Kernel::Modules::FAQ);
 
@@ -164,7 +164,7 @@ sub Run {
         # generate rss feed
         use XML::RSS::SimpleGen;
         rss_new( "http://" . $ENV{HTTP_HOST} );
-        my $Title = $Self->{ConfigObject}->Get('Product') . ' FAQ';
+        my $Title = $Self->{ConfigObject}->Get('ProductName') . ' FAQ';
         rss_title($Title);
 
         for my $ItemID (@IDs) {
