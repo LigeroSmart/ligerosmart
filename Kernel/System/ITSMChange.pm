@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.193 2009-11-27 08:25:26 ub Exp $
+# $Id: ITSMChange.pm,v 1.194 2009-12-01 10:05:14 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.193 $) [1];
+$VERSION = qw($Revision: 1.194 $) [1];
 
 =head1 NAME
 
@@ -453,23 +453,25 @@ sub ChangeUpdate {
 
 =item ChangeGet()
 
-return a change as a hash reference
+Return a change as a hash reference.
 
-    my $ChangeRef = $ChangeObject->ChangeGet(
+    my $Change = $ChangeObject->ChangeGet(
         ChangeID => 123,
         UserID   => 1,
     );
 
-The returned hash reference contains following elements:
+The returned hash reference contains the following elements:
 
     $Change{ChangeID}
     $Change{ChangeNumber}
     $Change{ChangeStateID}
-    $Change{ChangeState}
-    $Change{ChangeStateSignal}  # fetched from SysConfig
+    $Change{ChangeState}            # fetched from the general catalog
+    $Change{ChangeStateSignal}      # fetched from SysConfig
     $Change{ChangeTitle}
     $Change{Description}
+    $Change{DescriptionPlain}
     $Change{Justification}
+    $Change{JustificationPlain}
     $Change{ChangeManagerID}
     $Change{ChangeBuilderID}
     $Change{CategoryID}
@@ -478,14 +480,14 @@ The returned hash reference contains following elements:
     $Change{Impact}
     $Change{PriorityID}
     $Change{Priority}
-    $Change{WorkOrderIDs}       # array reference with WorkOrderIDs
-    $Change{WorkOrderCount}     # number of workorders
-    $Change{CABAgents}          # array reference with CAB Agent UserIDs
-    $Change{CABCustomers}       # array reference with CAB CustomerUserIDs
-    $Change{PlannedStartTime}   # determined from the workorders
-    $Change{PlannedEndTime}     # determined from the workorders
-    $Change{ActualStartTime}    # determined from the workorders
-    $Change{ActualEndTime}      # determined from the workorders
+    $Change{WorkOrderIDs}           # array reference with WorkOrderIDs
+    $Change{WorkOrderCount}         # number of workorders
+    $Change{CABAgents}              # array reference with CAB Agent UserIDs
+    $Change{CABCustomers}           # array reference with CAB CustomerUserIDs
+    $Change{PlannedStartTime}       # determined from the workorders
+    $Change{PlannedEndTime}         # determined from the workorders
+    $Change{ActualStartTime}        # determined from the workorders
+    $Change{ActualEndTime}          # determined from the workorders
     $Change{RealizeTime}
     $Change{CreateTime}
     $Change{CreateBy}
@@ -510,10 +512,13 @@ sub ChangeGet {
 
     # get data from database
     return if !$Self->{DBObject}->Prepare(
-        SQL => 'SELECT id, change_number, title, description, justification, '
+        SQL => 'SELECT id, change_number, title, '
+            . 'description, description_plain, '
+            . 'justification, justification_plain, '
             . 'change_state_id, change_manager_id, change_builder_id, '
             . 'category_id, impact_id, priority_id, '
-            . 'create_time, create_by, change_time, change_by, realize_time '
+            . 'create_time, create_by, change_time, change_by, '
+            . 'realize_time '
             . 'FROM change_item '
             . 'WHERE id = ? ',
         Bind  => [ \$Param{ChangeID} ],
@@ -523,22 +528,24 @@ sub ChangeGet {
     # fetch the result
     my %ChangeData;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $ChangeData{ChangeID}        = $Row[0];
-        $ChangeData{ChangeNumber}    = $Row[1];
-        $ChangeData{ChangeTitle}     = defined( $Row[2] ) ? $Row[2] : '';
-        $ChangeData{Description}     = defined( $Row[3] ) ? $Row[3] : '';
-        $ChangeData{Justification}   = defined( $Row[4] ) ? $Row[4] : '';
-        $ChangeData{ChangeStateID}   = $Row[5];
-        $ChangeData{ChangeManagerID} = $Row[6];
-        $ChangeData{ChangeBuilderID} = $Row[7];
-        $ChangeData{CategoryID}      = $Row[8];
-        $ChangeData{ImpactID}        = $Row[9];
-        $ChangeData{PriorityID}      = $Row[10];
-        $ChangeData{CreateTime}      = $Row[11];
-        $ChangeData{CreateBy}        = $Row[12];
-        $ChangeData{ChangeTime}      = $Row[13];
-        $ChangeData{ChangeBy}        = $Row[14];
-        $ChangeData{RealizeTime}     = $Row[15];
+        $ChangeData{ChangeID}           = $Row[0];
+        $ChangeData{ChangeNumber}       = $Row[1];
+        $ChangeData{ChangeTitle}        = defined( $Row[2] ) ? $Row[2] : '';
+        $ChangeData{Description}        = defined( $Row[3] ) ? $Row[3] : '';
+        $ChangeData{DescriptionPlain}   = defined( $Row[4] ) ? $Row[4] : '';
+        $ChangeData{Justification}      = defined( $Row[5] ) ? $Row[5] : '';
+        $ChangeData{JustificationPlain} = defined( $Row[6] ) ? $Row[6] : '';
+        $ChangeData{ChangeStateID}      = $Row[7];
+        $ChangeData{ChangeManagerID}    = $Row[8];
+        $ChangeData{ChangeBuilderID}    = $Row[9];
+        $ChangeData{CategoryID}         = $Row[10];
+        $ChangeData{ImpactID}           = $Row[11];
+        $ChangeData{PriorityID}         = $Row[12];
+        $ChangeData{CreateTime}         = $Row[13];
+        $ChangeData{CreateBy}           = $Row[14];
+        $ChangeData{ChangeTime}         = $Row[15];
+        $ChangeData{ChangeBy}           = $Row[16];
+        $ChangeData{RealizeTime}        = $Row[17];
     }
 
     # check error
@@ -2671,6 +2678,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.193 $ $Date: 2009-11-27 08:25:26 $
+$Revision: 1.194 $ $Date: 2009-12-01 10:05:14 $
 
 =cut
