@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.97 2009-12-01 14:28:57 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.98 2009-12-01 16:45:37 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -1311,7 +1311,7 @@
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::ViewMyChangesOverview</SubGroup>
         <Setting>
-            <Option SelectedID="ChangeNumber">
+            <Option SelectedID="PlannedStartTime">
                 <Item Key="ChangeNumber">ChangeNumber</Item>
                 <Item Key="ChangeTitle">ChangeTitle</Item>
                 <Item Key="ChangeStateID">ChangeState</Item>
@@ -1539,19 +1539,6 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeFSC###ChangeStates" Required="1" Valid="1">
-        <Description Lang="en">Defines the change states that will be used to show the FSC overview.</Description>
-        <Description Lang="de">Definiert die Change-States die für die FSC-Übersicht verwendet werden.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewFSCOverview</SubGroup>
-        <Setting>
-            <Array>
-                <Item>requested</Item>
-                <Item>pending approval</Item>
-                <Item>approved</Item>
-            </Array>
-        </Setting>
-    </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeFSC###Filter::ChangeStates" Required="1" Valid="1">
         <Description Lang="en">Defines the change states that will be used as filters in the FSC overview. To be used as a filter, a change state needs to be also defined in ITSMChange::Frontend::AgentITSMChangeFSC###ChangeStates.</Description>
         <Description Lang="de">Definiert die Change-States die als Filter in der FSC-Übersicht verwendet werden. Um als Filter verwendet werden zu können, muss ein Change-State ebenfalls in ITSMChange::Frontend::AgentITSMChangeFSC###ChangeStates definert sein.</Description>
@@ -1559,15 +1546,7 @@
         <SubGroup>Frontend::Agent::ITSMChange::ViewFSCOverview</SubGroup>
         <Setting>
             <Array>
-                <Item>requested</Item>
-                <Item>pending approval</Item>
-                <Item>rejected</Item>
                 <Item>approved</Item>
-                <Item>in progress</Item>
-                <Item>successful</Item>
-                <Item>failed</Item>
-                <Item>canceled</Item>
-                <Item>retracted</Item>
             </Array>
         </Setting>
     </ConfigItem>

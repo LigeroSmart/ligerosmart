@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeFSC.pm - the OTRS::ITSM::ChangeManagement change FSC overview module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeFSC.pm,v 1.2 2009-11-28 14:37:04 ub Exp $
+# $Id: AgentITSMChangeFSC.pm,v 1.3 2009-12-01 16:47:31 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -107,47 +107,8 @@ sub Run {
         }
     }
 
-    # find out which change states should be used to show FSC
-    my @ChangeStates;
-    if ( $Self->{Config}->{ChangeStates} ) {
-        CHANGESTATE:
-        for my $ChangeState ( @{ $Self->{Config}->{ChangeStates} } ) {
-
-            # check if change state is valid by looking up the state id
-            my $ChangeStateID = $Self->{ChangeObject}->ChangeStateLookup(
-                ChangeState => $ChangeState,
-            );
-
-            # do not use invalid change states
-            next CHANGESTATE if !$ChangeStateID;
-
-            push @ChangeStates, $ChangeState;
-        }
-    }
-
-    # build lookup hash of valid change states
-    my %ValidChangeState = map { $_ => 1 } @ChangeStates;
-
-    # get current timestamp, needed for time search parameters
-    # only changes with an actual start time in the future should be found
-    # ( all changes that have not yet started )
-    my $Now = $Self->{TimeObject}->CurrentTimestamp();
-
-    # set default search filter
-    my %Filters = (
-        All => {
-            Name   => 'All',
-            Prio   => 1000,
-            Search => {
-                ChangeStates             => \@ChangeStates,
-                ActualStartTimeNewerDate => $Now,
-                OrderBy                  => \@SortByArray,
-                OrderByDirection         => \@OrderByArray,
-                Limit                    => 1000,
-                UserID                   => $Self->{UserID},
-            },
-        },
-    );
+    # to store the filters
+    my %Filters;
 
     # set other filters based on change state
     if ( $Self->{Config}->{'Filter::ChangeStates'} ) {
@@ -161,9 +122,6 @@ sub Run {
 
             # do not use empty change states
             next CHANGESTATE if !$ChangeState;
-
-            # do not use change states which are not used for FSC
-            next CHANGESTATE if !$ValidChangeState{$ChangeState};
 
             # check if state is valid by looking up the state id
             my $ChangeStateID = $Self->{ChangeObject}->ChangeStateLookup(
@@ -181,15 +139,39 @@ sub Run {
                 Name   => $ChangeState,
                 Prio   => $PrioCounter,
                 Search => {
-                    ChangeStates             => [$ChangeState],
-                    ActualStartTimeNewerDate => $Now,
-                    OrderBy                  => \@SortByArray,
-                    OrderByDirection         => \@OrderByArray,
-                    Limit                    => 1000,
-                    UserID                   => $Self->{UserID},
+                    ChangeStates     => [$ChangeState],
+                    OrderBy          => \@SortByArray,
+                    OrderByDirection => \@OrderByArray,
+                    Limit            => 1000,
+                    UserID           => $Self->{UserID},
                 },
             };
         }
+    }
+
+    # if only one filter exists
+    if ( scalar keys %Filters == 1 ) {
+
+        # get the name of the only filter
+        my ($FilterName) = keys %Filters;
+
+        # activate this filter
+        $Self->{Filter} = $FilterName;
+    }
+    else {
+
+        # add default filter
+        $Filters{All} = {
+            Name   => 'All',
+            Prio   => 1000,
+            Search => {
+                ChangeStates     => $Self->{Config}->{'Filter::ChangeStates'},
+                OrderBy          => \@SortByArray,
+                OrderByDirection => \@OrderByArray,
+                Limit            => 1000,
+                UserID           => $Self->{UserID},
+            },
+        };
     }
 
     # check if filter is valid
