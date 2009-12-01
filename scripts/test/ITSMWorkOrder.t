@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.106 2009-11-24 12:12:52 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.107 2009-12-01 11:27:14 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -648,13 +648,37 @@ my @WorkOrderTests = (
         },
         ReferenceData => {
             WorkOrderGet => {
-                ChangeID       => $WorkOrderAddTestID,
-                WorkOrderTitle => 'WorkOrder 1 - Title - ' . $UniqueSignature,
-                Instruction    => 'WorkOrder 1 - Instruction - ' . $UniqueSignature,
-                Report         => 'WorkOrder 1 - Report - ' . $UniqueSignature,
+                ChangeID         => $WorkOrderAddTestID,
+                WorkOrderTitle   => 'WorkOrder 1 - Title - ' . $UniqueSignature,
+                Instruction      => 'WorkOrder 1 - Instruction - ' . $UniqueSignature,
+                InstructionPlain => "WorkOrder 1 - Instruction -\n$UniqueSignature\n",
+                Report           => 'WorkOrder 1 - Report - ' . $UniqueSignature,
+                ReportPlain      => 'WorkOrder 1 - Report - ' . $UniqueSignature,
             },
         },
         SearchTest => [ 2, 3, 4, 5, 6, 8, 11 ],
+    },
+
+    {
+        Description => 'Workorder contains HTML instruction and report',
+        SourceData  => {
+            WorkOrderAdd => {
+                UserID      => 1,
+                ChangeID    => $WorkOrderAddTestID,
+                Instruction => '<b>This instruction <u>is</u> bold</b> - ' . $UniqueSignature,
+                Report      => '<b>This report <u>is</u> bold</b> - ' . $UniqueSignature,
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                WorkOrderTitle   => '',
+                Instruction      => '<b>This instruction <u>is</u> bold</b> - ' . $UniqueSignature,
+                InstructionPlain => "This instruction is bold -\n$UniqueSignature\n",
+                Report           => '<b>This report <u>is</u> bold</b> - ' . $UniqueSignature,
+                ReportPlain      => 'This report is bold - ' . $UniqueSignature,
+            },
+        },
+        SearchTest => [2],
     },
 
     {
@@ -928,11 +952,13 @@ push @WorkOrderTests, (
         },
         ReferenceData => {
             WorkOrderGet => {
-                WorkOrderTitle => 'T' x 250,
-                Instruction    => 'I' x 3799,
-                Report         => 'R' x 3799,
-                CreateBy       => $UserIDs[0],
-                ChangeBy       => 1,
+                WorkOrderTitle   => 'T' x 250,
+                Instruction      => 'I' x 3799,
+                InstructionPlain => 'I' x 3799 . "\n",
+                Report           => 'R' x 3799,
+                ReportPlain      => 'R' x 3799 . "\n",
+                CreateBy         => $UserIDs[0],
+                ChangeBy         => 1,
             },
         },
         SearchTest => [ 1, 8 ],

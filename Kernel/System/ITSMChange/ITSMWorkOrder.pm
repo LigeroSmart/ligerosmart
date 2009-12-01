@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.41 2009-11-28 14:35:27 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.42 2009-12-01 11:27:14 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.41 $) [1];
+$VERSION = qw($Revision: 1.42 $) [1];
 
 =head1 NAME
 
@@ -540,7 +540,7 @@ sub WorkOrderUpdate {
 
 =item WorkOrderGet()
 
-return a WorkOrder as hash reference
+Return a WorkOrder as hash reference.
 
     my $WorkOrderRef = $WorkOrderObject->WorkOrderGet(
         WorkOrderID => 123,
@@ -554,12 +554,14 @@ The returned hash reference contains following elements:
     $WorkOrder{WorkOrderNumber}
     $WorkOrder{WorkOrderTitle}
     $WorkOrder{Instruction}
+    $WorkOrder{InstructionPlain}
     $WorkOrder{Report}
+    $WorkOrder{ReportPlain}
     $WorkOrder{WorkOrderStateID}
-    $WorkOrder{WorkOrderState}
-    $WorkOrder{WorkOrderStateSignal}
+    $WorkOrder{WorkOrderState}              # fetched from the general catalog
+    $WorkOrder{WorkOrderStateSignal}        # fetched from SysConfig
     $WorkOrder{WorkOrderTypeID}
-    $WorkOrder{WorkOrderType}
+    $WorkOrder{WorkOrderType}               # fetched from the general catalog
     $WorkOrder{WorkOrderAgentID}
     $WorkOrder{PlannedStartTime}
     $WorkOrder{PlannedEndTime}
@@ -588,10 +590,13 @@ sub WorkOrderGet {
 
     # get data from database
     return if !$Self->{DBObject}->Prepare(
-        SQL => 'SELECT id, change_id, workorder_number, title, instruction, '
-            . 'report, workorder_state_id, workorder_type_id, workorder_agent_id, '
+        SQL => 'SELECT id, change_id, workorder_number, title, '
+            . 'instruction, instruction_plain, '
+            . 'report, report_plain, '
+            . 'workorder_state_id, workorder_type_id, workorder_agent_id, '
             . 'planned_start_time, planned_end_time, actual_start_time, actual_end_time, '
-            . 'create_time, create_by, change_time, change_by '
+            . 'create_time, create_by, '
+            . 'change_time, change_by '
             . 'FROM change_workorder '
             . 'WHERE id = ?',
         Bind  => [ \$Param{WorkOrderID} ],
@@ -606,18 +611,20 @@ sub WorkOrderGet {
         $WorkOrderData{WorkOrderNumber}  = $Row[2];
         $WorkOrderData{WorkOrderTitle}   = defined $Row[3] ? $Row[3] : '';
         $WorkOrderData{Instruction}      = defined $Row[4] ? $Row[4] : '';
-        $WorkOrderData{Report}           = defined $Row[5] ? $Row[5] : '';
-        $WorkOrderData{WorkOrderStateID} = $Row[6];
-        $WorkOrderData{WorkOrderTypeID}  = $Row[7];
-        $WorkOrderData{WorkOrderAgentID} = $Row[8];
-        $WorkOrderData{PlannedStartTime} = $Row[9];
-        $WorkOrderData{PlannedEndTime}   = $Row[10];
-        $WorkOrderData{ActualStartTime}  = $Row[11];
-        $WorkOrderData{ActualEndTime}    = $Row[12];
-        $WorkOrderData{CreateTime}       = $Row[13];
-        $WorkOrderData{CreateBy}         = $Row[14];
-        $WorkOrderData{ChangeTime}       = $Row[15];
-        $WorkOrderData{ChangeBy}         = $Row[16];
+        $WorkOrderData{InstructionPlain} = defined $Row[5] ? $Row[5] : '';
+        $WorkOrderData{Report}           = defined $Row[6] ? $Row[6] : '';
+        $WorkOrderData{ReportPlain}      = defined $Row[7] ? $Row[7] : '';
+        $WorkOrderData{WorkOrderStateID} = $Row[8];
+        $WorkOrderData{WorkOrderTypeID}  = $Row[9];
+        $WorkOrderData{WorkOrderAgentID} = $Row[10];
+        $WorkOrderData{PlannedStartTime} = $Row[11];
+        $WorkOrderData{PlannedEndTime}   = $Row[12];
+        $WorkOrderData{ActualStartTime}  = $Row[13];
+        $WorkOrderData{ActualEndTime}    = $Row[14];
+        $WorkOrderData{CreateTime}       = $Row[15];
+        $WorkOrderData{CreateBy}         = $Row[16];
+        $WorkOrderData{ChangeTime}       = $Row[17];
+        $WorkOrderData{ChangeBy}         = $Row[18];
     }
 
     # check error
@@ -2175,6 +2182,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.41 $ $Date: 2009-11-28 14:35:27 $
+$Revision: 1.42 $ $Date: 2009-12-01 11:27:14 $
 
 =cut
