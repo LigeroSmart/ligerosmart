@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeMyChanges.pm - the OTRS::ITSM::ChangeManagement MyChanges overview module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeMyChanges.pm,v 1.2 2009-12-01 00:56:31 ub Exp $
+# $Id: AgentITSMChangeMyChanges.pm,v 1.3 2009-12-01 16:48:56 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -73,7 +73,7 @@ sub Run {
     # get sorting parameters
     my $SortBy = $Self->{ParamObject}->GetParam( Param => 'SortBy' )
         || $Self->{Config}->{'SortBy::Default'}
-        || 'ChangeNumber';
+        || 'PlannedStartTime';
 
     # get ordering parameters
     my $OrderBy = $Self->{ParamObject}->GetParam( Param => 'OrderBy' )
@@ -107,21 +107,8 @@ sub Run {
         }
     }
 
-    # set default search filter
-    my %Filters = (
-        All => {
-            Name   => 'All',
-            Prio   => 1000,
-            Search => {
-                ChangeBuilderIDs => [ $Self->{UserID} ],
-                ChangeStates     => $Self->{Config}->{'Filter::ChangeStates'},
-                OrderBy          => \@SortByArray,
-                OrderByDirection => \@OrderByArray,
-                Limit            => 1000,
-                UserID           => $Self->{UserID},
-            },
-        },
-    );
+    # to store the filters
+    my %Filters;
 
     # set other filters based on change state
     if ( $Self->{Config}->{'Filter::ChangeStates'} ) {
@@ -161,6 +148,32 @@ sub Run {
                 },
             };
         }
+    }
+
+    # if only one filter exists
+    if ( scalar keys %Filters == 1 ) {
+
+        # get the name of the only filter
+        my ($FilterName) = keys %Filters;
+
+        # activate this filter
+        $Self->{Filter} = $FilterName;
+    }
+    else {
+
+        # add default filter
+        $Filters{All} = {
+            Name   => 'All',
+            Prio   => 1000,
+            Search => {
+                ChangeBuilderIDs => [ $Self->{UserID} ],
+                ChangeStates     => $Self->{Config}->{'Filter::ChangeStates'},
+                OrderBy          => \@SortByArray,
+                OrderByDirection => \@OrderByArray,
+                Limit            => 1000,
+                UserID           => $Self->{UserID},
+            },
+        };
     }
 
     # check if filter is valid

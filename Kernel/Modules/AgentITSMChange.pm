@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChange.pm - the OTRS::ITSM::ChangeManagement change overview module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChange.pm,v 1.22 2009-11-28 14:36:02 ub Exp $
+# $Id: AgentITSMChange.pm,v 1.23 2009-12-01 16:46:39 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -107,19 +107,8 @@ sub Run {
         }
     }
 
-    # set default search filter
-    my %Filters = (
-        All => {
-            Name   => 'All',
-            Prio   => 1000,
-            Search => {
-                OrderBy          => \@SortByArray,
-                OrderByDirection => \@OrderByArray,
-                Limit            => 1000,
-                UserID           => $Self->{UserID},
-            },
-        },
-    );
+    # to store the filters
+    my %Filters;
 
     # set other filters based on change state
     if ( $Self->{Config}->{'Filter::ChangeStates'} ) {
@@ -158,6 +147,30 @@ sub Run {
                 },
             };
         }
+    }
+
+    # if only one filter exists
+    if ( scalar keys %Filters == 1 ) {
+
+        # get the name of the only filter
+        my ($FilterName) = keys %Filters;
+
+        # activate this filter
+        $Self->{Filter} = $FilterName;
+    }
+    else {
+
+        # add default filter
+        $Filters{All} = {
+            Name   => 'All',
+            Prio   => 1000,
+            Search => {
+                OrderBy          => \@SortByArray,
+                OrderByDirection => \@OrderByArray,
+                Limit            => 1000,
+                UserID           => $Self->{UserID},
+            },
+        };
     }
 
     # check if filter is valid

@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangePIR.pm - the OTRS::ITSM::ChangeManagement PIR overview module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePIR.pm,v 1.4 2009-11-28 14:37:04 ub Exp $
+# $Id: AgentITSMChangePIR.pm,v 1.5 2009-12-01 16:49:50 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -133,20 +133,8 @@ sub Run {
         }
     }
 
-    # set default search filter
-    my %Filters = (
-        All => {
-            Name   => 'All',
-            Prio   => 1000,
-            Search => {
-                WorkOrderTypes   => \@WorkOrderTypes,
-                OrderBy          => \@SortByArray,
-                OrderByDirection => \@OrderByArray,
-                Limit            => 1000,
-                UserID           => $Self->{UserID},
-            },
-        },
-    );
+    # to store the filters
+    my %Filters;
 
     # set other filters based on workorder state
     if ( $Self->{Config}->{'Filter::WorkOrderStates'} ) {
@@ -186,6 +174,31 @@ sub Run {
                 },
             };
         }
+    }
+
+    # if only one filter exists
+    if ( scalar keys %Filters == 1 ) {
+
+        # get the name of the only filter
+        my ($FilterName) = keys %Filters;
+
+        # activate this filter
+        $Self->{Filter} = $FilterName;
+    }
+    else {
+
+        # add default filter
+        $Filters{All} = {
+            Name   => 'All',
+            Prio   => 1000,
+            Search => {
+                WorkOrderTypes   => \@WorkOrderTypes,
+                OrderBy          => \@SortByArray,
+                OrderByDirection => \@OrderByArray,
+                Limit            => 1000,
+                UserID           => $Self->{UserID},
+            },
+        };
     }
 
     # check if filter is valid

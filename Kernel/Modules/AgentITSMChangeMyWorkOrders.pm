@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeMyWorkOrders.pm - the OTRS::ITSM::ChangeManagement MyWorkOrders overview module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeMyWorkOrders.pm,v 1.2 2009-12-01 00:56:31 ub Exp $
+# $Id: AgentITSMChangeMyWorkOrders.pm,v 1.3 2009-12-01 16:49:22 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -115,21 +115,8 @@ sub Run {
         }
     }
 
-    # set default search filter
-    my %Filters = (
-        All => {
-            Name   => 'All',
-            Prio   => 1000,
-            Search => {
-                WorkOrderAgentIDs => [ $Self->{UserID} ],
-                WorkOrderStates   => $Self->{Config}->{'Filter::WorkOrderStates'},
-                OrderBy           => \@SortByArray,
-                OrderByDirection  => \@OrderByArray,
-                Limit             => 1000,
-                UserID            => $Self->{UserID},
-            },
-        },
-    );
+    # to store the filters
+    my %Filters;
 
     # set other filters based on workorder state
     if ( $Self->{Config}->{'Filter::WorkOrderStates'} ) {
@@ -169,6 +156,32 @@ sub Run {
                 },
             };
         }
+    }
+
+    # if only one filter exists
+    if ( scalar keys %Filters == 1 ) {
+
+        # get the name of the only filter
+        my ($FilterName) = keys %Filters;
+
+        # activate this filter
+        $Self->{Filter} = $FilterName;
+    }
+    else {
+
+        # add default filter
+        $Filters{All} = {
+            Name   => 'All',
+            Prio   => 1000,
+            Search => {
+                WorkOrderAgentIDs => [ $Self->{UserID} ],
+                WorkOrderStates   => $Self->{Config}->{'Filter::WorkOrderStates'},
+                OrderBy           => \@SortByArray,
+                OrderByDirection  => \@OrderByArray,
+                Limit             => 1000,
+                UserID            => $Self->{UserID},
+            },
+        };
     }
 
     # check if filter is valid
