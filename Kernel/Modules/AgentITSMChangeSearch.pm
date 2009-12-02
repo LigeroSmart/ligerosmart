@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.15 2009-12-02 14:44:07 bes Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.16 2009-12-02 15:01:12 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -120,10 +120,10 @@ sub Run {
 
     # set radio button for time search types
     for my $TimeType (
-        qw( PlannedStartTime PlannedEndTime ActualStartTime ActualEndTime CreateTime ChangeTime )
+        qw( Realize PlannedStart PlannedEnd ActualStart ActualEnd Create Change )
         )
     {
-        my $SearchType = $TimeType . 'SearchType';
+        my $SearchType = $TimeType . 'TimeSearchType';
         if ( !$GetParam{$SearchType} ) {
             $GetParam{ $SearchType . '::None' } = 'checked="checked"';
         }
@@ -743,26 +743,26 @@ sub MaskForm {
     # get time fields
     my %OneToFiftyNine = map { $_ => sprintf "%2s", $_ } ( 1 .. 59 );
 
-    for my $TimeField (
-        qw(Realization PlannedStart PlannedEnd ActualStart ActualEnd Create Change)
+    for my $TimeType (
+        qw(Realize PlannedStart PlannedEnd ActualStart ActualEnd Create Change)
         )
     {
-        $Param{ $TimeField . 'TimePoint' } = $Self->{LayoutObject}->BuildSelection(
+        $Param{ $TimeType . 'TimePoint' } = $Self->{LayoutObject}->BuildSelection(
             Data       => \%OneToFiftyNine,
-            Name       => $TimeField . 'TimePoint',
-            SelectedID => $Param{ $TimeField . 'TimePoint' },
+            Name       => $TimeType . 'TimePoint',
+            SelectedID => $Param{ $TimeType . 'TimePoint' },
         );
 
-        $Param{ $TimeField . 'TimePointStart' } = $Self->{LayoutObject}->BuildSelection(
+        $Param{ $TimeType . 'TimePointStart' } = $Self->{LayoutObject}->BuildSelection(
             Data => {
                 'Last'   => 'last',
                 'Before' => 'before',
             },
-            Name => $TimeField . 'TimePointStart',
-            SelectedID => $Param{ $TimeField . 'TimePointStart' } || 'Last',
+            Name => $TimeType . 'TimePointStart',
+            SelectedID => $Param{ $TimeType . 'TimePointStart' } || 'Last',
         );
 
-        $Param{ $TimeField . 'TimePointFormat' } = $Self->{LayoutObject}->BuildSelection(
+        $Param{ $TimeType . 'TimePointFormat' } = $Self->{LayoutObject}->BuildSelection(
             Data => {
                 minute => 'minute(s)',
                 hour   => 'hour(s)',
@@ -771,20 +771,20 @@ sub MaskForm {
                 month  => 'month(s)',
                 year   => 'year(s)',
             },
-            Name       => $TimeField . 'TimePointFormat',
-            SelectedID => $Param{ $TimeField . 'TimePointFormat' },
+            Name       => $TimeType . 'TimePointFormat',
+            SelectedID => $Param{ $TimeType . 'TimePointFormat' },
         );
 
-        $Param{ $TimeField . 'TimeStart' } = $Self->{LayoutObject}->BuildDateSelection(
+        $Param{ $TimeType . 'TimeStart' } = $Self->{LayoutObject}->BuildDateSelection(
             %Param,
-            Prefix   => $TimeField . 'TimeStart',
+            Prefix   => $TimeType . 'TimeStart',
             Format   => 'DateInputFormat',
             DiffTime => -( ( 60 * 60 * 24 ) * 30 ),
         );
 
-        $Param{ $TimeField . 'TimeStop' } = $Self->{LayoutObject}->BuildDateSelection(
+        $Param{ $TimeType . 'TimeStop' } = $Self->{LayoutObject}->BuildDateSelection(
             %Param,
-            Prefix => $TimeField . 'TimeStop',
+            Prefix => $TimeType . 'TimeStop',
             Format => 'DateInputFormat',
         );
     }
@@ -795,22 +795,17 @@ sub MaskForm {
         Data => { %Param, },
     );
 
-    # show RealizationTime only when enabled in SysConfig
-    if ( $Self->{Config}->{RealizeTime} ) {
-        $Self->{LayoutObject}->Block(
-            Name => 'RealizationTime',
-            Data => {%Param},
-        );
-    }
-
-    for my $TimeField (
-        qw(PlannedStart PlannedEnd ActualStart ActualEnd Create Change)
+    for my $TimeType (
+        qw(Realize PlannedStart PlannedEnd ActualStart ActualEnd Create Change)
         )
     {
 
+        # show RealizeTime only when enabled in SysConfig
+        next if ( $TimeType eq 'Realize' && !$Self->{Config}->{RealizeTime} );
+
         # show time field
         $Self->{LayoutObject}->Block(
-            Name => $TimeField . 'Time',
+            Name => $TimeType . 'Time',
             Data => {%Param},
         );
     }
