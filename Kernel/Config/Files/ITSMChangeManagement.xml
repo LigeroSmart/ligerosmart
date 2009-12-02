@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.99 2009-12-02 12:47:30 reb Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.100 2009-12-02 13:28:05 bes Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -1731,6 +1731,32 @@
         <SubGroup>Frontend::Agent::ITSMChange::ViewChangeInvolvedPersons</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">rw</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeSearch###ShowColumns" Required="1" Valid="1">
+        <Description Lang="en">Defines the shown columns in the change search. This option has no effect on the position of the column.</Description>
+        <Description Lang="de">Definiert die angezeigten Tabellenspalten im Suchergebniss. Diese Option hat keinen Effekt auf die Position der Spalten.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeSearch</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="ChangeStateSignal">1</Item>
+                <Item Key="ChangeNumber">1</Item>
+                <Item Key="ChangeTitle">1</Item>
+                <Item Key="ChangeBuilder">1</Item>
+                <Item Key="ChangeManager">0</Item>
+                <Item Key="WorkOrderCount">1</Item>
+                <Item Key="ChangeState">1</Item>
+                <Item Key="Category">0</Item>
+                <Item Key="Impact">0</Item>
+                <Item Key="Priority">1</Item>
+                <Item Key="RealizeTime">0</Item>
+                <Item Key="PlannedStartTime">1</Item>
+                <Item Key="PlannedEndTime">1</Item>
+                <Item Key="ActualStartTime">0</Item>
+                <Item Key="ActualEndTime">0</Item>
+                <Item Key="CreateTime">0</Item>
+            </Hash>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeSearch###RealizeTime" Required="1" Valid="1">

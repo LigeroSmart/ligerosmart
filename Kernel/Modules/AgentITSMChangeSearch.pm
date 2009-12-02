@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.8 2009-12-02 13:16:01 reb Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.9 2009-12-02 13:28:05 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -489,7 +489,7 @@ sub Run {
         }
 
         # perform ticket search
-        my @ViewableChangeIDs = $Self->{ChangeObject}->ChangeSearch(
+        my $ViewableChangeIDs = $Self->{ChangeObject}->ChangeSearch(
             Result           => 'ARRAY',
             OrderBy          => [ $Self->{SortBy} ],
             OrderByDirection => [ $Self->{OrderBy} ],
@@ -543,9 +543,25 @@ sub Run {
                 . '&View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
                 . '&Profile=' . $Self->{Profile} . '&TakeLastSearch=1&Subaction=Search'
                 . '&';
+
+            # find out which columns should be shown
+            my @ShowColumns;
+            if ( $Self->{Config}->{ShowColumns} ) {
+
+                # get all possible columns from config
+                my %PossibleColumn = %{ $Self->{Config}->{ShowColumns} };
+
+                # get the column names that should be shown
+                COLUMNNAME:
+                for my $Name ( keys %PossibleColumn ) {
+                    next COLUMNNAME if !$PossibleColumn{$Name};
+                    push @ShowColumns, $Name;
+                }
+            }
+
             $Output .= $Self->{LayoutObject}->ITSMChangeListShow(
-                ChangeIDs => \@ViewableChangeIDs,
-                Total     => scalar @ViewableChangeIDs,
+                ChangeIDs => $ViewableChangeIDs,
+                Total     => scalar @{$ViewableChangeIDs},
 
                 View => $Self->{View},
 
@@ -555,13 +571,9 @@ sub Run {
                 LinkFilter => $LinkFilter,
                 LinkBack   => $LinkBack,
 
-                TitleName => 'Search Result',
-                Bulk      => 1,
-                Limit     => $Self->{SearchLimit},
+                TitleName => 'Change Search Result',
 
-                Filter     => $Self->{Filter},
-                FilterLink => $FilterLink,
-
+                ShowColumns => \@ShowColumns,
             );
 
             # build footer
