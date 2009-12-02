@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.6 2009-12-02 11:51:55 reb Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.7 2009-12-02 12:53:58 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -61,7 +61,7 @@ sub Run {
     $Self->{SearchLimit} = $Self->{Config}->{SearchLimit} || 500;
     $Self->{SortBy} = $Self->{ParamObject}->GetParam( Param => 'SortBy' )
         || $Self->{Config}->{'SortBy::Default'}
-        || 'Age';
+        || 'ChangeID';
     $Self->{OrderBy} = $Self->{ParamObject}->GetParam( Param => 'OrderBy' )
         || $Self->{Config}->{'Order::Default'}
         || 'Down';
@@ -82,7 +82,7 @@ sub Run {
     # get search string params (get submitted params)
     else {
         for my $SearchParam (
-            qw(ChangeNumber)
+            qw(ChangeNumber Description)
             )
         {
 
@@ -480,7 +480,7 @@ sub Run {
         }
 
         # have a fulltext search per default
-        for (qw(ChangeTitle)) {
+        for (qw(Description Justification WorkOrderInstruction WorkOrderReport)) {
             if ( defined( $GetParam{$_} ) && $GetParam{$_} ne '' ) {
                 $GetParam{$_} = "*$GetParam{$_}*";
             }
@@ -488,13 +488,11 @@ sub Run {
 
         # perform ticket search
         my @ViewableChangeIDs = $Self->{ChangeObject}->ChangeSearch(
-            Result          => 'ARRAY',
-            SortBy          => $Self->{SortBy},
-            OrderBy         => $Self->{OrderBy},
-            Limit           => $Self->{SearchLimit},
-            UserID          => $Self->{UserID},
-            ConditionInline => $Self->{Config}->{ExtendedSearchCondition},
-            FullTextIndex   => 1,
+            Result           => 'ARRAY',
+            OrderBy          => [ $Self->{SortBy} ],
+            OrderByDirection => [ $Self->{OrderBy} ],
+            Limit            => $Self->{SearchLimit},
+            UserID           => $Self->{UserID},
             %GetParam,
         );
 
@@ -543,7 +541,7 @@ sub Run {
                 . '&View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
                 . '&Profile=' . $Self->{Profile} . '&TakeLastSearch=1&Subaction=Search'
                 . '&';
-            $Output .= $Self->{LayoutObject}->ChangeListShow(
+            $Output .= $Self->{LayoutObject}->ITSMChangeListShow(
                 ChangeIDs => \@ViewableChangeIDs,
                 Total     => scalar @ViewableChangeIDs,
 
