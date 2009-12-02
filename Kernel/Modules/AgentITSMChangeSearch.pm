@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.7 2009-12-02 12:53:58 bes Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.8 2009-12-02 13:16:01 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,11 +17,12 @@ use warnings;
 use Kernel::System::CSV;
 use Kernel::System::Group;
 use Kernel::System::ITSMChange;
+use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::SearchProfile;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -46,6 +47,7 @@ sub new {
     $Self->{GroupObject}         = Kernel::System::Group->new(%Param);
     $Self->{SearchProfileObject} = Kernel::System::SearchProfile->new(%Param);
     $Self->{UserObject}          = Kernel::System::User->new(%Param);
+    $Self->{WorkOrderObject}     = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
 
     # get config for frontend
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
@@ -701,11 +703,40 @@ sub MaskForm {
         SelectedIDRefArray => $Param{StateIDs},
     );
 
-    # TODO: get created by users
+    # get created by users
+    my %Users = $Self->{UserObject}->UserList(
+        Type  => 'Long',
+        Valid => 1,
+    );
+    $Param{'CreateBySelectionStrg'} = $Self->{LayoutObject}->BuildSelection(
+        Data               => \%Users,
+        Name               => 'CreateByIDs',
+        Multiple           => 1,
+        Size               => 5,
+        SelectedIDRefArray => $Param{CreateByIDs},
+    );
 
-    # TODO: get workorder agents
+    # get workorder agents
+    $Param{'WorkOrderAgentIDSelectionStrg'} = $Self->{LayoutObject}->BuildSelection(
+        Data               => \%Users,
+        Name               => 'WorkOrderAgentIDs',
+        Multiple           => 1,
+        Size               => 5,
+        SelectedIDRefArray => $Param{WorkOrderAgentIDs},
+    );
 
-    # TODO: get workorder states
+    # get workorder states
+    my $WorkOrderStates = $Self->{WorkOrderObject}->WorkOrderPossibleStatesGet(
+        WorkOrderID => 1,
+        UserID      => 1,
+    );
+    $Param{'WorkOrderStateSelectionStrg'} = $Self->{LayoutObject}->BuildSelection(
+        Data               => $WorkOrderStates,
+        Name               => 'WorkOrderStateIDs',
+        Multiple           => 1,
+        Size               => 5,
+        SelectedIDRefArray => $Param{WorkOrderStateIDs},
+    );
 
     # what output types are supported
     $Param{'ResultFormStrg'} = $Self->{LayoutObject}->BuildSelection(
@@ -772,6 +803,26 @@ sub MaskForm {
         Name => 'Search',
         Data => { %Param, },
     );
+
+    # show RealizationTime only when enabled in SysConfig
+    if ( $Self->{Config}->{RealizeTime} ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'RealizationTime',
+            Data => {%Param},
+        );
+    }
+
+    for my $TimeField (
+        qw(PlannedStart PlannedEnd ActualStart ActualEnd Create Change)
+        )
+    {
+
+        # show time field
+        $Self->{LayoutObject}->Block(
+            Name => $TimeField . 'Time',
+            Data => {%Param},
+        );
+    }
 
     # build output
     my $Output = $Self->{LayoutObject}->Output(
