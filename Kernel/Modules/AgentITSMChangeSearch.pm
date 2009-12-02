@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.9 2009-12-02 13:28:05 bes Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.10 2009-12-02 13:45:17 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -112,55 +112,25 @@ sub Run {
         }
     }
 
-    # TODO: process in loop
-    # get time search params
-    if ( !$GetParam{ArticleTimeSearchType} ) {
-        $GetParam{'ArticleTimeSearchType::None'} = 'checked';
-    }
-    elsif ( $GetParam{ArticleTimeSearchType} eq 'TimePoint' ) {
-        $GetParam{'ArticleTimeSearchType::TimePoint'} = 'checked';
-    }
-    elsif ( $GetParam{ArticleTimeSearchType} eq 'TimeSlot' ) {
-        $GetParam{'ArticleTimeSearchType::TimeSlot'} = 'checked';
-    }
-
-    # get create time option
-    if ( !$GetParam{TimeSearchType} ) {
-        $GetParam{'TimeSearchType::None'} = 'checked';
-    }
-    elsif ( $GetParam{TimeSearchType} eq 'TimePoint' ) {
-        $GetParam{'TimeSearchType::TimePoint'} = 'checked';
-    }
-    elsif ( $GetParam{TimeSearchType} eq 'TimeSlot' ) {
-        $GetParam{'TimeSearchType::TimeSlot'} = 'checked';
-    }
-
-    # get change time option
-    if ( !$GetParam{ChangeTimeSearchType} ) {
-        $GetParam{'ChangeTimeSearchType::None'} = 'checked';
-    }
-    elsif ( $GetParam{ChangeTimeSearchType} eq 'TimePoint' ) {
-        $GetParam{'ChangeTimeSearchType::TimePoint'} = 'checked';
-    }
-    elsif ( $GetParam{ChangeTimeSearchType} eq 'TimeSlot' ) {
-        $GetParam{'ChangeTimeSearchType::TimeSlot'} = 'checked';
-    }
-
-    # get close time option
-    if ( !$GetParam{CloseTimeSearchType} ) {
-        $GetParam{'CloseTimeSearchType::None'} = 'checked';
-    }
-    elsif ( $GetParam{CloseTimeSearchType} eq 'TimePoint' ) {
-        $GetParam{'CloseTimeSearchType::TimePoint'} = 'checked';
-    }
-    elsif ( $GetParam{CloseTimeSearchType} eq 'TimeSlot' ) {
-        $GetParam{'CloseTimeSearchType::TimeSlot'} = 'checked';
+    # set radio button for time search types
+    for my $TimeType (
+        qw( PlannedStartTime PlannedEndTime ActualStartTime ActualEndTime CreateTime ChangeTime )
+        )
+    {
+        my $SearchType = $TimeType . 'SearchType';
+        if ( !$GetParam{$SearchType} ) {
+            $GetParam{ $SearchType . '::None' } = 'checked="checked"';
+        }
+        elsif ( $GetParam{$SearchType} eq 'TimePoint' ) {
+            $GetParam{ $SearchType . '::TimePoint' } = 'checked="checked"';
+        }
+        elsif ( $GetParam{$SearchType} eq 'TimeSlot' ) {
+            $GetParam{ $SearchType . '::TimeSlot' } = 'checked="checked"';
+        }
     }
 
     # set result form env
-    if ( !$GetParam{ResultForm} ) {
-        $GetParam{ResultForm} = '';
-    }
+    $GetParam{ResultForm} ||= '';
 
     # show result site
     if ( $Self->{Subaction} eq 'Search' ) {
