@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.5 2009-12-02 11:11:49 reb Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.6 2009-12-02 11:51:55 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -590,22 +590,23 @@ sub MaskForm {
     my $ChangeManagerGroupID = $Self->{GroupObject}->GroupLookup(
         Group => 'itsm-change-manager',
     );
-    my %ChangeManagerIDs = $Self->{GroupObject}->GroupMemberList(
-        Type   => 'ro',
-        Result => 'ID',
+    my @ChangeManagerIDs = $Self->{GroupObject}->GroupMemberList(
+        Type    => 'ro',
+        Result  => 'ID',
+        GroupID => $ChangeManagerGroupID,
     );
 
     # get change manager data for change manager ids
     my %ChangeManagerID2Name;
-    for my $ChangeManagerID ( keys %ChangeManagerIDs ) {
+    for my $ChangeManagerID (@ChangeManagerIDs) {
         my %ChangeManager = $Self->{UserObject}->GetUserData(
             UserID => $ChangeManagerID,
         );
 
-        if ($ChangeManager) {
+        if (%ChangeManager) {
             $ChangeManagerID2Name{$ChangeManagerID} = sprintf "%s %s (%s)",
-                $ChangeManager{Firstname},
-                $ChangeManager{Lastname},
+                $ChangeManager{UserFirstname},
+                $ChangeManager{UserLastname},
                 $ChangeManager{UserLogin};
         }
     }
@@ -623,22 +624,23 @@ sub MaskForm {
     my $ChangeBuilderGroupID = $Self->{GroupObject}->GroupLookup(
         Group => 'itsm-change-builder',
     );
-    my %ChangeBuilderIDs = $Self->{GroupObject}->GroupMemberList(
-        Type   => 'ro',
-        Result => 'ID',
+    my @ChangeBuilderIDs = $Self->{GroupObject}->GroupMemberList(
+        Type    => 'ro',
+        Result  => 'ID',
+        GroupID => $ChangeBuilderGroupID,
     );
 
     # get change builder data for change builder ids
     my %ChangeBuilderID2Name;
-    for my $ChangeBuilderID ( keys %ChangeManagerIDs ) {
+    for my $ChangeBuilderID (@ChangeManagerIDs) {
         my %ChangeBuilder = $Self->{UserObject}->GetUserData(
             UserID => $ChangeBuilderID,
         );
 
-        if ($ChangeBuilder) {
+        if (%ChangeBuilder) {
             $ChangeBuilderID2Name{$ChangeBuilderID} = sprintf "%s %s (%s)",
-                $ChangeBuilder{Firstname},
-                $ChangeBuilder{Lastname},
+                $ChangeBuilder{UserFirstname},
+                $ChangeBuilder{UserLastname},
                 $ChangeBuilder{UserLogin};
         }
     }
@@ -656,7 +658,7 @@ sub MaskForm {
     my $Categories = $Self->{ChangeObject}->ChangePossibleCIPGet(
         Type => 'Category',
     );
-    $Param{'CategoriesStrg'} = $Self->{LayoutObject}->BuildSelection(
+    $Param{'ChangeCategorySelectionStrg'} = $Self->{LayoutObject}->BuildSelection(
         Data               => $Categories,
         Name               => 'CategoryIDs',
         Multiple           => 1,
@@ -668,7 +670,7 @@ sub MaskForm {
     my $Impacts = $Self->{ChangeObject}->ChangePossibleCIPGet(
         Type => 'Impact',
     );
-    $Param{'ImpactsStrg'} = $Self->{LayoutObject}->BuildSelection(
+    $Param{'ChangeImpactSelectionStrg'} = $Self->{LayoutObject}->BuildSelection(
         Data               => $Impacts,
         Name               => 'ImpactIDs',
         Multiple           => 1,
@@ -680,7 +682,7 @@ sub MaskForm {
     my $Priorities = $Self->{ChangeObject}->ChangePossibleCIPGet(
         Type => 'Priority',
     );
-    $Param{'PrioritiesStrg'} = $Self->{LayoutObject}->BuildSelection(
+    $Param{'ChangePrioritySelectionStrg'} = $Self->{LayoutObject}->BuildSelection(
         Data               => $Priorities,
         Name               => 'PriorityIDs',
         Multiple           => 1,
@@ -693,7 +695,7 @@ sub MaskForm {
         ChangeID => 1,
         UserID   => $Self->{UserID},
     );
-    $Param{'StatesStrg'} = $Self->{LayoutObject}->BuildSelection(
+    $Param{'ChangeStateSelectionStrg'} = $Self->{LayoutObject}->BuildSelection(
         Data               => $ChangeStates,
         Name               => 'StateIDs',
         Multiple           => 1,
@@ -722,8 +724,7 @@ sub MaskForm {
     my %OneToFiftyNine = map { $_ => sprintf "%2s", $_ } ( 1 .. 59 );
 
     for my $TimeField (
-        qw(ChangeRealization ChangePlannedStart ChangePlannedEnd ChangeActualStart
-        ChangeActualEnd ChangeCreate ChangeChange)
+        qw(Realization PlannedStart PlannedEnd ActualStart ActualEnd Create Change)
         )
     {
         $Param{ $TimeField . 'TimePoint' } = $Self->{LayoutObject}->BuildSelection(
@@ -776,7 +777,7 @@ sub MaskForm {
 
     # build output
     my $Output = $Self->{LayoutObject}->Output(
-        TemplateFile => 'ITSMChangeSearch',
+        TemplateFile => 'AgentITSMChangeSearch',
         Data         => \%Param,
     );
 
