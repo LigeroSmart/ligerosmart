@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.12 2009-12-02 14:23:14 bes Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.13 2009-12-02 14:30:37 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -601,7 +601,7 @@ sub MaskForm {
     # build change manager dropdown
     $Param{'ChangeManagerSelectionStrg'} = $Self->{LayoutObject}->BuildSelection(
         Data               => \%ChangeManagerID2Name,
-        Name               => 'ChangeManagerID',
+        Name               => 'ChangeManagerIDs',
         Multiple           => 1,
         Size               => 5,
         SelectedIDRefArray => $Param{ChangeManagerID},
@@ -635,7 +635,7 @@ sub MaskForm {
     # build change builder dropdown
     $Param{'ChangeBuilderSelectionStrg'} = $Self->{LayoutObject}->BuildSelection(
         Data               => \%ChangeBuilderID2Name,
-        Name               => 'ChangeBuilderID',
+        Name               => 'ChangeBuilderIDs',
         Multiple           => 1,
         Size               => 5,
         SelectedIDRefArray => $Param{ChangeBuilderID},
