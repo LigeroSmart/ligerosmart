@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.14 2009-12-02 14:39:13 bes Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.15 2009-12-02 14:44:07 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -105,6 +105,7 @@ sub Run {
             ChangeManagerIDs ChangeBuilderIDs
             PriorityIDs CategoryIDs ImpactIDs
             CreateBy
+            WorkOrderStateIDs WorkOrderAgentIDs
             )
             )
         {
