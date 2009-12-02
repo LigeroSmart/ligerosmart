@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.10 2009-12-02 13:45:17 bes Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.11 2009-12-02 14:16:01 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -84,7 +84,8 @@ sub Run {
     # get search string params (get submitted params)
     else {
         for my $SearchParam (
-            qw(ChangeNumber Description)
+            qw(ChangeNumber ChangeTitle WorkOrderTitle Description Justification WorkOrderInstruction WorkOrderReport
+            )
             )
         {
 
@@ -100,7 +101,8 @@ sub Run {
 
         # get array params
         for my $SearchParam (
-            qw( ChangeManagerID )
+            qw( ChangeManagerIDs ChangeBuilderIDs PriorityIDs CategoryIDs ImpactIDs
+            )
             )
         {
 
@@ -452,7 +454,10 @@ sub Run {
         }
 
         # have a fulltext search per default
-        for (qw(Description Justification WorkOrderInstruction WorkOrderReport)) {
+        for (
+            qw(ChangeTitle WorkOrderTitle Description Justification WorkOrderInstruction WorkOrderReport)
+            )
+        {
             if ( defined( $GetParam{$_} ) && $GetParam{$_} ne '' ) {
                 $GetParam{$_} = "*$GetParam{$_}*";
             }
