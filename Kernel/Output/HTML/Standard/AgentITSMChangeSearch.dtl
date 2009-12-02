@@ -2,12 +2,38 @@
 # AgentITSMChangeSearch.dtl - provides HTML form for AgentITSMChangeSearch
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.dtl,v 1.8 2009-12-02 15:01:12 bes Exp $
+# $Id: AgentITSMChangeSearch.dtl,v 1.9 2009-12-02 17:46:16 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+
+$Include{"AJAX"}
+
+$Include{"AgentITSMUserSearch"}
+
+<style type="text/css">
+.myAutoComplete {
+    width:          32em;    /* set width here or else widget will expand to fit its container */
+    padding-bottom: 0.5em;
+}
+</style>
+
+<script language="JavaScript" type="text/javascript">
+<!--
+function clear_field1() {
+    document.compose.CABAgent.value = "";
+    document.compose.CABAgent.focus();
+}
+
+function clear_field2() {
+    document.compose.CABCustomer.value = "";
+    document.compose.CABCustomer.focus();
+}
+
+//-->
+</script>
 
 <!-- dtl:block:Search -->
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
@@ -22,6 +48,9 @@
             <form action="$Env{"CGIHandle"}" method="post" name="compose">
                 <input type="hidden" name="Action" value="$Env{"Action"}"/>
                 <input type="hidden" name="Subaction" value="Search"/>
+<!-- ## HiddenFields for CABAgent Autocompletion ## -->
+                <input type="hidden" name="SelectedUser1"     value="$QData{"SelectedUser1"}">
+                <input type="hidden" name="UserSearchGroups1" value="itsm-change">
                 <table width="800px" border="0" cellspacing="0" cellpadding="3">
                     <colgroup>
                     <col width="50%">
@@ -51,13 +80,35 @@
                                 </tr>
 <!-- AJAX -->
                                 <tr>
-                                    <td class="contentkey">$Text{"CABCustomerID"} $Text{"(e. g. US4231)"}</td>
-                                    <td class="contentvalue"><input type="text" name="CABCustomerID" size="30" value="$QData{"CABCustomerID"}"/></td>
+                                    <td class="contentkey">$Text{"CABCustomer"} $Text{"(e. g. US4231)"}</td>
+                                    <td class="contentvalue"><input type="text" name="CABCustomer" size="30" value="$QData{"CABCustomer"}"/></td>
                                 </tr>
 <!-- AJAX -->
                                 <tr>
-                                    <td class="contentkey">$Text{"CABAgentID"} $Text{"(e. g. 234231)"}</td>
-                                    <td class="contentvalue"><input type="text" name="CABAgentID" size="30" value="$QData{"CABAgentID"}"/></td>
+                                    <td class="contentkey">$Text{"CABAgent"} $Text{"(e. g. 234231)"}</td>
+                                    <td class="contentvalue">
+<!-- dtl:block:UserSearchAutoCompleteDivStart1 -->
+                                        <div id="myAutoComplete1" class="myAutoComplete">
+<!-- dtl:block:UserSearchAutoCompleteDivStart1 -->
+                                            <input id="myAutoCompleteInput1" type="text" name="CABAgent" value="$QData{"CABAgent"}" size="30"/>
+<!-- dtl:block:UserSearchAutoCompleteDivEnd1 -->
+                                            <div id="myAutoCompleteContainer1"></div>
+                                        </div>
+<!-- dtl:block:UserSearchAutoCompleteDivEnd1 -->
+<!-- dtl:block:InvalidCABAgent -->
+                                        <br />
+                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
+<!-- dtl:block:InvalidCABAgent -->
+                                        <br/>
+                                        $Data{"CABAgentString"}
+<!-- dtl:block:TakeCABAgent -->
+                                        <br/><input class="button" type="submit" name="ExpandManager2" value="$Text{"Take this User"}"/>
+<!-- dtl:block:TakeCABAgent -->
+<!-- dtl:block:SearchUserButton1 -->
+                                        <input class="button" type="submit" name="ExpandCABAgent1" value="$Text{"Search User"}"/>
+                                        <input class="button" type="submit" name="ClearCABAgent1" value="$Text{"Clear User"}" onclick="javascript:clear_field1(); return false;"/>
+<!-- dtl:block:SearchUserButton1 -->
+                                    </td>
                                 </tr>
                             </table>
                         </td>

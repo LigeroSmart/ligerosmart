@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.16 2009-12-02 15:01:12 bes Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.17 2009-12-02 17:46:16 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -84,7 +84,7 @@ sub Run {
 
         # get scalar search params
         for my $SearchParam (
-            qw(ChangeNumber ChangeTitle WorkOrderTitle Description Justification WorkOrderInstruction WorkOrderReport
+            qw(ChangeNumber ChangeTitle WorkOrderTitle SelectedUser1 SelectedUser2 Description Justification WorkOrderInstruction WorkOrderReport
             )
             )
         {
@@ -97,6 +97,14 @@ sub Run {
                 $GetParam{$SearchParam} =~ s/\s+$//g;
                 $GetParam{$SearchParam} =~ s/^\s+//g;
             }
+        }
+
+        if ( $GetParam{SelectedUser1} ) {
+            $GetParam{CABAgents} = [ $GetParam{SelectedUser1} ];
+        }
+
+        if ( $GetParam{CABCustomer} ) {
+            $GetParam{CABCustomers} = [ $GetParam{CABCustomer} ];
         }
 
         # get array search params
@@ -794,6 +802,57 @@ sub MaskForm {
         Name => 'Search',
         Data => { %Param, },
     );
+
+    # build changebuilder and changemanager search autocomplete field
+    my $UserAutoCompleteConfig
+        = $Self->{ConfigObject}->Get('ITSMChange::Frontend::UserSearchAutoComplete');
+    if ( $UserAutoCompleteConfig->{Active} ) {
+
+        # general blocks
+        $Self->{LayoutObject}->Block(
+            Name => 'UserSearchAutoComplete',
+        );
+
+        # CABAgent
+        $Self->{LayoutObject}->Block(
+            Name => 'UserSearchAutoCompleteCode',
+            Data => {
+                minQueryLength      => $UserAutoCompleteConfig->{MinQueryLength}      || 2,
+                queryDelay          => $UserAutoCompleteConfig->{QueryDelay}          || 0.1,
+                typeAhead           => $UserAutoCompleteConfig->{TypeAhead}           || 'false',
+                maxResultsDisplayed => $UserAutoCompleteConfig->{MaxResultsDisplayed} || 20,
+                InputNr             => 1,
+            },
+        );
+
+        # general block
+        $Self->{LayoutObject}->Block(
+            Name => 'UserSearchAutoCompleteReturn',
+        );
+
+        # return for CABAgent
+        $Self->{LayoutObject}->Block(
+            Name => 'UserSearchAutoCompleteReturnElements',
+            Data => {
+                InputNr => 1,
+            },
+        );
+
+        # CABAgent
+        $Self->{LayoutObject}->Block(
+            Name => 'UserSearchAutoCompleteDivStart1',
+        );
+        $Self->{LayoutObject}->Block(
+            Name => 'UserSearchAutoCompleteDivEnd1',
+        );
+    }
+    else {
+
+        # show usersearch buttons for CABAgent
+        $Self->{LayoutObject}->Block(
+            Name => 'SearchUserButton1',
+        );
+    }
 
     for my $TimeType (
         qw(Realize PlannedStart PlannedEnd ActualStart ActualEnd Create Change)
