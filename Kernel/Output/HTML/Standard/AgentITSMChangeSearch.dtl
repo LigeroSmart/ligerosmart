@@ -2,7 +2,7 @@
 # AgentITSMChangeSearch.dtl - provides HTML form for AgentITSMChangeSearch
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.dtl,v 1.4 2009-12-02 12:17:31 bes Exp $
+# $Id: AgentITSMChangeSearch.dtl,v 1.5 2009-12-02 12:24:00 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -135,7 +135,7 @@
                         <td class="contentbody">$Data{"WorkOrderStateSelectionStrg"}</td>
                         <td class="contentbody">$Data{"WorkOrderAgentIDSelectionStrg"}&nbsp;</td>
                     </tr>
-
+<!-- dtl:block:RealizationTime -->
                     <tr>
                         <td colspan="2" class="contenthead">$Text{"Realization Time"}</td>
                     </tr>
@@ -157,7 +157,8 @@
                             $Text{"Realization time created between"} $Data{"RealizationTimeStart"} $Text{"and"} $Data{"RealizationTimeStop"}
                         </td>
                     </tr>
-
+<!-- dtl:block:RealizationTime -->
+<!-- dtl:block:PlannedStartTime -->
                     <tr>
                         <td colspan="2" class="contenthead">$Text{"Planned Start Time"}</td>
                     </tr>
@@ -179,8 +180,8 @@
                             $Text{"Planned start time between"} $Data{"PlannedStartTimeStart"} $Text{"and"} $Data{"PlannedStartTimeStop"}
                         </td>
                     </tr>
-
-
+<!-- dtl:block:PlannedStartTime -->
+<!-- dtl:block:PlannedEndTime -->
                     <tr>
                         <td colspan="2" class="contenthead">$Text{"Planned End Time"}</td>
                     </tr>
@@ -202,8 +203,8 @@
                             $Text{"Planned end time between"} $Data{"PlannedEndTimeStart"} $Text{"and"} $Data{"PlannedEndTimeStop"}
                         </td>
                     </tr>
-
-
+<!-- dtl:block:PlannedEndTime -->
+<!-- dtl:block:ActualStartTime -->
                     <tr>
                         <td colspan="2" class="contenthead">$Text{"Actual Start Time"}</td>
                     </tr>
@@ -225,8 +226,8 @@
                             $Text{"Actual start time between"} $Data{"ActualStartTimeStart"} $Text{"and"} $Data{"ActualStartTimeStop"}
                         </td>
                     </tr>
-
-
+<!-- dtl:block:ActualStartTime -->
+<!-- dtl:block:ActualEndTime -->
                     <tr>
                         <td colspan="2" class="contenthead">$Text{"Actual End Time"}</td>
                     </tr>
@@ -248,8 +249,8 @@
                             $Text{"Actual end time between"} $Data{"ActualEndTimeStart"} $Text{"and"} $Data{"ActualEndTimeStop"}
                         </td>
                     </tr>
-
-
+<!-- dtl:block:ActualEndTime -->
+<!-- dtl:block:CreateTime -->
                     <tr>
                         <td colspan="2" class="contenthead">$Text{"Create Time"}</td>
                     </tr>
@@ -271,8 +272,8 @@
                             $Text{"Change created between"} $Data{"CreateTimeStart"} $Text{"and"} $Data{"CreateTimeStop"}
                         </td>
                     </tr>
-
-
+<!-- dtl:block:CreateTime -->
+<!-- dtl:block:ChangeTime -->
                     <tr>
                         <td colspan="2" class="contenthead">$Text{"Change Time"}</td>
                     </tr>
@@ -294,7 +295,7 @@
                             $Text{"Change changed between"} $Data{"ChangeTimeStart"} $Text{"and"} $Data{"ChangeTimeStop"}
                         </td>
                     </tr>
-
+<!-- dtl:block:ChangeTime -->
                     <tr>
                         <td colspan="4" class="contentfooter">
                             <input class="button" accesskey="g" type="submit" value="$Text{"Search"}"/>
