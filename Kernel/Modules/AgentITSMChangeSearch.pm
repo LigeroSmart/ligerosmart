@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.11 2009-12-02 14:16:01 bes Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.12 2009-12-02 14:23:14 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -80,9 +80,9 @@ sub Run {
             UserLogin => $Self->{UserLogin},
         );
     }
-
-    # get search string params (get submitted params)
     else {
+
+        # get scalar search params
         for my $SearchParam (
             qw(ChangeNumber ChangeTitle WorkOrderTitle Description Justification WorkOrderInstruction WorkOrderReport
             )
@@ -99,9 +99,9 @@ sub Run {
             }
         }
 
-        # get array params
+        # get array search params
         for my $SearchParam (
-            qw( ChangeManagerIDs ChangeBuilderIDs PriorityIDs CategoryIDs ImpactIDs
+            qw( ChangeStateIDs ChangeManagerIDs ChangeBuilderIDs PriorityIDs CategoryIDs ImpactIDs
             )
             )
         {
@@ -684,10 +684,10 @@ sub MaskForm {
     );
     $Param{'ChangeStateSelectionStrg'} = $Self->{LayoutObject}->BuildSelection(
         Data               => $ChangeStates,
-        Name               => 'StateIDs',
+        Name               => 'ChangeStateIDs',
         Multiple           => 1,
         Size               => 5,
-        SelectedIDRefArray => $Param{StateIDs},
+        SelectedIDRefArray => $Param{ChangeStateIDs},
     );
 
     # get created by users
