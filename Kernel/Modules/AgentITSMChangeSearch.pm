@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.24 2009-12-03 17:10:40 bes Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.25 2009-12-03 17:15:28 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.24 $) [1];
+$VERSION = qw($Revision: 1.25 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -194,13 +194,7 @@ sub Run {
 
             if ( $TimeSelectionParam{SearchType} eq 'TimeSlot' ) {
 
-                # a range of dates has been passed
-                # month and days might need a leading '0'
-                for my $Part (qw(StartMonth StartDay StopMonth StopDay)) {
-                    $TimeSelectionParam{$Part} = sprintf '%02d', $TimeSelectionParam{$Part};
-                }
-
-                my %SystemTime;
+                my %SystemTime;    # used for checking the ordering of the two times
 
                 # the earlier limit
                 if (
