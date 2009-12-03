@@ -2,7 +2,7 @@
 # ITSMChange.dtl - provides HTML elements for work order graph
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.dtl,v 1.11 2009-11-30 14:01:05 mae Exp $
+# $Id: ITSMChange.dtl,v 1.12 2009-12-03 11:13:48 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,10 +23,24 @@
     img.wo_status      { margin-top:2px; }
     td.change_title    { text-align:center; }
     img.change_title   { margin-top: 5px; margin-bottom: 5px; }
-    td.wo_status       { width: 20px; text-align: center; }
-    td.wo_nr           { width: 70px; text-align: left; }
+    td.wo_status       { text-align: center; }
+    td.wo_nr           { text-align: left; }
     td.wo              { height: 5px; font-size: 1pt; }
-    td.padding         { width: 10px; }
+
+    td.time_containter { font-size:0.1pt; }
+
+/* work around for CSS comments
+<!-- dtl:block:CSSTimeLine -->
+*/
+    div#time_line_cont  { position:relative; display:block; }
+    div#time_line      {
+                         width:2px; border-left: 2px solid red; z-index:1; position:absolute;
+                         top:3px; left:$QData{"TimeLineLeft"}%; height:$QData{"TimeLineHeight"}px;
+                       }
+/* work around for CSS comments
+<!-- dtl:block:CSSTimeLine -->
+*/
+
     div#scale          { border-bottom:1px solid #000000; margin:5px 0px 0px 0px; padding:0px; }
     div#scale table    { margin:0px; padding:0px; border-spacing:0px; border-collapse: collapse; }
     td.scale_line      { height: 5px; font-size: 4pt; width: 20%; text-align: center; }
@@ -39,6 +53,24 @@
     td#label_last      { width:10%; text-align:right; }
 </style>
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <colgroup>
+    <col width="25px">
+    <col width="100px">
+    <col width="*">
+    <col width="10px">
+    </colgroup>
+    <tr>
+        <td class="time_containter">&nbsp;</td>
+        <td class="time_containter">&nbsp;</td>
+        <td class="time_containter">
+<!-- dtl:block:TimeLine -->
+            <div id="time_line_cont">
+                <div id="time_line">&nbsp;</div>
+            </div>
+<!-- dtl:block:TimeLine -->
+        </td>
+        <td class="time_containter">&nbsp;</td>
+    </tr>
 <!-- dtl:block:WorkOrderItem -->
     <tr>
         <td class="wo_status">
@@ -47,11 +79,11 @@
         <td class="wo_nr">
             <div title="$QData{"WorkOrderLabel"}">
                 <a href="$Env{"Baselink"}$Data{"Link"}&amp;Action=AgentITSMWorkOrderZoom&amp;WorkOrderID=$LQData{"WorkOrderID"}">
-                |--> $QData{"WorkOrderNumber"}.
+                Number $QData{"WorkOrderNumber"}
                 </a>
             </div>
         </td>
-        <td width="90%">
+        <td>
 <!-- dtl:block:WorkOrderItemGraph -->
             <table border="0" cellpadding="0" cellspacing="0" width="100%">
                 <tr>
@@ -69,7 +101,7 @@
             </table>
 <!-- dtl:block:WorkOrderItemGraph -->
         </td>
-        <td class="padding"></td>
+        <td></td>
     </tr>
 <!-- dtl:block:WorkOrderItem -->
 <!-- dtl:block:Scale -->
@@ -95,7 +127,7 @@
                     </td>
 <!-- dtl:block:ScaleLabel -->
                     <td class="scale_label">
-                        $TimeShort{"$Data{"ScaleLabel"}"}
+                        $TimeLong{"$Data{"ScaleLabel"}"}
                     </td>
 <!-- dtl:block:ScaleLabel -->
                     <td class="scale_label" id="label_last">

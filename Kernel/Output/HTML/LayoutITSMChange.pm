@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LayoutITSMChange.pm,v 1.18 2009-11-30 10:16:11 mae Exp $
+# $Id: LayoutITSMChange.pm,v 1.19 2009-12-03 11:13:48 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use POSIX qw(ceil);
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 =over 4
 
@@ -149,6 +149,36 @@ sub ITSMChangeBuildWorkOrderGraph {
         Name => 'WorkOrderGraph',
         Data => {},
     );
+
+    # calculate time line parameter
+    my $TimeLine = $Self->_ITSMChangeGetTimeLine(
+        StartTime => $Time{StartTime},
+        EndTime   => $Time{EndTime},
+        Ticks     => $ChangeTicks,
+    );
+
+    if ( $TimeLine && $TimeLine->{TimeLineLeft} ) {
+
+        # calculate height of time line
+        my $WorkOrderHeight = 16;
+        my $ScaleMargin     = 10;
+        $TimeLine->{TimeLineHeight} =
+            ( ( scalar @WorkOrders ) * $WorkOrderHeight ) + $ScaleMargin;
+
+        # display css of timeline
+        $Self->Block(
+            Name => 'CSSTimeLine',
+            Data => {
+                %{$TimeLine},
+            },
+        );
+
+        # display timeline container
+        $Self->Block(
+            Name => 'TimeLine',
+            Data => {},
+        );
+    }
 
     # build graph of each workorder
     WORKORDER:
@@ -619,6 +649,53 @@ sub _ITSMChangeGetWorkOrderGraph {
             %TickValue,
         },
     );
+}
+
+=item _ITSMChangeGetTimeLine()
+
+a helper method for the workorder graph of a change
+
+=cut
+
+sub _ITSMChangeGetTimeLine {
+    my ( $Self, %Param ) = @_;
+
+    # check for start time
+    return if !$Param{StartTime};
+
+    # check for start time is an integer value
+    return if $Param{StartTime} !~ m{\A \d+ \z}xms;
+
+    # check for end time
+    return if !$Param{EndTime};
+
+    # check for end time is an integer value
+    return if $Param{EndTime} !~ m{\A \d+ \z}xms;
+
+    # check for ticks
+    return if !$Param{Ticks};
+
+    # check for ticks is an integer value
+    return if $Param{Ticks} !~ m{\A \d+ \z}xms;
+
+    # get current system time
+    my $CurrentTime = $Self->{TimeObject}->SystemTime();
+
+    # check for system time
+    return if !$CurrentTime;
+
+    # check if current time is in change time interval
+    return if $CurrentTime < $Param{StartTime} || $CurrentTime > $Param{EndTime};
+
+    # time line data
+    my %TimeLine;
+
+    # calculate percent of timeline
+    my $RelativeEnd   = $Param{EndTime} - $Param{StartTime};
+    my $RelativeStart = $CurrentTime - $Param{StartTime};
+    $TimeLine{TimeLineLeft} = int( ( $RelativeStart / $RelativeEnd ) * 100 );
+
+    return \%TimeLine;
 }
 
 =end Internal:
