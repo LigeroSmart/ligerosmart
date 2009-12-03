@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.101 2009-12-03 09:16:23 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.102 2009-12-03 11:40:50 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -1931,7 +1931,7 @@
         <Description Lang="en">Required privilege to view a workorder.</Description>
         <Description Lang="de">Benötigtes Recht zum Betrachten einer Workorder.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewWorkOrder</SubGroup>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewWorkOrderZoom</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">ro</String>
         </Setting>
