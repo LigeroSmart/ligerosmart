@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.21 2009-12-03 13:34:33 bes Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.22 2009-12-03 13:49:01 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.21 $) [1];
+$VERSION = qw($Revision: 1.22 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -737,11 +737,13 @@ sub MaskForm {
         Data => { %Param, },
     );
 
-    # setup for the time search fields
-
     # number of minutes, days, weeks, months and years
     my %OneToFiftyNine = map { $_ => sprintf '%2s', $_ } ( 1 .. 59 );
 
+    # time period that can be selected from the GUI
+    my %TimePeriod = %{ $Self->{ConfigObject}->Get('ITSMWorkOrder::TimePeriod') };
+
+    # setup for the time search fields
     my @TimeTypes = (
         { Prefix => 'Realize',      Title => 'Realization Time', },
         { Prefix => 'PlannedStart', Title => 'Planned  Start Time', },
@@ -807,6 +809,7 @@ sub MaskForm {
 
         $TimeSelectionData{TimeStart} = $Self->{LayoutObject}->BuildDateSelection(
             %Param,
+            %TimePeriod,
             Prefix   => $Prefix . 'TimeStart',
             Format   => 'DateInputFormat',
             DiffTime => -( ( 60 * 60 * 24 ) * 30 ),
@@ -814,6 +817,7 @@ sub MaskForm {
 
         $TimeSelectionData{TimeStop} = $Self->{LayoutObject}->BuildDateSelection(
             %Param,
+            %TimePeriod,
             Prefix => $Prefix . 'TimeStop',
             Format => 'DateInputFormat',
         );
