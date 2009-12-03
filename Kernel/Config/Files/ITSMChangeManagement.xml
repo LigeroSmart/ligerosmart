@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.100 2009-12-02 13:28:05 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.101 2009-12-03 09:16:23 bes Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -766,6 +766,69 @@
                 <Item Key="Action">AgentITSMWorkOrderDelete</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderDelete&amp;WorkOrderID=$QData{"WorkOrderID"}</Item>
             </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::CustomerSearchAutoComplete###Active" Required="1" Valid="1">
+        <Description Lang="en">Enable or disable the autocomplete feature for the customer search in the ITSM agent interface.</Description>
+        <Description Lang="de">Aktivieren oder deativieren der Autocomplete-Funktionalitaet für die Kunden-Suche im ITSM-Agenteninterface.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::CustomerSearch</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::CustomerSearchAutoComplete###MinQueryLength" Required="1" Valid="1">
+        <Description Lang="en">Set minimum number of characters before autocomplete query is sent.</Description>
+        <Description Lang="de">Mindestanzahl von Zeichen zum Ausfuehren der Autocomplete-Funktionalitaet.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::CustomerSearch</SubGroup>
+        <Setting>
+            <String Regex="^[1-9]$">2</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::CustomerSearchAutoComplete###QueryDelay" Required="1" Valid="1">
+        <Description Lang="en">Delay time between autocomplete queries.</Description>
+        <Description Lang="de">Wartezeit zwischen zwei Autocomplete-Queries.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::CustomerSearch</SubGroup>
+        <Setting>
+            <String Regex="^(0\.[1-9]+)|([1-9](\.[0-9]+)?)$">0.1</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::CustomerSearchAutoComplete###TypeAhead" Required="1" Valid="1">
+        <Description Lang="en">Enable or disable TypeAhead for the autocomplete feature.</Description>
+        <Description Lang="de">Aktivieren oder deativieren von TypeAhead für die Autocomplete-Funktionalitaet.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::CustomerSearch</SubGroup>
+        <Setting>
+            <Option SelectedID="false">
+                <Item Key="false">No</Item>
+                <Item Key="true">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::CustomerSearchAutoComplete###MaxResultsDisplayed" Required="1" Valid="1">
+        <Description Lang="en">Set number of search results for the autocomplete feature.</Description>
+        <Description Lang="de">Anzahl der Suchergebnisse für die Autocomplete-Funktionalitaet.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::CustomerSearch</SubGroup>
+        <Setting>
+            <String>20</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::CustomerSearchAutoComplete::DynamicWidth" Required="1" Valid="1">
+        <Description Lang="en">Adapt width of autocomplete drop down to length of the longest option.</Description>
+        <Description Lang="de">Passe die Breite des Autocomplete-DropDowns an die längste Option an.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::CustomerSearch</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::UserSearchAutoComplete###Active" Required="1" Valid="1">

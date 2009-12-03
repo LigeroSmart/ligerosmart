@@ -2,7 +2,7 @@
 # AgentITSMChangeSearch.dtl - provides HTML form for AgentITSMChangeSearch
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.dtl,v 1.9 2009-12-02 17:46:16 bes Exp $
+# $Id: AgentITSMChangeSearch.dtl,v 1.10 2009-12-03 09:16:23 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -11,6 +11,7 @@
 
 $Include{"AJAX"}
 
+$Include{"AgentCustomerSearch"}
 $Include{"AgentITSMUserSearch"}
 
 <style type="text/css">
@@ -22,14 +23,17 @@ $Include{"AgentITSMUserSearch"}
 
 <script language="JavaScript" type="text/javascript">
 <!--
+
+// clear CABCustomer
+function clear_field() {
+    document.compose.CABCustomer.value = "";
+    document.compose.CABCustomer.focus();
+}
+
+// clear CABAgent
 function clear_field1() {
     document.compose.CABAgent.value = "";
     document.compose.CABAgent.focus();
-}
-
-function clear_field2() {
-    document.compose.CABCustomer.value = "";
-    document.compose.CABCustomer.focus();
 }
 
 //-->
@@ -48,6 +52,8 @@ function clear_field2() {
             <form action="$Env{"CGIHandle"}" method="post" name="compose">
                 <input type="hidden" name="Action" value="$Env{"Action"}"/>
                 <input type="hidden" name="Subaction" value="Search"/>
+<!-- ## HiddenFields for CABCustomer Autocompletion ## -->
+                <input type="hidden" name="SelectedCustomerUser" value="$QData{"CustomerUser"}"/>
 <!-- ## HiddenFields for CABAgent Autocompletion ## -->
                 <input type="hidden" name="SelectedUser1"     value="$QData{"SelectedUser1"}">
                 <input type="hidden" name="UserSearchGroups1" value="itsm-change">
@@ -78,12 +84,32 @@ function clear_field2() {
                                     <td class="contentkey">$Text{"Workorder Title"}</td>
                                     <td class="contentvalue"><input type="text" name="WorkOrderTitle" size="30" value="$QData{"WorkOrderTitle"}"/></td>
                                 </tr>
-<!-- AJAX -->
                                 <tr>
                                     <td class="contentkey">$Text{"CABCustomer"} $Text{"(e. g. US4231)"}</td>
-                                    <td class="contentvalue"><input type="text" name="CABCustomer" size="30" value="$QData{"CABCustomer"}"/></td>
+                                    <td class="contentvalue">
+<!-- dtl:block:CustomerSearchAutoCompleteDivStart-->
+                                        <div id="myAutoComplete" class="myAutoComplete">
+<!-- dtl:block:CustomerSearchAutoCompleteDivStart -->
+                                            <input id="myAutoCompleteInput" type="text" name="CABCustomer" value="$QData{"CABCustomer"}" size="30"/>
+<!-- dtl:block:CustomerSearchAutoCompleteDivEnd -->
+                                            <div id="myAutoCompleteContainer"></div>
+                                        </div>
+<!-- dtl:block:CustomerSearchAutoCompleteDivEnd -->
+<!-- dtl:block:CustomerSearchAutoCompleteFromInvalid -->
+                                        <br/>
+<!-- dtl:block:CustomerSearchAutoCompleteFromInvalid -->
+
+                                        <font color="red" size="-2">$Text{"$Data{"Input invalid"}"}</font>
+                                        <br/>
+                                        $Data{"CABCustomerSelectionStrg"}
+                                        <dtl if ($Data{"CABCustomerSelectionStrg"} ne "") { $Data{"TakeThisCustomer"} = "<br/><input class="button" type="submit" name="ExpandCustomerName2" value="$Text{"Take this Customer"}"/>"; }>
+                                        $Data{"TakeThisCustomer"}
+<!-- dtl:block:SearchCustomerButton -->
+                                        <input class="button" type="submit" name="ExpandCustomerName1" value="$Text{"Search Customer"}"/>
+                                        <input class="button" type="submit" name="ClearFrom" value="$Text{"Clear From"}" onclick="javascript:clear_field(); return false;"/>
+<!-- dtl:block:SearchCustomerButton -->
+                                    </td>
                                 </tr>
-<!-- AJAX -->
                                 <tr>
                                     <td class="contentkey">$Text{"CABAgent"} $Text{"(e. g. 234231)"}</td>
                                     <td class="contentvalue">

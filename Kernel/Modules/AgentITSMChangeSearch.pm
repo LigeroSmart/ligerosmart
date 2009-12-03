@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.17 2009-12-02 17:46:16 bes Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.18 2009-12-03 09:16:23 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -84,7 +84,7 @@ sub Run {
 
         # get scalar search params
         for my $SearchParam (
-            qw(ChangeNumber ChangeTitle WorkOrderTitle SelectedUser1 SelectedUser2 Description Justification WorkOrderInstruction WorkOrderReport
+            qw(ChangeNumber ChangeTitle WorkOrderTitle SelectedCustomerUser SelectedUser1 Description Justification WorkOrderInstruction WorkOrderReport
             )
             )
         {
@@ -103,8 +103,8 @@ sub Run {
             $GetParam{CABAgents} = [ $GetParam{SelectedUser1} ];
         }
 
-        if ( $GetParam{CABCustomer} ) {
-            $GetParam{CABCustomers} = [ $GetParam{CABCustomer} ];
+        if ( $GetParam{SelectedCustomerUser} ) {
+            $GetParam{CABCustomers} = [ $GetParam{SelectedCustomerUser} ];
         }
 
         # get array search params
@@ -803,7 +803,33 @@ sub MaskForm {
         Data => { %Param, },
     );
 
-    # build changebuilder and changemanager search autocomplete field
+    # build customer search autocomplete field for CABCustomer
+    my $CustomerAutoCompleteConfig
+        = $Self->{ConfigObject}->Get('ITSMChange::Frontend::CustomerSearchAutoComplete');
+    if ( $CustomerAutoCompleteConfig->{Active} ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'CustomerSearchAutoComplete',
+            Data => {
+                minQueryLength => $CustomerAutoCompleteConfig->{MinQueryLength} || 2,
+                queryDelay     => $CustomerAutoCompleteConfig->{QueryDelay}     || 0.1,
+                typeAhead      => $CustomerAutoCompleteConfig->{TypeAhead}      || 'false',
+                maxResultsDisplayed => $CustomerAutoCompleteConfig->{MaxResultsDisplayed} || 20,
+            },
+        );
+        $Self->{LayoutObject}->Block(
+            Name => 'CustomerSearchAutoCompleteDivStart',
+        );
+        $Self->{LayoutObject}->Block(
+            Name => 'CustomerSearchAutoCompleteDivEnd',
+        );
+    }
+    else {
+        $Self->{LayoutObject}->Block(
+            Name => 'SearchCustomerButton',
+        );
+    }
+
+    # build user search autocomplete field for CABAgent
     my $UserAutoCompleteConfig
         = $Self->{ConfigObject}->Get('ITSMChange::Frontend::UserSearchAutoComplete');
     if ( $UserAutoCompleteConfig->{Active} ) {
