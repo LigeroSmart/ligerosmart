@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.194 2009-12-01 10:05:14 bes Exp $
+# $Id: ITSMChange.pm,v 1.195 2009-12-03 11:04:09 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.194 $) [1];
+$VERSION = qw($Revision: 1.195 $) [1];
 
 =head1 NAME
 
@@ -1044,6 +1044,10 @@ is ignored.
         WorkOrderInstruction      => 'Press the button.',              # (optional)
         WorkOrderReport           => 'Mailserver has booted.',         # (optional)
 
+        # search in workorder (array params)
+        WorkOrderStates   => [ 'accepted', 'ready' ],                  # (optional)
+        WorkOrderStateIDs => [ 1, 2, 3 ],                              # (optional)
+
         # changes with planned start time after ...
         PlannedStartTimeNewerDate => '2006-01-09 00:00:01',            # (optional)
         # changes with planned start time before then ....
@@ -1138,6 +1142,8 @@ sub ChangeSearch {
         CABAgents
         CABCustomers
         WorkOrderAgentIDs
+        WorkOrderStates
+        WorkOrderStateIDs
         CreateBy
         ChangeBy
         Categories
@@ -1289,6 +1295,32 @@ sub ChangeSearch {
 
             push @{ $Param{"${CIPSingular}IDs"} }, $CIPID;
         }
+    }
+
+    # check workorder states - if given
+    return if !$Self->{WorkOrderObject}->_CheckWorkOrderStateIDs(
+        WorkOrderStateIDs => $Param{WorkOrderStateIDs},
+    );
+
+    # look up and thus check the workorder states
+    for my $WorkOrderState ( @{ $Param{WorkOrderStates} } ) {
+
+        # look up the ID for the name
+        my $WorkOrderStateID = $Self->{WorkOrderObject}->WorkOrderStateLookup(
+            WorkOrderState => $WorkOrderState,
+        );
+
+        # check whether the ID was found, whether the name exists
+        if ( !$WorkOrderStateID ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "The workorder state $WorkOrderState is not known!",
+            );
+
+            return;
+        }
+
+        push @{ $Param{WorkOrderStateIDs} }, $WorkOrderStateID;
     }
 
     my @SQLWhere;           # assemble the conditions used in the WHERE clause
@@ -1466,18 +1498,28 @@ sub ChangeSearch {
         }
     }
 
-    # add workorder agent id params to sql-where-array
-    if ( @{ $Param{WorkOrderAgentIDs} } ) {
+    # workorder array params
+    my %WorkOrderArrayParams = (
+        WorkOrderAgentIDs => 'workorder_agent_id',
+        WorkOrderStateIDs => 'workorder_state_id',
+    );
+
+    # add workorder params to sql-where-array
+    WORKORDERPARAM:
+    for my $WorkOrderParam ( keys %WorkOrderArrayParams ) {
+
+        next WORKORDERPARAM if !@{ $Param{$WorkOrderParam} };
 
         # quote
-        for my $OneParam ( @{ $Param{WorkOrderAgentIDs} } ) {
+        for my $OneParam ( @{ $Param{$WorkOrderParam} } ) {
             $OneParam = $Self->{DBObject}->Quote($OneParam);
         }
 
         # create string
-        my $InString = join ', ', @{ $Param{WorkOrderAgentIDs} };
+        my $InString = join ', ', @{ $Param{$WorkOrderParam} };
+        my $ColumnName = $WorkOrderArrayParams{$WorkOrderParam};
 
-        push @SQLWhere,        "wo2.workorder_agent_id IN ( $InString )";
+        push @SQLWhere,        "wo2.$ColumnName IN ( $InString )";
         push @InnerJoinTables, 'wo2';
     }
 
@@ -2651,7 +2693,7 @@ sub _CheckChangeParams {
 }
 
 sub DESTROY {
-    my $Self = shift;
+    my ($Self) = @_;
 
     # TODO (ub: this must be commented out until further investigation!)
     #    # execute all transaction events
@@ -2678,6 +2720,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.194 $ $Date: 2009-12-01 10:05:14 $
+$Revision: 1.195 $ $Date: 2009-12-03 11:04:09 $
 
 =cut

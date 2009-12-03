@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.151 2009-12-01 10:05:14 bes Exp $
+# $Id: ITSMChange.t,v 1.152 2009-12-03 11:04:09 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -4751,7 +4751,7 @@ for my $Test (@WOStringAndAgentSearchTests) {
 
         next WOSTEST if !$SearchResult;
 
-        # check number of founded change
+        # check number of found changes
         $Self->Is(
             scalar @{$SearchResult},
             scalar @{$ReferenceData},
@@ -4790,6 +4790,180 @@ for my $Test (@WOStringAndAgentSearchTests) {
 
 # each of the changes should have one workorder
 for my $ChangeID (@WOSTChangeIDs) {
+    my $ChangeData = $Self->{ChangeObject}->ChangeGet(
+        ChangeID => $ChangeID,
+        UserID   => 1,
+    );
+    $Self->Is(
+        $ChangeData->{WorkOrderCount},
+        1,
+        "Test $TestCount: |- ChangeGet(): one workorder was added"
+    );
+}
+
+# ------------------------------------------------------------ #
+# advanced search by tests for workorder strings and agent id
+# ------------------------------------------------------------ #
+# get item list of the workorder states with swapped keys and values
+my %WorkOrderStateID2Name = %{
+    $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::ChangeManagement::WorkOrder::State',
+        ) || {}
+    };
+my %WorkOrderStateName2ID = reverse %WorkOrderStateID2Name;
+
+my @WOStateTests = (
+
+    {
+        Description => 'Insert change with one workorder and with WorkOrderState set.',
+        SourceData  => {
+            ChangeAdd => {
+                UserID => 1,
+            },
+            WorkOrderAdd => {
+                UserID         => 1,
+                WorkOrderTitle => 'WorkOrderStateID in ChangeSearch - Title - ' . $UniqueSignature,
+                WorkOrderStateID => $WorkOrderStateName2ID{ready},
+            },
+            ChangeSearch => {
+                UserID         => 1,
+                WorkOrderTitle => 'WorkOrderStateID in ChangeSearch - Title - ' . $UniqueSignature,
+                WorkOrderStateIDs => [ $WorkOrderStateName2ID{ready} ],
+            },
+        },
+        ReferenceData => [1],
+    },
+
+    {
+        Description => 'Insert change with one workorder and with WorkOrderState set.',
+        SourceData  => {
+            ChangeAdd => {
+                UserID => 1,
+            },
+            WorkOrderAdd => {
+                UserID         => 1,
+                WorkOrderTitle => 'WorkOrderStateID in ChangeSearch - Title - ' . $UniqueSignature,
+                WorkOrderStateID => $WorkOrderStateName2ID{canceled},
+            },
+            ChangeSearch => {
+                UserID         => 1,
+                WorkOrderTitle => 'WorkOrderStateID in ChangeSearch - Title - ' . $UniqueSignature,
+                WorkOrderStateIDs => [ $WorkOrderStateName2ID{canceled} ],
+            },
+        },
+        ReferenceData => [2],
+    },
+
+    {
+        Description => 'Insert change with one workorder and with WorkOrderState set.',
+        SourceData  => {
+            ChangeAdd => {
+                UserID => 1,
+            },
+            WorkOrderAdd => {
+                UserID         => 1,
+                WorkOrderTitle => 'WorkOrderStateID in ChangeSearch - Title - ' . $UniqueSignature,
+                WorkOrderStateID => $WorkOrderStateName2ID{closed},
+            },
+            ChangeSearch => {
+                UserID          => 1,
+                WorkOrderTitle  => 'WorkOrderStateID in ChangeSearch - Title - ' . $UniqueSignature,
+                WorkOrderStates => [ 'ready', 'closed' ],
+            },
+        },
+        ReferenceData => [ 1, 3 ],
+    },
+);
+
+my $WOStateTestCounter = 1;
+my @WOStateTestChangeIDs;       # search in workorder test change ids
+my @WOStateTestWorkOrderIDs;    # search in workorder test workorder ids
+my %WorkOrderStateTestMap;
+
+WOSTATETEST:
+for my $WorkOrderStateTest (@WOStateTests) {
+    my $SourceData = $WorkOrderStateTest->{SourceData};
+    my $ReferenceData = $WorkOrderStateTest->{ReferenceData} || [];
+
+    my $ChangeID;
+    my $WorkOrderID;
+
+    $Self->True(
+        1,
+        "Test $TestCount: $WorkOrderStateTest->{Description} (WOStateTest case: $WOStateTestCounter)",
+    );
+
+    if ( $SourceData->{ChangeAdd} ) {
+        $ChangeID = $Self->{ChangeObject}->ChangeAdd(
+            %{ $SourceData->{ChangeAdd} },
+        );
+
+        $Self->True(
+            $ChangeID,
+            "Test $TestCount: |- ChangeAdd",
+        );
+
+        if ($ChangeID) {
+            $TestedChangeID{$ChangeID} = 1;
+            push @WOStateTestChangeIDs, $ChangeID;
+            $WorkOrderStateTestMap{$WOStateTestCounter} = $ChangeID;
+        }
+    }
+
+    if ( $SourceData->{WorkOrderAdd} ) {
+        $WorkOrderID = $Self->{WorkOrderObject}->WorkOrderAdd(
+            %{ $SourceData->{WorkOrderAdd} },
+            ChangeID => $ChangeID,
+        );
+
+        $Self->True(
+            $WorkOrderID,
+            "Test $TestCount: |- WorkOrderAdd",
+        );
+
+        push @WOStateTestWorkOrderIDs, $WorkOrderID;
+    }
+
+    my $SearchResult;
+    if ( $SourceData->{ChangeSearch} ) {
+        $SearchResult = $Self->{ChangeObject}->ChangeSearch(
+            %{ $SourceData->{ChangeSearch} },
+        );
+
+        $Self->True(
+            $SearchResult && ref $SearchResult eq 'ARRAY',
+            "Test $TestCount: ChangeSearch() - List is an array reference.",
+        );
+
+        next WOSTATETEST if !$SearchResult;
+
+        # check number of found changes
+        $Self->Is(
+            scalar @{$SearchResult},
+            scalar @{$ReferenceData},
+            "Test $TestCount: ChangeSearch() - correct number of found changes",
+        );
+
+        # save returned ids in hash for easier checks
+        my %ResultIDs = map { $_ => 1 } @{$SearchResult};
+
+        # check returned ChangeIDs
+        for my $TestNr ( @{$ReferenceData} ) {
+            my $ChangeID = $WorkOrderStateTestMap{$TestNr};
+            $Self->True(
+                $ResultIDs{$ChangeID},
+                "Test $TestCount: ChangeSearch() - $ChangeID (from test $TestNr) in result set found",
+            );
+        }
+
+    }
+
+    $TestCount++;
+    $WOStateTestCounter++;
+}
+
+# each of the changes should have one workorder
+for my $ChangeID (@WOStateTestChangeIDs) {
     my $ChangeData = $Self->{ChangeObject}->ChangeGet(
         ChangeID => $ChangeID,
         UserID   => 1,
