@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.22 2009-12-03 13:49:01 bes Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.23 2009-12-03 15:17:45 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -152,303 +152,132 @@ sub Run {
             Value     => $URL,
         );
 
-        # get create time settings
-        if ( !$GetParam{ArticleTimeSearchType} ) {
+        # get the time search parameters
+        for my $TimeType (
+            qw( Realize PlannedStart PlannedEnd ActualStart ActualEnd Create Change )
+            )
+        {
 
-            # do nothing on time stuff
-        }
-        elsif ( $GetParam{ArticleTimeSearchType} eq 'TimeSlot' ) {
-            for (qw(Month Day)) {
-                $GetParam{"ArticleCreateTimeStart$_"}
-                    = sprintf( "%02d", $GetParam{"ArticleCreateTimeStart$_"} );
-            }
-            for (qw(Month Day)) {
-                $GetParam{"ArticleCreateTimeStop$_"}
-                    = sprintf( "%02d", $GetParam{"ArticleCreateTimeStop$_"} );
-            }
-            if (
-                $GetParam{ArticleCreateTimeStartDay}
-                && $GetParam{ArticleCreateTimeStartMonth}
-                && $GetParam{ArticleCreateTimeStartYear}
+            # extract the time search parameters for $TimeType into %TimeSelectionParam
+            my %TimeSelectionParam;
+            for my $Part (
+                qw(
+                SearchType
+                PointFormat Point PointStart
+                Start StartDay StartMonth StartYear
+                Stop  StopDay  StopMonth  StopYear
+                )
                 )
             {
-                $GetParam{ArticleCreateTimeNewerDate}
-                    = $GetParam{ArticleCreateTimeStartYear} . '-'
-                    . $GetParam{ArticleCreateTimeStartMonth} . '-'
-                    . $GetParam{ArticleCreateTimeStartDay}
-                    . ' 00:00:01';
-            }
-            if (
-                $GetParam{ArticleCreateTimeStopDay}
-                && $GetParam{ArticleCreateTimeStopMonth}
-                && $GetParam{ArticleCreateTimeStopYear}
-                )
-            {
-                $GetParam{ArticleCreateTimeOlderDate}
-                    = $GetParam{ArticleCreateTimeStopYear} . '-'
-                    . $GetParam{ArticleCreateTimeStopMonth} . '-'
-                    . $GetParam{ArticleCreateTimeStopDay}
-                    . ' 23:59:59';
-            }
-        }
-        elsif ( $GetParam{ArticleTimeSearchType} eq 'TimePoint' ) {
-            if (
-                $GetParam{ArticleCreateTimePoint}
-                && $GetParam{ArticleCreateTimePointStart}
-                && $GetParam{ArticleCreateTimePointFormat}
-                )
-            {
-                my $Time = 0;
-                if ( $GetParam{ArticleCreateTimePointFormat} eq 'minute' ) {
-                    $Time = $GetParam{ArticleCreateTimePoint};
-                }
-                elsif ( $GetParam{ArticleCreateTimePointFormat} eq 'hour' ) {
-                    $Time = $GetParam{ArticleCreateTimePoint} * 60;
-                }
-                elsif ( $GetParam{ArticleCreateTimePointFormat} eq 'day' ) {
-                    $Time = $GetParam{ArticleCreateTimePoint} * 60 * 24;
-                }
-                elsif ( $GetParam{ArticleCreateTimePointFormat} eq 'week' ) {
-                    $Time = $GetParam{ArticleCreateTimePoint} * 60 * 24 * 7;
-                }
-                elsif ( $GetParam{ArticleCreateTimePointFormat} eq 'month' ) {
-                    $Time = $GetParam{ArticleCreateTimePoint} * 60 * 24 * 30;
-                }
-                elsif ( $GetParam{ArticleCreateTimePointFormat} eq 'year' ) {
-                    $Time = $GetParam{ArticleCreateTimePoint} * 60 * 24 * 365;
-                }
-                if ( $GetParam{ArticleCreateTimePointStart} eq 'Before' ) {
-                    $GetParam{ArticleCreateTimeOlderMinutes} = $Time;
-                }
-                else {
-                    $GetParam{ArticleCreateTimeNewerMinutes} = $Time;
-                }
-            }
-        }
 
-        # get create time settings
-        if ( !$GetParam{TimeSearchType} ) {
+                # get search string params (get submitted params)
+                $TimeSelectionParam{$Part}
+                    = $Self->{ParamObject}->GetParam( Param => $TimeType . 'Time' . $Part );
 
-            # do noting ont time stuff
-        }
-        elsif ( $GetParam{TimeSearchType} eq 'TimeSlot' ) {
-            for (qw(Month Day)) {
-                $GetParam{"TicketCreateTimeStart$_"}
-                    = sprintf( "%02d", $GetParam{"TicketCreateTimeStart$_"} );
+                # remove white space on the start and end
+                if ( $TimeSelectionParam{$Part} ) {
+                    $TimeSelectionParam{$Part} =~ s/\s+$//;
+                    $TimeSelectionParam{$Part} =~ s/^\s+//;
+                }
             }
-            for (qw(Month Day)) {
-                $GetParam{"TicketCreateTimeStop$_"}
-                    = sprintf( "%02d", $GetParam{"TicketCreateTimeStop$_"} );
+
+            # nothing to do, when no time search type has been selected
+            next if !$TimeSelectionParam{SearchType};
+
+            if ( $TimeSelectionParam{SearchType} eq 'TimeSlot' ) {
+
+                # a range of dates has been passed
+                # month and days might need a leading '0'
+                for my $Part (qw(StartMonth StartDay StopMonth StopDay)) {
+                    $TimeSelectionParam{$Part} = sprintf '%02d', $TimeSelectionParam{$Part};
+                }
+
+                # the older limit
+                if (
+                    $TimeSelectionParam{StartDay}
+                    && $TimeSelectionParam{StartMonth}
+                    && $TimeSelectionParam{StartYear}
+                    )
+                {
+                    $GetParam{ $TimeType . 'TimeNewerDate' }
+                        = $TimeSelectionParam{StartYear} . '-'
+                        . $TimeSelectionParam{StartMonth} . '-'
+                        . $TimeSelectionParam{StartDay}
+                        . ' 00:00:01';
+                }
+
+                # the upper limit
+                if (
+                    $TimeSelectionParam{StopDay}
+                    && $TimeSelectionParam{StopMonth}
+                    && $TimeSelectionParam{StopYear}
+                    )
+                {
+                    $GetParam{ $TimeType . 'TimeOlderDate' }
+                        = $TimeSelectionParam{StopYear} . '-'
+                        . $TimeSelectionParam{StopMonth} . '-'
+                        . $TimeSelectionParam{StopDay}
+                        . ' 23:59:59';
+                }
             }
-            if (
-                $GetParam{TicketCreateTimeStartDay}
-                && $GetParam{TicketCreateTimeStartMonth}
-                && $GetParam{TicketCreateTimeStartYear}
-                )
-            {
-                $GetParam{TicketCreateTimeNewerDate}
-                    = $GetParam{TicketCreateTimeStartYear} . '-'
-                    . $GetParam{TicketCreateTimeStartMonth} . '-'
-                    . $GetParam{TicketCreateTimeStartDay}
-                    . ' 00:00:01';
+            elsif ( $TimeSelectionParam{SearchType} eq 'TimePoint' ) {
+
+                # queries relative to now
+                if (
+                    $TimeSelectionParam{Point}
+                    && $TimeSelectionParam{PointStart}
+                    && $TimeSelectionParam{PointFormat}
+                    )
+                {
+                    my $DiffSeconds = 0;
+                    if ( $TimeSelectionParam{PointFormat} eq 'minute' ) {
+                        $DiffSeconds = $TimeSelectionParam{Point} * 60;
+                    }
+                    elsif ( $TimeSelectionParam{PointFormat} eq 'hour' ) {
+                        $DiffSeconds = $TimeSelectionParam{Point} * 60 * 60;
+                    }
+                    elsif ( $TimeSelectionParam{PointFormat} eq 'day' ) {
+                        $DiffSeconds = $TimeSelectionParam{Point} * 60 * 60 * 24;
+                    }
+                    elsif ( $TimeSelectionParam{PointFormat} eq 'week' ) {
+                        $DiffSeconds = $TimeSelectionParam{Point} * 60 * 60 * 24 * 7;
+                    }
+                    elsif ( $TimeSelectionParam{PointFormat} eq 'month' ) {
+                        $DiffSeconds = $TimeSelectionParam{Point} * 60 * 60 * 24 * 30;
+                    }
+                    elsif ( $TimeSelectionParam{PointFormat} eq 'year' ) {
+                        $DiffSeconds = $TimeSelectionParam{Point} * 60 * 60 * 24 * 365;
+                    }
+
+                    my $CurrentSystemTime = $Self->{TimeObject}->SystemTime();
+                    my $CurrentTimeStamp  = $Self->{TimeObject}->SystemTime2TimeStamp(
+                        SystemTime => $CurrentSystemTime
+                    );
+                    if ( $TimeSelectionParam{PointStart} eq 'Before' ) {
+
+                        # search in the future
+                        my $SearchTimeStamp = $Self->{TimeObject}->SystemTime2TimeStamp(
+                            SystemTime => $CurrentSystemTime + $DiffSeconds,
+                        );
+                        $GetParam{ $TimeType . 'TimeNewerDate' } = $CurrentTimeStamp;
+                        $GetParam{ $TimeType . 'TimeOlderDate' } = $SearchTimeStamp;
+                    }
+                    else {
+                        my $SearchTimeStamp = $Self->{TimeObject}->SystemTime2TimeStamp(
+                            SystemTime => $CurrentSystemTime - $DiffSeconds,
+                        );
+                        $GetParam{ $TimeType . 'TimeNewerDate' } = $SearchTimeStamp;
+                        $GetParam{ $TimeType . 'TimeOlderDate' } = $CurrentTimeStamp;
+                    }
+                }
             }
-            if (
-                $GetParam{TicketCreateTimeStopDay}
-                && $GetParam{TicketCreateTimeStopMonth}
-                && $GetParam{TicketCreateTimeStopYear}
-                )
-            {
-                $GetParam{TicketCreateTimeOlderDate}
-                    = $GetParam{TicketCreateTimeStopYear} . '-'
-                    . $GetParam{TicketCreateTimeStopMonth} . '-'
-                    . $GetParam{TicketCreateTimeStopDay}
-                    . ' 23:59:59';
-            }
-        }
-        elsif ( $GetParam{TimeSearchType} eq 'TimePoint' ) {
-            if (
-                $GetParam{TicketCreateTimePoint}
-                && $GetParam{TicketCreateTimePointStart}
-                && $GetParam{TicketCreateTimePointFormat}
-                )
-            {
-                my $Time = 0;
-                if ( $GetParam{TicketCreateTimePointFormat} eq 'minute' ) {
-                    $Time = $GetParam{TicketCreateTimePoint};
-                }
-                elsif ( $GetParam{TicketCreateTimePointFormat} eq 'hour' ) {
-                    $Time = $GetParam{TicketCreateTimePoint} * 60;
-                }
-                elsif ( $GetParam{TicketCreateTimePointFormat} eq 'day' ) {
-                    $Time = $GetParam{TicketCreateTimePoint} * 60 * 24;
-                }
-                elsif ( $GetParam{TicketCreateTimePointFormat} eq 'week' ) {
-                    $Time = $GetParam{TicketCreateTimePoint} * 60 * 24 * 7;
-                }
-                elsif ( $GetParam{TicketCreateTimePointFormat} eq 'month' ) {
-                    $Time = $GetParam{TicketCreateTimePoint} * 60 * 24 * 30;
-                }
-                elsif ( $GetParam{TicketCreateTimePointFormat} eq 'year' ) {
-                    $Time = $GetParam{TicketCreateTimePoint} * 60 * 24 * 365;
-                }
-                if ( $GetParam{TicketCreateTimePointStart} eq 'Before' ) {
-                    $GetParam{TicketCreateTimeOlderMinutes} = $Time;
-                }
-                else {
-                    $GetParam{TicketCreateTimeNewerMinutes} = $Time;
-                }
+            else {
+
+                # unknown search types are simply ignored
             }
         }
 
-        # get close time settings
-        if ( !$GetParam{ChangeTimeSearchType} ) {
-
-            # do noting ont time stuff
-        }
-        elsif ( $GetParam{ChangeTimeSearchType} eq 'TimeSlot' ) {
-            for (qw(Month Day)) {
-                $GetParam{"TicketChangeTimeStart$_"}
-                    = sprintf( "%02d", $GetParam{"TicketChangeTimeStart$_"} );
-            }
-            for (qw(Month Day)) {
-                $GetParam{"TicketChangeTimeStop$_"}
-                    = sprintf( "%02d", $GetParam{"TicketChangeTimeStop$_"} );
-            }
-            if (
-                $GetParam{TicketChangeTimeStartDay}
-                && $GetParam{TicketChangeTimeStartMonth}
-                && $GetParam{TicketChangeTimeStartYear}
-                )
-            {
-                $GetParam{TicketChangeTimeNewerDate}
-                    = $GetParam{TicketChangeTimeStartYear} . '-'
-                    . $GetParam{TicketChangeTimeStartMonth} . '-'
-                    . $GetParam{TicketChangeTimeStartDay}
-                    . ' 00:00:01';
-            }
-            if (
-                $GetParam{TicketChangeTimeStopDay}
-                && $GetParam{TicketChangeTimeStopMonth}
-                && $GetParam{TicketChangeTimeStopYear}
-                )
-            {
-                $GetParam{TicketChangeTimeOlderDate}
-                    = $GetParam{TicketChangeTimeStopYear} . '-'
-                    . $GetParam{TicketChangeTimeStopMonth} . '-'
-                    . $GetParam{TicketChangeTimeStopDay}
-                    . ' 23:59:59';
-            }
-        }
-        elsif ( $GetParam{ChangeTimeSearchType} eq 'TimePoint' ) {
-            if (
-                $GetParam{TicketChangeTimePoint}
-                && $GetParam{TicketChangeTimePointStart}
-                && $GetParam{TicketChangeTimePointFormat}
-                )
-            {
-                my $Time = 0;
-                if ( $GetParam{TicketChangeTimePointFormat} eq 'minute' ) {
-                    $Time = $GetParam{TicketChangeTimePoint};
-                }
-                elsif ( $GetParam{TicketChangeTimePointFormat} eq 'hour' ) {
-                    $Time = $GetParam{TicketChangeTimePoint} * 60;
-                }
-                elsif ( $GetParam{TicketChangeTimePointFormat} eq 'day' ) {
-                    $Time = $GetParam{TicketChangeTimePoint} * 60 * 24;
-                }
-                elsif ( $GetParam{TicketChangeTimePointFormat} eq 'week' ) {
-                    $Time = $GetParam{TicketChangeTimePoint} * 60 * 24 * 7;
-                }
-                elsif ( $GetParam{TicketChangeTimePointFormat} eq 'month' ) {
-                    $Time = $GetParam{TicketChangeTimePoint} * 60 * 24 * 30;
-                }
-                elsif ( $GetParam{TicketChangeTimePointFormat} eq 'year' ) {
-                    $Time = $GetParam{TicketChangeTimePoint} * 60 * 24 * 365;
-                }
-                if ( $GetParam{TicketChangeTimePointStart} eq 'Before' ) {
-                    $GetParam{TicketChangeTimeOlderMinutes} = $Time;
-                }
-                else {
-                    $GetParam{TicketChangeTimeNewerMinutes} = $Time;
-                }
-            }
-        }
-
-        # get close time settings
-        if ( !$GetParam{CloseTimeSearchType} ) {
-
-            # do noting ont time stuff
-        }
-        elsif ( $GetParam{CloseTimeSearchType} eq 'TimeSlot' ) {
-            for (qw(Month Day)) {
-                $GetParam{"TicketCloseTimeStart$_"}
-                    = sprintf( "%02d", $GetParam{"TicketCloseTimeStart$_"} );
-            }
-            for (qw(Month Day)) {
-                $GetParam{"TicketCloseTimeStop$_"}
-                    = sprintf( "%02d", $GetParam{"TicketCloseTimeStop$_"} );
-            }
-            if (
-                $GetParam{TicketCloseTimeStartDay}
-                && $GetParam{TicketCloseTimeStartMonth}
-                && $GetParam{TicketCloseTimeStartYear}
-                )
-            {
-                $GetParam{TicketCloseTimeNewerDate}
-                    = $GetParam{TicketCloseTimeStartYear} . '-'
-                    . $GetParam{TicketCloseTimeStartMonth} . '-'
-                    . $GetParam{TicketCloseTimeStartDay}
-                    . ' 00:00:01';
-            }
-            if (
-                $GetParam{TicketCloseTimeStopDay}
-                && $GetParam{TicketCloseTimeStopMonth}
-                && $GetParam{TicketCloseTimeStopYear}
-                )
-            {
-                $GetParam{TicketCloseTimeOlderDate}
-                    = $GetParam{TicketCloseTimeStopYear} . '-'
-                    . $GetParam{TicketCloseTimeStopMonth} . '-'
-                    . $GetParam{TicketCloseTimeStopDay}
-                    . ' 23:59:59';
-            }
-        }
-        elsif ( $GetParam{CloseTimeSearchType} eq 'TimePoint' ) {
-            if (
-                $GetParam{TicketCloseTimePoint}
-                && $GetParam{TicketCloseTimePointStart}
-                && $GetParam{TicketCloseTimePointFormat}
-                )
-            {
-                my $Time = 0;
-                if ( $GetParam{TicketCloseTimePointFormat} eq 'minute' ) {
-                    $Time = $GetParam{TicketCloseTimePoint};
-                }
-                elsif ( $GetParam{TicketCloseTimePointFormat} eq 'hour' ) {
-                    $Time = $GetParam{TicketCloseTimePoint} * 60;
-                }
-                elsif ( $GetParam{TicketCloseTimePointFormat} eq 'day' ) {
-                    $Time = $GetParam{TicketCloseTimePoint} * 60 * 24;
-                }
-                elsif ( $GetParam{TicketCloseTimePointFormat} eq 'week' ) {
-                    $Time = $GetParam{TicketCloseTimePoint} * 60 * 24 * 7;
-                }
-                elsif ( $GetParam{TicketCloseTimePointFormat} eq 'month' ) {
-                    $Time = $GetParam{TicketCloseTimePoint} * 60 * 24 * 30;
-                }
-                elsif ( $GetParam{TicketCloseTimePointFormat} eq 'year' ) {
-                    $Time = $GetParam{TicketCloseTimePoint} * 60 * 24 * 365;
-                }
-                if ( $GetParam{TicketCloseTimePointStart} eq 'Before' ) {
-                    $GetParam{TicketCloseTimeOlderMinutes} = $Time;
-                }
-                else {
-                    $GetParam{TicketCloseTimeNewerMinutes} = $Time;
-                }
-            }
-        }
-
-        # have a fulltext search per default
+        # search for substrings by default
         for (
             qw(ChangeTitle WorkOrderTitle Description Justification WorkOrderInstruction WorkOrderReport)
             )
