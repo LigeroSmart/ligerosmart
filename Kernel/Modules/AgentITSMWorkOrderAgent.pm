@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAgent.pm - the OTRS::ITSM::ChangeManagement workorder agent edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAgent.pm,v 1.24 2009-11-16 22:23:41 ub Exp $
+# $Id: AgentITSMWorkOrderAgent.pm,v 1.25 2009-12-03 11:15:26 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.24 $) [1];
+$VERSION = qw($Revision: 1.25 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -303,10 +303,6 @@ sub Run {
                 typeAhead           => $AutoCompleteConfig->{TypeAhead}           || 'false',
                 maxResultsDisplayed => $AutoCompleteConfig->{MaxResultsDisplayed} || 20,
             },
-        );
-        $Self->{LayoutObject}->Block(
-            Name => 'UserSearchAutoCompleteReturn',
-            Data => {},
         );
         $Self->{LayoutObject}->Block(
             Name => 'UserSearchAutoCompleteReturnElements',

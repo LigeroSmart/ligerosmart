@@ -2,12 +2,14 @@
 # AgentITSMUserSearch.dtl - provides autocomplete feature for customer search
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMUserSearch.dtl,v 1.5 2009-10-23 09:30:27 bes Exp $
+# $Id: AgentITSMUserSearch.dtl,v 1.6 2009-12-03 11:15:27 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+
+<!-- dtl:block:UserSearchAutoComplete -->
 
 <!--CSS file (default YUI Sam Skin) -->
 <link type="text/css" rel="stylesheet" href="$Config{"Frontend::YUIPath"}build/autocomplete/assets/skins/sam/autocomplete.css">
@@ -28,7 +30,6 @@
 <!-- Source file -->
 <script type="text/javascript" src="$Config{"Frontend::YUIPath"}build/autocomplete/autocomplete-min.js"></script>
 
-
 <script type="text/javascript">
 
 (function() {
@@ -40,8 +41,6 @@
 
         // add yui css to body tag
         document.body.className = "yui-skin-sam";
-
-<!-- dtl:block:UserSearchAutoComplete -->
 
 <!-- dtl:block:UserSearchAutoCompleteCode -->
         // define XHRDataSource for autocomplete object
@@ -150,17 +149,16 @@
             return true;
         };
 <!-- dtl:block:UserSearchAutoCompleteCode -->
-<!-- dtl:block:UserSearchAutoComplete -->
 
-<!-- dtl:block:UserSearchAutoCompleteReturn -->
         return {
 <!-- dtl:block:UserSearchAutoCompleteReturnElements -->
             myDataSource$Data{"InputNr"}: myDataSource$Data{"InputNr"},
             myAutoComp$Data{"InputNr"}  : myAutoComp$Data{"InputNr"},
 <!-- dtl:block:UserSearchAutoCompleteReturnElements -->
-            dummy: 1
+            dummy: 1    // workaround for avoiding a trailing comma
         };
-<!-- dtl:block:UserSearchAutoCompleteReturn -->
     });
 })();
 </script>
+
+<!-- dtl:block:UserSearchAutoComplete -->
