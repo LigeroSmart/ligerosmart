@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.19 2009-12-03 11:15:26 bes Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.20 2009-12-03 12:28:48 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -123,23 +123,6 @@ sub Run {
             if (@Array) {
                 $GetParam{$SearchParam} = \@Array;
             }
-        }
-    }
-
-    # set radio button for time search types
-    for my $TimeType (
-        qw( Realize PlannedStart PlannedEnd ActualStart ActualEnd Create Change )
-        )
-    {
-        my $SearchType = $TimeType . 'TimeSearchType';
-        if ( !$GetParam{$SearchType} ) {
-            $GetParam{ $SearchType . '::None' } = 'checked="checked"';
-        }
-        elsif ( $GetParam{$SearchType} eq 'TimePoint' ) {
-            $GetParam{ $SearchType . '::TimePoint' } = 'checked="checked"';
-        }
-        elsif ( $GetParam{$SearchType} eq 'TimeSlot' ) {
-            $GetParam{ $SearchType . '::TimeSlot' } = 'checked="checked"';
         }
     }
 
@@ -748,6 +731,12 @@ sub MaskForm {
         SelectedID => $Param{ResultForm} || 'Normal',
     );
 
+    # render template
+    $Self->{LayoutObject}->Block(
+        Name => 'Search',
+        Data => { %Param, },
+    );
+
     # get time fields
     my %OneToFiftyNine = map { $_ => sprintf "%2s", $_ } ( 1 .. 59 );
 
@@ -755,6 +744,22 @@ sub MaskForm {
         qw(Realize PlannedStart PlannedEnd ActualStart ActualEnd Create Change)
         )
     {
+
+        # show RealizeTime only when enabled in SysConfig
+        next if ( $TimeType eq 'Realize' && !$Self->{Config}->{RealizeTime} );
+
+        # set radio button for time search types
+        my $SearchType = $TimeType . 'TimeSearchType';
+        if ( !$Param{$SearchType} ) {
+            $Param{ $SearchType . '::None' } = 'checked="checked"';
+        }
+        elsif ( $Param{$SearchType} eq 'TimePoint' ) {
+            $Param{ $SearchType . '::TimePoint' } = 'checked="checked"';
+        }
+        elsif ( $Param{$SearchType} eq 'TimeSlot' ) {
+            $Param{ $SearchType . '::TimeSlot' } = 'checked="checked"';
+        }
+
         $Param{ $TimeType . 'TimePoint' } = $Self->{LayoutObject}->BuildSelection(
             Data       => \%OneToFiftyNine,
             Name       => $TimeType . 'TimePoint',
@@ -795,13 +800,13 @@ sub MaskForm {
             Prefix => $TimeType . 'TimeStop',
             Format => 'DateInputFormat',
         );
-    }
 
-    # render template
-    $Self->{LayoutObject}->Block(
-        Name => 'Search',
-        Data => { %Param, },
-    );
+        # show time field
+        $Self->{LayoutObject}->Block(
+            Name => $TimeType . 'Time',
+            Data => {%Param},
+        );
+    }
 
     # build customer search autocomplete field for CABCustomer
     my $CustomerAutoCompleteConfig
@@ -872,21 +877,6 @@ sub MaskForm {
         # show usersearch buttons for CABAgent
         $Self->{LayoutObject}->Block(
             Name => 'SearchUserButton1',
-        );
-    }
-
-    for my $TimeType (
-        qw(Realize PlannedStart PlannedEnd ActualStart ActualEnd Create Change)
-        )
-    {
-
-        # show RealizeTime only when enabled in SysConfig
-        next if ( $TimeType eq 'Realize' && !$Self->{Config}->{RealizeTime} );
-
-        # show time field
-        $Self->{LayoutObject}->Block(
-            Name => $TimeType . 'Time',
-            Data => {%Param},
         );
     }
 
