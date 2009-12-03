@@ -2,7 +2,7 @@
 # AgentITSMChangeSearch.dtl - provides HTML form for AgentITSMChangeSearch
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.dtl,v 1.11 2009-12-03 13:34:33 bes Exp $
+# $Id: AgentITSMChangeSearch.dtl,v 1.12 2009-12-03 17:10:40 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -96,11 +96,9 @@ function clear_field1() {
                                         </div>
 <!-- dtl:block:CustomerSearchAutoCompleteDivEnd -->
 <!-- dtl:block:CustomerSearchAutoCompleteFromInvalid -->
-                                        <br/>
-<!-- dtl:block:CustomerSearchAutoCompleteFromInvalid -->
-
                                         <font color="red" size="-2">$Text{"$Data{"Input invalid"}"}</font>
                                         <br/>
+<!-- dtl:block:CustomerSearchAutoCompleteFromInvalid -->
                                         $Data{"CABCustomerSelectionStrg"}
                                         <dtl if ($Data{"CABCustomerSelectionStrg"} ne "") { $Data{"TakeThisCustomer"} = "<br/><input class="button" type="submit" name="ExpandCustomerName2" value="$Text{"Take this Customer"}"/>"; }>
                                         $Data{"TakeThisCustomer"}
@@ -228,6 +226,10 @@ function clear_field1() {
                         <td colspan="2" class="contentbody">
                             <input type="radio" name="$QData{"Prefix"}TimeSearchType" value="TimeSlot" $Data{"TimeSearchType::TimeSlot"}/>
                             $Text{"$QData{"TitleUcFirst"} between"} $Data{"TimeStart"} $Text{"and"} $Data{"TimeStop"}
+<!-- dtl:block:InvalidTimeSlot -->
+                            <br />
+                            <font color="red" size="-2">$Text{"Input invalid"}</font>
+<!-- dtl:block:InvalidTimeSlot -->
                         </td>
                     </tr>
 <!-- dtl:block:TimeSelection -->

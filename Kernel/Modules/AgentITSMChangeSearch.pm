@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.23 2009-12-03 15:17:45 bes Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.24 2009-12-03 17:10:40 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.23 $) [1];
+$VERSION = qw($Revision: 1.24 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -129,6 +129,10 @@ sub Run {
     # set result form env
     $GetParam{ResultForm} ||= '';
 
+    # Remember the reason why searching was not attempted.
+    # The entries are the names of the dtl validation error blocks.
+    my @ValidationErrors;
+
     # show result site
     if ( $Self->{Subaction} eq 'Search' ) {
 
@@ -179,6 +183,10 @@ sub Run {
                     $TimeSelectionParam{$Part} =~ s/\s+$//;
                     $TimeSelectionParam{$Part} =~ s/^\s+//;
                 }
+
+                # Keep the values with the original keys in %GetParam,
+                # so that the mask can be regenerated in case of validation errors
+                $GetParam{ $TimeType . 'Time' . $Part } = $TimeSelectionParam{$Part};
             }
 
             # nothing to do, when no time search type has been selected
@@ -192,33 +200,64 @@ sub Run {
                     $TimeSelectionParam{$Part} = sprintf '%02d', $TimeSelectionParam{$Part};
                 }
 
-                # the older limit
+                my %SystemTime;
+
+                # the earlier limit
                 if (
                     $TimeSelectionParam{StartDay}
                     && $TimeSelectionParam{StartMonth}
                     && $TimeSelectionParam{StartYear}
                     )
                 {
-                    $GetParam{ $TimeType . 'TimeNewerDate' }
-                        = $TimeSelectionParam{StartYear} . '-'
-                        . $TimeSelectionParam{StartMonth} . '-'
-                        . $TimeSelectionParam{StartDay}
-                        . ' 00:00:01';
+
+                    # format as timestamp
+                    $GetParam{ $TimeType . 'TimeNewerDate' } = sprintf '%04d-%02d-%02d 00:00:01',
+                        $TimeSelectionParam{StartYear},
+                        $TimeSelectionParam{StartMonth},
+                        $TimeSelectionParam{StartDay};
+
+                    # check the validity
+                    $SystemTime{TimeNewerDate} = $Self->{TimeObject}->TimeStamp2SystemTime(
+                        String => $GetParam{ $TimeType . 'TimeNewerDate' },
+                    );
+                    if ( !$SystemTime{TimeNewerDate} ) {
+                        push @ValidationErrors, $TimeType . 'InvalidTimeSlot';
+                    }
                 }
 
-                # the upper limit
+                # the later limit
                 if (
                     $TimeSelectionParam{StopDay}
                     && $TimeSelectionParam{StopMonth}
                     && $TimeSelectionParam{StopYear}
                     )
                 {
-                    $GetParam{ $TimeType . 'TimeOlderDate' }
-                        = $TimeSelectionParam{StopYear} . '-'
-                        . $TimeSelectionParam{StopMonth} . '-'
-                        . $TimeSelectionParam{StopDay}
-                        . ' 23:59:59';
+
+                    # format as timestamp
+                    $GetParam{ $TimeType . 'TimeOlderDate' } = sprintf '%04d-%02d-%02d 23:59:59',
+                        $TimeSelectionParam{StopYear},
+                        $TimeSelectionParam{StopMonth},
+                        $TimeSelectionParam{StopDay};
+
+                    # check the validity
+                    $SystemTime{TimeOlderDate} = $Self->{TimeObject}->TimeStamp2SystemTime(
+                        String => $GetParam{ $TimeType . 'TimeOlderDate' },
+                    );
+                    if ( !$SystemTime{TimeOlderDate} ) {
+                        push @ValidationErrors, $TimeType . 'InvalidTimeSlot';
+                    }
                 }
+
+                # check the ordering of the times
+                if (
+                    $SystemTime{TimeNewerDate}
+                    && $SystemTime{TimeOlderDate}
+                    && $SystemTime{TimeNewerDate} >= $SystemTime{TimeOlderDate}
+                    )
+                {
+                    push @ValidationErrors, $TimeType . 'InvalidTimeSlot';
+                }
+
             }
             elsif ( $TimeSelectionParam{SearchType} eq 'TimePoint' ) {
 
@@ -287,25 +326,18 @@ sub Run {
             }
         }
 
-        # perform ticket search
-        my $ViewableChangeIDs = $Self->{ChangeObject}->ChangeSearch(
-            Result           => 'ARRAY',
-            OrderBy          => [ $Self->{SortBy} ],
-            OrderByDirection => [ $Self->{OrderBy} ],
-            Limit            => $Self->{SearchLimit},
-            UserID           => $Self->{UserID},
-            %GetParam,
-        );
+        # do not search, when there are validation errors
+        if ( !@ValidationErrors ) {
 
-        if ( $GetParam{ResultForm} eq 'CSV' ) {
-
-            # TODO: remove or implement
-        }
-        elsif ( $GetParam{ResultForm} eq 'Print' ) {
-
-            # TODO: remove or implement
-        }
-        else {
+            # perform ticket search
+            my $ViewableChangeIDs = $Self->{ChangeObject}->ChangeSearch(
+                Result           => 'ARRAY',
+                OrderBy          => [ $Self->{SortBy} ],
+                OrderByDirection => [ $Self->{OrderBy} ],
+                Limit            => $Self->{SearchLimit},
+                UserID           => $Self->{UserID},
+                %GetParam,
+            );
 
             # start html page
             my $Output = $Self->{LayoutObject}->Header();
@@ -316,7 +348,7 @@ sub Run {
             $Self->{Filter} = $Self->{ParamObject}->GetParam( Param => 'Filter' ) || '';
             $Self->{View}   = $Self->{ParamObject}->GetParam( Param => 'View' )   || '';
 
-            # show ticket's
+            # show changes
             my $LinkPage = 'Filter='
                 . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
                 . '&View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
@@ -335,13 +367,6 @@ sub Run {
             my $LinkBack = 'Subaction=LoadProfile&Profile='
                 . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Profile} )
                 . '&TakeLastSearch=1&';
-
-            my $FilterLink
-                = 'SortBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{SortBy} )
-                . '&OrderBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{OrderBy} )
-                . '&View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
-                . '&Profile=' . $Self->{Profile} . '&TakeLastSearch=1&Subaction=Search'
-                . '&';
 
             # find out which columns should be shown
             my @ShowColumns;
@@ -377,21 +402,24 @@ sub Run {
 
             # build footer
             $Output .= $Self->{LayoutObject}->Footer();
+
             return $Output;
         }
     }
 
-    # empty search site
-    else {
+    # There was no 'SubAction', or there were validation errors
+    # generate search mask
+    my $Output = $Self->{LayoutObject}->Header();
 
-        # generate search mask
-        my $Output = $Self->{LayoutObject}->Header();
+    $Output .= $Self->{LayoutObject}->NavigationBar();
+    $Output .= $Self->MaskForm(
+        %GetParam,
+        ValidationErrors => \@ValidationErrors,
+        Profile          => $Self->{Profile},
+    );
+    $Output .= $Self->{LayoutObject}->Footer();
 
-        $Output .= $Self->{LayoutObject}->NavigationBar();
-        $Output .= $Self->MaskForm( %GetParam, Profile => $Self->{Profile}, );
-        $Output .= $Self->{LayoutObject}->Footer();
-        return $Output;
-    }
+    return $Output;
 }
 
 sub MaskForm {
@@ -656,6 +684,14 @@ sub MaskForm {
             Name => 'TimeSelection',
             Data => \%TimeSelectionData,
         );
+
+        # show time type specific validation errors
+        if ( grep { $_ eq $Prefix . 'InvalidTimeSlot' } @{ $Param{ValidationErrors} } ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'InvalidTimeSlot',
+                Data => \%TimeSelectionData,
+            );
+        }
     }
 
     # build customer search autocomplete field for CABCustomer
