@@ -2,7 +2,7 @@
 # AgentITSMChangeZoom.dtl - provides HTML form for AgentITSMChangeZoom
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.dtl,v 1.29 2009-12-01 14:28:57 bes Exp $
+# $Id: AgentITSMChangeZoom.dtl,v 1.30 2009-12-03 15:28:51 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -189,10 +189,10 @@
 <!-- dtl:block:ActualEndTime -->
                     </td>
                 </tr>
+<!-- dtl:block:RealizeTime -->
                 <tr>
                     <td colspan="2">&nbsp;</td>
                 </tr>
-<!-- dtl:block:RealizeTime -->
                 <tr>
                     <td class="mainkey">$Text{"Realization Time"}:</td>
                     <td class="mainvalue">
@@ -201,6 +201,9 @@
                 </tr>
 <!-- dtl:block:RealizeTime -->
 <!-- dtl:block:EmptyRealizeTime -->
+                <tr>
+                    <td colspan="2">&nbsp;</td>
+                </tr>
                 <tr>
                     <td class="mainkey">$Text{"Realization Time"}:</td>
                     <td class="mainvalue">
@@ -211,7 +214,6 @@
                 <tr>
                     <td colspan="2">&nbsp;</td>
                 </tr>
-
 <!-- dtl:block:Category -->
                 <tr valign="top">
                     <td class="mainkey">$Text{"Category"}:</td>
@@ -239,7 +241,6 @@
                 <tr>
                     <td colspan="2">&nbsp;</td>
                 </tr>
-
                 <tr>
                     <td class="mainkey">$Text{"Change Initiator(s):"}</td>
                     <td class="mainvalue">
