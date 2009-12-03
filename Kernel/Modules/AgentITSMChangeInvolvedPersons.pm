@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeInvolvedPersons.pm - the OTRS::ITSM::ChangeManagement change involved persons module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.17 2009-12-03 09:52:16 bes Exp $
+# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.18 2009-12-03 10:03:45 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::User;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -669,11 +669,9 @@ sub _IsNewCABMemberOk {
     # current members
     my $CurrentMembers = $Param{Change}->{$MemberType};
 
-    my %User;
-
     # an agent is requested to be added
     if ( $MemberType eq 'CABAgents' ) {
-        %User = $Self->{UserObject}->GetUserData(
+        my %User = $Self->{UserObject}->GetUserData(
             UserID => $Param{CABMemberID},
         );
 
