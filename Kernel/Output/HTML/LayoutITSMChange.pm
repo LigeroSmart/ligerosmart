@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LayoutITSMChange.pm,v 1.19 2009-12-03 11:13:48 mae Exp $
+# $Id: LayoutITSMChange.pm,v 1.20 2009-12-03 12:43:14 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use POSIX qw(ceil);
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 =over 4
 
@@ -38,7 +38,7 @@ sub ITSMChangeBuildWorkOrderGraph {
     my ( $Self, %Param ) = @_;
 
     # check needed objects
-    for my $Object (qw(TimeObject)) {
+    for my $Object (qw(TimeObject ConfigObject)) {
         if ( !$Self->{$Object} ) {
             $Self->{LayoutObject}->FatalError(
                 Message => "Got no $Object!",
@@ -141,8 +141,69 @@ sub ITSMChangeBuildWorkOrderGraph {
         push @WorkOrders, $WorkOrder;
     }
 
-    # sort workorder ascending to WorkOrderNumber
-    @WorkOrders = sort { $a->{WorkOrderNumber} <=> $b->{WorkOrderNumber} } @WorkOrders;
+    # get config settings
+    my $ChangeZoomConfig = $Self->{ConfigObject}->Get('ITSMChange::Frontend::AgentITSMChangeZoom');
+
+    # check config setting
+    if ( !$ChangeZoomConfig ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need SysConfig settings for ITSMChange::Frontend::AgentITSMChangeZoom!',
+        );
+        return;
+    }
+
+    # check graph config setting
+    if ( !$ChangeZoomConfig->{WorkOrderGraph} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message =>
+                'Need SysConfig settings for '
+                . 'ITSMChange::Frontend::AgentITSMChangeZoom###WorkOrderGraph!',
+        );
+        return;
+    }
+
+    # validity settings of graph settings
+    my %WorkOrderGraphCheck = (
+        TimeLineColor => '#[a-fA-F\d]{6}',
+        TimeLineWidth => '\d{1,2}',
+    );
+
+    # check validity of graph settings
+    my $WorkOrderGraphConfig = $ChangeZoomConfig->{WorkOrderGraph};
+    for my $GraphSetting ( keys %WorkOrderGraphCheck ) {
+
+        # check existense of config setting
+        if ( !$WorkOrderGraphConfig->{$GraphSetting} ) {
+
+            # display error and return
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message =>
+                    "Need SysConfig setting '$GraphSetting' in "
+                    . "ITSMChange::Frontend::AgentITSMChangeZoom###WorkOrderGraph!",
+            );
+            return;
+        }
+
+        # check validity of config setting
+        if (
+            $WorkOrderGraphConfig->{$GraphSetting}
+            !~ m{\A $WorkOrderGraphCheck{$GraphSetting} \z}smx
+            )
+        {
+
+            # display error and return
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message =>
+                    "SysConfig setting '$GraphSetting' is invalid in "
+                    . "ITSMChange::Frontend::AgentITSMChangeZoom###WorkOrderGraph!",
+            );
+            return;
+        }
+    }
 
     # load graph sceleton
     $Self->Block(
@@ -161,7 +222,7 @@ sub ITSMChangeBuildWorkOrderGraph {
 
         # calculate height of time line
         my $WorkOrderHeight = 16;
-        my $ScaleMargin     = 10;
+        my $ScaleMargin     = 11;
         $TimeLine->{TimeLineHeight} =
             ( ( scalar @WorkOrders ) * $WorkOrderHeight ) + $ScaleMargin;
 
@@ -170,6 +231,7 @@ sub ITSMChangeBuildWorkOrderGraph {
             Name => 'CSSTimeLine',
             Data => {
                 %{$TimeLine},
+                %{$WorkOrderGraphConfig},
             },
         );
 
@@ -179,6 +241,9 @@ sub ITSMChangeBuildWorkOrderGraph {
             Data => {},
         );
     }
+
+    # sort workorder ascending to WorkOrderNumber
+    @WorkOrders = sort { $a->{WorkOrderNumber} <=> $b->{WorkOrderNumber} } @WorkOrders;
 
     # build graph of each workorder
     WORKORDER:

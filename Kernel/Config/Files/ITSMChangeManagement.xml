@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.102 2009-12-03 11:40:50 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.103 2009-12-03 12:43:14 mae Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -1862,6 +1862,18 @@
                 <Item Key="0">No</Item>
                 <Item Key="1">Yes</Item>
             </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeZoom###WorkOrderGraph" Required="1" Valid="1">
+        <Description Lang="en">Defines shown graph attributes.</Description>
+        <Description Lang="de">Definiert Attribute für die Anzeige des Graphen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeZoom</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="TimeLineColor">#800000</Item>
+                <Item Key="TimeLineWidth">2</Item>
+            </Hash>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMWorkOrderAdd###Permission" Required="1" Valid="1">
