@@ -2,7 +2,7 @@
 # ITSMChange.dtl - provides HTML elements for work order graph
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.dtl,v 1.13 2009-12-03 12:43:14 mae Exp $
+# $Id: ITSMChange.dtl,v 1.14 2009-12-03 14:37:35 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -11,15 +11,6 @@
 
 <!-- dtl:block:WorkOrderGraph -->
 <style type="text/css" media="screen">
-    .pending           { opacity:0.5; }
-    .wo_approval       { background-color:#ff9933; }
-    .wo_approval_comp  { background-color:#804d1a; }
-    .wo_entry          { background-color:#4d9a00; }
-    .wo_entry_comp     { background-color:#2e4d0f; }
-    .wo_entry_pend     { background-color:#a1a1a1; }
-    .wo_pir_comp       { background-color:#806700; }
-    .wo_pir_pend       { background-color:#a1a1a1; }
-    .wo_pir            { background-color:#ffcc00; }
     img.wo_status      { margin-top:2px; }
     td.change_title    { text-align:center; }
     img.change_title   { margin-top: 5px; margin-bottom: 5px; }
@@ -28,10 +19,11 @@
     td.wo              { height: 5px; font-size: 1pt; }
 
     td.time_containter { font-size:0.1pt; }
+/* <!-- dtl:block:CSSWorkOrderType --> */
+    td.$QData{"WorkOrderTypeName"} { background-color:$QData{"WorkOrderTypeColor"}; }
+/* <!-- dtl:block:CSSWorkOrderType --> */
 
-/* work around for CSS comments
-<!-- dtl:block:CSSTimeLine -->
-*/
+/* <!-- dtl:block:CSSTimeLine --> */
     div#time_line_cont  { position:relative; display:block; }
     div#time_line       {
                           background-color:$QData{"TimeLineColor"};
@@ -42,9 +34,7 @@
                           top:2px;
                           left:$QData{"TimeLineLeft"}%;
                         }
-/* work around for CSS comments
-<!-- dtl:block:CSSTimeLine -->
-*/
+/* <!-- dtl:block:CSSTimeLine --> */
 
     div#scale          { border-bottom:1px solid #000000; margin:5px 0px 0px 0px; padding:0px; }
     div#scale table    { margin:0px; padding:0px; border-spacing:0px; border-collapse: collapse; }
@@ -93,14 +83,14 @@
             <table border="0" cellpadding="0" cellspacing="0" width="100%">
                 <tr>
                     <td class="wo" width="$QData{"PlannedPadding"}%"></td>
-                    <td class="wo wo_pir pending" width="$QData{"PlannedTicks"}%">&nbsp;</td>
+                    <td class="wo $QData{"WorkOrderType"}_planned" width="$QData{"PlannedTicks"}%">&nbsp;</td>
                     <td class="wo" width="$QData{"PlannedTrailing"}%"></td>
                 </tr>
             </table>
             <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-top:1px">
                 <tr>
                     <td class="wo" width="$QData{"ActualPadding"}%"></td>
-                    <td class="wo wo_pir_pend pending" width="$QData{"ActualTicks"}%">&nbsp;</td>
+                    <td class="wo $QData{"WorkOrderType"}_actual" width="$QData{"ActualTicks"}%">&nbsp;</td>
                     <td class="wo" width="$QData{"ActualTrailing"}%"></td>
                 </tr>
             </table>

@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LayoutITSMChange.pm,v 1.20 2009-12-03 12:43:14 mae Exp $
+# $Id: LayoutITSMChange.pm,v 1.21 2009-12-03 14:37:34 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use POSIX qw(ceil);
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 =over 4
 
@@ -166,8 +166,10 @@ sub ITSMChangeBuildWorkOrderGraph {
 
     # validity settings of graph settings
     my %WorkOrderGraphCheck = (
-        TimeLineColor => '#[a-fA-F\d]{6}',
-        TimeLineWidth => '\d{1,2}',
+        TimeLineColor           => '#[a-fA-F\d]{6}',
+        TimeLineWidth           => '\d{1,2}',
+        undefined_planned_color => '#[a-fA-F\d]{6}',
+        undefined_actual_color  => '#[a-fA-F\d]{6}',
     );
 
     # check validity of graph settings
@@ -210,6 +212,51 @@ sub ITSMChangeBuildWorkOrderGraph {
         Name => 'WorkOrderGraph',
         Data => {},
     );
+
+    # create color definitions for all configured workorder types
+    my $WorkOrderTypes = $Self->{WorkOrderObject}->WorkOrderTypeList(
+        UserID => $Self->{UserID},
+    ) || [];
+
+    # create css definitions for workorder types
+    WORKORDERTYPE:
+    for my $WorkOrderType ( @{$WorkOrderTypes} ) {
+
+        # check workorder type
+        next WORKORDERTYPE if !$WorkOrderType || !$WorkOrderType->{Value};
+
+        # get name of workorder type
+        my $WorkOrderTypeName = $WorkOrderType->{Value};
+
+        # check contents of name
+        next WORKORDERTYPE if !$WorkOrderTypeName;
+
+        for my $WorkOrderColor (qw(_planned _actual)) {
+
+            # get configured or fallback planned color for workorder
+            my $WorkOrderTypeColor =
+                $WorkOrderGraphConfig->{"${WorkOrderTypeName}${WorkOrderColor}_color"};
+
+            # set default color if no color is found
+            $WorkOrderTypeColor ||=
+                $WorkOrderGraphConfig->{"undefined${WorkOrderColor}_color"};
+
+            # check validity of workorder color
+            if ( $WorkOrderTypeColor !~ m{\A # [A-Za-z\d]{6} \z}smx ) {
+                $WorkOrderTypeColor =
+                    $WorkOrderGraphConfig->{"undefined${WorkOrderColor}_color"};
+            }
+
+            # display css definitions for planned
+            $Self->Block(
+                Name => 'CSSWorkOrderType',
+                Data => {
+                    WorkOrderTypeName  => $WorkOrderTypeName . $WorkOrderColor,
+                    WorkOrderTypeColor => $WorkOrderTypeColor,
+                },
+            );
+        }
+    }
 
     # calculate time line parameter
     my $TimeLine = $Self->_ITSMChangeGetTimeLine(
