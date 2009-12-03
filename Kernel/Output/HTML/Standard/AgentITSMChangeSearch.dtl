@@ -2,7 +2,7 @@
 # AgentITSMChangeSearch.dtl - provides HTML form for AgentITSMChangeSearch
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.dtl,v 1.10 2009-12-03 09:16:23 bes Exp $
+# $Id: AgentITSMChangeSearch.dtl,v 1.11 2009-12-03 13:34:33 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -208,167 +208,29 @@ function clear_field1() {
                         <td class="contentbody">$Data{"WorkOrderStateSelectionStrg"}</td>
                         <td class="contentbody">$Data{"WorkOrderAgentIDSelectionStrg"}&nbsp;</td>
                     </tr>
-<!-- dtl:block:RealizeTime -->
+<!-- dtl:block:TimeSelection -->
                     <tr>
-                        <td colspan="2" class="contenthead">$Text{"RealizeTime"}</td>
+                        <td colspan="2" class="contenthead">$Text{"$QData{"Title"}"}</td>
                     </tr>
                     <tr>
                         <td colspan="2" class="contentbody">
-                            <input type="radio" name="RealizeTimeSearchType" value="" $Data{"RealizeTimeSearchType::None"}/>
-                            $Text{"No realization time settings."}
+                            <input type="radio" name="$QData{"Prefix"}TimeSearchType" value="" $Data{"TimeSearchType::None"}/>
+                            $Text{"No $QData{"TitleLc"} settings."}
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2" class="contentbody">
-                            <input type="radio" name="RealizeTimeSearchType" value="TimePoint" $Data{"RealizeTimeSearchType::TimePoint"}/>
-                            $Text{"Realization time"} $Data{"RealizeTimePointStart"} $Data{"RealizeTimePoint"} $Data{"RealizeTimePointFormat"}
+                            <input type="radio" name="$QData{"Prefix"}TimeSearchType" value="TimePoint" $Data{"TimeSearchType::TimePoint"}/>
+                            $Text{"$QData{"TitleUcFirst"}"} $Data{"TimePointStart"} $Data{"TimePoint"} $Data{"TimePointFormat"}
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2" class="contentbody">
-                            <input type="radio" name="RealizeTimeSearchType" value="TimeSlot" $Data{"RealizeTimeSearchType::TimeSlot"}/>
-                            $Text{"Realization time between"} $Data{"RealizeTimeStart"} $Text{"and"} $Data{"RealizeTimeStop"}
+                            <input type="radio" name="$QData{"Prefix"}TimeSearchType" value="TimeSlot" $Data{"TimeSearchType::TimeSlot"}/>
+                            $Text{"$QData{"TitleUcFirst"} between"} $Data{"TimeStart"} $Text{"and"} $Data{"TimeStop"}
                         </td>
                     </tr>
-<!-- dtl:block:RealizeTime -->
-<!-- dtl:block:PlannedStartTime -->
-                    <tr>
-                        <td colspan="2" class="contenthead">$Text{"Planned Start Time"}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="contentbody">
-                            <input type="radio" name="PlannedStartTimeSearchType" value="" $Data{"PlannedStartTimeSearchType::None"}/>
-                            $Text{"No planned start time settings."}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="contentbody">
-                            <input type="radio" name="PlannedStartTimeSearchType" value="TimePoint" $Data{"PlannedStartTimeSearchType::TimePoint"}/>
-                            $Text{"Planned start time"} $Data{"PlannedStartTimePointStart"} $Data{"PlannedStartTimePoint"} $Data{"PlannedStartTimePointFormat"}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="contentbody">
-                            <input type="radio" name="PlannedStartTimeSearchType" value="TimeSlot" $Data{"PlannedStartTimeSearchType::TimeSlot"}/>
-                            $Text{"Planned start time between"} $Data{"PlannedStartTimeStart"} $Text{"and"} $Data{"PlannedStartTimeStop"}
-                        </td>
-                    </tr>
-<!-- dtl:block:PlannedStartTime -->
-<!-- dtl:block:PlannedEndTime -->
-                    <tr>
-                        <td colspan="2" class="contenthead">$Text{"Planned End Time"}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="contentbody">
-                            <input type="radio" name="PlannedEndTimeSearchType" value="" $Data{"PlannedEndTimeSearchType::None"}/>
-                            $Text{"No planned end time settings."}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="contentbody">
-                            <input type="radio" name="PlannedEndTimeSearchType" value="TimePoint" $Data{"PlannedEndTimeSearchType::TimePoint"}/>
-                            $Text{"Planned end time"} $Data{"PlannedEndTimePointStart"} $Data{"PlannedEndTimePoint"} $Data{"PlannedEndTimePointFormat"}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="contentbody">
-                            <input type="radio" name="PlannedEndTimeSearchType" value="TimeSlot" $Data{"PlannedEndTimeSearchType::TimeSlot"}/>
-                            $Text{"Planned end time between"} $Data{"PlannedEndTimeStart"} $Text{"and"} $Data{"PlannedEndTimeStop"}
-                        </td>
-                    </tr>
-<!-- dtl:block:PlannedEndTime -->
-<!-- dtl:block:ActualStartTime -->
-                    <tr>
-                        <td colspan="2" class="contenthead">$Text{"Actual Start Time"}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="contentbody">
-                            <input type="radio" name="ActualStartTimeSearchType" value="" $Data{"ActualStartTimeSearchType::None"}/>
-                            $Text{"No actual start time settings."}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="contentbody">
-                            <input type="radio" name="ActualStartTimeSearchType" value="TimePoint" $Data{"ActualStartTimeSearchType::TimePoint"}/>
-                            $Text{"Actual start time"} $Data{"ActualStartTimePointStart"} $Data{"ActualStartTimePoint"} $Data{"ActualStartTimePointFormat"}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="contentbody">
-                            <input type="radio" name="ActualStartTimeSearchType" value="TimeSlot" $Data{"ActualStartTimeSearchType::TimeSlot"}/>
-                            $Text{"Actual start time between"} $Data{"ActualStartTimeStart"} $Text{"and"} $Data{"ActualStartTimeStop"}
-                        </td>
-                    </tr>
-<!-- dtl:block:ActualStartTime -->
-<!-- dtl:block:ActualEndTime -->
-                    <tr>
-                        <td colspan="2" class="contenthead">$Text{"Actual End Time"}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="contentbody">
-                            <input type="radio" name="ActualEndTimeSearchType" value="" $Data{"ActualEndTimeSearchType::None"}/>
-                            $Text{"No actual end time settings."}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="contentbody">
-                            <input type="radio" name="ActualEndTimeSearchType" value="TimePoint" $Data{"ActualEndTimeSearchType::TimePoint"}/>
-                            $Text{"Actual end time"} $Data{"ActualEndTimePointStart"} $Data{"ActualEndTimePoint"} $Data{"ActualEndTimePointFormat"}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="contentbody">
-                            <input type="radio" name="ActualEndTimeSearchType" value="TimeSlot" $Data{"ActualEndTimeSearchType::TimeSlot"}/>
-                            $Text{"Actual end time between"} $Data{"ActualEndTimeStart"} $Text{"and"} $Data{"ActualEndTimeStop"}
-                        </td>
-                    </tr>
-<!-- dtl:block:ActualEndTime -->
-<!-- dtl:block:CreateTime -->
-                    <tr>
-                        <td colspan="2" class="contenthead">$Text{"Create Time"}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="contentbody">
-                            <input type="radio" name="CreateTimeSearchType" value="" $Data{"CreateTimeSearchType::None"}/>
-                            $Text{"No create time settings."}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="contentbody">
-                            <input type="radio" name="CreateTimeSearchType" value="TimePoint" $Data{"CreateTimeSearchType::TimePoint"}/>
-                            $Text{"Change created"} $Data{"CreateTimePointStart"} $Data{"CreateTimePoint"} $Data{"CreateTimePointFormat"}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="contentbody">
-                            <input type="radio" name="CreateTimeSearchType" value="TimeSlot" $Data{"CreateTimeSearchType::TimeSlot"}/>
-                            $Text{"Change created between"} $Data{"CreateTimeStart"} $Text{"and"} $Data{"CreateTimeStop"}
-                        </td>
-                    </tr>
-<!-- dtl:block:CreateTime -->
-<!-- dtl:block:ChangeTime -->
-                    <tr>
-                        <td colspan="2" class="contenthead">$Text{"Change Time"}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="contentbody">
-                            <input type="radio" name="ChangeTimeSearchType" value="" $Data{"ChangeTimeSearchType::None"}/>
-                            $Text{"No change time settings."}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="contentbody">
-                            <input type="radio" name="ChangeTimeSearchType" value="TimePoint" $Data{"ChangeTimeSearchType::TimePoint"}/>
-                            $Text{"Change changed"} $Data{"ChangeTimePointStart"} $Data{"ChangeTimePoint"} $Data{"ChangeTimePointFormat"}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="contentbody">
-                            <input type="radio" name="ChangeTimeSearchType" value="TimeSlot" $Data{"ChangeTimeSearchType::TimeSlot"}/>
-                            $Text{"Change changed between"} $Data{"ChangeTimeStart"} $Text{"and"} $Data{"ChangeTimeStop"}
-                        </td>
-                    </tr>
-<!-- dtl:block:ChangeTime -->
+<!-- dtl:block:TimeSelection -->
                     <tr>
                         <td colspan="4" class="contentfooter">
                             <input class="button" accesskey="g" type="submit" value="$Text{"Search"}"/>

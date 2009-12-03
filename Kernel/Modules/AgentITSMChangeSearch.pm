@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.20 2009-12-03 12:28:48 bes Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.21 2009-12-03 13:34:33 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -737,45 +737,62 @@ sub MaskForm {
         Data => { %Param, },
     );
 
-    # get time fields
-    my %OneToFiftyNine = map { $_ => sprintf "%2s", $_ } ( 1 .. 59 );
+    # setup for the time search fields
 
-    for my $TimeType (
-        qw(Realize PlannedStart PlannedEnd ActualStart ActualEnd Create Change)
-        )
-    {
+    # number of minutes, days, weeks, months and years
+    my %OneToFiftyNine = map { $_ => sprintf '%2s', $_ } ( 1 .. 59 );
+
+    my @TimeTypes = (
+        { Prefix => 'Realize',      Title => 'Realization Time', },
+        { Prefix => 'PlannedStart', Title => 'Planned  Start Time', },
+        { Prefix => 'PlannedEnd',   Title => 'Planned End Time', },
+        { Prefix => 'ActualStart',  Title => 'Actual Start Time', },
+        { Prefix => 'ActualEnd',    Title => 'Actual End Time', },
+        { Prefix => 'Create',       Title => 'Create Time', },
+        { Prefix => 'Change',       Title => 'Change Time', },
+    );
+
+    for my $TimeType (@TimeTypes) {
+        my $Prefix = $TimeType->{Prefix};
 
         # show RealizeTime only when enabled in SysConfig
-        next if ( $TimeType eq 'Realize' && !$Self->{Config}->{RealizeTime} );
+        next if ( $Prefix eq 'Realize' && !$Self->{Config}->{RealizeTime} );
 
-        # set radio button for time search types
-        my $SearchType = $TimeType . 'TimeSearchType';
-        if ( !$Param{$SearchType} ) {
-            $Param{ $SearchType . '::None' } = 'checked="checked"';
-        }
-        elsif ( $Param{$SearchType} eq 'TimePoint' ) {
-            $Param{ $SearchType . '::TimePoint' } = 'checked="checked"';
-        }
-        elsif ( $Param{$SearchType} eq 'TimeSlot' ) {
-            $Param{ $SearchType . '::TimeSlot' } = 'checked="checked"';
-        }
-
-        $Param{ $TimeType . 'TimePoint' } = $Self->{LayoutObject}->BuildSelection(
-            Data       => \%OneToFiftyNine,
-            Name       => $TimeType . 'TimePoint',
-            SelectedID => $Param{ $TimeType . 'TimePoint' },
+        my %TimeSelectionData = (
+            Prefix       => $Prefix,
+            Title        => $TimeType->{Title},
+            TitleLc      => lc( $TimeType->{Title} ),
+            TitleUcFirst => ucfirst( lc $TimeType->{Title} ),
         );
 
-        $Param{ $TimeType . 'TimePointStart' } = $Self->{LayoutObject}->BuildSelection(
+        # set radio button for time search types
+        my $SearchType = $Prefix . 'TimeSearchType';
+        if ( !$Param{$SearchType} ) {
+            $TimeSelectionData{'TimeSearchType::None'} = 'checked="checked"';
+        }
+        elsif ( $Param{$SearchType} eq 'TimePoint' ) {
+            $TimeSelectionData{'TimeSearchType::TimePoint'} = 'checked="checked"';
+        }
+        elsif ( $Param{$SearchType} eq 'TimeSlot' ) {
+            $TimeSelectionData{'TimeSearchType::TimeSlot'} = 'checked="checked"';
+        }
+
+        $TimeSelectionData{TimePoint} = $Self->{LayoutObject}->BuildSelection(
+            Data       => \%OneToFiftyNine,
+            Name       => $Prefix . 'TimePoint',
+            SelectedID => $Param{ $Prefix . 'TimePoint' },
+        );
+
+        $TimeSelectionData{TimePointStart} = $Self->{LayoutObject}->BuildSelection(
             Data => {
                 'Last'   => 'last',
                 'Before' => 'before',
             },
-            Name => $TimeType . 'TimePointStart',
-            SelectedID => $Param{ $TimeType . 'TimePointStart' } || 'Last',
+            Name => $Prefix . 'TimePointStart',
+            SelectedID => $Param{ $Prefix . 'TimePointStart' } || 'Last',
         );
 
-        $Param{ $TimeType . 'TimePointFormat' } = $Self->{LayoutObject}->BuildSelection(
+        $TimeSelectionData{TimePointFormat} = $Self->{LayoutObject}->BuildSelection(
             Data => {
                 minute => 'minute(s)',
                 hour   => 'hour(s)',
@@ -784,27 +801,27 @@ sub MaskForm {
                 month  => 'month(s)',
                 year   => 'year(s)',
             },
-            Name       => $TimeType . 'TimePointFormat',
-            SelectedID => $Param{ $TimeType . 'TimePointFormat' },
+            Name       => $Prefix . 'TimePointFormat',
+            SelectedID => $Param{ $Prefix . 'TimePointFormat' },
         );
 
-        $Param{ $TimeType . 'TimeStart' } = $Self->{LayoutObject}->BuildDateSelection(
+        $TimeSelectionData{TimeStart} = $Self->{LayoutObject}->BuildDateSelection(
             %Param,
-            Prefix   => $TimeType . 'TimeStart',
+            Prefix   => $Prefix . 'TimeStart',
             Format   => 'DateInputFormat',
             DiffTime => -( ( 60 * 60 * 24 ) * 30 ),
         );
 
-        $Param{ $TimeType . 'TimeStop' } = $Self->{LayoutObject}->BuildDateSelection(
+        $TimeSelectionData{TimeStop} = $Self->{LayoutObject}->BuildDateSelection(
             %Param,
-            Prefix => $TimeType . 'TimeStop',
+            Prefix => $Prefix . 'TimeStop',
             Format => 'DateInputFormat',
         );
 
         # show time field
         $Self->{LayoutObject}->Block(
-            Name => $TimeType . 'Time',
-            Data => {%Param},
+            Name => 'TimeSelection',
+            Data => \%TimeSelectionData,
         );
     }
 
