@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.26 2009-12-04 07:39:33 reb Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.27 2009-12-04 08:04:07 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.26 $) [1];
+$VERSION = qw($Revision: 1.27 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -74,7 +74,7 @@ sub Run {
     my %GetParam;
 
     # load profiles string params (press load profile)
-    if ( $Self->{TakeLastSearch} ) {
+    if ( ( $Self->{Subaction} eq 'LoadProfile' && $Self->{Profile} ) || $Self->{TakeLastSearch} ) {
         %GetParam = $Self->{SearchProfileObject}->SearchProfileGet(
             Base      => 'ITSMChangeSearch',
             Name      => $Self->{Profile},
@@ -124,6 +124,26 @@ sub Run {
             if (@Array) {
                 $GetParam{$SearchParam} = \@Array;
             }
+        }
+    }
+
+    # remove old profile stuff
+    $Self->{SearchProfileObject}->SearchProfileDelete(
+        Base      => 'ITSMChangeSearch',
+        Name      => $Self->{Profile},
+        UserLogin => $Self->{UserLogin},
+    );
+
+    # insert new profile params
+    for my $Key ( keys %GetParam ) {
+        if ( $GetParam{$Key} ) {
+            $Self->{SearchProfileObject}->SearchProfileAdd(
+                Base      => 'ITSMChangeSearch',
+                Name      => $Self->{Profile},
+                Key       => $Key,
+                Value     => $GetParam{$Key},
+                UserLogin => $Self->{UserLogin},
+            );
         }
     }
 
@@ -447,11 +467,11 @@ sub MaskForm {
 
     # build change manager dropdown
     $Param{'ChangeManagerSelectionStrg'} = $Self->{LayoutObject}->BuildSelection(
-        Data               => \%ChangeManagerID2Name,
-        Name               => 'ChangeManagerIDs',
-        Multiple           => 1,
-        Size               => 5,
-        SelectedIDRefArray => $Param{ChangeManagerID},
+        Data       => \%ChangeManagerID2Name,
+        Name       => 'ChangeManagerIDs',
+        Multiple   => 1,
+        Size       => 5,
+        SelectedID => $Param{ChangeManagerIDs},
     );
 
     # get ChangeBuilderIDs
@@ -481,11 +501,11 @@ sub MaskForm {
 
     # build change builder dropdown
     $Param{'ChangeBuilderSelectionStrg'} = $Self->{LayoutObject}->BuildSelection(
-        Data               => \%ChangeBuilderID2Name,
-        Name               => 'ChangeBuilderIDs',
-        Multiple           => 1,
-        Size               => 5,
-        SelectedIDRefArray => $Param{ChangeBuilderID},
+        Data       => \%ChangeBuilderID2Name,
+        Name       => 'ChangeBuilderIDs',
+        Multiple   => 1,
+        Size       => 5,
+        SelectedID => $Param{ChangeBuilderIDs},
     );
 
     # get possible Change Categories
@@ -493,11 +513,11 @@ sub MaskForm {
         Type => 'Category',
     );
     $Param{'ChangeCategorySelectionStrg'} = $Self->{LayoutObject}->BuildSelection(
-        Data               => $Categories,
-        Name               => 'CategoryIDs',
-        Multiple           => 1,
-        Size               => 5,
-        SelectedIDRefArray => $Param{CategoryIDs},
+        Data       => $Categories,
+        Name       => 'CategoryIDs',
+        Multiple   => 1,
+        Size       => 5,
+        SelectedID => $Param{CategoryIDs},
     );
 
     # get possible Change Impacts
@@ -505,11 +525,11 @@ sub MaskForm {
         Type => 'Impact',
     );
     $Param{'ChangeImpactSelectionStrg'} = $Self->{LayoutObject}->BuildSelection(
-        Data               => $Impacts,
-        Name               => 'ImpactIDs',
-        Multiple           => 1,
-        Size               => 5,
-        SelectedIDRefArray => $Param{ImpactIDs},
+        Data       => $Impacts,
+        Name       => 'ImpactIDs',
+        Multiple   => 1,
+        Size       => 5,
+        SelectedID => $Param{ImpactIDs},
     );
 
     # get possible Change Priorities
@@ -517,11 +537,11 @@ sub MaskForm {
         Type => 'Priority',
     );
     $Param{'ChangePrioritySelectionStrg'} = $Self->{LayoutObject}->BuildSelection(
-        Data               => $Priorities,
-        Name               => 'PriorityIDs',
-        Multiple           => 1,
-        Size               => 5,
-        SelectedIDRefArray => $Param{PriorityIDs},
+        Data       => $Priorities,
+        Name       => 'PriorityIDs',
+        Multiple   => 1,
+        Size       => 5,
+        SelectedID => $Param{PriorityIDs},
     );
 
     # get change states
@@ -530,11 +550,11 @@ sub MaskForm {
         UserID   => $Self->{UserID},
     );
     $Param{'ChangeStateSelectionStrg'} = $Self->{LayoutObject}->BuildSelection(
-        Data               => $ChangeStates,
-        Name               => 'ChangeStateIDs',
-        Multiple           => 1,
-        Size               => 5,
-        SelectedIDRefArray => $Param{ChangeStateIDs},
+        Data       => $ChangeStates,
+        Name       => 'ChangeStateIDs',
+        Multiple   => 1,
+        Size       => 5,
+        SelectedID => $Param{ChangeStateIDs},
     );
 
     # get created by users
@@ -543,20 +563,20 @@ sub MaskForm {
         Valid => 1,
     );
     $Param{'CreateBySelectionStrg'} = $Self->{LayoutObject}->BuildSelection(
-        Data               => \%Users,
-        Name               => 'CreateBy',
-        Multiple           => 1,
-        Size               => 5,
-        SelectedIDRefArray => $Param{CreateBy},
+        Data       => \%Users,
+        Name       => 'CreateBy',
+        Multiple   => 1,
+        Size       => 5,
+        SelectedID => $Param{CreateBy},
     );
 
     # get workorder agents
     $Param{'WorkOrderAgentIDSelectionStrg'} = $Self->{LayoutObject}->BuildSelection(
-        Data               => \%Users,
-        Name               => 'WorkOrderAgentIDs',
-        Multiple           => 1,
-        Size               => 5,
-        SelectedIDRefArray => $Param{WorkOrderAgentIDs},
+        Data       => \%Users,
+        Name       => 'WorkOrderAgentIDs',
+        Multiple   => 1,
+        Size       => 5,
+        SelectedID => $Param{WorkOrderAgentIDs},
     );
 
     # get workorder states
@@ -565,11 +585,11 @@ sub MaskForm {
         UserID      => 1,
     );
     $Param{'WorkOrderStateSelectionStrg'} = $Self->{LayoutObject}->BuildSelection(
-        Data               => $WorkOrderStates,
-        Name               => 'WorkOrderStateIDs',
-        Multiple           => 1,
-        Size               => 5,
-        SelectedIDRefArray => $Param{WorkOrderStateIDs},
+        Data       => $WorkOrderStates,
+        Name       => 'WorkOrderStateIDs',
+        Multiple   => 1,
+        Size       => 5,
+        SelectedID => $Param{WorkOrderStateIDs},
     );
 
     # what output types are supported
