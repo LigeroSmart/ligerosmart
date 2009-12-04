@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.195 2009-12-03 11:04:09 reb Exp $
+# $Id: ITSMChange.pm,v 1.196 2009-12-04 16:18:15 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.195 $) [1];
+$VERSION = qw($Revision: 1.196 $) [1];
 
 =head1 NAME
 
@@ -2607,6 +2607,13 @@ sub _CheckChangeParams {
                 Type => $Type,
             );
         }
+
+        if ( defined $Param{$Type} ) {
+            return if !$Self->ChangeCIPLookup(
+                CIP  => $Param{$Type},
+                Type => $Type,
+            );
+        }
     }
 
     # change manager and change builder must be agents
@@ -2720,6 +2727,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.195 $ $Date: 2009-12-03 11:04:09 $
+$Revision: 1.196 $ $Date: 2009-12-04 16:18:15 $
 
 =cut
