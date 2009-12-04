@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.25 2009-12-03 17:15:28 bes Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.26 2009-12-04 07:39:33 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.25 $) [1];
+$VERSION = qw($Revision: 1.26 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -68,6 +68,7 @@ sub Run {
         || $Self->{Config}->{'Order::Default'}
         || 'Down';
     $Self->{TakeLastSearch} = $Self->{ParamObject}->GetParam( Param => 'TakeLastSearch' ) || '';
+    $Self->{Profile} = $Self->{ParamObject}->GetParam( Param => 'Profile' ) || 'last-search';
 
     # search parameters
     my %GetParam;
