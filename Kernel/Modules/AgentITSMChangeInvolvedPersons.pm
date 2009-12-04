@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeInvolvedPersons.pm - the OTRS::ITSM::ChangeManagement change involved persons module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.19 2009-12-03 11:15:26 bes Exp $
+# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.20 2009-12-04 11:19:08 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::User;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -183,7 +183,7 @@ sub Run {
         }
         elsif ($ExpandUser) {
 
-            # get user info when
+            # get user info when autocompletion is turned off
             %ExpandInfo = $Self->_GetExpandInfo(%GetParam);
         }
         elsif ($ClearUser) {
@@ -819,14 +819,12 @@ sub _GetExpandInfo {
             Valid  => 1,
         );
 
-        # filter the itsm-change users in found customer users
-        CHANGECUSTOMERUSERID:
-        for my $ChangeCustomerUserID ( keys %CustomerUserFound ) {
+        # save found customer users in @UserList
+        for my $CustomerUserID ( keys %CustomerUserFound ) {
 
-            # save found user in @UserList
             push @UserList, {
-                Name => $CustomerUserFound{$ChangeCustomerUserID},
-                ID   => $ChangeCustomerUserID,
+                Name => $CustomerUserFound{$CustomerUserID},
+                ID   => $CustomerUserID,
                 Type => 'CABCustomers',
             };
         }
