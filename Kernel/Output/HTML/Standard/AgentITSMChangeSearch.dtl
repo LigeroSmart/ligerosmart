@@ -2,7 +2,7 @@
 # AgentITSMChangeSearch.dtl - provides HTML form for AgentITSMChangeSearch
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.dtl,v 1.12 2009-12-03 17:10:40 bes Exp $
+# $Id: AgentITSMChangeSearch.dtl,v 1.13 2009-12-04 12:43:02 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,13 +25,13 @@ $Include{"AgentITSMUserSearch"}
 <!--
 
 // clear CABCustomer
-function clear_field() {
+function clear_cab_customer() {
     document.compose.CABCustomer.value = "";
     document.compose.CABCustomer.focus();
 }
 
 // clear CABAgent
-function clear_field1() {
+function clear_cab_agent() {
     document.compose.CABAgent.value = "";
     document.compose.CABAgent.focus();
 }
@@ -39,7 +39,6 @@ function clear_field1() {
 //-->
 </script>
 
-<!-- dtl:block:Search -->
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
         <td class="mainhead">
@@ -95,16 +94,18 @@ function clear_field1() {
                                             <div id="myAutoCompleteContainer"></div>
                                         </div>
 <!-- dtl:block:CustomerSearchAutoCompleteDivEnd -->
-<!-- dtl:block:CustomerSearchAutoCompleteFromInvalid -->
+<!-- dtl:block:InvalidCABCustomer -->
                                         <font color="red" size="-2">$Text{"$Data{"Input invalid"}"}</font>
                                         <br/>
-<!-- dtl:block:CustomerSearchAutoCompleteFromInvalid -->
+<!-- dtl:block:InvalidCABCustomer -->
+                                        <br/>
                                         $Data{"CABCustomerSelectionStrg"}
-                                        <dtl if ($Data{"CABCustomerSelectionStrg"} ne "") { $Data{"TakeThisCustomer"} = "<br/><input class="button" type="submit" name="ExpandCustomerName2" value="$Text{"Take this Customer"}"/>"; }>
-                                        $Data{"TakeThisCustomer"}
+<!-- dtl:block:TakeCABCustomer -->
+                                        <br/><input class="button" type="submit" name="ExpandCABCustomer2" value="$Text{"Take this Customer"}"/>
+<!-- dtl:block:TakeCABCustomer -->
 <!-- dtl:block:SearchCustomerButton -->
-                                        <input class="button" type="submit" name="ExpandCustomerName1" value="$Text{"Search Customer"}"/>
-                                        <input class="button" type="submit" name="ClearFrom" value="$Text{"Clear From"}" onclick="javascript:clear_field(); return false;"/>
+                                        <input class="button" type="submit" name="ExpandCABCustomerName1" value="$Text{"Search CAB Customer"}"/>
+                                        <input class="button" type="submit" name="ClearCABCustomer" value="$Text{"Clear CAB Customer"}" onclick="javascript:clear_cab_customer(); return false;"/>
 <!-- dtl:block:SearchCustomerButton -->
                                     </td>
                                 </tr>
@@ -124,13 +125,13 @@ function clear_field1() {
                                         <font color="red" size="-2">$Text{"Input invalid"}</font>
 <!-- dtl:block:InvalidCABAgent -->
                                         <br/>
-                                        $Data{"CABAgentString"}
+                                        $Data{"CABAgentSelectionStrg"}
 <!-- dtl:block:TakeCABAgent -->
-                                        <br/><input class="button" type="submit" name="ExpandManager2" value="$Text{"Take this User"}"/>
+                                        <br/><input class="button" type="submit" name="ExpandCABAgent2" value="$Text{"Take this CAB Agent"}"/>
 <!-- dtl:block:TakeCABAgent -->
 <!-- dtl:block:SearchUserButton1 -->
-                                        <input class="button" type="submit" name="ExpandCABAgent1" value="$Text{"Search User"}"/>
-                                        <input class="button" type="submit" name="ClearCABAgent1" value="$Text{"Clear User"}" onclick="javascript:clear_field1(); return false;"/>
+                                        <input class="button" type="submit" name="ExpandCABAgent1" value="$Text{"Search CAB Agent"}"/>
+                                        <input class="button" type="submit" name="ClearCABAgent" value="$Text{"Clear CAB Agent"}" onclick="javascript:clear_cab_agent(); return false;"/>
 <!-- dtl:block:SearchUserButton1 -->
                                     </td>
                                 </tr>
@@ -244,4 +245,3 @@ function clear_field1() {
         </td>
     </tr>
 </table>
-<!-- dtl:block:Search -->

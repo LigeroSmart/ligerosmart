@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.27 2009-12-04 08:04:07 reb Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.28 2009-12-04 12:43:02 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,7 +14,6 @@ package Kernel::Modules::AgentITSMChangeSearch;
 use strict;
 use warnings;
 
-use Kernel::System::CSV;
 use Kernel::System::Group;
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
@@ -22,7 +21,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.27 $) [1];
+$VERSION = qw($Revision: 1.28 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -43,7 +42,6 @@ sub new {
 
     # create needed objects
     $Self->{ChangeObject}        = Kernel::System::ITSMChange->new(%Param);
-    $Self->{CSVObject}           = Kernel::System::CSV->new(%Param);
     $Self->{GroupObject}         = Kernel::System::Group->new(%Param);
     $Self->{SearchProfileObject} = Kernel::System::SearchProfile->new(%Param);
     $Self->{UserObject}          = Kernel::System::User->new(%Param);
@@ -73,7 +71,8 @@ sub Run {
     # search parameters
     my %GetParam;
 
-    # load profiles string params (press load profile)
+    # load parameters from search profile,
+    # this happens when the next result page should be shown, or when the results are reordered
     if ( ( $Self->{Subaction} eq 'LoadProfile' && $Self->{Profile} ) || $Self->{TakeLastSearch} ) {
         %GetParam = $Self->{SearchProfileObject}->SearchProfileGet(
             Base      => 'ITSMChangeSearch',
@@ -84,28 +83,24 @@ sub Run {
     else {
 
         # get scalar search params
-        for my $SearchParam (
-            qw(ChangeNumber ChangeTitle WorkOrderTitle SelectedCustomerUser SelectedUser1 Description Justification WorkOrderInstruction WorkOrderReport
+        for my $ParamName (
+            qw(
+            ChangeNumber ChangeTitle Description Justification
+            SelectedCustomerUser
+            SelectedUser1
+            WorkOrderTitle WorkOrderInstruction WorkOrderReport
             )
             )
         {
 
             # get search string params (get submitted params)
-            $GetParam{$SearchParam} = $Self->{ParamObject}->GetParam( Param => $SearchParam );
+            $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
 
             # remove white space on the start and end
-            if ( $GetParam{$SearchParam} ) {
-                $GetParam{$SearchParam} =~ s/\s+$//g;
-                $GetParam{$SearchParam} =~ s/^\s+//g;
+            if ( $GetParam{$ParamName} ) {
+                $GetParam{$ParamName} =~ s/\s+$//g;
+                $GetParam{$ParamName} =~ s/^\s+//g;
             }
-        }
-
-        if ( $GetParam{SelectedUser1} ) {
-            $GetParam{CABAgents} = [ $GetParam{SelectedUser1} ];
-        }
-
-        if ( $GetParam{SelectedCustomerUser} ) {
-            $GetParam{CABCustomers} = [ $GetParam{SelectedCustomerUser} ];
         }
 
         # get array search params
@@ -118,11 +113,37 @@ sub Run {
             )
             )
         {
-
-            # get search array params (get submitted params)
             my @Array = $Self->{ParamObject}->GetArray( Param => $SearchParam );
             if (@Array) {
                 $GetParam{$SearchParam} = \@Array;
+            }
+        }
+
+        # get time related params
+        for my $TimeType (
+            qw( Realize PlannedStart PlannedEnd ActualStart ActualEnd Create Change )
+            )
+        {
+            for my $Part (
+                qw(
+                SearchType
+                PointFormat Point PointStart
+                Start StartDay StartMonth StartYear
+                Stop  StopDay  StopMonth  StopYear
+                )
+                )
+            {
+                my $ParamKey = "${TimeType}Time${Part}";
+                my $ParamVal = $Self->{ParamObject}->GetParam( Param => $ParamKey );
+
+                # remove white space on the start and end
+                if ($ParamVal) {
+                    $ParamVal =~ s/\s+$//;
+                    $ParamVal =~ s/^\s+//;
+                }
+
+                # store in %GetParam
+                $GetParam{$ParamKey} = $ParamVal;
             }
         }
     }
@@ -147,297 +168,321 @@ sub Run {
         }
     }
 
-    # set result form env
-    $GetParam{ResultForm} ||= '';
-
     # Remember the reason why searching was not attempted.
     # The entries are the names of the dtl validation error blocks.
     my @ValidationErrors;
 
+    # this is needed to handle user requests when autocompletion is turned off
+    # %ExpandInfo gets info about chosen user and all available users
+    my %ExpandInfo;
+
     # show result site
     if ( $Self->{Subaction} eq 'Search' ) {
+
+        # Extract the parameters that are not needed for searching,
+        # which are not stored in the search profile
+        for my $ParamName (
+            qw(
+            CABCustomerID CABCustomer ExpandCABCustomer1 ExpandCABCustomer2 ClearCABCustomer
+            CABAgentID    CABAgent    ExpandCABAgent1    ExpandCABAgent2    ClearCABAgent
+            )
+            )
+        {
+            $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+        }
+
+        # is a "search user" or "search customer" button clicked
+        my $ExpandUser = $GetParam{ExpandCABAgent1} || $GetParam{ExpandCABAgent2}
+            || $GetParam{ExpandCABCustomer1} || $GetParam{ExpandCABCustomer2};
+
+        # is a "clear user" button clicked
+        my $ClearUser = $GetParam{ClearCABAgent} || $GetParam{ClearCABCustomer};
 
         # fill up profile name (e.g. with last-search)
         if ( !$Self->{Profile} ) {
             $Self->{Profile} = 'last-search';
         }
 
-        # store last queue screen
-        my $URL
-            = "Action=ITSMChangeSearch&Subaction=Search&Profile=$Self->{Profile}&SortBy=$Self->{SortBy}"
-            . "&OrderBy=$Self->{OrderBy}&TakeLastSearch=1&StartHit=$Self->{StartHit}";
-        $Self->{SessionObject}->UpdateSessionID(
-            SessionID => $Self->{SessionID},
-            Key       => 'LastScreenOverview',
-            Value     => $URL,
-        );
-        $Self->{SessionObject}->UpdateSessionID(
-            SessionID => $Self->{SessionID},
-            Key       => 'LastScreenView',
-            Value     => $URL,
-        );
+        if ($ExpandUser) {
 
-        # get the time search parameters
-        for my $TimeType (
-            qw( Realize PlannedStart PlannedEnd ActualStart ActualEnd Create Change )
-            )
-        {
+            # get user and customer info when autocompletion is turned off
+            %ExpandInfo = $Self->_GetExpandInfo(%GetParam);
+        }
+        else {
 
-            # extract the time search parameters for $TimeType into %TimeSelectionParam
-            my %TimeSelectionParam;
-            for my $Part (
-                qw(
-                SearchType
-                PointFormat Point PointStart
-                Start StartDay StartMonth StartYear
-                Stop  StopDay  StopMonth  StopYear
-                )
+            # store last queue screen
+            my $URL
+                = "Action=ITSMChangeSearch&Subaction=Search&Profile=$Self->{Profile}&SortBy=$Self->{SortBy}"
+                . "&OrderBy=$Self->{OrderBy}&TakeLastSearch=1&StartHit=$Self->{StartHit}";
+            $Self->{SessionObject}->UpdateSessionID(
+                SessionID => $Self->{SessionID},
+                Key       => 'LastScreenOverview',
+                Value     => $URL,
+            );
+            $Self->{SessionObject}->UpdateSessionID(
+                SessionID => $Self->{SessionID},
+                Key       => 'LastScreenView',
+                Value     => $URL,
+            );
+
+            # prepare CABAgents and CABCustomers
+            if ( $GetParam{SelectedUser1} ) {
+                $GetParam{CABAgents} = [ $GetParam{SelectedUser1} ];
+            }
+            if ( $GetParam{SelectedCustomerUser} ) {
+                $GetParam{CABCustomers} = [ $GetParam{SelectedCustomerUser} ];
+            }
+
+            # get and check the time search parameters
+            for my $TimeType (
+                qw( Realize PlannedStart PlannedEnd ActualStart ActualEnd Create Change )
                 )
             {
 
-                # get search string params (get submitted params)
-                $TimeSelectionParam{$Part}
-                    = $Self->{ParamObject}->GetParam( Param => $TimeType . 'Time' . $Part );
-
-                # remove white space on the start and end
-                if ( $TimeSelectionParam{$Part} ) {
-                    $TimeSelectionParam{$Part} =~ s/\s+$//;
-                    $TimeSelectionParam{$Part} =~ s/^\s+//;
-                }
-
-                # Keep the values with the original keys in %GetParam,
-                # so that the mask can be regenerated in case of validation errors
-                $GetParam{ $TimeType . 'Time' . $Part } = $TimeSelectionParam{$Part};
-            }
-
-            # nothing to do, when no time search type has been selected
-            next if !$TimeSelectionParam{SearchType};
-
-            if ( $TimeSelectionParam{SearchType} eq 'TimeSlot' ) {
-
-                my %SystemTime;    # used for checking the ordering of the two times
-
-                # the earlier limit
-                if (
-                    $TimeSelectionParam{StartDay}
-                    && $TimeSelectionParam{StartMonth}
-                    && $TimeSelectionParam{StartYear}
+                # extract the time search parameters for $TimeType into %TimeSelectionParam
+                my %TimeSelectionParam;
+                for my $Part (
+                    qw(
+                    SearchType
+                    PointFormat Point PointStart
+                    Start StartDay StartMonth StartYear
+                    Stop  StopDay  StopMonth  StopYear
+                    )
                     )
                 {
+                    $TimeSelectionParam{$Part} = $GetParam{ $TimeType . 'Time' . $Part };
+                }
 
-                    # format as timestamp
-                    $GetParam{ $TimeType . 'TimeNewerDate' } = sprintf '%04d-%02d-%02d 00:00:01',
-                        $TimeSelectionParam{StartYear},
-                        $TimeSelectionParam{StartMonth},
-                        $TimeSelectionParam{StartDay};
+                # nothing to do, when no time search type has been selected
+                next if !$TimeSelectionParam{SearchType};
 
-                    # check the validity
-                    $SystemTime{TimeNewerDate} = $Self->{TimeObject}->TimeStamp2SystemTime(
-                        String => $GetParam{ $TimeType . 'TimeNewerDate' },
-                    );
-                    if ( !$SystemTime{TimeNewerDate} ) {
+                if ( $TimeSelectionParam{SearchType} eq 'TimeSlot' ) {
+
+                    my %SystemTime;    # used for checking the ordering of the two times
+
+                    # the earlier limit
+                    if (
+                        $TimeSelectionParam{StartDay}
+                        && $TimeSelectionParam{StartMonth}
+                        && $TimeSelectionParam{StartYear}
+                        )
+                    {
+
+                        # format as timestamp
+                        $GetParam{ $TimeType . 'TimeNewerDate' }
+                            = sprintf '%04d-%02d-%02d 00:00:01',
+                            $TimeSelectionParam{StartYear},
+                            $TimeSelectionParam{StartMonth},
+                            $TimeSelectionParam{StartDay};
+
+                        # check the validity
+                        $SystemTime{TimeNewerDate} = $Self->{TimeObject}->TimeStamp2SystemTime(
+                            String => $GetParam{ $TimeType . 'TimeNewerDate' },
+                        );
+                        if ( !$SystemTime{TimeNewerDate} ) {
+                            push @ValidationErrors, $TimeType . 'InvalidTimeSlot';
+                        }
+                    }
+
+                    # the later limit
+                    if (
+                        $TimeSelectionParam{StopDay}
+                        && $TimeSelectionParam{StopMonth}
+                        && $TimeSelectionParam{StopYear}
+                        )
+                    {
+
+                        # format as timestamp
+                        $GetParam{ $TimeType . 'TimeOlderDate' }
+                            = sprintf '%04d-%02d-%02d 23:59:59',
+                            $TimeSelectionParam{StopYear},
+                            $TimeSelectionParam{StopMonth},
+                            $TimeSelectionParam{StopDay};
+
+                        # check the validity
+                        $SystemTime{TimeOlderDate} = $Self->{TimeObject}->TimeStamp2SystemTime(
+                            String => $GetParam{ $TimeType . 'TimeOlderDate' },
+                        );
+                        if ( !$SystemTime{TimeOlderDate} ) {
+                            push @ValidationErrors, $TimeType . 'InvalidTimeSlot';
+                        }
+                    }
+
+                    # check the ordering of the times
+                    if (
+                        $SystemTime{TimeNewerDate}
+                        && $SystemTime{TimeOlderDate}
+                        && $SystemTime{TimeNewerDate} >= $SystemTime{TimeOlderDate}
+                        )
+                    {
                         push @ValidationErrors, $TimeType . 'InvalidTimeSlot';
                     }
+
                 }
+                elsif ( $TimeSelectionParam{SearchType} eq 'TimePoint' ) {
 
-                # the later limit
-                if (
-                    $TimeSelectionParam{StopDay}
-                    && $TimeSelectionParam{StopMonth}
-                    && $TimeSelectionParam{StopYear}
-                    )
-                {
+                    # queries relative to now
+                    if (
+                        $TimeSelectionParam{Point}
+                        && $TimeSelectionParam{PointStart}
+                        && $TimeSelectionParam{PointFormat}
+                        )
+                    {
+                        my $DiffSeconds = 0;
+                        if ( $TimeSelectionParam{PointFormat} eq 'minute' ) {
+                            $DiffSeconds = $TimeSelectionParam{Point} * 60;
+                        }
+                        elsif ( $TimeSelectionParam{PointFormat} eq 'hour' ) {
+                            $DiffSeconds = $TimeSelectionParam{Point} * 60 * 60;
+                        }
+                        elsif ( $TimeSelectionParam{PointFormat} eq 'day' ) {
+                            $DiffSeconds = $TimeSelectionParam{Point} * 60 * 60 * 24;
+                        }
+                        elsif ( $TimeSelectionParam{PointFormat} eq 'week' ) {
+                            $DiffSeconds = $TimeSelectionParam{Point} * 60 * 60 * 24 * 7;
+                        }
+                        elsif ( $TimeSelectionParam{PointFormat} eq 'month' ) {
+                            $DiffSeconds = $TimeSelectionParam{Point} * 60 * 60 * 24 * 30;
+                        }
+                        elsif ( $TimeSelectionParam{PointFormat} eq 'year' ) {
+                            $DiffSeconds = $TimeSelectionParam{Point} * 60 * 60 * 24 * 365;
+                        }
 
-                    # format as timestamp
-                    $GetParam{ $TimeType . 'TimeOlderDate' } = sprintf '%04d-%02d-%02d 23:59:59',
-                        $TimeSelectionParam{StopYear},
-                        $TimeSelectionParam{StopMonth},
-                        $TimeSelectionParam{StopDay};
-
-                    # check the validity
-                    $SystemTime{TimeOlderDate} = $Self->{TimeObject}->TimeStamp2SystemTime(
-                        String => $GetParam{ $TimeType . 'TimeOlderDate' },
-                    );
-                    if ( !$SystemTime{TimeOlderDate} ) {
-                        push @ValidationErrors, $TimeType . 'InvalidTimeSlot';
-                    }
-                }
-
-                # check the ordering of the times
-                if (
-                    $SystemTime{TimeNewerDate}
-                    && $SystemTime{TimeOlderDate}
-                    && $SystemTime{TimeNewerDate} >= $SystemTime{TimeOlderDate}
-                    )
-                {
-                    push @ValidationErrors, $TimeType . 'InvalidTimeSlot';
-                }
-
-            }
-            elsif ( $TimeSelectionParam{SearchType} eq 'TimePoint' ) {
-
-                # queries relative to now
-                if (
-                    $TimeSelectionParam{Point}
-                    && $TimeSelectionParam{PointStart}
-                    && $TimeSelectionParam{PointFormat}
-                    )
-                {
-                    my $DiffSeconds = 0;
-                    if ( $TimeSelectionParam{PointFormat} eq 'minute' ) {
-                        $DiffSeconds = $TimeSelectionParam{Point} * 60;
-                    }
-                    elsif ( $TimeSelectionParam{PointFormat} eq 'hour' ) {
-                        $DiffSeconds = $TimeSelectionParam{Point} * 60 * 60;
-                    }
-                    elsif ( $TimeSelectionParam{PointFormat} eq 'day' ) {
-                        $DiffSeconds = $TimeSelectionParam{Point} * 60 * 60 * 24;
-                    }
-                    elsif ( $TimeSelectionParam{PointFormat} eq 'week' ) {
-                        $DiffSeconds = $TimeSelectionParam{Point} * 60 * 60 * 24 * 7;
-                    }
-                    elsif ( $TimeSelectionParam{PointFormat} eq 'month' ) {
-                        $DiffSeconds = $TimeSelectionParam{Point} * 60 * 60 * 24 * 30;
-                    }
-                    elsif ( $TimeSelectionParam{PointFormat} eq 'year' ) {
-                        $DiffSeconds = $TimeSelectionParam{Point} * 60 * 60 * 24 * 365;
-                    }
-
-                    my $CurrentSystemTime = $Self->{TimeObject}->SystemTime();
-                    my $CurrentTimeStamp  = $Self->{TimeObject}->SystemTime2TimeStamp(
-                        SystemTime => $CurrentSystemTime
-                    );
-                    if ( $TimeSelectionParam{PointStart} eq 'Before' ) {
-
-                        # search in the future
-                        my $SearchTimeStamp = $Self->{TimeObject}->SystemTime2TimeStamp(
-                            SystemTime => $CurrentSystemTime + $DiffSeconds,
+                        my $CurrentSystemTime = $Self->{TimeObject}->SystemTime();
+                        my $CurrentTimeStamp  = $Self->{TimeObject}->SystemTime2TimeStamp(
+                            SystemTime => $CurrentSystemTime
                         );
-                        $GetParam{ $TimeType . 'TimeNewerDate' } = $CurrentTimeStamp;
-                        $GetParam{ $TimeType . 'TimeOlderDate' } = $SearchTimeStamp;
-                    }
-                    else {
-                        my $SearchTimeStamp = $Self->{TimeObject}->SystemTime2TimeStamp(
-                            SystemTime => $CurrentSystemTime - $DiffSeconds,
-                        );
-                        $GetParam{ $TimeType . 'TimeNewerDate' } = $SearchTimeStamp;
-                        $GetParam{ $TimeType . 'TimeOlderDate' } = $CurrentTimeStamp;
+                        if ( $TimeSelectionParam{PointStart} eq 'Before' ) {
+
+                            # search in the future
+                            my $SearchTimeStamp = $Self->{TimeObject}->SystemTime2TimeStamp(
+                                SystemTime => $CurrentSystemTime + $DiffSeconds,
+                            );
+                            $GetParam{ $TimeType . 'TimeNewerDate' } = $CurrentTimeStamp;
+                            $GetParam{ $TimeType . 'TimeOlderDate' } = $SearchTimeStamp;
+                        }
+                        else {
+                            my $SearchTimeStamp = $Self->{TimeObject}->SystemTime2TimeStamp(
+                                SystemTime => $CurrentSystemTime - $DiffSeconds,
+                            );
+                            $GetParam{ $TimeType . 'TimeNewerDate' } = $SearchTimeStamp;
+                            $GetParam{ $TimeType . 'TimeOlderDate' } = $CurrentTimeStamp;
+                        }
                     }
                 }
-            }
-            else {
+                else {
 
-                # unknown search types are simply ignored
-            }
-        }
-
-        # search for substrings by default
-        for (
-            qw(ChangeTitle WorkOrderTitle Description Justification WorkOrderInstruction WorkOrderReport)
-            )
-        {
-            if ( defined( $GetParam{$_} ) && $GetParam{$_} ne '' ) {
-                $GetParam{$_} = "*$GetParam{$_}*";
-            }
-        }
-
-        # do not search, when there are validation errors
-        if ( !@ValidationErrors ) {
-
-            # perform ticket search
-            my $ViewableChangeIDs = $Self->{ChangeObject}->ChangeSearch(
-                Result           => 'ARRAY',
-                OrderBy          => [ $Self->{SortBy} ],
-                OrderByDirection => [ $Self->{OrderBy} ],
-                Limit            => $Self->{SearchLimit},
-                UserID           => $Self->{UserID},
-                %GetParam,
-            );
-
-            # start html page
-            my $Output = $Self->{LayoutObject}->Header();
-            $Output .= $Self->{LayoutObject}->NavigationBar();
-            $Self->{LayoutObject}->Print( Output => \$Output );
-            $Output = '';
-
-            $Self->{Filter} = $Self->{ParamObject}->GetParam( Param => 'Filter' ) || '';
-            $Self->{View}   = $Self->{ParamObject}->GetParam( Param => 'View' )   || '';
-
-            # show changes
-            my $LinkPage = 'Filter='
-                . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
-                . '&View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
-                . '&SortBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{SortBy} )
-                . '&OrderBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{OrderBy} )
-                . '&Profile=' . $Self->{Profile} . '&TakeLastSearch=1&Subaction=Search'
-                . '&';
-            my $LinkSort = 'Filter='
-                . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
-                . '&View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
-                . '&Profile=' . $Self->{Profile} . '&TakeLastSearch=1&Subaction=Search'
-                . '&';
-            my $LinkFilter = 'TakeLastSearch=1&Subaction=Search&Profile='
-                . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Profile} )
-                . '&';
-            my $LinkBack = 'Subaction=LoadProfile&Profile='
-                . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Profile} )
-                . '&TakeLastSearch=1&';
-
-            # find out which columns should be shown
-            my @ShowColumns;
-            if ( $Self->{Config}->{ShowColumns} ) {
-
-                # get all possible columns from config
-                my %PossibleColumn = %{ $Self->{Config}->{ShowColumns} };
-
-                # get the column names that should be shown
-                COLUMNNAME:
-                for my $Name ( keys %PossibleColumn ) {
-                    next COLUMNNAME if !$PossibleColumn{$Name};
-                    push @ShowColumns, $Name;
+                    # unknown search types are simply ignored
                 }
             }
 
-            $Output .= $Self->{LayoutObject}->ITSMChangeListShow(
-                ChangeIDs => $ViewableChangeIDs,
-                Total     => scalar @{$ViewableChangeIDs},
+            # search for substrings by default
+            for (
+                qw(ChangeTitle WorkOrderTitle Description Justification WorkOrderInstruction WorkOrderReport)
+                )
+            {
+                if ( defined( $GetParam{$_} ) && $GetParam{$_} ne '' ) {
+                    $GetParam{$_} = "*$GetParam{$_}*";
+                }
+            }
 
-                View => $Self->{View},
+            # do not search, when there are validation errors
+            if ( !@ValidationErrors ) {
 
-                Env        => $Self,
-                LinkPage   => $LinkPage,
-                LinkSort   => $LinkSort,
-                LinkFilter => $LinkFilter,
-                LinkBack   => $LinkBack,
+                # perform ticket search
+                my $ViewableChangeIDs = $Self->{ChangeObject}->ChangeSearch(
+                    Result           => 'ARRAY',
+                    OrderBy          => [ $Self->{SortBy} ],
+                    OrderByDirection => [ $Self->{OrderBy} ],
+                    Limit            => $Self->{SearchLimit},
+                    UserID           => $Self->{UserID},
+                    %GetParam,
+                );
 
-                TitleName => 'Change Search Result',
+                # start html page
+                my $Output = $Self->{LayoutObject}->Header();
+                $Output .= $Self->{LayoutObject}->NavigationBar();
+                $Self->{LayoutObject}->Print( Output => \$Output );
+                $Output = '';
 
-                ShowColumns => \@ShowColumns,
-            );
+                $Self->{Filter} = $Self->{ParamObject}->GetParam( Param => 'Filter' ) || '';
+                $Self->{View}   = $Self->{ParamObject}->GetParam( Param => 'View' )   || '';
 
-            # build footer
-            $Output .= $Self->{LayoutObject}->Footer();
+                # show changes
+                my $LinkPage = 'Filter='
+                    . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
+                    . '&View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
+                    . '&SortBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{SortBy} )
+                    . '&OrderBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{OrderBy} )
+                    . '&Profile=' . $Self->{Profile} . '&TakeLastSearch=1&Subaction=Search'
+                    . '&';
+                my $LinkSort = 'Filter='
+                    . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
+                    . '&View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
+                    . '&Profile=' . $Self->{Profile} . '&TakeLastSearch=1&Subaction=Search'
+                    . '&';
+                my $LinkFilter = 'TakeLastSearch=1&Subaction=Search&Profile='
+                    . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Profile} )
+                    . '&';
+                my $LinkBack = 'Subaction=LoadProfile&Profile='
+                    . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Profile} )
+                    . '&TakeLastSearch=1&';
 
-            return $Output;
+                # find out which columns should be shown
+                my @ShowColumns;
+                if ( $Self->{Config}->{ShowColumns} ) {
+
+                    # get all possible columns from config
+                    my %PossibleColumn = %{ $Self->{Config}->{ShowColumns} };
+
+                    # get the column names that should be shown
+                    COLUMNNAME:
+                    for my $Name ( keys %PossibleColumn ) {
+                        next COLUMNNAME if !$PossibleColumn{$Name};
+                        push @ShowColumns, $Name;
+                    }
+                }
+
+                $Output .= $Self->{LayoutObject}->ITSMChangeListShow(
+                    ChangeIDs => $ViewableChangeIDs,
+                    Total     => scalar @{$ViewableChangeIDs},
+
+                    View => $Self->{View},
+
+                    Env        => $Self,
+                    LinkPage   => $LinkPage,
+                    LinkSort   => $LinkSort,
+                    LinkFilter => $LinkFilter,
+                    LinkBack   => $LinkBack,
+
+                    TitleName => 'Change Search Result',
+
+                    ShowColumns => \@ShowColumns,
+                );
+
+                # build footer
+                $Output .= $Self->{LayoutObject}->Footer();
+
+                return $Output;
+            }
         }
     }
 
-    # There was no 'SubAction', or there were validation errors
+    # There was no 'SubAction', or there were validation errors, or an user or customer was searched
     # generate search mask
     my $Output = $Self->{LayoutObject}->Header();
-
     $Output .= $Self->{LayoutObject}->NavigationBar();
-    $Output .= $Self->MaskForm(
+    $Output .= $Self->_MaskForm(
         %GetParam,
+        %ExpandInfo,
         ValidationErrors => \@ValidationErrors,
-        Profile          => $Self->{Profile},
     );
     $Output .= $Self->{LayoutObject}->Footer();
 
     return $Output;
 }
 
-sub MaskForm {
+sub _MaskForm {
     my ( $Self, %Param ) = @_;
 
     # get ChangeManagerIDs
@@ -590,23 +635,6 @@ sub MaskForm {
         Multiple   => 1,
         Size       => 5,
         SelectedID => $Param{WorkOrderStateIDs},
-    );
-
-    # what output types are supported
-    $Param{'ResultFormStrg'} = $Self->{LayoutObject}->BuildSelection(
-        Data => {
-            Normal => 'Normal',
-            Print  => 'Print',
-            CSV    => 'CSV',
-        },
-        Name => 'ResultForm',
-        SelectedID => $Param{ResultForm} || 'Normal',
-    );
-
-    # render template
-    $Self->{LayoutObject}->Block(
-        Name => 'Search',
-        Data => { %Param, },
     );
 
     # number of minutes, days, weeks, months and years
@@ -788,6 +816,210 @@ sub MaskForm {
     );
 
     return $Output;
+}
+
+sub _GetExpandInfo {
+    my ( $Self, %Param ) = @_;
+
+    my %Info;    # this hash will be returned
+
+    # TODO: call GroupLookup() and GroupMemberList only for expansion of agents
+    # get group id for the group 'itsm-change'.
+    my $ITSMChangeGroupID = $Self->{GroupObject}->GroupLookup(
+        Group => 'itsm-change',
+    );
+
+    # get members of group 'itsm-change'.
+    # Only members of this group may be CABAgents.
+    # TODO: what about agents that were removed from 'itsm-change', but are still CAB member ?
+    my %ITSMChangeUsers = $Self->{GroupObject}->GroupMemberList(
+        GroupID => $ITSMChangeGroupID,
+        Type    => 'ro',
+        Result  => 'HASH',
+        Cached  => 1,
+    );
+
+    # currently the only Agent search is for 'CABAgent', but more might be added
+    for my $Name (qw(CABAgent)) {
+
+        # the fields in .dtl have a number at the end
+        my $Key = 1;
+
+        # handle the "search user" button
+        if ( $Param{ 'Expand' . $Name . '1' } ) {
+
+            # search for agents
+            my %UserFound = $Self->{UserObject}->UserSearch(
+                Search => $Param{$Name} . '*',
+                Valid  => 1,
+            );
+
+            # filter the itsm-change users in found users
+            my %UserList;
+            USERID:
+            for my $UserID ( keys %ITSMChangeUsers ) {
+                next USERID if !$UserFound{$UserID};
+
+                $UserList{$UserID} = $UserFound{$UserID};
+            }
+
+            # check if just one customer user exists
+            # if just one, fillup CustomerUserID and CustomerID
+            my @KeysUserList = keys %UserList;
+            if ( 1 == scalar @KeysUserList ) {
+
+                # if user is found, display the name
+                $Info{$Name} = $UserList{ $KeysUserList[0] };
+
+                # get user
+                my %UserData = $Self->{UserObject}->GetUserData(
+                    UserID => $KeysUserList[0],
+                );
+
+                # if user is found set hidden field,
+                # this is the id that will actually be used in ChangeSearch
+                if ( $UserData{UserID} ) {
+                    $Info{ 'SelectedUser' . $Key } = $UserData{UserID};
+                }
+            }
+
+            # if no or more the one user were found, show list
+            # and clean UserID
+            else {
+
+                # reset input field
+                $Info{ 'SelectedUser' . $Key } = '';
+
+                # build drop down with found users
+                $Info{ $Name . 'SelectionStrg' } = $Self->{LayoutObject}->BuildSelection(
+                    Name => $Name . 'ID',
+                    Data => \%UserList,
+                );
+
+                # show 'take this user' button
+                $Self->{LayoutObject}->Block(
+                    Name => 'Take' . $Name,
+                );
+
+                # clear the selected user if no user was found
+                if ( !%UserList ) {
+                    $Info{$Name} = '';
+                    $Info{ 'SelectedUser' . $Key } = '';
+                }
+            }
+        }
+
+        # handle the "take this user" button
+        elsif ( $Param{ 'Expand' . $Name . '2' } ) {
+
+            # show user data
+            my $UserID   = $Param{ $Name . 'ID' };
+            my %UserData = $Self->{UserObject}->GetUserData(
+                UserID => $UserID,
+            );
+
+            # if user is found
+            if (%UserData) {
+
+                # set hidden field
+                $Info{ 'SelectedUser' . $Key } = $UserID;
+                $Info{$Name} = sprintf '%s %s %s ',
+                    $UserData{UserLogin},
+                    $UserData{UserFirstname},
+                    $UserData{UserLastname};
+            }
+        }
+    }
+
+    # search for CABCustomer
+    if ( $Param{ExpandCABCustomer1} ) {
+
+        # search customers
+        my %CustomerUserFound = $Self->{CustomerUserObject}->CustomerSearch(
+            Search => $Param{CABCustomer} . '*',
+            Valid  => 1,
+        );
+
+        # save found customer users in @CustomerUserList
+        my @CustomerUserList;
+        for my $CustomerUserID ( keys %CustomerUserFound ) {
+
+            push @CustomerUserList, {
+                Name => $CustomerUserFound{$CustomerUserID},
+                ID   => $CustomerUserID,
+            };
+        }
+
+        # check if just one customer user exists
+        # if just one, fillup CustomerUserID and CustomerID
+        if ( 1 == scalar @CustomerUserList ) {
+
+            # if user is found, display the name
+            $Info{CABCustomer}   = $CustomerUserList[0]->{Name};
+            $Info{CABCustomerID} = $CustomerUserList[0]->{ID};
+        }
+
+        # if more the one user exists, show list
+        # and clean UserID
+        else {
+
+            # build list for drop down
+            my @UserListForDropDown;
+            for my $User (@CustomerUserList) {
+                push @UserListForDropDown, {
+                    Key   => $User->{ID},
+                    Value => $User->{Name},
+                };
+            }
+
+            # reset input field
+            $Info{CABCustomer} = '';
+
+            # build drop down with found users
+            $Info{CABCustomerSelectionStrg} = $Self->{LayoutObject}->BuildSelection(
+                Name => 'CABCustomerID',
+                Data => \@UserListForDropDown,
+            );
+
+            # show 'take this user' button
+            $Self->{LayoutObject}->Block(
+                Name => 'TakeCABCustomer',
+            );
+
+            # clear to if there is no customer found
+            if ( !@CustomerUserList ) {
+                $Info{'CABCustomer'}   = '';
+                $Info{'CABCustomerID'} = '';
+            }
+        }
+    }
+
+    # handle the "take this user" button
+    elsif ( $Param{ExpandCABCustomer2} ) {
+
+        # show user data
+        my $CustomerUserID = $Param{'CABCustomerID'};
+        my %UserData;
+
+        # get customer user data
+        my %CustomerUserData = $Self->{CustomerUserObject}->CustomerUserDataGet(
+            User  => $CustomerUserID,
+            Valid => 1,
+        );
+
+        # if user is found
+        if (%CustomerUserData) {
+
+            # set hidden field
+            $Info{CABCustomerID} = $CustomerUserID;
+            $Info{CABCustomer}   = sprintf '"%s %s" <%s>',
+                $CustomerUserData{UserFirstname},
+                $CustomerUserData{UserLastname},
+                $CustomerUserData{UserEmail};
+        }
+    }
+
+    return %Info;
 }
 
 1;
