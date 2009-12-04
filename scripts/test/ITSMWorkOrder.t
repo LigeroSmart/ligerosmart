@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.107 2009-12-01 11:27:14 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.108 2009-12-04 10:39:56 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,6 +18,7 @@ use vars qw($Self);
 use Data::Dumper;
 use Kernel::System::User;
 use Kernel::System::Group;
+use Kernel::System::Valid;
 use Kernel::System::GeneralCatalog;
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
@@ -28,22 +29,22 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 my $TestCount = 1;
 
 # create common objects
-$Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
 $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
 $Self->{GroupObject}          = Kernel::System::Group->new( %{$Self} );
+$Self->{ValidObject}          = Kernel::System::Valid->new( %{$Self} );
+$Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
 $Self->{ChangeObject}         = Kernel::System::ITSMChange->new( %{$Self} );
 $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
-$Self->{ValidObject}          = Kernel::System::Valid->new( %{$Self} );
 
 # test if workorder object was created successfully
 $Self->True(
     $Self->{WorkOrderObject},
-    "Test " . $TestCount++ . ' - construction of workorder object'
+    "Test " . $TestCount++ . ' - construction of workorder object',
 );
 $Self->Is(
     ref $Self->{WorkOrderObject},
     'Kernel::System::ITSMChange::ITSMWorkOrder',
-    "Test " . $TestCount++ . ' - class of workorder object'
+    "Test " . $TestCount++ . ' - class of workorder object',
 );
 
 # ------------------------------------------------------------ #

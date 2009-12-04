@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.152 2009-12-03 11:04:09 reb Exp $
+# $Id: ITSMChange.t,v 1.153 2009-12-04 10:39:16 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,6 +19,7 @@ use Data::Dumper;
 use Kernel::System::User;
 use Kernel::System::Group;
 use Kernel::System::CustomerUser;
+use Kernel::System::Valid;
 use Kernel::System::GeneralCatalog;
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChangeCIPAllocate;
@@ -31,25 +32,25 @@ use Kernel::System::ITSMChange::History;
 my $TestCount = 1;
 
 # create common objects
-$Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
 $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
 $Self->{GroupObject}          = Kernel::System::Group->new( %{$Self} );
 $Self->{CustomerUserObject}   = Kernel::System::CustomerUser->new( %{$Self} );
-$Self->{ChangeObject}         = Kernel::System::ITSMChange->new( %{$Self} );
-$Self->{WorkOrderObject}      = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
 $Self->{ValidObject}          = Kernel::System::Valid->new( %{$Self} );
-$Self->{HistoryObject}        = Kernel::System::ITSMChange::History->new( %{$Self} );
+$Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
+$Self->{ChangeObject}         = Kernel::System::ITSMChange->new( %{$Self} );
 $Self->{CIPAllocateObject}    = Kernel::System::ITSMChangeCIPAllocate->new( %{$Self} );
+$Self->{WorkOrderObject}      = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
+$Self->{HistoryObject}        = Kernel::System::ITSMChange::History->new( %{$Self} );
 
 # test if change object was created successfully
 $Self->True(
     $Self->{ChangeObject},
-    "Test " . $TestCount++ . ' - construction of change object'
+    "Test " . $TestCount++ . ' - construction of change object',
 );
 $Self->Is(
     ref $Self->{ChangeObject},
     'Kernel::System::ITSMChange',
-    "Test " . $TestCount++ . ' - class of change object'
+    "Test " . $TestCount++ . ' - class of change object',
 );
 
 # ------------------------------------------------------------ #
@@ -164,7 +165,7 @@ my @ObjectMethods = qw(
 for my $ObjectMethod (@ObjectMethods) {
     $Self->True(
         $Self->{ChangeObject}->can($ObjectMethod),
-        "Test " . $TestCount++ . " - check 'can $ObjectMethod'"
+        "Test " . $TestCount++ . " - check 'can $ObjectMethod'",
     );
 }
 
@@ -198,7 +199,7 @@ my @SortedChangeStateIDs = sort keys %ChangeStateID2Name;
 for my $DefaultChangeState (@DefaultChangeStates) {
     $Self->True(
         $ChangeStateName2ID{$DefaultChangeState},
-        "Test " . $TestCount++ . " - check state '$DefaultChangeState'"
+        "Test " . $TestCount++ . " - check state '$DefaultChangeState'",
     );
 }
 
@@ -273,11 +274,18 @@ $Self->False(
 # ------------------------------------------------------------ #
 
 my @DefaultHistoryTypes = qw(
-    ChangeAdd ChangeUpdate ChangeDelete
-    ChangeCABUpdate ChangeCABDelete
-    ChangeLinkAdd ChangeLinkDelete
-    WorkOrderAdd WorkOrderUpdate WorkOrderDelete
-    WorkOrderLinkAdd WorkOrderLinkDelete
+    ChangeAdd
+    ChangeUpdate
+    ChangeDelete
+    ChangeCABUpdate
+    ChangeCABDelete
+    ChangeLinkAdd
+    ChangeLinkDelete
+    WorkOrderAdd
+    WorkOrderUpdate
+    WorkOrderDelete
+    WorkOrderLinkAdd
+    WorkOrderLinkDelete
 );
 
 # investigate the default history types
