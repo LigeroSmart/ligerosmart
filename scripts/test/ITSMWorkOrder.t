@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.108 2009-12-04 10:39:56 ub Exp $
+# $Id: ITSMWorkOrder.t,v 1.109 2009-12-07 13:01:33 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -330,8 +330,14 @@ for my $TypeID (@SortedTypeIDs) {
 # ------------------------------------------------------------ #
 
 # store current TestCount for better test case recognition
-my $TestCountMisc   = $TestCount;
-my $UniqueSignature = 'UnitTest-ITSMChange::ITSMWorkOrder-' . int( rand 1_000_000 ) . '_' . time;
+my $TestCountMisc = $TestCount;
+
+# An unique indentifier, so that data from different test runs
+# won't be mixed up. The string is formated to a constant length,
+# as the conversion to plain text with ToAscii() depends on the string length.
+my $UniqueSignature = sprintf 'UnitTest-ITSMChange::ITSMWorkOrder-%06d_%010d',
+    int( rand 1_000_000 ),
+    time();
 
 my @ChangeTests = (
 

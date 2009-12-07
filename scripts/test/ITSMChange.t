@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.153 2009-12-04 10:39:16 ub Exp $
+# $Id: ITSMChange.t,v 1.154 2009-12-07 13:01:33 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -426,9 +426,17 @@ my $DefaultPriority = $Self->{CIPAllocateObject}->PriorityAllocationGet(
 # ------------------------------------------------------------ #
 
 # store current TestCount for better test case recognition
-my $TestCountMisc        = $TestCount;
-my $UniqueSignature      = 'UnitTest-ITSMChange-' . int( rand 1_000_000 ) . '_' . time;
-my $NoWildcardsTestTitle = 'UnitTest-ITSMChange-%NoWildcards%_' . time;
+my $TestCountMisc = $TestCount;
+
+# An unique indentifier, so that data from different test runs
+# won't be mixed up. The string is formated to a constant length,
+# as the conversion to plain text with ToAscii() depends on the string length.
+my $UniqueSignature = sprintf 'UnitTest-ITSMChange-%06d_%010d',
+    int( rand 1_000_000 ),
+    time();
+my $NoWildcardsTestTitle = sprintf 'UnitTest-ITSMChange-%%NoWildcards%%_%06d_%010d',
+    int( rand 1_000_000 ),
+    time();
 
 my @ChangeTests = (
 
