@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.42 2009-12-01 11:27:14 bes Exp $
+# $Id: ITSMWorkOrder.pm,v 1.43 2009-12-07 08:56:45 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.42 $) [1];
+$VERSION = qw($Revision: 1.43 $) [1];
 
 =head1 NAME
 
@@ -932,7 +932,7 @@ sub WorkOrderSearch {
     my $Result = $Param{Result} || 'ARRAY';
 
     # check whether all of the given WorkOrderStateIDs are valid
-    return if !$Self->_CheckWorkOrderStateIDs( WorkOrderStateIDs => $Param{WorkOrderStateIDs} );
+    return if !$Self->WorkOrderStateIDsCheck( WorkOrderStateIDs => $Param{WorkOrderStateIDs} );
 
     # look up and thus check the States
     for my $WorkOrderState ( @{ $Param{WorkOrderStates} } ) {
@@ -1791,19 +1791,17 @@ sub Permission {
     return;
 }
 
-=begin Internal:
-
-=item _CheckWorkOrderStateIDs()
+=item WorkOrderStateIDsCheck()
 
 Check whether all of the given workorder state ids are valid.
 
-    my $Ok = $WorkOrderObject->_CheckWorkOrderStateIDs(
+    my $Ok = $WorkOrderObject->WorkOrderStateIDsCheck(
         WorkOrderStateIDs => [ 25 ],
     );
 
 =cut
 
-sub _CheckWorkOrderStateIDs {
+sub WorkOrderStateIDsCheck {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
@@ -1841,6 +1839,8 @@ sub _CheckWorkOrderStateIDs {
 
     return 1;
 }
+
+=begin Internal:
 
 =item _CheckWorkOrderTypeIDs()
 
@@ -2069,7 +2069,7 @@ sub _CheckWorkOrderParams {
 
     # check if given WorkOrderStateID is valid
     if ( exists $Param{WorkOrderStateID} ) {
-        return if !$Self->_CheckWorkOrderStateIDs(
+        return if !$Self->WorkOrderStateIDsCheck(
             WorkOrderStateIDs => [ $Param{WorkOrderStateID} ],
         );
     }
@@ -2182,6 +2182,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.42 $ $Date: 2009-12-01 11:27:14 $
+$Revision: 1.43 $ $Date: 2009-12-07 08:56:45 $
 
 =cut
