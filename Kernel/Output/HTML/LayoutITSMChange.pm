@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LayoutITSMChange.pm,v 1.21 2009-12-03 14:37:34 mae Exp $
+# $Id: LayoutITSMChange.pm,v 1.22 2009-12-07 09:16:18 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use POSIX qw(ceil);
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.21 $) [1];
+$VERSION = qw($Revision: 1.22 $) [1];
 
 =over 4
 
@@ -363,18 +363,22 @@ sub ITSMChangeListShow {
         Value     => $View,
     );
 
-    # check backends
+    # get backend from config
     my $Backends = $Self->{ConfigObject}->Get('ITSMChange::Frontend::Overview');
     if ( !$Backends ) {
         return $Env->{LayoutObject}->FatalError(
             Message => 'Need config option ITSMChange::Frontend::Overview',
         );
     }
+
+    # check for hash-ref
     if ( ref $Backends ne 'HASH' ) {
         return $Env->{LayoutObject}->FatalError(
             Message => 'Config option ITSMChange::Frontend::Overview needs to be a HASH ref!',
         );
     }
+
+    # check for config key
     if ( !$Backends->{$View} ) {
         return $Env->{LayoutObject}->FatalError(
             Message => "No Config option found for $View!",
@@ -382,7 +386,9 @@ sub ITSMChangeListShow {
     }
 
     # nav bar
-    my $StartHit = $Self->{ParamObject}->GetParam( Param => 'StartHit' ) || 1;
+    my $StartHit = $Self->{ParamObject}->GetParam(
+        Param => 'StartHit',
+    ) || 1;
 
     # check start option, if higher then elements available, set
     # it to the last overview page (Thanks to Stefan Schmidt!)
@@ -392,6 +398,7 @@ sub ITSMChangeListShow {
         $StartHit = ( ( $Pages - 1 ) * $PageShown ) + 1;
     }
 
+    # set page limit and build page nav
     my $Limit = $Param{Limit} || 20_000;
     my %PageNav = $Env->{LayoutObject}->PageNavBar(
         Limit     => $Limit,
@@ -402,6 +409,7 @@ sub ITSMChangeListShow {
         Link      => $Param{LinkPage},
     );
 
+    # build navbar content
     $Env->{LayoutObject}->Block(
         Name => 'OverviewNavBar',
         Data => \%Param,
@@ -415,20 +423,28 @@ sub ITSMChangeListShow {
         );
     }
 
-    # filter
+    # get filters
     if ( $Param{Filters} ) {
+
+        # get given filters
         my @NavBarFilters;
         for my $Prio ( sort keys %{ $Param{Filters} } ) {
             push @NavBarFilters, $Param{Filters}->{$Prio};
         }
+
+        # build filter content
         $Env->{LayoutObject}->Block(
             Name => 'OverviewNavBarFilter',
             Data => {
                 %Param,
             },
         );
+
+        # loop over filters
         my $Count = 0;
         for my $Filter (@NavBarFilters) {
+
+            # at least a second filter is set, build split content
             if ($Count) {
                 $Env->{LayoutObject}->Block(
                     Name => 'OverviewNavBarFilterItemSplit',
@@ -438,6 +454,8 @@ sub ITSMChangeListShow {
                     },
                 );
             }
+
+            # increment filter count and build filter item
             $Count++;
             $Env->{LayoutObject}->Block(
                 Name => 'OverviewNavBarFilterItem',
@@ -446,6 +464,8 @@ sub ITSMChangeListShow {
                     %{$Filter},
                 },
             );
+
+            # filter is selected
             if ( $Filter->{Filter} eq $Param{Filter} ) {
                 $Env->{LayoutObject}->Block(
                     Name => 'OverviewNavBarFilterItemSelected',
@@ -467,8 +487,10 @@ sub ITSMChangeListShow {
         }
     }
 
-    # mode
+    # loop over configured backends
     for my $Backend ( keys %{$Backends} ) {
+
+        # build navbar view mode
         $Env->{LayoutObject}->Block(
             Name => 'OverviewNavBarViewMode',
             Data => {
@@ -478,6 +500,8 @@ sub ITSMChangeListShow {
                 View   => $Backend,
             },
         );
+
+        # current view is configured in backend
         if ( $View eq $Backend ) {
             $Env->{LayoutObject}->Block(
                 Name => 'OverviewNavBarViewModeSelected',
@@ -502,6 +526,7 @@ sub ITSMChangeListShow {
         }
     }
 
+    # check if page nav is available
     if (%PageNav) {
         $Env->{LayoutObject}->Block(
             Name => 'OverviewNavBarPageNavBar',
@@ -509,6 +534,7 @@ sub ITSMChangeListShow {
         );
     }
 
+    # check if nav bar is available
     if ( $Param{NavBar} ) {
         if ( $Param{NavBar}->{MainName} ) {
             $Env->{LayoutObject}->Block(
@@ -518,13 +544,18 @@ sub ITSMChangeListShow {
         }
     }
 
+    # build html content
     my $OutputNavBar = $Env->{LayoutObject}->Output(
         TemplateFile => 'AgentITSMChangeOverviewNavBar',
         Data         => {%Param},
     );
+
+    # create output
     my $OutputRaw = '';
     if ( !$Param{Output} ) {
-        $Env->{LayoutObject}->Print( Output => \$OutputNavBar );
+        $Env->{LayoutObject}->Print(
+            Output => \$OutputNavBar,
+        );
     }
     else {
         $OutputRaw .= $OutputNavBar;
@@ -534,6 +565,8 @@ sub ITSMChangeListShow {
     if ( !$Self->{MainObject}->Require( $Backends->{$View}->{Module} ) ) {
         return $Env->{LayoutObject}->FatalError();
     }
+
+    # check for backend object
     my $Object = $Backends->{$View}->{Module}->new( %{$Env} );
     return if !$Object;
 
@@ -545,34 +578,48 @@ sub ITSMChangeListShow {
         PageShown => $PageShown,
         AllHits   => $Param{Total} || 0,
     );
+
+    # create output
     if ( !$Param{Output} ) {
-        $Env->{LayoutObject}->Print( Output => \$Output );
+        $Env->{LayoutObject}->Print(
+            Output => \$Output,
+        );
     }
     else {
         $OutputRaw .= $Output;
     }
 
+    # create overview nav bar
     $Env->{LayoutObject}->Block(
         Name => 'OverviewNavBar',
         Data => {%Param},
     );
+
+    # check for page nav and create content
     if (%PageNav) {
         $Env->{LayoutObject}->Block(
             Name => 'OverviewNavBarPageNavBar',
             Data => {%PageNav},
         );
     }
+
+    # create smal nav bar
     my $OutputNavBarSmall = $Env->{LayoutObject}->Output(
         TemplateFile => 'AgentITSMChangeOverviewNavBarSmall',
         Data         => {%Param},
     );
+
+    # create output
     if ( !$Param{Output} ) {
-        $Env->{LayoutObject}->Print( Output => \$OutputNavBarSmall );
+        $Env->{LayoutObject}->Print(
+            Output => \$OutputNavBarSmall,
+        );
     }
     else {
         $OutputRaw .= $OutputNavBarSmall;
     }
 
+    # return content if available
     return $OutputRaw;
 }
 
