@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.30 2009-12-07 13:44:48 bes Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.31 2009-12-07 13:57:18 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::User;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.30 $) [1];
+$VERSION = qw($Revision: 1.31 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -88,8 +88,8 @@ sub Run {
         for my $ParamName (
             qw(
             ChangeNumber ChangeTitle Description Justification
-            SelectedCustomerUser
-            SelectedUser1
+            SelectedCustomerUser CABCustomer
+            SelectedUser1        CABAgent
             WorkOrderTitle WorkOrderInstruction WorkOrderReport
             )
             )
@@ -185,8 +185,8 @@ sub Run {
         # which are not stored in the search profile
         for my $ParamName (
             qw(
-            CABCustomerID CABCustomer ExpandCABCustomer1 ExpandCABCustomer2 ClearCABCustomer
-            CABAgentID    CABAgent    ExpandCABAgent1    ExpandCABAgent2    ClearCABAgent
+            CABCustomerID ExpandCABCustomer1 ExpandCABCustomer2 ClearCABCustomer
+            CABAgentID    ExpandCABAgent1    ExpandCABAgent2    ClearCABAgent
             )
             )
         {
