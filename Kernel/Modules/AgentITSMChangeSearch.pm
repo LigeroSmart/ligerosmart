@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.31 2009-12-07 13:57:18 bes Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.32 2009-12-07 15:13:16 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::User;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.31 $) [1];
+$VERSION = qw($Revision: 1.32 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -210,6 +210,20 @@ sub Run {
             # get user and customer info when autocompletion is turned off
             %ExpandInfo = $Self->_GetExpandInfo(%GetParam);
         }
+        elsif ($ClearUser) {
+
+            # which fields to clear
+            my %FieldMap = (
+                ClearCABAgent    => [qw(CABAgent SelectedUser1)],
+                ClearCABCustomer => [qw(CABAgent SelectedCustomerUser)],
+            );
+
+            # actually clear the fields associated with the button that was clicked
+            my $Fields = $FieldMap{$ClearUser} || [];
+            for my $Field ( @{$Fields} ) {
+                $GetParam{$Field} = '';
+            }
+        }
         else {
 
             # store last queue screen
@@ -228,10 +242,10 @@ sub Run {
             );
 
             # prepare CABAgents and CABCustomers
-            if ( $GetParam{SelectedUser1} ) {
+            if ( $GetParam{SelectedUser1} && $GetParam{CABAgent} ) {
                 $GetParam{CABAgents} = [ $GetParam{SelectedUser1} ];
             }
-            if ( $GetParam{SelectedCustomerUser} ) {
+            if ( $GetParam{SelectedCustomerUser} && $GetParam{CABCustomer} ) {
                 $GetParam{CABCustomers} = [ $GetParam{SelectedCustomerUser} ];
             }
 
