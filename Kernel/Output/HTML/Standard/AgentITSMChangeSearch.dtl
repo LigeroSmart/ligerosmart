@@ -2,7 +2,7 @@
 # AgentITSMChangeSearch.dtl - provides HTML form for AgentITSMChangeSearch
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.dtl,v 1.13 2009-12-04 12:43:02 bes Exp $
+# $Id: AgentITSMChangeSearch.dtl,v 1.14 2009-12-07 13:34:26 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -52,7 +52,7 @@ function clear_cab_agent() {
                 <input type="hidden" name="Action" value="$Env{"Action"}"/>
                 <input type="hidden" name="Subaction" value="Search"/>
 <!-- ## HiddenFields for CABCustomer Autocompletion ## -->
-                <input type="hidden" name="SelectedCustomerUser" value="$QData{"CustomerUser"}"/>
+                <input type="hidden" name="SelectedCustomerUser" value="$QData{"SelectedCustomerUser"}"/>
 <!-- ## HiddenFields for CABAgent Autocompletion ## -->
                 <input type="hidden" name="SelectedUser1"     value="$QData{"SelectedUser1"}">
                 <input type="hidden" name="UserSearchGroups1" value="itsm-change">
@@ -104,7 +104,7 @@ function clear_cab_agent() {
                                         <br/><input class="button" type="submit" name="ExpandCABCustomer2" value="$Text{"Take this Customer"}"/>
 <!-- dtl:block:TakeCABCustomer -->
 <!-- dtl:block:SearchCustomerButton -->
-                                        <input class="button" type="submit" name="ExpandCABCustomerName1" value="$Text{"Search CAB Customer"}"/>
+                                        <input class="button" type="submit" name="ExpandCABCustomer1" value="$Text{"Search CAB Customer"}"/>
                                         <input class="button" type="submit" name="ClearCABCustomer" value="$Text{"Clear CAB Customer"}" onclick="javascript:clear_cab_customer(); return false;"/>
 <!-- dtl:block:SearchCustomerButton -->
                                     </td>

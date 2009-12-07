@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.28 2009-12-04 12:43:02 bes Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.29 2009-12-07 13:34:26 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,9 +19,10 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::SearchProfile;
 use Kernel::System::User;
+use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.28 $) [1];
+$VERSION = qw($Revision: 1.29 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -45,6 +46,7 @@ sub new {
     $Self->{GroupObject}         = Kernel::System::Group->new(%Param);
     $Self->{SearchProfileObject} = Kernel::System::SearchProfile->new(%Param);
     $Self->{UserObject}          = Kernel::System::User->new(%Param);
+    $Self->{CustomerUserObject}  = Kernel::System::CustomerUser->new(%Param);
     $Self->{WorkOrderObject}     = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
 
     # get config for frontend
@@ -183,8 +185,8 @@ sub Run {
         # which are not stored in the search profile
         for my $ParamName (
             qw(
-            CABCustomerID CABCustomer ExpandCABCustomer1 ExpandCABCustomer2 ClearCABCustomer
-            CABAgentID    CABAgent    ExpandCABAgent1    ExpandCABAgent2    ClearCABAgent
+            CABCustomer ExpandCABCustomer1 ExpandCABCustomer2 ClearCABCustomer
+            CABAgent    ExpandCABAgent1    ExpandCABAgent2    ClearCABAgent
             )
             )
         {
@@ -955,8 +957,11 @@ sub _GetExpandInfo {
         if ( 1 == scalar @CustomerUserList ) {
 
             # if user is found, display the name
-            $Info{CABCustomer}   = $CustomerUserList[0]->{Name};
-            $Info{CABCustomerID} = $CustomerUserList[0]->{ID};
+            $Info{CABCustomer} = $CustomerUserList[0]->{Name};
+
+            # set hidden field when a customer user is found
+            # this is the id that will actually be used in ChangeSearch
+            $Info{'SelectedCustomerUser'} = $CustomerUserList[0]->{ID};
         }
 
         # if more the one user exists, show list
@@ -1011,8 +1016,8 @@ sub _GetExpandInfo {
         if (%CustomerUserData) {
 
             # set hidden field
-            $Info{CABCustomerID} = $CustomerUserID;
-            $Info{CABCustomer}   = sprintf '"%s %s" <%s>',
+            $Info{SelectCustomerUser} = $CustomerUserID;
+            $Info{CABCustomer}        = sprintf '"%s %s" <%s>',
                 $CustomerUserData{UserFirstname},
                 $CustomerUserData{UserLastname},
                 $CustomerUserData{UserEmail};
