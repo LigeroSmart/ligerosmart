@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.29 2009-12-07 13:34:26 bes Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.30 2009-12-07 13:44:48 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::User;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.29 $) [1];
+$VERSION = qw($Revision: 1.30 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -185,8 +185,8 @@ sub Run {
         # which are not stored in the search profile
         for my $ParamName (
             qw(
-            CABCustomer ExpandCABCustomer1 ExpandCABCustomer2 ClearCABCustomer
-            CABAgent    ExpandCABAgent1    ExpandCABAgent2    ClearCABAgent
+            CABCustomerID CABCustomer ExpandCABCustomer1 ExpandCABCustomer2 ClearCABCustomer
+            CABAgentID    CABAgent    ExpandCABAgent1    ExpandCABAgent2    ClearCABAgent
             )
             )
         {
@@ -980,7 +980,7 @@ sub _GetExpandInfo {
             # reset input field
             $Info{CABCustomer} = '';
 
-            # build drop down with found users
+            # build drop down with found customer users
             $Info{CABCustomerSelectionStrg} = $Self->{LayoutObject}->BuildSelection(
                 Name => 'CABCustomerID',
                 Data => \@UserListForDropDown,
@@ -1016,8 +1016,8 @@ sub _GetExpandInfo {
         if (%CustomerUserData) {
 
             # set hidden field
-            $Info{SelectCustomerUser} = $CustomerUserID;
-            $Info{CABCustomer}        = sprintf '"%s %s" <%s>',
+            $Info{SelectedCustomerUser} = $CustomerUserID;
+            $Info{CABCustomer}          = sprintf '"%s %s" <%s>',
                 $CustomerUserData{UserFirstname},
                 $CustomerUserData{UserLastname},
                 $CustomerUserData{UserEmail};
