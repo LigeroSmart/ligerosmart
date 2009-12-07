@@ -2,7 +2,7 @@
 # AgentITSMChangeSearch.dtl - provides HTML form for AgentITSMChangeSearch
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.dtl,v 1.15 2009-12-07 15:13:17 bes Exp $
+# $Id: AgentITSMChangeSearch.dtl,v 1.16 2009-12-07 16:58:58 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -215,24 +215,62 @@ function clear_cab_agent() {
                     </tr>
                     <tr>
                         <td colspan="2" class="contentbody">
-                            <input type="radio" name="$QData{"Prefix"}TimeSearchType" value="" $Data{"TimeSearchType::None"}/>
+                            <input type="radio" id="$QData{"Prefix"}TimeSearchType::None" name="$QData{"Prefix"}TimeSearchType" value="" $Data{"TimeSearchType::None"}/>
                             $Text{"No $QData{"TitleLc"} settings."}
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2" class="contentbody">
-                            <input type="radio" name="$QData{"Prefix"}TimeSearchType" value="TimePoint" $Data{"TimeSearchType::TimePoint"}/>
+                            <input type="radio" id="$QData{"Prefix"}TimeSearchType::TimePoint" name="$QData{"Prefix"}TimeSearchType" value="TimePoint" $Data{"TimeSearchType::TimePoint"}/>
                             $Text{"$QData{"TitleUcFirst"}"} $Data{"TimePointStart"} $Data{"TimePoint"} $Data{"TimePointFormat"}
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2" class="contentbody">
-                            <input type="radio" name="$QData{"Prefix"}TimeSearchType" value="TimeSlot" $Data{"TimeSearchType::TimeSlot"}/>
+                            <input type="radio" id="$QData{"Prefix"}TimeSearchType::TimeSlot" name="$QData{"Prefix"}TimeSearchType" value="TimeSlot" $Data{"TimeSearchType::TimeSlot"}/>
                             $Text{"$QData{"TitleUcFirst"} between"} $Data{"TimeStart"} $Text{"and"} $Data{"TimeStop"}
 <!-- dtl:block:InvalidTimeSlot -->
                             <br />
                             <font color="red" size="-2">$Text{"Input invalid"}</font>
 <!-- dtl:block:InvalidTimeSlot -->
+<script language="JavaScript" type="text/javascript">
+<!--
+
+// register onchange-handlers for the TimeSlot dropdown menus
+var TimePointIDs = new Array(
+    "TimePointStart", "TimePoint", "TimePointFormat"
+);
+TimePointIDs.each(
+    function(item) {
+        Event.observe(
+            "$QData{"Prefix"}" + item,
+            'change',
+            function(){
+                $("$QData{"Prefix"}TimeSearchType::TimePoint").checked = true;
+            }
+        );
+    }
+);
+
+// register onchange-handlers for the TimeSlot dropdown menus
+var TimeSlotIDs = new Array(
+    "TimeStartDay", "TimeStartMonth", "TimeStartYear",
+    "TimeStopDay", "TimeStopMonth", "TimeStopYear"
+);
+TimeSlotIDs.each(
+    function(item) {
+        Event.observe(
+            "$QData{"Prefix"}" + item,
+            'change',
+            function(){
+                $("$QData{"Prefix"}TimeSearchType::TimeSlot").checked = true;
+            }
+        );
+    }
+);
+
+//-->
+</script>
                         </td>
                     </tr>
 <!-- dtl:block:TimeSelection -->
