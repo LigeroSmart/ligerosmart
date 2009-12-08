@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.32 2009-12-07 15:13:16 bes Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.33 2009-12-08 09:42:44 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,15 +14,15 @@ package Kernel::Modules::AgentITSMChangeSearch;
 use strict;
 use warnings;
 
+use Kernel::System::CustomerUser;
 use Kernel::System::Group;
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::SearchProfile;
 use Kernel::System::User;
-use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.32 $) [1];
+$VERSION = qw($Revision: 1.33 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -42,12 +42,12 @@ sub new {
     }
 
     # create needed objects
-    $Self->{ChangeObject}        = Kernel::System::ITSMChange->new(%Param);
+    $Self->{CustomerUserObject}  = Kernel::System::CustomerUser->new(%Param);
     $Self->{GroupObject}         = Kernel::System::Group->new(%Param);
+    $Self->{ChangeObject}        = Kernel::System::ITSMChange->new(%Param);
+    $Self->{WorkOrderObject}     = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
     $Self->{SearchProfileObject} = Kernel::System::SearchProfile->new(%Param);
     $Self->{UserObject}          = Kernel::System::User->new(%Param);
-    $Self->{CustomerUserObject}  = Kernel::System::CustomerUser->new(%Param);
-    $Self->{WorkOrderObject}     = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
 
     # get config for frontend
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
@@ -94,14 +94,12 @@ sub Run {
             )
             )
         {
-
-            # get search string params (get submitted params)
             $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
 
-            # remove white space on the start and end
+            # remove whitespace on the start and end
             if ( $GetParam{$ParamName} ) {
-                $GetParam{$ParamName} =~ s/\s+$//g;
-                $GetParam{$ParamName} =~ s/^\s+//g;
+                $GetParam{$ParamName} =~ s/\s+$//;
+                $GetParam{$ParamName} =~ s/^\s+//;
             }
         }
 
@@ -178,7 +176,7 @@ sub Run {
     # %ExpandInfo gets info about chosen user and all available users
     my %ExpandInfo;
 
-    # show result site
+    # show result site or perform other actions
     if ( $Self->{Subaction} eq 'Search' ) {
 
         # Extract the parameters that are not needed for searching,
@@ -214,8 +212,8 @@ sub Run {
 
             # which fields to clear
             my %FieldMap = (
-                ClearCABAgent    => [qw(CABAgent SelectedUser1)],
-                ClearCABCustomer => [qw(CABAgent SelectedCustomerUser)],
+                ClearCABAgent    => [qw(CABAgent    SelectedUser1)],
+                ClearCABCustomer => [qw(CABCustomer SelectedCustomerUser)],
             );
 
             # actually clear the fields associated with the button that was clicked
@@ -241,7 +239,7 @@ sub Run {
                 Value     => $URL,
             );
 
-            # prepare CABAgents and CABCustomers
+            # prepare CABAgents and CABCustomers, checking for emptied text fields
             if ( $GetParam{SelectedUser1} && $GetParam{CABAgent} ) {
                 $GetParam{CABAgents} = [ $GetParam{SelectedUser1} ];
             }
@@ -285,8 +283,8 @@ sub Run {
                     {
 
                         # format as timestamp
-                        $GetParam{ $TimeType . 'TimeNewerDate' }
-                            = sprintf '%04d-%02d-%02d 00:00:01',
+                        $GetParam{ $TimeType . 'TimeNewerDate' } = sprintf
+                            '%04d-%02d-%02d 00:00:01',
                             $TimeSelectionParam{StartYear},
                             $TimeSelectionParam{StartMonth},
                             $TimeSelectionParam{StartDay};
@@ -309,8 +307,8 @@ sub Run {
                     {
 
                         # format as timestamp
-                        $GetParam{ $TimeType . 'TimeOlderDate' }
-                            = sprintf '%04d-%02d-%02d 23:59:59',
+                        $GetParam{ $TimeType . 'TimeOlderDate' } = sprintf
+                            '%04d-%02d-%02d 23:59:59',
                             $TimeSelectionParam{StopYear},
                             $TimeSelectionParam{StopMonth},
                             $TimeSelectionParam{StopDay};
@@ -460,19 +458,15 @@ sub Run {
                 }
 
                 $Output .= $Self->{LayoutObject}->ITSMChangeListShow(
-                    ChangeIDs => $ViewableChangeIDs,
-                    Total     => scalar @{$ViewableChangeIDs},
-
-                    View => $Self->{View},
-
-                    Env        => $Self,
-                    LinkPage   => $LinkPage,
-                    LinkSort   => $LinkSort,
-                    LinkFilter => $LinkFilter,
-                    LinkBack   => $LinkBack,
-
-                    TitleName => 'Change Search Result',
-
+                    ChangeIDs   => $ViewableChangeIDs,
+                    Total       => scalar @{$ViewableChangeIDs},
+                    View        => $Self->{View},
+                    Env         => $Self,
+                    LinkPage    => $LinkPage,
+                    LinkSort    => $LinkSort,
+                    LinkFilter  => $LinkFilter,
+                    LinkBack    => $LinkBack,
+                    TitleName   => 'Change Search Result',
                     ShowColumns => \@ShowColumns,
                 );
 
@@ -767,10 +761,10 @@ sub _MaskForm {
             },
         );
         $Self->{LayoutObject}->Block(
-            Name => 'CustomerSearchAutoCompleteDivStart',
+            Name => 'CABCustomerSearchAutoCompleteDivStart',
         );
         $Self->{LayoutObject}->Block(
-            Name => 'CustomerSearchAutoCompleteDivEnd',
+            Name => 'CABCustomerSearchAutoCompleteDivEnd',
         );
     }
     else {
@@ -811,10 +805,10 @@ sub _MaskForm {
 
         # CABAgent
         $Self->{LayoutObject}->Block(
-            Name => 'UserSearchAutoCompleteDivStart1',
+            Name => 'CABAgentSearchAutoCompleteDivStart1',
         );
         $Self->{LayoutObject}->Block(
-            Name => 'UserSearchAutoCompleteDivEnd1',
+            Name => 'CABAgentSearchAutoCompleteDivEnd1',
         );
     }
     else {
@@ -879,8 +873,7 @@ sub _GetExpandInfo {
                 $UserList{$UserID} = $UserFound{$UserID};
             }
 
-            # check if just one customer user exists
-            # if just one, fillup CustomerUserID and CustomerID
+            # if a single user was found, fill up SelectedUser and the search field
             my @KeysUserList = keys %UserList;
             if ( 1 == scalar @KeysUserList ) {
 
@@ -899,7 +892,7 @@ sub _GetExpandInfo {
                 }
             }
 
-            # if no or more the one user were found, show list
+            # if no or more the one user was found, show list
             # and clean UserID
             else {
 

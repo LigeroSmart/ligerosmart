@@ -2,7 +2,7 @@
 # AgentITSMChangeSearch.dtl - provides HTML form for AgentITSMChangeSearch
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.dtl,v 1.17 2009-12-08 09:01:08 bes Exp $
+# $Id: AgentITSMChangeSearch.dtl,v 1.18 2009-12-08 09:42:44 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -88,14 +88,14 @@ function clear_cab_agent() {
                                 <tr>
                                     <td class="contentkey">$Text{"CABCustomer"} $Text{"(e. g. US4231)"}</td>
                                     <td class="contentvalue">
-<!-- dtl:block:CustomerSearchAutoCompleteDivStart-->
+<!-- dtl:block:CABCustomerSearchAutoCompleteDivStart-->
                                         <div id="myAutoComplete" class="myAutoComplete">
-<!-- dtl:block:CustomerSearchAutoCompleteDivStart -->
+<!-- dtl:block:CABCustomerSearchAutoCompleteDivStart -->
                                             <input id="myAutoCompleteInput" type="text" name="CABCustomer" value="$QData{"CABCustomer"}" size="30"/>
-<!-- dtl:block:CustomerSearchAutoCompleteDivEnd -->
+<!-- dtl:block:CABCustomerSearchAutoCompleteDivEnd -->
                                             <div id="myAutoCompleteContainer"></div>
                                         </div>
-<!-- dtl:block:CustomerSearchAutoCompleteDivEnd -->
+<!-- dtl:block:CABCustomerSearchAutoCompleteDivEnd -->
 <!-- dtl:block:InvalidCABCustomer -->
                                         <font color="red" size="-2">$Text{"$Data{"Input invalid"}"}</font>
                                         <br/>
@@ -114,14 +114,14 @@ function clear_cab_agent() {
                                 <tr>
                                     <td class="contentkey">$Text{"CABAgent"} $Text{"(e. g. 234231)"}</td>
                                     <td class="contentvalue">
-<!-- dtl:block:UserSearchAutoCompleteDivStart1 -->
+<!-- dtl:block:CABAgentSearchAutoCompleteDivStart1 -->
                                         <div id="myAutoComplete1" class="myAutoComplete">
-<!-- dtl:block:UserSearchAutoCompleteDivStart1 -->
+<!-- dtl:block:CABAgentSearchAutoCompleteDivStart1 -->
                                             <input id="myAutoCompleteInput1" type="text" name="CABAgent" value="$QData{"CABAgent"}" size="30"/>
-<!-- dtl:block:UserSearchAutoCompleteDivEnd1 -->
+<!-- dtl:block:CABAgentSearchAutoCompleteDivEnd1 -->
                                             <div id="myAutoCompleteContainer1"></div>
                                         </div>
-<!-- dtl:block:UserSearchAutoCompleteDivEnd1 -->
+<!-- dtl:block:CABAgentSearchAutoCompleteDivEnd1 -->
 <!-- dtl:block:InvalidCABAgent -->
                                         <br />
                                         <font color="red" size="-2">$Text{"Input invalid"}</font>
