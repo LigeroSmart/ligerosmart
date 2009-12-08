@@ -2,7 +2,7 @@
 # AgentITSMChangeSearch.dtl - provides HTML form for AgentITSMChangeSearch
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.dtl,v 1.16 2009-12-07 16:58:58 bes Exp $
+# $Id: AgentITSMChangeSearch.dtl,v 1.17 2009-12-08 09:01:08 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -236,15 +236,12 @@ function clear_cab_agent() {
 <script language="JavaScript" type="text/javascript">
 <!--
 
-// register onchange-handlers for the TimeSlot dropdown menus
-var TimePointIDs = new Array(
-    "TimePointStart", "TimePoint", "TimePointFormat"
-);
-TimePointIDs.each(
-    function(item) {
-        Event.observe(
-            "$QData{"Prefix"}" + item,
-            'change',
+// register onchange-handlers for the TimePoint dropdown menus
+var TimePointElements = $("$QData{"Prefix"}TimeSearchType::TimePoint").adjacent('select');
+TimePointElements.each(
+    function(elem) {
+        elem.observe(
+            'click',
             function(){
                 $("$QData{"Prefix"}TimeSearchType::TimePoint").checked = true;
             }
@@ -252,16 +249,12 @@ TimePointIDs.each(
     }
 );
 
-// register onchange-handlers for the TimeSlot dropdown menus
-var TimeSlotIDs = new Array(
-    "TimeStartDay", "TimeStartMonth", "TimeStartYear",
-    "TimeStopDay", "TimeStopMonth", "TimeStopYear"
-);
-TimeSlotIDs.each(
-    function(item) {
-        Event.observe(
-            "$QData{"Prefix"}" + item,
-            'change',
+// register onchange-handlers for the TimeSlot dropdown menus and calendar links
+var TimeSlotElements  = $("$QData{"Prefix"}TimeSearchType::TimeSlot").adjacent('select, a[target="calendar"]');
+TimeSlotElements.each(
+    function(elem) {
+        elem.observe(
+            'click',
             function(){
                 $("$QData{"Prefix"}TimeSearchType::TimeSlot").checked = true;
             }
