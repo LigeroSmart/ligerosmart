@@ -2,7 +2,7 @@
 # AgentITSMChangeSearch.dtl - provides HTML form for AgentITSMChangeSearch
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.dtl,v 1.19 2009-12-08 10:00:29 bes Exp $
+# $Id: AgentITSMChangeSearch.dtl,v 1.20 2009-12-08 10:15:40 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -278,3 +278,37 @@ TimeSlotElements.each(
         </td>
     </tr>
 </table>
+
+<script language="JavaScript" type="text/javascript">
+<!--
+<!-- dtl:block:TimeSelectionJS -->
+
+// register onchange-handlers for the TimePoint dropdown menus
+var TimePointElements = $("$QData{"Prefix"}TimeSearchType::TimePoint").adjacent('select');
+TimePointElements.each(
+    function(elem) {
+        elem.observe(
+            'click',
+            function(){
+                $("$QData{"Prefix"}TimeSearchType::TimePoint").checked = true;
+            }
+        );
+    }
+);
+
+// register onchange-handlers for the TimeSlot dropdown menus and calendar links
+var TimeSlotElements  = $("$QData{"Prefix"}TimeSearchType::TimeSlot").adjacent('select, a[target="calendar"]');
+TimeSlotElements.each(
+    function(elem) {
+        elem.observe(
+            'click',
+            function(){
+                $("$QData{"Prefix"}TimeSearchType::TimeSlot").checked = true;
+            }
+        );
+    }
+);
+
+//-->
+<!-- dtl:block:TimeSelectionJS -->
+</script>
