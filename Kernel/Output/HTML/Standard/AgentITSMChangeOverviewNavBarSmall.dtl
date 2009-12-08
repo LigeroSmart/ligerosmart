@@ -2,7 +2,7 @@
 # AgentITSMChangeOverviewNavBarSmall.dtl - html for change overview table
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeOverviewNavBarSmall.dtl,v 1.1 2009-11-24 02:33:31 ub Exp $
+# $Id: AgentITSMChangeOverviewNavBarSmall.dtl,v 1.2 2009-12-08 14:34:18 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -47,10 +47,10 @@
                     <td width="20%" align="right" valign="top">
 <!-- dtl:block:OverviewNavBarViewMode -->
 <!-- dtl:block:OverviewNavBarViewModeSelected -->
-                        <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&Filter=$LQData{"Filter"}&View=$LQData{"View"}#subnav" Title="$QData{"Name"}"><img border="0" src="$Config{"Frontend::ImagePath"}$QData{"ImageSelected"}" $QData{"Name"}/></a>
+                        <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&Filter=$LQData{"Filter"}&View=$LQData{"View"}#subnav" title="$Text{"$QData{"Name"}"}"><img border="0" src="$Config{"Frontend::ImagePath"}$QData{"ImageSelected"}" alt="$Text{"$QData{"Name"}"}"/></a>
 <!-- dtl:block:OverviewNavBarViewModeSelected -->
 <!-- dtl:block:OverviewNavBarViewModeNotSelected -->
-                        <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&Filter=$LQData{"Filter"}&View=$LQData{"View"}#subnav" Title="$QData{"Name"}"><img border="0" src="$Config{"Frontend::ImagePath"}$QData{"Image"}" title="$QData{"Name"}" /></a>
+                        <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&Filter=$LQData{"Filter"}&View=$LQData{"View"}#subnav" title="$Text{"$QData{"Name"}"}"><img border="0" src="$Config{"Frontend::ImagePath"}$QData{"Image"}" alt="$Text{"$QData{"Name"}"}"/></a>
 <!-- dtl:block:OverviewNavBarViewModeNotSelected -->
 <!-- dtl:block:OverviewNavBarViewMode -->
                         &nbsp;
