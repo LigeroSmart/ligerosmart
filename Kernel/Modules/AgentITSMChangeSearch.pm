@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.34 2009-12-08 10:15:41 bes Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.35 2009-12-08 10:32:04 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.34 $) [1];
+$VERSION = qw($Revision: 1.35 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -226,11 +226,11 @@ sub Run {
 
             # store last queue screen
             my $URL
-                = "Action=ITSMChangeSearch&Subaction=Search&Profile=$Self->{Profile}&SortBy=$Self->{SortBy}"
+                = "Action=AgentITSMChangeSearch&Subaction=Search&Profile=$Self->{Profile}&SortBy=$Self->{SortBy}"
                 . "&OrderBy=$Self->{OrderBy}&TakeLastSearch=1&StartHit=$Self->{StartHit}";
             $Self->{SessionObject}->UpdateSessionID(
                 SessionID => $Self->{SessionID},
-                Key       => 'LastScreenOverview',
+                Key       => 'LastScreenChanges',
                 Value     => $URL,
             );
             $Self->{SessionObject}->UpdateSessionID(
@@ -848,7 +848,6 @@ sub _GetExpandInfo {
 
     my %Info;    # this hash will be returned
 
-    # TODO: call GroupLookup() and GroupMemberList only for expansion of agents
     # get group id for the group 'itsm-change'.
     my $ITSMChangeGroupID = $Self->{GroupObject}->GroupLookup(
         Group => 'itsm-change',
@@ -856,7 +855,7 @@ sub _GetExpandInfo {
 
     # get members of group 'itsm-change'.
     # Only members of this group may be CABAgents.
-    # TODO: what about agents that were removed from 'itsm-change', but are still CAB member ?
+    # TODO: what about agents that were removed from 'itsm-change', but are still CAB members ?
     my %ITSMChangeUsers = $Self->{GroupObject}->GroupMemberList(
         GroupID => $ITSMChangeGroupID,
         Type    => 'ro',
