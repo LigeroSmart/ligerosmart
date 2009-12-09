@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # Translated/Updated into Persian (Farsi) by Afshar Mohebbi <afshar.mohebbi at gmail.com>
 # --
-# $Id: fa_FAQ.pm,v 1.3 2009-07-20 09:52:39 ub Exp $
+# $Id: fa_FAQ.pm,v 1.4 2009-12-09 10:24:11 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -42,9 +42,9 @@ sub Data {
     $Lang->{'FAQ Category'}            = 'دسته FAQ';
     $Lang->{'A category should have a name!'}    = 'دسته بدون نام امکان پذیر نیست!';
     $Lang->{'A category should have a comment!'} = 'دسته بدون توضیح امکان پذیر نیست!';
-    $Lang->{'FAQ News (new created)'}            = 'اخبار FAQ (جدیدا ایجاد شده)';
-    $Lang->{'FAQ News (recently changed)'}       = 'اخبار FAQ (جدیدا تغییر یافته)';
-    $Lang->{'FAQ News (Top 10)'}                 = 'اخبار FAQ (۱۰ تای برتر)';
+    $Lang->{'FAQ Articles (new created)'}        = 'اخبار FAQ (جدیدا ایجاد شده)';
+    $Lang->{'FAQ Articles (recently changed)'}   = 'اخبار FAQ (جدیدا تغییر یافته)';
+    $Lang->{'FAQ Articles (Top 10)'}             = 'اخبار FAQ (۱۰ تای برتر)';
     $Lang->{'StartDay'}                          = 'روز آغاز';
     $Lang->{'StartMonth'}                        = 'ماه آغاز';
     $Lang->{'StartYear'}                         = 'سال آغاز';

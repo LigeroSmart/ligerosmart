@@ -1,8 +1,8 @@
 # --
 # FAQ.dtl - provides HTML view for faq articles
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.dtl,v 1.21 2008-09-26 18:04:25 ub Exp $
+# $Id: FAQ.dtl,v 1.22 2009-12-09 10:24:11 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -504,7 +504,7 @@
           <td><h3>$Text{"LatestCreatedItems"}</h3></td>
 <!-- dtl:block:ExplorerLatestCreateRss -->
           <td valign="top" align="right">
-            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=rss&Type=Created" title="$Text{"FAQ News (new created)"}"><img src="$Env{"Images"}/rss.png" border="0"></a>
+            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=rss&Type=Created" title="$Text{"FAQ Articles (new created)"}"><img src="$Env{"Images"}/rss.png" border="0"></a>
           </td>
 <!-- dtl:block:ExplorerLatestCreateRss -->
         </tr>

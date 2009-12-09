@@ -2,7 +2,7 @@
 # Kernel/Language/de_FAQ.pm - the german translation of FAQ
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: de_FAQ.pm,v 1.15 2009-07-30 19:21:13 ub Exp $
+# $Id: de_FAQ.pm,v 1.16 2009-12-09 10:24:11 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -39,18 +39,18 @@ sub Data {
     $Lang->{'SubCategories'}           = 'Subkategorien';
     $Lang->{'New FAQ Article'}         = 'Neuer FAQ Artikel';
     $Lang->{'FAQ Category'}            = 'FAQ Kategorie';
-    $Lang->{'A category should have a name!'}    = 'Eine Kategorien sollte einen Namen haben!';
-    $Lang->{'A category should have a comment!'} = 'Eine Kategorien sollte einen Kommentar haben!';
-    $Lang->{'FAQ News (new created)'}            = 'FAQ News (neu erstellte)';
-    $Lang->{'FAQ News (recently changed)'}       = 'FAQ News (zuletzt geänderte)';
-    $Lang->{'FAQ News (Top 10)'}                 = 'FAQ News (Top 10)';
-    $Lang->{'StartDay'}                          = 'Start Tag';
-    $Lang->{'StartMonth'}                        = 'Start Monat';
-    $Lang->{'StartYear'}                         = 'Start Jahr';
-    $Lang->{'EndDay'}                            = 'End Tag';
-    $Lang->{'EndMonth'}                          = 'End Monat';
-    $Lang->{'EndYear'}                           = 'End Jahr';
-    $Lang->{'Approval'}                          = 'Freigabe';
+    $Lang->{'A category should have a name!'}        = 'Eine Kategorien sollte einen Namen haben!';
+    $Lang->{'A category should have a comment!'}     = 'Eine Kategorien sollte einen Kommentar haben!';
+    $Lang->{'FAQ Articles (new created)'}            = 'FAQ Articles (neu erstellte)';
+    $Lang->{'FAQ Articles (recently changed)'}       = 'FAQ Articles (zuletzt geänderte)';
+    $Lang->{'FAQ Articles (Top 10)'}                 = 'FAQ Articles (Top 10)';
+    $Lang->{'StartDay'}                              = 'Start Tag';
+    $Lang->{'StartMonth'}                            = 'Start Monat';
+    $Lang->{'StartYear'}                             = 'Start Jahr';
+    $Lang->{'EndDay'}                                = 'End Tag';
+    $Lang->{'EndMonth'}                              = 'End Monat';
+    $Lang->{'EndYear'}                               = 'End Jahr';
+    $Lang->{'Approval'}                              = 'Freigabe';
     $Lang->{
         'No category accessible. To create an article you need access to at least one category. Please check your group/category permission under -category menu-!'
         }

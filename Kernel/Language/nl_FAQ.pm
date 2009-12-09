@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # Copyright (C) 2009 Michiel Beijen <michiel 'at' beefreeit.nl>
 # --
-# $Id: nl_FAQ.pm,v 1.2 2009-07-13 10:16:09 ub Exp $
+# $Id: nl_FAQ.pm,v 1.3 2009-12-09 10:24:11 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -44,9 +44,9 @@ sub Data {
     $Lang->{'FAQ Category'}            = 'FAQ categorie';
     $Lang->{'A category should have a name!'}    = 'Geef een naam op voor de categorie';
     $Lang->{'A category should have a comment!'} = 'Geef een beschrijving op voor de categorie';
-    $Lang->{'FAQ News (new created)'}            = 'FAQ Nieuws (nieuw aangemaakt)';
-    $Lang->{'FAQ News (recently changed)'}       = 'FAQ Nieuws (laatst veranderd)';
-    $Lang->{'FAQ News (Top 10)'}                 = 'FAQ Nieuws (Top 10)';
+    $Lang->{'FAQ Articles (new created)'}        = 'FAQ artikelen (nieuw aangemaakt)';
+    $Lang->{'FAQ Articles (recently changed)'}   = 'FAQ artikelen (laatst veranderd)';
+    $Lang->{'FAQ Articles (Top 10)'}             = 'FAQ artikelen (Top 10)';
     $Lang->{'StartDay'}                          = 'Eerste dag';
     $Lang->{'StartMonth'}                        = 'Eerste maand';
     $Lang->{'StartYear'}                         = 'Eerste jaar';

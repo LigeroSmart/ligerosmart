@@ -2,7 +2,7 @@
 # Kernel/Language/en_FAQ.pm - the english translation of FAQ
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: en_FAQ.pm,v 1.14 2009-03-21 14:44:50 ub Exp $
+# $Id: en_FAQ.pm,v 1.15 2009-12-09 10:24:11 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -41,9 +41,9 @@ sub Data {
     $Lang->{'FAQ Category'}                      = '';
     $Lang->{'A category should have a name!'}    = '';
     $Lang->{'A category should have a comment!'} = '';
-    $Lang->{'FAQ News (new created)'}            = '';
-    $Lang->{'FAQ News (recently changed)'}       = '';
-    $Lang->{'FAQ News (Top 10)'}                 = '';
+    $Lang->{'FAQ Articles (new created)'}        = '';
+    $Lang->{'FAQ Articles (recently changed)'}   = '';
+    $Lang->{'FAQ Articles (Top 10)'}             = '';
     $Lang->{'StartDay'}                          = 'Start day';
     $Lang->{'StartMonth'}                        = 'Start month';
     $Lang->{'StartYear'}                         = 'Start year';

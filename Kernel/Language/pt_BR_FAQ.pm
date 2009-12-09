@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # Copyright (C) 2009 Ronaldo Richieri <richieri@gmail.com>
 # --
-# $Id: pt_BR_FAQ.pm,v 1.2 2009-04-23 09:56:03 ub Exp $
+# $Id: pt_BR_FAQ.pm,v 1.3 2009-12-09 10:24:11 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -40,9 +40,9 @@ sub Data {
     $Lang->{'SubCategories'}                     = 'Subcategorias';
     $Lang->{'A category should have a name!'}    = 'Uma categoria precisa ter um nome!';
     $Lang->{'A category should have a comment!'} = 'Uma categoria precisa ter um comentário!';
-    $Lang->{'FAQ News (new created)'}            = 'FAQ News (recém criados)';
-    $Lang->{'FAQ News (recently changed)'}       = 'FAQ News (alterados recentemente)';
-    $Lang->{'FAQ News (Top 10)'}                 = 'FAQ News (as 10 mais)';
+    $Lang->{'FAQ Articles (new created)'}        = 'FAQ Articles (recém criados)';
+    $Lang->{'FAQ Articles (recently changed)'}   = 'FAQ Articles (alterados recentemente)';
+    $Lang->{'FAQ Articles (Top 10)'}             = 'FAQ Articles (as 10 mais)';
     $Lang->{'StartDay'}                          = 'Dia de início';
     $Lang->{'StartMonth'}                        = 'Mês de início';
     $Lang->{'StartYear'}                         = 'Ano de início';

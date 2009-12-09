@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # Copyright (C) 2009 Jonathan Peyrot
 # --
-# $Id: fr_FAQ.pm,v 1.1 2009-08-04 22:16:35 ub Exp $
+# $Id: fr_FAQ.pm,v 1.2 2009-12-09 10:24:11 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -42,9 +42,9 @@ sub Data {
     $Lang->{'FAQ Category'}                      = 'Catégorie FAQ';
     $Lang->{'A category should have a name!'}    = 'Une catégorie doit avoir un nom !';
     $Lang->{'A category should have a comment!'} = 'Une catégorie doit posséder un commentaire';
-    $Lang->{'FAQ News (new created)'}            = 'FAQ News (nouvelles questions)';
-    $Lang->{'FAQ News (recently changed)'}       = 'FAQ News (derniers changements)';
-    $Lang->{'FAQ News (Top 10)'}                 = 'FAQ News (Top 10)';
+    $Lang->{'FAQ Articles (new created)'}        = 'FAQ Articles (nouvelles questions)';
+    $Lang->{'FAQ Articles (recently changed)'}   = 'FAQ Articles (derniers changements)';
+    $Lang->{'FAQ Articles (Top 10)'}             = 'FAQ Articles (Top 10)';
     $Lang->{'StartDay'}                          = 'Jour Début';
     $Lang->{'StartMonth'}                        = 'Mois Début';
     $Lang->{'StartYear'}                         = 'Année Début';

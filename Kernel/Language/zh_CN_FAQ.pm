@@ -2,7 +2,7 @@
 # Kernel/Language/zh_CN_FAQ.pm - the Chinese simple translation for FAQ
 # Copyright (C) 2009 Never Min <never at qnofae.org>
 # --
-# $Id: zh_CN_FAQ.pm,v 1.3 2009-07-30 19:29:38 ub Exp $
+# $Id: zh_CN_FAQ.pm,v 1.4 2009-12-09 10:24:11 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -42,9 +42,9 @@ sub Data {
     $Lang->{'FAQ Category'}                      = 'FAQ 目录';
     $Lang->{'A category should have a name!'}    = '目录名不能为空!';
     $Lang->{'A category should have a comment!'} = '请为该目录写上注释!';
-    $Lang->{'FAQ News (new created)'}            = 'FAQ 更新(新创建)';
-    $Lang->{'FAQ News (recently changed)'}       = 'FAQ 更新(最近更改)';
-    $Lang->{'FAQ News (Top 10)'}                 = 'FAQ 更新';
+    $Lang->{'FAQ Articles (new created)'}        = 'FAQ 更新(新创建)';
+    $Lang->{'FAQ Articles (recently changed)'}   = 'FAQ 更新(最近更改)';
+    $Lang->{'FAQ Articles (Top 10)'}             = 'FAQ 更新';
     $Lang->{'StartDay'}                          = '开始日期';
     $Lang->{'StartMonth'}                        = '开始月份';
     $Lang->{'StartYear'}                         = '开始年份';

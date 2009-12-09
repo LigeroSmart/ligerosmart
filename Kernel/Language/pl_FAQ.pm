@@ -4,7 +4,7 @@
 # Copyright (C) 2008 Patryk ¦ciborek <patryk@sciborek.com>
 # Copyright (C) 2009 Artur Skalski <skal.ar at wp.pl>
 # --
-# $Id: pl_FAQ.pm,v 1.4 2009-07-13 10:15:54 ub Exp $
+# $Id: pl_FAQ.pm,v 1.5 2009-12-09 10:24:11 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -43,9 +43,9 @@ sub Data {
     $Lang->{'FAQ Category'}                      = 'Kategoria FAQ';
     $Lang->{'A category should have a name!'}    = 'Kategoria musi posiadaæ nazwê!';
     $Lang->{'A category should have a comment!'} = 'Kategoria musi posiadaæ komentarz!';
-    $Lang->{'FAQ News (new created)'}            = 'Zmiany w FAQ (nowe artyku³y)';
-    $Lang->{'FAQ News (recently changed)'}       = 'Zmiany w FAQ (zmienione artyku³y)';
-    $Lang->{'FAQ News (Top 10)'}                 = 'Zmiany w FAQ (10 najlepszych artyku³ów)';
+    $Lang->{'FAQ Articles (new created)'}        = 'Zmiany w FAQ (nowe artyku³y)';
+    $Lang->{'FAQ Articles (recently changed)'}   = 'Zmiany w FAQ (zmienione artyku³y)';
+    $Lang->{'FAQ Articles (Top 10)'}             = 'Zmiany w FAQ (10 najlepszych artyku³ów)';
     $Lang->{'StartDay'}                          = 'Dzieñ pocz±tkowy';
     $Lang->{'StartMonth'}                        = 'Miesi±c pocz±tkowy';
     $Lang->{'StartYear'}                         = 'Rok pocz±tkowy';
