@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicFAQ.pm - faq module
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQ.pm,v 1.10 2009-12-01 08:40:28 mb Exp $
+# $Id: PublicFAQ.pm,v 1.11 2009-12-09 10:19:06 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::Modules::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 our @ISA = qw(Kernel::Modules::FAQ);
 
@@ -83,7 +83,7 @@ sub Run {
             Data => {
                 Rel   => 'alternate',
                 Type  => 'application/rss+xml',
-                Title => '$Text{"FAQ News (new created)"}',
+                Title => 'FAQ Articles (new created)',
                 Href  => '$Env{"Baselink"}Action=$Env{"Action"}&Subaction=rss&Type=Created',
             },
         );
@@ -92,7 +92,7 @@ sub Run {
             Data => {
                 Rel   => 'alternate',
                 Type  => 'application/rss+xml',
-                Title => '$Text{"FAQ News (recently changed)"}',
+                Title => 'FAQ Articles (recently changed)',
                 Href  => '$Env{"Baselink"}Action=$Env{"Action"}&Subaction=rss&Type=Changed',
             },
         );
@@ -101,7 +101,7 @@ sub Run {
             Data => {
                 Rel   => 'alternate',
                 Type  => 'application/rss+xml',
-                Title => '$Text{"FAQ News (Top 10)"}',
+                Title => 'FAQ Articles (Top 10)',
                 Href  => '$Env{"Baselink"}Action=$Env{"Action"}&Subaction=rss&Type=Top10',
             },
         );
