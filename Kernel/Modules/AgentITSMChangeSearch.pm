@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.37 2009-12-08 14:27:03 bes Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.38 2009-12-09 08:51:32 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.37 $) [1];
+$VERSION = qw($Revision: 1.38 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -596,8 +596,7 @@ sub _MaskForm {
 
     # get change states
     my $ChangeStates = $Self->{ChangeObject}->ChangePossibleStatesGet(
-        ChangeID => 1,
-        UserID   => $Self->{UserID},
+        UserID => $Self->{UserID},
     );
     $Param{'ChangeStateSelectionStrg'} = $Self->{LayoutObject}->BuildSelection(
         Data       => $ChangeStates,
@@ -631,8 +630,7 @@ sub _MaskForm {
 
     # get workorder states
     my $WorkOrderStates = $Self->{WorkOrderObject}->WorkOrderPossibleStatesGet(
-        WorkOrderID => 1,
-        UserID      => 1,
+        UserID => 1,
     );
     $Param{'WorkOrderStateSelectionStrg'} = $Self->{LayoutObject}->BuildSelection(
         Data       => $WorkOrderStates,

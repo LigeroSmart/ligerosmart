@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.197 2009-12-07 08:56:45 reb Exp $
+# $Id: ITSMChange.pm,v 1.198 2009-12-09 08:51:32 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.197 $) [1];
+$VERSION = qw($Revision: 1.198 $) [1];
 
 =head1 NAME
 
@@ -1926,11 +1926,12 @@ sub ChangeStateLookup {
 =item ChangePossibleStatesGet()
 
 This method returns a list of possible change states.
-For now the required parameter ChangeID is checked,
-but not yet used for producing the list.
+If ChangeID is omitted, the complete list of change states is returned.
+If ChangeID is given, the list of possible change states for this
+change is returned (to be implemented!)
 
     my $ChangeStateList = $ChangeObject->ChangePossibleStatesGet(
-        ChangeID => 123,
+        ChangeID => 123,    # optional
         UserID   => 1,
     );
 
@@ -1955,7 +1956,7 @@ sub ChangePossibleStatesGet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Attribute (qw(ChangeID UserID)) {
+    for my $Attribute (qw(UserID)) {
         if ( !$Param{$Attribute} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -1977,6 +1978,13 @@ sub ChangePossibleStatesGet {
             Key   => $StateID,
             Value => $StateList->{$StateID},
         };
+    }
+
+    # TODO: if ChangeID is given, shrink list to possible
+    # states
+    if ( $Param{ChangeID} ) {
+
+        # to be implemented
     }
 
     return \@ArrayHashRef;
@@ -2727,6 +2735,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.197 $ $Date: 2009-12-07 08:56:45 $
+$Revision: 1.198 $ $Date: 2009-12-09 08:51:32 $
 
 =cut

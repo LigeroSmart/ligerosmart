@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.43 2009-12-07 08:56:45 reb Exp $
+# $Id: ITSMWorkOrder.pm,v 1.44 2009-12-09 08:51:32 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.43 $) [1];
+$VERSION = qw($Revision: 1.44 $) [1];
 
 =head1 NAME
 
@@ -1458,16 +1458,17 @@ sub WorkOrderStateLookup {
 =item WorkOrderPossibleStatesGet()
 
 This method returns a list of possible workorder states.
-For now the required parameter WorkOrderID is checked,
-but not yet used for producing the list.
+If WorkOrderID is omitted, the complete list of change states is returned.
+If WorkOrderID is given, the list of possible change states for this
+workorder is returned (to be implemented!)
 
     my $WorkOrderStateList = $WorkOrderObject->WorkOrderPossibleStatesGet(
-        WorkOrderID => 123,
+        WorkOrderID => 123, # optional
         UserID      => 1,
     );
 
-The return value is a reference to an array of hashrefs. The Element 'Key' is then
-the StateID and die Element 'Value' is the name of the state. The array elements
+The return value is a reference to an array of hashrefs. The element 'Key' is then
+the StateID and the element 'Value' is the name of the state. The array elements
 are sorted by state id.
 
     my $WorkOrderStateList = [
@@ -1487,7 +1488,7 @@ sub WorkOrderPossibleStatesGet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Attribute (qw(WorkOrderID UserID)) {
+    for my $Attribute (qw(UserID)) {
         if ( !$Param{$Attribute} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -1509,6 +1510,13 @@ sub WorkOrderPossibleStatesGet {
             Key   => $StateID,
             Value => $StateList->{$StateID},
         };
+    }
+
+    # TODO: if WorkOrderID is given, shrink list to possible
+    # states
+    if ( $Param{WorkOrderID} ) {
+
+        # to be implemented
     }
 
     return \@ArrayHashRef;
@@ -2182,6 +2190,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.43 $ $Date: 2009-12-07 08:56:45 $
+$Revision: 1.44 $ $Date: 2009-12-09 08:51:32 $
 
 =cut
