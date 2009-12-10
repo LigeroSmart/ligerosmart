@@ -1,17 +1,36 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.105 2009-12-10 15:20:25 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.106 2009-12-10 17:06:18 bes Exp $</CVS>
+    <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
+        <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Admin::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Group>admin</Group>
+                <Description>Admin of the CIP matrix</Description>
+                <Title>Category &lt;-&gt; Impact &lt;-&gt; Priority</Title>
+                <NavBarName>Admin</NavBarName>
+                <NavBarModule>
+                    <Module>Kernel::Output::HTML::NavBarModuleAdmin</Module>
+                    <Name>Category &lt;-&gt; Impact &lt;-&gt; Priority</Name>
+                    <Block>Block3</Block>
+                    <Prio>431</Prio>
+                </NavBarModule>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="Frontend::Module###AgentITSMCABMemberSearch" Required="0" Valid="1">
-        <Description Lang="en">Frontend module registration for the AgentITSMCABMemeberSearch object in the agent interface.</Description>
+        <Description Lang="en">Frontend module registration for the AgentITSMCABMemberSearch object in the agent interface.</Description>
         <Description Lang="de">Frontendmodul-Registration des AgentITSMCABMemberSearch-Objekts im Agenten-Interface.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>Agent CABMemberSearch</Description>
-                <Title>CABMember Search</Title>
-                <NavBarName>Change</NavBarName>
+                <Description>Lookup of CAB members for autocompletion</Description>
+                <Title>CAB Member Search</Title>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -23,7 +42,7 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>ITSM Change Overview</Description>
+                <Description>Overview over all Changes</Description>
                 <NavBarName>Change</NavBarName>
                 <Title>Change</Title>
                 <NavBar>
@@ -60,7 +79,7 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change-builder</GroupRo>
                 <GroupRo>itsm-change-manager</GroupRo>
-                <Description>Change Add</Description>
+                <Description>Add a change</Description>
                 <Title>Add</Title>
                 <NavBarName>Change</NavBarName>
                 <NavBar>
@@ -77,26 +96,6 @@
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
-        <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
-        <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Admin::ModuleRegistration</SubGroup>
-        <Setting>
-            <FrontendModuleReg>
-                <Group>admin</Group>
-                <Description>Admin</Description>
-                <Title>Category &lt;-&gt; Impact &lt;-&gt; Priority</Title>
-                <NavBarName>Admin</NavBarName>
-                <NavBarModule>
-                    <Module>Kernel::Output::HTML::NavBarModuleAdmin</Module>
-                    <Name>Category &lt;-&gt; Impact &lt;-&gt; Priority</Name>
-                    <Block>Block3</Block>
-                    <Prio>431</Prio>
-                </NavBarModule>
-            </FrontendModuleReg>
-        </Setting>
-    </ConfigItem>
     <ConfigItem Name="Frontend::Module###AgentITSMChangeEdit" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AgentITSMChangeEdit object in the agent interface.</Description>
         <Description Lang="de">Frontendmodul-Registration des AgentITSMChangeEdit-Objekts im Agent-Interface.</Description>
@@ -105,7 +104,7 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>Change Edit</Description>
+                <Description>Edit a change</Description>
                 <Title>Edit</Title>
                 <NavBarName>Change</NavBarName>
             </FrontendModuleReg>
@@ -119,9 +118,9 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>ITSM Change FSC Overview</Description>
+                <Description>Forward schedule of changes. Overview over approved changes.</Description>
                 <NavBarName>Change</NavBarName>
-                <Title>Change</Title>
+                <Title>ChangeFSC</Title>
                 <NavBar>
                     <Description>FSC (Forward Schedule Of Changes)</Description>
                     <Name>FSC</Name>
@@ -158,7 +157,7 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>Change HistoryZoom</Description>
+                <Description>Details of a change history entry</Description>
                 <Title>HistoryZoom</Title>
                 <NavBarName>Change</NavBarName>
             </FrontendModuleReg>
@@ -391,7 +390,7 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>Workorder HistoryZoom</Description>
+                <Description>Workorder History Zoom</Description>
                 <Title>HistoryZoom</Title>
                 <NavBarName>Change</NavBarName>
             </FrontendModuleReg>
@@ -405,7 +404,7 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>WorkOrder Report</Description>
+                <Description>Workorder Report</Description>
                 <Title>Report</Title>
                 <NavBarName>Change</NavBarName>
             </FrontendModuleReg>
@@ -419,7 +418,7 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>WorkOrder Zoom</Description>
+                <Description>Workorder Zoom</Description>
                 <Title>Zoom</Title>
                 <NavBarName>Change</NavBarName>
             </FrontendModuleReg>
@@ -433,7 +432,7 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>Agent UserSearch</Description>
+                <Description>Looup of agents, for autocompletion</Description>
                 <Title>UserSearch</Title>
                 <NavBarName>Change</NavBarName>
             </FrontendModuleReg>
@@ -514,8 +513,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::MenuModule###000-Back" Required="0" Valid="1">
-        <Description Lang="en">Module to show back link in change menu.</Description>
-        <Description Lang="de">Mit diesem Modul wird der Zurück-Link in der Linkleiste der Change-Ansicht angezeigt.</Description>
+        <Description Lang="en">Module to show the 'Back' link in change menu.</Description>
+        <Description Lang="de">Mit diesem Modul wird der 'Zurück'-Link in der Linkleiste der Change-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
         <Setting>
@@ -529,8 +528,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::MenuModule###010-History" Required="0" Valid="1">
-        <Description Lang="en">Module to show history link in change menu.</Description>
-        <Description Lang="de">Mit diesem Modul wird der History-Link in der Linkleiste der Change-Ansicht angezeigt.</Description>
+        <Description Lang="en">Module to show the 'History' link in change menu.</Description>
+        <Description Lang="de">Mit diesem Modul wird der 'History'-Link in der Linkleiste der Change-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
         <Setting>
@@ -544,8 +543,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::MenuModule###020-Print" Required="0" Valid="1">
-        <Description Lang="en">Module to show print link in change menu.</Description>
-        <Description Lang="de">Mit diesem Modul wird der Drucken-Link in der Linkleiste der Change-Ansicht angezeigt.</Description>
+        <Description Lang="en">Module to show the 'Print' link in change menu.</Description>
+        <Description Lang="de">Mit diesem Modul wird der 'Drucken'-Link in der Linkleiste der Change-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
         <Setting>
@@ -559,22 +558,22 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::MenuModule###030-Edit" Required="0" Valid="1">
-        <Description Lang="en">Module to show edit link in change menu.</Description>
-        <Description Lang="de">Mit diesem Modul wird der Bearbeiten-Link in der Linkleiste der Change-Ansicht angezeigt.</Description>
+        <Description Lang="en">Module to show the 'Edit' link in change menu.</Description>
+        <Description Lang="de">Mit diesem Modul wird der 'Bearbeiten'-Link in der Linkleiste der Change-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMChangeMenuGeneric</Item>
                 <Item Key="Name">Edit</Item>
-                <Item Key="Description">Edit</Item>
+                <Item Key="Description">Edit a Change</Item>
                 <Item Key="Action">AgentITSMChangeEdit</Item>
                 <Item Key="Link">Action=AgentITSMChangeEdit&amp;ChangeID=$QData{"ChangeID"}</Item>
             </Hash>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::MenuModule###040-InvolvedPersons" Required="0" Valid="1">
-        <Description Lang="en">Module to show 'involved persons' link in change menu.</Description>
+        <Description Lang="en">Module to show the 'involved persons' link in change menu.</Description>
         <Description Lang="de">Mit diesem Modul wird der 'Involvierte Personen'-Link in der Linkleiste der Change-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
@@ -582,14 +581,14 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMChangeMenuGeneric</Item>
                 <Item Key="Name">Involved Persons</Item>
-                <Item Key="Description">Involved Persons</Item>
+                <Item Key="Description">Change Involved Persons of a Change</Item>
                 <Item Key="Action">AgentITSMChangeInvolvedPersons</Item>
                 <Item Key="Link">Action=AgentITSMChangeInvolvedPersons&amp;ChangeID=$QData{"ChangeID"}</Item>
             </Hash>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::MenuModule###050-WorkOrderAdd" Required="0" Valid="1">
-        <Description Lang="en">Module to show 'Add WorkOrder' link in change menu.</Description>
+        <Description Lang="en">Module to show add 'Add Workorder' link in change menu.</Description>
         <Description Lang="de">Mit diesem Modul wird der 'Workorder hinzufügen'-Link in der Linkleiste der Change-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
@@ -597,29 +596,29 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMChangeMenuGeneric</Item>
                 <Item Key="Name">Add Workorder</Item>
-                <Item Key="Description">Add Workorder</Item>
+                <Item Key="Description">Add a Workorder to the Change</Item>
                 <Item Key="Action">AgentITSMWorkOrderAdd</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderAdd&amp;ChangeID=$QData{"ChangeID"}</Item>
             </Hash>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::MenuModule###070-Link" Required="0" Valid="1">
-        <Description Lang="en">Module to show link link in change menu.</Description>
-        <Description Lang="de">Mit diesem Modul wird der Link-Link in der Linkleiste der Change-Ansicht angezeigt.</Description>
+        <Description Lang="en">Module to show the 'Link' link in change menu.</Description>
+        <Description Lang="de">Mit diesem Modul wird der 'Verknüpfen'-Link in der Linkleiste der Change-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMChangeMenuGeneric</Item>
                 <Item Key="Name">Link</Item>
-                <Item Key="Description">Link</Item>
+                <Item Key="Description">Link another object to the Change</Item>
                 <Item Key="Action">AgentLinkObject</Item>
                 <Item Key="Link">Action=AgentLinkObject&amp;SourceObject=ITSMChange&amp;SourceKey=$QData{"ChangeID"}</Item>
             </Hash>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::MenuModule###080-MoveTimeSlot" Required="0" Valid="1">
-        <Description Lang="en">Module to show move timeslot link in change menu.</Description>
+        <Description Lang="en">Module to show the 'Move Timeslot' link in change menu.</Description>
         <Description Lang="de">Mit diesem Modul wird der 'Verschieben'-Link in der Linkleiste der Change-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
@@ -627,15 +626,15 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMChangeMenuWorkOrdersNeeded</Item>
                 <Item Key="Name">MoveTimeSlot</Item>
-                <Item Key="Description">Move Time Slot</Item>
+                <Item Key="Description">Move all workorders in time</Item>
                 <Item Key="Action">AgentITSMChangeTimeSlot</Item>
                 <Item Key="Link">Action=AgentITSMChangeTimeSlot&amp;ChangeID=$QData{"ChangeID"}</Item>
             </Hash>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###000-Back" Required="0" Valid="1">
-        <Description Lang="en">Module to show back link in workorder menu.</Description>
-        <Description Lang="de">Mit diesem Modul wird der Zurück-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
+        <Description Lang="en">Module to show the 'Back' link in workorder menu.</Description>
+        <Description Lang="de">Mit diesem Modul wird der 'Zurück'-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
@@ -649,8 +648,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###010-History" Required="0" Valid="1">
-        <Description Lang="en">Module to show history link in workorder menu.</Description>
-        <Description Lang="de">Mit diesem Modul wird der Historie-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
+        <Description Lang="en">Module to show the 'History' link in workorder menu.</Description>
+        <Description Lang="de">Mit diesem Modul wird der 'Historie'-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
@@ -664,38 +663,38 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###020-Print" Required="0" Valid="1">
-        <Description Lang="en">Module to show print link in workorder menu.</Description>
-        <Description Lang="de">Mit diesem Modul wird der Drucken-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
+        <Description Lang="en">Module to show the 'Print' link in workorder menu.</Description>
+        <Description Lang="de">Mit diesem Modul wird der 'Drucken'-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrderMenuGeneric</Item>
                 <Item Key="Name">Print</Item>
-                <Item Key="Description">Print</Item>
+                <Item Key="Description">Print the workorder</Item>
                 <Item Key="Action">AgentITSMWorkOrderPrint</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderPrint&amp;WorkOrderID=$QData{"WorkOrderID"}</Item>
             </Hash>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###030-Edit" Required="0" Valid="1">
-        <Description Lang="en">Module to show edit link in workorder menu.</Description>
-        <Description Lang="de">Mit diesem Modul wird der Bearbeiten-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
+        <Description Lang="en">Module to show the 'Edit' link in workorder menu.</Description>
+        <Description Lang="de">Mit diesem Modul wird der 'Bearbeiten'-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrderMenuWithPermissionFromChange</Item>
                 <Item Key="Name">Edit</Item>
-                <Item Key="Description">Edit</Item>
+                <Item Key="Description">Edit the workorder</Item>
                 <Item Key="Action">AgentITSMWorkOrderEdit</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderEdit&amp;WorkOrderID=$QData{"WorkOrderID"}</Item>
             </Hash>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###040-WorkOrderAgent" Required="0" Valid="1">
-        <Description Lang="en">Module to show WorkOrderAgent link in workorder menu.</Description>
-        <Description Lang="de">Mit diesem Modul wird der WorkOrderAgent-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
+        <Description Lang="en">Module to show the 'Workorder Agent' link in workorder menu.</Description>
+        <Description Lang="de">Mit diesem Modul wird der 'Workorder Agent'-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
@@ -709,8 +708,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###050-Report" Required="0" Valid="1">
-        <Description Lang="en">Module to show report link in workorder menu.</Description>
-        <Description Lang="de">Mit diesem Modul wird der Report-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
+        <Description Lang="en">Module to show the 'Report' link in workorder menu.</Description>
+        <Description Lang="de">Mit diesem Modul wird der 'Report'-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
@@ -739,8 +738,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###080-Template" Required="0" Valid="1">
-        <Description Lang="en">Module to show template link in workorder menu.</Description>
-        <Description Lang="de">Mit diesem Modul wird der Template-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
+        <Description Lang="en">Module to show the 'Template' link in workorder menu.</Description>
+        <Description Lang="de">Mit diesem Modul wird der 'Template'-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
@@ -770,7 +769,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::CustomerSearchAutoComplete###Active" Required="1" Valid="1">
         <Description Lang="en">Enable or disable the autocomplete feature for the customer search in the ITSM agent interface.</Description>
-        <Description Lang="de">Aktivieren oder deativieren der Autocomplete-Funktionalitaet für die Kunden-Suche im ITSM-Agenteninterface.</Description>
+        <Description Lang="de">Aktivieren oder deaktivieren der Autocomplete-Funktionalität für die Kunden-Suche im ITSM-Agenteninterface.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::CustomerSearch</SubGroup>
         <Setting>
@@ -793,8 +792,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::CustomerSearchAutoComplete###MaxResultsDisplayed" Required="1" Valid="1">
-        <Description Lang="en">Set number of search results for the autocomplete feature.</Description>
-        <Description Lang="de">Anzahl der Suchergebnisse für die Autocomplete-Funktionalitaet.</Description>
+        <Description Lang="en">Set maximal number of search results for the autocomplete feature.</Description>
+        <Description Lang="de">Maximale Zahl der Suchergebnisse in der Autocomplete-Funktionalität.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::CustomerSearch</SubGroup>
         <Setting>
@@ -803,7 +802,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::CustomerSearchAutoComplete###MinQueryLength" Required="1" Valid="1">
         <Description Lang="en">Set minimum number of characters before autocomplete query is sent.</Description>
-        <Description Lang="de">Mindestanzahl von Zeichen zum Ausfuehren der Autocomplete-Funktionalitaet.</Description>
+        <Description Lang="de">Mindestanzahl von Zeichen zum Ausführen der Autocomplete-Funktionalität.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::CustomerSearch</SubGroup>
         <Setting>
@@ -812,7 +811,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::CustomerSearchAutoComplete###QueryDelay" Required="1" Valid="1">
         <Description Lang="en">Delay time between autocomplete queries.</Description>
-        <Description Lang="de">Wartezeit zwischen zwei Autocomplete-Queries.</Description>
+        <Description Lang="de">Wartezeit zwischen zwei Autocomplete-Anfragen.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::CustomerSearch</SubGroup>
         <Setting>
@@ -821,7 +820,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::CustomerSearchAutoComplete###TypeAhead" Required="1" Valid="1">
         <Description Lang="en">Enable or disable TypeAhead for the autocomplete feature.</Description>
-        <Description Lang="de">Aktivieren oder deativieren von TypeAhead für die Autocomplete-Funktionalitaet.</Description>
+        <Description Lang="de">Aktivieren oder deaktivieren von TypeAhead in der Autocomplete-Funktionalität.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::CustomerSearch</SubGroup>
         <Setting>
@@ -833,7 +832,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::UserSearchAutoComplete###Active" Required="1" Valid="1">
         <Description Lang="en">Enable or disable the autocomplete feature for the user search in the agent interface.</Description>
-        <Description Lang="de">Aktivieren oder deativieren der Autocomplete-Funktionalitaet für die User-Suche im Agenteninterface.</Description>
+        <Description Lang="de">Aktivieren oder deaktivieren der Autocomplete-Funktionalität für die User-Suche im Agenteninterface.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::UserSearch</SubGroup>
         <Setting>
@@ -857,7 +856,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::UserSearchAutoComplete###MinQueryLength" Required="1" Valid="1">
         <Description Lang="en">Set minimum number of characters before autocomplete query is sent.</Description>
-        <Description Lang="de">Mindestanzahl von Zeichen zum Ausfuehren der Autocomplete-Funktionalitaet.</Description>
+        <Description Lang="de">Mindestanzahl von Zeichen zum Ausführen der Autocomplete-Funktionalität.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::UserSearch</SubGroup>
         <Setting>
@@ -865,8 +864,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::UserSearchAutoComplete###MaxResultsDisplayed" Required="1" Valid="1">
-        <Description Lang="en">Set number of search results for the autocomplete feature.</Description>
-        <Description Lang="de">Anzahl der Suchergebnisse für die Autocomplete-Funktionalitaet.</Description>
+        <Description Lang="en">Set maximal number of search results for the autocomplete feature.</Description>
+        <Description Lang="de">Maximale Zahl der Suchergebnisse in der Autocomplete-Funktionalität.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::UserSearch</SubGroup>
         <Setting>
@@ -875,7 +874,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::UserSearchAutoComplete###QueryDelay" Required="1" Valid="1">
         <Description Lang="en">Delay time between autocomplete queries.</Description>
-        <Description Lang="de">Wartezeit zwischen zwei Autocomplete-Queries.</Description>
+        <Description Lang="de">Wartezeit zwischen zwei Autocomplete-Anfragen.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::UserSearch</SubGroup>
         <Setting>
@@ -884,7 +883,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::UserSearchAutoComplete###TypeAhead" Required="1" Valid="1">
         <Description Lang="en">Enable or disable TypeAhead for the autocomplete feature.</Description>
-        <Description Lang="de">Aktivieren oder deativieren von TypeAhead für die Autocomplete-Funktionalitaet.</Description>
+        <Description Lang="de">Aktivieren oder deaktivieren von TypeAhead für die Autocomplete-Funktionalität.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::UserSearch</SubGroup>
         <Setting>
@@ -896,7 +895,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::CABMemberSearchAutoComplete###Active" Required="1" Valid="1">
         <Description Lang="en">Enable or disable the autocomplete feature for the CAB member search in the agent interface.</Description>
-        <Description Lang="de">Aktivieren oder deativieren der Autocomplete-Funktionalitaet für die CABMember-Suche im Agenteninterface.</Description>
+        <Description Lang="de">Aktivieren oder deaktivieren der Autocomplete-Funktionalität für die CABMember-Suche im Agenteninterface.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::CABMemberSearch</SubGroup>
         <Setting>
@@ -919,8 +918,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::CABMemberSearchAutoComplete###MaxResultsDisplayed" Required="1" Valid="1">
-        <Description Lang="en">Set number of search results for the autocomplete feature.</Description>
-        <Description Lang="de">Anzahl der Suchergebnisse für die Autocomplete-Funktionalitaet.</Description>
+        <Description Lang="en">Set maximal number of search results for the autocomplete feature.</Description>
+        <Description Lang="de">Maximale Zahl der Suchergebnisse in der Autocomplete-Funktionalität.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::CABMemberSearch</SubGroup>
         <Setting>
@@ -929,7 +928,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::CABMemberSearchAutoComplete###MinQueryLength" Required="1" Valid="1">
         <Description Lang="en">Set minimum number of characters before autocomplete query is sent.</Description>
-        <Description Lang="de">Mindestanzahl von Zeichen zum Ausfuehren der Autocomplete-Funktionalitaet.</Description>
+        <Description Lang="de">Mindestanzahl von Zeichen zum Ausführen der Autocomplete-Funktionalität.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::CABMemberSearch</SubGroup>
         <Setting>
@@ -938,7 +937,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::CABMemberSearchAutoComplete###QueryDelay" Required="1" Valid="1">
         <Description Lang="en">Delay time between autocomplete queries.</Description>
-        <Description Lang="de">Wartezeit zwischen zwei Autocomplete-Queries.</Description>
+        <Description Lang="de">Wartezeit zwischen zwei Autocomplete-Anfragen.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::CABMemberSearch</SubGroup>
         <Setting>
@@ -947,7 +946,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::CABMemberSearchAutoComplete###TypeAhead" Required="1" Valid="1">
         <Description Lang="en">Enable or disable TypeAhead for the autocomplete feature.</Description>
-        <Description Lang="de">Aktivieren oder deativieren von TypeAhead für die Autocomplete-Funktionalitaet.</Description>
+        <Description Lang="de">Aktivieren oder deaktivieren von TypeAhead in der Autocomplete-Funktionalität.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::CABMemberSearch</SubGroup>
         <Setting>
@@ -959,7 +958,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMChange::EventModule###01-HistoryAdd" Required="0" Valid="1">
         <Description Lang="en">ITSM event module updates the history of change objects.</Description>
-        <Description Lang="de">ITSM Event Modul aktualisiert die History von Change Objekten.</Description>
+        <Description Lang="de">ITSM Event Modul aktualisiert die Historie von Change Objekten.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Core::ITSMChange::Event</SubGroup>
         <Setting>
@@ -972,7 +971,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::EventModule###01-HistoryAdd" Required="0" Valid="1">
         <Description Lang="en">ITSM event module updates the history of workorder objects.</Description>
-        <Description Lang="de">ITSM Event Modul aktualisiert die History von Workorder Objekten.</Description>
+        <Description Lang="de">ITSM Event Modul aktualisiert die Historie von Workorder Objekten.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Core::ITSMWorkOrder::Event</SubGroup>
         <Setting>
@@ -984,7 +983,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::EventModule###02-WorkOrderNumberCalc" Required="0" Valid="1">
-        <Description Lang="en">ITSM event module to recalculate the Workorder numbers.</Description>
+        <Description Lang="en">ITSM event module to recalculate the workorder numbers.</Description>
         <Description Lang="de">ITSM Event Modul, das die Workorder Nummern neu berechnet.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Core::ITSMWorkOrder::Event</SubGroup>
@@ -997,8 +996,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::CounterLog" Required="1" Valid="1">
-        <Description Lang="en">Logfile for the itsm change counter.</Description>
-        <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter.</Description>
+        <Description Lang="en">Logfile for the itsm change counter. This file is used for creating the change numbers.</Description>
+        <Description Lang="de">Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter. Diese Datei hilft bei der Erzeugung von Change-Nummern.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Core::ITSMChange</SubGroup>
         <Setting>
@@ -1054,8 +1053,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::State::Signal" Required="1" Valid="1">
-        <Description Lang="en">Define the signal for ITSMWorkOrder states.</Description>
-        <Description Lang="de">Definieren eines Signals für einen ITSMWorkOrder-Status.</Description>
+        <Description Lang="en">Define the signal for workorder states.</Description>
+        <Description Lang="de">Definieren eines Signals für einen Workorder-Status.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Core::ITSMWorkOrder</SubGroup>
         <Setting>
@@ -1078,8 +1077,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::TimePeriod" Required="1" Valid="1">
-        <Description Lang="en">Define the period, in which start and end times can be selected.</Description>
-        <Description Lang="de">Definition der Zeitspanne, in der Start- und Endzeiten ausgewählt werden können.</Description>
+        <Description Lang="en">Define the period in years, in which start and end times can be selected.</Description>
+        <Description Lang="de">Definition der Zeitspanne in Jahren, in der Start- und Endzeiten ausgewählt werden können.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Core::ITSMWorkOrder</SubGroup>
         <Setting>
@@ -1090,7 +1089,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::HistoryOrder" Required="1" Valid="1">
-        <Description Lang="en">Show history order reverse in the agent interface under change history.</Description>
+        <Description Lang="en">Show history order normal or reverse in the agent interface under change history.</Description>
         <Description Lang="de">Zeige die Historie normal oder rückwärts sortiert im Agent-Interface unter der Change-Historie.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ViewHistory</SubGroup>
@@ -1102,7 +1101,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMChange###Permission" Required="1" Valid="1">
-        <Description Lang="en">Required privilege to view list of changes.</Description>
+        <Description Lang="en">Required privilege to view overview over all changes.</Description>
         <Description Lang="de">Benötigtes Recht zum Einsehen der Liste von Changes.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::ViewChangeOverview</SubGroup>
