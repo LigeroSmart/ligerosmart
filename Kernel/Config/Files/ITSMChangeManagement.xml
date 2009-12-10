@@ -1,23 +1,17 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.104 2009-12-03 14:37:34 mae Exp $</CVS>
-    <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
-        <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
-        <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.105 2009-12-10 15:20:25 bes Exp $</CVS>
+    <ConfigItem Name="Frontend::Module###AgentITSMCABMemberSearch" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AgentITSMCABMemeberSearch object in the agent interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration des AgentITSMCABMemberSearch-Objekts im Agenten-Interface.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Admin::ModuleRegistration</SubGroup>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <Group>admin</Group>
-                <Description>Admin</Description>
-                <Title>Category &lt;-&gt; Impact &lt;-&gt; Priority</Title>
-                <NavBarName>Admin</NavBarName>
-                <NavBarModule>
-                    <Module>Kernel::Output::HTML::NavBarModuleAdmin</Module>
-                    <Name>Category &lt;-&gt; Impact &lt;-&gt; Priority</Name>
-                    <Block>Block3</Block>
-                    <Prio>431</Prio>
-                </NavBarModule>
+                <GroupRo>itsm-change</GroupRo>
+                <Description>Agent CABMemberSearch</Description>
+                <Title>CABMember Search</Title>
+                <NavBarName>Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -57,6 +51,66 @@
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentITSMChangeAdd" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AgentITSMChangeAdd object in the agent interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration des AgentITSMChangeAdd-Objekts im Agent-Interface.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <GroupRo>itsm-change-builder</GroupRo>
+                <GroupRo>itsm-change-manager</GroupRo>
+                <Description>Change Add</Description>
+                <Title>Add</Title>
+                <NavBarName>Change</NavBarName>
+                <NavBar>
+                    <Description>New</Description>
+                    <Name>New</Name>
+                    <Image>new.png</Image>
+                    <Link>Action=AgentITSMChangeAdd</Link>
+                    <Type></Type>
+                    <Block></Block>
+                    <NavBar>Change</NavBar>
+                    <AccessKey></AccessKey>
+                    <Prio>500</Prio>
+                </NavBar>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
+        <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Admin::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Group>admin</Group>
+                <Description>Admin</Description>
+                <Title>Category &lt;-&gt; Impact &lt;-&gt; Priority</Title>
+                <NavBarName>Admin</NavBarName>
+                <NavBarModule>
+                    <Module>Kernel::Output::HTML::NavBarModuleAdmin</Module>
+                    <Name>Category &lt;-&gt; Impact &lt;-&gt; Priority</Name>
+                    <Block>Block3</Block>
+                    <Prio>431</Prio>
+                </NavBarModule>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentITSMChangeEdit" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AgentITSMChangeEdit object in the agent interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration des AgentITSMChangeEdit-Objekts im Agent-Interface.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <GroupRo>itsm-change</GroupRo>
+                <Description>Change Edit</Description>
+                <Title>Edit</Title>
+                <NavBarName>Change</NavBarName>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="Frontend::Module###AgentITSMChangeFSC" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AgentITSMChangeFSC object in the agent interface.</Description>
         <Description Lang="de">Frontendmodul-Registration des AgentITSMChangeFSC-Objekts im Agent-Interface.</Description>
@@ -82,54 +136,45 @@
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="Frontend::Module###AgentITSMChangePIR" Required="0" Valid="1">
-        <Description Lang="en">Frontend module registration for the AgentITSMChangePIR object in the agent interface.</Description>
-        <Description Lang="de">Frontendmodul-Registration des AgentITSMChangePIR-Objekts im Agent-Interface.</Description>
+    <ConfigItem Name="Frontend::Module###AgentITSMChangeHistory" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AgentITSMChangeHistory object in the agent interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration des AgentITSMChangeHistory-Objekts im Agent-Interface.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>ITSM Change PIR Overview</Description>
+                <Description>Change History</Description>
+                <Title>History</Title>
                 <NavBarName>Change</NavBarName>
-                <Title>Change</Title>
-                <NavBar>
-                    <Description>PIR (Post Implementation Review)</Description>
-                    <Name>PIR</Name>
-                    <Image>overview.png</Image>
-                    <Link>Action=AgentITSMChangePIR</Link>
-                    <Type></Type>
-                    <Block></Block>
-                    <NavBar>Change</NavBar>
-                    <AccessKey></AccessKey>
-                    <Prio>300</Prio>
-                </NavBar>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="Frontend::Module###AgentITSMChangeAdd" Required="0" Valid="1">
-        <Description Lang="en">Frontend module registration for the AgentITSMChangeAdd object in the agent interface.</Description>
-        <Description Lang="de">Frontendmodul-Registration des AgentITSMChangeAdd-Objekts im Agent-Interface.</Description>
+    <ConfigItem Name="Frontend::Module###AgentITSMChangeHistoryZoom" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AgentITSMChangeHistoryZoom object in the agent interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration des AgentITSMChangeHistoryZoom-Objekts im Agent-Interface.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <GroupRo>itsm-change-builder</GroupRo>
-                <GroupRo>itsm-change-manager</GroupRo>
-                <Description>Change Add</Description>
-                <Title>Add</Title>
+                <GroupRo>itsm-change</GroupRo>
+                <Description>Change HistoryZoom</Description>
+                <Title>HistoryZoom</Title>
                 <NavBarName>Change</NavBarName>
-                <NavBar>
-                    <Description>New</Description>
-                    <Name>New</Name>
-                    <Image>new.png</Image>
-                    <Link>Action=AgentITSMChangeAdd</Link>
-                    <Type></Type>
-                    <Block></Block>
-                    <NavBar>Change</NavBar>
-                    <AccessKey></AccessKey>
-                    <Prio>500</Prio>
-                </NavBar>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentITSMChangeInvolvedPersons" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AgentITSMChangeInvolvedPersons object in the agent interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration des AgentITSMChangeInvolvedPersons-Objekts im Agent-Interface.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <GroupRo>itsm-change</GroupRo>
+                <Description>Change Involved Persons</Description>
+                <Title>Involved Persons</Title>
+                <NavBarName>Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -190,73 +235,28 @@
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="Frontend::Module###AgentITSMChangeZoom" Required="0" Valid="1">
-        <Description Lang="en">Frontend module registration for the AgentITSMChangeZoom object in the agent interface.</Description>
-        <Description Lang="de">Frontendmodul-Registration des AgentITSMChangeZoom-Objekts im Agent-Interface.</Description>
+    <ConfigItem Name="Frontend::Module###AgentITSMChangePIR" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AgentITSMChangePIR object in the agent interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration des AgentITSMChangePIR-Objekts im Agent-Interface.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>Change Zoom</Description>
-                <Title>Zoom</Title>
+                <Description>ITSM Change PIR Overview</Description>
                 <NavBarName>Change</NavBarName>
-            </FrontendModuleReg>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="Frontend::Module###AgentITSMChangeEdit" Required="0" Valid="1">
-        <Description Lang="en">Frontend module registration for the AgentITSMChangeEdit object in the agent interface.</Description>
-        <Description Lang="de">Frontendmodul-Registration des AgentITSMChangeEdit-Objekts im Agent-Interface.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
-        <Setting>
-            <FrontendModuleReg>
-                <GroupRo>itsm-change</GroupRo>
-                <Description>Change Edit</Description>
-                <Title>Edit</Title>
-                <NavBarName>Change</NavBarName>
-            </FrontendModuleReg>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="Frontend::Module###AgentITSMChangeInvolvedPersons" Required="0" Valid="1">
-        <Description Lang="en">Frontend module registration for the AgentITSMChangeInvolvedPersons object in the agent interface.</Description>
-        <Description Lang="de">Frontendmodul-Registration des AgentITSMChangeInvolvedPersons-Objekts im Agent-Interface.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
-        <Setting>
-            <FrontendModuleReg>
-                <GroupRo>itsm-change</GroupRo>
-                <Description>Change Involved Persons</Description>
-                <Title>Involved Persons</Title>
-                <NavBarName>Change</NavBarName>
-            </FrontendModuleReg>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="Frontend::Module###AgentITSMChangeHistory" Required="0" Valid="1">
-        <Description Lang="en">Frontend module registration for the AgentITSMChangeHistory object in the agent interface.</Description>
-        <Description Lang="de">Frontendmodul-Registration des AgentITSMChangeHistory-Objekts im Agent-Interface.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
-        <Setting>
-            <FrontendModuleReg>
-                <GroupRo>itsm-change</GroupRo>
-                <Description>Change History</Description>
-                <Title>History</Title>
-                <NavBarName>Change</NavBarName>
-            </FrontendModuleReg>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="Frontend::Module###AgentITSMChangeHistoryZoom" Required="0" Valid="1">
-        <Description Lang="en">Frontend module registration for the AgentITSMChangeHistoryZoom object in the agent interface.</Description>
-        <Description Lang="de">Frontendmodul-Registration des AgentITSMChangeHistoryZoom-Objekts im Agent-Interface.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
-        <Setting>
-            <FrontendModuleReg>
-                <GroupRo>itsm-change</GroupRo>
-                <Description>Change HistoryZoom</Description>
-                <Title>HistoryZoom</Title>
-                <NavBarName>Change</NavBarName>
+                <Title>Change</Title>
+                <NavBar>
+                    <Description>PIR (Post Implementation Review)</Description>
+                    <Name>PIR</Name>
+                    <Image>overview.png</Image>
+                    <Link>Action=AgentITSMChangePIR</Link>
+                    <Type></Type>
+                    <Block></Block>
+                    <NavBar>Change</NavBar>
+                    <AccessKey></AccessKey>
+                    <Prio>300</Prio>
+                </NavBar>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -299,58 +299,16 @@
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="Frontend::Module###AgentITSMWorkOrderZoom" Required="0" Valid="1">
-        <Description Lang="en">Frontend module registration for the AgentITSMWorkOrderZoom object in the agent interface.</Description>
-        <Description Lang="de">Frontendmodul-Registration des AgentITSMWorkOrderZoom-Objekts im Agent-Interface.</Description>
+    <ConfigItem Name="Frontend::Module###AgentITSMChangeZoom" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AgentITSMChangeZoom object in the agent interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration des AgentITSMChangeZoom-Objekts im Agent-Interface.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>WorkOrder Zoom</Description>
+                <Description>Change Zoom</Description>
                 <Title>Zoom</Title>
-                <NavBarName>Change</NavBarName>
-            </FrontendModuleReg>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="Frontend::Module###AgentITSMWorkOrderReport" Required="0" Valid="1">
-        <Description Lang="en">Frontend module registration for the AgentITSMWorkOrderReport object in the agent interface.</Description>
-        <Description Lang="de">Frontendmodul-Registration des AgentITSMWorkOrderReport-Objekts im Agent-Interface.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
-        <Setting>
-            <FrontendModuleReg>
-                <GroupRo>itsm-change</GroupRo>
-                <Description>WorkOrder Report</Description>
-                <Title>Report</Title>
-                <NavBarName>Change</NavBarName>
-            </FrontendModuleReg>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="Frontend::Module###AgentITSMWorkOrderAgent" Required="0" Valid="1">
-        <Description Lang="en">Frontend module registration for the AgentITSMWorkOrderAgent object in the agent interface.</Description>
-        <Description Lang="de">Frontendmodul-Registration des AgentITSMWorkOrderAgent-Objekts im Agent-Interface.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
-        <Setting>
-            <FrontendModuleReg>
-                <GroupRo>itsm-change</GroupRo>
-                <Description>Workorder Agent</Description>
-                <Title>Agent</Title>
-                <NavBarName>Change</NavBarName>
-            </FrontendModuleReg>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="Frontend::Module###AgentITSMWorkOrderEdit" Required="0" Valid="1">
-        <Description Lang="en">Frontend module registration for the AgentITSMWorkOrderEdit object in the agent interface.</Description>
-        <Description Lang="de">Frontendmodul-Registration des AgentITSMWorkOrderEdit-Objekts im Agent-Interface.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
-        <Setting>
-            <FrontendModuleReg>
-                <GroupRo>itsm-change</GroupRo>
-                <Description>Workorder Edit</Description>
-                <Title>Edit</Title>
                 <NavBarName>Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
@@ -369,6 +327,20 @@
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentITSMWorkOrderAgent" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AgentITSMWorkOrderAgent object in the agent interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration des AgentITSMWorkOrderAgent-Objekts im Agent-Interface.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <GroupRo>itsm-change</GroupRo>
+                <Description>Workorder Agent</Description>
+                <Title>Agent</Title>
+                <NavBarName>Change</NavBarName>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="Frontend::Module###AgentITSMWorkOrderDelete" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AgentITSMWorkOrderDelete object in the agent interface.</Description>
         <Description Lang="de">Frontendmodul-Registration des AgentITSMWorkOrderDelete-Objekts im Agent-Interface.</Description>
@@ -379,6 +351,20 @@
                 <GroupRo>itsm-change</GroupRo>
                 <Description>Workorder Delete</Description>
                 <Title>Delete</Title>
+                <NavBarName>Change</NavBarName>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentITSMWorkOrderEdit" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AgentITSMWorkOrderEdit object in the agent interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration des AgentITSMWorkOrderEdit-Objekts im Agent-Interface.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <GroupRo>itsm-change</GroupRo>
+                <Description>Workorder Edit</Description>
+                <Title>Edit</Title>
                 <NavBarName>Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
@@ -411,6 +397,34 @@
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentITSMWorkOrderReport" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AgentITSMWorkOrderReport object in the agent interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration des AgentITSMWorkOrderReport-Objekts im Agent-Interface.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <GroupRo>itsm-change</GroupRo>
+                <Description>WorkOrder Report</Description>
+                <Title>Report</Title>
+                <NavBarName>Change</NavBarName>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentITSMWorkOrderZoom" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AgentITSMWorkOrderZoom object in the agent interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration des AgentITSMWorkOrderZoom-Objekts im Agent-Interface.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <GroupRo>itsm-change</GroupRo>
+                <Description>WorkOrder Zoom</Description>
+                <Title>Zoom</Title>
+                <NavBarName>Change</NavBarName>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="Frontend::Module###AgentITSMUserSearch" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AgentUserSearch object in the agent interface.</Description>
         <Description Lang="de">Frontendmodul-Registration des AgentUserSearch-Objekts im Agent-Interface.</Description>
@@ -421,20 +435,6 @@
                 <GroupRo>itsm-change</GroupRo>
                 <Description>Agent UserSearch</Description>
                 <Title>UserSearch</Title>
-                <NavBarName>Change</NavBarName>
-            </FrontendModuleReg>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="Frontend::Module###AgentITSMCABMemberSearch" Required="0" Valid="1">
-        <Description Lang="en">Frontend module registration for the AgentITSMCABMemeberSearch object in the agent interface.</Description>
-        <Description Lang="de">Frontendmodul-Registration des AgentITSMCABMemberSearch-Objekts im Agenten-Interface.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
-        <Setting>
-            <FrontendModuleReg>
-                <GroupRo>itsm-change</GroupRo>
-                <Description>Agent CABMemberSearch</Description>
-                <Title>CABMember Search</Title>
                 <NavBarName>Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
@@ -780,6 +780,27 @@
             </Option>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::CustomerSearchAutoComplete::DynamicWidth" Required="1" Valid="1">
+        <Description Lang="en">Adapt width of autocomplete drop down to length of the longest option.</Description>
+        <Description Lang="de">Passe die Breite des Autocomplete-DropDowns an die längste Option an.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::CustomerSearch</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::CustomerSearchAutoComplete###MaxResultsDisplayed" Required="1" Valid="1">
+        <Description Lang="en">Set number of search results for the autocomplete feature.</Description>
+        <Description Lang="de">Anzahl der Suchergebnisse für die Autocomplete-Funktionalitaet.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::CustomerSearch</SubGroup>
+        <Setting>
+            <String>20</String>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::CustomerSearchAutoComplete###MinQueryLength" Required="1" Valid="1">
         <Description Lang="en">Set minimum number of characters before autocomplete query is sent.</Description>
         <Description Lang="de">Mindestanzahl von Zeichen zum Ausfuehren der Autocomplete-Funktionalitaet.</Description>
@@ -810,20 +831,11 @@
             </Option>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::CustomerSearchAutoComplete###MaxResultsDisplayed" Required="1" Valid="1">
-        <Description Lang="en">Set number of search results for the autocomplete feature.</Description>
-        <Description Lang="de">Anzahl der Suchergebnisse für die Autocomplete-Funktionalitaet.</Description>
+    <ConfigItem Name="ITSMChange::Frontend::UserSearchAutoComplete###Active" Required="1" Valid="1">
+        <Description Lang="en">Enable or disable the autocomplete feature for the user search in the agent interface.</Description>
+        <Description Lang="de">Aktivieren oder deativieren der Autocomplete-Funktionalitaet für die User-Suche im Agenteninterface.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::CustomerSearch</SubGroup>
-        <Setting>
-            <String>20</String>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::CustomerSearchAutoComplete::DynamicWidth" Required="1" Valid="1">
-        <Description Lang="en">Adapt width of autocomplete drop down to length of the longest option.</Description>
-        <Description Lang="de">Passe die Breite des Autocomplete-DropDowns an die längste Option an.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::CustomerSearch</SubGroup>
+        <SubGroup>Frontend::Agent::UserSearch</SubGroup>
         <Setting>
             <Option SelectedID="1">
                 <Item Key="0">No</Item>
@@ -831,9 +843,9 @@
             </Option>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::UserSearchAutoComplete###Active" Required="1" Valid="1">
-        <Description Lang="en">Enable or disable the autocomplete feature for the user search in the agent interface.</Description>
-        <Description Lang="de">Aktivieren oder deativieren der Autocomplete-Funktionalitaet für die User-Suche im Agenteninterface.</Description>
+    <ConfigItem Name="ITSMChange::Frontend::UserSearchAutoComplete::DynamicWidth" Required="1" Valid="1">
+        <Description Lang="en">Adapt width of autocomplete drop down to length of the longest option.</Description>
+        <Description Lang="de">Passe die Breite des Autocomplete-DropDowns an die längste Option an.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::UserSearch</SubGroup>
         <Setting>
@@ -850,6 +862,15 @@
         <SubGroup>Frontend::Agent::UserSearch</SubGroup>
         <Setting>
             <String Regex="^[1-9]$">2</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::UserSearchAutoComplete###MaxResultsDisplayed" Required="1" Valid="1">
+        <Description Lang="en">Set number of search results for the autocomplete feature.</Description>
+        <Description Lang="de">Anzahl der Suchergebnisse für die Autocomplete-Funktionalitaet.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::UserSearch</SubGroup>
+        <Setting>
+            <String>20</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::UserSearchAutoComplete###QueryDelay" Required="1" Valid="1">
@@ -873,27 +894,6 @@
             </Option>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::UserSearchAutoComplete###MaxResultsDisplayed" Required="1" Valid="1">
-        <Description Lang="en">Set number of search results for the autocomplete feature.</Description>
-        <Description Lang="de">Anzahl der Suchergebnisse für die Autocomplete-Funktionalitaet.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::UserSearch</SubGroup>
-        <Setting>
-            <String>20</String>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::UserSearchAutoComplete::DynamicWidth" Required="1" Valid="1">
-        <Description Lang="en">Adapt width of autocomplete drop down to length of the longest option.</Description>
-        <Description Lang="de">Passe die Breite des Autocomplete-DropDowns an die längste Option an.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::UserSearch</SubGroup>
-        <Setting>
-            <Option SelectedID="1">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
-            </Option>
-        </Setting>
-    </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::CABMemberSearchAutoComplete###Active" Required="1" Valid="1">
         <Description Lang="en">Enable or disable the autocomplete feature for the CAB member search in the agent interface.</Description>
         <Description Lang="de">Aktivieren oder deativieren der Autocomplete-Funktionalitaet für die CABMember-Suche im Agenteninterface.</Description>
@@ -904,6 +904,27 @@
                 <Item Key="0">No</Item>
                 <Item Key="1">Yes</Item>
             </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::CABMemberSearchAutoComplete::DynamicWidth" Required="1" Valid="1">
+        <Description Lang="en">Adapt width of autocomplete drop down to length of the longest option.</Description>
+        <Description Lang="de">Passe die Breite des Autocomplete-DropDowns an die längste Option an.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::CABMemberSearch</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::CABMemberSearchAutoComplete###MaxResultsDisplayed" Required="1" Valid="1">
+        <Description Lang="en">Set number of search results for the autocomplete feature.</Description>
+        <Description Lang="de">Anzahl der Suchergebnisse für die Autocomplete-Funktionalitaet.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::CABMemberSearch</SubGroup>
+        <Setting>
+            <String>20</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::CABMemberSearchAutoComplete###MinQueryLength" Required="1" Valid="1">
@@ -933,27 +954,6 @@
             <Option SelectedID="false">
                 <Item Key="false">No</Item>
                 <Item Key="true">Yes</Item>
-            </Option>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::CABMemberSearchAutoComplete###MaxResultsDisplayed" Required="1" Valid="1">
-        <Description Lang="en">Set number of search results for the autocomplete feature.</Description>
-        <Description Lang="de">Anzahl der Suchergebnisse für die Autocomplete-Funktionalitaet.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::CABMemberSearch</SubGroup>
-        <Setting>
-            <String>20</String>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::CABMemberSearchAutoComplete::DynamicWidth" Required="1" Valid="1">
-        <Description Lang="en">Adapt width of autocomplete drop down to length of the longest option.</Description>
-        <Description Lang="de">Passe die Breite des Autocomplete-DropDowns an die längste Option an.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::CABMemberSearch</SubGroup>
-        <Setting>
-            <Option SelectedID="1">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -1190,7 +1190,6 @@
             </Array>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeManager###Permission" Required="1" Valid="1">
         <Description Lang="en">Required privilege to view list of changes where user is change manager.</Description>
         <Description Lang="de">Benötigtes Recht zum Einsehen der Liste der Changes bei denen der Benutzer change manager ist.</Description>
