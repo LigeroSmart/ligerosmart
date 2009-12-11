@@ -2,7 +2,7 @@
 # AgentITSMChangeSearch.dtl - provides HTML form for AgentITSMChangeSearch
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.dtl,v 1.25 2009-12-11 15:06:06 bes Exp $
+# $Id: AgentITSMChangeSearch.dtl,v 1.26 2009-12-11 15:31:11 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -41,6 +41,22 @@ function clear_cab_agent() {
 // do initialization when the DOM is fully loaded
 document.observe( "dom:loaded", function() {
 
+    // clear the CABAgent input field, when it gains focus
+    $('myAutoCompleteInput1').observe(
+        'focus',
+        function() {
+            this.setValue('');
+        }
+    );
+
+    // clear the CABCustomer input field, when it gains focus
+    $('myAutoCompleteInput').observe(
+        'focus',
+        function() {
+            this.setValue('');
+        }
+    );
+
 <!-- dtl:block:TimeSelectionJS -->
 
     // register onchange-handlers for the TimePoint dropdown menus
@@ -49,7 +65,7 @@ document.observe( "dom:loaded", function() {
         function(elem) {
             elem.observe(
                 'click',
-                function(){
+                function() {
                     $("$QData{"Prefix"}TimeSearchType::TimePoint").checked = true;
                 }
             );
@@ -62,7 +78,7 @@ document.observe( "dom:loaded", function() {
         function(elem) {
             elem.observe(
                 'click',
-                function(){
+                function() {
                     $("$QData{"Prefix"}TimeSearchType::TimeSlot").checked = true;
                 }
             );
