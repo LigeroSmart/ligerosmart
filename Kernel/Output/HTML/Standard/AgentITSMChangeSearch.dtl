@@ -2,7 +2,7 @@
 # AgentITSMChangeSearch.dtl - provides HTML form for AgentITSMChangeSearch
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.dtl,v 1.20 2009-12-08 10:15:40 bes Exp $
+# $Id: AgentITSMChangeSearch.dtl,v 1.21 2009-12-11 09:35:38 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -35,7 +35,7 @@ function clear_cab_customer() {
 function clear_cab_agent() {
     document.compose.SelectedUser1.value = "";
     document.compose.CABAgent.value = "";
-    document.compose.CABAgent.value = "";
+    document.compose.CABAgent.focus();
 }
 
 //-->
@@ -60,8 +60,8 @@ function clear_cab_agent() {
                 <input type="hidden" name="UserSearchGroups1" value="itsm-change">
                 <table width="800px" border="0" cellspacing="0" cellpadding="3">
                     <colgroup>
-                    <col width="50%">
-                    <col width="50%">
+                        <col width="50%">
+                        <col width="50%">
                     </colgroup>
                     <tr>
                         <td colspan="2" class="contenthead">$Text{"Change#, Workorder and CAB"}</td>
@@ -70,8 +70,8 @@ function clear_cab_agent() {
                         <td colspan="2" class="contentbody">
                             <table width="100%" border="0" cellspacing="0" cellpadding="3">
                                 <colgroup>
-                                <col width="50%">
-                                <col width="50%">
+                                    <col width="50%">
+                                    <col width="50%">
                                 </colgroup>
                                 <tr>
                                     <td class="contentkey">$Text{"Change#"} $Text{"(e.g. 10*5155 or 105658*)"}</td>
@@ -147,8 +147,8 @@ function clear_cab_agent() {
                         <td colspan="2" class="contentbody">
                             <table width="100%" border="0" cellspacing="0" cellpadding="3">
                                 <colgroup>
-                                <col width="50%">
-                                <col width="50%">
+                                    <col width="50%">
+                                    <col width="50%">
                                 </colgroup>
                                 <tr>
                                     <td class="contentkey">$Text{"Change description"}</td>
