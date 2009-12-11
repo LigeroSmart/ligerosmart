@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeInvolvedPersons.pm - the OTRS::ITSM::ChangeManagement change involved persons module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.21 2009-12-11 12:22:03 bes Exp $
+# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.22 2009-12-11 12:51:59 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::User;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.21 $) [1];
+$VERSION = qw($Revision: 1.22 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -612,7 +612,7 @@ sub _CheckChangeManagerAndChangeBuilder {
                 $ChangeBuilder{UserLogin},
                 $ChangeBuilder{UserFirstname},
                 $ChangeBuilder{UserLastname};
-            if ( index( $Param{ChangeBuilder}, $CheckString ) != 0 ) {
+            if ( index( $CheckString, $Param{ChangeBuilder} ) != 0 ) {
                 $Errors{ChangeBuilder} = 1;
             }
         }
@@ -643,14 +643,16 @@ sub _IsNewCABMemberOk {
 
         if (%User) {
 
-            # compare input value with user data
+            # Compare input value with user data.
+            # Look for exact match at beginning,
+            # as $User{UserLastname} might contain a trailing 'out of office' note.
             my $CheckString = sprintf '%s %s %s ',
                 $User{UserLogin},
                 $User{UserFirstname},
                 $User{UserLastname};
+            if ( index( $CheckString, $Param{NewCABMember} ) == 0 ) {
 
-            # save member infos
-            if ( $CheckString eq $Param{NewCABMember} ) {
+                # save member infos
                 %MemberInfo = (
                     $MemberType => [ @$CurrentMembers, $User{UserID} ],
                 );
