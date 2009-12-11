@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeInvolvedPersons.pm - the OTRS::ITSM::ChangeManagement change involved persons module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.23 2009-12-11 13:23:40 bes Exp $
+# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.24 2009-12-11 13:30:59 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::User;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.23 $) [1];
+$VERSION = qw($Revision: 1.24 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -564,14 +564,14 @@ sub _CheckChangeManagerAndChangeBuilder {
         my $Key = $Role eq 'ChangeManager' ? 1 : 2;
 
         # check the role
-        if ( !$Param{$Role} || !$Param{"SelectedUser$Key"} ) {
+        if ( !$Param{$Role} || !$Param{ 'SelectedUser' . $Key } ) {
             $Errors{$Role} = 1;
         }
         else {
 
             # get user data
             my %User = $Self->{UserObject}->GetUserData(
-                UserID => $Param{"SelectedUser$Key"},
+                UserID => $Param{ 'SelectedUser' . $Key },
             );
 
             # show error if user does not exist
