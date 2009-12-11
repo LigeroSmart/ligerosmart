@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.8 2009-11-25 17:40:04 bes Exp $
+# $Id: ITSMChangeManagement.pm,v 1.9 2009-12-11 11:20:04 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::CSV;
 use Kernel::System::GeneralCatalog;
 use Kernel::System::Group;
 use Kernel::System::ITSMChange;
-use Kernel::System::ITSMChangeCIPAllocate;
+use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::LinkObject;
 use Kernel::System::State;
@@ -30,7 +30,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 =head1 NAME
 
@@ -141,16 +141,16 @@ sub new {
     }
 
     # create needed objects
-    $Self->{ConfigObject}         = Kernel::Config->new();
-    $Self->{CSVObject}            = Kernel::System::CSV->new( %{$Self} );
-    $Self->{GroupObject}          = Kernel::System::Group->new( %{$Self} );
-    $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
-    $Self->{StateObject}          = Kernel::System::State->new( %{$Self} );
-    $Self->{TypeObject}           = Kernel::System::Type->new( %{$Self} );
-    $Self->{ValidObject}          = Kernel::System::Valid->new( %{$Self} );
-    $Self->{LinkObject}           = Kernel::System::LinkObject->new( %{$Self} );
-    $Self->{ChangeObject}         = Kernel::System::ITSMChange->new( %{$Self} );
-    $Self->{CIPAllocateObject}    = Kernel::System::ITSMChangeCIPAllocate->new( %{$Self} );
+    $Self->{ConfigObject}      = Kernel::Config->new();
+    $Self->{CSVObject}         = Kernel::System::CSV->new( %{$Self} );
+    $Self->{GroupObject}       = Kernel::System::Group->new( %{$Self} );
+    $Self->{UserObject}        = Kernel::System::User->new( %{$Self} );
+    $Self->{StateObject}       = Kernel::System::State->new( %{$Self} );
+    $Self->{TypeObject}        = Kernel::System::Type->new( %{$Self} );
+    $Self->{ValidObject}       = Kernel::System::Valid->new( %{$Self} );
+    $Self->{LinkObject}        = Kernel::System::LinkObject->new( %{$Self} );
+    $Self->{ChangeObject}      = Kernel::System::ITSMChange->new( %{$Self} );
+    $Self->{CIPAllocateObject} = Kernel::System::ITSMChange::ITSMChangeCIPAllocate->new( %{$Self} );
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
     $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
     $Self->{StatsObject}          = Kernel::System::Stats->new(
@@ -607,6 +607,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.8 $ $Date: 2009-11-25 17:40:04 $
+$Revision: 1.9 $ $Date: 2009-12-11 11:20:04 $
 
 =cut

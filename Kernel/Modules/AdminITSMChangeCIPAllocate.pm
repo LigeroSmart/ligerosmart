@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminITSMChangeCIPAllocate.pm - admin frontend of criticality, impact and priority
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMChangeCIPAllocate.pm,v 1.2 2009-11-20 10:21:03 reb Exp $
+# $Id: AdminITSMChangeCIPAllocate.pm,v 1.3 2009-12-11 11:18:34 reb Exp $
 # $OldId: AdminITSMCIPAllocate.pm,v 1.11 2009/05/18 09:48:35 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -26,12 +26,12 @@ use Kernel::System::GeneralCatalog;
 # ---
 #use Kernel::System::ITSMCIPAllocate;
 #use Kernel::System::Priority;
-use Kernel::System::ITSMChangeCIPAllocate;
+use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
 # ---
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -52,7 +52,7 @@ sub new {
 # ---
 #    $Self->{CIPAllocateObject}    = Kernel::System::ITSMCIPAllocate->new(%Param);
 #    $Self->{PriorityObject}       = Kernel::System::Priority->new(%Param);
-    $Self->{CIPAllocateObject}    = Kernel::System::ITSMChangeCIPAllocate->new(%Param);
+    $Self->{CIPAllocateObject}    = Kernel::System::ITSMChange::ITSMChangeCIPAllocate->new(%Param);
 # ---
     $Self->{ValidObject}          = Kernel::System::Valid->new(%Param);
 

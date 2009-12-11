@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.198 2009-12-09 08:51:32 reb Exp $
+# $Id: ITSMChange.pm,v 1.199 2009-12-11 11:18:34 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,14 +19,14 @@ use Kernel::System::LinkObject;
 use Kernel::System::User;
 use Kernel::System::Group;
 use Kernel::System::CustomerUser;
-use Kernel::System::ITSMChangeCIPAllocate;
+use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::HTMLUtils;
 
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.198 $) [1];
+$VERSION = qw($Revision: 1.199 $) [1];
 
 =head1 NAME
 
@@ -111,7 +111,9 @@ sub new {
     $Self->{CustomerUserObject}   = Kernel::System::CustomerUser->new( %{$Self} );
     $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
     $Self->{HTMLUtilsObject}      = Kernel::System::HTMLUtils->new( %{$Self} );
-    $Self->{CIPAllocateObject}    = Kernel::System::ITSMChangeCIPAllocate->new( %{$Self} );
+    $Self->{CIPAllocateObject}    = Kernel::System::ITSMChange::ITSMChangeCIPAllocate->new(
+        %{$Self},
+    );
 
     # init of event handler
     $Self->EventHandlerInit(
@@ -2735,6 +2737,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.198 $ $Date: 2009-12-09 08:51:32 $
+$Revision: 1.199 $ $Date: 2009-12-11 11:18:34 $
 
 =cut
