@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMUserSearch.pm - a module used for the autocomplete feature
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMUserSearch.pm,v 1.5 2009-11-18 12:35:12 bes Exp $
+# $Id: AgentITSMUserSearch.pm,v 1.6 2009-12-11 10:09:49 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::User;
 use Kernel::System::Group;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -61,12 +61,19 @@ sub Run {
         if ($Groups) {
             my @GroupNames = split /,\s+/, $Groups;
 
+            GROUPNAME:
             for my $GroupName (@GroupNames) {
+
+                # allow trailing comma
+                next GROUPNAME if !$GroupName;
+
                 my $GroupID = $Self->{GroupObject}->GroupLookup(
                     Group => $GroupName,
                 );
 
-                # get user groups
+                next GROUPNAME if !$GroupID;
+
+                # get users in group
                 my %Users = $Self->{GroupObject}->GroupMemberList(
                     GroupID => $GroupID,
                     Type    => 'ro',
