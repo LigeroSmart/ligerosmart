@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.155 2009-12-11 11:20:03 reb Exp $
+# $Id: ITSMChange.t,v 1.156 2009-12-11 13:18:47 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1132,14 +1132,14 @@ my @ChangeTests = (
         },
     },
 
-    # test on invalid RealizeTime
+    # test on invalid RequestedTime
     {
-        Description => 'Test on invalid RealizeTime for ChangeAdd.',
+        Description => 'Test on invalid RequestedTime for ChangeAdd.',
         Fails       => 1,
         SourceData  => {
             ChangeAdd => {
-                UserID      => 1,
-                RealizeTime => 'anything invalid',
+                UserID        => 1,
+                RequestedTime => 'anything invalid',
             },
         },
         ReferenceData => {
@@ -1147,23 +1147,23 @@ my @ChangeTests = (
         },
     },
 
-    # test on valid RealizeTime
+    # test on valid RequestedTime
     {
-        Description => 'Test on valid RealizeTime for ChangeAdd.',
+        Description => 'Test on valid RequestedTime for ChangeAdd.',
         SourceData  => {
             ChangeAdd => {
-                UserID      => 1,
-                RealizeTime => '2009-10-29 13:33:33',
-                Description => 'RealizeTime - ' . $UniqueSignature,
+                UserID        => 1,
+                RequestedTime => '2009-10-29 13:33:33',
+                Description   => 'RequestedTime - ' . $UniqueSignature,
             },
         },
         ReferenceData => {
             ChangeGet => {
-                CreateBy    => 1,
-                ChangeBy    => 1,
-                ChangeTitle => '',
-                RealizeTime => '2009-10-29 13:33:33',
-                Description => 'RealizeTime - ' . $UniqueSignature,
+                CreateBy      => 1,
+                ChangeBy      => 1,
+                ChangeTitle   => '',
+                RequestedTime => '2009-10-29 13:33:33',
+                Description   => 'RequestedTime - ' . $UniqueSignature,
             },
         },
         SearchTest => [ 42, 43 ],
@@ -1468,54 +1468,54 @@ my @ChangeTests = (
         },
     },
 
-    # test on valid RealizeTime
+    # test on valid RequestedTime
     {
-        Description => 'Test on valid RealizeTime for ChangeUpdate.',
+        Description => 'Test on valid RequestedTime for ChangeUpdate.',
         SourceData  => {
             ChangeAdd => {
-                UserID      => 1,
-                RealizeTime => '2009-10-29 13:33:33',
-                Description => 'RealizeTime - ' . $UniqueSignature,
+                UserID        => 1,
+                RequestedTime => '2009-10-29 13:33:33',
+                Description   => 'RequestedTime - ' . $UniqueSignature,
             },
             ChangeUpdate => {
-                RealizeTime => '2009-11-06 08:15:22',
-                UserID      => $UserIDs[0],
+                RequestedTime => '2009-11-06 08:15:22',
+                UserID        => $UserIDs[0],
             },
         },
         ReferenceData => {
             ChangeGet => {
-                CreateBy    => 1,
-                ChangeBy    => $UserIDs[0],
-                ChangeTitle => '',
-                RealizeTime => '2009-11-06 08:15:22',
-                Description => 'RealizeTime - ' . $UniqueSignature,
+                CreateBy      => 1,
+                ChangeBy      => $UserIDs[0],
+                ChangeTitle   => '',
+                RequestedTime => '2009-11-06 08:15:22',
+                Description   => 'RequestedTime - ' . $UniqueSignature,
             },
         },
         SearchTest => [43],
     },
 
-    # test on invalid RealizeTime
+    # test on invalid RequestedTime
     {
-        Description => 'Test on invalid RealizeTime for ChangeUpdate.',
+        Description => 'Test on invalid RequestedTime for ChangeUpdate.',
         UpdateFails => 1,
         SourceData  => {
             ChangeAdd => {
-                UserID      => 1,
-                RealizeTime => '2009-10-29 13:33:33',
-                Description => 'RealizeTime - ' . $UniqueSignature,
+                UserID        => 1,
+                RequestedTime => '2009-10-29 13:33:33',
+                Description   => 'RequestedTime - ' . $UniqueSignature,
             },
             ChangeUpdate => {
-                RealizeTime => 'anything',
-                UserID      => $UserIDs[0],
+                RequestedTime => 'anything',
+                UserID        => $UserIDs[0],
             },
         },
         ReferenceData => {
             ChangeGet => {
-                CreateBy    => 1,
-                ChangeBy    => 1,
-                ChangeTitle => '',
-                RealizeTime => '2009-10-29 13:33:33',
-                Description => 'RealizeTime - ' . $UniqueSignature,
+                CreateBy      => 1,
+                ChangeBy      => 1,
+                ChangeTitle   => '',
+                RequestedTime => '2009-10-29 13:33:33',
+                Description   => 'RequestedTime - ' . $UniqueSignature,
             },
         },
         SearchTest => [ 42, 43 ],
@@ -3069,44 +3069,44 @@ my @ChangeSearchTests = (
         SearchFails => 1,
     },
 
-    # Nr 41 - Search for an invalid change RealizeTimeOlderDate
+    # Nr 41 - Search for an invalid change RequestedTimeOlderDate
     {
-        Description => 'Search for an invalid RealizeTime',
+        Description => 'Search for an invalid RequestedTime',
         SearchData  => {
-            RealizeTimeOlderDate => 'anything',
+            RequestedTimeOlderDate => 'anything',
         },
         SearchFails => 1,
     },
 
-    # Nr 42 - Search for an valid change RealizeTimeOlderDate
+    # Nr 42 - Search for an valid change RequestedTimeOlderDate
     {
-        Description => 'Search for an valid RealizeTime',
+        Description => 'Search for an valid RequestedTime',
         SearchData  => {
-            RealizeTimeOlderDate => '2009-10-29 13:33:33',
-            Description          => 'RealizeTime - ' . $UniqueSignature,
+            RequestedTimeOlderDate => '2009-10-29 13:33:33',
+            Description            => 'RequestedTime - ' . $UniqueSignature,
         },
         ResultData => {
             TestCount => 1,
         },
     },
 
-    # Nr 43 - Search for an valid change RealizeTimeNewerDate
+    # Nr 43 - Search for an valid change RequestedTimeNewerDate
     {
-        Description => 'Search for an valid RealizeTime',
+        Description => 'Search for an valid RequestedTime',
         SearchData  => {
-            RealizeTimeNewerDate => '2009-10-29 13:33:33',
-            Description          => 'RealizeTime - ' . $UniqueSignature,
+            RequestedTimeNewerDate => '2009-10-29 13:33:33',
+            Description            => 'RequestedTime - ' . $UniqueSignature,
         },
         ResultData => {
             TestCount => 1,
         },
     },
 
-    # Nr 44 - Search for an invalid change RealizeTimeNewerDate
+    # Nr 44 - Search for an invalid change RequestedTimeNewerDate
     {
-        Description => 'Search for an invalid RealizeTime',
+        Description => 'Search for an invalid RequestedTime',
         SearchData  => {
-            RealizeTimeNewerDate => 'anything',
+            RequestedTimeNewerDate => 'anything',
         },
         SearchFails => 1,
     },

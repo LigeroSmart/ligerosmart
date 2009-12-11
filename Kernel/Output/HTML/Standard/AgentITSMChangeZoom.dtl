@@ -2,7 +2,7 @@
 # AgentITSMChangeZoom.dtl - provides HTML form for AgentITSMChangeZoom
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.dtl,v 1.30 2009-12-03 15:28:51 ub Exp $
+# $Id: AgentITSMChangeZoom.dtl,v 1.31 2009-12-11 13:19:44 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -35,8 +35,8 @@
 </table>
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <colgroup>
-    <col width="75%">
-    <col width="25%">
+        <col width="75%">
+        <col width="25%">
     </colgroup>
     <tr>
         <td valign="top" class="mainbody">
@@ -55,8 +55,8 @@
             <hr size="2">
             <table border="0" width="100%" cellspacing="0" cellpadding="1">
                 <colgroup>
-                <col width="130px">
-                <col>
+                    <col width="130px">
+                    <col>
                 </colgroup>
                 <tr>
                     <td class="contentkey">
@@ -189,28 +189,28 @@
 <!-- dtl:block:ActualEndTime -->
                     </td>
                 </tr>
-<!-- dtl:block:RealizeTime -->
+<!-- dtl:block:RequestedTime -->
                 <tr>
                     <td colspan="2">&nbsp;</td>
                 </tr>
                 <tr>
-                    <td class="mainkey">$Text{"Realization Time"}:</td>
+                    <td class="mainkey">$Text{"Requested (by customer) Date"}:</td>
                     <td class="mainvalue">
-                        <div title="$QData{"RealizeTime"}">$TimeLong{"$Data{"RealizeTime"}"}</div>
+                        <div title="$QData{"RequestedTime"}">$TimeLong{"$Data{"RequestedTime"}"}</div>
                     </td>
                 </tr>
-<!-- dtl:block:RealizeTime -->
-<!-- dtl:block:EmptyRealizeTime -->
+<!-- dtl:block:RequestedTime -->
+<!-- dtl:block:EmptyRequestedTime -->
                 <tr>
                     <td colspan="2">&nbsp;</td>
                 </tr>
                 <tr>
-                    <td class="mainkey">$Text{"Realization Time"}:</td>
+                    <td class="mainkey">$Text{"Requested (by customer) Date"}:</td>
                     <td class="mainvalue">
                         <div title="-">-</div>
                     </td>
                 </tr>
-<!-- dtl:block:EmptyRealizeTime -->
+<!-- dtl:block:EmptyRequestedTime -->
                 <tr>
                     <td colspan="2">&nbsp;</td>
                 </tr>

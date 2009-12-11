@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.106 2009-12-10 17:06:18 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.107 2009-12-11 13:18:47 reb Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -1122,7 +1122,7 @@
                 <Item Key="CategoryID">Category</Item>
                 <Item Key="ImpactID">Impact</Item>
                 <Item Key="PriorityID">Priority</Item>
-                <Item Key="RealizeTime">RealizeTime</Item>
+                <Item Key="RequestedTime">ReuestedTime</Item>
                 <Item Key="PlannedStartTime">PlannedStartTime</Item>
                 <Item Key="PlannedEndTime">PlannedEndTime</Item>
                 <Item Key="ActualStartTime">ActualStartTime</Item>
@@ -1161,7 +1161,7 @@
                 <Item Key="Category">0</Item>
                 <Item Key="Impact">0</Item>
                 <Item Key="Priority">1</Item>
-                <Item Key="RealizeTime">0</Item>
+                <Item Key="RequestedTime">0</Item>
                 <Item Key="PlannedStartTime">1</Item>
                 <Item Key="PlannedEndTime">1</Item>
                 <Item Key="ActualStartTime">0</Item>
@@ -1211,7 +1211,7 @@
                 <Item Key="CategoryID">Category</Item>
                 <Item Key="ImpactID">Impact</Item>
                 <Item Key="PriorityID">Priority</Item>
-                <Item Key="RealizeTime">RealizeTime</Item>
+                <Item Key="RequestedTime">RequestedTime</Item>
                 <Item Key="PlannedStartTime">PlannedStartTime</Item>
                 <Item Key="PlannedEndTime">PlannedEndTime</Item>
                 <Item Key="ActualStartTime">ActualStartTime</Item>
@@ -1250,7 +1250,7 @@
                 <Item Key="Category">0</Item>
                 <Item Key="Impact">0</Item>
                 <Item Key="Priority">1</Item>
-                <Item Key="RealizeTime">0</Item>
+                <Item Key="RequestedTime">0</Item>
                 <Item Key="PlannedStartTime">1</Item>
                 <Item Key="PlannedEndTime">1</Item>
                 <Item Key="ActualStartTime">0</Item>
@@ -1295,7 +1295,7 @@
                 <Item Key="CategoryID">Category</Item>
                 <Item Key="ImpactID">Impact</Item>
                 <Item Key="PriorityID">Priority</Item>
-                <Item Key="RealizeTime">RealizeTime</Item>
+                <Item Key="RequestedTime">RequestedTime</Item>
                 <Item Key="PlannedStartTime">PlannedStartTime</Item>
                 <Item Key="PlannedEndTime">PlannedEndTime</Item>
                 <Item Key="ActualStartTime">ActualStartTime</Item>
@@ -1334,7 +1334,7 @@
                 <Item Key="Category">0</Item>
                 <Item Key="Impact">0</Item>
                 <Item Key="Priority">1</Item>
-                <Item Key="RealizeTime">0</Item>
+                <Item Key="RequestedTime">0</Item>
                 <Item Key="PlannedStartTime">1</Item>
                 <Item Key="PlannedEndTime">1</Item>
                 <Item Key="ActualStartTime">0</Item>
@@ -1379,7 +1379,7 @@
                 <Item Key="CategoryID">Category</Item>
                 <Item Key="ImpactID">Impact</Item>
                 <Item Key="PriorityID">Priority</Item>
-                <Item Key="RealizeTime">RealizeTime</Item>
+                <Item Key="RequestedTime">RequestedTime</Item>
                 <Item Key="PlannedStartTime">PlannedStartTime</Item>
                 <Item Key="PlannedEndTime">PlannedEndTime</Item>
                 <Item Key="ActualStartTime">ActualStartTime</Item>
@@ -1418,7 +1418,7 @@
                 <Item Key="Category">0</Item>
                 <Item Key="Impact">0</Item>
                 <Item Key="Priority">1</Item>
-                <Item Key="RealizeTime">0</Item>
+                <Item Key="RequestedTime">0</Item>
                 <Item Key="PlannedStartTime">1</Item>
                 <Item Key="PlannedEndTime">1</Item>
                 <Item Key="ActualStartTime">0</Item>
@@ -1463,7 +1463,7 @@
                 <Item Key="CategoryID">Category</Item>
                 <Item Key="ImpactID">Impact</Item>
                 <Item Key="PriorityID">Priority</Item>
-                <Item Key="RealizeTime">RealizeTime</Item>
+                <Item Key="RequestedTime">RequestedTime</Item>
                 <Item Key="PlannedStartTime">PlannedStartTime</Item>
                 <Item Key="PlannedEndTime">PlannedEndTime</Item>
                 <Item Key="ActualStartTime">ActualStartTime</Item>
@@ -1502,7 +1502,7 @@
                 <Item Key="Category">0</Item>
                 <Item Key="Impact">0</Item>
                 <Item Key="Priority">0</Item>
-                <Item Key="RealizeTime">0</Item>
+                <Item Key="RequestedTime">0</Item>
                 <Item Key="PlannedStartTime">1</Item>
                 <Item Key="PlannedEndTime">1</Item>
                 <Item Key="ActualStartTime">0</Item>
@@ -1552,7 +1552,7 @@
                 <Item Key="CategoryID">Category</Item>
                 <Item Key="ImpactID">Impact</Item>
                 <Item Key="PriorityID">Priority</Item>
-                <Item Key="RealizeTime">RealizeTime</Item>
+                <Item Key="RequestedTime">RequestedTime</Item>
                 <Item Key="PlannedStartTime">PlannedStartTime</Item>
                 <Item Key="PlannedEndTime">PlannedEndTime</Item>
                 <Item Key="ActualStartTime">ActualStartTime</Item>
@@ -1591,7 +1591,7 @@
                 <Item Key="Category">0</Item>
                 <Item Key="Impact">0</Item>
                 <Item Key="Priority">1</Item>
-                <Item Key="RealizeTime">0</Item>
+                <Item Key="RequestedTime">0</Item>
                 <Item Key="PlannedStartTime">1</Item>
                 <Item Key="PlannedEndTime">1</Item>
                 <Item Key="ActualStartTime">0</Item>
@@ -1633,7 +1633,7 @@
                 <Item Key="CategoryID">Category</Item>
                 <Item Key="ImpactID">Impact</Item>
                 <Item Key="PriorityID">Priority</Item>
-                <Item Key="RealizeTime">RealizeTime</Item>
+                <Item Key="RequestedTime">RequestedTime</Item>
                 <Item Key="PlannedStartTime">PlannedStartTime</Item>
                 <Item Key="PlannedEndTime">PlannedEndTime</Item>
                 <Item Key="ActualStartTime">ActualStartTime</Item>
@@ -1672,7 +1672,7 @@
                 <Item Key="Category">0</Item>
                 <Item Key="Impact">0</Item>
                 <Item Key="Priority">0</Item>
-                <Item Key="RealizeTime">0</Item>
+                <Item Key="RequestedTime">0</Item>
                 <Item Key="PlannedStartTime">1</Item>
                 <Item Key="PlannedEndTime">1</Item>
                 <Item Key="ActualStartTime">0</Item>
@@ -1722,9 +1722,9 @@
             <String Regex="^(rw|ro)$">rw</String>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeAdd###RealizeTime" Required="1" Valid="1">
-        <Description Lang="en">If you want to set the realization time.</Description>
-        <Description Lang="de">Wenn die gewünschte Fertigstellungszeit gesetzt werden soll.</Description>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeAdd###RequestedTime" Required="1" Valid="1">
+        <Description Lang="en">If you want to set the requested (by customer) date.</Description>
+        <Description Lang="de">Wenn der Wunschtermin des Kunden gesetzt werden soll.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::ViewChangeAdd</SubGroup>
         <Setting>
@@ -1743,9 +1743,9 @@
             <String Regex="^(rw|ro)$">rw</String>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeEdit###RealizeTime" Required="1" Valid="1">
-        <Description Lang="en">If you want to set the realization time.</Description>
-        <Description Lang="de">Wenn die gewünschte Fertigstellungszeit gesetzt werden soll.</Description>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeEdit###RequestedTime" Required="1" Valid="1">
+        <Description Lang="en">If you want to set the requested (by customer) date.</Description>
+        <Description Lang="de">Soll der Wunschtermin des Kunden gesetzt werden.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::ViewChangeEdit</SubGroup>
         <Setting>
@@ -1811,7 +1811,7 @@
                 <Item Key="Category">0</Item>
                 <Item Key="Impact">0</Item>
                 <Item Key="Priority">1</Item>
-                <Item Key="RealizeTime">0</Item>
+                <Item Key="RequestedTime">0</Item>
                 <Item Key="PlannedStartTime">1</Item>
                 <Item Key="PlannedEndTime">1</Item>
                 <Item Key="ActualStartTime">0</Item>
@@ -1820,9 +1820,9 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeSearch###RealizeTime" Required="1" Valid="1">
-        <Description Lang="en">If you want to set the realization time.</Description>
-        <Description Lang="de">Wenn die gewünschte Fertigstellungszeit gesetzt werden soll.</Description>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeSearch###RequestedTime" Required="1" Valid="1">
+        <Description Lang="en">If you want to set the requested (by customer) date.</Description>
+        <Description Lang="de">Soll der Wunschtermin des Kunden eingestellt werden.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::ViewChangeSearch</SubGroup>
         <Setting>
@@ -1850,9 +1850,9 @@
             <String Regex="^(rw|ro)$">ro</String>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeZoom###RealizeTime" Required="1" Valid="1">
-        <Description Lang="en">If you want to show the realization time.</Description>
-        <Description Lang="de">Wenn die gewünschte Fertigstellungszeit angezeigt werden soll.</Description>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeZoom###RequestedTime" Required="1" Valid="1">
+        <Description Lang="en">If you want to show the requested (by customer) date.</Description>
+        <Description Lang="de">Soll der Wunschtermin des Kunden angezeigt werden.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::ViewChangeZoom</SubGroup>
         <Setting>

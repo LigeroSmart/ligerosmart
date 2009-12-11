@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.199 2009-12-11 11:18:34 reb Exp $
+# $Id: ITSMChange.pm,v 1.200 2009-12-11 13:20:19 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.199 $) [1];
+$VERSION = qw($Revision: 1.200 $) [1];
 
 =head1 NAME
 
@@ -154,7 +154,7 @@ or
         Priority        => '5 very high',                      # (optional) or PriorityID => 6
         CABAgents       => [ 1, 2, 4 ],     # UserIDs          # (optional)
         CABCustomers    => [ 'tt', 'mm' ],  # CustomerUserIDs  # (optional)
-        RealizeTime     => '2006-01-19 23:59:59',              # (optional)
+        RequestedTime   => '2006-01-19 23:59:59',              # (optional)
         UserID          => 1,
     );
 
@@ -309,7 +309,7 @@ Passing undefined values is not allowed.
         Priority        => '5 very high',                      # (optional) or PriorityID => 6
         CABAgents       => [ 1, 2, 4 ],     # UserIDs          # (optional)
         CABCustomers    => [ 'tt', 'mm' ],  # CustomerUserIDs  # (optional)
-        RealizeTime     => '2006-01-19 23:59:59',              # (optional)
+        RequestedTime   => '2006-01-19 23:59:59',              # (optional)
         UserID          => 1,
     );
 
@@ -410,7 +410,7 @@ sub ChangeUpdate {
         CategoryID         => 'category_id',
         ImpactID           => 'impact_id',
         PriorityID         => 'priority_id',
-        RealizeTime        => 'realize_time',
+        RequestedTime      => 'requested_time',
         DescriptionPlain   => 'description_plain',
         JustificationPlain => 'justification_plain',
     );
@@ -490,7 +490,7 @@ The returned hash reference contains the following elements:
     $Change{PlannedEndTime}         # determined from the workorders
     $Change{ActualStartTime}        # determined from the workorders
     $Change{ActualEndTime}          # determined from the workorders
-    $Change{RealizeTime}
+    $Change{RequestedTime}
     $Change{CreateTime}
     $Change{CreateBy}
     $Change{ChangeTime}
@@ -520,7 +520,7 @@ sub ChangeGet {
             . 'change_state_id, change_manager_id, change_builder_id, '
             . 'category_id, impact_id, priority_id, '
             . 'create_time, create_by, change_time, change_by, '
-            . 'realize_time '
+            . 'requested_time '
             . 'FROM change_item '
             . 'WHERE id = ? ',
         Bind  => [ \$Param{ChangeID} ],
@@ -547,7 +547,7 @@ sub ChangeGet {
         $ChangeData{CreateBy}           = $Row[14];
         $ChangeData{ChangeTime}         = $Row[15];
         $ChangeData{ChangeBy}           = $Row[16];
-        $ChangeData{RealizeTime}        = $Row[17];
+        $ChangeData{RequestedTime}      = $Row[17];
     }
 
     # check error
@@ -1080,10 +1080,10 @@ is ignored.
         # changes with changed time before then ....
         ChangeTimeOlderDate       => '2006-01-19 23:59:59',            # (optional)
 
-        # changes with realize time after ...
-        RealizeTimeNewerDate      => '2006-01-09 00:00:01',            # (optional)
-        # changes with realize time before then ....
-        RealizeTimeOlderDate      => '2006-01-19 23:59:59',            # (optional)
+        # changes with requested time after ...
+        RequestedTimeNewerDate    => '2006-01-09 00:00:01',            # (optional)
+        # changes with requested time before then ....
+        RequestedTimeOlderDate    => '2006-01-19 23:59:59',            # (optional)
 
         OrderBy => [ 'ChangeID', 'ChangeManagerID' ],                  # (optional)
         # ignored when the result type is 'COUNT'
@@ -1092,7 +1092,7 @@ is ignored.
         # ChangeManagerID, ChangeBuilderID,
         # CategoryID, ImpactID, PriorityID
         # PlannedStartTime, PlannedEndTime,
-        # ActualStartTime, ActualEndTime, RealizeTime,
+        # ActualStartTime, ActualEndTime, RequestedTime,
         # CreateTime, CreateBy, ChangeTime, ChangeBy)
 
         # Additional information for OrderBy:
@@ -1187,7 +1187,7 @@ sub ChangeSearch {
         CreateBy         => 'c.create_by',
         ChangeTime       => 'c.change_time',
         ChangeBy         => 'c.change_by',
-        RealizeTime      => 'c.realize_time',
+        RequestedTime    => 'c.requested_time',
         PlannedStartTime => 'MIN(wo1.planned_start_time)',
         PlannedEndTime   => 'MAX(wo1.planned_end_time)',
         ActualStartTime  => 'MIN(wo1.actual_start_time)',
@@ -1420,12 +1420,12 @@ sub ChangeSearch {
     my %TimeParams = (
 
         # times in change_item
-        CreateTimeNewerDate  => 'c.create_time >=',
-        CreateTimeOlderDate  => 'c.create_time <=',
-        ChangeTimeNewerDate  => 'c.change_time >=',
-        ChangeTimeOlderDate  => 'c.change_time <=',
-        RealizeTimeNewerDate => 'c.realize_time >=',
-        RealizeTimeOlderDate => 'c.realize_time <=',
+        CreateTimeNewerDate    => 'c.create_time >=',
+        CreateTimeOlderDate    => 'c.create_time <=',
+        ChangeTimeNewerDate    => 'c.change_time >=',
+        ChangeTimeOlderDate    => 'c.change_time <=',
+        RequestedTimeNewerDate => 'c.requested_time >=',
+        RequestedTimeOlderDate => 'c.requested_time <=',
 
         # times in change_workorder
         PlannedStartTimeNewerDate => 'min(wo1.planned_start_time) >=',
@@ -2504,7 +2504,7 @@ There are no required parameters.
         CategoryID           => 7,                                  # (optional)
         ImpactID             => 8,                                  # (optional)
         PriorityID           => 9,                                  # (optional)
-        RealizeTime          => '2009-10-23 08:57:12',              # (optional)
+        RequestedTime        => '2009-10-23 08:57:12',              # (optional)
         CABAgents            => [ 1, 2, 4 ],     # UserIDs          # (optional)
         CABCustomers         => [ 'tt', 'mm' ],  # CustomerUserIDs  # (optional)
     );
@@ -2589,15 +2589,15 @@ sub _CheckChangeParams {
         }
     }
 
-    # check if realize_time has correct format
+    # check if requested_time has correct format
     if (
-        defined $Param{RealizeTime}
-        && $Param{RealizeTime} !~ m{ \A \d\d\d\d-\d\d-\d\d \s \d\d:\d\d:\d\d \z }xms
+        defined $Param{RequestedTime}
+        && $Param{RequestedTime} !~ m{ \A \d\d\d\d-\d\d-\d\d \s \d\d:\d\d:\d\d \z }xms
         )
     {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'Invalid format for RealizeTime!',
+            Message  => 'Invalid format for RequestedTime!',
         );
         return;
     }
@@ -2737,6 +2737,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.199 $ $Date: 2009-12-11 11:18:34 $
+$Revision: 1.200 $ $Date: 2009-12-11 13:20:19 $
 
 =cut

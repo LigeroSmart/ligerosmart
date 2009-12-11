@@ -2,7 +2,7 @@
 # AgentITSMChangeAdd.dtl - provides HTML form for AgentITSMChangeAdd
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.dtl,v 1.33 2009-11-30 07:43:43 bes Exp $
+# $Id: AgentITSMChangeAdd.dtl,v 1.34 2009-12-11 13:19:44 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,8 +26,8 @@ function submit_compose() {
         return false;
     }
 
-    // check the realize time
-    if (  !CheckTime( 'RealizeTime' ) && document.compose.RealizeTimeUsed.checked == true ) {
+    // check the requested time
+    if (  !CheckTime( 'RequestedTime' ) && document.compose.RequestedTimeUsed.checked == true ) {
         alert('$JSText{"The realization time is invalid!"}');
 
         return false;
@@ -66,8 +66,8 @@ function submit_compose() {
                         <td>
                             <table border="0" width="100%" cellspacing="0" cellpadding="3">
                                 <colgroup>
-                                <col width="130px">
-                                <col>
+                                    <col width="130px">
+                                    <col>
                                 </colgroup>
                                 <tr>
                                     <td class="contentkey">
@@ -199,20 +199,20 @@ $Include{"RichTextEditorITSM"}
                                 <tr>
                                     <td colspan="2">&nbsp;</td>
                                 </tr>
-<!-- dtl:block:RealizeTime -->
+<!-- dtl:block:RequestedTime -->
                                 <tr>
                                     <td class="contentkey">
-                                        $Text{"Realization time"}:
+                                        $Text{"Requested (by customer) Date"}:
                                     </td>
                                     <td class="contentvalue">
-                                        $Data{"RealizeTimeString"}
-<!-- dtl:block:InvalidRealizeTime -->
+                                        $Data{"RequestedTimeString"}
+<!-- dtl:block:InvalidRequestedTime -->
                                         <br />
                                         <font color="red" size="-2">$Text{"Input invalid"}</font>
-<!-- dtl:block:InvalidRealizeTime -->
+<!-- dtl:block:InvalidRequestedTime -->
                                     </td>
                                 </tr>
-<!-- dtl:block:RealizeTime -->
+<!-- dtl:block:RequestedTime -->
                                 <tr>
                                     <td colspan="2">&nbsp;</td>
                                 </tr>

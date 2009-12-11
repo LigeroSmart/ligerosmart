@@ -2,7 +2,7 @@
 # AgentITSMChangeOverviewSmall.dtl - html for change overview table
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeOverviewSmall.dtl,v 1.10 2009-11-28 09:37:32 ub Exp $
+# $Id: AgentITSMChangeOverviewSmall.dtl,v 1.11 2009-12-11 13:19:44 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -101,12 +101,12 @@
                     <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=PriorityID&OrderBy=Down" onmouseover="window.status='$JSText{"sort downward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}down-small.png" alt="$Text{"down"}"></a>
                     </th>
 <!-- dtl:block:RecordPriorityHeader -->
-<!-- dtl:block:RecordRealizeTimeHeader -->
+<!-- dtl:block:RecordRequestedTimeHeader -->
                     <th>$Text{"Realization Time"}<br/>
-                    <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=RealizeTime&OrderBy=Up" onmouseover="window.status='$JSText{"sort upward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}up-small.png" alt="$Text{"up"}"></a> /
-                    <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=RealizeTime&OrderBy=Down" onmouseover="window.status='$JSText{"sort downward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}down-small.png" alt="$Text{"down"}"></a>
+                    <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=RequestedalizeTime&OrderBy=Up" onmouseover="window.status='$JSText{"sort upward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}up-small.png" alt="$Text{"up"}"></a> /
+                    <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=RequestedTime&OrderBy=Down" onmouseover="window.status='$JSText{"sort downward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}down-small.png" alt="$Text{"down"}"></a>
                     </th>
-<!-- dtl:block:RecordRealizeTimeHeader -->
+<!-- dtl:block:RecordRequestedTimeHeader -->
 <!-- dtl:block:RecordPlannedStartTimeHeader -->
                     <th>$Text{"Planned Start"}<br/>
                     <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=PlannedStartTime&OrderBy=Up" onmouseover="window.status='$JSText{"sort upward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}up-small.png" alt="$Text{"up"}"></a> /
@@ -226,11 +226,11 @@
                         <div title="$Text{"$QData{"Priority"}"}">$Text{"$QData{"Priority"}"}</div>
                     </td>
 <!-- dtl:block:RecordPriority -->
-<!-- dtl:block:RecordRealizeTime -->
+<!-- dtl:block:RecordRequestedTime -->
                     <td>
-                        <div title="$TimeLong{"$QData{"RealizeTime"}"}">$TimeLong{"$QData{"RealizeTime"}"}</div>
+                        <div title="$TimeLong{"$QData{"RequestedTime"}"}">$TimeLong{"$QData{"RequestedTime"}"}</div>
                     </td>
-<!-- dtl:block:RecordRealizeTime -->
+<!-- dtl:block:RecordRequestedTime -->
 <!-- dtl:block:RecordPlannedStartTime -->
                     <td>
                         <div title="$TimeLong{"$QData{"PlannedStartTime"}"}">$TimeLong{"$QData{"PlannedStartTime"}"}</div>

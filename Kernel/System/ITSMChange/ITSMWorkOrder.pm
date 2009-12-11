@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.44 2009-12-09 08:51:32 reb Exp $
+# $Id: ITSMWorkOrder.pm,v 1.45 2009-12-11 13:20:19 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.44 $) [1];
+$VERSION = qw($Revision: 1.45 $) [1];
 
 =head1 NAME
 
@@ -880,7 +880,7 @@ sub WorkOrderSearch {
         CategoryID      => 'c.category_id',
         ImpactID        => 'c.impact_id',
         PriorityID      => 'c.priority_id',
-        RealizeTime     => 'c.realize_time',
+        RequestedTime   => 'c.requested_time',
     );
 
     # check if OrderBy contains only unique valid values
@@ -2190,6 +2190,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.44 $ $Date: 2009-12-09 08:51:32 $
+$Revision: 1.45 $ $Date: 2009-12-11 13:20:19 $
 
 =cut
