@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.38 2009-12-09 08:51:32 reb Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.39 2009-12-11 12:25:58 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.38 $) [1];
+$VERSION = qw($Revision: 1.39 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -490,68 +490,91 @@ sub Run {
 sub _MaskForm {
     my ( $Self, %Param ) = @_;
 
+    # Get a complete list of users
+    # for the selection 'ChangeBuilder', 'ChangeManager' and 'created by user'.
+    # Out of office nice might be appended to the values.
+    my %Users = $Self->{UserObject}->UserList(
+        Type  => 'Long',
+        Valid => 1,
+    );
+
+    # dropdown menu for 'created by users'
+    $Param{'CreateBySelectionStrg'} = $Self->{LayoutObject}->BuildSelection(
+        Data       => \%Users,
+        Name       => 'CreateBy',
+        Multiple   => 1,
+        Size       => 5,
+        SelectedID => $Param{CreateBy},
+    );
+
+    # TODO: delete obsolete code
     # get ChangeManagerIDs
-    my $ChangeManagerGroupID = $Self->{GroupObject}->GroupLookup(
-        Group => 'itsm-change-manager',
-    );
-    my @ChangeManagerIDs = $Self->{GroupObject}->GroupMemberList(
-        Type    => 'ro',
-        Result  => 'ID',
-        GroupID => $ChangeManagerGroupID,
-    );
+    #my $ChangeManagerGroupID = $Self->{GroupObject}->GroupLookup(
+    #    Group => 'itsm-change-manager',
+    #);
+    #my @ChangeManagerIDs = $Self->{GroupObject}->GroupMemberList(
+    #    Type    => 'ro',
+    #    Result  => 'ID',
+    #    GroupID => $ChangeManagerGroupID,
+    #);
 
     # get change manager data for change manager ids
-    my %ChangeManagerID2Name;
-    for my $ChangeManagerID (@ChangeManagerIDs) {
-        my %ChangeManager = $Self->{UserObject}->GetUserData(
-            UserID => $ChangeManagerID,
-        );
+    #my %ChangeManagerID2Name;
+    #for my $ChangeManagerID (@ChangeManagerIDs) {
+    #    my %ChangeManager = $Self->{UserObject}->GetUserData(
+    #        UserID => $ChangeManagerID,
+    #    );
 
-        if (%ChangeManager) {
-            $ChangeManagerID2Name{$ChangeManagerID} = sprintf "%s %s (%s)",
-                $ChangeManager{UserFirstname},
-                $ChangeManager{UserLastname},
-                $ChangeManager{UserLogin};
-        }
-    }
+    #    if (%ChangeManager) {
+    #        $ChangeManagerID2Name{$ChangeManagerID} = sprintf "%s %s (%s)",
+    #            $ChangeManager{UserFirstname},
+    #            $ChangeManager{UserLastname},
+    #            $ChangeManager{UserLogin};
+    #    }
+    #}
 
     # build change manager dropdown
     $Param{'ChangeManagerSelectionStrg'} = $Self->{LayoutObject}->BuildSelection(
-        Data       => \%ChangeManagerID2Name,
+
+        #Data       => \%ChangeManagerID2Name,
+        Data       => \%Users,
         Name       => 'ChangeManagerIDs',
         Multiple   => 1,
         Size       => 5,
         SelectedID => $Param{ChangeManagerIDs},
     );
 
+    # TODO: delete obsolete code
     # get ChangeBuilderIDs
-    my $ChangeBuilderGroupID = $Self->{GroupObject}->GroupLookup(
-        Group => 'itsm-change-builder',
-    );
-    my @ChangeBuilderIDs = $Self->{GroupObject}->GroupMemberList(
-        Type    => 'ro',
-        Result  => 'ID',
-        GroupID => $ChangeBuilderGroupID,
-    );
+    #my $ChangeBuilderGroupID = $Self->{GroupObject}->GroupLookup(
+    #    Group => 'itsm-change-builder',
+    #);
+    #my @ChangeBuilderIDs = $Self->{GroupObject}->GroupMemberList(
+    #    Type    => 'ro',
+    #    Result  => 'ID',
+    #    GroupID => $ChangeBuilderGroupID,
+    #);
 
     # get change builder data for change builder ids
-    my %ChangeBuilderID2Name;
-    for my $ChangeBuilderID (@ChangeBuilderIDs) {
-        my %ChangeBuilder = $Self->{UserObject}->GetUserData(
-            UserID => $ChangeBuilderID,
-        );
+    #my %ChangeBuilderID2Name;
+    #for my $ChangeBuilderID (@ChangeBuilderIDs) {
+    #    my %ChangeBuilder = $Self->{UserObject}->GetUserData(
+    #        UserID => $ChangeBuilderID,
+    #    );
 
-        if (%ChangeBuilder) {
-            $ChangeBuilderID2Name{$ChangeBuilderID} = sprintf "%s %s (%s)",
-                $ChangeBuilder{UserFirstname},
-                $ChangeBuilder{UserLastname},
-                $ChangeBuilder{UserLogin};
-        }
-    }
+    #    if (%ChangeBuilder) {
+    #        $ChangeBuilderID2Name{$ChangeBuilderID} = sprintf "%s %s (%s)",
+    #            $ChangeBuilder{UserFirstname},
+    #            $ChangeBuilder{UserLastname},
+    #            $ChangeBuilder{UserLogin};
+    #    }
+    #}
 
     # build change builder dropdown
     $Param{'ChangeBuilderSelectionStrg'} = $Self->{LayoutObject}->BuildSelection(
-        Data       => \%ChangeBuilderID2Name,
+
+        #Data       => \%ChangeBuilderID2Name,
+        Data       => \%Users,
         Name       => 'ChangeBuilderIDs',
         Multiple   => 1,
         Size       => 5,
@@ -604,19 +627,6 @@ sub _MaskForm {
         Multiple   => 1,
         Size       => 5,
         SelectedID => $Param{ChangeStateIDs},
-    );
-
-    # get created by users
-    my %Users = $Self->{UserObject}->UserList(
-        Type  => 'Long',
-        Valid => 1,
-    );
-    $Param{'CreateBySelectionStrg'} = $Self->{LayoutObject}->BuildSelection(
-        Data       => \%Users,
-        Name       => 'CreateBy',
-        Multiple   => 1,
-        Size       => 5,
-        SelectedID => $Param{CreateBy},
     );
 
     # get workorder agents
