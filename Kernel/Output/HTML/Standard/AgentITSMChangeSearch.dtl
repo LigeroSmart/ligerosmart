@@ -2,7 +2,7 @@
 # AgentITSMChangeSearch.dtl - provides HTML form for AgentITSMChangeSearch
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.dtl,v 1.24 2009-12-11 14:58:00 bes Exp $
+# $Id: AgentITSMChangeSearch.dtl,v 1.25 2009-12-11 15:06:06 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -267,37 +267,6 @@ document.observe( "dom:loaded", function() {
                             <br />
                             <font color="red" size="-2">$Text{"Input invalid"}</font>
 <!-- dtl:block:InvalidTimeSlot -->
-<script language="JavaScript" type="text/javascript">
-<!--
-
-// register onchange-handlers for the TimePoint dropdown menus
-var TimePointElements = $("$QData{"Prefix"}TimeSearchType::TimePoint").adjacent('select');
-TimePointElements.each(
-    function(elem) {
-        elem.observe(
-            'click',
-            function(){
-                $("$QData{"Prefix"}TimeSearchType::TimePoint").checked = true;
-            }
-        );
-    }
-);
-
-// register onchange-handlers for the TimeSlot dropdown menus and calendar links
-var TimeSlotElements  = $("$QData{"Prefix"}TimeSearchType::TimeSlot").adjacent('select, a[target="calendar"]');
-TimeSlotElements.each(
-    function(elem) {
-        elem.observe(
-            'click',
-            function(){
-                $("$QData{"Prefix"}TimeSearchType::TimeSlot").checked = true;
-            }
-        );
-    }
-);
-
-//-->
-</script>
                         </td>
                     </tr>
 <!-- dtl:block:TimeSelection -->
