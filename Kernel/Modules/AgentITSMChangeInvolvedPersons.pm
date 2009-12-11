@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeInvolvedPersons.pm - the OTRS::ITSM::ChangeManagement change involved persons module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.20 2009-12-04 11:19:08 bes Exp $
+# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.21 2009-12-11 12:22:03 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::User;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -575,14 +575,14 @@ sub _CheckChangeManagerAndChangeBuilder {
         }
         else {
 
-            # compare input value with user data
+            # Compare input value with user data.
+            # Look for exact match at beginning,
+            # as $ChangeManager{UserLastname} might contain a trailing 'out of office' note.
             my $CheckString = sprintf '%s %s %s ',
                 $ChangeManager{UserLogin},
                 $ChangeManager{UserFirstname},
                 $ChangeManager{UserLastname};
-
-            # show error
-            if ( $CheckString ne $Param{ChangeManager} ) {
+            if ( index( $CheckString, $Param{ChangeManager} ) != 0 ) {
                 $Errors{ChangeManager} = 1;
             }
         }
@@ -594,7 +594,7 @@ sub _CheckChangeManagerAndChangeBuilder {
     }
     else {
 
-        # get changemanager data
+        # get changebuilder data
         my %ChangeBuilder = $Self->{UserObject}->GetUserData(
             UserID => $Param{SelectedUser2},
         );
@@ -605,14 +605,14 @@ sub _CheckChangeManagerAndChangeBuilder {
         }
         else {
 
-            # compare input value with user data
+            # Compare input value with user data.
+            # Look for exact match at beginning,
+            # as $ChangeManager{UserLastname} might contain a trailing 'out of office' note.
             my $CheckString = sprintf '%s %s %s ',
                 $ChangeBuilder{UserLogin},
                 $ChangeBuilder{UserFirstname},
                 $ChangeBuilder{UserLastname};
-
-            # show error
-            if ( $CheckString ne $Param{ChangeBuilder} ) {
+            if ( index( $Param{ChangeBuilder}, $CheckString ) != 0 ) {
                 $Errors{ChangeBuilder} = 1;
             }
         }
