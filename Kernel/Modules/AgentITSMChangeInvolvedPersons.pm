@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeInvolvedPersons.pm - the OTRS::ITSM::ChangeManagement change involved persons module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.22 2009-12-11 12:51:59 bes Exp $
+# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.23 2009-12-11 13:23:40 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::User;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -558,62 +558,38 @@ sub _CheckChangeManagerAndChangeBuilder {
     # hash for error info
     my %Errors;
 
-    # check change manager
-    if ( !$Param{ChangeManager} || !$Param{SelectedUser1} ) {
-        $Errors{ChangeManager} = 1;
-    }
-    else {
+    for my $Role (qw(ChangeBuilder ChangeManager)) {
 
-        # get changemanager data
-        my %ChangeManager = $Self->{UserObject}->GetUserData(
-            UserID => $Param{SelectedUser1},
-        );
+        # the fields in .dtl have a number at the end
+        my $Key = $Role eq 'ChangeManager' ? 1 : 2;
 
-        # show error if user not exists
-        if ( !%ChangeManager ) {
-            $Errors{ChangeManager} = 1;
+        # check the role
+        if ( !$Param{$Role} || !$Param{"SelectedUser$Key"} ) {
+            $Errors{$Role} = 1;
         }
         else {
 
-            # Compare input value with user data.
-            # Look for exact match at beginning,
-            # as $ChangeManager{UserLastname} might contain a trailing 'out of office' note.
-            my $CheckString = sprintf '%s %s %s ',
-                $ChangeManager{UserLogin},
-                $ChangeManager{UserFirstname},
-                $ChangeManager{UserLastname};
-            if ( index( $CheckString, $Param{ChangeManager} ) != 0 ) {
-                $Errors{ChangeManager} = 1;
+            # get user data
+            my %User = $Self->{UserObject}->GetUserData(
+                UserID => $Param{"SelectedUser$Key"},
+            );
+
+            # show error if user does not exist
+            if ( !%User ) {
+                $Errors{$Role} = 1;
             }
-        }
-    }
+            else {
 
-    # check change builder
-    if ( !$Param{ChangeBuilder} || !$Param{SelectedUser2} ) {
-        $Errors{ChangeBuilder} = 1;
-    }
-    else {
-
-        # get changebuilder data
-        my %ChangeBuilder = $Self->{UserObject}->GetUserData(
-            UserID => $Param{SelectedUser2},
-        );
-
-        # show error if user not exists
-        if ( !%ChangeBuilder ) {
-            $Errors{ChangeBuilder} = 1;
-        }
-        else {
-
-            # Compare input value with user data.
-            # Look for exact match at beginning,
-            # as $ChangeManager{UserLastname} might contain a trailing 'out of office' note.
-            my $CheckString = sprintf '%s %s %s ',
-                $ChangeBuilder{UserLogin},
-                $ChangeBuilder{UserFirstname},
-                $ChangeBuilder{UserLastname};
-            if ( index( $CheckString, $Param{ChangeBuilder} ) != 0 ) {
-                $Errors{ChangeBuilder} = 1;
+                # Compare input value with user data.
+                # Look for exact match at beginning,
+                # as $User{UserLastname} might contain a trailing 'out of office' note.
+                my $CheckString = sprintf '%s %s %s ',
+                    $User{UserLogin},
+                    $User{UserFirstname},
+                    $User{UserLastname};
+                if ( index( $CheckString, $Param{User} ) != 0 ) {
+                    $Errors{ChangeManager} = 1;
+                }
             }
         }
     }
