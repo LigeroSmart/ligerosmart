@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMUserSearch.pm - a module used for the autocomplete feature
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMUserSearch.pm,v 1.6 2009-12-11 10:09:49 bes Exp $
+# $Id: AgentITSMUserSearch.pm,v 1.7 2009-12-11 14:06:45 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::User;
 use Kernel::System::Group;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -91,6 +91,11 @@ sub Run {
             Search => $Search,
             Valid  => 1,
         );
+
+        # UserSearch() returns values with a trailing space, get rid of it
+        for my $Name ( values %UserList ) {
+            $Name =~ s/ \s+ $//xms;
+        }
 
         # build data
         my @Data;

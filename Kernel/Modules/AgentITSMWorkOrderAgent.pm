@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAgent.pm - the OTRS::ITSM::ChangeManagement workorder agent edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAgent.pm,v 1.25 2009-12-03 11:15:26 bes Exp $
+# $Id: AgentITSMWorkOrderAgent.pm,v 1.26 2009-12-11 14:06:45 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.25 $) [1];
+$VERSION = qw($Revision: 1.26 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -175,6 +175,11 @@ sub Run {
                     Search => $Search,
                     Valid  => 1,
                 );
+
+                # UserSearch() returns values with a trailing space, get rid of it
+                for my $Name ( values %UserFound ) {
+                    $Name =~ s/ \s+ $//xms;
+                }
 
                 # get group of group itsm-change
                 my $GroupID = $Self->{GroupObject}->GroupLookup(
