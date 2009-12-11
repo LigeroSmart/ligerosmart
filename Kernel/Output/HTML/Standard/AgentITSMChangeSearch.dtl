@@ -2,7 +2,7 @@
 # AgentITSMChangeSearch.dtl - provides HTML form for AgentITSMChangeSearch
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.dtl,v 1.23 2009-12-11 10:09:49 bes Exp $
+# $Id: AgentITSMChangeSearch.dtl,v 1.24 2009-12-11 14:58:00 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -37,6 +37,40 @@ function clear_cab_agent() {
     document.compose.CABAgent.value = "";
     document.compose.CABAgent.focus();
 }
+
+// do initialization when the DOM is fully loaded
+document.observe( "dom:loaded", function() {
+
+<!-- dtl:block:TimeSelectionJS -->
+
+    // register onchange-handlers for the TimePoint dropdown menus
+    var TimePointElements = $("$QData{"Prefix"}TimeSearchType::TimePoint").adjacent('select');
+    TimePointElements.each(
+        function(elem) {
+            elem.observe(
+                'click',
+                function(){
+                    $("$QData{"Prefix"}TimeSearchType::TimePoint").checked = true;
+                }
+            );
+        }
+    );
+
+    // register onchange-handlers for the TimeSlot dropdown menus and calendar links
+    var TimeSlotElements  = $("$QData{"Prefix"}TimeSearchType::TimeSlot").adjacent('select, a[target="calendar"]');
+    TimeSlotElements.each(
+        function(elem) {
+            elem.observe(
+                'click',
+                function(){
+                    $("$QData{"Prefix"}TimeSearchType::TimeSlot").checked = true;
+                }
+            );
+        }
+    );
+
+<!-- dtl:block:TimeSelectionJS -->
+} );
 
 //-->
 </script>
@@ -278,37 +312,3 @@ TimeSlotElements.each(
         </td>
     </tr>
 </table>
-
-<script language="JavaScript" type="text/javascript">
-<!--
-<!-- dtl:block:TimeSelectionJS -->
-
-// register onchange-handlers for the TimePoint dropdown menus
-var TimePointElements = $("$QData{"Prefix"}TimeSearchType::TimePoint").adjacent('select');
-TimePointElements.each(
-    function(elem) {
-        elem.observe(
-            'click',
-            function(){
-                $("$QData{"Prefix"}TimeSearchType::TimePoint").checked = true;
-            }
-        );
-    }
-);
-
-// register onchange-handlers for the TimeSlot dropdown menus and calendar links
-var TimeSlotElements  = $("$QData{"Prefix"}TimeSearchType::TimeSlot").adjacent('select, a[target="calendar"]');
-TimeSlotElements.each(
-    function(elem) {
-        elem.observe(
-            'click',
-            function(){
-                $("$QData{"Prefix"}TimeSearchType::TimeSlot").checked = true;
-            }
-        );
-    }
-);
-
-//-->
-<!-- dtl:block:TimeSelectionJS -->
-</script>
