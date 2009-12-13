@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeInvolvedPersons.pm - the OTRS::ITSM::ChangeManagement change involved persons module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.25 2009-12-11 14:06:45 bes Exp $
+# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.26 2009-12-13 14:28:49 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::User;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.25 $) [1];
+$VERSION = qw($Revision: 1.26 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -696,7 +696,7 @@ sub _GetExpandInfo {
 
             # UserSearch() returns values with a trailing space, get rid of it
             for my $Name ( values %UserFound ) {
-                $Name =~ s/ \s+ $//xms;
+                $Name =~ s{ \s+ \z }{}xms;
             }
 
             # filter the itsm-change users in found users
@@ -785,7 +785,7 @@ sub _GetExpandInfo {
 
         # UserSearch() returns values with a trailing space, get rid of it
         for my $Name ( values %UserFound ) {
-            $Name =~ s/ \s+ $//xms;
+            $Name =~ s{ \s+ \z }{}xms;
         }
 
         # filter the itsm-change users in found users

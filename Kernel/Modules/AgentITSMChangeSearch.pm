@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.41 2009-12-11 14:06:45 bes Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.42 2009-12-13 14:29:49 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.41 $) [1];
+$VERSION = qw($Revision: 1.42 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -883,7 +883,7 @@ sub _GetExpandInfo {
 
             # UserSearch() returns values with a trailing space, get rid of it
             for my $Name ( values %UserFound ) {
-                $Name =~ s/ \s+ $//xms;
+                $Name =~ s{ \s+ \z }{}xms;
             }
 
             # filter the itsm-change users in found users

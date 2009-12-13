@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LayoutITSMChange.pm,v 1.23 2009-12-13 13:09:35 mae Exp $
+# $Id: LayoutITSMChange.pm,v 1.24 2009-12-13 14:31:21 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use POSIX qw(ceil);
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.23 $) [1];
+$VERSION = qw($Revision: 1.24 $) [1];
 
 =over 4
 
@@ -667,7 +667,7 @@ sub _ITSMChangeGetChangeScale {
     return if !$Param{StartTime};
 
     # check for start time is an integer value
-    return if $Param{StartTime} !~ m{\A \d+ \z}xms;
+    return if $Param{StartTime} !~ m{ \A \d+ \z }xms;
 
     # add start and end time and calculate scale naming
     my %ScaleName = (
@@ -701,7 +701,7 @@ sub _ITSMChangeGetChangeScale {
         next INTERVAL if !$ScaleName{$Interval};
 
         # do not display start or end
-        next INTERVAL if $Interval =~ m{\A ( Start | End ) Time \z}xms;
+        next INTERVAL if $Interval =~ m{ \A ( Start | End ) Time \z }xms;
 
         # build scale label block
         $Self->Block(
@@ -832,19 +832,19 @@ sub _ITSMChangeGetTimeLine {
     return if !$Param{StartTime};
 
     # check for start time is an integer value
-    return if $Param{StartTime} !~ m{\A \d+ \z}xms;
+    return if $Param{StartTime} !~ m{ \A \d+ \z }xms;
 
     # check for end time
     return if !$Param{EndTime};
 
     # check for end time is an integer value
-    return if $Param{EndTime} !~ m{\A \d+ \z}xms;
+    return if $Param{EndTime} !~ m{ \A \d+ \z }xms;
 
     # check for ticks
     return if !$Param{Ticks};
 
     # check for ticks is an integer value
-    return if $Param{Ticks} !~ m{\A \d+ \z}xms;
+    return if $Param{Ticks} !~ m{ \A \d+ \z }xms;
 
     # get current system time
     my $CurrentTime = $Self->{TimeObject}->SystemTime();

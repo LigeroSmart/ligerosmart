@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMCABMemberSearch.pm - a module used for the autocomplete feature
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMCABMemberSearch.pm,v 1.5 2009-12-11 14:06:45 bes Exp $
+# $Id: AgentITSMCABMemberSearch.pm,v 1.6 2009-12-13 14:28:05 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::CustomerUser;
 use Kernel::System::Group;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -89,7 +89,7 @@ sub Run {
 
         # UserSearch() returns values with a trailing space, get rid of it
         for my $Name ( values %UserList ) {
-            $Name =~ s/ \s+ $//xms;
+            $Name =~ s{ \s+ \z }{}xms;
         }
 
         # build data
