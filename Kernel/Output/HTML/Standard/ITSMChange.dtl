@@ -2,7 +2,7 @@
 # ITSMChange.dtl - provides HTML elements for work order graph
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.dtl,v 1.14 2009-12-03 14:37:35 mae Exp $
+# $Id: ITSMChange.dtl,v 1.15 2009-12-13 13:09:35 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,6 +17,12 @@
     td.wo_status       { text-align: center; }
     td.wo_nr           { text-align: left; }
     td.wo              { height: 5px; font-size: 1pt; }
+    span.WorkOrderInfoContainer { position:relative; }
+    .WorkOrderInformation   {
+        position:absolute; top:2px; left:0px; display:none; border:1px solid black;
+        background-color: #FFFFFF; margin:2px; padding:4px; z-index:10;
+        }
+    span.WorkOrderInfoContainer:hover > span.WorkOrderInformation { display:block; }
 
     td.time_containter { font-size:0.1pt; }
 /* <!-- dtl:block:CSSWorkOrderType --> */
@@ -49,10 +55,10 @@
 </style>
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
     <colgroup>
-    <col width="25px">
-    <col width="50px">
-    <col width="*">
-    <col width="10px">
+        <col width="25px">
+        <col width="50px">
+        <col width="*">
+        <col width="10px">
     </colgroup>
     <tr>
         <td class="time_containter">&nbsp;</td>
@@ -80,6 +86,7 @@
         </td>
         <td>
 <!-- dtl:block:WorkOrderItemGraph -->
+            <span class="WorkOrderInfoContainer">
             <table border="0" cellpadding="0" cellspacing="0" width="100%">
                 <tr>
                     <td class="wo" width="$QData{"PlannedPadding"}%"></td>
@@ -94,6 +101,49 @@
                     <td class="wo" width="$QData{"ActualTrailing"}%"></td>
                 </tr>
             </table>
+            <span class="WorkOrderInformation">
+            <table width="380px" cellpadding="3" cellspacing="0" width="400px">
+                <colgroup>
+                    <col width="130px">
+                    <col width="250px">
+                </colgroup>
+                <tr class="contenthead">
+                    <td colspan="2">$Text{"Workorder Information"}</td>
+                </tr>
+                <tr class="searchactive">
+                    <td class="contentkey">$Text{"Title:"}</td>
+                    <td class="contentvalue">$QData{"WorkOrderTitle","40"}</td>
+                </tr>
+                <tr class="searchpassive">
+                    <td class="contentkey">$Text{"State:"}</td>
+                    <td class="contentvalue">$Text{"$QData{"WorkOrderState"}"}</td>
+                </tr>
+                <tr class="searchactive">
+                    <td class="contentkey">$Text{"Type:"}</td>
+                    <td class="contentvalue">$Text{"$QData{"WorkOrderType"}"}</td>
+                </tr>
+                <tr class="searchpassive">
+                    <td class="contentkey">$Text{"Planned Start:"}</td>
+                    <td class="contentvalue">$TimeLong{"$QData{"PlannedStartTime"}"}</td>
+                </tr>
+                <tr class="searchactive">
+                    <td class="contentkey">$Text{"Planned End:"}</td>
+                    <td class="contentvalue">$TimeLong{"$QData{"PlannedEndTime"}"}</td>
+                </tr>
+                <tr class="searchpassive">
+                    <td class="contentkey">$Text{"Actual Start:"}</td>
+                    <td class="contentvalue">$TimeLong{"$QData{"ActualStartTime"}"}</td>
+                </tr>
+                <tr class="searchactive">
+                    <td class="contentkey">$Text{"Actual End:"}</td>
+                    <td class="contentvalue">$TimeLong{"$QData{"ActualEndTime"}"}</td>
+                </tr>
+                <tr class="contenthead">
+                    <td colspan="2">&nbsp;</td>
+                </tr>
+            </table>
+            </span>
+            </span>
 <!-- dtl:block:WorkOrderItemGraph -->
         </td>
         <td></td>
