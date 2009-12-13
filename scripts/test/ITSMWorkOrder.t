@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.109 2009-12-07 13:01:33 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.110 2009-12-13 14:33:51 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -148,6 +148,7 @@ for my $ObjectMethod (@ObjectMethods) {
 # define default ITSMWorkOrder States
 # can't use qw due to spaces in states
 my @DefaultWorkOrderStates = (
+    'created',
     'accepted',
     'ready',
     'in progress',
