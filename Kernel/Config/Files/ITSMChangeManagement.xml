@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.111 2009-12-14 16:08:33 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.112 2009-12-14 16:42:11 bes Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -1938,21 +1938,9 @@
             <String Regex="^(rw|ro)$">ro</String>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderReport###ActualStartTime" Required="1" Valid="1">
-        <Description Lang="en">If you want to set the actual start time.</Description>
-        <Description Lang="de">Wenn der tatsächliche Startzeitpunkt gesetzt werden soll.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewWorkOrderReport</SubGroup>
-        <Setting>
-            <Option SelectedID="0">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
-            </Option>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderReport###ActualEndTime" Required="1" Valid="1">
-        <Description Lang="en">If you want to set the actual end time.</Description>
-        <Description Lang="de">Wenn der tatsächliche Endzeitpunkt gesetzt werden soll.</Description>
+    <ConfigItem Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderReport###ActualTimeSpan" Required="1" Valid="1">
+        <Description Lang="en">If you want to set the actual start and end time.</Description>
+        <Description Lang="de">Wenn der tatsächliche Start- und Endzeitpunkt gesetzt werden soll.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::ViewWorkOrderReport</SubGroup>
         <Setting>

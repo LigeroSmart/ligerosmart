@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderReport.pm - the OTRS::ITSM::ChangeManagement workorder report module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderReport.pm,v 1.17 2009-12-14 13:23:09 bes Exp $
+# $Id: AgentITSMWorkOrderReport.pm,v 1.18 2009-12-14 16:42:11 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -93,9 +93,9 @@ sub Run {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
-    # store time related fields in %GetParam
-    for my $TimeType (qw(ActualStartTime ActualEndTime)) {
-        if ( $Self->{Config}->{$TimeType} ) {
+    # store actual time related fields in %GetParam
+    if ( $Self->{Config}->{ActualTimeSpan} ) {
+        for my $TimeType (qw(ActualStartTime ActualEndTime)) {
             for my $TimePart (qw(Year Month Day Hour Minute Used)) {
                 my $ParamName = $TimeType . $TimePart;
                 $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
@@ -110,10 +110,13 @@ sub Run {
     # update workorder
     if ( $Self->{Subaction} eq 'Save' ) {
 
-        # check the time related parameters
-        for my $TimeType (qw(ActualStartTime ActualEndTime)) {
+        # validate the actual time related parameters
+        if ( $Self->{Config}->{ActualTimeSpan} ) {
+            TIME_TYPE:
+            for my $TimeType (qw(ActualStartTime ActualEndTime)) {
 
-            if ( $Self->{Config}->{$TimeType} && $GetParam{ $TimeType . 'Used' } ) {
+                # only when the checkbutton has been checked
+                next TIME_TYPE if !$GetParam{ $TimeType . 'Used' };
 
                 if (
                     $GetParam{ $TimeType . 'Year' }
@@ -156,9 +159,11 @@ sub Run {
 
             # the time related fields are configurable
             my %AdditionalParam;
-            for my $TimeType (qw(ActualStartTime ActualEndTime)) {
-                if ( $Self->{Config}->{$TimeType} && $GetParam{$TimeType} ) {
-                    $AdditionalParam{$TimeType} = $GetParam{$TimeType};
+            if ( $Self->{Config}->{ActualTimeSpan} ) {
+                for my $TimeType (qw(ActualStartTime ActualEndTime)) {
+                    if ( $GetParam{$TimeType} ) {
+                        $AdditionalParam{$TimeType} = $GetParam{$TimeType};
+                    }
                 }
             }
 
@@ -190,9 +195,12 @@ sub Run {
     }
     else {
 
-        # initialize the time related fields
-        for my $TimeType (qw(ActualStartTime ActualEndTime)) {
-            if ( $Self->{Config}->{$TimeType} && $WorkOrder->{$TimeType} ) {
+        # initialize the actual time related fields
+        if ( $Self->{Config}->{ActualTimeSpan} ) {
+            TIME_TYPE:
+            for my $TimeType (qw(ActualStartTime ActualEndTime)) {
+
+                next TIME_TYPE if !$WorkOrder->{$TimeType};
 
                 # get the time from the workorder
                 my $SystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
@@ -261,8 +269,8 @@ sub Run {
         );
     }
 
-    for my $TimeType (qw(ActualStartTime ActualEndTime)) {
-        if ( $Self->{Config}->{$TimeType} ) {
+    if ( $Self->{Config}->{ActualTimeSpan} ) {
+        for my $TimeType (qw(ActualStartTime ActualEndTime)) {
 
             # time period that can be selected from the GUI
             my %TimePeriod = %{ $Self->{ConfigObject}->Get('ITSMWorkOrder::TimePeriod') };
