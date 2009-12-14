@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LayoutITSMChange.pm,v 1.24 2009-12-13 14:31:21 ub Exp $
+# $Id: LayoutITSMChange.pm,v 1.25 2009-12-14 18:40:33 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use POSIX qw(ceil);
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.24 $) [1];
+$VERSION = qw($Revision: 1.25 $) [1];
 
 =over 4
 
@@ -729,7 +729,7 @@ sub _ITSMChangeGetWorkOrderGraph {
     my $WorkOrder = $Param{WorkOrder};
 
     # save orig workorder for workorder information
-    my %WorkOrderBackup = %{$WorkOrder};
+    my %WorkOrderInformation = %{$WorkOrder};
 
     # translate workorder type
     $WorkOrder->{TranslatedWorkOrderType} =
@@ -757,10 +757,10 @@ sub _ITSMChangeGetWorkOrderGraph {
         if !$WorkOrder->{ActualEndTime};
 
     # set nice display of undef actual times
-    $WorkOrderBackup{ActualStartTime} = '-'
-        if !$WorkOrderBackup{ActualStartTime};
-    $WorkOrderBackup{ActualEndTime} = '-'
-        if !$WorkOrderBackup{ActualEndTime};
+    $WorkOrderInformation{EmptyActualStartTime} = '-'
+        if !$WorkOrderInformation{ActualStartTime};
+    $WorkOrderInformation{EmptyActualEndTime} = '-'
+        if !$WorkOrderInformation{ActualEndTime};
 
     # hash for time values
     my %Time;
@@ -813,7 +813,7 @@ sub _ITSMChangeGetWorkOrderGraph {
     $Self->Block(
         Name => 'WorkOrderItemGraph',
         Data => {
-            %WorkOrderBackup,
+            %WorkOrderInformation,
             %TickValue,
         },
     );

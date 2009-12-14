@@ -2,7 +2,7 @@
 # ITSMChange.dtl - provides HTML elements for work order graph
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.dtl,v 1.15 2009-12-13 13:09:35 mae Exp $
+# $Id: ITSMChange.dtl,v 1.16 2009-12-14 18:40:04 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -132,11 +132,11 @@
                 </tr>
                 <tr class="searchpassive">
                     <td class="contentkey">$Text{"Actual Start:"}</td>
-                    <td class="contentvalue">$TimeLong{"$QData{"ActualStartTime"}"}</td>
+                    <td class="contentvalue">$TimeLong{"$QData{"ActualStartTime"}"}$QData{"EmptyActualStartTime"}</td>
                 </tr>
                 <tr class="searchactive">
                     <td class="contentkey">$Text{"Actual End:"}</td>
-                    <td class="contentvalue">$TimeLong{"$QData{"ActualEndTime"}"}</td>
+                    <td class="contentvalue">$TimeLong{"$QData{"ActualEndTime"}"}$QData{"EmptyActualEndTime"}</td>
                 </tr>
                 <tr class="contenthead">
                     <td colspan="2">&nbsp;</td>
