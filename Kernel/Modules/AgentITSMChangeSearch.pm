@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.42 2009-12-13 14:29:49 ub Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.43 2009-12-14 20:42:26 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.42 $) [1];
+$VERSION = qw($Revision: 1.43 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -897,7 +897,7 @@ sub _GetExpandInfo {
 
             # if a single user was found, fill up SelectedUser and the search field
             my @KeysUserList = keys %UserList;
-            if ( 1 == scalar @KeysUserList ) {
+            if ( scalar @KeysUserList == 1 ) {
 
                 # if user is found, display the name
                 $Info{$Name} = $UserList{ $KeysUserList[0] };
@@ -983,7 +983,7 @@ sub _GetExpandInfo {
 
         # check if just one customer user exists
         # if just one, fillup CustomerUserID and CustomerID
-        if ( 1 == scalar @CustomerUserList ) {
+        if ( scalar @CustomerUserList == 1 ) {
 
             # if user is found, display the name
             $Info{CABCustomer} = $CustomerUserList[0]->{Name};

@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeInvolvedPersons.pm - the OTRS::ITSM::ChangeManagement change involved persons module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.26 2009-12-13 14:28:49 ub Exp $
+# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.27 2009-12-14 20:42:26 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::User;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.26 $) [1];
+$VERSION = qw($Revision: 1.27 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -711,7 +711,7 @@ sub _GetExpandInfo {
             # check if just one customer user exists
             # if just one, fillup CustomerUserID and CustomerID
             my @KeysUserList = keys %UserList;
-            if ( 1 == scalar @KeysUserList ) {
+            if ( scalar @KeysUserList == 1 ) {
 
                 # if user is found, display the name
                 $Info{ 'Change' . $Name } = $UserList{ $KeysUserList[0] };
@@ -819,7 +819,7 @@ sub _GetExpandInfo {
 
         # check if just one customer user exists
         # if just one, fillup CustomerUserID and CustomerID
-        if ( 1 == scalar @UserList ) {
+        if ( scalar @UserList == 1 ) {
 
             # if user is found, display the name
             $Info{NewCABMember}  = $UserList[0]->{Name};
