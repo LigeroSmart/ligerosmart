@@ -2,7 +2,7 @@
 # AgentITSMChangeEdit.dtl - provides HTML form for AgentITSMChangeEdit
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.dtl,v 1.32 2009-12-11 13:19:44 reb Exp $
+# $Id: AgentITSMChangeEdit.dtl,v 1.33 2009-12-14 15:11:34 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -28,7 +28,7 @@ function submit_compose() {
 
     // check the requested time
     if ( !CheckTime( 'RequestedTime' ) && document.compose.RequestedTimeUsed.checked == true ) {
-        alert('$JSText{"The realization time is invalid!"}');
+        alert('$JSText{"The requested time is invalid!"}');
 
         return false;
     }
