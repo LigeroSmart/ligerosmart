@@ -2,12 +2,51 @@
 # AgentITSMWorkOrderReport.dtl - provides HTML form for AgentITSMWorkOrderReport
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderReport.dtl,v 1.17 2009-12-14 13:23:09 bes Exp $
+# $Id: AgentITSMWorkOrderReport.dtl,v 1.18 2009-12-14 13:50:29 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+
+<script type="text/javascript" src="$Config{"Frontend::JavaScriptPath"}itsm-changemanagement.js"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+
+function submit_compose() {
+
+    // check the actual start time
+    if ( document.compose.ActualStartTimeUsed.checked && !CheckTime( 'ActualStartTime' ) ) {
+        alert('$JSText{"The actual start time is invalid!"}');
+
+        return false;
+    }
+
+    // check the actual end time
+    if ( document.compose.ActualEndTimeUsed.checked && !CheckTime( 'ActualEndTime' ) ) {
+        alert('$JSText{"The actual end time is invalid!"}');
+
+        return false;
+    }
+
+    if ( document.compose.ActualEndTimeUsed.checked && !document.compose.ActualStartTimeUsed.checked ) {
+        alert('$JSText{"The actual start time must be set, when the actual end time is set!"}');
+
+        return false;
+    }
+
+    // check whether the planned start time is before the planned end time
+    if ( document.compose.ActualEndTimeUsed.checked && document.compose.ActualEndTimeUsed.checked ) {
+        var StartAfterEndMsg = '$JSText{"The actual start time must be before the actual end time!"}';
+        if ( !CheckStartBeforeEnd( 'ActualStartTime', 'ActualEndTime', StartAfterEndMsg ) ) {
+            return false;
+        }
+    }
+
+    return true;
+}
+//-->
+</script>
 
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
@@ -26,7 +65,7 @@
     <tr>
         <td class="mainbody">
             <br>
-            <form action="$Env{"CGIHandle"}" method="post">
+            <form action="$Env{"CGIHandle"}" method="post" name="compose">
                 <input type="hidden" name="Action"    value="$Env{"Action"}">
                 <input type="hidden" name="Subaction" value="Save">
                 <input type="hidden" name="WorkOrderID" value="$QData{"WorkOrderID"}">
@@ -92,7 +131,7 @@ $Include{"RichTextEditorITSM"}
                     </tr>
                     <tr>
                         <td class="contentfooter">
-                            <input class="button" type="submit" name="Submit" value="$Text{"Save"}">
+                            <input class="button" id="submitWorkOrderReport" accesskey="g" type="submit" name="WorkOrderReport" value="$Text{"Save"}" onclick="return submit_compose();">
                         </td>
                     </tr>
                 </table>
