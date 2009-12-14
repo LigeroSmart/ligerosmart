@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.110 2009-12-14 13:23:09 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.111 2009-12-14 16:08:33 bes Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -1100,36 +1100,23 @@
             </Option>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChange###Permission" Required="1" Valid="1">
-        <Description Lang="en">Required privilege to view overview over all changes.</Description>
-        <Description Lang="de">Benötigtes Recht zum Einsehen der Liste von Changes.</Description>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChange###Filter::ChangeStates" Required="1" Valid="1">
+        <Description Lang="en">Defines the change states that will be used as filters in the change overview.</Description>
+        <Description Lang="de">Definiert die Change-States die als Filter in der Change-Übersicht verwendet werden.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::ViewChangeOverview</SubGroup>
         <Setting>
-            <String Regex="^(rw|ro)$">ro</String>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChange###SortBy::Default" Required="1" Valid="1">
-        <Description Lang="en">Change sort by default in the change overview.</Description>
-        <Description Lang="de">Standard Sortierung der Changes in der Change-Übersicht.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeOverview</SubGroup>
-        <Setting>
-            <Option SelectedID="ChangeNumber">
-                <Item Key="ChangeNumber">ChangeNumber</Item>
-                <Item Key="ChangeTitle">ChangeTitle</Item>
-                <Item Key="ChangeStateID">ChangeState</Item>
-                <Item Key="CategoryID">Category</Item>
-                <Item Key="ImpactID">Impact</Item>
-                <Item Key="PriorityID">Priority</Item>
-                <Item Key="RequestedTime">ReuestedTime</Item>
-                <Item Key="PlannedStartTime">PlannedStartTime</Item>
-                <Item Key="PlannedEndTime">PlannedEndTime</Item>
-                <Item Key="ActualStartTime">ActualStartTime</Item>
-                <Item Key="ActualEndTime">ActualEndTime</Item>
-                <Item Key="Priority">Priority</Item>
-                <Item Key="CreateTime">CreateTime</Item>
-            </Option>
+            <Array>
+                <Item>requested</Item>
+                <Item>pending approval</Item>
+                <Item>rejected</Item>
+                <Item>approved</Item>
+                <Item>in progress</Item>
+                <Item>successful</Item>
+                <Item>failed</Item>
+                <Item>canceled</Item>
+                <Item>retracted</Item>
+            </Array>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMChange###Order::Default" Required="1" Valid="1">
@@ -1142,6 +1129,15 @@
                 <Item Key="Down">Down</Item>
                 <Item Key="Up">Up</Item>
             </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChange###Permission" Required="1" Valid="1">
+        <Description Lang="en">Required privilege to view overview over all changes.</Description>
+        <Description Lang="de">Benötigtes Recht zum Einsehen der Liste von Changes.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeOverview</SubGroup>
+        <Setting>
+            <String Regex="^(rw|ro)$">ro</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMChange###ShowColumns" Required="1" Valid="1">
@@ -1170,40 +1166,12 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChange###Filter::ChangeStates" Required="1" Valid="1">
-        <Description Lang="en">Defines the change states that will be used as filters in the change overview.</Description>
-        <Description Lang="de">Definiert die Change-States die als Filter in der Change-Übersicht verwendet werden.</Description>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChange###SortBy::Default" Required="1" Valid="1">
+        <Description Lang="en">Change sort by default in the change overview.</Description>
+        <Description Lang="de">Standard Sortierung der Changes in der Change-Übersicht.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::ViewChangeOverview</SubGroup>
         <Setting>
-            <Array>
-                <Item>requested</Item>
-                <Item>pending approval</Item>
-                <Item>rejected</Item>
-                <Item>approved</Item>
-                <Item>in progress</Item>
-                <Item>successful</Item>
-                <Item>failed</Item>
-                <Item>canceled</Item>
-                <Item>retracted</Item>
-            </Array>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeManager###Permission" Required="1" Valid="1">
-        <Description Lang="en">Required privilege to view list of changes where user is change manager.</Description>
-        <Description Lang="de">Benötigtes Recht zum Einsehen der Liste der Changes bei denen der Benutzer change manager ist.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeManagerOverview</SubGroup>
-        <Setting>
-            <String Regex="^(rw|ro)$">ro</String>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeManager###SortBy::Default" Required="1" Valid="1">
-        <Description Lang="en">Change sort by default in the change manager overview.</Description>
-        <Description Lang="de">Standard Sortierung der Changes in der Change-Manager-Übersicht.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeManagerOverview</SubGroup>
-        <Setting>
             <Option SelectedID="ChangeNumber">
                 <Item Key="ChangeNumber">ChangeNumber</Item>
                 <Item Key="ChangeTitle">ChangeTitle</Item>
@@ -1211,7 +1179,7 @@
                 <Item Key="CategoryID">Category</Item>
                 <Item Key="ImpactID">Impact</Item>
                 <Item Key="PriorityID">Priority</Item>
-                <Item Key="RequestedTime">RequestedTime</Item>
+                <Item Key="RequestedTime">ReuestedTime</Item>
                 <Item Key="PlannedStartTime">PlannedStartTime</Item>
                 <Item Key="PlannedEndTime">PlannedEndTime</Item>
                 <Item Key="ActualStartTime">ActualStartTime</Item>
@@ -1219,498 +1187,6 @@
                 <Item Key="Priority">Priority</Item>
                 <Item Key="CreateTime">CreateTime</Item>
             </Option>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeManager###Order::Default" Required="1" Valid="1">
-        <Description Lang="en">Order default in the change manager overview.</Description>
-        <Description Lang="de">Standard Reihenfolge der Changes in der Change-Manager-Übersicht.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeManagerOverview</SubGroup>
-        <Setting>
-            <Option SelectedID="Up">
-                <Item Key="Down">Down</Item>
-                <Item Key="Up">Up</Item>
-            </Option>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeManager###ShowColumns" Required="1" Valid="1">
-        <Description Lang="en">Defines the shown columns in the change manager overview. This option has no effect on the position of the column.</Description>
-        <Description Lang="de">Definiert die angezeigten Tabellenspalten in der Change-Manager-Übersicht. Diese Option hat keinen Effekt auf die Position der Spalten.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeManagerOverview</SubGroup>
-        <Setting>
-            <Hash>
-                <Item Key="ChangeStateSignal">1</Item>
-                <Item Key="ChangeNumber">1</Item>
-                <Item Key="ChangeTitle">1</Item>
-                <Item Key="ChangeBuilder">1</Item>
-                <Item Key="ChangeManager">1</Item>
-                <Item Key="WorkOrderCount">1</Item>
-                <Item Key="ChangeState">1</Item>
-                <Item Key="Category">0</Item>
-                <Item Key="Impact">0</Item>
-                <Item Key="Priority">1</Item>
-                <Item Key="RequestedTime">0</Item>
-                <Item Key="PlannedStartTime">1</Item>
-                <Item Key="PlannedEndTime">1</Item>
-                <Item Key="ActualStartTime">0</Item>
-                <Item Key="ActualEndTime">0</Item>
-                <Item Key="CreateTime">0</Item>
-            </Hash>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeManager###Filter::ChangeStates" Required="1" Valid="1">
-        <Description Lang="en">Defines the change states that will be used as filters in the change manager overview.</Description>
-        <Description Lang="de">Definiert die Change-States die als Filter in der Change-Manager-Übersicht verwendet werden.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeManagerOverview</SubGroup>
-        <Setting>
-            <Array>
-                <Item>requested</Item>
-                <Item>pending approval</Item>
-                <Item>approved</Item>
-                <Item>in progress</Item>
-            </Array>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeMyCAB###Permission" Required="1" Valid="1">
-        <Description Lang="en">Required privilege to view list of changes where user is CAB member.</Description>
-        <Description Lang="de">Benötigtes Recht zum Einsehen der Liste der Changes bei denen der Benutzer Mitglied des CABs ist.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewMyCABOverview</SubGroup>
-        <Setting>
-            <String Regex="^(rw|ro)$">ro</String>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeMyCAB###SortBy::Default" Required="1" Valid="1">
-        <Description Lang="en">Change sort by default in the MyCAB overview.</Description>
-        <Description Lang="de">Standard Sortierung der Changes in der MyCAB-Übersicht.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewMyCABOverview</SubGroup>
-        <Setting>
-            <Option SelectedID="ChangeNumber">
-                <Item Key="ChangeNumber">ChangeNumber</Item>
-                <Item Key="ChangeTitle">ChangeTitle</Item>
-                <Item Key="ChangeStateID">ChangeState</Item>
-                <Item Key="CategoryID">Category</Item>
-                <Item Key="ImpactID">Impact</Item>
-                <Item Key="PriorityID">Priority</Item>
-                <Item Key="RequestedTime">RequestedTime</Item>
-                <Item Key="PlannedStartTime">PlannedStartTime</Item>
-                <Item Key="PlannedEndTime">PlannedEndTime</Item>
-                <Item Key="ActualStartTime">ActualStartTime</Item>
-                <Item Key="ActualEndTime">ActualEndTime</Item>
-                <Item Key="Priority">Priority</Item>
-                <Item Key="CreateTime">CreateTime</Item>
-            </Option>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeMyCAB###Order::Default" Required="1" Valid="1">
-        <Description Lang="en">Order default in the MyCAB overview.</Description>
-        <Description Lang="de">Standard Reihenfolge der Changes in der MyCAB-Übersicht.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewMyCABOverview</SubGroup>
-        <Setting>
-            <Option SelectedID="Up">
-                <Item Key="Down">Down</Item>
-                <Item Key="Up">Up</Item>
-            </Option>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeMyCAB###ShowColumns" Required="1" Valid="1">
-        <Description Lang="en">Defines the shown columns in the MyCAB overview. This option has no effect on the position of the column.</Description>
-        <Description Lang="de">Definiert die angezeigten Tabellenspalten in der MyCAB-Übersicht. Diese Option hat keinen Effekt auf die Position der Spalten.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewMyCABOverview</SubGroup>
-        <Setting>
-            <Hash>
-                <Item Key="ChangeStateSignal">1</Item>
-                <Item Key="ChangeNumber">1</Item>
-                <Item Key="ChangeTitle">1</Item>
-                <Item Key="ChangeBuilder">1</Item>
-                <Item Key="ChangeManager">0</Item>
-                <Item Key="WorkOrderCount">1</Item>
-                <Item Key="ChangeState">1</Item>
-                <Item Key="Category">0</Item>
-                <Item Key="Impact">0</Item>
-                <Item Key="Priority">1</Item>
-                <Item Key="RequestedTime">0</Item>
-                <Item Key="PlannedStartTime">1</Item>
-                <Item Key="PlannedEndTime">1</Item>
-                <Item Key="ActualStartTime">0</Item>
-                <Item Key="ActualEndTime">0</Item>
-                <Item Key="CreateTime">0</Item>
-            </Hash>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeMyCAB###Filter::ChangeStates" Required="1" Valid="1">
-        <Description Lang="en">Defines the change states that will be used as filters in the MyCAB overview.</Description>
-        <Description Lang="de">Definiert die Change-States die als Filter in der MyCAB-Übersicht verwendet werden.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewMyCABOverview</SubGroup>
-        <Setting>
-            <Array>
-                <Item>requested</Item>
-                <Item>pending approval</Item>
-                <Item>approved</Item>
-                <Item>in progress</Item>
-            </Array>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeMyChanges###Permission" Required="1" Valid="1">
-        <Description Lang="en">Required privilege to view list of own changes.</Description>
-        <Description Lang="de">Benötigtes Recht zum Einsehen der Liste der eigenen Changes.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewMyChangesOverview</SubGroup>
-        <Setting>
-            <String Regex="^(rw|ro)$">ro</String>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeMyChanges###SortBy::Default" Required="1" Valid="1">
-        <Description Lang="en">Change sort by default in the MyChanges overview.</Description>
-        <Description Lang="de">Standard Sortierung der Changes in der MyChanges-Übersicht.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewMyChangesOverview</SubGroup>
-        <Setting>
-            <Option SelectedID="PlannedStartTime">
-                <Item Key="ChangeNumber">ChangeNumber</Item>
-                <Item Key="ChangeTitle">ChangeTitle</Item>
-                <Item Key="ChangeStateID">ChangeState</Item>
-                <Item Key="CategoryID">Category</Item>
-                <Item Key="ImpactID">Impact</Item>
-                <Item Key="PriorityID">Priority</Item>
-                <Item Key="RequestedTime">RequestedTime</Item>
-                <Item Key="PlannedStartTime">PlannedStartTime</Item>
-                <Item Key="PlannedEndTime">PlannedEndTime</Item>
-                <Item Key="ActualStartTime">ActualStartTime</Item>
-                <Item Key="ActualEndTime">ActualEndTime</Item>
-                <Item Key="Priority">Priority</Item>
-                <Item Key="CreateTime">CreateTime</Item>
-            </Option>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeMyChanges###Order::Default" Required="1" Valid="1">
-        <Description Lang="en">Order default in the MyChanges overview.</Description>
-        <Description Lang="de">Standard Reihenfolge der Changes in der MyChanges-Übersicht.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewMyChangesOverview</SubGroup>
-        <Setting>
-            <Option SelectedID="Up">
-                <Item Key="Down">Down</Item>
-                <Item Key="Up">Up</Item>
-            </Option>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeMyChanges###ShowColumns" Required="1" Valid="1">
-        <Description Lang="en">Defines the shown columns in the MyChanges overview. This option has no effect on the position of the column.</Description>
-        <Description Lang="de">Definiert die angezeigten Tabellenspalten in der MyChanges-Übersicht. Diese Option hat keinen Effekt auf die Position der Spalten.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewMyChangesOverview</SubGroup>
-        <Setting>
-            <Hash>
-                <Item Key="ChangeStateSignal">1</Item>
-                <Item Key="ChangeNumber">1</Item>
-                <Item Key="ChangeTitle">1</Item>
-                <Item Key="ChangeBuilder">1</Item>
-                <Item Key="ChangeManager">0</Item>
-                <Item Key="WorkOrderCount">1</Item>
-                <Item Key="ChangeState">1</Item>
-                <Item Key="Category">0</Item>
-                <Item Key="Impact">0</Item>
-                <Item Key="Priority">1</Item>
-                <Item Key="RequestedTime">0</Item>
-                <Item Key="PlannedStartTime">1</Item>
-                <Item Key="PlannedEndTime">1</Item>
-                <Item Key="ActualStartTime">0</Item>
-                <Item Key="ActualEndTime">0</Item>
-                <Item Key="CreateTime">0</Item>
-            </Hash>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeMyChanges###Filter::ChangeStates" Required="1" Valid="1">
-        <Description Lang="en">Defines the change states that will be used as filters in the MyChanges overview.</Description>
-        <Description Lang="de">Definiert die Change-States die als Filter in der MyChanges-Übersicht verwendet werden.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewMyChangesOverview</SubGroup>
-        <Setting>
-            <Array>
-                <Item>requested</Item>
-                <Item>pending approval</Item>
-                <Item>approved</Item>
-                <Item>in progress</Item>
-            </Array>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeMyWorkOrders###Permission" Required="1" Valid="1">
-        <Description Lang="en">Required privilege to view list of own workorders.</Description>
-        <Description Lang="de">Benötigtes Recht zum Einsehen der Liste von eigenen Workorders.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewMyWorkOrdersOverview</SubGroup>
-        <Setting>
-            <String Regex="^(rw|ro)$">ro</String>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeMyWorkOrders###SortBy::Default" Required="1" Valid="1">
-        <Description Lang="en">Change sort by default in the MyWorkorders overview.</Description>
-        <Description Lang="de">Standard Sortierung der Changes in der MyWorkorders-Übersicht.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewMyWorkOrdersOverview</SubGroup>
-        <Setting>
-            <Option SelectedID="PlannedStartTime">
-                <Item Key="ChangeNumber">ChangeNumber</Item>
-                <Item Key="ChangeTitle">ChangeTitle</Item>
-                <Item Key="ChangeStateID">ChangeState</Item>
-                <Item Key="CategoryID">Category</Item>
-                <Item Key="ImpactID">Impact</Item>
-                <Item Key="PriorityID">Priority</Item>
-                <Item Key="RequestedTime">RequestedTime</Item>
-                <Item Key="PlannedStartTime">PlannedStartTime</Item>
-                <Item Key="PlannedEndTime">PlannedEndTime</Item>
-                <Item Key="ActualStartTime">ActualStartTime</Item>
-                <Item Key="ActualEndTime">ActualEndTime</Item>
-                <Item Key="Priority">Priority</Item>
-                <Item Key="CreateTime">CreateTime</Item>
-            </Option>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeMyWorkOrders###Order::Default" Required="1" Valid="1">
-        <Description Lang="en">Order default in the MyWorkorders overview.</Description>
-        <Description Lang="de">Standard Reihenfolge der Workorders in der MyWorkorders-Übersicht.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewMyWorkOrdersOverview</SubGroup>
-        <Setting>
-            <Option SelectedID="Up">
-                <Item Key="Down">Down</Item>
-                <Item Key="Up">Up</Item>
-            </Option>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeMyWorkOrders###ShowColumns" Required="1" Valid="1">
-        <Description Lang="en">Defines the shown columns in the MyWorkorders overview. This option has no effect on the position of the column.</Description>
-        <Description Lang="de">Definiert die angezeigten Tabellenspalten in der MyWorkorders-Übersicht. Diese Option hat keinen Effekt auf die Position der Spalten.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewMyWorkOrdersOverview</SubGroup>
-        <Setting>
-            <Hash>
-                <Item Key="ChangeStateSignal">0</Item>
-                <Item Key="ChangeNumber">0</Item>
-                <Item Key="ChangeTitle">1</Item>
-                <Item Key="ChangeBuilder">0</Item>
-                <Item Key="ChangeManager">0</Item>
-                <Item Key="WorkOrderCount">0</Item>
-                <Item Key="ChangeState">0</Item>
-                <Item Key="Category">0</Item>
-                <Item Key="Impact">0</Item>
-                <Item Key="Priority">0</Item>
-                <Item Key="RequestedTime">0</Item>
-                <Item Key="PlannedStartTime">1</Item>
-                <Item Key="PlannedEndTime">1</Item>
-                <Item Key="ActualStartTime">0</Item>
-                <Item Key="ActualEndTime">0</Item>
-                <Item Key="CreateTime">0</Item>
-                <Item Key="WorkOrderStateSignal">1</Item>
-                <Item Key="WorkOrderNumber">1</Item>
-                <Item Key="WorkOrderTitle">1</Item>
-                <Item Key="WorkOrderAgent">1</Item>
-                <Item Key="WorkOrderState">1</Item>
-                <Item Key="WorkOrderType">0</Item>
-            </Hash>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeMyWorkOrders###Filter::WorkOrderStates" Required="1" Valid="1">
-        <Description Lang="en">Defines the workorder states that will be used as filters in the MyWorkorders overview.</Description>
-        <Description Lang="de">Definiert die Workorder-States die als Filter in der MyWorkorders-Übersicht verwendet werden.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewMyWorkOrdersOverview</SubGroup>
-        <Setting>
-            <Array>
-                <Item>accepted</Item>
-                <Item>ready</Item>
-                <Item>in progress</Item>
-            </Array>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeFSC###Permission" Required="1" Valid="1">
-        <Description Lang="en">Required privilege to view list of FSC.</Description>
-        <Description Lang="de">Benötigtes Recht zum Einsehen der FSC Liste.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewFSCOverview</SubGroup>
-        <Setting>
-            <String Regex="^(rw|ro)$">ro</String>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeFSC###SortBy::Default" Required="1" Valid="1">
-        <Description Lang="en">Change sort by default in the FSC overview.</Description>
-        <Description Lang="de">Standard Sortierung der Changes in der FSC-Übersicht.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewFSCOverview</SubGroup>
-        <Setting>
-            <Option SelectedID="PlannedStartTime">
-                <Item Key="ChangeNumber">ChangeNumber</Item>
-                <Item Key="ChangeTitle">ChangeTitle</Item>
-                <Item Key="ChangeStateID">ChangeState</Item>
-                <Item Key="CategoryID">Category</Item>
-                <Item Key="ImpactID">Impact</Item>
-                <Item Key="PriorityID">Priority</Item>
-                <Item Key="RequestedTime">RequestedTime</Item>
-                <Item Key="PlannedStartTime">PlannedStartTime</Item>
-                <Item Key="PlannedEndTime">PlannedEndTime</Item>
-                <Item Key="ActualStartTime">ActualStartTime</Item>
-                <Item Key="ActualEndTime">ActualEndTime</Item>
-                <Item Key="Priority">Priority</Item>
-                <Item Key="CreateTime">CreateTime</Item>
-            </Option>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeFSC###Order::Default" Required="1" Valid="1">
-        <Description Lang="en">Order default in the FSC overview.</Description>
-        <Description Lang="de">Standard Reihenfolge der Changes in der FSC-Übersicht.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewFSCOverview</SubGroup>
-        <Setting>
-            <Option SelectedID="Up">
-                <Item Key="Down">Down</Item>
-                <Item Key="Up">Up</Item>
-            </Option>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeFSC###ShowColumns" Required="1" Valid="1">
-        <Description Lang="en">Defines the shown columns in the FSC overview. This option has no effect on the position of the column.</Description>
-        <Description Lang="de">Definiert die angezeigten Tabellenspalten in der FSC-Übersicht. Diese Option hat keinen Effekt auf die Position der Spalten.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewFSCOverview</SubGroup>
-        <Setting>
-            <Hash>
-                <Item Key="ChangeStateSignal">1</Item>
-                <Item Key="ChangeNumber">1</Item>
-                <Item Key="ChangeTitle">1</Item>
-                <Item Key="ChangeBuilder">1</Item>
-                <Item Key="ChangeManager">0</Item>
-                <Item Key="WorkOrderCount">1</Item>
-                <Item Key="ChangeState">1</Item>
-                <Item Key="Category">0</Item>
-                <Item Key="Impact">0</Item>
-                <Item Key="Priority">1</Item>
-                <Item Key="RequestedTime">0</Item>
-                <Item Key="PlannedStartTime">1</Item>
-                <Item Key="PlannedEndTime">1</Item>
-                <Item Key="ActualStartTime">0</Item>
-                <Item Key="ActualEndTime">0</Item>
-                <Item Key="CreateTime">0</Item>
-            </Hash>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeFSC###Filter::ChangeStates" Required="1" Valid="1">
-        <Description Lang="en">Defines the change states that will be used as filters in the FSC overview. To be used as a filter, a change state needs to be also defined in ITSMChange::Frontend::AgentITSMChangeFSC###ChangeStates.</Description>
-        <Description Lang="de">Definiert die Change-States die als Filter in der FSC-Übersicht verwendet werden. Um als Filter verwendet werden zu können, muss ein Change-State ebenfalls in ITSMChange::Frontend::AgentITSMChangeFSC###ChangeStates definert sein.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewFSCOverview</SubGroup>
-        <Setting>
-            <Array>
-                <Item>approved</Item>
-            </Array>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangePIR###Permission" Required="1" Valid="1">
-        <Description Lang="en">Required privilege to view list of changes with an upcoming PIR (Post Implementation Review).</Description>
-        <Description Lang="de">Benötigtes Recht zum Einsehen der Liste von Changes mit einem anstehenden PIR (Post Implementation Review).</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewPIROverview</SubGroup>
-        <Setting>
-            <String Regex="^(rw|ro)$">ro</String>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangePIR###SortBy::Default" Required="1" Valid="1">
-        <Description Lang="en">Change sort by default in the PIR overview.</Description>
-        <Description Lang="de">Standard Sortierung der Changes in der PIR-Übersicht.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewPIROverview</SubGroup>
-        <Setting>
-            <Option SelectedID="PlannedStartTime">
-                <Item Key="ChangeNumber">ChangeNumber</Item>
-                <Item Key="ChangeTitle">ChangeTitle</Item>
-                <Item Key="ChangeStateID">ChangeState</Item>
-                <Item Key="CategoryID">Category</Item>
-                <Item Key="ImpactID">Impact</Item>
-                <Item Key="PriorityID">Priority</Item>
-                <Item Key="RequestedTime">RequestedTime</Item>
-                <Item Key="PlannedStartTime">PlannedStartTime</Item>
-                <Item Key="PlannedEndTime">PlannedEndTime</Item>
-                <Item Key="ActualStartTime">ActualStartTime</Item>
-                <Item Key="ActualEndTime">ActualEndTime</Item>
-                <Item Key="Priority">Priority</Item>
-                <Item Key="CreateTime">CreateTime</Item>
-            </Option>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangePIR###Order::Default" Required="1" Valid="1">
-        <Description Lang="en">Order default in the PIR overview.</Description>
-        <Description Lang="de">Standard Reihenfolge der Changes in der PIR-Übersicht.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewPIROverview</SubGroup>
-        <Setting>
-            <Option SelectedID="Up">
-                <Item Key="Down">Down</Item>
-                <Item Key="Up">Up</Item>
-            </Option>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangePIR###ShowColumns" Required="1" Valid="1">
-        <Description Lang="en">Defines the shown columns in the PIR overview. This option has no effect on the position of the column.</Description>
-        <Description Lang="de">Definiert die angezeigten Tabellenspalten in der PIR-Übersicht. Diese Option hat keinen Effekt auf die Position der Spalten.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewPIROverview</SubGroup>
-        <Setting>
-            <Hash>
-                <Item Key="ChangeStateSignal">0</Item>
-                <Item Key="ChangeNumber">0</Item>
-                <Item Key="ChangeTitle">1</Item>
-                <Item Key="ChangeBuilder">0</Item>
-                <Item Key="ChangeManager">0</Item>
-                <Item Key="WorkOrderCount">0</Item>
-                <Item Key="ChangeState">0</Item>
-                <Item Key="Category">0</Item>
-                <Item Key="Impact">0</Item>
-                <Item Key="Priority">0</Item>
-                <Item Key="RequestedTime">0</Item>
-                <Item Key="PlannedStartTime">1</Item>
-                <Item Key="PlannedEndTime">1</Item>
-                <Item Key="ActualStartTime">0</Item>
-                <Item Key="ActualEndTime">0</Item>
-                <Item Key="CreateTime">0</Item>
-                <Item Key="WorkOrderStateSignal">1</Item>
-                <Item Key="WorkOrderNumber">1</Item>
-                <Item Key="WorkOrderTitle">1</Item>
-                <Item Key="WorkOrderAgent">1</Item>
-                <Item Key="WorkOrderState">1</Item>
-                <Item Key="WorkOrderType">0</Item>
-            </Hash>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangePIR###WorkOrderTypes" Required="1" Valid="1">
-        <Description Lang="en">Defines the workorder types that will be used to show the PIR overview.</Description>
-        <Description Lang="de">Definiert die Workorder-Typen die für die PIR-Übersicht verwendet werden.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewPIROverview</SubGroup>
-        <Setting>
-            <Array>
-                <Item>pir</Item>
-            </Array>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangePIR###Filter::WorkOrderStates" Required="1" Valid="1">
-        <Description Lang="en">Defines the workorder states that will be used as filters in the PIR overview.</Description>
-        <Description Lang="de">Definiert die Workorder-States die als Filter in der PIR-Übersicht verwendet werden.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewPIROverview</SubGroup>
-        <Setting>
-            <Array>
-                <Item>accepted</Item>
-                <Item>ready</Item>
-                <Item>in progress</Item>
-                <Item>closed</Item>
-                <Item>canceled</Item>
-            </Array>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeAdd###Permission" Required="1" Valid="1">
@@ -1767,6 +1243,87 @@
             </Option>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeFSC###Filter::ChangeStates" Required="1" Valid="1">
+        <Description Lang="en">Defines the change states that will be used as filters in the FSC overview. To be used as a filter, a change state needs to be also defined in ITSMChange::Frontend::AgentITSMChangeFSC###ChangeStates.</Description>
+        <Description Lang="de">Definiert die Change-States die als Filter in der FSC-Übersicht verwendet werden. Um als Filter verwendet werden zu können, muss ein Change-State ebenfalls in ITSMChange::Frontend::AgentITSMChangeFSC###ChangeStates definert sein.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewFSCOverview</SubGroup>
+        <Setting>
+            <Array>
+                <Item>approved</Item>
+            </Array>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeFSC###Order::Default" Required="1" Valid="1">
+        <Description Lang="en">Order default in the FSC overview.</Description>
+        <Description Lang="de">Standard Reihenfolge der Changes in der FSC-Übersicht.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewFSCOverview</SubGroup>
+        <Setting>
+            <Option SelectedID="Up">
+                <Item Key="Down">Down</Item>
+                <Item Key="Up">Up</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeFSC###Permission" Required="1" Valid="1">
+        <Description Lang="en">Required privilege to view list of FSC.</Description>
+        <Description Lang="de">Benötigtes Recht zum Einsehen der FSC Liste.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewFSCOverview</SubGroup>
+        <Setting>
+            <String Regex="^(rw|ro)$">ro</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeFSC###ShowColumns" Required="1" Valid="1">
+        <Description Lang="en">Defines the shown columns in the FSC overview. This option has no effect on the position of the column.</Description>
+        <Description Lang="de">Definiert die angezeigten Tabellenspalten in der FSC-Übersicht. Diese Option hat keinen Effekt auf die Position der Spalten.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewFSCOverview</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="ChangeStateSignal">1</Item>
+                <Item Key="ChangeNumber">1</Item>
+                <Item Key="ChangeTitle">1</Item>
+                <Item Key="ChangeBuilder">1</Item>
+                <Item Key="ChangeManager">0</Item>
+                <Item Key="WorkOrderCount">1</Item>
+                <Item Key="ChangeState">1</Item>
+                <Item Key="Category">0</Item>
+                <Item Key="Impact">0</Item>
+                <Item Key="Priority">1</Item>
+                <Item Key="RequestedTime">0</Item>
+                <Item Key="PlannedStartTime">1</Item>
+                <Item Key="PlannedEndTime">1</Item>
+                <Item Key="ActualStartTime">0</Item>
+                <Item Key="ActualEndTime">0</Item>
+                <Item Key="CreateTime">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeFSC###SortBy::Default" Required="1" Valid="1">
+        <Description Lang="en">Change sort by default in the FSC overview.</Description>
+        <Description Lang="de">Standard Sortierung der Changes in der FSC-Übersicht.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewFSCOverview</SubGroup>
+        <Setting>
+            <Option SelectedID="PlannedStartTime">
+                <Item Key="ChangeNumber">ChangeNumber</Item>
+                <Item Key="ChangeTitle">ChangeTitle</Item>
+                <Item Key="ChangeStateID">ChangeState</Item>
+                <Item Key="CategoryID">Category</Item>
+                <Item Key="ImpactID">Impact</Item>
+                <Item Key="PriorityID">Priority</Item>
+                <Item Key="RequestedTime">RequestedTime</Item>
+                <Item Key="PlannedStartTime">PlannedStartTime</Item>
+                <Item Key="PlannedEndTime">PlannedEndTime</Item>
+                <Item Key="ActualStartTime">ActualStartTime</Item>
+                <Item Key="ActualEndTime">ActualEndTime</Item>
+                <Item Key="Priority">Priority</Item>
+                <Item Key="CreateTime">CreateTime</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeHistory###Permission" Required="1" Valid="1">
         <Description Lang="en">Required privilege to view the history of a change.</Description>
         <Description Lang="de">Benötigtes Recht zum Einsehen der Historie eines Change.</Description>
@@ -1792,6 +1349,449 @@
         <SubGroup>Frontend::Agent::ITSMChange::ViewChangeInvolvedPersons</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">rw</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeManager###Filter::ChangeStates" Required="1" Valid="1">
+        <Description Lang="en">Defines the change states that will be used as filters in the change manager overview.</Description>
+        <Description Lang="de">Definiert die Change-States die als Filter in der Change-Manager-Übersicht verwendet werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeManagerOverview</SubGroup>
+        <Setting>
+            <Array>
+                <Item>requested</Item>
+                <Item>pending approval</Item>
+                <Item>approved</Item>
+                <Item>in progress</Item>
+            </Array>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeManager###Order::Default" Required="1" Valid="1">
+        <Description Lang="en">Order default in the change manager overview.</Description>
+        <Description Lang="de">Standard Reihenfolge der Changes in der Change-Manager-Übersicht.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeManagerOverview</SubGroup>
+        <Setting>
+            <Option SelectedID="Up">
+                <Item Key="Down">Down</Item>
+                <Item Key="Up">Up</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeManager###Permission" Required="1" Valid="1">
+        <Description Lang="en">Required privilege to view list of changes where user is change manager.</Description>
+        <Description Lang="de">Benötigtes Recht zum Einsehen der Liste der Changes bei denen der Benutzer change manager ist.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeManagerOverview</SubGroup>
+        <Setting>
+            <String Regex="^(rw|ro)$">ro</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeManager###ShowColumns" Required="1" Valid="1">
+        <Description Lang="en">Defines the shown columns in the change manager overview. This option has no effect on the position of the column.</Description>
+        <Description Lang="de">Definiert die angezeigten Tabellenspalten in der Change-Manager-Übersicht. Diese Option hat keinen Effekt auf die Position der Spalten.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeManagerOverview</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="ChangeStateSignal">1</Item>
+                <Item Key="ChangeNumber">1</Item>
+                <Item Key="ChangeTitle">1</Item>
+                <Item Key="ChangeBuilder">1</Item>
+                <Item Key="ChangeManager">1</Item>
+                <Item Key="WorkOrderCount">1</Item>
+                <Item Key="ChangeState">1</Item>
+                <Item Key="Category">0</Item>
+                <Item Key="Impact">0</Item>
+                <Item Key="Priority">1</Item>
+                <Item Key="RequestedTime">0</Item>
+                <Item Key="PlannedStartTime">1</Item>
+                <Item Key="PlannedEndTime">1</Item>
+                <Item Key="ActualStartTime">0</Item>
+                <Item Key="ActualEndTime">0</Item>
+                <Item Key="CreateTime">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeManager###SortBy::Default" Required="1" Valid="1">
+        <Description Lang="en">Change sort by default in the change manager overview.</Description>
+        <Description Lang="de">Standard Sortierung der Changes in der Change-Manager-Übersicht.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeManagerOverview</SubGroup>
+        <Setting>
+            <Option SelectedID="ChangeNumber">
+                <Item Key="ChangeNumber">ChangeNumber</Item>
+                <Item Key="ChangeTitle">ChangeTitle</Item>
+                <Item Key="ChangeStateID">ChangeState</Item>
+                <Item Key="CategoryID">Category</Item>
+                <Item Key="ImpactID">Impact</Item>
+                <Item Key="PriorityID">Priority</Item>
+                <Item Key="RequestedTime">RequestedTime</Item>
+                <Item Key="PlannedStartTime">PlannedStartTime</Item>
+                <Item Key="PlannedEndTime">PlannedEndTime</Item>
+                <Item Key="ActualStartTime">ActualStartTime</Item>
+                <Item Key="ActualEndTime">ActualEndTime</Item>
+                <Item Key="Priority">Priority</Item>
+                <Item Key="CreateTime">CreateTime</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeMyCAB###Filter::ChangeStates" Required="1" Valid="1">
+        <Description Lang="en">Defines the change states that will be used as filters in the MyCAB overview.</Description>
+        <Description Lang="de">Definiert die Change-States die als Filter in der MyCAB-Übersicht verwendet werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewMyCABOverview</SubGroup>
+        <Setting>
+            <Array>
+                <Item>requested</Item>
+                <Item>pending approval</Item>
+                <Item>approved</Item>
+                <Item>in progress</Item>
+            </Array>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeMyCAB###Order::Default" Required="1" Valid="1">
+        <Description Lang="en">Order default in the MyCAB overview.</Description>
+        <Description Lang="de">Standard Reihenfolge der Changes in der MyCAB-Übersicht.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewMyCABOverview</SubGroup>
+        <Setting>
+            <Option SelectedID="Up">
+                <Item Key="Down">Down</Item>
+                <Item Key="Up">Up</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeMyCAB###Permission" Required="1" Valid="1">
+        <Description Lang="en">Required privilege to view list of changes where user is CAB member.</Description>
+        <Description Lang="de">Benötigtes Recht zum Einsehen der Liste der Changes bei denen der Benutzer Mitglied des CABs ist.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewMyCABOverview</SubGroup>
+        <Setting>
+            <String Regex="^(rw|ro)$">ro</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeMyCAB###ShowColumns" Required="1" Valid="1">
+        <Description Lang="en">Defines the shown columns in the MyCAB overview. This option has no effect on the position of the column.</Description>
+        <Description Lang="de">Definiert die angezeigten Tabellenspalten in der MyCAB-Übersicht. Diese Option hat keinen Effekt auf die Position der Spalten.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewMyCABOverview</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="ChangeStateSignal">1</Item>
+                <Item Key="ChangeNumber">1</Item>
+                <Item Key="ChangeTitle">1</Item>
+                <Item Key="ChangeBuilder">1</Item>
+                <Item Key="ChangeManager">0</Item>
+                <Item Key="WorkOrderCount">1</Item>
+                <Item Key="ChangeState">1</Item>
+                <Item Key="Category">0</Item>
+                <Item Key="Impact">0</Item>
+                <Item Key="Priority">1</Item>
+                <Item Key="RequestedTime">0</Item>
+                <Item Key="PlannedStartTime">1</Item>
+                <Item Key="PlannedEndTime">1</Item>
+                <Item Key="ActualStartTime">0</Item>
+                <Item Key="ActualEndTime">0</Item>
+                <Item Key="CreateTime">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeMyCAB###SortBy::Default" Required="1" Valid="1">
+        <Description Lang="en">Change sort by default in the MyCAB overview.</Description>
+        <Description Lang="de">Standard Sortierung der Changes in der MyCAB-Übersicht.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewMyCABOverview</SubGroup>
+        <Setting>
+            <Option SelectedID="ChangeNumber">
+                <Item Key="ChangeNumber">ChangeNumber</Item>
+                <Item Key="ChangeTitle">ChangeTitle</Item>
+                <Item Key="ChangeStateID">ChangeState</Item>
+                <Item Key="CategoryID">Category</Item>
+                <Item Key="ImpactID">Impact</Item>
+                <Item Key="PriorityID">Priority</Item>
+                <Item Key="RequestedTime">RequestedTime</Item>
+                <Item Key="PlannedStartTime">PlannedStartTime</Item>
+                <Item Key="PlannedEndTime">PlannedEndTime</Item>
+                <Item Key="ActualStartTime">ActualStartTime</Item>
+                <Item Key="ActualEndTime">ActualEndTime</Item>
+                <Item Key="Priority">Priority</Item>
+                <Item Key="CreateTime">CreateTime</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeMyChanges###Filter::ChangeStates" Required="1" Valid="1">
+        <Description Lang="en">Defines the change states that will be used as filters in the MyChanges overview.</Description>
+        <Description Lang="de">Definiert die Change-States die als Filter in der MyChanges-Übersicht verwendet werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewMyChangesOverview</SubGroup>
+        <Setting>
+            <Array>
+                <Item>requested</Item>
+                <Item>pending approval</Item>
+                <Item>approved</Item>
+                <Item>in progress</Item>
+            </Array>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeMyWorkOrders###Filter::WorkOrderStates" Required="1" Valid="1">
+        <Description Lang="en">Defines the workorder states that will be used as filters in the MyWorkorders overview.</Description>
+        <Description Lang="de">Definiert die Workorder-States die als Filter in der MyWorkorders-Übersicht verwendet werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewMyWorkOrdersOverview</SubGroup>
+        <Setting>
+            <Array>
+                <Item>accepted</Item>
+                <Item>ready</Item>
+                <Item>in progress</Item>
+            </Array>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeMyChanges###Order::Default" Required="1" Valid="1">
+        <Description Lang="en">Order default in the MyChanges overview.</Description>
+        <Description Lang="de">Standard Reihenfolge der Changes in der MyChanges-Übersicht.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewMyChangesOverview</SubGroup>
+        <Setting>
+            <Option SelectedID="Up">
+                <Item Key="Down">Down</Item>
+                <Item Key="Up">Up</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeMyChanges###Permission" Required="1" Valid="1">
+        <Description Lang="en">Required privilege to view list of own changes.</Description>
+        <Description Lang="de">Benötigtes Recht zum Einsehen der Liste der eigenen Changes.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewMyChangesOverview</SubGroup>
+        <Setting>
+            <String Regex="^(rw|ro)$">ro</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeMyChanges###ShowColumns" Required="1" Valid="1">
+        <Description Lang="en">Defines the shown columns in the MyChanges overview. This option has no effect on the position of the column.</Description>
+        <Description Lang="de">Definiert die angezeigten Tabellenspalten in der MyChanges-Übersicht. Diese Option hat keinen Effekt auf die Position der Spalten.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewMyChangesOverview</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="ChangeStateSignal">1</Item>
+                <Item Key="ChangeNumber">1</Item>
+                <Item Key="ChangeTitle">1</Item>
+                <Item Key="ChangeBuilder">1</Item>
+                <Item Key="ChangeManager">0</Item>
+                <Item Key="WorkOrderCount">1</Item>
+                <Item Key="ChangeState">1</Item>
+                <Item Key="Category">0</Item>
+                <Item Key="Impact">0</Item>
+                <Item Key="Priority">1</Item>
+                <Item Key="RequestedTime">0</Item>
+                <Item Key="PlannedStartTime">1</Item>
+                <Item Key="PlannedEndTime">1</Item>
+                <Item Key="ActualStartTime">0</Item>
+                <Item Key="ActualEndTime">0</Item>
+                <Item Key="CreateTime">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeMyChanges###SortBy::Default" Required="1" Valid="1">
+        <Description Lang="en">Change sort by default in the MyChanges overview.</Description>
+        <Description Lang="de">Standard Sortierung der Changes in der MyChanges-Übersicht.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewMyChangesOverview</SubGroup>
+        <Setting>
+            <Option SelectedID="PlannedStartTime">
+                <Item Key="ChangeNumber">ChangeNumber</Item>
+                <Item Key="ChangeTitle">ChangeTitle</Item>
+                <Item Key="ChangeStateID">ChangeState</Item>
+                <Item Key="CategoryID">Category</Item>
+                <Item Key="ImpactID">Impact</Item>
+                <Item Key="PriorityID">Priority</Item>
+                <Item Key="RequestedTime">RequestedTime</Item>
+                <Item Key="PlannedStartTime">PlannedStartTime</Item>
+                <Item Key="PlannedEndTime">PlannedEndTime</Item>
+                <Item Key="ActualStartTime">ActualStartTime</Item>
+                <Item Key="ActualEndTime">ActualEndTime</Item>
+                <Item Key="Priority">Priority</Item>
+                <Item Key="CreateTime">CreateTime</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeMyWorkOrders###Order::Default" Required="1" Valid="1">
+        <Description Lang="en">Order default in the MyWorkorders overview.</Description>
+        <Description Lang="de">Standard Reihenfolge der Workorders in der MyWorkorders-Übersicht.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewMyWorkOrdersOverview</SubGroup>
+        <Setting>
+            <Option SelectedID="Up">
+                <Item Key="Down">Down</Item>
+                <Item Key="Up">Up</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeMyWorkOrders###Permission" Required="1" Valid="1">
+        <Description Lang="en">Required privilege to view list of own workorders.</Description>
+        <Description Lang="de">Benötigtes Recht zum Einsehen der Liste von eigenen Workorders.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewMyWorkOrdersOverview</SubGroup>
+        <Setting>
+            <String Regex="^(rw|ro)$">ro</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeMyWorkOrders###ShowColumns" Required="1" Valid="1">
+        <Description Lang="en">Defines the shown columns in the MyWorkorders overview. This option has no effect on the position of the column.</Description>
+        <Description Lang="de">Definiert die angezeigten Tabellenspalten in der MyWorkorders-Übersicht. Diese Option hat keinen Effekt auf die Position der Spalten.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewMyWorkOrdersOverview</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="ChangeStateSignal">0</Item>
+                <Item Key="ChangeNumber">0</Item>
+                <Item Key="ChangeTitle">1</Item>
+                <Item Key="ChangeBuilder">0</Item>
+                <Item Key="ChangeManager">0</Item>
+                <Item Key="WorkOrderCount">0</Item>
+                <Item Key="ChangeState">0</Item>
+                <Item Key="Category">0</Item>
+                <Item Key="Impact">0</Item>
+                <Item Key="Priority">0</Item>
+                <Item Key="RequestedTime">0</Item>
+                <Item Key="PlannedStartTime">1</Item>
+                <Item Key="PlannedEndTime">1</Item>
+                <Item Key="ActualStartTime">0</Item>
+                <Item Key="ActualEndTime">0</Item>
+                <Item Key="CreateTime">0</Item>
+                <Item Key="WorkOrderStateSignal">1</Item>
+                <Item Key="WorkOrderNumber">1</Item>
+                <Item Key="WorkOrderTitle">1</Item>
+                <Item Key="WorkOrderAgent">1</Item>
+                <Item Key="WorkOrderState">1</Item>
+                <Item Key="WorkOrderType">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeMyWorkOrders###SortBy::Default" Required="1" Valid="1">
+        <Description Lang="en">Change sort by default in the MyWorkorders overview.</Description>
+        <Description Lang="de">Standard Sortierung der Changes in der MyWorkorders-Übersicht.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewMyWorkOrdersOverview</SubGroup>
+        <Setting>
+            <Option SelectedID="PlannedStartTime">
+                <Item Key="ChangeNumber">ChangeNumber</Item>
+                <Item Key="ChangeTitle">ChangeTitle</Item>
+                <Item Key="ChangeStateID">ChangeState</Item>
+                <Item Key="CategoryID">Category</Item>
+                <Item Key="ImpactID">Impact</Item>
+                <Item Key="PriorityID">Priority</Item>
+                <Item Key="RequestedTime">RequestedTime</Item>
+                <Item Key="PlannedStartTime">PlannedStartTime</Item>
+                <Item Key="PlannedEndTime">PlannedEndTime</Item>
+                <Item Key="ActualStartTime">ActualStartTime</Item>
+                <Item Key="ActualEndTime">ActualEndTime</Item>
+                <Item Key="Priority">Priority</Item>
+                <Item Key="CreateTime">CreateTime</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangePIR###Filter::WorkOrderStates" Required="1" Valid="1">
+        <Description Lang="en">Defines the workorder states that will be used as filters in the PIR overview.</Description>
+        <Description Lang="de">Definiert die Workorder-States die als Filter in der PIR-Übersicht verwendet werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewPIROverview</SubGroup>
+        <Setting>
+            <Array>
+                <Item>accepted</Item>
+                <Item>ready</Item>
+                <Item>in progress</Item>
+                <Item>closed</Item>
+                <Item>canceled</Item>
+            </Array>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangePIR###Order::Default" Required="1" Valid="1">
+        <Description Lang="en">Order default in the PIR overview.</Description>
+        <Description Lang="de">Standard Reihenfolge der Changes in der PIR-Übersicht.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewPIROverview</SubGroup>
+        <Setting>
+            <Option SelectedID="Up">
+                <Item Key="Down">Down</Item>
+                <Item Key="Up">Up</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangePIR###Permission" Required="1" Valid="1">
+        <Description Lang="en">Required privilege to view list of changes with an upcoming PIR (Post Implementation Review).</Description>
+        <Description Lang="de">Benötigtes Recht zum Einsehen der Liste von Changes mit einem anstehenden PIR (Post Implementation Review).</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewPIROverview</SubGroup>
+        <Setting>
+            <String Regex="^(rw|ro)$">ro</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangePIR###ShowColumns" Required="1" Valid="1">
+        <Description Lang="en">Defines the shown columns in the PIR overview. This option has no effect on the position of the column.</Description>
+        <Description Lang="de">Definiert die angezeigten Tabellenspalten in der PIR-Übersicht. Diese Option hat keinen Effekt auf die Position der Spalten.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewPIROverview</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="ChangeStateSignal">0</Item>
+                <Item Key="ChangeNumber">0</Item>
+                <Item Key="ChangeTitle">1</Item>
+                <Item Key="ChangeBuilder">0</Item>
+                <Item Key="ChangeManager">0</Item>
+                <Item Key="WorkOrderCount">0</Item>
+                <Item Key="ChangeState">0</Item>
+                <Item Key="Category">0</Item>
+                <Item Key="Impact">0</Item>
+                <Item Key="Priority">0</Item>
+                <Item Key="RequestedTime">0</Item>
+                <Item Key="PlannedStartTime">1</Item>
+                <Item Key="PlannedEndTime">1</Item>
+                <Item Key="ActualStartTime">0</Item>
+                <Item Key="ActualEndTime">0</Item>
+                <Item Key="CreateTime">0</Item>
+                <Item Key="WorkOrderStateSignal">1</Item>
+                <Item Key="WorkOrderNumber">1</Item>
+                <Item Key="WorkOrderTitle">1</Item>
+                <Item Key="WorkOrderAgent">1</Item>
+                <Item Key="WorkOrderState">1</Item>
+                <Item Key="WorkOrderType">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangePIR###SortBy::Default" Required="1" Valid="1">
+        <Description Lang="en">Change sort by default in the PIR overview.</Description>
+        <Description Lang="de">Standard Sortierung der Changes in der PIR-Übersicht.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewPIROverview</SubGroup>
+        <Setting>
+            <Option SelectedID="PlannedStartTime">
+                <Item Key="ChangeNumber">ChangeNumber</Item>
+                <Item Key="ChangeTitle">ChangeTitle</Item>
+                <Item Key="ChangeStateID">ChangeState</Item>
+                <Item Key="CategoryID">Category</Item>
+                <Item Key="ImpactID">Impact</Item>
+                <Item Key="PriorityID">Priority</Item>
+                <Item Key="RequestedTime">RequestedTime</Item>
+                <Item Key="PlannedStartTime">PlannedStartTime</Item>
+                <Item Key="PlannedEndTime">PlannedEndTime</Item>
+                <Item Key="ActualStartTime">ActualStartTime</Item>
+                <Item Key="ActualEndTime">ActualEndTime</Item>
+                <Item Key="Priority">Priority</Item>
+                <Item Key="CreateTime">CreateTime</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangePIR###WorkOrderTypes" Required="1" Valid="1">
+        <Description Lang="en">Defines the workorder types that will be used to show the PIR overview.</Description>
+        <Description Lang="de">Definiert die Workorder-Typen die für die PIR-Übersicht verwendet werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::ViewPIROverview</SubGroup>
+        <Setting>
+            <Array>
+                <Item>pir</Item>
+            </Array>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeSearch###ShowColumns" Required="1" Valid="1">
