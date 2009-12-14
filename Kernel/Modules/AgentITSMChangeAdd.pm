@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.28 2009-12-11 13:19:44 reb Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.29 2009-12-14 14:37:26 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,9 +17,11 @@ use warnings;
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
 use Kernel::System::LinkObject;
+use Kernel::System::VirtualFS;
+use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.28 $) [1];
+$VERSION = qw($Revision: 1.29 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -39,9 +41,19 @@ sub new {
     $Self->{ChangeObject}      = Kernel::System::ITSMChange->new(%Param);
     $Self->{LinkObject}        = Kernel::System::LinkObject->new(%Param);
     $Self->{CIPAllocateObject} = Kernel::System::ITSMChange::ITSMChangeCIPAllocate->new(%Param);
+    $Self->{VirtualFSObject}   = Kernel::System::VirtualFS->new(%Param);
+    $Self->{UploadCacheObject} = Kernel::System::Web::UploadCache->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
+
+    # get form id
+    $Self->{FormID} = $Self->{ParamObject}->GetParam( Param => 'FormID' );
+
+    # create form id
+    if ( !$Self->{FormID} ) {
+        $Self->{FormID} = $Self->{UploadCacheObject}->FormIDCreate();
+    }
 
     return $Self;
 }
@@ -69,7 +81,7 @@ sub Run {
         qw(
         ChangeTitle Description Justification TicketID
         OldCategoryID CategoryID OldImpactID ImpactID OldPriorityID PriorityID
-        ElementChanged
+        ElementChanged SaveAttachment
         )
         )
     {
@@ -96,6 +108,45 @@ sub Run {
         CIP  => $DefaultImpact,
         Type => 'Impact',
     );
+
+    # if attachment upload is requested
+    if ( $GetParam{SaveAttachment} ) {
+        my %UploadStuff = $Self->{ParamObject}->GetUploadAll(
+            Param  => "AttachmentNew",
+            Source => 'string',
+        );
+        $Self->{UploadCacheObject}->FormIDAddFile(
+            FormID => $Self->{FormID},
+            %UploadStuff,
+        );
+
+        $Self->{Subaction} = 'SaveAttachment';
+    }
+
+    # get all attachments meta data
+    my @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
+        FormID => $Self->{FormID},
+    );
+
+    # check if attachment should be deleted
+    for my $Attachment (@Attachments) {
+        if ( $Self->{ParamObject}->GetParam( Param => 'DeleteAttachment' . $Attachment->{FileID} ) )
+        {
+
+            # delete attachment
+            $Self->{UploadCacheObject}->FormIDRemoveFile(
+                FormID => $Self->{FormID},
+                FileID => $Attachment->{FileID},
+            );
+
+            # reload attachment list
+            @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
+                FormID => $Self->{FormID},
+            );
+
+            $Self->{Subaction} = 'DeleteAttachment';
+        }
+    }
 
     # the TicketID can be validated even without the Subaction 'Save',
     # as it is passed as GET-param or in a hidden field.
@@ -293,6 +344,39 @@ sub Run {
                         return $Self->{LayoutObject}->ErrorScreen(
                             Message => $Message,
                             Comment => 'Please contact the admin.',
+                        );
+                    }
+                }
+
+                # move attachments from cache to virtual fs
+                my @CachedAttachments = $Self->{UploadCacheObject}->FormIDGetAllFilesData(
+                    FormID => $Self->{FormID},
+                );
+
+                for my $CachedAttachment (@CachedAttachments) {
+                    my $Success = $Self->{VirtualFSObject}->Write(
+                        Filename    => $CachedAttachment->{Filename},
+                        Mode        => 'binary',
+                        Content     => \$CachedAttachment->{Content},
+                        Preferences => {
+                            ContentID   => $CachedAttachment->{ContentID},
+                            ContentType => $CachedAttachment->{ContentType},
+                            ChangeID    => $ChangeID,
+                        },
+                    );
+
+                    # delete file from cache if move was successful
+                    if ($Success) {
+                        $Self->{UploadCacheObject}->FormIDRemoveFile(
+                            FormID => $Self->{FormID},
+                            FileID => $CachedAttachment->{FileID},
+                        );
+                    }
+                    else {
+                        $Self->{LogObject}->Log(
+                            Priority => 'error',
+                            Message  => 'Cannot move File from Cache to VirtualFS'
+                                . "(${$CachedAttachment}{Filename})",
                         );
                     }
                 }
@@ -512,12 +596,23 @@ sub Run {
         );
     }
 
+    # show attachments
+    for my $Attachment (@Attachments) {
+        $Self->{LayoutObject}->Block(
+            Name => 'AttachmentRow',
+            Data => {
+                %{$Attachment},
+            },
+        );
+    }
+
     # start template output
     $Output .= $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentITSMChangeAdd',
         Data         => {
             %Param,
             %GetParam,
+            FormID => $Self->{FormID},
         },
     );
 

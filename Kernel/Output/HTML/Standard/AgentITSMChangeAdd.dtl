@@ -2,7 +2,7 @@
 # AgentITSMChangeAdd.dtl - provides HTML form for AgentITSMChangeAdd
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.dtl,v 1.35 2009-12-14 13:50:29 bes Exp $
+# $Id: AgentITSMChangeAdd.dtl,v 1.36 2009-12-14 14:37:26 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -105,6 +105,7 @@ function submit_compose() {
                 <input type="hidden" name="Action"     value="$Env{"Action"}">
                 <input type="hidden" name="TicketID"   value="$QData{"TicketID"}">
                 <input type="hidden" name="Subaction"  value="Save">
+                <input type="hidden" name="FormID"     value="$QData{"FormID"}">
                 <table border="0" width="800px" align="center" cellspacing="0" cellpadding="4">
                     <tr>
                         <td class="contenthead">$Text{"ITSM Change"}</td>
@@ -222,10 +223,9 @@ $Include{"RichTextEditorITSM"}
                                         <table width="100%" cellspacing="0" cellpadding="0">
 <!-- dtl:block:AttachmentRow -->
                                             <tr>
-                                                <td>$QData{"AttachmentName"}</td>
-                                                <td>$QData{"AttachmentSize"}</td>
-<!-- TODO: set correct name for Delete button with unique name -->
-                                                <td><input class="button" type="submit" name="DeleteAttachmentxxx" value="$Text{"Delete"}"></td>
+                                                <td>$QData{"Filename"}</td>
+                                                <td>$QData{"Filesize"}</td>
+                                                <td><input class="button" type="submit" name="DeleteAttachment$QData{"FileID"}" value="$Text{"Delete"}"></td>
                                             </tr>
 <!-- dtl:block:AttachmentRow -->
                                             <tr>
