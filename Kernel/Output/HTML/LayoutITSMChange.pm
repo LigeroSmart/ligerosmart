@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LayoutITSMChange.pm,v 1.25 2009-12-14 18:40:33 ub Exp $
+# $Id: LayoutITSMChange.pm,v 1.26 2009-12-14 19:12:00 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use POSIX qw(ceil);
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.25 $) [1];
+$VERSION = qw($Revision: 1.26 $) [1];
 
 =over 4
 
@@ -642,8 +642,7 @@ sub _ITSMChangeGetChangeTicks {
     return if $Param{End} !~ m{ \A \d+ \z }xms;
 
     # calculate time span in sec
-    my $Ticks;
-    $Ticks = $Param{End} - $Param{Start};
+    my $Ticks = $Param{End} - $Param{Start};
 
     # check for computing error
     return if $Ticks <= 0;
@@ -732,12 +731,12 @@ sub _ITSMChangeGetWorkOrderGraph {
     my %WorkOrderInformation = %{$WorkOrder};
 
     # translate workorder type
-    $WorkOrder->{TranslatedWorkOrderType} =
-        $Self->{LanguageObject}->Get( $WorkOrder->{WorkOrderType} );
+    $WorkOrder->{TranslatedWorkOrderType}
+        = $Self->{LanguageObject}->Get( $WorkOrder->{WorkOrderType} );
 
     # build label for link in graph
-    $WorkOrder->{WorkOrderLabel} =
-        "Title: $WorkOrder->{WorkOrderTitle} | Type: $WorkOrder->{TranslatedWorkOrderType}";
+    $WorkOrder->{WorkOrderLabel}
+        = "Title: $WorkOrder->{WorkOrderTitle} | Type: $WorkOrder->{TranslatedWorkOrderType}";
 
     # create workorder item
     $Self->Block(
@@ -751,16 +750,19 @@ sub _ITSMChangeGetWorkOrderGraph {
     return if !$Param{Ticks};
 
     # set planned if no actual time is set
-    $WorkOrder->{ActualStartTime} = $WorkOrder->{PlannedStartTime}
-        if !$WorkOrder->{ActualStartTime};
-    $WorkOrder->{ActualEndTime} = $WorkOrder->{PlannedEndTime}
-        if !$WorkOrder->{ActualEndTime};
+    if ( !$WorkOrder->{ActualStartTime} ) {
+        $WorkOrder->{ActualStartTime} = $WorkOrder->{PlannedStartTime};
+    }
+    if ( !$WorkOrder->{ActualEndTime} ) {
+        $WorkOrder->{ActualEndTime} = $WorkOrder->{PlannedEndTime};
+    }
 
     # set nice display of undef actual times
-    $WorkOrderInformation{EmptyActualStartTime} = '-'
-        if !$WorkOrderInformation{ActualStartTime};
-    $WorkOrderInformation{EmptyActualEndTime} = '-'
-        if !$WorkOrderInformation{ActualEndTime};
+    for my $TimeType (qw(ActualStartTime ActualEndTime)) {
+        if ( !$WorkOrderInformation{$TimeType} ) {
+            $WorkOrderInformation{"Empty$TimeType"} = '-';
+        }
+    }
 
     # hash for time values
     my %Time;
@@ -798,15 +800,15 @@ sub _ITSMChangeGetWorkOrderGraph {
 
         # get at least 1 percent for display span
         # if padding would gain 100 percent
-        $TickValue{"${TimeType}Padding"} =
-            ( $TickValue{"${TimeType}Ticks"} == 1 && $TickValue{"${TimeType}Padding"} == 100 )
+        $TickValue{"${TimeType}Padding"}
+            = ( $TickValue{"${TimeType}Ticks"} == 1 && $TickValue{"${TimeType}Padding"} == 100 )
             ? 99
             : $TickValue{"${TimeType}Padding"}
             ;
 
         # get trailing space
-        $TickValue{"${TimeType}Trailing"} =
-            100 - ( $TickValue{"${TimeType}Padding"} + $TickValue{"${TimeType}Ticks"} );
+        $TickValue{"${TimeType}Trailing"}
+            = 100 - ( $TickValue{"${TimeType}Padding"} + $TickValue{"${TimeType}Ticks"} );
     }
 
     # create graph of workorder item
@@ -853,7 +855,8 @@ sub _ITSMChangeGetTimeLine {
     return if !$CurrentTime;
 
     # check if current time is in change time interval
-    return if $CurrentTime < $Param{StartTime} || $CurrentTime > $Param{EndTime};
+    return if $CurrentTime < $Param{StartTime};
+    return if $CurrentTime > $Param{EndTime};
 
     # time line data
     my %TimeLine;
