@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.201 2009-12-13 14:33:08 ub Exp $
+# $Id: ITSMChange.pm,v 1.202 2009-12-14 22:57:11 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,13 +20,14 @@ use Kernel::System::User;
 use Kernel::System::Group;
 use Kernel::System::CustomerUser;
 use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
+use Kernel::System::ITSMChange::ITSMStateMachine;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::HTMLUtils;
 
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.201 $) [1];
+$VERSION = qw($Revision: 1.202 $) [1];
 
 =head1 NAME
 
@@ -109,8 +110,9 @@ sub new {
     $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
     $Self->{GroupObject}          = Kernel::System::Group->new( %{$Self} );
     $Self->{CustomerUserObject}   = Kernel::System::CustomerUser->new( %{$Self} );
-    $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
     $Self->{HTMLUtilsObject}      = Kernel::System::HTMLUtils->new( %{$Self} );
+    $Self->{StateMachineObject}   = Kernel::System::ITSMChange::ITSMStateMachine->new( %{$Self} );
+    $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
     $Self->{CIPAllocateObject}    = Kernel::System::ITSMChange::ITSMChangeCIPAllocate->new(
         %{$Self},
     );
@@ -198,13 +200,12 @@ sub ChangeAdd {
     # create a new change number
     my $ChangeNumber = $Self->_ChangeNumberCreate();
 
-    # TODO: replace this later with State-Condition-Action logic
     # get initial change state id
-    my $ItemDataRef = $Self->{GeneralCatalogObject}->ItemGet(
-        Class => 'ITSM::ChangeManagement::Change::State',
-        Name  => 'requested',
+    my $NextStateIDs = $Self->{StateMachineObject}->StateTransitionGet(
+        StateID => 0,
+        Class   => 'ITSM::ChangeManagement::Change::State',
     );
-    my $ChangeStateID = $ItemDataRef->{ItemID};
+    my $ChangeStateID = $NextStateIDs->[0];
 
     # get default Category if not defined
     if ( !defined $Param{CategoryID} ) {
@@ -1802,66 +1803,6 @@ sub ChangeDelete {
     return 1;
 }
 
-=item ChangeWorkflowEdit()
-
-Edit the workflow of a change.
-
-TODO: To be defined in more detail! (Or to be deleted!)
-
-    my $Success = $ChangeObject->ChangeWorkflowEdit(
-        ChangeID  => 123,
-        UserID    => 1,
-    );
-
-=cut
-
-sub ChangeWorkflowEdit {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for my $Attribute (qw(ChangeID UserID)) {
-        if ( !$Param{$Attribute} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Attribute!",
-            );
-            return;
-        }
-    }
-
-    return;
-}
-
-=item ChangeWorkflowList()
-
-List the workflows of a change.
-
-TODO: To be defined in more detail! (Or to be deleted!)
-
-    my $ChangeWorkflow = $ChangeObject->ChangeWorkflowList(
-        ChangeID => 123,
-        UserID   => 1,
-    );
-
-=cut
-
-sub ChangeWorkflowList {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for my $Attribute (qw(ChangeID UserID)) {
-        if ( !$Param{$Attribute} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Attribute!",
-            );
-            return;
-        }
-    }
-
-    return;
-}
-
 =item ChangeStateLookup()
 
 This method does a lookup for a change state. If a change state id is given,
@@ -1968,25 +1909,53 @@ sub ChangePossibleStatesGet {
         }
     }
 
-    # get workorder state list
+    # get change state list
     my $StateList = $Self->{GeneralCatalogObject}->ItemList(
         Class => 'ITSM::ChangeManagement::Change::State',
     ) || {};
 
-    # assemble an array of hash refs
+    # to store an array of hash refs
     my @ArrayHashRef;
-    for my $StateID ( sort keys %{$StateList} ) {
-        push @ArrayHashRef, {
-            Key   => $StateID,
-            Value => $StateList->{$StateID},
-        };
-    }
 
-    # TODO: if ChangeID is given, shrink list to possible
-    # states
+    # if ChangeID is given, only use possible next states as defined in state machine
     if ( $Param{ChangeID} ) {
 
-        # to be implemented
+        # get change data
+        my $Change = $Self->ChangeGet(
+            ChangeID => $Param{ChangeID},
+            UserID   => $Param{UserID},
+        );
+
+        # get the possible next state ids
+        my $NextStateIDsRef = $Self->{StateMachineObject}->StateTransitionGet(
+            StateID => $Change->{ChangeStateID},
+            Class   => 'ITSM::ChangeManagement::Change::State',
+        );
+
+        # add current change state id to list
+        my @NextStateIDs = sort ( @{$NextStateIDsRef}, $Change->{ChangeStateID} );
+
+        # assemble the array of hash refs with only possible next states
+        STATEID:
+        for my $StateID (@NextStateIDs) {
+
+            next STATEID if !$StateID;
+
+            push @ArrayHashRef, {
+                Key   => $StateID,
+                Value => $StateList->{$StateID},
+            };
+        }
+    }
+    else {
+
+        # assemble the array of hash refs with all next states
+        for my $StateID ( sort keys %{$StateList} ) {
+            push @ArrayHashRef, {
+                Key   => $StateID,
+                Value => $StateList->{$StateID},
+            };
+        }
     }
 
     return \@ArrayHashRef;
@@ -2737,6 +2706,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.201 $ $Date: 2009-12-13 14:33:08 $
+$Revision: 1.202 $ $Date: 2009-12-14 22:57:11 $
 
 =cut

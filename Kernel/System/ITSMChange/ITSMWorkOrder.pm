@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.47 2009-12-14 16:50:42 bes Exp $
+# $Id: ITSMWorkOrder.pm,v 1.48 2009-12-14 22:57:42 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,12 +18,13 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 use Kernel::System::User;
 use Kernel::System::Group;
+use Kernel::System::ITSMChange::ITSMStateMachine;
 use Kernel::System::HTMLUtils;
 
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.47 $) [1];
+$VERSION = qw($Revision: 1.48 $) [1];
 
 =head1 NAME
 
@@ -105,6 +106,7 @@ sub new {
     $Self->{LinkObject}           = Kernel::System::LinkObject->new( %{$Self} );
     $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
     $Self->{GroupObject}          = Kernel::System::Group->new( %{$Self} );
+    $Self->{StateMachineObject}   = Kernel::System::ITSMChange::ITSMStateMachine->new( %{$Self} );
     $Self->{HTMLUtilsObject}      = Kernel::System::HTMLUtils->new( %{$Self} );
 
     # init of event handler
@@ -229,38 +231,17 @@ sub WorkOrderAdd {
         UserID => $Param{UserID},
     );
 
-    # set default WorkOrderStateID
+    # set initial WorkOrderStateID
     my $WorkOrderStateID = $Param{WorkOrderStateID};
     if ( !$Param{WorkOrderStateID} ) {
 
-        # ----------------------------------------------------------------
-        # TODO:
-        # Replace this later with State-Condition-Action logic
-        # to get the 'first' workorder state
-        # here, workorder state 'accepted' is used as default
-
-        my $DefaultState = 'accepted';
-
-        # get WorkOrderStateID from general catalog
-        my $ItemDataRef = $Self->{GeneralCatalogObject}->ItemGet(
-            Class => 'ITSM::ChangeManagement::WorkOrder::State',
-            Name  => $DefaultState,
+        # get initial workorder state id
+        my $NextStateIDs = $Self->{StateMachineObject}->StateTransitionGet(
+            StateID => 0,
+            Class   => 'ITSM::ChangeManagement::WorkOrder::State',
         );
+        $WorkOrderStateID = $NextStateIDs->[0];
 
-        # error handling because of WorkOrderStateID
-        if ( !$ItemDataRef || ref $ItemDataRef ne 'HASH' || !%{$ItemDataRef} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "The default WorkOrderState '$DefaultState' "
-                    . "is invalid! Check the general catalog!",
-            );
-            return;
-        }
-
-        # set default
-        $WorkOrderStateID = $ItemDataRef->{ItemID};
-
-        # ----------------------------------------------------------------
     }
 
     # set default WorkOrderTypeID
@@ -1503,20 +1484,48 @@ sub WorkOrderPossibleStatesGet {
         Class => 'ITSM::ChangeManagement::WorkOrder::State',
     ) || {};
 
-    # assemble a an array of hash refs
+    # to store an array of hash refs
     my @ArrayHashRef;
-    for my $StateID ( sort keys %{$StateList} ) {
-        push @ArrayHashRef, {
-            Key   => $StateID,
-            Value => $StateList->{$StateID},
-        };
-    }
 
-    # TODO: if WorkOrderID is given, shrink list to possible
-    # states
+    # if WorkOrderID is given, only use possible next states as defined in state machine
     if ( $Param{WorkOrderID} ) {
 
-        # to be implemented
+        # get workorder data
+        my $WorkOrder = $Self->WorkOrderGet(
+            WorkOrderID => $Param{WorkOrderID},
+            UserID      => $Param{UserID},
+        );
+
+        # get the possible next state ids
+        my $NextStateIDsRef = $Self->{StateMachineObject}->StateTransitionGet(
+            StateID => $WorkOrder->{WorkOrderStateID},
+            Class   => 'ITSM::ChangeManagement::WorkOrder::State',
+        );
+
+        # add current workorder state id to list
+        my @NextStateIDs = sort ( @{$NextStateIDsRef}, $WorkOrder->{WorkOrderStateID} );
+
+        # assemble the array of hash refs with only possible next states
+        STATEID:
+        for my $StateID (@NextStateIDs) {
+
+            next STATEID if !$StateID;
+
+            push @ArrayHashRef, {
+                Key   => $StateID,
+                Value => $StateList->{$StateID},
+            };
+        }
+    }
+    else {
+
+        # assemble the array of hash refs with all next states
+        for my $StateID ( sort keys %{$StateList} ) {
+            push @ArrayHashRef, {
+                Key   => $StateID,
+                Value => $StateList->{$StateID},
+            };
+        }
     }
 
     return \@ArrayHashRef;
@@ -2218,6 +2227,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.47 $ $Date: 2009-12-14 16:50:42 $
+$Revision: 1.48 $ $Date: 2009-12-14 22:57:42 $
 
 =cut

@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.9 2009-12-11 11:20:04 reb Exp $
+# $Id: ITSMChangeManagement.pm,v 1.10 2009-12-14 22:56:28 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,6 +21,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::Group;
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
+use Kernel::System::ITSMChange::ITSMStateMachine;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::LinkObject;
 use Kernel::System::State;
@@ -30,7 +31,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 =head1 NAME
 
@@ -151,6 +152,7 @@ sub new {
     $Self->{LinkObject}        = Kernel::System::LinkObject->new( %{$Self} );
     $Self->{ChangeObject}      = Kernel::System::ITSMChange->new( %{$Self} );
     $Self->{CIPAllocateObject} = Kernel::System::ITSMChange::ITSMChangeCIPAllocate->new( %{$Self} );
+    $Self->{StateMachineObject}   = Kernel::System::ITSMChange::ITSMStateMachine->new( %{$Self} );
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
     $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
     $Self->{StatsObject}          = Kernel::System::Stats->new(
@@ -184,7 +186,7 @@ sub CodeInstall {
     # add the group itsm-change-builder
     $Self->_GroupAdd(
         Name        => 'itsm-change-builder',
-        Description => 'Group for ITSM Change Builder.',
+        Description => 'Group for ITSM Change Builders.',
     );
 
     # add the group itsm-change-manager
@@ -200,6 +202,9 @@ sub CodeInstall {
 
     # set default CIP matrix
     $Self->_CIPDefaultMatrixSet();
+
+    # set default StateMachine settings
+    $Self->_StateMachineDefaultSet();
 
     return 1;
 }
@@ -224,7 +229,7 @@ sub CodeReinstall {
     # add the group itsm-change-builder
     $Self->_GroupAdd(
         Name        => 'itsm-change-builder',
-        Description => 'Group for ITSM Change Builder.',
+        Description => 'Group for ITSM Change Builders.',
     );
 
     # add the group itsm-change-manager
@@ -240,6 +245,9 @@ sub CodeReinstall {
 
     # set default CIP matrix
     $Self->_CIPDefaultMatrixSet();
+
+    # set default StateMachine settings
+    $Self->_StateMachineDefaultSet();
 
     return 1;
 }
@@ -262,6 +270,9 @@ sub CodeUpgrade {
 
     # set default CIP matrix
     $Self->_CIPDefaultMatrixSet();
+
+    # set default StateMachine settings
+    $Self->_StateMachineDefaultSet();
 
     return 1;
 }
@@ -546,6 +557,87 @@ sub _CIPDefaultMatrixSet {
     return 1;
 }
 
+=item _StateMachineDefaultSet()
+
+set the default state machine
+
+    my $Result = $CodeObject->_StateMachineDefaultSet();
+
+=cut
+
+sub _StateMachineDefaultSet {
+    my ( $Self, %Param ) = @_;
+
+    # get the change states from the general catalog
+    my %Name2ChangeStateID = reverse %{
+        $Self->{GeneralCatalogObject}->ItemList(
+            Class => 'ITSM::ChangeManagement::Change::State',
+            )
+        };
+
+    # get the workorder states from the general catalog
+    my %Name2WorkOrderStateID = reverse %{
+        $Self->{GeneralCatalogObject}->ItemList(
+            Class => 'ITSM::ChangeManagement::WorkOrder::State',
+            )
+        };
+
+    # define ChangeState transitions
+    my %ChangeStateTransitions = (
+        0 => ['requested'],
+        'requested' => [ 'rejected', 'retracted', 'pending approval' ],
+        'pending approval' => [ 'retracted', 'approved' ],
+        'approved'         => [ 'retracted', 'in progress' ],
+        'in progress'      => [ 'retracted', 'failed', 'successful', 'canceled' ],
+        'rejected'   => [0],
+        'retracted'  => [0],
+        'failed'     => [0],
+        'successful' => [0],
+        'canceled'   => [0],
+    );
+
+    # define WorkOrderState transitions
+    my %WorkOrderStateTransitions = (
+        0             => ['created'],
+        'created'     => [ 'accepted', 'canceled' ],
+        'accepted'    => [ 'ready', 'canceled' ],
+        'ready'       => [ 'in progress', 'canceled' ],
+        'in progress' => [ 'closed', 'canceled' ],
+        'canceled'    => [0],
+        'closed'      => [0],
+    );
+
+    # insert ChangeState transitions into database
+    for my $State ( sort keys %ChangeStateTransitions ) {
+
+        for my $NextState ( @{ $ChangeStateTransitions{$State} } ) {
+
+            # add state transition
+            my $TransitionID = $Self->{StateMachineObject}->StateTransitionAdd(
+                StateID     => $Name2ChangeStateID{$State}     || 0,
+                NextStateID => $Name2ChangeStateID{$NextState} || 0,
+                Class       => 'ITSM::ChangeManagement::Change::State',
+            );
+        }
+    }
+
+    # insert WorkOrderState transitions into database
+    for my $State ( sort keys %WorkOrderStateTransitions ) {
+
+        for my $NextState ( @{ $WorkOrderStateTransitions{$State} } ) {
+
+            # add state transition
+            my $TransitionID = $Self->{StateMachineObject}->StateTransitionAdd(
+                StateID     => $Name2WorkOrderStateID{$State}     || 0,
+                NextStateID => $Name2WorkOrderStateID{$NextState} || 0,
+                Class       => 'ITSM::ChangeManagement::WorkOrder::State',
+            );
+        }
+    }
+
+    return 1;
+}
+
 =item _LinkDelete()
 
 delete all existing links with change and workorder objects
@@ -607,6 +699,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.9 $ $Date: 2009-12-11 11:20:04 $
+$Revision: 1.10 $ $Date: 2009-12-14 22:56:28 $
 
 =cut

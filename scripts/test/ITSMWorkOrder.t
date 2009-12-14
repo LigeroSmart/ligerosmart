@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.110 2009-12-13 14:33:51 ub Exp $
+# $Id: ITSMWorkOrder.t,v 1.111 2009-12-14 22:55:22 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -4077,8 +4077,9 @@ my @PossibleStateIDsReference = @SortedWorkOrderStateIDs;
 
 # get possible states
 my $PossibleStates = $Self->{WorkOrderObject}->WorkOrderPossibleStatesGet(
-    WorkOrderID => $WorkOrderIDForPossibleStatesTest,
-    UserID      => 1,
+
+    #    WorkOrderID => $WorkOrderIDForPossibleStatesTest,
+    UserID => 1,
 ) || {};
 
 # do the checks
