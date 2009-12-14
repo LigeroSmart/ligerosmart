@@ -2,7 +2,7 @@
 # AgentITSMChangeZoom.dtl - provides HTML form for AgentITSMChangeZoom
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.dtl,v 1.31 2009-12-11 13:19:44 reb Exp $
+# $Id: AgentITSMChangeZoom.dtl,v 1.32 2009-12-14 15:25:56 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -90,8 +90,9 @@
                         <table width="100%">
 <!-- dtl:block:AttachmentRow -->
                             <tr>
-                                <td>$Data{"AttachmentName"}</td>
-                                <td>$Data{"AttachmentSize"}</td>
+                                <td>$QData{"Filename"}</td>
+                                <td width="16"><a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=DownloadAttachment;FileID=$QData{"FileID"};ChangeID=$QData{"ChangeID"}"><img src="$Config{"Frontend::ImagePath"}disk-s.png" border="0" alt="Download" title="Download"/></a></td>
+                                <td width="100%">$QData{"Filesize"}</td>
                             </tr>
 <!-- dtl:block:AttachmentRow -->
                         </table>
