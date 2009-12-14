@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderReport.pm - the OTRS::ITSM::ChangeManagement workorder report module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderReport.pm,v 1.16 2009-11-28 16:01:29 ub Exp $
+# $Id: AgentITSMWorkOrderReport.pm,v 1.17 2009-12-14 13:23:09 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -87,36 +87,129 @@ sub Run {
         );
     }
 
-    # save the needed GET params in Hash
+    # store needed parameters in %GetParam to make this page reloadable
     my %GetParam;
     for my $ParamName (qw(Report WorkOrderStateID)) {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
+    # store time related fields in %GetParam
+    for my $TimeType (qw(ActualStartTime ActualEndTime)) {
+        if ( $Self->{Config}->{$TimeType} ) {
+            for my $TimePart (qw(Year Month Day Hour Minute Used)) {
+                my $ParamName = $TimeType . $TimePart;
+                $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+            }
+        }
+    }
+
+    # Remember the reason why perfoming the subaction was not attempted.
+    # The entries are the names of the dtl validation error blocks.
+    my %ValidationError;
+
     # update workorder
     if ( $Self->{Subaction} eq 'Save' ) {
-        my $CouldUpdateWorkOrder = $Self->{WorkOrderObject}->WorkOrderUpdate(
-            WorkOrderID      => $WorkOrder->{WorkOrderID},
-            Report           => $GetParam{Report},
-            WorkOrderStateID => $GetParam{WorkOrderStateID},
-            UserID           => $Self->{UserID},
-        );
 
-        # if workorder update was successful
-        if ($CouldUpdateWorkOrder) {
+        # check the time related parameters
+        for my $TimeType (qw(ActualStartTime ActualEndTime)) {
 
-            # redirect to zoom mask
-            return $Self->{LayoutObject}->Redirect(
-                OP => "Action=AgentITSMWorkOrderZoom&WorkOrderID=$WorkOrder->{WorkOrderID}",
-            );
+            if ( $Self->{Config}->{$TimeType} && $GetParam{ $TimeType . 'Used' } ) {
+
+                if (
+                    $GetParam{ $TimeType . 'Year' }
+                    && $GetParam{ $TimeType . 'Month' }
+                    && $GetParam{ $TimeType . 'Day' }
+                    && $GetParam{ $TimeType . 'Hour' }
+                    && $GetParam{ $TimeType . 'Minute' }
+                    )
+                {
+
+                    # format as timestamp, when all required time params were passed
+                    $GetParam{$TimeType} = sprintf '%04d-%02d-%02d %02d:%02d:00',
+                        $GetParam{ $TimeType . 'Year' },
+                        $GetParam{ $TimeType . 'Month' },
+                        $GetParam{ $TimeType . 'Day' },
+                        $GetParam{ $TimeType . 'Hour' },
+                        $GetParam{ $TimeType . 'Minute' };
+
+                    # sanity check of the assembled timestamp
+                    my $SystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
+                        String => $GetParam{$TimeType},
+                    );
+
+                    # do not save when time is invalid
+                    if ( !$SystemTime ) {
+                        $ValidationError{ 'Invalid' . $TimeType } = 1;
+                    }
+                }
+                else {
+
+                    # it was indicated that the time should be set,
+                    # but at least one of the required time params is missing
+                    $ValidationError{ 'Invalid' . $TimeType } = 1;
+                }
+            }
         }
-        else {
 
-            # show error message
-            return $Self->{LayoutObject}->ErrorScreen(
-                Message => "Was not able to update WorkOrder $WorkOrder->{WorkOrderID}!",
-                Comment => 'Please contact the admin.',
+        # update only when there are no input validation errors
+        if ( !%ValidationError ) {
+
+            # the time related fields are configurable
+            my %AdditionalParam;
+            for my $TimeType (qw(ActualStartTime ActualEndTime)) {
+                if ( $Self->{Config}->{$TimeType} && $GetParam{$TimeType} ) {
+                    $AdditionalParam{$TimeType} = $GetParam{$TimeType};
+                }
+            }
+
+            my $CouldUpdateWorkOrder = $Self->{WorkOrderObject}->WorkOrderUpdate(
+                WorkOrderID      => $WorkOrder->{WorkOrderID},
+                Report           => $GetParam{Report},
+                WorkOrderStateID => $GetParam{WorkOrderStateID},
+                UserID           => $Self->{UserID},
+                %AdditionalParam,
             );
+
+            # if workorder update was successful
+            if ($CouldUpdateWorkOrder) {
+
+                # redirect to zoom mask
+                return $Self->{LayoutObject}->Redirect(
+                    OP => "Action=AgentITSMWorkOrderZoom&WorkOrderID=$WorkOrder->{WorkOrderID}",
+                );
+            }
+            else {
+
+                # show error message
+                return $Self->{LayoutObject}->ErrorScreen(
+                    Message => "Was not able to update WorkOrder $WorkOrder->{WorkOrderID}!",
+                    Comment => 'Please contact the admin.',
+                );
+            }
+        }
+    }
+    else {
+
+        # initialize the time related fields
+        for my $TimeType (qw(ActualStartTime ActualEndTime)) {
+            if ( $Self->{Config}->{$TimeType} && $WorkOrder->{$TimeType} ) {
+
+                # get the time from the workorder
+                my $SystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
+                    String => $WorkOrder->{$TimeType},
+                );
+
+                my ( $Second, $Minute, $Hour, $Day, $Month, $Year )
+                    = $Self->{TimeObject}->SystemTime2Date( SystemTime => $SystemTime );
+
+                # set the parameter hash for BuildDateSelection()
+                $GetParam{ $TimeType . 'Used' }   = 1;
+                $GetParam{ $TimeType . 'Minute' } = $Minute;
+                $GetParam{ $TimeType . 'Hour' }   = $Hour;
+                $GetParam{ $TimeType . 'Day' }    = $Day;
+                $GetParam{ $TimeType . 'Month' }  = $Month;
+                $GetParam{ $TimeType . 'Year' }   = $Year;
+            }
         }
     }
 
@@ -166,6 +259,38 @@ sub Run {
         $Self->{LayoutObject}->Block(
             Name => 'RichText',
         );
+    }
+
+    for my $TimeType (qw(ActualStartTime ActualEndTime)) {
+        if ( $Self->{Config}->{$TimeType} ) {
+
+            # time period that can be selected from the GUI
+            my %TimePeriod = %{ $Self->{ConfigObject}->Get('ITSMWorkOrder::TimePeriod') };
+
+            # add selection for the time
+            my $TimeSelectionString = $Self->{LayoutObject}->BuildDateSelection(
+                %GetParam,
+                Format                => 'DateInputFormatLong',
+                Prefix                => $TimeType,
+                "${TimeType}Optional" => 1,
+                %TimePeriod,
+            );
+
+            # show time field
+            $Self->{LayoutObject}->Block(
+                Name => $TimeType,
+                Data => {
+                    $TimeType . 'SelectionString' => $TimeSelectionString,
+                },
+            );
+
+            # show time validation error
+            if ( $ValidationError{ 'Invalid' . $TimeType } ) {
+                $Self->{LayoutObject}->Block(
+                    Name => 'Invalid' . $TimeType,
+                );
+            }
+        }
     }
 
     # start template output

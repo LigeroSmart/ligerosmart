@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderReport.dtl - provides HTML form for AgentITSMWorkOrderReport
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderReport.dtl,v 1.16 2009-11-28 16:01:29 ub Exp $
+# $Id: AgentITSMWorkOrderReport.dtl,v 1.17 2009-12-14 13:23:09 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -38,8 +38,8 @@
                         <td>
                             <table border="0" width="100%" cellspacing="0" cellpadding="3">
                                 <colgroup>
-                                <col width="130px">
-                                <col>
+                                    <col width="130px">
+                                    <col>
                                 </colgroup>
                                 <tr>
                                     <td class="contentkey">$Text{"Report"}:</td>
@@ -59,6 +59,34 @@ $Include{"RichTextEditorITSM"}
                                     <td width="75%" class="contentvalue">$Data{"StateSelect"}</td>
                                 </tr>
 <!-- dtl:block:State -->
+<!-- dtl:block:ActualStartTime -->
+                                <tr>
+                                    <td class="contentkey">
+                                        $Text{"Actual start time"}:
+                                    </td>
+                                    <td class="contentvalue">
+                                        $Data{"ActualStartTimeSelectionString"}
+<!-- dtl:block:InvalidActualStartTime -->
+                                        <br />
+                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
+<!-- dtl:block:InvalidActualStartTime -->
+                                    </td>
+                                </tr>
+<!-- dtl:block:ActualStartTime -->
+<!-- dtl:block:ActualEndTime -->
+                                <tr>
+                                    <td class="contentkey">
+                                        $Text{"Actual end time"}:
+                                    </td>
+                                    <td class="contentvalue">
+                                        $Data{"ActualEndTimeSelectionString"}
+<!-- dtl:block:InvalidActualEndTime -->
+                                        <br />
+                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
+<!-- dtl:block:InvalidActualEndTime -->
+                                    </td>
+                                </tr>
+<!-- dtl:block:ActualEndTime -->
                             </table>
                         </td>
                     </tr>

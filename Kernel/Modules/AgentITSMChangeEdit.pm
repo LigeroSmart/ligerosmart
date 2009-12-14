@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeEdit.pm - the OTRS::ITSM::ChangeManagement change edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.pm,v 1.29 2009-12-11 13:19:44 reb Exp $
+# $Id: AgentITSMChangeEdit.pm,v 1.30 2009-12-14 13:23:09 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.29 $) [1];
+$VERSION = qw($Revision: 1.30 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -87,7 +87,7 @@ sub Run {
         );
     }
 
-    # store needed parameters in %GetParam to make it reloadable
+    # store needed parameters in %GetParam to make this page reloadable
     my %GetParam;
     for my $ParamName (
         qw(
@@ -117,7 +117,7 @@ sub Run {
         $GetParam{ChangeStateID} = $Self->{ParamObject}->GetParam( Param => 'ChangeStateID' );
     }
 
-    # Remember the reason why saving was not attempted.
+    # Remember the reason why perfoming the subaction was not attempted.
     # The entries are the names of the dtl validation error blocks.
     my @ValidationErrors;
     my %CIPErrors;
@@ -161,7 +161,7 @@ sub Run {
                 )
             {
 
-                # format as timestamp, when all required time param were passed
+                # format as timestamp, when all required time params were passed
                 $GetParam{RequestedTime} = sprintf '%04d-%02d-%02d %02d:%02d:00',
                     $GetParam{RequestedTimeYear},
                     $GetParam{RequestedTimeMonth},
@@ -189,12 +189,12 @@ sub Run {
 
         # update only when there are no input validation errors
         if ( !@ValidationErrors ) {
-            my %AdditionalParam;
 
+            # setting of state and requested time is configurable
+            my %AdditionalParam;
             if ( $Self->{Config}->{State} ) {
                 $AdditionalParam{ChangeStateID} = $GetParam{ChangeStateID};
             }
-
             if ( $Self->{Config}->{RequestedTime} ) {
                 $AdditionalParam{RequestedTime} = $GetParam{RequestedTime};
             }
@@ -454,10 +454,8 @@ sub Run {
     }
 
     # Add the validation error messages as late as possible
-    # as the enclosing blocks, e.g. 'RequestedTime' muss first be set.
+    # as the enclosing blocks muss first be set.
     for my $BlockName (@ValidationErrors) {
-
-        # show validation error message
         $Self->{LayoutObject}->Block(
             Name => $BlockName,
         );
