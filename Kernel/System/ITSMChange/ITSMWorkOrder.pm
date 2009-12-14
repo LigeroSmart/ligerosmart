@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.45 2009-12-11 13:20:19 reb Exp $
+# $Id: ITSMWorkOrder.pm,v 1.46 2009-12-14 13:20:28 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.45 $) [1];
+$VERSION = qw($Revision: 1.46 $) [1];
 
 =head1 NAME
 
@@ -2142,21 +2142,46 @@ sub _CheckTimestamps {
         my $EndTime   = $Param{ $Type . 'EndTime' }   || $WorkOrderData->{ $Type . 'EndTime' };
 
         # check for the reserved date
-        return if $StartTime && $StartTime eq '9999-01-01 00:00:00';
-        return if $EndTime   && $EndTime   eq '9999-01-01 00:00:00';
+        if ( $StartTime && $StartTime eq '9999-01-01 00:00:00' ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "The value $StartTime is invalid for the \l$Type start time!",
+            );
+            return;
+        }
+        if ( $EndTime && $EndTime eq '9999-01-01 00:00:00' ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "The value $EndTime is invalid for the \l$Type end time!",
+            );
+            return;
+        }
 
         # don't check actual start time when change has not ended yet
         next TYPE if $Type eq 'Actual' && $StartTime && !$EndTime;
 
         # the check fails if not both (start and end) times are present
-        return if !$StartTime || !$EndTime;
+        if ( !$StartTime || !$EndTime ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "$Type start time and \l$Type end time must be given!",
+            );
+            return;
+        }
 
         # remove all Non-Number characters
         $StartTime =~ s{ \D }{}xmsg;
         $EndTime   =~ s{ \D }{}xmsg;
 
         # start time must be smaller than end time
-        return if $StartTime >= $EndTime;
+        if ( $StartTime >= $EndTime ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message =>
+                    "The \l$Type start time '$StartTime' must be before the \l$Type end time '$EndTime'!",
+            );
+            return;
+        }
     }
 
     return 1;
@@ -2190,6 +2215,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.45 $ $Date: 2009-12-11 13:20:19 $
+$Revision: 1.46 $ $Date: 2009-12-14 13:20:28 $
 
 =cut
