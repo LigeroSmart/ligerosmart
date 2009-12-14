@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeEdit.pm - the OTRS::ITSM::ChangeManagement change edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.pm,v 1.30 2009-12-14 13:23:09 bes Exp $
+# $Id: AgentITSMChangeEdit.pm,v 1.31 2009-12-14 16:04:54 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,9 +16,10 @@ use warnings;
 
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
+use Kernel::System::VirtualFS;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.30 $) [1];
+$VERSION = qw($Revision: 1.31 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -37,6 +38,7 @@ sub new {
     # create needed objects
     $Self->{ChangeObject}      = Kernel::System::ITSMChange->new(%Param);
     $Self->{CIPAllocateObject} = Kernel::System::ITSMChange::ITSMChangeCIPAllocate->new(%Param);
+    $Self->{VirtualFSObject}   = Kernel::System::VirtualFS->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
@@ -93,7 +95,7 @@ sub Run {
         qw(
         ChangeTitle Description Justification TicketID
         OldCategoryID CategoryID OldImpactID ImpactID OldPriorityID PriorityID
-        ElementChanged
+        ElementChanged SaveAttachment
         )
         )
     {
@@ -108,6 +110,30 @@ sub Run {
         }
     }
 
+    # Remember the reason why perfoming the subaction was not attempted.
+    # The entries are the names of the dtl validation error blocks.
+    my @ValidationErrors;
+    my %CIPErrors;
+
+    # if attachment upload is requested
+    if ( $GetParam{SaveAttachment} ) {
+        $Self->{Subaction} = 'SaveAttachment';
+    }
+
+    # get all attachments meta data
+    my %Attachments = $Self->{VirtualFSObject}->Search(
+        Preferences => {
+            ChangeID => $ChangeID,
+        },
+    );
+
+    # check if attachment should be deleted
+    for my $AttachmentID ( keys %Attachments ) {
+        if ( $Self->{ParamObject}->GetParam( Param => 'DeleteAttachment' . $AttachmentID ) ) {
+            $Self->{Subaction} = 'DeleteAttachment';
+        }
+    }
+
     # set default values for category and impact
     $Param{CategoryID} = $Change->{CategoryID};
     $Param{ImpactID}   = $Change->{ImpactID};
@@ -116,11 +142,6 @@ sub Run {
     if ( $Self->{Config}->{State} ) {
         $GetParam{ChangeStateID} = $Self->{ParamObject}->GetParam( Param => 'ChangeStateID' );
     }
-
-    # Remember the reason why perfoming the subaction was not attempted.
-    # The entries are the names of the dtl validation error blocks.
-    my @ValidationErrors;
-    my %CIPErrors;
 
     # update change
     if ( $Self->{Subaction} eq 'Save' ) {
@@ -263,6 +284,59 @@ sub Run {
             Type        => 'inline',
             NoCache     => 1,
         );
+    }
+
+    # handle attachment actions
+    elsif ( $Self->{Subaction} eq 'SaveAttachment' ) {
+        my %UploadStuff = $Self->{ParamObject}->GetUploadAll(
+            Param  => "AttachmentNew",
+            Source => 'string',
+        );
+
+        # write to virtual fs
+        if ( $UploadStuff{Filename} ) {
+            my $Success = $Self->{VirtualFSObject}->Write(
+                Filename    => $UploadStuff{Filename},
+                Mode        => 'binary',
+                Content     => \$UploadStuff{Content},
+                Preferences => {
+                    ContentType => $UploadStuff{ContentType},
+                    ChangeID    => $ChangeID,
+                    }
+            );
+
+            # check for error
+            if ( !$Success ) {
+                push @ValidationErrors, 'InvalidAttachment';
+            }
+
+            # reload attachment list
+            %Attachments = $Self->{VirtualFSObject}->Search(
+                Preferences => {
+                    ChangeID => $ChangeID,
+                },
+            );
+        }
+    }
+    elsif ( $Self->{Subaction} eq 'DeleteAttachment' ) {
+        for my $AttachmentID ( keys %Attachments ) {
+            if ( $Self->{ParamObject}->GetParam( Param => 'DeleteAttachment' . $AttachmentID ) ) {
+
+                # delete attachment
+                $Self->{VirtualFSObject}->Delete(
+                    Filename => $Attachments{$AttachmentID},
+                );
+
+                # reload attachment list
+                %Attachments = $Self->{VirtualFSObject}->Search(
+                    Preferences => {
+                        ChangeID => $ChangeID,
+                    },
+                );
+
+                $Self->{Subaction} = 'DeleteAttachment';
+            }
+        }
     }
 
     # delete all keys from %GetParam when it is no Subaction
@@ -458,6 +532,27 @@ sub Run {
     for my $BlockName (@ValidationErrors) {
         $Self->{LayoutObject}->Block(
             Name => $BlockName,
+        );
+    }
+
+    # show attachments
+    for my $AttachmentID ( keys %Attachments ) {
+
+        # get info about file
+        my %AttachmentData = $Self->{VirtualFSObject}->Read(
+            Filename => $Attachments{$AttachmentID},
+            Mode     => 'binary',
+        );
+
+        # show block
+        $Self->{LayoutObject}->Block(
+            Name => 'AttachmentRow',
+            Data => {
+                %{$Change},
+                %{ $AttachmentData{Preferences} },
+                Filename => $Attachments{$AttachmentID},
+                FileID   => $AttachmentID,
+            },
         );
     }
 
