@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.46 2009-12-14 13:20:28 bes Exp $
+# $Id: ITSMWorkOrder.pm,v 1.47 2009-12-14 16:50:42 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.46 $) [1];
+$VERSION = qw($Revision: 1.47 $) [1];
 
 =head1 NAME
 
@@ -2141,18 +2141,21 @@ sub _CheckTimestamps {
         my $StartTime = $Param{ $Type . 'StartTime' } || $WorkOrderData->{ $Type . 'StartTime' };
         my $EndTime   = $Param{ $Type . 'EndTime' }   || $WorkOrderData->{ $Type . 'EndTime' };
 
+        # for the log messages
+        my $TypeLc = lc $Type;
+
         # check for the reserved date
         if ( $StartTime && $StartTime eq '9999-01-01 00:00:00' ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "The value $StartTime is invalid for the \l$Type start time!",
+                Message  => "The value $StartTime is invalid for the $TypeLc start time!",
             );
             return;
         }
         if ( $EndTime && $EndTime eq '9999-01-01 00:00:00' ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "The value $EndTime is invalid for the \l$Type end time!",
+                Message  => "The value $EndTime is invalid for the $TypeLc end time!",
             );
             return;
         }
@@ -2164,12 +2167,12 @@ sub _CheckTimestamps {
         if ( !$StartTime || !$EndTime ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "$Type start time and \l$Type end time must be given!",
+                Message  => "$Type start time and $TypeLc end time must be given!",
             );
             return;
         }
 
-        # remove all Non-Number characters
+        # remove all non-digit characters
         $StartTime =~ s{ \D }{}xmsg;
         $EndTime   =~ s{ \D }{}xmsg;
 
@@ -2178,7 +2181,7 @@ sub _CheckTimestamps {
             $Self->{LogObject}->Log(
                 Priority => 'error',
                 Message =>
-                    "The \l$Type start time '$StartTime' must be before the \l$Type end time '$EndTime'!",
+                    "The $TypeLc start time '$StartTime' must be before the $TypeLc end time '$EndTime'!",
             );
             return;
         }
@@ -2215,6 +2218,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.46 $ $Date: 2009-12-14 13:20:28 $
+$Revision: 1.47 $ $Date: 2009-12-14 16:50:42 $
 
 =cut
