@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMStateMachine.pm - all state machine functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMStateMachine.pm,v 1.1 2009-12-14 22:51:48 ub Exp $
+# $Id: ITSMStateMachine.pm,v 1.2 2009-12-15 11:59:31 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::GeneralCatalog;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -105,8 +105,8 @@ sub new {
 Add a new state transition. Returns the transition id on success.
 
     my $TransitionID = $StateMachineObject->StateTransitionAdd(
-        StateID     => 1,  # id within the given class, or 0 to indicate the start state
-        NextStateID => 2,  # id within the given class, or 0 to indicate an end state
+        StateID     => 1,                                       # id within the given class, or 0 to indicate the start state
+        NextStateID => 2,                                       # id within the given class, or 0 to indicate an end state
         Class       => 'ITSM::ChangeManagement::Change::State', # the name of a general catalog class
     );
 
@@ -115,8 +115,8 @@ Add a new state transition. Returns the transition id on success.
 sub StateTransitionAdd {
     my ( $Self, %Param ) = @_;
 
-    # check if StateID and NextStateID (they can be 0) and class are given
-    for my $Argument (qw(StateID NextStateID Class)) {
+    # check if StateID and NextStateID are given (they can be 0)
+    for my $Argument (qw(StateID NextStateID)) {
         if ( !defined $Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -124,6 +124,15 @@ sub StateTransitionAdd {
             );
             return;
         }
+    }
+
+    # check that class is given
+    if ( !$Param{Class} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need Class!',
+        );
+        return;
     }
 
     # check that not both StateID and NextStateID are zero
@@ -297,10 +306,10 @@ sub StateTransitionDeleteAll {
     my ( $Self, %Param ) = @_;
 
     # check needed parameter
-    if ( !defined $Param{Class} ) {
+    if ( $Param{Class} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Need Class!",
+            Message  => 'Need Class!',
         );
         return;
     }
@@ -341,7 +350,7 @@ Get a state transition for a given state id.
 Returns an array reference of the next state ids.
 
     my $NextStateIDsRef = $StateMachineObject->StateTransitionGet(
-        StateID => 1,  # id within the given class, or 0 to indicate the start state
+        StateID => 1,                                       # id within the given class, or 0 to indicate the start state
         Class   => 'ITSM::ChangeManagement::Change::State', # the name of a general catalog class
     );
 
@@ -351,7 +360,7 @@ sub StateTransitionGet {
     my ( $Self, %Param ) = @_;
 
     # check if StateID are given (they can be 0)
-    for my $Argument (qw(StateID Class)) {
+    for my $Argument (qw(StateID)) {
         if ( !defined $Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -359,6 +368,15 @@ sub StateTransitionGet {
             );
             return;
         }
+    }
+
+    # check that class is given
+    if ( !$Param{Class} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need Class!',
+        );
+        return;
     }
 
     # check if StateID belongs to the given class, but only if state id is not a start state (=0)
@@ -477,9 +495,9 @@ sub StateTransitionList {
 Add a new state transition. Returns the transition id on success.
 
     my $UpdateSuccess = $StateMachineObject->StateTransitionUpdate(
-        StateID        => 1,  # id within the given class, or 0 to indicate the start state
-        NextStateID    => 2,  # id within the given class, or 0 to indicate an end state
-        NewNextStateID => 3,  # id within the given class, or 0 to indicate an end state
+        StateID        => 1,                                       # id within the given class, or 0 to indicate the start state
+        NextStateID    => 2,                                       # id within the given class, or 0 to indicate an end state
+        NewNextStateID => 3,                                       # id within the given class, or 0 to indicate an end state
         Class          => 'ITSM::ChangeManagement::Change::State', # the name of a general catalog class
     );
 
@@ -489,7 +507,7 @@ sub StateTransitionUpdate {
     my ( $Self, %Param ) = @_;
 
     # check if StateID, NextStateID and NewNextStateID are given (they can be 0)
-    for my $Argument (qw(StateID NextStateID NewNextStateID Class)) {
+    for my $Argument (qw(StateID NextStateID NewNextStateID)) {
         if ( !defined $Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -497,6 +515,15 @@ sub StateTransitionUpdate {
             );
             return;
         }
+    }
+
+    # check that class is given
+    if ( !$Param{Class} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need Class!',
+        );
+        return;
     }
 
     # check that not both StateID and NextStateID are zero
@@ -697,6 +724,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2009-12-14 22:51:48 $
+$Revision: 1.2 $ $Date: 2009-12-15 11:59:31 $
 
 =cut
