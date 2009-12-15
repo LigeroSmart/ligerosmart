@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderZoom.dtl - provides HTML form for AgentITSMWorkOrderZoom
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderZoom.dtl,v 1.22 2009-12-01 13:26:27 bes Exp $
+# $Id: AgentITSMWorkOrderZoom.dtl,v 1.23 2009-12-15 10:40:40 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -35,15 +35,15 @@
 </table>
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <colgroup>
-    <col width="75%">
-    <col width="25%">
+        <col width="75%">
+        <col width="25%">
     </colgroup>
     <tr>
         <td valign="top" class="mainbody">
             <table border="0" width="100%" cellspacing="0" cellpadding="1">
                 <colgroup>
-                <col width="30px">
-                <col>
+                    <col width="30px">
+                    <col>
                 </colgroup>
                 <tr>
                     <td style="text-align:center;">
@@ -73,8 +73,8 @@
             <hr size="2">
             <table border="0" width="100%" cellspacing="0" cellpadding="1">
                 <colgroup>
-                <col width="130px">
-                <col>
+                    <col width="130px">
+                    <col>
                 </colgroup>
                 <tr>
                     <td class="contentkey">
@@ -108,8 +108,9 @@
                         <table width="100%">
 <!-- dtl:block:AttachmentRow -->
                             <tr>
-                                <td>$Data{"AttachmentName"}</td>
-                                <td>$Data{"AttachmentSize"}</td>
+                                <td>$Data{"Filename"}</td>
+                                <td width="16"><a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=DownloadAttachment;FileID=$QData{"FileID"};WorkOrderID=$QData{"WorkOrderID"}"><img src="$Config{"Frontend::ImagePath"}disk-s.png" border="0" alt="Download" title="Download"/></a></td>
+                                <td width="100%">$Data{"Filesize"}</td>
                             </tr>
 <!-- dtl:block:AttachmentRow -->
                         </table>
