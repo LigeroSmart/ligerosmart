@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LayoutITSMChange.pm,v 1.28 2009-12-15 07:52:43 mae Exp $
+# $Id: LayoutITSMChange.pm,v 1.29 2009-12-15 20:47:15 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use POSIX qw(ceil);
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.28 $) [1];
+$VERSION = qw($Revision: 1.29 $) [1];
 
 =over 4
 
@@ -105,13 +105,22 @@ sub ITSMChangeBuildWorkOrderGraph {
         $Time{"Actual${TimeType}Time"} = $Self->{TimeObject}->TimeStamp2SystemTime(
             String => $Change->{"Actual${TimeType}Time"},
         );
+    }
 
-        # set start time
-        $Time{"${TimeType}Time"} =
-            ( $Time{"Planned${TimeType}Time"} > $Time{"Actual${TimeType}Time"} )
-            ? $Time{"Actual${TimeType}Time"}
-            : $Time{"Planned${TimeType}Time"}
-            ;
+    # get smallest start time
+    if ( !$Time{StartTime} ) {
+        $Time{StartTime} =
+            ( $Time{PlannedStartTime} < $Time{ActualStartTime} )
+            ? $Time{PlannedStartTime}
+            : $Time{ActualStartTime};
+    }
+
+    # get highest end time
+    if ( !$Time{EndTime} ) {
+        $Time{EndTime} =
+            ( $Time{PlannedEndTime} > $Time{ActualEndTime} )
+            ? $Time{PlannedEndTime}
+            : $Time{ActualEndTime};
     }
 
     # calculate ticks for change
@@ -265,7 +274,7 @@ sub ITSMChangeBuildWorkOrderGraph {
         Ticks     => $ChangeTicks,
     );
 
-    if ( $TimeLine && $TimeLine->{TimeLineLeft} ) {
+    if ( $TimeLine && defined $TimeLine->{TimeLineLeft} ) {
 
         # calculate height of time line
         my $WorkOrderHeight = 16;
@@ -752,9 +761,12 @@ sub _ITSMChangeGetWorkOrderGraph {
     # set planned if no actual time is set
     if ( !$WorkOrder->{ActualStartTime} ) {
         $WorkOrder->{ActualStartTime} = $WorkOrder->{PlannedStartTime};
+        $WorkOrder->{ActualEndTime}   = $WorkOrder->{PlannedEndTime};
     }
-    if ( !$WorkOrder->{ActualEndTime} ) {
-        $WorkOrder->{ActualEndTime} = $WorkOrder->{PlannedEndTime};
+
+    # set current time if no actual end time is set
+    if ( $WorkOrder->{ActualStartTime} && !$WorkOrder->{ActualEndTime} ) {
+        $WorkOrder->{ActualEndTime} = $Self->{TimeObject}->CurrentTimestamp();
     }
 
     # set nice display of undef actual times
@@ -794,7 +806,7 @@ sub _ITSMChangeGetWorkOrderGraph {
         );
 
         # get values for display span
-        $TickValue{"${TimeType}Ticks"} = ceil(
+        $TickValue{"${TimeType}Ticks"} = int(
             ( $Time{"${TimeType}EndTime"} - $Time{"${TimeType}StartTime"} ) / $Param{Ticks}
         ) || 1;
 
@@ -808,6 +820,12 @@ sub _ITSMChangeGetWorkOrderGraph {
         # get trailing space
         $TickValue{"${TimeType}Trailing"}
             = 100 - ( $TickValue{"${TimeType}Padding"} + $TickValue{"${TimeType}Ticks"} );
+
+        # correct math
+        if ( $TickValue{"${TimeType}Trailing"} == -1 ) {
+            $TickValue{"${TimeType}Trailing"} = 0;
+            $TickValue{"${TimeType}Ticks"} -= 1;
+        }
     }
 
     # create graph of workorder item
