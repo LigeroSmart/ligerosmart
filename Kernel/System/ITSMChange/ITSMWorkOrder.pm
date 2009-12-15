@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.48 2009-12-14 22:57:42 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.49 2009-12-15 10:19:18 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.48 $) [1];
+$VERSION = qw($Revision: 1.49 $) [1];
 
 =head1 NAME
 
@@ -345,9 +345,11 @@ sub WorkOrderAdd {
 
 =item WorkOrderUpdate()
 
-Update a WorkOrder.
-Leading and trailing whitespace is removed from WorkOrderTitle.
-Passing undefined values is not allowed.
+Update a workorder.
+Leading and trailing whitespace is removed from C<WorkOrderTitle>.
+Passing undefined values is generally not allowed. An exception
+are the parameters C<PlannedStartTime>, C<PlannedEndTime>, C<ActualStartTime>, and C<ActualEndTime>.
+There passing C<undef> indicates that the workorder time should be cleared.
 
     my $Success = $WorkOrderObject->WorkOrderUpdate(
         WorkOrderID      => 4,
@@ -361,17 +363,17 @@ Passing undefined values is not allowed.
         WorkOrderTypeID  => 161,                                       # (optional) or WorkOrderType => 'pir'
         WorkOrderType    => 'pir',                                     # (optional) or WorkOrderStateID => 161
         WorkOrderAgentID => 8,                                         # (optional)
-        PlannedStartTime => '2009-10-12 00:00:01',                     # (optional)
-        PlannedEndTime   => '2009-10-15 15:00:00',                     # (optional)
-        ActualStartTime  => '2009-10-14 00:00:01',                     # (optional)
-        ActualEndTime    => '2009-01-20 00:00:01',                     # (optional)
+        PlannedStartTime => '2009-10-12 00:00:01',                     # (optional) 'undef' indicates clearing
+        PlannedEndTime   => '2009-10-15 15:00:00',                     # (optional) 'undef' indicates clearing
+        ActualStartTime  => '2009-10-14 00:00:01',                     # (optional) 'undef' indicates clearing
+        ActualEndTime    => '2009-01-20 00:00:01',                     # (optional) 'undef' indicates clearing
         UserID           => 1,
     );
 
 constraints:
 
 xxxStartTime has to be before xxxEndTime. If just one of these parameters is passed
-the other time is retrieved from database
+the other time is retrieved from database.
 
 =cut
 
@@ -456,6 +458,14 @@ sub WorkOrderUpdate {
         },
         UserID => $Param{UserID},
     );
+
+    # Handle the special cases for the time
+    my $DefaultTimeStamp = '9999-01-01 00:00:00';
+    for my $TimeType (qw(ActualStartTime ActualEndTime PlannedStartTime PlannedEndTime)) {
+        if ( exists $Param{$TimeType} && !defined $Param{$TimeType} ) {
+            $Param{$TimeType} = $DefaultTimeStamp;
+        }
+    }
 
     # get old data to be given to post event handler
     my $WorkOrderData = $Self->WorkOrderGet(
@@ -2139,34 +2149,70 @@ sub _CheckTimestamps {
         UserID      => $Param{UserID},
     );
 
+    my $DefaultTimeStamp = '9999-01-01 00:00:00';
+
     # check times
     TYPE:
     for my $Type (qw(Actual Planned)) {
 
         # at least one of the start or end times is needed
-        next TYPE if !$Param{ $Type . 'StartTime' } && !$Param{ $Type . 'EndTime' };
-
-        # if only one time is given, get the other one from the workorder
-        my $StartTime = $Param{ $Type . 'StartTime' } || $WorkOrderData->{ $Type . 'StartTime' };
-        my $EndTime   = $Param{ $Type . 'EndTime' }   || $WorkOrderData->{ $Type . 'EndTime' };
+        next TYPE if !exists $Param{ $Type . 'StartTime' } && !exists $Param{ $Type . 'EndTime' };
 
         # for the log messages
         my $TypeLc = lc $Type;
 
-        # check for the reserved date
-        if ( $StartTime && $StartTime eq '9999-01-01 00:00:00' ) {
+        my $StartTime;
+        if ( !exists $Param{ $Type . 'StartTime' } ) {
+
+            # if a time is not given, get it from the workorder
+            $StartTime = $WorkOrderData->{ $Type . 'StartTime' };
+        }
+        elsif ( !defined $Param{ $Type . 'StartTime' } ) {
+
+            # special case for clearing the time
+            $StartTime = $DefaultTimeStamp;
+        }
+        elsif ( !$Param{ $Type . 'StartTime' } ) {
+
+            # if a time is not given, get it from the workorder
+            $StartTime = $WorkOrderData->{ $Type . 'StartTime' };
+        }
+        elsif ( $Param{ $Type . 'StartTime' } eq $DefaultTimeStamp ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
                 Message  => "The value $StartTime is invalid for the $TypeLc start time!",
             );
             return;
         }
-        if ( $EndTime && $EndTime eq '9999-01-01 00:00:00' ) {
+        else {
+            $StartTime = $Param{ $Type . 'StartTime' };
+        }
+
+        my $EndTime;
+        if ( !exists $Param{ $Type . 'EndTime' } ) {
+
+            # if a time is not given, get it from the workorder
+            $EndTime = $WorkOrderData->{ $Type . 'EndTime' };
+        }
+        elsif ( !defined $Param{ $Type . 'EndTime' } ) {
+
+            # special case for clearing the time
+            $EndTime = $DefaultTimeStamp;
+        }
+        elsif ( !$Param{ $Type . 'EndTime' } ) {
+
+            # if a time is not given, get it from the workorder
+            $EndTime = $WorkOrderData->{ $Type . 'EndTime' };
+        }
+        elsif ( $Param{ $Type . 'EndTime' } eq $DefaultTimeStamp ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
                 Message  => "The value $EndTime is invalid for the $TypeLc end time!",
             );
             return;
+        }
+        else {
+            $EndTime = $Param{ $Type . 'EndTime' };
         }
 
         # don't check actual start time when change has not ended yet
@@ -2181,18 +2227,22 @@ sub _CheckTimestamps {
             return;
         }
 
-        # remove all non-digit characters
-        $StartTime =~ s{ \D }{}xmsg;
-        $EndTime   =~ s{ \D }{}xmsg;
+        # check the ordering of the times, only in the non-default-case
+        if ( $StartTime ne $DefaultTimeStamp && $EndTime ne $DefaultTimeStamp ) {
 
-        # start time must be smaller than end time
-        if ( $StartTime >= $EndTime ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message =>
-                    "The $TypeLc start time '$StartTime' must be before the $TypeLc end time '$EndTime'!",
-            );
-            return;
+            # remove all non-digit characters
+            $StartTime =~ s{ \D }{}xmsg;
+            $EndTime   =~ s{ \D }{}xmsg;
+
+            # start time must be smaller than end time
+            if ( $StartTime >= $EndTime ) {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message =>
+                        "The $TypeLc start time '$StartTime' must be before the $TypeLc end time '$EndTime'!",
+                );
+                return;
+            }
         }
     }
 
@@ -2227,6 +2277,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.48 $ $Date: 2009-12-14 22:57:42 $
+$Revision: 1.49 $ $Date: 2009-12-15 10:19:18 $
 
 =cut

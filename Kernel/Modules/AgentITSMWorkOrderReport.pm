@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderReport.pm - the OTRS::ITSM::ChangeManagement workorder report module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderReport.pm,v 1.18 2009-12-14 16:42:11 bes Exp $
+# $Id: AgentITSMWorkOrderReport.pm,v 1.19 2009-12-15 10:19:18 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -112,13 +112,14 @@ sub Run {
 
         # validate the actual time related parameters
         if ( $Self->{Config}->{ActualTimeSpan} ) {
-            TIME_TYPE:
             for my $TimeType (qw(ActualStartTime ActualEndTime)) {
 
-                # only when the checkbutton has been checked
-                next TIME_TYPE if !$GetParam{ $TimeType . 'Used' };
+                if ( !$GetParam{ $TimeType . 'Used' } ) {
 
-                if (
+                    # when the button was not checked, then clear the time
+                    $GetParam{$TimeType} = undef;
+                }
+                elsif (
                     $GetParam{ $TimeType . 'Year' }
                     && $GetParam{ $TimeType . 'Month' }
                     && $GetParam{ $TimeType . 'Day' }
@@ -157,13 +158,13 @@ sub Run {
         # update only when there are no input validation errors
         if ( !%ValidationError ) {
 
-            # the time related fields are configurable
+            # the actual time related fields are configurable
             my %AdditionalParam;
             if ( $Self->{Config}->{ActualTimeSpan} ) {
                 for my $TimeType (qw(ActualStartTime ActualEndTime)) {
-                    if ( $GetParam{$TimeType} ) {
-                        $AdditionalParam{$TimeType} = $GetParam{$TimeType};
-                    }
+
+                    # $GetParam{$TimeType} is either a valid timestamp or undef
+                    $AdditionalParam{$TimeType} = $GetParam{$TimeType};
                 }
             }
 
