@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.49 2009-12-15 10:19:18 bes Exp $
+# $Id: ITSMWorkOrder.pm,v 1.50 2009-12-15 11:57:45 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.49 $) [1];
+$VERSION = qw($Revision: 1.50 $) [1];
 
 =head1 NAME
 
@@ -447,8 +447,17 @@ sub WorkOrderUpdate {
     # check the given parameters
     return if !$Self->_CheckWorkOrderParams(%Param);
 
+    # get old data to be given to _CheckWorkOrderParams() and the post event handler
+    my $WorkOrderData = $Self->WorkOrderGet(
+        WorkOrderID => $Param{WorkOrderID},
+        UserID      => $Param{UserID},
+    );
+
     # check if the timestamps are correct
-    return if !$Self->_CheckTimestamps(%Param);
+    return if !$Self->_CheckTimestamps(
+        %Param,
+        WorkOrderData => $WorkOrderData,
+    );
 
     # trigger WorkOrderUpdatePre-Event
     $Self->EventHandler(
@@ -466,12 +475,6 @@ sub WorkOrderUpdate {
             $Param{$TimeType} = $DefaultTimeStamp;
         }
     }
-
-    # get old data to be given to post event handler
-    my $WorkOrderData = $Self->WorkOrderGet(
-        WorkOrderID => $Param{WorkOrderID},
-        UserID      => $Param{UserID},
-    );
 
     # map update attributes to column names
     my %Attribute = (
@@ -2116,16 +2119,17 @@ sub _CheckWorkOrderParams {
 Checks the constraints of timestamps: xxxStartTime must be before xxxEndTime
 
     my $Ok = $WorkOrderObject->_CheckTimestamps(
-        WorkOrderID      => 123,
-        PlannedStartTime => '2009-10-12 00:00:01',                     # (optional)
-        PlannedEndTime   => '2009-10-15 15:00:00',                     # (optional)
-        ActualStartTime  => '2009-10-14 00:00:01',                     # (optional)
-        ActualEndTime    => '2009-01-20 00:00:01',                     # (optional)
-        UserID           => 1,
+        WorkOrderData    => $WorkOrderData,
+        PlannedStartTime => '2009-10-12 00:00:01',     # (optional) or undef
+        PlannedEndTime   => '2009-10-15 15:00:00',     # (optional) or undef
+        ActualStartTime  => '2009-10-14 00:00:01',     # (optional) or undef
+        ActualEndTime    => '2009-01-20 00:00:01',     # (optional) or undef
     );
 
 If PlannedStartTime is given, PlannedEndTime has to be given, too - and vice versa.
-If ActualStartTime, ActualEndTime is optional.
+If ActualStartTime is given ActualEndTime is optional.
+But if ActualEndTime is given then ActualStartTime has to be given, too.
+WorkOrderData is only passed for improving the performance.
 
 =cut
 
@@ -2133,7 +2137,7 @@ sub _CheckTimestamps {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(WorkOrderID UserID)) {
+    for my $Argument (qw(WorkOrderData)) {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -2142,12 +2146,6 @@ sub _CheckTimestamps {
             return;
         }
     }
-
-    # get workorder data
-    my $WorkOrderData = $Self->WorkOrderGet(
-        WorkOrderID => $Param{WorkOrderID},
-        UserID      => $Param{UserID},
-    );
 
     my $DefaultTimeStamp = '9999-01-01 00:00:00';
 
@@ -2165,7 +2163,7 @@ sub _CheckTimestamps {
         if ( !exists $Param{ $Type . 'StartTime' } ) {
 
             # if a time is not given, get it from the workorder
-            $StartTime = $WorkOrderData->{ $Type . 'StartTime' };
+            $StartTime = $Param{WorkOrderData}->{ $Type . 'StartTime' };
         }
         elsif ( !defined $Param{ $Type . 'StartTime' } ) {
 
@@ -2175,7 +2173,7 @@ sub _CheckTimestamps {
         elsif ( !$Param{ $Type . 'StartTime' } ) {
 
             # if a time is not given, get it from the workorder
-            $StartTime = $WorkOrderData->{ $Type . 'StartTime' };
+            $StartTime = $Param{WorkOrderData}->{ $Type . 'StartTime' };
         }
         elsif ( $Param{ $Type . 'StartTime' } eq $DefaultTimeStamp ) {
             $Self->{LogObject}->Log(
@@ -2192,7 +2190,7 @@ sub _CheckTimestamps {
         if ( !exists $Param{ $Type . 'EndTime' } ) {
 
             # if a time is not given, get it from the workorder
-            $EndTime = $WorkOrderData->{ $Type . 'EndTime' };
+            $EndTime = $Param{WorkOrderData}->{ $Type . 'EndTime' };
         }
         elsif ( !defined $Param{ $Type . 'EndTime' } ) {
 
@@ -2202,7 +2200,7 @@ sub _CheckTimestamps {
         elsif ( !$Param{ $Type . 'EndTime' } ) {
 
             # if a time is not given, get it from the workorder
-            $EndTime = $WorkOrderData->{ $Type . 'EndTime' };
+            $EndTime = $Param{WorkOrderData}->{ $Type . 'EndTime' };
         }
         elsif ( $Param{ $Type . 'EndTime' } eq $DefaultTimeStamp ) {
             $Self->{LogObject}->Log(
@@ -2277,6 +2275,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.49 $ $Date: 2009-12-15 10:19:18 $
+$Revision: 1.50 $ $Date: 2009-12-15 11:57:45 $
 
 =cut
