@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAdd.pm - the OTRS::ITSM::ChangeManagement workorder add module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.pm,v 1.22 2009-11-23 13:03:08 bes Exp $
+# $Id: AgentITSMWorkOrderAdd.pm,v 1.23 2009-12-15 10:39:44 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,9 +16,11 @@ use warnings;
 
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
+use Kernel::System::VirtualFS;
+use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -35,11 +37,21 @@ sub new {
     }
 
     # create needed objects
-    $Self->{ChangeObject}    = Kernel::System::ITSMChange->new(%Param);
-    $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
+    $Self->{ChangeObject}      = Kernel::System::ITSMChange->new(%Param);
+    $Self->{WorkOrderObject}   = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
+    $Self->{VirtualFSObject}   = Kernel::System::VirtualFS->new(%Param);
+    $Self->{UploadCacheObject} = Kernel::System::Web::UploadCache->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
+
+    # get form id
+    $Self->{FormID} = $Self->{ParamObject}->GetParam( Param => 'FormID' );
+
+    # create form id
+    if ( !$Self->{FormID} ) {
+        $Self->{FormID} = $Self->{UploadCacheObject}->FormIDCreate();
+    }
 
     return $Self;
 }
@@ -89,7 +101,7 @@ sub Run {
 
     # store needed parameters in %GetParam to make it reloadable
     my %GetParam;
-    for my $ParamName (qw(WorkOrderTitle Instruction WorkOrderTypeID)) {
+    for my $ParamName (qw(WorkOrderTitle Instruction WorkOrderTypeID SaveAttachment)) {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
@@ -98,6 +110,24 @@ sub Run {
         for my $TimePart (qw(Year Month Day Hour Minute)) {
             my $ParamName = $TimeType . $TimePart;
             $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+        }
+    }
+
+    # reset subaction
+    if ( $GetParam{SaveAttachment} ) {
+        $Self->{Subaction} = 'SaveAttachment';
+    }
+
+    # get all attachments meta data
+    my @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
+        FormID => $Self->{FormID},
+    );
+
+    # check if attachment should be deleted
+    for my $Attachment (@Attachments) {
+        if ( $Self->{ParamObject}->GetParam( Param => 'DeleteAttachment' . $Attachment->{FileID} ) )
+        {
+            $Self->{Subaction} = 'DeleteAttachment';
         }
     }
 
@@ -181,6 +211,39 @@ sub Run {
 
             if ($WorkOrderID) {
 
+                # move attachments from cache to virtual fs
+                my @CachedAttachments = $Self->{UploadCacheObject}->FormIDGetAllFilesData(
+                    FormID => $Self->{FormID},
+                );
+
+                for my $CachedAttachment (@CachedAttachments) {
+                    my $Success = $Self->{VirtualFSObject}->Write(
+                        Filename    => "WorkOrder/$WorkOrderID/" . $CachedAttachment->{Filename},
+                        Mode        => 'binary',
+                        Content     => \$CachedAttachment->{Content},
+                        Preferences => {
+                            ContentID   => $CachedAttachment->{ContentID},
+                            ContentType => $CachedAttachment->{ContentType},
+                            WorkOrderID => $WorkOrderID,
+                        },
+                    );
+
+                    # delete file from cache if move was successful
+                    if ($Success) {
+                        $Self->{UploadCacheObject}->FormIDRemoveFile(
+                            FormID => $Self->{FormID},
+                            FileID => $CachedAttachment->{FileID},
+                        );
+                    }
+                    else {
+                        $Self->{LogObject}->Log(
+                            Priority => 'error',
+                            Message  => 'Cannot move File from Cache to VirtualFS'
+                                . "(${$CachedAttachment}{Filename})",
+                        );
+                    }
+                }
+
                 # redirect to zoom mask, when adding was successful
                 return $Self->{LayoutObject}->Redirect(
                     OP => "Action=AgentITSMWorkOrderZoom&WorkOrderID=$WorkOrderID",
@@ -196,6 +259,54 @@ sub Run {
             }
         }
     }
+
+    # handle saveattachment subaction
+    elsif ( $Self->{Subaction} eq 'SaveAttachment' ) {
+        my %UploadStuff = $Self->{ParamObject}->GetUploadAll(
+            Param  => "AttachmentNew",
+            Source => 'string',
+        );
+        $Self->{UploadCacheObject}->FormIDAddFile(
+            FormID => $Self->{FormID},
+            %UploadStuff,
+        );
+
+        # reload attachment list
+        @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
+            FormID => $Self->{FormID},
+        );
+    }
+
+    # handle attachment deletion
+    elsif ( $Self->{Subaction} eq 'DeleteAttachment' ) {
+
+        # check if attachment should be deleted
+        for my $Attachment (@Attachments) {
+            if (
+                $Self->{ParamObject}
+                ->GetParam( Param => 'DeleteAttachment' . $Attachment->{FileID} )
+                )
+            {
+
+                # delete attachment
+                $Self->{UploadCacheObject}->FormIDRemoveFile(
+                    FormID => $Self->{FormID},
+                    FileID => $Attachment->{FileID},
+                );
+            }
+
+            # reload attachment list
+            @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
+                FormID => $Self->{FormID},
+            );
+        }
+
+    }
+
+    # get all attachments meta data
+    @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
+        FormID => $Self->{FormID},
+    );
 
     # output header
     my $Output = $Self->{LayoutObject}->Header(
@@ -284,6 +395,16 @@ sub Run {
         );
     }
 
+    # show attachments
+    for my $Attachment (@Attachments) {
+        $Self->{LayoutObject}->Block(
+            Name => 'AttachmentRow',
+            Data => {
+                %{$Attachment},
+            },
+        );
+    }
+
     # start template output
     $Output .= $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentITSMWorkOrderAdd',
@@ -291,6 +412,7 @@ sub Run {
             %Param,
             %{$Change},
             %GetParam,
+            FormID => $Self->{FormID},
         },
     );
 
