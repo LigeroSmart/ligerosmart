@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderEdit.dtl - provides HTML form for AgentITSMWorkOrderEdit
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderEdit.dtl,v 1.28 2009-12-14 15:30:07 mae Exp $
+# $Id: AgentITSMWorkOrderEdit.dtl,v 1.29 2009-12-15 11:58:29 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -151,14 +151,14 @@ $Include{"RichTextEditorITSM"}
                                         <table width="100%" cellspacing="0" cellpadding="0">
 <!-- dtl:block:AttachmentRow -->
                                             <tr>
-                                                <td>$QData{"AttachmentName"}</td>
-                                                <td>$QData{"AttachmentSize"}</td>
-<!-- TODO: set correct name for Delete button with unique name -->
-                                                <td><input class="button" type="submit" name="DeleteAttachmentxxx" value="$Text{"Delete"}"></td>
+                                                <td>$QData{"Filename"}</td>
+                                                <td width="16"><a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=DownloadAttachment;FileID=$QData{"FileID"};WorkOrderID=$QData{"WorkOrderID"}"><img src="$Config{"Frontend::ImagePath"}disk-s.png" border="0" alt="Download" title="Download"/></a></td>
+                                                <td>$QData{"Filesize"}</td>
+                                                <td width="100%"><input class="button" type="submit" name="DeleteAttachment$QData{"FileID"}" value="$Text{"Delete"}"></td>
                                             </tr>
 <!-- dtl:block:AttachmentRow -->
                                             <tr>
-                                                <td colspan="2"><input type="file" name="AttachmentNew"></td>
+                                                <td colspan="3"><input type="file" name="AttachmentNew"></td>
                                                 <td width="100%"><input type="submit" class="button" name="SaveAttachment" value="$Text{"Attach"}"></td>
                                             </tr>
                                         </table>

@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeEdit.pm - the OTRS::ITSM::ChangeManagement change edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.pm,v 1.32 2009-12-15 10:47:36 reb Exp $
+# $Id: AgentITSMChangeEdit.pm,v 1.33 2009-12-15 11:58:29 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
 use Kernel::System::VirtualFS;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.32 $) [1];
+$VERSION = qw($Revision: 1.33 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -302,7 +302,7 @@ sub Run {
                 Preferences => {
                     ContentType => $UploadStuff{ContentType},
                     ChangeID    => $ChangeID,
-                    }
+                },
             );
 
             # check for error

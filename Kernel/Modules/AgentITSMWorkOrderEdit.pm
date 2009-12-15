@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderEdit.pm - the OTRS::ITSM::ChangeManagement workorder edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderEdit.pm,v 1.26 2009-11-23 11:09:23 mae Exp $
+# $Id: AgentITSMWorkOrderEdit.pm,v 1.27 2009-12-15 11:58:29 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,9 +16,10 @@ use warnings;
 
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
+use Kernel::System::VirtualFS;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.26 $) [1];
+$VERSION = qw($Revision: 1.27 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -37,6 +38,7 @@ sub new {
     # create needed objects
     $Self->{ChangeObject}    = Kernel::System::ITSMChange->new(%Param);
     $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
+    $Self->{VirtualFSObject} = Kernel::System::VirtualFS->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMWorkOrder::Frontend::$Self->{Action}");
@@ -98,7 +100,7 @@ sub Run {
 
     # store needed parameters in %GetParam to make it reloadable
     my %GetParam;
-    for my $ParamName (qw(WorkOrderTitle Instruction)) {
+    for my $ParamName (qw(WorkOrderTitle Instruction SaveAttachment)) {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
@@ -107,6 +109,25 @@ sub Run {
         for my $TimePart (qw(Year Month Day Hour Minute)) {
             my $ParamName = $TimeType . $TimePart;
             $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+        }
+    }
+
+    # if attachment upload is requested
+    if ( $GetParam{SaveAttachment} ) {
+        $Self->{Subaction} = 'SaveAttachment';
+    }
+
+    # get all attachments meta data
+    my %Attachments = $Self->{VirtualFSObject}->Search(
+        Preferences => {
+            WorkOrderID => $WorkOrderID,
+        },
+    );
+
+    # check if attachment should be deleted
+    for my $AttachmentID ( keys %Attachments ) {
+        if ( $Self->{ParamObject}->GetParam( Param => 'DeleteAttachment' . $AttachmentID ) ) {
+            $Self->{Subaction} = 'DeleteAttachment';
         }
     }
 
@@ -194,6 +215,60 @@ sub Run {
             }
         }
     }
+
+    # handle attachment actions
+    elsif ( $Self->{Subaction} eq 'SaveAttachment' ) {
+        my %UploadStuff = $Self->{ParamObject}->GetUploadAll(
+            Param  => "AttachmentNew",
+            Source => 'string',
+        );
+
+        # write to virtual fs
+        if ( $UploadStuff{Filename} ) {
+            my $Success = $Self->{VirtualFSObject}->Write(
+                Filename    => "WorkOrder/$WorkOrderID/" . $UploadStuff{Filename},
+                Mode        => 'binary',
+                Content     => \$UploadStuff{Content},
+                Preferences => {
+                    ContentType => $UploadStuff{ContentType},
+                    WorkOrderID => $WorkOrderID,
+                },
+            );
+
+            # check for error
+            if ( !$Success ) {
+                push @ValidationErrors, 'InvalidAttachment';
+            }
+
+            # reload attachment list
+            %Attachments = $Self->{VirtualFSObject}->Search(
+                Preferences => {
+                    WorkOrderID => $WorkOrderID,
+                },
+            );
+        }
+    }
+    elsif ( $Self->{Subaction} eq 'DeleteAttachment' ) {
+        for my $AttachmentID ( keys %Attachments ) {
+            if ( $Self->{ParamObject}->GetParam( Param => 'DeleteAttachment' . $AttachmentID ) ) {
+
+                # delete attachment
+                $Self->{VirtualFSObject}->Delete(
+                    Filename => $Attachments{$AttachmentID},
+                );
+
+                # reload attachment list
+                %Attachments = $Self->{VirtualFSObject}->Search(
+                    Preferences => {
+                        WorkOrderID => $WorkOrderID,
+                    },
+                );
+
+                $Self->{Subaction} = 'DeleteAttachment';
+            }
+        }
+    }
+
     else {
 
         # delete all keys from GetParam when it is no Subaction
@@ -278,6 +353,29 @@ sub Run {
         # show validation error message
         $Self->{LayoutObject}->Block(
             Name => $BlockName,
+        );
+    }
+
+    # show attachments
+    for my $AttachmentID ( keys %Attachments ) {
+
+        # get info about file
+        my %AttachmentData = $Self->{VirtualFSObject}->Read(
+            Filename => $Attachments{$AttachmentID},
+            Mode     => 'binary',
+        );
+
+        my ($Filename) = $Attachments{$AttachmentID} =~ m{ \A WorkOrder / \d+ / (.*) \z }xms;
+
+        # show block
+        $Self->{LayoutObject}->Block(
+            Name => 'AttachmentRow',
+            Data => {
+                %{$WorkOrder},
+                %{ $AttachmentData{Preferences} },
+                Filename => $Filename,
+                FileID   => $AttachmentID,
+            },
         );
     }
 
