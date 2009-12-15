@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeEdit.pm - the OTRS::ITSM::ChangeManagement change edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.pm,v 1.31 2009-12-14 16:04:54 reb Exp $
+# $Id: AgentITSMChangeEdit.pm,v 1.32 2009-12-15 10:47:36 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
 use Kernel::System::VirtualFS;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.31 $) [1];
+$VERSION = qw($Revision: 1.32 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -296,7 +296,7 @@ sub Run {
         # write to virtual fs
         if ( $UploadStuff{Filename} ) {
             my $Success = $Self->{VirtualFSObject}->Write(
-                Filename    => $UploadStuff{Filename},
+                Filename    => "Change/$ChangeID/" . $UploadStuff{Filename},
                 Mode        => 'binary',
                 Content     => \$UploadStuff{Content},
                 Preferences => {
@@ -544,13 +544,15 @@ sub Run {
             Mode     => 'binary',
         );
 
+        my ($Filename) = $Attachments{$AttachmentID} =~ m{ \A Change / \d+ / (.*) \z }xms;
+
         # show block
         $Self->{LayoutObject}->Block(
             Name => 'AttachmentRow',
             Data => {
                 %{$Change},
                 %{ $AttachmentData{Preferences} },
-                Filename => $Attachments{$AttachmentID},
+                Filename => $Filename,
                 FileID   => $AttachmentID,
             },
         );

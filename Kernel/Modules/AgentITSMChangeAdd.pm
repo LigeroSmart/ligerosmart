@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.29 2009-12-14 14:37:26 reb Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.30 2009-12-15 10:47:36 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::VirtualFS;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.29 $) [1];
+$VERSION = qw($Revision: 1.30 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -355,7 +355,7 @@ sub Run {
 
                 for my $CachedAttachment (@CachedAttachments) {
                     my $Success = $Self->{VirtualFSObject}->Write(
-                        Filename    => $CachedAttachment->{Filename},
+                        Filename    => "Change/$ChangeID/" . $CachedAttachment->{Filename},
                         Mode        => 'binary',
                         Content     => \$CachedAttachment->{Content},
                         Preferences => {

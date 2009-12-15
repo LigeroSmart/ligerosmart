@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeZoom.pm - the OTRS::ITSM::ChangeManagement change zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.pm,v 1.34 2009-12-14 15:25:56 reb Exp $
+# $Id: AgentITSMChangeZoom.pm,v 1.35 2009-12-15 10:47:36 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::VirtualFS;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.34 $) [1];
+$VERSION = qw($Revision: 1.35 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -517,13 +517,15 @@ sub Run {
             Mode     => 'binary',
         );
 
+        my ($Filename) = $Attachments{$AttachmentID} =~ m{ \A Change / \d+ / (.*) \z }xms;
+
         # show block
         $Self->{LayoutObject}->Block(
             Name => 'AttachmentRow',
             Data => {
                 %{$Change},
                 %{ $AttachmentData{Preferences} },
-                Filename => $Attachments{$AttachmentID},
+                Filename => $Filename,
                 FileID   => $AttachmentID,
             },
         );
