@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.204 2009-12-15 09:27:52 bes Exp $
+# $Id: ITSMChange.pm,v 1.205 2009-12-15 16:05:48 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,7 +27,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.204 $) [1];
+$VERSION = qw($Revision: 1.205 $) [1];
 
 =head1 NAME
 
@@ -1874,7 +1874,7 @@ sub ChangeStateLookup {
 This method returns a list of possible change states.
 If ChangeID is omitted, the complete list of change states is returned.
 If ChangeID is given, the list of possible change states for this
-change is returned (to be implemented!)
+change is returned.
 
     my $ChangeStateList = $ChangeObject->ChangePossibleStatesGet(
         ChangeID => 123,    # optional
@@ -2709,6 +2709,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.204 $ $Date: 2009-12-15 09:27:52 $
+$Revision: 1.205 $ $Date: 2009-12-15 16:05:48 $
 
 =cut

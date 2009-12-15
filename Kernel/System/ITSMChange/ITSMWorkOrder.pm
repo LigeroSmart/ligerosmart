@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.50 2009-12-15 11:57:45 bes Exp $
+# $Id: ITSMWorkOrder.pm,v 1.51 2009-12-15 16:05:48 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.50 $) [1];
+$VERSION = qw($Revision: 1.51 $) [1];
 
 =head1 NAME
 
@@ -1454,7 +1454,7 @@ sub WorkOrderStateLookup {
 This method returns a list of possible workorder states.
 If WorkOrderID is omitted, the complete list of change states is returned.
 If WorkOrderID is given, the list of possible change states for this
-workorder is returned (to be implemented!)
+workorder is returned.
 
     my $WorkOrderStateList = $WorkOrderObject->WorkOrderPossibleStatesGet(
         WorkOrderID => 123, # optional
@@ -2275,6 +2275,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.50 $ $Date: 2009-12-15 11:57:45 $
+$Revision: 1.51 $ $Date: 2009-12-15 16:05:48 $
 
 =cut
