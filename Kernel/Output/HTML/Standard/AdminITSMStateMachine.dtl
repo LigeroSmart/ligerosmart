@@ -1,0 +1,137 @@
+# --
+# AdminITSMStateMachine.dtl - provides HTML form for AdminITSMStateMachine
+# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# --
+# $Id: AdminITSMStateMachine.dtl,v 1.1 2009-12-15 15:10:40 bes Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<!-- dtl:block:Overview -->
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+    <colgroup>
+        <col width="30%">
+        <col width="70%">
+    </colgroup>
+    <tr>
+        <td colspan="2" class="mainhead">
+            $Env{"Box0"}$Text{"Admin State Machine"}$Env{"Box1"}
+        </td>
+    </tr>
+    <tr>
+        <td class="mainbody">
+            <form action="$Env{"CGIHandle"}" method="post">
+                <input type="hidden" name="Action" value="$Env{"Action"}"/>
+                <input type="hidden" name="Subaction" value="AddStateTransition"/>
+                <table width="100%" cellspacing="0" cellpadding="4">
+                    <tr>
+                        <td class="contenthead">$Text{"Add State Transition"}:</td>
+                    </tr>
+                    <tr>
+                        <td class="contentbody">
+                            $Text{"Add a new state transition."}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="contentfooter">
+                            <input class="button" type="submit" value="$Text{"Add"}"/>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </td>
+        <td class="mainbody">
+<!-- dtl:block:OverviewResult -->
+            <table width="100%" cellspacing="0" cellpadding="4">
+                <tr>
+                    <td class="contenthead">$Text{"Overview over all possible state transitions"}:</td>
+                </tr>
+                <tr>
+                    <td class="contentbody">
+                        <table width="100%" border="0" cellspacing="0" cellpadding="3">
+                            <tr>
+                                <td class="contentkey">$Text{"Class"}</td>
+                                <td class="contentkey">$Text{"State"}</td>
+                                <td class="contentkey">$Text{"Next State"}</td>
+                                <td class="contentkey"></td>
+                            </tr>
+<!-- dtl:block:OverviewResultRow -->
+                            <tr>
+                                <td class="$QData{"CssClass"}">$QData{"Class"}</td>
+                                <td class="$QData{"CssClass"}">
+<!-- dtl:block:OverviewResultRowRegularState -->
+<!--img border="0" src="$Config{"Frontend::ImagePath"}$QData{"StateSignal"}.png" alt="$Text{"$QData{"State"} ($QData{"StateID"})"}">&nbsp;-->$Text{"$QData{"StateName"}"}
+<!-- dtl:block:OverviewResultRowRegularState -->
+<!-- dtl:block:OverviewResultRowSpecialState -->
+                                    $QData{"StateID"}
+<!-- dtl:block:OverviewResultRowSpecialState -->
+                                </td>
+                                <td class="$QData{"CssClass"}">
+<!-- dtl:block:OverviewResultRowRegularNextState -->
+<!--img border="0" src="$Config{"Frontend::ImagePath"}$QData{"StateSignal"}.png" alt="$Text{"$QData{"State"} ($QData{"StateID"})"}">&nbsp;-->$Text{"$QData{"StateName"}"}
+<!-- dtl:block:OverviewResultRowRegularNextState -->
+<!-- dtl:block:OverviewResultRowSpecialNextState -->
+                                    $QData{"StateID"}
+<!-- dtl:block:OverviewResultRowSpecialNextState -->
+                                </td>
+                                <td class="$QData{"CssClass"}"><!--TODO: Edit, Delete--></td>
+                            </tr>
+<!-- dtl:block:OverviewResultRow -->
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="contentfooter">
+                        &nbsp;
+                    </td>
+                </tr>
+            </table>
+<!-- dtl:block:OverviewResult -->
+<!-- dtl:block:OverviewUpdate -->
+            <form action="$Env{"CGIHandle"}" method="post" name="GroupUpdate">
+                <input type="hidden" name="Action"    value="$Env{"Action"}"/>
+                <input type="hidden" name="Subaction" value="$QData{"Action"}Action"/>
+                <input type="hidden" name="ID"        value="$QData{"ID"}"/>
+                <input type="hidden" name="NameOld"   value="$QData{"Name"}"/>
+                <table width="100%" cellspacing="0" cellpadding="4">
+                    <tr>
+                        <td class="contenthead">
+                            $Text{"Edit"} ($Text{"$QData{"Action"}"}):
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="contentbody">
+                            <table border="0" cellspacing="0" cellpadding="3">
+                                <tr>
+                                    <td class="contentkey">$Text{"Name"}: </td>
+                                    <td class="contentvalue">
+                                        <input type="text" name="Name" value="$QData{"Name"}" size="50" maxlength="50"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="contentkey">$Text{"Valid"}: </td>
+                                    <td class="contentvalue">$Data{"ValidOption"}</td>
+                                </tr>
+                                <tr>
+                                    <td class="contentkey">$Text{"Comment"}: </td>
+                                    <td class="contentvalue">
+                                        <input type="text" name="Comment" value="$QData{"Comment"}" size="60" maxlength="150"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="contentfooter">
+                            <input class="button" type="submit" value="$Text{"Submit"}" onclick="return AdminGroupCheck();" />
+                        </td>
+                    </tr>
+                </table>
+            </form>
+<!-- dtl:block:OverviewUpdate -->
+        </td>
+    </tr>
+</table>
+<!-- dtl:block:Overview -->

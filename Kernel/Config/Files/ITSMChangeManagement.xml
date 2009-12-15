@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.113 2009-12-14 22:53:22 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.114 2009-12-15 15:10:40 bes Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -17,6 +17,26 @@
                     <Name>Category &lt;-&gt; Impact &lt;-&gt; Priority</Name>
                     <Block>Block3</Block>
                     <Prio>431</Prio>
+                </NavBarModule>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AdminITSMStateMachine" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AdminITSMStateMachine configuration in the admin area.</Description>
+        <Description Lang="de">Frontendmodul-Registration der AdminITSMStateMachine Konfiguration im Admin-Bereich.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Admin::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Group>admin</Group>
+                <Description>Admin of the state machine</Description>
+                <Title>State Machine</Title>
+                <NavBarName>Admin</NavBarName>
+                <NavBarModule>
+                    <Module>Kernel::Output::HTML::NavBarModuleAdmin</Module>
+                    <Name>State Machine</Name>
+                    <Block>Block3</Block>
+                    <Prio>433</Prio>
                 </NavBarModule>
             </FrontendModuleReg>
         </Setting>
