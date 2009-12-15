@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.203 2009-12-15 08:55:47 bes Exp $
+# $Id: ITSMChange.pm,v 1.204 2009-12-15 09:27:52 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,7 +27,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.203 $) [1];
+$VERSION = qw($Revision: 1.204 $) [1];
 
 =head1 NAME
 
@@ -290,8 +290,10 @@ sub ChangeAdd {
 =item ChangeUpdate()
 
 Update a change.
-Leading and trailing whitespace is removed from ChangeTitle.
-Passing undefined values is not allowed.
+Leading and trailing whitespace is removed from C<ChangeTitle>.
+Passing undefined values is generally not allowed.
+An exception is the parameter C<RequestedTime>, where the undefined value
+indicates that requested time of the change should be cleared.
 
     my $Success = $ChangeObject->ChangeUpdate(
         ChangeID        => 123,
@@ -308,9 +310,9 @@ Passing undefined values is not allowed.
         Impact          => '4 high',                           # (optional) or ImpactID => 5
         PriorityID      => 9,                                  # (optional) or Priority => '5 very high'
         Priority        => '5 very high',                      # (optional) or PriorityID => 6
-        CABAgents       => [ 1, 2, 4 ],     # UserIDs          # (optional)
-        CABCustomers    => [ 'tt', 'mm' ],  # CustomerUserIDs  # (optional)
-        RequestedTime   => '2006-01-19 23:59:59',              # (optional)
+        CABAgents       => [ 1, 2, 4 ],                        # (optional) UserIDs
+        CABCustomers    => [ 'tt', 'mm' ],                     # (optional) CustomerUserIDs
+        RequestedTime   => '2006-01-19 23:59:59',              # (optional) or 'undef', which clears the time
         UserID          => 1,
     );
 
@@ -2707,6 +2709,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.203 $ $Date: 2009-12-15 08:55:47 $
+$Revision: 1.204 $ $Date: 2009-12-15 09:27:52 $
 
 =cut
