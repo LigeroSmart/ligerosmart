@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.31 2009-12-16 13:45:39 reb Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.32 2009-12-16 17:15:44 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,11 +17,10 @@ use warnings;
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
 use Kernel::System::LinkObject;
-use Kernel::System::VirtualFS;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.31 $) [1];
+$VERSION = qw($Revision: 1.32 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -41,7 +40,6 @@ sub new {
     $Self->{ChangeObject}      = Kernel::System::ITSMChange->new(%Param);
     $Self->{LinkObject}        = Kernel::System::LinkObject->new(%Param);
     $Self->{CIPAllocateObject} = Kernel::System::ITSMChange::ITSMChangeCIPAllocate->new(%Param);
-    $Self->{VirtualFSObject}   = Kernel::System::VirtualFS->new(%Param);
     $Self->{UploadCacheObject} = Kernel::System::Web::UploadCache->new(%Param);
 
     # get config of frontend module
@@ -354,15 +352,9 @@ sub Run {
                 );
 
                 for my $CachedAttachment (@CachedAttachments) {
-                    my $Success = $Self->{VirtualFSObject}->Write(
-                        Filename    => "Change/$ChangeID/" . $CachedAttachment->{Filename},
-                        Mode        => 'binary',
-                        Content     => \$CachedAttachment->{Content},
-                        Preferences => {
-                            ContentID   => $CachedAttachment->{ContentID},
-                            ContentType => $CachedAttachment->{ContentType},
-                            ChangeID    => $ChangeID,
-                        },
+                    my $Success = $Self->{ChangeObject}->ChangeAttachmentAdd(
+                        %{$CachedAttachment},
+                        ChangeID => $ChangeID,
                     );
 
                     # delete file from cache if move was successful
@@ -400,11 +392,13 @@ sub Run {
     # handle attachment downloads
     elsif ( $Self->{Subaction} eq 'DownloadAttachment' ) {
 
-        # get filename
-        my $Filename = $Attachments{ $GetParam{FileID} };
+        # get data for attachment
+        my $AttachmentData = $Self->{ChangeObject}->ChangeAttachmentGet(
+            FileID => $GetParam{FileID},
+        );
 
         # return error if file does not exist
-        if ( !$Filename ) {
+        if ( !$AttachmentData ) {
             $Self->{LogObject}->Log(
                 Message  => "No such attachment ($GetParam{FileID})! May be an attack!!!",
                 Priority => 'error',
@@ -412,20 +406,9 @@ sub Run {
             return $Self->{LayoutObject}->ErrorScreen();
         }
 
-        # get data for attachment
-        my %AttachmentData = $Self->{VirtualFSObject}->Read(
-            Filename => $Filename,
-            Mode     => 'binary',
-        );
-
-        # remove extra information from filename
-        ( my $NameDisplayed = $Filename ) =~ s{ \A WorkOrder / \d+ / }{}xms;
-
         return $Self->{LayoutObject}->Attachment(
-            Filename    => $NameDisplayed,
-            Content     => ${ $AttachmentData{Content} },
-            ContentType => $AttachmentData{Preferences}->{ContentType},
-            Type        => 'attachment',
+            %{$AttachmentData},
+            Type => 'attachment',
         );
     }
 

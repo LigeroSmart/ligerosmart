@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeZoom.pm - the OTRS::ITSM::ChangeManagement change zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.pm,v 1.37 2009-12-16 14:04:30 reb Exp $
+# $Id: AgentITSMChangeZoom.pm,v 1.38 2009-12-16 17:15:44 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,10 +18,9 @@ use Kernel::System::LinkObject;
 use Kernel::System::CustomerUser;
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
-use Kernel::System::VirtualFS;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.37 $) [1];
+$VERSION = qw($Revision: 1.38 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -42,7 +41,6 @@ sub new {
     $Self->{CustomerUserObject} = Kernel::System::CustomerUser->new(%Param);
     $Self->{ChangeObject}       = Kernel::System::ITSMChange->new(%Param);
     $Self->{WorkOrderObject}    = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
-    $Self->{VirtualFSObject}    = Kernel::System::VirtualFS->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
@@ -96,12 +94,14 @@ sub Run {
     # handle DownloadAttachment
     if ( $Self->{Subaction} eq 'DownloadAttachment' ) {
 
-        # get filename
-        my $FileID = $Self->{ParamObject}->GetParam( Param => FileID );
-        my $Filename = $Attachments{$FileID};
+        # get data for attachment
+        my $FileID = $Self->{ParamObject}->GetParam( Param => 'FileID' );
+        my $AttachmentData = $Self->{ChangeObject}->ChangeAttachmentGet(
+            FileID => $FileID,
+        );
 
         # return error if file does not exist
-        if ( !$Filename ) {
+        if ( !$AttachmentData ) {
             $Self->{LogObject}->Log(
                 Message  => "No such attachment ($FileID)! May be an attack!!!",
                 Priority => 'error',
@@ -109,20 +109,9 @@ sub Run {
             return $Self->{LayoutObject}->ErrorScreen();
         }
 
-        # get data for attachment
-        my %AttachmentData = $Self->{VirtualFSObject}->Read(
-            Filename => $Filename,
-            Mode     => 'binary',
-        );
-
-        # remove extra information from filename
-        ( my $NameDisplayed = $Filename ) =~ s{ \A WorkOrder / \d+ / }{}xms;
-
         return $Self->{LayoutObject}->Attachment(
-            Filename    => $NameDisplayed,
-            Content     => ${ $AttachmentData{Content} },
-            ContentType => $AttachmentData{Preferences}->{ContentType},
-            Type        => 'attachment',
+            %{$AttachmentData},
+            Type => 'attachment',
         );
     }
 
@@ -530,30 +519,24 @@ sub Run {
     }
 
     # show attachments
-    my %Attachments = $Self->{VirtualFSObject}->Search(
-        Preferences => {
-            ChangeID => $Change->{ChangeID},
-        },
+    my %Attachments = $Self->{ChangeObject}->ChangeAttachmentList(
+        ChangeID => $Change->{ChangeID},
     );
 
+    # show attachments
     for my $AttachmentID ( keys %Attachments ) {
 
         # get info about file
-        my %AttachmentData = $Self->{VirtualFSObject}->Read(
-            Filename => $Attachments{$AttachmentID},
-            Mode     => 'binary',
+        my $AttachmentData = $Self->{ChangeObject}->ChangeAttachmentGet(
+            FileID => $AttachmentID,
         );
-
-        my ($Filename) = $Attachments{$AttachmentID} =~ m{ \A Change / \d+ / (.*) \z }xms;
 
         # show block
         $Self->{LayoutObject}->Block(
             Name => 'AttachmentRow',
             Data => {
                 %{$Change},
-                %{ $AttachmentData{Preferences} },
-                Filename => $Filename,
-                FileID   => $AttachmentID,
+                %{$AttachmentData},
             },
         );
     }

@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.205 2009-12-15 16:05:48 bes Exp $
+# $Id: ITSMChange.pm,v 1.206 2009-12-16 17:15:44 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,11 +23,12 @@ use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
 use Kernel::System::ITSMChange::ITSMStateMachine;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::HTMLUtils;
+use Kernel::System::VirtualFS;
 
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.205 $) [1];
+$VERSION = qw($Revision: 1.206 $) [1];
 
 =head1 NAME
 
@@ -112,6 +113,7 @@ sub new {
     $Self->{CustomerUserObject}   = Kernel::System::CustomerUser->new( %{$Self} );
     $Self->{HTMLUtilsObject}      = Kernel::System::HTMLUtils->new( %{$Self} );
     $Self->{StateMachineObject}   = Kernel::System::ITSMChange::ITSMStateMachine->new( %{$Self} );
+    $Self->{VirtualFSObject}      = Kernel::System::VirtualFS->new( %{$Self} );
     $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
     $Self->{CIPAllocateObject}    = Kernel::System::ITSMChange::ITSMChangeCIPAllocate->new(
         %{$Self},
@@ -2213,6 +2215,224 @@ sub Permission {
     return;
 }
 
+=item ChangeAttachmentAdd()
+
+Add an attachment to a given change
+
+    my $Success = $ChangeObject->ChangeAttachmentAdd(
+        ChangeID    => 123,
+        Filename    => 'filename,
+        Content     => 'content',
+        ContentID   => 'some_content@id',
+        ContentType => 'text/plain',
+    );
+
+=cut
+
+sub ChangeAttachmentAdd {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Needed (qw(ChangeID Filename Content ContentID ContentType)) {
+        if ( !$Param{$Needed} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => 'Need FileID!',
+            );
+
+            return;
+        }
+    }
+
+    my $Success = $Self->{VirtualFSObject}->Write(
+        Filename    => "Change/$Param{ChangeID}/" . $Param{Filename},
+        Mode        => 'binary',
+        Content     => \$Param{Content},
+        Preferences => {
+            ContentID   => $Param{ContentID},
+            ContentType => $Param{ContentType},
+            ChangeID    => $Param{ChangeID},
+        },
+    );
+
+    if ($Success) {
+
+        # TODO: trigger ChangeAttachmentAdd event
+    }
+    else {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Cannot add attachment for change $Param{ChangeID}",
+        );
+
+        return;
+    }
+
+    return 1;
+}
+
+=item ChangeAttachmentDelete()
+
+Delete a given file from virtual fs.
+
+    my $Success = $ChangeObject->ChangeAttachmentDelete(
+        FileID => 1234,
+    );
+
+=cut
+
+sub ChangeAttachmentDelete {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    if ( !$Param{FileID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need FileID!',
+        );
+
+        return;
+    }
+
+    # search for attachments
+    my %Attachments = $Self->{VirtualFSObject}->Search(
+        FileID => $Param{FileID},
+    );
+
+    # get filename
+    my $Filename = $Attachments{ $Param{FileID} };
+
+    # delete file
+    my $Success = $Self->{VirtualFSObject}->Delete(
+        Filename => $Filename,
+    );
+
+    # trigger 'ChangeAttachmentDelete' event
+    # TODO: trigger event
+
+    return $Success;
+}
+
+=item ChangeAttachmentGet()
+
+This method returns information about one specific attachment.
+
+    my $Attachment = $ChangeObject->ChangeAttachmentGet(
+        FileID => 123,
+    );
+
+returns
+
+    {
+        Preferences => {
+            AllPreferences => 'test',
+        },
+        Filename    => 'test.txt',
+        Content     => 'hallo',
+        ContentType => 'text/plain',
+        Filesize    => '123 KBytes',
+        Type        => 'attachment',
+    }
+
+=cut
+
+sub ChangeAttachmentGet {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    if ( !$Param{FileID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need FileID!',
+        );
+
+        return;
+    }
+
+    # search for attachments
+    my %Attachments = $Self->{VirtualFSObject}->Search(
+        FileID => $Param{FileID},
+    );
+
+    # get filename
+    my $Filename = $Attachments{ $Param{FileID} };
+
+    # return error if file does not exist
+    if ( !$Filename ) {
+        $Self->{LogObject}->Log(
+            Message  => "No such attachment ($Param{FileID})! May be an attack!!!",
+            Priority => 'error',
+        );
+        return;
+    }
+
+    # get data for attachment
+    my %AttachmentData = $Self->{VirtualFSObject}->Read(
+        Filename => $Filename,
+        Mode     => 'binary',
+    );
+
+    # remove extra information from filename
+    ( my $NameDisplayed = $Filename ) =~ s{ \A Change / \d+ / }{}xms;
+
+    my $AttachmentInfo = {
+        %AttachmentData,
+        Filename    => $NameDisplayed,
+        Content     => ${ $AttachmentData{Content} },
+        ContentType => $AttachmentData{Preferences}->{ContentType},
+        Type        => 'attachment',
+        FileID      => $Param{FileID},
+        Filesize    => $AttachmentData{Preferences}->{Filesize},
+    };
+
+    return $AttachmentInfo;
+}
+
+=item ChangeAttachmentList()
+
+returns a hash with all attachments of a given change. The file id is the key
+and the filename is the value
+
+    my %Attachments = $ChangeObject->ChangeAttachmentList(
+        ChangeID => 123,
+    );
+
+returns
+
+    123 => 'filename.txt',
+    435 => 'other_file.pdf',
+
+=cut
+
+sub ChangeAttachmentList {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    if ( !$Param{ChangeID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need FileID!',
+        );
+
+        return;
+    }
+
+    # search for attachments
+    my %Attachments = $Self->{VirtualFSObject}->Search(
+        Preferences => {
+            ChangeID => $Param{ChangeID},
+        },
+    );
+
+    for my $FileID ( keys %Attachments ) {
+
+        # remove extra information from filename
+        $Attachments{$FileID} =~ s{ \A Change / \d+ / }{}xms;
+    }
+
+    return %Attachments;
+}
+
 =begin Internal:
 
 =item _CheckChangeStateIDs()
@@ -2709,6 +2929,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.205 $ $Date: 2009-12-15 16:05:48 $
+$Revision: 1.206 $ $Date: 2009-12-16 17:15:44 $
 
 =cut

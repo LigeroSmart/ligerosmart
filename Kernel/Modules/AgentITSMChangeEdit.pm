@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeEdit.pm - the OTRS::ITSM::ChangeManagement change edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.pm,v 1.34 2009-12-16 13:45:39 reb Exp $
+# $Id: AgentITSMChangeEdit.pm,v 1.35 2009-12-16 17:15:44 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,10 +16,9 @@ use warnings;
 
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
-use Kernel::System::VirtualFS;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.34 $) [1];
+$VERSION = qw($Revision: 1.35 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -38,7 +37,6 @@ sub new {
     # create needed objects
     $Self->{ChangeObject}      = Kernel::System::ITSMChange->new(%Param);
     $Self->{CIPAllocateObject} = Kernel::System::ITSMChange::ITSMChangeCIPAllocate->new(%Param);
-    $Self->{VirtualFSObject}   = Kernel::System::VirtualFS->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
@@ -121,10 +119,8 @@ sub Run {
     }
 
     # get all attachments meta data
-    my %Attachments = $Self->{VirtualFSObject}->Search(
-        Preferences => {
-            ChangeID => $ChangeID,
-        },
+    my %Attachments = $Self->{ChangeObject}->ChangeAttachmentList(
+        ChangeID => $ChangeID,
     );
 
     # check if attachment should be deleted
@@ -295,14 +291,9 @@ sub Run {
 
         # write to virtual fs
         if ( $UploadStuff{Filename} ) {
-            my $Success = $Self->{VirtualFSObject}->Write(
-                Filename    => "Change/$ChangeID/" . $UploadStuff{Filename},
-                Mode        => 'binary',
-                Content     => \$UploadStuff{Content},
-                Preferences => {
-                    ContentType => $UploadStuff{ContentType},
-                    ChangeID    => $ChangeID,
-                },
+            my $Success = $Self->{ChangeObject}->ChangeAttachmentAdd(
+                %UploadStuff,
+                ChangeID => $ChangeID,
             );
 
             # check for error
@@ -311,10 +302,8 @@ sub Run {
             }
 
             # reload attachment list
-            %Attachments = $Self->{VirtualFSObject}->Search(
-                Preferences => {
-                    ChangeID => $ChangeID,
-                },
+            %Attachments = $Self->{ChangeObject}->ChangeAttachmentList(
+                ChangeID => $ChangeID,
             );
         }
     }
@@ -323,15 +312,13 @@ sub Run {
             if ( $Self->{ParamObject}->GetParam( Param => 'DeleteAttachment' . $AttachmentID ) ) {
 
                 # delete attachment
-                $Self->{VirtualFSObject}->Delete(
-                    Filename => $Attachments{$AttachmentID},
+                $Self->{ChangeObject}->ChangeAttachmentDelete(
+                    FileID => $AttachmentID,
                 );
 
                 # reload attachment list
-                %Attachments = $Self->{VirtualFSObject}->Search(
-                    Preferences => {
-                        ChangeID => $ChangeID,
-                    },
+                %Attachments = $Self->{ChangeObject}->ChangeAttachmentList(
+                    ChangeID => $ChangeID,
                 );
 
                 $Self->{Subaction} = 'DeleteAttachment';
@@ -342,11 +329,13 @@ sub Run {
     # handle attachment downloads
     elsif ( $Self->{Subaction} eq 'DownloadAttachment' ) {
 
-        # get filename
-        my $Filename = $Attachments{ $GetParam{FileID} };
+        # get data for attachment
+        my $AttachmentData = $Self->{ChangeObject}->ChangeAttachmentGet(
+            FileID => $GetParam{FileID},
+        );
 
         # return error if file does not exist
-        if ( !$Filename ) {
+        if ( !$AttachmentData ) {
             $Self->{LogObject}->Log(
                 Message  => "No such attachment ($GetParam{FileID})! May be an attack!!!",
                 Priority => 'error',
@@ -354,20 +343,9 @@ sub Run {
             return $Self->{LayoutObject}->ErrorScreen();
         }
 
-        # get data for attachment
-        my %AttachmentData = $Self->{VirtualFSObject}->Read(
-            Filename => $Filename,
-            Mode     => 'binary',
-        );
-
-        # remove extra information from filename
-        ( my $NameDisplayed = $Filename ) =~ s{ \A WorkOrder / \d+ / }{}xms;
-
         return $Self->{LayoutObject}->Attachment(
-            Filename    => $NameDisplayed,
-            Content     => ${ $AttachmentData{Content} },
-            ContentType => $AttachmentData{Preferences}->{ContentType},
-            Type        => 'attachment',
+            %{$AttachmentData},
+            Type => 'attachment',
         );
     }
 
@@ -571,21 +549,16 @@ sub Run {
     for my $AttachmentID ( keys %Attachments ) {
 
         # get info about file
-        my %AttachmentData = $Self->{VirtualFSObject}->Read(
-            Filename => $Attachments{$AttachmentID},
-            Mode     => 'binary',
+        my $AttachmentData = $Self->{ChangeObject}->ChangeAttachmentGet(
+            FileID => $AttachmentID,
         );
-
-        my ($Filename) = $Attachments{$AttachmentID} =~ m{ \A Change / \d+ / (.*) \z }xms;
 
         # show block
         $Self->{LayoutObject}->Block(
             Name => 'AttachmentRow',
             Data => {
                 %{$Change},
-                %{ $AttachmentData{Preferences} },
-                Filename => $Filename,
-                FileID   => $AttachmentID,
+                %{$AttachmentData},
             },
         );
     }
