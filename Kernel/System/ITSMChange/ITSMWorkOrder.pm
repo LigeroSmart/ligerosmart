@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.52 2009-12-16 19:25:09 reb Exp $
+# $Id: ITSMWorkOrder.pm,v 1.53 2009-12-16 20:45:44 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,12 +19,13 @@ use Kernel::System::LinkObject;
 use Kernel::System::User;
 use Kernel::System::Group;
 use Kernel::System::ITSMChange::ITSMStateMachine;
+use Kernel::System::VirtualFS;
 use Kernel::System::HTMLUtils;
 
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.52 $) [1];
+$VERSION = qw($Revision: 1.53 $) [1];
 
 =head1 NAME
 
@@ -108,6 +109,7 @@ sub new {
     $Self->{GroupObject}          = Kernel::System::Group->new( %{$Self} );
     $Self->{StateMachineObject}   = Kernel::System::ITSMChange::ITSMStateMachine->new( %{$Self} );
     $Self->{HTMLUtilsObject}      = Kernel::System::HTMLUtils->new( %{$Self} );
+    $Self->{VirtualFSObject}      = Kernel::System::VirtualFS->new( %{$Self} );
 
     # init of event handler
     $Self->EventHandlerInit(
@@ -1880,6 +1882,7 @@ Add an attachment to a given change
         Content     => 'content',
         ContentID   => 'some_content@id',
         ContentType => 'text/plain',
+        UserID      => 1,
     );
 
 =cut
@@ -1888,17 +1891,18 @@ sub WorkOrderAttachmentAdd {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Needed (qw(WorkOrderID Filename Content ContentID ContentType)) {
+    for my $Needed (qw(WorkOrderID Filename Content ContentType UserID ChangeID WorkOrderID)) {
         if ( !$Param{$Needed} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => 'Need FileID!',
+                Message  => "Need $Needed!",
             );
 
             return;
         }
     }
 
+    # write to virtual fs
     my $Success = $Self->{VirtualFSObject}->Write(
         Filename    => "WorkOrder/$Param{WorkOrderID}/" . $Param{Filename},
         Mode        => 'binary',
@@ -1907,17 +1911,26 @@ sub WorkOrderAttachmentAdd {
             ContentID   => $Param{ContentID},
             ContentType => $Param{ContentType},
             WorkOrderID => $Param{WorkOrderID},
+            UserID      => $Param{UserID},
         },
     );
 
+    # check for error
     if ($Success) {
 
-        # TODO: trigger WorkOrderAttachmentAdd event
+        # trigger AttachmentAdd-Event
+        $Self->EventHandler(
+            Event => 'AttachmentAddPost',
+            Data  => {
+                %Param,
+            },
+            UserID => $Param{UserID},
+        );
     }
     else {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Cannot add attachment for change $Param{WorkOrderID}",
+            Message  => "Cannot add attachment for workorder $Param{WorkOrderID}",
         );
 
         return;
@@ -1932,6 +1945,7 @@ Delete a given file from virtual fs.
 
     my $Success = $WorkOrderObject->WorkOrderAttachmentDelete(
         FileID => 1234,
+        UserID => 1,
     );
 
 =cut
@@ -1940,13 +1954,15 @@ sub WorkOrderAttachmentDelete {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    if ( !$Param{FileID} ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => 'Need FileID!',
-        );
+    for my $Needed (qw(FileID UserID ChangeID WorkOrderID)) {
+        if ( !$Param{$Needed} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Needed!",
+            );
 
-        return;
+            return;
+        }
     }
 
     # search for attachments
@@ -1962,8 +1978,29 @@ sub WorkOrderAttachmentDelete {
         Filename => $Filename,
     );
 
-    # trigger 'WorkOrderAttachmentDelete' event
-    # TODO: trigger event
+    $Filename =~ s{ \A WorkOrder / \d+ / }{}xms;
+
+    # check for error
+    if ($Success) {
+
+        # trigger AttachmentDeletePost-Event
+        $Self->EventHandler(
+            Event => 'AttachmentDeletePost',
+            Data  => {
+                %Param,
+                Filename => $Filename,
+            },
+            UserID => $Param{UserID},
+        );
+    }
+    else {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Cannot delete attachment $Param{FileID}!",
+        );
+
+        return;
+    }
 
     return $Success;
 }
@@ -2066,7 +2103,7 @@ sub WorkOrderAttachmentList {
     if ( !$Param{WorkOrderID} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'Need FileID!',
+            Message  => 'Need WorkOrderID!',
         );
 
         return;
@@ -2493,6 +2530,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.52 $ $Date: 2009-12-16 19:25:09 $
+$Revision: 1.53 $ $Date: 2009-12-16 20:45:44 $
 
 =cut

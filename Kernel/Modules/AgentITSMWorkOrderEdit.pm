@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderEdit.pm - the OTRS::ITSM::ChangeManagement workorder edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderEdit.pm,v 1.29 2009-12-16 19:25:09 reb Exp $
+# $Id: AgentITSMWorkOrderEdit.pm,v 1.30 2009-12-16 20:45:43 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.29 $) [1];
+$VERSION = qw($Revision: 1.30 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -224,6 +224,8 @@ sub Run {
             my $Success = $Self->{WorkOrderObject}->WorkOrderAttachmentAdd(
                 %UploadStuff,
                 WorkOrderID => $WorkOrderID,
+                ChangeID    => $WorkOrder->{ChangeID},
+                UserID      => $Self->{UserID},
             );
 
             # check for error
@@ -243,7 +245,10 @@ sub Run {
 
                 # delete attachment
                 $Self->{WorkOrderObject}->WorkOrderAttachmentDelete(
-                    FileID => $AttachmentID,
+                    FileID      => $AttachmentID,
+                    WorkOrderID => $WorkOrderID,
+                    ChangeID    => $WorkOrder->{ChangeID},
+                    UserID      => $Self->{UserID},
                 );
 
                 # reload attachment list

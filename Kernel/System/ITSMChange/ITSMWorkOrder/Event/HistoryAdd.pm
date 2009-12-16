@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder/Event/HistoryAdd.pm - HistoryAdd event module for WorkOrder
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: HistoryAdd.pm,v 1.16 2009-11-17 17:48:54 ub Exp $
+# $Id: HistoryAdd.pm,v 1.17 2009-12-16 20:45:44 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 =head1 NAME
 
@@ -246,6 +246,19 @@ sub Run {
         );
     }
 
+    # handle attachment events
+    elsif ( $HistoryType eq 'AttachmentAdd' || $HistoryType eq 'AttachmentDelete' ) {
+
+        # tell history that an attachment event was triggered
+        return if !$Self->{HistoryObject}->HistoryAdd(
+            HistoryType => $HistoryType,
+            ChangeID    => $Param{Data}->{ChangeID},
+            UserID      => $Param{UserID},
+            ContentNew  => $Param{Data}->{Filename},
+            WorkOrderID => $Param{Data}->{WorkOrderID},
+        );
+    }
+
     # error
     else {
 
@@ -332,6 +345,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.16 $ $Date: 2009-11-17 17:48:54 $
+$Revision: 1.17 $ $Date: 2009-12-16 20:45:44 $
 
 =cut

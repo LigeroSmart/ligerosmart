@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.82 2009-12-15 15:10:40 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.83 2009-12-16 20:44:52 reb Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -802,6 +802,22 @@
         </Insert>
         <Insert Table="change_history_type">
             <Data Key="name" Type="Quote">WorkOrderLinkDelete</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">AttachmentAdd</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">AttachmentDelete</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>

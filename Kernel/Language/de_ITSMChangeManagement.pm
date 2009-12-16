@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMChangeManagement.pm - the german translation of ITSMChangeManagement
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: de_ITSMChangeManagement.pm,v 1.13 2009-12-11 13:40:24 reb Exp $
+# $Id: de_ITSMChangeManagement.pm,v 1.14 2009-12-16 20:44:52 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -43,6 +43,8 @@ sub Data {
     $Lang->{'ChangeHistory::ChangeLinkDelete'} = 'Link zu %s (ID=%s) gelöscht';
     $Lang->{'ChangeHistory::ChangeCABUpdate'}  = 'CAB %s';
     $Lang->{'ChangeHistory::ChangeCABDelete'}  = 'CAB gelöscht %s';
+    $Lang->{'ChangeHistory::AttachmentAdd'}    = 'Neuer Anhang: %s';
+    $Lang->{'ChangeHistory::AttachmentDelete'} = 'Anhang gelöscht: %s';
 
     # WorkOrder history
     $Lang->{'WorkOrderHistory::WorkOrderAdd'}        = 'Neue Workorder (ID=%s)';
@@ -50,6 +52,8 @@ sub Data {
     $Lang->{'WorkOrderHistory::WorkOrderLinkAdd'}    = 'Link zu %s (ID=%s) hinzugefügt';
     $Lang->{'WorkOrderHistory::WorkOrderLinkDelete'} = 'Link to %s (ID=%s) gelöscht';
     $Lang->{'WorkOrderHistory::WorkOrderDelete'}     = 'Workorder (ID=%s) gelöscht';
+    $Lang->{'WorkOrderHistory::AttachmentAdd'}       = 'Neuer Anhang für Workorder: %s';
+    $Lang->{'WorkOrderHistory::AttachmentDelete'}    = 'Anhang von Workorder gelöscht: %s';
 
     # long WorkOrder history
     $Lang->{'WorkOrderHistory::WorkOrderAddWithWorkorderID'}        = 'Neue Workorder (ID=%s)';

@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAdd.pm - the OTRS::ITSM::ChangeManagement workorder add module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.pm,v 1.25 2009-12-16 19:25:09 reb Exp $
+# $Id: AgentITSMWorkOrderAdd.pm,v 1.26 2009-12-16 20:45:43 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.25 $) [1];
+$VERSION = qw($Revision: 1.26 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -218,6 +218,8 @@ sub Run {
                     my $Success = $Self->{WorkOrderObject}->WorkOrderAttachmentAdd(
                         %{$CachedAttachment},
                         WorkOrderID => $WorkOrderID,
+                        ChangeID    => $ChangeID,
+                        UserID      => $Self->{UserID},
                     );
 
                     # delete file from cache if move was successful
