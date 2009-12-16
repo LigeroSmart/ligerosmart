@@ -2,7 +2,7 @@
 # AdminITSMStateMachine.dtl - provides HTML form for AdminITSMStateMachine
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMStateMachine.dtl,v 1.2 2009-12-15 18:53:16 bes Exp $
+# $Id: AdminITSMStateMachine.dtl,v 1.3 2009-12-16 10:42:31 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -78,28 +78,24 @@
                                 <td class="contentkey">$Text{"Class"}</td>
                                 <td class="contentkey">$Text{"State"}</td>
                                 <td class="contentkey">$Text{"Next State"}</td>
-                                <td class="contentkey"></td>
+                                <td class="contentkey">$Text{"Delete"}</td>
                             </tr>
 <!-- dtl:block:OverviewResultRow -->
                             <tr>
                                 <td class="$QData{"CssClass"}">$QData{"Class"}</td>
                                 <td class="$QData{"CssClass"}">
-<!-- dtl:block:OverviewResultRowRegularState -->
-<!--img border="0" src="$Config{"Frontend::ImagePath"}$QData{"StateSignal"}.png" alt="$Text{"$QData{"State"} ($QData{"StateID"})"}">&nbsp;-->$Text{"$QData{"StateName"}"}
-<!-- dtl:block:OverviewResultRowRegularState -->
-<!-- dtl:block:OverviewResultRowSpecialState -->
-                                    $QData{"StateID"}
-<!-- dtl:block:OverviewResultRowSpecialState -->
+<!-- dtl:block:OverviewResultRowOriginState -->
+<!--img border="0" src="$Config{"Frontend::ImagePath"}$QData{"StateSignal"}.png" alt="$Text{"$QData{"State"} ($QData{"StateID"})"}">&nbsp;-->
+                                    <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=EditStateTransition;ObjectType=$LQData{"ObjectType"};$LQData{"ObjectType"}StateID=$LQData{"StateID"}">$Text{"$QData{"StateName"}"}</a>
+<!-- dtl:block:OverviewResultRowOriginState -->
                                 </td>
                                 <td class="$QData{"CssClass"}">
-<!-- dtl:block:OverviewResultRowRegularNextState -->
-<!--img border="0" src="$Config{"Frontend::ImagePath"}$QData{"StateSignal"}.png" alt="$Text{"$QData{"State"} ($QData{"StateID"})"}">&nbsp;-->$Text{"$QData{"StateName"}"}
-<!-- dtl:block:OverviewResultRowRegularNextState -->
-<!-- dtl:block:OverviewResultRowSpecialNextState -->
-                                    $QData{"StateID"}
-<!-- dtl:block:OverviewResultRowSpecialNextState -->
+<!-- dtl:block:OverviewResultRowNextState -->
+<!--img border="0" src="$Config{"Frontend::ImagePath"}$QData{"StateSignal"}.png" alt="$Text{"$QData{"State"} ($QData{"StateID"})"}">&nbsp;-->
+                                    $Text{"$QData{"StateName"}"}
+<!-- dtl:block:OverviewResultRowNextState -->
                                 </td>
-                                <td class="$QData{"CssClass"}"><!--TODO: Edit, Delete--></td>
+                                <td class="$QData{"CssClass"}">TODO: Delete</td>
                             </tr>
 <!-- dtl:block:OverviewResultRow -->
                         </table>

@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminITSMStateMachine.pm - to add/update/delete state transitions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMStateMachine.pm,v 1.3 2009-12-16 09:59:41 bes Exp $
+# $Id: AdminITSMStateMachine.pm,v 1.4 2009-12-16 10:42:31 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::ITSMStateMachine;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -297,40 +297,27 @@ sub _OverviewOverStateTransitions {
                     },
                 );
 
-                if ( $StateID == 0 ) {
+                # fill the origin state
+                {
+                    my $StateName   = $StateID2Name{$ObjectType}->{$StateID}       || $StateID;
+                    my $StateSignal = $StateName2Signal{$ObjectType}->{$StateName} || '';
                     $Self->{LayoutObject}->Block(
-                        Name => 'OverviewResultRowSpecialState',
-                        Data => {
-                            StateID => $StateID,
-                        },
-                    );
-                }
-                else {
-                    my $StateName   = $StateID2Name{$ObjectType}->{$StateID};
-                    my $StateSignal = $StateName2Signal{$ObjectType}->{$StateName};
-                    $Self->{LayoutObject}->Block(
-                        Name => 'OverviewResultRowRegularState',
+                        Name => 'OverviewResultRowOriginState',
                         Data => {
                             StateName   => $StateName,
                             StateSignal => $StateSignal,
                             StateID     => $StateID,
+                            ObjectType  => $ObjectType,
                         },
                     );
                 }
 
-                if ( $NextStateID == 0 ) {
+                # fill the next state
+                {
+                    my $StateName   = $StateID2Name{$ObjectType}->{$NextStateID}   || $NextStateID;
+                    my $StateSignal = $StateName2Signal{$ObjectType}->{$StateName} || '';
                     $Self->{LayoutObject}->Block(
-                        Name => 'OverviewResultRowSpecialNextState',
-                        Data => {
-                            StateID => $NextStateID,
-                        },
-                    );
-                }
-                else {
-                    my $StateName   = $StateID2Name{$ObjectType}->{$NextStateID};
-                    my $StateSignal = $StateName2Signal{$ObjectType}->{$StateName};
-                    $Self->{LayoutObject}->Block(
-                        Name => 'OverviewResultRowRegularNextState',
+                        Name => 'OverviewResultRowNextState',
                         Data => {
                             StateName   => $StateName,
                             StateSignal => $StateSignal,
