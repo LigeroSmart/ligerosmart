@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderZoom.pm - the OTRS::ITSM::ChangeManagement workorder zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderZoom.pm,v 1.27 2009-12-16 13:45:39 reb Exp $
+# $Id: AgentITSMWorkOrderZoom.pm,v 1.28 2009-12-16 14:04:30 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::VirtualFS;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.27 $) [1];
+$VERSION = qw($Revision: 1.28 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -95,12 +95,13 @@ sub Run {
     if ( $Self->{Subaction} eq 'DownloadAttachment' ) {
 
         # get filename
-        my $Filename = $Attachments{ $Self->{ParamObject}->GetParam( Param => FileID ) };
+        my $FileID = $Self->{ParamObject}->GetParam( Param => FileID );
+        my $Filename = $Attachments{$FileID};
 
         # return error if file does not exist
         if ( !$Filename ) {
             $Self->{LogObject}->Log(
-                Message  => "No such attachment ($GetParam{FileID})! May be an attack!!!",
+                Message  => "No such attachment ($FileID)! May be an attack!!!",
                 Priority => 'error',
             );
             return $Self->{LayoutObject}->ErrorScreen();
