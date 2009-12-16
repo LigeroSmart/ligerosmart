@@ -2,7 +2,7 @@
 # Kernel/System/VirtualFS.pm - all virtual fs functions
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: VirtualFS.pm,v 1.1 2009-12-14 14:27:43 reb Exp $
+# $Id: VirtualFS.pm,v 1.2 2009-12-16 21:09:16 reb Exp $
 # $OldId: VirtualFS.pm,v 1.3 2009/12/10 11:59:54 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -407,13 +407,24 @@ sub Search {
         delete $Param{Preferences};
     }
 
+    # map param keys to column maps
+    my %Param2Column = (
+        FileID   => 'id',
+        Filename => 'filename',
+        Backend  => 'backend',
+    );
+
     # push all remaining parameters to where clause
+    COLUMN:
     for my $Column ( keys %Param ) {
+        next COLUMN if ! exists $Param2Column{$Column};
         my $Like = $Param{$Column};
         $Like =~ s/\*/%/g;
         $Like = $Self->{DBObject}->Quote( $Like, 'Like' );
 
-        push @Where, "vf.$Column LIKE '$Like'";
+        my $ColumnName = $Param2Column{$Column};
+
+        push @Where, "vf.$ColumnName LIKE '$Like'";
     }
 
     # join the where conditions
@@ -512,6 +523,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2009-12-14 14:27:43 $
+$Revision: 1.2 $ $Date: 2009-12-16 21:09:16 $
 
 =cut
