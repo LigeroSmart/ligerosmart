@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAdd.pm - the OTRS::ITSM::ChangeManagement workorder add module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.pm,v 1.24 2009-12-16 13:45:39 reb Exp $
+# $Id: AgentITSMWorkOrderAdd.pm,v 1.25 2009-12-16 19:25:09 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,11 +16,10 @@ use warnings;
 
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
-use Kernel::System::VirtualFS;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.24 $) [1];
+$VERSION = qw($Revision: 1.25 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -39,7 +38,6 @@ sub new {
     # create needed objects
     $Self->{ChangeObject}      = Kernel::System::ITSMChange->new(%Param);
     $Self->{WorkOrderObject}   = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
-    $Self->{VirtualFSObject}   = Kernel::System::VirtualFS->new(%Param);
     $Self->{UploadCacheObject} = Kernel::System::Web::UploadCache->new(%Param);
 
     # get config of frontend module
@@ -217,15 +215,9 @@ sub Run {
                 );
 
                 for my $CachedAttachment (@CachedAttachments) {
-                    my $Success = $Self->{VirtualFSObject}->Write(
-                        Filename    => "WorkOrder/$WorkOrderID/" . $CachedAttachment->{Filename},
-                        Mode        => 'binary',
-                        Content     => \$CachedAttachment->{Content},
-                        Preferences => {
-                            ContentID   => $CachedAttachment->{ContentID},
-                            ContentType => $CachedAttachment->{ContentType},
-                            WorkOrderID => $WorkOrderID,
-                        },
+                    my $Success = $Self->{WorkOrderObject}->WorkOrderAttachmentAdd(
+                        %{$CachedAttachment},
+                        WorkOrderID => $WorkOrderID,
                     );
 
                     # delete file from cache if move was successful
@@ -305,32 +297,30 @@ sub Run {
     # handle attachment downloads
     elsif ( $Self->{Subaction} eq 'DownloadAttachment' ) {
 
-        # get filename
-        my $Filename = $Attachments{ $GetParam{FileID} };
-
-        # return error if file does not exist
-        if ( !$Filename ) {
-            $Self->{LogObject}->Log(
-                Message  => "No such attachment ($GetParam{FileID})! May be an attack!!!",
-                Priority => 'error',
-            );
-            return $Self->{LayoutObject}->ErrorScreen();
-        }
-
-        # get data for attachment
-        my %AttachmentData = $Self->{VirtualFSObject}->Read(
-            Filename => $Filename,
-            Mode     => 'binary',
+        # get data for all attachments
+        my @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesData(
+            FormID => $Self->{FormID},
         );
 
-        # remove extra information from filename
-        ( my $NameDisplayed = $Filename ) =~ s{ \A WorkOrder / \d+ / }{}xms;
+        # get data for requested attachment
+        my $AttachmentData;
+        for my $Attachment (@Attachments) {
+            $AttachmentData = $Attachment if $Attachment->{FileID} == $GetParam{FileID};
+        }
+
+        # check if file can be found
+        if ( !$AttachmentData ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => 'invalid FileID $GetParam{FileID}',
+            );
+
+            return;
+        }
 
         return $Self->{LayoutObject}->Attachment(
-            Filename    => $NameDisplayed,
-            Content     => ${ $AttachmentData{Content} },
-            ContentType => $AttachmentData{Preferences}->{ContentType},
-            Type        => 'attachment',
+            %{$AttachmentData},
+            Type => 'attachment',
         );
     }
 
@@ -432,6 +422,8 @@ sub Run {
             Name => 'AttachmentRow',
             Data => {
                 %{$Attachment},
+                ChangeID => $ChangeID,
+                FormID   => $Self->{FormID},
             },
         );
     }

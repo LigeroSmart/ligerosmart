@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderEdit.pm - the OTRS::ITSM::ChangeManagement workorder edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderEdit.pm,v 1.28 2009-12-16 13:45:39 reb Exp $
+# $Id: AgentITSMWorkOrderEdit.pm,v 1.29 2009-12-16 19:25:09 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,10 +16,9 @@ use warnings;
 
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
-use Kernel::System::VirtualFS;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.28 $) [1];
+$VERSION = qw($Revision: 1.29 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -38,7 +37,6 @@ sub new {
     # create needed objects
     $Self->{ChangeObject}    = Kernel::System::ITSMChange->new(%Param);
     $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
-    $Self->{VirtualFSObject} = Kernel::System::VirtualFS->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMWorkOrder::Frontend::$Self->{Action}");
@@ -118,10 +116,8 @@ sub Run {
     }
 
     # get all attachments meta data
-    my %Attachments = $Self->{VirtualFSObject}->Search(
-        Preferences => {
-            WorkOrderID => $WorkOrderID,
-        },
+    my %Attachments = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
+        WorkOrderID => $WorkOrderID,
     );
 
     # check if attachment should be deleted
@@ -225,14 +221,9 @@ sub Run {
 
         # write to virtual fs
         if ( $UploadStuff{Filename} ) {
-            my $Success = $Self->{VirtualFSObject}->Write(
-                Filename    => "WorkOrder/$WorkOrderID/" . $UploadStuff{Filename},
-                Mode        => 'binary',
-                Content     => \$UploadStuff{Content},
-                Preferences => {
-                    ContentType => $UploadStuff{ContentType},
-                    WorkOrderID => $WorkOrderID,
-                },
+            my $Success = $Self->{WorkOrderObject}->WorkOrderAttachmentAdd(
+                %UploadStuff,
+                WorkOrderID => $WorkOrderID,
             );
 
             # check for error
@@ -241,10 +232,8 @@ sub Run {
             }
 
             # reload attachment list
-            %Attachments = $Self->{VirtualFSObject}->Search(
-                Preferences => {
-                    WorkOrderID => $WorkOrderID,
-                },
+            %Attachments = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
+                WorkOrderID => $WorkOrderID,
             );
         }
     }
@@ -253,15 +242,13 @@ sub Run {
             if ( $Self->{ParamObject}->GetParam( Param => 'DeleteAttachment' . $AttachmentID ) ) {
 
                 # delete attachment
-                $Self->{VirtualFSObject}->Delete(
-                    Filename => $Attachments{$AttachmentID},
+                $Self->{WorkOrderObject}->WorkOrderAttachmentDelete(
+                    FileID => $AttachmentID,
                 );
 
                 # reload attachment list
-                %Attachments = $Self->{VirtualFSObject}->Search(
-                    Preferences => {
-                        WorkOrderID => $WorkOrderID,
-                    },
+                %Attachments = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
+                    WorkOrderID => $WorkOrderID,
                 );
 
                 $Self->{Subaction} = 'DeleteAttachment';
@@ -272,11 +259,13 @@ sub Run {
     # handle attachment downloads
     elsif ( $Self->{Subaction} eq 'DownloadAttachment' ) {
 
-        # get filename
-        my $Filename = $Attachments{ $GetParam{FileID} };
+        # get data for attachment
+        my $AttachmentData = $Self->{WorkOrderObject}->WorkOrderAttachmentGet(
+            FileID => $GetParam{FileID},
+        );
 
         # return error if file does not exist
-        if ( !$Filename ) {
+        if ( !$AttachmentData ) {
             $Self->{LogObject}->Log(
                 Message  => "No such attachment ($GetParam{FileID})! May be an attack!!!",
                 Priority => 'error',
@@ -284,20 +273,9 @@ sub Run {
             return $Self->{LayoutObject}->ErrorScreen();
         }
 
-        # get data for attachment
-        my %AttachmentData = $Self->{VirtualFSObject}->Read(
-            Filename => $Filename,
-            Mode     => 'binary',
-        );
-
-        # remove extra information from filename
-        ( my $NameDisplayed = $Filename ) =~ s{ \A WorkOrder / \d+ / }{}xms;
-
         return $Self->{LayoutObject}->Attachment(
-            Filename    => $NameDisplayed,
-            Content     => ${ $AttachmentData{Content} },
-            ContentType => $AttachmentData{Preferences}->{ContentType},
-            Type        => 'attachment',
+            %{$AttachmentData},
+            Type => 'attachment',
         );
     }
 
@@ -392,21 +370,16 @@ sub Run {
     for my $AttachmentID ( keys %Attachments ) {
 
         # get info about file
-        my %AttachmentData = $Self->{VirtualFSObject}->Read(
-            Filename => $Attachments{$AttachmentID},
-            Mode     => 'binary',
+        my $AttachmentData = $Self->{WorkOrderObject}->WorkOrderAttachmentGet(
+            FileID => $AttachmentID,
         );
-
-        my ($Filename) = $Attachments{$AttachmentID} =~ m{ \A WorkOrder / \d+ / (.*) \z }xms;
 
         # show block
         $Self->{LayoutObject}->Block(
             Name => 'AttachmentRow',
             Data => {
                 %{$WorkOrder},
-                %{ $AttachmentData{Preferences} },
-                Filename => $Filename,
-                FileID   => $AttachmentID,
+                %{$AttachmentData},
             },
         );
     }
