@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.32 2009-12-16 17:15:44 reb Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.33 2009-12-16 21:03:35 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.32 $) [1];
+$VERSION = qw($Revision: 1.33 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -355,6 +355,7 @@ sub Run {
                     my $Success = $Self->{ChangeObject}->ChangeAttachmentAdd(
                         %{$CachedAttachment},
                         ChangeID => $ChangeID,
+                        UserID   => $Self->{UserID},
                     );
 
                     # delete file from cache if move was successful
