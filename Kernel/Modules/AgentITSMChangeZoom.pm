@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeZoom.pm - the OTRS::ITSM::ChangeManagement change zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.pm,v 1.35 2009-12-15 10:47:36 reb Exp $
+# $Id: AgentITSMChangeZoom.pm,v 1.36 2009-12-16 13:45:39 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::VirtualFS;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.35 $) [1];
+$VERSION = qw($Revision: 1.36 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -96,7 +96,33 @@ sub Run {
     # handle DownloadAttachment
     if ( $Self->{Subaction} eq 'DownloadAttachment' ) {
 
-        # TODO: Implement AttachmentDownload
+        # get filename
+        my $Filename = $Attachments{ $Self->{ParamObject}->GetParam( Param => FileID ) };
+
+        # return error if file does not exist
+        if ( !$Filename ) {
+            $Self->{LogObject}->Log(
+                Message  => "No such attachment ($GetParam{FileID})! May be an attack!!!",
+                Priority => 'error',
+            );
+            return $Self->{LayoutObject}->ErrorScreen();
+        }
+
+        # get data for attachment
+        my %AttachmentData = $Self->{VirtualFSObject}->Read(
+            Filename => $Filename,
+            Mode     => 'binary',
+        );
+
+        # remove extra information from filename
+        ( my $NameDisplayed = $Filename ) =~ s{ \A WorkOrder / \d+ / }{}xms;
+
+        return $Self->{LayoutObject}->Attachment(
+            Filename    => $NameDisplayed,
+            Content     => ${ $AttachmentData{Content} },
+            ContentType => $AttachmentData{Preferences}->{ContentType},
+            Type        => 'attachment',
+        );
     }
 
     # Store LastScreenView, for backlinks

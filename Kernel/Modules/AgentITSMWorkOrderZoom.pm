@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderZoom.pm - the OTRS::ITSM::ChangeManagement workorder zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderZoom.pm,v 1.26 2009-12-15 10:40:40 reb Exp $
+# $Id: AgentITSMWorkOrderZoom.pm,v 1.27 2009-12-16 13:45:39 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::VirtualFS;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.26 $) [1];
+$VERSION = qw($Revision: 1.27 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -94,7 +94,33 @@ sub Run {
     # handle DownloadAttachment
     if ( $Self->{Subaction} eq 'DownloadAttachment' ) {
 
-        # TODO: Implement AttachmentDownload
+        # get filename
+        my $Filename = $Attachments{ $Self->{ParamObject}->GetParam( Param => FileID ) };
+
+        # return error if file does not exist
+        if ( !$Filename ) {
+            $Self->{LogObject}->Log(
+                Message  => "No such attachment ($GetParam{FileID})! May be an attack!!!",
+                Priority => 'error',
+            );
+            return $Self->{LayoutObject}->ErrorScreen();
+        }
+
+        # get data for attachment
+        my %AttachmentData = $Self->{VirtualFSObject}->Read(
+            Filename => $Filename,
+            Mode     => 'binary',
+        );
+
+        # remove extra information from filename
+        ( my $NameDisplayed = $Filename ) =~ s{ \A WorkOrder / \d+ / }{}xms;
+
+        return $Self->{LayoutObject}->Attachment(
+            Filename    => $NameDisplayed,
+            Content     => ${ $AttachmentData{Content} },
+            ContentType => $AttachmentData{Preferences}->{ContentType},
+            Type        => 'attachment',
+        );
     }
 
     # check if LayoutObject has TranslationObject

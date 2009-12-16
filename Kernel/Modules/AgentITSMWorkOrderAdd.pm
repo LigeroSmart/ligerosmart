@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAdd.pm - the OTRS::ITSM::ChangeManagement workorder add module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.pm,v 1.23 2009-12-15 10:39:44 reb Exp $
+# $Id: AgentITSMWorkOrderAdd.pm,v 1.24 2009-12-16 13:45:39 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::VirtualFS;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.23 $) [1];
+$VERSION = qw($Revision: 1.24 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -101,7 +101,7 @@ sub Run {
 
     # store needed parameters in %GetParam to make it reloadable
     my %GetParam;
-    for my $ParamName (qw(WorkOrderTitle Instruction WorkOrderTypeID SaveAttachment)) {
+    for my $ParamName (qw(WorkOrderTitle Instruction WorkOrderTypeID SaveAttachment FileID)) {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
@@ -300,7 +300,38 @@ sub Run {
                 FormID => $Self->{FormID},
             );
         }
+    }
 
+    # handle attachment downloads
+    elsif ( $Self->{Subaction} eq 'DownloadAttachment' ) {
+
+        # get filename
+        my $Filename = $Attachments{ $GetParam{FileID} };
+
+        # return error if file does not exist
+        if ( !$Filename ) {
+            $Self->{LogObject}->Log(
+                Message  => "No such attachment ($GetParam{FileID})! May be an attack!!!",
+                Priority => 'error',
+            );
+            return $Self->{LayoutObject}->ErrorScreen();
+        }
+
+        # get data for attachment
+        my %AttachmentData = $Self->{VirtualFSObject}->Read(
+            Filename => $Filename,
+            Mode     => 'binary',
+        );
+
+        # remove extra information from filename
+        ( my $NameDisplayed = $Filename ) =~ s{ \A WorkOrder / \d+ / }{}xms;
+
+        return $Self->{LayoutObject}->Attachment(
+            Filename    => $NameDisplayed,
+            Content     => ${ $AttachmentData{Content} },
+            ContentType => $AttachmentData{Preferences}->{ContentType},
+            Type        => 'attachment',
+        );
     }
 
     # get all attachments meta data

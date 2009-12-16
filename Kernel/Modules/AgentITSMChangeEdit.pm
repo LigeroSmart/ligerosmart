@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeEdit.pm - the OTRS::ITSM::ChangeManagement change edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.pm,v 1.33 2009-12-15 11:58:29 reb Exp $
+# $Id: AgentITSMChangeEdit.pm,v 1.34 2009-12-16 13:45:39 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
 use Kernel::System::VirtualFS;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.33 $) [1];
+$VERSION = qw($Revision: 1.34 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -95,7 +95,7 @@ sub Run {
         qw(
         ChangeTitle Description Justification TicketID
         OldCategoryID CategoryID OldImpactID ImpactID OldPriorityID PriorityID
-        ElementChanged SaveAttachment
+        ElementChanged SaveAttachment FileID
         )
         )
     {
@@ -337,6 +337,38 @@ sub Run {
                 $Self->{Subaction} = 'DeleteAttachment';
             }
         }
+    }
+
+    # handle attachment downloads
+    elsif ( $Self->{Subaction} eq 'DownloadAttachment' ) {
+
+        # get filename
+        my $Filename = $Attachments{ $GetParam{FileID} };
+
+        # return error if file does not exist
+        if ( !$Filename ) {
+            $Self->{LogObject}->Log(
+                Message  => "No such attachment ($GetParam{FileID})! May be an attack!!!",
+                Priority => 'error',
+            );
+            return $Self->{LayoutObject}->ErrorScreen();
+        }
+
+        # get data for attachment
+        my %AttachmentData = $Self->{VirtualFSObject}->Read(
+            Filename => $Filename,
+            Mode     => 'binary',
+        );
+
+        # remove extra information from filename
+        ( my $NameDisplayed = $Filename ) =~ s{ \A WorkOrder / \d+ / }{}xms;
+
+        return $Self->{LayoutObject}->Attachment(
+            Filename    => $NameDisplayed,
+            Content     => ${ $AttachmentData{Content} },
+            ContentType => $AttachmentData{Preferences}->{ContentType},
+            Type        => 'attachment',
+        );
     }
 
     # delete all keys from %GetParam when it is no Subaction
