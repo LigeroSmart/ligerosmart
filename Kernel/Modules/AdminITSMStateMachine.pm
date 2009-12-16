@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminITSMStateMachine.pm - to add/update/delete state transitions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMStateMachine.pm,v 1.7 2009-12-16 14:17:12 bes Exp $
+# $Id: AdminITSMStateMachine.pm,v 1.8 2009-12-16 14:39:18 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::ITSMStateMachine;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -143,16 +143,7 @@ sub Run {
     }
 
     # present a table of all transitions
-    $Self->_OverviewOverStateTransitions(%GetParam);
-    my $Output = $Self->{LayoutObject}->Header();
-    $Output .= $Self->{LayoutObject}->NavigationBar();
-    $Output .= $Self->{LayoutObject}->Output(
-        TemplateFile => 'AdminITSMStateMachine',
-        Data         => \%Param,
-    );
-    $Output .= $Self->{LayoutObject}->Footer();
-
-    return $Output;
+    return $Self->_OverviewPageGet(%GetParam);
 }
 
 sub _EditStateTransitionsPageGet {
@@ -276,19 +267,50 @@ sub _ConfirmDeletionPageGet {
         Data => \%Param,
     );
 
-    # Show states which should be deleted
-    for my $NextStateID ( $Self->{ParamObject}->GetArray( Param => 'DelNextStateIDs' ) ) {
+    # set up some lookup tables for displaying the state name
+    # TODO: Avoid direct usage of GeneralCatalogObject
+    my %StateID2Name;
+    for my $ObjectType (qw(Change WorkOrder)) {
+
+        # lookup table for the config item class
+        my %ConfigItemClass = (
+            Change    => 'ITSM::ChangeManagement::Change::State',
+            WorkOrder => 'ITSM::ChangeManagement::WorkOrder::State',
+        );
+
+        # get the state names
+        my $Class = $ConfigItemClass{$ObjectType};
+        $StateID2Name{$ObjectType} = $Self->{GeneralCatalogObject}->ItemList( Class => $Class );
+    }
+
+    # Show which states are scheduled to be deleted
+    my @DelNextStateIDs = $Self->{ParamObject}->GetArray( Param => 'DelNextStateIDs' );
+    for my $NextStateID (@DelNextStateIDs) {
+        my $NextStateName = $StateID2Name{ $Param{ObjectType} }->{$NextStateID} || $NextStateID;
         $Self->{LayoutObject}->Block(
             Name => 'ConfirmDeletionDelNextState',
-            Data => { NextStateID => $NextStateID },
+            Data => {
+                NextStateID   => $NextStateID,
+                NextStateName => $NextStateName,
+            },
         );
     }
 
-    # Show states which should be added
-    for my $NextStateID ( $Self->{ParamObject}->GetArray( Param => 'AddNextStateIDs' ) ) {
+    # Show which states are scheduled to be added
+    my @AddNextStateIDs = $Self->{ParamObject}->GetArray( Param => 'AddNextStateIDs' );
+    if (@AddNextStateIDs) {
+        $Self->{LayoutObject}->Block(
+            Name => 'ConfirmDeletionAddNextStatesExist',
+        );
+    }
+    for my $NextStateID (@AddNextStateIDs) {
+        my $NextStateName = $StateID2Name{ $Param{ObjectType} }->{$NextStateID} || $NextStateID;
         $Self->{LayoutObject}->Block(
             Name => 'ConfirmDeletionAddNextState',
-            Data => { NextStateID => $NextStateID },
+            Data => {
+                NextStateID   => $NextStateID,
+                NextStateName => $NextStateName,
+            },
         );
     }
 
@@ -318,7 +340,7 @@ sub _ConfirmDeletionPageGet {
 }
 
 # Show a table of all state transitions
-sub _OverviewOverStateTransitions {
+sub _OverviewPageGet {
     my ( $Self, %Param ) = @_;
 
     $Self->{LayoutObject}->Block(
@@ -389,7 +411,15 @@ sub _OverviewOverStateTransitions {
         }
     }
 
-    return 1;
+    my $Output = $Self->{LayoutObject}->Header();
+    $Output .= $Self->{LayoutObject}->NavigationBar();
+    $Output .= $Self->{LayoutObject}->Output(
+        TemplateFile => 'AdminITSMStateMachine',
+        Data         => \%Param,
+    );
+    $Output .= $Self->{LayoutObject}->Footer();
+
+    return $Output;
 }
 
 1;
