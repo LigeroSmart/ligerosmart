@@ -2,7 +2,7 @@
 # AdminITSMStateMachine.dtl - provides HTML form for AdminITSMStateMachine
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMStateMachine.dtl,v 1.7 2009-12-16 14:39:18 bes Exp $
+# $Id: AdminITSMStateMachine.dtl,v 1.8 2009-12-16 15:45:48 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -120,12 +120,12 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="contentbody">
+                        <td align="center" class="contentbody">
                             <table border="0" cellspacing="0" cellpadding="3">
                                 <tr>
-                                    <td class="contentkey">$Text{"Delete Possible Next States"}: </td>
+                                    <td class="contentkey">$Text{"Prohibit state transistions to:"}: </td>
                                     <td class="contentvalue">$Data{"DelNextStateSelectionString"}</td>
-                                    <td class="contentkey">$Text{"Add Possible Next States"}: </td>
+                                    <td class="contentkey">$Text{"Allow state transitions to"}: </td>
                                     <td class="contentvalue">$Data{"AddNextStateSelectionString"}</td>
                                 </tr>
                             </table>
@@ -142,7 +142,7 @@
 <!-- dtl:block:ConfirmDeletion -->
             <table border="0" width="350" align="center" cellspacing="0" cellpadding="4">
                 <tr>
-                    <td colspan="2" class="contenthead">$Text{"Delete Next States"}</td>
+                    <td class="contenthead">$Text{"Delete $QData{"ObjectType"} State Transitions from"} <b>$QData{"StateName"}</b></td>
                 </tr>
                 <tr>
                     <td class="contentbody">

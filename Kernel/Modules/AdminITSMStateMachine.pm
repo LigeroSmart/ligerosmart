@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminITSMStateMachine.pm - to add/update/delete state transitions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMStateMachine.pm,v 1.8 2009-12-16 14:39:18 bes Exp $
+# $Id: AdminITSMStateMachine.pm,v 1.9 2009-12-16 15:45:48 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::ITSMStateMachine;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -52,6 +52,13 @@ sub Run {
     my %GetParam;
     for my $ParamName (qw( ChangeStateID WorkOrderStateID ObjectType)) {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+    }
+
+    # choose the appropriate state id
+    if ( $GetParam{ObjectType} ) {
+        $GetParam{OriginStateID} = $GetParam{ObjectType} eq 'Change'
+            ? $GetParam{ChangeStateID}
+            : $GetParam{WorkOrderStateID};
     }
 
     # check whether next states should be deleted,
@@ -111,16 +118,13 @@ sub Run {
         my $Class = $ConfigItemClass{ $GetParam{ObjectType} };
 
         # the origin of the transitions
-        my $OriginStateID
-            = $GetParam{ObjectType} eq 'Change'
-            ? $GetParam{ChangeStateID}
-            : $GetParam{WorkOrderStateID};
+        my $OriginStateID = $GetParam{OriginStateID};
 
         my %OldNextStateID = map { $_ => 1 } @{
             $Self->{StateMachineObject}->StateTransitionGet(
                 StateID => $OriginStateID,
                 Class   => $Class,
-                )
+                ) || []
             };
 
         # Delete the DelNextStateID's
@@ -146,25 +150,25 @@ sub Run {
     return $Self->_OverviewPageGet(%GetParam);
 }
 
+# provide a form for adding and deleting state transitions
 sub _EditStateTransitionsPageGet {
     my ( $Self, %Param ) = @_;
 
     # the origin of the transitions
-    my $OriginStateID = $Param{ObjectType} eq 'Change'
-        ? $Param{ChangeStateID}
-        : $Param{WorkOrderStateID};
+    my $OriginStateID = $Param{OriginStateID};
 
     # Display the name of the origin state
-    if ( $Param{ObjectType} eq 'Change' && $Param{ChangeStateID} ) {
+    if ( $Param{ObjectType} eq 'Change' ) {
         $Param{StateName} = $Self->{ChangeObject}->ChangeStateLookup(
             ChangeStateID => $OriginStateID,
         );
     }
-    elsif ( $Param{ObjectType} eq 'WorkOrder' && $Param{WorkOrderStateID} ) {
+    elsif ( $Param{ObjectType} eq 'WorkOrder' ) {
         $Param{StateName} = $Self->{WorkOrderObject}->WorkOrderStateLookup(
             WorkOrderStateID => $OriginStateID,
         );
     }
+    $Param{StateName} ||= $Param{OriginStateID};
 
     # config item class
     my %ConfigItemClass = (
@@ -178,22 +182,18 @@ sub _EditStateTransitionsPageGet {
         $Self->{StateMachineObject}->StateTransitionGet(
             StateID => $OriginStateID,
             Class   => $Class,
-            )
+            ) || []
         };
 
-    # ArrayHashRef with the all states
+    # ArrayHashRef with the all states for an object type
     my $AllArrayHashRef;
     if ( $Param{ObjectType} eq 'Change' ) {
-
-        # all change states
         $AllArrayHashRef = $Self->{ChangeObject}->ChangePossibleStatesGet(
             UserID => $Self->{UserID},
         );
     }
     else {
-
-        # all workorder states
-        $AllArrayHashRef = $Self->{ChangeObject}->ChangePossibleStatesGet(
+        $AllArrayHashRef = $Self->{WorkOrderObject}->WorkOrderPossibleStatesGet(
             UserID => $Self->{UserID},
         );
     }
@@ -206,6 +206,10 @@ sub _EditStateTransitionsPageGet {
     for my $HashRef ( @{$AllArrayHashRef} ) {
         if ( $OldNextStateID{ $HashRef->{Key} } ) {
             push @DelArrayHashRef, $HashRef;
+        }
+        elsif ( $HashRef->{Key} == $OriginStateID ) {
+
+            # do not encourage a transition to the same state
         }
         else {
             push @AddArrayHashRef, $HashRef;
@@ -255,18 +259,6 @@ sub _EditStateTransitionsPageGet {
 sub _ConfirmDeletionPageGet {
     my ( $Self, %Param ) = @_;
 
-    my $Output = $Self->{LayoutObject}->Header();
-    $Output .= $Self->{LayoutObject}->NavigationBar();
-    $Self->{LayoutObject}->Block(
-        Name => 'Overview',
-        Data => \%Param,
-    );
-
-    $Self->{LayoutObject}->Block(
-        Name => 'ConfirmDeletion',
-        Data => \%Param,
-    );
-
     # set up some lookup tables for displaying the state name
     # TODO: Avoid direct usage of GeneralCatalogObject
     my %StateID2Name;
@@ -282,6 +274,24 @@ sub _ConfirmDeletionPageGet {
         my $Class = $ConfigItemClass{$ObjectType};
         $StateID2Name{$ObjectType} = $Self->{GeneralCatalogObject}->ItemList( Class => $Class );
     }
+
+    my $Output = $Self->{LayoutObject}->Header();
+    $Output .= $Self->{LayoutObject}->NavigationBar();
+
+    $Self->{LayoutObject}->Block(
+        Name => 'Overview',
+        Data => \%Param,
+    );
+
+    my $StateName = $StateID2Name{ $Param{ObjectType} }->{ $Param{OriginStateID} }
+        || $Param{OriginStateID};
+    $Self->{LayoutObject}->Block(
+        Name => 'ConfirmDeletion',
+        Data => {
+            %Param,
+            StateName => $StateName,
+            }
+    );
 
     # Show which states are scheduled to be deleted
     my @DelNextStateIDs = $Self->{ParamObject}->GetArray( Param => 'DelNextStateIDs' );
