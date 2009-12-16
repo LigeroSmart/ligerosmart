@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminITSMStateMachine.pm - to add/update/delete state transitions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMStateMachine.pm,v 1.6 2009-12-16 13:58:52 bes Exp $
+# $Id: AdminITSMStateMachine.pm,v 1.7 2009-12-16 14:17:12 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::ITSMStateMachine;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -317,6 +317,7 @@ sub _ConfirmDeletionPageGet {
     return $Output;
 }
 
+# Show a table of all state transitions
 sub _OverviewOverStateTransitions {
     my ( $Self, %Param ) = @_;
 
@@ -325,7 +326,7 @@ sub _OverviewOverStateTransitions {
         Data => \%Param,
     );
     $Self->{LayoutObject}->Block(
-        Name => 'OverviewResult',
+        Name => 'OverviewStateTransitions',
         Data => \%Param,
     );
 
@@ -354,7 +355,7 @@ sub _OverviewOverStateTransitions {
         my $Class = $ConfigItemClass{$ObjectType};
         my %NextStateIDs = %{ $Self->{StateMachineObject}->StateTransitionList( Class => $Class ) };
 
-        # loop over all 'State' and 'NextState' pairs
+        # loop over all 'State' and 'NextState' pairs for the ObjectType
         for my $StateID ( sort keys %NextStateIDs ) {
 
             for my $NextStateID ( @{ $NextStateIDs{$StateID} } ) {
@@ -362,58 +363,28 @@ sub _OverviewOverStateTransitions {
                 # set output class
                 $CssClass = $CssClass eq 'searchactive' ? 'searchpassive' : 'searchactive';
 
+                # values for the origin state
+                my $StateName   = $StateID2Name{$ObjectType}->{$StateID}       || $StateID;
+                my $StateSignal = $StateName2Signal{$ObjectType}->{$StateName} || '';
+
+                # values for the next state
+                my $NextStateName   = $StateID2Name{$ObjectType}->{$NextStateID}   || $NextStateID;
+                my $NextStateSignal = $StateName2Signal{$ObjectType}->{$StateName} || '';
+
                 $Self->{LayoutObject}->Block(
-                    Name => 'OverviewResultRow',
+                    Name => 'StateTransitionRow',
                     Data => {
-                        Class       => $Class,
-                        NextStateID => $NextStateID,
-                        CssClass    => $CssClass,
+                        CssClass        => $CssClass,
+                        ObjectType      => $ObjectType,
+                        Class           => $Class,
+                        StateID         => $StateID,
+                        StateName       => $StateName,
+                        StateSignal     => $StateSignal,
+                        NextStateID     => $NextStateID,
+                        NextStateName   => $NextStateName,
+                        NextStateSignal => $NextStateSignal,
                     },
                 );
-
-                # fill the origin state
-                {
-                    my $StateName   = $StateID2Name{$ObjectType}->{$StateID}       || $StateID;
-                    my $StateSignal = $StateName2Signal{$ObjectType}->{$StateName} || '';
-                    $Self->{LayoutObject}->Block(
-                        Name => 'OverviewResultRowOriginState',
-                        Data => {
-                            StateName   => $StateName,
-                            StateSignal => $StateSignal,
-                            StateID     => $StateID,
-                            ObjectType  => $ObjectType,
-                        },
-                    );
-                }
-
-                # fill the next state
-                {
-                    my $StateName   = $StateID2Name{$ObjectType}->{$NextStateID}   || $NextStateID;
-                    my $StateSignal = $StateName2Signal{$ObjectType}->{$StateName} || '';
-                    $Self->{LayoutObject}->Block(
-                        Name => 'OverviewResultRowNextState',
-                        Data => {
-                            StateName   => $StateName,
-                            StateSignal => $StateSignal,
-                            StateID     => $NextStateID,
-                        },
-                    );
-                }
-
-                # add the delete button
-                {
-                    my $StateName   = $StateID2Name{$ObjectType}->{$NextStateID}   || $NextStateID;
-                    my $StateSignal = $StateName2Signal{$ObjectType}->{$StateName} || '';
-                    $Self->{LayoutObject}->Block(
-                        Name => 'OverviewResultRowDelete',
-                        Data => {
-                            %Param,
-                            ObjectType  => $ObjectType,
-                            StateID     => $StateID,
-                            NextStateID => $NextStateID,
-                        },
-                    );
-                }
             }
         }
     }

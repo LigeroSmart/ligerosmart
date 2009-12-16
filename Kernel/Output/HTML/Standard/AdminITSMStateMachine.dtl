@@ -2,7 +2,7 @@
 # AdminITSMStateMachine.dtl - provides HTML form for AdminITSMStateMachine
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMStateMachine.dtl,v 1.5 2009-12-16 13:58:52 bes Exp $
+# $Id: AdminITSMStateMachine.dtl,v 1.6 2009-12-16 14:17:12 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -66,7 +66,7 @@
             </form>
         </td>
         <td class="mainbody">
-<!-- dtl:block:OverviewResult -->
+<!-- dtl:block:OverviewStateTransitions -->
             <table width="100%" cellspacing="0" cellpadding="4">
                 <tr>
                     <td class="contenthead">$Text{"Overview over all possible state transitions"}:</td>
@@ -80,28 +80,22 @@
                                 <td class="contentkey">$Text{"Next State"}</td>
                                 <td class="contentkey">$Text{"Delete"}</td>
                             </tr>
-<!-- dtl:block:OverviewResultRow -->
+<!-- dtl:block:StateTransitionRow -->
                             <tr>
                                 <td class="$QData{"CssClass"}">$QData{"Class"}</td>
                                 <td class="$QData{"CssClass"}">
-<!-- dtl:block:OverviewResultRowOriginState -->
 <!--img border="0" src="$Config{"Frontend::ImagePath"}$QData{"StateSignal"}.png" alt="$Text{"$QData{"State"} ($QData{"StateID"})"}">&nbsp;-->
                                     <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=EditStateTransitions;ObjectType=$LQData{"ObjectType"};$LQData{"ObjectType"}StateID=$LQData{"StateID"}">$Text{"$QData{"StateName"}"}</a>
-<!-- dtl:block:OverviewResultRowOriginState -->
                                 </td>
                                 <td class="$QData{"CssClass"}">
-<!-- dtl:block:OverviewResultRowNextState -->
-<!--img border="0" src="$Config{"Frontend::ImagePath"}$QData{"StateSignal"}.png" alt="$Text{"$QData{"State"} ($QData{"StateID"})"}">&nbsp;-->
-                                    $Text{"$QData{"StateName"}"}
-<!-- dtl:block:OverviewResultRowNextState -->
+<!--img border="0" src="$Config{"Frontend::ImagePath"}$QData{"NextStateSignal"}.png" alt="$Text{"$QData{"State"} ($QData{"StateID"})"}">&nbsp;-->
+                                    $Text{"$QData{"NextStateName"}"}
                                 </td>
                                 <td class="$QData{"CssClass"}">
-<!-- dtl:block:OverviewResultRowDelete -->
                                     <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=EditStateTransitionsAction;ObjectType=$LQData{"ObjectType"};$LQData{"ObjectType"}StateID=$LQData{"StateID"};DelNextStateIDs=$LQData{"NextStateID"}">x</a>
-<!-- dtl:block:OverviewResultRowDelete -->
                                 </td>
                             </tr>
-<!-- dtl:block:OverviewResultRow -->
+<!-- dtl:block:StateTransitionRow -->
                         </table>
                     </td>
                 </tr>
@@ -111,7 +105,7 @@
                     </td>
                 </tr>
             </table>
-<!-- dtl:block:OverviewResult -->
+<!-- dtl:block:OverviewStateTransitions -->
 <!-- dtl:block:EditStateTransitions -->
             <form action="$Env{"CGIHandle"}" method="post" name="ITSMStateMachineUpdate">
                 <input type="hidden" name="Action"    value="$Env{"Action"}"/>
