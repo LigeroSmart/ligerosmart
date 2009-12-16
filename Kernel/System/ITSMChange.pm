@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.206 2009-12-16 17:15:44 reb Exp $
+# $Id: ITSMChange.pm,v 1.207 2009-12-16 20:56:50 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -28,7 +28,7 @@ use Kernel::System::VirtualFS;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.206 $) [1];
+$VERSION = qw($Revision: 1.207 $) [1];
 
 =head1 NAME
 
@@ -2223,7 +2223,6 @@ Add an attachment to a given change
         ChangeID    => 123,
         Filename    => 'filename,
         Content     => 'content',
-        ContentID   => 'some_content@id',
         ContentType => 'text/plain',
     );
 
@@ -2233,17 +2232,18 @@ sub ChangeAttachmentAdd {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Needed (qw(ChangeID Filename Content ContentID ContentType)) {
+    for my $Needed (qw(ChangeID Filename Content ContentType UserID)) {
         if ( !$Param{$Needed} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => 'Need FileID!',
+                Message  => "Need $Needed",
             );
 
             return;
         }
     }
 
+    # write to virtual fs
     my $Success = $Self->{VirtualFSObject}->Write(
         Filename    => "Change/$Param{ChangeID}/" . $Param{Filename},
         Mode        => 'binary',
@@ -2255,9 +2255,17 @@ sub ChangeAttachmentAdd {
         },
     );
 
+    # check for error
     if ($Success) {
 
-        # TODO: trigger ChangeAttachmentAdd event
+        # trigger AttachmentAdd-Event
+        $Self->EventHandler(
+            Event => 'AttachmentAddPost',
+            Data  => {
+                %Param,
+            },
+            UserID => $Param{UserID},
+        );
     }
     else {
         $Self->{LogObject}->Log(
@@ -2276,7 +2284,9 @@ sub ChangeAttachmentAdd {
 Delete a given file from virtual fs.
 
     my $Success = $ChangeObject->ChangeAttachmentDelete(
-        FileID => 1234,
+        FileID   => 1234,
+        ChangeID => 123,
+        UserID   => 1,
     );
 
 =cut
@@ -2285,13 +2295,15 @@ sub ChangeAttachmentDelete {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    if ( !$Param{FileID} ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => 'Need FileID!',
-        );
+    for my $Needed (qw(FileID ChangeID UserID)) {
+        if ( !$Param{$Needed} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Needed!",
+            );
 
-        return;
+            return;
+        }
     }
 
     # search for attachments
@@ -2307,8 +2319,29 @@ sub ChangeAttachmentDelete {
         Filename => $Filename,
     );
 
-    # trigger 'ChangeAttachmentDelete' event
-    # TODO: trigger event
+    $Filename =~ s{ \A Change / \d+ / }{}xms;
+
+    # check for error
+    if ($Success) {
+
+        # trigger AttachmentDeletePost-Event
+        $Self->EventHandler(
+            Event => 'AttachmentDeletePost',
+            Data  => {
+                %Param,
+                Filename => $Filename,
+            },
+            UserID => $Param{UserID},
+        );
+    }
+    else {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Cannot delete attachment $Param{FileID}!",
+        );
+
+        return;
+    }
 
     return $Success;
 }
@@ -2929,6 +2962,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.206 $ $Date: 2009-12-16 17:15:44 $
+$Revision: 1.207 $ $Date: 2009-12-16 20:56:50 $
 
 =cut

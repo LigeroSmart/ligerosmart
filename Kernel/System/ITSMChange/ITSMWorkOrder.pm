@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.53 2009-12-16 20:45:44 reb Exp $
+# $Id: ITSMWorkOrder.pm,v 1.54 2009-12-16 20:56:50 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.53 $) [1];
+$VERSION = qw($Revision: 1.54 $) [1];
 
 =head1 NAME
 
@@ -1877,12 +1877,12 @@ sub WorkOrderStateIDsCheck {
 Add an attachment to a given change
 
     my $Success = $WorkOrderObject->WorkOrderAttachmentAdd(
-        WorkOrderID    => 123,
+        WorkOrderID => 123,
         Filename    => 'filename,
         Content     => 'content',
-        ContentID   => 'some_content@id',
         ContentType => 'text/plain',
         UserID      => 1,
+        ChangeID    => 135
     );
 
 =cut
@@ -1891,7 +1891,7 @@ sub WorkOrderAttachmentAdd {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Needed (qw(WorkOrderID Filename Content ContentType UserID ChangeID WorkOrderID)) {
+    for my $Needed (qw(WorkOrderID Filename Content ContentType UserID ChangeID)) {
         if ( !$Param{$Needed} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -1944,8 +1944,10 @@ sub WorkOrderAttachmentAdd {
 Delete a given file from virtual fs.
 
     my $Success = $WorkOrderObject->WorkOrderAttachmentDelete(
-        FileID => 1234,
-        UserID => 1,
+        WorkOrderID => 5123,
+        FileID      => 1234,
+        UserID      => 1,
+        ChangeID    => 12345,
     );
 
 =cut
@@ -2530,6 +2532,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.53 $ $Date: 2009-12-16 20:45:44 $
+$Revision: 1.54 $ $Date: 2009-12-16 20:56:50 $
 
 =cut
