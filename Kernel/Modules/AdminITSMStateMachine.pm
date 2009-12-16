@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminITSMStateMachine.pm - to add/update/delete state transitions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMStateMachine.pm,v 1.5 2009-12-16 11:29:53 bes Exp $
+# $Id: AdminITSMStateMachine.pm,v 1.6 2009-12-16 13:58:52 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::ITSMStateMachine;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -54,6 +54,12 @@ sub Run {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
+    # check whether next states should be deleted,
+    # this determines whether the confirmation page should be shown
+    my $ShowConfirmDeletionPage
+        = scalar( $Self->{ParamObject}->GetArray( Param => 'DelNextStateIDs' ) )
+        && !$Self->{ParamObject}->GetParam( Param => 'DeletionConfirmed' );
+
     # Build drop-downs for the left side with all change states and all workorders.
     # These dropdown are always needed.
     {
@@ -79,106 +85,23 @@ sub Run {
     }
 
     # provide form for changing the next states
-    if ( $Self->{Subaction} eq 'EditStateTransition' ) {
-
-        # the origin of the transitions
-        my $OriginStateID = $GetParam{ObjectType} eq 'Change'
-            ? $GetParam{ChangeStateID}
-            : $GetParam{WorkOrderStateID};
-
-        # Display the name of the origin state
-        if ( $GetParam{ObjectType} eq 'Change' && $GetParam{ChangeStateID} ) {
-            $GetParam{StateName} = $Self->{ChangeObject}->ChangeStateLookup(
-                ChangeStateID => $OriginStateID,
-            );
-        }
-        elsif ( $GetParam{ObjectType} eq 'WorkOrder' && $GetParam{WorkOrderStateID} ) {
-            $GetParam{StateName} = $Self->{WorkOrderObject}->WorkOrderStateLookup(
-                WorkOrderStateID => $OriginStateID,
-            );
-        }
-
-        # config item class
-        my %ConfigItemClass = (
-            Change    => 'ITSM::ChangeManagement::Change::State',
-            WorkOrder => 'ITSM::ChangeManagement::WorkOrder::State',
-        );
-        my $Class = $ConfigItemClass{ $GetParam{ObjectType} };
-
-        # the currently possible next states
-        my %OldNextStateID = map { $_ => 1 } @{
-            $Self->{StateMachineObject}->StateTransitionGet(
-                StateID => $OriginStateID,
-                Class   => $Class,
-                )
-            };
-
-        # ArrayHashRef with the all states
-        my $AllArrayHashRef;
-        if ( $GetParam{ObjectType} eq 'Change' ) {
-
-            # all change states
-            $AllArrayHashRef = $Self->{ChangeObject}->ChangePossibleStatesGet(
-                UserID => $Self->{UserID},
-            );
-        }
-        else {
-
-            # all workorder states
-            $AllArrayHashRef = $Self->{ChangeObject}->ChangePossibleStatesGet(
-                UserID => $Self->{UserID},
-            );
-        }
-
-        # Add the special final state
-        push @{$AllArrayHashRef}, { Key => '0', Value => '0' };
-
-      # split $AllArrayHashRef into an Array of the old next states and the possible new next states
-        my ( @DelArrayHashRef, @AddArrayHashRef );
-        for my $HashRef ( @{$AllArrayHashRef} ) {
-            if ( $OldNextStateID{ $HashRef->{Key} } ) {
-                push @DelArrayHashRef, $HashRef;
-            }
-            else {
-                push @AddArrayHashRef, $HashRef;
-            }
-        }
-
-        # dropdown menu, where the old next states can be selected for deletion
-        # multiple selections are explicitly allowed
-        $GetParam{DelNextStateSelectionString} = $Self->{LayoutObject}->BuildSelection(
-            Data     => \@DelArrayHashRef,
-            Multiple => 1,
-            Size     => scalar(@DelArrayHashRef),
-            Name     => 'DelNextStateIDs',
-        );
-
-        # dropdown menu, where the next states can be selected for addition
-        # multiple selections are explicitly allowed
-        $GetParam{AddNextStateSelectionString} = $Self->{LayoutObject}->BuildSelection(
-            Data     => \@AddArrayHashRef,
-            Multiple => 1,
-            Size     => scalar(@AddArrayHashRef),
-            Name     => 'AddNextStateIDs',
-        );
-
-        my $Output = $Self->{LayoutObject}->Header();
-        $Output .= $Self->{LayoutObject}->NavigationBar();
-        $Self->_EditStateTransition(
-            Action => 'EditStateTransition',
+    if ( $Self->{Subaction} eq 'EditStateTransitions' ) {
+        return $Self->_EditStateTransitionsPageGet(
+            Action => 'EditStateTransitions',
             %GetParam,
         );
-        $Output .= $Self->{LayoutObject}->Output(
-            TemplateFile => 'AdminITSMStateMachine',
-            Data         => \%Param,
-        );
-        $Output .= $Self->{LayoutObject}->Footer();
+    }
 
-        return $Output;
+    # deletion of next states was ordered, but not comfirmed yet
+    elsif ($ShowConfirmDeletionPage) {
+        return $Self->_ConfirmDeletionPageGet(
+            Action => 'EditStateTransitions',
+            %GetParam,
+        );
     }
 
     # actually add and delete state transitions
-    elsif ( $Self->{Subaction} eq 'EditStateTransitionAction' ) {
+    elsif ( $Self->{Subaction} eq 'EditStateTransitionsAction' ) {
 
         # config item class
         my %ConfigItemClass = (
@@ -232,8 +155,92 @@ sub Run {
     return $Output;
 }
 
-sub _EditStateTransition {
+sub _EditStateTransitionsPageGet {
     my ( $Self, %Param ) = @_;
+
+    # the origin of the transitions
+    my $OriginStateID = $Param{ObjectType} eq 'Change'
+        ? $Param{ChangeStateID}
+        : $Param{WorkOrderStateID};
+
+    # Display the name of the origin state
+    if ( $Param{ObjectType} eq 'Change' && $Param{ChangeStateID} ) {
+        $Param{StateName} = $Self->{ChangeObject}->ChangeStateLookup(
+            ChangeStateID => $OriginStateID,
+        );
+    }
+    elsif ( $Param{ObjectType} eq 'WorkOrder' && $Param{WorkOrderStateID} ) {
+        $Param{StateName} = $Self->{WorkOrderObject}->WorkOrderStateLookup(
+            WorkOrderStateID => $OriginStateID,
+        );
+    }
+
+    # config item class
+    my %ConfigItemClass = (
+        Change    => 'ITSM::ChangeManagement::Change::State',
+        WorkOrder => 'ITSM::ChangeManagement::WorkOrder::State',
+    );
+    my $Class = $ConfigItemClass{ $Param{ObjectType} };
+
+    # the currently possible next states
+    my %OldNextStateID = map { $_ => 1 } @{
+        $Self->{StateMachineObject}->StateTransitionGet(
+            StateID => $OriginStateID,
+            Class   => $Class,
+            )
+        };
+
+    # ArrayHashRef with the all states
+    my $AllArrayHashRef;
+    if ( $Param{ObjectType} eq 'Change' ) {
+
+        # all change states
+        $AllArrayHashRef = $Self->{ChangeObject}->ChangePossibleStatesGet(
+            UserID => $Self->{UserID},
+        );
+    }
+    else {
+
+        # all workorder states
+        $AllArrayHashRef = $Self->{ChangeObject}->ChangePossibleStatesGet(
+            UserID => $Self->{UserID},
+        );
+    }
+
+    # Add the special final state
+    push @{$AllArrayHashRef}, { Key => '0', Value => '0' };
+
+    # split $AllArrayHashRef into an Array of the old next states and the possible new next states
+    my ( @DelArrayHashRef, @AddArrayHashRef );
+    for my $HashRef ( @{$AllArrayHashRef} ) {
+        if ( $OldNextStateID{ $HashRef->{Key} } ) {
+            push @DelArrayHashRef, $HashRef;
+        }
+        else {
+            push @AddArrayHashRef, $HashRef;
+        }
+    }
+
+    # dropdown menu, where the old next states can be selected for deletion
+    # multiple selections are explicitly allowed
+    $Param{DelNextStateSelectionString} = $Self->{LayoutObject}->BuildSelection(
+        Data     => \@DelArrayHashRef,
+        Multiple => 1,
+        Size     => scalar(@DelArrayHashRef),
+        Name     => 'DelNextStateIDs',
+    );
+
+    # dropdown menu, where the next states can be selected for addition
+    # multiple selections are explicitly allowed
+    $Param{AddNextStateSelectionString} = $Self->{LayoutObject}->BuildSelection(
+        Data     => \@AddArrayHashRef,
+        Multiple => 1,
+        Size     => scalar(@AddArrayHashRef),
+        Name     => 'AddNextStateIDs',
+    );
+
+    my $Output = $Self->{LayoutObject}->Header();
+    $Output .= $Self->{LayoutObject}->NavigationBar();
 
     $Self->{LayoutObject}->Block(
         Name => 'Overview',
@@ -241,11 +248,73 @@ sub _EditStateTransition {
     );
 
     $Self->{LayoutObject}->Block(
-        Name => 'OverviewUpdate',
+        Name => 'EditStateTransitions',
+        Data => \%Param,
+    );
+    $Output .= $Self->{LayoutObject}->Output(
+        TemplateFile => 'AdminITSMStateMachine',
+        Data         => \%Param,
+    );
+    $Output .= $Self->{LayoutObject}->Footer();
+
+    return $Output;
+}
+
+# show the confirm deletion page
+sub _ConfirmDeletionPageGet {
+    my ( $Self, %Param ) = @_;
+
+    my $Output = $Self->{LayoutObject}->Header();
+    $Output .= $Self->{LayoutObject}->NavigationBar();
+    $Self->{LayoutObject}->Block(
+        Name => 'Overview',
         Data => \%Param,
     );
 
-    return 1;
+    $Self->{LayoutObject}->Block(
+        Name => 'ConfirmDeletion',
+        Data => \%Param,
+    );
+
+    # Show states which should be deleted
+    for my $NextStateID ( $Self->{ParamObject}->GetArray( Param => 'DelNextStateIDs' ) ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'ConfirmDeletionDelNextState',
+            Data => { NextStateID => $NextStateID },
+        );
+    }
+
+    # Show states which should be added
+    for my $NextStateID ( $Self->{ParamObject}->GetArray( Param => 'AddNextStateIDs' ) ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'ConfirmDeletionAddNextState',
+            Data => { NextStateID => $NextStateID },
+        );
+    }
+
+    # set hidden params for deleting next state ids
+    for my $NextStateID ( $Self->{ParamObject}->GetArray( Param => 'DelNextStateIDs' ) ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'ConfirmDeletionDelNextStateHidden',
+            Data => { NextStateID => $NextStateID },
+        );
+    }
+
+    # set hidden params for adding next state ids
+    for my $NextStateID ( $Self->{ParamObject}->GetArray( Param => 'AddNextStateIDs' ) ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'ConfirmDeletionAddNextStateHidden',
+            Data => { NextStateID => $NextStateID },
+        );
+    }
+
+    $Output .= $Self->{LayoutObject}->Output(
+        TemplateFile => 'AdminITSMStateMachine',
+        Data         => \%Param,
+    );
+    $Output .= $Self->{LayoutObject}->Footer();
+
+    return $Output;
 }
 
 sub _OverviewOverStateTransitions {
@@ -327,6 +396,21 @@ sub _OverviewOverStateTransitions {
                             StateName   => $StateName,
                             StateSignal => $StateSignal,
                             StateID     => $NextStateID,
+                        },
+                    );
+                }
+
+                # add the delete button
+                {
+                    my $StateName   = $StateID2Name{$ObjectType}->{$NextStateID}   || $NextStateID;
+                    my $StateSignal = $StateName2Signal{$ObjectType}->{$StateName} || '';
+                    $Self->{LayoutObject}->Block(
+                        Name => 'OverviewResultRowDelete',
+                        Data => {
+                            %Param,
+                            ObjectType  => $ObjectType,
+                            StateID     => $StateID,
+                            NextStateID => $NextStateID,
                         },
                     );
                 }
