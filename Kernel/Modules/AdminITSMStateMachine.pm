@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminITSMStateMachine.pm - to add/update/delete state transitions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMStateMachine.pm,v 1.2 2009-12-15 18:53:16 bes Exp $
+# $Id: AdminITSMStateMachine.pm,v 1.3 2009-12-16 09:59:41 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,12 +14,13 @@ package Kernel::Modules::AdminITSMStateMachine;
 use strict;
 use warnings;
 
+use Kernel::System::GeneralCatalog;
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::ITSMStateMachine;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -53,24 +54,22 @@ sub Run {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
-    # get complete change state list
+    # build drop-down for the left side with all change states
     my $AllChangeStates = $Self->{ChangeObject}->ChangePossibleStatesGet(
         UserID => $Self->{UserID},
     );
-
-    # build drop-down with change states, for the left side
+    unshift @{$AllChangeStates}, { Key => '0', Value => '0' };
     $GetParam{ChangeStateSelectionString} = $Self->{LayoutObject}->BuildSelection(
         Data       => $AllChangeStates,
         Name       => 'ChangeStateID',
         SelectedID => $GetParam{ChangeStateID},
     );
 
-    # get complete workorder state list
+    # build drop-down for the left side with all workorder states
     my $AllWorkOrderStates = $Self->{WorkOrderObject}->WorkOrderPossibleStatesGet(
         UserID => $Self->{UserID},
     );
-
-    # build drop-down with workorder states, for the left side
+    unshift @{$AllWorkOrderStates}, { Key => '0', Value => '0' };
     $GetParam{WorkOrderStateSelectionString} = $Self->{LayoutObject}->BuildSelection(
         Data       => $AllWorkOrderStates,
         Name       => 'WorkOrderStateID',
@@ -80,7 +79,7 @@ sub Run {
     # provide form for changing the next states
     if ( $Self->{Subaction} eq 'EditStateTransition' ) {
 
-        # Display the name of the state
+        # Display the name of the origin state
         if ( $GetParam{ObjectType} eq 'Change' && $GetParam{ChangeStateID} ) {
             $GetParam{StateName} = $Self->{ChangeObject}->ChangeStateLookup(
                 ChangeStateID => $GetParam{ChangeStateID},
@@ -92,38 +91,55 @@ sub Run {
             );
         }
 
-        # TODO: avoid code duplication
-        # dropdown menu, where possible states can be selected and deselected
-        # the existing transition are preselected,
-        # multiple selections are explicitly allowed
-        if ( $GetParam{ObjectType} eq 'Change' ) {
-            my $NextStateIDs = $Self->{StateMachineObject}->StateTransitionGet(
-                StateID => $GetParam{ChangeStateID},
-                Class   => 'ITSM::ChangeManagement::Change::State',
-            );
+        # config item class
+        my %ConfigItemClass = (
+            Change    => 'ITSM::ChangeManagement::Change::State',
+            WorkOrder => 'ITSM::ChangeManagement::WorkOrder::State',
+        );
+        my $Class = $ConfigItemClass{ $GetParam{ObjectType} };
 
-            $GetParam{NextStateSelectionString} = $Self->{LayoutObject}->BuildSelection(
-                Data       => $AllChangeStates,
-                Multiple   => 1,
-                Size       => scalar( @{$AllChangeStates} ),
-                Name       => 'NextChangeStateIDs',
-                SelectedID => $NextStateIDs,
+        # the origin of the transitions
+        my $StateID
+            = $GetParam{ObjectType} eq 'Change'
+            ? $GetParam{ChangeStateID}
+            : $GetParam{WorkOrderStateID};
+
+        my $OldNextStateIDs = $Self->{StateMachineObject}->StateTransitionGet(
+            StateID => $GetParam{ChangeStateID},
+            Class   => 'ITSM::ChangeManagement::Change::State',
+        );
+
+        # ArrayHashRef with the selectable states
+        my $AllStates;
+        if ( $GetParam{ObjectType} eq 'Change' ) {
+
+            # all change states
+            $AllStates = $Self->{ChangeObject}->ChangePossibleStatesGet(
+                UserID => $Self->{UserID},
             );
         }
         else {
-            my $NextStateIDs = $Self->{StateMachineObject}->StateTransitionGet(
-                StateID => $GetParam{WorkOrderStateID},
-                Class   => 'ITSM::ChangeManagement::WorkOrder::State',
-            );
 
-            $GetParam{NextStateSelectionString} = $Self->{LayoutObject}->BuildSelection(
-                Data       => $AllWorkOrderStates,
-                Multiple   => 1,
-                Size       => scalar( @{$AllChangeStates} ),
-                Name       => 'NextWorkOrderStateIDs',
-                SelectedID => $NextStateIDs,
+            # all workorder states
+            $AllStates = $Self->{ChangeObject}->ChangePossibleStatesGet(
+                UserID => $Self->{UserID},
             );
         }
+
+        # Add the special final state
+        push @{$AllStates}, { Key => '0', Value => '0' };
+
+        # dropdown menu, where possible states can be selected and deselected
+        # the existing transition are preselected,
+        # multiple selections are explicitly allowed
+        $GetParam{NextStateSelectionString} = $Self->{LayoutObject}->BuildSelection(
+            Data       => $AllStates,
+            Multiple   => 1,
+            Size       => scalar( @{$AllStates} ),
+            Name       => 'NextStateIDs',
+            SelectedID => $OldNextStateIDs,
+        );
+
         my $Output = $Self->{LayoutObject}->Header();
         $Output .= $Self->{LayoutObject}->NavigationBar();
         $Self->_EditStateTransition(
@@ -162,18 +178,10 @@ sub Run {
                 )
             };
 
-        my %NewNextStateID;
-        if ( $GetParam{ObjectType} eq 'Change' ) {
-            %NewNextStateID
-                = map { $_ => 1 } $Self->{ParamObject}->GetArray( Param => 'NextChangeStateIDs' );
-        }
-        else {
-            %NewNextStateID
-                = map { $_ => 1 }
-                $Self->{ParamObject}->GetArray( Param => 'NextWorkOrderStateIDs' );
-        }
+        my %NewNextStateID
+            = map { $_ => 1 } $Self->{ParamObject}->GetArray( Param => 'NextStateIDs' );
 
-        # Delete the NextStateIDs, which are not in %NewNextStateID
+        # Delete the NextStateID's, which are not in %NewNextStateID
         NEXT_STATE_ID:
         for my $NextStateID ( sort keys %OldNextStateID ) {
 
@@ -185,7 +193,7 @@ sub Run {
             );
         }
 
-        # Add the NextStateIDs which are not in %OldNextStateIDs
+        # Add the NextStateID's which are not in %OldNextStateIDs
         NEXT_STATE_ID:
         for my $NextStateID ( sort keys %NewNextStateID ) {
 
