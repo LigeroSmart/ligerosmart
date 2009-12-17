@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LinkObjectITSMChange.pm - layout backend module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LinkObjectITSMChange.pm,v 1.5 2009-11-23 13:30:43 bes Exp $
+# $Id: LinkObjectITSMChange.pm,v 1.6 2009-12-17 08:44:05 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::Output::HTML::Layout;
 use Kernel::System::GeneralCatalog;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 =head1 NAME
 
@@ -71,10 +71,6 @@ sub new {
     return $Self;
 }
 
-#
-# TODO: Update POD when table layout is final
-#
-
 =item TableCreateComplex()
 
 return an array with the block data
@@ -109,12 +105,13 @@ Return
         ItemList => [
             [
                 {
-                    Type    => 'ChangeStateSignal',
-                    Key     => 123,
-                    Content => 'requested',
+                    Type        => 'ChangeStateSignal',
+                    Key         => 123,
+                    Content     => 'grayled',
+                    ChangeState => 'requested',
                 },
                 {
-                    Type    => 'Text',
+                    Type    => 'Link',
                     Content => '2009100112345778',
                     Link    => 'Action=AgentITSMChangeZoom&ChangeID=123',
                 },
@@ -134,12 +131,13 @@ Return
             ],
             [
                 {
-                    Type    => 'ChangeStateSignal',
-                    Key     => 456,
-                    Content => 'closed',
+                    Type        => 'ChangeStateSignal',
+                    Key         => 456,
+                    Content     => 'greenled',
+                    ChangeState => 'closed',
                 },
                 {
-                    Type    => 'Text',
+                    Type    => 'Link',
                     Content => '2009100112345774',
                     Link    => 'Action=AgentITSMChangeZoom&ChangeID=456',
                 },
@@ -550,6 +548,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2009-11-23 13:30:43 $
+$Revision: 1.6 $ $Date: 2009-12-17 08:44:05 $
 
 =cut

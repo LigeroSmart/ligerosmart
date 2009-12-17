@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LinkObjectITSMWorkOrder.pm - layout backend module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LinkObjectITSMWorkOrder.pm,v 1.17 2009-11-25 09:49:22 bes Exp $
+# $Id: LinkObjectITSMWorkOrder.pm,v 1.18 2009-12-17 08:44:05 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::Output::HTML::Layout;
 use Kernel::System::GeneralCatalog;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 =head1 NAME
 
@@ -71,10 +71,6 @@ sub new {
     return $Self;
 }
 
-#
-# TODO: Update POD when table layout is final
-#
-
 =item TableCreateComplex()
 
 return an array with the block data
@@ -113,12 +109,13 @@ Return
         ItemList => [
             [
                 {
-                    Type    => 'WorkOrderStateSignal',
-                    Key     => 2,
-                    Content => 'ready',
+                    Type           => 'WorkOrderStateSignal',
+                    Key            => 2,
+                    Content        => 'greenled',
+                    WorkOrderState => 'ready',
                 },
                 {
-                    Type    => 'Text',
+                    Type    => 'Link',
                     Content => '2009100112345778-3',
                     Link    => 'Action=AgentITSMWorkOrderZoom&WorkOrderID=2',
                 },
@@ -143,12 +140,13 @@ Return
             ],
             [
                 {
-                    Type    => 'WorkOrderStateSignal',
-                    Key     => 4,
-                    Content => 'accepted',
+                    Type           => 'WorkOrderStateSignal',
+                    Key            => 4,
+                    Content        => 'redled',
+                    WorkOrderState => 'canceld',
                 },
                 {
-                    Type    => 'Text',
+                    Type    => 'Link',
                     Content => '2009100112345778-4',
                     Link    => 'Action=AgentITSMWorkOrderZoom&WorkOrderID=4',
                 },
@@ -589,6 +587,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.17 $ $Date: 2009-11-25 09:49:22 $
+$Revision: 1.18 $ $Date: 2009-12-17 08:44:05 $
 
 =cut
