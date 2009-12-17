@@ -2,7 +2,7 @@
 # Kernel/System/LinkObject/ITSMChange.pm - to link change objects
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.4 2009-11-06 10:11:37 ub Exp $
+# $Id: ITSMChange.pm,v 1.5 2009-12-17 08:53:55 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -208,7 +208,7 @@ sub ObjectSearch {
     }
 
     # search the changes
-    # no need to use OrderBy here, because it is sorted in TableCreateComplex and TableCreatSimple
+    # no need to use OrderBy here, because it is sorted in TableCreateComplex and TableCreateSimple
     my $ChangeIDsRef = $Self->{ChangeObject}->ChangeSearch(
         %{ $Param{SearchParams} },
         %Search,
