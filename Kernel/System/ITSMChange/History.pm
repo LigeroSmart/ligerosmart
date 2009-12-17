@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/History.pm - all change and workorder history functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: History.pm,v 1.20 2009-11-19 10:01:50 ub Exp $
+# $Id: History.pm,v 1.21 2009-12-17 09:43:02 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 =head1 NAME
 
@@ -155,7 +155,7 @@ sub HistoryAdd {
         if ( !$ID ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => 'Invalid history type given!',
+                Message  => "Invalid history type '$Param{HistoryType}' given!",
             );
             return;
         }
@@ -681,6 +681,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.20 $ $Date: 2009-11-19 10:01:50 $
+$Revision: 1.21 $ $Date: 2009-12-17 09:43:02 $
 
 =cut
