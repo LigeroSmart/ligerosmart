@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminITSMStateMachine.pm - to add/update/delete state transitions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMStateMachine.pm,v 1.11 2009-12-21 17:10:04 bes Exp $
+# $Id: AdminITSMStateMachine.pm,v 1.12 2009-12-21 17:32:59 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::ITSMStateMachine;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -445,8 +445,6 @@ sub _ConfirmDeletionPageGet {
 sub _OverviewStateTransitionsPageGet {
     my ( $Self, %Param ) = @_;
 
-    my $ObjectType = $Param{ObjectType};
-
     $Self->{LayoutObject}->Block(
         Name => 'Overview',
         Data => \%Param,
@@ -454,18 +452,12 @@ sub _OverviewStateTransitionsPageGet {
 
     $Self->{LayoutObject}->Block(
         Name => 'OverviewStateTransitions',
-        Data => {
-            %Param,
-            Class => $Param{Class},
-            }
+        Data => \%Param,
     );
 
-    # get the state names
+    # lookup for state names
     # TODO: Avoid direct usage of GeneralCatalogObject
     my $StateID2Name = $Self->{GeneralCatalogObject}->ItemList( Class => $Param{Class} );
-
-    # get the state signals
-    my $StateName2Signal = $Self->{ConfigObject}->Get("ITSM${ObjectType}::State::Signal");
 
     my $CssClass = 'searchactive';
     my %NextStateIDs
@@ -479,25 +471,19 @@ sub _OverviewStateTransitionsPageGet {
             # set output class
             $CssClass = $CssClass eq 'searchactive' ? 'searchpassive' : 'searchactive';
 
-            # values for the origin state
-            my $StateName   = $StateID2Name->{$StateID}       || $StateID;
-            my $StateSignal = $StateName2Signal->{$StateName} || '';
-
-            # values for the next state
-            my $NextStateName   = $StateID2Name->{$NextStateID}   || $NextStateID;
-            my $NextStateSignal = $StateName2Signal->{$StateName} || '';
+            # state names
+            my $StateName     = $StateID2Name->{$StateID}     || '*START*';
+            my $NextStateName = $StateID2Name->{$NextStateID} || '*END*';
 
             $Self->{LayoutObject}->Block(
                 Name => 'StateTransitionRow',
                 Data => {
-                    CssClass        => $CssClass,
-                    ObjectType      => $ObjectType,
-                    StateID         => $StateID,
-                    StateName       => $StateName,
-                    StateSignal     => $StateSignal,
-                    NextStateID     => $NextStateID,
-                    NextStateName   => $NextStateName,
-                    NextStateSignal => $NextStateSignal,
+                    CssClass      => $CssClass,
+                    ObjectType    => $Param{ObjectType},
+                    StateID       => $StateID,
+                    StateName     => $StateName,
+                    NextStateID   => $NextStateID,
+                    NextStateName => $NextStateName,
                 },
             );
         }
