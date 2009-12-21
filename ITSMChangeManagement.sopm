@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.83 2009-12-16 20:44:52 reb Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.84 2009-12-21 14:47:48 reb Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -195,6 +195,8 @@
             <Column Name="planned_end_time" Required="true" Default="9999-01-01 00:00:00" Type="DATE"/>
             <Column Name="actual_start_time" Required="true" Default="9999-01-01 00:00:00" Type="DATE"/>
             <Column Name="actual_end_time" Required="true" Default="9999-01-01 00:00:00" Type="DATE"/>
+            <Column Name="planned_efford" Required="true" Default="0" Size="10,2" Type="DECIMAL"/>
+            <Column Name="accounted_time" Required="true" Default="0" Size="10,2" Type="DECIMAL"/>
             <Column Name="create_time" Required="true" Type="DATE"/>
             <Column Name="create_by" Required="true" Type="INTEGER"/>
             <Column Name="change_time" Required="true" Type="DATE"/>

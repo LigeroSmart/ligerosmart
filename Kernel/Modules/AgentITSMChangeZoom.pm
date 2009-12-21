@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeZoom.pm - the OTRS::ITSM::ChangeManagement change zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.pm,v 1.39 2009-12-21 10:12:05 bes Exp $
+# $Id: AgentITSMChangeZoom.pm,v 1.40 2009-12-21 14:48:10 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.39 $) [1];
+$VERSION = qw($Revision: 1.40 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -239,7 +239,8 @@ sub Run {
         push @AdditionalBlockNames, 'RequestedTime';
     }
     for my $BlockName (
-        @AdditionalBlockNames, qw(PlannedStartTime PlannedEndTime ActualStartTime ActualEndTime)
+        @AdditionalBlockNames, qw(PlannedStartTime PlannedEndTime ActualStartTime
+        ActualEndTime PlannedEfford AccountedTime)
         )
     {
         if ( $Change->{$BlockName} ) {

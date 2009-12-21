@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderZoom.dtl - provides HTML form for AgentITSMWorkOrderZoom
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderZoom.dtl,v 1.23 2009-12-15 10:40:40 reb Exp $
+# $Id: AgentITSMWorkOrderZoom.dtl,v 1.24 2009-12-21 14:48:25 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -217,6 +217,36 @@
                             $TimeLong{"$Data{"ActualEndTime"}"}
                         </div>
 <!-- dtl:block:ActualEndTime -->
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>$Text{"Planned Efford"}: </b></td>
+                    <td>
+<!-- dtl:block:EmptyPlannedEfford -->
+                        <div title="-">
+                            -
+                        </div>
+<!-- dtl:block:EmptyPlannedEfford -->
+<!-- dtl:block:PlannedEfford -->
+                        <div title="$QData{"Planned Efford"}">
+                            $QData{"PlannedEfford"}
+                        </div>
+<!-- dtl:block:PlannedEfford -->
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>$Text{"Accounted Time"}: </b></td>
+                    <td>
+<!-- dtl:block:EmptyAccountedTime -->
+                        <div title="-">
+                            -
+                        </div>
+<!-- dtl:block:EmptyAccountedTime -->
+<!-- dtl:block:AccountedTime -->
+                        <div title="$QData{"Accounted Time"}">
+                            $QData{"AccountedTime"}
+                        </div>
+<!-- dtl:block:AccountedTime -->
                     </td>
                 </tr>
                 <tr>

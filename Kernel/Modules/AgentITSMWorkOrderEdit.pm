@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderEdit.pm - the OTRS::ITSM::ChangeManagement workorder edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderEdit.pm,v 1.30 2009-12-16 20:45:43 reb Exp $
+# $Id: AgentITSMWorkOrderEdit.pm,v 1.31 2009-12-21 14:48:10 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.30 $) [1];
+$VERSION = qw($Revision: 1.31 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -98,7 +98,7 @@ sub Run {
 
     # store needed parameters in %GetParam to make it reloadable
     my %GetParam;
-    for my $ParamName (qw(WorkOrderTitle Instruction SaveAttachment FileID)) {
+    for my $ParamName (qw(WorkOrderTitle Instruction SaveAttachment FileID PlannedEfford)) {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
@@ -183,6 +183,11 @@ sub Run {
             push @ValidationErrors, 'InvalidPlannedEndTime';
         }
 
+        # check format of planned efford
+        if ( $GetParam{PlannedEfford} !~ m{ \A \d* (?: [.] \d+ )? \z }xms ) {
+            push @ValidationErrors, 'InvalidPlannedEfford';
+        }
+
         # if all passed data is valid
         if ( !@ValidationErrors ) {
             my $CouldUpdateWorkOrder = $Self->{WorkOrderObject}->WorkOrderUpdate(
@@ -191,6 +196,7 @@ sub Run {
                 Instruction      => $GetParam{Instruction},
                 PlannedStartTime => $GetParam{PlannedStartTime},
                 PlannedEndTime   => $GetParam{PlannedEndTime},
+                PlannedEfford    => $GetParam{PlannedEfford},
                 UserID           => $Self->{UserID},
             );
 

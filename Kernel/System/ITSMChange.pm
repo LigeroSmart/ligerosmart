@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.208 2009-12-17 14:48:46 ub Exp $
+# $Id: ITSMChange.pm,v 1.209 2009-12-21 14:47:48 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -28,7 +28,7 @@ use Kernel::System::VirtualFS;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.208 $) [1];
+$VERSION = qw($Revision: 1.209 $) [1];
 
 =head1 NAME
 
@@ -496,6 +496,8 @@ The returned hash reference contains the following elements:
     $Change{PlannedEndTime}         # determined from the workorders
     $Change{ActualStartTime}        # determined from the workorders
     $Change{ActualEndTime}          # determined from the workorders
+    $Change{PlannedEfford}          # determined from the workorders
+    $Change{AccountedTime}          # determined from the workorders
     $Change{RequestedTime}
     $Change{CreateTime}
     $Change{CreateBy}
@@ -609,6 +611,22 @@ sub ChangeGet {
     # add result to change data
     $ChangeData{WorkOrderIDs} = $WorkOrderIDsRef || [];
     $ChangeData{WorkOrderCount} = scalar @{ $ChangeData{WorkOrderIDs} };
+
+    # get planned efford and accounted time for the change
+    my $ChangeEffords = $Self->{WorkOrderObject}->WorkOrderChangeEffordsGet(
+        ChangeID => $Param{ChangeID},
+        UserID   => $Param{UserID},
+    );
+
+    # merge time hash with change hash
+    if (
+        $ChangeEffords
+        && ref $ChangeEffords eq 'HASH'
+        && %{$ChangeEffords}
+        )
+    {
+        %ChangeData = ( %ChangeData, %{$ChangeEffords} );
+    }
 
     # get timestamps for the change
     my $ChangeTime = $Self->{WorkOrderObject}->WorkOrderChangeTimeGet(
@@ -2962,6 +2980,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.208 $ $Date: 2009-12-17 14:48:46 $
+$Revision: 1.209 $ $Date: 2009-12-21 14:47:48 $
 
 =cut

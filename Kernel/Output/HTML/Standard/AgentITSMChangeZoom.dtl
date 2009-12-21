@@ -2,7 +2,7 @@
 # AgentITSMChangeZoom.dtl - provides HTML form for AgentITSMChangeZoom
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.dtl,v 1.34 2009-12-15 21:02:18 mae Exp $
+# $Id: AgentITSMChangeZoom.dtl,v 1.35 2009-12-21 14:48:25 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -213,6 +213,36 @@
                     </td>
                 </tr>
 <!-- dtl:block:EmptyRequestedTime -->
+                <tr>
+                    <td><b>$Text{"Planned Efford"}: </b></td>
+                    <td>
+<!-- dtl:block:EmptyPlannedEfford -->
+                        <div title="-">
+                            -
+                        </div>
+<!-- dtl:block:EmptyPlannedEfford -->
+<!-- dtl:block:PlannedEfford -->
+                        <div title="$QData{"Planned Efford"}">
+                            $QData{"PlannedEfford"}
+                        </div>
+<!-- dtl:block:PlannedEfford -->
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>$Text{"Accounted Time"}: </b></td>
+                    <td>
+<!-- dtl:block:EmptyAccountedTime -->
+                        <div title="-">
+                            -
+                        </div>
+<!-- dtl:block:EmptyAccountedTime -->
+<!-- dtl:block:AccountedTime -->
+                        <div title="$QData{"Accounted Time"}">
+                            $QData{"AccountedTime"}
+                        </div>
+<!-- dtl:block:AccountedTime -->
+                    </td>
+                </tr>
                 <tr>
                     <td colspan="2">&nbsp;</td>
                 </tr>

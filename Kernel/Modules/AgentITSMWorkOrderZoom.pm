@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderZoom.pm - the OTRS::ITSM::ChangeManagement workorder zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderZoom.pm,v 1.30 2009-12-21 10:25:22 bes Exp $
+# $Id: AgentITSMWorkOrderZoom.pm,v 1.31 2009-12-21 14:48:11 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.30 $) [1];
+$VERSION = qw($Revision: 1.31 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -221,7 +221,8 @@ sub Run {
 
     # show values or dash ('-')
     for my $BlockName (
-        qw(WorkOrderType PlannedStartTime PlannedEndTime ActualStartTime ActualEndTime)
+        qw(WorkOrderType PlannedStartTime PlannedEndTime ActualStartTime ActualEndTime
+        PlannedEfford AccountedTime)
         )
     {
         if ( $WorkOrder->{$BlockName} ) {

@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderEdit.dtl - provides HTML form for AgentITSMWorkOrderEdit
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderEdit.dtl,v 1.29 2009-12-15 11:58:29 reb Exp $
+# $Id: AgentITSMWorkOrderEdit.dtl,v 1.30 2009-12-21 14:48:25 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -140,6 +140,19 @@ $Include{"RichTextEditorITSM"}
                                         <br />
                                         <font color="red" size="-2">$Text{"Input invalid"}</font>
 <!-- dtl:block:InvalidPlannedEndTime -->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="contentkey">$Text{"Planned Efford"}:</td>
+
+                                    <td class="contentvalue">
+                                        <div>
+                                            <input type="text" name="PlannedEfford" value="$QData{"PlannedEfford"}" size="11" maxlength="11">
+<!-- dtl:block:InvalidPlannedEfford -->
+                                            <br />
+                                            <font color="red" size="-2">$Text{"Input invalid"}</font>
+<!-- dtl:block:InvalidPlannedEfford -->
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>

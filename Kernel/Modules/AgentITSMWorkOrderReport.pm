@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderReport.pm - the OTRS::ITSM::ChangeManagement workorder report module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderReport.pm,v 1.19 2009-12-15 10:19:18 bes Exp $
+# $Id: AgentITSMWorkOrderReport.pm,v 1.20 2009-12-21 14:48:10 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -89,7 +89,7 @@ sub Run {
 
     # store needed parameters in %GetParam to make this page reloadable
     my %GetParam;
-    for my $ParamName (qw(Report WorkOrderStateID)) {
+    for my $ParamName (qw(Report WorkOrderStateID AccountedTime)) {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
@@ -155,6 +155,11 @@ sub Run {
             }
         }
 
+        # validate format of accounted time
+        if ( $GetParam{AccountedTime} !~ m{ \A \d* (?: [.] \d+ )? \z }xms ) {
+            $ValidationError{'InvalidAccountedTime'} = 1;
+        }
+
         # update only when there are no input validation errors
         if ( !%ValidationError ) {
 
@@ -173,6 +178,7 @@ sub Run {
                 Report           => $GetParam{Report},
                 WorkOrderStateID => $GetParam{WorkOrderStateID},
                 UserID           => $Self->{UserID},
+                AccountedTime    => $GetParam{AccountedTime},
                 %AdditionalParam,
             );
 
@@ -220,6 +226,9 @@ sub Run {
                 $GetParam{ $TimeType . 'Year' }   = $Year;
             }
         }
+
+        # do not show accounted time
+        delete $WorkOrder->{AccountedTime};
     }
 
     # get change that the workorder belongs to
@@ -298,8 +307,17 @@ sub Run {
                 $Self->{LayoutObject}->Block(
                     Name => 'Invalid' . $TimeType,
                 );
+
+                delete $ValidationError{ 'Invalid' . $TimeType };
             }
         }
+    }
+
+    # show validation errors
+    for my $Error ( keys %ValidationError ) {
+        $Self->{LayoutObject}->Block(
+            Name => $Error,
+        );
     }
 
     # start template output

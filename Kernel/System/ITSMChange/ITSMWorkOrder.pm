@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.55 2009-12-17 14:48:46 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.56 2009-12-21 14:47:48 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.55 $) [1];
+$VERSION = qw($Revision: 1.56 $) [1];
 
 =head1 NAME
 
@@ -369,6 +369,8 @@ There passing C<undef> indicates that the workorder time should be cleared.
         PlannedEndTime   => '2009-10-15 15:00:00',                     # (optional) 'undef' indicates clearing
         ActualStartTime  => '2009-10-14 00:00:01',                     # (optional) 'undef' indicates clearing
         ActualEndTime    => '2009-01-20 00:00:01',                     # (optional) 'undef' indicates clearing
+        PlannedEfford    => 123,                                       # (optional)
+        AccountedTime    => 13,                                        # (optional) the value is added to the value in the database
         UserID           => 1,
     );
 
@@ -494,6 +496,7 @@ sub WorkOrderUpdate {
         ActualEndTime    => 'actual_end_time',
         InstructionPlain => 'instruction_plain',
         ReportPlain      => 'report_plain',
+        PlannedEfford    => 'planned_efford',
     );
 
     # build SQL to update workorder
@@ -509,6 +512,13 @@ sub WorkOrderUpdate {
         # param checking has already been done, so this is safe
         $SQL .= "$Attribute{$Attribute} = ?, ";
         push @Bind, \$Param{$Attribute};
+    }
+
+    # addition of accounted time
+    if ( $Param{AccountedTime} ) {
+        my $ColumnName = 'accounted_time';
+        $SQL .= "$ColumnName = $ColumnName + ?, ";
+        push @Bind, \$Param{AccountedTime};
     }
 
     $SQL .= 'change_time = current_timestamp, change_by = ? ';
@@ -563,6 +573,8 @@ The returned hash reference contains following elements:
     $WorkOrder{PlannedEndTime}
     $WorkOrder{ActualStartTime}
     $WorkOrder{ActualEndTime}
+    $WorkOrder{AccountedTime}
+    $WorkOrder{PlannedEfford}
     $WorkOrder{CreateTime}
     $WorkOrder{CreateBy}
     $WorkOrder{ChangeTime}
@@ -592,7 +604,8 @@ sub WorkOrderGet {
             . 'workorder_state_id, workorder_type_id, workorder_agent_id, '
             . 'planned_start_time, planned_end_time, actual_start_time, actual_end_time, '
             . 'create_time, create_by, '
-            . 'change_time, change_by '
+            . 'change_time, change_by, '
+            . 'planned_efford, accounted_time '
             . 'FROM change_workorder '
             . 'WHERE id = ?',
         Bind  => [ \$Param{WorkOrderID} ],
@@ -621,6 +634,8 @@ sub WorkOrderGet {
         $WorkOrderData{CreateBy}         = $Row[16];
         $WorkOrderData{ChangeTime}       = $Row[17];
         $WorkOrderData{ChangeBy}         = $Row[18];
+        $WorkOrderData{PlannedEfford}    = $Row[19];
+        $WorkOrderData{AccountedTime}    = $Row[20];
     }
 
     # check error
@@ -2127,6 +2142,56 @@ sub WorkOrderAttachmentList {
     return %Attachments;
 }
 
+=item WorkOrderChangeEffordsGet()
+
+returns the effords for a given change
+
+    my $ChangeEffords = $WorkOrderObject->WorkOrderChangeEffordsGet(
+        ChangeID => 123,
+        UserID   => 1,
+    );
+
+=cut
+
+sub WorkOrderChangeEffordsGet {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Attribute (qw(ChangeID UserID)) {
+        if ( !$Param{$Attribute} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Attribute!",
+            );
+            return;
+        }
+    }
+
+    # build sql, using min and max functions
+    my $SQL = 'SELECT '
+        . 'SUM( planned_efford ), SUM( accounted_time ) '
+        . 'FROM change_workorder '
+        . 'WHERE change_id = ?';
+
+    # retrieve the requested time
+    return if !$Self->{DBObject}->Prepare(
+        SQL   => $SQL,
+        Bind  => [ \$Param{ChangeID} ],
+        Limit => 1,
+    );
+
+    # initialize the return time hash
+    my %ChangeEffords;
+
+    # fetch the result
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $ChangeEffords{PlannedEfford} = $Row[0] || '';
+        $ChangeEffords{AccountedTime} = $Row[1] || '';
+    }
+
+    return \%ChangeEffords;
+}
+
 =begin Internal:
 
 =item _CheckWorkOrderTypeIDs()
@@ -2532,6 +2597,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.55 $ $Date: 2009-12-17 14:48:46 $
+$Revision: 1.56 $ $Date: 2009-12-21 14:47:48 $
 
 =cut
