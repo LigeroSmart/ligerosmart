@@ -2,7 +2,7 @@
 # AdminITSMStateMachine.dtl - provides HTML form for AdminITSMStateMachine
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMStateMachine.dtl,v 1.8 2009-12-16 15:45:48 bes Exp $
+# $Id: AdminITSMStateMachine.dtl,v 1.9 2009-12-21 16:33:39 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,77 +22,87 @@
     </tr>
     <tr>
         <td class="mainbody">
-<!-- TODO: put these two form into a general dtl-block -->
-            <form action="$Env{"CGIHandle"}" method="post">
-                <input type="hidden" name="Action" value="$Env{"Action"}"/>
-                <input type="hidden" name="Subaction" value="EditStateTransitions"/>
-                <input type="hidden" name="ObjectType" value="Change"/>
+            <form action="$Env{"CGIHandle"}" method="get">
+                <input type="hidden" name="Action" value="$Env{"Action"}">
+                <input type="hidden" name="Subaction" value="StateTransitionAdd">
                 <table width="100%" cellspacing="0" cellpadding="4">
                     <tr>
-                        <td class="contenthead">$Text{"Edit State Transitions for Changes"}:</td>
+                        <td class="contenthead">$Text{"Add State Transition"}:</td>
                     </tr>
                     <tr>
                         <td class="contentbody">
-                            $Text{"Edit state transitions from the state"} $Data{"ChangeStateSelectionString"}
+                            <table>
+                                <tr>
+                                    <td class="contentkey">$Text{"Catalog Class"}:</td>
+                                    <td class="contentvalue">$Data{"ObjectTypeSelectionString"}</td>
+                                </tr>
+                            </table>
                         </td>
                     </tr>
                     <tr>
                         <td class="contentfooter">
-                            <input class="button" type="submit" value="$Text{"Edit"}"/>
-                        </td>
-                    </tr>
-                </table>
-            </form>
-            <br/>
-            <form action="$Env{"CGIHandle"}" method="post">
-                <input type="hidden" name="Action" value="$Env{"Action"}"/>
-                <input type="hidden" name="Subaction" value="EditStateTransitions"/>
-                <input type="hidden" name="ObjectType" value="WorkOrder"/>
-                <table width="100%" cellspacing="0" cellpadding="4">
-                    <tr>
-                        <td class="contenthead">$Text{"Edit State Transitions for Workorders"}:</td>
-                    </tr>
-                    <tr>
-                        <td class="contentbody">
-                            $Text{"Edit state transition from the state"} $Data{"WorkOrderStateSelectionString"}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="contentfooter">
-                            <input class="button" type="submit" value="$Text{"Edit"}"/>
+                            <input class="button" type="submit" value="$Text{"Add"}">
                         </td>
                     </tr>
                 </table>
             </form>
         </td>
         <td class="mainbody">
-<!-- dtl:block:OverviewStateTransitions -->
+<!-- dtl:block:OverviewObjectTypes -->
             <table width="100%" cellspacing="0" cellpadding="4">
                 <tr>
-                    <td class="contenthead">$Text{"Overview over all possible state transitions"}:</td>
+                    <td class="contenthead">$Text{"List"}:</td>
                 </tr>
                 <tr>
                     <td class="contentbody">
                         <table width="100%" border="0" cellspacing="0" cellpadding="3">
                             <tr>
-                                <td class="contentkey">$Text{"Class"}</td>
+                                <td class="contentkey" width="60%">$Text{"Catalog Class"}</td>
+                            </tr>
+<!-- dtl:block:OverviewObjectTypeRow -->
+                            <tr>
+                                <td class="$QData{"CssClass"}">
+                                    <a href="$Env{"Baselink"}Action=$Env{"Action"}&ObjectType=$LQData{"ObjectType"}">
+                                    $QData{"Class"}
+                                    </a>
+                                </td>
+                            </tr>
+<!-- dtl:block:OverviewObjectTypeRow -->
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="contentfooter">
+                        &nbsp;
+                    </td>
+                </tr>
+            </table>
+<!-- dtl:block:OverviewObjectTypes -->
+<!-- dtl:block:OverviewStateTransitions -->
+            <table width="100%" cellspacing="0" cellpadding="4">
+                <tr>
+                    <td class="contenthead">$Text{"Overview over all state transitions for"} $QData{"Class"}:</td>
+                </tr>
+                <tr>
+                    <td class="contentbody">
+                        <table width="100%" border="0" cellspacing="0" cellpadding="3">
+                            <tr>
                                 <td class="contentkey">$Text{"State"}</td>
                                 <td class="contentkey">$Text{"Next State"}</td>
                                 <td class="contentkey">$Text{"Delete"}</td>
                             </tr>
 <!-- dtl:block:StateTransitionRow -->
                             <tr>
-                                <td class="$QData{"CssClass"}">$QData{"Class"}</td>
                                 <td class="$QData{"CssClass"}">
 <!--img border="0" src="$Config{"Frontend::ImagePath"}$QData{"StateSignal"}.png" alt="$Text{"$QData{"State"} ($QData{"StateID"})"}">&nbsp;-->
-                                    <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=EditStateTransitions;ObjectType=$LQData{"ObjectType"};$LQData{"ObjectType"}StateID=$LQData{"StateID"}">$Text{"$QData{"StateName"}"}</a>
+                                    <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=StateTransitionUpdate;ObjectType=$LQData{"ObjectType"};StateID=$LQData{"StateID"};NextStateID=$LQData{"NextStateID"}">$Text{"$QData{"StateName"}"}</a>
                                 </td>
                                 <td class="$QData{"CssClass"}">
 <!--img border="0" src="$Config{"Frontend::ImagePath"}$QData{"NextStateSignal"}.png" alt="$Text{"$QData{"State"} ($QData{"StateID"})"}">&nbsp;-->
                                     $Text{"$QData{"NextStateName"}"}
                                 </td>
                                 <td class="$QData{"CssClass"}">
-                                    <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=EditStateTransitionsAction;ObjectType=$LQData{"ObjectType"};$LQData{"ObjectType"}StateID=$LQData{"StateID"};DelNextStateIDs=$LQData{"NextStateID"}">x</a>
+                                    <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=EditStateTransitionsAction;ObjectType=$LQData{"ObjectType"};StateID=$LQData{"StateID"};DelNextStateIDs=$LQData{"NextStateID"}">x</a>
                                 </td>
                             </tr>
 <!-- dtl:block:StateTransitionRow -->
@@ -106,27 +116,25 @@
                 </tr>
             </table>
 <!-- dtl:block:OverviewStateTransitions -->
-<!-- dtl:block:EditStateTransitions -->
-            <form action="$Env{"CGIHandle"}" method="post" name="ITSMStateMachineUpdate">
+<!-- dtl:block:StateTransitionAdd -->
+            <form action="$Env{"CGIHandle"}" method="post" name="ITSMStateMachineAdd">
                 <input type="hidden" name="Action"    value="$Env{"Action"}"/>
                 <input type="hidden" name="Subaction" value="$QData{"Action"}Action"/>
                 <input type="hidden" name="ObjectType" value="$QData{"ObjectType"}"/>
-                <input type="hidden" name="ChangeStateID" value="$QData{"ChangeStateID"}"/>
-                <input type="hidden" name="WorkOrderStateID" value="$QData{"WorkOrderStateID"}"/>
                 <table width="100%" cellspacing="0" cellpadding="4">
                     <tr>
                         <td class="contenthead">
-                            $Text{"Edit"} $Text{"$QData{"ObjectType"}"} state transitions from the state: <b>$Text{"$QData{"StateName"}"}</b>
+                            $Text{"Change next"} $Text{"$QData{"ObjectType"}"} state from: <b>$Text{"$QData{"OldNextStateName"}"}</b>
                         </td>
                     </tr>
                     <tr>
                         <td align="center" class="contentbody">
                             <table border="0" cellspacing="0" cellpadding="3">
                                 <tr>
-                                    <td class="contentkey">$Text{"Prohibit state transistions to:"}: </td>
-                                    <td class="contentvalue">$Data{"DelNextStateSelectionString"}</td>
-                                    <td class="contentkey">$Text{"Allow state transitions to"}: </td>
-                                    <td class="contentvalue">$Data{"AddNextStateSelectionString"}</td>
+                                    <td class="contentkey">$Text{"State"}: </td>
+                                    <td class="contentvalue">$Data{"StateSelectionString"}</td>
+                                    <td class="contentkey">$Text{"Next state"}: </td>
+                                    <td class="contentvalue">$Data{"NextStateSelectionString"}</td>
                                 </tr>
                             </table>
                         </td>
@@ -138,7 +146,38 @@
                     </tr>
                 </table>
             </form>
-<!-- dtl:block:EditStateTransitions -->
+<!-- dtl:block:StateTransitionAdd -->
+<!-- dtl:block:StateTransitionUpdate -->
+            <form action="$Env{"CGIHandle"}" method="post" name="ITSMStateMachineUpdate">
+                <input type="hidden" name="Action"      value="$Env{"Action"}"/>
+                <input type="hidden" name="Subaction"   value="$QData{"Action"}Action"/>
+                <input type="hidden" name="ObjectType"  value="$QData{"ObjectType"}"/>
+                <input type="hidden" name="StateID"     value="$QData{"StateID"}"/>
+                <input type="hidden" name="NextStateID" value="$QData{"NextStateID"}"/>
+                <table width="100%" cellspacing="0" cellpadding="4">
+                    <tr>
+                        <td class="contenthead">
+                            $Text{"Change next"} $Text{"$QData{"ObjectType"}"} state from: <b>$Text{"$QData{"OldNextStateName"}"}</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" class="contentbody">
+                            <table border="0" cellspacing="0" cellpadding="3">
+                                <tr>
+                                    <td class="contentkey">$Text{"New next state"}: </td>
+                                    <td class="contentvalue">$Data{"NextStateSelectionString"}</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="contentfooter">
+                            <input class="button" type="submit" value="$Text{"Save"}" />
+                        </td>
+                    </tr>
+                </table>
+            </form>
+<!-- dtl:block:StateTransitionUpdate -->
 <!-- dtl:block:ConfirmDeletion -->
             <table border="0" width="350" align="center" cellspacing="0" cellpadding="4">
                 <tr>
@@ -175,8 +214,7 @@
                                         <input type="hidden" name="Subaction" value="EditStateTransitionsAction"/>
                                         <input type="hidden" name="DeletionConfirmed" value="1"/>
                                         <input type="hidden" name="ObjectType" value="$QData{"ObjectType"}"/>
-                                        <input type="hidden" name="ChangeStateID" value="$QData{"ChangeStateID"}"/>
-                                        <input type="hidden" name="WorkOrderStateID" value="$QData{"WorkOrderStateID"}"/>
+                                        <input type="hidden" name="StateID" value="$QData{"StateID"}"/>
 <!-- dtl:block:ConfirmDeletionDelNextStateHidden -->
                                         <input type="hidden" name="DelNextStateIDs" value="$QData{"NextStateID"}"/>
 <!-- dtl:block:ConfirmDeletionDelNextStateHidden -->

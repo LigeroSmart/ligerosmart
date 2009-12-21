@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminITSMStateMachine.pm - to add/update/delete state transitions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMStateMachine.pm,v 1.9 2009-12-16 15:45:48 bes Exp $
+# $Id: AdminITSMStateMachine.pm,v 1.10 2009-12-21 16:33:39 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::ITSMStateMachine;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -50,87 +50,102 @@ sub Run {
 
     # store needed parameters in %GetParam
     my %GetParam;
-    for my $ParamName (qw( ChangeStateID WorkOrderStateID ObjectType)) {
+    for my $ParamName (qw(StateID NextStateID ObjectType)) {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
-    # choose the appropriate state id
     if ( $GetParam{ObjectType} ) {
-        $GetParam{OriginStateID} = $GetParam{ObjectType} eq 'Change'
-            ? $GetParam{ChangeStateID}
-            : $GetParam{WorkOrderStateID};
+
+        # the general catalog class
+        my %ConfigItemClass = (
+            Change    => 'ITSM::ChangeManagement::Change::State',
+            WorkOrder => 'ITSM::ChangeManagement::WorkOrder::State',
+        );
+        $GetParam{Class} = $ConfigItemClass{ $GetParam{ObjectType} };
     }
 
-    # check whether next states should be deleted,
-    # this determines whether the confirmation page should be shown
-    my $ShowConfirmDeletionPage
-        = scalar( $Self->{ParamObject}->GetArray( Param => 'DelNextStateIDs' ) )
-        && !$Self->{ParamObject}->GetParam( Param => 'DeletionConfirmed' );
+    # Build drop-down for the left side.
+    $GetParam{ObjectTypeSelectionString} = $Self->{LayoutObject}->BuildSelection(
+        Name => 'ObjectType',
+        Data => [
+            {
+                Key   => 'Change',
+                Value => 'ITSM::ChangeManagement::Change::State',
+            },
+            {
+                Key   => 'WorkOrder',
+                Value => 'ITSM::ChangeManagement::WorkOrder::State',
+            },
+        ],
+        SelectedID   => $GetParam{ObjectType},
+        PossibleNone => 1,
+        Translation  => 0,
+    );
 
-    # Build drop-downs for the left side with all change states and all workorders.
-    # These dropdown are always needed.
-    {
-        my $AllChangeStates = $Self->{ChangeObject}->ChangePossibleStatesGet(
-            UserID => $Self->{UserID},
-        );
-        unshift @{$AllChangeStates}, { Key => '0', Value => '0' };
-        $GetParam{ChangeStateSelectionString} = $Self->{LayoutObject}->BuildSelection(
-            Data       => $AllChangeStates,
-            Name       => 'ChangeStateID',
-            SelectedID => $GetParam{ChangeStateID},
-        );
-
-        my $AllWorkOrderStates = $Self->{WorkOrderObject}->WorkOrderPossibleStatesGet(
-            UserID => $Self->{UserID},
-        );
-        unshift @{$AllWorkOrderStates}, { Key => '0', Value => '0' };
-        $GetParam{WorkOrderStateSelectionString} = $Self->{LayoutObject}->BuildSelection(
-            Data       => $AllWorkOrderStates,
-            Name       => 'WorkOrderStateID',
-            SelectedID => $GetParam{WorkOrderStateID},
-        );
-    }
-
-    # provide form for changing the next states
-    if ( $Self->{Subaction} eq 'EditStateTransitions' ) {
-        return $Self->_EditStateTransitionsPageGet(
-            Action => 'EditStateTransitions',
+    # provide form for changing the next state
+    if ( $Self->{Subaction} eq 'StateTransitionUpdate' ) {
+        return $Self->_StateTransitionUpdatePageGet(
+            Action => 'StateTransitionUpdate',
             %GetParam,
         );
     }
 
+    # provide form for adding a state transition
+    if ( $Self->{Subaction} eq 'StateTransitionAdd' && $GetParam{ObjectType} ) {
+        return $Self->_StateTransitionAddPageGet(
+            Action => 'StateTransitionAdd',
+            %GetParam,
+        );
+    }
+
+    # check whether next states should be deleted,
+    # this determines whether the confirmation page should be shown
     # deletion of next states was ordered, but not comfirmed yet
-    elsif ($ShowConfirmDeletionPage) {
+    if (
+        scalar( $Self->{ParamObject}->GetArray( Param => 'DelNextStateIDs' ) )
+        && !$Self->{ParamObject}->GetParam( Param => 'DeletionConfirmed' )
+        )
+    {
         return $Self->_ConfirmDeletionPageGet(
             Action => 'EditStateTransitions',
             %GetParam,
         );
     }
 
+    my $ActionIsOk;
+
+    # update the next state of a state transition
+    if ( $Self->{Subaction} eq 'StateTransitionUpdateAction' ) {
+
+        for my $ParamName (qw(NewNextStateID)) {
+            $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+        }
+
+        # Update the state transition
+        $ActionIsOk = $Self->{StateMachineObject}->StateTransitionUpdate(
+            Class          => $GetParam{Class},
+            StateID        => $GetParam{StateID},
+            NextStateID    => $GetParam{NextStateID},
+            NewNextStateID => $GetParam{NewNextStateID},
+        );
+    }
+    elsif ( $Self->{Subaction} eq 'StateTransitionAddAction' ) {
+
+        # Add the state transition
+        $ActionIsOk = $Self->{StateMachineObject}->StateTransitionAdd(
+            Class       => $GetParam{Class},
+            StateID     => $GetParam{StateID},
+            NextStateID => $GetParam{NextStateID},
+        );
+    }
+
     # actually add and delete state transitions
     elsif ( $Self->{Subaction} eq 'EditStateTransitionsAction' ) {
 
-        # config item class
-        my %ConfigItemClass = (
-            Change    => 'ITSM::ChangeManagement::Change::State',
-            WorkOrder => 'ITSM::ChangeManagement::WorkOrder::State',
-        );
-        my $Class = $ConfigItemClass{ $GetParam{ObjectType} };
-
-        # the origin of the transitions
-        my $OriginStateID = $GetParam{OriginStateID};
-
-        my %OldNextStateID = map { $_ => 1 } @{
-            $Self->{StateMachineObject}->StateTransitionGet(
-                StateID => $OriginStateID,
-                Class   => $Class,
-                ) || []
-            };
-
         # Delete the DelNextStateID's
         for my $NextStateID ( $Self->{ParamObject}->GetArray( Param => 'DelNextStateIDs' ) ) {
-            $Self->{StateMachineObject}->StateTransitionDelete(
-                StateID     => $OriginStateID,
+            $ActionIsOk = $Self->{StateMachineObject}->StateTransitionDelete(
+                StateID     => $GetParam{StateID},
                 NextStateID => $NextStateID
             );
         }
@@ -138,50 +153,62 @@ sub Run {
         # Add the AddNextStateID's
         for my $NextStateID ( $Self->{ParamObject}->GetArray( Param => 'AddNextStateIDs' ) ) {
 
-            $Self->{StateMachineObject}->StateTransitionAdd(
-                Class       => $Class,
-                StateID     => $OriginStateID,
+            $ActionIsOk = $Self->{StateMachineObject}->StateTransitionAdd(
+                Class       => $GetParam{Class},
+                StateID     => $GetParam{StateID},
                 NextStateID => $NextStateID
             );
         }
     }
 
-    # present a table of all transitions
-    return $Self->_OverviewPageGet(%GetParam);
+    if ( $GetParam{ObjectType} ) {
+        my $Note = $ActionIsOk ? '' : $Self->{LayoutObject}->Notify( Priority => 'Error' );
+
+        return $Self->_OverviewStateTransitionsPageGet(
+            %GetParam,
+            Note => $Note,
+        );
+    }
+
+    # present a list of object types
+    return $Self->_OverviewObjectTypesPageGet(%GetParam);
 }
 
-# provide a form for adding and deleting state transitions
-sub _EditStateTransitionsPageGet {
+# provide a form for changing the next state of a transition
+sub _StateTransitionUpdatePageGet {
     my ( $Self, %Param ) = @_;
-
-    # the origin of the transitions
-    my $OriginStateID = $Param{OriginStateID};
 
     # Display the name of the origin state
     if ( $Param{ObjectType} eq 'Change' ) {
         $Param{StateName} = $Self->{ChangeObject}->ChangeStateLookup(
-            ChangeStateID => $OriginStateID,
+            ChangeStateID => $Param{StateID},
         );
     }
     elsif ( $Param{ObjectType} eq 'WorkOrder' ) {
         $Param{StateName} = $Self->{WorkOrderObject}->WorkOrderStateLookup(
-            WorkOrderStateID => $OriginStateID,
+            WorkOrderStateID => $Param{StateID},
         );
     }
-    $Param{StateName} ||= $Param{OriginStateID};
+    $Param{StateName} ||= $Param{StateID};
 
-    # config item class
-    my %ConfigItemClass = (
-        Change    => 'ITSM::ChangeManagement::Change::State',
-        WorkOrder => 'ITSM::ChangeManagement::WorkOrder::State',
-    );
-    my $Class = $ConfigItemClass{ $Param{ObjectType} };
+    # Display the name of the old next state
+    if ( $Param{ObjectType} eq 'Change' ) {
+        $Param{OldNextStateName} = $Self->{ChangeObject}->ChangeStateLookup(
+            ChangeStateID => $Param{NextStateID},
+        );
+    }
+    elsif ( $Param{ObjectType} eq 'WorkOrder' ) {
+        $Param{OldNextStateName} = $Self->{WorkOrderObject}->WorkOrderStateLookup(
+            WorkOrderStateID => $Param{NextStateID},
+        );
+    }
+    $Param{OldNextStateName} ||= $Param{NextStateID};
 
     # the currently possible next states
     my %OldNextStateID = map { $_ => 1 } @{
         $Self->{StateMachineObject}->StateTransitionGet(
-            StateID => $OriginStateID,
-            Class   => $Class,
+            StateID => $Param{StateID},
+            Class   => $Param{Class},
             ) || []
         };
 
@@ -199,15 +226,16 @@ sub _EditStateTransitionsPageGet {
     }
 
     # Add the special final state
-    push @{$AllArrayHashRef}, { Key => '0', Value => '0' };
+    push @{$AllArrayHashRef}, { Key => '0', Value => '*END*' };
 
     # split $AllArrayHashRef into an Array of the old next states and the possible new next states
-    my ( @DelArrayHashRef, @AddArrayHashRef );
+    my @AddArrayHashRef;
     for my $HashRef ( @{$AllArrayHashRef} ) {
         if ( $OldNextStateID{ $HashRef->{Key} } ) {
-            push @DelArrayHashRef, $HashRef;
+
+            # already existing transitions are not offered
         }
-        elsif ( $HashRef->{Key} == $OriginStateID ) {
+        elsif ( $HashRef->{Key} == $Param{StateID} ) {
 
             # do not encourage a transition to the same state
         }
@@ -216,22 +244,12 @@ sub _EditStateTransitionsPageGet {
         }
     }
 
-    # dropdown menu, where the old next states can be selected for deletion
-    # multiple selections are explicitly allowed
-    $Param{DelNextStateSelectionString} = $Self->{LayoutObject}->BuildSelection(
-        Data     => \@DelArrayHashRef,
-        Multiple => 1,
-        Size     => scalar(@DelArrayHashRef),
-        Name     => 'DelNextStateIDs',
-    );
-
     # dropdown menu, where the next states can be selected for addition
     # multiple selections are explicitly allowed
-    $Param{AddNextStateSelectionString} = $Self->{LayoutObject}->BuildSelection(
-        Data     => \@AddArrayHashRef,
-        Multiple => 1,
-        Size     => scalar(@AddArrayHashRef),
-        Name     => 'AddNextStateIDs',
+    $Param{NextStateSelectionString} = $Self->{LayoutObject}->BuildSelection(
+        Data => \@AddArrayHashRef,
+        Size => scalar(@AddArrayHashRef),
+        Name => 'NewNextStateID',
     );
 
     my $Output = $Self->{LayoutObject}->Header();
@@ -243,7 +261,67 @@ sub _EditStateTransitionsPageGet {
     );
 
     $Self->{LayoutObject}->Block(
-        Name => 'EditStateTransitions',
+        Name => 'StateTransitionUpdate',
+        Data => \%Param,
+    );
+    $Output .= $Self->{LayoutObject}->Output(
+        TemplateFile => 'AdminITSMStateMachine',
+        Data         => \%Param,
+    );
+    $Output .= $Self->{LayoutObject}->Footer();
+
+    return $Output;
+}
+
+# provide a form for add a new state transition
+sub _StateTransitionAddPageGet {
+    my ( $Self, %Param ) = @_;
+
+    # the origin of the transitions
+    my $StateID = $Param{StateID};
+
+    # ArrayHashRef with the all states for an object type
+    my $AllArrayHashRef;
+    if ( $Param{ObjectType} eq 'Change' ) {
+        $AllArrayHashRef = $Self->{ChangeObject}->ChangePossibleStatesGet(
+            UserID => $Self->{UserID},
+        );
+    }
+    else {
+        $AllArrayHashRef = $Self->{WorkOrderObject}->WorkOrderPossibleStatesGet(
+            UserID => $Self->{UserID},
+        );
+    }
+
+    # Add the special final state
+    push @{$AllArrayHashRef}, { Key => '0', Value => '*START*' };
+
+    # multiple selections are explicitly allowed
+    $Param{StateSelectionString} = $Self->{LayoutObject}->BuildSelection(
+        Data => $AllArrayHashRef,
+        Size => scalar( @{$AllArrayHashRef} ),
+        Name => 'StateID',
+    );
+
+    # dropdown menu, where the next states can be selected for addition
+    # multiple selections are explicitly allowed
+    $AllArrayHashRef->[-1] = { Key => '0', Value => '*END*' };
+    $Param{NextStateSelectionString} = $Self->{LayoutObject}->BuildSelection(
+        Data => $AllArrayHashRef,
+        Size => scalar( @{$AllArrayHashRef} ),
+        Name => 'NextStateID',
+    );
+
+    my $Output = $Self->{LayoutObject}->Header();
+    $Output .= $Self->{LayoutObject}->NavigationBar();
+
+    $Self->{LayoutObject}->Block(
+        Name => 'Overview',
+        Data => \%Param,
+    );
+
+    $Self->{LayoutObject}->Block(
+        Name => 'StateTransitionAdd',
         Data => \%Param,
     );
     $Output .= $Self->{LayoutObject}->Output(
@@ -260,7 +338,6 @@ sub _ConfirmDeletionPageGet {
     my ( $Self, %Param ) = @_;
 
     # set up some lookup tables for displaying the state name
-    # TODO: Avoid direct usage of GeneralCatalogObject
     my %StateID2Name;
     for my $ObjectType (qw(Change WorkOrder)) {
 
@@ -272,6 +349,8 @@ sub _ConfirmDeletionPageGet {
 
         # get the state names
         my $Class = $ConfigItemClass{$ObjectType};
+
+        # TODO: Avoid direct usage of GeneralCatalogObject
         $StateID2Name{$ObjectType} = $Self->{GeneralCatalogObject}->ItemList( Class => $Class );
     }
 
@@ -283,8 +362,8 @@ sub _ConfirmDeletionPageGet {
         Data => \%Param,
     );
 
-    my $StateName = $StateID2Name{ $Param{ObjectType} }->{ $Param{OriginStateID} }
-        || $Param{OriginStateID};
+    my $StateName = $StateID2Name{ $Param{ObjectType} }->{ $Param{StateID} }
+        || $Param{StateID};
     $Self->{LayoutObject}->Block(
         Name => 'ConfirmDeletion',
         Data => {
@@ -350,7 +429,81 @@ sub _ConfirmDeletionPageGet {
 }
 
 # Show a table of all state transitions
-sub _OverviewPageGet {
+sub _OverviewStateTransitionsPageGet {
+    my ( $Self, %Param ) = @_;
+
+    my $ObjectType = $Param{ObjectType};
+
+    $Self->{LayoutObject}->Block(
+        Name => 'Overview',
+        Data => \%Param,
+    );
+
+    $Self->{LayoutObject}->Block(
+        Name => 'OverviewStateTransitions',
+        Data => {
+            %Param,
+            Class => $Param{Class},
+            }
+    );
+
+    # get the state names
+    # TODO: Avoid direct usage of GeneralCatalogObject
+    my $StateID2Name = $Self->{GeneralCatalogObject}->ItemList( Class => $Param{Class} );
+
+    # get the state signals
+    my $StateName2Signal = $Self->{ConfigObject}->Get("ITSM${ObjectType}::State::Signal");
+
+    my $CssClass = 'searchactive';
+    my %NextStateIDs
+        = %{ $Self->{StateMachineObject}->StateTransitionList( Class => $Param{Class} ) || {} };
+
+    # loop over all 'State' and 'NextState' pairs for the ObjectType
+    for my $StateID ( sort keys %NextStateIDs ) {
+
+        for my $NextStateID ( @{ $NextStateIDs{$StateID} } ) {
+
+            # set output class
+            $CssClass = $CssClass eq 'searchactive' ? 'searchpassive' : 'searchactive';
+
+            # values for the origin state
+            my $StateName   = $StateID2Name->{$StateID}       || $StateID;
+            my $StateSignal = $StateName2Signal->{$StateName} || '';
+
+            # values for the next state
+            my $NextStateName   = $StateID2Name->{$NextStateID}   || $NextStateID;
+            my $NextStateSignal = $StateName2Signal->{$StateName} || '';
+
+            $Self->{LayoutObject}->Block(
+                Name => 'StateTransitionRow',
+                Data => {
+                    CssClass        => $CssClass,
+                    ObjectType      => $ObjectType,
+                    StateID         => $StateID,
+                    StateName       => $StateName,
+                    StateSignal     => $StateSignal,
+                    NextStateID     => $NextStateID,
+                    NextStateName   => $NextStateName,
+                    NextStateSignal => $NextStateSignal,
+                },
+            );
+        }
+    }
+
+    my $Output = $Self->{LayoutObject}->Header();
+    $Output .= $Self->{LayoutObject}->NavigationBar();
+    $Output .= $Param{Note};
+    $Output .= $Self->{LayoutObject}->Output(
+        TemplateFile => 'AdminITSMStateMachine',
+        Data         => \%Param,
+    );
+    $Output .= $Self->{LayoutObject}->Footer();
+
+    return $Output;
+}
+
+# Show a list of relevant object types
+sub _OverviewObjectTypesPageGet {
     my ( $Self, %Param ) = @_;
 
     $Self->{LayoutObject}->Block(
@@ -358,7 +511,7 @@ sub _OverviewPageGet {
         Data => \%Param,
     );
     $Self->{LayoutObject}->Block(
-        Name => 'OverviewStateTransitions',
+        Name => 'OverviewObjectTypes',
         Data => \%Param,
     );
 
@@ -368,57 +521,20 @@ sub _OverviewPageGet {
         WorkOrder => 'ITSM::ChangeManagement::WorkOrder::State',
     );
 
-    # set up some lookup tables for displaying the state name and signal
-    # TODO: Avoid direct usage of GeneralCatalogObject
-    my ( %StateID2Name, %StateName2Signal );
-    for my $ObjectType (qw(Change WorkOrder)) {
-
-        # get the state names
-        my $Class = $ConfigItemClass{$ObjectType};
-        $StateID2Name{$ObjectType} = $Self->{GeneralCatalogObject}->ItemList( Class => $Class );
-
-        # get the state signals
-        $StateName2Signal{$ObjectType}
-            = $Self->{ConfigObject}->Get("ITSM${ObjectType}::State::Signal");
-    }
-
     my $CssClass = 'searchactive';
     for my $ObjectType (qw(Change WorkOrder)) {
         my $Class = $ConfigItemClass{$ObjectType};
-        my %NextStateIDs = %{ $Self->{StateMachineObject}->StateTransitionList( Class => $Class ) };
 
-        # loop over all 'State' and 'NextState' pairs for the ObjectType
-        for my $StateID ( sort keys %NextStateIDs ) {
+        $CssClass = $CssClass eq 'searchactive' ? 'searchpassive' : 'searchactive';
 
-            for my $NextStateID ( @{ $NextStateIDs{$StateID} } ) {
-
-                # set output class
-                $CssClass = $CssClass eq 'searchactive' ? 'searchpassive' : 'searchactive';
-
-                # values for the origin state
-                my $StateName   = $StateID2Name{$ObjectType}->{$StateID}       || $StateID;
-                my $StateSignal = $StateName2Signal{$ObjectType}->{$StateName} || '';
-
-                # values for the next state
-                my $NextStateName   = $StateID2Name{$ObjectType}->{$NextStateID}   || $NextStateID;
-                my $NextStateSignal = $StateName2Signal{$ObjectType}->{$StateName} || '';
-
-                $Self->{LayoutObject}->Block(
-                    Name => 'StateTransitionRow',
-                    Data => {
-                        CssClass        => $CssClass,
-                        ObjectType      => $ObjectType,
-                        Class           => $Class,
-                        StateID         => $StateID,
-                        StateName       => $StateName,
-                        StateSignal     => $StateSignal,
-                        NextStateID     => $NextStateID,
-                        NextStateName   => $NextStateName,
-                        NextStateSignal => $NextStateSignal,
-                    },
-                );
-            }
-        }
+        $Self->{LayoutObject}->Block(
+            Name => 'OverviewObjectTypeRow',
+            Data => {
+                CssClass   => $CssClass,
+                ObjectType => $ObjectType,
+                Class      => $Class,
+            },
+        );
     }
 
     my $Output = $Self->{LayoutObject}->Header();
