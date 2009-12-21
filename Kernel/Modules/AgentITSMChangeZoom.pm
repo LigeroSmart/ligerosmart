@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeZoom.pm - the OTRS::ITSM::ChangeManagement change zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.pm,v 1.38 2009-12-16 17:15:44 reb Exp $
+# $Id: AgentITSMChangeZoom.pm,v 1.39 2009-12-21 10:12:05 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.38 $) [1];
+$VERSION = qw($Revision: 1.39 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -115,10 +115,10 @@ sub Run {
         );
     }
 
-    # Store LastScreenView, for backlinks
+    # Store LastScreenOverview, for backlinks from linked tickets
     $Self->{SessionObject}->UpdateSessionID(
         SessionID => $Self->{SessionID},
-        Key       => 'LastScreenView',
+        Key       => 'LastScreenOverview',
         Value     => $Self->{RequestedURL},
     );
 
