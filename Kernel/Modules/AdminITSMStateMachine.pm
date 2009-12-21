@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminITSMStateMachine.pm - to add/update/delete state transitions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMStateMachine.pm,v 1.10 2009-12-21 16:33:39 bes Exp $
+# $Id: AdminITSMStateMachine.pm,v 1.11 2009-12-21 17:10:04 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::ITSMStateMachine;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -82,6 +82,8 @@ sub Run {
         Translation  => 0,
     );
 
+    my $Note = '';
+
     # provide form for changing the next state
     if ( $Self->{Subaction} eq 'StateTransitionUpdate' ) {
         return $Self->_StateTransitionUpdatePageGet(
@@ -91,17 +93,25 @@ sub Run {
     }
 
     # provide form for adding a state transition
-    if ( $Self->{Subaction} eq 'StateTransitionAdd' && $GetParam{ObjectType} ) {
-        return $Self->_StateTransitionAddPageGet(
-            Action => 'StateTransitionAdd',
-            %GetParam,
-        );
+    elsif ( $Self->{Subaction} eq 'StateTransitionAdd' ) {
+        if ( !$GetParam{ObjectType} ) {
+            $Note .= $Self->{LayoutObject}->Notify(
+                Priority => 'Error',
+                Info     => 'Please select first an object type!',
+            );
+        }
+        else {
+            return $Self->_StateTransitionAddPageGet(
+                Action => 'StateTransitionAdd',
+                %GetParam,
+            );
+        }
     }
 
     # check whether next states should be deleted,
     # this determines whether the confirmation page should be shown
     # deletion of next states was ordered, but not comfirmed yet
-    if (
+    elsif (
         scalar( $Self->{ParamObject}->GetArray( Param => 'DelNextStateIDs' ) )
         && !$Self->{ParamObject}->GetParam( Param => 'DeletionConfirmed' )
         )
@@ -112,7 +122,7 @@ sub Run {
         );
     }
 
-    my $ActionIsOk;
+    my $ActionIsOk = 1;
 
     # update the next state of a state transition
     if ( $Self->{Subaction} eq 'StateTransitionUpdateAction' ) {
@@ -162,7 +172,7 @@ sub Run {
     }
 
     if ( $GetParam{ObjectType} ) {
-        my $Note = $ActionIsOk ? '' : $Self->{LayoutObject}->Notify( Priority => 'Error' );
+        $Note .= $ActionIsOk ? '' : $Self->{LayoutObject}->Notify( Priority => 'Error' );
 
         return $Self->_OverviewStateTransitionsPageGet(
             %GetParam,
@@ -171,7 +181,10 @@ sub Run {
     }
 
     # present a list of object types
-    return $Self->_OverviewObjectTypesPageGet(%GetParam);
+    return $Self->_OverviewObjectTypesPageGet(
+        %GetParam,
+        Note => $Note,
+    );
 }
 
 # provide a form for changing the next state of a transition
@@ -539,6 +552,7 @@ sub _OverviewObjectTypesPageGet {
 
     my $Output = $Self->{LayoutObject}->Header();
     $Output .= $Self->{LayoutObject}->NavigationBar();
+    $Output .= $Param{Note};
     $Output .= $Self->{LayoutObject}->Output(
         TemplateFile => 'AdminITSMStateMachine',
         Data         => \%Param,
