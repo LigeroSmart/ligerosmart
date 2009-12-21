@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeMyWorkOrders.pm - the OTRS::ITSM::ChangeManagement MyWorkOrders overview module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeMyWorkOrders.pm,v 1.3 2009-12-01 16:49:22 ub Exp $
+# $Id: AgentITSMChangeMyWorkOrders.pm,v 1.4 2009-12-21 10:00:36 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -68,7 +68,7 @@ sub Run {
     # store last screen, used for backlinks
     $Self->{SessionObject}->UpdateSessionID(
         SessionID => $Self->{SessionID},
-        Key       => 'LastScreenChanges',
+        Key       => 'LastScreenWorkOrders',
         Value     => $Self->{RequestedURL},
     );
 
