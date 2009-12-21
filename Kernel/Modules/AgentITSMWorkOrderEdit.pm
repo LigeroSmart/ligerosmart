@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderEdit.pm - the OTRS::ITSM::ChangeManagement workorder edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderEdit.pm,v 1.31 2009-12-21 14:48:10 reb Exp $
+# $Id: AgentITSMWorkOrderEdit.pm,v 1.32 2009-12-21 15:18:39 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.31 $) [1];
+$VERSION = qw($Revision: 1.32 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -184,7 +184,7 @@ sub Run {
         }
 
         # check format of planned efford
-        if ( $GetParam{PlannedEfford} !~ m{ \A \d* (?: [.] \d+ )? \z }xms ) {
+        if ( $GetParam{PlannedEfford} !~ m{ \A -? \d* (?: [.] \d{1,2} )? \z }xms ) {
             push @ValidationErrors, 'InvalidPlannedEfford';
         }
 

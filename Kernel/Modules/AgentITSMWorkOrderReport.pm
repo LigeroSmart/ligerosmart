@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderReport.pm - the OTRS::ITSM::ChangeManagement workorder report module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderReport.pm,v 1.20 2009-12-21 14:48:10 reb Exp $
+# $Id: AgentITSMWorkOrderReport.pm,v 1.21 2009-12-21 15:18:39 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -156,7 +156,7 @@ sub Run {
         }
 
         # validate format of accounted time
-        if ( $GetParam{AccountedTime} !~ m{ \A \d* (?: [.] \d+ )? \z }xms ) {
+        if ( $GetParam{AccountedTime} !~ m{ \A -? \d* (?: [.] \d{1,2} )? \z }xms ) {
             $ValidationError{'InvalidAccountedTime'} = 1;
         }
 
@@ -226,9 +226,6 @@ sub Run {
                 $GetParam{ $TimeType . 'Year' }   = $Year;
             }
         }
-
-        # do not show accounted time
-        delete $WorkOrder->{AccountedTime};
     }
 
     # get change that the workorder belongs to
@@ -320,6 +317,12 @@ sub Run {
         );
     }
 
+    # show accounted time only when form was submitted
+    my $AccountedTime = '';
+    if ( $GetParam{AccountedTime} ) {
+        $AccountedTime = $GetParam{AccountedTime};
+    }
+
     # start template output
     $Output .= $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentITSMWorkOrderReport',
@@ -327,6 +330,7 @@ sub Run {
             %Param,
             %{$Change},
             %{$WorkOrder},
+            AccountedTime => $AccountedTime,
         },
     );
 
