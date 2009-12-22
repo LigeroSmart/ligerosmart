@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminITSMStateMachine.pm - to add/update/delete state transitions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMStateMachine.pm,v 1.12 2009-12-21 17:32:59 bes Exp $
+# $Id: AdminITSMStateMachine.pm,v 1.13 2009-12-22 09:10:58 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,13 +14,12 @@ package Kernel::Modules::AdminITSMStateMachine;
 use strict;
 use warnings;
 
-use Kernel::System::GeneralCatalog;
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::ITSMStateMachine;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -37,10 +36,9 @@ sub new {
     }
 
     # create additional objects
-    $Self->{ChangeObject}         = Kernel::System::ITSMChange->new(%Param);
-    $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
-    $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
-    $Self->{StateMachineObject}   = Kernel::System::ITSMChange::ITSMStateMachine->new(%Param);
+    $Self->{ChangeObject}       = Kernel::System::ITSMChange->new(%Param);
+    $Self->{WorkOrderObject}    = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
+    $Self->{StateMachineObject} = Kernel::System::ITSMChange::ITSMStateMachine->new(%Param);
 
     return $Self;
 }
@@ -350,23 +348,6 @@ sub _StateTransitionAddPageGet {
 sub _ConfirmDeletionPageGet {
     my ( $Self, %Param ) = @_;
 
-    # set up some lookup tables for displaying the state name
-    my %StateID2Name;
-    for my $ObjectType (qw(Change WorkOrder)) {
-
-        # lookup table for the config item class
-        my %ConfigItemClass = (
-            Change    => 'ITSM::ChangeManagement::Change::State',
-            WorkOrder => 'ITSM::ChangeManagement::WorkOrder::State',
-        );
-
-        # get the state names
-        my $Class = $ConfigItemClass{$ObjectType};
-
-        # TODO: Avoid direct usage of GeneralCatalogObject
-        $StateID2Name{$ObjectType} = $Self->{GeneralCatalogObject}->ItemList( Class => $Class );
-    }
-
     my $Output = $Self->{LayoutObject}->Header();
     $Output .= $Self->{LayoutObject}->NavigationBar();
 
@@ -375,8 +356,10 @@ sub _ConfirmDeletionPageGet {
         Data => \%Param,
     );
 
-    my $StateName = $StateID2Name{ $Param{ObjectType} }->{ $Param{StateID} }
-        || $Param{StateID};
+    my $StateName = $Self->{StateMachineObject}->StateLookup(
+        Class   => $Param{Class},
+        StateID => $Param{StateID},
+    ) || $Param{StateID};
     $Self->{LayoutObject}->Block(
         Name => 'ConfirmDeletion',
         Data => {
@@ -388,7 +371,10 @@ sub _ConfirmDeletionPageGet {
     # Show which states are scheduled to be deleted
     my @DelNextStateIDs = $Self->{ParamObject}->GetArray( Param => 'DelNextStateIDs' );
     for my $NextStateID (@DelNextStateIDs) {
-        my $NextStateName = $StateID2Name{ $Param{ObjectType} }->{$NextStateID} || $NextStateID;
+        my $NextStateName = $Self->{StateMachineObject}->StateLookup(
+            Class   => $Param{Class},
+            StateID => $NextStateID,
+        ) || $NextStateID;
         $Self->{LayoutObject}->Block(
             Name => 'ConfirmDeletionDelNextState',
             Data => {
@@ -406,7 +392,10 @@ sub _ConfirmDeletionPageGet {
         );
     }
     for my $NextStateID (@AddNextStateIDs) {
-        my $NextStateName = $StateID2Name{ $Param{ObjectType} }->{$NextStateID} || $NextStateID;
+        my $NextStateName = $Self->{StateMachineObject}->StateLookup(
+            Class   => $Param{Class},
+            StateID => $NextStateID,
+        ) || $NextStateID;
         $Self->{LayoutObject}->Block(
             Name => 'ConfirmDeletionAddNextState',
             Data => {
@@ -456,9 +445,6 @@ sub _OverviewStateTransitionsPageGet {
     );
 
     # lookup for state names
-    # TODO: Avoid direct usage of GeneralCatalogObject
-    my $StateID2Name = $Self->{GeneralCatalogObject}->ItemList( Class => $Param{Class} );
-
     my $CssClass = 'searchactive';
     my %NextStateIDs
         = %{ $Self->{StateMachineObject}->StateTransitionList( Class => $Param{Class} ) || {} };
@@ -472,8 +458,14 @@ sub _OverviewStateTransitionsPageGet {
             $CssClass = $CssClass eq 'searchactive' ? 'searchpassive' : 'searchactive';
 
             # state names
-            my $StateName     = $StateID2Name->{$StateID}     || '*START*';
-            my $NextStateName = $StateID2Name->{$NextStateID} || '*END*';
+            my $StateName = $Self->{StateMachineObject}->StateLookup(
+                Class   => $Param{Class},
+                StateID => $StateID,
+            ) || '*START*';
+            my $NextStateName = $Self->{StateMachineObject}->StateLookup(
+                Class   => $Param{Class},
+                StateID => $NextStateID,
+            ) || '*END*';
 
             $Self->{LayoutObject}->Block(
                 Name => 'StateTransitionRow',
