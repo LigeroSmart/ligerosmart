@@ -2,7 +2,7 @@
 # ITSMStateMachine.t - StateMachine tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMStateMachine.t,v 1.1 2009-12-14 22:45:50 ub Exp $
+# $Id: ITSMStateMachine.t,v 1.2 2009-12-22 09:47:28 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -31,12 +31,12 @@ $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
 # test if statemachine object was created successfully
 $Self->True(
     $Self->{StateMachineObject},
-    "Test " . $TestCount++ . ' - construction of statemachine object',
+    'Test ' . $TestCount++ . ' - construction of statemachine object',
 );
 $Self->Is(
     ref $Self->{StateMachineObject},
     'Kernel::System::ITSMChange::ITSMStateMachine',
-    "Test " . $TestCount++ . ' - class of statemachine object',
+    'Test ' . $TestCount++ . ' - class of statemachine object',
 );
 
 # ------------------------------------------------------------ #
@@ -57,7 +57,7 @@ my @ObjectMethods = qw(
 for my $ObjectMethod (@ObjectMethods) {
     $Self->True(
         $Self->{StateMachineObject}->can($ObjectMethod),
-        "Test " . $TestCount++ . " - check 'can $ObjectMethod'",
+        'Test ' . $TestCount++ . " - check 'can $ObjectMethod'",
     );
 }
 
