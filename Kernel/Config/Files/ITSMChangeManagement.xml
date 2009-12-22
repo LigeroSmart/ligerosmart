@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.115 2009-12-16 20:44:52 reb Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.116 2009-12-22 10:07:19 reb Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -63,8 +63,8 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
                 <Description>Overview over all Changes</Description>
-                <NavBarName>Change</NavBarName>
-                <Title>Change</Title>
+                <NavBarName>ITSM Change</NavBarName>
+                <Title>ITSM Change</Title>
                 <NavBar>
                     <Description>Change-Area</Description>
                     <Name>ITSM Change</Name>
@@ -72,7 +72,7 @@
                     <Block>ItemArea</Block>
                     <Image>itsm_change.png</Image>
                     <Link>Action=AgentITSMChange</Link>
-                    <NavBar>Change</NavBar>
+                    <NavBar>ITSM Change</NavBar>
                     <AccessKey></AccessKey>
                     <Prio>3400</Prio>
                 </NavBar>
@@ -83,7 +83,7 @@
                     <Link>Action=AgentITSMChange</Link>
                     <Type></Type>
                     <Block></Block>
-                    <NavBar>Change</NavBar>
+                    <NavBar>ITSM Change</NavBar>
                     <AccessKey></AccessKey>
                     <Prio>100</Prio>
                 </NavBar>
@@ -101,7 +101,7 @@
                 <GroupRo>itsm-change-manager</GroupRo>
                 <Description>Add a change</Description>
                 <Title>Add</Title>
-                <NavBarName>Change</NavBarName>
+                <NavBarName>ITSM Change</NavBarName>
                 <NavBar>
                     <Description>New</Description>
                     <Name>New</Name>
@@ -109,7 +109,7 @@
                     <Link>Action=AgentITSMChangeAdd</Link>
                     <Type></Type>
                     <Block></Block>
-                    <NavBar>Change</NavBar>
+                    <NavBar>ITSM Change</NavBar>
                     <AccessKey></AccessKey>
                     <Prio>500</Prio>
                 </NavBar>
@@ -126,7 +126,7 @@
                 <GroupRo>itsm-change</GroupRo>
                 <Description>Edit a change</Description>
                 <Title>Edit</Title>
-                <NavBarName>Change</NavBarName>
+                <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -139,7 +139,7 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
                 <Description>Forward schedule of changes. Overview over approved changes.</Description>
-                <NavBarName>Change</NavBarName>
+                <NavBarName>ITSM Change</NavBarName>
                 <Title>ChangeFSC</Title>
                 <NavBar>
                     <Description>FSC (Forward Schedule Of Changes)</Description>
@@ -148,7 +148,7 @@
                     <Link>Action=AgentITSMChangeFSC</Link>
                     <Type></Type>
                     <Block></Block>
-                    <NavBar>Change</NavBar>
+                    <NavBar>ITSM Change</NavBar>
                     <AccessKey></AccessKey>
                     <Prio>200</Prio>
                 </NavBar>
@@ -165,7 +165,7 @@
                 <GroupRo>itsm-change</GroupRo>
                 <Description>Change History</Description>
                 <Title>History</Title>
-                <NavBarName>Change</NavBarName>
+                <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -179,7 +179,7 @@
                 <GroupRo>itsm-change</GroupRo>
                 <Description>Details of a change history entry</Description>
                 <Title>HistoryZoom</Title>
-                <NavBarName>Change</NavBarName>
+                <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -193,7 +193,7 @@
                 <GroupRo>itsm-change</GroupRo>
                 <Description>Change Involved Persons</Description>
                 <Title>Involved Persons</Title>
-                <NavBarName>Change</NavBarName>
+                <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -206,8 +206,8 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change-manager</GroupRo>
                 <Description>ITSM Change Manager Overview</Description>
-                <NavBarName>Change</NavBarName>
-                <Title>Change</Title>
+                <NavBarName>ITSM Change</NavBarName>
+                <Title>ITSM Change</Title>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -220,8 +220,8 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
                 <Description>ITSM MyCAB Overview</Description>
-                <NavBarName>Change</NavBarName>
-                <Title>Change</Title>
+                <NavBarName>ITSM Change</NavBarName>
+                <Title>ITSM Change</Title>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -235,8 +235,8 @@
                 <GroupRo>itsm-change-builder</GroupRo>
                 <GroupRo>itsm-change-manager</GroupRo>
                 <Description>ITSM MyChanges Overview</Description>
-                <NavBarName>Change</NavBarName>
-                <Title>Change</Title>
+                <NavBarName>ITSM Change</NavBarName>
+                <Title>ITSM Change</Title>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -249,8 +249,8 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
                 <Description>ITSM MyWorkorders Overview</Description>
-                <NavBarName>Change</NavBarName>
-                <Title>Change</Title>
+                <NavBarName>ITSM Change</NavBarName>
+                <Title>ITSM Change</Title>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -263,8 +263,8 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
                 <Description>ITSM Change PIR Overview</Description>
-                <NavBarName>Change</NavBarName>
-                <Title>Change</Title>
+                <NavBarName>ITSM Change</NavBarName>
+                <Title>ITSM Change</Title>
                 <NavBar>
                     <Description>PIR (Post Implementation Review)</Description>
                     <Name>PIR</Name>
@@ -272,7 +272,7 @@
                     <Link>Action=AgentITSMChangePIR</Link>
                     <Type></Type>
                     <Block></Block>
-                    <NavBar>Change</NavBar>
+                    <NavBar>ITSM Change</NavBar>
                     <AccessKey></AccessKey>
                     <Prio>300</Prio>
                 </NavBar>
@@ -289,13 +289,13 @@
                 <GroupRo>itsm-change</GroupRo>
                 <Description>Search Changes</Description>
                 <Title>Search</Title>
-                <NavBarName>Change</NavBarName>
+                <NavBarName>ITSM Change</NavBarName>
                 <NavBar>
                     <Description>Search Changes</Description>
                     <Name>Search</Name>
                     <Image>search.png</Image>
                     <Link>Action=AgentITSMChangeSearch</Link>
-                    <NavBar>Change</NavBar>
+                    <NavBar>ITSM Change</NavBar>
                     <Type></Type>
                     <Block></Block>
                     <AccessKey></AccessKey>
@@ -314,7 +314,7 @@
                 <GroupRo>itsm-change</GroupRo>
                 <Description>Move Time Slot</Description>
                 <Title>Time Slot</Title>
-                <NavBarName>Change</NavBarName>
+                <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -328,7 +328,7 @@
                 <GroupRo>itsm-change</GroupRo>
                 <Description>Change Zoom</Description>
                 <Title>Zoom</Title>
-                <NavBarName>Change</NavBarName>
+                <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -342,7 +342,7 @@
                 <GroupRo>itsm-change</GroupRo>
                 <Description>Workorder Add</Description>
                 <Title>Add</Title>
-                <NavBarName>Change</NavBarName>
+                <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -356,7 +356,7 @@
                 <GroupRo>itsm-change</GroupRo>
                 <Description>Workorder Agent</Description>
                 <Title>Agent</Title>
-                <NavBarName>Change</NavBarName>
+                <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -370,7 +370,7 @@
                 <GroupRo>itsm-change</GroupRo>
                 <Description>Workorder Delete</Description>
                 <Title>Delete</Title>
-                <NavBarName>Change</NavBarName>
+                <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -384,7 +384,7 @@
                 <GroupRo>itsm-change</GroupRo>
                 <Description>Workorder Edit</Description>
                 <Title>Edit</Title>
-                <NavBarName>Change</NavBarName>
+                <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -398,7 +398,7 @@
                 <GroupRo>itsm-change</GroupRo>
                 <Description>Workorder History</Description>
                 <Title>History</Title>
-                <NavBarName>Change</NavBarName>
+                <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -412,7 +412,7 @@
                 <GroupRo>itsm-change</GroupRo>
                 <Description>Workorder History Zoom</Description>
                 <Title>HistoryZoom</Title>
-                <NavBarName>Change</NavBarName>
+                <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -426,7 +426,7 @@
                 <GroupRo>itsm-change</GroupRo>
                 <Description>Workorder Report</Description>
                 <Title>Report</Title>
-                <NavBarName>Change</NavBarName>
+                <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -440,7 +440,7 @@
                 <GroupRo>itsm-change</GroupRo>
                 <Description>Workorder Zoom</Description>
                 <Title>Zoom</Title>
-                <NavBarName>Change</NavBarName>
+                <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -454,7 +454,7 @@
                 <GroupRo>itsm-change</GroupRo>
                 <Description>Lookup of agents, used for autocompletion</Description>
                 <Title>UserSearch</Title>
-                <NavBarName>Change</NavBarName>
+                <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
