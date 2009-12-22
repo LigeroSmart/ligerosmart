@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.210 2009-12-22 11:29:40 mae Exp $
+# $Id: ITSMChange.pm,v 1.211 2009-12-22 14:56:00 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -28,7 +28,7 @@ use Kernel::System::VirtualFS;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.210 $) [1];
+$VERSION = qw($Revision: 1.211 $) [1];
 
 =head1 NAME
 
@@ -2239,9 +2239,10 @@ Add an attachment to a given change
 
     my $Success = $ChangeObject->ChangeAttachmentAdd(
         ChangeID    => 123,
-        Filename    => 'filename,
+        Filename    => 'filename',
         Content     => 'content',
         ContentType => 'text/plain',
+        UserID      => 1,
     );
 
 =cut
@@ -2989,6 +2990,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.210 $ $Date: 2009-12-22 11:29:40 $
+$Revision: 1.211 $ $Date: 2009-12-22 14:56:00 $
 
 =cut
