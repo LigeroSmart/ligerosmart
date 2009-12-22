@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeEdit.pm - the OTRS::ITSM::ChangeManagement change edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.pm,v 1.36 2009-12-16 21:03:35 reb Exp $
+# $Id: AgentITSMChangeEdit.pm,v 1.37 2009-12-22 11:37:32 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.36 $) [1];
+$VERSION = qw($Revision: 1.37 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -549,12 +549,16 @@ sub Run {
     }
 
     # show attachments
+    ATTACHMENTID:
     for my $AttachmentID ( keys %Attachments ) {
 
         # get info about file
         my $AttachmentData = $Self->{ChangeObject}->ChangeAttachmentGet(
             FileID => $AttachmentID,
         );
+
+        # check for attachment information
+        next ATTACHMENTID if !$AttachmentData;
 
         # show block
         $Self->{LayoutObject}->Block(
