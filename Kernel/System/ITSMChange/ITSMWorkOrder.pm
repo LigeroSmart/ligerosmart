@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.57 2009-12-21 16:08:29 reb Exp $
+# $Id: ITSMWorkOrder.pm,v 1.58 2009-12-22 15:27:22 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.57 $) [1];
+$VERSION = qw($Revision: 1.58 $) [1];
 
 =head1 NAME
 
@@ -1894,7 +1894,7 @@ Add an attachment to a given change
 
     my $Success = $WorkOrderObject->WorkOrderAttachmentAdd(
         WorkOrderID => 123,
-        Filename    => 'filename,
+        Filename    => 'filename',
         Content     => 'content',
         ContentType => 'text/plain',
         UserID      => 1,
@@ -2598,6 +2598,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.57 $ $Date: 2009-12-21 16:08:29 $
+$Revision: 1.58 $ $Date: 2009-12-22 15:27:22 $
 
 =cut

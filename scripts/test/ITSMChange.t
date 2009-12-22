@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.158 2009-12-22 15:00:17 bes Exp $
+# $Id: ITSMChange.t,v 1.159 2009-12-22 15:27:22 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,6 +17,7 @@ use vars qw($Self);
 
 use Data::Dumper;
 use List::Util qw(max);
+
 use Kernel::System::User;
 use Kernel::System::Group;
 use Kernel::System::CustomerUser;

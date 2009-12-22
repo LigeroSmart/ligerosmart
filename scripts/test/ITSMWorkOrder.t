@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.111 2009-12-14 22:55:22 ub Exp $
+# $Id: ITSMWorkOrder.t,v 1.112 2009-12-22 15:27:22 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,6 +16,8 @@ use utf8;
 use vars qw($Self);
 
 use Data::Dumper;
+use List::Util qw(max);
+
 use Kernel::System::User;
 use Kernel::System::Group;
 use Kernel::System::Valid;
@@ -4113,6 +4115,128 @@ for my $PossibleStateID (@PossibleStateIDsReference) {
 # these objects should be deleted
 push @{ $IDsToDelete{Change} },    $ChangeIDForPossibleStatesTest;
 push @{ $IDsToDelete{WorkOrder} }, $WorkOrderIDForPossibleStatesTest;
+
+# ------------------------------------------------------------ #
+# testing support for attachments
+# ------------------------------------------------------------ #
+
+# create change for this test
+my $ChangeIDForAttachmentTest = $Self->{ChangeObject}->ChangeAdd(
+    UserID => 1,
+);
+
+# create workorder for this test
+my $WorkOrderIDForAttachmentTest = $Self->{WorkOrderObject}->WorkOrderAdd(
+    ChangeID       => $ChangeIDForAttachmentTest,
+    UserID         => 1,
+    WorkOrderState => 'accepted',
+);
+
+# these objects should be deleted later on
+push @{ $IDsToDelete{Change} },    $ChangeIDForAttachmentTest;
+push @{ $IDsToDelete{WorkOrder} }, $WorkOrderIDForAttachmentTest;
+
+# verify that initialy no attachment exists
+my %AttachmentList = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
+    WorkOrderID => $WorkOrderIDForAttachmentTest,
+    UserID      => 1,
+);
+
+$Self->Is(
+    scalar( keys %AttachmentList ),
+    0,
+    'no attachments initially',
+);
+
+my @TestFileList = (
+    {
+        Filename    => 'first attachment',
+        Content     => 'First attachment from ITSMWorkOrder.t',
+        ContentType => 'text/plain',
+    },
+    {
+        Filename    => 'second attachment',
+        Content     => 'Second attachment from ITSMWorkOrder.t',
+        ContentType => 'text/plain',
+    },
+);
+
+my $FileCount = 1;
+my %Filename2FileID;
+for my $TestFile (@TestFileList) {
+
+    my $AddOk = $Self->{WorkOrderObject}->WorkOrderAttachmentAdd(
+        %{$TestFile},
+        WorkOrderID => $WorkOrderIDForAttachmentTest,
+        ChangeID    => $ChangeIDForAttachmentTest,
+        UserID      => 1,
+    );
+    $Self->True( $AddOk, "Attachment  $FileCount: attachment added" );
+
+    my %AttachmentList = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
+        WorkOrderID => $WorkOrderIDForAttachmentTest,
+        UserID      => 1,
+    );
+
+    $Self->Is(
+        scalar( keys %AttachmentList ),
+        $FileCount,
+        "Attachment $FileCount: number of attachments after adding",
+    );
+
+    my $FileID = max( keys %AttachmentList );
+    $Filename2FileID{ $TestFile->{Filename} } = $FileID;
+
+    $Self->Is(
+        $AttachmentList{$FileID},
+        $TestFile->{Filename},
+        "Attachment $FileCount: filename from WorkOrderAttachmentList()",
+    );
+
+    my $Attachment = $Self->{WorkOrderObject}->WorkOrderAttachmentGet(
+        FileID => $FileID,
+    );
+    $Self->True( $Attachment, "Attachment $FileCount: WorkOrderAttachmentGet() returned true" );
+
+    for my $Attr (qw(Filename Content ContentType)) {
+        $Self->Is(
+            $Attachment->{$Attr},
+            $TestFile->{$Attr},
+            "Attachment $FileCount: $Attr from WorkOrderAttachmentGet",
+        );
+    }
+}
+continue {
+    $FileCount++;
+}
+
+# now delete the attachments
+$FileCount = 1;
+for my $TestFile (@TestFileList) {
+
+    my $FileID   = $Filename2FileID{ $TestFile->{Filename} };
+    my $DeleteOk = $Self->{WorkOrderObject}->WorkOrderAttachmentDelete(
+        FileID      => $FileID,
+        WorkOrderID => $WorkOrderIDForAttachmentTest,
+        ChangeID    => $ChangeIDForAttachmentTest,
+        UserID      => 1,
+    );
+    $Self->True( $DeleteOk, "Attachment $FileCount: attachment deleted" );
+
+    my %AttachmentList = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
+        WorkOrderID => $WorkOrderIDForAttachmentTest,
+        UserID      => 1,
+    );
+
+    $Self->Is(
+        scalar( keys %AttachmentList ),
+        2 - $FileCount,
+        "Attachment $FileCount: number of attachments after deletion",
+    );
+}
+continue {
+    $FileCount++;
+}
 
 # ------------------------------------------------------------ #
 # clean the system
