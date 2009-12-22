@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LayoutITSMChange.pm,v 1.29 2009-12-15 20:47:15 mae Exp $
+# $Id: LayoutITSMChange.pm,v 1.30 2009-12-22 07:41:32 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use POSIX qw(ceil);
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.29 $) [1];
+$VERSION = qw($Revision: 1.30 $) [1];
 
 =over 4
 
@@ -826,6 +826,10 @@ sub _ITSMChangeGetWorkOrderGraph {
             $TickValue{"${TimeType}Trailing"} = 0;
             $TickValue{"${TimeType}Ticks"} -= 1;
         }
+    }
+
+    if ( !$WorkOrderInformation{ActualStartTime} ) {
+        $WorkOrderInformation{WorkOrderOpacity} = 'inactive';
     }
 
     # create graph of workorder item

@@ -2,7 +2,7 @@
 # ITSMChange.dtl - provides HTML elements for work order graph
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.dtl,v 1.17 2009-12-15 21:50:52 mae Exp $
+# $Id: ITSMChange.dtl,v 1.18 2009-12-22 07:41:32 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,6 +23,7 @@
         background-color: #FFFFFF; margin:2px; padding:4px; z-index:10;
         }
     span.WorkOrderInfoContainer:hover > span.WorkOrderInformation { display:block; }
+    td.inactive        { opacity:.7; }
 
     td.time_containter { font-size:0.1pt; }
 /* <!-- dtl:block:CSSWorkOrderType --> */
@@ -91,22 +92,22 @@
             <table border="0" cellpadding="0" cellspacing="0" width="100%">
                 <tr>
                     <td class="wo" width="$QData{"PlannedPadding"}%"></td>
-                    <td class="wo $QData{"WorkOrderType"}_planned" width="$QData{"PlannedTicks"}%">&nbsp;</td>
+                    <td class="wo $QData{"WorkOrderType"}_planned $Data{"WorkOrderOpacity"}" width="$QData{"PlannedTicks"}%">&nbsp;</td>
                     <td class="wo" width="$QData{"PlannedTrailing"}%"></td>
                 </tr>
             </table>
             <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-top:1px">
                 <tr>
                     <td class="wo" width="$QData{"ActualPadding"}%"></td>
-                    <td class="wo $QData{"WorkOrderType"}_actual" width="$QData{"ActualTicks"}%">&nbsp;</td>
+                    <td class="wo $QData{"WorkOrderType"}_actual $Data{"WorkOrderOpacity"}" width="$QData{"ActualTicks"}%">&nbsp;</td>
                     <td class="wo" width="$QData{"ActualTrailing"}%"></td>
                 </tr>
             </table>
             <span class="WorkOrderInformation">
-            <table width="380px" cellpadding="3" cellspacing="0" width="400px">
+            <table width="400px" cellpadding="3" cellspacing="0" width="400px">
                 <colgroup>
                     <col width="130px">
-                    <col width="250px">
+                    <col width="270px">
                 </colgroup>
                 <tr class="contenthead">
                     <td colspan="2">$Text{"Workorder Information"}</td>
