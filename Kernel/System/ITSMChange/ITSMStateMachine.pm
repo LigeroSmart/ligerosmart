@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMStateMachine.pm - all state machine functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMStateMachine.pm,v 1.3 2009-12-22 09:10:03 bes Exp $
+# $Id: ITSMStateMachine.pm,v 1.4 2009-12-22 10:25:56 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::GeneralCatalog;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 =head1 NAME
 
@@ -661,15 +661,27 @@ sub StateLookup {
     }
 
     # The StateID '0' is a special case. Depending on the context it
-    # can indicate '*START*' or '*END*'. So return undef in that case,
-    # but do not flood the error log.
+    # can indicate '*START*' or '*END*'. So return '0' in that case,
+    # and do not flood the error log.
     if (
         defined $Param{StateID}
         && $Param{StateID} eq '0'
         && !defined $Param{State}
         )
     {
-        return;
+        return '0';
+    }
+
+    # The State '0' is a special case. Depending on the context it
+    # can indicate '*START*' or '*END*'. So return '0' in that case,
+    # and do not flood the error log.
+    if (
+        defined $Param{State}
+        && $Param{State} eq '0'
+        && !defined $Param{StateID}
+        )
+    {
+        return '0';
     }
 
     # either StateID or State must be passed
@@ -736,6 +748,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2009-12-22 09:10:03 $
+$Revision: 1.4 $ $Date: 2009-12-22 10:25:56 $
 
 =cut

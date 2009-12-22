@@ -2,7 +2,7 @@
 # ITSMStateMachine.t - StateMachine tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMStateMachine.t,v 1.2 2009-12-22 09:47:28 bes Exp $
+# $Id: ITSMStateMachine.t,v 1.3 2009-12-22 10:25:56 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -271,10 +271,32 @@ for my $DefaultState ( keys %DefaultChangeStateTransitions ) {
             $NextStates[ $Index++ ],
             $DefaultNextState,
             'Test '
-                . $TestCount++
+                . $TestCount
                 . ": StateTransitionList() - default next state for change state '$DefaultState'.",
         );
     }
+
+    # test the state lookup function for the state
+    my $LookedUpStateID = $Self->{StateMachineObject}->StateLookup(
+        State => $DefaultState,
+        Class => 'ITSM::ChangeManagement::Change::State',
+    );
+    $Self->Is(
+        $LookedUpStateID,
+        $DefaultStateID,
+        "Test $TestCount: StateLookup() for change state '$DefaultState'.",
+    );
+
+    # test the state lookup function for the state id
+    my $LookedUpState = $Self->{StateMachineObject}->StateLookup(
+        StateID => $DefaultStateID,
+        Class   => 'ITSM::ChangeManagement::Change::State',
+    );
+    $Self->Is(
+        $LookedUpState,
+        $DefaultState,
+        "Test $TestCount: StateLookup() for change state id '$DefaultStateID'.",
+    );
 }
 
 # ------------------------------------------------------------ #
@@ -322,10 +344,32 @@ for my $DefaultState ( keys %DefaultWorkOrderStateTransitions ) {
             $NextStates[ $Index++ ],
             $DefaultNextState,
             'Test '
-                . $TestCount++
+                . $TestCount
                 . ": StateTransitionList() - Default next state for workorder state '$DefaultState'.",
         );
     }
+
+    # test the state lookup function for the state
+    my $LookedUpStateID = $Self->{StateMachineObject}->StateLookup(
+        State => $DefaultState,
+        Class => 'ITSM::ChangeManagement::WorkOrder::State',
+    );
+    $Self->Is(
+        $LookedUpStateID,
+        $DefaultStateID,
+        "Test $TestCount: StateLookup() for workorder state '$DefaultState'.",
+    );
+
+    # test the state lookup function for the state id
+    my $LookedUpState = $Self->{StateMachineObject}->StateLookup(
+        StateID => $DefaultStateID,
+        Class   => 'ITSM::ChangeManagement::WorkOrder::State',
+    );
+    $Self->Is(
+        $LookedUpState,
+        $DefaultState,
+        "Test $TestCount: StateLookup() for workorder state id '$DefaultStateID'.",
+    );
 }
 
 # ------------------------------------------------------------ #
