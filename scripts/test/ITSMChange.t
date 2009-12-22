@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.157 2009-12-14 22:55:22 ub Exp $
+# $Id: ITSMChange.t,v 1.158 2009-12-22 15:00:17 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,6 +16,7 @@ use utf8;
 use vars qw($Self);
 
 use Data::Dumper;
+use List::Util qw(max);
 use Kernel::System::User;
 use Kernel::System::Group;
 use Kernel::System::CustomerUser;
@@ -2162,6 +2163,24 @@ my @ChangeTests = (
         },
         SearchTest => [6],
         Label      => 'PossibleStatesTest',    # change for testing ChangePossibleStatesGet()
+    },
+
+    # Change for attachment tests
+    {
+        Description => 'Change for attachment tests',
+        SourceData  => {
+            ChangeAdd => {
+                UserID      => $UserIDs[0],
+                ChangeTitle => 'Attachments - Title - ' . $UniqueSignature,
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                ChangeTitle => 'Attachments - Title - ' . $UniqueSignature,
+            },
+        },
+        SearchTest => [6],
+        Label      => 'Attachment',
     },
 );
 
@@ -5527,6 +5546,112 @@ for my $Type (qw(Category Impact Priority)) {
         $PossibleCIPReference,
         "Test $TestCount - ChangePossibleCIPGet() returned expected values for '$Type'",
     );
+}
+
+# ------------------------------------------------------------ #
+# testing support for attachments
+# ------------------------------------------------------------ #
+
+my ($AttachmentTestChangeID) = @{ $Label2ChangeIDs{Attachment} };
+
+# verify that initialy no attachment exists
+my %AttachmentList = $Self->{ChangeObject}->ChangeAttachmentList(
+    ChangeID => $AttachmentTestChangeID,
+    UserID   => 1,
+);
+
+$Self->Is(
+    scalar( keys %AttachmentList ),
+    0,
+    'no attachments initially',
+);
+
+my @TestFileList = (
+    {
+        Filename    => 'first attachment',
+        Content     => 'First attachment from ITSMChange.t',
+        ContentType => 'text/plain',
+    },
+    {
+        Filename    => 'second attachment',
+        Content     => 'Second attachment from ITSMChange.t',
+        ContentType => 'text/plain',
+    },
+);
+
+my $FileCount = 1;
+my %Filename2FileID;
+for my $TestFile (@TestFileList) {
+
+    my $AddOk = $Self->{ChangeObject}->ChangeAttachmentAdd(
+        %{$TestFile},
+        ChangeID => $AttachmentTestChangeID,
+        UserID   => 1,
+    );
+    $Self->True( $AddOk, "Attachment  $FileCount: attachment added" );
+
+    my %AttachmentList = $Self->{ChangeObject}->ChangeAttachmentList(
+        ChangeID => $AttachmentTestChangeID,
+        UserID   => 1,
+    );
+
+    $Self->Is(
+        scalar( keys %AttachmentList ),
+        $FileCount,
+        "Attachment $FileCount: number of attachments after adding",
+    );
+
+    my $FileID = max( keys %AttachmentList );
+    $Filename2FileID{ $TestFile->{Filename} } = $FileID;
+
+    $Self->Is(
+        $AttachmentList{$FileID},
+        $TestFile->{Filename},
+        "Attachment $FileCount: filename from ChangeAttachmentList()",
+    );
+
+    my $Attachment = $Self->{ChangeObject}->ChangeAttachmentGet(
+        FileID => $FileID,
+    );
+    $Self->True( $Attachment, "Attachment $FileCount: ChangeAttachmentGet() returned true" );
+
+    for my $Attr (qw(Filename Content ContentType)) {
+        $Self->Is(
+            $Attachment->{$Attr},
+            $TestFile->{$Attr},
+            "Attachment $FileCount: $Attr from ChangeAttachmentGet",
+        );
+    }
+}
+continue {
+    $FileCount++;
+}
+
+# now delete the attachments
+$FileCount = 1;
+for my $TestFile (@TestFileList) {
+
+    my $FileID   = $Filename2FileID{ $TestFile->{Filename} };
+    my $DeleteOk = $Self->{ChangeObject}->ChangeAttachmentDelete(
+        FileID   => $FileID,
+        ChangeID => $AttachmentTestChangeID,
+        UserID   => 1,
+    );
+    $Self->True( $DeleteOk, "Attachment $FileCount: attachment deleted" );
+
+    my %AttachmentList = $Self->{ChangeObject}->ChangeAttachmentList(
+        ChangeID => $AttachmentTestChangeID,
+        UserID   => 1,
+    );
+
+    $Self->Is(
+        scalar( keys %AttachmentList ),
+        2 - $FileCount,
+        "Attachment $FileCount: number of attachments after deletion",
+    );
+}
+continue {
+    $FileCount++;
 }
 
 # ------------------------------------------------------------ #
