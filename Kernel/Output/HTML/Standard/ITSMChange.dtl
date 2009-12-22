@@ -2,7 +2,7 @@
 # ITSMChange.dtl - provides HTML elements for work order graph
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.dtl,v 1.18 2009-12-22 07:41:32 mae Exp $
+# $Id: ITSMChange.dtl,v 1.19 2009-12-22 13:40:27 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@
         background-color: #FFFFFF; margin:2px; padding:4px; z-index:10;
         }
     span.WorkOrderInfoContainer:hover > span.WorkOrderInformation { display:block; }
-    td.inactive        { opacity:.7; }
+    td.inactive        { opacity:.5; }
 
     td.time_containter { font-size:0.1pt; }
 /* <!-- dtl:block:CSSWorkOrderType --> */
@@ -125,18 +125,33 @@
                     <td class="contentvalue">$Text{"$QData{"WorkOrderType"}"}</td>
                 </tr>
                 <tr class="searchpassive">
+                    <td class="contentkey">$Text{"Workorder Agent:"}</td>
+                    <td class="contentvalue">
+<!-- dtl:block:EmptyWorkOrderAgent -->
+                        <div title="-">
+                            -
+                        </div>
+<!-- dtl:block:EmptyWorkOrderAgent -->
+<!-- dtl:block:WorkOrderAgent -->
+                        <div title="$QData{"WorkOrderAgentUserLogin"} ($Quote{"$Data{"WorkOrderAgentUserFirstname"} $Data{"WorkOrderAgentUserLastname"}"})">
+                            $QData{"WorkOrderAgentUserLogin","20"} ($Quote{"$Data{"WorkOrderAgentUserFirstname"} $Data{"WorkOrderAgentUserLastname"}","20"})
+                        </div>
+<!-- dtl:block:WorkOrderAgent -->
+                    </td>
+                </tr>
+                <tr class="searchactive">
                     <td class="contentkey">$Text{"Planned Start:"}</td>
                     <td class="contentvalue">$TimeLong{"$QData{"PlannedStartTime"}"}</td>
                 </tr>
-                <tr class="searchactive">
+                <tr class="searchpassive">
                     <td class="contentkey">$Text{"Planned End:"}</td>
                     <td class="contentvalue">$TimeLong{"$QData{"PlannedEndTime"}"}</td>
                 </tr>
-                <tr class="searchpassive">
+                <tr class="searchactive">
                     <td class="contentkey">$Text{"Actual Start:"}</td>
                     <td class="contentvalue">$TimeLong{"$QData{"ActualStartTime"}"}$QData{"EmptyActualStartTime"}</td>
                 </tr>
-                <tr class="searchactive">
+                <tr class="searchpassive">
                     <td class="contentkey">$Text{"Actual End:"}</td>
                     <td class="contentvalue">$TimeLong{"$QData{"ActualEndTime"}"}$QData{"EmptyActualEndTime"}</td>
                 </tr>

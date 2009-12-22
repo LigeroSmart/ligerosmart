@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: LayoutITSMChange.pm,v 1.30 2009-12-22 07:41:32 mae Exp $
+# $Id: LayoutITSMChange.pm,v 1.31 2009-12-22 13:40:28 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use POSIX qw(ceil);
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.30 $) [1];
+$VERSION = qw($Revision: 1.31 $) [1];
 
 =over 4
 
@@ -828,8 +828,26 @@ sub _ITSMChangeGetWorkOrderGraph {
         }
     }
 
+    # set workorder as inactive if it is not started jet
     if ( !$WorkOrderInformation{ActualStartTime} ) {
         $WorkOrderInformation{WorkOrderOpacity} = 'inactive';
+    }
+
+    # set workorder agent
+    if ( $WorkOrderInformation{WorkOrderAgentID} ) {
+        my %WorkOrderAgentData = $Self->{UserObject}->GetUserData(
+            UserID => $WorkOrderInformation{WorkOrderAgentID},
+            Cached => 1,
+        );
+
+        if (%WorkOrderAgentData) {
+
+            # get WorkOrderAgent information
+            for my $Postfix (qw(UserLogin UserFirstname UserLastname)) {
+                $WorkOrderInformation{"WorkOrderAgent$Postfix"} = $WorkOrderAgentData{$Postfix}
+                    || '';
+            }
+        }
     }
 
     # create graph of workorder item
@@ -840,6 +858,24 @@ sub _ITSMChangeGetWorkOrderGraph {
             %TickValue,
         },
     );
+
+    # check the least thing: UserLogin
+    if ( $WorkOrderInformation{WorkOrderAgentUserLogin} ) {
+        $Self->Block(
+            Name => 'WorkOrderAgent',
+            Data => {
+                %WorkOrderInformation,
+            },
+        );
+    }
+    else {
+        $Self->Block(
+            Name => 'EmptyWorkOrderAgent',
+            Data => {
+                %WorkOrderInformation,
+            },
+        );
+    }
 }
 
 =item _ITSMChangeGetTimeLine()
