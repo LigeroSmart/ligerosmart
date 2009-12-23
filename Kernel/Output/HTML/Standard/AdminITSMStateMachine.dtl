@@ -2,7 +2,7 @@
 # AdminITSMStateMachine.dtl - provides HTML form for AdminITSMStateMachine
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMStateMachine.dtl,v 1.13 2009-12-23 10:05:02 bes Exp $
+# $Id: AdminITSMStateMachine.dtl,v 1.14 2009-12-23 10:14:13 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -157,18 +157,18 @@
                 <table width="100%" cellspacing="0" cellpadding="4">
                     <tr>
                         <td class="contenthead">
-                            $Text{"Change next"} $Text{"$QData{"ObjectType"}"} state
+                            $Text{"Edit a $QData{"ObjectType"} state transition"}
                         </td>
                     </tr>
                     <tr>
                         <td class="contentbody">
                             <table border="0" cellspacing="0" cellpadding="3">
                                 <tr>
-                                    <td class="contentkey">$Text{"Start state"}: </td>
-                                    <td class="contentvalue">$Data{"StateName"}</td>
+                                    <td class="contentkey">$Text{"State"}: </td>
+                                    <td class="contentvalue">$Text{"$Data{"StateName"}"}</td>
                                 </tr>
                                 <tr>
-                                    <td class="contentkey">$Text{"New next state"}: </td>
+                                    <td class="contentkey">$Text{"Next state"}: </td>
                                     <td class="contentvalue">$Data{"NextStateSelectionString"}</td>
                                 </tr>
                             </table>
@@ -189,15 +189,15 @@
                 </tr>
                 <tr>
                     <td class="contentbody">
-                        $Text{"Do you really want to delete the state transition from $QData{"StateName"} to:"}</br>
+                        $Text{"Do you really want to delete the state transition from $Text{"$QData{"StateName"}"} to:"}</br>
 <!-- dtl:block:ConfirmDeletionDelNextState -->
-                        <b>$QData{"NextStateName"}</b><br/>
+                        <b>$Text{"$QData{"NextStateName"}"}</b><br/>
 <!-- dtl:block:ConfirmDeletionDelNextState -->
 <!-- dtl:block:ConfirmDeletionAddNextStatesExist -->
                         $Text{"and add the state transition to:"}</br>
 <!-- dtl:block:ConfirmDeletionAddNextStatesExist -->
 <!-- dtl:block:ConfirmDeletionAddNextState -->
-                        <b>$QData{"NextStateName"}</b><br/>
+                        <b>$Text{"$QData{"NextStateName"}"}</b><br/>
 <!-- dtl:block:ConfirmDeletionAddNextState -->
                     </td>
                 </tr>
