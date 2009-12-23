@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.2 2009-12-23 10:33:09 mae Exp $
+# $Id: ITSMCondition.t,v 1.3 2009-12-23 10:44:32 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -55,6 +55,12 @@ my @ObjectMethods = qw(
     ObjectList
     ObjectLookup
     ObjectUpdate
+    OperatorAdd
+    OperatorDelete
+    OperatorGet
+    OperatorList
+    OperatorLookup
+    OperatorUpdate
 );
 
 # check if subs are available
