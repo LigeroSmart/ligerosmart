@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminITSMStateMachine.pm - to add/update/delete state transitions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMStateMachine.pm,v 1.21 2009-12-23 15:24:38 bes Exp $
+# $Id: AdminITSMStateMachine.pm,v 1.22 2009-12-23 21:37:22 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange::ITSMStateMachine;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.21 $) [1];
+$VERSION = qw($Revision: 1.22 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -53,7 +53,7 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    # store needed parameters in %GetParam
+    # store commonly needed parameters in %GetParam
     my %GetParam;
     for my $ParamName (qw(StateID NextStateID ObjectType Class)) {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
@@ -67,7 +67,7 @@ sub Run {
         $GetParam{ObjectType} = $Self->{ConfigByClass}->{ $GetParam{Class} }->{Name};
     }
 
-    # Build drop-down for the left side.
+    # Build drop-down for the class selection on the left side.
     my @ArrHashRef;
     for my $Class ( sort keys %{ $Self->{ConfigByClass} } ) {
         push @ArrHashRef, { Key => $Class, Value => $Class, };
@@ -80,51 +80,50 @@ sub Run {
         Translation  => 0,
     );
 
+    # error messages are added to this variable
     my $Note = '';
 
-    # provide form for changing the next state
     if ( $Self->{Subaction} eq 'StateTransitionUpdate' ) {
+
+        # provide form for changing the next state
         return $Self->_StateTransitionUpdatePageGet(
             Action => 'StateTransitionUpdate',
             %GetParam,
         );
     }
-
-    # provide form for adding a state transition
     elsif ( $Self->{Subaction} eq 'StateTransitionAdd' ) {
-        if ( !$GetParam{ObjectType} ) {
+        if ( !$GetParam{Class} ) {
             $Note .= $Self->{LayoutObject}->Notify(
                 Priority => 'Error',
-                Info     => 'Please select first an object type!',
+                Info     => 'Please select first a catalog class!',
             );
         }
         else {
+
+            # provide form for adding a state transition
             return $Self->_StateTransitionAddPageGet(
                 Action => 'StateTransitionAdd',
                 %GetParam,
             );
         }
     }
+    elsif ( $Self->{Subaction} eq 'StateTransitionDelete' ) {
 
-    # check whether next states should be deleted,
-    # this determines whether the confirmation page should be shown
-    # deletion of next states was ordered, but not comfirmed yet
-    elsif (
-        scalar( $Self->{ParamObject}->GetArray( Param => 'DelNextStateIDs' ) )
-        && !$Self->{ParamObject}->GetParam( Param => 'DeletionConfirmed' )
-        )
-    {
-        return $Self->_ConfirmDeletionPageGet(
-            Action => 'EditStateTransitions',
+        # show confirmation page for state deletion
+        return $Self->_StateTransitionDeletePageGet(
+            Action => 'StateTransitionDelete',
             %GetParam,
         );
     }
+
+    # perform actions
 
     my $ActionIsOk = 1;
 
     # update the next state of a state transition
     if ( $Self->{Subaction} eq 'StateTransitionUpdateAction' ) {
 
+        # params specific to StateTransitionUpdate
         for my $ParamName (qw(NewNextStateID)) {
             $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
         }
@@ -175,29 +174,16 @@ sub Run {
             NextStateID => $GetParam{NextStateID},
         );
     }
+    elsif ( $Self->{Subaction} eq 'StateTransitionDeleteAction' ) {
 
-    # actually add and delete state transitions
-    elsif ( $Self->{Subaction} eq 'EditStateTransitionsAction' ) {
-
-        # Delete the DelNextStateID's
-        for my $NextStateID ( $Self->{ParamObject}->GetArray( Param => 'DelNextStateIDs' ) ) {
-            $ActionIsOk = $Self->{StateMachineObject}->StateTransitionDelete(
-                StateID     => $GetParam{StateID},
-                NextStateID => $NextStateID
-            );
-        }
-
-        # Add the AddNextStateID's
-        for my $NextStateID ( $Self->{ParamObject}->GetArray( Param => 'AddNextStateIDs' ) ) {
-
-            $ActionIsOk = $Self->{StateMachineObject}->StateTransitionAdd(
-                Class       => $GetParam{Class},
-                StateID     => $GetParam{StateID},
-                NextStateID => $NextStateID
-            );
-        }
+        # Delete the state transition
+        $ActionIsOk = $Self->{StateMachineObject}->StateTransitionDelete(
+            StateID     => $GetParam{StateID},
+            NextStateID => $GetParam{NextStateID},
+        );
     }
 
+    # Show list of state transitions for the class
     if ( $GetParam{Class} ) {
         $Note .= $ActionIsOk ? '' : $Self->{LayoutObject}->Notify( Priority => 'Error' );
 
@@ -207,7 +193,7 @@ sub Run {
         );
     }
 
-    # present a list of object types
+    # present a list of all configured classes, as the class is not known yet
     return $Self->_OverviewClassesPageGet(
         %GetParam,
         Note => $Note,
@@ -224,22 +210,19 @@ sub _StateTransitionUpdatePageGet {
     ) || '*START*';
 
     # ArrayHashRef with all states for a catalog class
-    my $AllArrayHashRef = $Self->{StateMachineObject}->StateList(
+    my $AllStatesArrayHashRef = $Self->{StateMachineObject}->StateList(
         Class  => $Param{Class},
         UserID => $Self->{UserID},
     );
 
     # Add the special final state
-    push @{$AllArrayHashRef}, { Key => '0', Value => '*END*' };
+    push @{$AllStatesArrayHashRef}, { Key => '0', Value => '*END*' };
 
     $Param{NextStateSelectionString} = $Self->{LayoutObject}->BuildSelection(
-        Data       => $AllArrayHashRef,
+        Data       => $AllStatesArrayHashRef,
         Name       => 'NewNextStateID',
         SelectedID => $Param{NextStateID},
     );
-
-    my $Output = $Self->{LayoutObject}->Header();
-    $Output .= $Self->{LayoutObject}->NavigationBar();
 
     $Self->{LayoutObject}->Block(
         Name => 'Overview',
@@ -250,6 +233,11 @@ sub _StateTransitionUpdatePageGet {
         Name => 'StateTransitionUpdate',
         Data => \%Param,
     );
+
+    # generate HTML
+    my $Output = $Self->{LayoutObject}->Header();
+    $Output .= $Self->{LayoutObject}->NavigationBar();
+    $Output .= $Param{Note} || '';
     $Output .= $Self->{LayoutObject}->Output(
         TemplateFile => 'AdminITSMStateMachine',
         Data         => \%Param,
@@ -259,42 +247,35 @@ sub _StateTransitionUpdatePageGet {
     return $Output;
 }
 
-# provide a form for add a new state transition
+# provide a form for adding a new state transition
 sub _StateTransitionAddPageGet {
     my ( $Self, %Param ) = @_;
 
-    # the origin of the transitions
-    my $StateID = $Param{StateID};
-
     # ArrayHashRef with all states for a catalog class
-    my $AllArrayHashRef = $Self->{StateMachineObject}->StateList(
+    my $AllStatesArrayHashRef = $Self->{StateMachineObject}->StateList(
         Class  => $Param{Class},
         UserID => $Self->{UserID},
     );
 
     # Add the special final state
-    push @{$AllArrayHashRef}, { Key => '0', Value => '*START*' };
+    push @{$AllStatesArrayHashRef}, { Key => '0', Value => '*START*' };
 
     # dropdown menu, where the state can be selected for addition
     $Param{StateSelectionString} = $Self->{LayoutObject}->BuildSelection(
-        Data         => $AllArrayHashRef,
+        Data         => $AllStatesArrayHashRef,
         Name         => 'StateID',
         SelectedID   => $Param{StateID},
         PossibleNone => 1,
     );
 
     # dropdown menu, where the next state can be selected for addition
-    $AllArrayHashRef->[-1] = { Key => '0', Value => '*END*' };
+    $AllStatesArrayHashRef->[-1] = { Key => '0', Value => '*END*' };
     $Param{NextStateSelectionString} = $Self->{LayoutObject}->BuildSelection(
-        Data         => $AllArrayHashRef,
+        Data         => $AllStatesArrayHashRef,
         Name         => 'NextStateID',
         SelectedID   => $Param{NextStateID},
         PossibleNone => 1,
     );
-
-    my $Output = $Self->{LayoutObject}->Header();
-    $Output .= $Self->{LayoutObject}->NavigationBar();
-    $Output .= $Param{Note} || '';
 
     $Self->{LayoutObject}->Block(
         Name => 'Overview',
@@ -305,6 +286,11 @@ sub _StateTransitionAddPageGet {
         Name => 'StateTransitionAdd',
         Data => \%Param,
     );
+
+    # generate HTML
+    my $Output = $Self->{LayoutObject}->Header();
+    $Output .= $Self->{LayoutObject}->NavigationBar();
+    $Output .= $Param{Note} || '';
     $Output .= $Self->{LayoutObject}->Output(
         TemplateFile => 'AdminITSMStateMachine',
         Data         => \%Param,
@@ -314,83 +300,34 @@ sub _StateTransitionAddPageGet {
     return $Output;
 }
 
-# show the confirm deletion page
-sub _ConfirmDeletionPageGet {
+# provide a form for confirming the deletion of a state transition
+sub _StateTransitionDeletePageGet {
     my ( $Self, %Param ) = @_;
-
-    my $Output = $Self->{LayoutObject}->Header();
-    $Output .= $Self->{LayoutObject}->NavigationBar();
 
     $Self->{LayoutObject}->Block(
         Name => 'Overview',
         Data => \%Param,
     );
 
-    my $StateName = $Self->{StateMachineObject}->StateLookup(
+    $Param{StateName} = $Self->{StateMachineObject}->StateLookup(
         Class   => $Param{Class},
         StateID => $Param{StateID},
     ) || '*START*';
+
+    $Param{NextStateName} = $Self->{StateMachineObject}->StateLookup(
+        Class   => $Param{Class},
+        StateID => $Param{NextStateID},
+    ) || '*END*';
+
     $Self->{LayoutObject}->Block(
-        Name => 'ConfirmDeletion',
-        Data => {
-            %Param,
-            StateName => $StateName,
-            }
+        Name => 'StateTransitionDelete',
+        Data => \%Param,
     );
 
-    # Show which states are scheduled to be deleted
-    my @DelNextStateIDs = $Self->{ParamObject}->GetArray( Param => 'DelNextStateIDs' );
-    for my $NextStateID (@DelNextStateIDs) {
-        my $NextStateName = $Self->{StateMachineObject}->StateLookup(
-            Class   => $Param{Class},
-            StateID => $NextStateID,
-        ) || '*END*';
-        $Self->{LayoutObject}->Block(
-            Name => 'ConfirmDeletionDelNextState',
-            Data => {
-                NextStateID   => $NextStateID,
-                NextStateName => $NextStateName,
-            },
-        );
-    }
-
-    # Show which states are scheduled to be added
-    my @AddNextStateIDs = $Self->{ParamObject}->GetArray( Param => 'AddNextStateIDs' );
-    if (@AddNextStateIDs) {
-        $Self->{LayoutObject}->Block(
-            Name => 'ConfirmDeletionAddNextStatesExist',
-        );
-    }
-    for my $NextStateID (@AddNextStateIDs) {
-        my $NextStateName = $Self->{StateMachineObject}->StateLookup(
-            Class   => $Param{Class},
-            StateID => $NextStateID,
-        ) || '*END*';
-        $Self->{LayoutObject}->Block(
-            Name => 'ConfirmDeletionAddNextState',
-            Data => {
-                NextStateID   => $NextStateID,
-                NextStateName => $NextStateName,
-            },
-        );
-    }
-
-    # set hidden params for deleting next state ids
-    for my $NextStateID ( $Self->{ParamObject}->GetArray( Param => 'DelNextStateIDs' ) ) {
-        $Self->{LayoutObject}->Block(
-            Name => 'ConfirmDeletionDelNextStateHidden',
-            Data => { NextStateID => $NextStateID },
-        );
-    }
-
-    # set hidden params for adding next state ids
-    for my $NextStateID ( $Self->{ParamObject}->GetArray( Param => 'AddNextStateIDs' ) ) {
-        $Self->{LayoutObject}->Block(
-            Name => 'ConfirmDeletionAddNextStateHidden',
-            Data => { NextStateID => $NextStateID },
-        );
-    }
-
+    # generate HTML
+    my $Output = $Self->{LayoutObject}->Header();
+    $Output .= $Self->{LayoutObject}->NavigationBar();
+    $Output .= $Param{Note} || '';
     $Output .= $Self->{LayoutObject}->Output(
         TemplateFile => 'AdminITSMStateMachine',
         Data         => \%Param,
@@ -440,8 +377,8 @@ sub _OverviewStateTransitionsPageGet {
             $Self->{LayoutObject}->Block(
                 Name => 'StateTransitionRow',
                 Data => {
+                    %Param,
                     CssClass      => $CssClass,
-                    ObjectType    => $Param{ObjectType},
                     StateID       => $StateID,
                     StateName     => $StateName,
                     NextStateID   => $NextStateID,
@@ -451,9 +388,10 @@ sub _OverviewStateTransitionsPageGet {
         }
     }
 
+    # generate HTML
     my $Output = $Self->{LayoutObject}->Header();
     $Output .= $Self->{LayoutObject}->NavigationBar();
-    $Output .= $Param{Note};
+    $Output .= $Param{Note} || '';
     $Output .= $Self->{LayoutObject}->Output(
         TemplateFile => 'AdminITSMStateMachine',
         Data         => \%Param,
@@ -489,9 +427,10 @@ sub _OverviewClassesPageGet {
         );
     }
 
+    # generate HTML
     my $Output = $Self->{LayoutObject}->Header();
     $Output .= $Self->{LayoutObject}->NavigationBar();
-    $Output .= $Param{Note};
+    $Output .= $Param{Note} || '';
     $Output .= $Self->{LayoutObject}->Output(
         TemplateFile => 'AdminITSMStateMachine',
         Data         => \%Param,
