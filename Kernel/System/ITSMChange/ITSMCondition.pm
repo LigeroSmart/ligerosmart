@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition.pm - all condition functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.pm,v 1.1 2009-12-23 08:15:01 mae Exp $
+# $Id: ITSMCondition.pm,v 1.2 2009-12-23 10:15:31 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,12 +14,16 @@ package Kernel::System::ITSMChange::ITSMCondition;
 use strict;
 use warnings;
 
+use Kernel::System::ITSMChange::ITSMCondition::Object;
+
+use base qw(Kernel::System::ITSMChange::ITSMCondition::Object);
+
 # TODO: may we need an event handler in the condtion framework
 # I thin so ;)
 #use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -255,6 +259,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2009-12-23 08:15:01 $
+$Revision: 1.2 $ $Date: 2009-12-23 10:15:31 $
 
 =cut
