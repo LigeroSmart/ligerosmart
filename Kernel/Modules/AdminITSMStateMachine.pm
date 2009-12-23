@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminITSMStateMachine.pm - to add/update/delete state transitions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMStateMachine.pm,v 1.18 2009-12-23 10:05:02 bes Exp $
+# $Id: AdminITSMStateMachine.pm,v 1.19 2009-12-23 11:25:46 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::ITSMStateMachine;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -138,6 +138,35 @@ sub Run {
         );
     }
     elsif ( $Self->{Subaction} eq 'StateTransitionAddAction' ) {
+
+        my $IsValid = 1;
+
+        # we need to distinguish between empty string '' and the string '0'.
+        # '' indicates that no value was selected, which is invalid
+        # '0' indicated '*START*' or '*END*'
+        if ( $GetParam{StateID} eq '' ) {
+            $IsValid = 0;
+            $Note .= $Self->{LayoutObject}->Notify(
+                Priority => 'Error',
+                Info     => 'Please select a state!',
+            );
+        }
+
+        if ( $GetParam{NextStateID} eq '' ) {
+            $IsValid = 0;
+            $Note .= $Self->{LayoutObject}->Notify(
+                Priority => 'Error',
+                Info     => 'Please select a next state!',
+            );
+        }
+
+        if ( !$IsValid ) {
+            return $Self->_StateTransitionAddPageGet(
+                %GetParam,
+                Action => 'StateTransitionAdd',
+                Note   => $Note,
+            );
+        }
 
         # Add the state transition
         $ActionIsOk = $Self->{StateMachineObject}->StateTransitionAdd(
@@ -292,19 +321,24 @@ sub _StateTransitionAddPageGet {
 
     # dropdown menu, where the state can be selected for addition
     $Param{StateSelectionString} = $Self->{LayoutObject}->BuildSelection(
-        Data => $AllArrayHashRef,
-        Name => 'StateID',
+        Data         => $AllArrayHashRef,
+        Name         => 'StateID',
+        SelectedID   => $Param{StateID},
+        PossibleNone => 1,
     );
 
     # dropdown menu, where the next state can be selected for addition
     $AllArrayHashRef->[-1] = { Key => '0', Value => '*END*' };
     $Param{NextStateSelectionString} = $Self->{LayoutObject}->BuildSelection(
-        Data => $AllArrayHashRef,
-        Name => 'NextStateID',
+        Data         => $AllArrayHashRef,
+        Name         => 'NextStateID',
+        SelectedID   => $Param{NextStateID},
+        PossibleNone => 1,
     );
 
     my $Output = $Self->{LayoutObject}->Header();
     $Output .= $Self->{LayoutObject}->NavigationBar();
+    $Output .= $Param{Note} || '';
 
     $Self->{LayoutObject}->Block(
         Name => 'Overview',
