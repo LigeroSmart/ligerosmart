@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMStateMachine.pm - all state machine functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMStateMachine.pm,v 1.6 2009-12-23 12:22:51 ub Exp $
+# $Id: ITSMStateMachine.pm,v 1.7 2009-12-23 13:13:46 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::GeneralCatalog;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 =head1 NAME
 
@@ -144,9 +144,17 @@ sub StateTransitionAdd {
         return;
     }
 
+    # define lookup hash for state name
+    my %StateID2State;
+
     # check if StateID and NextStateID belong to the given class
     ARGUMENT:
     for my $Argument (qw(StateID NextStateID)) {
+
+        $StateID2State{ $Param{$Argument} } = $Self->StateLookup(
+            StateID => $Param{$Argument},
+            Class   => $Param{Class},
+        );
 
         # dont check zero values
         next ARGUMENT if !$Param{$Argument};
@@ -165,6 +173,24 @@ sub StateTransitionAdd {
             return;
         }
     }
+
+    # check if a state transition with the StateID and NextStateID exists already
+    return if !$Self->{DBObject}->Prepare(
+        SQL => 'SELECT id FROM change_state_machine '
+            . 'WHERE state_id = ? '
+            . 'AND next_state_id = ?',
+        Bind => [ \$Param{StateID}, \$Param{NextStateID} ],
+        Limit => 1,
+    );
+
+    # fetch the result
+    my $TransitionID;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $TransitionID = $Row[0];
+    }
+
+    # do not insert this transition twice
+    return $TransitionID if $TransitionID;
 
     # check if StateID is a start state (=0) and another start state already exists
     if ( !$Param{StateID} ) {
@@ -191,8 +217,9 @@ sub StateTransitionAdd {
         if ($Count) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Can not add state id $Param{NextStateID} as start state. "
-                    . "There is already a start state defined for class $Param{Class}!",
+                Message =>
+                    "Can not add state '$StateID2State{$Param{NextStateID}}' (ID: $Param{NextStateID}) as start state. "
+                    . "There is already a start state defined for class '$Param{Class}'!",
             );
             return;
         }
@@ -212,7 +239,7 @@ sub StateTransitionAdd {
             $Self->{LogObject}->Log(
                 Priority => 'error',
                 Message =>
-                    "StateTransitionAdd() failed! Can not set StateID $Param{StateID} as end state, "
+                    "StateTransitionAdd() failed! Can not set state '$StateID2State{$Param{StateID}}' (ID: $Param{StateID}) as end state, "
                     . "because other following states exist, which must be deleted first!",
             );
             return;
@@ -233,7 +260,7 @@ sub StateTransitionAdd {
             $Self->{LogObject}->Log(
                 Priority => 'error',
                 Message =>
-                    "StateTransitionAdd() failed! StateID $Param{StateID} is defined as an end state, "
+                    "StateTransitionAdd() failed! State '$StateID2State{$Param{StateID}}' (ID: $Param{StateID}) is defined as an end state, "
                     . "it must be deleted first, before new following states can be added!",
             );
             return;
@@ -260,7 +287,6 @@ sub StateTransitionAdd {
     );
 
     # fetch the result
-    my $TransitionID;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $TransitionID = $Row[0];
     }
@@ -413,7 +439,7 @@ sub StateTransitionGet {
         if ( !$DataRef || !%{$DataRef} || $DataRef->{Class} ne $Param{Class} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "StateID $Param{StateID} is not in the class $Param{Class}!",
+                Message  => "StateID $Param{StateID} is not in the class '$Param{Class}'!",
             );
             return;
         }
@@ -567,9 +593,17 @@ sub StateTransitionUpdate {
         return;
     }
 
+    # define lookup hash for state name
+    my %StateID2State;
+
     # check if StateID, NextStateID and NewNextStateID belong to the given class
     ARGUMENT:
     for my $Argument (qw(StateID NextStateID NewNextStateID)) {
+
+        $StateID2State{ $Param{$Argument} } = $Self->StateLookup(
+            StateID => $Param{$Argument},
+            Class   => $Param{Class},
+        );
 
         # dont check zero values
         next ARGUMENT if !$Param{$Argument};
@@ -583,7 +617,7 @@ sub StateTransitionUpdate {
         if ( !$DataRef || !%{$DataRef} || $DataRef->{Class} ne $Param{Class} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "$Argument $Param{$Argument} is not in the class $Param{Class}!",
+                Message  => "$Argument $Param{$Argument} is not in the class '$Param{Class}'!",
             );
             return;
         }
@@ -634,7 +668,7 @@ sub StateTransitionUpdate {
             $Self->{LogObject}->Log(
                 Priority => 'error',
                 Message =>
-                    "StateTransitionUpdate() failed! Can not set StateID $Param{StateID} as end state, "
+                    "StateTransitionUpdate() failed! Can not set state '$StateID2State{$Param{StateID}}' (ID: $Param{StateID}) as end state, "
                     . "because other following states exist, which must be deleted first!",
             );
             return;
@@ -770,6 +804,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.6 $ $Date: 2009-12-23 12:22:51 $
+$Revision: 1.7 $ $Date: 2009-12-23 13:13:46 $
 
 =cut
