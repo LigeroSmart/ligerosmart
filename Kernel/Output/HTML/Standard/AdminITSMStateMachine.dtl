@@ -2,7 +2,7 @@
 # AdminITSMStateMachine.dtl - provides HTML form for AdminITSMStateMachine
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMStateMachine.dtl,v 1.17 2009-12-23 21:37:22 bes Exp $
+# $Id: AdminITSMStateMachine.dtl,v 1.18 2009-12-23 21:44:12 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -66,7 +66,7 @@
                                     <a href="$Env{"Baselink"}Action=$Env{"Action"}&Class=$LQData{"Class"}">$QData{"Class"}</a>
                                 </td>
                                 <td class="$QData{"CssClass"}">
-                                    $Text{"$QData{"ObjectType"}"}
+                                    $Text{"$QData{"ClassShortName"}"}
                                 </td>
                             </tr>
 <!-- dtl:block:OverviewClassesRow -->
@@ -83,7 +83,7 @@
 <!-- dtl:block:OverviewStateTransitions -->
             <table width="100%" cellspacing="0" cellpadding="4">
                 <tr>
-                    <td class="contenthead">$Text{"Overview over state transitions for"} $Text{"$QData{"ObjectType"}"}:</td>
+                    <td class="contenthead">$Text{"Overview over state transitions for"} $Text{"$QData{"ClassShortName"}"}:</td>
                 </tr>
                 <tr>
                     <td class="contentbody">
@@ -124,7 +124,7 @@
                 <table width="100%" cellspacing="0" cellpadding="4">
                     <tr>
                         <td class="contenthead">
-                            $Text{"Add a new"} $Text{"$QData{"ObjectType"}"} $Text{"state transition"}
+                            $Text{"Add a new"} $Text{"$QData{"ClassShortName"}"} $Text{"state transition"}
                         </td>
                     </tr>
                     <tr>
@@ -159,7 +159,7 @@
                 <table width="100%" cellspacing="0" cellpadding="4">
                     <tr>
                         <td class="contenthead">
-                            $Text{"Edit a"} $Text{"$QData{"ObjectType"}"} $Text{"state transition"}
+                            $Text{"Edit a"} $Text{"$QData{"ClassShortName"}"} $Text{"state transition"}
                         </td>
                     </tr>
                     <tr>
@@ -187,7 +187,7 @@
 <!-- dtl:block:StateTransitionDelete -->
             <table border="0" width="350" align="center" cellspacing="0" cellpadding="4">
                 <tr>
-                    <td class="contenthead">$Text{"Delete a"} $Text{"$QData{"ObjectType"}"} $Text{"state transition"}</td>
+                    <td class="contenthead">$Text{"Delete a"} $Text{"$QData{"ClassShortName"}"} $Text{"state transition"}</td>
                 </tr>
                 <tr>
                     <td class="contentbody">

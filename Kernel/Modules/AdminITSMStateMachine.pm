@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminITSMStateMachine.pm - to add/update/delete state transitions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMStateMachine.pm,v 1.22 2009-12-23 21:37:22 bes Exp $
+# $Id: AdminITSMStateMachine.pm,v 1.23 2009-12-23 21:44:12 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange::ITSMStateMachine;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -36,14 +36,13 @@ sub new {
     # create additional objects
     $Self->{StateMachineObject} = Kernel::System::ITSMChange::ITSMStateMachine->new(%Param);
 
-    $Self->{ConfigByName}  = {};
-    $Self->{ConfigByClass} = {};
-
-    # read and prepare the config,
-    # the hash keys of $Config are not significant
+    # read the config,
     my $Config = $Self->{ConfigObject}->Get("ITSMStateMachine::Object") || {};
+
+    # prepare the config for lookup by class
+    # the hash keys of $Config are not significant
+    $Self->{ConfigByClass} = {};
     for my $HashRef ( values %{$Config} ) {
-        $Self->{ConfigByName}->{ $HashRef->{Name} }   = $HashRef;
         $Self->{ConfigByClass}->{ $HashRef->{Class} } = $HashRef;
     }
 
@@ -55,16 +54,13 @@ sub Run {
 
     # store commonly needed parameters in %GetParam
     my %GetParam;
-    for my $ParamName (qw(StateID NextStateID ObjectType Class)) {
+    for my $ParamName (qw(StateID NextStateID Class)) {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
     # translate from name to class and visa versa
-    if ( !$GetParam{Class} && $GetParam{ObjectType} ) {
-        $GetParam{Class} = $Self->{ConfigByName}->{ $GetParam{ObjectType} }->{Class};
-    }
-    elsif ( !$GetParam{ObjectType} && $GetParam{Class} ) {
-        $GetParam{ObjectType} = $Self->{ConfigByClass}->{ $GetParam{Class} }->{Name};
+    if ( $GetParam{Class} ) {
+        $GetParam{ClassShortName} = $Self->{ConfigByClass}->{ $GetParam{Class} }->{Name};
     }
 
     # Build drop-down for the class selection on the left side.
@@ -356,7 +352,7 @@ sub _OverviewStateTransitionsPageGet {
     my %NextStateIDs
         = %{ $Self->{StateMachineObject}->StateTransitionList( Class => $Param{Class} ) || {} };
 
-    # loop over all 'State' and 'NextState' pairs for the ObjectType
+    # loop over all 'State' and 'NextState' pairs for the catalog class
     for my $StateID ( sort keys %NextStateIDs ) {
 
         for my $NextStateID ( @{ $NextStateIDs{$StateID} } ) {
@@ -420,9 +416,9 @@ sub _OverviewClassesPageGet {
         $Self->{LayoutObject}->Block(
             Name => 'OverviewClassesRow',
             Data => {
-                CssClass   => $CssClass,
-                ObjectType => $Self->{ConfigByClass}->{$Class}->{Name},
-                Class      => $Class,
+                CssClass       => $CssClass,
+                ClassShortName => $Self->{ConfigByClass}->{$Class}->{Name},
+                Class          => $Class,
             },
         );
     }
