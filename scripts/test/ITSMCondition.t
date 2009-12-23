@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.5 2009-12-23 14:47:47 mae Exp $
+# $Id: ITSMCondition.t,v 1.6 2009-12-23 15:04:36 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -146,13 +146,23 @@ $Self->Is(
 );
 
 # check update of condition object
+my $ConditionObjectNewName = 'UnitTestUpdate' . int rand 1_000_000;
 $Self->True(
     $Self->{ConditionObject}->ObjectUpdate(
         UserID   => 1,
         ObjectID => $ConditionObjectCreated[0],
-        Name     => 'UnitTestUpdate' . int rand 1_000_000,
+        Name     => $ConditionObjectNewName,
     ),
     'Test ' . $TestCount++ . " - ObjectUpdate",
+);
+my $ConditionObjectUpdate = $Self->{ConditionObject}->ObjectGet(
+    UserID   => 1,
+    ObjectID => $ConditionObjectCreated[0],
+);
+$Self->Is(
+    $ConditionObjectNewName,
+    $ConditionObjectUpdate->{Name},
+    'Test ' . $TestCount++ . " - ObjectUpdate verify update",
 );
 
 # check for object delete
