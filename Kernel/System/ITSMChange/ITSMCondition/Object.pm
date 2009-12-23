@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Object.pm - all condition object functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: Object.pm,v 1.2 2009-12-23 13:19:18 mae Exp $
+# $Id: Object.pm,v 1.3 2009-12-23 14:14:08 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
@@ -118,6 +118,18 @@ sub ObjectUpdate {
 
 =item ObjectGet()
 
+Get a condition object for a given object id.
+Returns an hash reference of the object data.
+
+    my $ConditionObjectRef = $ConditionObject->ObjectGet(
+        UserID   => 1,
+        ObjectID => 1234,
+    );
+
+The returned hash reference contains following elements:
+
+    $ConditionObject{Name}
+
 =cut
 
 sub ObjectGet {
@@ -134,7 +146,28 @@ sub ObjectGet {
         }
     }
 
+    # prepare SQL statement
+    return if !$Self->{DBObject}->Prepare(
+        SQL   => 'SELECT name FROM condition_object WHERE id = ?',
+        Bind  => [ \$Param{ObjectID} ],
+        Limit => 1,
+    );
+
+    # fetch the result
     my %ObjectData;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $ObjectData{Name} = $Row[0];
+    }
+
+    # check error
+    if ( !%ObjectData ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "ObjectID $Param{ObjectID} does not exist!",
+        );
+        return;
+    }
+
     return \%ObjectData;
 }
 
@@ -237,7 +270,28 @@ sub ObjectList {
         }
     }
 
-    return [];
+    # prepare SQL statement
+    return if !$Self->{DBObject}->Prepare(
+        SQL  => 'SELECT name FROM condition_object',
+        Bind => [],
+    );
+
+    # fetch the result
+    my @ObjectList;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        push @ObjectList, $Row[0];
+    }
+
+    # check error
+    if ( !@ObjectList ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Object list could not be gathered!",
+        );
+        return;
+    }
+
+    return \@ObjectList;
 }
 
 =item ObjectDelete()
@@ -265,6 +319,13 @@ sub ObjectDelete {
         }
     }
 
+    # delete condition object from database
+    return if !$Self->{DBObject}->Do(
+        SQL => 'DELETE FROM condition_object '
+            . 'WHERE id = ?',
+        Bind => [ \$Param{ObjectID} ],
+    );
+
     return 1;
 }
 
@@ -284,6 +345,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2009-12-23 13:19:18 $
+$Revision: 1.3 $ $Date: 2009-12-23 14:14:08 $
 
 =cut
