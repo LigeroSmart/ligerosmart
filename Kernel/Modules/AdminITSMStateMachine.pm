@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminITSMStateMachine.pm - to add/update/delete state transitions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMStateMachine.pm,v 1.16 2009-12-23 09:15:46 bes Exp $
+# $Id: AdminITSMStateMachine.pm,v 1.17 2009-12-23 09:46:06 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::ITSMStateMachine;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -200,7 +200,7 @@ sub _StateTransitionUpdatePageGet {
             WorkOrderStateID => $Param{StateID},
         );
     }
-    $Param{StateName} ||= $Param{StateID};
+    $Param{StateName} ||= '*START*';
 
     # the currently possible next states
     my %OldNextStateID = map { $_ => 1 } @{
@@ -301,7 +301,6 @@ sub _StateTransitionAddPageGet {
     # dropdown menu, where the state can be selected for addition
     $Param{StateSelectionString} = $Self->{LayoutObject}->BuildSelection(
         Data => $AllArrayHashRef,
-        Size => scalar( @{$AllArrayHashRef} ),
         Name => 'StateID',
     );
 
@@ -309,7 +308,6 @@ sub _StateTransitionAddPageGet {
     $AllArrayHashRef->[-1] = { Key => '0', Value => '*END*' };
     $Param{NextStateSelectionString} = $Self->{LayoutObject}->BuildSelection(
         Data => $AllArrayHashRef,
-        Size => scalar( @{$AllArrayHashRef} ),
         Name => 'NextStateID',
     );
 
@@ -364,7 +362,7 @@ sub _ConfirmDeletionPageGet {
         my $NextStateName = $Self->{StateMachineObject}->StateLookup(
             Class   => $Param{Class},
             StateID => $NextStateID,
-        ) || $NextStateID;
+        ) || '*END*';
         $Self->{LayoutObject}->Block(
             Name => 'ConfirmDeletionDelNextState',
             Data => {
@@ -385,7 +383,7 @@ sub _ConfirmDeletionPageGet {
         my $NextStateName = $Self->{StateMachineObject}->StateLookup(
             Class   => $Param{Class},
             StateID => $NextStateID,
-        ) || $NextStateID;
+        ) || '*END*';
         $Self->{LayoutObject}->Block(
             Name => 'ConfirmDeletionAddNextState',
             Data => {

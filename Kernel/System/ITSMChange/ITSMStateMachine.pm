@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMStateMachine.pm - all state machine functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMStateMachine.pm,v 1.4 2009-12-22 10:25:56 bes Exp $
+# $Id: ITSMStateMachine.pm,v 1.5 2009-12-23 09:46:06 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::GeneralCatalog;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 =head1 NAME
 
@@ -492,7 +492,8 @@ sub StateTransitionList {
 
 =item StateTransitionUpdate()
 
-Add a new state transition. Returns the transition id on success.
+Update the next state of an existing new state transition.
+Returns the transition id on success.
 
     my $UpdateSuccess = $StateMachineObject->StateTransitionUpdate(
         StateID        => 1,                                       # id within the given class, or 0 to indicate the start state
@@ -605,12 +606,13 @@ sub StateTransitionUpdate {
             Class   => $Param{Class},
         );
 
-        if ( $NextStateIDs && @{$NextStateIDs} && scalar @{$NextStateIDs} ) {
+        # The old state transition, which is verified to exist, does not count in this check
+        if ( $NextStateIDs && scalar @{$NextStateIDs} > 1 ) {
 
             $Self->{LogObject}->Log(
                 Priority => 'error',
                 Message =>
-                    "StateTransitionAdd() failed! Can not set StateID $Param{StateID} as end state, "
+                    "StateTransitionUpdate() failed! Can not set StateID $Param{StateID} as end state, "
                     . "because other following states exist, which must be deleted first!",
             );
             return;
@@ -748,6 +750,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2009-12-22 10:25:56 $
+$Revision: 1.5 $ $Date: 2009-12-23 09:46:06 $
 
 =cut
