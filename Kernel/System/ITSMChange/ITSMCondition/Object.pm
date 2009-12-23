@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Object.pm - all condition object functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: Object.pm,v 1.4 2009-12-23 14:47:47 mae Exp $
+# $Id: Object.pm,v 1.5 2009-12-23 16:06:37 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 =head1 NAME
 
@@ -330,7 +330,7 @@ sub ObjectList {
 
 =item ObjectDelete()
 
-Delete a condition.
+Delete a condition object.
 
     my $Success = $ConditionObject->ObjectDelete(
         ObjectID => 123,
@@ -379,6 +379,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2009-12-23 14:47:47 $
+$Revision: 1.5 $ $Date: 2009-12-23 16:06:37 $
 
 =cut
