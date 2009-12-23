@@ -2,7 +2,7 @@
 # ITSMStateMachine.t - StateMachine tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMStateMachine.t,v 1.3 2009-12-22 10:25:56 bes Exp $
+# $Id: ITSMStateMachine.t,v 1.4 2009-12-23 13:14:40 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -45,6 +45,7 @@ $Self->Is(
 
 # define public interface (in alphabetical order)
 my @ObjectMethods = qw(
+    StateLookup
     StateTransitionAdd
     StateTransitionDelete
     StateTransitionDeleteAll
