@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.116 2009-12-22 10:07:19 reb Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.117 2009-12-23 15:18:30 bes Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -2101,6 +2101,30 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::Ticket::Acl::RestrictTicketTypes</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMStateMachine::Object###Change" Required="0" Valid="1">
+        <Description Lang="en">Set up the state machine for changes.</Description>
+        <Description Lang="de">Konfiguration für die State Machine für Changes.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMStateMachine</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Name">Change</Item>
+                <Item Key="Class">ITSM::ChangeManagement::Change::State</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMStateMachine::Object###WorkOrder" Required="0" Valid="1">
+        <Description Lang="en">Set up the state machine for changes.</Description>
+        <Description Lang="de">Konfiguration für die State Machine für Workorders.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMStateMachine</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Name">WorkOrder</Item>
+                <Item Key="Class">ITSM::ChangeManagement::WorkOrder::State</Item>
             </Hash>
         </Setting>
     </ConfigItem>

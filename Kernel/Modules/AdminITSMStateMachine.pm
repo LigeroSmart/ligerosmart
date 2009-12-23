@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminITSMStateMachine.pm - to add/update/delete state transitions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMStateMachine.pm,v 1.19 2009-12-23 11:25:46 bes Exp $
+# $Id: AdminITSMStateMachine.pm,v 1.20 2009-12-23 15:18:30 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,12 +14,10 @@ package Kernel::Modules::AdminITSMStateMachine;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange;
-use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::ITSMStateMachine;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -36,9 +34,18 @@ sub new {
     }
 
     # create additional objects
-    $Self->{ChangeObject}       = Kernel::System::ITSMChange->new(%Param);
-    $Self->{WorkOrderObject}    = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
     $Self->{StateMachineObject} = Kernel::System::ITSMChange::ITSMStateMachine->new(%Param);
+
+    $Self->{ConfigByName}  = {};
+    $Self->{ConfigByClass} = {};
+
+    # read and prepare the config,
+    # the hash keys of $Config are not significant
+    my $Config = $Self->{ConfigObject}->Get("ITSMStateMachine::Object") || {};
+    for my $HashRef ( values %{$Config} ) {
+        $Self->{ConfigByName}->{ $HashRef->{Name} }   = $HashRef;
+        $Self->{ConfigByClass}->{ $HashRef->{Class} } = $HashRef;
+    }
 
     return $Self;
 }
@@ -48,34 +55,27 @@ sub Run {
 
     # store needed parameters in %GetParam
     my %GetParam;
-    for my $ParamName (qw(StateID NextStateID ObjectType)) {
+    for my $ParamName (qw(StateID NextStateID ObjectType Class)) {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
-    if ( $GetParam{ObjectType} ) {
-
-        # the general catalog class
-        my %ConfigItemClass = (
-            Change    => 'ITSM::ChangeManagement::Change::State',
-            WorkOrder => 'ITSM::ChangeManagement::WorkOrder::State',
-        );
-        $GetParam{Class} = $ConfigItemClass{ $GetParam{ObjectType} };
+    # translate from name to class and visa versa
+    if ( !$GetParam{Class} && $GetParam{ObjectType} ) {
+        $GetParam{Class} = $Self->{ConfigByName}->{ $GetParam{ObjectType} }->{Class};
+    }
+    elsif ( !$GetParam{ObjectType} && $GetParam{Class} ) {
+        $GetParam{ObjectType} = $Self->{ConfigByClass}->{ $GetParam{Class} }->{Name};
     }
 
     # Build drop-down for the left side.
-    $GetParam{ObjectTypeSelectionString} = $Self->{LayoutObject}->BuildSelection(
-        Name => 'ObjectType',
-        Data => [
-            {
-                Key   => 'Change',
-                Value => 'ITSM::ChangeManagement::Change::State',
-            },
-            {
-                Key   => 'WorkOrder',
-                Value => 'ITSM::ChangeManagement::WorkOrder::State',
-            },
-        ],
-        SelectedID   => $GetParam{ObjectType},
+    my @ArrHashRef;
+    for my $Class ( sort keys %{ $Self->{ConfigByClass} } ) {
+        push @ArrHashRef, { Key => $Class, Value => $Class, };
+    }
+    $GetParam{ClassSelectionString} = $Self->{LayoutObject}->BuildSelection(
+        Name         => 'Class',
+        Data         => \@ArrHashRef,
+        SelectedID   => $GetParam{Class},
         PossibleNone => 1,
         Translation  => 0,
     );
@@ -198,7 +198,7 @@ sub Run {
         }
     }
 
-    if ( $GetParam{ObjectType} ) {
+    if ( $GetParam{Class} ) {
         $Note .= $ActionIsOk ? '' : $Self->{LayoutObject}->Notify( Priority => 'Error' );
 
         return $Self->_OverviewStateTransitionsPageGet(
@@ -208,7 +208,7 @@ sub Run {
     }
 
     # present a list of object types
-    return $Self->_OverviewObjectTypesPageGet(
+    return $Self->_OverviewClassesPageGet(
         %GetParam,
         Note => $Note,
     );
@@ -231,18 +231,11 @@ sub _StateTransitionUpdatePageGet {
             ) || []
         };
 
-    # ArrayHashRef with the all states for an object type
-    my $AllArrayHashRef;
-    if ( $Param{ObjectType} eq 'Change' ) {
-        $AllArrayHashRef = $Self->{ChangeObject}->ChangePossibleStatesGet(
-            UserID => $Self->{UserID},
-        );
-    }
-    else {
-        $AllArrayHashRef = $Self->{WorkOrderObject}->WorkOrderPossibleStatesGet(
-            UserID => $Self->{UserID},
-        );
-    }
+    # ArrayHashRef with all states for a catalog class
+    my $AllArrayHashRef = $Self->{StateMachineObject}->StateList(
+        Class  => $Param{Class},
+        UserID => $Self->{UserID},
+    );
 
     # Add the special final state
     push @{$AllArrayHashRef}, { Key => '0', Value => '*END*' };
@@ -303,18 +296,11 @@ sub _StateTransitionAddPageGet {
     # the origin of the transitions
     my $StateID = $Param{StateID};
 
-    # ArrayHashRef with the all states for an object type
-    my $AllArrayHashRef;
-    if ( $Param{ObjectType} eq 'Change' ) {
-        $AllArrayHashRef = $Self->{ChangeObject}->ChangePossibleStatesGet(
-            UserID => $Self->{UserID},
-        );
-    }
-    else {
-        $AllArrayHashRef = $Self->{WorkOrderObject}->WorkOrderPossibleStatesGet(
-            UserID => $Self->{UserID},
-        );
-    }
+    # ArrayHashRef with all states for a catalog class
+    my $AllArrayHashRef = $Self->{StateMachineObject}->StateList(
+        Class  => $Param{Class},
+        UserID => $Self->{UserID},
+    );
 
     # Add the special final state
     push @{$AllArrayHashRef}, { Key => '0', Value => '*START*' };
@@ -508,7 +494,7 @@ sub _OverviewStateTransitionsPageGet {
 }
 
 # Show a list of relevant object types
-sub _OverviewObjectTypesPageGet {
+sub _OverviewClassesPageGet {
     my ( $Self, %Param ) = @_;
 
     $Self->{LayoutObject}->Block(
@@ -516,27 +502,18 @@ sub _OverviewObjectTypesPageGet {
         Data => \%Param,
     );
     $Self->{LayoutObject}->Block(
-        Name => 'OverviewObjectTypes',
+        Name => 'OverviewClasses',
         Data => \%Param,
     );
 
-    # lookup table for the config item class
-    my %ConfigItemClass = (
-        Change    => 'ITSM::ChangeManagement::Change::State',
-        WorkOrder => 'ITSM::ChangeManagement::WorkOrder::State',
-    );
-
     my $CssClass = 'searchactive';
-    for my $ObjectType (qw(Change WorkOrder)) {
-        my $Class = $ConfigItemClass{$ObjectType};
-
+    for my $Class ( sort keys %{ $Self->{ConfigByClass} } ) {
         $CssClass = $CssClass eq 'searchactive' ? 'searchpassive' : 'searchactive';
-
         $Self->{LayoutObject}->Block(
-            Name => 'OverviewObjectTypeRow',
+            Name => 'OverviewClassesRow',
             Data => {
                 CssClass   => $CssClass,
-                ObjectType => $ObjectType,
+                ObjectType => $Self->{ConfigByClass}->{$Class}->{Name},
                 Class      => $Class,
             },
         );

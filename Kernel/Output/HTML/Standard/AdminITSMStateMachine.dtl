@@ -2,7 +2,7 @@
 # AdminITSMStateMachine.dtl - provides HTML form for AdminITSMStateMachine
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMStateMachine.dtl,v 1.15 2009-12-23 10:28:13 bes Exp $
+# $Id: AdminITSMStateMachine.dtl,v 1.16 2009-12-23 15:18:30 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -34,7 +34,7 @@
                             <table>
                                 <tr>
                                     <td class="contentkey">$Text{"Catalog Class"}:</td>
-                                    <td class="contentvalue">$Data{"ObjectTypeSelectionString"}</td>
+                                    <td class="contentvalue">$Data{"ClassSelectionString"}</td>
                                 </tr>
                             </table>
                         </td>
@@ -48,7 +48,7 @@
             </form>
         </td>
         <td class="mainbody">
-<!-- dtl:block:OverviewObjectTypes -->
+<!-- dtl:block:OverviewClasses -->
             <table width="100%" cellspacing="0" cellpadding="4">
                 <tr>
                     <td class="contenthead">$Text{"List"}:</td>
@@ -58,16 +58,20 @@
                         <table width="100%" border="0" cellspacing="0" cellpadding="3">
                             <tr>
                                 <td class="contentkey" width="60%">$Text{"Catalog Class"}</td>
+                                <td class="contentkey" width="40%">$Text{"Short Name"}</td>
                             </tr>
-<!-- dtl:block:OverviewObjectTypeRow -->
+<!-- dtl:block:OverviewClassesRow -->
                             <tr>
                                 <td class="$QData{"CssClass"}">
-                                    <a href="$Env{"Baselink"}Action=$Env{"Action"}&ObjectType=$LQData{"ObjectType"}">
+                                    <a href="$Env{"Baselink"}Action=$Env{"Action"}&Class=$LQData{"Class"}">
                                     $QData{"Class"}
                                     </a>
                                 </td>
+                                <td class="$QData{"CssClass"}">
+                                    $QData{"ObjectType"}
+                                </td>
                             </tr>
-<!-- dtl:block:OverviewObjectTypeRow -->
+<!-- dtl:block:OverviewClassesRow -->
                         </table>
                     </td>
                 </tr>
@@ -77,7 +81,7 @@
                     </td>
                 </tr>
             </table>
-<!-- dtl:block:OverviewObjectTypes -->
+<!-- dtl:block:OverviewClasses -->
 <!-- dtl:block:OverviewStateTransitions -->
             <table width="100%" cellspacing="0" cellpadding="4">
                 <tr>
@@ -141,7 +145,7 @@
                     </tr>
                     <tr>
                         <td class="contentfooter">
-                            <input class="button" type="submit" value="$Text{"Save"}" />
+                            <input class="button" type="submit" value="$Text{"Add"}" />
                         </td>
                     </tr>
                 </table>
