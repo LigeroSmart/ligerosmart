@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminITSMStateMachine.pm - to add/update/delete state transitions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMStateMachine.pm,v 1.13 2009-12-22 09:10:58 bes Exp $
+# $Id: AdminITSMStateMachine.pm,v 1.14 2009-12-23 07:59:55 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::ITSMStateMachine;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -255,8 +255,7 @@ sub _StateTransitionUpdatePageGet {
         }
     }
 
-    # dropdown menu, where the next states can be selected for addition
-    # multiple selections are explicitly allowed
+    # dropdown menu, where the next state can be selected for addition
     $Param{NextStateSelectionString} = $Self->{LayoutObject}->BuildSelection(
         Data => \@AddArrayHashRef,
         Size => scalar(@AddArrayHashRef),
@@ -307,15 +306,14 @@ sub _StateTransitionAddPageGet {
     # Add the special final state
     push @{$AllArrayHashRef}, { Key => '0', Value => '*START*' };
 
-    # multiple selections are explicitly allowed
+    # dropdown menu, where the state can be selected for addition
     $Param{StateSelectionString} = $Self->{LayoutObject}->BuildSelection(
         Data => $AllArrayHashRef,
         Size => scalar( @{$AllArrayHashRef} ),
         Name => 'StateID',
     );
 
-    # dropdown menu, where the next states can be selected for addition
-    # multiple selections are explicitly allowed
+    # dropdown menu, where the next state can be selected for addition
     $AllArrayHashRef->[-1] = { Key => '0', Value => '*END*' };
     $Param{NextStateSelectionString} = $Self->{LayoutObject}->BuildSelection(
         Data => $AllArrayHashRef,
