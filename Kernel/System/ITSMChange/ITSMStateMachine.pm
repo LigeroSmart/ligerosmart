@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMStateMachine.pm - all state machine functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMStateMachine.pm,v 1.7 2009-12-23 13:13:46 ub Exp $
+# $Id: ITSMStateMachine.pm,v 1.8 2009-12-23 15:16:47 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::GeneralCatalog;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 =head1 NAME
 
@@ -785,6 +785,65 @@ sub StateLookup {
     }
 }
 
+=item StateList()
+
+This method returns a list of states for a catalog class.
+
+    my $StateList = $StateMachineObject->StateList(
+        Class  => 'ITSM::ChangeManagement::Change::State',
+        UserID => 1,
+    );
+
+The return value is a reference to an array of hashrefs. The element 'Key' is then
+the state id and the element 'Value' is the name of the state. The array elements
+are sorted by state id.
+
+    my $StateList = [
+        {
+            Key   => 156,
+            Value => 'approved',
+        },
+        {
+            Key   => 157,
+            Value => 'in progress',
+        },
+    ];
+
+=cut
+
+sub StateList {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Attribute (qw(Class UserID)) {
+        if ( !$Param{$Attribute} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Attribute!",
+            );
+            return;
+        }
+    }
+
+    # get change state list
+    my $StateList = $Self->{GeneralCatalogObject}->ItemList(
+        Class => $Param{Class},
+    ) || {};
+
+    # to store an array of hash refs
+    my @ArrayHashRef;
+
+    # assemble the array of hash refs with all states
+    for my $StateID ( sort keys %{$StateList} ) {
+        push @ArrayHashRef, {
+            Key   => $StateID,
+            Value => $StateList->{$StateID},
+        };
+    }
+
+    return \@ArrayHashRef;
+}
+
 1;
 
 =begin Internal:
@@ -804,6 +863,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.7 $ $Date: 2009-12-23 13:13:46 $
+$Revision: 1.8 $ $Date: 2009-12-23 15:16:47 $
 
 =cut

@@ -2,7 +2,7 @@
 # ITSMStateMachine.t - StateMachine tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMStateMachine.t,v 1.4 2009-12-23 13:14:40 ub Exp $
+# $Id: ITSMStateMachine.t,v 1.5 2009-12-23 15:16:47 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -42,24 +42,27 @@ $Self->Is(
 # ------------------------------------------------------------ #
 # test StateMachine API
 # ------------------------------------------------------------ #
+{
 
-# define public interface (in alphabetical order)
-my @ObjectMethods = qw(
-    StateLookup
-    StateTransitionAdd
-    StateTransitionDelete
-    StateTransitionDeleteAll
-    StateTransitionGet
-    StateTransitionList
-    StateTransitionUpdate
-);
-
-# check if subs are available
-for my $ObjectMethod (@ObjectMethods) {
-    $Self->True(
-        $Self->{StateMachineObject}->can($ObjectMethod),
-        'Test ' . $TestCount++ . " - check 'can $ObjectMethod'",
+    # define public interface (in alphabetical order)
+    my @ObjectMethods = qw(
+        StateList
+        StateLookup
+        StateTransitionAdd
+        StateTransitionDelete
+        StateTransitionDeleteAll
+        StateTransitionGet
+        StateTransitionList
+        StateTransitionUpdate
     );
+
+    # check if subs are available
+    for my $ObjectMethod (@ObjectMethods) {
+        $Self->True(
+            $Self->{StateMachineObject}->can($ObjectMethod),
+            'Test ' . $TestCount++ . " - check 'can $ObjectMethod'",
+        );
+    }
 }
 
 # ------------------------------------------------------------ #
@@ -409,6 +412,72 @@ for my $StateID ( keys %{$ChangeStateTransitions} ) {
             'Test '
                 . $TestCount++
                 . ": StateTransitionGet() - Next state for change state '$ChangeStateID2Name{$StateID}'.",
+        );
+    }
+}
+
+# ------------------------------------------------------------ #
+# check StateList() for change states
+# ------------------------------------------------------------ #
+
+{
+    my $StateList = $Self->{StateMachineObject}->StateList(
+        Class  => 'ITSM::ChangeManagement::Change::State',
+        UserID => 1,
+    ) || [];
+
+    # Check the number of change states. The start state is not returned by StateList().
+    $Self->Is(
+        scalar( @{$StateList} ),
+        scalar( keys %DefaultChangeStateTransitions ) - 1,
+        'StateList() - Change - number of states',
+    );
+
+    # check whether the default states are in the StateList
+    DEFAULT_STATE:
+    for my $DefaultState ( keys %DefaultChangeStateTransitions ) {
+
+        # skip the default state '0'
+        next DEFAULT_STATE if !$DefaultState;
+
+        my @Matches = grep { $_->{Value} eq $DefaultState } @{$StateList};
+        $Self->Is(
+            scalar(@Matches),
+            1,
+            "StateList() - Change - found $DefaultState",
+        );
+    }
+}
+
+# ------------------------------------------------------------ #
+# check StateList() for workorder states
+# ------------------------------------------------------------ #
+
+{
+    my $StateList = $Self->{StateMachineObject}->StateList(
+        Class  => 'ITSM::ChangeManagement::WorkOrder::State',
+        UserID => 1,
+    ) || [];
+
+    # Check the number of states. The start state is not returned by StateList().
+    $Self->Is(
+        scalar( @{$StateList} ),
+        scalar( keys %DefaultWorkOrderStateTransitions ) - 1,
+        'StateList() - WorkOrder - number of states',
+    );
+
+    # check whether the default states are in the StateList
+    DEFAULT_STATE:
+    for my $DefaultState ( keys %DefaultWorkOrderStateTransitions ) {
+
+        # skip the default state '0'
+        next DEFAULT_STATE if !$DefaultState;
+
+        my @Matches = grep { $_->{Value} eq $DefaultState } @{$StateList};
+        $Self->Is(
+            scalar(@Matches),
+            1,
+            "StateList() - WorkOrder - found $DefaultState",
         );
     }
 }
