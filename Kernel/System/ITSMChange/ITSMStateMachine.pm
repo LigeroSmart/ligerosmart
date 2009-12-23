@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMStateMachine.pm - all state machine functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMStateMachine.pm,v 1.5 2009-12-23 09:46:06 bes Exp $
+# $Id: ITSMStateMachine.pm,v 1.6 2009-12-23 12:22:51 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::GeneralCatalog;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 =head1 NAME
 
@@ -199,7 +199,7 @@ sub StateTransitionAdd {
     }
 
     # prevent setting an end state transition, if other state transistions exist already
-    if ( !$Param{NextStateID} ) {
+    if ( $Param{StateID} && !$Param{NextStateID} ) {
 
         # check if other state transistions exist for the given StateID
         my $NextStateIDs = $Self->StateTransitionGet(
@@ -207,12 +207,34 @@ sub StateTransitionAdd {
             Class   => $Param{Class},
         );
 
+        # check if any next states are defined for this start state
         if ( $NextStateIDs && @{$NextStateIDs} && scalar @{$NextStateIDs} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
                 Message =>
                     "StateTransitionAdd() failed! Can not set StateID $Param{StateID} as end state, "
                     . "because other following states exist, which must be deleted first!",
+            );
+            return;
+        }
+    }
+
+   # prevent the adding of other next states if an end state is already defined for this start state
+    elsif ( $Param{StateID} && $Param{NextStateID} ) {
+
+        # check if other state transistions exist for the given StateID
+        my $NextStateIDs = $Self->StateTransitionGet(
+            StateID => $Param{StateID},
+            Class   => $Param{Class},
+        );
+
+        # check if there is an end state (=0) defined for this start state
+        if ( $NextStateIDs && @{$NextStateIDs} && !$NextStateIDs->[0] ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message =>
+                    "StateTransitionAdd() failed! StateID $Param{StateID} is defined as an end state, "
+                    . "it must be deleted first, before new following states can be added!",
             );
             return;
         }
@@ -630,8 +652,6 @@ sub StateTransitionUpdate {
     return 1;
 }
 
-# TODO Check if this function can be deleted!
-
 =item StateLookup()
 
 This method does a lookup for a state. If a state id is given,
@@ -750,6 +770,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2009-12-23 09:46:06 $
+$Revision: 1.6 $ $Date: 2009-12-23 12:22:51 $
 
 =cut
