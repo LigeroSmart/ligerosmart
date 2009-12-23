@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.88 2009-12-23 10:44:32 mae Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.89 2009-12-23 13:18:36 mae Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -407,14 +407,23 @@
         <TableCreate Name="condition_object">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="SMALLINT"/>
             <Column Name="name" Required="true" Size="250" Type="VARCHAR"/>
+            <Unique Name="condition_object">
+                <UniqueColumn Name="name"/>
+            </Unique>
         </TableCreate>
         <TableCreate Name="condition_attribute">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="SMALLINT"/>
             <Column Name="name" Required="true" Size="250" Type="VARCHAR"/>
+            <Unique Name="condition_attribute">
+                <UniqueColumn Name="name"/>
+            </Unique>
         </TableCreate>
         <TableCreate Name="condition_operator">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="SMALLINT"/>
             <Column Name="name" Required="true" Size="250" Type="VARCHAR"/>
+            <Unique Name="condition_operator">
+                <UniqueColumn Name="name"/>
+            </Unique>
         </TableCreate>
         <TableCreate Name="condition_relation">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="SMALLINT"/>
