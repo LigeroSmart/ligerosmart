@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminITSMStateMachine.pm - to add/update/delete state transitions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMStateMachine.pm,v 1.17 2009-12-23 09:46:06 bes Exp $
+# $Id: AdminITSMStateMachine.pm,v 1.18 2009-12-23 10:05:02 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::ITSMStateMachine;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -189,18 +189,10 @@ sub Run {
 sub _StateTransitionUpdatePageGet {
     my ( $Self, %Param ) = @_;
 
-    # Display the name of the origin state
-    if ( $Param{ObjectType} eq 'Change' ) {
-        $Param{StateName} = $Self->{ChangeObject}->ChangeStateLookup(
-            ChangeStateID => $Param{StateID},
-        );
-    }
-    elsif ( $Param{ObjectType} eq 'WorkOrder' ) {
-        $Param{StateName} = $Self->{WorkOrderObject}->WorkOrderStateLookup(
-            WorkOrderStateID => $Param{StateID},
-        );
-    }
-    $Param{StateName} ||= '*START*';
+    $Param{StateName} = $Self->{StateMachineObject}->StateLookup(
+        Class   => $Param{Class},
+        StateID => $Param{StateID},
+    ) || '*START*';
 
     # the currently possible next states
     my %OldNextStateID = map { $_ => 1 } @{
@@ -347,7 +339,7 @@ sub _ConfirmDeletionPageGet {
     my $StateName = $Self->{StateMachineObject}->StateLookup(
         Class   => $Param{Class},
         StateID => $Param{StateID},
-    ) || $Param{StateID};
+    ) || '*START*';
     $Self->{LayoutObject}->Block(
         Name => 'ConfirmDeletion',
         Data => {
