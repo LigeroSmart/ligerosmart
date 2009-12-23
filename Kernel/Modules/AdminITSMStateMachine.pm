@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminITSMStateMachine.pm - to add/update/delete state transitions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMStateMachine.pm,v 1.20 2009-12-23 15:18:30 bes Exp $
+# $Id: AdminITSMStateMachine.pm,v 1.21 2009-12-23 15:24:38 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange::ITSMStateMachine;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -223,14 +223,6 @@ sub _StateTransitionUpdatePageGet {
         StateID => $Param{StateID},
     ) || '*START*';
 
-    # the currently possible next states
-    my %OldNextStateID = map { $_ => 1 } @{
-        $Self->{StateMachineObject}->StateTransitionGet(
-            StateID => $Param{StateID},
-            Class   => $Param{Class},
-            ) || []
-        };
-
     # ArrayHashRef with all states for a catalog class
     my $AllArrayHashRef = $Self->{StateMachineObject}->StateList(
         Class  => $Param{Class},
@@ -240,30 +232,8 @@ sub _StateTransitionUpdatePageGet {
     # Add the special final state
     push @{$AllArrayHashRef}, { Key => '0', Value => '*END*' };
 
-    #  $AllArrayHashRef into an Array of the old next states and the possible new next states
-    my @AddArrayHashRef;
-    for my $HashRef ( @{$AllArrayHashRef} ) {
-        if ( $HashRef->{Key} == $Param{NextStateID} ) {
-
-            # the current next state can be selected too
-            push @AddArrayHashRef, $HashRef;
-        }
-        elsif ( $OldNextStateID{ $HashRef->{Key} } ) {
-
-            # already existing transitions are not offered
-        }
-        elsif ( $HashRef->{Key} == $Param{StateID} ) {
-
-            # do not encourage a transition to the same state
-        }
-        else {
-            push @AddArrayHashRef, $HashRef;
-        }
-    }
-
-    # dropdown menu, where the next state can be selected for addition
     $Param{NextStateSelectionString} = $Self->{LayoutObject}->BuildSelection(
-        Data       => \@AddArrayHashRef,
+        Data       => $AllArrayHashRef,
         Name       => 'NewNextStateID',
         SelectedID => $Param{NextStateID},
     );
