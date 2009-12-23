@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminITSMStateMachine.pm - to add/update/delete state transitions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMStateMachine.pm,v 1.15 2009-12-23 08:39:13 bes Exp $
+# $Id: AdminITSMStateMachine.pm,v 1.16 2009-12-23 09:15:46 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::ITSMStateMachine;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -202,19 +202,6 @@ sub _StateTransitionUpdatePageGet {
     }
     $Param{StateName} ||= $Param{StateID};
 
-    # Display the name of the old next state
-    if ( $Param{ObjectType} eq 'Change' ) {
-        $Param{OldNextStateName} = $Self->{ChangeObject}->ChangeStateLookup(
-            ChangeStateID => $Param{NextStateID},
-        );
-    }
-    elsif ( $Param{ObjectType} eq 'WorkOrder' ) {
-        $Param{OldNextStateName} = $Self->{WorkOrderObject}->WorkOrderStateLookup(
-            WorkOrderStateID => $Param{NextStateID},
-        );
-    }
-    $Param{OldNextStateName} ||= $Param{NextStateID};
-
     # the currently possible next states
     my %OldNextStateID = map { $_ => 1 } @{
         $Self->{StateMachineObject}->StateTransitionGet(
@@ -263,7 +250,6 @@ sub _StateTransitionUpdatePageGet {
     # dropdown menu, where the next state can be selected for addition
     $Param{NextStateSelectionString} = $Self->{LayoutObject}->BuildSelection(
         Data       => \@AddArrayHashRef,
-        Size       => scalar(@AddArrayHashRef),
         Name       => 'NewNextStateID',
         SelectedID => $Param{NextStateID},
     );
