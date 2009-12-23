@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.6 2009-12-23 15:04:36 mae Exp $
+# $Id: ITSMCondition.t,v 1.7 2009-12-23 15:59:14 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -173,6 +173,114 @@ for my $ObjectID (@ConditionObjectCreated) {
             ObjectID => $ObjectID,
         ),
         'Test ' . $TestCount++ . " - ObjectDelete -> '$ObjectID'",
+    );
+}
+
+#------------------------
+# condition attributes tests
+#------------------------
+
+# check for default condition attributes
+my @ConditionAttributes = qw(
+    Title Number State Type ChangeManager ChangeBuilder WorkOrderAgent Priority
+    PlannedStart PlannedEnd ActualStart ActualEnd PlannedEfford AccountedTime
+);
+
+# check condition attributes
+for my $ConditionAttribute (@ConditionAttributes) {
+
+    # make lookup to get attribute id
+    my $AttributeID = $Self->{ConditionObject}->AttributeLookup(
+        UserID => 1,
+        Name   => $ConditionAttribute,
+    );
+
+    # check on return value
+    $Self->True(
+        $AttributeID,
+        'Test ' . $TestCount++ . " - AttributeLookup on '$ConditionAttribute' -> '$AttributeID'",
+    );
+
+    # get attribute data with attribute id
+    my $AttributeData = $Self->{ConditionObject}->AttributeGet(
+        UserID      => 1,
+        AttributeID => $AttributeID,
+    );
+
+    # check return parameters
+    $Self->Is(
+        $AttributeData->{Name},
+        $ConditionAttribute,
+        'Test ' . $TestCount++ . ' - AttributeGet() name check',
+    );
+}
+
+# check for object add
+my @ConditionAttributeCreated;
+for my $Counter ( 1 .. 3 ) {
+
+    # add new objects
+    my $AttributeID = $Self->{ConditionObject}->AttributeAdd(
+        UserID => 1,
+        Name   => 'AttributeName' . $Counter . int rand 1_000_000,
+    );
+
+    # check on return value
+    $Self->True(
+        $AttributeID,
+        'Test ' . $TestCount++ . " - AttributeAdd -> '$AttributeID'",
+    );
+
+    # save object it for delete test
+    push @ConditionAttributeCreated, $AttributeID;
+}
+
+# check condition attribute list
+my $AttributeList = $Self->{ConditionObject}->AttributeList(
+    UserID => 1,
+);
+
+# check for attribute list
+$Self->True(
+    $AttributeList,
+    'Test ' . $TestCount++ . " - AttributeList is not empty",
+);
+
+# check for attribute list as array ref
+$Self->Is(
+    'ARRAY',
+    ref $AttributeList,
+    'Test ' . $TestCount++ . " - AttributeList type",
+);
+
+# check update of attribute object
+my $ConditionAttributeNewName = 'UnitTestUpdate' . int rand 1_000_000;
+$Self->True(
+    $Self->{ConditionObject}->AttributeUpdate(
+        UserID      => 1,
+        AttributeID => $ConditionAttributeCreated[0],
+        Name        => $ConditionAttributeNewName,
+    ),
+    'Test ' . $TestCount++ . " - AttributeUpdate",
+);
+my $ConditionAttributeUpdate = $Self->{ConditionObject}->AttributeGet(
+    UserID      => 1,
+    AttributeID => $ConditionAttributeCreated[0],
+);
+$Self->Is(
+    $ConditionAttributeNewName,
+    $ConditionAttributeUpdate->{Name},
+    'Test ' . $TestCount++ . " - AttributeUpdate verify update",
+);
+
+# check for attribute delete
+for my $AttributeID (@ConditionAttributeCreated) {
+    $Self->True(
+        $Self->{ConditionObject}->AttributeDelete(
+            UserID      => 1,
+            AttributeID => $AttributeID,
+        ),
+        'Test ' . $TestCount++ . " - AttributeDelete -> '$AttributeID'",
     );
 }
 
