@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.58 2009-12-22 15:27:22 bes Exp $
+# $Id: ITSMWorkOrder.pm,v 1.59 2009-12-28 13:04:28 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.58 $) [1];
+$VERSION = qw($Revision: 1.59 $) [1];
 
 =head1 NAME
 
@@ -548,10 +548,13 @@ sub WorkOrderUpdate {
 =item WorkOrderGet()
 
 Return a WorkOrder as hash reference.
+When the workorder does not exist, a false value is returned.
+The optional option C<LogNo> turns off logging when the workorder does not exist.
 
     my $WorkOrderRef = $WorkOrderObject->WorkOrderGet(
         WorkOrderID => 123,
         UserID      => 1,
+        LogNo       => 1,      # optional, turns off logging when the workorder does not exist
     );
 
 The returned hash reference contains following elements:
@@ -641,10 +644,12 @@ sub WorkOrderGet {
 
     # check error
     if ( !%WorkOrderData ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "WorkOrderID $Param{WorkOrderID} does not exist!",
-        );
+        if ( !$Param{LogNo} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "WorkOrderID $Param{WorkOrderID} does not exist!",
+            );
+        }
         return;
     }
 
@@ -2598,6 +2603,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.58 $ $Date: 2009-12-22 15:27:22 $
+$Revision: 1.59 $ $Date: 2009-12-28 13:04:28 $
 
 =cut
