@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Notification.pm - lib for notifications in change management
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.1 2009-12-23 18:00:19 reb Exp $
+# $Id: Notification.pm,v 1.2 2009-12-28 13:48:43 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,11 +14,14 @@ package Kernel::System::ITSMChange::Notification;
 use strict;
 use warnings;
 
+use Kernel::System::CustomerUser;
+use Kernel::System::Email;
+use Kernel::System::HTMLUtils;
 use Kernel::System::Notification;
-use Kernel::System::Sendmail;
+use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -82,7 +85,7 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Object (qw(DBObject ConfigObject EncodeObject LogObject MainObject)) {
+    for my $Object (qw(DBObject ConfigObject EncodeObject LogObject MainObject TimeObject)) {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
@@ -93,6 +96,8 @@ sub new {
     $Self->{NotificationObject} = Kernel::System::Notification->new( %{$Self} );
     $Self->{UserObject}         = Kernel::System::User->new( %{$Self} );
     $Self->{CustomerUserObject} = Kernel::System::CustomerUser->new( %{$Self} );
+    $Self->{HTMLUtilsObject}    = Kernel::System::HTMLUtils->new( %{$Self} );
+    $Self->{SendmailObject}     = Kernel::System::Email->new( %{$Self} );
 
     # do we use richtext
     $Self->{RichText} = $Self->{ConfigObject}->Get('Frontend::RichText');
@@ -139,23 +144,29 @@ sub NotificationSend {
     }
 
     # AgentIDs and CustomerIDs have to be array references
+    for my $IDKey (qw(AgentIDs CustomerIDs)) {
+        if ( defined $Param{$IDKey} && ref $Param{$IDKey} ne 'ARRAY' ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "$IDKey has to be an array reference!",
+            );
+            return;
+        }
+    }
 
     my %NotificationCache;
 
-    for my $CustomerID ( @{ $Param{CustomerIDs} } ) {
+    for my $AgentID ( @{ $Param{AgentIDs} } ) {
 
         # get preferred language
-        my %CustomerUser = $Self->{CustomerUserObject}->CustomerUserDataGet(
-            User => $Article{CustomerUserID},
+        my %User = $Self->{UserObject}->GetUserData(
+            UserID => $AgentID,
         );
-        if ( $CustomerUser{UserEmail} ) {
-            $Article{From} = $CustomerUser{UserEmail};
-        }
 
         # get preferred language
         my $PreferredLanguage = $Self->{ConfigObject}->Get('DefaultLanguage') || 'en';
-        if ( $CustomerUser{UserLanguage} ) {
-            $Language = $CustomerUser{UserLanguage};
+        if ( $User{UserLanguage} ) {
+            $PreferredLanguage = $User{UserLanguage};
         }
 
         my $NotificationKey = $PreferredLanguage . '::' . $Param{Type} . '::' . $Param{Event};
@@ -166,12 +177,12 @@ sub NotificationSend {
         if ( !$Notification ) {
 
             # get from database
-            $Notification = $Self->{NotificationObject}->NotificationGet(
+            my %NotificationData = $Self->{NotificationObject}->NotificationGet(
                 Name => $NotificationKey
             );
 
             # no notification found
-            if ( !$Notification ) {
+            if ( !%NotificationData ) {
                 $Self->{LogObject}->Log(
                     Priority => 'error',
                     Message  => "Could not find notification for $NotificationKey",
@@ -180,14 +191,96 @@ sub NotificationSend {
                 return;
             }
 
-            $NotificationCache{$NotificationKey} = $Notification;
+            $NotificationCache{$NotificationKey} = {%NotificationData};
+            $Notification = {%NotificationData};
         }
 
         # replace otrs macros
-        $Notification = $Self->_NotificationReplaceMacros(
-            Type         => $Param{Type},
-            Notification => $Notification,
-            Recipient    => {%CustomerUser},
+        $Notification->{Body} = $Self->_NotificationReplaceMacros(
+            Type      => $Param{Type},
+            Text      => $Notification->{Body},
+            Recipient => {%User},
+            RichText  => $Self->{RichText},
+            UserID    => $Param{UserID},
+            Data      => $Param{Data},
+        );
+
+        $Notification->{Subject} = $Self->_NotificationReplaceMacros(
+            Type      => $Param{Type},
+            Text      => $Notification->{Subject},
+            Recipient => {%User},
+            UserID    => $Param{UserID},
+            Data      => $Param{Data},
+        );
+
+        # send notification
+        $Self->{SendmailObject}->Send(
+            From => $Self->{ConfigObject}->Get('NotificationSenderName') . ' <'
+                . $Self->{ConfigObject}->Get('NotificationSenderEmail') . '>',
+            To       => $User{UserEmail},
+            Subject  => $Notification->{Subject},
+            MimeType => $Notification->{ContentType} || 'text/plain',
+            Charset  => $Notification->{Charset},
+            Body     => $Notification->{Body},
+            Loop     => 1,
+        );
+    }
+
+    for my $CustomerID ( @{ $Param{CustomerIDs} } ) {
+
+        # get preferred language
+        my %CustomerUser = $Self->{CustomerUserObject}->CustomerUserDataGet(
+            User => $CustomerID,
+        );
+
+        # get preferred language
+        my $PreferredLanguage = $Self->{ConfigObject}->Get('DefaultLanguage') || 'en';
+        if ( $CustomerUser{UserLanguage} ) {
+            $PreferredLanguage = $CustomerUser{UserLanguage};
+        }
+
+        my $NotificationKey = $PreferredLanguage . '::' . $Param{Type} . '::' . $Param{Event};
+
+        # get notification (cache || database)
+        my $Notification = $NotificationCache{$NotificationKey};
+
+        if ( !$Notification ) {
+
+            # get from database
+            my %NotificationData = $Self->{NotificationObject}->NotificationGet(
+                Name => $NotificationKey
+            );
+
+            # no notification found
+            if ( !%NotificationData ) {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "Could not find notification for $NotificationKey",
+                );
+
+                return;
+            }
+
+            $NotificationCache{$NotificationKey} = {%NotificationData};
+            $Notification = {%NotificationData};
+        }
+
+        # replace otrs macros
+        $Notification->{Body} = $Self->_NotificationReplaceMacros(
+            Type      => $Param{Type},
+            Text      => $Notification->{Body},
+            Recipient => {%CustomerUser},
+            RichText  => $Self->{RichText},
+            UserID    => $Param{UserID},
+            Data      => $Param{Data},
+        );
+
+        $Notification->{Subject} = $Self->_NotificationReplaceMacros(
+            Type      => $Param{Type},
+            Text      => $Notification->{Subject},
+            Recipient => {%CustomerUser},
+            UserID    => $Param{UserID},
+            Data      => $Param{Data},
         );
 
         # send notification
@@ -195,10 +288,10 @@ sub NotificationSend {
             From => $Self->{ConfigObject}->Get('NotificationSenderName') . ' <'
                 . $Self->{ConfigObject}->Get('NotificationSenderEmail') . '>',
             To       => $CustomerUser{UserEmail},
-            Subject  => $Notification{Subject},
-            MimeType => $Notification{ContentType} || 'text/plain',
-            Charset  => $Notification{Charset},
-            Body     => $Notification{Body},
+            Subject  => $Notification->{Subject},
+            MimeType => $Notification->{ContentType} || 'text/plain',
+            Charset  => $Notification->{Charset},
+            Body     => $Notification->{Body},
             Loop     => 1,
         );
     }
@@ -212,42 +305,45 @@ sub _NotificationReplaceMacros {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(Type Notification Data UserID)) {
-        if ( !defined $Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+    for my $Needed (qw(Type Text Data UserID)) {
+        if ( !defined $Param{$Needed} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Needed!",
+            );
             return;
         }
     }
 
-    my $Notification = $Param{Notification};
+    my $Text = $Param{Text};
 
     # determine what "macro" delimiters are used
     my $Start = '<';
     my $End   = '>';
 
     # with richtext enabled, the delimiters change
-    if ( $Self->{RichText} ) {
+    if ( $Param{RichText} ) {
         $Start = '&lt;';
         $End   = '&gt;';
-        $Notification{Body} =~ s/(\n|\r)//g;
+        $Text =~ s/(\n|\r)//g;
     }
 
     # replace config options
     my $Tag = $Start . 'OTRS_CONFIG_';
-    $Notification{Body} =~ s{ $Tag (.+?) $End }{$Self->{ConfigObject}->Get($1)}egx;
+    $Text =~ s{ $Tag (.+?) $End }{$Self->{ConfigObject}->Get($1)}egx;
 
     # cleanup
-    $Notification{Body} =~ s{ $Tag .+? $End }{-}gi;
+    $Text =~ s{ $Tag .+? $End }{-}gi;
 
     # get recipient data and replace it with <OTRS_...
     $Tag = $Start . 'OTRS_';
     if ( $Param{Recipient} ) {
 
         # html quoting of content
-        if ( $Self->{RichText} ) {
+        if ( $Param{RichText} ) {
             for ( keys %{ $Param{Recipient} } ) {
                 next if !$Param{Recipient}->{$_};
-                $Recipient{$_} = $Self->{HTMLUtilsObject}->ToHTML(
+                $Param{Recipient}->{$_} = $Self->{HTMLUtilsObject}->ToHTML(
                     String => $Param{Recipient}->{$_},
                 );
             }
@@ -257,19 +353,19 @@ sub _NotificationReplaceMacros {
         for ( keys %{ $Param{Recipient} } ) {
             next if !defined $Param{Recipient}->{$_};
             my $Value = $Param{Recipient}->{$_};
-            $Notification{Body} =~ s{ $Tag $_ $End }{$Value}gxmsi;
+            $Text =~ s{ $Tag $_ $End }{$Value}gxmsi;
         }
     }
 
     # cleanup
-    $Notification{Body} =~ s{ $Tag .+? $End}{-}gxmsi;
+    $Text =~ s{ $Tag .+? $End}{-}gxmsi;
 
     $Tag = $Start . 'OTRS_Agent_';
     my $Tag2 = $Start . 'OTRS_CURRENT_';
     my %CurrentUser = $Self->{UserObject}->GetUserData( UserID => $Param{UserID} );
 
     # html quoting of content
-    if ( $Self->{RichText} ) {
+    if ( $Param{RichText} ) {
         for ( keys %CurrentUser ) {
             next if !$CurrentUser{$_};
             $CurrentUser{$_} = $Self->{HTMLUtilsObject}->ToHTML(
@@ -281,22 +377,22 @@ sub _NotificationReplaceMacros {
     # replace it
     for ( keys %CurrentUser ) {
         next if !defined $CurrentUser{$_};
-        $Notification{Body} =~ s{ $Tag $_ $End }{$CurrentUser{$_}}gxmsi;
-        $Notification{Body} =~ s{ $Tag2 $_ $End }{$CurrentUser{$_}}gxmsi;
+        $Text =~ s{ $Tag $_ $End }{$CurrentUser{$_}}gxmsi;
+        $Text =~ s{ $Tag2 $_ $End }{$CurrentUser{$_}}gxmsi;
     }
 
     # replace other needed stuff
-    $Notification{Body} =~ s{ $Start OTRS_FIRST_NAME $End }{$CurrentUser{UserFirstname}}gxms;
-    $Notification{Body} =~ s{ $Start OTRS_LAST_NAME $End }{$CurrentUser{UserLastname}}gxms;
+    $Text =~ s{ $Start OTRS_FIRST_NAME $End }{$CurrentUser{UserFirstname}}gxms;
+    $Text =~ s{ $Start OTRS_LAST_NAME $End }{$CurrentUser{UserLastname}}gxms;
 
     # cleanup
-    $Notification{Body} =~ s/$Tag.+?$End/-/gi;
-    $Notification{Body} =~ s/$Tag2.+?$End/-/gi;
+    $Text =~ s/$Tag.+?$End/-/gi;
+    $Text =~ s/$Tag2.+?$End/-/gi;
 
     # get customer params and replace it with <OTRS_CUSTOMER_...
     my %Data = %{ $Param{Data} };
 
-    # html quoteing of content
+    # html quoting of content
     if ( $Param{RichText} ) {
         for ( keys %Data ) {
             next if !$Data{$_};
@@ -305,154 +401,24 @@ sub _NotificationReplaceMacros {
             );
         }
     }
-    if (%Data) {
-
-        # check if original content isn't text/plain, don't use it
-        if ( $Data{'Content-Type'} && $Data{'Content-Type'} !~ /(text\/plain|\btext\b)/i ) {
-            $Data{Body} = '-> no quotable message <-';
-        }
-
-        # replace <OTRS_CUSTOMER_*> tags
-        $Tag = $Start . 'OTRS_CUSTOMER_';
-        for ( keys %Data ) {
-            next if !defined $Data{$_};
-            $Param{Text} =~ s/$Tag$_$End/$Data{$_}/gi;
-        }
-
-        # replace <OTRS_CUSTOMER_BODY> and <OTRS_COMMENT> tags
-        for my $Key (qw(OTRS_CUSTOMER_BODY OTRS_COMMENT)) {
-
-            $Tag = $Start . $Key;
-            if ( $Param{Text} =~ /$Tag$End(\n|\r|)/g ) {
-                my $Line       = 2500;
-                my @Body       = split( /\n/, $Data{Body} );
-                my $NewOldBody = '';
-                for ( my $i = 0; $i < $Line; $i++ ) {
-                    if ( $#Body >= $i ) {
-
-                        # add no quote char, do it later by using DocumentStyleCleanup()
-                        if ( $Param{RichText} ) {
-                            $NewOldBody .= $Body[$i];
-                        }
-
-                        # add "> " as quote char
-                        else {
-                            $NewOldBody .= "> $Body[$i]";
-                        }
-
-                        # add new line
-                        if ( $i < ( $Line - 1 ) ) {
-                            $NewOldBody .= "\n";
-                        }
-                    }
-                    else {
-                        last;
-                    }
-                }
-                chomp $NewOldBody;
-
-                # html quoteing of content
-                if ( $Param{RichText} && $NewOldBody ) {
-
-                    # remove tailing new lines
-                    for ( 1 .. 10 ) {
-                        $NewOldBody =~ s/(<br\/>)\s{0,20}$//gs;
-                    }
-
-                    # add quote
-                    $NewOldBody = "<blockquote type=\"cite\">$NewOldBody</blockquote>";
-                    $NewOldBody = $Self->{HTMLUtilsObject}->DocumentStyleCleanup(
-                        String => $NewOldBody,
-                    );
-                }
-
-                # replace tag
-                $Param{Text} =~ s/$Tag$End/$NewOldBody/g;
-            }
-        }
-
-        # replace <OTRS_CUSTOMER_EMAIL[]> tags
-        $Tag = $Start . 'OTRS_CUSTOMER_EMAIL';
-        if ( $Param{Text} =~ /$Tag\[(.+?)\]$End/g ) {
-            my $Line       = $1;
-            my @Body       = split( /\n/, $Data{Body} );
-            my $NewOldBody = '';
-            for ( my $i = 0; $i < $Line; $i++ ) {
-
-                # 2002-06-14 patch of Pablo Ruiz Garcia
-                # http://lists.otrs.org/pipermail/dev/2002-June/000012.html
-                if ( $#Body >= $i ) {
-
-                    # add no quote char, do it later by using DocumentStyleCleanup()
-                    if ( $Self->{RichText} ) {
-                        $NewOldBody .= $Body[$i];
-                    }
-
-                    # add "> " as quote char
-                    else {
-                        $NewOldBody .= "> $Body[$i]";
-                    }
-
-                    # add new line
-                    if ( $i < ( $Line - 1 ) ) {
-                        $NewOldBody .= "\n";
-                    }
-                }
-            }
-            chomp $NewOldBody;
-
-            # html quoteing of content
-            if ( $Self->{RichText} && $NewOldBody ) {
-
-                # remove tailing new lines
-                for ( 1 .. 10 ) {
-                    $NewOldBody =~ s/(<br\/>)\s{0,20}$//gs;
-                }
-
-                # add quote
-                $NewOldBody = "<blockquote type=\"cite\">$NewOldBody</blockquote>";
-                $NewOldBody = $Self->{HTMLUtilsObject}->DocumentStyleCleanup(
-                    String => $NewOldBody,
-                );
-            }
-
-            # replace tag
-            $Notification{Body} =~ s/$Tag\[.+?\]$End/$NewOldBody/g;
-        }
-
-        # replace <OTRS_CUSTOMER_SUBJECT[]> tags
-        $Tag = $Start . 'OTRS_CUSTOMER_SUBJECT';
-        $Notification{Body} =~ s/$Tag\[.+?\]$End//g;
-
-        # Arnold Ligtvoet - otrs@ligtvoet.org
-        # get <OTRS_EMAIL_DATE[]> from body and replace with received date
-        use POSIX qw(strftime);
-        $Tag = $Start . 'OTRS_EMAIL_DATE';
-        if ( $Notification{Body} =~ /$Tag\[(.+?)\]$End/g ) {
-            my $TimeZone = $1;
-            my $EmailDate = strftime( '%A, %B %e, %Y at %T ', localtime );
-            $EmailDate .= "($TimeZone)";
-            $Notification{Body} =~ s/$Tag\[.+?\]$End/$EmailDate/g;
-        }
-    }
 
     # get and prepare realname
     $Tag = $Start . 'OTRS_CUSTOMER_REALNAME';
-    $Notification{Body} =~ s/$Tag$End/$From/g;
+    $Text =~ s/$Tag$End/-/g;
 
     # get customer data and replace it with <OTRS_CUSTOMER_DATA_...
     $Tag  = $Start . 'OTRS_CUSTOMER_';
     $Tag2 = $Start . 'OTRS_CUSTOMER_DATA_';
 
     # cleanup all not needed <OTRS_CUSTOMER_DATA_ tags
-    $Notification{Body} =~ s/$Tag.+?$End/-/gi;
-    $Notification{Body} =~ s/$Tag2.+?$End/-/gi;
+    $Text =~ s/$Tag.+?$End/-/gi;
+    $Text =~ s/$Tag2.+?$End/-/gi;
 
     # replace <OTRS_CHANGE_... tags
 
     # replace <OTRS_WORKORDER_...
 
-    return $Notification{Body};
+    return $Text;
 }
 
 1;
@@ -473,6 +439,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2009-12-23 18:00:19 $
+$Revision: 1.2 $ $Date: 2009-12-28 13:48:43 $
 
 =cut
