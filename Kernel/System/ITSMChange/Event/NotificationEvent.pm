@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/NotificationEvent.pm - a event module to send notifications
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: NotificationEvent.pm,v 1.1 2009-12-28 12:03:58 bes Exp $
+# $Id: NotificationEvent.pm,v 1.2 2009-12-28 12:37:12 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use warnings;
 #use Kernel::System::ITSMChange::Notification;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -112,12 +112,12 @@ sub new {
 
 =item Run()
 
-The C<Run()> method handles the events and adds/deletes the history entries for
+The C<Run()> method handles the events and sends notifications about
 the given change object.
 
 It returns 1 on success, C<undef> otherwise.
 
-    my $Success = $HistoryAddObject->Run(
+    my $Success = $NotificationEventObject->Run(
         Event => 'ChangeUpdatePost',
         Data => {
             ChangeID    => 123,
@@ -125,7 +125,7 @@ It returns 1 on success, C<undef> otherwise.
         },
         Config => {
             Event       => '(ChangeAddPost|ChangeUpdatePost|ChangeCABUpdatePost|ChangeCABDeletePost|ChangeDeletePost)',
-            Module      => 'Kernel::System::ITSMChange::Event::HistoryAdd',
+            Module      => 'Kernel::System::ITSMChange::Event::NotificationEvent',
             Transaction => '0',
         },
         UserID => 1,
@@ -137,7 +137,7 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(Data Event Config)) {
+    for my $Argument (qw(Data Event Config UserID)) {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -146,8 +146,6 @@ sub Run {
             return;
         }
     }
-
-    my $UserID = $Param{Data}->{UserID};
 
     # in notification event handling we use Event name without 'Post'
     my $Event = $Param{Event};
@@ -164,7 +162,7 @@ sub Run {
             CustomerIDs => \@CustomerIDs,
             Type        => 'Change',
             Event       => $Event,
-            UserID      => $UserID,
+            UserID      => $Param{UserID},
             Data        => $Param{Data},
         );
     }
@@ -188,6 +186,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2009-12-28 12:03:58 $
+$Revision: 1.2 $ $Date: 2009-12-28 12:37:12 $
 
 =cut
