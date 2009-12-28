@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.89 2009-12-23 13:18:36 mae Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.90 2009-12-28 15:31:55 reb Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -1020,6 +1020,174 @@
         </Insert>
         <Insert Table="condition_operator">
             <Data Key="name" Type="Quote">ends with</Data>
+        </Insert>
+        <Insert Table="notifications">
+            <Data Key="notification_type" Type="Quote">Change::ChangeUpdate</Data>
+            <Data Key="notification_charset" Type="Quote">iso-8859-1</Data>
+            <Data Key="notification_language" Type="Quote">de</Data>
+            <Data Key="subject" Type="Quote">Change::ChangeUpdate</Data>
+            <Data Key="text" Type="Quote">Change (ChangeUpdate)</Data>
+            <Data Key="content_type" Type="Quote">text/plain</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+        </Insert>
+        <Insert Table="notifications">
+            <Data Key="notification_type" Type="Quote">Change::ChangeUpdate</Data>
+            <Data Key="notification_charset" Type="Quote">iso-8859-1</Data>
+            <Data Key="notification_language" Type="Quote">en</Data>
+            <Data Key="subject" Type="Quote">Change::ChangeUpdate</Data>
+            <Data Key="text" Type="Quote">Change (ChangeUpdate)</Data>
+            <Data Key="content_type" Type="Quote">text/plain</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+        </Insert>
+        <Insert Table="notifications">
+            <Data Key="notification_type" Type="Quote">Change::ChangeAdd</Data>
+            <Data Key="notification_charset" Type="Quote">iso-8859-1</Data>
+            <Data Key="notification_language" Type="Quote">de</Data>
+            <Data Key="subject" Type="Quote">Change::ChangeAdd</Data>
+            <Data Key="text" Type="Quote">Change (ChangeAdd)</Data>
+            <Data Key="content_type" Type="Quote">text/plain</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+        </Insert>
+        <Insert Table="notifications">
+            <Data Key="notification_type" Type="Quote">Change::ChangeAdd</Data>
+            <Data Key="notification_charset" Type="Quote">iso-8859-1</Data>
+            <Data Key="notification_language" Type="Quote">en</Data>
+            <Data Key="subject" Type="Quote">Change::ChangeAdd</Data>
+            <Data Key="text" Type="Quote">Change (ChangeAdd)</Data>
+            <Data Key="content_type" Type="Quote">text/plain</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+        </Insert>
+        <Insert Table="notifications">
+            <Data Key="notification_type" Type="Quote">Change::ChangeDelete</Data>
+            <Data Key="notification_charset" Type="Quote">iso-8859-1</Data>
+            <Data Key="notification_language" Type="Quote">de</Data>
+            <Data Key="subject" Type="Quote">Change::ChangeDelete</Data>
+            <Data Key="text" Type="Quote">Change (ChangeDelete)</Data>
+            <Data Key="content_type" Type="Quote">text/plain</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+        </Insert>
+        <Insert Table="notifications">
+            <Data Key="notification_type" Type="Quote">Change::ChangeDelete</Data>
+            <Data Key="notification_charset" Type="Quote">iso-8859-1</Data>
+            <Data Key="notification_language" Type="Quote">en</Data>
+            <Data Key="subject" Type="Quote">Change::ChangeDelete</Data>
+            <Data Key="text" Type="Quote">Change (ChangeDelete)</Data>
+            <Data Key="content_type" Type="Quote">text/plain</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+        </Insert>
+        <Insert Table="notifications">
+            <Data Key="notification_type" Type="Quote">Change::ChangeCABUpdate</Data>
+            <Data Key="notification_charset" Type="Quote">iso-8859-1</Data>
+            <Data Key="notification_language" Type="Quote">de</Data>
+            <Data Key="subject" Type="Quote">Change::ChangeCABUpdate</Data>
+            <Data Key="text" Type="Quote">Change (ChangeCABUpdate)</Data>
+            <Data Key="content_type" Type="Quote">text/plain</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+        </Insert>
+        <Insert Table="notifications">
+            <Data Key="notification_type" Type="Quote">Change::ChangeCABUpdate</Data>
+            <Data Key="notification_charset" Type="Quote">iso-8859-1</Data>
+            <Data Key="notification_language" Type="Quote">en</Data>
+            <Data Key="subject" Type="Quote">Change::ChangeCABUpdate</Data>
+            <Data Key="text" Type="Quote">Change (ChangeCABUpdate)</Data>
+            <Data Key="content_type" Type="Quote">text/plain</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+        </Insert>
+        <Insert Table="notifications">
+            <Data Key="notification_type" Type="Quote">WorkOrder::WorkOrderUpdate</Data>
+            <Data Key="notification_charset" Type="Quote">iso-8859-1</Data>
+            <Data Key="notification_language" Type="Quote">de</Data>
+            <Data Key="subject" Type="Quote">WorkOrder::WorkOrderUpdate</Data>
+            <Data Key="text" Type="Quote">WorkOrder (WorkOrderUpdate)</Data>
+            <Data Key="content_type" Type="Quote">text/plain</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+        </Insert>
+        <Insert Table="notifications">
+            <Data Key="notification_type" Type="Quote">WorkOrder::WorkOrderUpdate</Data>
+            <Data Key="notification_charset" Type="Quote">iso-8859-1</Data>
+            <Data Key="notification_language" Type="Quote">en</Data>
+            <Data Key="subject" Type="Quote">WorkOrder::WorkOrderUpdate</Data>
+            <Data Key="text" Type="Quote">WorkOrder (WorkOrderUpdate)</Data>
+            <Data Key="content_type" Type="Quote">text/plain</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+        </Insert>
+        <Insert Table="notifications">
+            <Data Key="notification_type" Type="Quote">WorkOrder::WorkOrderAdd</Data>
+            <Data Key="notification_charset" Type="Quote">iso-8859-1</Data>
+            <Data Key="notification_language" Type="Quote">de</Data>
+            <Data Key="subject" Type="Quote">WorkOrder::WorkOrderAdd</Data>
+            <Data Key="text" Type="Quote">WorkOrder (WorkOrderAdd)</Data>
+            <Data Key="content_type" Type="Quote">text/plain</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+        </Insert>
+        <Insert Table="notifications">
+            <Data Key="notification_type" Type="Quote">WorkOrder::WorkOrderAdd</Data>
+            <Data Key="notification_charset" Type="Quote">iso-8859-1</Data>
+            <Data Key="notification_language" Type="Quote">en</Data>
+            <Data Key="subject" Type="Quote">WorkOrder::WorkOrderAdd</Data>
+            <Data Key="text" Type="Quote">WorkOrder (WorkOrderAdd)</Data>
+            <Data Key="content_type" Type="Quote">text/plain</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+        </Insert>
+        <Insert Table="notifications">
+            <Data Key="notification_type" Type="Quote">WorkOrder::WorkOrderDelete</Data>
+            <Data Key="notification_charset" Type="Quote">iso-8859-1</Data>
+            <Data Key="notification_language" Type="Quote">de</Data>
+            <Data Key="subject" Type="Quote">WorkOrder::WorkOrderDelete</Data>
+            <Data Key="text" Type="Quote">WorkOrder (WorkOrderDelete)</Data>
+            <Data Key="content_type" Type="Quote">text/plain</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+        </Insert>
+        <Insert Table="notifications">
+            <Data Key="notification_type" Type="Quote">WorkOrder::WorkOrderDelete</Data>
+            <Data Key="notification_charset" Type="Quote">iso-8859-1</Data>
+            <Data Key="notification_language" Type="Quote">en</Data>
+            <Data Key="subject" Type="Quote">WorkOrder::WorkOrderDelete</Data>
+            <Data Key="text" Type="Quote">WorkOrder (WorkOrderDelete)</Data>
+            <Data Key="content_type" Type="Quote">text/plain</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
         </Insert>
     </DatabaseInstall>
     <DatabaseUpgrade>
