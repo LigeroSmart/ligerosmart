@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.59 2009-12-28 13:04:28 bes Exp $
+# $Id: ITSMWorkOrder.pm,v 1.60 2009-12-28 15:59:12 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.59 $) [1];
+$VERSION = qw($Revision: 1.60 $) [1];
 
 =head1 NAME
 
@@ -369,7 +369,7 @@ There passing C<undef> indicates that the workorder time should be cleared.
         PlannedEndTime   => '2009-10-15 15:00:00',                     # (optional) 'undef' indicates clearing
         ActualStartTime  => '2009-10-14 00:00:01',                     # (optional) 'undef' indicates clearing
         ActualEndTime    => '2009-01-20 00:00:01',                     # (optional) 'undef' indicates clearing
-        PlannedEfford    => 123,                                       # (optional)
+        PlannedEffort    => 123,                                       # (optional)
         AccountedTime    => 13,                                        # (optional) the value is added to the value in the database
         UserID           => 1,
     );
@@ -496,7 +496,7 @@ sub WorkOrderUpdate {
         ActualEndTime    => 'actual_end_time',
         InstructionPlain => 'instruction_plain',
         ReportPlain      => 'report_plain',
-        PlannedEfford    => 'planned_efford',
+        PlannedEffort    => 'planned_effort',
     );
 
     # build SQL to update workorder
@@ -578,7 +578,7 @@ The returned hash reference contains following elements:
     $WorkOrder{ActualStartTime}
     $WorkOrder{ActualEndTime}
     $WorkOrder{AccountedTime}
-    $WorkOrder{PlannedEfford}
+    $WorkOrder{PlannedEffort}
     $WorkOrder{CreateTime}
     $WorkOrder{CreateBy}
     $WorkOrder{ChangeTime}
@@ -609,7 +609,7 @@ sub WorkOrderGet {
             . 'planned_start_time, planned_end_time, actual_start_time, actual_end_time, '
             . 'create_time, create_by, '
             . 'change_time, change_by, '
-            . 'planned_efford, accounted_time '
+            . 'planned_effort, accounted_time '
             . 'FROM change_workorder '
             . 'WHERE id = ?',
         Bind  => [ \$Param{WorkOrderID} ],
@@ -638,7 +638,7 @@ sub WorkOrderGet {
         $WorkOrderData{CreateBy}         = $Row[16];
         $WorkOrderData{ChangeTime}       = $Row[17];
         $WorkOrderData{ChangeBy}         = $Row[18];
-        $WorkOrderData{PlannedEfford}    = $Row[19];
+        $WorkOrderData{PlannedEffort}    = $Row[19];
         $WorkOrderData{AccountedTime}    = $Row[20];
     }
 
@@ -2148,18 +2148,18 @@ sub WorkOrderAttachmentList {
     return %Attachments;
 }
 
-=item WorkOrderChangeEffordsGet()
+=item WorkOrderChangeEffortsGet()
 
-returns the effords for a given change
+returns the efforts for a given change
 
-    my $ChangeEffords = $WorkOrderObject->WorkOrderChangeEffordsGet(
+    my $ChangeEfforts = $WorkOrderObject->WorkOrderChangeEffortsGet(
         ChangeID => 123,
         UserID   => 1,
     );
 
 =cut
 
-sub WorkOrderChangeEffordsGet {
+sub WorkOrderChangeEffortsGet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
@@ -2175,7 +2175,7 @@ sub WorkOrderChangeEffordsGet {
 
     # build sql, using min and max functions
     my $SQL = 'SELECT '
-        . 'SUM( planned_efford ), SUM( accounted_time ) '
+        . 'SUM( planned_effort ), SUM( accounted_time ) '
         . 'FROM change_workorder '
         . 'WHERE change_id = ?';
 
@@ -2187,15 +2187,15 @@ sub WorkOrderChangeEffordsGet {
     );
 
     # initialize the return time hash
-    my %ChangeEffords;
+    my %ChangeEfforts;
 
     # fetch the result
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $ChangeEffords{PlannedEfford} = $Row[0] || '';
-        $ChangeEffords{AccountedTime} = $Row[1] || '';
+        $ChangeEfforts{PlannedEffort} = $Row[0] || '';
+        $ChangeEfforts{AccountedTime} = $Row[1] || '';
     }
 
-    return \%ChangeEffords;
+    return \%ChangeEfforts;
 }
 
 =begin Internal:
@@ -2603,6 +2603,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.59 $ $Date: 2009-12-28 13:04:28 $
+$Revision: 1.60 $ $Date: 2009-12-28 15:59:12 $
 
 =cut

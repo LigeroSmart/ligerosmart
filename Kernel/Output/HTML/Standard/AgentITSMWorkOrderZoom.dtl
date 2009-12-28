@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderZoom.dtl - provides HTML form for AgentITSMWorkOrderZoom
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderZoom.dtl,v 1.24 2009-12-21 14:48:25 reb Exp $
+# $Id: AgentITSMWorkOrderZoom.dtl,v 1.25 2009-12-28 15:58:46 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -220,18 +220,18 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><b>$Text{"Planned Efford"}: </b></td>
+                    <td><b>$Text{"Planned Effort"}: </b></td>
                     <td>
-<!-- dtl:block:EmptyPlannedEfford -->
+<!-- dtl:block:EmptyPlannedEffort -->
                         <div title="-">
                             -
                         </div>
-<!-- dtl:block:EmptyPlannedEfford -->
-<!-- dtl:block:PlannedEfford -->
-                        <div title="$QData{"Planned Efford"}">
-                            $QData{"PlannedEfford"}
+<!-- dtl:block:EmptyPlannedEffort -->
+<!-- dtl:block:PlannedEffort -->
+                        <div title="$QData{"Planned Effort"}">
+                            $QData{"PlannedEffort"}
                         </div>
-<!-- dtl:block:PlannedEfford -->
+<!-- dtl:block:PlannedEffort -->
                     </td>
                 </tr>
                 <tr>

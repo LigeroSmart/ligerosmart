@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.7 2009-12-23 15:59:14 mae Exp $
+# $Id: ITSMCondition.t,v 1.8 2009-12-28 15:59:32 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -183,7 +183,7 @@ for my $ObjectID (@ConditionObjectCreated) {
 # check for default condition attributes
 my @ConditionAttributes = qw(
     Title Number State Type ChangeManager ChangeBuilder WorkOrderAgent Priority
-    PlannedStart PlannedEnd ActualStart ActualEnd PlannedEfford AccountedTime
+    PlannedStart PlannedEnd ActualStart ActualEnd PlannedEffort AccountedTime
 );
 
 # check condition attributes

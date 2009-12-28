@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderEdit.pm - the OTRS::ITSM::ChangeManagement workorder edit module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderEdit.pm,v 1.33 2009-12-21 15:20:40 reb Exp $
+# $Id: AgentITSMWorkOrderEdit.pm,v 1.34 2009-12-28 15:58:11 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.33 $) [1];
+$VERSION = qw($Revision: 1.34 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -98,7 +98,7 @@ sub Run {
 
     # store needed parameters in %GetParam to make it reloadable
     my %GetParam;
-    for my $ParamName (qw(WorkOrderTitle Instruction SaveAttachment FileID PlannedEfford)) {
+    for my $ParamName (qw(WorkOrderTitle Instruction SaveAttachment FileID PlannedEffort)) {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
@@ -183,9 +183,9 @@ sub Run {
             push @ValidationErrors, 'InvalidPlannedEndTime';
         }
 
-        # check format of planned efford
-        if ( $GetParam{PlannedEfford} !~ m{ \A \d* (?: [.] \d{1,2} )? \z }xms ) {
-            push @ValidationErrors, 'InvalidPlannedEfford';
+        # check format of planned effort
+        if ( $GetParam{PlannedEffort} !~ m{ \A \d* (?: [.] \d{1,2} )? \z }xms ) {
+            push @ValidationErrors, 'InvalidPlannedEffort';
         }
 
         # if all passed data is valid
@@ -196,7 +196,7 @@ sub Run {
                 Instruction      => $GetParam{Instruction},
                 PlannedStartTime => $GetParam{PlannedStartTime},
                 PlannedEndTime   => $GetParam{PlannedEndTime},
-                PlannedEfford    => $GetParam{PlannedEfford},
+                PlannedEffort    => $GetParam{PlannedEffort},
                 UserID           => $Self->{UserID},
             );
 

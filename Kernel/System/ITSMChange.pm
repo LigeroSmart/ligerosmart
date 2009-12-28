@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.212 2009-12-28 13:04:28 bes Exp $
+# $Id: ITSMChange.pm,v 1.213 2009-12-28 15:59:12 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -28,7 +28,7 @@ use Kernel::System::VirtualFS;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.212 $) [1];
+$VERSION = qw($Revision: 1.213 $) [1];
 
 =head1 NAME
 
@@ -499,7 +499,7 @@ The returned hash reference contains the following elements:
     $Change{PlannedEndTime}         # determined from the workorders
     $Change{ActualStartTime}        # determined from the workorders
     $Change{ActualEndTime}          # determined from the workorders
-    $Change{PlannedEfford}          # determined from the workorders
+    $Change{PlannedEffort}          # determined from the workorders
     $Change{AccountedTime}          # determined from the workorders
     $Change{RequestedTime}
     $Change{CreateTime}
@@ -617,20 +617,20 @@ sub ChangeGet {
     $ChangeData{WorkOrderIDs} = $WorkOrderIDsRef || [];
     $ChangeData{WorkOrderCount} = scalar @{ $ChangeData{WorkOrderIDs} };
 
-    # get planned efford and accounted time for the change
-    my $ChangeEffords = $Self->{WorkOrderObject}->WorkOrderChangeEffordsGet(
+    # get planned effort and accounted time for the change
+    my $ChangeEfforts = $Self->{WorkOrderObject}->WorkOrderChangeEffortsGet(
         ChangeID => $Param{ChangeID},
         UserID   => $Param{UserID},
     );
 
-    # merge time hash with change hash
+    # merge effort hash with change hash
     if (
-        $ChangeEffords
-        && ref $ChangeEffords eq 'HASH'
-        && %{$ChangeEffords}
+        $ChangeEfforts
+        && ref $ChangeEfforts eq 'HASH'
+        && %{$ChangeEfforts}
         )
     {
-        %ChangeData = ( %ChangeData, %{$ChangeEffords} );
+        %ChangeData = ( %ChangeData, %{$ChangeEfforts} );
     }
 
     # get timestamps for the change
@@ -2995,6 +2995,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.212 $ $Date: 2009-12-28 13:04:28 $
+$Revision: 1.213 $ $Date: 2009-12-28 15:59:12 $
 
 =cut

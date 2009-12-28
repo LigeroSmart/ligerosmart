@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAdd.pm - the OTRS::ITSM::ChangeManagement workorder add module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.pm,v 1.29 2009-12-21 15:20:40 reb Exp $
+# $Id: AgentITSMWorkOrderAdd.pm,v 1.30 2009-12-28 15:58:11 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.29 $) [1];
+$VERSION = qw($Revision: 1.30 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -100,7 +100,7 @@ sub Run {
     # store needed parameters in %GetParam to make it reloadable
     my %GetParam;
     for my $ParamName (
-        qw(WorkOrderTitle Instruction WorkOrderTypeID SaveAttachment FileID PlannedEfford)
+        qw(WorkOrderTitle Instruction WorkOrderTypeID SaveAttachment FileID PlannedEffort)
         )
     {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
@@ -198,9 +198,9 @@ sub Run {
             push @ValidationErrors, 'InvalidPlannedEndTime';
         }
 
-        # check format of planned efford
-        if ( $GetParam{PlannedEfford} !~ m{ \A \d* (?: [.] \d{1,2} )? \z }xms ) {
-            push @ValidationErrors, 'InvalidPlannedEfford';
+        # check format of planned effort
+        if ( $GetParam{PlannedEffort} !~ m{ \A \d* (?: [.] \d{1,2} )? \z }xms ) {
+            push @ValidationErrors, 'InvalidPlannedEffort';
         }
 
         # if all passed data is valid
@@ -212,7 +212,7 @@ sub Run {
                 PlannedStartTime => $GetParam{PlannedStartTime},
                 PlannedEndTime   => $GetParam{PlannedEndTime},
                 WorkOrderTypeID  => $GetParam{WorkOrderTypeID},
-                PlannedEfford    => $GetParam{PlannedEfford},
+                PlannedEffort    => $GetParam{PlannedEffort},
                 UserID           => $Self->{UserID},
             );
 

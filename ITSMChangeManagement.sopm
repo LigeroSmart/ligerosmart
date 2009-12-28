@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.91 2009-12-28 15:39:02 reb Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.92 2009-12-28 15:58:11 reb Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -202,7 +202,7 @@
             <Column Name="planned_end_time" Required="true" Default="9999-01-01 00:00:00" Type="DATE"/>
             <Column Name="actual_start_time" Required="true" Default="9999-01-01 00:00:00" Type="DATE"/>
             <Column Name="actual_end_time" Required="true" Default="9999-01-01 00:00:00" Type="DATE"/>
-            <Column Name="planned_efford" Required="true" Default="0" Size="10,2" Type="DECIMAL"/>
+            <Column Name="planned_effort" Required="true" Default="0" Size="10,2" Type="DECIMAL"/>
             <Column Name="accounted_time" Required="true" Default="0" Size="10,2" Type="DECIMAL"/>
             <Column Name="create_time" Required="true" Type="DATE"/>
             <Column Name="create_by" Required="true" Type="INTEGER"/>
@@ -997,7 +997,7 @@
             <Data Key="name" Type="Quote">ActualEnd</Data>
         </Insert>
         <Insert Table="condition_attribute">
-            <Data Key="name" Type="Quote">PlannedEfford</Data>
+            <Data Key="name" Type="Quote">PlannedEffort</Data>
         </Insert>
         <Insert Table="condition_attribute">
             <Data Key="name" Type="Quote">AccountedTime</Data>
