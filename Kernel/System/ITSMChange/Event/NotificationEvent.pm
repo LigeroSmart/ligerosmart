@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/NotificationEvent.pm - a event module to send notifications
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: NotificationEvent.pm,v 1.2 2009-12-28 12:37:12 bes Exp $
+# $Id: NotificationEvent.pm,v 1.3 2009-12-28 17:09:45 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,11 +14,10 @@ package Kernel::System::ITSMChange::Event::NotificationEvent;
 use strict;
 use warnings;
 
-# TODO: enable when Kernel::System::ITSMChange::Notification compiles
-#use Kernel::System::ITSMChange::Notification;
+use Kernel::System::ITSMChange::Notification;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
@@ -104,8 +103,7 @@ sub new {
     }
 
     # create additional objects
-    # TODO: enable when Kernel::System::ITSMChange::Notification compiles
-    #$Self->{ChangeNotificationObject} = Kernel::System::ITSMChange::Notification->new( %{$Self} );
+    $Self->{ChangeNotificationObject} = Kernel::System::ITSMChange::Notification->new( %{$Self} );
 
     return $Self;
 }
@@ -155,17 +153,14 @@ sub Run {
     my @AgentIDs;
     my @CustomerIDs;
 
-    # TODO: enable when Kernel::System::ITSMChange::Notification compiles
-    if (0) {
-        $Self->{ChangeNotificationObject}->NotificationSend(
-            AgentIDs    => \@AgentIDs,
-            CustomerIDs => \@CustomerIDs,
-            Type        => 'Change',
-            Event       => $Event,
-            UserID      => $Param{UserID},
-            Data        => $Param{Data},
-        );
-    }
+    $Self->{ChangeNotificationObject}->NotificationSend(
+        AgentIDs    => \@AgentIDs,
+        CustomerIDs => \@CustomerIDs,
+        Type        => 'Change',
+        Event       => $Event,
+        UserID      => $Param{UserID},
+        Data        => $Param{Data},
+    );
 
     return 1;
 }
@@ -186,6 +181,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2009-12-28 12:37:12 $
+$Revision: 1.3 $ $Date: 2009-12-28 17:09:45 $
 
 =cut
