@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkORder/Event/NotificationEvent.pm - a event module to send notifications
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: NotificationEvent.pm,v 1.1 2009-12-29 09:19:08 bes Exp $
+# $Id: NotificationEvent.pm,v 1.2 2009-12-29 10:46:32 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange::Notification;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -96,7 +96,7 @@ sub new {
 
     # get needed objects
     for my $Object (
-        qw(DBObject ConfigObject EncodeObject LogObject MainObject TimeObject ChangeObject)
+        qw(DBObject ConfigObject EncodeObject LogObject MainObject TimeObject WorkOrderObject)
         )
     {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
@@ -185,6 +185,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2009-12-29 09:19:08 $
+$Revision: 1.2 $ $Date: 2009-12-29 10:46:32 $
 
 =cut

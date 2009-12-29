@@ -3,7 +3,7 @@
 # event module for ITSMWorkOrder
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrderNumberCalc.pm,v 1.7 2009-12-29 09:19:08 bes Exp $
+# $Id: WorkOrderNumberCalc.pm,v 1.8 2009-12-29 10:46:32 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 =head1 NAME
 
@@ -96,7 +96,7 @@ sub new {
 
     # get needed objects
     for my $Object (
-        qw(DBObject ConfigObject EncodeObject LogObject MainObject TimeObject ChangeObject)
+        qw(DBObject ConfigObject EncodeObject LogObject MainObject TimeObject WorkOrderObject)
         )
     {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
@@ -286,6 +286,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.7 $ $Date: 2009-12-29 09:19:08 $
+$Revision: 1.8 $ $Date: 2009-12-29 10:46:32 $
 
 =cut
