@@ -1,15 +1,15 @@
 # --
-# Kernel/System/ITSMChange/Event/NotificationEvent.pm - a event module to send notifications
+# Kernel/System/ITSMChange/ITSMWorkORder/Event/NotificationEvent.pm - a event module to send notifications
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: NotificationEvent.pm,v 1.4 2009-12-29 09:19:08 bes Exp $
+# $Id: NotificationEvent.pm,v 1.1 2009-12-29 09:19:08 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::System::ITSMChange::Event::NotificationEvent;
+package Kernel::System::ITSMChange::ITSMWorkOrder::Event::NotificationEvent;
 
 use strict;
 use warnings;
@@ -17,15 +17,15 @@ use warnings;
 use Kernel::System::ITSMChange::Notification;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.1 $) [1];
 
 =head1 NAME
 
-Kernel::System::ITSMChange::Event::NotificationEvent - ITSMChange notification lib
+Kernel::System::ITSMChange::ITSMWorkOrder::Event::NotificationEvent - ITSMWorkOrder notification lib
 
 =head1 SYNOPSIS
 
-Event handler module for notifications for changes.
+Event handler module for notifications for workorders.
 
 =head1 PUBLIC INTERFACE
 
@@ -41,8 +41,8 @@ create an object
     use Kernel::System::DB;
     use Kernel::System::Main;
     use Kernel::System::Time;
-    use Kernel::System::ITSMChange;
-    use Kernel::System::ITSMChange::Event::NotificationEvent;
+    use Kernel::System::ITSMChange::ITSMWorkOrder;
+    use Kernel::System::ITSMChange::ITSMWorkOrder::Event::NotificationEvent;
 
     my $ConfigObject = Kernel::Config->new();
     my $EncodeObject = Kernel::System::Encode->new(
@@ -67,7 +67,7 @@ create an object
         LogObject    => $LogObject,
         MainObject   => $MainObject,
     );
-    my $ChangeObject = Kernel::System::ITSMChange->new(
+    my $WorkOrderObject = Kernel::System::ITSMChange::ITSMWorkOrder->new(
         ConfigObject => $ConfigObject,
         EncodeObject => $EncodeObject,
         LogObject    => $LogObject,
@@ -75,14 +75,14 @@ create an object
         TimeObject   => $TimeObject,
         MainObject   => $MainObject,
     );
-    my $ChangeNotificationObject = Kernel::System::ITSMChange::Event::NotificationEvent->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        DBObject     => $DBObject,
-        TimeObject   => $TimeObject,
-        MainObject   => $MainObject,
-        ChangeObject => $ChangeObject,
+    my $WorkOrderNotificationObject = Kernel::System::ITSMChange::ITSMWorkOrder::Event::NotificationEvent->new(
+        ConfigObject    => $ConfigObject,
+        EncodeObject    => $EncodeObject,
+        LogObject       => $LogObject,
+        DBObject        => $DBObject,
+        TimeObject      => $TimeObject,
+        MainObject      => $MainObject,
+        WorkOrderObject => $WorkOrderObject,
     );
 
 =cut
@@ -111,19 +111,19 @@ sub new {
 =item Run()
 
 The C<Run()> method handles the events and sends notifications about
-the given change object.
+the given workorder object.
 
 It returns 1 on success, C<undef> otherwise.
 
     my $Success = $NotificationEventObject->Run(
-        Event => 'ChangeUpdatePost',
+        Event => 'WorkOrderUpdatePost',
         Data => {
-            ChangeID    => 123,
-            ChangeTitle => 'test',
+            WorkOrderID    => 123,
+            WorkOrderTitle => 'test',
         },
         Config => {
-            Event       => '(ChangeAddPost|ChangeUpdatePost|ChangeCABUpdatePost|ChangeCABDeletePost|ChangeDeletePost)',
-            Module      => 'Kernel::System::ITSMChange::Event::NotificationEvent',
+            Event       => '(WorkOrderUpdatePost|WorkOrderDeletePost)',
+            Module      => 'Kernel::System::ITSMChange::ITSMWorkOrder::Event::NotificationEvent',
             Transaction => '0',
         },
         UserID => 1,
@@ -156,7 +156,7 @@ sub Run {
     $Self->{ChangeNotificationObject}->NotificationSend(
         AgentIDs    => \@AgentIDs,
         CustomerIDs => \@CustomerIDs,
-        Type        => 'Change',
+        Type        => 'WorkOrder',
         Event       => $Event,
         UserID      => $Param{UserID},
         Data        => $Param{Data},
@@ -166,6 +166,10 @@ sub Run {
 }
 
 1;
+
+=begin Internal:
+
+=end Internal:
 
 =back
 
@@ -181,6 +185,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2009-12-29 09:19:08 $
+$Revision: 1.1 $ $Date: 2009-12-29 09:19:08 $
 
 =cut
