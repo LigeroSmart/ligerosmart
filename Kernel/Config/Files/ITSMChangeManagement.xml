@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.120 2009-12-30 09:29:54 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.121 2009-12-30 09:54:58 bes Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -1032,7 +1032,7 @@
         <Description Lang="en">ITSM event module that sends notifications.</Description>
         <Description Lang="de">ITSM Event Modul zum Sender von Benachrichtigungen.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMChange::Event</SubGroup>
+        <SubGroup>Core::ITSMWorkOrder::Event</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::ITSMChange::Event::Notification</Item>
