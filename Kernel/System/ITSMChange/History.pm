@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/History.pm - all change and workorder history functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: History.pm,v 1.21 2009-12-17 09:43:02 ub Exp $
+# $Id: History.pm,v 1.22 2009-12-30 17:10:03 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.21 $) [1];
+$VERSION = qw($Revision: 1.22 $) [1];
 
 =head1 NAME
 
@@ -665,6 +665,19 @@ sub HistoryTypeLookup {
     return $Value;
 }
 
+=item HistoryTypeList()
+
+returns an array reference with hashreferences. The key of the hashreference is the id
+of an recipient and the name is the value.
+
+=cut
+
+sub HistoryTypeList {
+    my ( $Self, %Param ) = @_;
+
+    return [ { Key => 1, Value => 'ChangeUpdate' }, { Key => 2, Value => 'ChangeAdd' }, ];
+}
+
 1;
 
 =back
@@ -681,6 +694,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.21 $ $Date: 2009-12-17 09:43:02 $
+$Revision: 1.22 $ $Date: 2009-12-30 17:10:03 $
 
 =cut

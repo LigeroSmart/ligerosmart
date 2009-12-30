@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Notification.pm - lib for notifications in change management
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.2 2009-12-28 13:48:43 reb Exp $
+# $Id: Notification.pm,v 1.3 2009-12-30 17:10:03 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Notification;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
@@ -297,6 +297,126 @@ sub NotificationSend {
     }
 }
 
+=item NotificationRuleGet()
+
+Get info about a single notification rule
+
+    my $NotificationRule = $NotificationObject->NotificationRuleGet(
+        ID => 123,
+    );
+
+returns
+
+    {
+        ID           => 123,
+        Name         => 'a descriptive name',
+        Attribute    => 'ChangeTitle',
+        EventID      => 1,
+        Event        => 'ChangeUpdate',
+        ValidID      => 1,
+        Comment      => 'description what the rule does',
+        Rule         => 'rejected',
+        Recipients   => [ 'ChangeBuilder', 'ChangeManager', 'ChangeCABCustomers' ],
+        RecipientIDs => [ 2, 3, 7 ],
+    }
+
+=cut
+
+sub NotificationRuleGet {
+    my ( $Self, %Param ) = @_;
+
+    my $Info = {
+        ID           => 1,
+        Name         => 'a descriptive name',
+        Attribute    => 'ChangeTitle',
+        EventID      => 1,
+        Event        => 'ChangeUpdate',
+        ValidID      => 1,
+        Comment      => 'description what the rule does',
+        Rule         => 'rejected',
+        Recipients   => [ 'ChangeBuilder', 'ChangeManager', 'ChangeCABCustomers' ],
+        RecipientIDs => [ 2, 3, 7 ],
+    };
+
+    return $Info;
+}
+
+=item NotificationRuleAdd()
+
+Add a notification rule
+
+    my $Success = $NotificationObject->NotificationRuleAdd(
+        Name         => 'a descriptive name',
+        Attribute    => 'ChangeTitle',
+        EventID      => 1,
+        ValidID      => 1,
+        Comment      => 'description what the rule does',
+        Rule         => 'rejected',
+        RecipientIDs => [ 2, 3, 7 ],
+    );
+
+=cut
+
+sub NotificationRuleAdd {
+    my ( $Self, %Param ) = @_;
+
+    return 1;
+}
+
+=item NotificationRuleUpdate()
+
+updates an existing notification rule
+
+    my $Success = $NotificationObject->NotificationRuleUpdate(
+        ID           => 123,
+        Name         => 'a descriptive name',
+        Attribute    => 'ChangeTitle',
+        EventID      => 1,
+        ValidID      => 1,
+        Comment      => 'description what the rule does',
+        Rule         => 'rejected',
+        RecipientIDs => [ 2, 3, 7 ],
+    );
+
+=cut
+
+sub NotificationRuleUpdate {
+    my ( $Self, %Param ) = @_;
+
+    return 1;
+}
+
+=item NotificationList()
+
+returns an array reference with IDs of all existing notification rules
+
+    my $List = $NotificationObject->NotificationList();
+
+returns
+
+    [ 1, 2, 3 ]
+
+=cut
+
+sub NotificationList {
+    my ( $Self, %Param ) = @_;
+
+    return [1];
+}
+
+=item RecipientList()
+
+returns an array reference with hashreferences. The key of the hashreference is the id
+of an recipient and the name is the value.
+
+=cut
+
+sub RecipientList {
+    my ( $Self, %Param ) = @_;
+
+    return [ { Key => 1, Value => 'ChangeBuilder' }, { Key => 2, Value => 'ChangeInitiator' }, ];
+}
+
 =begin Internal:
 
 =cut
@@ -439,6 +559,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2009-12-28 13:48:43 $
+$Revision: 1.3 $ $Date: 2009-12-30 17:10:03 $
 
 =cut

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.124 2009-12-30 14:07:22 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.125 2009-12-30 17:06:35 reb Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -17,6 +17,26 @@
                     <Name>Category &lt;-&gt; Impact &lt;-&gt; Priority</Name>
                     <Block>Block3</Block>
                     <Prio>431</Prio>
+                </NavBarModule>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AdminITSMChangeNotification" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AdminITSMChangeNotification configuration in the admin area.</Description>
+        <Description Lang="de">Frontendmodul-Registrierung der AdminITSMChangeNotification Konfiguration im Admin-Bereich.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Admin::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Group>admin</Group>
+                <Description>Admin of notification rules</Description>
+                <Title>ITSM Change notification rules</Title>
+                <NavBarName>Admin</NavBarName>
+                <NavBarModule>
+                    <Module>Kernel::Output::HTML::NavBarModuleAdmin</Module>
+                    <Name>ITSM Changenotification rules</Name>
+                    <Block>Block3</Block>
+                    <Prio>432</Prio>
                 </NavBarModule>
             </FrontendModuleReg>
         </Setting>
