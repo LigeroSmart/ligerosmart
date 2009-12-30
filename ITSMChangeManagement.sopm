@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.98 2009-12-30 17:33:46 reb Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.99 2009-12-30 18:22:02 ub Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -444,11 +444,14 @@
             <Index Name="condition_relation_operator_id">
                 <IndexColumn Name="operator_id"/>
             </Index>
-            <Index Name="condition_relation_attribute_id_attribute_id_operator_id">
-                <IndexColumn Name="object_id"/>
-                <IndexColumn Name="attribute_id"/>
-                <IndexColumn Name="operator_id"/>
-            </Index>
+            <Unique Name="condition_relation_unique">
+                <UniqueColumn Name="object_id"/>
+                <UniqueColumn Name="attribute_id"/>
+                <UniqueColumn Name="operator_id"/>
+            </Unique>
+            <ForeignKey ForeignTable="condition_object">
+                <Reference Local="object_id" Foreign="id"/>
+            </ForeignKey>
             <ForeignKey ForeignTable="condition_attribute">
                 <Reference Local="attribute_id" Foreign="id"/>
             </ForeignKey>
