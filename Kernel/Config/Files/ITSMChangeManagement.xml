@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.123 2009-12-30 13:49:23 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.124 2009-12-30 14:07:22 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -1151,7 +1151,7 @@
         <Description Lang="en">Defines the change states that will be used as filters in the change overview.</Description>
         <Description Lang="de">Definiert die Change-States die als Filter in der Change-Übersicht verwendet werden.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeOverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewChangeOverview</SubGroup>
         <Setting>
             <Array>
                 <Item>requested</Item>
@@ -1170,7 +1170,7 @@
         <Description Lang="en">Order default in the change overview.</Description>
         <Description Lang="de">Standard Reihenfolge der Changes in der Change-Übersicht.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeOverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewChangeOverview</SubGroup>
         <Setting>
             <Option SelectedID="Up">
                 <Item Key="Down">Down</Item>
@@ -1182,7 +1182,7 @@
         <Description Lang="en">Required privilege to view overview over all changes.</Description>
         <Description Lang="de">Benötigtes Recht zum Einsehen der Liste von Changes.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeOverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewChangeOverview</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">ro</String>
         </Setting>
@@ -1191,7 +1191,7 @@
         <Description Lang="en">Defines the shown columns in the change overview. This option has no effect on the position of the column.</Description>
         <Description Lang="de">Definiert die angezeigten Tabellenspalten in der Change-Übersicht. Diese Option hat keinen Effekt auf die Position der Spalten.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeOverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewChangeOverview</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="ChangeStateSignal">1</Item>
@@ -1217,7 +1217,7 @@
         <Description Lang="en">Change sort by default in the change overview.</Description>
         <Description Lang="de">Standard Sortierung der Changes in der Change-Übersicht.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeOverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewChangeOverview</SubGroup>
         <Setting>
             <Option SelectedID="ChangeNumber">
                 <Item Key="ChangeNumber">ChangeNumber</Item>
@@ -1240,7 +1240,7 @@
         <Description Lang="en">Required privilege to create changes.</Description>
         <Description Lang="de">Benötigtes Recht zum Erstellen von Changes.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeAdd</SubGroup>
+        <SubGroup>Frontend::Agent::ViewChangeAdd</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">rw</String>
         </Setting>
@@ -1249,7 +1249,7 @@
         <Description Lang="en">If you want to set the requested (by customer) date.</Description>
         <Description Lang="de">Wenn der Wunschtermin des Kunden gesetzt werden soll.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeAdd</SubGroup>
+        <SubGroup>Frontend::Agent::ViewChangeAdd</SubGroup>
         <Setting>
             <Option SelectedID="1">
                 <Item Key="0">No</Item>
@@ -1261,7 +1261,7 @@
         <Description Lang="en">Required privilege to edit changes.</Description>
         <Description Lang="de">Benötigtes Recht zum Bearbeiten von Changes.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeEdit</SubGroup>
+        <SubGroup>Frontend::Agent::ViewChangeEdit</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">rw</String>
         </Setting>
@@ -1270,7 +1270,7 @@
         <Description Lang="en">If you want to set the requested (by customer) date.</Description>
         <Description Lang="de">Soll der Wunschtermin des Kunden gesetzt werden.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeEdit</SubGroup>
+        <SubGroup>Frontend::Agent::ViewChangeEdit</SubGroup>
         <Setting>
             <Option SelectedID="1">
                 <Item Key="0">No</Item>
@@ -1282,7 +1282,7 @@
         <Description Lang="en">If you want to set the state.</Description>
         <Description Lang="de">Wenn der Status gesetzt werden soll.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeEdit</SubGroup>
+        <SubGroup>Frontend::Agent::ViewChangeEdit</SubGroup>
         <Setting>
             <Option SelectedID="0">
                 <Item Key="0">No</Item>
@@ -1294,7 +1294,7 @@
         <Description Lang="en">Defines the change states that will be used as filters in the FSC overview. To be used as a filter, a change state needs to be also defined in ITSMChange::Frontend::AgentITSMChangeFSC###ChangeStates.</Description>
         <Description Lang="de">Definiert die Change-States die als Filter in der FSC-Übersicht verwendet werden. Um als Filter verwendet werden zu können, muss ein Change-State ebenfalls in ITSMChange::Frontend::AgentITSMChangeFSC###ChangeStates definert sein.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewFSCOverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewFSCOverview</SubGroup>
         <Setting>
             <Array>
                 <Item>approved</Item>
@@ -1305,7 +1305,7 @@
         <Description Lang="en">Order default in the FSC overview.</Description>
         <Description Lang="de">Standard Reihenfolge der Changes in der FSC-Übersicht.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewFSCOverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewFSCOverview</SubGroup>
         <Setting>
             <Option SelectedID="Up">
                 <Item Key="Down">Down</Item>
@@ -1317,7 +1317,7 @@
         <Description Lang="en">Required privilege to view list of FSC.</Description>
         <Description Lang="de">Benötigtes Recht zum Einsehen der FSC Liste.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewFSCOverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewFSCOverview</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">ro</String>
         </Setting>
@@ -1326,7 +1326,7 @@
         <Description Lang="en">Defines the shown columns in the FSC overview. This option has no effect on the position of the column.</Description>
         <Description Lang="de">Definiert die angezeigten Tabellenspalten in der FSC-Übersicht. Diese Option hat keinen Effekt auf die Position der Spalten.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewFSCOverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewFSCOverview</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="ChangeStateSignal">1</Item>
@@ -1352,7 +1352,7 @@
         <Description Lang="en">Change sort by default in the FSC overview.</Description>
         <Description Lang="de">Standard Sortierung der Changes in der FSC-Übersicht.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewFSCOverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewFSCOverview</SubGroup>
         <Setting>
             <Option SelectedID="PlannedStartTime">
                 <Item Key="ChangeNumber">ChangeNumber</Item>
@@ -1375,7 +1375,7 @@
         <Description Lang="en">Required privilege to view the history of a change.</Description>
         <Description Lang="de">Benötigtes Recht zum Einsehen der Historie eines Change.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeHistory</SubGroup>
+        <SubGroup>Frontend::Agent::ViewChangeHistory</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">ro</String>
         </Setting>
@@ -1384,7 +1384,7 @@
         <Description Lang="en">Required privilege to view the history zoom of a change.</Description>
         <Description Lang="de">Benötigtes Recht zum Einsehen der Historiendetails eines Changes.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeHistoryZoom</SubGroup>
+        <SubGroup>Frontend::Agent::ViewChangeHistoryZoom</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">ro</String>
         </Setting>
@@ -1393,7 +1393,7 @@
         <Description Lang="en">Required privilege to edit the involved persons of a change.</Description>
         <Description Lang="de">Benötigtes Recht zum Ändern der beteiligten Personen.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeInvolvedPersons</SubGroup>
+        <SubGroup>Frontend::Agent::ViewChangeInvolvedPersons</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">rw</String>
         </Setting>
@@ -1402,7 +1402,7 @@
         <Description Lang="en">Defines the change states that will be used as filters in the change manager overview.</Description>
         <Description Lang="de">Definiert die Change-States die als Filter in der Change-Manager-Übersicht verwendet werden.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeManagerOverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewChangeManagerOverview</SubGroup>
         <Setting>
             <Array>
                 <Item>requested</Item>
@@ -1416,7 +1416,7 @@
         <Description Lang="en">Order default in the change manager overview.</Description>
         <Description Lang="de">Standard Reihenfolge der Changes in der Change-Manager-Übersicht.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeManagerOverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewChangeManagerOverview</SubGroup>
         <Setting>
             <Option SelectedID="Up">
                 <Item Key="Down">Down</Item>
@@ -1428,7 +1428,7 @@
         <Description Lang="en">Required privilege to view list of changes where user is change manager.</Description>
         <Description Lang="de">Benötigtes Recht zum Einsehen der Liste der Changes bei denen der Benutzer change manager ist.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeManagerOverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewChangeManagerOverview</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">ro</String>
         </Setting>
@@ -1437,7 +1437,7 @@
         <Description Lang="en">Defines the shown columns in the change manager overview. This option has no effect on the position of the column.</Description>
         <Description Lang="de">Definiert die angezeigten Tabellenspalten in der Change-Manager-Übersicht. Diese Option hat keinen Effekt auf die Position der Spalten.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeManagerOverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewChangeManagerOverview</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="ChangeStateSignal">1</Item>
@@ -1463,7 +1463,7 @@
         <Description Lang="en">Change sort by default in the change manager overview.</Description>
         <Description Lang="de">Standard Sortierung der Changes in der Change-Manager-Übersicht.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeManagerOverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewChangeManagerOverview</SubGroup>
         <Setting>
             <Option SelectedID="ChangeNumber">
                 <Item Key="ChangeNumber">ChangeNumber</Item>
@@ -1486,7 +1486,7 @@
         <Description Lang="en">Defines the change states that will be used as filters in the MyCAB overview.</Description>
         <Description Lang="de">Definiert die Change-States die als Filter in der MyCAB-Übersicht verwendet werden.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewMyCABOverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewMyCABOverview</SubGroup>
         <Setting>
             <Array>
                 <Item>requested</Item>
@@ -1500,7 +1500,7 @@
         <Description Lang="en">Order default in the MyCAB overview.</Description>
         <Description Lang="de">Standard Reihenfolge der Changes in der MyCAB-Übersicht.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewMyCABOverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewMyCABOverview</SubGroup>
         <Setting>
             <Option SelectedID="Up">
                 <Item Key="Down">Down</Item>
@@ -1512,7 +1512,7 @@
         <Description Lang="en">Required privilege to view list of changes where user is CAB member.</Description>
         <Description Lang="de">Benötigtes Recht zum Einsehen der Liste der Changes bei denen der Benutzer Mitglied des CABs ist.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewMyCABOverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewMyCABOverview</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">ro</String>
         </Setting>
@@ -1521,7 +1521,7 @@
         <Description Lang="en">Defines the shown columns in the MyCAB overview. This option has no effect on the position of the column.</Description>
         <Description Lang="de">Definiert die angezeigten Tabellenspalten in der MyCAB-Übersicht. Diese Option hat keinen Effekt auf die Position der Spalten.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewMyCABOverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewMyCABOverview</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="ChangeStateSignal">1</Item>
@@ -1547,7 +1547,7 @@
         <Description Lang="en">Change sort by default in the MyCAB overview.</Description>
         <Description Lang="de">Standard Sortierung der Changes in der MyCAB-Übersicht.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewMyCABOverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewMyCABOverview</SubGroup>
         <Setting>
             <Option SelectedID="ChangeNumber">
                 <Item Key="ChangeNumber">ChangeNumber</Item>
@@ -1570,7 +1570,7 @@
         <Description Lang="en">Defines the change states that will be used as filters in the MyChanges overview.</Description>
         <Description Lang="de">Definiert die Change-States die als Filter in der MyChanges-Übersicht verwendet werden.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewMyChangesOverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewMyChangesOverview</SubGroup>
         <Setting>
             <Array>
                 <Item>requested</Item>
@@ -1584,7 +1584,7 @@
         <Description Lang="en">Defines the workorder states that will be used as filters in the MyWorkorders overview.</Description>
         <Description Lang="de">Definiert die Workorder-States die als Filter in der MyWorkorders-Übersicht verwendet werden.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewMyWorkOrdersOverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewMyWorkOrdersOverview</SubGroup>
         <Setting>
             <Array>
                 <Item>accepted</Item>
@@ -1597,7 +1597,7 @@
         <Description Lang="en">Order default in the MyChanges overview.</Description>
         <Description Lang="de">Standard Reihenfolge der Changes in der MyChanges-Übersicht.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewMyChangesOverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewMyChangesOverview</SubGroup>
         <Setting>
             <Option SelectedID="Up">
                 <Item Key="Down">Down</Item>
@@ -1609,7 +1609,7 @@
         <Description Lang="en">Required privilege to view list of own changes.</Description>
         <Description Lang="de">Benötigtes Recht zum Einsehen der Liste der eigenen Changes.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewMyChangesOverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewMyChangesOverview</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">ro</String>
         </Setting>
@@ -1618,7 +1618,7 @@
         <Description Lang="en">Defines the shown columns in the MyChanges overview. This option has no effect on the position of the column.</Description>
         <Description Lang="de">Definiert die angezeigten Tabellenspalten in der MyChanges-Übersicht. Diese Option hat keinen Effekt auf die Position der Spalten.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewMyChangesOverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewMyChangesOverview</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="ChangeStateSignal">1</Item>
@@ -1644,7 +1644,7 @@
         <Description Lang="en">Change sort by default in the MyChanges overview.</Description>
         <Description Lang="de">Standard Sortierung der Changes in der MyChanges-Übersicht.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewMyChangesOverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewMyChangesOverview</SubGroup>
         <Setting>
             <Option SelectedID="PlannedStartTime">
                 <Item Key="ChangeNumber">ChangeNumber</Item>
@@ -1667,7 +1667,7 @@
         <Description Lang="en">Order default in the MyWorkorders overview.</Description>
         <Description Lang="de">Standard Reihenfolge der Workorders in der MyWorkorders-Übersicht.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewMyWorkOrdersOverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewMyWorkOrdersOverview</SubGroup>
         <Setting>
             <Option SelectedID="Up">
                 <Item Key="Down">Down</Item>
@@ -1679,7 +1679,7 @@
         <Description Lang="en">Required privilege to view list of own workorders.</Description>
         <Description Lang="de">Benötigtes Recht zum Einsehen der Liste von eigenen Workorders.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewMyWorkOrdersOverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewMyWorkOrdersOverview</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">ro</String>
         </Setting>
@@ -1688,7 +1688,7 @@
         <Description Lang="en">Defines the shown columns in the MyWorkorders overview. This option has no effect on the position of the column.</Description>
         <Description Lang="de">Definiert die angezeigten Tabellenspalten in der MyWorkorders-Übersicht. Diese Option hat keinen Effekt auf die Position der Spalten.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewMyWorkOrdersOverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewMyWorkOrdersOverview</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="ChangeStateSignal">0</Item>
@@ -1720,7 +1720,7 @@
         <Description Lang="en">Change sort by default in the MyWorkorders overview.</Description>
         <Description Lang="de">Standard Sortierung der Changes in der MyWorkorders-Übersicht.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewMyWorkOrdersOverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewMyWorkOrdersOverview</SubGroup>
         <Setting>
             <Option SelectedID="PlannedStartTime">
                 <Item Key="ChangeNumber">ChangeNumber</Item>
@@ -1743,7 +1743,7 @@
         <Description Lang="en">Defines the workorder states that will be used as filters in the PIR overview.</Description>
         <Description Lang="de">Definiert die Workorder-States die als Filter in der PIR-Übersicht verwendet werden.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewPIROverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewPIROverview</SubGroup>
         <Setting>
             <Array>
                 <Item>accepted</Item>
@@ -1758,7 +1758,7 @@
         <Description Lang="en">Order default in the PIR overview.</Description>
         <Description Lang="de">Standard Reihenfolge der Changes in der PIR-Übersicht.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewPIROverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewPIROverview</SubGroup>
         <Setting>
             <Option SelectedID="Up">
                 <Item Key="Down">Down</Item>
@@ -1770,7 +1770,7 @@
         <Description Lang="en">Required privilege to view list of changes with an upcoming PIR (Post Implementation Review).</Description>
         <Description Lang="de">Benötigtes Recht zum Einsehen der Liste von Changes mit einem anstehenden PIR (Post Implementation Review).</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewPIROverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewPIROverview</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">ro</String>
         </Setting>
@@ -1779,7 +1779,7 @@
         <Description Lang="en">Defines the shown columns in the PIR overview. This option has no effect on the position of the column.</Description>
         <Description Lang="de">Definiert die angezeigten Tabellenspalten in der PIR-Übersicht. Diese Option hat keinen Effekt auf die Position der Spalten.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewPIROverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewPIROverview</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="ChangeStateSignal">0</Item>
@@ -1811,7 +1811,7 @@
         <Description Lang="en">Change sort by default in the PIR overview.</Description>
         <Description Lang="de">Standard Sortierung der Changes in der PIR-Übersicht.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewPIROverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewPIROverview</SubGroup>
         <Setting>
             <Option SelectedID="PlannedStartTime">
                 <Item Key="ChangeNumber">ChangeNumber</Item>
@@ -1834,7 +1834,7 @@
         <Description Lang="en">Defines the workorder types that will be used to show the PIR overview.</Description>
         <Description Lang="de">Definiert die Workorder-Typen die für die PIR-Übersicht verwendet werden.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewPIROverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewPIROverview</SubGroup>
         <Setting>
             <Array>
                 <Item>pir</Item>
@@ -1845,7 +1845,7 @@
         <Description Lang="en">Defines the shown columns in the change search. This option has no effect on the position of the column.</Description>
         <Description Lang="de">Definiert die angezeigten Tabellenspalten im Suchergebniss. Diese Option hat keinen Effekt auf die Position der Spalten.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeSearch</SubGroup>
+        <SubGroup>Frontend::Agent::ViewChangeSearch</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="ChangeStateSignal">1</Item>
@@ -1871,7 +1871,7 @@
         <Description Lang="en">If you want to set the requested (by customer) date.</Description>
         <Description Lang="de">Soll der Wunschtermin des Kunden eingestellt werden.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeSearch</SubGroup>
+        <SubGroup>Frontend::Agent::ViewChangeSearch</SubGroup>
         <Setting>
             <Option SelectedID="1">
                 <Item Key="0">No</Item>
@@ -1883,7 +1883,7 @@
         <Description Lang="en">Required privilege to move changes in time.</Description>
         <Description Lang="de">Benötigtes Recht zum zeitlichen Verschieben von Changes.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeTimeSlot</SubGroup>
+        <SubGroup>Frontend::Agent::ViewChangeTimeSlot</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">rw</String>
         </Setting>
@@ -1892,7 +1892,7 @@
         <Description Lang="en">Required privilege to view changes.</Description>
         <Description Lang="de">Benötigtes Recht zum Ansehen von Changes.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeZoom</SubGroup>
+        <SubGroup>Frontend::Agent::ViewChangeZoom</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">ro</String>
         </Setting>
@@ -1901,7 +1901,7 @@
         <Description Lang="en">If you want to show the requested (by customer) date.</Description>
         <Description Lang="de">Soll der Wunschtermin des Kunden angezeigt werden.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeZoom</SubGroup>
+        <SubGroup>Frontend::Agent::ViewChangeZoom</SubGroup>
         <Setting>
             <Option SelectedID="1">
                 <Item Key="0">No</Item>
@@ -1913,7 +1913,7 @@
         <Description Lang="en">Defines shown graph attributes.</Description>
         <Description Lang="de">Definiert Attribute für die Anzeige des Graphen.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewChangeZoom</SubGroup>
+        <SubGroup>Frontend::Agent::ViewChangeZoom</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="TimeLineColor">#DC143C</Item>
@@ -1935,7 +1935,7 @@
         <Description Lang="en">Required privilege to add a workorder.</Description>
         <Description Lang="de">Benötigtes Recht zum Hinzufügen einer Workorder.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewWorkOrderAdd</SubGroup>
+        <SubGroup>Frontend::Agent::ViewWorkOrderAdd</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">rw</String>
         </Setting>
@@ -1944,7 +1944,7 @@
         <Description Lang="en">Required privilege to change the workorder agent.</Description>
         <Description Lang="de">Benötigtes Recht zum Ändern des Agenten einer Workorder.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewWorkOrderAgent</SubGroup>
+        <SubGroup>Frontend::Agent::ViewWorkOrderAgent</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">rw</String>
         </Setting>
@@ -1953,7 +1953,7 @@
         <Description Lang="en">Required privilege to delete a workorder.</Description>
         <Description Lang="de">Benötigtes Recht zum Löschen einer Workorder.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewWorkOrderDelete</SubGroup>
+        <SubGroup>Frontend::Agent::ViewWorkOrderDelete</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">rw</String>
         </Setting>
@@ -1962,7 +1962,7 @@
         <Description Lang="en">Required privilege to edit a workorder.</Description>
         <Description Lang="de">Benötigtes Recht zum Ändern einer Workorder.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewWorkOrderEdit</SubGroup>
+        <SubGroup>Frontend::Agent::ViewWorkOrderEdit</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">rw</String>
         </Setting>
@@ -1971,7 +1971,7 @@
         <Description Lang="en">Required privilege to view the history of a workorder.</Description>
         <Description Lang="de">Benötigtes Recht zum Betrachten der Historie einer Workorder.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewWorkOrderHistory</SubGroup>
+        <SubGroup>Frontend::Agent::ViewWorkOrderHistory</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">ro</String>
         </Setting>
@@ -1980,7 +1980,7 @@
         <Description Lang="en">Required privilege to view the history zoom of a workorder.</Description>
         <Description Lang="de">Benötigtes Recht zum Betrachten der Historiendetails einer Workorder.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewWorkOrderHistoryZoom</SubGroup>
+        <SubGroup>Frontend::Agent::ViewWorkOrderHistoryZoom</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">ro</String>
         </Setting>
@@ -1989,7 +1989,7 @@
         <Description Lang="en">If you want to set the actual start and end time.</Description>
         <Description Lang="de">Wenn der tatsächliche Start- und Endzeitpunkt gesetzt werden soll.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewWorkOrderReport</SubGroup>
+        <SubGroup>Frontend::Agent::ViewWorkOrderReport</SubGroup>
         <Setting>
             <Option SelectedID="0">
                 <Item Key="0">No</Item>
@@ -2001,7 +2001,7 @@
         <Description Lang="en">Required privilege to write a report for the workorder.</Description>
         <Description Lang="de">Benötigtes Recht zum Verfassen eines Berichtes für eine Workorder.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewWorkOrderReport</SubGroup>
+        <SubGroup>Frontend::Agent::ViewWorkOrderReport</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">rw</String>
         </Setting>
@@ -2010,7 +2010,7 @@
         <Description Lang="en">Required privilege to view a workorder.</Description>
         <Description Lang="de">Benötigtes Recht zum Betrachten einer Workorder.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ITSMChange::ViewWorkOrderZoom</SubGroup>
+        <SubGroup>Frontend::Agent::ViewWorkOrderZoom</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">ro</String>
         </Setting>
