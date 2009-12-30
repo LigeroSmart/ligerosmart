@@ -2,7 +2,7 @@
 # Kernel/Language/en_ITSMChangeManagement.pm - the english translation of ITSMChangeManagement
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: en_ITSMChangeManagement.pm,v 1.11 2009-12-16 20:44:52 reb Exp $
+# $Id: en_ITSMChangeManagement.pm,v 1.12 2009-12-30 11:00:21 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -36,8 +36,8 @@ sub Data {
     $Lang->{'ChangeHistory::ChangeLinkDelete'} = 'Link to %s (ID=%s) deleted';
     $Lang->{'ChangeHistory::ChangeCABUpdate'}  = 'CAB %s';
     $Lang->{'ChangeHistory::ChangeCABDelete'}  = 'CAB Deleted %s';
-    $Lang->{'ChangeHistory::AttachmentAdd'}    = 'New Attachment: %s';
-    $Lang->{'ChangeHistory::AttachmentDelete'} = 'Deleted Attachment %s';
+    $Lang->{'ChangeHistory::ChangeAttachmentAdd'}    = 'New Attachment: %s';
+    $Lang->{'ChangeHistory::ChangeAttachmentDelete'} = 'Deleted Attachment %s';
 
     # WorkOrder history
     $Lang->{'WorkOrderHistory::WorkOrderAdd'}        = 'New Workorder (ID=%s)';
@@ -45,8 +45,8 @@ sub Data {
     $Lang->{'WorkOrderHistory::WorkOrderLinkAdd'}    = 'Link to %s (ID=%s) added';
     $Lang->{'WorkOrderHistory::WorkOrderLinkDelete'} = 'Link to %s (ID=%s) deleted';
     $Lang->{'WorkOrderHistory::WorkOrderDelete'}     = 'Workorder (ID=%s) deleted';
-    $Lang->{'WorkOrderHistory::AttachmentAdd'}       = 'New Attachment for WorkOrder: %s';
-    $Lang->{'WorkOrderHistory::AttachmentDelete'}    = 'Deleted Attachment from WorkOrder: %s';
+    $Lang->{'WorkOrderHistory::WorkOrderAttachmentAdd'}       = 'New Attachment for WorkOrder: %s';
+    $Lang->{'WorkOrderHistory::WorkOrderAttachmentDelete'}    = 'Deleted Attachment from WorkOrder: %s';
 
     # long WorkOrder history
     $Lang->{'WorkOrderHistory::WorkOrderAddWithWorkorderID'}        = 'New Workorder (ID=%s)';

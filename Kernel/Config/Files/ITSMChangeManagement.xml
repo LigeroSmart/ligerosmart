@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.121 2009-12-30 09:54:58 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.122 2009-12-30 11:00:21 reb Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -984,7 +984,7 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::ITSMChange::Event::HistoryAdd</Item>
-                <Item Key="Event">(ChangeAddPost|ChangeUpdatePost|ChangeCABUpdatePost|ChangeCABDeletePost|ChangeDeletePost|ChangeLinkAddPost|ChangeLinkDeletePost|AttachmentAddPost|AttachmentDeletePost)</Item>
+                <Item Key="Event">(ChangeAddPost|ChangeUpdatePost|ChangeCABUpdatePost|ChangeCABDeletePost|ChangeDeletePost|ChangeLinkAddPost|ChangeLinkDeletePost|ChangeAttachmentAddPost|ChangeAttachmentDeletePost)</Item>
                 <Item Key="Transaction">0</Item>
             </Hash>
         </Setting>
@@ -997,7 +997,7 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::ITSMChange::Event::Notification</Item>
-                <Item Key="Event">(ChangeAddPost|ChangeUpdatePost|ChangeCABUpdatePost|ChangeCABDeletePost|ChangeDeletePost|ChangeLinkAddPost|ChangeLinkDeletePost|AttachmentAddPost|AttachmentDeletePost)</Item>
+                <Item Key="Event">(ChangeAddPost|ChangeUpdatePost|ChangeCABUpdatePost|ChangeCABDeletePost|ChangeDeletePost|ChangeLinkAddPost|ChangeLinkDeletePost|ChangeAttachmentAddPost|ChangeAttachmentDeletePost)</Item>
                 <Item Key="Transaction">0</Item>
             </Hash>
         </Setting>
@@ -1010,7 +1010,7 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::ITSMChange::ITSMWorkOrder::Event::HistoryAdd</Item>
-                <Item Key="Event">(WorkOrderAddPost|WorkOrderUpdatePost|WorkOrderDeletePost|WorkOrderLinkAddPost|WorkOrderLinkDeletePost|AttachmentAddPost|AttachmentDeletePost)</Item>
+                <Item Key="Event">(WorkOrderAddPost|WorkOrderUpdatePost|WorkOrderDeletePost|WorkOrderLinkAddPost|WorkOrderLinkDeletePost|WorkOrderAttachmentAddPost|WorkOrderAttachmentDeletePost)</Item>
                 <Item Key="Transaction">0</Item>
             </Hash>
         </Setting>
@@ -1036,7 +1036,7 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::ITSMChange::Event::Notification</Item>
-                <Item Key="Event">(WorkOrderAddPost|WorkOrderUpdatePost|WorkOrderDeletePost|WorkOrderLinkAddPost|WorkOrderLinkDeletePost|AttachmentAddPost|AttachmentDeletePost)</Item>
+                <Item Key="Event">(WorkOrderAddPost|WorkOrderUpdatePost|WorkOrderDeletePost|WorkOrderLinkAddPost|WorkOrderLinkDeletePost|WorkOrderAttachmentAddPost|WorkOrderAttachmentDeletePost)</Item>
                 <Item Key="Transaction">0</Item>
             </Hash>
         </Setting>

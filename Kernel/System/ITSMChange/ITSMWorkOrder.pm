@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.60 2009-12-28 15:59:12 reb Exp $
+# $Id: ITSMWorkOrder.pm,v 1.61 2009-12-30 11:01:03 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.60 $) [1];
+$VERSION = qw($Revision: 1.61 $) [1];
 
 =head1 NAME
 
@@ -1941,7 +1941,7 @@ sub WorkOrderAttachmentAdd {
 
         # trigger AttachmentAdd-Event
         $Self->EventHandler(
-            Event => 'AttachmentAddPost',
+            Event => 'WorkOrderAttachmentAddPost',
             Data  => {
                 %Param,
             },
@@ -2008,7 +2008,7 @@ sub WorkOrderAttachmentDelete {
 
         # trigger AttachmentDeletePost-Event
         $Self->EventHandler(
-            Event => 'AttachmentDeletePost',
+            Event => 'WorkOrderAttachmentDeletePost',
             Data  => {
                 %Param,
                 Filename => $Filename,
@@ -2603,6 +2603,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.60 $ $Date: 2009-12-28 15:59:12 $
+$Revision: 1.61 $ $Date: 2009-12-30 11:01:03 $
 
 =cut
