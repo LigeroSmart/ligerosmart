@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/Notification.pm - a event module to send notifications
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.2 2009-12-30 10:57:25 bes Exp $
+# $Id: Notification.pm,v 1.3 2009-12-30 11:04:46 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::Notification;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
@@ -149,7 +149,21 @@ sub Run {
     my @CustomerIDs;
 
     # distinguish between Change and WorkOrder events
-    my $Type = $Event =~ m/ \A Change/xms ? 'Change' : 'WorkOrder';
+    # TODO: this still needs to be worked out. e.g. AttachmentAddPost
+    my $Type;
+    if ( $Event =~ m{ \A Change }xms ) {
+        $Type = 'Change';
+    }
+    elsif ( $Event =~ m{ \A WorkOrder }xms ) {
+        $Type = 'WorkOrder';
+    }
+    else {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Could not determine the object type for the event '$Event'!"
+        );
+        return;
+    }
 
     $Self->{ChangeNotificationObject}->NotificationSend(
         AgentIDs    => \@AgentIDs,
@@ -183,6 +197,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2009-12-30 10:57:25 $
+$Revision: 1.3 $ $Date: 2009-12-30 11:04:46 $
 
 =cut
