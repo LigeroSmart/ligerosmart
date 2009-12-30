@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeZoom.pm - the OTRS::ITSM::ChangeManagement change zoom module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.pm,v 1.43 2009-12-28 15:58:11 reb Exp $
+# $Id: AgentITSMChangeZoom.pm,v 1.44 2009-12-30 13:43:34 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.43 $) [1];
+$VERSION = qw($Revision: 1.44 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -196,19 +196,11 @@ sub Run {
         },
     );
 
-    # all postfixes needed for information
-    my @Postfixes = qw(UserLogin UserFirstname UserLastname);
-
     # get change builder data
     my %ChangeBuilderUser = $Self->{UserObject}->GetUserData(
         UserID => $Change->{ChangeBuilderID},
         Cached => 1,
     );
-
-    # get ChangeBuilder user information
-    for my $Postfix (@Postfixes) {
-        $Change->{ 'ChangeBuilder' . $Postfix } = $ChangeBuilderUser{$Postfix};
-    }
 
     # get create user data
     my %CreateUser = $Self->{UserObject}->GetUserData(
@@ -216,20 +208,20 @@ sub Run {
         Cached => 1,
     );
 
-    # get CreateBy user information
-    for my $Postfix (@Postfixes) {
-        $Change->{ 'Create' . $Postfix } = $CreateUser{$Postfix};
-    }
-
     # get change user data
     my %ChangeUser = $Self->{UserObject}->GetUserData(
         UserID => $Change->{ChangeBy},
         Cached => 1,
     );
 
-    # get ChangeBy user information
+    # all postfixes needed for user information
+    my @Postfixes = qw(UserLogin UserFirstname UserLastname);
+
+    # get user information for ChangeBuilder, CreateBy, ChangeBy
     for my $Postfix (@Postfixes) {
-        $Change->{ 'Change' . $Postfix } = $ChangeUser{$Postfix};
+        $Change->{ 'ChangeBuilder' . $Postfix } = $ChangeBuilderUser{$Postfix};
+        $Change->{ 'Create' . $Postfix }        = $CreateUser{$Postfix};
+        $Change->{ 'Change' . $Postfix }        = $ChangeUser{$Postfix};
     }
 
     # output meta block
