@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeTimeSlot.pm - the OTRS::ITSM::ChangeManagement move time slot module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeTimeSlot.pm,v 1.16 2009-12-30 13:49:23 bes Exp $
+# $Id: AgentITSMChangeTimeSlot.pm,v 1.17 2009-12-30 14:02:22 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -82,7 +82,7 @@ sub Run {
     # check if change is found
     if ( !$Change ) {
         return $Self->{LayoutObject}->ErrorScreen(
-            Message => "Change $ChangeID not found in database!",
+            Message => "Change $ChangeID was not found in the database!",
             Comment => 'Please contact the admin.',
         );
     }
@@ -169,7 +169,7 @@ sub Run {
 
                 # show error message
                 return $Self->{LayoutObject}->ErrorScreen(
-                    Message => q{Can't move a change which already has started.},
+                    Message => "Can't move a change which already has started!",
                     Comment => 'Please move the individual workorders instead.',
                 );
             }
@@ -179,7 +179,7 @@ sub Run {
 
                 # show error message
                 return $Self->{LayoutObject}->ErrorScreen(
-                    Message => q{Can't move a change when there are no workorders.},
+                    Message => "Can't move a change when there are no workorders!",
                     Comment => 'There has to be at least one workorder.',
                 );
             }
