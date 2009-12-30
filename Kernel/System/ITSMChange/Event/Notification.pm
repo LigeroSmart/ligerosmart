@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/Notification.pm - a event module to send notifications
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.1 2009-12-30 09:29:54 bes Exp $
+# $Id: Notification.pm,v 1.2 2009-12-30 10:57:25 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::Notification;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -144,7 +144,8 @@ sub Run {
     $Event =~ s{ Post \z }{}xms;
 
     # TODO: determine list of agents and customers from SysConfig and Change- or WorkOrder-Object
-    my @AgentIDs;
+    # TODO: for development, send notification to the logged in user
+    my @AgentIDs = ( $Param{UserID} );
     my @CustomerIDs;
 
     # distinguish between Change and WorkOrder events
@@ -182,6 +183,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2009-12-30 09:29:54 $
+$Revision: 1.2 $ $Date: 2009-12-30 10:57:25 $
 
 =cut
