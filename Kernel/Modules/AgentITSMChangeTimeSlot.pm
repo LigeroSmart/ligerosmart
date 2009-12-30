@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeTimeSlot.pm - the OTRS::ITSM::ChangeManagement move time slot module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeTimeSlot.pm,v 1.14 2009-12-30 11:18:09 bes Exp $
+# $Id: AgentITSMChangeTimeSlot.pm,v 1.15 2009-12-30 13:23:02 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -164,17 +164,27 @@ sub Run {
         # move time slot only when there are no validation errors
         if ( !@ValidationErrors ) {
 
+            # Moving works only when there are workorders.
+            if ( !$Change->{WorkOrderCount} ) {
+
+                # show error message
+                return $Self->{LayoutObject}->ErrorScreen(
+                    Message => q{Can't move a change when there are no workorders.},
+                    Comment => 'There has to be at least one workorder.',
+                );
+            }
+
             # Determine the difference in seconds
             my $CurrentPlannedTime = $Change->{$TimeType};
 
-            # When there are no workorders, then there is no planned start or end time.
+            # Even when there are workorders, a change might still miss a planned time.
             # In that case moving the time slot is not possible.
             if ( !$CurrentPlannedTime ) {
 
                 # show error message
                 return $Self->{LayoutObject}->ErrorScreen(
                     Message => "The current $TimeType could not be determined.",
-                    Comment => 'There has to be at least one workorder.',
+                    Comment => "The $TimeType of all workorders has to be defined.",
                 );
             }
 
