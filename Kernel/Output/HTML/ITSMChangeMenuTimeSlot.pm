@@ -1,23 +1,22 @@
 # --
-# Kernel/Output/HTML/ITSMChangeMenuWorkOrdersNeeded.pm - Menu with check whether there are workorders
+# Kernel/Output/HTML/ITSMChangeMenuTimeSlot.pm - Menu module with check
+# whether there are workorders and whether the change has not started yet
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeMenuWorkOrdersNeeded.pm,v 1.6 2009-12-30 13:49:23 bes Exp $
+# $Id: ITSMChangeMenuTimeSlot.pm,v 1.1 2009-12-30 13:49:23 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::ITSMChangeMenuWorkOrdersNeeded;
+package Kernel::Output::HTML::ITSMChangeMenuTimeSlot;
 
 use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
-
-# TODO: decide whether this module can be removed. As of 2009-12-30 it is unused.
+$VERSION = qw($Revision: 1.1 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -51,6 +50,9 @@ sub Run {
 
     # check whether there are any workorders yet
     return $Param{Counter} if !$Param{Change}->{WorkOrderCount};
+
+    # The change can no longer be moved, when the change has already started.
+    return $Param{Counter} if $Param{Change}->{ActualStartTime};
 
     # get config for the relevant action
     my $FrontendConfig
