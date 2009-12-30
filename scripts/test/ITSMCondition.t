@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.8 2009-12-28 15:59:32 reb Exp $
+# $Id: ITSMCondition.t,v 1.9 2009-12-30 18:20:54 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -38,17 +38,17 @@ $Self->True(
 
 # define public interface (in alphabetical order)
 my @ObjectMethods = qw(
-    ConditionAdd
-    ConditionDelete
-    ConditionGet
-    ConditionList
-    ConditionUpdate
     AttributeAdd
     AttributeDelete
     AttributeGet
     AttributeList
     AttributeLookup
     AttributeUpdate
+    ConditionAdd
+    ConditionDelete
+    ConditionGet
+    ConditionList
+    ConditionUpdate
     ObjectAdd
     ObjectDelete
     ObjectGet
