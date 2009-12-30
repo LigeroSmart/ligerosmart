@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeTimeSlot.pm - the OTRS::ITSM::ChangeManagement move time slot module
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeTimeSlot.pm,v 1.13 2009-12-14 22:54:03 ub Exp $
+# $Id: AgentITSMChangeTimeSlot.pm,v 1.14 2009-12-30 11:18:09 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -126,13 +126,14 @@ sub Run {
             push @ValidationErrors, 'InvalidTimeType';
         }
 
-        # check the completeness of the time parameter list
+        # check the completeness of the time parameter list,
+        # only hour and minute are allowed to be '0'
         if (
             !$GetParam{PlannedYear}
             || !$GetParam{PlannedMonth}
             || !$GetParam{PlannedDay}
-            || !$GetParam{PlannedHour}
-            || !$GetParam{PlannedMinute}
+            || !defined $GetParam{PlannedHour}
+            || !defined $GetParam{PlannedMinute}
             )
         {
             push @ValidationErrors, 'InvalidPlannedTime';
