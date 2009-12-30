@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.97 2009-12-30 17:06:35 reb Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.98 2009-12-30 17:33:46 reb Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -514,6 +514,36 @@
             </Index>
             <ForeignKey ForeignTable="condition_relation">
                 <Reference Local="relation_id" Foreign="id"/>
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Name="change_notification">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
+            <Column Name="name" Required="true" Size="250" Type="VARCHAR"/>
+            <Column Name="item_attribute" Required="false" Size="250" Type="VARCHAR"/>
+            <Column Name="event_id" Required="true" Type="BIGINT"/>
+            <Column Name="valid_id" Required="true" Type="BIGINT"/>
+            <Column Name="comments" Required="false" Size="250" Type="VARCHAR"/>
+            <Column Name="notification_rule" Required="false" Size="250" Type="VARCHAR"/>
+            <ForeignKey ForeignTable="change_history_type">
+                <Reference Local="event_id" Foreign="id"/>
+            </ForeignKey>
+            <ForeignKey ForeignTable="valid">
+                <Reference Local="valid_id" Foreign="id"/>
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Name="change_notification_grps">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
+            <Column Name="name" Required="true" Size="250" Type="VARCHAR"/>
+        </TableCreate>
+        <TableCreate Name="change_notification_rec">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
+            <Column Name="notification_id" Required="true" Type="BIGINT"/>
+            <Column Name="group_id" Required="true" Type="BIGINT"/>
+            <ForeignKey ForeignTable="change_notification">
+                <Reference Local="notification_id" Foreign="id"/>
+            </ForeignKey>
+            <ForeignKey ForeignTable="change_notification_grps">
+                <Reference Local="group_id" Foreign="id"/>
             </ForeignKey>
         </TableCreate>
         <Insert Table="general_catalog">
@@ -1215,6 +1245,9 @@
 <!-- TODO: Add Database upgrade part later (copy from DatabaseInstall and add version tags. We need this so that an upgrade from 1.3.2 is possible -->
     </DatabaseUpgrade>
     <DatabaseUninstall Type="pre">
+        <TableDrop Name="change_notification_rec"/>
+        <TableDrop Name="change_notification_grps"/>
+        <TableDrop Name="change_notification"/>
         <TableDrop Name="change_cab"/>
         <TableDrop Name="change_history"/>
         <TableDrop Name="change_history_type"/>
