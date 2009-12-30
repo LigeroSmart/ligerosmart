@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/History.pm - all change and workorder history functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: History.pm,v 1.22 2009-12-30 17:10:03 reb Exp $
+# $Id: History.pm,v 1.23 2009-12-30 17:17:08 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 =head1 NAME
 
@@ -675,7 +675,22 @@ of an recipient and the name is the value.
 sub HistoryTypeList {
     my ( $Self, %Param ) = @_;
 
-    return [ { Key => 1, Value => 'ChangeUpdate' }, { Key => 2, Value => 'ChangeAdd' }, ];
+    # prepare db query
+    return if !$Self->{DBObject}->Prepare(
+        SQL => 'SELECT id, name FROM change_history_type ORDER BY name',
+    );
+
+    # retrieve data
+    my @HistoryTypes;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        my $Entry = {
+            Key   => $Row[0],
+            Value => $Row[1],
+        };
+        push @HistoryTypes, $Entry;
+    }
+
+    return \@HistoryTypes;
 }
 
 1;
@@ -694,6 +709,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.22 $ $Date: 2009-12-30 17:10:03 $
+$Revision: 1.23 $ $Date: 2009-12-30 17:17:08 $
 
 =cut
