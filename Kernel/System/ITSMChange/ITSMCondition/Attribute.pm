@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Attribute.pm - all condition attribute functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: Attribute.pm,v 1.2 2009-12-23 15:59:13 mae Exp $
+# $Id: Attribute.pm,v 1.3 2009-12-30 17:20:41 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
@@ -31,11 +31,11 @@ All functions for condition attributes in ITSMChangeManagement.
 
 =item AttributeAdd()
 
-Add a new attribute.
+Add a new condition attribute.
 
-    my $ConditionID = $ConditionObject->AttributeAdd(
+    my $AttributeID = $ConditionObject->AttributeAdd(
+        Name   => 'AttributeName',
         UserID => 1,
-        Name   => 'AttributeObject',
     );
 
 =cut
@@ -60,7 +60,7 @@ sub AttributeAdd {
         Name   => $Param{Name},
     );
 
-    # check if attribute name is already given
+    # check if attribute name already exists
     if ($CheckAttributeID) {
         $Self->{LogObject}->Log(
             Priority => 'error',
@@ -100,9 +100,9 @@ sub AttributeAdd {
 Update a condition attribute.
 
     my $Success = $ConditionObject->AttributeUpdate(
-        UserID      => 1,
         AttributeID => 1234,
-        Name        => 'NewConditionAttribute',
+        Name        => 'NewConditionAttributeName',
+        UserID      => 1,
     );
 
 =cut
@@ -156,8 +156,8 @@ Get a condition attribute for a given attribute id.
 Returns an hash reference of the attribute data.
 
     my $ConditionAttributetRef = $ConditionObject->AttributeGet(
-        UserID    => 1,
-        Attribute => 1234,
+        AttributeID => 1234,
+        UserID      => 1,
     );
 
 The returned hash reference contains following elements:
@@ -170,11 +170,11 @@ sub AttributeGet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Attribute (qw(AttributeID UserID)) {
-        if ( !$Param{$Attribute} ) {
+    for my $Argument (qw(AttributeID UserID)) {
+        if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Attribute!",
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -212,13 +212,13 @@ id is given, it returns the name of the attribute. If the attributes
 name is given, the appropriate id is returned.
 
     my $AttributeName = $ConditionObject->AttributeLookup(
-        UserID      => 1234,
-        AttributeID => 4321
+        AttributeID => 4321,
+        UserID      => 1,
     );
 
     my $AttributeID = $ConditionObject->AttributeLookup(
-        UserID     => 1234,
-        Name => 'AttributeObject',
+        Name   => 'AttributeName',
+        UserID => 1,
     );
 
 =cut
@@ -227,14 +227,12 @@ sub AttributeLookup {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Attribute (qw(UserID)) {
-        if ( !$Param{$Attribute} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Attribute!",
-            );
-            return;
-        }
+    if ( !$Param{UserID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Need UserID!",
+        );
+        return;
     }
 
     # check if both parameters are given
@@ -285,7 +283,7 @@ sub AttributeLookup {
 return a list of all condition attribute ids as array reference
 
     my $ConditionAttributeIDsRef = $ConditionObject->AttributeList(
-        UserID   => 1,
+        UserID => 1,
     );
 
 =cut
@@ -294,20 +292,17 @@ sub AttributeList {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Attribute (qw(UserID)) {
-        if ( !$Param{$Attribute} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Attribute!",
-            );
-            return;
-        }
+    if ( !$Param{UserID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Need UserID!",
+        );
+        return;
     }
 
     # prepare SQL statement
     return if !$Self->{DBObject}->Prepare(
-        SQL  => 'SELECT name FROM condition_attribute',
-        Bind => [],
+        SQL => 'SELECT name FROM condition_attribute',
     );
 
     # fetch the result
@@ -343,11 +338,11 @@ sub AttributeDelete {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Attribute (qw(AttributeID UserID)) {
-        if ( !$Param{$Attribute} ) {
+    for my $Argument (qw(AttributeID UserID)) {
+        if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Attribute!",
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -357,7 +352,7 @@ sub AttributeDelete {
     return if !$Self->{DBObject}->Do(
         SQL => 'DELETE FROM condition_attribute '
             . 'WHERE id = ?',
-        Bind => [ \$Param{ObjectID} ],
+        Bind => [ \$Param{AttributeID} ],
     );
 
     return 1;
@@ -379,6 +374,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2009-12-23 15:59:13 $
+$Revision: 1.3 $ $Date: 2009-12-30 17:20:41 $
 
 =cut
