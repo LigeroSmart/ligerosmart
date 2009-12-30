@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Object.pm - all condition object functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: Object.pm,v 1.5 2009-12-23 16:06:37 mae Exp $
+# $Id: Object.pm,v 1.6 2009-12-30 18:36:08 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 =head1 NAME
 
@@ -34,8 +34,8 @@ All functions for condition objects in ITSMChangeManagement.
 Add a new object.
 
     my $ConditionID = $ConditionObject->ObjectAdd(
-        UserID => 1,
         Name   => 'ConditionObject',
+        UserID => 1,
     );
 
 =cut
@@ -100,9 +100,9 @@ sub ObjectAdd {
 Update a condition object.
 
     my $Success = $ConditionObject->ObjectUpdate(
-        UserID   => 1,
         ObjectID => 1234,
         Name     => 'NewConditionObject',
+        UserID   => 1,
     );
 
 =cut
@@ -156,8 +156,8 @@ Get a condition object for a given object id.
 Returns an hash reference of the object data.
 
     my $ConditionObjectRef = $ConditionObject->ObjectGet(
-        UserID   => 1,
         ObjectID => 1234,
+        UserID   => 1,
     );
 
 The returned hash reference contains following elements:
@@ -212,13 +212,13 @@ id is given, it returns the name of the object. If the objects
 name is given, the appropriate id is returned.
 
     my $ObjectName = $ConditionObject->ObjectLookup(
+        ObjectID => 4321,
         UserID   => 1234,
-        ObjectID => 4321
     );
 
     my $ObjectID = $ConditionObject->ObjectLookup(
-        UserID     => 1234,
-        Name => 'ConditionObject',
+        Name   => 'ConditionObject',
+        UserID => 1234,
     );
 
 =cut
@@ -285,7 +285,7 @@ sub ObjectLookup {
 return a list of all condition object ids as array reference
 
     my $ConditionObjectIDsRef = $ConditionObject->ObjectList(
-        UserID   => 1,
+        UserID => 1,
     );
 
 =cut
@@ -306,8 +306,7 @@ sub ObjectList {
 
     # prepare SQL statement
     return if !$Self->{DBObject}->Prepare(
-        SQL  => 'SELECT name FROM condition_object',
-        Bind => [],
+        SQL => 'SELECT name FROM condition_object',
     );
 
     # fetch the result
@@ -379,6 +378,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2009-12-23 16:06:37 $
+$Revision: 1.6 $ $Date: 2009-12-30 18:36:08 $
 
 =cut
