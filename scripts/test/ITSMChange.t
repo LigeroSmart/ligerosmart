@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.160 2009-12-31 10:49:16 bes Exp $
+# $Id: ITSMChange.t,v 1.161 2009-12-31 13:05:09 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -142,6 +142,25 @@ $Self->{ConfigObject}->Set(
     Key   => 'CheckEmailAddresses',
     Value => $CheckEmailAddressesOrg,
 );
+
+# turn off notifications, in order to avoid a lot of useless mails
+my $ChangeNotificationSettingsOrg;
+{
+    my $EventModule = $Self->{ConfigObject}->Get('ITSMChange::EventModule');
+    $ChangeNotificationSettingsOrg = $EventModule->{'02-Notification'};
+    $Self->{ConfigObject}->Set(
+        Key => 'ITSMChange::EventModule###02-Notification',
+    );
+}
+
+my $WorkOrderNotificationSettingsOrg;
+{
+    my $EventModule = $Self->{ConfigObject}->Get('ITSMWorkOrder::EventModule');
+    $WorkOrderNotificationSettingsOrg = $EventModule->{'03-Notification'};
+    $Self->{ConfigObject}->Set(
+        Key => 'ITSMWorkOrder::EventModule###03-Notification',
+    );
+}
 
 # ------------------------------------------------------------ #
 # test ITSMChange API
@@ -5782,6 +5801,22 @@ sub SetTimes {
         Bind => \@Bind,
     );
     return 1;
+}
+
+# set change notifications to their original value
+if ($ChangeNotificationSettingsOrg) {
+    $Self->{ConfigObject}->Set(
+        Key   => 'ITSMChange::EventModule###02-Notification',
+        Value => $ChangeNotificationSettingsOrg,
+    );
+}
+
+# set workorder notifications to their original value
+if ($WorkOrderNotificationSettingsOrg) {
+    $Self->{ConfigObject}->Set(
+        Key   => 'ITSMWorkOrder::EventModule###03-Notification',
+        Value => $WorkOrderNotificationSettingsOrg,
+    );
 }
 
 1;
