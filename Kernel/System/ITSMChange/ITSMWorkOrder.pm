@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.62 2009-12-31 10:19:35 bes Exp $
+# $Id: ITSMWorkOrder.pm,v 1.63 2009-12-31 10:23:19 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.62 $) [1];
+$VERSION = qw($Revision: 1.63 $) [1];
 
 =head1 NAME
 
@@ -2275,7 +2275,7 @@ sub _GetWorkOrderNumber {
         return;
     }
 
-    # get max workorder number
+    # get the largest workorder number
     return if !$Self->{DBObject}->Prepare(
         SQL => 'SELECT MAX(workorder_number) '
             . 'FROM change_workorder '
@@ -2284,11 +2284,12 @@ sub _GetWorkOrderNumber {
         Limit => 1,
     );
 
-    # fetch the result
+    # fetch the result, default to 0 when there are no workorders yet
     my $WorkOrderNumber;
     while ( my @Row = $Self->{DBObject}->FetchrowArray ) {
         $WorkOrderNumber = $Row[0];
     }
+    $WorkOrderNumber ||= 0;
 
     # increment number to get a non-existent workorder number
     $WorkOrderNumber++;
@@ -2603,6 +2604,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.62 $ $Date: 2009-12-31 10:19:35 $
+$Revision: 1.63 $ $Date: 2009-12-31 10:23:19 $
 
 =cut
