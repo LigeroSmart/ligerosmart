@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Notification.pm - lib for notifications in change management
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.7 2009-12-31 08:45:45 reb Exp $
+# $Id: Notification.pm,v 1.8 2009-12-31 09:25:37 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Notification;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 =head1 NAME
 
@@ -365,6 +365,23 @@ sub NotificationRuleGet {
     if (%NotificationRule) {
 
         # get recipients
+        return if !$Self->{DBObject}->Prepare(
+            SQL => 'SELECT grp.id, grp.name '
+                . 'FROM change_notification_grps grp, change_notification_rec r '
+                . 'WHERE grp.id = r.group_id AND r.notification_id = ?',
+            Bind => [ \$NotificationRule{ID} ],
+        );
+
+        # fetch recipients
+        my @Recipients;
+        my @RecipientIDs;
+        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+            push @RecipientIDs, $Row[0];
+            push @Recipients,   $Row[1];
+        }
+
+        $NotificationRule{Recipients}   = \@Recipients;
+        $NotificationRule{RecipientIDs} = \@RecipientIDs;
     }
 
     return \%NotificationRule;
@@ -372,9 +389,9 @@ sub NotificationRuleGet {
 
 =item NotificationRuleAdd()
 
-Add a notification rule
+Add a notification rule. Returns the ID of the rule.
 
-    my $Success = $NotificationObject->NotificationRuleAdd(
+    my $ID = $NotificationObject->NotificationRuleAdd(
         Name         => 'a descriptive name',
         Attribute    => 'ChangeTitle',
         EventID      => 1,
@@ -389,7 +406,66 @@ Add a notification rule
 sub NotificationRuleAdd {
     my ( $Self, %Param ) = @_;
 
-    return 1;
+    # check needed stuff
+    for my $Needed (qw(Name EventID ValidID RecipientIDs)) {
+        if ( !$Param{$Needed} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Needed!",
+            );
+            return;
+        }
+    }
+
+    # RecipientIDs must be an array reference
+    if ( ref $Param{RecipientIDs} ne 'ARRAY' ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'RecipientIDs must be an array reference!',
+        );
+        return;
+    }
+
+    # save notification rule
+    return if !$Self->{DBObject}->Do(
+        SQL =>
+            'INSERT INTO change_notification (name, event_id, valid_id, item_attribute, comments, '
+            . 'notification_rule ) VALUES (?, ?, ?, ?, ?, ?)',
+        Bind => [
+            \$Param{Name},      \$Param{EventID}, \$Param{ValidID},
+            \$Param{Attribute}, \$Param{Comment}, \$Param{Rule},
+        ],
+    );
+
+    # get ID of rule
+    return if !$Self->{DBObject}->Prepare(
+        SQL =>
+            'SELECT id FROM change_notification WHERE name = ? AND event_id = ? AND valid_id = ? '
+            . 'AND item_attribute = ? AND comments = ? AND notification_rule = ?',
+        Bind => [
+            \$Param{Name},      \$Param{EventID}, \$Param{ValidID},
+            \$Param{Attribute}, \$Param{Comment}, \$Param{Rule},
+        ],
+        Limit => 1,
+    );
+
+    # fetch ID
+    my $RuleID;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $RuleID = $Row[0];
+    }
+
+    return if !$RuleID;
+
+    # insert recipients
+    for my $RecipientID ( @{ $Param{RecipientIDs} } ) {
+        return if !$Self->{DBObject}->Do(
+            SQL => 'INSERT INTO change_notification_rec (notification_id, group_id) VALUES (?, ?)',
+            Bind => [ \$RuleID, \$RecipientID ],
+        );
+    }
+
+    return $RuleID;
 }
 
 =item NotificationRuleUpdate()
@@ -411,6 +487,26 @@ updates an existing notification rule
 
 sub NotificationRuleUpdate {
     my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Needed (qw(Name EventID ValidID RecipientIDs)) {
+        if ( !$Param{$Needed} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Needed!",
+            );
+            return;
+        }
+    }
+
+    # RecipientIDs must be an array reference
+    if ( ref $Param{RecipientIDs} ne 'ARRAY' ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'RecipientIDs must be an array reference!',
+        );
+        return;
+    }
 
     return 1;
 }
@@ -703,6 +799,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.7 $ $Date: 2009-12-31 08:45:45 $
+$Revision: 1.8 $ $Date: 2009-12-31 09:25:37 $
 
 =cut

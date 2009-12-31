@@ -3,7 +3,7 @@
 # notification rules for ITSM change management
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMChangeNotification.pm,v 1.2 2009-12-31 08:45:45 reb Exp $
+# $Id: AdminITSMChangeNotification.pm,v 1.3 2009-12-31 09:25:37 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::Notification;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -72,16 +72,18 @@ sub Run {
 
         my $Note = '';
         my %GetParam;
-        for my $Param (qw(ID Name TypeID Comment ValidID)) {
+        for my $Param (qw(ID Name EventID Comment ValidID Attribute Rule)) {
             $GetParam{$Param} = $Self->{ParamObject}->GetParam( Param => $Param ) || '';
         }
 
+        $GetParam{RecipientIDs} = [
+            $Self->{ParamObject}->GetArray( Param => 'RecipientIDs' )
+                ||
+                $Self->{ParamObject}->GetParam( Param => 'RecipientIDs' )
+        ];
+
         # update group
-        if (
-            $Self->{NotificationObject}
-            ->NotificationRuleUpdate( %GetParam, UserID => $Self->{UserID} )
-            )
-        {
+        if ( $Self->{NotificationObject}->NotificationRuleUpdate(%GetParam) ) {
             $Self->_Overview();
 
             # notification was updated
@@ -124,18 +126,18 @@ sub Run {
 
         my $Note = '';
         my %GetParam;
-        for my $Param (qw(ID TypeID Name Comment ValidID)) {
+        for my $Param (qw(ID EventID Name Comment ValidID Attribute Rule)) {
             $GetParam{$Param} = $Self->{ParamObject}->GetParam( Param => $Param ) || '';
         }
 
+        $GetParam{RecipientIDs} = [
+            $Self->{ParamObject}->GetArray( Param => 'RecipientIDs' )
+                ||
+                $Self->{ParamObject}->GetParam( Param => 'RecipientIDs' )
+        ];
+
         # add notification rule
-        if (
-            my $StateID = $Self->{NotificationObject}->NotificationRuleAdd(
-                %GetParam,
-                UserID => $Self->{UserID},
-            )
-            )
-        {
+        if ( my $StateID = $Self->{NotificationObject}->NotificationRuleAdd(%GetParam) ) {
             $Self->_Overview();
 
             # notification was added
