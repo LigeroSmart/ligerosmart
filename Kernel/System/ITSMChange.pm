@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.214 2009-12-30 11:01:03 reb Exp $
+# $Id: ITSMChange.pm,v 1.215 2009-12-31 10:19:35 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -28,7 +28,7 @@ use Kernel::System::VirtualFS;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.214 $) [1];
+$VERSION = qw($Revision: 1.215 $) [1];
 
 =head1 NAME
 
@@ -2240,10 +2240,10 @@ sub Permission {
 
 =item ChangeAttachmentAdd()
 
-Add an attachment to a given change
+Add an attachment to the given change.
 
     my $Success = $ChangeObject->ChangeAttachmentAdd(
-        ChangeID    => 123,
+        ChangeID    => 123,               # the ChangeID becomes part of the file path
         Filename    => 'filename',
         Content     => 'content',
         ContentType => 'text/plain',
@@ -2260,7 +2260,7 @@ sub ChangeAttachmentAdd {
         if ( !$Param{$Needed} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Needed",
+                Message  => "Need $Needed!",
             );
 
             return;
@@ -2269,7 +2269,7 @@ sub ChangeAttachmentAdd {
 
     # write to virtual fs
     my $Success = $Self->{VirtualFSObject}->Write(
-        Filename    => "Change/$Param{ChangeID}/" . $Param{Filename},
+        Filename    => "Change/$Param{ChangeID}/$Param{Filename}",
         Mode        => 'binary',
         Content     => \$Param{Content},
         Preferences => {
@@ -2305,11 +2305,11 @@ sub ChangeAttachmentAdd {
 
 =item ChangeAttachmentDelete()
 
-Delete a given file from virtual fs.
+Delete the given file from the virtual filesystem.
 
     my $Success = $ChangeObject->ChangeAttachmentDelete(
-        FileID   => 1234,
-        ChangeID => 123,
+        FileID   => 1234,     # identifies the attachment
+        ChangeID => 123,      # used in event handling, e.g. for logging the history
         UserID   => 1,
     );
 
@@ -2456,8 +2456,8 @@ sub ChangeAttachmentGet {
 
 =item ChangeAttachmentList()
 
-returns a hash with all attachments of a given change. The file id is the key
-and the filename is the value
+Returns a hash with all attachments of the given change. The file id is the key
+and the filename is the value of the returned hash.
 
     my %Attachments = $ChangeObject->ChangeAttachmentList(
         ChangeID => 123,
@@ -2995,6 +2995,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.214 $ $Date: 2009-12-30 11:01:03 $
+$Revision: 1.215 $ $Date: 2009-12-31 10:19:35 $
 
 =cut

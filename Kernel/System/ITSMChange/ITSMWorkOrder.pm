@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.61 2009-12-30 11:01:03 reb Exp $
+# $Id: ITSMWorkOrder.pm,v 1.62 2009-12-31 10:19:35 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.61 $) [1];
+$VERSION = qw($Revision: 1.62 $) [1];
 
 =head1 NAME
 
@@ -670,7 +670,7 @@ sub WorkOrderGet {
     # add the workorder state signal
     if ( $WorkOrderData{WorkOrderState} ) {
 
-        # get all change state signals
+        # get all workorder state signals
         my $StateSignal = $Self->{ConfigObject}->Get('ITSMWorkOrder::State::Signal');
 
         $WorkOrderData{WorkOrderStateSignal} = $StateSignal->{ $WorkOrderData{WorkOrderState} };
@@ -688,7 +688,7 @@ sub WorkOrderGet {
 
 =item WorkOrderList()
 
-return a list of all workorder ids of a given change id as array reference
+return a list of all workorder ids of the given change as array reference
 
     my $WorkOrderIDsRef = $WorkOrderObject->WorkOrderList(
         ChangeID => 5,
@@ -758,34 +758,34 @@ is ignored.
         ChangeDescription   => 'Description of change',                # (optional)
         ChangeJustification => 'Justification of change',              # (optional)
 
-        # changes with planned start time after ...
+        # workorders with planned start time after ...
         PlannedStartTimeNewerDate => '2006-01-09 00:00:01',            # (optional)
-        # changes with planned start time before then ....
+        # workorders with planned start time before then ....
         PlannedStartTimeOlderDate => '2006-01-19 23:59:59',            # (optional)
 
-        # changes with planned end time after ...
+        # workorders with planned end time after ...
         PlannedEndTimeNewerDate   => '2006-01-09 00:00:01',            # (optional)
-        # changes with planned end time before then ....
+        # workorders with planned end time before then ....
         PlannedEndTimeOlderDate   => '2006-01-19 23:59:59',            # (optional)
 
-        # changes with actual start time after ...
+        # workorders with actual start time after ...
         ActualStartTimeNewerDate  => '2006-01-09 00:00:01',            # (optional)
-        # changes with actual start time before then ....
+        # workorders with actual start time before then ....
         ActualStartTimeOlderDate  => '2006-01-19 23:59:59',            # (optional)
 
-        # changes with actual end time after ...
+        # workorders with actual end time after ...
         ActualEndTimeNewerDate    => '2006-01-09 00:00:01',            # (optional)
-        # changes with actual end time before then ....
+        # workorders with actual end time before then ....
         ActualEndTimeOlderDate    => '2006-01-19 23:59:59',            # (optional)
 
-        # changes with created time after ...
+        # workorders with created time after ...
         CreateTimeNewerDate       => '2006-01-09 00:00:01',            # (optional)
-        # changes with created time before then ....
+        # workorders with created time before then ....
         CreateTimeOlderDate       => '2006-01-19 23:59:59',            # (optional)
 
-        # changes with changed time after ...
+        # workorders with changed time after ...
         ChangeTimeNewerDate       => '2006-01-09 00:00:01',            # (optional)
-        # changes with changed time before then ....
+        # workorders with changed time before then ....
         ChangeTimeOlderDate       => '2006-01-19 23:59:59',            # (optional)
 
         OrderBy => [ 'ChangeID', 'WorkOrderNumber' ],                  # (optional)
@@ -1475,8 +1475,8 @@ sub WorkOrderStateLookup {
 =item WorkOrderPossibleStatesGet()
 
 This method returns a list of possible workorder states.
-If WorkOrderID is omitted, the complete list of change states is returned.
-If WorkOrderID is given, the list of possible change states for this
+If WorkOrderID is omitted, the complete list of workorder states is returned.
+If WorkOrderID is given, the list of possible workorder states for the given
 workorder is returned.
 
     my $WorkOrderStateList = $WorkOrderObject->WorkOrderPossibleStatesGet(
@@ -1733,7 +1733,7 @@ sub WorkOrderTypeList {
 
 Returns whether the agent C<UserID> has permissions of the type C<Type>
 on the workorder C<WorkOrderID>. The parameters are passed on to
-the permission modules that were registered under B<ITSMChange::Permission>.
+the permission modules that were registered under B<ITSMWorkOrder::Permission>.
 
 The optional option C<LogNo> turns off logging when access was denied.
 This is useful when the method is used for checking whether a link or an action should be shown.
@@ -1895,15 +1895,15 @@ sub WorkOrderStateIDsCheck {
 
 =item WorkOrderAttachmentAdd()
 
-Add an attachment to a given change
+Add an attachment to the given change.
 
     my $Success = $WorkOrderObject->WorkOrderAttachmentAdd(
-        WorkOrderID => 123,
+        ChangeID    => 123,
+        WorkOrderID => 123,         # the WorkOrderID becomes part of the file path
         Filename    => 'filename',
         Content     => 'content',
         ContentType => 'text/plain',
         UserID      => 1,
-        ChangeID    => 135
     );
 
 =cut
@@ -1912,7 +1912,7 @@ sub WorkOrderAttachmentAdd {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Needed (qw(WorkOrderID Filename Content ContentType UserID ChangeID)) {
+    for my $Needed (qw(ChangeID WorkOrderID Filename Content ContentType UserID )) {
         if ( !$Param{$Needed} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -1925,7 +1925,7 @@ sub WorkOrderAttachmentAdd {
 
     # write to virtual fs
     my $Success = $Self->{VirtualFSObject}->Write(
-        Filename    => "WorkOrder/$Param{WorkOrderID}/" . $Param{Filename},
+        Filename    => "WorkOrder/$Param{WorkOrderID}/$Param{Filename}",
         Mode        => 'binary',
         Content     => \$Param{Content},
         Preferences => {
@@ -1962,13 +1962,13 @@ sub WorkOrderAttachmentAdd {
 
 =item WorkOrderAttachmentDelete()
 
-Delete a given file from virtual fs.
+Delete the given file from the virtual filesystem.
 
     my $Success = $WorkOrderObject->WorkOrderAttachmentDelete(
-        WorkOrderID => 5123,
-        FileID      => 1234,
-        UserID      => 1,
         ChangeID    => 12345,
+        WorkOrderID => 5123,
+        FileID      => 1234,     # identifies the attachment
+        UserID      => 1,
     );
 
 =cut
@@ -1977,7 +1977,7 @@ sub WorkOrderAttachmentDelete {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Needed (qw(FileID UserID ChangeID WorkOrderID)) {
+    for my $Needed (qw(ChangeID WorkOrderID FileID UserID)) {
         if ( !$Param{$Needed} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -2105,8 +2105,8 @@ sub WorkOrderAttachmentGet {
 
 =item WorkOrderAttachmentList()
 
-returns a hash with all attachments of a given change. The file id is the key
-and the filename is the value
+Returns a hash with all attachments of the given workorder. The file id is the key
+and the filename is the value of the returned hash.
 
     my %Attachments = $WorkOrderObject->WorkOrderAttachmentList(
         WorkOrderID => 123,
@@ -2150,7 +2150,7 @@ sub WorkOrderAttachmentList {
 
 =item WorkOrderChangeEffortsGet()
 
-returns the efforts for a given change
+returns the combined efforts of the workorders for the given change
 
     my $ChangeEfforts = $WorkOrderObject->WorkOrderChangeEffortsGet(
         ChangeID => 123,
@@ -2253,9 +2253,9 @@ sub _CheckWorkOrderTypeIDs {
 
 =item _GetWorkOrderNumber()
 
-Get a new unused workorder number for a given ChangeID.
-The highest current workorder number for a given change is
-looked up and increased by one.
+Get a new unused workorder number for the given change.
+The highest current workorder number for the given change is
+looked up and incremented by one.
 
     my $WorkOrderNumber = $WorkOrderObject->_GetWorkOrderNumber(
         ChangeID => 2,
@@ -2298,7 +2298,7 @@ sub _GetWorkOrderNumber {
 
 =item _CheckWorkOrderParams()
 
-Checks the params to WorkORderAdd() and WorkORderUpdate().
+Checks the params to WorkOrderAdd() and WorkOrderUpdate().
 There are no required parameters.
 
     my $Ok = $WorkOrderObject->_CheckWorkOrderParams(
@@ -2481,7 +2481,7 @@ sub _CheckTimestamps {
     TYPE:
     for my $Type (qw(Actual Planned)) {
 
-        # at least one of the start or end times is needed
+        # check only when a start or a end time is given
         next TYPE if !exists $Param{ $Type . 'StartTime' } && !exists $Param{ $Type . 'EndTime' };
 
         # for the log messages
@@ -2541,7 +2541,7 @@ sub _CheckTimestamps {
             $EndTime = $Param{ $Type . 'EndTime' };
         }
 
-        # don't check actual start time when change has not ended yet
+        # don't check actual start time when the workorder has not ended yet
         next TYPE if $Type eq 'Actual' && $StartTime && !$EndTime;
 
         # the check fails if not both (start and end) times are present
@@ -2603,6 +2603,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.61 $ $Date: 2009-12-30 11:01:03 $
+$Revision: 1.62 $ $Date: 2009-12-31 10:19:35 $
 
 =cut
