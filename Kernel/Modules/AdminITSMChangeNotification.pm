@@ -3,7 +3,7 @@
 # notification rules for ITSM change management
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMChangeNotification.pm,v 1.3 2009-12-31 09:25:37 reb Exp $
+# $Id: AdminITSMChangeNotification.pm,v 1.4 2009-12-31 09:47:08 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::Notification;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -78,8 +78,6 @@ sub Run {
 
         $GetParam{RecipientIDs} = [
             $Self->{ParamObject}->GetArray( Param => 'RecipientIDs' )
-                ||
-                $Self->{ParamObject}->GetParam( Param => 'RecipientIDs' )
         ];
 
         # update group
@@ -132,8 +130,6 @@ sub Run {
 
         $GetParam{RecipientIDs} = [
             $Self->{ParamObject}->GetArray( Param => 'RecipientIDs' )
-                ||
-                $Self->{ParamObject}->GetParam( Param => 'RecipientIDs' )
         ];
 
         # add notification rule
@@ -196,9 +192,9 @@ sub _Edit {
     $Param{RecipientOption} = $Self->{LayoutObject}->BuildSelection(
         Data => $Self->{NotificationObject}->RecipientList( UserID => 1 ) || [],
         Name => 'RecipientIDs',
-        Multiple    => 1,
-        Size        => 5,
-        SelectedIDs => [ $Param{RecipientIDs} ],
+        Multiple   => 1,
+        Size       => 5,
+        SelectedID => $Param{RecipientIDs},
     );
     $Self->{LayoutObject}->Block(
         Name => 'OverviewUpdate',

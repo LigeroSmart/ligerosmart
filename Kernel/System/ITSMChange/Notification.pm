@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Notification.pm - lib for notifications in change management
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.8 2009-12-31 09:25:37 reb Exp $
+# $Id: Notification.pm,v 1.9 2009-12-31 09:47:08 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Notification;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 =head1 NAME
 
@@ -428,9 +428,8 @@ sub NotificationRuleAdd {
 
     # save notification rule
     return if !$Self->{DBObject}->Do(
-        SQL =>
-            'INSERT INTO change_notification (name, event_id, valid_id, item_attribute, comments, '
-            . 'notification_rule ) VALUES (?, ?, ?, ?, ?, ?)',
+        SQL => 'INSERT INTO change_notification (name, event_id, valid_id, '
+            . 'item_attribute, comments, notification_rule ) VALUES (?, ?, ?, ?, ?, ?)',
         Bind => [
             \$Param{Name},      \$Param{EventID}, \$Param{ValidID},
             \$Param{Attribute}, \$Param{Comment}, \$Param{Rule},
@@ -489,7 +488,7 @@ sub NotificationRuleUpdate {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Needed (qw(Name EventID ValidID RecipientIDs)) {
+    for my $Needed (qw(ID Name EventID ValidID RecipientIDs)) {
         if ( !$Param{$Needed} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -506,6 +505,33 @@ sub NotificationRuleUpdate {
             Message  => 'RecipientIDs must be an array reference!',
         );
         return;
+    }
+
+    # save notification rule
+    return if !$Self->{DBObject}->Do(
+        SQL => 'UPDATE change_notification '
+            . 'SET name = ?, event_id = ?, valid_id = ?, '
+            . 'item_attribute = ?, comments = ?, notification_rule = ? '
+            . 'WHERE id = ?',
+        Bind => [
+            \$Param{Name},      \$Param{EventID}, \$Param{ValidID},
+            \$Param{Attribute}, \$Param{Comment}, \$Param{Rule},
+            \$Param{ID},
+        ],
+    );
+
+    # delete old recipient entries
+    return if !$Self->{DBObject}->Do(
+        SQL  => 'DELETE FROM change_notification_rec WHERE notification_id = ?',
+        Bind => [ \$Param{ID} ],
+    );
+
+    # insert recipients
+    for my $RecipientID ( @{ $Param{RecipientIDs} } ) {
+        return if !$Self->{DBObject}->Do(
+            SQL => 'INSERT INTO change_notification_rec (notification_id, group_id) VALUES (?, ?)',
+            Bind => [ \$Param{ID}, \$RecipientID ],
+        );
     }
 
     return 1;
@@ -799,6 +825,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.8 $ $Date: 2009-12-31 09:25:37 $
+$Revision: 1.9 $ $Date: 2009-12-31 09:47:08 $
 
 =cut
