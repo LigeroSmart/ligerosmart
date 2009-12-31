@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.159 2009-12-22 15:27:22 bes Exp $
+# $Id: ITSMChange.t,v 1.160 2009-12-31 10:49:16 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -64,7 +64,10 @@ my @NonExistingUserIDs;    # a list of non-existion user ids
 my @CustomerUserIDs;       # a list of existing and valid customer user ids, a list of strings
 
 # disable email checks to create new user
-my $CheckEmailAddressesOrg = $Self->{ConfigObject}->Get('CheckEmailAddresses') || 1;
+my $CheckEmailAddressesOrg = $Self->{ConfigObject}->Get('CheckEmailAddresses');
+if ( !defined $CheckEmailAddressesOrg ) {
+    $CheckEmailAddressesOrg = 1;
+}
 $Self->{ConfigObject}->Set(
     Key   => 'CheckEmailAddresses',
     Value => 0,
@@ -5660,7 +5663,10 @@ continue {
 # ------------------------------------------------------------ #
 
 # disable email checks to change the newly added users
-$CheckEmailAddressesOrg = $Self->{ConfigObject}->Get('CheckEmailAddresses') || 1;
+$CheckEmailAddressesOrg = $Self->{ConfigObject}->Get('CheckEmailAddresses');
+if ( !defined $CheckEmailAddressesOrg ) {
+    $CheckEmailAddressesOrg = 1;
+}
 $Self->{ConfigObject}->Set(
     Key   => 'CheckEmailAddresses',
     Value => 0,
