@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Notification.pm - lib for notifications in change management
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.4 2009-12-31 08:08:47 reb Exp $
+# $Id: Notification.pm,v 1.5 2009-12-31 08:17:40 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Notification;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 =head1 NAME
 
@@ -404,6 +404,69 @@ sub NotificationList {
     return [1];
 }
 
+=item RecipientLookup()
+
+Returns the ID when you pass the recipient name and returns the name if you
+pass the recipient ID.
+
+    my $ID = $NotificationObject->RecipientLookup(
+        Name => 'ChangeBuilder',
+    );
+
+    my $Name = $NotificationObject->RecipientLookup(
+        ID => 123,
+    );
+
+=cut
+
+sub RecipientLookup {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    if ( !$Param{ID} && !$Param{Name} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need either ID or Name!',
+        );
+        return;
+    }
+
+    if ( $Param{ID} && $Param{Name} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need either ID or Name - not both!',
+        );
+        return;
+    }
+
+    # determine sql statement and bind parameters
+    my $SQL;
+    my @Binds;
+    if ( $Param{ID} ) {
+        $SQL   = 'SELECT name FROM change_notification_grps WHERE id = ';
+        @Binds = ( \$Param{ID} );
+    }
+    elsif ( $Param{Name} ) {
+        $SQL   = 'SELECT id FROM change_notification_grps WHERE name = ?';
+        @Binds = ( \$Param{Name} );
+    }
+
+    # do sql query
+    return if !$Self->{DBObject}->Prepare(
+        SQL   => $SQL,
+        Bind  => \@Binds,
+        Limit => 1,
+    );
+
+    # get value
+    my $Value;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray ) {
+        $Value = $Row[0];
+    }
+
+    return $Value;
+}
+
 =item RecipientList()
 
 returns an array reference with hashreferences. The key of the hashreference is the id
@@ -574,6 +637,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2009-12-31 08:08:47 $
+$Revision: 1.5 $ $Date: 2009-12-31 08:17:40 $
 
 =cut
