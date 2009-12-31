@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Notification.pm - lib for notifications in change management
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.6 2009-12-31 08:21:41 reb Exp $
+# $Id: Notification.pm,v 1.7 2009-12-31 08:45:45 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Notification;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 =head1 NAME
 
@@ -325,20 +325,49 @@ returns
 sub NotificationRuleGet {
     my ( $Self, %Param ) = @_;
 
-    my $Info = {
-        ID           => 1,
-        Name         => 'a descriptive name',
-        Attribute    => 'ChangeTitle',
-        EventID      => 1,
-        Event        => 'ChangeUpdate',
-        ValidID      => 1,
-        Comment      => 'description what the rule does',
-        Rule         => 'rejected',
-        Recipients   => [ 'ChangeBuilder', 'ChangeManager', 'ChangeCABCustomers' ],
-        RecipientIDs => [ 2, 3, 7 ],
-    };
+    # check needed stuff
+    if ( !$Param{ID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need ID!',
+        );
+        return;
+    }
 
-    return $Info;
+    # do sql query
+    return if !$Self->{DBObject}->Prepare(
+        SQL => 'SELECT cn.id, cn.name, item_attribute, event_id, cht.name, '
+            . 'cn.valid_id, cn.comments, notification_rule '
+            . 'FROM change_notification cn, change_history_type cht '
+            . 'WHERE event_id = cht.id AND cn.id = ?',
+        Bind  => [ \$Param{ID} ],
+        Limit => 1,
+    );
+
+    # fetch notification rule
+    my %NotificationRule;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        %NotificationRule = (
+            ID           => $Row[0],
+            Name         => $Row[1],
+            Attribute    => defined $Row[2] ? $Row[2] : '',
+            EventID      => $Row[3],
+            Event        => $Row[4],
+            ValidID      => $Row[5],
+            Comment      => $Row[6],
+            Rule         => defined $Row[7] ? $Row[7] : '',
+            Recipients   => undef,
+            RecipientIDs => undef,
+        );
+    }
+
+    # get additional info
+    if (%NotificationRule) {
+
+        # get recipients
+    }
+
+    return \%NotificationRule;
 }
 
 =item NotificationRuleAdd()
@@ -386,11 +415,11 @@ sub NotificationRuleUpdate {
     return 1;
 }
 
-=item NotificationList()
+=item NotificationRuleList()
 
 returns an array reference with IDs of all existing notification rules
 
-    my $List = $NotificationObject->NotificationList();
+    my $List = $NotificationObject->NotificationRuleList();
 
 returns
 
@@ -398,10 +427,21 @@ returns
 
 =cut
 
-sub NotificationList {
-    my ( $Self, %Param ) = @_;
+sub NotificationRuleList {
+    my ($Self) = @_;
 
-    return [1];
+    # do sql query
+    return if !$Self->{DBObject}->Prepare(
+        SQL => 'SELECT id FROM change_notification ORDER BY id',
+    );
+
+    # fetch IDs
+    my @IDs;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        push @IDs, $Row[0],
+    }
+
+    return \@IDs;
 }
 
 =item RecipientLookup()
@@ -460,7 +500,7 @@ sub RecipientLookup {
 
     # get value
     my $Value;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray ) {
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $Value = $Row[0];
     }
 
@@ -490,7 +530,7 @@ returns
 =cut
 
 sub RecipientList {
-    my ( $Self, %Param ) = @_;
+    my ($Self) = @_;
 
     # do SQL query
     return if !$Self->{DBObject}->Prepare(
@@ -663,6 +703,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.6 $ $Date: 2009-12-31 08:21:41 $
+$Revision: 1.7 $ $Date: 2009-12-31 08:45:45 $
 
 =cut
