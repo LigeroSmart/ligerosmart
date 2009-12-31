@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Notification.pm - lib for notifications in change management
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.3 2009-12-30 17:10:03 reb Exp $
+# $Id: Notification.pm,v 1.4 2009-12-31 08:08:47 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Notification;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 =head1 NAME
 
@@ -414,7 +414,22 @@ of an recipient and the name is the value.
 sub RecipientList {
     my ( $Self, %Param ) = @_;
 
-    return [ { Key => 1, Value => 'ChangeBuilder' }, { Key => 2, Value => 'ChangeInitiator' }, ];
+    # do SQL query
+    return if !$Self->{DBObject}->Prepare(
+        SQL => 'SELECT id, name FROM change_notification_grps ORDER BY name',
+    );
+
+    # fetch recipients
+    my @Recipients;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray ) {
+        my $Recipient = {
+            Key   => $Row[0],
+            Value => $Row[1],
+        };
+        push @Recipients, $Recipient;
+    }
+
+    return \@Recipients;
 }
 
 =begin Internal:
@@ -559,6 +574,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2009-12-30 17:10:03 $
+$Revision: 1.4 $ $Date: 2009-12-31 08:08:47 $
 
 =cut
