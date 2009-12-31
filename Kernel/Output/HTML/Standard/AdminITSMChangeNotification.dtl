@@ -2,7 +2,7 @@
 # AdminITSMChangeNotification.dtl - provides HTML form for AdminState
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMChangeNotification.dtl,v 1.1 2009-12-30 17:10:03 reb Exp $
+# $Id: AdminITSMChangeNotification.dtl,v 1.2 2009-12-31 08:07:04 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -138,23 +138,6 @@
                 </table>
             </form>
 <!-- dtl:block:OverviewUpdate -->
-        </td>
-    </tr>
-</table>
-<table border="0" width="100%" cellspacing="0" cellpadding="3">
-    <tr>
-        <td class="mainhead">
-            $Env{"Box0"}$Text{"Note"}$Env{"Box1"}
-        </td>
-    </tr>
-    <tr>
-        <td class="mainbody">
-            <p>
-                $Text{"Attention"}: $Text{"Take care that you also updated the default states in you Kernel/Config.pm!"}
-            </p>
-            <p>
-                $Text{"See also"}: <a href="http://doc.otrs.org" target="doc">http://doc.otrs.org</a>
-            </p>
         </td>
     </tr>
 </table>
