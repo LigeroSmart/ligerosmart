@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.10 2010-01-03 14:38:30 ub Exp $
+# $Id: ITSMCondition.t,v 1.11 2010-01-03 15:54:01 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -76,7 +76,7 @@ for my $ObjectMethod (@ObjectMethods) {
 #------------------------
 
 # check for default condition objects
-my @ConditionObjects = qw(Change Workorder ChangeStateLock WorkorderStateLock);
+my @ConditionObjects = qw(ITSMChange ITSMWorkOrder ChangeStateLock WorkorderStateLock);
 
 # check condition objects
 for my $ConditionObject (@ConditionObjects) {
@@ -176,9 +176,9 @@ for my $ObjectID (@ConditionObjectCreated) {
     );
 }
 
-#------------------------
+#----------------------------
 # condition attributes tests
-#------------------------
+#----------------------------
 
 # check for default condition attributes
 my @ConditionAttributes = qw(
@@ -283,5 +283,11 @@ for my $AttributeID (@ConditionAttributeCreated) {
         'Test ' . $TestCount++ . " - AttributeDelete -> '$AttributeID'",
     );
 }
+
+#-------------------------
+# condition operator tests
+#-------------------------
+
+# TODO Add condition operator tests here!
 
 1;
