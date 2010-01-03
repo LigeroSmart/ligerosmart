@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Operator.pm - all condition operator functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Operator.pm,v 1.2 2010-01-03 15:43:35 ub Exp $
+# $Id: Operator.pm,v 1.3 2010-01-03 15:52:57 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
@@ -162,7 +162,7 @@ Returns a hash reference of the operator data.
 
 The returned hash reference contains following elements:
 
-    $ConditionOperator{ID}
+    $ConditionOperator{OperatorID}
     $ConditionOperator{Name}
 
 =cut
@@ -191,8 +191,8 @@ sub OperatorGet {
     # fetch the result
     my %OperatorData;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $OperatorData{ID}   = $Row[0];
-        $OperatorData{Name} = $Row[1];
+        $OperatorData{OperatorID} = $Row[0];
+        $OperatorData{Name}       = $Row[1];
     }
 
     # check error
@@ -367,6 +367,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2010-01-03 15:43:35 $
+$Revision: 1.3 $ $Date: 2010-01-03 15:52:57 $
 
 =cut
