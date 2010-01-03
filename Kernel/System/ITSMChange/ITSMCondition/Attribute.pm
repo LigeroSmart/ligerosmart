@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/ITSMCondition/Attribute.pm - all condition attribute functions
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Attribute.pm,v 1.3 2009-12-30 17:20:41 ub Exp $
+# $Id: Attribute.pm,v 1.4 2010-01-03 14:40:12 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 =head1 NAME
 
@@ -56,8 +56,8 @@ sub AttributeAdd {
 
     # make lookup with given name for checks
     my $CheckAttributeID = $Self->AttributeLookup(
-        UserID => $Param{UserID},
         Name   => $Param{Name},
+        UserID => $Param{UserID},
     );
 
     # check if attribute name already exists
@@ -79,8 +79,8 @@ sub AttributeAdd {
 
     # get id of created attribute
     my $AttributeID = $Self->AttributeLookup(
-        UserID => $Param{UserID},
         Name   => $Param{Name},
+        UserID => $Param{UserID},
     );
 
     # check if attribute could be added
@@ -101,7 +101,7 @@ Update a condition attribute.
 
     my $Success = $ConditionObject->AttributeUpdate(
         AttributeID => 1234,
-        Name        => 'NewConditionAttributeName',
+        Name        => 'NewAttributeName',
         UserID      => 1,
     );
 
@@ -123,8 +123,8 @@ sub AttributeUpdate {
 
     # get attribute data
     my $AttributeData = $Self->AttributeGet(
-        UserID      => $Param{UserID},
         AttributeID => $Param{AttributeID},
+        UserID      => $Param{UserID},
     );
 
     # check attribute data
@@ -162,6 +162,7 @@ Returns an hash reference of the attribute data.
 
 The returned hash reference contains following elements:
 
+    $ConditionAttribute{ID}
     $ConditionAttribute{Name}
 
 =cut
@@ -182,7 +183,7 @@ sub AttributeGet {
 
     # prepare SQL statement
     return if !$Self->{DBObject}->Prepare(
-        SQL   => 'SELECT name FROM condition_attribute WHERE id = ?',
+        SQL   => 'SELECT id, name FROM condition_attribute WHERE id = ?',
         Bind  => [ \$Param{AttributeID} ],
         Limit => 1,
     );
@@ -190,7 +191,8 @@ sub AttributeGet {
     # fetch the result
     my %AttributeData;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $AttributeData{Name} = $Row[0];
+        $AttributeData{ID}   = $Row[0];
+        $AttributeData{Name} = $Row[1];
     }
 
     # check error
@@ -311,15 +313,6 @@ sub AttributeList {
         push @AttributeList, $Row[0];
     }
 
-    # check error
-    if ( !@AttributeList ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "Attribute list could not be gathered!",
-        );
-        return;
-    }
-
     return \@AttributeList;
 }
 
@@ -374,6 +367,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2009-12-30 17:20:41 $
+$Revision: 1.4 $ $Date: 2010-01-03 14:40:12 $
 
 =cut
