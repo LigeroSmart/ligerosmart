@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/ITSMCondition/Object.pm - all condition object functions
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Object.pm,v 1.6 2009-12-30 18:36:08 ub Exp $
+# $Id: Object.pm,v 1.7 2010-01-03 15:20:31 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 =head1 NAME
 
@@ -31,10 +31,10 @@ All functions for condition objects in ITSMChangeManagement.
 
 =item ObjectAdd()
 
-Add a new object.
+Add a new condition object.
 
     my $ConditionID = $ConditionObject->ObjectAdd(
-        Name   => 'ConditionObject',
+        Name   => 'ObjectName',
         UserID => 1,
     );
 
@@ -44,7 +44,7 @@ sub ObjectAdd {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(UserID Name)) {
+    for my $Argument (qw(Name UserID)) {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -56,11 +56,11 @@ sub ObjectAdd {
 
     # make lookup with given name for checks
     my $CheckObjectID = $Self->ObjectLookup(
-        UserID => $Param{UserID},
         Name   => $Param{Name},
+        UserID => $Param{UserID},
     );
 
-    # check if object name is already given
+    # check if object name already exists
     if ($CheckObjectID) {
         $Self->{LogObject}->Log(
             Priority => 'error',
@@ -79,8 +79,8 @@ sub ObjectAdd {
 
     # get id of created object
     my $ObjectID = $Self->ObjectLookup(
-        UserID => $Param{UserID},
         Name   => $Param{Name},
+        UserID => $Param{UserID},
     );
 
     # check if object could be added
@@ -101,7 +101,7 @@ Update a condition object.
 
     my $Success = $ConditionObject->ObjectUpdate(
         ObjectID => 1234,
-        Name     => 'NewConditionObject',
+        Name     => 'NewObjectName',
         UserID   => 1,
     );
 
@@ -111,7 +111,7 @@ sub ObjectUpdate {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(ObjectID UserID Name)) {
+    for my $Argument (qw(ObjectID Name UserID)) {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -123,8 +123,8 @@ sub ObjectUpdate {
 
     # get object data
     my $ObjectData = $Self->ObjectGet(
-        UserID   => $Param{UserID},
         ObjectID => $Param{ObjectID},
+        UserID   => $Param{UserID},
     );
 
     # check object data
@@ -153,7 +153,7 @@ sub ObjectUpdate {
 =item ObjectGet()
 
 Get a condition object for a given object id.
-Returns an hash reference of the object data.
+Returns a hash reference of the object data.
 
     my $ConditionObjectRef = $ConditionObject->ObjectGet(
         ObjectID => 1234,
@@ -162,6 +162,7 @@ Returns an hash reference of the object data.
 
 The returned hash reference contains following elements:
 
+    $ConditionObject{ID}
     $ConditionObject{Name}
 
 =cut
@@ -170,11 +171,11 @@ sub ObjectGet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Attribute (qw(ObjectID UserID)) {
-        if ( !$Param{$Attribute} ) {
+    for my $Argument (qw(ObjectID UserID)) {
+        if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Attribute!",
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -182,7 +183,7 @@ sub ObjectGet {
 
     # prepare SQL statement
     return if !$Self->{DBObject}->Prepare(
-        SQL   => 'SELECT name FROM condition_object WHERE id = ?',
+        SQL   => 'SELECT id, name FROM condition_object WHERE id = ?',
         Bind  => [ \$Param{ObjectID} ],
         Limit => 1,
     );
@@ -190,7 +191,8 @@ sub ObjectGet {
     # fetch the result
     my %ObjectData;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $ObjectData{Name} = $Row[0];
+        $ObjectData{ID}   = $Row[0];
+        $ObjectData{Name} = $Row[1];
     }
 
     # check error
@@ -207,9 +209,9 @@ sub ObjectGet {
 
 =item ObjectLookup()
 
-This method does a lookup for a condition object. If a object
-id is given, it returns the name of the object. If the objects
-name is given, the appropriate id is returned.
+This method does a lookup for a condition object. If an object
+id is given, it returns the name of the object. If the name of the
+object is given, the appropriate id is returned.
 
     my $ObjectName = $ConditionObject->ObjectLookup(
         ObjectID => 4321,
@@ -217,7 +219,7 @@ name is given, the appropriate id is returned.
     );
 
     my $ObjectID = $ConditionObject->ObjectLookup(
-        Name   => 'ConditionObject',
+        Name   => 'ObjectName',
         UserID => 1234,
     );
 
@@ -227,14 +229,12 @@ sub ObjectLookup {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Attribute (qw(UserID)) {
-        if ( !$Param{$Attribute} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Attribute!",
-            );
-            return;
-        }
+    if ( !$Param{UserID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Need UserID!",
+        );
+        return;
     }
 
     # check if both parameters are given
@@ -272,17 +272,17 @@ sub ObjectLookup {
     }
 
     # fetch the result
-    my $ObjectLookup;
+    my $Lookup;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $ObjectLookup = $Row[0];
+        $Lookup = $Row[0];
     }
 
-    return $ObjectLookup;
+    return $Lookup;
 }
 
 =item ObjectList()
 
-return a list of all condition object ids as array reference
+Returns a list of all condition object ids as array reference
 
     my $ConditionObjectIDsRef = $ConditionObject->ObjectList(
         UserID => 1,
@@ -294,14 +294,12 @@ sub ObjectList {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Attribute (qw(UserID)) {
-        if ( !$Param{$Attribute} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Attribute!",
-            );
-            return;
-        }
+    if ( !$Param{UserID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Need UserID!",
+        );
+        return;
     }
 
     # prepare SQL statement
@@ -315,21 +313,12 @@ sub ObjectList {
         push @ObjectList, $Row[0];
     }
 
-    # check error
-    if ( !@ObjectList ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "Object list could not be gathered!",
-        );
-        return;
-    }
-
     return \@ObjectList;
 }
 
 =item ObjectDelete()
 
-Delete a condition object.
+Deletes a condition object.
 
     my $Success = $ConditionObject->ObjectDelete(
         ObjectID => 123,
@@ -342,11 +331,11 @@ sub ObjectDelete {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Attribute (qw(ObjectID UserID)) {
-        if ( !$Param{$Attribute} ) {
+    for my $Argument (qw(ObjectID UserID)) {
+        if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Attribute!",
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -378,6 +367,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.6 $ $Date: 2009-12-30 18:36:08 $
+$Revision: 1.7 $ $Date: 2010-01-03 15:20:31 $
 
 =cut
