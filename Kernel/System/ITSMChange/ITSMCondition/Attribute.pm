@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Attribute.pm - all condition attribute functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Attribute.pm,v 1.5 2010-01-03 15:19:54 ub Exp $
+# $Id: Attribute.pm,v 1.6 2010-01-03 15:42:59 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 =head1 NAME
 
@@ -155,7 +155,7 @@ sub AttributeUpdate {
 Get a condition attribute for a given attribute id.
 Returns a hash reference of the attribute data.
 
-    my $ConditionAttributetRef = $ConditionObject->AttributeGet(
+    my $ConditionAttributeRef = $ConditionObject->AttributeGet(
         AttributeID => 1234,
         UserID      => 1,
     );
@@ -367,6 +367,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2010-01-03 15:19:54 $
+$Revision: 1.6 $ $Date: 2010-01-03 15:42:59 $
 
 =cut
