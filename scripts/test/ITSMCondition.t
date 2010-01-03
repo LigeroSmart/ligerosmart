@@ -1,8 +1,8 @@
 # --
 # ITSMCondition.t - Condition tests
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.9 2009-12-30 18:20:54 ub Exp $
+# $Id: ITSMCondition.t,v 1.10 2010-01-03 14:38:30 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -83,8 +83,8 @@ for my $ConditionObject (@ConditionObjects) {
 
     # make lookup to get object id
     my $ObjectID = $Self->{ConditionObject}->ObjectLookup(
-        UserID => 1,
         Name   => $ConditionObject,
+        UserID => 1,
     );
 
     # check on return value
@@ -95,8 +95,8 @@ for my $ConditionObject (@ConditionObjects) {
 
     # get object data with object id
     my $ObjectData = $Self->{ConditionObject}->ObjectGet(
-        UserID   => 1,
         ObjectID => $ObjectID,
+        UserID   => 1,
     );
 
     # check return parameters
@@ -113,8 +113,8 @@ for my $Counter ( 1 .. 3 ) {
 
     # add new objects
     my $ObjectID = $Self->{ConditionObject}->ObjectAdd(
-        UserID => 1,
         Name   => 'ObjectName' . $Counter . int rand 1_000_000,
+        UserID => 1,
     );
 
     # check on return value
@@ -149,15 +149,15 @@ $Self->Is(
 my $ConditionObjectNewName = 'UnitTestUpdate' . int rand 1_000_000;
 $Self->True(
     $Self->{ConditionObject}->ObjectUpdate(
-        UserID   => 1,
         ObjectID => $ConditionObjectCreated[0],
         Name     => $ConditionObjectNewName,
+        UserID   => 1,
     ),
     'Test ' . $TestCount++ . " - ObjectUpdate",
 );
 my $ConditionObjectUpdate = $Self->{ConditionObject}->ObjectGet(
-    UserID   => 1,
     ObjectID => $ConditionObjectCreated[0],
+    UserID   => 1,
 );
 $Self->Is(
     $ConditionObjectNewName,
@@ -169,8 +169,8 @@ $Self->Is(
 for my $ObjectID (@ConditionObjectCreated) {
     $Self->True(
         $Self->{ConditionObject}->ObjectDelete(
-            UserID   => 1,
             ObjectID => $ObjectID,
+            UserID   => 1,
         ),
         'Test ' . $TestCount++ . " - ObjectDelete -> '$ObjectID'",
     );
