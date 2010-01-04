@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.13 2010-01-04 12:26:15 reb Exp $
+# $Id: ITSMChangeManagement.pm,v 1.14 2010-01-04 15:26:28 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,7 +33,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 =head1 NAME
 
@@ -704,11 +704,11 @@ sub _AddNotifications {
         {
             Name       => 'requested changes',
             Attribute  => 'ChangeState',
-            Event      => 'ChangeUpdate',
+            Event      => 'ChangeAdd',
             ValidID    => 1,
             Comment    => 'inform recipients that a change was requested',
             Rule       => 'requested',
-            Recipients => [ 'Requester', 'ChangeManager', 'ChangeBuilder' ],
+            Recipients => [ 'ChangeInitiators', 'ChangeManager', 'ChangeBuilder' ],
         },
         {
             Name       => 'pending approval changes',
@@ -717,7 +717,7 @@ sub _AddNotifications {
             ValidID    => 1,
             Comment    => 'inform recipients that a change waits for approval',
             Rule       => 'pending approval',
-            Recipients => [ 'ChangeManager', 'ChangeCABCustomers', 'ChangeCABAgents' ],
+            Recipients => [ 'ChangeManager', 'CABCustomers', 'CABAgents' ],
         },
         {
             Name       => 'pending PIR changes',
@@ -736,8 +736,7 @@ sub _AddNotifications {
             Comment    => 'inform recipients that a change was rejected',
             Rule       => 'rejected',
             Recipients => [
-                'Requester', 'ChangeBuilder', 'ChangeInitiator',
-                'ChangeCABCustomers', 'ChangeCABAgents',
+                'ChangeBuilder', 'ChangeInitiators', 'CABCustomers', 'CABAgents', 'WorkOrderAgents',
             ],
         },
         {
@@ -748,8 +747,8 @@ sub _AddNotifications {
             Comment    => 'inform recipients that a change was approved',
             Rule       => 'approved',
             Recipients => [
-                'Requester', 'ChangeBuilder', 'ChangeInitiator',
-                'ChangeCABCustomers', 'ChangeCABAgents',
+                'ChangeBuilder', 'ChangeInitiators', 'ChangeCABCustomers', 'ChangeCABAgents',
+                'WorkOrderAgents',
             ],
         },
         {
@@ -759,7 +758,7 @@ sub _AddNotifications {
             ValidID    => 1,
             Comment    => 'inform recipients that a change is in progress',
             Rule       => 'in progress',
-            Recipients => ['ChangeManager'],
+            Recipients => [ 'ChangeManager', 'WorkOrderAgents' ],
         },
         {
             Name       => 'successful changes',
@@ -769,8 +768,7 @@ sub _AddNotifications {
             Comment    => 'inform recipients that a change was successful',
             Rule       => 'successful',
             Recipients => [
-                'Requester', 'ChangeBuilder', 'ChangeInitiator',
-                'ChangeCABCustomers', 'ChangeCABAgents',
+                'ChangeBuilder', 'ChangeInitiators', 'CABCustomers', 'CABAgents', 'WorkOrderAgents',
             ],
         },
         {
@@ -779,10 +777,9 @@ sub _AddNotifications {
             Event      => 'ChangeUpdate',
             ValidID    => 1,
             Comment    => 'inform recipients that a change failed',
-            Rule       => 'requested',
+            Rule       => 'failed',
             Recipients => [
-                'Requester', 'ChangeBuilder', 'ChangeInitiator',
-                'ChangeCABCustomers', 'ChangeCABAgents',
+                'ChangeBuilder', 'ChangeInitiators', 'CABCustomers', 'CABAgents', 'WorkOrderAgents',
             ],
         },
         {
@@ -802,8 +799,7 @@ sub _AddNotifications {
             Comment    => 'inform recipients that a change was retracted',
             Rule       => 'retracted',
             Recipients => [
-                'Requester', 'ChangeBuilder', 'ChangeInitiator',
-                'ChangeCABCustomers', 'ChangeCABAgents',
+                'ChangeBuilder', 'ChangeInitiators', 'CABCustomers', 'CABAgents', 'WorkOrderAgents',
             ],
         },
     );
@@ -862,6 +858,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.13 $ $Date: 2010-01-04 12:26:15 $
+$Revision: 1.14 $ $Date: 2010-01-04 15:26:28 $
 
 =cut

@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Notification.pm - lib for notifications in change management
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.10 2010-01-04 14:45:22 bes Exp $
+# $Id: Notification.pm,v 1.11 2010-01-04 15:27:08 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 =head1 NAME
 
@@ -431,7 +431,8 @@ sub NotificationRuleAdd {
     # save notification rule
     return if !$Self->{DBObject}->Do(
         SQL => 'INSERT INTO change_notification (name, event_id, valid_id, '
-            . 'item_attribute, comments, notification_rule ) VALUES (?, ?, ?, ?, ?, ?)',
+            . 'item_attribute, comments, notification_rule) '
+            . 'VALUES (?, ?, ?, ?, ?, ?)',
         Bind => [
             \$Param{Name},      \$Param{EventID}, \$Param{ValidID},
             \$Param{Attribute}, \$Param{Comment}, \$Param{Rule},
@@ -512,9 +513,8 @@ sub NotificationRuleUpdate {
     # save notification rule
     return if !$Self->{DBObject}->Do(
         SQL => 'UPDATE change_notification '
-            . 'SET name = ?, event_id = ?, valid_id = ?, '
-            . 'item_attribute = ?, comments = ?, notification_rule = ? '
-            . 'WHERE id = ?',
+            . 'SET name = ?, event_id = ?, valid_id = ?, item_attribute = ?, '
+            . 'comments = ?, notification_rule = ? WHERE id = ?',
         Bind => [
             \$Param{Name},      \$Param{EventID}, \$Param{ValidID},
             \$Param{Attribute}, \$Param{Comment}, \$Param{Rule},
@@ -839,19 +839,6 @@ sub _NotificationReplaceMacros {
     $Text =~ s/$Tag.+?$End/-/gi;
     $Text =~ s/$Tag2.+?$End/-/gi;
 
-    # get customer params and replace it with <OTRS_CUSTOMER_...
-    my %Data = %{ $Param{Data} };
-
-    # html quoting of content
-    if ( $Param{RichText} ) {
-        for ( keys %Data ) {
-            next if !$Data{$_};
-            $Data{$_} = $Self->{HTMLUtilsObject}->ToHTML(
-                String => $Data{$_},
-            );
-        }
-    }
-
     # get and prepare realname
     $Tag = $Start . 'OTRS_CUSTOMER_REALNAME';
     $Text =~ s/$Tag$End/-/g;
@@ -865,8 +852,26 @@ sub _NotificationReplaceMacros {
     $Text =~ s/$Tag2.+?$End/-/gi;
 
     # replace <OTRS_CHANGE_... tags
+    $Tag = $Start . 'OTRS_CHANGE_';
+    my $WOTag = $Start . 'OTRS_WORKORDER_';
+    my %Data  = %{ $Param{Data} };
 
-    # replace <OTRS_WORKORDER_...
+    # html quoting of content
+    if ( $Param{RichText} ) {
+        for ( keys %Data ) {
+            next if !$Data{$_};
+            $Data{$_} = $Self->{HTMLUtilsObject}->ToHTML(
+                String => $Data{$_},
+            );
+        }
+    }
+
+    # replace it
+    for ( keys %Data ) {
+        next if !defined $Data{$_};
+        $Text =~ s{ $Tag $_ $End }{$Data{$_}}gxmsi;
+        $Text =~ s{ $WOTag $_ $End }{$Data{$_}}gxmsi;
+    }
 
     return $Text;
 }
@@ -889,6 +894,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.10 $ $Date: 2010-01-04 14:45:22 $
+$Revision: 1.11 $ $Date: 2010-01-04 15:27:08 $
 
 =cut
