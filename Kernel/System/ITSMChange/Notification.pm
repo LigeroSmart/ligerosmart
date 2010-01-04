@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Notification.pm - lib for notifications in change management
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.11 2010-01-04 15:27:08 reb Exp $
+# $Id: Notification.pm,v 1.12 2010-01-04 15:39:57 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 =head1 NAME
 
@@ -753,6 +753,11 @@ This method replaces all the <OTRS_xxxx> macros in notification text.
 
 sub _NotificationReplaceMacros {
     my ( $Self, %Param ) = @_;
+    use Data::Dumper;
+    $Self->{LogObject}->Log(
+        Priority => 'error',
+        Message  => Dumper \%Param,
+    );
 
     # check needed stuff
     for my $Needed (qw(Type Text Data UserID)) {
@@ -784,31 +789,6 @@ sub _NotificationReplaceMacros {
 
     # cleanup
     $Text =~ s{ $Tag .+? $End }{-}gi;
-
-    # get recipient data and replace it with <OTRS_...
-    $Tag = $Start . 'OTRS_';
-    if ( $Param{Recipient} ) {
-
-        # html quoting of content
-        if ( $Param{RichText} ) {
-            for ( keys %{ $Param{Recipient} } ) {
-                next if !$Param{Recipient}->{$_};
-                $Param{Recipient}->{$_} = $Self->{HTMLUtilsObject}->ToHTML(
-                    String => $Param{Recipient}->{$_},
-                );
-            }
-        }
-
-        # replace it
-        for ( keys %{ $Param{Recipient} } ) {
-            next if !defined $Param{Recipient}->{$_};
-            my $Value = $Param{Recipient}->{$_};
-            $Text =~ s{ $Tag $_ $End }{$Value}gxmsi;
-        }
-    }
-
-    # cleanup
-    $Text =~ s{ $Tag .+? $End}{-}gxmsi;
 
     $Tag = $Start . 'OTRS_Agent_';
     my $Tag2 = $Start . 'OTRS_CURRENT_';
@@ -873,6 +853,31 @@ sub _NotificationReplaceMacros {
         $Text =~ s{ $WOTag $_ $End }{$Data{$_}}gxmsi;
     }
 
+    # get recipient data and replace it with <OTRS_...
+    $Tag = $Start . 'OTRS_';
+    if ( $Param{Recipient} ) {
+
+        # html quoting of content
+        if ( $Param{RichText} ) {
+            for ( keys %{ $Param{Recipient} } ) {
+                next if !$Param{Recipient}->{$_};
+                $Param{Recipient}->{$_} = $Self->{HTMLUtilsObject}->ToHTML(
+                    String => $Param{Recipient}->{$_},
+                );
+            }
+        }
+
+        # replace it
+        for ( keys %{ $Param{Recipient} } ) {
+            next if !defined $Param{Recipient}->{$_};
+            my $Value = $Param{Recipient}->{$_};
+            $Text =~ s{ $Tag $_ $End }{$Value}gxmsi;
+        }
+    }
+
+    # cleanup
+    $Text =~ s{ $Tag .+? $End}{-}gxmsi;
+
     return $Text;
 }
 
@@ -894,6 +899,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.11 $ $Date: 2010-01-04 15:27:08 $
+$Revision: 1.12 $ $Date: 2010-01-04 15:39:57 $
 
 =cut
