@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.128 2010-01-04 11:01:47 reb Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.129 2010-01-04 12:14:56 reb Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -1984,6 +1984,18 @@
             <String Regex="^(rw|ro)$">rw</String>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderAdd###PlannedEffort" Required="1" Valid="1">
+        <Description Lang="en">If you want to show the planned effort.</Description>
+        <Description Lang="de">Soll der geplante Aufwand angezeigt werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ViewWorkOrderAdd</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderAgent###Permission" Required="1" Valid="1">
         <Description Lang="en">Required privilege to change the workorder agent.</Description>
         <Description Lang="de">Benötigtes Recht zum Ändern des Agenten einer Workorder.</Description>
@@ -2011,6 +2023,18 @@
             <String Regex="^(rw|ro)$">rw</String>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderEdit###PlannedEffort" Required="1" Valid="1">
+        <Description Lang="en">If you want to show the planned effort.</Description>
+        <Description Lang="de">Soll der geplante Aufwand angezeigt werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ViewWorkOrderEdit</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderHistory###Permission" Required="1" Valid="1">
         <Description Lang="en">Required privilege to view the history of a workorder.</Description>
         <Description Lang="de">Benötigtes Recht zum Betrachten der Historie einer Workorder.</Description>
@@ -2027,6 +2051,18 @@
         <SubGroup>Frontend::Agent::ViewWorkOrderHistoryZoom</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">ro</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderReport###AccountedTime" Required="1" Valid="1">
+        <Description Lang="en">If you want to show the accounted time.</Description>
+        <Description Lang="de">Soll die gebuchte Zeit angezeigt werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ViewWorkOrderReport</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderReport###ActualTimeSpan" Required="1" Valid="1">
@@ -2050,6 +2086,18 @@
             <String Regex="^(rw|ro)$">rw</String>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderZoom###AccountedTime" Required="1" Valid="1">
+        <Description Lang="en">If you want to show the accounted time.</Description>
+        <Description Lang="de">Soll die gebuchte Zeit angezeigt werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ViewWorkOrderZoom</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderZoom###Permission" Required="1" Valid="1">
         <Description Lang="en">Required privilege to view a workorder.</Description>
         <Description Lang="de">Benötigtes Recht zum Betrachten einer Workorder.</Description>
@@ -2057,6 +2105,18 @@
         <SubGroup>Frontend::Agent::ViewWorkOrderZoom</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">ro</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderZoom###PlannedEffort" Required="1" Valid="1">
+        <Description Lang="en">If you want to show the planned effort.</Description>
+        <Description Lang="de">Soll der geplante Aufwand angezeigt werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ViewWorkOrderZoom</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Permission###10-ChangeManagerCheck" Required="0" Valid="1">
