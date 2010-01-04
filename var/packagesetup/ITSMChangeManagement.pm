@@ -1,8 +1,8 @@
 # --
 # ITSMChangeManagement.pm - code to excecute during package installation
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.11 2009-12-14 23:33:58 ub Exp $
+# $Id: ITSMChangeManagement.pm,v 1.12 2010-01-04 10:16:09 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,9 +20,11 @@ use Kernel::System::CSV;
 use Kernel::System::GeneralCatalog;
 use Kernel::System::Group;
 use Kernel::System::ITSMChange;
+use Kernel::System::ITSMChange::History;
 use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
 use Kernel::System::ITSMChange::ITSMStateMachine;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
+use Kernel::System::ITSMChange::Notification;
 use Kernel::System::LinkObject;
 use Kernel::System::State;
 use Kernel::System::Stats;
@@ -31,7 +33,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 =head1 NAME
 
@@ -155,6 +157,8 @@ sub new {
     $Self->{StateMachineObject}   = Kernel::System::ITSMChange::ITSMStateMachine->new( %{$Self} );
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
     $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
+    $Self->{HistoryObject}        = Kernel::System::ITSMChange::History->new( %{$Self} );
+    $Self->{NotificationObject}   = Kernel::System::ITSMChange::Notification->new( %{$Self} );
     $Self->{StatsObject}          = Kernel::System::Stats->new(
         %{$Self},
         UserID => 1,
@@ -205,6 +209,9 @@ sub CodeInstall {
 
     # set default StateMachine settings
     $Self->_StateMachineDefaultSet();
+
+    # add notifications
+    $Self->_AddNotifications();
 
     return 1;
 }
@@ -681,6 +688,162 @@ sub _LinkDelete {
     return 1;
 }
 
+=item _AddNotifications()
+
+Add ChangeManagement specific notifications.
+
+    my $Success = $SetupObject->_AddNotifications;
+
+=cut
+
+sub _AddNotifications {
+    my ($Self) = @_;
+
+    # define notifications and recipients
+    my @Notifications = (
+        {
+            Name       => 'requested changes',
+            Attribute  => 'ChangeStatus',
+            Event      => 'ChangeUpdate',
+            ValidID    => 1,
+            Comment    => 'inform recipients that a change was requested',
+            Rule       => 'requested',
+            Recipients => [ 'Requester', 'ChangeManager', 'ChangeBuilder' ],
+        },
+        {
+            Name       => 'pending approval changes',
+            Attribute  => 'ChangeStatus',
+            Event      => 'ChangeUpdate',
+            ValidID    => 1,
+            Comment    => 'inform recipients that a change waits for approval',
+            Rule       => 'pending approval',
+            Recipients => [ 'ChangeManager', 'ChangeCABCustomers', 'ChangeCABAgents' ],
+        },
+        {
+            Name       => 'pending PIR changes',
+            Attribute  => 'ChangeStatus',
+            Event      => 'ChangeUpdate',
+            ValidID    => 1,
+            Comment    => 'inform recipients that a change waits for PIR',
+            Rule       => 'pending PIR',
+            Recipients => ['ChangeManager'],
+        },
+        {
+            Name       => 'rejected changes',
+            Attribute  => 'ChangeStatus',
+            Event      => 'ChangeUpdate',
+            ValidID    => 1,
+            Comment    => 'inform recipients that a change was rejected',
+            Rule       => 'rejected',
+            Recipients => [
+                'Requester', 'ChangeBuilder', 'ChangeInitiator',
+                'ChangeCABCustomers', 'ChangeCABAgents',
+            ],
+        },
+        {
+            Name       => 'approved changes',
+            Attribute  => 'ChangeStatus',
+            Event      => 'ChangeUpdate',
+            ValidID    => 1,
+            Comment    => 'inform recipients that a change was approved',
+            Rule       => 'approved',
+            Recipients => [
+                'Requester', 'ChangeBuilder', 'ChangeInitiator',
+                'ChangeCABCustomers', 'ChangeCABAgents',
+            ],
+        },
+        {
+            Name       => 'changes in progress',
+            Attribute  => 'ChangeStatus',
+            Event      => 'ChangeUpdate',
+            ValidID    => 1,
+            Comment    => 'inform recipients that a change is in progress',
+            Rule       => 'in progress',
+            Recipients => ['ChangeManager'],
+        },
+        {
+            Name       => 'successful changes',
+            Attribute  => 'ChangeStatus',
+            Event      => 'ChangeUpdate',
+            ValidID    => 1,
+            Comment    => 'inform recipients that a change was successful',
+            Rule       => 'successful',
+            Recipients => [
+                'Requester', 'ChangeBuilder', 'ChangeInitiator',
+                'ChangeCABCustomers', 'ChangeCABAgents',
+            ],
+        },
+        {
+            Name       => 'failed changes',
+            Attribute  => 'ChangeStatus',
+            Event      => 'ChangeUpdate',
+            ValidID    => 1,
+            Comment    => 'inform recipients that a change failed',
+            Rule       => 'requested',
+            Recipients => [
+                'Requester', 'ChangeBuilder', 'ChangeInitiator',
+                'ChangeCABCustomers', 'ChangeCABAgents',
+            ],
+        },
+        {
+            Name       => 'canceled changes',
+            Attribute  => 'ChangeStatus',
+            Event      => 'ChangeUpdate',
+            ValidID    => 1,
+            Comment    => 'inform recipients that a change was canceled',
+            Rule       => 'canceled',
+            Recipients => [ 'ChangeBuilder', 'ChangeManager' ],
+        },
+        {
+            Name       => 'retracted changes',
+            Attribute  => 'ChangeStatus',
+            Event      => 'ChangeUpdate',
+            ValidID    => 1,
+            Comment    => 'inform recipients that a change was retracted',
+            Rule       => 'retracted',
+            Recipients => [
+                'Requester', 'ChangeBuilder', 'ChangeInitiator',
+                'ChangeCABCustomers', 'ChangeCABAgents',
+            ],
+        },
+    );
+
+    # cache for lookup results
+    my %HistoryTypes;
+
+    # add notifications
+    NOTIFICATION:
+    for my $Notification (@Notifications) {
+
+        # find recipients
+        my @RecipientIDs;
+        for my $Recipient ( @{ $Notification->{Recipients} } ) {
+            my $RecipientID = $Self->{NotificationObject}->RecipientLookup(
+                Name => $Recipient,
+            );
+
+            if ($RecipientID) {
+                push @RecipientIDs, $RecipientID;
+            }
+        }
+
+        # get event id
+        my $EventID = $HistoryTypes{ $Notification->{Event} }
+            || $Self->{HistoryObject}->HistoryTypeLookup(
+            HistoryType => $Notification->{Event},
+            );
+
+        # insert notification
+        my $RuleID = $Self->{NotificationObject}->NotificationRuleAdd(
+            %{$Notification},
+            EventID      => $EventID,
+            RecipientIDs => \@RecipientIDs,
+        );
+    }
+
+    return 1;
+}
+
 1;
 
 =end Internal:
@@ -699,6 +862,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.11 $ $Date: 2009-12-14 23:33:58 $
+$Revision: 1.12 $ $Date: 2010-01-04 10:16:09 $
 
 =cut
