@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/Event/Notification.pm - a event module to send notifications
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.4 2009-12-30 12:17:25 bes Exp $
+# $Id: Notification.pm,v 1.5 2010-01-04 14:45:22 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::Notification;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 =head1 NAME
 
@@ -99,6 +99,9 @@ sub new {
     $Self->{WorkOrderObject}          = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
     $Self->{ChangeNotificationObject} = Kernel::System::ITSMChange::Notification->new( %{$Self} );
 
+    # TODO: find better was to look up event ids
+    $Self->{HistoryObject} = Kernel::System::ITSMChange::History->new( %{$Self} );
+
     return $Self;
 }
 
@@ -143,11 +146,6 @@ sub Run {
     my $Event = $Param{Event};
     $Event =~ s{ Post \z }{}xms;
 
-    # TODO: determine list of agents and customers from SysConfig and Change- or WorkOrder-Object
-    # TODO: for development, send notification to the logged in user
-    my @AgentIDs = ( $Param{UserID} );
-    my @CustomerIDs;
-
     # distinguish between Change and WorkOrder events, base on naming convention
     my $Type;
     if ( $Event =~ m{ \A Change }xms ) {
@@ -164,21 +162,228 @@ sub Run {
         return;
     }
 
-    $Self->{ChangeNotificationObject}->NotificationSend(
-        AgentIDs    => \@AgentIDs,
-        CustomerIDs => \@CustomerIDs,
-        Type        => $Type,
-        Event       => $Event,
-        UserID      => $Param{UserID},
-        Data        => $Param{Data},
+    # get the event id, for looking up the list of relevant rules
+    my $EventID = $Self->{HistoryObject}->HistoryTypeLookup( HistoryType => $Event );
+    if ( !$EventID ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Encountered unknown event '$Event'!"
+        );
+        return;
+    }
+
+    my $NotificationRuleIDs = $Self->{ChangeNotificationObject}->NotificationRuleSearch(
+        EventID => $EventID,
     );
+    if ( !$NotificationRuleIDs ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Could not get notification rules for the event '$Event'!"
+        );
+        return;
+    }
+
+    # TODO: add support for WorkOrders
+    return if $Type ne 'Change';
+
+    # TODO: add support for other events
+    return if $Event ne 'ChangeUpdate';
+
+    my $OldData = $Param{Data}->{"Old${Type}Data"};
+
+    # The notification rules are based on names, while the ChangeUpdate-Function
+    # primarily cares about IDs. So there needs to be a mapping.
+    my %Name2ID = (
+        ChangeState => 'ChangeStateID',
+    );
+
+    # loop over the notification rules and check the condition
+    RULE_ID:
+    for my $RuleID ( @{$NotificationRuleIDs} ) {
+        my $Rule = $Self->{ChangeNotificationObject}->NotificationRuleGet(
+            ID => $RuleID,
+        );
+
+        my $Attribute = $Rule->{Attribute} || '';
+
+        # TODO: add support for other attributes
+        next RULE_ID if $Attribute ne 'ChangeState';
+
+        # check whether the attribute has changed
+        my $FieldHasChanged;
+        if ( $Name2ID{$Attribute} ) {
+            $FieldHasChanged = $Self->_HasFieldChanged(
+                New => $Param{Data}->{ $Name2ID{$Attribute} },
+                Old => $OldData->{ $Name2ID{$Attribute} },
+            );
+        }
+        else {
+            $FieldHasChanged = $Self->_HasFieldChanged(
+                New => $Param{Data}->{$Attribute},
+                Old => $OldData->{$Attribute},
+            );
+        }
+
+        next RULE_ID if !$FieldHasChanged;
+
+        # get the string to match against
+        my $NewFieldContent;
+        if ( $Name2ID{$Attribute} ) {
+
+            # TODO: support other combinations, maybe use GeneralCatalog directly
+            $NewFieldContent = $Self->{ChangeObject}->ChangeStateLookup(
+                ChangeStateID => $Param{Data}->{ $Name2ID{$Attribute} },
+            );
+        }
+        else {
+            $NewFieldContent = $Param{Data}->{$Attribute};
+        }
+
+        # should the notification be sent ?
+        # the x-modifier is harmful here, as $Rule->{Rule} can contain spaces
+        next RULE_ID if $NewFieldContent !~ m/^$Rule->{Rule}$/;
+
+        # determine list of agents and customers
+        my $AgentAndCustomerIDs = $Self->_AgentAndCustomerIDsGet(
+            Recipients => $Rule->{Recipients},
+            ChangeID   => $Param{ChangeID},
+            UserID     => $Param{UserID},
+        );
+
+        next RULE_ID if !$AgentAndCustomerIDs;
+
+        $Self->{ChangeNotificationObject}->NotificationSend(
+            %{$AgentAndCustomerIDs},
+            Type   => $Type,
+            Event  => $Event,
+            UserID => $Param{UserID},
+            Data   => $Param{Data},
+        );
+    }
 
     return 1;
 }
 
-1;
-
 =begin Internal:
+
+=item _HasFieldChanged()
+
+This method checks whether a field was changed or not. It returns 1 when field
+was changed, 0 otherwise
+
+    my $FieldHasChanged = $NotificationEventObject->_HasFieldChanged(
+        Old => 'old value', # can be array reference or hash reference as well
+        New => 'new value', # can be array reference or hash reference as well
+    );
+
+=cut
+
+sub _HasFieldChanged {
+    my ( $Self, %Param ) = @_;
+
+    # field has changed when either 'new' or 'old is not set
+    return 1 if !( $Param{New} && $Param{Old} ) && ( $Param{New} || $Param{Old} );
+
+    # field has not changed when both values are empty
+    return if !$Param{New} && !$Param{Old};
+
+    # return result of 'eq' when both params are scalars
+    return $Param{New} ne $Param{Old} if !ref( $Param{New} ) && !ref( $Param{Old} );
+
+    # a field has changed when 'ref' is different
+    return 1 if ref( $Param{New} ) ne ref( $Param{Old} );
+
+    # check hashes
+    if ( ref $Param{New} eq 'HASH' ) {
+
+        # field has changed when number of keys are different
+        return 1 if scalar keys %{ $Param{New} } != scalar keys %{ $Param{Old} };
+
+        # check the values for each key
+        for my $Key ( keys %{ $Param{New} } ) {
+            return 1 if $Param{New}->{$Key} ne $Param{Old}->{$Key};
+        }
+    }
+
+    # check arrays
+    if ( ref $Param{New} eq 'ARRAY' ) {
+
+        # changed when number of elements differ
+        return 1 if scalar @{ $Param{New} } != scalar @{ $Param{Old} };
+
+        # check each element
+        for my $Index ( 0 .. $#{ $Param{New} } ) {
+            return 1 if $Param{New}->[$Index] ne $Param{Old}->[$Index];
+        }
+    }
+
+    # field has not been changed
+    return 0;
+}
+
+=item _AgentAndCustomerIDsGet()
+
+Get the agent and customer IDs from the recipient list.
+
+    my $AgentAndCustomerIDs = $HistoryObject->_AgentAndCustomerIDsGet(
+        Recipients => ['ChangeBuilder', 'ChangeManager'],
+    );
+
+returns
+
+    $AgentAndCustomerIDs = {
+        AgentIDs    => [ 2, 4 ],
+        CustomerIDs => [],
+    };
+
+=cut
+
+sub _AgentAndCustomerIDsGet {
+    my ( $Self, %Param ) = @_;
+
+    my ( @AgentIDs, @CustomerIDs );
+
+    my $Change = $Self->{ChangeObject}->ChangeGet(
+        ChangeID => $Param{ChangeID},
+        UserID   => $Param{UserID},
+    );
+
+    for my $Recipient ( @{ $Param{Recipients} } ) {
+
+        # TODO: support for WorkOrderAgents, WorkOrderAgent, ChangeInitiator, Requester
+        if (
+            $Recipient eq 'ChangeBuilder'
+            || $Recipient eq 'ChangeManager'
+            )
+        {
+            push @AgentIDs, $Change->{ $Recipient . 'ID' };
+        }
+        elsif ( $Recipient eq 'ChangeCABCustomers' ) {
+            push @CustomerIDs, @{ $Change->{CABCustomers} };
+        }
+        elsif ( $Recipient eq 'ChangeCABAgents' ) {
+            push @AgentIDs, @{ $Change->{CABAgents} };
+        }
+        else {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Unknown recipient '$Recipient'!",
+            );
+            return;
+        }
+    }
+
+    # remove empty IDs
+    @AgentIDs    = grep {$_} @AgentIDs;
+    @CustomerIDs = grep {$_} @CustomerIDs;
+
+    return {
+        AgentIDs    => \@AgentIDs,
+        CustomerIDs => \@CustomerIDs,
+    };
+}
+
+1;
 
 =end Internal:
 
@@ -196,6 +401,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2009-12-30 12:17:25 $
+$Revision: 1.5 $ $Date: 2010-01-04 14:45:22 $
 
 =cut

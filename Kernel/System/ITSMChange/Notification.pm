@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/Notification.pm - lib for notifications in change management
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.9 2009-12-31 09:47:08 reb Exp $
+# $Id: Notification.pm,v 1.10 2010-01-04 14:45:22 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,9 +19,10 @@ use Kernel::System::Email;
 use Kernel::System::HTMLUtils;
 use Kernel::System::Notification;
 use Kernel::System::User;
+use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 =head1 NAME
 
@@ -98,6 +99,7 @@ sub new {
     $Self->{CustomerUserObject} = Kernel::System::CustomerUser->new( %{$Self} );
     $Self->{HTMLUtilsObject}    = Kernel::System::HTMLUtils->new( %{$Self} );
     $Self->{SendmailObject}     = Kernel::System::Email->new( %{$Self} );
+    $Self->{ValidObject}        = Kernel::System::Valid->new( %{$Self} );
 
     # do we use richtext
     $Self->{RichText} = $Self->{ConfigObject}->Get('Frontend::RichText');
@@ -566,6 +568,68 @@ sub NotificationRuleList {
     return \@IDs;
 }
 
+=item NotificationRuleSearch()
+
+Returns an array reference with IDs of all matching notification rules.
+The only valid search parameter is the EventID.
+
+    my $NotificationRuleIDs = $NotificationObject->NotificationRuleSearch(
+        EventID => 4,    # optional, primary key in change_history_type
+        Valid   => 1,    # optional, default is 1
+    );
+
+returns
+
+    [ 1, 2, 3 ]
+
+=cut
+
+sub NotificationRuleSearch {
+    my ( $Self, %Param ) = @_;
+
+    my $Valid = defined $Param{Valid} ? $Param{Valid} : 1;
+
+    my @SQLWhere;    # assemble the conditions used in the WHERE clause
+    my @SQLBind;     # parameters for the WHERE clause
+
+    # for now we only have a single search param
+    if ( $Param{EventID} ) {
+        push @SQLWhere, 'cn.event_id = ?';
+        push @SQLBind,  \$Param{EventID};
+    }
+
+    my $SQL = 'SELECT id FROM change_notification cn ';
+
+    # add the WHERE clause
+    if (@SQLWhere) {
+        $SQL .= 'WHERE ';
+        $SQL .= join ' AND ', map {"( $_ )"} @SQLWhere;
+        $SQL .= ' ';
+    }
+
+    # add valid option
+    if ($Valid) {
+        $SQL .= 'AND cn.valid_id IN (' . join( ', ', $Self->{ValidObject}->ValidIDsGet() ) . ') ';
+    }
+
+    # add the ORDER BY clause
+    $SQL .= 'ORDER BY cn.id ';
+
+    # do sql query
+    return if !$Self->{DBObject}->Prepare(
+        SQL  => $SQL,
+        Bind => \@SQLBind,
+    );
+
+    # fetch IDs
+    my @IDs;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        push @IDs, $Row[0],
+    }
+
+    return \@IDs;
+}
+
 =item RecipientLookup()
 
 Returns the ID when you pass the recipient name and returns the name if you
@@ -825,6 +889,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.9 $ $Date: 2009-12-31 09:47:08 $
+$Revision: 1.10 $ $Date: 2010-01-04 14:45:22 $
 
 =cut
