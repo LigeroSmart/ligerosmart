@@ -3,7 +3,7 @@
 # notification rules for ITSM change management
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMChangeNotification.pm,v 1.5 2010-01-04 08:18:21 reb Exp $
+# $Id: AdminITSMChangeNotification.pm,v 1.6 2010-01-04 10:06:44 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::Notification;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -220,7 +220,7 @@ sub _Overview {
         Name => 'OverviewResult',
         Data => \%Param,
     );
-    my $List = $Self->{NotificationObject}->NotificationRuleList();
+    my $List = $Self->{NotificationObject}->NotificationRuleList() || [];
 
     # get valid list
     my %ValidList = $Self->{ValidObject}->ValidList();
