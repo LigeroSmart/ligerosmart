@@ -2,7 +2,7 @@
 # AdminITSMChangeNotification.dtl - provides HTML form for AdminState
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMChangeNotification.dtl,v 1.4 2010-01-04 08:18:21 reb Exp $
+# $Id: AdminITSMChangeNotification.dtl,v 1.5 2010-01-04 15:29:18 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -98,14 +98,14 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <td class="contentkey">$Text{"Event"}: </td>
+                                    <td class="contentvalue"> $Data{"EventOption"}</td>
+                                </tr>
+                                <tr>
                                     <td class="contentkey">$Text{"Attribute"}: </td>
                                     <td class="contentvalue">
                                         <input type="text" name="Attribute" value="$QData{"Attribute"}" size="50" maxlength="50"/>
                                     </td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey">$Text{"Event"}: </td>
-                                    <td class="contentvalue"> $Data{"EventOption"}</td>
                                 </tr>
                                 <tr>
                                     <td class="contentkey">$Text{"Rule"}: </td>
