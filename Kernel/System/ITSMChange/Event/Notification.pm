@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/Notification.pm - a event module to send notifications
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.5 2010-01-04 14:45:22 bes Exp $
+# $Id: Notification.pm,v 1.6 2010-01-04 16:03:20 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::Notification;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 =head1 NAME
 
@@ -183,12 +183,7 @@ sub Run {
         return;
     }
 
-    # TODO: add support for WorkOrders
-    return if $Type ne 'Change';
-
-    # TODO: add support for other events
-    return if $Event ne 'ChangeUpdate';
-
+    # in case of update, we have the old data for comparison
     my $OldData = $Param{Data}->{"Old${Type}Data"};
 
     # The notification rules are based on names, while the ChangeUpdate-Function
@@ -206,25 +201,25 @@ sub Run {
 
         my $Attribute = $Rule->{Attribute} || '';
 
-        # TODO: add support for other attributes
-        next RULE_ID if $Attribute ne 'ChangeState';
+        # in case of an update, check whether the attribute has changed
+        if ( $Event eq 'ChangeUpdate' || $Event eq 'WorkOrderUpdate' ) {
 
-        # check whether the attribute has changed
-        my $FieldHasChanged;
-        if ( $Name2ID{$Attribute} ) {
-            $FieldHasChanged = $Self->_HasFieldChanged(
-                New => $Param{Data}->{ $Name2ID{$Attribute} },
-                Old => $OldData->{ $Name2ID{$Attribute} },
-            );
-        }
-        else {
-            $FieldHasChanged = $Self->_HasFieldChanged(
-                New => $Param{Data}->{$Attribute},
-                Old => $OldData->{$Attribute},
-            );
-        }
+            my $FieldHasChanged;
+            if ( $Name2ID{$Attribute} ) {
+                $FieldHasChanged = $Self->_HasFieldChanged(
+                    New => $Param{Data}->{ $Name2ID{$Attribute} },
+                    Old => $OldData->{ $Name2ID{$Attribute} },
+                );
+            }
+            else {
+                $FieldHasChanged = $Self->_HasFieldChanged(
+                    New => $Param{Data}->{$Attribute},
+                    Old => $OldData->{$Attribute},
+                );
+            }
 
-        next RULE_ID if !$FieldHasChanged;
+            next RULE_ID if !$FieldHasChanged;
+        }
 
         # get the string to match against
         my $NewFieldContent;
@@ -245,9 +240,10 @@ sub Run {
 
         # determine list of agents and customers
         my $AgentAndCustomerIDs = $Self->_AgentAndCustomerIDsGet(
-            Recipients => $Rule->{Recipients},
-            ChangeID   => $Param{ChangeID},
-            UserID     => $Param{UserID},
+            Recipients  => $Rule->{Recipients},
+            ChangeID    => $Param{ChangeID},
+            WorkOrderID => $Param{WorkOrderID},
+            UserID      => $Param{UserID},
         );
 
         next RULE_ID if !$AgentAndCustomerIDs;
@@ -350,7 +346,6 @@ sub _AgentAndCustomerIDsGet {
 
     for my $Recipient ( @{ $Param{Recipients} } ) {
 
-        # TODO: support for WorkOrderAgents, WorkOrderAgent, ChangeInitiator, Requester
         if (
             $Recipient eq 'ChangeBuilder'
             || $Recipient eq 'ChangeManager'
@@ -358,11 +353,70 @@ sub _AgentAndCustomerIDsGet {
         {
             push @AgentIDs, $Change->{ $Recipient . 'ID' };
         }
-        elsif ( $Recipient eq 'ChangeCABCustomers' ) {
+        elsif ( $Recipient eq 'CABCustomers' ) {
             push @CustomerIDs, @{ $Change->{CABCustomers} };
         }
-        elsif ( $Recipient eq 'ChangeCABAgents' ) {
+        elsif ( $Recipient eq 'CABAgents' ) {
             push @AgentIDs, @{ $Change->{CABAgents} };
+        }
+        elsif ( $Recipient eq 'WorkOrderAgent' ) {
+            if ( !$Param{WorkOrderID} ) {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "Recipient WorkOrderAgent is only valid for workorder events.!",
+                );
+            }
+            else {
+                my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+                    WorkOrderID => $Param{WorkOrderID},
+                    UserID      => $Param{UserID},
+                );
+
+                push @AgentIDs, $WorkOrder->{WorkOrderAgentID};
+            }
+        }
+        elsif ( $Recipient eq 'WorkOrderAgents' ) {
+
+            # loop over the workorders of a change and get their workorder agents
+            for my $WorkOrderID ( @{ $Change->{WorkOrderIDs} } ) {
+                my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+                    WorkOrderID => $WorkOrderID,
+                    UserID      => $Param{UserID},
+                );
+
+                push @AgentIDs, $WorkOrder->{WorkOrderAgentID};
+            }
+        }
+        elsif ( $Recipient eq 'ChangeInitiators' ) {
+
+            # get linked objects which are directly linked with this change object
+            my $LinkListWithData = $Self->{LinkObject}->LinkListWithData(
+                Object => 'ITSMChange',
+                Key    => $Param{ChangeID},
+                State  => 'Valid',
+                UserID => $Self->{UserID},
+            );
+
+            # get change initiators (customer users of linked tickets)
+            # This should be the same list a displayed in ChangeZoom.
+            my $TicketsRef = $LinkListWithData->{Ticket} || {};
+            for my $LinkType ( keys %{$TicketsRef} ) {
+
+                my $TicketRef = $TicketsRef->{$LinkType}->{Source};
+                for my $TicketID ( keys %{$TicketRef} ) {
+
+                    # get id of customer user
+                    my $CustomerUserID = $TicketRef->{$TicketID}->{CustomerUserID};
+
+                    # if a customer
+                    if ($CustomerUserID) {
+                        push @CustomerIDs, $CustomerUserID;
+                    }
+                    else {
+                        push @AgentIDs, $TicketRef->{$TicketID}->{OwnerID};
+                    }
+                }
+            }
         }
         else {
             $Self->{LogObject}->Log(
@@ -401,6 +455,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2010-01-04 14:45:22 $
+$Revision: 1.6 $ $Date: 2010-01-04 16:03:20 $
 
 =cut
