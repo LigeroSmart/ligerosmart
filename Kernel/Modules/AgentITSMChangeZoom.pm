@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMChangeZoom.pm - the OTRS::ITSM::ChangeManagement change zoom module
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.pm,v 1.44 2009-12-30 13:43:34 ub Exp $
+# $Id: AgentITSMChangeZoom.pm,v 1.45 2010-01-04 11:01:48 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.44 $) [1];
+$VERSION = qw($Revision: 1.45 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -238,10 +238,37 @@ sub Run {
         push @AdditionalBlockNames, 'RequestedTime';
     }
     for my $BlockName (
-        @AdditionalBlockNames, qw(PlannedStartTime PlannedEndTime ActualStartTime
-        ActualEndTime PlannedEffort AccountedTime)
+        @AdditionalBlockNames, qw(PlannedStartTime PlannedEndTime ActualStartTime ActualEndTime)
         )
     {
+        if ( $Change->{$BlockName} ) {
+            $Self->{LayoutObject}->Block(
+                Name => $BlockName,
+                Data => {
+                    $BlockName => $Change->{$BlockName},
+                },
+            );
+        }
+        else {
+            $Self->{LayoutObject}->Block(
+                Name => 'Empty' . $BlockName,
+            );
+        }
+    }
+
+    # show configurable blocks
+    BLOCKNAME:
+    for my $BlockName (qw(PlannedEffort AccountedTime)) {
+
+        # skip if block is switched off in SysConfig
+        next BLOCKNAME if !$Self->{Config}->{$BlockName};
+
+        # show block
+        $Self->{LayoutObject}->Block(
+            Name => 'Show' . $BlockName,
+        );
+
+        # show value or dash
         if ( $Change->{$BlockName} ) {
             $Self->{LayoutObject}->Block(
                 Name => $BlockName,

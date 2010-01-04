@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.127 2010-01-03 14:52:08 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.128 2010-01-04 11:01:47 reb Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -1908,6 +1908,18 @@
             <String Regex="^(rw|ro)$">rw</String>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeZoom###AccountedTime" Required="1" Valid="1">
+        <Description Lang="en">If you want to show the accounted time.</Description>
+        <Description Lang="de">Soll die gebuchte Zeit angezeigt werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ViewChangeZoom</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeZoom###Permission" Required="1" Valid="1">
         <Description Lang="en">Required privilege to view changes.</Description>
         <Description Lang="de">Benötigtes Recht zum Ansehen von Changes.</Description>
@@ -1915,6 +1927,18 @@
         <SubGroup>Frontend::Agent::ViewChangeZoom</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">ro</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeZoom###PlannedEffort" Required="1" Valid="1">
+        <Description Lang="en">If you want to show the planned effort.</Description>
+        <Description Lang="de">Soll der geplante Aufwand angezeigt werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ViewChangeZoom</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeZoom###RequestedTime" Required="1" Valid="1">

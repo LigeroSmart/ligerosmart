@@ -1,8 +1,8 @@
 # --
 # AgentITSMChangeZoom.dtl - provides HTML form for AgentITSMChangeZoom
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.dtl,v 1.37 2009-12-30 13:40:59 ub Exp $
+# $Id: AgentITSMChangeZoom.dtl,v 1.38 2010-01-04 11:01:48 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -216,6 +216,7 @@
                 <tr>
                     <td colspan="2">&nbsp;</td>
                 </tr>
+<!-- dtl:block:ShowPlannedEffort -->
                 <tr>
                     <td><b>$Text{"Planned Effort"}: </b></td>
                     <td>
@@ -231,6 +232,8 @@
 <!-- dtl:block:PlannedEffort -->
                     </td>
                 </tr>
+<!-- dtl:block:ShowPlannedEffort -->
+<!-- dtl:block:ShowAccountedTime -->
                 <tr>
                     <td><b>$Text{"Accounted Time"}: </b></td>
                     <td>
@@ -246,6 +249,7 @@
 <!-- dtl:block:AccountedTime -->
                     </td>
                 </tr>
+<!-- dtl:block:ShowAccountedTime -->
                 <tr>
                     <td colspan="2">&nbsp;</td>
                 </tr>
