@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAdd.pm - the OTRS::ITSM::ChangeManagement workorder add module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.pm,v 1.31 2010-01-04 12:14:56 reb Exp $
+# $Id: AgentITSMWorkOrderAdd.pm,v 1.32 2010-01-04 12:17:56 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.31 $) [1];
+$VERSION = qw($Revision: 1.32 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -418,19 +418,19 @@ sub Run {
         );
     }
 
+    # show planned time if it is configured
+    if ( $Self->{Config}->{PlannedEffort} ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'ShowPlannedEffort',
+        );
+    }
+
     # Add the validation error messages.
     for my $BlockName (@ValidationErrors) {
 
         # show validation error message
         $Self->{LayoutObject}->Block(
             Name => $BlockName,
-        );
-    }
-
-    # show accounted time only when form was submitted
-    if ( $Self->{Config}->{PlannedEffort} ) {
-        $Self->{LayoutObject}->Block(
-            Name => 'ShowPlannedEffort',
         );
     }
 
