@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.103 2010-01-03 12:47:58 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.104 2010-01-04 09:13:16 reb Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -1252,6 +1252,30 @@
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="change_by">1</Data>
             <Data Key="change_time">current_timestamp</Data>
+        </Insert>
+        <Insert Table="change_notification_grps">
+            <Data Key="name" Type="Quote">ChangeBuilder</Data>
+        </Insert>
+        <Insert Table="change_notification_grps">
+            <Data Key="name" Type="Quote">ChangeManager</Data>
+        </Insert>
+        <Insert Table="change_notification_grps">
+            <Data Key="name" Type="Quote">ChangeCABCustomers</Data>
+        </Insert>
+        <Insert Table="change_notification_grps">
+            <Data Key="name" Type="Quote">ChangeCABAgents</Data>
+        </Insert>
+        <Insert Table="change_notification_grps">
+            <Data Key="name" Type="Quote">WorkOrderAgents</Data>
+        </Insert>
+        <Insert Table="change_notification_grps">
+            <Data Key="name" Type="Quote">WorkOrderAgent</Data>
+        </Insert>
+        <Insert Table="change_notification_grps">
+            <Data Key="name" Type="Quote">ChangeInitiator</Data>
+        </Insert>
+        <Insert Table="change_notification_grps">
+            <Data Key="name" Type="Quote">Requester</Data>
         </Insert>
     </DatabaseInstall>
     <DatabaseUpgrade>
