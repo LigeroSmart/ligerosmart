@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/Event/HistoryAdd.pm - HistoryAdd event module for ITSMChange
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: HistoryAdd.pm,v 1.22 2009-12-30 11:01:03 reb Exp $
+# $Id: HistoryAdd.pm,v 1.23 2010-01-04 12:06:54 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 =head1 NAME
 
@@ -163,10 +163,13 @@ sub Run {
     elsif ( $HistoryType eq 'ChangeUpdate' ) {
 
         # get old data
-        my $OldData = delete $Param{Data}->{OldChangeData};
+        my $OldData = $Param{Data}->{OldChangeData};
 
         FIELD:
         for my $Field ( keys %{ $Param{Data} } ) {
+
+            # avoid recursion
+            next FIELD if $Field eq 'OldChangeData';
 
             # we do not track the user id and "plain" columns
             next FIELD if $Field eq 'UserID';
@@ -209,12 +212,12 @@ sub Run {
     elsif ( $HistoryType eq 'ChangeCABUpdate' || $HistoryType eq 'ChangeCABDelete' ) {
 
         # get old data
-        my $OldData = delete $Param{Data}->{OldChangeCABData};
+        my $OldData = $Param{Data}->{OldChangeCABData};
 
         FIELD:
         for my $Field (qw(CABAgents CABCustomers)) {
 
-            # we do not track the user id
+            # we do not track when the param has not been passed
             next FIELD if !$Param{$Field};
 
             # check if field has changed
@@ -347,6 +350,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.22 $ $Date: 2009-12-30 11:01:03 $
+$Revision: 1.23 $ $Date: 2010-01-04 12:06:54 $
 
 =cut
