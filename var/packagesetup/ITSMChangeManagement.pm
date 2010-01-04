@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.12 2010-01-04 10:16:09 reb Exp $
+# $Id: ITSMChangeManagement.pm,v 1.13 2010-01-04 12:26:15 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,7 +33,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 =head1 NAME
 
@@ -703,7 +703,7 @@ sub _AddNotifications {
     my @Notifications = (
         {
             Name       => 'requested changes',
-            Attribute  => 'ChangeStatus',
+            Attribute  => 'ChangeState',
             Event      => 'ChangeUpdate',
             ValidID    => 1,
             Comment    => 'inform recipients that a change was requested',
@@ -712,7 +712,7 @@ sub _AddNotifications {
         },
         {
             Name       => 'pending approval changes',
-            Attribute  => 'ChangeStatus',
+            Attribute  => 'ChangeState',
             Event      => 'ChangeUpdate',
             ValidID    => 1,
             Comment    => 'inform recipients that a change waits for approval',
@@ -721,7 +721,7 @@ sub _AddNotifications {
         },
         {
             Name       => 'pending PIR changes',
-            Attribute  => 'ChangeStatus',
+            Attribute  => 'ChangeState',
             Event      => 'ChangeUpdate',
             ValidID    => 1,
             Comment    => 'inform recipients that a change waits for PIR',
@@ -730,7 +730,7 @@ sub _AddNotifications {
         },
         {
             Name       => 'rejected changes',
-            Attribute  => 'ChangeStatus',
+            Attribute  => 'ChangeState',
             Event      => 'ChangeUpdate',
             ValidID    => 1,
             Comment    => 'inform recipients that a change was rejected',
@@ -742,7 +742,7 @@ sub _AddNotifications {
         },
         {
             Name       => 'approved changes',
-            Attribute  => 'ChangeStatus',
+            Attribute  => 'ChangeState',
             Event      => 'ChangeUpdate',
             ValidID    => 1,
             Comment    => 'inform recipients that a change was approved',
@@ -754,7 +754,7 @@ sub _AddNotifications {
         },
         {
             Name       => 'changes in progress',
-            Attribute  => 'ChangeStatus',
+            Attribute  => 'ChangeState',
             Event      => 'ChangeUpdate',
             ValidID    => 1,
             Comment    => 'inform recipients that a change is in progress',
@@ -763,7 +763,7 @@ sub _AddNotifications {
         },
         {
             Name       => 'successful changes',
-            Attribute  => 'ChangeStatus',
+            Attribute  => 'ChangeState',
             Event      => 'ChangeUpdate',
             ValidID    => 1,
             Comment    => 'inform recipients that a change was successful',
@@ -775,7 +775,7 @@ sub _AddNotifications {
         },
         {
             Name       => 'failed changes',
-            Attribute  => 'ChangeStatus',
+            Attribute  => 'ChangeState',
             Event      => 'ChangeUpdate',
             ValidID    => 1,
             Comment    => 'inform recipients that a change failed',
@@ -787,7 +787,7 @@ sub _AddNotifications {
         },
         {
             Name       => 'canceled changes',
-            Attribute  => 'ChangeStatus',
+            Attribute  => 'ChangeState',
             Event      => 'ChangeUpdate',
             ValidID    => 1,
             Comment    => 'inform recipients that a change was canceled',
@@ -796,7 +796,7 @@ sub _AddNotifications {
         },
         {
             Name       => 'retracted changes',
-            Attribute  => 'ChangeStatus',
+            Attribute  => 'ChangeState',
             Event      => 'ChangeUpdate',
             ValidID    => 1,
             Comment    => 'inform recipients that a change was retracted',
@@ -862,6 +862,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.12 $ $Date: 2010-01-04 10:16:09 $
+$Revision: 1.13 $ $Date: 2010-01-04 12:26:15 $
 
 =cut
