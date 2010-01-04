@@ -1,9 +1,9 @@
 # --
 # Kernel/Modules/AdminITSMChangeNotification.pm - to add/update/delete
 # notification rules for ITSM change management
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMChangeNotification.pm,v 1.4 2009-12-31 09:47:08 reb Exp $
+# $Id: AdminITSMChangeNotification.pm,v 1.5 2010-01-04 08:18:21 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::Notification;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -57,7 +57,8 @@ sub Run {
         my $Data = $Self->{NotificationObject}->NotificationRuleGet( ID => $ID, );
 
         $Self->_Edit(
-            Action => 'Change',
+            Action      => 'Change',
+            ActionLabel => 'Edit',
             %{$Data},
         );
     }
@@ -93,7 +94,8 @@ sub Run {
             %Notification = ( Priority => 'Error' );
 
             $Self->_Edit(
-                Action => "Change",
+                Action      => 'Change',
+                ActionLabel => 'Edit',
                 %GetParam,
             );
         }
@@ -109,7 +111,8 @@ sub Run {
         }
 
         $Self->_Edit(
-            Action => "Add",
+            Action      => 'Add',
+            ActionLabel => 'Add',
             %GetParam,
         );
     }
@@ -145,7 +148,8 @@ sub Run {
             %Notification = ( Priority => 'Error' );
 
             $Self->_Edit(
-                Action => "Add",
+                Action      => 'Add',
+                ActionLabel => 'Add',
                 %GetParam,
             );
         }
