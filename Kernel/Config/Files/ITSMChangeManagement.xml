@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.129 2010-01-04 12:14:56 reb Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.130 2010-01-04 15:44:13 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -34,9 +34,9 @@
                 <NavBarName>Admin</NavBarName>
                 <NavBarModule>
                     <Module>Kernel::Output::HTML::NavBarModuleAdmin</Module>
-                    <Name>ITSM ChangeManagement Notification</Name>
+                    <Name>Notification (ITSM Change Management)</Name>
                     <Block>Block3</Block>
-                    <Prio>432</Prio>
+                    <Prio>406</Prio>
                 </NavBarModule>
             </FrontendModuleReg>
         </Setting>
@@ -1017,7 +1017,7 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::ITSMChange::Event::Notification</Item>
-                <Item Key="Event"></Item>
+                <Item Key="Event">(ChangeAddPost|ChangeUpdatePost|ChangeCABUpdatePost|ChangeCABDeletePost|ChangeDeletePost|ChangeLinkAddPost|ChangeLinkDeletePost|ChangeAttachmentAddPost|ChangeAttachmentDeletePost)</Item>
                 <Item Key="Transaction">0</Item>
             </Hash>
         </Setting>
