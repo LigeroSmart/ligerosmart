@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.64 2010-01-05 15:22:39 bes Exp $
+# $Id: ITSMWorkOrder.pm,v 1.65 2010-01-05 15:52:48 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.64 $) [1];
+$VERSION = qw($Revision: 1.65 $) [1];
 
 =head1 NAME
 
@@ -1279,6 +1279,7 @@ sub WorkOrderDelete {
     for my $FileID ( sort keys %Attachments ) {
         return if !$Self->WorkOrderAttachmentDelete(
             FileID      => $FileID,
+            ChangeID    => $WorkOrderData->{ChangeID},
             WorkOrderID => $Param{WorkOrderID},
             UserID      => $Param{UserID},
         );
@@ -2618,6 +2619,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.64 $ $Date: 2010-01-05 15:22:39 $
+$Revision: 1.65 $ $Date: 2010-01-05 15:52:48 $
 
 =cut
