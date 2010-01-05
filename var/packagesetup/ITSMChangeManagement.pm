@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.14 2010-01-04 15:26:28 reb Exp $
+# $Id: ITSMChangeManagement.pm,v 1.15 2010-01-05 15:58:06 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,7 +33,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 =head1 NAME
 
@@ -657,32 +657,41 @@ sub _LinkDelete {
     my ( $Self, %Param ) = @_;
 
     # get all change object ids
-    my $ChangeIDs = $Self->{ChangeObject}->ChangeList();
+    my $ChangeIDs = $Self->{ChangeObject}->ChangeList(
+        UserID => 1,
+    );
 
     # delete all change links
     if ( $ChangeIDs && ref $ChangeIDs eq 'ARRAY' ) {
+
+        CHANGEID:
         for my $ChangeID ( @{$ChangeIDs} ) {
+
+            # delete all links to this change
             $Self->{LinkObject}->LinkDeleteAll(
                 Object => 'ITSMChange',
                 Key    => $ChangeID,
                 UserID => 1,
             );
+
+            # get all workorder ids for this change
+            my $WorkOrderIDs = $Self->{WorkOrderObject}->WorkOrderList(
+                ChangeID => $ChangeID,
+                UserID   => 1,
+            );
+
+            next CHANGEID if !$WorkOrderIDs;
+            next CHANGEID if ref $WorkOrderIDs ne 'ARRAY';
+
+            # delete all workorder links
+            for my $WorkOrderID ( @{$WorkOrderIDs} ) {
+                $Self->{LinkObject}->LinkDeleteAll(
+                    Object => 'ITSMWorkOrder',
+                    Key    => $WorkOrderID,
+                    UserID => 1,
+                );
+            }
         }
-    }
-
-    # get all workorder object ids
-    my $WorkOrderIDs = $Self->{WorkOrderObject}->WorkOrderList();
-
-    return if !$WorkOrderIDs;
-    return if ref $WorkOrderIDs ne 'ARRAY';
-
-    # delete all workorder links
-    for my $WorkOrderID ( @{$WorkOrderIDs} ) {
-        $Self->{LinkObject}->LinkDeleteAll(
-            Object => 'ITSMWorkOrder',
-            Key    => $WorkOrderID,
-            UserID => 1,
-        );
     }
 
     return 1;
@@ -858,6 +867,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.14 $ $Date: 2010-01-04 15:26:28 $
+$Revision: 1.15 $ $Date: 2010-01-05 15:58:06 $
 
 =cut
