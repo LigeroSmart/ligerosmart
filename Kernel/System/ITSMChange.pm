@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange.pm - all change functions
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.215 2009-12-31 10:19:35 bes Exp $
+# $Id: ITSMChange.pm,v 1.216 2010-01-05 15:22:39 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -28,7 +28,7 @@ use Kernel::System::VirtualFS;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.215 $) [1];
+$VERSION = qw($Revision: 1.216 $) [1];
 
 =head1 NAME
 
@@ -1730,13 +1730,14 @@ sub ChangeSearch {
 
 Delete a change.
 
-This function first removes all links to this ChangeObject.
-Then it gets a list of all WorkOrderObjects of this change and
-calls WorkorderDelete for each WorkOrder (which will itself delete
-all links to the WorkOrder).
+This function first removes all links and attachments to the given change.
+Then it gets a list of all workorders of the change and
+calls C<WorkorderDelete()> for each workorder, which will delete
+all links and all attachments to the workorders.
 Then it deletes the CAB.
-The history of this ChangeObject will be deleted by the calling the
-ChangeDeletePostEvent.
+After that the change is removed.
+The history of this change will be deleted during the handling of the
+triggered ChangeDeletePost-event.
 
     my $Success = $ChangeObject->ChangeDelete(
         ChangeID => 123,
@@ -1780,6 +1781,18 @@ sub ChangeDelete {
         Key    => $Param{ChangeID},
         UserID => 1,
     );
+
+    # get the list of attachments and delete them
+    my %Attachments = $Self->ChangeAttachmentList(
+        ChangeID => $Param{ChangeID},
+    );
+    for my $FileID ( sort keys %Attachments ) {
+        return if !$Self->ChangeAttachmentDelete(
+            FileID   => $FileID,
+            ChangeID => $Param{ChangeID},
+            UserID   => $Param{UserID},
+        );
+    }
 
     # get change data to get the workorder ids
     my $ChangeData = $Self->ChangeGet(
@@ -2995,6 +3008,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.215 $ $Date: 2009-12-31 10:19:35 $
+$Revision: 1.216 $ $Date: 2010-01-05 15:22:39 $
 
 =cut

@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.63 2009-12-31 10:23:19 bes Exp $
+# $Id: ITSMWorkOrder.pm,v 1.64 2010-01-05 15:22:39 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.63 $) [1];
+$VERSION = qw($Revision: 1.64 $) [1];
 
 =head1 NAME
 
@@ -1225,7 +1225,9 @@ sub WorkOrderSearch {
 
 Delete a workorder.
 
-This function first removes all links to the WorkOrder with the passed workorder id.
+This function removes all links and attachments to the workorder
+with the passed workorder id.
+After that the workorder is removed.
 
     my $Success = $WorkOrderObject->WorkOrderDelete(
         WorkOrderID => 123,
@@ -1269,6 +1271,18 @@ sub WorkOrderDelete {
         Key    => $Param{WorkOrderID},
         UserID => 1,
     );
+
+    # get the list of attachments and delete them
+    my %Attachments = $Self->WorkOrderAttachmentList(
+        WorkOrderID => $Param{WorkOrderID},
+    );
+    for my $FileID ( sort keys %Attachments ) {
+        return if !$Self->WorkOrderAttachmentDelete(
+            FileID      => $FileID,
+            WorkOrderID => $Param{WorkOrderID},
+            UserID      => $Param{UserID},
+        );
+    }
 
     # delete the workorder
     return if !$Self->{DBObject}->Do(
@@ -2604,6 +2618,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.63 $ $Date: 2009-12-31 10:23:19 $
+$Revision: 1.64 $ $Date: 2010-01-05 15:22:39 $
 
 =cut
