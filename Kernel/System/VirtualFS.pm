@@ -1,8 +1,8 @@
 # --
 # Kernel/System/VirtualFS.pm - all virtual fs functions
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: VirtualFS.pm,v 1.2 2009-12-16 21:09:16 reb Exp $
+# $Id: VirtualFS.pm,v 1.3 2010-01-05 14:26:39 bes Exp $
 # $OldId: VirtualFS.pm,v 1.3 2009/12/10 11:59:54 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
@@ -343,11 +343,14 @@ sub Delete {
 # ---
 =item Search()
 
-search for files in virtual file system. In contrast to Find(), you do
+Search for files in virtual file system. In contrast to Find(), you do
 not need to know the filename. You can search for files based on virtual fs
-preferences.
+preferences. The search in the preferences is logically OR connected.
 
-It returns a hash with the ID as the key and the filename is the value.
+String search parameters are queried with wildcard behavior.
+The integer search parameter, that us C<FileID>, has no wildcard behavior.
+
+The function returns a hash with the ID as the key and the filename is the value.
 
     # search for all text/plain files
     my %Files = $VirtualFSObject->Search(
@@ -370,20 +373,23 @@ sub Search {
     if ( ! keys %Param ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'At least one search criteria must be given',
+            Message  => 'At least one search criterion must be given',
         );
 
         return;
     }
 
-    # all where clauses
+    # all where conditions
     my @Where;
+    my @Bind;
 
-    # we have to join the other table when the search is
-    # based on entries in preferences
-    my $Join = '';
+    # We have to join the preferences table when the search is
+    # based on entries in preferences.
+    my $JoinClause = '';
+    my $GroupByClause = '';
     if ( $Param{Preferences} ) {
-        $Join = 'INNER JOIN virtual_fs_preferences vfp ON vfp.virtual_fs_id = vf.id ';
+        $JoinClause    = 'INNER JOIN virtual_fs_preferences vfp ON vfp.virtual_fs_id = vf.id ';
+        $GroupByClause = 'GROUP BY vf.id, vf.filename';
 
         # push search criteria to where clause
         my @PreferencesWhere;
@@ -408,23 +414,40 @@ sub Search {
     }
 
     # map param keys to column maps
-    my %Param2Column = (
-        FileID   => 'id',
+    my %StringParam2Column = (
         Filename => 'filename',
         Backend  => 'backend',
     );
 
+    my %IntegerParam2Column = (
+        FileID   => 'id',
+    );
+
     # push all remaining parameters to where clause
-    COLUMN:
     for my $Column ( keys %Param ) {
-        next COLUMN if ! exists $Param2Column{$Column};
-        my $Like = $Param{$Column};
-        $Like =~ s/\*/%/g;
-        $Like = $Self->{DBObject}->Quote( $Like, 'Like' );
 
-        my $ColumnName = $Param2Column{$Column};
+        # SQL for the string search parameters
+        if ( $StringParam2Column{$Column} ) {
+            my $Like = $Param{$Column};
+            $Like =~ s/\*/%/g;
+            $Like = $Self->{DBObject}->Quote( $Like, 'Like' );
 
-        push @Where, "vf.$ColumnName LIKE '$Like'";
+            my $ColumnName = $StringParam2Column{$Column};
+
+            push @Where, "vf.$ColumnName LIKE '$Like'";
+        }
+
+        # SQL for the integer search parameters
+        elsif ( $IntegerParam2Column{$Column} ) {
+            my $ColumnName = $IntegerParam2Column{$Column};
+            push @Where, "vf.$ColumnName = ?";
+            push @Bind, \$Param{$Column};
+        }
+
+        # all other search parameters are ignored
+        else {
+            # do nothing
+        }
     }
 
     # join the where conditions
@@ -432,13 +455,17 @@ sub Search {
 
     # do the search
     return if !$Self->{DBObject}->Prepare(
-        SQL => "SELECT vf.id, vf.filename FROM virtual_fs vf $Join WHERE $WhereClause GROUP BY vf.id",
+        SQL => 'SELECT vf.id, vf.filename '
+            . "FROM virtual_fs vf $JoinClause "
+            . "WHERE $WhereClause $GroupByClause",
+        Bind => \@Bind,
     );
 
     my %Files;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $Files{ $Row[0] } = $Row[1];
     }
+
     return %Files;
 }
 # ---
@@ -523,6 +550,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2009-12-16 21:09:16 $
+$Revision: 1.3 $ $Date: 2010-01-05 14:26:39 $
 
 =cut
