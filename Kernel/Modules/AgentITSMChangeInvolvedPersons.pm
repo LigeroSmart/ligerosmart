@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMChangeInvolvedPersons.pm - the OTRS::ITSM::ChangeManagement change involved persons module
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.27 2009-12-14 20:42:26 ub Exp $
+# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.28 2010-01-06 09:26:10 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::User;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.27 $) [1];
+$VERSION = qw($Revision: 1.28 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -555,9 +555,10 @@ sub _IsMemberDeletion {
 sub _CheckChangeManagerAndChangeBuilder {
     my ( $Self, %Param ) = @_;
 
-    # hash for error info
+    # The hash with the error info will be returned.
     my %Errors;
 
+    ROLE:
     for my $Role (qw(ChangeBuilder ChangeManager)) {
 
         # the fields in .dtl have a number at the end
@@ -566,31 +567,30 @@ sub _CheckChangeManagerAndChangeBuilder {
         # check the role
         if ( !$Param{$Role} || !$Param{ 'SelectedUser' . $Key } ) {
             $Errors{$Role} = 1;
+            next ROLE;
         }
-        else {
 
-            # get user data
-            my %User = $Self->{UserObject}->GetUserData(
-                UserID => $Param{ 'SelectedUser' . $Key },
-            );
+        # get user data
+        my %User = $Self->{UserObject}->GetUserData(
+            UserID => $Param{ 'SelectedUser' . $Key },
+        );
 
-            # show error if user does not exist
-            if ( !%User ) {
-                $Errors{$Role} = 1;
-            }
-            else {
+        # show error if user does not exist
+        if ( !%User ) {
+            $Errors{$Role} = 1;
+            next ROLE;
+        }
 
-                # Compare input value with user data.
-                # Look for exact match at beginning,
-                # as $User{UserLastname} might contain a trailing 'out of office' note.
-                my $CheckString = sprintf '%s %s %s',
-                    $User{UserLogin},
-                    $User{UserFirstname},
-                    $User{UserLastname};
-                if ( index( $CheckString, $Param{User} ) != 0 ) {
-                    $Errors{ChangeManager} = 1;
-                }
-            }
+        # Check whether the input has been manually edited.
+        # Look for exact match at beginning,
+        # as $User{UserLastname} might contain a trailing 'out of office' note.
+        # Note that this won't catch deletions of $Param{$Role} at the end.
+        my $CheckString = sprintf '%s %s %s',
+            $User{UserLogin},
+            $User{UserFirstname},
+            $User{UserLastname};
+        if ( index( $CheckString, $Param{$Role} ) != 0 ) {
+            $Errors{$Role} = 1;
         }
     }
 
@@ -603,6 +603,7 @@ sub _IsNewCABMemberOk {
     # check needed stuff
     return if !$Param{Change};
 
+    # The member info will be returned.
     my %MemberInfo;
 
     # CABCustomers or CABAgents?
@@ -622,6 +623,7 @@ sub _IsNewCABMemberOk {
             # Compare input value with user data.
             # Look for exact match at beginning,
             # as $User{UserLastname} might contain a trailing 'out of office' note.
+            # Note that this won't catch deletions of $Param{NewCABMember} at the end.
             my $CheckString = sprintf '%s %s %s',
                 $User{UserLogin},
                 $User{UserFirstname},
@@ -630,7 +632,7 @@ sub _IsNewCABMemberOk {
 
                 # save member infos
                 %MemberInfo = (
-                    $MemberType => [ @$CurrentMembers, $User{UserID} ],
+                    $MemberType => [ @{$CurrentMembers}, $User{UserID} ],
                 );
             }
         }
@@ -645,15 +647,16 @@ sub _IsNewCABMemberOk {
         if (%CustomerUser) {
 
             # compare input value with user data
+            # string comparision can be used for checking, as there are no 'out of office' notes
             my $CheckString = sprintf '"%s %s" <%s>',
                 $CustomerUser{UserFirstname},
                 $CustomerUser{UserLastname},
                 $CustomerUser{UserEmail};
-
-            # save member infos
             if ( $CheckString eq $Param{NewCABMember} ) {
+
+                # save member infos
                 %MemberInfo = (
-                    $MemberType => [ @$CurrentMembers, $CustomerUser{UserLogin} ],
+                    $MemberType => [ @{$CurrentMembers}, $CustomerUser{UserLogin} ],
                 );
             }
         }
