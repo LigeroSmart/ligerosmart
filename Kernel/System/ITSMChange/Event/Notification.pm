@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/Notification.pm - a event module to send notifications
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.6 2010-01-04 16:03:20 bes Exp $
+# $Id: Notification.pm,v 1.7 2010-01-06 10:00:06 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::Notification;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 =head1 NAME
 
@@ -142,19 +142,13 @@ sub Run {
         }
     }
 
-    # in notification event handling we use Event name without 'Post'
+    # in notification event handling we use the event name without the trailing 'Post'.
     my $Event = $Param{Event};
     $Event =~ s{ Post \z }{}xms;
 
-    # distinguish between Change and WorkOrder events, base on naming convention
-    my $Type;
-    if ( $Event =~ m{ \A Change }xms ) {
-        $Type = 'Change';
-    }
-    elsif ( $Event =~ m{ \A WorkOrder }xms ) {
-        $Type = 'WorkOrder';
-    }
-    else {
+    # distinguish between Change and WorkOrder events, based on naming convention
+    my ($Type) = $Event =~ m{ \A (Change|WorkOrder) }xms;
+    if ( !$Type ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message  => "Could not determine the object type for the event '$Event'!"
@@ -183,7 +177,7 @@ sub Run {
         return;
     }
 
-    # in case of update, we have the old data for comparison
+    # in case of an update, we have the old data for comparison
     my $OldData = $Param{Data}->{"Old${Type}Data"};
 
     # The notification rules are based on names, while the ChangeUpdate-Function
@@ -200,39 +194,28 @@ sub Run {
         );
 
         my $Attribute = $Rule->{Attribute} || '';
+        if ( $Name2ID{$Attribute} ) {
+            $Attribute = $Name2ID{$Attribute};
+        }
 
-        # in case of an update, check whether the attribute has changed
+        # in case of an update, check whether the attribute is part of the update
+        # and whether it has changed
         if ( $Event eq 'ChangeUpdate' || $Event eq 'WorkOrderUpdate' ) {
 
-            my $FieldHasChanged;
-            if ( $Name2ID{$Attribute} ) {
-                $FieldHasChanged = $Self->_HasFieldChanged(
-                    New => $Param{Data}->{ $Name2ID{$Attribute} },
-                    Old => $OldData->{ $Name2ID{$Attribute} },
-                );
-            }
-            else {
-                $FieldHasChanged = $Self->_HasFieldChanged(
-                    New => $Param{Data}->{$Attribute},
-                    Old => $OldData->{$Attribute},
-                );
-            }
+            next RULE_ID if !exists $Param{Data}->{$Attribute};
 
-            next RULE_ID if !$FieldHasChanged;
+            my $HasChanged = $Self->_HasFieldChanged(
+                New => $Param{Data}->{$Attribute},
+                Old => $OldData->{$Attribute},
+            );
+            next RULE_ID if !$HasChanged;
         }
 
         # get the string to match against
-        my $NewFieldContent;
-        if ( $Name2ID{$Attribute} ) {
-
-            # TODO: support other combinations, maybe use GeneralCatalog directly
-            $NewFieldContent = $Self->{ChangeObject}->ChangeStateLookup(
-                ChangeStateID => $Param{Data}->{ $Name2ID{$Attribute} },
-            );
-        }
-        else {
-            $NewFieldContent = $Param{Data}->{$Attribute};
-        }
+        # TODO: support other combinations, maybe use GeneralCatalog directly
+        my $NewFieldContent = $Self->{ChangeObject}->ChangeStateLookup(
+            ChangeStateID => $Param{Data}->{$Attribute},
+        );
 
         # should the notification be sent ?
         # the x-modifier is harmful here, as $Rule->{Rule} can contain spaces
@@ -455,6 +438,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.6 $ $Date: 2010-01-04 16:03:20 $
+$Revision: 1.7 $ $Date: 2010-01-06 10:00:06 $
 
 =cut
