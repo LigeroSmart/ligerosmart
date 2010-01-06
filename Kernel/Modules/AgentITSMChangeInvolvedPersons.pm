@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeInvolvedPersons.pm - the OTRS::ITSM::ChangeManagement change involved persons module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.29 2010-01-06 10:54:17 bes Exp $
+# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.30 2010-01-06 13:01:04 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::User;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.29 $) [1];
+$VERSION = qw($Revision: 1.30 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -293,10 +293,10 @@ sub Run {
             if (%ChangeManager) {
 
                 # build string to display
-                $ChangeManager = sprintf '%s %s %s',
-                    $ChangeManager{UserLogin},
+                $ChangeManager = sprintf '"%s %s" <%s>',
                     $ChangeManager{UserFirstname},
-                    $ChangeManager{UserLastname};
+                    $ChangeManager{UserLastname},
+                    $ChangeManager{UserEmail};
             }
         }
 
@@ -311,10 +311,10 @@ sub Run {
             if (%ChangeBuilder) {
 
                 # build string to display
-                $ChangeBuilder = sprintf '%s %s %s',
-                    $ChangeBuilder{UserLogin},
+                $ChangeBuilder = sprintf '"%s %s" <%s>',
                     $ChangeBuilder{UserFirstname},
-                    $ChangeBuilder{UserLastname};
+                    $ChangeBuilder{UserLastname},
+                    $ChangeBuilder{UserEmail};
             }
         }
 
@@ -585,10 +585,10 @@ sub _CheckChangeManagerAndChangeBuilder {
         # Look for exact match at beginning,
         # as $User{UserLastname} might contain a trailing 'out of office' note.
         # Note that this won't catch deletions of $Param{$Role} at the end.
-        my $CheckString = sprintf '%s %s %s',
-            $User{UserLogin},
+        my $CheckString = sprintf '"%s %s" <%s>',
             $User{UserFirstname},
-            $User{UserLastname};
+            $User{UserLastname},
+            $User{UserEmail};
         if ( index( $CheckString, $Param{$Role} ) != 0 ) {
             $Errors{$Role} = 1;
         }
@@ -774,10 +774,10 @@ sub _GetExpandInfo {
 
                 # set hidden field
                 $Info{ 'SelectedUser' . $Key } = $UserID;
-                $Info{ 'Change' . $Name }      = sprintf '%s %s %s',
-                    $UserData{UserLogin},
+                $Info{ 'Change' . $Name }      = sprintf '"%s %s" <%s>',
                     $UserData{UserFirstname},
-                    $UserData{UserLastname};
+                    $UserData{UserLastname},
+                    $UserData{UserEmail};
             }
         }
     }

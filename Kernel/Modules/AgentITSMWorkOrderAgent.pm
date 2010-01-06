@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMWorkOrderAgent.pm - the OTRS::ITSM::ChangeManagement workorder agent edit module
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAgent.pm,v 1.27 2009-12-14 20:42:26 ub Exp $
+# $Id: AgentITSMWorkOrderAgent.pm,v 1.28 2010-01-06 13:01:04 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.27 $) [1];
+$VERSION = qw($Revision: 1.28 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -253,10 +253,10 @@ sub Run {
                 # an appropriate user is found fill the textfield
                 if (%UserData) {
                     $Param{UserID} = $UserID;
-                    $Param{User}   = sprintf '%s %s %s',
-                        $UserData{UserLogin},
+                    $Param{User}   = sprintf '"%s %s" <%s>',
                         $UserData{UserFirstname},
-                        $UserData{UserLastname};
+                        $UserData{UserLastname},
+                        $UserData{UserEmail};
                 }
             }
         }
@@ -269,10 +269,10 @@ sub Run {
         );
 
         $Param{UserID} = $UserData{UserID};
-        $Param{User}   = sprintf '%s %s %s',
-            $UserData{UserLogin},
+        $Param{User}   = sprintf '"%s %s" <%s>',
             $UserData{UserFirstname},
-            $UserData{UserLastname};
+            $UserData{UserLastname},
+            $UserData{UserEmail};
     }
 
     # get change that workorder belongs to
@@ -376,10 +376,10 @@ sub _CheckWorkOrderAgent {
         else {
 
             # compare input value with user data
-            my $CheckString = sprintf '%s %s %s',
-                $User{UserLogin},
+            my $CheckString = sprintf '"%s %s" <%s>',
                 $User{UserFirstname},
-                $User{UserLastname};
+                $User{UserLastname},
+                $User{UserEmail};
 
             # show error
             if ( $CheckString ne $Param{User} ) {

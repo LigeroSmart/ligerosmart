@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.43 2009-12-14 20:42:26 ub Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.44 2010-01-06 13:01:04 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.43 $) [1];
+$VERSION = qw($Revision: 1.44 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -954,10 +954,10 @@ sub _GetExpandInfo {
 
                 # set hidden field
                 $Info{ 'SelectedUser' . $Key } = $UserID;
-                $Info{$Name} = sprintf '%s %s %s',
-                    $UserData{UserLogin},
+                $Info{$Name} = sprintf '"%s %s" <%s>',
                     $UserData{UserFirstname},
-                    $UserData{UserLastname};
+                    $UserData{UserLastname},
+                    $UserData{UserEmail};
             }
         }
     }

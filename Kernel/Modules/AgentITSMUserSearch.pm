@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMUserSearch.pm - a module used for the autocomplete feature
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMUserSearch.pm,v 1.8 2009-12-13 14:30:44 ub Exp $
+# $Id: AgentITSMUserSearch.pm,v 1.9 2010-01-06 13:01:04 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::User;
 use Kernel::System::Group;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -92,34 +92,34 @@ sub Run {
             Valid  => 1,
         );
 
-        # UserSearch() returns values with a trailing space, get rid of it
-        for my $Name ( values %UserList ) {
-            $Name =~ s{ \s+ \z }{}xms;
-        }
-
-        # build data
+        # the data that will be sent as response
         my @Data;
 
         USERID:
-        for my $UserID (
-            sort { $UserList{$a} cmp $UserList{$b} }
-            keys %UserList
-            )
-        {
+        for my $UserID ( sort { $UserList{$a} cmp $UserList{$b} } keys %UserList ) {
 
             # if groups are required and user is not member of one of the groups
             # then skip the user
             next USERID if $Groups && !$GroupUsers{$UserID};
 
+            # The values in %UserList are in the form: 'mm Max Mustermann'.
+            # So assemble a neater string for display.
+            # (Actually UserSearch() contains code for formating, but that is usually not called.)
+            my %User = $Self->{UserObject}->GetUserData(
+                UserID => $UserID,
+                Valid  => $Param{Valid},
+            );
+            my $UserValuePlain
+                = '"' . "$User{UserFirstname} $User{UserLastname}" . '" ' . "<$User{UserEmail}>";
+
             # html quote characters like <>
-            my $UserValuePlain = $UserList{$UserID};
-            $UserList{$UserID} = $Self->{LayoutObject}->Ascii2Html(
-                Text => $UserList{$UserID},
+            my $UserValue = $Self->{LayoutObject}->Ascii2Html(
+                Text => $UserValuePlain,
             );
 
             push @Data, {
                 UserKey        => $UserID,
-                UserValue      => $UserList{$UserID},
+                UserValue      => $UserValue,
                 UserValuePlain => $UserValuePlain,
             };
         }
