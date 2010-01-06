@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/Notification.pm - a event module to send notifications
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.7 2010-01-06 10:00:06 bes Exp $
+# $Id: Notification.pm,v 1.8 2010-01-06 15:30:20 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::Notification;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 =head1 NAME
 
@@ -202,24 +202,33 @@ sub Run {
         # and whether it has changed
         if ( $Event eq 'ChangeUpdate' || $Event eq 'WorkOrderUpdate' ) {
 
-            next RULE_ID if !exists $Param{Data}->{$Attribute};
+            next RULE_ID if $Attribute && !exists $Param{Data}->{$Attribute};
 
-            my $HasChanged = $Self->_HasFieldChanged(
-                New => $Param{Data}->{$Attribute},
-                Old => $OldData->{$Attribute},
-            );
+            my $HasChanged = 1;
+
+            if ($Attribute) {
+                $HasChanged = $Self->_HasFieldChanged(
+                    New => $Param{Data}->{$Attribute},
+                    Old => $OldData->{$Attribute},
+                );
+            }
+
             next RULE_ID if !$HasChanged;
         }
 
         # get the string to match against
         # TODO: support other combinations, maybe use GeneralCatalog directly
-        my $NewFieldContent = $Self->{ChangeObject}->ChangeStateLookup(
-            ChangeStateID => $Param{Data}->{$Attribute},
-        );
+        my $NewFieldContent = $Param{Data}->{$Attribute};
+
+        if ( $Attribute eq 'ChangeStateID' ) {
+            $NewFieldContent = $Self->{ChangeObject}->ChangeStateLookup(
+                ChangeStateID => $Param{Data}->{$Attribute},
+            );
+        }
 
         # should the notification be sent ?
         # the x-modifier is harmful here, as $Rule->{Rule} can contain spaces
-        next RULE_ID if $NewFieldContent !~ m/^$Rule->{Rule}$/;
+        next RULE_ID if defined $Rule->{Rule} && $NewFieldContent !~ m/^$Rule->{Rule}$/;
 
         # determine list of agents and customers
         my $AgentAndCustomerIDs = $Self->_AgentAndCustomerIDsGet(
@@ -438,6 +447,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.7 $ $Date: 2010-01-06 10:00:06 $
+$Revision: 1.8 $ $Date: 2010-01-06 15:30:20 $
 
 =cut
