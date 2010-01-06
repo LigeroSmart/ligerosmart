@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/ITSMStateMachine.pm - all state machine functions
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMStateMachine.pm,v 1.8 2009-12-23 15:16:47 bes Exp $
+# $Id: ITSMStateMachine.pm,v 1.9 2010-01-06 10:32:48 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::GeneralCatalog;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 =head1 NAME
 
@@ -217,8 +217,8 @@ sub StateTransitionAdd {
         if ($Count) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message =>
-                    "Can not add state '$StateID2State{$Param{NextStateID}}' (ID: $Param{NextStateID}) as start state. "
+                Message  => "Can not add state '$StateID2State{$Param{NextStateID}}' "
+                    . "(ID: $Param{NextStateID}) as start state. "
                     . "There is already a start state defined for class '$Param{Class}'!",
             );
             return;
@@ -238,8 +238,8 @@ sub StateTransitionAdd {
         if ( $NextStateIDs && @{$NextStateIDs} && scalar @{$NextStateIDs} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message =>
-                    "StateTransitionAdd() failed! Can not set state '$StateID2State{$Param{StateID}}' (ID: $Param{StateID}) as end state, "
+                Message  => "StateTransitionAdd() failed! Can not set state "
+                    . "'$StateID2State{$Param{StateID}}' (ID: $Param{StateID}) as end state, "
                     . "because other following states exist, which must be deleted first!",
             );
             return;
@@ -259,8 +259,8 @@ sub StateTransitionAdd {
         if ( $NextStateIDs && @{$NextStateIDs} && !$NextStateIDs->[0] ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message =>
-                    "StateTransitionAdd() failed! State '$StateID2State{$Param{StateID}}' (ID: $Param{StateID}) is defined as an end state, "
+                Message  => "StateTransitionAdd() failed! State '$StateID2State{$Param{StateID}}' "
+                    . "(ID: $Param{StateID}) is defined as an end state, "
                     . "it must be deleted first, before new following states can be added!",
             );
             return;
@@ -667,8 +667,8 @@ sub StateTransitionUpdate {
 
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message =>
-                    "StateTransitionUpdate() failed! Can not set state '$StateID2State{$Param{StateID}}' (ID: $Param{StateID}) as end state, "
+                Message  => "StateTransitionUpdate() failed! Can not set state "
+                    . "'$StateID2State{$Param{StateID}}' (ID: $Param{StateID}) as end state, "
                     . "because other following states exist, which must be deleted first!",
             );
             return;
@@ -863,6 +863,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.8 $ $Date: 2009-12-23 15:16:47 $
+$Revision: 1.9 $ $Date: 2010-01-06 10:32:48 $
 
 =cut
