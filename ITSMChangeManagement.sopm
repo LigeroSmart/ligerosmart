@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.108 2010-01-06 15:03:37 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.109 2010-01-06 15:20:35 ub Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -1123,6 +1123,7 @@
             <Data Key="notification_language" Type="Quote">en</Data>
             <Data Key="subject" Type="Quote">[Change #&lt;OTRS_CHANGE_ChangeNumber&gt;] updated</Data>
             <Data Key="text" Type="Quote">Change #&lt;OTRS_CHANGE_ChangeNumber&gt; was updated.
+
 Change Title: &lt;OTRS_CHANGE_ChangeTitle&gt;
 Current change state: &lt;OTRS_CHANGE_ChangeState&gt;
 
