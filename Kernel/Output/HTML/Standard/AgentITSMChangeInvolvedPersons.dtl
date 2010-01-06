@@ -1,8 +1,8 @@
 # --
 # AgentITSMChangeInvolvedPersons.dtl - provides HTML form for AgentITSMChangeInvolvedPersons
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.19 2009-12-03 10:39:22 bes Exp $
+# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.20 2010-01-06 11:15:45 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -79,8 +79,8 @@ function clear_field3() {
                         <td>
                             <table border="0" width="100%" cellspacing="0" cellpadding="3">
                                 <colgroup>
-                                <col width="130px">
-                                <col>
+                                    <col width="130px">
+                                    <col>
                                 </colgroup>
                                 <tr>
                                     <td class="contentkey">
@@ -150,8 +150,8 @@ function clear_field3() {
                         <td>
                             <table border="0" width="100%" cellspacing="0" cellpadding="3">
                                 <colgroup>
-                                <col width="130px">
-                                <col>
+                                    <col width="130px">
+                                    <col>
                                 </colgroup>
                                 <tr>
                                     <td class="contentkey">
@@ -209,7 +209,7 @@ function clear_field3() {
 <!-- dtl:block:AgentCAB -->
                                 <tr>
                                     <td class="contentkey">&nbsp;</td>
-                                    <td class="contentvalue">$Data{"UserLogin"} &lt;$Data{"UserEmail"}&gt;</td>
+                                    <td class="contentvalue">$QData{"UserLogin","25"} ($Quote{"$Data{"UserFirstname"} $Data{"UserLastname"}","25"})</td>
                                     <td class="contentvalue"><input type="submit" class="button" name="DeleteCABAgent$QData{"UserID"}" value="$Text{"Delete"}"></td>
                                 </tr>
 <!-- dtl:block:AgentCAB -->
@@ -221,7 +221,7 @@ function clear_field3() {
 <!-- dtl:block:CustomerCAB -->
                                 <tr>
                                     <td class="contentkey">&nbsp;</td>
-                                    <td class="contentvalue">$Data{"UserLogin"} &lt;$Data{"UserEmail"}&gt;</td>
+                                    <td>$QData{"UserLogin","25"} ($Quote{"$Data{"UserFirstname"} $Data{"UserLastname"}","25"})</td>
                                     <td class="contentvalue"><input type="submit" class="button" name="DeleteCABCustomer$QData{"UserLogin"}" value="$Text{"Delete"}"></td>
                                 </tr>
 <!-- dtl:block:CustomerCAB -->
