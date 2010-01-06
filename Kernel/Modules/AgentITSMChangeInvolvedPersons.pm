@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeInvolvedPersons.pm - the OTRS::ITSM::ChangeManagement change involved persons module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.30 2010-01-06 13:01:04 bes Exp $
+# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.31 2010-01-06 13:11:56 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::User;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.30 $) [1];
+$VERSION = qw($Revision: 1.31 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -624,10 +624,10 @@ sub _IsNewCABMemberOk {
             # Look for exact match at beginning,
             # as $User{UserLastname} might contain a trailing 'out of office' note.
             # Note that this won't catch deletions of $Param{NewCABMember} at the end.
-            my $CheckString = sprintf '%s %s %s',
-                $User{UserLogin},
+            my $CheckString = sprintf '"%s %s" <%s>',
                 $User{UserFirstname},
-                $User{UserLastname};
+                $User{UserLastname},
+                $User{UserEmail};
             if ( index( $CheckString, $Param{NewCABMember} ) == 0 ) {
 
                 # save member infos
