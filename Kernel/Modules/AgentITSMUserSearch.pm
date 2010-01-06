@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMUserSearch.pm - a module used for the autocomplete feature
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMUserSearch.pm,v 1.9 2010-01-06 13:01:04 bes Exp $
+# $Id: AgentITSMUserSearch.pm,v 1.10 2010-01-06 13:24:39 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::User;
 use Kernel::System::Group;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -109,8 +109,10 @@ sub Run {
                 UserID => $UserID,
                 Valid  => $Param{Valid},
             );
-            my $UserValuePlain
-                = '"' . "$User{UserFirstname} $User{UserLastname}" . '" ' . "<$User{UserEmail}>";
+            my $UserValuePlain = sprintf '"%s %s" <%s>',
+                $User{UserFirstname},
+                $User{UserLastname},
+                $User{UserEmail};
 
             # html quote characters like <>
             my $UserValue = $Self->{LayoutObject}->Ascii2Html(
