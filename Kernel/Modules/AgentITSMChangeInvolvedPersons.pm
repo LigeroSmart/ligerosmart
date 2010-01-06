@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeInvolvedPersons.pm - the OTRS::ITSM::ChangeManagement change involved persons module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.28 2010-01-06 09:26:10 bes Exp $
+# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.29 2010-01-06 10:54:17 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::User;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.28 $) [1];
+$VERSION = qw($Revision: 1.29 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -640,23 +640,27 @@ sub _IsNewCABMemberOk {
 
     # an customer is requested to be added
     else {
-        my %CustomerUser = $Self->{CustomerUserObject}->CustomerUserDataGet(
-            User => $Param{CABMemberID},
+
+        # For the sanity check we use the same function as we use for Autocompletion
+        # and customer user expansion
+        # CustomerSearch() does funny formating, when it thinks that it has
+        # encountered an Email-address.
+        # Furthermore the returned hash from CustomerSearch() depends on the setting of
+        # 'CustomerUserListFields'.
+        my %CustomerUser = $Self->{CustomerUserObject}->CustomerSearch(
+            UserLogin => $Param{CABMemberID},
         );
 
-        if (%CustomerUser) {
+        if ( scalar( keys %CustomerUser ) == 1 ) {
 
             # compare input value with user data
             # string comparision can be used for checking, as there are no 'out of office' notes
-            my $CheckString = sprintf '"%s %s" <%s>',
-                $CustomerUser{UserFirstname},
-                $CustomerUser{UserLastname},
-                $CustomerUser{UserEmail};
+            my ($CheckString) = values %CustomerUser;
             if ( $CheckString eq $Param{NewCABMember} ) {
 
                 # save member infos
                 %MemberInfo = (
-                    $MemberType => [ @{$CurrentMembers}, $CustomerUser{UserLogin} ],
+                    $MemberType => [ @{$CurrentMembers}, $Param{CABMemberID} ],
                 );
             }
         }
