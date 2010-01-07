@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.16 2010-01-07 08:54:26 reb Exp $
+# $Id: ITSMChangeManagement.pm,v 1.17 2010-01-07 13:38:54 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,6 +19,7 @@ use Kernel::System::Config;
 use Kernel::System::CSV;
 use Kernel::System::GeneralCatalog;
 use Kernel::System::Group;
+use Kernel::System::HTMLUtils;
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::History;
 use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
@@ -33,7 +34,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 =head1 NAME
 
@@ -159,6 +160,7 @@ sub new {
     $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
     $Self->{HistoryObject}        = Kernel::System::ITSMChange::History->new( %{$Self} );
     $Self->{NotificationObject}   = Kernel::System::ITSMChange::Notification->new( %{$Self} );
+    $Self->{HTMLUtilsObject}      = Kernel::System::HTMLUtils->new( %{$Self} );
     $Self->{StatsObject}          = Kernel::System::Stats->new(
         %{$Self},
         UserID => 1,
@@ -1051,13 +1053,24 @@ Your OTRS Notification Master'
         ]
     );
 
+    # check if richtext feature is enabled
+    my $RichTextEnabled = $Self->{ConfigObject}->Get('Frontend::RichText');
+
     # insert the entries
     for my $Notification (@Notifications) {
         my @Binds;
+
+        # if richtext is enabled, the notification text has to be html-escaped
+        if ($RichTextEnabled) {
+            $Notification->[3] = $Self->{HTMLUtilsObject}->ToHTML( String => $Notification->[3] );
+        }
+
+        # Bind requires scalar references
         for my $Value ( @{$Notification} ) {
             push @Binds, \$Value;
         }
 
+        # do the insertion
         $Self->{DBObject}->Do(
             SQL => 'INSERT INTO notifications (notification_type, notification_language, '
                 . 'subject, text, notification_charset, content_type, '
@@ -1082,6 +1095,7 @@ Deletes the Change:: and WorkOrder:: notifications from systems notification tab
 sub _DeleteSystemNotifications {
     my ($Self) = @_;
 
+    # define the notification keys to be deleted
     my @NotificationKeys = (
         'de::Change::ChangeUpdate',
         'en::Change::ChangeUpdate',
@@ -1143,6 +1157,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.16 $ $Date: 2010-01-07 08:54:26 $
+$Revision: 1.17 $ $Date: 2010-01-07 13:38:54 $
 
 =cut
