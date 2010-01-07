@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Expression.pm - all condition expression functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Expression.pm,v 1.2 2010-01-07 13:28:54 mae Exp $
+# $Id: Expression.pm,v 1.3 2010-01-07 15:49:42 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
@@ -130,8 +130,12 @@ Update a condition expression.
 
     my $Success = $ConditionObject->ExpressionUpdate(
         ExpressionID => 1234,
-        Name        => 'NewExpressionName',
-        UserID      => 1,
+        ObjectID     => 234,        # (optional)
+        AttributeID  => 345,        # (optional)
+        OperatorID   => 456,        # (optional)
+        Selector     => 1234',      # (optional)
+        CompareValue => 'rejected', # (optional)
+        UserID       => 1,
     );
 
 =cut
@@ -140,7 +144,7 @@ sub ExpressionUpdate {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(ExpressionID Name UserID)) {
+    for my $Argument (qw(ExpressionID UserID)) {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -150,30 +154,41 @@ sub ExpressionUpdate {
         }
     }
 
-    # get expression data
-    my $ExpressionData = $Self->ExpressionGet(
-        ExpressionID => $Param{ExpressionID},
-        UserID       => $Param{UserID},
+    # map update attributes to column names
+    my %Attribute = (
+        ObjectID     => 'object_id',
+        AttributeID  => 'attribute_id',
+        OperatorID   => 'operator_id',
+        Selector     => 'selector',
+        CompareValue => 'compare_value',
     );
 
-    # check expression data
-    if ( !$ExpressionData ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "ExpressionUpdate of $Param{ExpressionID} failed!",
-        );
-        return;
+    # build SQL to update change
+    my $SQL = 'UPDATE condition_expression SET ';
+    my @Bind;
+
+    ATTRIBUTE:
+    for my $Attribute ( keys %Attribute ) {
+
+        # preserve the old value, when the column isn't in function parameters
+        next ATTRIBUTE if !exists $Param{$Attribute};
+
+        # param checking has already been done, so this is safe
+        $SQL .= "$Attribute{$Attribute} = ?, ";
+        push @Bind, \$Param{$Attribute};
     }
 
-    # update expression in database
+    # set condition ID to allow trailing comma of previous loop
+    $SQL .= ' condition_id = condition_id ';
+
+    # set matching of SQL statement
+    $SQL .= 'WHERE id = ?';
+    push @Bind, \$Param{ExpressionID};
+
+    # update expression
     return if !$Self->{DBObject}->Do(
-        SQL => 'UPDATE condition_expression '
-            . 'SET name = ? '
-            . 'WHERE id = ?',
-        Bind => [
-            \$Param{Name},
-            \$Param{ExpressionID},
-        ],
+        SQL  => $SQL,
+        Bind => \@Bind,
     );
 
     return 1;
@@ -341,6 +356,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2010-01-07 13:28:54 $
+$Revision: 1.3 $ $Date: 2010-01-07 15:49:42 $
 
 =cut

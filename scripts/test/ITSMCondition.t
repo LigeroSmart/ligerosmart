@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.16 2010-01-07 14:15:17 mae Exp $
+# $Id: ITSMCondition.t,v 1.17 2010-01-07 15:49:42 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -546,8 +546,6 @@ my @ExpressionTests = (
                 UserID       => 1,
             },
         },
-        ReferenceData => {
-        },
     },
     {
         SourceData => {
@@ -598,12 +596,86 @@ my @ExpressionTests = (
                 },
 
                 # static fields
+                Selector     => 'NewDummySelector' . int rand 1_000_000,
+                CompareValue => 'NewDummyCompareValue' . int rand 1_000_000,
+                UserID       => 1,
+            },
+        },
+    },
+    {
+        SourceData => {
+            ExpressionAdd => {
+                ObjectID => {
+                    ObjectLookup => {
+                        Name   => 'ITSMWorkOrder',
+                        UserID => 1,
+                    },
+                },
+                AttributeID => {
+                    AttributeLookup => {
+                        Name   => 'WorkOrderTitle',
+                        UserID => 1,
+                    },
+                },
+                OperatorID => {
+                    OperatorLookup => {
+                        Name   => 'is not',
+                        UserID => 1,
+                    },
+                },
+
+                # static fields
+                ConditionID  => $ConditionIDs[0],
+                Selector     => 'DummySelector3',
+                CompareValue => 'DummyCompareValue3',
+                UserID       => 1,
+            },
+            ExpressionUpdate => {
                 UserID => 1,
             },
         },
-        ReferenceData => {
-        },
     },
+    {
+        SourceData => {
+            ExpressionAdd => {
+                ObjectID => {
+                    ObjectLookup => {
+                        Name   => 'ITSMChange',
+                        UserID => 1,
+                    },
+                },
+                AttributeID => {
+                    AttributeLookup => {
+                        Name   => 'PlannedStartTime',
+                        UserID => 1,
+                    },
+                },
+                OperatorID => {
+                    OperatorLookup => {
+                        Name   => 'is greater than',
+                        UserID => 1,
+                    },
+                },
+
+                # static fields
+                ConditionID  => $ConditionIDs[1],
+                Selector     => 'DummySelector2',
+                CompareValue => 'DummyCompareValue2',
+                UserID       => 1,
+            },
+            ExpressionUpdate => {
+                ObjectID => {
+                    ObjectLookup => {
+                        Name   => 'ITSMWorkOrder',
+                        UserID => 1,
+                    },
+                },
+
+                # static fields
+                UserID => 1,
+            },
+        },
+    }
 );
 
 # check condition expressions
@@ -613,16 +685,13 @@ for my $ExpressionTest (@ExpressionTests) {
 
     # store data of test cases locally
     my %SourceData;
-    my %ReferenceData;
+    my $ExpressionID;
+    my %ExpressionAddSourceData;
+    my %ExpressionAddData;
 
     # extract source data
     if ( $ExpressionTest->{SourceData} ) {
         %SourceData = %{ $ExpressionTest->{SourceData} };
-    }
-
-    # extract reference data
-    if ( $ExpressionTest->{ReferenceData} ) {
-        %ReferenceData = %{ $ExpressionTest->{ReferenceData} };
     }
 
     next EXPRESSIONTEST if !%SourceData;
@@ -634,12 +703,18 @@ for my $ExpressionTest (@ExpressionTests) {
         if ( $CreateData eq 'ExpressionAdd' ) {
 
             # extract ExpressionAdd data
-            my %ExpressionAddSourceData = %{ $SourceData{$CreateData} };
-            my %ExpressionAddData;
+            %ExpressionAddSourceData = %{ $SourceData{$CreateData} };
 
             # set static fields
             my @StaticFields = qw( Selector CompareValue UserID ConditionID );
+
+            STATICFIELD:
             for my $StaticField (@StaticFields) {
+
+                # ommit static field if it is not set
+                next STATICFIELD if !$ExpressionAddSourceData{$StaticField};
+
+                # safe data
                 $ExpressionAddData{$StaticField} = $ExpressionAddSourceData{$StaticField};
             }
 
@@ -661,7 +736,7 @@ for my $ExpressionTest (@ExpressionTests) {
             }
 
             # add expression
-            my $ExpressionID = $Self->{ConditionObject}->ExpressionAdd(
+            $ExpressionID = $Self->{ConditionObject}->ExpressionAdd(
                 %ExpressionAddData,
             );
 
@@ -682,7 +757,7 @@ for my $ExpressionTest (@ExpressionTests) {
             );
             $Self->True(
                 $ExpressionGetData,
-                'Test ' . $TestCount++ . ' - ExpressionGet',
+                'Test ' . $TestCount++ . ' - ExpressionAdd(): ExpressionGet',
             );
 
             # test values
@@ -691,10 +766,85 @@ for my $ExpressionTest (@ExpressionTests) {
                 $Self->Is(
                     $ExpressionGetData->{$TestValue},
                     $ExpressionAddData{$TestValue},
-                    'Test ' . $TestCount++ . " - ExpressionGet -> $TestValue",
+                    'Test ' . $TestCount++ . " - ExpressionAdd(): ExpressionGet -> $TestValue",
                 );
             }
-        }
+        }    # end if ( $CreateData eq 'ExpressionAdd' )
+
+        # add expression
+        if ( $CreateData eq 'ExpressionUpdate' ) {
+
+            # extract ExpressionUpdate data
+            my %ExpressionUpdateSourceData = %{ $SourceData{$CreateData} };
+            my %ExpressionUpdateData;
+
+            # set static fields
+            my @StaticFields = qw( Selector CompareValue UserID ConditionID );
+
+            STATICFIELD:
+            for my $StaticField (@StaticFields) {
+
+                # ommit static field if it is not set
+                next STATICFIELD if !$ExpressionUpdateSourceData{$StaticField};
+
+                # safe data
+                $ExpressionUpdateData{$StaticField} = $ExpressionUpdateSourceData{$StaticField};
+            }
+
+            # get all fields for ExpressionUpdate
+            for my $ExpressionUpdateValue ( keys %ExpressionUpdateSourceData ) {
+
+                # ommit static fields
+                next if grep { $_ eq $ExpressionUpdateValue } @StaticFields;
+
+                # get values for fields
+                for my $FieldValue ( keys %{ $ExpressionUpdateSourceData{$ExpressionUpdateValue} } )
+                {
+
+                    # store gathered information in hash for updating
+                    $ExpressionUpdateData{$ExpressionUpdateValue} =
+                        $Self->{ConditionObject}->$FieldValue(
+                        %{ $ExpressionUpdateSourceData{$ExpressionUpdateValue}->{$FieldValue} },
+                        );
+                }
+            }
+
+            # update expression
+            my $UpdateSuccess = $Self->{ConditionObject}->ExpressionUpdate(
+                ExpressionID => $ExpressionID,
+                %ExpressionUpdateData,
+            );
+
+            $Self->True(
+                $UpdateSuccess,
+                'Test ' . $TestCount++ . " - $CreateData",
+            );
+
+            next CREATEDATA if !$UpdateSuccess;
+
+            # check the added expression
+            my $ExpressionGetData = $Self->{ConditionObject}->ExpressionGet(
+                ExpressionID => $ExpressionID,
+                UserID       => $ExpressionUpdateData{UserID},
+            );
+            $Self->True(
+                $ExpressionGetData,
+                'Test ' . $TestCount++ . ' - ExpressionUpdate(): ExpressionGet',
+            );
+
+            # merge add and update data
+            %ExpressionUpdateData = ( %ExpressionAddData, %ExpressionUpdateData );
+
+            # test values
+            delete $ExpressionUpdateData{UserID};
+            for my $TestValue ( keys %ExpressionUpdateData ) {
+                $Self->Is(
+                    $ExpressionGetData->{$TestValue},
+                    $ExpressionUpdateData{$TestValue},
+                    'Test ' . $TestCount++ . " - ExpressionUpdate(): ExpressionGet -> $TestValue",
+                );
+            }
+        }    # end if ( $CreateData eq 'ExpressionUpdate' )
     }
 }
 
