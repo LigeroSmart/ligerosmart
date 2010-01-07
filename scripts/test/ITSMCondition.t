@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.14 2010-01-07 13:30:53 mae Exp $
+# $Id: ITSMCondition.t,v 1.15 2010-01-07 14:12:28 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -484,7 +484,7 @@ for my $CreateCondition ( 0 .. 2 ) {
 }
 
 # check for default condition expressions
-my @ConditionExpressionTests = (
+my @ExpressionTests = (
     {
         SourceData => {
             ExpressionAdd => {
@@ -497,6 +497,38 @@ my @ConditionExpressionTests = (
                 AttributeID => {
                     AttributeLookup => {
                         Name   => 'ChangeTitle',
+                        UserID => 1,
+                    },
+                },
+                OperatorID => {
+                    OperatorLookup => {
+                        Name   => 'is',
+                        UserID => 1,
+                    },
+                },
+
+                # static fields
+                ConditionID  => $ConditionIDs[0],
+                Selector     => 'DummySelector1',
+                CompareValue => 'DummyCompareValue1',
+                UserID       => 1,
+            },
+        },
+        ReferenceData => {
+        },
+    },
+    {
+        SourceData => {
+            ExpressionAdd => {
+                ObjectID => {
+                    ObjectLookup => {
+                        Name   => 'ITSMChange',
+                        UserID => 1,
+                    },
+                },
+                AttributeID => {
+                    AttributeLookup => {
+                        Name   => 'ChangeManagerID',
                         UserID => 1,
                     },
                 },
@@ -545,6 +577,29 @@ my @ConditionExpressionTests = (
                 CompareValue => 'DummyCompareValue2',
                 UserID       => 1,
             },
+            ExpressionUpdate => {
+                ObjectID => {
+                    ObjectLookup => {
+                        Name   => 'ITSMChange',
+                        UserID => 1,
+                    },
+                },
+                AttributeID => {
+                    AttributeLookup => {
+                        Name   => 'ChangeTitle',
+                        UserID => 1,
+                    },
+                },
+                OperatorID => {
+                    OperatorLookup => {
+                        Name   => 'is',
+                        UserID => 1,
+                    },
+                },
+
+                # static fields
+                UserID => 1,
+            },
         },
         ReferenceData => {
         },
@@ -552,23 +607,25 @@ my @ConditionExpressionTests = (
 );
 
 # check condition expressions
-my @ConditionExpressionCreated;
-CONDITIONEXPRESSIONTEST:
-for my $ConditionExpressionTest (@ConditionExpressionTests) {
+my @ExpressionIDs;
+EXPRESSIONTEST:
+for my $ExpressionTest (@ExpressionTests) {
+
+    # store data of test cases locally
     my %SourceData;
     my %ReferenceData;
 
     # extract source data
-    if ( $ConditionExpressionTest->{SourceData} ) {
-        %SourceData = %{ $ConditionExpressionTest->{SourceData} };
+    if ( $ExpressionTest->{SourceData} ) {
+        %SourceData = %{ $ExpressionTest->{SourceData} };
     }
 
     # extract reference data
-    if ( $ConditionExpressionTest->{ReferenceData} ) {
-        %ReferenceData = %{ $ConditionExpressionTest->{ReferenceData} };
+    if ( $ExpressionTest->{ReferenceData} ) {
+        %ReferenceData = %{ $ExpressionTest->{ReferenceData} };
     }
 
-    next CONDITIONEXPRESSIONTEST if !%SourceData;
+    next EXPRESSIONTEST if !%SourceData;
 
     CREATEDATA:
     for my $CreateData ( keys %SourceData ) {
@@ -595,6 +652,7 @@ for my $ConditionExpressionTest (@ConditionExpressionTests) {
                 # get values for fields
                 for my $FieldValue ( keys %{ $ExpressionAddSourceData{$ExpressionAddValue} } ) {
 
+                    # store gathered information in hash for adding
                     $ExpressionAddData{$ExpressionAddValue} =
                         $Self->{ConditionObject}->$FieldValue(
                         %{ $ExpressionAddSourceData{$ExpressionAddValue}->{$FieldValue} },
@@ -615,7 +673,7 @@ for my $ConditionExpressionTest (@ConditionExpressionTests) {
             next CREATEDATA if !$ExpressionID;
 
             # save created ID for deleting expressions
-            push @ConditionExpressionCreated, $ExpressionID;
+            push @ExpressionIDs, $ExpressionID;
 
             # check the added expression
             my $ExpressionGetData = $Self->{ConditionObject}->ExpressionGet(
@@ -640,8 +698,48 @@ for my $ConditionExpressionTest (@ConditionExpressionTests) {
     }
 }
 
+# check for expression list
+CONDITIONID:
+for my $ConditionID (@ConditionIDs) {
+
+    # check for expressions of this condition id
+    my $ExpressionTestCount = 0;
+    EXPRESSIONTEST:
+    for my $ExpressionTest (@ExpressionTests) {
+
+        # ommit test case if no source data is available
+        next EXPRESSIONTEST if !$ExpressionTest->{SourceData};
+
+        # ommit test case if no expression shoul be added
+        next EXPRESSIONTEST if !$ExpressionTest->{SourceData}->{ExpressionAdd};
+
+        $ExpressionTestCount++
+            if $ExpressionTest->{SourceData}->{ExpressionAdd}->{ConditionID} == $ConditionID;
+    }
+
+    my $ExpressionList = $Self->{ConditionObject}->ExpressionList(
+        ConditionID => $ConditionID,
+        UserID      => 1,
+    );
+
+    $Self->Is(
+        'ARRAY',
+        ref $ExpressionList,
+        'Test ' . $TestCount++ . ' - ExpressionList return value',
+    );
+
+    # check for list type
+    next CONDITIONID if ref $ExpressionList ne 'ARRAY';
+
+    $Self->Is(
+        $ExpressionTestCount,
+        scalar @{$ExpressionList},
+        'Test ' . $TestCount++ . " - ExpressionList -> $ConditionID",
+    );
+}
+
 # check for expression delete
-for my $ExpressionID (@ConditionExpressionCreated) {
+for my $ExpressionID (@ExpressionIDs) {
     $Self->True(
         $Self->{ConditionObject}->ExpressionDelete(
             UserID       => 1,
