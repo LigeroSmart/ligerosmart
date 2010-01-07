@@ -1,8 +1,8 @@
 # --
 # AgentITSMChangeAdd.dtl - provides HTML form for AgentITSMChangeAdd
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.dtl,v 1.38 2009-12-16 20:45:43 reb Exp $
+# $Id: AgentITSMChangeAdd.dtl,v 1.39 2010-01-07 09:43:10 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -230,8 +230,16 @@ $Include{"RichTextEditorITSM"}
                                             </tr>
 <!-- dtl:block:AttachmentRow -->
                                             <tr>
-                                                <td colspan="3"><input type="file" name="AttachmentNew"></td>
-                                                <td width="100%"><input type="submit" class="button" name="SaveAttachment" value="$Text{"Attach"}"></td>
+                                                <td colspan="3">
+                                                    <input type="file" name="AttachmentNew">
+<!-- dtl:block:FileAlreadyUploaded -->
+                                                    <br />
+                                                    <font color="red" size="-2">$Text{"Input invalid"}</font>
+<!-- dtl:block:FileAlreadyUploaded -->
+                                                </td>
+                                                <td width="100%">
+                                                    <input type="submit" class="button" name="SaveAttachment" value="$Text{"Attach"}">
+                                                </td>
                                             </tr>
                                         </table>
                                     </td>

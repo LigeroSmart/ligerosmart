@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.33 2009-12-16 21:03:35 reb Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.34 2010-01-07 09:43:10 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.33 $) [1];
+$VERSION = qw($Revision: 1.34 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -107,16 +107,42 @@ sub Run {
         Type => 'Impact',
     );
 
+    # Remember the reason why saving was not attempted.
+    # The entries are the names of the dtl validation error blocks.
+    my @ValidationErrors;
+    my %CIPErrors;
+
     # if attachment upload is requested
     if ( $GetParam{SaveAttachment} ) {
+
+        # get upload data
         my %UploadStuff = $Self->{ParamObject}->GetUploadAll(
             Param  => "AttachmentNew",
             Source => 'string',
         );
-        $Self->{UploadCacheObject}->FormIDAddFile(
+
+        # get meta data from all already uploaded files
+        my @AllFilesMetaData = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
             FormID => $Self->{FormID},
-            %UploadStuff,
         );
+
+        # check if file was already uploaded
+        my $FileAlreadyUploaded = 0;
+        for my $FileMetaData (@AllFilesMetaData) {
+            if ( $FileMetaData->{Filename} eq $UploadStuff{Filename} ) {
+                $FileAlreadyUploaded = 1;
+
+                # show error message
+                push @ValidationErrors, 'FileAlreadyUploaded';
+            }
+        }
+
+        if ( !$FileAlreadyUploaded ) {
+            $Self->{UploadCacheObject}->FormIDAddFile(
+                FormID => $Self->{FormID},
+                %UploadStuff,
+            );
+        }
 
         $Self->{Subaction} = 'SaveAttachment';
     }
@@ -218,11 +244,6 @@ sub Run {
             );
         }
     }
-
-    # Remember the reason why saving was not attempted.
-    # The entries are the names of the dtl validation error blocks.
-    my @ValidationErrors;
-    my %CIPErrors;
 
     # update change
     if ( $Self->{Subaction} eq 'Save' ) {

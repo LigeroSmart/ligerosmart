@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.216 2010-01-05 15:22:39 bes Exp $
+# $Id: ITSMChange.pm,v 1.217 2010-01-07 09:43:10 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -28,7 +28,7 @@ use Kernel::System::VirtualFS;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.216 $) [1];
+$VERSION = qw($Revision: 1.217 $) [1];
 
 =head1 NAME
 
@@ -2512,6 +2512,40 @@ sub ChangeAttachmentList {
     return %Attachments;
 }
 
+=item ChangeAttachmentExists()
+
+Checks if a file with a given filename exists.
+
+    my $Exists = $ChangeObject->ChangeAttachmentExists(
+        Filename => 'test.txt',
+        ChangeID => 123,
+        UserID   => 1,
+    );
+
+=cut
+
+sub ChangeAttachmentExists {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Needed (qw(Filename ChangeID UserID)) {
+        if ( !$Param{$Needed} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Needed!",
+            );
+
+            return;
+        }
+    }
+
+    return if !$Self->{VirtualFSObject}->Find(
+        Filename => 'Change/' . $Param{ChangeID} . '/' . $Param{Filename},
+    );
+
+    return 1;
+}
+
 =begin Internal:
 
 =item _CheckChangeStateIDs()
@@ -3008,6 +3042,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.216 $ $Date: 2010-01-05 15:22:39 $
+$Revision: 1.217 $ $Date: 2010-01-07 09:43:10 $
 
 =cut
