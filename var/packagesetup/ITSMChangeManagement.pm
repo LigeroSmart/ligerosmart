@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.17 2010-01-07 13:38:54 reb Exp $
+# $Id: ITSMChangeManagement.pm,v 1.18 2010-01-07 14:01:34 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,6 @@ use Kernel::System::Config;
 use Kernel::System::CSV;
 use Kernel::System::GeneralCatalog;
 use Kernel::System::Group;
-use Kernel::System::HTMLUtils;
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::History;
 use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
@@ -34,7 +33,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 =head1 NAME
 
@@ -160,7 +159,6 @@ sub new {
     $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
     $Self->{HistoryObject}        = Kernel::System::ITSMChange::History->new( %{$Self} );
     $Self->{NotificationObject}   = Kernel::System::ITSMChange::Notification->new( %{$Self} );
-    $Self->{HTMLUtilsObject}      = Kernel::System::HTMLUtils->new( %{$Self} );
     $Self->{StatsObject}          = Kernel::System::Stats->new(
         %{$Self},
         UserID => 1,
@@ -1053,17 +1051,9 @@ Your OTRS Notification Master'
         ]
     );
 
-    # check if richtext feature is enabled
-    my $RichTextEnabled = $Self->{ConfigObject}->Get('Frontend::RichText');
-
     # insert the entries
     for my $Notification (@Notifications) {
         my @Binds;
-
-        # if richtext is enabled, the notification text has to be html-escaped
-        if ($RichTextEnabled) {
-            $Notification->[3] = $Self->{HTMLUtilsObject}->ToHTML( String => $Notification->[3] );
-        }
 
         # Bind requires scalar references
         for my $Value ( @{$Notification} ) {
@@ -1157,6 +1147,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.17 $ $Date: 2010-01-07 13:38:54 $
+$Revision: 1.18 $ $Date: 2010-01-07 14:01:34 $
 
 =cut

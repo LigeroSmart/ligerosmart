@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Notification.pm - lib for notifications in change management
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.18 2010-01-07 13:56:05 bes Exp $
+# $Id: Notification.pm,v 1.19 2010-01-07 14:01:34 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 =head1 NAME
 
@@ -218,6 +218,22 @@ sub NotificationSend {
                 return;
             }
 
+            # do text/plain to text/html convert
+            if ( $Self->{RichText} && $NotificationData{ContentType} =~ m{ text/plain }xmsi ) {
+                $NotificationData{ContentType} = 'text/html';
+                $NotificationData{Body}        = $Self->{HTMLUtilsObject}->ToHTML(
+                    String => $NotificationData{Body},
+                );
+            }
+
+            # do text/html to text/plain convert
+            if ( !$Self->{RichText} && $NotificationData{ContentType} =~ m{ text/html }xmsi ) {
+                $NotificationData{ContentType} = 'text/plain';
+                $NotificationData{Body}        = $Self->{HTMLUtilsObject}->ToAscii(
+                    String => $NotificationData{Body},
+                );
+            }
+
             $NotificationCache{$NotificationKey} = {%NotificationData};
             $Notification = {%NotificationData};
         }
@@ -291,6 +307,22 @@ sub NotificationSend {
                 );
 
                 return;
+            }
+
+            # do text/plain to text/html convert
+            if ( $Self->{RichText} && $NotificationData{ContentType} =~ m{ text/plain }xmsi ) {
+                $NotificationData{ContentType} = 'text/html';
+                $NotificationData{Body}        = $Self->{HTMLUtilsObject}->ToHTML(
+                    String => $NotificationData{Body},
+                );
+            }
+
+            # do text/html to text/plain convert
+            if ( !$Self->{RichText} && $NotificationData{ContentType} =~ m{ text/html }xmsi ) {
+                $NotificationData{ContentType} = 'text/plain';
+                $NotificationData{Body}        = $Self->{HTMLUtilsObject}->ToAscii(
+                    String => $NotificationData{Body},
+                );
             }
 
             $NotificationCache{$NotificationKey} = {%NotificationData};
@@ -950,6 +982,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.18 $ $Date: 2010-01-07 13:56:05 $
+$Revision: 1.19 $ $Date: 2010-01-07 14:01:34 $
 
 =cut
