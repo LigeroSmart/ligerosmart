@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Notification.pm - lib for notifications in change management
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.20 2010-01-07 16:58:18 ub Exp $
+# $Id: Notification.pm,v 1.21 2010-01-07 18:38:25 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 =head1 NAME
 
@@ -180,63 +180,24 @@ sub NotificationSend {
         );
     }
 
-    my %NotificationCache;
-
     for my $AgentID ( @{ $Param{AgentIDs} } ) {
 
-        # get preferred language
+        # User info for prefered language and macro replacement
         my %User = $Self->{UserObject}->GetUserData(
             UserID => $AgentID,
         );
-
-        # get preferred language
-        my $PreferredLanguage = $Self->{ConfigObject}->Get('DefaultLanguage') || 'en';
-        if ( $User{UserLanguage} ) {
-            $PreferredLanguage = $User{UserLanguage};
-        }
+        my $PreferredLanguage
+            = $User{UserLanguage} || $Self->{ConfigObject}->Get('DefaultLanguage') || 'en';
 
         my $NotificationKey
             = $PreferredLanguage . '::Agent::' . $Param{Type} . '::' . $Param{Event};
 
         # get notification (cache || database)
-        my $Notification = $NotificationCache{$NotificationKey};
+        my $Notification = $Self->_NotificationCachedGet(
+            NotificationKey => $NotificationKey,
+        );
 
-        if ( !$Notification ) {
-
-            # get from database
-            my %NotificationData = $Self->{NotificationObject}->NotificationGet(
-                Name => $NotificationKey,
-            );
-
-            # no notification found
-            if ( !%NotificationData ) {
-                $Self->{LogObject}->Log(
-                    Priority => 'error',
-                    Message  => "Could not find notification for $NotificationKey",
-                );
-
-                return;
-            }
-
-            # do text/plain to text/html convert
-            if ( $Self->{RichText} && $NotificationData{ContentType} =~ m{ text/plain }xmsi ) {
-                $NotificationData{ContentType} = 'text/html';
-                $NotificationData{Body}        = $Self->{HTMLUtilsObject}->ToHTML(
-                    String => $NotificationData{Body},
-                );
-            }
-
-            # do text/html to text/plain convert
-            if ( !$Self->{RichText} && $NotificationData{ContentType} =~ m{ text/html }xmsi ) {
-                $NotificationData{ContentType} = 'text/plain';
-                $NotificationData{Body}        = $Self->{HTMLUtilsObject}->ToAscii(
-                    String => $NotificationData{Body},
-                );
-            }
-
-            $NotificationCache{$NotificationKey} = {%NotificationData};
-            $Notification = {%NotificationData};
-        }
+        return if !$Notification;
 
         # replace otrs macros
         $Notification->{Body} = $Self->_NotificationReplaceMacros(
@@ -275,59 +236,20 @@ sub NotificationSend {
 
     for my $CustomerID ( @{ $Param{CustomerIDs} } ) {
 
-        # get preferred language
+        # User info for prefered language and macro replacement
         my %CustomerUser = $Self->{CustomerUserObject}->CustomerUserDataGet(
             User => $CustomerID,
         );
-
-        # get preferred language
-        my $PreferredLanguage = $Self->{ConfigObject}->Get('DefaultLanguage') || 'en';
-        if ( $CustomerUser{UserLanguage} ) {
-            $PreferredLanguage = $CustomerUser{UserLanguage};
-        }
+        my $PreferredLanguage
+            = $CustomerUser{UserLanguage} || $Self->{ConfigObject}->Get('DefaultLanguage') || 'en';
 
         my $NotificationKey
             = $PreferredLanguage . '::Customer::' . $Param{Type} . '::' . $Param{Event};
 
         # get notification (cache || database)
-        my $Notification = $NotificationCache{$NotificationKey};
-
-        if ( !$Notification ) {
-
-            # get from database
-            my %NotificationData = $Self->{NotificationObject}->NotificationGet(
-                Name => $NotificationKey,
-            );
-
-            # no notification found
-            if ( !%NotificationData ) {
-                $Self->{LogObject}->Log(
-                    Priority => 'error',
-                    Message  => "Could not find notification for $NotificationKey",
-                );
-
-                return;
-            }
-
-            # do text/plain to text/html convert
-            if ( $Self->{RichText} && $NotificationData{ContentType} =~ m{ text/plain }xmsi ) {
-                $NotificationData{ContentType} = 'text/html';
-                $NotificationData{Body}        = $Self->{HTMLUtilsObject}->ToHTML(
-                    String => $NotificationData{Body},
-                );
-            }
-
-            # do text/html to text/plain convert
-            if ( !$Self->{RichText} && $NotificationData{ContentType} =~ m{ text/html }xmsi ) {
-                $NotificationData{ContentType} = 'text/plain';
-                $NotificationData{Body}        = $Self->{HTMLUtilsObject}->ToAscii(
-                    String => $NotificationData{Body},
-                );
-            }
-
-            $NotificationCache{$NotificationKey} = {%NotificationData};
-            $Notification = {%NotificationData};
-        }
+        my $Notification = $Self->_NotificationCachedGet(
+            NotificationKey => $NotificationKey,
+        );
 
         # replace otrs macros
         $Notification->{Body} = $Self->_NotificationReplaceMacros(
@@ -806,17 +728,91 @@ sub RecipientList {
 
 =begin Internal:
 
+=cut
+
+{
+
+=item _NotificationCachedGet()
+
+Get the notification template from cache or from the NotificationObject.
+Also convert to notification the appropriate content type.
+
+    my $Notification = $NotificationObject->_NotificationCachedGet(
+        NotificationKey => 'en::Agent::WorkOrder::WorkOrderUpdate',
+    );
+
+=cut
+
+    my %NotificationCache;
+
+    sub _NotificationCachedGet {
+        my ( $Self, %Param ) = @_;
+
+        for my $Argument (qw(NotificationKey)) {
+            if ( !defined $Param{$Argument} ) {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "Need $Argument!",
+                );
+                return;
+            }
+        }
+
+        my $NotificationKey = $Param{NotificationKey};
+
+        # check the cache
+        return $NotificationCache{$NotificationKey} if $NotificationCache{$NotificationKey};
+
+        # get from database
+        my %NotificationData = $Self->{NotificationObject}->NotificationGet(
+            Name => $NotificationKey,
+        );
+
+        # no notification found
+        if ( !%NotificationData ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Could not find notification for $NotificationKey",
+            );
+
+            return;
+        }
+
+        # do text/plain to text/html convert
+        if ( $Self->{RichText} && $NotificationData{ContentType} =~ m{ text/plain }xmsi ) {
+            $NotificationData{ContentType} = 'text/html';
+            $NotificationData{Body}        = $Self->{HTMLUtilsObject}->ToHTML(
+                String => $NotificationData{Body},
+            );
+        }
+
+        # do text/html to text/plain convert
+        elsif ( !$Self->{RichText} && $NotificationData{ContentType} =~ m{ text/html }xmsi ) {
+            $NotificationData{ContentType} = 'text/plain';
+            $NotificationData{Body}        = $Self->{HTMLUtilsObject}->ToAscii(
+                String => $NotificationData{Body},
+            );
+        }
+
+        $NotificationCache{$NotificationKey} = \%NotificationData;
+
+        return $NotificationCache{$NotificationKey};
+    }
+}
+
 =item _NotificationReplaceMacros()
 
 This method replaces all the <OTRS_xxxx> macros in notification text.
 
     my $CleanText = $NotificationObject->_NotificationReplaceMacros(
         Type      => 'Change',    # Change|WorkOrder
-        Text      => 'Some <OTRS_CONFIG_FQDN> text',
+        Text      => 'Some <OTRS_CONFIG_FQDN> text',        # optional, Text or Richtext
+        RichText  => 'Some <b><OTRS_CONFIG_FQDN></b> text', # optional, RichText or Text
+        Recipient => {%User},
         Data      => { %ChangeData },
-        UserID    => 1,
         Change    => $Change,
         WorkOrder => $WorkOrder,
+        UserID    => 1,
     );
 
 =cut
@@ -982,6 +978,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.20 $ $Date: 2010-01-07 16:58:18 $
+$Revision: 1.21 $ $Date: 2010-01-07 18:38:25 $
 
 =cut
