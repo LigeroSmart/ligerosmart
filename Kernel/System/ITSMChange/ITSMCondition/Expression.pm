@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Expression.pm - all condition expression functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Expression.pm,v 1.3 2010-01-07 15:49:42 mae Exp $
+# $Id: Expression.pm,v 1.4 2010-01-07 18:22:49 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 =head1 NAME
 
@@ -340,6 +340,74 @@ sub ExpressionDelete {
     return 1;
 }
 
+=item ExpressionMatch()
+
+Returns the boolean value of an expression.
+
+    my $Match = $ConditionObject->ExpressionMatch(
+        ExpressionID      => 123,
+        AttributesChanged => [ 'ChangeTitle', 'ChangeStateID', ],
+        UserID            => 1,
+    );
+
+=cut
+
+sub ExpressionMatch {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(ExpressionID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # get expression content
+    my $Expression = $Self->ExpressionGet(
+        ExpressionID => $Param{ExpressionID},
+        UserID       => $Param{UserID},
+    );
+
+    # check expression content
+    return if !$Expression;
+
+    # map expression attribute to object store
+    my %Attribute = (
+        ObjectID    => 'Object',
+        AttributeID => 'Attribute',
+        OperatorID  => 'Operator',
+    );
+
+    # get expression attributes
+    my %ExpressionData;
+    for my $Attribute ( keys %Attribute ) {
+
+        # define get function
+        my $GetFunction = $Attribute{$Attribute} . 'Get';
+
+        # get object
+        $ExpressionData{ $Attribute{$Attribute} }
+            = $Self->$GetFunction(
+            $Attribute => $Expression->{$Attribute},
+            UserID     => $Param{UserID},
+            );
+
+        # check for returned data
+        if ( !$ExpressionData{ $Attribute{$Attribute} } ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message =>
+                    "No value for '$Attribute' with ID '$Expression->{$Attribute}'!",
+            );
+            return;
+        }
+    }
+}
+
 1;
 
 =back
@@ -356,6 +424,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2010-01-07 15:49:42 $
+$Revision: 1.4 $ $Date: 2010-01-07 18:22:49 $
 
 =cut

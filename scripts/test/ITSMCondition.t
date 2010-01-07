@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.17 2010-01-07 15:49:42 mae Exp $
+# $Id: ITSMCondition.t,v 1.18 2010-01-07 18:22:49 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -91,7 +91,7 @@ for my $ObjectMethod (@ObjectMethods) {
 #------------------------
 
 # check for default condition objects
-my @ConditionObjects = qw(ITSMChange ITSMWorkOrder ChangeStateLock WorkOrderStateLock);
+my @ConditionObjects = qw(ITSMChange ITSMWorkOrder);
 
 # check condition objects
 for my $ConditionObject (@ConditionObjects) {
@@ -319,6 +319,9 @@ my @ConditionOperators = (
 
     # string matching
     'contains', 'begins with', 'ends with',
+
+    # action operator
+    'set', 'lock',
 );
 
 # check condition operators
@@ -927,6 +930,15 @@ for my $ConditionID (@ConditionIDs) {
         'Test ' . $TestCount++ . " - ExpressionList -> $ConditionID",
     );
 }
+
+my $ExpressionMatch = $Self->{ConditionObject}->ExpressionMatch(
+    ExpressionID => $ExpressionIDs[0],
+    UserID       => 1,
+);
+$Self->True(
+    $ExpressionMatch,
+    'Test ' . $TestCount++ . " - ExpressionMatch -> '$ExpressionMatch'",
+);
 
 # check for expression delete
 for my $ExpressionID (@ExpressionIDs) {
