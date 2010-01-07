@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Notification.pm - lib for notifications in change management
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.16 2010-01-07 08:54:26 reb Exp $
+# $Id: Notification.pm,v 1.17 2010-01-07 13:30:15 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 =head1 NAME
 
@@ -813,7 +813,7 @@ sub _NotificationReplaceMacros {
     if ( $Param{RichText} ) {
         $Start = '&lt;';
         $End   = '&gt;';
-        $Text =~ s/(\n|\r)//g;
+        $Text =~ s{ (\n|\r) }{}xmsg;
     }
 
     # replace config options
@@ -849,20 +849,20 @@ sub _NotificationReplaceMacros {
     $Text =~ s{ $Start OTRS_LAST_NAME $End }{$CurrentUser{UserLastname}}gxms;
 
     # cleanup
-    $Text =~ s/$Tag.+?$End/-/gi;
-    $Text =~ s/$Tag2.+?$End/-/gi;
+    $Text =~ s{ $Tag .+? $End}{-}xmsgi;
+    $Text =~ s{ $Tag2 .+? $End}{-}xmsgi;
 
     # get and prepare realname
     $Tag = $Start . 'OTRS_CUSTOMER_REALNAME';
-    $Text =~ s/$Tag$End/-/g;
+    $Text =~ s{$Tag$End}{-}g;
 
     # get customer data and replace it with <OTRS_CUSTOMER_DATA_...
     $Tag  = $Start . 'OTRS_CUSTOMER_';
     $Tag2 = $Start . 'OTRS_CUSTOMER_DATA_';
 
     # cleanup all not needed <OTRS_CUSTOMER_DATA_ tags
-    $Text =~ s/$Tag.+?$End/-/gi;
-    $Text =~ s/$Tag2.+?$End/-/gi;
+    $Text =~ s{ $Tag .+? $End }{-}xmsgi;
+    $Text =~ s{ $Tag2 .+? $End}{-}xmsgi;
 
     # replace <OTRS_CHANGE_... tags
     $Tag = $Start . 'OTRS_CHANGE_';
@@ -950,6 +950,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.16 $ $Date: 2010-01-07 08:54:26 $
+$Revision: 1.17 $ $Date: 2010-01-07 13:30:15 $
 
 =cut
