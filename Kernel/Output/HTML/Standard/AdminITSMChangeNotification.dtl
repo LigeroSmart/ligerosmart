@@ -2,7 +2,7 @@
 # AdminITSMChangeNotification.dtl - provides HTML form for AdminState
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMChangeNotification.dtl,v 1.5 2010-01-04 15:29:18 reb Exp $
+# $Id: AdminITSMChangeNotification.dtl,v 1.6 2010-01-07 12:14:50 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -49,21 +49,21 @@
                         <table width="100%" border="0" cellspacing="0" cellpadding="3">
                             <tr>
                                 <td class="contentkey" width="20%">$Text{"Name"}</td>
-                                <td class="contentkey">$Text{"Attribute"}</td>
                                 <td class="contentkey">$Text{"Event"}</td>
+                                <td class="contentkey">$Text{"Attribute"}</td>
                                 <td class="contentkey">$Text{"Rule"}</td>
                                 <td class="contentkey">$Text{"Recipients"}</td>
-#                <td class="contentkey" width="25%">$Text{"Comment"}</td>
+#                                <td class="contentkey" width="25%">$Text{"Comment"}</td>
                                 <td align="center" class="contentkey">$Text{"valid"}/$Text{"invalid"}</td>
                             </tr>
 <!-- dtl:block:OverviewResultRow -->
                             <tr>
                                 <td class="$QData{"CssClass"}"><a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Change;ID=$LQData{"ID"}">$QData{"Name"}</a></td>
-                                <td class="$QData{"CssClass"}">$QData{"Attribute"}</td>
                                 <td class="$QData{"CssClass"}"><div title="$Text{"$QData{"Event"}"}">$Text{"$QData{"Event"}"}</div></td>
+                                <td class="$QData{"CssClass"}">$QData{"Attribute"}</td>
                                 <td class="$QData{"CssClass"}">$QData{"Rule"}</td>
                                 <td class="$QData{"CssClass"}">$QData{"Recipients"}</td>
-#                <td class="$QData{"CssClass"}"><div title="$QData{"Comment"}">$QData{"Comment","20"}</div></td>
+#                                <td class="$QData{"CssClass"}"><div title="$QData{"Comment"}">$QData{"Comment","20"}</div></td>
                                 <td align="center" class="$QData{"CssClass"}">$Text{"$QData{"Valid"}"}</td>
                             </tr>
 <!-- dtl:block:OverviewResultRow -->
