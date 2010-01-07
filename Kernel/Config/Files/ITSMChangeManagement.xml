@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.130 2010-01-04 15:44:13 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.131 2010-01-07 13:31:29 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -1009,7 +1009,7 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChange::EventModule###02-Notification" Required="0" Valid="0">
+    <ConfigItem Name="ITSMChange::EventModule###02-Notification" Required="0" Valid="1">
         <Description Lang="en">ITSM event module that sends notifications.</Description>
         <Description Lang="de">ITSM Event Modul zum Senden von Benachrichtigungen.</Description>
         <Group>ITSM Change Management</Group>
@@ -1048,7 +1048,7 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMWorkOrder::EventModule###03-Notification" Required="0" Valid="0">
+    <ConfigItem Name="ITSMWorkOrder::EventModule###03-Notification" Required="0" Valid="1">
         <Description Lang="en">ITSM event module that sends notifications.</Description>
         <Description Lang="de">ITSM Event Modul zum Sender von Benachrichtigungen.</Description>
         <Group>ITSM Change Management</Group>
