@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.217 2010-01-07 09:43:10 reb Exp $
+# $Id: ITSMChange.pm,v 1.218 2010-01-07 11:28:59 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -28,7 +28,7 @@ use Kernel::System::VirtualFS;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.217 $) [1];
+$VERSION = qw($Revision: 1.218 $) [1];
 
 =head1 NAME
 
@@ -259,14 +259,22 @@ sub ChangeAdd {
 
     # trigger ChangeAddPost-Event
     # (yes, we want do do this before the ChangeUpdate!)
+    # override the actually passed change state with the initial change state
     $Self->EventHandler(
         Event => 'ChangeAddPost',
         Data  => {
             ChangeID => $ChangeID,
             %Param,
+            ChangeStateID => $ChangeStateID,
+            ChangeNumer   => $ChangeNumber,
         },
         UserID => $Param{UserID},
     );
+
+    # no need to pass already handled attributes to ChangeUpdate
+    delete $Param{CategoryID};
+    delete $Param{ImpactID};
+    delete $Param{PriorityID};
 
     # update change with remaining parameters
     my $UpdateSuccess = $Self->ChangeUpdate(
@@ -3042,6 +3050,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.217 $ $Date: 2010-01-07 09:43:10 $
+$Revision: 1.218 $ $Date: 2010-01-07 11:28:59 $
 
 =cut

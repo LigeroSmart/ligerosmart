@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/Notification.pm - a event module to send notifications
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.9 2010-01-07 11:04:10 bes Exp $
+# $Id: Notification.pm,v 1.10 2010-01-07 11:28:59 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,10 +17,9 @@ use warnings;
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::Notification;
-use Kernel::System::ITSMChange::ITSMStateMachine;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 =head1 NAME
 
@@ -99,7 +98,6 @@ sub new {
     $Self->{ChangeObject}             = Kernel::System::ITSMChange->new( %{$Self} );
     $Self->{WorkOrderObject}          = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
     $Self->{ChangeNotificationObject} = Kernel::System::ITSMChange::Notification->new( %{$Self} );
-    $Self->{StateMachineObject} = Kernel::System::ITSMChange::ITSMStateMachine->new( %{$Self} );
 
     # TODO: find better was to look up event ids
     $Self->{HistoryObject} = Kernel::System::ITSMChange::History->new( %{$Self} );
@@ -187,21 +185,6 @@ sub Run {
     my %Name2ID = (
         ChangeState => 'ChangeStateID',
     );
-
-    if ( $Event eq 'ChangeAdd' ) {
-
-        # in ChangeAdd(), the initial change_state_id is always the start state
-        # as determined from the state machine. If a changes state has been explicitly
-        # passed to ChangeAdd(), the changes state is passed to ChangeUpdate().
-        # For the sake of notifications, let's act as if the initial change state
-        # was passed as a param.
-        my $NextStateIDs = $Self->{StateMachineObject}->StateTransitionGet(
-            StateID => 0,
-            Class   => 'ITSM::ChangeManagement::Change::State',
-        );
-
-        $Param{Data}->{ChangeStateID} = $NextStateIDs->[0];
-    }
 
     # loop over the notification rules and check the condition
     RULE_ID:
@@ -463,6 +446,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.9 $ $Date: 2010-01-07 11:04:10 $
+$Revision: 1.10 $ $Date: 2010-01-07 11:28:59 $
 
 =cut
