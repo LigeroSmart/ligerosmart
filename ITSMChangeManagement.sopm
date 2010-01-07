@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.110 2010-01-07 08:54:26 reb Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.111 2010-01-07 09:33:00 mae Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -484,6 +484,14 @@
             <Index Name="condition_expression_compare_value">
                 <IndexColumn Name="compare_value"/>
             </Index>
+            <Unique Name="condition_expression_unique">
+                <UniqueColumn Name="condition_id"/>
+                <UniqueColumn Name="object_id"/>
+                <UniqueColumn Name="attribute_id"/>
+                <UniqueColumn Name="operator_id"/>
+                <UniqueColumn Name="selector"/>
+                <UniqueColumn Name="compare_value"/>
+            </Unique>
             <ForeignKey ForeignTable="change_condition">
                 <Reference Local="condition_id" Foreign="id"/>
             </ForeignKey>
@@ -1049,6 +1057,12 @@
             <Data Key="name" Type="Quote">PriorityID</Data>
         </Insert>
         <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeManagerID</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeBuilderID</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
             <Data Key="name" Type="Quote">PlannedStartTime</Data>
         </Insert>
         <Insert Table="condition_attribute">
@@ -1067,6 +1081,9 @@
             <Data Key="name" Type="Quote">AccountedTime</Data>
         </Insert>
         <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderID</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
             <Data Key="name" Type="Quote">WorkOrderNumber</Data>
         </Insert>
         <Insert Table="condition_attribute">
@@ -1077,6 +1094,9 @@
         </Insert>
         <Insert Table="condition_attribute">
             <Data Key="name" Type="Quote">WorkOrderTitle</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderAgentID</Data>
         </Insert>
         <Insert Table="condition_operator">
             <Data Key="name" Type="Quote">is</Data>

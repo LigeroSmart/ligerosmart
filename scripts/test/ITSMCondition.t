@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.11 2010-01-03 15:54:01 ub Exp $
+# $Id: ITSMCondition.t,v 1.12 2010-01-07 09:33:00 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -76,7 +76,7 @@ for my $ObjectMethod (@ObjectMethods) {
 #------------------------
 
 # check for default condition objects
-my @ConditionObjects = qw(ITSMChange ITSMWorkOrder ChangeStateLock WorkorderStateLock);
+my @ConditionObjects = qw(ITSMChange ITSMWorkOrder ChangeStateLock WorkOrderStateLock);
 
 # check condition objects
 for my $ConditionObject (@ConditionObjects) {
@@ -85,7 +85,7 @@ for my $ConditionObject (@ConditionObjects) {
     my $ObjectID = $Self->{ConditionObject}->ObjectLookup(
         Name   => $ConditionObject,
         UserID => 1,
-    );
+    ) || '';
 
     # check on return value
     $Self->True(
@@ -182,8 +182,10 @@ for my $ObjectID (@ConditionObjectCreated) {
 
 # check for default condition attributes
 my @ConditionAttributes = qw(
-    Title Number State Type ChangeManager ChangeBuilder WorkOrderAgent Priority
-    PlannedStart PlannedEnd ActualStart ActualEnd PlannedEffort AccountedTime
+    ChangeTitle      CategoryID      ImpactID PriorityID PlannedEffort    AccountedTime
+    ChangeManagerID  ChangeBuilderID WorkOrderAgentID
+    WorkOrderTitle   WorkOrderID     WorkOrderNumber     WorkOrderStateID WorkOrderTypeID
+    PlannedStartTime PlannedEndTime  ActualStartTime     ActualEndTime
 );
 
 # check condition attributes
@@ -193,7 +195,7 @@ for my $ConditionAttribute (@ConditionAttributes) {
     my $AttributeID = $Self->{ConditionObject}->AttributeLookup(
         UserID => 1,
         Name   => $ConditionAttribute,
-    );
+    ) || '';
 
     # check on return value
     $Self->True(
@@ -288,6 +290,118 @@ for my $AttributeID (@ConditionAttributeCreated) {
 # condition operator tests
 #-------------------------
 
-# TODO Add condition operator tests here!
+# check for default condition operators
+my @ConditionOperators = (
+
+    # commong matching
+    'is', 'is not',
+
+    # digit matching
+    'is greater than', 'is less than',
+
+    # date matching
+    'is before', 'is after',
+
+    # string matching
+    'contains', 'begins with', 'ends with',
+);
+
+# check condition operators
+for my $ConditionOperator (@ConditionOperators) {
+
+    # make lookup to get operator id
+    my $OperatorID = $Self->{ConditionObject}->OperatorLookup(
+        UserID => 1,
+        Name   => $ConditionOperator,
+    ) || '';
+
+    # check on return value
+    $Self->True(
+        $OperatorID,
+        'Test ' . $TestCount++ . " - OperatorLookup on '$ConditionOperator' -> '$OperatorID'",
+    );
+
+    # get operator data with operator id
+    my $OperatorData = $Self->{ConditionObject}->OperatorGet(
+        UserID     => 1,
+        OperatorID => $OperatorID,
+    );
+
+    # check return parameters
+    $Self->Is(
+        $OperatorData->{Name},
+        $ConditionOperator,
+        'Test ' . $TestCount++ . ' - OperatorGet() name check',
+    );
+}
+
+# check for object add
+my @ConditionOperatorCreated;
+for my $Counter ( 1 .. 3 ) {
+
+    # add new objects
+    my $OperatorID = $Self->{ConditionObject}->OperatorAdd(
+        UserID => 1,
+        Name   => 'OperatorName' . $Counter . int rand 1_000_000,
+    );
+
+    # check on return value
+    $Self->True(
+        $OperatorID,
+        'Test ' . $TestCount++ . " - OperatorAdd -> '$OperatorID'",
+    );
+
+    # save object it for delete test
+    push @ConditionOperatorCreated, $OperatorID;
+}
+
+# check condition operator list
+my $OperatorList = $Self->{ConditionObject}->OperatorList(
+    UserID => 1,
+);
+
+# check for operator list
+$Self->True(
+    $OperatorList,
+    'Test ' . $TestCount++ . " - OperatorList is not empty",
+);
+
+# check for operator list as array ref
+$Self->Is(
+    'ARRAY',
+    ref $OperatorList,
+    'Test ' . $TestCount++ . " - OperatorList type",
+);
+
+# check update of operator object
+my $ConditionOperatorNewName = 'UnitTestUpdate' . int rand 1_000_000;
+$Self->True(
+    $Self->{ConditionObject}->OperatorUpdate(
+        UserID     => 1,
+        OperatorID => $ConditionOperatorCreated[0],
+        Name       => $ConditionOperatorNewName,
+    ),
+    'Test ' . $TestCount++ . " - OperatorUpdate",
+);
+my $ConditionOperatorUpdate = $Self->{ConditionObject}->OperatorGet(
+    UserID     => 1,
+    OperatorID => $ConditionOperatorCreated[0],
+);
+$Self->Is(
+    $ConditionOperatorNewName,
+    $ConditionOperatorUpdate->{Name},
+    'Test ' . $TestCount++ . " - OperatorUpdate verify update",
+);
+
+# check for operator delete
+for my $OperatorID (@ConditionOperatorCreated) {
+    $Self->True(
+        $Self->{ConditionObject}->OperatorDelete(
+            UserID     => 1,
+            OperatorID => $OperatorID,
+        ),
+        'Test ' . $TestCount++ . " - OperatorDelete -> '$OperatorID'",
+    );
+}
 
 1;
