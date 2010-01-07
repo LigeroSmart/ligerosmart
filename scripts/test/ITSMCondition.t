@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.15 2010-01-07 14:12:28 mae Exp $
+# $Id: ITSMCondition.t,v 1.16 2010-01-07 14:15:17 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -696,6 +696,46 @@ for my $ExpressionTest (@ExpressionTests) {
             }
         }
     }
+}
+
+# check for expression list
+CONDITIONID:
+for my $ConditionID (@ConditionIDs) {
+
+    # check for expressions of this condition id
+    my $ExpressionTestCount = 0;
+    EXPRESSIONTEST:
+    for my $ExpressionTest (@ExpressionTests) {
+
+        # ommit test case if no source data is available
+        next EXPRESSIONTEST if !$ExpressionTest->{SourceData};
+
+        # ommit test case if no expression shoul be added
+        next EXPRESSIONTEST if !$ExpressionTest->{SourceData}->{ExpressionAdd};
+
+        $ExpressionTestCount++
+            if $ExpressionTest->{SourceData}->{ExpressionAdd}->{ConditionID} == $ConditionID;
+    }
+
+    my $ExpressionList = $Self->{ConditionObject}->ExpressionList(
+        ConditionID => $ConditionID,
+        UserID      => 1,
+    );
+
+    $Self->Is(
+        'ARRAY',
+        ref $ExpressionList,
+        'Test ' . $TestCount++ . ' - ExpressionList return value',
+    );
+
+    # check for list type
+    next CONDITIONID if ref $ExpressionList ne 'ARRAY';
+
+    $Self->Is(
+        $ExpressionTestCount,
+        scalar @{$ExpressionList},
+        'Test ' . $TestCount++ . " - ExpressionList -> $ConditionID",
+    );
 }
 
 # check for expression list
