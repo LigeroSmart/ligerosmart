@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAdd.pm - the OTRS::ITSM::ChangeManagement workorder add module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.pm,v 1.32 2010-01-04 12:17:56 reb Exp $
+# $Id: AgentITSMWorkOrderAdd.pm,v 1.33 2010-01-07 10:05:54 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.32 $) [1];
+$VERSION = qw($Revision: 1.33 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -269,15 +269,29 @@ sub Run {
             Param  => "AttachmentNew",
             Source => 'string',
         );
-        $Self->{UploadCacheObject}->FormIDAddFile(
-            FormID => $Self->{FormID},
-            %UploadStuff,
-        );
 
-        # reload attachment list
-        @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
-            FormID => $Self->{FormID},
-        );
+        # check if file was already uploaded
+        my $FileAlreadyUploaded = 0;
+        for my $FileMetaData (@Attachments) {
+            if ( $FileMetaData->{Filename} eq $UploadStuff{Filename} ) {
+                $FileAlreadyUploaded = 1;
+
+                # show error message
+                push @ValidationErrors, 'FileAlreadyUploaded';
+            }
+        }
+
+        if ( !$FileAlreadyUploaded ) {
+            $Self->{UploadCacheObject}->FormIDAddFile(
+                FormID => $Self->{FormID},
+                %UploadStuff,
+            );
+
+            # reload attachment list
+            @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
+                FormID => $Self->{FormID},
+            );
+        }
     }
 
     # handle attachment deletion

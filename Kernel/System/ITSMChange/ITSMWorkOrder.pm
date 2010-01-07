@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.66 2010-01-06 08:01:11 reb Exp $
+# $Id: ITSMWorkOrder.pm,v 1.67 2010-01-07 10:05:54 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.66 $) [1];
+$VERSION = qw($Revision: 1.67 $) [1];
 
 =head1 NAME
 
@@ -2163,6 +2163,40 @@ sub WorkOrderAttachmentList {
     return %Attachments;
 }
 
+=item WorkOrderAttachmentExists()
+
+Checks if a file with a given filename exists.
+
+    my $Exists = $WorkOrderObject->WorkOrderAttachmentExists(
+        Filename    => 'test.txt',
+        WorkOrderID => 123,
+        UserID      => 1,
+    );
+
+=cut
+
+sub WorkOrderAttachmentExists {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Needed (qw(Filename WorkOrderID UserID)) {
+        if ( !$Param{$Needed} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Needed!",
+            );
+
+            return;
+        }
+    }
+
+    return if !$Self->{VirtualFSObject}->Find(
+        Filename => 'WorkOrder/' . $Param{WorkOrderID} . '/' . $Param{Filename},
+    );
+
+    return 1;
+}
+
 =item WorkOrderChangeEffortsGet()
 
 returns the combined efforts of the workorders for the given change
@@ -2619,6 +2653,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.66 $ $Date: 2010-01-06 08:01:11 $
+$Revision: 1.67 $ $Date: 2010-01-07 10:05:54 $
 
 =cut

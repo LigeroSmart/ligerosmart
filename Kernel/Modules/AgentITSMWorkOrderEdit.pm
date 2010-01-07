@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderEdit.pm - the OTRS::ITSM::ChangeManagement workorder edit module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderEdit.pm,v 1.35 2010-01-04 12:14:56 reb Exp $
+# $Id: AgentITSMWorkOrderEdit.pm,v 1.36 2010-01-07 10:05:54 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.35 $) [1];
+$VERSION = qw($Revision: 1.36 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -225,8 +225,15 @@ sub Run {
             Source => 'string',
         );
 
+        # check if file was already uploaded
+        my $FileAlreadyUploaded = $Self->{WorkOrderObject}->WorkOrderAttachmentExists(
+            Filename    => $UploadStuff{Filename},
+            UserID      => $Self->{UserID},
+            WorkOrderID => $WorkOrderID,
+        );
+
         # write to virtual fs
-        if ( $UploadStuff{Filename} ) {
+        if ( $UploadStuff{Filename} && !$FileAlreadyUploaded ) {
             my $Success = $Self->{WorkOrderObject}->WorkOrderAttachmentAdd(
                 %UploadStuff,
                 WorkOrderID => $WorkOrderID,
@@ -236,13 +243,16 @@ sub Run {
 
             # check for error
             if ( !$Success ) {
-                push @ValidationErrors, 'InvalidAttachment';
+                push @ValidationErrors, 'FileAlreadyUploaded';
             }
 
             # reload attachment list
             %Attachments = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
                 WorkOrderID => $WorkOrderID,
             );
+        }
+        else {
+            push @ValidationErrors, 'FileAlreadyUploaded';
         }
     }
     elsif ( $Self->{Subaction} eq 'DeleteAttachment' ) {
