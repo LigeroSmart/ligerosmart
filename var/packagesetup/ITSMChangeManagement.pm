@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.15 2010-01-05 15:58:06 ub Exp $
+# $Id: ITSMChangeManagement.pm,v 1.16 2010-01-07 08:54:26 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,7 +33,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 =head1 NAME
 
@@ -213,6 +213,9 @@ sub CodeInstall {
     # add notifications
     $Self->_AddNotifications();
 
+    # add system notifications
+    $Self->_AddSystemNotifications();
+
     return 1;
 }
 
@@ -312,6 +315,10 @@ sub CodeUninstall {
     $Self->_GroupDeactivate(
         Name => 'itsm-change-manager',
     );
+
+    # delete system notifications
+    $Self->_DeleteSystemNotifications();
+
     return 1;
 }
 
@@ -849,6 +856,275 @@ sub _AddNotifications {
     return 1;
 }
 
+=item _AddSystemNotifications()
+
+Adds the Change:: and WorkOrder:: notifications to systems notification table.
+
+    my $Success = $PackageSetup->_AddSystemNotifications();
+
+=cut
+
+sub _AddSystemNotifications {
+    my ($Self) = @_;
+
+    # define notifications
+    my @Notifications = (
+        [
+            'Agent::Change::ChangeUpdate',
+            'de',
+            'Change::ChangeUpdate',
+            'Change (ChangeUpdate)'
+        ],
+        [
+            'Agent::Change::ChangeUpdate',
+            'en',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] updated',
+            'Change #<OTRS_CHANGE_ChangeNumber> was updated.
+
+Change Title: <OTRS_CHANGE_ChangeTitle>
+Current change state: <OTRS_CHANGE_ChangeState>
+
+<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom&ChangeID=<OTRS_CHANGE_ChangeID>
+
+Your OTRS Notification Master'
+        ],
+        [
+            'Agent::Change::ChangeAdd',
+            'de',
+            'Change::ChangeAdd',
+            'Change (ChangeAdd)'
+        ],
+        [
+            'Agent::Change::ChangeAdd',
+            'en',
+            'Change::ChangeAdd',
+            'Change (ChangeAdd)'
+        ],
+        [
+            'Agent::Change::ChangeDelete',
+            'de',
+            'Change::ChangeDelete',
+            'Change (ChangeDelete)'
+        ],
+        [
+            'Agent::Change::ChangeDelete',
+            'en',
+            'Change::ChangeDelete',
+            'Change (ChangeDelete)'
+        ],
+        [
+            'Agent::Change::ChangeCABUpdate',
+            'de',
+            'Change::ChangeCABUpdate',
+            'Change (ChangeCABUpdate)'
+        ],
+        [
+            'Agent::Change::ChangeCABUpdate',
+            'en',
+            'Change::ChangeCABUpdate',
+            'Change (ChangeCABUpdate)'
+        ],
+        [
+            'Agent::WorkOrder::WorkOrderUpdate',
+            'de',
+            'WorkOrder::WorkOrderUpdate',
+            'WorkOrder (WorkOrderUpdate)'
+        ],
+        [
+            'Agent::WorkOrder::WorkOrderUpdate',
+            'en',
+            'WorkOrder::WorkOrderUpdate',
+            'WorkOrder (WorkOrderUpdate)'
+        ],
+        [
+            'Agent::WorkOrder::WorkOrderAdd',
+            'de',
+            'WorkOrder::WorkOrderAdd',
+            'WorkOrder (WorkOrderAdd)'
+        ],
+        [
+            'Agent::WorkOrder::WorkOrderAdd',
+            'en',
+            'WorkOrder::WorkOrderAdd',
+            'WorkOrder (WorkOrderAdd)'
+        ],
+        [
+            'Agent::WorkOrder::WorkOrderDelete',
+            'de',
+            'WorkOrder::WorkOrderDelete',
+            'WorkOrder (WorkOrderDelete)'
+        ],
+        [
+            'Agent::WorkOrder::WorkOrderDelete',
+            'en',
+            'WorkOrder::WorkOrderDelete',
+            'WorkOrder (WorkOrderDelete)'
+        ],
+        [
+            'Customer::Change::ChangeUpdate',
+            'de',
+            'Change::ChangeUpdate',
+            'Change (ChangeUpdate)'
+        ],
+        [
+            'Customer::Change::ChangeUpdate',
+            'en',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] updated',
+            'Change #<OTRS_CHANGE_ChangeNumber> was updated.
+
+Change Title: <OTRS_CHANGE_ChangeTitle>
+Current change state: <OTRS_CHANGE_ChangeState>
+
+Your OTRS Notification Master'
+        ],
+        [
+            'Customer::Change::ChangeAdd',
+            'de',
+            'Change::ChangeAdd',
+            'Change (ChangeAdd)'
+        ],
+        [
+            'Customer::Change::ChangeAdd',
+            'en',
+            'Change::ChangeAdd',
+            'Change (ChangeAdd)'
+        ],
+        [
+            'Customer::Change::ChangeDelete',
+            'de',
+            'Change::ChangeDelete',
+            'Change (ChangeDelete)'
+        ],
+        [
+            'Customer::Change::ChangeDelete',
+            'en',
+            'Change::ChangeDelete',
+            'Change (ChangeDelete)'
+        ],
+        [
+            'Customer::Change::ChangeCABUpdate',
+            'de',
+            'Change::ChangeCABUpdate',
+            'Change (ChangeCABUpdate)'
+        ],
+        [
+            'Customer::Change::ChangeCABUpdate',
+            'en',
+            'Change::ChangeCABUpdate',
+            'Change (ChangeCABUpdate)'
+        ],
+        [
+            'Customer::WorkOrder::WorkOrderUpdate',
+            'de',
+            'WorkOrder::WorkOrderUpdate',
+            'WorkOrder (WorkOrderUpdate)'
+        ],
+        [
+            'Customer::WorkOrder::WorkOrderUpdate',
+            'en',
+            'WorkOrder::WorkOrderUpdate',
+            'WorkOrder (WorkOrderUpdate)'
+        ],
+        [
+            'Customer::WorkOrder::WorkOrderAdd',
+            'de',
+            'WorkOrder::WorkOrderAdd',
+            'WorkOrder (WorkOrderAdd)'
+        ],
+        [
+            'Customer::WorkOrder::WorkOrderAdd',
+            'en',
+            'WorkOrder::WorkOrderAdd',
+            'WorkOrder (WorkOrderAdd)'
+        ],
+        [
+            'Customer::WorkOrder::WorkOrderDelete',
+            'de',
+            'Workorder geloescht',
+            'WorkOrder wurde geloescht'
+        ],
+        [
+            'Customer::WorkOrder::WorkOrderDelete',
+            'en',
+            'Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> deleted',
+            'The Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was deleted'
+        ]
+    );
+
+    # insert the entries
+    for my $Notification (@Notifications) {
+        my @Binds;
+        for my $Value ( @{$Notification} ) {
+            push @Binds, \$Value;
+        }
+
+        $Self->{DBObject}->Do(
+            SQL => 'INSERT INTO notifications (notification_type, notification_language, '
+                . 'subject, text, notification_charset, content_type, '
+                . 'create_time, create_by, change_time, change_by) '
+                . 'VALUES( ?, ?, ?, ?, \'iso-8859-1\', \'text/plain\', '
+                . 'current_timestamp, 1, current_timestamp, 1 )',
+            Bind => [@Binds],
+        );
+    }
+
+    return 1;
+}
+
+=item _DeleteSystemNotifications()
+
+Deletes the Change:: and WorkOrder:: notifications from systems notification table.
+
+    my $Success = $PackageSetup->_DeleteSystemNotifications();
+
+=cut
+
+sub _DeleteSystemNotifications {
+    my ($Self) = @_;
+
+    my @NotificationKeys = (
+        'de::Change::ChangeUpdate',
+        'en::Change::ChangeUpdate',
+        'de::Change::ChangeAdd',
+        'en::Change::ChangeAdd',
+        'de::Change::ChangeDelete',
+        'en::Change::ChangeDelete',
+        'de::Change::ChangeCABUpdate',
+        'en::Change::ChangeCABUpdate',
+        'de::WorkOrder::WorkOrderUpdate',
+        'en::WorkOrder::WorkOrderUpdate',
+        'de::WorkOrder::WorkOrderAdd',
+        'en::WorkOrder::WorkOrderAdd',
+        'de::WorkOrder::WorkOrderDelete',
+        'en::WorkOrder::WorkOrderDelete',
+    );
+
+    # delete the entries
+    for my $NotificationKey (@NotificationKeys) {
+        my ( $Lang, $Type ) = split /::/, $NotificationKey, 2;
+
+        # delete agent notification
+        my $AgentType = 'Agent::' . $Type;
+
+        $Self->{DBObject}->Do(
+            SQL => 'DELETE FROM notifications '
+                . 'WHERE notification_language = ? AND notification_type = ?',
+            Bind => [ \$Lang, \$AgentType ],
+        );
+
+        # delete customer notification
+        my $CustomerType = 'Customer::' . $Type;
+
+        $Self->{DBObject}->Do(
+            SQL => 'DELETE FROM notifications '
+                . 'WHERE notification_language = ? AND notification_type = ?',
+            Bind => [ \$Lang, \$CustomerType ],
+        );
+    }
+
+    return 1;
+}
+
 1;
 
 =end Internal:
@@ -867,6 +1143,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.15 $ $Date: 2010-01-05 15:58:06 $
+$Revision: 1.16 $ $Date: 2010-01-07 08:54:26 $
 
 =cut

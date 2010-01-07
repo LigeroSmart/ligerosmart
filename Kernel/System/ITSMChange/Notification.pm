@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Notification.pm - lib for notifications in change management
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.15 2010-01-06 15:30:20 reb Exp $
+# $Id: Notification.pm,v 1.16 2010-01-07 08:54:26 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 =head1 NAME
 
@@ -195,7 +195,8 @@ sub NotificationSend {
             $PreferredLanguage = $User{UserLanguage};
         }
 
-        my $NotificationKey = $PreferredLanguage . '::' . $Param{Type} . '::' . $Param{Event};
+        my $NotificationKey
+            = $PreferredLanguage . '::Agent::' . $Param{Type} . '::' . $Param{Event};
 
         # get notification (cache || database)
         my $Notification = $NotificationCache{$NotificationKey};
@@ -269,7 +270,8 @@ sub NotificationSend {
             $PreferredLanguage = $CustomerUser{UserLanguage};
         }
 
-        my $NotificationKey = $PreferredLanguage . '::' . $Param{Type} . '::' . $Param{Event};
+        my $NotificationKey
+            = $PreferredLanguage . '::Customer::' . $Param{Type} . '::' . $Param{Event};
 
         # get notification (cache || database)
         my $Notification = $NotificationCache{$NotificationKey};
@@ -948,6 +950,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.15 $ $Date: 2010-01-06 15:30:20 $
+$Revision: 1.16 $ $Date: 2010-01-07 08:54:26 $
 
 =cut
