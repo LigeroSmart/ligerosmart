@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Expression.pm - all condition expression functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Expression.pm,v 1.1 2010-01-07 11:31:52 mae Exp $
+# $Id: Expression.pm,v 1.2 2010-01-07 13:28:54 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -248,85 +248,14 @@ sub ExpressionGet {
     return \%ExpressionData;
 }
 
-=item ExpressionLookup()
-
-This method does a lookup for a condition expression. If an expression
-id is given, it returns the name of the expression. If the name of the
-expression is given, the appropriate id is returned.
-
-    my $ExpressionName = $ConditionObject->ExpressionLookup(
-        ExpressionID => 4321,
-        UserID      => 1,
-    );
-
-    my $ExpressionID = $ConditionObject->ExpressionLookup(
-        Name   => 'ExpressionName',
-        UserID => 1,
-    );
-
-=cut
-
-sub ExpressionLookup {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "Need UserID!",
-        );
-        return;
-    }
-
-    # check if both parameters are given
-    if ( $Param{ExpressionID} && $Param{Name} ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => 'Need ExpressionID or Name - not both!',
-        );
-        return;
-    }
-
-    # check if both parameters are not given
-    if ( !$Param{ExpressionID} && !$Param{Name} ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => 'Need ExpressionID or Name - none is given!',
-        );
-        return;
-    }
-
-    # prepare SQL statements
-    if ( $Param{ExpressionID} ) {
-        return if !$Self->{DBObject}->Prepare(
-            SQL   => 'SELECT name FROM condition_expression WHERE id = ?',
-            Bind  => [ \$Param{ExpressionID} ],
-            Limit => 1,
-        );
-    }
-    elsif ( $Param{Name} ) {
-        return if !$Self->{DBObject}->Prepare(
-            SQL   => 'SELECT id FROM condition_expression WHERE name = ?',
-            Bind  => [ \$Param{Name} ],
-            Limit => 1,
-        );
-    }
-
-    # fetch the result
-    my $Lookup;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $Lookup = $Row[0];
-    }
-
-    return $Lookup;
-}
-
 =item ExpressionList()
 
-Returns a list of all condition expression ids as array reference
+Returns a list of all condition expression ids for
+a given ConditionID as array reference.
 
     my $ConditionExpressionIDsRef = $ConditionObject->ExpressionList(
-        UserID => 1,
+        ConditionID => 1234,
+        UserID      => 1,
     );
 
 =cut
@@ -335,17 +264,21 @@ sub ExpressionList {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "Need UserID!",
-        );
-        return;
+    for my $Argument (qw(ConditionID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
     }
 
     # prepare SQL statement
     return if !$Self->{DBObject}->Prepare(
-        SQL => 'SELECT name FROM condition_expression',
+        SQL => 'SELECT id FROM condition_expression '
+            . 'WHERE condition_id = ?',
+        Bind => [ \$Param{ConditionID} ],
     );
 
     # fetch the result
@@ -408,6 +341,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2010-01-07 11:31:52 $
+$Revision: 1.2 $ $Date: 2010-01-07 13:28:54 $
 
 =cut
