@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.13 2010-01-07 11:31:52 mae Exp $
+# $Id: ITSMCondition.t,v 1.14 2010-01-07 13:30:53 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,6 +17,7 @@ use vars qw($Self);
 
 use Data::Dumper;
 
+use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMCondition;
 
 # ------------------------------------------------------------ #
@@ -26,9 +27,16 @@ use Kernel::System::ITSMChange::ITSMCondition;
 my $TestCount = 1;
 
 # create common objects
+$Self->{ChangeObject}    = Kernel::System::ITSMChange->new( %{$Self} );
 $Self->{ConditionObject} = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
 
-# test if statemachine object was created successfully
+# test if change object was created successfully
+$Self->True(
+    $Self->{ChangeObject},
+    'Test ' . $TestCount++ . ' - construction of change object',
+);
+
+# test if condition object was created successfully
 $Self->True(
     $Self->{ConditionObject},
     'Test ' . $TestCount++ . ' - construction of condition object',
@@ -54,6 +62,7 @@ my @ObjectMethods = qw(
     ExpressionAdd
     ExpressionDelete
     ExpressionGet
+    ExpressionList
     ExpressionUpdate
     ObjectAdd
     ObjectDelete
@@ -414,6 +423,66 @@ for my $OperatorID (@ConditionOperatorCreated) {
 # condition expression tests
 #-------------------------
 
+# create new change
+my @ChangeIDs;
+CREATECHANGE:
+for my $CreateChange ( 0 .. 2 ) {
+    my $ChangeID = $Self->{ChangeObject}->ChangeAdd(
+        ChangeTitle => "UnitTest$CreateChange",
+        UserID      => 1,
+    );
+
+    $Self->True(
+        $ChangeID,
+        'Test ' . $TestCount++ . " - ChangeAdd -> $ChangeID",
+    );
+
+    # do not store change id if add failed
+    next CREATECHANGE if !$ChangeID;
+
+    # store change id for further usage and deletion
+    push @ChangeIDs, $ChangeID;
+}
+
+# create new condition
+my @ConditionIDs;
+CREATECONDITION:
+for my $CreateCondition ( 0 .. 2 ) {
+
+    # TODO: create condition through condition object
+    my $ConditionName = "UnitTestConditionName_${CreateCondition}_" . int rand 1_000_000;
+
+    next CREATECONDITION if !$Self->{DBObject}->Do(
+        SQL => 'INSERT INTO change_condition '
+            . '(change_id, name, valid_id, create_by, change_by) '
+            . 'VALUES (?, ?, ?, ?, ?)',
+        Bind => [ \$ChangeIDs[$CreateCondition], \$ConditionName, \1, \1, \1, ],
+    );
+
+    # prepare sql
+    next CREATECONDITION if !$Self->{DBObject}->Prepare(
+        SQL => 'SELECT id FROM change_condition '
+            . 'WHERE change_id = ? AND name = ?',
+        Bind => [ \$ChangeIDs[$CreateCondition], \$ConditionName, ],
+        Limit => 1,
+    );
+
+    # get created condition id
+    my $ConditionID;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $ConditionID = $Row[0];
+    }
+
+    $Self->True(
+        $ConditionID,
+        'Test ' . $TestCount++ . " - ConditionAdd -> $ConditionID",
+    );
+
+    next CREATECONDITION if !$ConditionID;
+
+    push @ConditionIDs, $ConditionID;
+}
+
 # check for default condition expressions
 my @ConditionExpressionTests = (
     {
@@ -439,7 +508,7 @@ my @ConditionExpressionTests = (
                 },
 
                 # static fields
-                ConditionID  => 1,
+                ConditionID  => $ConditionIDs[0],
                 Selector     => 'DummySelector1',
                 CompareValue => 'DummyCompareValue1',
                 UserID       => 1,
@@ -471,7 +540,7 @@ my @ConditionExpressionTests = (
                 },
 
                 # static fields
-                ConditionID  => 1,
+                ConditionID  => $ConditionIDs[1],
                 Selector     => 'DummySelector2',
                 CompareValue => 'DummyCompareValue2',
                 UserID       => 1,
@@ -547,6 +616,26 @@ for my $ConditionExpressionTest (@ConditionExpressionTests) {
 
             # save created ID for deleting expressions
             push @ConditionExpressionCreated, $ExpressionID;
+
+            # check the added expression
+            my $ExpressionGetData = $Self->{ConditionObject}->ExpressionGet(
+                ExpressionID => $ExpressionID,
+                UserID       => $ExpressionAddData{UserID},
+            );
+            $Self->True(
+                $ExpressionGetData,
+                'Test ' . $TestCount++ . ' - ExpressionGet',
+            );
+
+            # test values
+            delete $ExpressionAddData{UserID};
+            for my $TestValue ( keys %ExpressionAddData ) {
+                $Self->Is(
+                    $ExpressionGetData->{$TestValue},
+                    $ExpressionAddData{$TestValue},
+                    'Test ' . $TestCount++ . " - ExpressionGet -> $TestValue",
+                );
+            }
         }
     }
 }
@@ -559,6 +648,29 @@ for my $ExpressionID (@ConditionExpressionCreated) {
             ExpressionID => $ExpressionID,
         ),
         'Test ' . $TestCount++ . " - ExpressionDelete -> '$ExpressionID'",
+    );
+}
+
+# delete created conditions
+for my $ConditionID (@ConditionIDs) {
+    $Self->True(
+        $Self->{DBObject}->Do(
+            SQL => 'DELETE FROM change_condition '
+                . 'WHERE id = ?',
+            Bind => [ \$ConditionID ],
+        ),
+        'Test ' . $TestCount++ . " - ConditionDelete -> '$ConditionID'",
+    );
+}
+
+# delete created changes
+for my $ChangeID (@ChangeIDs) {
+    $Self->True(
+        $Self->{ChangeObject}->ChangeDelete(
+            ChangeID => $ChangeID,
+            UserID   => 1,
+        ),
+        'Test ' . $TestCount++ . " - ChangeDelete -> '$ChangeID'",
     );
 }
 
