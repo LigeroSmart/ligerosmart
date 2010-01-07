@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.18 2010-01-07 14:01:34 reb Exp $
+# $Id: ITSMChangeManagement.pm,v 1.19 2010-01-07 14:13:12 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,7 +33,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 =head1 NAME
 
@@ -818,6 +818,17 @@ sub _AddNotifications {
                 'ChangeBuilder', 'ChangeInitiators', 'CABCustomers', 'CABAgents', 'WorkOrderAgents',
             ],
         },
+        {
+            Name       => 'updated state for workorder',
+            Attribute  => 'WorkOrderState',
+            Event      => 'WorkOrderUpdate',
+            ValidID    => 1,
+            Comment    => 'inform recipients that a the state of a workorder was changed',
+            Rule       => '.*',
+            Recipients => [
+                'WorkOrderAgents',
+            ],
+        },
     );
 
     # cache for lookup results
@@ -1147,6 +1158,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.18 $ $Date: 2010-01-07 14:01:34 $
+$Revision: 1.19 $ $Date: 2010-01-07 14:13:12 $
 
 =cut
