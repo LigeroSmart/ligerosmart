@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/Notification.pm - a event module to send notifications
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.13 2010-01-07 13:40:40 reb Exp $
+# $Id: Notification.pm,v 1.14 2010-01-07 13:56:05 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::Notification;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 =head1 NAME
 
@@ -185,7 +185,8 @@ sub Run {
     # The notification rules are based on names, while the ChangeUpdate-Function
     # primarily cares about IDs. So there needs to be a mapping.
     my %Name2ID = (
-        ChangeState => 'ChangeStateID',
+        ChangeState    => 'ChangeStateID',
+        WorkOrderState => 'WorkOrderStateID',
     );
 
     # loop over the notification rules and check the condition
@@ -226,6 +227,11 @@ sub Run {
                 ChangeStateID => $NewFieldContent,
             );
         }
+        elsif ( $Attribute eq 'WorkOrderStateID' ) {
+            $NewFieldContent = $Self->{WorkOrderObject}->WorkOrderStateLookup(
+                WorkOrderStateID => $NewFieldContent,
+            );
+        }
 
         # should the notification be sent ?
         # the x-modifier is harmful here, as $Rule->{Rule} can contain spaces
@@ -235,6 +241,7 @@ sub Run {
         # determine list of agents and customers
         my $AgentAndCustomerIDs = $Self->_AgentAndCustomerIDsGet(
             Recipients  => $Rule->{Recipients},
+            Type        => $Type,
             ChangeID    => $Param{ChangeID},
             WorkOrderID => $Param{WorkOrderID},
             UserID      => $Param{UserID},
@@ -331,6 +338,19 @@ returns
 sub _AgentAndCustomerIDsGet {
     my ( $Self, %Param ) = @_;
 
+    my $WorkOrderAgentID;
+    if ( $Param{Type} eq 'WorkOrder' ) {
+
+        # get ChangeID from the WorkOrder
+        my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+            WorkOrderID => $Param{WorkOrderID},
+            UserID      => $Param{UserID},
+        );
+        $Param{ChangeID} = $WorkOrder->{ChangeID};
+        $WorkOrderAgentID = $WorkOrder->{WorkOrderAgentID};
+    }
+
+    # these arrays will be returned
     my ( @AgentIDs, @CustomerIDs );
 
     my $Change = $Self->{ChangeObject}->ChangeGet(
@@ -361,12 +381,7 @@ sub _AgentAndCustomerIDsGet {
                 );
             }
             else {
-                my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
-                    WorkOrderID => $Param{WorkOrderID},
-                    UserID      => $Param{UserID},
-                );
-
-                push @AgentIDs, $WorkOrder->{WorkOrderAgentID};
+                push @AgentIDs, $WorkOrderAgentID;
             }
         }
         elsif ( $Recipient eq 'WorkOrderAgents' ) {
@@ -449,6 +464,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.13 $ $Date: 2010-01-07 13:40:40 $
+$Revision: 1.14 $ $Date: 2010-01-07 13:56:05 $
 
 =cut
