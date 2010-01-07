@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.68 2010-01-07 12:51:11 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.69 2010-01-07 12:52:29 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.68 $) [1];
+$VERSION = qw($Revision: 1.69 $) [1];
 
 =head1 NAME
 
@@ -516,9 +516,7 @@ sub WorkOrderUpdate {
 
     # addition of accounted time
     if ( $Param{AccountedTime} ) {
-        my $ColumnName = 'accounted_time';
-        $SQL
-            .= "$ColumnName = $ColumnName + ?, ";
+        $SQL .= 'accounted_time = accounted_time + ?, ';
         push @Bind, \$Param{AccountedTime};
     }
 
@@ -2653,6 +2651,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.68 $ $Date: 2010-01-07 12:51:11 $
+$Revision: 1.69 $ $Date: 2010-01-07 12:52:29 $
 
 =cut
