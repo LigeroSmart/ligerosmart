@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.12 2010-01-07 09:33:00 mae Exp $
+# $Id: ITSMCondition.t,v 1.13 2010-01-07 11:31:52 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,6 +14,8 @@ use warnings;
 use utf8;
 
 use vars qw($Self);
+
+use Data::Dumper;
 
 use Kernel::System::ITSMChange::ITSMCondition;
 
@@ -49,6 +51,10 @@ my @ObjectMethods = qw(
     ConditionGet
     ConditionList
     ConditionUpdate
+    ExpressionAdd
+    ExpressionDelete
+    ExpressionGet
+    ExpressionUpdate
     ObjectAdd
     ObjectDelete
     ObjectGet
@@ -401,6 +407,158 @@ for my $OperatorID (@ConditionOperatorCreated) {
             OperatorID => $OperatorID,
         ),
         'Test ' . $TestCount++ . " - OperatorDelete -> '$OperatorID'",
+    );
+}
+
+#-------------------------
+# condition expression tests
+#-------------------------
+
+# check for default condition expressions
+my @ConditionExpressionTests = (
+    {
+        SourceData => {
+            ExpressionAdd => {
+                ObjectID => {
+                    ObjectLookup => {
+                        Name   => 'ITSMChange',
+                        UserID => 1,
+                    },
+                },
+                AttributeID => {
+                    AttributeLookup => {
+                        Name   => 'ChangeTitle',
+                        UserID => 1,
+                    },
+                },
+                OperatorID => {
+                    OperatorLookup => {
+                        Name   => 'is',
+                        UserID => 1,
+                    },
+                },
+
+                # static fields
+                ConditionID  => 1,
+                Selector     => 'DummySelector1',
+                CompareValue => 'DummyCompareValue1',
+                UserID       => 1,
+            },
+        },
+        ReferenceData => {
+        },
+    },
+    {
+        SourceData => {
+            ExpressionAdd => {
+                ObjectID => {
+                    ObjectLookup => {
+                        Name   => 'ITSMWorkOrder',
+                        UserID => 1,
+                    },
+                },
+                AttributeID => {
+                    AttributeLookup => {
+                        Name   => 'WorkOrderTitle',
+                        UserID => 1,
+                    },
+                },
+                OperatorID => {
+                    OperatorLookup => {
+                        Name   => 'is not',
+                        UserID => 1,
+                    },
+                },
+
+                # static fields
+                ConditionID  => 1,
+                Selector     => 'DummySelector2',
+                CompareValue => 'DummyCompareValue2',
+                UserID       => 1,
+            },
+        },
+        ReferenceData => {
+        },
+    },
+);
+
+# check condition expressions
+my @ConditionExpressionCreated;
+CONDITIONEXPRESSIONTEST:
+for my $ConditionExpressionTest (@ConditionExpressionTests) {
+    my %SourceData;
+    my %ReferenceData;
+
+    # extract source data
+    if ( $ConditionExpressionTest->{SourceData} ) {
+        %SourceData = %{ $ConditionExpressionTest->{SourceData} };
+    }
+
+    # extract reference data
+    if ( $ConditionExpressionTest->{ReferenceData} ) {
+        %ReferenceData = %{ $ConditionExpressionTest->{ReferenceData} };
+    }
+
+    next CONDITIONEXPRESSIONTEST if !%SourceData;
+
+    CREATEDATA:
+    for my $CreateData ( keys %SourceData ) {
+
+        # add expression
+        if ( $CreateData eq 'ExpressionAdd' ) {
+
+            # extract ExpressionAdd data
+            my %ExpressionAddSourceData = %{ $SourceData{$CreateData} };
+            my %ExpressionAddData;
+
+            # set static fields
+            my @StaticFields = qw( Selector CompareValue UserID ConditionID );
+            for my $StaticField (@StaticFields) {
+                $ExpressionAddData{$StaticField} = $ExpressionAddSourceData{$StaticField};
+            }
+
+            # get all fields for ExpressionAdd
+            for my $ExpressionAddValue ( keys %ExpressionAddSourceData ) {
+
+                # ommit static fields
+                next if grep { $_ eq $ExpressionAddValue } @StaticFields;
+
+                # get values for fields
+                for my $FieldValue ( keys %{ $ExpressionAddSourceData{$ExpressionAddValue} } ) {
+
+                    $ExpressionAddData{$ExpressionAddValue} =
+                        $Self->{ConditionObject}->$FieldValue(
+                        %{ $ExpressionAddSourceData{$ExpressionAddValue}->{$FieldValue} },
+                        );
+                }
+            }
+
+            # add expression
+            my $ExpressionID = $Self->{ConditionObject}->ExpressionAdd(
+                %ExpressionAddData,
+            );
+
+            $Self->True(
+                $ExpressionID,
+                'Test ' . $TestCount++ . " - $CreateData -> $ExpressionID",
+            );
+
+            next CREATEDATA if !$ExpressionID;
+
+            # save created ID for deleting expressions
+            push @ConditionExpressionCreated, $ExpressionID;
+        }
+    }
+}
+
+# check for expression delete
+for my $ExpressionID (@ConditionExpressionCreated) {
+    $Self->True(
+        $Self->{ConditionObject}->ExpressionDelete(
+            UserID       => 1,
+            ExpressionID => $ExpressionID,
+        ),
+        'Test ' . $TestCount++ . " - ExpressionDelete -> '$ExpressionID'",
     );
 }
 
