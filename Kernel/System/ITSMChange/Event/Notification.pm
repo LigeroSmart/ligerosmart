@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/Notification.pm - a event module to send notifications
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.8 2010-01-06 15:30:20 reb Exp $
+# $Id: Notification.pm,v 1.9 2010-01-07 11:04:10 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,9 +17,10 @@ use warnings;
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::Notification;
+use Kernel::System::ITSMChange::ITSMStateMachine;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 =head1 NAME
 
@@ -98,6 +99,7 @@ sub new {
     $Self->{ChangeObject}             = Kernel::System::ITSMChange->new( %{$Self} );
     $Self->{WorkOrderObject}          = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
     $Self->{ChangeNotificationObject} = Kernel::System::ITSMChange::Notification->new( %{$Self} );
+    $Self->{StateMachineObject} = Kernel::System::ITSMChange::ITSMStateMachine->new( %{$Self} );
 
     # TODO: find better was to look up event ids
     $Self->{HistoryObject} = Kernel::System::ITSMChange::History->new( %{$Self} );
@@ -186,6 +188,21 @@ sub Run {
         ChangeState => 'ChangeStateID',
     );
 
+    if ( $Event eq 'ChangeAdd' ) {
+
+        # in ChangeAdd(), the initial change_state_id is always the start state
+        # as determined from the state machine. If a changes state has been explicitly
+        # passed to ChangeAdd(), the changes state is passed to ChangeUpdate().
+        # For the sake of notifications, let's act as if the initial change state
+        # was passed as a param.
+        my $NextStateIDs = $Self->{StateMachineObject}->StateTransitionGet(
+            StateID => 0,
+            Class   => 'ITSM::ChangeManagement::Change::State',
+        );
+
+        $Param{Data}->{ChangeStateID} = $NextStateIDs->[0];
+    }
+
     # loop over the notification rules and check the condition
     RULE_ID:
     for my $RuleID ( @{$NotificationRuleIDs} ) {
@@ -198,31 +215,30 @@ sub Run {
             $Attribute = $Name2ID{$Attribute};
         }
 
-        # in case of an update, check whether the attribute is part of the update
-        # and whether it has changed
-        if ( $Event eq 'ChangeUpdate' || $Event eq 'WorkOrderUpdate' ) {
+        # no notification if the attribute is not relevant
+        next RULE_ID if $Attribute && !exists $Param{Data}->{$Attribute};
 
-            next RULE_ID if $Attribute && !exists $Param{Data}->{$Attribute};
-
-            my $HasChanged = 1;
-
-            if ($Attribute) {
-                $HasChanged = $Self->_HasFieldChanged(
-                    New => $Param{Data}->{$Attribute},
-                    Old => $OldData->{$Attribute},
-                );
-            }
+        # in case of an update, check whether the attribute has changed
+        if (
+            $Attribute
+            && ( $Event eq 'ChangeUpdate' || $Event eq 'WorkOrderUpdate' )
+            )
+        {
+            my $HasChanged = $Self->_HasFieldChanged(
+                New => $Param{Data}->{$Attribute},
+                Old => $OldData->{$Attribute},
+            );
 
             next RULE_ID if !$HasChanged;
         }
 
         # get the string to match against
         # TODO: support other combinations, maybe use GeneralCatalog directly
-        my $NewFieldContent = $Param{Data}->{$Attribute};
+        my $NewFieldContent = $Attribute ? $Param{Data}->{$Attribute} : '';
 
         if ( $Attribute eq 'ChangeStateID' ) {
             $NewFieldContent = $Self->{ChangeObject}->ChangeStateLookup(
-                ChangeStateID => $Param{Data}->{$Attribute},
+                ChangeStateID => $NewFieldContent,
             );
         }
 
@@ -447,6 +463,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.8 $ $Date: 2010-01-06 15:30:20 $
+$Revision: 1.9 $ $Date: 2010-01-07 11:04:10 $
 
 =cut
