@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/Notification.pm - a event module to send notifications
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.14 2010-01-07 13:56:05 bes Exp $
+# $Id: Notification.pm,v 1.15 2010-01-07 17:53:58 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::Notification;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 =head1 NAME
 
@@ -341,6 +341,14 @@ sub _AgentAndCustomerIDsGet {
     my $WorkOrderAgentID;
     if ( $Param{Type} eq 'WorkOrder' ) {
 
+        # check WorkOrderID
+        if ( !$Param{WorkOrderID} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "The param 'WorkOrderID' is required for WorkOrder events!",
+            );
+        }
+
         # get ChangeID from the WorkOrder
         my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
             WorkOrderID => $Param{WorkOrderID},
@@ -353,6 +361,7 @@ sub _AgentAndCustomerIDsGet {
     # these arrays will be returned
     my ( @AgentIDs, @CustomerIDs );
 
+    # needed for determining the actual recipients
     my $Change = $Self->{ChangeObject}->ChangeGet(
         ChangeID => $Param{ChangeID},
         UserID   => $Param{UserID},
@@ -360,11 +369,7 @@ sub _AgentAndCustomerIDsGet {
 
     for my $Recipient ( @{ $Param{Recipients} } ) {
 
-        if (
-            $Recipient eq 'ChangeBuilder'
-            || $Recipient eq 'ChangeManager'
-            )
-        {
+        if ( $Recipient eq 'ChangeBuilder' || $Recipient eq 'ChangeManager' ) {
             push @AgentIDs, $Change->{ $Recipient . 'ID' };
         }
         elsif ( $Recipient eq 'CABCustomers' ) {
@@ -374,7 +379,7 @@ sub _AgentAndCustomerIDsGet {
             push @AgentIDs, @{ $Change->{CABAgents} };
         }
         elsif ( $Recipient eq 'WorkOrderAgent' ) {
-            if ( !$Param{WorkOrderID} ) {
+            if ( $Param{Type} ne 'WorkOrder' ) {
                 $Self->{LogObject}->Log(
                     Priority => 'error',
                     Message  => "Recipient WorkOrderAgent is only valid for workorder events.!",
@@ -408,21 +413,19 @@ sub _AgentAndCustomerIDsGet {
 
             # get change initiators (customer users of linked tickets)
             # This should be the same list a displayed in ChangeZoom.
-            my $TicketsRef = $LinkListWithData->{Ticket} || {};
-            for my $LinkType ( keys %{$TicketsRef} ) {
+            my $LinkList = $LinkListWithData->{Ticket} || {};
+            for my $LinkType ( keys %{$LinkList} ) {
 
-                my $TicketRef = $TicketsRef->{$LinkType}->{Source};
-                for my $TicketID ( keys %{$TicketRef} ) {
+                # the linked tickets are always the 'Source'.
+                for my $TicketData ( values %{ $LinkList->{$LinkType}->{Source} } ) {
 
-                    # get id of customer user
-                    my $CustomerUserID = $TicketRef->{$TicketID}->{CustomerUserID};
-
-                    # if a customer
-                    if ($CustomerUserID) {
-                        push @CustomerIDs, $CustomerUserID;
+                    # The data for the linked ticket can have a customer id.
+                    # If it doesn't, fall back to the owner.
+                    if ( $TicketData->{CustomerUserID} ) {
+                        push @CustomerIDs, $TicketData->{CustomerUserID};
                     }
                     else {
-                        push @AgentIDs, $TicketRef->{$TicketID}->{OwnerID};
+                        push @AgentIDs, $TicketData->{OwnerID};
                     }
                 }
             }
@@ -464,6 +467,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.14 $ $Date: 2010-01-07 13:56:05 $
+$Revision: 1.15 $ $Date: 2010-01-07 17:53:58 $
 
 =cut
