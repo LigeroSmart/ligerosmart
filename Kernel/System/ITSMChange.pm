@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.218 2010-01-07 11:28:59 bes Exp $
+# $Id: ITSMChange.pm,v 1.219 2010-01-08 12:16:44 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -28,7 +28,7 @@ use Kernel::System::VirtualFS;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.218 $) [1];
+$VERSION = qw($Revision: 1.219 $) [1];
 
 =head1 NAME
 
@@ -210,28 +210,31 @@ sub ChangeAdd {
     my $ChangeStateID = $NextStateIDs->[0];
 
     # get default Category if not defined
-    if ( !defined $Param{CategoryID} ) {
+    my $CategoryID = delete $Param{CategoryID};
+    if ( !$CategoryID ) {
         my $DefaultCategory = $Self->{ConfigObject}->Get('ITSMChange::Category::Default');
-        $Param{CategoryID} = $Self->ChangeCIPLookup(
+        $CategoryID = $Self->ChangeCIPLookup(
             CIP  => $DefaultCategory,
             Type => 'Category',
         );
     }
 
     # get default Impact if not defined
-    if ( !defined $Param{ImpactID} ) {
+    my $ImpactID = delete $Param{ImpactID};
+    if ( !$ImpactID ) {
         my $DefaultImpact = $Self->{ConfigObject}->Get('ITSMChange::Impact::Default');
-        $Param{ImpactID} = $Self->ChangeCIPLookup(
+        $ImpactID = $Self->ChangeCIPLookup(
             CIP  => $DefaultImpact,
             Type => 'Impact',
         );
     }
 
     # get default Priority if not defined
-    if ( !defined $Param{PriorityID} ) {
-        $Param{PriorityID} = $Self->{CIPAllocateObject}->PriorityAllocationGet(
-            CategoryID => $Param{CategoryID},
-            ImpactID   => $Param{ImpactID},
+    my $PriorityID = delete $Param{PriorityID};
+    if ( !$PriorityID ) {
+        $PriorityID = $Self->{CIPAllocateObject}->PriorityAllocationGet(
+            CategoryID => $CategoryID,
+            ImpactID   => $ImpactID,
         );
     }
 
@@ -244,7 +247,7 @@ sub ChangeAdd {
             . 'VALUES (?, ?, ?, ?, ?, ?, current_timestamp, ?, current_timestamp, ?)',
         Bind => [
             \$ChangeNumber, \$ChangeStateID, \$Param{UserID},
-            \$Param{CategoryID}, \$Param{ImpactID}, \$Param{PriorityID},
+            \$CategoryID,   \$ImpactID,      \$PriorityID,
             \$Param{UserID}, \$Param{UserID},
         ],
     );
@@ -263,23 +266,22 @@ sub ChangeAdd {
     $Self->EventHandler(
         Event => 'ChangeAddPost',
         Data  => {
-            ChangeID => $ChangeID,
             %Param,
+            CategoryID    => $CategoryID,
+            ImpactID      => $ImpactID,
+            PriorityID    => $PriorityID,
+            ChangeID      => $ChangeID,
             ChangeStateID => $ChangeStateID,
             ChangeNumer   => $ChangeNumber,
         },
         UserID => $Param{UserID},
     );
 
-    # no need to pass already handled attributes to ChangeUpdate
-    delete $Param{CategoryID};
-    delete $Param{ImpactID};
-    delete $Param{PriorityID};
-
     # update change with remaining parameters
+    # the already handles params have been deleted from %Param
     my $UpdateSuccess = $Self->ChangeUpdate(
-        ChangeID => $ChangeID,
         %Param,
+        ChangeID => $ChangeID,
     );
 
     # check update error
@@ -3050,6 +3052,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.218 $ $Date: 2010-01-07 11:28:59 $
+$Revision: 1.219 $ $Date: 2010-01-08 12:16:44 $
 
 =cut

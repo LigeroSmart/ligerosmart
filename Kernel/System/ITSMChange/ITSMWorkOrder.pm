@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.69 2010-01-07 12:52:29 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.70 2010-01-08 12:16:44 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.69 $) [1];
+$VERSION = qw($Revision: 1.70 $) [1];
 
 =head1 NAME
 
@@ -233,9 +233,9 @@ sub WorkOrderAdd {
         UserID => $Param{UserID},
     );
 
-    # set initial WorkOrderStateID
-    my $WorkOrderStateID = $Param{WorkOrderStateID};
-    if ( !$Param{WorkOrderStateID} ) {
+    # set initial WorkOrderStateID, use default if not passed
+    my $WorkOrderStateID = delete $Param{WorkOrderStateID};
+    if ( !$WorkOrderStateID ) {
 
         # get initial workorder state id
         my $NextStateIDs = $Self->{StateMachineObject}->StateTransitionGet(
@@ -243,12 +243,11 @@ sub WorkOrderAdd {
             Class   => 'ITSM::ChangeManagement::WorkOrder::State',
         );
         $WorkOrderStateID = $NextStateIDs->[0];
-
     }
 
-    # set default WorkOrderTypeID
-    my $WorkOrderTypeID = $Param{WorkOrderTypeID};
-    if ( !$Param{WorkOrderTypeID} ) {
+    # set default WorkOrderTypeID, use default if not passed
+    my $WorkOrderTypeID = delete $Param{WorkOrderTypeID};
+    if ( !$WorkOrderTypeID ) {
 
         # set config option
         my $ConfigOption = 'ITSMWorkOrder::Type::Default';
@@ -277,7 +276,10 @@ sub WorkOrderAdd {
     }
 
     # get default workorder number if not given
-    my $WorkOrderNumber = $Param{WorkOrderNumber} || $Self->_GetWorkOrderNumber(%Param);
+    my $WorkOrderNumber = delete $Param{WorkOrderNumber};
+    if ( !$WorkOrderNumber ) {
+        $WorkOrderNumber = $Self->_GetWorkOrderNumber(%Param);
+    }
 
     # add WorkOrder to database
     return if !$Self->{DBObject}->Do(
@@ -318,13 +320,17 @@ sub WorkOrderAdd {
     $Self->EventHandler(
         Event => 'WorkOrderAddPost',
         Data  => {
-            WorkOrderID => $WorkOrderID,
             %Param,
+            WorkOrderID      => $WorkOrderID,
+            WorkOrderNumber  => $WorkOrderNumber,
+            WorkOrderStateID => $WorkOrderStateID,
+            WorkOrderTypeID  => $WorkOrderTypeID,
         },
         UserID => $Param{UserID},
     );
 
-    # update WorkOrder with remaining parameters
+    # update WorkOrder with remaining parameters,
+    # the already handles params have been deleted from %Param
     my $UpdateSuccess = $Self->WorkOrderUpdate(
         WorkOrderID => $WorkOrderID,
         %Param,
@@ -2651,6 +2657,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.69 $ $Date: 2010-01-07 12:52:29 $
+$Revision: 1.70 $ $Date: 2010-01-08 12:16:44 $
 
 =cut
