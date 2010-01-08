@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Expression.pm - all condition expression functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Expression.pm,v 1.5 2010-01-08 13:25:07 mae Exp $
+# $Id: Expression.pm,v 1.6 2010-01-08 14:48:24 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 =head1 NAME
 
@@ -371,35 +371,52 @@ sub ExpressionMatch {
     # check expression content
     return if !$Expression;
 
-    # map expression attribute to object store
-    my %Attribute = (
-        ObjectID    => 'Object',
-        AttributeID => 'Attribute',
-        OperatorID  => 'Operator',
-    );
-
     # get expression attributes
     my %ExpressionData;
-    for my $Attribute ( keys %Attribute ) {
 
-        # define get function
-        my $GetFunction = $Attribute{$Attribute} . 'Get';
+    # get object data
+    $ExpressionData{Object} = $Self->ObjectGet(
+        ObjectID => $Expression->{ObjectID},
+        UserID   => $Param{UserID},
+    );
 
-        # get object
-        $ExpressionData{ $Attribute{$Attribute} } = $Self->$GetFunction(
-            $Attribute => $Expression->{$Attribute},
-            UserID     => $Param{UserID},
+    # check for object data
+    if ( !$ExpressionData{Object} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "No value for 'Object' with ID '$Expression->{ObjectID}'!",
         );
+        return;
+    }
 
-        # check for returned data
-        if ( !$ExpressionData{ $Attribute{$Attribute} } ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message =>
-                    "No value for '$Attribute' with ID '$Expression->{$Attribute}'!",
-            );
-            return;
-        }
+    # get attribute data
+    $ExpressionData{Attribute} = $Self->AttributeGet(
+        AttributeID => $Expression->{AttributeID},
+        UserID      => $Param{UserID},
+    );
+
+    # check for attribute data
+    if ( !$ExpressionData{Attribute} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "No value for 'Attribute' with ID '$Expression->{AttributeID}'!",
+        );
+        return;
+    }
+
+    # get operator data
+    $ExpressionData{Operator} = $Self->OperatorGet(
+        OperatorID => $Expression->{OperatorID},
+        UserID     => $Param{UserID},
+    );
+
+    # check for operator data
+    if ( !$ExpressionData{Operator} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "No value for 'Operator' with ID '$Expression->{OperatorID}'!",
+        );
+        return;
     }
 
     # TODO: check for changed fields
@@ -442,14 +459,14 @@ sub ExpressionMatch {
         return;
     }
 
-    # get attribte type
+    # get attribute type
     my $AttributeType = $ExpressionData{Attribute}->{Name};
 
     # check for object attribte
     if ( !exists $ExpressionObject->{$AttributeType} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "No object attribte for $ObjectType ($AttributeType) found!",
+            Message  => "No object attribute for $ObjectType ($AttributeType) found!",
         );
         return;
     }
@@ -505,12 +522,12 @@ Returns a workorder object.
 
 sub _ExpressionITSMWorkOrder {
     my ( $Self, %Param ) = @_;
-    return $Self->{ChangeObject}->{WorkOrderObject}->WorkOrderGet(%Param);
+    return $Self->{WorkOrderObject}->WorkOrderGet(%Param);
 }
 
 =item _OperatorEqual()
 
-Returns true or false (1/undef) if given values are equale.
+Returns true or false (1/undef) if given values are equal.
 
     my $Result = $ConditionObject->_OperatorEqual(
         Value1 => 'SomeValue',
@@ -552,6 +569,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2010-01-08 13:25:07 $
+$Revision: 1.6 $ $Date: 2010-01-08 14:48:24 $
 
 =cut
