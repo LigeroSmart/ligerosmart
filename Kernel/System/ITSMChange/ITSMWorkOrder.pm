@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.72 2010-01-08 13:45:22 bes Exp $
+# $Id: ITSMWorkOrder.pm,v 1.73 2010-01-08 15:02:22 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.72 $) [1];
+$VERSION = qw($Revision: 1.73 $) [1];
 
 =head1 NAME
 
@@ -457,6 +457,21 @@ sub WorkOrderUpdate {
 
     # check the given parameters
     return if !$Self->_CheckWorkOrderParams(%Param);
+
+    # check sanity of the new state with the state machine
+    if ( $Param{WorkOrderStateID} ) {
+        my $StateList = $Self->WorkOrderPossibleStatesGet(
+            WorkOrderID => $Param{WorkOrderID},
+            UserID      => $Param{UserID},
+        );
+        if ( !grep { $_->{Key} == $Param{WorkOrderStateID} } @{$StateList} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "The state $Param{WorkOrderStateID} is not a possible next state!",
+            );
+            return;
+        }
+    }
 
     # get old data to be given to _CheckWorkOrderParams() and the post event handler
     my $WorkOrderData = $Self->WorkOrderGet(
@@ -2660,6 +2675,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.72 $ $Date: 2010-01-08 13:45:22 $
+$Revision: 1.73 $ $Date: 2010-01-08 15:02:22 $
 
 =cut

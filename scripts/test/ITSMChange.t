@@ -1,8 +1,8 @@
 # --
 # ITSMChange.t - change tests
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.161 2009-12-31 13:05:09 bes Exp $
+# $Id: ITSMChange.t,v 1.162 2010-01-08 15:02:22 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -613,9 +613,44 @@ my @ChangeTests = (
         SearchTest => [ 4, 25, 26, 33, 37 ],
     },
 
-    # ChangeUpdate with named ChangeState
+    # ChangeUpdate() with valid named ChangeState
     {
-        Description => 'Test for Statenames in ChangeUpdate - ' . $UniqueSignature,
+        Description => 'ChangeUpdate() with valid named ChangeState - ' . $UniqueSignature,
+        SourceData  => {
+            ChangeAdd => {
+                UserID      => $UserIDs[0],
+                Description => 'ChangeStates - ' . $UniqueSignature,
+                ChangeState => 'requested',
+            },
+            ChangeUpdate => {
+                UserID      => $UserIDs[0],
+                ChangeState => 'pending approval',
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                ChangeTitle     => '',
+                Description     => 'ChangeStates - ' . $UniqueSignature,
+                Justification   => '',
+                ChangeManagerID => undef,
+                ChangeBuilderID => $UserIDs[0],
+                ChangeStateID   => $ChangeStateName2ID{'pending approval'},
+                ChangeState     => 'pending approval',
+                WorkOrderIDs    => [],
+                WorkOrderCount  => 0,
+                CABAgents       => [],
+                CABCustomers    => [],
+                CreateBy        => $UserIDs[0],
+                ChangeBy        => $UserIDs[0],
+            },
+        },
+        SearchTest => [ 4, 25, 26, 38 ],
+    },
+
+    # ChangeUpdate() with invalid named ChangeState
+    {
+        Description => 'ChangeUpdate() with invalid named ChangeState - ' . $UniqueSignature,
+        UpdateFails => 1,
         SourceData  => {
             ChangeAdd => {
                 UserID      => $UserIDs[0],
@@ -634,8 +669,8 @@ my @ChangeTests = (
                 Justification   => '',
                 ChangeManagerID => undef,
                 ChangeBuilderID => $UserIDs[0],
-                ChangeStateID   => $ChangeStateName2ID{failed},
-                ChangeState     => 'failed',
+                ChangeStateID   => $ChangeStateName2ID{requested},
+                ChangeState     => 'requested',
                 WorkOrderIDs    => [],
                 WorkOrderCount  => 0,
                 CABAgents       => [],
@@ -644,7 +679,7 @@ my @ChangeTests = (
                 ChangeBy        => $UserIDs[0],
             },
         },
-        SearchTest => [ 4, 25, 26, 37, 38 ],
+        SearchTest => [ 4, 25, 26, 37 ],
     },
 
     # change contains all data - (all attributes)
@@ -2069,12 +2104,12 @@ my @ChangeTests = (
         Description => "Change for 'OrderBy' tests (1).",
         SourceData  => {
             ChangeAdd => {
-                UserID      => 1,
-                ChangeTitle => 'OrderByChange - Title - ' . $UniqueSignature,
+                UserID        => 1,
+                ChangeTitle   => 'OrderByChange - Title - ' . $UniqueSignature,
+                ChangeStateID => $ChangeStateName2ID{successful},
             },
             ChangeUpdate => {
                 UserID          => $UserIDs[0],
-                ChangeStateID   => $ChangeStateName2ID{successful},
                 ChangeManagerID => $UserIDs[1],
             },
             ChangeAddChangeTime => {
@@ -2122,12 +2157,12 @@ my @ChangeTests = (
         Description => "Change for 'OrderBy' tests (3).",
         SourceData  => {
             ChangeAdd => {
-                UserID      => $UserIDs[0],
-                ChangeTitle => 'OrderByChange - Title - ' . $UniqueSignature,
+                UserID        => $UserIDs[0],
+                ChangeStateID => $ChangeStateName2ID{failed},
+                ChangeTitle   => 'OrderByChange - Title - ' . $UniqueSignature,
             },
             ChangeUpdate => {
                 UserID          => 1,
-                ChangeStateID   => $ChangeStateName2ID{failed},
                 ChangeManagerID => $UserIDs[0],
             },
             ChangeAddChangeTime => {
@@ -3082,10 +3117,10 @@ my @ChangeSearchTests = (
 
     # Nr 38 - ChangeStates (names not ids)
     {
-        Description => 'ChangeStates (names not ids) - failed',
+        Description => 'ChangeStates (names not ids) - pending approval',
         SearchData  => {
             Description  => 'ChangeStates - ' . $UniqueSignature,
-            ChangeStates => ['failed'],
+            ChangeStates => ['pending approval'],
         },
         ResultData => {
             TestCount => 1,

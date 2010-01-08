@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.115 2010-01-08 13:45:23 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.116 2010-01-08 15:02:22 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -809,7 +809,7 @@ my @WorkOrderTests = (
                 UserID           => 1,
                 ChangeID         => $WorkOrderAddTestID,
                 WorkOrderTypeID  => $WorkOrderTypeName2ID{pir},
-                WorkOrderStateID => $WorkOrderStateName2ID{closed},
+                WorkOrderStateID => $WorkOrderStateName2ID{'in progress'},
                 WorkOrderTitle   => 'WorkOrderAdd with WorkOrderStateID - Title - '
                     . $UniqueSignature,
                 Instruction => 'WorkOrderAdd with WorkOrderStateID - Instruction - '
@@ -882,13 +882,41 @@ my @WorkOrderTests = (
     },
 
     {
-        Description => 'Test for States (no ids) in WOAdd() and WOUpdate()',
+        Description => 'Test for invalid state names in WOAdd() and WOUpdate()',
+        UpdateFails => 1,
         SourceData  => {
             WorkOrderAdd => {
                 UserID         => 1,
                 ChangeID       => $WorkOrderAddTestID,
                 WorkOrderTitle => 'WorkOrderState - ' . $UniqueSignature,
                 WorkOrderState => 'closed',
+            },
+            WorkOrderUpdate => {
+                WorkOrderState => 'canceled',
+                UserID         => 1,
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                ChangeID         => $WorkOrderAddTestID,
+                CreateBy         => 1,
+                ChangeBy         => 1,
+                WorkOrderTitle   => 'WorkOrderState - ' . $UniqueSignature,
+                WorkOrderState   => 'closed',
+                WorkOrderStateID => $WorkOrderStateName2ID{closed},
+            },
+        },
+        SearchTest => [ 27, 28 ],
+    },
+
+    {
+        Description => 'Test for valid state names in WOAdd() and WOUpdate()',
+        SourceData  => {
+            WorkOrderAdd => {
+                UserID         => 1,
+                ChangeID       => $WorkOrderAddTestID,
+                WorkOrderTitle => 'WorkOrderState - ' . $UniqueSignature,
+                WorkOrderState => 'in progress',
             },
             WorkOrderUpdate => {
                 WorkOrderState => 'canceled',

@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.221 2010-01-08 13:45:22 bes Exp $
+# $Id: ITSMChange.pm,v 1.222 2010-01-08 15:02:22 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -28,7 +28,7 @@ use Kernel::System::VirtualFS;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.221 $) [1];
+$VERSION = qw($Revision: 1.222 $) [1];
 
 =head1 NAME
 
@@ -396,6 +396,21 @@ sub ChangeUpdate {
 
     # check the given parameters
     return if !$Self->_CheckChangeParams(%Param);
+
+    # check sanity of the new state with the state machine
+    if ( $Param{ChangeStateID} ) {
+        my $StateList = $Self->ChangePossibleStatesGet(
+            ChangeID => $Param{ChangeID},
+            UserID   => $Param{UserID},
+        );
+        if ( !grep { $_->{Key} == $Param{ChangeStateID} } @{$StateList} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "The state $Param{ChangeStateID} is not a possible next state!",
+            );
+            return;
+        }
+    }
 
     # trigger ChangeUpdatePre-Event
     $Self->EventHandler(
@@ -3055,6 +3070,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.221 $ $Date: 2010-01-08 13:45:22 $
+$Revision: 1.222 $ $Date: 2010-01-08 15:02:22 $
 
 =cut
