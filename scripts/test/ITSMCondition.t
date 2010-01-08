@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.21 2010-01-08 15:14:57 mae Exp $
+# $Id: ITSMCondition.t,v 1.22 2010-01-08 15:20:25 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -764,6 +764,38 @@ my @ExpressionTests = (
             },
         },
     },
+    {
+        MatchSuccess => 1,
+        SourceData   => {
+            ExpressionAdd => {
+                ObjectID => {
+                    ObjectLookup => {
+                        Name   => 'ITSMChange',
+                        UserID => 1,
+                    },
+                },
+                AttributeID => {
+                    AttributeLookup => {
+                        Name   => 'ChangeTitle',
+                        UserID => 1,
+                    },
+                },
+                OperatorID => {
+                    OperatorLookup => {
+                        Name   => 'is not',
+                        UserID => 1,
+                    },
+                },
+
+                # static fields
+                ConditionID  => $ConditionIDs[0],
+                Selector     => $ChangeIDs[0],
+                CompareValue => $ChangeTitles[0] . int rand 1_000_000,
+                UserID       => 1,
+            },
+        },
+    },
+
 );
 
 # check condition expressions
@@ -1014,6 +1046,8 @@ for my $ExpressionID (@ExpressionIDs) {
 
 # delete created conditions
 for my $ConditionID (@ConditionIDs) {
+
+    # TODO: substitude following removal of conditions with condition object
     $Self->True(
         $Self->{DBObject}->Do(
             SQL => 'DELETE FROM change_condition '
