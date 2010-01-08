@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Notification.pm - lib for notifications in change management
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.24 2010-01-08 08:32:00 reb Exp $
+# $Id: Notification.pm,v 1.25 2010-01-08 10:16:33 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.24 $) [1];
+$VERSION = qw($Revision: 1.25 $) [1];
 
 =head1 NAME
 
@@ -1041,6 +1041,120 @@ sub _NotificationReplaceMacros {
 
 =back
 
+=head2 The following placeholders can be used in Change::xxx notifications
+
+<OTRS_CHANGE_xxx>
+
+with the subsequent values for xxx:
+
+    ChangeID
+        The ID of the change
+    ChangeNumber
+        The number of the change
+    ChangeStateID
+        The ID of the change state
+    ChangeState
+        The name of the change state (e.g. requested, approved)
+    ChangeStateSignal
+    ChangeTitle
+        The change title
+    Description
+        The "original" description. Please note: If richtext feature is enabled,
+        this contains HTML markup. So this can be used to send HTML notifications.
+    DescriptionPlain
+        This is the plain description without any HTML markup. This is better for plain notifications.
+    Justification
+        The same as for Description applies here.
+    JustificationPlain
+        See DescriptionPlain.
+    ChangeBuilderID
+        Change builder ID
+    ChangeManagerID
+        Change manager ID
+    CategoryID
+        ID of changes' category.
+    Category
+        Name of changes' category.
+    ImpactID
+        ID of changes' impact.
+    Impact
+        Name of changes' impact.
+    PriorityID
+        ID of changes' priority.
+    Priority
+        Name of changes' priority.
+    WorkOrderCount
+        Number of all work orders that belong to the change.
+    RequestedTime
+        The time the customer want the change to be finished.
+    PlannedEffort
+        Sum of the planned efforts (calculated from the workorders).
+    AccountedTime
+        Accounted time of the change (calculated from the workorders).
+    PlannedStartTime
+        Planned start time of the change (calculated from the workorders).
+    PlannedEndTime
+        Planned end time of the change (calculated from the workorders).
+    ActualStartTime
+        Actual start time of the change (calculated from the workorders).
+    ActualEndTime
+        Actual end time of the change (calculated from the workorders).
+
+=head3 <OTRS_CHANGEBUILDER_xxx>, <OTRS_CHANGEMANAGER_xxx>, <OTRS_WORKORDERAGENT_xxx>
+
+with the subsequent values for xxx:
+
+    UserFirstname
+        Firstname of the person.
+    UserLastname
+        Lastname of the person.
+    UserEmail
+        Email address of the person.
+
+=head3 <OTRS_WORKORDER_xxx>
+
+with the subsequent values for xxx:
+
+    WorkOrderID
+        ID of the workorder
+    ChangeID
+        ID of the change the workorder belongs to.
+    WorkOrderNumber
+        Workorder number
+    WorkOrderTitle
+        Title of the workorder
+    Instruction
+        See Change placeholders -> Description
+    InstructionPlain
+        See Change placeholders -> DescriptionPlain
+    Report
+        See Change placeholders -> Description
+    ReportPlain
+        See Change placeholders -> DescriptionPlain
+    WorkOrderStateID
+        ID of the workorder state.
+    WorkOrderState
+        Name of the workorder state.
+    WorkOrderStateSignal
+    WorkOrderTypeID
+        ID of the workorder type.
+    WorkOrderType
+        The name of the work order type.
+    WorkOrderAgentID
+        The ID of the workorder agent.
+    PlannedStartTime
+        The planned start time for the workorder.
+    PlannedEndTime
+        The planned end time for the workorder.
+    ActualStartTime
+        When did the workorder actually start.
+    ActualEndTime
+        When did the workorder actually end.
+    AccountedTime
+        The so far accounted time for the single workorder
+    PlannedEffort
+        This is the effort planned for the single workorder.
+
 =head1 TERMS AND CONDITIONS
 
 This software is part of the OTRS project (http://otrs.org/).
@@ -1053,6 +1167,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.24 $ $Date: 2010-01-08 08:32:00 $
+$Revision: 1.25 $ $Date: 2010-01-08 10:16:33 $
 
 =cut
