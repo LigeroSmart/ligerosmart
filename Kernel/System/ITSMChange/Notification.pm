@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Notification.pm - lib for notifications in change management
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.26 2010-01-08 10:31:07 reb Exp $
+# $Id: Notification.pm,v 1.27 2010-01-08 11:53:20 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.26 $) [1];
+$VERSION = qw($Revision: 1.27 $) [1];
 
 =head1 NAME
 
@@ -114,6 +114,9 @@ sub new {
 
     # do we use richtext
     $Self->{RichText} = $Self->{ConfigObject}->Get('Frontend::RichText');
+
+    # set up empty cache for _NotificationGet()
+    $Self->{NotificationCache} = {};
 
     return $Self;
 }
@@ -224,7 +227,7 @@ sub NotificationSend {
             = $PreferredLanguage . '::Agent::' . $Param{Type} . '::' . $Param{Event};
 
         # get notification (cache || database)
-        my $Notification = $Self->_NotificationCachedGet(
+        my $Notification = $Self->_NotificationGet(
             NotificationKey => $NotificationKey,
         );
 
@@ -278,7 +281,7 @@ sub NotificationSend {
             = $PreferredLanguage . '::Customer::' . $Param{Type} . '::' . $Param{Event};
 
         # get notification (cache || database)
-        my $Notification = $Self->_NotificationCachedGet(
+        my $Notification = $Self->_NotificationGet(
             NotificationKey => $NotificationKey,
         );
 
@@ -759,76 +762,73 @@ sub RecipientList {
 
 =begin Internal:
 
-=cut
-
-{
-
-=item _NotificationCachedGet()
+=item _NotificationGet()
 
 Get the notification template from cache or from the NotificationObject.
 Also convert to notification the appropriate content type.
 
-    my $Notification = $NotificationObject->_NotificationCachedGet(
+    my $Notification = $NotificationObject->_NotificationGet(
         NotificationKey => 'en::Agent::WorkOrder::WorkOrderUpdate',
     );
 
 =cut
 
-    my %NotificationCache;
+sub _NotificationGet {
+    my ( $Self, %Param ) = @_;
 
-    sub _NotificationCachedGet {
-        my ( $Self, %Param ) = @_;
-
-        for my $Argument (qw(NotificationKey)) {
-            if ( !defined $Param{$Argument} ) {
-                $Self->{LogObject}->Log(
-                    Priority => 'error',
-                    Message  => "Need $Argument!",
-                );
-                return;
-            }
-        }
-
-        my $NotificationKey = $Param{NotificationKey};
-
-        # check the cache
-        return $NotificationCache{$NotificationKey} if $NotificationCache{$NotificationKey};
-
-        # get from database
-        my %NotificationData = $Self->{NotificationObject}->NotificationGet(
-            Name => $NotificationKey,
-        );
-
-        # no notification found
-        if ( !%NotificationData ) {
+    for my $Argument (qw(NotificationKey)) {
+        if ( !defined $Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Could not find notification for $NotificationKey",
+                Message  => "Need $Argument!",
             );
-
             return;
         }
-
-        # do text/plain to text/html convert
-        if ( $Self->{RichText} && $NotificationData{ContentType} =~ m{ text/plain }xmsi ) {
-            $NotificationData{ContentType} = 'text/html';
-            $NotificationData{Body}        = $Self->{HTMLUtilsObject}->ToHTML(
-                String => $NotificationData{Body},
-            );
-        }
-
-        # do text/html to text/plain convert
-        elsif ( !$Self->{RichText} && $NotificationData{ContentType} =~ m{ text/html }xmsi ) {
-            $NotificationData{ContentType} = 'text/plain';
-            $NotificationData{Body}        = $Self->{HTMLUtilsObject}->ToAscii(
-                String => $NotificationData{Body},
-            );
-        }
-
-        $NotificationCache{$NotificationKey} = \%NotificationData;
-
-        return $NotificationCache{$NotificationKey};
     }
+
+    my $NotificationKey = $Param{NotificationKey};
+
+    # check the cache
+    if ( $Self->{NotificationCache}->{$NotificationKey} ) {
+        return $Self->{NotificationCache}->{$NotificationKey};
+    }
+
+    # get from database
+    my %NotificationData = $Self->{NotificationObject}->NotificationGet(
+        Name => $NotificationKey,
+    );
+
+    # no notification found
+    if ( !%NotificationData ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Could not find notification for $NotificationKey",
+        );
+
+        return;
+    }
+
+    # do text/plain to text/html convert
+    if ( $Self->{RichText} && $NotificationData{ContentType} =~ m{ text/plain }xmsi ) {
+        $NotificationData{ContentType} = 'text/html';
+        $NotificationData{Body}        = $Self->{HTMLUtilsObject}->ToHTML(
+            String => $NotificationData{Body},
+        );
+    }
+
+    # do text/html to text/plain convert
+    elsif ( !$Self->{RichText} && $NotificationData{ContentType} =~ m{ text/html }xmsi ) {
+        $NotificationData{ContentType} = 'text/plain';
+        $NotificationData{Body}        = $Self->{HTMLUtilsObject}->ToAscii(
+            String => $NotificationData{Body},
+        );
+    }
+
+    # cache data
+    $Self->{NotificationCache}->{$NotificationKey} = \%NotificationData;
+
+    # return data
+    return \%NotificationData;
 }
 
 =item _NotificationReplaceMacros()
@@ -1167,6 +1167,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.26 $ $Date: 2010-01-08 10:31:07 $
+$Revision: 1.27 $ $Date: 2010-01-08 11:53:20 $
 
 =cut
