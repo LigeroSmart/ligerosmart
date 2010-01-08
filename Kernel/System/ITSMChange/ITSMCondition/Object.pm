@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Object.pm - all condition object functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Object.pm,v 1.8 2010-01-03 15:52:57 ub Exp $
+# $Id: Object.pm,v 1.9 2010-01-08 16:07:53 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 =head1 NAME
 
@@ -351,6 +351,97 @@ sub ObjectDelete {
     return 1;
 }
 
+=item ObjectDataGet()
+
+Return the data of a given type and selector of a certain object.
+
+    my $ObjectData = $ConditionObject->ObjectDataGet(
+        ObjectName => 'ITSMChange',
+        Selector   => 123,
+        UserID   => 1,
+    );
+
+=cut
+
+sub ObjectDataGet {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(ObjectName Selector UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # define known objects and function calls
+    my %ObjectAction = (
+        ITSMChange    => \&_ObjectITSMChange,
+        ITSMWorkOrder => \&_ObjectITSMWorkOrder,
+    );
+
+    # define the needed selectors
+    my %ObjectSelector = (
+        ITSMChange    => 'ChangeID',
+        ITSMWorkOrder => 'WorkOrderID',
+    );
+
+    # get object type
+    my $ObjectType = $Param{ObjectName};
+
+    # check for manageable object
+    if ( !exists $ObjectAction{$ObjectType} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "No object action for $ObjectType found!",
+        );
+        return;
+    }
+
+    # extract needed sub and selector
+    my $ActionSub      = $ObjectAction{$ObjectType};
+    my $ActionSelector = $ObjectSelector{$ObjectType};
+
+    # get and return object
+    return $Self->$ActionSub(
+        $ActionSelector => $Param{Selector},
+        UserID          => 1,
+    );
+}
+
+=item _ObjectITSMChange()
+
+Returns a change object.
+
+    my $Change = $ConditionObject->_ObjectITSMChange();
+
+=cut
+
+sub _ObjectITSMChange {
+    my ( $Self, %Param ) = @_;
+
+    # get and return change data
+    return $Self->{ChangeObject}->ChangeGet(%Param);
+}
+
+=item _ObjectITSMWorkOrder()
+
+Returns a workorder object.
+
+    my $WorkOrder = $ConditionObject->_ObjectITSMWorkOrder();
+
+=cut
+
+sub _ObjectITSMWorkOrder {
+    my ( $Self, %Param ) = @_;
+
+    # get and return workorder data
+    return $Self->{WorkOrderObject}->WorkOrderGet(%Param);
+}
+
 1;
 
 =back
@@ -367,6 +458,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.8 $ $Date: 2010-01-03 15:52:57 $
+$Revision: 1.9 $ $Date: 2010-01-08 16:07:53 $
 
 =cut

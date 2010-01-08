@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Expression.pm - all condition expression functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Expression.pm,v 1.7 2010-01-08 15:19:07 mae Exp $
+# $Id: Expression.pm,v 1.8 2010-01-08 16:07:53 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 =head1 NAME
 
@@ -420,41 +420,23 @@ sub ExpressionMatch {
     }
 
     # TODO: check for changed fields
+    # TODO: implement some magic for selector is ( 'any' | 'all' )
 
-    # TODO: generalize the object calls
-    my %Dispatcher = (
-        ITSMChange    => \&_ExpressionITSMChange,
-        ITSMWorkOrder => \&_ExpressionITSMWorkOrder,
-    );
-    my %ObjectAttribute = (
-        ITSMChange    => 'ChangeID',
-        ITSMWorkOrder => 'WorkOrderID',
-    );
+    # get object name
+    my $ObjectName = $ExpressionData{Object}->{Name};
 
-    # get object type
-    my $ObjectType = $ExpressionData{Object}->{Name};
-
-    # check for manageable object
-    if ( !exists $Dispatcher{$ObjectType} ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "No object dispatcher for $ObjectType found!",
-        );
-        return;
-    }
-
-    # extract sub reference and get con object
-    my $Sub              = $Dispatcher{$ObjectType};
-    my $ExpressionObject = $Self->$Sub(
-        $ObjectAttribute{$ObjectType} => $Expression->{Selector},
-        UserID                        => 1,
+    # get object data
+    my $ExpressionObject = $Self->ObjectDataGet(
+        ObjectName => $ObjectName,
+        Selector   => $Expression->{Selector},
+        UserID     => $Param{UserID},
     );
 
     # check for expression object
     if ( !$ExpressionObject ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "No object data for $ObjectType ($Expression->{Selector}) found!",
+            Message  => "No object data for $ObjectName ($Expression->{Selector}) found!",
         );
         return;
     }
@@ -466,7 +448,7 @@ sub ExpressionMatch {
     if ( !exists $ExpressionObject->{$AttributeType} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "No object attribute for $ObjectType ($AttributeType) found!",
+            Message  => "No object attribute for $ObjectName ($AttributeType) found!",
         );
         return;
     }
@@ -478,32 +460,6 @@ sub ExpressionMatch {
         Value2       => $Expression->{CompareValue},
         UserID       => $Param{UserID},
     );
-}
-
-=item _ExpressionITSMChange()
-
-Returns a change object.
-
-    my $Change = $ConditionObject->_ExpressionITSMChange();
-
-=cut
-
-sub _ExpressionITSMChange {
-    my ( $Self, %Param ) = @_;
-    return $Self->{ChangeObject}->ChangeGet(%Param);
-}
-
-=item _ExpressionITSMWorkOrder()
-
-Returns a workorder object.
-
-    my $WorkOrder = $ConditionObject->_ExpressionITSMWorkOrder();
-
-=cut
-
-sub _ExpressionITSMWorkOrder {
-    my ( $Self, %Param ) = @_;
-    return $Self->{WorkOrderObject}->WorkOrderGet(%Param);
 }
 
 1;
@@ -522,6 +478,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.7 $ $Date: 2010-01-08 15:19:07 $
+$Revision: 1.8 $ $Date: 2010-01-08 16:07:53 $
 
 =cut
