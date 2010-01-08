@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Notification.pm - lib for notifications in change management
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.22 2010-01-08 07:30:28 reb Exp $
+# $Id: Notification.pm,v 1.23 2010-01-08 07:32:09 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 =head1 NAME
 
@@ -49,6 +49,7 @@ create a notification object
     use Kernel::System::Log;
     use Kernel::System::Main;
     use Kernel::System::DB;
+    use Kernel::System::Time;
     use Kernel::System::ITSMChange::Notification;
 
     my $ConfigObject = Kernel::Config->new();
@@ -70,12 +71,18 @@ create a notification object
         LogObject    => $LogObject,
         MainObject   => $MainObject,
     );
+    my $TimeObject = Kernel::System::Time->new(
+        ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
+        LogObject    => $LogObject,
+    );
     my $NotificationObject = Kernel::System::ITSMChange::Notification->new(
         EncodeObject => $EncodeObject,
         ConfigObject => $ConfigObject,
         LogObject    => $LogObject,
         MainObject   => $MainObject,
         DBObject     => $DBObject,
+        TimeObject   => $TimeObject,
     );
 
 =cut
@@ -978,6 +985,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.22 $ $Date: 2010-01-08 07:30:28 $
+$Revision: 1.23 $ $Date: 2010-01-08 07:32:09 $
 
 =cut
