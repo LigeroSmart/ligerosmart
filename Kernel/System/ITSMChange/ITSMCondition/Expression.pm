@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Expression.pm - all condition expression functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Expression.pm,v 1.4 2010-01-07 18:22:49 mae Exp $
+# $Id: Expression.pm,v 1.5 2010-01-08 13:25:07 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 =head1 NAME
 
@@ -70,17 +70,7 @@ sub ExpressionAdd {
         }
     }
 
-    # TODO:
-    my $CheckExpressionID;
-
-    # check if expression name already exists
-    if ($CheckExpressionID) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "Condition expression ($Param{Name}) already exists!",
-        );
-        return;
-    }
+    # TODO: execute ExpressionAddPre Event
 
     # add new expression name to database
     return if !$Self->{DBObject}->Do(
@@ -121,6 +111,8 @@ sub ExpressionAdd {
         return;
     }
 
+    # TODO: execute ExpressionAddPost Event
+
     return $ExpressionID;
 }
 
@@ -153,6 +145,8 @@ sub ExpressionUpdate {
             return;
         }
     }
+
+    # TODO: execute ExpressionUpdatePre Event
 
     # map update attributes to column names
     my %Attribute = (
@@ -190,6 +184,8 @@ sub ExpressionUpdate {
         SQL  => $SQL,
         Bind => \@Bind,
     );
+
+    # TODO: execute ExpressionUpdatePost Event
 
     return 1;
 }
@@ -390,11 +386,10 @@ sub ExpressionMatch {
         my $GetFunction = $Attribute{$Attribute} . 'Get';
 
         # get object
-        $ExpressionData{ $Attribute{$Attribute} }
-            = $Self->$GetFunction(
+        $ExpressionData{ $Attribute{$Attribute} } = $Self->$GetFunction(
             $Attribute => $Expression->{$Attribute},
             UserID     => $Param{UserID},
-            );
+        );
 
         # check for returned data
         if ( !$ExpressionData{ $Attribute{$Attribute} } ) {
@@ -406,6 +401,139 @@ sub ExpressionMatch {
             return;
         }
     }
+
+    # TODO: check for changed fields
+
+    # TODO: generalize the object calls
+    my %Dispatcher = (
+        ITSMChange    => \&_ExpressionITSMChange,
+        ITSMWorkOrder => \&_ExpressionITSMWorkOrder,
+    );
+    my %ObjectAttribute = (
+        ITSMChange    => 'ChangeID',
+        ITSMWorkOrder => 'WorkOrderID',
+    );
+
+    # get object type
+    my $ObjectType = $ExpressionData{Object}->{Name};
+
+    # check for manageable object
+    if ( !exists $Dispatcher{$ObjectType} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "No object dispatcher for $ObjectType found!",
+        );
+        return;
+    }
+
+    # extract sub reference and get con object
+    my $Sub              = $Dispatcher{$ObjectType};
+    my $ExpressionObject = $Self->$Sub(
+        $ObjectAttribute{$ObjectType} => $Expression->{Selector},
+        UserID                        => 1,
+    );
+
+    # check for expression object
+    if ( !$ExpressionObject ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "No object data for $ObjectType ($Expression->{Selector}) found!",
+        );
+        return;
+    }
+
+    # get attribte type
+    my $AttributeType = $ExpressionData{Attribute}->{Name};
+
+    # check for object attribte
+    if ( !exists $ExpressionObject->{$AttributeType} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "No object attribte for $ObjectType ($AttributeType) found!",
+        );
+        return;
+    }
+
+    # TODO: generalize operators
+    # map for operator action
+    my %OperatorAction = (
+        'is' => \&_OperatorEqual,
+    );
+
+    # get matching operator
+    my $MatchOperator = $ExpressionData{Operator}->{Name};
+
+    # check for matching operator
+    if ( !exists $OperatorAction{$MatchOperator} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "No matching operator for '$MatchOperator' found!",
+        );
+        return;
+    }
+
+    # extract operator sub
+    $Sub = $OperatorAction{$MatchOperator};
+
+    # return extracted match
+    return $Self->$Sub(
+        Value1 => $ExpressionObject->{$AttributeType},
+        Value2 => $Expression->{CompareValue},
+    );
+}
+
+=item _ExpressionITSMChange()
+
+Returns a change object.
+
+    my $Change = $ConditionObject->_ExpressionITSMChange();
+
+=cut
+
+sub _ExpressionITSMChange {
+    my ( $Self, %Param ) = @_;
+    return $Self->{ChangeObject}->ChangeGet(%Param);
+}
+
+=item _ExpressionITSMWorkOrder()
+
+Returns a workorder object.
+
+    my $WorkOrder = $ConditionObject->_ExpressionITSMWorkOrder();
+
+=cut
+
+sub _ExpressionITSMWorkOrder {
+    my ( $Self, %Param ) = @_;
+    return $Self->{ChangeObject}->{WorkOrderObject}->WorkOrderGet(%Param);
+}
+
+=item _OperatorEqual()
+
+Returns true or false (1/undef) if given values are equale.
+
+    my $Result = $ConditionObject->_OperatorEqual(
+        Value1 => 'SomeValue',
+        Value2 => 'SomeOtherValue',
+    );
+
+=cut
+
+sub _OperatorEqual {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(Value1 Value2)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    return $Param{Value1} eq $Param{Value2};
 }
 
 1;
@@ -424,6 +552,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2010-01-07 18:22:49 $
+$Revision: 1.5 $ $Date: 2010-01-08 13:25:07 $
 
 =cut

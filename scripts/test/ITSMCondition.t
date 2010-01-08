@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.19 2010-01-08 12:35:47 bes Exp $
+# $Id: ITSMCondition.t,v 1.20 2010-01-08 13:25:07 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -447,10 +447,12 @@ for my $OperatorID (@ConditionOperatorCreated) {
 
 # create new change
 my @ChangeIDs;
+my @ChangeTitles;
 CREATECHANGE:
 for my $CreateChange ( 0 .. 2 ) {
-    my $ChangeID = $Self->{ChangeObject}->ChangeAdd(
-        ChangeTitle => "UnitTest$CreateChange",
+    my $ChangeTitle = "UnitTest$CreateChange";
+    my $ChangeID    = $Self->{ChangeObject}->ChangeAdd(
+        ChangeTitle => $ChangeTitle,
         UserID      => 1,
     );
 
@@ -463,7 +465,8 @@ for my $CreateChange ( 0 .. 2 ) {
     next CREATECHANGE if !$ChangeID;
 
     # store change id for further usage and deletion
-    push @ChangeIDs, $ChangeID;
+    push @ChangeIDs,    $ChangeID;
+    push @ChangeTitles, $ChangeTitle;
 }
 
 # create new condition
@@ -697,7 +700,37 @@ my @ExpressionTests = (
                 UserID => 1,
             },
         },
-    }
+    },
+    {
+        SourceData => {
+            ExpressionAdd => {
+                ObjectID => {
+                    ObjectLookup => {
+                        Name   => 'ITSMChange',
+                        UserID => 1,
+                    },
+                },
+                AttributeID => {
+                    AttributeLookup => {
+                        Name   => 'ChangeTitle',
+                        UserID => 1,
+                    },
+                },
+                OperatorID => {
+                    OperatorLookup => {
+                        Name   => 'is',
+                        UserID => 1,
+                    },
+                },
+
+                # static fields
+                ConditionID  => $ConditionIDs[0],
+                Selector     => $ChangeIDs[0],
+                CompareValue => $ChangeTitles[0],
+                UserID       => 1,
+            },
+        },
+    },
 );
 
 # check condition expressions
@@ -951,9 +984,9 @@ for my $ConditionID (@ConditionIDs) {
 }
 
 my $ExpressionMatch = $Self->{ConditionObject}->ExpressionMatch(
-    ExpressionID => $ExpressionIDs[0],
+    ExpressionID => $ExpressionIDs[-1],
     UserID       => 1,
-);
+) || 0;
 $Self->True(
     $ExpressionMatch,
     'Test ' . $TestCount++ . " - ExpressionMatch -> '$ExpressionMatch'",
