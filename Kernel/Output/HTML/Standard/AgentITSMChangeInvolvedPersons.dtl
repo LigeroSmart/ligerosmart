@@ -2,7 +2,7 @@
 # AgentITSMChangeInvolvedPersons.dtl - provides HTML form for AgentITSMChangeInvolvedPersons
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.20 2010-01-06 11:15:45 bes Exp $
+# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.21 2010-01-08 10:31:10 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -35,6 +35,35 @@ function clear_field3() {
     document.compose.NewCABMember.value = "";
     document.compose.NewCABMember.focus();
 }
+
+// do initialization when the DOM is fully loaded
+document.observe( "dom:loaded", function() {
+
+    // clear the ChangeManager input field, when it gains focus
+    $('myAutoCompleteInput1').observe(
+        'focus',
+        function() {
+            this.setValue('');
+        }
+    );
+
+    // clear the ChangeBuilder input field, when it gains focus
+    $('myAutoCompleteInput2').observe(
+        'focus',
+        function() {
+            this.setValue('');
+        }
+    );
+
+    // clear the CABMember input field, when it gains focus
+    $('myCABAutoCompleteInput').observe(
+        'focus',
+        function() {
+            this.setValue('');
+        }
+    );
+} );
+
 //-->
 </script>
 

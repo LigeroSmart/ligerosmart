@@ -1,8 +1,8 @@
 # --
 # AgentITSMWorkOrderAgent.dtl - provides HTML form for AgentITSMWorkOrderAgent
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAgent.dtl,v 1.14 2009-11-30 09:59:09 bes Exp $
+# $Id: AgentITSMWorkOrderAgent.dtl,v 1.15 2010-01-08 10:31:10 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,6 +26,21 @@ function clear_field() {
     document.compose.Agent.value = "";
     document.compose.Agent.focus();
 }
+
+// do initialization when the DOM is fully loaded
+document.observe( "dom:loaded", function() {
+
+    // clear the User input field, when it gains focus
+    $('myAutoCompleteInput').observe(
+        'focus',
+        function() {
+            this.setValue('');
+        }
+    );
+
+} );
+
+
 //-->
 </script>
 
@@ -60,8 +75,8 @@ function clear_field() {
                         <td>
                             <table border="0" width="100%" cellspacing="0" cellpadding="3">
                                 <colgroup>
-                                <col width="130px">
-                                <col>
+                                    <col width="130px">
+                                    <col>
                                 </colgroup>
                                 <tr>
                                     <td class="contentkey">
