@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.20 2010-01-08 13:25:07 mae Exp $
+# $Id: ITSMCondition.t,v 1.21 2010-01-08 15:14:57 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -82,6 +82,7 @@ my @ObjectMethods = qw(
     ExpressionDelete
     ExpressionGet
     ExpressionList
+    ExpressionMatch
     ExpressionUpdate
     ObjectAdd
     ObjectDelete
@@ -327,7 +328,7 @@ for my $AttributeID (@ConditionAttributeCreated) {
 # check for default condition operators
 my @ConditionOperators = (
 
-    # commong matching
+    # common matching
     'is', 'is not',
 
     # digit matching
@@ -702,7 +703,8 @@ my @ExpressionTests = (
         },
     },
     {
-        SourceData => {
+        MatchSuccess => 1,
+        SourceData   => {
             ExpressionAdd => {
                 ObjectID => {
                     ObjectLookup => {
@@ -719,6 +721,37 @@ my @ExpressionTests = (
                 OperatorID => {
                     OperatorLookup => {
                         Name   => 'is',
+                        UserID => 1,
+                    },
+                },
+
+                # static fields
+                ConditionID  => $ConditionIDs[0],
+                Selector     => $ChangeIDs[0],
+                CompareValue => $ChangeTitles[0],
+                UserID       => 1,
+            },
+        },
+    },
+    {
+        MatchSuccess => 0,
+        SourceData   => {
+            ExpressionAdd => {
+                ObjectID => {
+                    ObjectLookup => {
+                        Name   => 'ITSMChange',
+                        UserID => 1,
+                    },
+                },
+                AttributeID => {
+                    AttributeLookup => {
+                        Name   => 'ChangeTitle',
+                        UserID => 1,
+                    },
+                },
+                OperatorID => {
+                    OperatorLookup => {
+                        Name   => 'is not',
                         UserID => 1,
                     },
                 },
@@ -826,7 +859,7 @@ for my $ExpressionTest (@ExpressionTests) {
             }
         }    # end if ( $CreateData eq 'ExpressionAdd' )
 
-        # add expression
+        # update expression
         if ( $CreateData eq 'ExpressionUpdate' ) {
 
             # extract ExpressionUpdate data
@@ -943,54 +976,30 @@ for my $ConditionID (@ConditionIDs) {
     );
 }
 
-# check for expression list
-CONDITIONID:
-for my $ConditionID (@ConditionIDs) {
+# test for matching
+for my $ExpressionCounter ( 0 .. ( scalar @ExpressionIDs - 1 ) ) {
+    my $ExpressionMatch = $Self->{ConditionObject}->ExpressionMatch(
+        ExpressionID => $ExpressionIDs[$ExpressionCounter],
+        UserID       => 1,
+    );
 
-    # check for expressions of this condition id
-    my $ExpressionTestCount = 0;
-    EXPRESSIONTEST:
-    for my $ExpressionTest (@ExpressionTests) {
-
-        # ommit test case if no source data is available
-        next EXPRESSIONTEST if !$ExpressionTest->{SourceData};
-
-        # ommit test case if no expression shoul be added
-        next EXPRESSIONTEST if !$ExpressionTest->{SourceData}->{ExpressionAdd};
-
-        $ExpressionTestCount++
-            if $ExpressionTest->{SourceData}->{ExpressionAdd}->{ConditionID} == $ConditionID;
+    if ( $ExpressionTests[$ExpressionCounter]->{MatchSuccess} ) {
+        $Self->True(
+            $ExpressionMatch,
+            'Test '
+                . $TestCount++
+                . " - ExpressionMatch return true -> '$ExpressionIDs[$ExpressionCounter]'",
+        );
     }
-
-    my $ExpressionList = $Self->{ConditionObject}->ExpressionList(
-        ConditionID => $ConditionID,
-        UserID      => 1,
-    );
-
-    $Self->Is(
-        'ARRAY',
-        ref $ExpressionList,
-        'Test ' . $TestCount++ . ' - ExpressionList return value',
-    );
-
-    # check for list type
-    next CONDITIONID if ref $ExpressionList ne 'ARRAY';
-
-    $Self->Is(
-        $ExpressionTestCount,
-        scalar @{$ExpressionList},
-        'Test ' . $TestCount++ . " - ExpressionList -> $ConditionID",
-    );
+    else {
+        $Self->False(
+            $ExpressionMatch,
+            'Test '
+                . $TestCount++
+                . " - ExpressionMatch return false -> '$ExpressionIDs[$ExpressionCounter]'",
+        );
+    }
 }
-
-my $ExpressionMatch = $Self->{ConditionObject}->ExpressionMatch(
-    ExpressionID => $ExpressionIDs[-1],
-    UserID       => 1,
-) || 0;
-$Self->True(
-    $ExpressionMatch,
-    'Test ' . $TestCount++ . " - ExpressionMatch -> '$ExpressionMatch'",
-);
 
 # check for expression delete
 for my $ExpressionID (@ExpressionIDs) {
