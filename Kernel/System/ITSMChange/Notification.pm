@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Notification.pm - lib for notifications in change management
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.23 2010-01-08 07:32:09 reb Exp $
+# $Id: Notification.pm,v 1.24 2010-01-08 08:32:00 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.23 $) [1];
+$VERSION = qw($Revision: 1.24 $) [1];
 
 =head1 NAME
 
@@ -177,6 +177,22 @@ sub NotificationSend {
             UserID   => $Param{UserID},
             LogNo    => 1,
         );
+
+        if ( $Change->{ChangeBuilderID} ) {
+            $Param{Data}->{ChangeBuilder} = {
+                $Self->{UserObject}->GetUserData(
+                    UserID => $Change->{ChangeBuilderID},
+                    )
+            };
+        }
+
+        if ( $Change->{ChangeManagerID} ) {
+            $Param{Data}->{ChangeManager} = {
+                $Self->{UserObject}->GetUserData(
+                    UserID => $Change->{ChangeManagerID},
+                    )
+            };
+        }
     }
 
     if ( $Param{Data}->{WorkOrderID} ) {
@@ -185,6 +201,14 @@ sub NotificationSend {
             UserID      => $Param{UserID},
             LogNo       => 1,
         );
+
+        if ( $WorkOrder->{WorkOrderAgentID} ) {
+            $Param{Data}->{WorkOrderAgent} = {
+                $Self->{UserObject}->GetUserData(
+                    UserID => $WorkOrder->{WorkOrderAgentID},
+                    )
+            };
+        }
     }
 
     for my $AgentID ( @{ $Param{AgentIDs} } ) {
@@ -816,7 +840,13 @@ This method replaces all the <OTRS_xxxx> macros in notification text.
         Text      => 'Some <OTRS_CONFIG_FQDN> text',
         RichText  => 1,          # optional, is Text richtext or not. default 0
         Recipient => {%User},
-        Data      => { %ChangeData },
+        Data      => {
+            ChangeBuilder => {
+                UserFirstname => 'Tom',
+                UserLastname  => 'Tester',
+                UserEmail     => 'tt@otrs.com',
+            },
+        },
         Change    => $Change,
         WorkOrder => $WorkOrder,
         UserID    => 1,
@@ -919,6 +949,9 @@ sub _NotificationReplaceMacros {
         $Text =~ s{ $Tag $_ $End }{$ChangeData{$_}}gxmsi;
     }
 
+    # cleanup
+    $Text =~ s{ $Tag .+? $End}{-}gxmsi;
+
     # replace <OTRS_WORKORDER_... tags
     $Tag = $Start . 'OTRS_WORKORDER_';
     my %WorkOrderData = %{ $Param{WorkOrder} };
@@ -937,6 +970,41 @@ sub _NotificationReplaceMacros {
     for ( keys %WorkOrderData ) {
         next if !defined $WorkOrderData{$_};
         $Text =~ s{ $Tag $_ $End }{$WorkOrderData{$_}}gxmsi;
+    }
+
+    # cleanup
+    $Text =~ s{ $Tag .+? $End}{-}gxmsi;
+
+    # replace extended <OTRS_CHANGE_... tags
+    my %InfoHash = %{ $Param{Data} };
+
+    for my $Object (qw(ChangeBuilder ChangeManager WorkOrderAgent)) {
+        $Tag = $Start . uc 'OTRS_' . $Object . '_';
+
+        if ( exists $InfoHash{$Object} && ref $InfoHash{$Object} eq 'HASH' ) {
+
+            # html quoting of content
+            if ( $Param{RichText} ) {
+
+                KEY:
+                for my $Key ( keys %{ $InfoHash{$Object} } ) {
+                    next KEY if !$WorkOrderData{$Key};
+                    $InfoHash{$Object}->{$Key} = $Self->{HTMLUtilsObject}->ToHTML(
+                        String => $InfoHash{$Object}->{$Key},
+                    );
+                }
+            }
+
+            # replace it
+            KEY:
+            for my $Key ( keys %{ $InfoHash{$Object} } ) {
+                next KEY if !defined $InfoHash{$Object}->{$Key};
+                $Text =~ s{ $Tag $Key $End }{$InfoHash{$Object}->{$Key}}gxmsi;
+            }
+        }
+
+        # cleanup
+        $Text =~ s{ $Tag .+? $End}{-}gxmsi;
     }
 
     # get recipient data and replace it with <OTRS_...
@@ -985,6 +1053,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.23 $ $Date: 2010-01-08 07:32:09 $
+$Revision: 1.24 $ $Date: 2010-01-08 08:32:00 $
 
 =cut
