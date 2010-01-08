@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Expression.pm - all condition expression functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Expression.pm,v 1.6 2010-01-08 14:48:24 mae Exp $
+# $Id: Expression.pm,v 1.7 2010-01-08 15:19:07 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 =head1 NAME
 
@@ -471,31 +471,12 @@ sub ExpressionMatch {
         return;
     }
 
-    # TODO: generalize operators
-    # map for operator action
-    my %OperatorAction = (
-        'is' => \&_OperatorEqual,
-    );
-
-    # get matching operator
-    my $MatchOperator = $ExpressionData{Operator}->{Name};
-
-    # check for matching operator
-    if ( !exists $OperatorAction{$MatchOperator} ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "No matching operator for '$MatchOperator' found!",
-        );
-        return;
-    }
-
-    # extract operator sub
-    $Sub = $OperatorAction{$MatchOperator};
-
-    # return extracted match
-    return $Self->$Sub(
-        Value1 => $ExpressionObject->{$AttributeType},
-        Value2 => $Expression->{CompareValue},
+    # return result of the expressions execution
+    return $Self->OperatorExecute(
+        OperatorName => $ExpressionData{Operator}->{Name},
+        Value1       => $ExpressionObject->{$AttributeType},
+        Value2       => $Expression->{CompareValue},
+        UserID       => $Param{UserID},
     );
 }
 
@@ -525,34 +506,6 @@ sub _ExpressionITSMWorkOrder {
     return $Self->{WorkOrderObject}->WorkOrderGet(%Param);
 }
 
-=item _OperatorEqual()
-
-Returns true or false (1/undef) if given values are equal.
-
-    my $Result = $ConditionObject->_OperatorEqual(
-        Value1 => 'SomeValue',
-        Value2 => 'SomeOtherValue',
-    );
-
-=cut
-
-sub _OperatorEqual {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for my $Argument (qw(Value1 Value2)) {
-        if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Argument!",
-            );
-            return;
-        }
-    }
-
-    return $Param{Value1} eq $Param{Value2};
-}
-
 1;
 
 =back
@@ -569,6 +522,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.6 $ $Date: 2010-01-08 14:48:24 $
+$Revision: 1.7 $ $Date: 2010-01-08 15:19:07 $
 
 =cut

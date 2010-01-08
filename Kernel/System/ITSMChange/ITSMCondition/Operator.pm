@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Operator.pm - all condition operator functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Operator.pm,v 1.3 2010-01-03 15:52:57 ub Exp $
+# $Id: Operator.pm,v 1.4 2010-01-08 15:19:07 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 =head1 NAME
 
@@ -351,6 +351,119 @@ sub OperatorDelete {
     return 1;
 }
 
+=item OperatorExecute()
+
+Returns true or false (1/undef) if given values are equal.
+
+    my $Result = $ConditionObject->OperatorExecute(
+        OperatorName => 'is',
+        Value1       => 'SomeValue',
+        Value2       => 'SomeOtherValue',
+        UserID       => 1234,
+    );
+
+=cut
+
+sub OperatorExecute {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(OperatorName Value1 Value2 UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # map for operator action
+    my %OperatorAction = (
+        'is'     => \&_OperatorEqual,
+        'is not' => \&_OperatorNotEqual,
+    );
+
+    # get operator name
+    my $OperatorName = $Param{OperatorName};
+
+    # check for matching operator
+    if ( !exists $OperatorAction{$OperatorName} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "No matching operator for '$OperatorName' found!",
+        );
+        return;
+    }
+
+    # extract operator sub
+    my $Sub = $OperatorAction{$OperatorName};
+
+    # return extracted match
+    return $Self->$Sub(
+        Value1 => $Param{Value1},
+        Value2 => $Param{Value2},
+    );
+
+}
+
+=item _OperatorEqual()
+
+Returns true or false (1/undef) if given values are equal.
+
+    my $Result = $ConditionObject->_OperatorEqual(
+        Value1 => 'SomeValue',
+        Value2 => 'SomeOtherValue',
+    );
+
+=cut
+
+sub _OperatorEqual {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(Value1 Value2)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # return result of equation
+    return $Param{Value1} eq $Param{Value2};
+}
+
+=item _OperatorNotEqual()
+
+Returns true or false (1/undef) if given values are not equal.
+
+    my $Result = $ConditionObject->_OperatorNotEqual(
+        Value1 => 'SomeValue',
+        Value2 => 'SomeOtherValue',
+    );
+
+=cut
+
+sub _OperatorNotEqual {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(Value1 Value2)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # return result of negated equation
+    return !$Self->_OperatorEqual(%Param);
+}
 1;
 
 =back
@@ -367,6 +480,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2010-01-03 15:52:57 $
+$Revision: 1.4 $ $Date: 2010-01-08 15:19:07 $
 
 =cut
