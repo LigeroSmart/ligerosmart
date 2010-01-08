@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.220 2010-01-08 12:28:23 bes Exp $
+# $Id: ITSMChange.pm,v 1.221 2010-01-08 13:45:22 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -28,7 +28,7 @@ use Kernel::System::VirtualFS;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.220 $) [1];
+$VERSION = qw($Revision: 1.221 $) [1];
 
 =head1 NAME
 
@@ -2591,7 +2591,7 @@ sub _CheckChangeStateIDs {
         return;
     }
 
-    # check if ChangeStateIDs belongs to correct general catalog class
+    # check if ChangeStateIDs belong to correct general catalog class
     for my $StateID ( @{ $Param{ChangeStateIDs} } ) {
         my $State = $Self->ChangeStateLookup(
             ChangeStateID => $StateID,
@@ -3055,6 +3055,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.220 $ $Date: 2010-01-08 12:28:23 $
+$Revision: 1.221 $ $Date: 2010-01-08 13:45:22 $
 
 =cut

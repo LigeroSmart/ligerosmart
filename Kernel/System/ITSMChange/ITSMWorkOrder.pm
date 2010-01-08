@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.71 2010-01-08 12:28:23 bes Exp $
+# $Id: ITSMWorkOrder.pm,v 1.72 2010-01-08 13:45:22 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.71 $) [1];
+$VERSION = qw($Revision: 1.72 $) [1];
 
 =head1 NAME
 
@@ -380,10 +380,11 @@ There passing C<undef> indicates that the workorder time should be cleared.
         UserID           => 1,
     );
 
-constraints:
+Constraints:
 
-xxxStartTime has to be before xxxEndTime. If just one of these parameters is passed
+C<xxxStartTime> has to be before C<xxxEndTime>. If just one of the parameter pair is passed
 the other time is retrieved from database.
+The C<WorkOrderStateID> is checked against the state machine.
 
 =cut
 
@@ -401,7 +402,7 @@ sub WorkOrderUpdate {
         }
     }
 
-    # check that not both State and StateID are given
+    # check that not both WorkOrderState and WorkOrderStateID are given
     if ( $Param{WorkOrderState} && $Param{WorkOrderStateID} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
@@ -527,8 +528,9 @@ sub WorkOrderUpdate {
     }
 
     $SQL .= 'change_time = current_timestamp, change_by = ? ';
+    push @Bind, \$Param{UserID};
     $SQL .= 'WHERE id = ?';
-    push @Bind, \$Param{UserID}, \$Param{WorkOrderID};
+    push @Bind, \$Param{WorkOrderID};
 
     # update workorder
     return if !$Self->{DBObject}->Do(
@@ -1494,8 +1496,8 @@ sub WorkOrderStateLookup {
 =item WorkOrderPossibleStatesGet()
 
 This method returns a list of possible workorder states.
-If WorkOrderID is omitted, the complete list of workorder states is returned.
-If WorkOrderID is given, the list of possible workorder states for the given
+If C<WorkOrderID> is omitted, the complete list of workorder states is returned.
+If C<WorkOrderID> is given, the list of possible states for the given
 workorder is returned.
 
     my $WorkOrderStateList = $WorkOrderObject->WorkOrderPossibleStatesGet(
@@ -1866,6 +1868,7 @@ sub Permission {
 =item WorkOrderStateIDsCheck()
 
 Check whether all of the given workorder state ids are valid.
+The method is public as it is used in L<Kernel::System::ITSMChange::ChangeSearch>.
 
     my $Ok = $WorkOrderObject->WorkOrderStateIDsCheck(
         WorkOrderStateIDs => [ 25 ],
@@ -2657,6 +2660,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.71 $ $Date: 2010-01-08 12:28:23 $
+$Revision: 1.72 $ $Date: 2010-01-08 13:45:22 $
 
 =cut

@@ -1,8 +1,8 @@
 # --
 # ITSMWorkOrder.t - workorder tests
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.114 2009-12-31 13:05:09 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.115 2010-01-08 13:45:23 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -153,6 +153,7 @@ my @ObjectMethods = qw(
     WorkOrderSearch
     WorkOrderUpdate
     WorkOrderStateLookup
+    WorkOrderStateIDsCheck
     WorkOrderTypeList
     WorkOrderTypeLookup
     WorkOrderPossibleStatesGet
