@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition.pm - all condition functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.pm,v 1.9 2010-01-08 12:59:48 mae Exp $
+# $Id: ITSMCondition.pm,v 1.10 2010-01-08 13:03:17 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,6 +15,7 @@ use strict;
 use warnings;
 
 use Kernel::System::ITSMChange;
+use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 #use base qw(Kernel::System::EventHandler);
 use base qw(Kernel::System::ITSMChange::ITSMCondition::Object);
@@ -23,7 +24,7 @@ use base qw(Kernel::System::ITSMChange::ITSMCondition::Operator);
 use base qw(Kernel::System::ITSMChange::ITSMCondition::Expression);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 =head1 NAME
 
@@ -101,7 +102,8 @@ sub new {
     $Self->{Debug} = $Param{Debug} || 0;
 
     # create additional objects
-    $Self->{ChangeObject} = Kernel::System::ITSMChange->new( %{$Self} );
+    $Self->{ChangeObject}    = Kernel::System::ITSMChange->new( %{$Self} );
+    $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
 
     # init of event handler
     #$Self->EventHandlerInit(
@@ -260,6 +262,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.9 $ $Date: 2010-01-08 12:59:48 $
+$Revision: 1.10 $ $Date: 2010-01-08 13:03:17 $
 
 =cut
