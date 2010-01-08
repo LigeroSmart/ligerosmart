@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.70 2010-01-08 12:16:44 bes Exp $
+# $Id: ITSMWorkOrder.pm,v 1.71 2010-01-08 12:28:23 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.70 $) [1];
+$VERSION = qw($Revision: 1.71 $) [1];
 
 =head1 NAME
 
@@ -332,8 +332,8 @@ sub WorkOrderAdd {
     # update WorkOrder with remaining parameters,
     # the already handles params have been deleted from %Param
     my $UpdateSuccess = $Self->WorkOrderUpdate(
-        WorkOrderID => $WorkOrderID,
         %Param,
+        WorkOrderID => $WorkOrderID,
     );
 
     # check update error
@@ -2657,6 +2657,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.70 $ $Date: 2010-01-08 12:16:44 $
+$Revision: 1.71 $ $Date: 2010-01-08 12:28:23 $
 
 =cut

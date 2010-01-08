@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.219 2010-01-08 12:16:44 bes Exp $
+# $Id: ITSMChange.pm,v 1.220 2010-01-08 12:28:23 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -28,7 +28,7 @@ use Kernel::System::VirtualFS;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.219 $) [1];
+$VERSION = qw($Revision: 1.220 $) [1];
 
 =head1 NAME
 
@@ -203,11 +203,14 @@ sub ChangeAdd {
     my $ChangeNumber = $Self->_ChangeNumberCreate();
 
     # get initial change state id
-    my $NextStateIDs = $Self->{StateMachineObject}->StateTransitionGet(
-        StateID => 0,
-        Class   => 'ITSM::ChangeManagement::Change::State',
-    );
-    my $ChangeStateID = $NextStateIDs->[0];
+    my $ChangeStateID = delete $Param{ChangeStateID};
+    if ( !$ChangeStateID ) {
+        my $NextStateIDs = $Self->{StateMachineObject}->StateTransitionGet(
+            StateID => 0,
+            Class   => 'ITSM::ChangeManagement::Change::State',
+        );
+        $ChangeStateID = $NextStateIDs->[0];
+    }
 
     # get default Category if not defined
     my $CategoryID = delete $Param{CategoryID};
@@ -267,10 +270,10 @@ sub ChangeAdd {
         Event => 'ChangeAddPost',
         Data  => {
             %Param,
+            ChangeID      => $ChangeID,
             CategoryID    => $CategoryID,
             ImpactID      => $ImpactID,
             PriorityID    => $PriorityID,
-            ChangeID      => $ChangeID,
             ChangeStateID => $ChangeStateID,
             ChangeNumer   => $ChangeNumber,
         },
@@ -3052,6 +3055,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.219 $ $Date: 2010-01-08 12:16:44 $
+$Revision: 1.220 $ $Date: 2010-01-08 12:28:23 $
 
 =cut
