@@ -2,7 +2,7 @@
 # Kernel/System/Stats/Dynamic/ITSMChangeManagement.pm - all advice functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.1 2010-01-08 12:03:43 reb Exp $
+# $Id: ITSMChangeManagement.pm,v 1.2 2010-01-08 12:55:28 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -54,30 +54,36 @@ sub GetObjectAttributes {
     );
 
     # get change state list
-    my $ChangeStateList = $Self->{ChangeObject}->ChangePossibleStatesGet(
+    my $ChangeStates = $Self->{ChangeObject}->ChangePossibleStatesGet(
         UserID => 1,
     );
+    my %ChangeStateList = map { $_->{Key} => $_->{Value} } @{$ChangeStates};
 
     # get cip lists
-    my $CategoryList = $Self->{ChangeObject}->ChangePossibleCIPGet(
+    my $Categories = $Self->{ChangeObject}->ChangePossibleCIPGet(
         Type => 'Category',
     );
-    my $ImpactList = $Self->{ChangeObject}->ChangePossibleCIPGet(
+    my %CategoryList = map { $_->{Key} => $_->{Value} } @{$Categories};
+
+    my $Impacts = $Self->{ChangeObject}->ChangePossibleCIPGet(
         Type => 'Impact',
     );
-    my $PriorityList = $Self->{ChangeObject}->ChangePossibleCIPGet(
+    my %ImpactList = map { $_->{Key} => $_->{Value} } @{$Impacts};
+
+    my $Priorities = $Self->{ChangeObject}->ChangePossibleCIPGet(
         Type => 'Priority',
     );
+    my %PriorityList = map { $_->{Key} => $_->{Value} } @{$Priorities};
 
     my @ObjectAttributes = (
         {
-            Name             => 'ChangeState',
+            Name             => 'Change State',
             UseAsXvalue      => 1,
             UseAsValueSeries => 1,
             UseAsRestriction => 1,
             Element          => 'StateIDs',
             Block            => 'MultiSelectField',
-            Values           => $ChangeStateList,
+            Values           => \%ChangeStateList,
         },
         {
             Name             => 'Category',
@@ -86,7 +92,7 @@ sub GetObjectAttributes {
             UseAsRestriction => 1,
             Element          => 'CategoryIDs',
             Block            => 'MultiSelectField',
-            Values           => $CategoryList,
+            Values           => \%CategoryList,
         },
         {
             Name             => 'Priority',
@@ -95,7 +101,7 @@ sub GetObjectAttributes {
             UseAsRestriction => 1,
             Element          => 'PriorityIDs',
             Block            => 'MultiSelectField',
-            Values           => $PriorityList,
+            Values           => \%PriorityList,
         },
         {
             Name             => 'Impact',
@@ -105,7 +111,7 @@ sub GetObjectAttributes {
             Element          => 'ImpactIDs',
             Block            => 'MultiSelectField',
             Translation      => 0,
-            Values           => $ImpactList,
+            Values           => \%ImpactList,
         },
         {
             Name             => 'Timeperiod',
@@ -133,7 +139,7 @@ sub GetStatElement {
     my ( $Self, %Param ) = @_;
 
     # search tickets
-    return $Self->{ChangeObject}->ChangeSearchSearch(
+    return $Self->{ChangeObject}->ChangeSearch(
         UserID     => 1,
         Result     => 'COUNT',
         Permission => 'ro',
@@ -154,11 +160,16 @@ sub ExportWrapper {
             my $Values      = $Element->{SelectedValues};
 
             if ( $ElementName eq 'StateIDs' ) {
-                my %StateList = $Self->{StateObject}->StateList( UserID => 1 );
+                my $StateList = $Self->{ChangeObject}->ChangePossibleStatesGet( UserID => 1 );
                 ID:
                 for my $ID ( @{$Values} ) {
                     next ID if !$ID;
-                    $ID->{Content} = $StateList{ $ID->{Content} };
+
+                    STATE:
+                    for my $State ( @{$StateList} ) {
+                        next STATE if $ID->{Content} ne $State->{Key};
+                        $ID->{Content} = $State->{Value};
+                    }
                 }
             }
 
@@ -188,34 +199,17 @@ sub ImportWrapper {
             my $ElementName = $Element->{Element};
             my $Values      = $Element->{SelectedValues};
 
-            if ( $ElementName eq 'QueueIDs' || $ElementName eq 'CreatedQueueIDs' ) {
-                ID:
-                for my $ID ( @{$Values} ) {
-                    next ID if !$ID;
-                    if ( $Self->{QueueObject}->QueueLookup( Queue => $ID->{Content} ) ) {
-                        $ID->{Content}
-                            = $Self->{QueueObject}->QueueLookup( Queue => $ID->{Content} );
-                    }
-                    else {
-                        $Self->{LogObject}->Log(
-                            Priority => 'error',
-                            Message  => "Import: Can' find the queue $ID->{Content}!"
-                        );
-                        $ID = undef;
-                    }
-                }
-            }
-            elsif ( $ElementName eq 'StateIDs' || $ElementName eq 'CreatedStateIDs' ) {
+            if ( $ElementName eq 'StateIDs' ) {
                 ID:
                 for my $ID ( @{$Values} ) {
                     next ID if !$ID;
 
-                    my %State = $Self->{StateObject}->StateGet(
-                        Name  => $ID->{Content},
-                        Cache => 1,
+                    my $StateID = $Self->{ChangeObject}->ChangeStateLookup(
+                        ChangeState => $ID->{Content},
+                        Cache       => 1,
                     );
-                    if ( $State{ID} ) {
-                        $ID->{Content} = $State{ID};
+                    if ($StateID) {
+                        $ID->{Content} = $StateID;
                     }
                     else {
                         $Self->{LogObject}->Log(
@@ -226,52 +220,53 @@ sub ImportWrapper {
                     }
                 }
             }
-            elsif ( $ElementName eq 'PriorityIDs' || $ElementName eq 'CreatedPriorityIDs' ) {
-                my %PriorityList = $Self->{PriorityObject}->PriorityList( UserID => 1 );
-                my %PriorityIDs;
-                for my $Key ( keys %PriorityList ) {
-                    $PriorityIDs{ $PriorityList{$Key} } = $Key;
-                }
-                ID:
-                for my $ID ( @{$Values} ) {
-                    next ID if !$ID;
 
-                    if ( $PriorityIDs{ $ID->{Content} } ) {
-                        $ID->{Content} = $PriorityIDs{ $ID->{Content} };
-                    }
-                    else {
-                        $Self->{LogObject}->Log(
-                            Priority => 'error',
-                            Message  => "Import: Can' find priority $ID->{Content}!"
-                        );
-                        $ID = undef;
-                    }
-                }
-            }
-            elsif (
-                $ElementName    eq 'OwnerIDs'
-                || $ElementName eq 'CreatedUserIDs'
-                || $ElementName eq 'ResponsibleIDs'
-                )
-            {
-                ID:
-                for my $ID ( @{$Values} ) {
-                    next ID if !$ID;
+            #elsif ( $ElementName eq 'PriorityIDs' || $ElementName eq 'CreatedPriorityIDs' ) {
+            #    my %PriorityList = $Self->{PriorityObject}->PriorityList( UserID => 1 );
+            #    my %PriorityIDs;
+            #    for my $Key ( keys %PriorityList ) {
+            #        $PriorityIDs{ $PriorityList{$Key} } = $Key;
+            #    }
+            #    ID:
+            #    for my $ID ( @{$Values} ) {
+            #        next ID if !$ID;
 
-                    if ( $Self->{UserObject}->UserLookup( UserLogin => $ID->{Content} ) ) {
-                        $ID->{Content} = $Self->{UserObject}->UserLookup(
-                            UserLogin => $ID->{Content}
-                        );
-                    }
-                    else {
-                        $Self->{LogObject}->Log(
-                            Priority => 'error',
-                            Message  => "Import: Can' find user $ID->{Content}!"
-                        );
-                        $ID = undef;
-                    }
-                }
-            }
+            #        if ( $PriorityIDs{ $ID->{Content} } ) {
+            #            $ID->{Content} = $PriorityIDs{ $ID->{Content} };
+            #        }
+            #        else {
+            #            $Self->{LogObject}->Log(
+            #                Priority => 'error',
+            #                Message  => "Import: Can' find priority $ID->{Content}!"
+            #            );
+            #            $ID = undef;
+            #        }
+            #    }
+            #}
+            #elsif (
+            #    $ElementName    eq 'OwnerIDs'
+            #    || $ElementName eq 'CreatedUserIDs'
+            #    || $ElementName eq 'ResponsibleIDs'
+            #    )
+            #{
+            #    ID:
+            #    for my $ID ( @{$Values} ) {
+            #        next ID if !$ID;
+
+            #        if ( $Self->{UserObject}->UserLookup( UserLogin => $ID->{Content} ) ) {
+            #            $ID->{Content} = $Self->{UserObject}->UserLookup(
+            #                UserLogin => $ID->{Content}
+            #            );
+            #        }
+            #        else {
+            #            $Self->{LogObject}->Log(
+            #                Priority => 'error',
+            #                Message  => "Import: Can' find user $ID->{Content}!"
+            #            );
+            #            $ID = undef;
+            #        }
+            #    }
+            #}
 
             # Locks and statustype don't have to wrap because they are never different
         }
