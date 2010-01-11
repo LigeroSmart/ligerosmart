@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Expression.pm - all condition expression functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Expression.pm,v 1.11 2010-01-11 15:07:37 mae Exp $
+# $Id: Expression.pm,v 1.12 2010-01-11 16:17:36 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 =head1 NAME
 
@@ -157,7 +157,7 @@ sub ExpressionUpdate {
         CompareValue => 'compare_value',
     );
 
-    # build SQL to update change
+    # build SQL to update expression
     my $SQL = 'UPDATE condition_expression SET ';
     my @Bind;
 
@@ -525,6 +525,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.11 $ $Date: 2010-01-11 15:07:37 $
+$Revision: 1.12 $ $Date: 2010-01-11 16:17:36 $
 
 =cut
