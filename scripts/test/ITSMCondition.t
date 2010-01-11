@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.24 2010-01-11 11:57:43 mae Exp $
+# $Id: ITSMCondition.t,v 1.25 2010-01-11 13:15:01 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -480,9 +480,12 @@ for my $CreateCondition ( 0 .. 2 ) {
 
     next CREATECONDITION if !$Self->{DBObject}->Do(
         SQL => 'INSERT INTO change_condition '
-            . '(change_id, name, valid_id, create_by, change_by) '
-            . 'VALUES (?, ?, ?, ?, ?)',
-        Bind => [ \$ChangeIDs[$CreateCondition], \$ConditionName, \1, \1, \1, ],
+            . '(change_id, name, expression_conjunction, valid_id, '
+            . 'create_by, change_by, create_time, change_time) '
+            . 'VALUES (?, ?, ?, ?, ?, ?, current_timestamp, current_timestamp)',
+        Bind => [
+            \$ChangeIDs[$CreateCondition], \$ConditionName, \'all', \1, \1, \1,
+        ],
     );
 
     # prepare sql
