@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition.pm - all condition functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.pm,v 1.11 2010-01-11 15:55:22 ub Exp $
+# $Id: ITSMCondition.pm,v 1.12 2010-01-11 16:20:20 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use base qw(Kernel::System::ITSMChange::ITSMCondition::Operator);
 use base qw(Kernel::System::ITSMChange::ITSMCondition::Expression);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 =head1 NAME
 
@@ -158,17 +158,77 @@ sub ConditionAdd {
         Limit => 1,
     );
 
+    # fetch the result
+    my $ConditionID;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $ConditionID = $Row[0];
+    }
+
+    # a condition with this name and change id exists already
+    if ($ConditionID) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "A condition with the name $Param{Name} "
+                . "exists already for ChangeID $Param{ChangeID}!",
+        );
+        return;
+    }
+
     # TODO: execute ConditionAddPre Event
+
+    # add new condition to database
+    return if !$Self->{DBObject}->Do(
+        SQL => 'INSERT INTO change_condition '
+            . '(change_id, name, expression_conjunction, comments, valid_id, '
+            . 'create_time, create_by, change_time, change_by) '
+            . 'VALUES (?, ?, ?, ?, ?, current_timestamp, ?, current_timestamp, ?)',
+        Bind => [
+            \$Param{ChangeID}, \$Param{Name}, \$Param{ExpressionConjunction},
+            \$Param{Comments}, \$Param{ValidID}, \$Param{UserID}, \$Param{UserID},
+        ],
+    );
+
+    # prepare SQL statement
+    return if !$Self->{DBObject}->Prepare(
+        SQL => 'SELECT id FROM change_condition '
+            . 'WHERE change_id = ? AND name = ?',
+        Bind => [
+            \$Param{ChangeID}, \$Param{Name},
+        ],
+        Limit => 1,
+    );
+
+    # fetch the result
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $ConditionID = $Row[0];
+    }
+
+    # check if condition could be added
+    if ( !$ConditionID ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "ConditionAdd() failed!",
+        );
+        return;
+    }
 
     # TODO: execute ConditionAddPost Event
 
-    return $ExpressionID;
-
-    my $ConditionID;
     return $ConditionID;
 }
 
 =item ConditionUpdate()
+
+Update a condition.
+
+    my $Success = $ConditionObject->ConditionUpdate(
+        ConditionID           => 1234,
+        Name                  => 'The condition name',
+        ExpressionConjunction => 'any',                 # (any|all)
+        Comments              => 'A comment',           # (optional)
+        ValidID               => 1,
+        UserID                => 1,
+    );
 
 =cut
 
@@ -437,6 +497,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.11 $ $Date: 2010-01-11 15:55:22 $
+$Revision: 1.12 $ $Date: 2010-01-11 16:20:20 $
 
 =cut
