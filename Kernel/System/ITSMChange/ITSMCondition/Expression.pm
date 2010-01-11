@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Expression.pm - all condition expression functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Expression.pm,v 1.10 2010-01-11 12:47:58 mae Exp $
+# $Id: Expression.pm,v 1.11 2010-01-11 15:07:37 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 =head1 NAME
 
@@ -381,20 +381,25 @@ sub ExpressionMatch {
     return if !$ExpressionData;
 
     # TODO: check for changed fields
-    # TODO: implement some magic for selector is ( 'any' | 'all' )
 
     # get object name
     my $ObjectName = $ExpressionData->{Object}->{Name};
 
     # get object data
-    my $ExpressionObject = $Self->ObjectDataGet(
+    my $ExpressionObjectData = $Self->ObjectDataGet(
         ObjectName => $ObjectName,
         Selector   => $Expression->{Selector},
         UserID     => $Param{UserID},
     );
 
-    # check for expression object
-    if ( !$ExpressionObject ) {
+    # check for expression object data
+    # no need to execute operator if it is an empty array ref
+    if (
+        !$ExpressionObjectData
+        || ref $ExpressionObjectData ne 'ARRAY'
+        || ref $ExpressionObjectData eq 'ARRAY' && !@{$ExpressionObjectData}
+        )
+    {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message  => "No object data for $ObjectName ($Expression->{Selector}) found!",
@@ -405,20 +410,33 @@ sub ExpressionMatch {
     # get attribute type
     my $AttributeType = $ExpressionData->{Attribute}->{Name};
 
-    # check for object attribte
-    if ( !exists $ExpressionObject->{$AttributeType} ) {
+    # check attribute type
+    if ( !$AttributeType ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "No object attribute for $ObjectName ($AttributeType) found!",
+            Message  => "No attribute $ObjectName ($Expression->{Selector}) found!",
         );
         return;
+    }
+
+    # check for object attribute
+    for my $ExpressionObject ( @{$ExpressionObjectData} ) {
+        if ( !exists $ExpressionObject->{$AttributeType} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "No object attribute for $ObjectName ($AttributeType) found!",
+            );
+            return;
+        }
     }
 
     # return result of the expressions execution
     return $Self->OperatorExecute(
         OperatorName => $ExpressionData->{Operator}->{Name},
-        Value1       => $ExpressionObject->{$AttributeType},
-        Value2       => $Expression->{CompareValue},
+        Attribute    => $AttributeType,
+        Selector     => $Expression->{Selector},
+        ObjectData   => $ExpressionObjectData,
+        CompareValue => $Expression->{CompareValue},
         UserID       => $Param{UserID},
     );
 }
@@ -507,6 +525,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.10 $ $Date: 2010-01-11 12:47:58 $
+$Revision: 1.11 $ $Date: 2010-01-11 15:07:37 $
 
 =cut

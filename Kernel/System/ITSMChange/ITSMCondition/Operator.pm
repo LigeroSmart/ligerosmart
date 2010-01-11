@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Operator.pm - all condition operator functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Operator.pm,v 1.4 2010-01-08 15:19:07 mae Exp $
+# $Id: Operator.pm,v 1.5 2010-01-11 15:07:37 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 =head1 NAME
 
@@ -357,6 +357,88 @@ Returns true or false (1/undef) if given values are equal.
 
     my $Result = $ConditionObject->OperatorExecute(
         OperatorName => 'is',
+        Attribute    => 'WorkOrderStateID',
+        Selector     => ( '1234 | 'all' | 'any' ),
+        ObjectData   => [ $WorkOrderData1, $WorkOrderData2 ],
+        CompareValue => 'SomeValue',
+        UserID       => 1234,
+    );
+
+=cut
+
+sub OperatorExecute {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (
+        qw(
+        OperatorName
+        Attribute
+        Selector
+        ObjectData
+        CompareValue
+        UserID
+        )
+        )
+    {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # get object data
+    my $ObjectData = $Param{ObjectData};
+
+    # check ObjectData
+    if ( ref $ObjectData ne 'ARRAY' ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'ObjectData is not an array reference!',
+        );
+        return;
+    }
+
+    # return false if no object data is given
+    return if !@{$ObjectData};
+
+    # execute operator for each object
+    my @OperatorExecuteResult;
+    for my $Object ( @{$ObjectData} ) {
+
+        # get equation result for object
+        my $Result = $Self->_OperatorExecute(
+            OperatorName => $Param{OperatorName},
+            Value1       => $Object->{ $Param{Attribute} },
+            Value2       => $Param{CompareValue},
+            UserID       => $Param{UserID},
+        ) || 0;
+
+        # return true if result is positive and 'any' is requested
+        return if $Param{Selector} eq 'any' && $Result;
+
+        # return false if result is negative and 'all' is requested
+        return if $Param{Selector} eq 'all' && !$Result;
+
+        # save current result for coming checks
+        push @OperatorExecuteResult, $Result;
+    }
+
+    # we need to check all results be true
+    return (
+        scalar @{$ObjectData} == scalar grep { $_ == 1 } @OperatorExecuteResult
+    );
+}
+
+=item _OperatorExecute()
+
+Returns true or false (1/undef) if given values are equal.
+
+    my $Result = $ConditionObject->_OperatorExecute(
+        OperatorName => 'is',
         Value1       => 'SomeValue',
         Value2       => 'SomeOtherValue',
         UserID       => 1234,
@@ -364,7 +446,7 @@ Returns true or false (1/undef) if given values are equal.
 
 =cut
 
-sub OperatorExecute {
+sub _OperatorExecute {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
@@ -480,6 +562,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2010-01-08 15:19:07 $
+$Revision: 1.5 $ $Date: 2010-01-11 15:07:37 $
 
 =cut
