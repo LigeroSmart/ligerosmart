@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Notification.pm - lib for notifications in change management
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.28 2010-01-11 14:35:56 reb Exp $
+# $Id: Notification.pm,v 1.29 2010-01-11 15:25:10 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.28 $) [1];
+$VERSION = qw($Revision: 1.29 $) [1];
 
 =head1 NAME
 
@@ -174,6 +174,28 @@ sub NotificationSend {
     my $Change    = {};
     my $WorkOrder = {};
 
+    # start with workorder, as the change id might be taken from the workorder
+    if ( $Param{Data}->{WorkOrderID} ) {
+        $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+            WorkOrderID => $Param{Data}->{WorkOrderID},
+            UserID      => $Param{UserID},
+            LogNo       => 1,
+        );
+
+        if ( $WorkOrder->{WorkOrderAgentID} ) {
+            $Param{Data}->{WorkOrderAgent} = {
+                $Self->{UserObject}->GetUserData(
+                    UserID => $WorkOrder->{WorkOrderAgentID},
+                    )
+            };
+        }
+
+        # infer the change id from the workorder
+        if ( $WorkOrder->{ChangeID} ) {
+            $Param{Data}->{ChangeID} = $WorkOrder->{ChangeID};
+        }
+    }
+
     if ( $Param{Data}->{ChangeID} ) {
         $Change = $Self->{ChangeObject}->ChangeGet(
             ChangeID => $Param{Data}->{ChangeID},
@@ -193,22 +215,6 @@ sub NotificationSend {
             $Param{Data}->{ChangeManager} = {
                 $Self->{UserObject}->GetUserData(
                     UserID => $Change->{ChangeManagerID},
-                    )
-            };
-        }
-    }
-
-    if ( $Param{Data}->{WorkOrderID} ) {
-        $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
-            WorkOrderID => $Param{Data}->{WorkOrderID},
-            UserID      => $Param{UserID},
-            LogNo       => 1,
-        );
-
-        if ( $WorkOrder->{WorkOrderAgentID} ) {
-            $Param{Data}->{WorkOrderAgent} = {
-                $Self->{UserObject}->GetUserData(
-                    UserID => $WorkOrder->{WorkOrderAgentID},
                     )
             };
         }
@@ -1183,6 +1189,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.28 $ $Date: 2010-01-11 14:35:56 $
+$Revision: 1.29 $ $Date: 2010-01-11 15:25:10 $
 
 =cut
