@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<otrs_stats>
+<Cache>0</Cache>
+<Description>This report counts the changes in the selected category for a selected time period.</Description>
+<File></File>
+<Format>CSV</Format>
+<Format>Print</Format>
+<Object>ITSMChangeManagement</Object>
+<ObjectModule>Kernel::System::Stats::Dynamic::ITSMChangeManagement</ObjectModule>
+<ObjectName>ITSMChangeManagement</ObjectName>
+<Permission>stats</Permission>
+<StatType>dynamic</StatType>
+<SumCol>0</SumCol>
+<SumRow>0</SumRow>
+<Title>ITSMChange Changes per Category</Title>
+<UseAsValueSeries Element="CategoryIDs">
+<SelectedValues>1 very low</SelectedValues>
+<SelectedValues>2 low</SelectedValues>
+<SelectedValues>3 normal</SelectedValues>
+<SelectedValues>4 high</SelectedValues>
+<SelectedValues>5 very high</SelectedValues>
+</UseAsValueSeries>
+<UseAsXvalue Element="TimePeriod" TimeScaleCount="1" TimeStart="2009-01-01 00:00:00" TimeStop="2037-12-31 23:59:59">
+<SelectedValues>Day</SelectedValues>
+</UseAsXvalue>
+<Valid>1</Valid>
+</otrs_stats>
