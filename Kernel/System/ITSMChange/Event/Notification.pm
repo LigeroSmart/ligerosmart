@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/Notification.pm - a event module to send notifications
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.16 2010-01-11 14:28:03 bes Exp $
+# $Id: Notification.pm,v 1.17 2010-01-11 14:44:18 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Group;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 =head1 NAME
 
@@ -374,6 +374,8 @@ sub _AgentAndCustomerIDsGet {
     for my $Recipient ( @{ $Param{Recipients} } ) {
 
         if ( $Recipient eq 'ChangeBuilder' || $Recipient eq 'ChangeManager' ) {
+
+            # take the builder or manager from the current change data
             push @AgentIDs, $Change->{ $Recipient . 'ID' };
         }
         elsif ( $Recipient eq 'OldChangeBuilder' || $Recipient eq 'OldChangeManager' ) {
@@ -384,7 +386,9 @@ sub _AgentAndCustomerIDsGet {
                 );
             }
             else {
-                $Recipient =~ s/ \A Old //xms;
+
+                # take the builder or manager from the original change data
+                $Recipient =~ s{ \A Old }{}xms;
                 push @AgentIDs, $Param{OldData}->{ $Recipient . 'ID' };
             }
         }
@@ -413,7 +417,9 @@ sub _AgentAndCustomerIDsGet {
                 );
             }
             else {
-                $Recipient =~ s/ \A Old //xms;
+
+                # take the workorder agent from the original workorder data
+                $Recipient =~ s{ \A Old }{}xms;
                 push @AgentIDs, $Param{OldData}->{ $Recipient . 'ID' };
             }
         }
@@ -490,7 +496,8 @@ sub _AgentAndCustomerIDsGet {
         }
     }
 
-    # remove empty IDs
+    # no need to eliminate duplicates, NotificationSend() takes care of that
+    # remove empty IDs,
     @AgentIDs    = grep {$_} @AgentIDs;
     @CustomerIDs = grep {$_} @CustomerIDs;
 
@@ -518,6 +525,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.16 $ $Date: 2010-01-11 14:28:03 $
+$Revision: 1.17 $ $Date: 2010-01-11 14:44:18 $
 
 =cut
