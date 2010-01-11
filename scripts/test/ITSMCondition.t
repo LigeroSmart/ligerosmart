@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.26 2010-01-11 17:01:21 mae Exp $
+# $Id: ITSMCondition.t,v 1.27 2010-01-11 17:21:51 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -509,32 +509,17 @@ my @ConditionIDs;
 CREATECONDITION:
 for my $CreateCondition ( 0 .. 2 ) {
 
-    # TODO: create condition through condition object
+    # build condition name
     my $ConditionName = "UnitTestConditionName_${CreateCondition}_" . int rand 1_000_000;
 
-    next CREATECONDITION if !$Self->{DBObject}->Do(
-        SQL => 'INSERT INTO change_condition '
-            . '(change_id, name, expression_conjunction, valid_id, '
-            . 'create_by, change_by, create_time, change_time) '
-            . 'VALUES (?, ?, ?, ?, ?, ?, current_timestamp, current_timestamp)',
-        Bind => [
-            \$ChangeIDs[$CreateCondition], \$ConditionName, \'all', \1, \1, \1,
-        ],
+    # add a condition
+    my $ConditionID = $Self->{ConditionObject}->ConditionAdd(
+        ChangeID              => $ChangeIDs[$CreateCondition],
+        Name                  => $ConditionName,
+        ExpressionConjunction => 'all',
+        ValidID               => 1,
+        UserID                => 1,
     );
-
-    # prepare sql
-    next CREATECONDITION if !$Self->{DBObject}->Prepare(
-        SQL => 'SELECT id FROM change_condition '
-            . 'WHERE change_id = ? AND name = ?',
-        Bind => [ \$ChangeIDs[$CreateCondition], \$ConditionName, ],
-        Limit => 1,
-    );
-
-    # get created condition id
-    my $ConditionID;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $ConditionID = $Row[0];
-    }
 
     $Self->True(
         $ConditionID,
@@ -1177,15 +1162,16 @@ for my $ExpressionID (@ExpressionIDs) {
 # delete created conditions
 for my $ConditionID (@ConditionIDs) {
 
-    # TODO: substitude following removal of conditions with condition object
+    my $DeleteSuccess = $Self->{ConditionObject}->ConditionDelete(
+        ConditionID => $ConditionID,
+        UserID      => 1,
+    );
+
     $Self->True(
-        $Self->{DBObject}->Do(
-            SQL => 'DELETE FROM change_condition '
-                . 'WHERE id = ?',
-            Bind => [ \$ConditionID ],
-        ),
+        $DeleteSuccess,
         'Test ' . $TestCount++ . " - ConditionDelete -> '$ConditionID'",
     );
+
 }
 
 # delete created changes
