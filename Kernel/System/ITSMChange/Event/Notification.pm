@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/Notification.pm - a event module to send notifications
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.15 2010-01-07 17:53:58 bes Exp $
+# $Id: Notification.pm,v 1.16 2010-01-11 14:28:03 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,9 +18,10 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::Notification;
 use Kernel::System::LinkObject;
+use Kernel::System::Group;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 =head1 NAME
 
@@ -100,6 +101,7 @@ sub new {
     $Self->{WorkOrderObject}          = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
     $Self->{ChangeNotificationObject} = Kernel::System::ITSMChange::Notification->new( %{$Self} );
     $Self->{LinkObject}               = Kernel::System::LinkObject->new( %{$Self} );
+    $Self->{GroupObject}              = Kernel::System::Group->new( %{$Self} );
 
     # TODO: find better was to look up event ids
     $Self->{HistoryObject} = Kernel::System::ITSMChange::History->new( %{$Self} );
@@ -242,8 +244,10 @@ sub Run {
         my $AgentAndCustomerIDs = $Self->_AgentAndCustomerIDsGet(
             Recipients  => $Rule->{Recipients},
             Type        => $Type,
+            Event       => $Event,
             ChangeID    => $Param{ChangeID},
             WorkOrderID => $Param{WorkOrderID},
+            OldData     => $OldData,
             UserID      => $Param{UserID},
         );
 
@@ -372,6 +376,18 @@ sub _AgentAndCustomerIDsGet {
         if ( $Recipient eq 'ChangeBuilder' || $Recipient eq 'ChangeManager' ) {
             push @AgentIDs, $Change->{ $Recipient . 'ID' };
         }
+        elsif ( $Recipient eq 'OldChangeBuilder' || $Recipient eq 'OldChangeManager' ) {
+            if ( $Param{Event} ne 'ChangeUpdate' ) {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "Recipient $Recipient is only valid for ChangeUpdate events!",
+                );
+            }
+            else {
+                $Recipient =~ s/ \A Old //xms;
+                push @AgentIDs, $Param{OldData}->{ $Recipient . 'ID' };
+            }
+        }
         elsif ( $Recipient eq 'CABCustomers' ) {
             push @CustomerIDs, @{ $Change->{CABCustomers} };
         }
@@ -382,11 +398,23 @@ sub _AgentAndCustomerIDsGet {
             if ( $Param{Type} ne 'WorkOrder' ) {
                 $Self->{LogObject}->Log(
                     Priority => 'error',
-                    Message  => "Recipient WorkOrderAgent is only valid for workorder events.!",
+                    Message  => "Recipient $Recipient is only valid for workorder events!",
                 );
             }
             else {
                 push @AgentIDs, $WorkOrderAgentID;
+            }
+        }
+        elsif ( $Recipient eq 'OldWorkOrderAgent' ) {
+            if ( $Param{Event} ne 'WorkOrderUpdate' ) {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "Recipient $Recipient is only valid for WorkOrderUpdate events!",
+                );
+            }
+            else {
+                $Recipient =~ s/ \A Old //xms;
+                push @AgentIDs, $Param{OldData}->{ $Recipient . 'ID' };
             }
         }
         elsif ( $Recipient eq 'WorkOrderAgents' ) {
@@ -430,6 +458,29 @@ sub _AgentAndCustomerIDsGet {
                 }
             }
         }
+        elsif ( $Recipient =~ m{ \A GroupITSMChange(|Builder|Manager) \z }xms ) {
+
+            my %Recipient2Group = (
+                GroupITSMChange        => 'itsm-change',
+                GroupITSMChangeBuilder => 'itsm-change-builder',
+                GroupITSMChangeManager => 'itsm-change-manager',
+            );
+
+            # get group id
+            my $GroupID = $Self->{GroupObject}->GroupLookup(
+                Group => $Recipient2Group{$Recipient}
+            );
+
+            # get members of group
+            my %Users = $Self->{GroupObject}->GroupMemberList(
+                GroupID => $GroupID,
+                Type    => 'ro',
+                Result  => 'HASH',
+                Cached  => 1,
+            );
+
+            push @AgentIDs, keys %Users;
+        }
         else {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -467,6 +518,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.15 $ $Date: 2010-01-07 17:53:58 $
+$Revision: 1.16 $ $Date: 2010-01-11 14:28:03 $
 
 =cut

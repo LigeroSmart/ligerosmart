@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.21 2010-01-11 11:54:31 bes Exp $
+# $Id: ITSMChangeManagement.pm,v 1.22 2010-01-11 14:28:03 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,7 +33,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.21 $) [1];
+$VERSION = qw($Revision: 1.22 $) [1];
 
 =head1 NAME
 
@@ -819,6 +819,28 @@ sub _AddNotifications {
             ],
         },
         {
+            Name       => 'ChangeManager update',
+            Attribute  => 'ChangeManagerID',
+            Event      => 'ChangeUpdate',
+            ValidID    => 1,
+            Comment    => 'inform recipients that the changemanager was replaced',
+            Rule       => '.*',
+            Recipients => [
+                'ChangeManager', 'OldChangeManager',
+            ],
+        },
+        {
+            Name       => 'ChangeBuilder update',
+            Attribute  => 'ChangeBuilderID',
+            Event      => 'ChangeUpdate',
+            ValidID    => 1,
+            Comment    => 'inform recipients that the changebuilder was replaced',
+            Rule       => '.*',
+            Recipients => [
+                'ChangeManager', 'ChangeBuilder', 'OldChangeBuilder',
+            ],
+        },
+        {
             Name       => 'updated state for workorder',
             Attribute  => 'WorkOrderState',
             Event      => 'WorkOrderUpdate',
@@ -827,6 +849,17 @@ sub _AddNotifications {
             Rule       => '.*',
             Recipients => [
                 'WorkOrderAgents',
+            ],
+        },
+        {
+            Name       => 'updated workorder agent for workorder',
+            Attribute  => 'WorkOrderAgentID',
+            Event      => 'WorkOrderUpdate',
+            ValidID    => 1,
+            Comment    => 'inform recipients that the workorder agent was replaced',
+            Rule       => '.*',
+            Recipients => [
+                'WorkOrderAgent', 'OldWorkOrderAgent',
             ],
         },
     );
@@ -1423,6 +1456,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.21 $ $Date: 2010-01-11 11:54:31 $
+$Revision: 1.22 $ $Date: 2010-01-11 14:28:03 $
 
 =cut

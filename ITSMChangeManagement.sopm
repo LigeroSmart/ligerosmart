@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.117 2010-01-11 11:58:20 mae Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.118 2010-01-11 14:28:03 bes Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -1138,7 +1138,13 @@
             <Data Key="name" Type="Quote">ChangeBuilder</Data>
         </Insert>
         <Insert Table="change_notification_grps">
+            <Data Key="name" Type="Quote">OldChangeBuilder</Data>
+        </Insert>
+        <Insert Table="change_notification_grps">
             <Data Key="name" Type="Quote">ChangeManager</Data>
+        </Insert>
+        <Insert Table="change_notification_grps">
+            <Data Key="name" Type="Quote">OldChangeManager</Data>
         </Insert>
         <Insert Table="change_notification_grps">
             <Data Key="name" Type="Quote">CABCustomers</Data>
@@ -1153,7 +1159,19 @@
             <Data Key="name" Type="Quote">WorkOrderAgent</Data>
         </Insert>
         <Insert Table="change_notification_grps">
+            <Data Key="name" Type="Quote">OldWorkOrderAgent</Data>
+        </Insert>
+        <Insert Table="change_notification_grps">
             <Data Key="name" Type="Quote">ChangeInitiators</Data>
+        </Insert>
+        <Insert Table="change_notification_grps">
+            <Data Key="name" Type="Quote">GroupITSMChange</Data>
+        </Insert>
+        <Insert Table="change_notification_grps">
+            <Data Key="name" Type="Quote">GroupITSMChangeBuilder</Data>
+        </Insert>
+        <Insert Table="change_notification_grps">
+            <Data Key="name" Type="Quote">GroupITSMChangeManager</Data>
         </Insert>
     </DatabaseInstall>
     <DatabaseUpgrade>
