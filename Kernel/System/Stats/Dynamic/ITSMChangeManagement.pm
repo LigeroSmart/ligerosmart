@@ -2,7 +2,7 @@
 # Kernel/System/Stats/Dynamic/ITSMChangeManagement.pm - all advice functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.2 2010-01-08 12:55:28 reb Exp $
+# $Id: ITSMChangeManagement.pm,v 1.3 2010-01-11 13:01:00 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -126,10 +126,6 @@ sub GetObjectAttributes {
                 TimeStop  => 'CreateTimeOlderDate',
             },
         },
-
-        # CI-Status
-        # CI-Types
-        # ChangeInitiators
     );
 
     return @ObjectAttributes;
@@ -173,16 +169,29 @@ sub ExportWrapper {
                 }
             }
 
-            #elsif ( $ElementName eq 'PriorityIDs' || $ElementName eq 'CreatedPriorityIDs' ) {
-            #    my %PriorityList = $Self->{PriorityObject}->PriorityList( UserID => 1 );
-            #    ID:
-            #    for my $ID ( @{$Values} ) {
-            #        next ID if !$ID;
-            #        $ID->{Content} = $PriorityList{ $ID->{Content} };
-            #    }
-            #}
+            elsif (
+                $ElementName eq 'CategoryIDs' || $ElementName eq 'ImpactIDs'
+                || $ElementName eq 'PriorityIDs'
+                )
+            {
+                my ($Type) = $ElementName =~ m{ \A (.*?) IDs \z }xms;
 
-            # Locks and statustype don't have to wrap because they are never different
+                my $CIPList = $Self->{ChangeObject}->ChangePossibleCIPGet(
+                    Type   => $Type,
+                    UserID => 1,
+                );
+
+                ID:
+                for my $ID ( @{$Values} ) {
+                    next ID if !$ID;
+
+                    ELEMENT:
+                    for my $Element ( @{$CategoryList} ) {
+                        next ELEMENT if $ID->{Content} ne $Element->{Key};
+                        $ID->{Content} = $Element->{Value};
+                    }
+                }
+            }
         }
     }
     return \%Param;
@@ -221,54 +230,30 @@ sub ImportWrapper {
                 }
             }
 
-            #elsif ( $ElementName eq 'PriorityIDs' || $ElementName eq 'CreatedPriorityIDs' ) {
-            #    my %PriorityList = $Self->{PriorityObject}->PriorityList( UserID => 1 );
-            #    my %PriorityIDs;
-            #    for my $Key ( keys %PriorityList ) {
-            #        $PriorityIDs{ $PriorityList{$Key} } = $Key;
-            #    }
-            #    ID:
-            #    for my $ID ( @{$Values} ) {
-            #        next ID if !$ID;
+            # import wrapper for CIP
+            for my $Type (qw(Category Impact Priority)) {
+                if ( $ElementName eq $Type . 'IDs' ) {
+                    ID:
+                    for my $ID ( @{$Values} ) {
+                        next ID if !$ID;
 
-            #        if ( $PriorityIDs{ $ID->{Content} } ) {
-            #            $ID->{Content} = $PriorityIDs{ $ID->{Content} };
-            #        }
-            #        else {
-            #            $Self->{LogObject}->Log(
-            #                Priority => 'error',
-            #                Message  => "Import: Can' find priority $ID->{Content}!"
-            #            );
-            #            $ID = undef;
-            #        }
-            #    }
-            #}
-            #elsif (
-            #    $ElementName    eq 'OwnerIDs'
-            #    || $ElementName eq 'CreatedUserIDs'
-            #    || $ElementName eq 'ResponsibleIDs'
-            #    )
-            #{
-            #    ID:
-            #    for my $ID ( @{$Values} ) {
-            #        next ID if !$ID;
-
-            #        if ( $Self->{UserObject}->UserLookup( UserLogin => $ID->{Content} ) ) {
-            #            $ID->{Content} = $Self->{UserObject}->UserLookup(
-            #                UserLogin => $ID->{Content}
-            #            );
-            #        }
-            #        else {
-            #            $Self->{LogObject}->Log(
-            #                Priority => 'error',
-            #                Message  => "Import: Can' find user $ID->{Content}!"
-            #            );
-            #            $ID = undef;
-            #        }
-            #    }
-            #}
-
-            # Locks and statustype don't have to wrap because they are never different
+                        my $CIPID = $Self->{ChangeObject}->ChangeCIPLookup(
+                            CIP  => $ID->{Content},
+                            Type => $Type,
+                        );
+                        if ($CIPID) {
+                            $ID->{Content} = $CIPID;
+                        }
+                        else {
+                            $Self->{LogObject}->Log(
+                                Priority => 'error',
+                                Message  => "Import: Can' find $Type $ID->{Content}!"
+                            );
+                            $ID = undef;
+                        }
+                    }
+                }
+            }
         }
     }
     return \%Param;
