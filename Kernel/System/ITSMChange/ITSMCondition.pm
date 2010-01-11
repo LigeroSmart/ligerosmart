@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition.pm - all condition functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.pm,v 1.12 2010-01-11 16:20:20 ub Exp $
+# $Id: ITSMCondition.pm,v 1.13 2010-01-11 16:29:54 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use base qw(Kernel::System::ITSMChange::ITSMCondition::Operator);
 use base qw(Kernel::System::ITSMChange::ITSMCondition::Expression);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 =head1 NAME
 
@@ -223,10 +223,10 @@ Update a condition.
 
     my $Success = $ConditionObject->ConditionUpdate(
         ConditionID           => 1234,
-        Name                  => 'The condition name',
-        ExpressionConjunction => 'any',                 # (any|all)
+        Name                  => 'The condition name',  # (optional)
+        ExpressionConjunction => 'any',                 # (optional) (any|all)
         Comments              => 'A comment',           # (optional)
-        ValidID               => 1,
+        ValidID               => 1,                     # (optional)
         UserID                => 1,
     );
 
@@ -245,6 +245,47 @@ sub ConditionUpdate {
             return;
         }
     }
+
+    # TODO: execute ConditionUpdatePre Event
+
+    # map update attributes to column names
+    my %Attribute = (
+        Name                  => 'name',
+        ExpressionConjunction => 'expression_conjunction',
+        Comments              => 'comments',
+        ValidID               => 'valid_id',
+    );
+
+    # build SQL to update condition
+    my $SQL = 'UPDATE change_condition SET ';
+    my @Bind;
+
+    ATTRIBUTE:
+    for my $Attribute ( keys %Attribute ) {
+
+        # preserve the old value, when the column isn't in function parameters
+        next ATTRIBUTE if !exists $Param{$Attribute};
+
+        # param checking has already been done, so this is safe
+        $SQL .= "$Attribute{$Attribute} = ?, ";
+        push @Bind, \$Param{$Attribute};
+    }
+
+    # add change time and change user
+    $SQL .= 'change_time = current_timestamp, change_by = ? ';
+    push @Bind, \$Param{UserID};
+
+    # set matching of SQL statement
+    $SQL .= 'WHERE id = ?';
+    push @Bind, \$Param{ConditionID};
+
+    # update condition
+    return if !$Self->{DBObject}->Do(
+        SQL  => $SQL,
+        Bind => \@Bind,
+    );
+
+    # TODO: execute ConditionUpdatePost Event
 
     return 1;
 }
@@ -497,6 +538,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.12 $ $Date: 2010-01-11 16:20:20 $
+$Revision: 1.13 $ $Date: 2010-01-11 16:29:54 $
 
 =cut
