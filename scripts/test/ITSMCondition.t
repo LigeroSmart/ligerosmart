@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.25 2010-01-11 13:15:01 mae Exp $
+# $Id: ITSMCondition.t,v 1.26 2010-01-11 17:01:21 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,6 +18,7 @@ use vars qw($Self);
 use Data::Dumper;
 
 use Kernel::System::ITSMChange;
+use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::ITSMCondition;
 
 # ------------------------------------------------------------ #
@@ -28,12 +29,19 @@ my $TestCount = 1;
 
 # create common objects
 $Self->{ChangeObject}    = Kernel::System::ITSMChange->new( %{$Self} );
+$Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
 $Self->{ConditionObject} = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
 
 # test if change object was created successfully
 $Self->True(
     $Self->{ChangeObject},
     'Test ' . $TestCount++ . ' - construction of change object',
+);
+
+# test if workorder object was created successfully
+$Self->True(
+    $Self->{WorkOrderObject},
+    'Test ' . $TestCount++ . ' - construction of workorder object',
 );
 
 # test if condition object was created successfully
@@ -451,7 +459,7 @@ my @ChangeIDs;
 my @ChangeTitles;
 CREATECHANGE:
 for my $CreateChange ( 0 .. 2 ) {
-    my $ChangeTitle = "UnitTest$CreateChange";
+    my $ChangeTitle = 'UnitTestChange' . $CreateChange;
     my $ChangeID    = $Self->{ChangeObject}->ChangeAdd(
         ChangeTitle => $ChangeTitle,
         UserID      => 1,
@@ -468,6 +476,32 @@ for my $CreateChange ( 0 .. 2 ) {
     # store change id for further usage and deletion
     push @ChangeIDs,    $ChangeID;
     push @ChangeTitles, $ChangeTitle;
+}
+
+# create new workorders
+my @WorkOrderIDs;
+my @WorkOrderTitles;
+CREATEWORKORDER:
+for my $CreateWorkOrder ( 0 .. 8 ) {
+    my $WorkOrderTitle = 'UnitTestWO' . $CreateWorkOrder;
+    my $WorkOrderID    = $Self->{WorkOrderObject}->WorkOrderAdd(
+        ChangeID => $ChangeIDs[ ( $CreateWorkOrder % scalar @ChangeIDs ) ],
+        WorkOrderTitle => $WorkOrderTitle,
+        UserID         => 1,
+    );
+
+    $Self->True(
+        $WorkOrderID,
+        'Test ' . $TestCount++ . ' - WorkOrderAdd (ChangeID: '
+            . $ChangeIDs[ ( $CreateWorkOrder % scalar @ChangeIDs ) ] . ") -> $WorkOrderID",
+    );
+
+    # do not store workorder id if add failed
+    next CREATEWORKORDER if !$WorkOrderID;
+
+    # store workorder id for further usage and deletion
+    push @WorkOrderIDs,    $WorkOrderID;
+    push @WorkOrderTitles, $WorkOrderTitle;
 }
 
 # create new condition
@@ -515,7 +549,8 @@ for my $CreateCondition ( 0 .. 2 ) {
 # check for default condition expressions
 my @ExpressionTests = (
     {
-        SourceData => {
+        MatchSuccess => 0,
+        SourceData   => {
             ExpressionAdd => {
                 ObjectID => {
                     ObjectLookup => {
@@ -538,12 +573,10 @@ my @ExpressionTests = (
 
                 # static fields
                 ConditionID  => $ConditionIDs[0],
-                Selector     => 'DummySelector1',
+                Selector     => $ChangeIDs[0],
                 CompareValue => 'DummyCompareValue1',
                 UserID       => 1,
             },
-        },
-        ReferenceData => {
         },
     },
     {
@@ -570,7 +603,7 @@ my @ExpressionTests = (
 
                 # static fields
                 ConditionID  => $ConditionIDs[0],
-                Selector     => 'DummySelector1',
+                Selector     => $ChangeIDs[0],
                 CompareValue => 'DummyCompareValue1',
                 UserID       => 1,
             },
@@ -600,7 +633,7 @@ my @ExpressionTests = (
 
                 # static fields
                 ConditionID  => $ConditionIDs[1],
-                Selector     => 'DummySelector2',
+                Selector     => $WorkOrderIDs[1],
                 CompareValue => 'DummyCompareValue2',
                 UserID       => 1,
             },
@@ -625,14 +658,15 @@ my @ExpressionTests = (
                 },
 
                 # static fields
-                Selector     => 'NewSelector' . int rand 1_000_000,
+                Selector     => $ChangeIDs[0],
                 CompareValue => 'NewDummyCompareValue' . int rand 1_000_000,
                 UserID       => 1,
             },
         },
     },
     {
-        SourceData => {
+        MatchSuccess => 1,
+        SourceData   => {
             ExpressionAdd => {
                 ObjectID => {
                     ObjectLookup => {
@@ -655,8 +689,8 @@ my @ExpressionTests = (
 
                 # static fields
                 ConditionID  => $ConditionIDs[0],
-                Selector     => 'DummySelector3',
-                CompareValue => 'DummyCompareValue3',
+                Selector     => $WorkOrderIDs[1],
+                CompareValue => $WorkOrderTitles[0],
                 UserID       => 1,
             },
             ExpressionUpdate => {
@@ -688,7 +722,7 @@ my @ExpressionTests = (
 
                 # static fields
                 ConditionID  => $ConditionIDs[1],
-                Selector     => 'DummySelector2',
+                Selector     => $ChangeIDs[0],
                 CompareValue => 'DummyCompareValue2',
                 UserID       => 1,
             },
@@ -701,7 +735,8 @@ my @ExpressionTests = (
                 },
 
                 # static fields
-                UserID => 1,
+                Selector => $WorkOrderIDs[1],
+                UserID   => 1,
             },
         },
     },
@@ -798,7 +833,99 @@ my @ExpressionTests = (
             },
         },
     },
+    {
+        MatchSuccess => 1,
+        SourceData   => {
+            ExpressionAdd => {
+                ObjectID => {
+                    ObjectLookup => {
+                        Name   => 'ITSMWorkOrder',
+                        UserID => 1,
+                    },
+                },
+                AttributeID => {
+                    AttributeLookup => {
+                        Name   => 'WorkOrderTitle',
+                        UserID => 1,
+                    },
+                },
+                OperatorID => {
+                    OperatorLookup => {
+                        Name   => 'is',
+                        UserID => 1,
+                    },
+                },
 
+                # static fields
+                ConditionID  => $ConditionIDs[0],
+                Selector     => $WorkOrderIDs[0],
+                CompareValue => $WorkOrderTitles[0],
+                UserID       => 1,
+            },
+        },
+    },
+    {
+        MatchSuccess => 0,
+        SourceData   => {
+            ExpressionAdd => {
+                ObjectID => {
+                    ObjectLookup => {
+                        Name   => 'ITSMWorkOrder',
+                        UserID => 1,
+                    },
+                },
+                AttributeID => {
+                    AttributeLookup => {
+                        Name   => 'WorkOrderTitle',
+                        UserID => 1,
+                    },
+                },
+                OperatorID => {
+                    OperatorLookup => {
+                        Name   => 'is',
+                        UserID => 1,
+                    },
+                },
+
+                # static fields
+                ConditionID  => $ConditionIDs[2],
+                Selector     => 'all',
+                CompareValue => $WorkOrderTitles[8],
+                UserID       => 1,
+            },
+        },
+    },
+    {
+        MatchSuccess => 1,
+        SourceData   => {
+            ExpressionAdd => {
+                ObjectID => {
+                    ObjectLookup => {
+                        Name   => 'ITSMWorkOrder',
+                        UserID => 1,
+                    },
+                },
+                AttributeID => {
+                    AttributeLookup => {
+                        Name   => 'WorkOrderTitle',
+                        UserID => 1,
+                    },
+                },
+                OperatorID => {
+                    OperatorLookup => {
+                        Name   => 'is',
+                        UserID => 1,
+                    },
+                },
+
+                # static fields
+                ConditionID  => $ConditionIDs[2],
+                Selector     => 'any',
+                CompareValue => $WorkOrderTitles[8],
+                UserID       => 1,
+            },
+        },
+    },
 );
 
 # check condition expressions

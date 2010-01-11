@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Object.pm - all condition object functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Object.pm,v 1.10 2010-01-11 15:07:37 mae Exp $
+# $Id: Object.pm,v 1.11 2010-01-11 17:01:21 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 =head1 NAME
 
@@ -356,9 +356,10 @@ sub ObjectDelete {
 Return the data of a given type and selector of a certain object.
 
     my $ObjectDataRef = $ConditionObject->ObjectDataGet(
-        ObjectName => 'ITSMChange',
-        Selector   => ( '123' | 'all' | 'any' ),
-        UserID     => 1,
+        ConditionID => 1234,
+        ObjectName  => 'ITSMChange',
+        Selector    => ( '123' | 'all' | 'any' ),
+        UserID      => 1,
     );
 
 =cut
@@ -367,7 +368,7 @@ sub ObjectDataGet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(ObjectName Selector UserID)) {
+    for my $Argument (qw(ConditionID ObjectName Selector UserID)) {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -410,13 +411,16 @@ sub ObjectDataGet {
     if ( $Param{Selector} =~ m{ ( all | any ) }smx ) {
         $ActionSub = $ObjectAction{ $ObjectType . 'All' };
         return $Self->$ActionSub(
-            UserID => $Param{UserID},
+            ConditionID     => $Param{ConditionID},
+            $ActionSelector => $Param{Selector},
+            UserID          => $Param{UserID},
         );
     }
 
     # get and return object
     return [
         $Self->$ActionSub(
+            ConditionID     => $Param{ConditionID},
             $ActionSelector => $Param{Selector},
             UserID          => $Param{UserID},
             )
@@ -464,15 +468,18 @@ Returns a workorder ids of a change.
 sub _ObjectITSMWorkOrderAll {
     my ( $Self, %Param ) = @_;
 
-    # get and return workorder data
-    my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(%Param);
+    # get condition
+    my $Condition = $Self->ConditionGet(
+        ConditionID => $Param{ConditionID},
+        UserID      => $Param{UserID},
+    );
 
-    # check for workorder
-    return if !$WorkOrder;
+    # check for condition
+    return if !$Condition;
 
     # get all workorder ids of change
     my $WorkOrderIDs = $Self->{WorkOrderObject}->WorkOrderList(
-        ChangeID => $WorkOrder->{ChangeID},
+        ChangeID => $Condition->{ChangeID},
         UserID   => $Param{UserID},
     );
 
@@ -483,7 +490,7 @@ sub _ObjectITSMWorkOrderAll {
     my @WorkOrderData;
     WORKORDERID:
     for my $WorkOrderID ( @{$WorkOrderIDs} ) {
-        $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+        my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
             WorkOrderID => $WorkOrderID,
             UserID      => $Param{UserID},
         );
@@ -514,6 +521,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.10 $ $Date: 2010-01-11 15:07:37 $
+$Revision: 1.11 $ $Date: 2010-01-11 17:01:21 $
 
 =cut
