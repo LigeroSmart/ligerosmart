@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Expression.pm - all condition expression functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Expression.pm,v 1.9 2010-01-11 11:14:00 ub Exp $
+# $Id: Expression.pm,v 1.10 2010-01-11 12:47:58 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 =head1 NAME
 
@@ -372,6 +372,75 @@ sub ExpressionMatch {
     return if !$Expression;
 
     # get expression attributes
+    my $ExpressionData = $Self->_ExpressionMatchInit(
+        Expression => $Expression,
+        UserID     => $Param{UserID},
+    );
+
+    # check expression attributes
+    return if !$ExpressionData;
+
+    # TODO: check for changed fields
+    # TODO: implement some magic for selector is ( 'any' | 'all' )
+
+    # get object name
+    my $ObjectName = $ExpressionData->{Object}->{Name};
+
+    # get object data
+    my $ExpressionObject = $Self->ObjectDataGet(
+        ObjectName => $ObjectName,
+        Selector   => $Expression->{Selector},
+        UserID     => $Param{UserID},
+    );
+
+    # check for expression object
+    if ( !$ExpressionObject ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "No object data for $ObjectName ($Expression->{Selector}) found!",
+        );
+        return;
+    }
+
+    # get attribute type
+    my $AttributeType = $ExpressionData->{Attribute}->{Name};
+
+    # check for object attribte
+    if ( !exists $ExpressionObject->{$AttributeType} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "No object attribute for $ObjectName ($AttributeType) found!",
+        );
+        return;
+    }
+
+    # return result of the expressions execution
+    return $Self->OperatorExecute(
+        OperatorName => $ExpressionData->{Operator}->{Name},
+        Value1       => $ExpressionObject->{$AttributeType},
+        Value2       => $Expression->{CompareValue},
+        UserID       => $Param{UserID},
+    );
+}
+
+=item _ExpressionMatchInit()
+
+Returns object, attribute and operator of a given expression.
+
+    my $ExpressionData = $ConditionObject->_ExpressionMatchInit(
+        Expression => $ExpressionRef,
+        UserID     => 1,
+    );
+
+=cut
+
+sub _ExpressionMatchInit {
+    my ( $Self, %Param ) = @_;
+
+    # extract expression
+    my $Expression = $Param{Expression};
+
+    # declate expression data
     my %ExpressionData;
 
     # get object data
@@ -419,47 +488,7 @@ sub ExpressionMatch {
         return;
     }
 
-    # TODO: check for changed fields
-    # TODO: implement some magic for selector is ( 'any' | 'all' )
-
-    # get object name
-    my $ObjectName = $ExpressionData{Object}->{Name};
-
-    # get object data
-    my $ExpressionObject = $Self->ObjectDataGet(
-        ObjectName => $ObjectName,
-        Selector   => $Expression->{Selector},
-        UserID     => $Param{UserID},
-    );
-
-    # check for expression object
-    if ( !$ExpressionObject ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "No object data for $ObjectName ($Expression->{Selector}) found!",
-        );
-        return;
-    }
-
-    # get attribute type
-    my $AttributeType = $ExpressionData{Attribute}->{Name};
-
-    # check for object attribte
-    if ( !exists $ExpressionObject->{$AttributeType} ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "No object attribute for $ObjectName ($AttributeType) found!",
-        );
-        return;
-    }
-
-    # return result of the expressions execution
-    return $Self->OperatorExecute(
-        OperatorName => $ExpressionData{Operator}->{Name},
-        Value1       => $ExpressionObject->{$AttributeType},
-        Value2       => $Expression->{CompareValue},
-        UserID       => $Param{UserID},
-    );
+    return \%ExpressionData;
 }
 
 1;
@@ -478,6 +507,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.9 $ $Date: 2010-01-11 11:14:00 $
+$Revision: 1.10 $ $Date: 2010-01-11 12:47:58 $
 
 =cut
