@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.115 2010-01-08 15:26:26 mae Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.116 2010-01-11 11:35:33 ub Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -470,7 +470,7 @@
             <Column Name="object_id" Required="true" Type="SMALLINT"/>
             <Column Name="attribute_id" Required="true" Type="SMALLINT"/>
             <Column Name="operator_id" Required="true" Type="SMALLINT"/>
-            <Column Name="selector" Required="false" Size="250" Type="VARCHAR"/>
+            <Column Name="selector" Required="false" Size="20" Type="VARCHAR"/>
             <Column Name="compare_value" Required="false" Size="250" Type="VARCHAR"/>
             <Index Name="condition_expression_condition_id">
                 <IndexColumn Name="condition_id"/>
