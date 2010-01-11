@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.20 2010-01-08 13:11:32 bes Exp $
+# $Id: ITSMChangeManagement.pm,v 1.21 2010-01-11 11:54:31 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,7 +33,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 =head1 NAME
 
@@ -878,192 +878,456 @@ Adds the Change:: and WorkOrder:: notifications to systems notification table.
 sub _AddSystemNotifications {
     my ($Self) = @_;
 
+    # set up some standard texts
+    my $BasicChangeInfoEn = "\n"
+        . "Change title: <OTRS_CHANGE_ChangeTitle>\n"
+        . "Current change state: <OTRS_CHANGE_ChangeState>\n"
+        . "\n"
+        . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom&ChangeID=<OTRS_CHANGE_ChangeID>\n"
+        . "\n"
+        . "Your OTRS Notification Master\n";
+
+    my $BasicChangeInfoDe = "\n"
+        . "Change Titel: <OTRS_CHANGE_ChangeTitle>\n"
+        . "Aktueller Change Status: <OTRS_CHANGE_ChangeState>\n"
+        . "\n"
+        . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom&ChangeID=<OTRS_CHANGE_ChangeID>\n"
+        . "\n"
+        . "Ihr OTRS Notification Master\n";
+
+    my $BasicWorkOrderInfoEn = "\n"
+        . "Change title: <OTRS_CHANGE_ChangeTitle>\n"
+        . "Workorder title: <OTRS_WORKORDER_WorkOrderTitle>\n"
+        . "Current change state: <OTRS_CHANGE_ChangeState>\n"
+        . "Current workorder state: <OTRS_WORKORDER_WorkOrderState>\n"
+        . "\n"
+        . "Your OTRS Notification Master\n";
+
+    my $BasicWorkOrderInfoDe = "\n"
+        . "Change Titel: <OTRS_CHANGE_ChangeTitle>\n"
+        . "Workorder Titel: <OTRS_WORKORDER_WorkOrderTitle>\n"
+        . "Aktueller Change Status: <OTRS_CHANGE_ChangeState>\n"
+        . "Aktueller Workorder Status: <OTRS_WORKORDER_WorkOrderState>\n"
+        . "\n"
+        . "Your OTRS Notification Master'\n";
+
     # define notifications
-    my @Notifications = (
+    my @AgentNotifications = (
+        [
+            'Agent::Change::ChangeAdd',
+            'de',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] neu erstellt',
+            'Change #<OTRS_CHANGE_ChangeNumber> wurde neu erstellt.' . $BasicChangeInfoDe,
+        ],
+        [
+            'Agent::Change::ChangeAdd',
+            'en',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] added',
+            'Change #<OTRS_CHANGE_ChangeNumber> was added.' . $BasicChangeInfoEn,
+        ],
         [
             'Agent::Change::ChangeUpdate',
             'de',
-            'Change::ChangeUpdate',
-            'Change (ChangeUpdate)'
+            '[Change #<OTRS_CHANGE_ChangeNumber>] aktualisiert',
+            'Change #<OTRS_CHANGE_ChangeNumber> wurde aktualisiert.' . $BasicChangeInfoDe,
         ],
         [
             'Agent::Change::ChangeUpdate',
             'en',
             '[Change #<OTRS_CHANGE_ChangeNumber>] updated',
-            'Change #<OTRS_CHANGE_ChangeNumber> was updated.
-
-Change Title: <OTRS_CHANGE_ChangeTitle>
-Current change state: <OTRS_CHANGE_ChangeState>
-
-<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom&ChangeID=<OTRS_CHANGE_ChangeID>
-
-Your OTRS Notification Master'
-        ],
-        [
-            'Agent::Change::ChangeAdd',
-            'de',
-            'Change::ChangeAdd',
-            'Change (ChangeAdd)'
-        ],
-        [
-            'Agent::Change::ChangeAdd',
-            'en',
-            'Change::ChangeAdd',
-            'Change (ChangeAdd)'
-        ],
-        [
-            'Agent::Change::ChangeDelete',
-            'de',
-            'Change::ChangeDelete',
-            'Change (ChangeDelete)'
-        ],
-        [
-            'Agent::Change::ChangeDelete',
-            'en',
-            'Change::ChangeDelete',
-            'Change (ChangeDelete)'
+            'Change #<OTRS_CHANGE_ChangeNumber> was updated.' . $BasicChangeInfoEn,
         ],
         [
             'Agent::Change::ChangeCABUpdate',
             'de',
-            'Change::ChangeCABUpdate',
-            'Change (ChangeCABUpdate)'
+            '[Change #<OTRS_CHANGE_ChangeNumber>] CAB aktualisiert',
+            'Change #<OTRS_CHANGE_ChangeNumber> mit aktualisierten CAB.' . $BasicChangeInfoEn,
         ],
         [
             'Agent::Change::ChangeCABUpdate',
             'en',
-            'Change::ChangeCABUpdate',
-            'Change (ChangeCABUpdate)'
+            '[Change #<OTRS_CHANGE_ChangeNumber>] CAB updated',
+            'Change #<OTRS_CHANGE_ChangeNumber> with updated CAB.' . $BasicChangeInfoEn,
         ],
         [
-            'Agent::WorkOrder::WorkOrderUpdate',
+            'Agent::Change::ChangeCABDelete',
             'de',
-            'WorkOrder::WorkOrderUpdate',
-            'WorkOrder (WorkOrderUpdate)'
+            '[Change #<OTRS_CHANGE_ChangeNumber>] CAB gelöscht',
+            'Change #<OTRS_CHANGE_ChangeNumber> mit gelöschtem CAB.' . $BasicChangeInfoEn,
         ],
         [
-            'Agent::WorkOrder::WorkOrderUpdate',
+            'Agent::Change::ChangeCABDelete',
             'en',
-            'WorkOrder::WorkOrderUpdate',
-            'WorkOrder (WorkOrderUpdate)'
+            '[Change #<OTRS_CHANGE_ChangeNumber>] CAB deleted',
+            'Change #<OTRS_CHANGE_ChangeNumber> with deleted CAB.' . $BasicChangeInfoEn,
+        ],
+        [
+            'Agent::Change::ChangeLinkAdd',
+            'de',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] RfC verknüpft',
+            'Change #<OTRS_CHANGE_ChangeNumber> mit verknüpftem RfC.' . $BasicChangeInfoDe,
+        ],
+        [
+            'Agent::Change::ChangeLinkAdd',
+            'en',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] RfC linked',
+            'Change #<OTRS_CHANGE_ChangeNumber> with linked RfC.' . $BasicChangeInfoEn,
+        ],
+        [
+            'Agent::Change::ChangeLinkDelete',
+            'de',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] RfC entfernt',
+            'Change #<OTRS_CHANGE_ChangeNumber> mit entferntem RfC.' . $BasicChangeInfoDe,
+        ],
+        [
+            'Agent::Change::ChangeLinkDelete',
+            'en',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] RfC unlinked',
+            'Change #<OTRS_CHANGE_ChangeNumber> with unlinked RfC.' . $BasicChangeInfoEn,
+        ],
+        [
+            'Agent::Change::ChangeDelete',
+            'de',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] gelöscht',
+            'Change #<OTRS_CHANGE_ChangeNumber> wurde gelöscht.',
+        ],
+        [
+            'Agent::Change::ChangeDelete',
+            'en',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] deleted',
+            'Change #<OTRS_CHANGE_ChangeNumber> was deleted.',
         ],
         [
             'Agent::WorkOrder::WorkOrderAdd',
             'de',
-            'WorkOrder::WorkOrderAdd',
-            'WorkOrder (WorkOrderAdd)'
+            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] neu erstellt',
+            'The Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde neu erstellt.'
+                . $BasicWorkOrderInfoDe,
         ],
         [
             'Agent::WorkOrder::WorkOrderAdd',
             'en',
-            'WorkOrder::WorkOrderAdd',
-            'WorkOrder (WorkOrderAdd)'
+            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] added',
+            'The Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was added.'
+                . $BasicWorkOrderInfoEn,
+        ],
+        [
+            'Agent::WorkOrder::WorkOrderUpdate',
+            'de',
+            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] aktualisiert',
+            'The Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde aktualisiert.'
+                . $BasicWorkOrderInfoDe,
+        ],
+        [
+            'Agent::WorkOrder::WorkOrderUpdate',
+            'en',
+            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] updated',
+            'The Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was updated.'
+                . $BasicWorkOrderInfoEn,
         ],
         [
             'Agent::WorkOrder::WorkOrderDelete',
             'de',
-            'WorkOrder::WorkOrderDelete',
-            'WorkOrder (WorkOrderDelete)'
+            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] gelöscht',
+            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde gelöscht.',
         ],
         [
             'Agent::WorkOrder::WorkOrderDelete',
             'en',
-            'WorkOrder::WorkOrderDelete',
-            'WorkOrder (WorkOrderDelete)'
+            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] deleted',
+            'The Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was deleted.',
+        ],
+        [
+            'Agent::WorkOrder::WorkOrderLinkAdd',
+            'de',
+            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Ticket verknüpft',
+            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde mit einem Ticket verknüpft.'
+                . $BasicWorkOrderInfoDe,
+        ],
+        [
+            'Agent::WorkOrder::WorkOrderLinkAdd',
+            'en',
+            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Ticket linked',
+            'The Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was linked to a ticket.'
+                . $BasicWorkOrderInfoDe,
+        ],
+        [
+            'Agent::WorkOrder::WorkOrderLinkDelete',
+            'de',
+            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Ticket entfernt',
+            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> ist mit einem Ticket nicht mehr verknüpft.'
+                . $BasicWorkOrderInfoDe,
+        ],
+        [
+            'Agent::WorkOrder::WorkOrderLinkDelete',
+            'en',
+            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Ticket removed',
+            'The Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> in no linker linked to a ticket.'
+                . $BasicWorkOrderInfoDe,
+        ],
+        [
+            'Agent::Change::ChangeAttachmentAdd',
+            'de',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] neuer Anhang',
+            'Change #<OTRS_CHANGE_ChangeNumber> hat einen neuen Anhang.' . $BasicChangeInfoDe,
+        ],
+        [
+            'Agent::Change::ChangeAttachmentAdd',
+            'en',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] new attachment.',
+            'Change #<OTRS_CHANGE_ChangeNumber> with new attachment.' . $BasicChangeInfoEn,
+        ],
+        [
+            'Agent::Change::ChangeAttachmentDelete',
+            'de',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] Anhang gelöscht',
+            'Change #<OTRS_CHANGE_ChangeNumber> mit gelöschtem Anhang.' . $BasicChangeInfoDe,
+        ],
+        [
+            'Agent::Change::ChangeAttachmentDelete',
+            'en',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] attachment deleted.',
+            'Change #<OTRS_CHANGE_ChangeNumber> with deleted attachment.' . $BasicChangeInfoEn,
+        ],
+        [
+            'Agent::WorkOrder::WorkOrderAttachmentAdd',
+            'de',
+            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] neuer Anhang',
+            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> hat einen neuen Anhang.'
+                . $BasicWorkOrderInfoDe,
+        ],
+        [
+            'Agent::WorkOrder::WorkOrderAttachmentAdd',
+            'en',
+            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] new attachment.',
+            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> with new attachment.'
+                . $BasicWorkOrderInfoEn,
+        ],
+        [
+            'Agent::WorkOrder::WorkOrderAttachmentDelete',
+            'de',
+            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Anhang gelöscht',
+            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> mit gelöschtem Anhang.'
+                . $BasicWorkOrderInfoDe,
+        ],
+        [
+            'Agent::WorkOrder::WorkOrderAttachmentDelete',
+            'en',
+            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] attachment deleted.',
+            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> with deleted attachment.'
+                . $BasicWorkOrderInfoEn,
+        ],
+    );
+
+    my @CustomerNotifications = (
+        [
+            'Customer::Change::ChangeAdd',
+            'de',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] neu erstellt',
+            'Change #<OTRS_CHANGE_ChangeNumber> wurde neu erstellt.' . $BasicChangeInfoDe,
+        ],
+        [
+            'Customer::Change::ChangeAdd',
+            'en',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] added',
+            'Change #<OTRS_CHANGE_ChangeNumber> was added.' . $BasicChangeInfoEn,
         ],
         [
             'Customer::Change::ChangeUpdate',
             'de',
-            'Change::ChangeUpdate',
-            'Change (ChangeUpdate)'
+            '[Change #<OTRS_CHANGE_ChangeNumber>] aktualisiert',
+            'Change #<OTRS_CHANGE_ChangeNumber> wurde aktualisiert.' . $BasicChangeInfoDe,
         ],
         [
             'Customer::Change::ChangeUpdate',
             'en',
             '[Change #<OTRS_CHANGE_ChangeNumber>] updated',
-            'Change #<OTRS_CHANGE_ChangeNumber> was updated.
-
-Change Title: <OTRS_CHANGE_ChangeTitle>
-Current change state: <OTRS_CHANGE_ChangeState>
-
-Your OTRS Notification Master'
-        ],
-        [
-            'Customer::Change::ChangeAdd',
-            'de',
-            'Change::ChangeAdd',
-            'Change (ChangeAdd)'
-        ],
-        [
-            'Customer::Change::ChangeAdd',
-            'en',
-            'Change::ChangeAdd',
-            'Change (ChangeAdd)'
-        ],
-        [
-            'Customer::Change::ChangeDelete',
-            'de',
-            'Change::ChangeDelete',
-            'Change (ChangeDelete)'
-        ],
-        [
-            'Customer::Change::ChangeDelete',
-            'en',
-            'Change::ChangeDelete',
-            'Change (ChangeDelete)'
+            'Change #<OTRS_CHANGE_ChangeNumber> was updated.' . $BasicChangeInfoEn,
         ],
         [
             'Customer::Change::ChangeCABUpdate',
             'de',
-            'Change::ChangeCABUpdate',
-            'Change (ChangeCABUpdate)'
+            '[Change #<OTRS_CHANGE_ChangeNumber>] CAB aktualisiert',
+            'Change #<OTRS_CHANGE_ChangeNumber> mit aktualisierten CAB.' . $BasicChangeInfoEn,
         ],
         [
             'Customer::Change::ChangeCABUpdate',
             'en',
-            'Change::ChangeCABUpdate',
-            'Change (ChangeCABUpdate)'
+            '[Change #<OTRS_CHANGE_ChangeNumber>] CAB updated',
+            'Change #<OTRS_CHANGE_ChangeNumber> with updated CAB.' . $BasicChangeInfoEn,
         ],
         [
-            'Customer::WorkOrder::WorkOrderUpdate',
+            'Customer::Change::ChangeCABDelete',
             'de',
-            'WorkOrder::WorkOrderUpdate',
-            'WorkOrder (WorkOrderUpdate)'
+            '[Change #<OTRS_CHANGE_ChangeNumber>] CAB gelöscht',
+            'Change #<OTRS_CHANGE_ChangeNumber> mit gelöschtem CAB.' . $BasicChangeInfoEn,
         ],
         [
-            'Customer::WorkOrder::WorkOrderUpdate',
+            'Customer::Change::ChangeCABDelete',
             'en',
-            'WorkOrder::WorkOrderUpdate',
-            'WorkOrder (WorkOrderUpdate)'
+            '[Change #<OTRS_CHANGE_ChangeNumber>] CAB deleted',
+            'Change #<OTRS_CHANGE_ChangeNumber> with deleted CAB.' . $BasicChangeInfoEn,
+        ],
+        [
+            'Customer::Change::ChangeLinkAdd',
+            'de',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] RfC verknüpft',
+            'Change #<OTRS_CHANGE_ChangeNumber> mit verknüpftem RfC.' . $BasicChangeInfoDe,
+        ],
+        [
+            'Customer::Change::ChangeLinkAdd',
+            'en',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] RfC linked',
+            'Change #<OTRS_CHANGE_ChangeNumber> with linked RfC.' . $BasicChangeInfoEn,
+        ],
+        [
+            'Customer::Change::ChangeLinkDelete',
+            'de',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] RfC entfernt',
+            'Change #<OTRS_CHANGE_ChangeNumber> mit entferntem RfC.' . $BasicChangeInfoDe,
+        ],
+        [
+            'Customer::Change::ChangeLinkDelete',
+            'en',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] RfC unlinked',
+            'Change #<OTRS_CHANGE_ChangeNumber> with unlinked RfC.' . $BasicChangeInfoEn,
+        ],
+        [
+            'Customer::Change::ChangeDelete',
+            'de',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] gelöscht',
+            'Change #<OTRS_CHANGE_ChangeNumber> wurde gelöscht.',
+        ],
+        [
+            'Customer::Change::ChangeDelete',
+            'en',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] deleted',
+            'Change #<OTRS_CHANGE_ChangeNumber> was deleted.',
         ],
         [
             'Customer::WorkOrder::WorkOrderAdd',
             'de',
-            'WorkOrder::WorkOrderAdd',
-            'WorkOrder (WorkOrderAdd)'
+            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] neu erstellt',
+            'The Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde neu erstellt.'
+                . $BasicWorkOrderInfoDe,
         ],
         [
             'Customer::WorkOrder::WorkOrderAdd',
             'en',
-            'WorkOrder::WorkOrderAdd',
-            'WorkOrder (WorkOrderAdd)'
+            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] added',
+            'The Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was added.'
+                . $BasicWorkOrderInfoEn,
+        ],
+        [
+            'Customer::WorkOrder::WorkOrderUpdate',
+            'de',
+            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] aktualisiert',
+            'The Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde aktualisiert.'
+                . $BasicWorkOrderInfoDe,
+        ],
+        [
+            'Customer::WorkOrder::WorkOrderUpdate',
+            'en',
+            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] updated',
+            'The Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was updated.'
+                . $BasicWorkOrderInfoEn,
         ],
         [
             'Customer::WorkOrder::WorkOrderDelete',
             'de',
-            'Workorder geloescht',
-            'WorkOrder wurde geloescht'
+            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] gelöscht',
+            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde gelöscht.',
         ],
         [
             'Customer::WorkOrder::WorkOrderDelete',
             'en',
-            'Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> deleted',
-            'The Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was deleted'
-        ]
+            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] deleted',
+            'The Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was deleted.',
+        ],
+        [
+            'Customer::WorkOrder::WorkOrderLinkAdd',
+            'de',
+            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Ticket verknüpft',
+            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde mit einem Ticket verknüpft.'
+                . $BasicWorkOrderInfoDe,
+        ],
+        [
+            'Customer::WorkOrder::WorkOrderLinkAdd',
+            'en',
+            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Ticket linked',
+            'The Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was linked to a ticket.'
+                . $BasicWorkOrderInfoDe,
+        ],
+        [
+            'Customer::WorkOrder::WorkOrderLinkDelete',
+            'de',
+            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Ticket entfernt',
+            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> ist mit einem Ticket nicht mehr verknüpft.'
+                . $BasicWorkOrderInfoDe,
+        ],
+        [
+            'Customer::WorkOrder::WorkOrderLinkDelete',
+            'en',
+            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Ticket removed',
+            'The Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> in no linker linked to a ticket.'
+                . $BasicWorkOrderInfoDe,
+        ],
+        [
+            'Customer::Change::ChangeAttachmentAdd',
+            'de',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] neuer Anhang',
+            'Change #<OTRS_CHANGE_ChangeNumber> hat einen neuen Anhang.' . $BasicChangeInfoDe,
+        ],
+        [
+            'Customer::Change::ChangeAttachmentAdd',
+            'en',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] new attachment.',
+            'Change #<OTRS_CHANGE_ChangeNumber> with new attachment.' . $BasicChangeInfoEn,
+        ],
+        [
+            'Customer::Change::ChangeAttachmentDelete',
+            'de',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] Anhang gelöscht',
+            'Change #<OTRS_CHANGE_ChangeNumber> mit gelöschtem Anhang.' . $BasicChangeInfoDe,
+        ],
+        [
+            'Customer::Change::ChangeAttachmentDelete',
+            'en',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] attachment deleted.',
+            'Change #<OTRS_CHANGE_ChangeNumber> with deleted attachment.' . $BasicChangeInfoEn,
+        ],
+        [
+            'Customer::WorkOrder::WorkOrderAttachmentAdd',
+            'de',
+            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] neuer Anhang',
+            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> hat einen neuen Anhang.'
+                . $BasicWorkOrderInfoDe,
+        ],
+        [
+            'Customer::WorkOrder::WorkOrderAttachmentAdd',
+            'en',
+            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] new attachment.',
+            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> with new attachment.'
+                . $BasicWorkOrderInfoEn,
+        ],
+        [
+            'Customer::WorkOrder::WorkOrderAttachmentDelete',
+            'de',
+            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Anhang gelöscht',
+            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> mit gelöschtem Anhang.'
+                . $BasicWorkOrderInfoDe,
+        ],
+        [
+            'Customer::WorkOrder::WorkOrderAttachmentDelete',
+            'en',
+            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] attachment deleted.',
+            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> with deleted attachment.'
+                . $BasicWorkOrderInfoEn,
+        ],
     );
 
     # insert the entries
-    for my $Notification (@Notifications) {
+    for my $Notification ( @AgentNotifications, @CustomerNotifications ) {
         my @Binds;
 
         # Bind requires scalar references
@@ -1096,45 +1360,46 @@ Deletes the Change:: and WorkOrder:: notifications from systems notification tab
 sub _DeleteSystemNotifications {
     my ($Self) = @_;
 
-    # define the notification keys to be deleted
-    my @NotificationKeys = (
-        'de::Change::ChangeUpdate',
-        'en::Change::ChangeUpdate',
-        'de::Change::ChangeAdd',
-        'en::Change::ChangeAdd',
-        'de::Change::ChangeDelete',
-        'en::Change::ChangeDelete',
-        'de::Change::ChangeCABUpdate',
-        'en::Change::ChangeCABUpdate',
-        'de::WorkOrder::WorkOrderUpdate',
-        'en::WorkOrder::WorkOrderUpdate',
-        'de::WorkOrder::WorkOrderAdd',
-        'en::WorkOrder::WorkOrderAdd',
-        'de::WorkOrder::WorkOrderDelete',
-        'en::WorkOrder::WorkOrderDelete',
+    # define the notification types to be deleted
+    my @NotificationTypes = (
+        'Change::ChangeAdd',
+        'Change::ChangeUpdate',
+        'Change::ChangeCABUpdate',
+        'Change::ChangeCABDelete',
+        'Change::ChangeLinkAdd',
+        'Change::ChangeLinkDelete',
+        'Change::ChangeDelete',
+        'WorkOrder::WorkOrderAdd',
+        'WorkOrder::WorkOrderUpdate',
+        'WorkOrder::WorkOrderDelete',
+        'WorkOrder::WorkOrderLinkAdd',
+        'WorkOrder::WorkOrderLinkDelete',
+        'WorkOrder::ChangeAttachmentAdd',
+        'WorkOrder::ChangeAttachmentDelete',
+        'WorkOrder::WorkOrderAttachmentAdd',
+        'WorkOrder::WorkOrderAttachmentDelete',
     );
 
     # delete the entries
-    for my $NotificationKey (@NotificationKeys) {
-        my ( $Lang, $Type ) = split /::/, $NotificationKey, 2;
+    for my $Type (@NotificationTypes) {
 
-        # delete agent notification
-        my $AgentType = 'Agent::' . $Type;
+        # the default notification are defined for English and German
+        for my $Lang (qw(en de)) {
 
-        $Self->{DBObject}->Do(
-            SQL => 'DELETE FROM notifications '
-                . 'WHERE notification_language = ? AND notification_type = ?',
-            Bind => [ \$Lang, \$AgentType ],
-        );
+            # delete agent notification
+            $Self->{DBObject}->Do(
+                SQL => 'DELETE FROM notifications '
+                    . 'WHERE notification_language = ? AND notification_type = ?',
+                Bind => [ \$Lang, \"${Lang}::Agent::${Type}" ],
+            );
 
-        # delete customer notification
-        my $CustomerType = 'Customer::' . $Type;
-
-        $Self->{DBObject}->Do(
-            SQL => 'DELETE FROM notifications '
-                . 'WHERE notification_language = ? AND notification_type = ?',
-            Bind => [ \$Lang, \$CustomerType ],
-        );
+            # delete customer notification
+            $Self->{DBObject}->Do(
+                SQL => 'DELETE FROM notifications '
+                    . 'WHERE notification_language = ? AND notification_type = ?',
+                Bind => [ \$Lang, \"${Lang}::Customer::${Type}" ],
+            );
+        }
     }
 
     return 1;
@@ -1158,6 +1423,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.20 $ $Date: 2010-01-08 13:11:32 $
+$Revision: 1.21 $ $Date: 2010-01-11 11:54:31 $
 
 =cut
