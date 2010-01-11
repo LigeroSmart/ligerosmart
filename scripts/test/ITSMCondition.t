@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.28 2010-01-11 17:24:05 ub Exp $
+# $Id: ITSMCondition.t,v 1.29 2010-01-11 18:32:21 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -117,6 +117,128 @@ for my $ObjectMethod (@ObjectMethods) {
 }
 
 #------------------------
+# make some preparations
+#------------------------
+
+# create new change
+my @ChangeIDs;
+my @ChangeTitles;
+CREATECHANGE:
+for my $CreateChange ( 0 .. 2 ) {
+    my $ChangeTitle = 'UnitTestChange' . $CreateChange;
+    my $ChangeID    = $Self->{ChangeObject}->ChangeAdd(
+        ChangeTitle => $ChangeTitle,
+        UserID      => 1,
+    );
+
+    $Self->True(
+        $ChangeID,
+        'Test ' . $TestCount++ . " - ChangeAdd -> $ChangeID",
+    );
+
+    # do not store change id if add failed
+    next CREATECHANGE if !$ChangeID;
+
+    # store change id for further usage and deletion
+    push @ChangeIDs,    $ChangeID;
+    push @ChangeTitles, $ChangeTitle;
+}
+
+# create new workorders
+my @WorkOrderIDs;
+my @WorkOrderTitles;
+CREATEWORKORDER:
+for my $CreateWorkOrder ( 0 .. 8 ) {
+    my $WorkOrderTitle = 'UnitTestWO' . $CreateWorkOrder;
+    my $WorkOrderID    = $Self->{WorkOrderObject}->WorkOrderAdd(
+        ChangeID => $ChangeIDs[ ( $CreateWorkOrder % scalar @ChangeIDs ) ],
+        WorkOrderTitle => $WorkOrderTitle,
+        UserID         => 1,
+    );
+
+    $Self->True(
+        $WorkOrderID,
+        'Test ' . $TestCount++ . ' - WorkOrderAdd (ChangeID: '
+            . $ChangeIDs[ ( $CreateWorkOrder % scalar @ChangeIDs ) ] . ") -> $WorkOrderID",
+    );
+
+    # do not store workorder id if add failed
+    next CREATEWORKORDER if !$WorkOrderID;
+
+    # store workorder id for further usage and deletion
+    push @WorkOrderIDs,    $WorkOrderID;
+    push @WorkOrderTitles, $WorkOrderTitle;
+}
+
+#------------------------
+# condition tests
+#------------------------
+
+# create new condition
+my @ConditionIDs;
+my %ConditionCount;
+CREATECONDITION:
+for my $CreateCondition ( 0 .. 10 ) {
+
+    # build condition name
+    my $ConditionName = "UnitTestConditionName_${CreateCondition}_" . int rand 1_000_000;
+
+    # set the change id
+    my $ChangeID = $ChangeIDs[$CreateCondition] || $ChangeIDs[0];
+
+    # add a condition
+    my $ConditionID = $Self->{ConditionObject}->ConditionAdd(
+        ChangeID              => $ChangeID,
+        Name                  => $ConditionName,
+        ExpressionConjunction => 'all',
+        ValidID               => 1,
+        UserID                => 1,
+    );
+
+    $Self->True(
+        $ConditionID,
+        'Test ' . $TestCount++ . " - ConditionAdd -> $ConditionID",
+    );
+
+    next CREATECONDITION if !$ConditionID;
+
+    # remember change id for later tests
+    $ConditionCount{$ChangeID}++;
+
+    # get a condition
+    my $ConditionData = $Self->{ConditionObject}->ConditionGet(
+        ConditionID => $ConditionID,
+        UserID      => 1,
+    );
+
+    $Self->Is(
+        $ConditionData->{ConditionID},
+        $ConditionID,
+        'Test ' . $TestCount++ . " - ConditionGet -> $ConditionID",
+    );
+
+    push @ConditionIDs, $ConditionID;
+}
+
+# condition list test
+for my $ChangeID ( keys %ConditionCount ) {
+
+    # get condition list
+    my $ConditionIDsRef = $Self->{ConditionObject}->ConditionList(
+        ChangeID => $ChangeID,
+        Valid    => 1,
+        UserID   => 1,
+    );
+
+    $Self->Is(
+        scalar @{$ConditionIDsRef},
+        $ConditionCount{$ChangeID},
+        'Test ' . $TestCount++ . " - ConditionList -> Number of conditions for ChangeID: $ChangeID",
+    );
+
+}
+
+#------------------------
 # condition object tests
 #------------------------
 
@@ -168,7 +290,7 @@ for my $Counter ( 1 .. 3 ) {
         'Test ' . $TestCount++ . " - ObjectAdd -> '$ObjectID'",
     );
 
-    # save object it for delete test
+    # save object id for delete test
     push @ConditionObjectCreated, $ObjectID;
 }
 
@@ -455,83 +577,6 @@ for my $OperatorID (@ConditionOperatorCreated) {
 #-------------------------
 # condition expression tests
 #-------------------------
-
-# create new change
-my @ChangeIDs;
-my @ChangeTitles;
-CREATECHANGE:
-for my $CreateChange ( 0 .. 2 ) {
-    my $ChangeTitle = 'UnitTestChange' . $CreateChange;
-    my $ChangeID    = $Self->{ChangeObject}->ChangeAdd(
-        ChangeTitle => $ChangeTitle,
-        UserID      => 1,
-    );
-
-    $Self->True(
-        $ChangeID,
-        'Test ' . $TestCount++ . " - ChangeAdd -> $ChangeID",
-    );
-
-    # do not store change id if add failed
-    next CREATECHANGE if !$ChangeID;
-
-    # store change id for further usage and deletion
-    push @ChangeIDs,    $ChangeID;
-    push @ChangeTitles, $ChangeTitle;
-}
-
-# create new workorders
-my @WorkOrderIDs;
-my @WorkOrderTitles;
-CREATEWORKORDER:
-for my $CreateWorkOrder ( 0 .. 8 ) {
-    my $WorkOrderTitle = 'UnitTestWO' . $CreateWorkOrder;
-    my $WorkOrderID    = $Self->{WorkOrderObject}->WorkOrderAdd(
-        ChangeID => $ChangeIDs[ ( $CreateWorkOrder % scalar @ChangeIDs ) ],
-        WorkOrderTitle => $WorkOrderTitle,
-        UserID         => 1,
-    );
-
-    $Self->True(
-        $WorkOrderID,
-        'Test ' . $TestCount++ . ' - WorkOrderAdd (ChangeID: '
-            . $ChangeIDs[ ( $CreateWorkOrder % scalar @ChangeIDs ) ] . ") -> $WorkOrderID",
-    );
-
-    # do not store workorder id if add failed
-    next CREATEWORKORDER if !$WorkOrderID;
-
-    # store workorder id for further usage and deletion
-    push @WorkOrderIDs,    $WorkOrderID;
-    push @WorkOrderTitles, $WorkOrderTitle;
-}
-
-# create new condition
-my @ConditionIDs;
-CREATECONDITION:
-for my $CreateCondition ( 0 .. 2 ) {
-
-    # build condition name
-    my $ConditionName = "UnitTestConditionName_${CreateCondition}_" . int rand 1_000_000;
-
-    # add a condition
-    my $ConditionID = $Self->{ConditionObject}->ConditionAdd(
-        ChangeID              => $ChangeIDs[$CreateCondition],
-        Name                  => $ConditionName,
-        ExpressionConjunction => 'all',
-        ValidID               => 1,
-        UserID                => 1,
-    );
-
-    $Self->True(
-        $ConditionID,
-        'Test ' . $TestCount++ . " - ConditionAdd -> $ConditionID",
-    );
-
-    next CREATECONDITION if !$ConditionID;
-
-    push @ConditionIDs, $ConditionID;
-}
 
 # check for default condition expressions
 my @ExpressionTests = (
