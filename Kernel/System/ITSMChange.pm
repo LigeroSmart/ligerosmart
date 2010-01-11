@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.222 2010-01-08 15:02:22 bes Exp $
+# $Id: ITSMChange.pm,v 1.223 2010-01-11 15:56:06 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -28,7 +28,7 @@ use Kernel::System::VirtualFS;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.222 $) [1];
+$VERSION = qw($Revision: 1.223 $) [1];
 
 =head1 NAME
 
@@ -1051,7 +1051,7 @@ sub ChangeList {
         return;
     }
 
-    # get change id
+    # get change ids
     return if !$Self->{DBObject}->Prepare(
         SQL => 'SELECT id FROM change_item',
     );
@@ -3070,6 +3070,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.222 $ $Date: 2010-01-08 15:02:22 $
+$Revision: 1.223 $ $Date: 2010-01-11 15:56:06 $
 
 =cut
