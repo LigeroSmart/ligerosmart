@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.24 2010-01-11 15:57:00 ub Exp $
+# $Id: ITSMChangeManagement.pm,v 1.25 2010-01-11 17:51:27 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,7 +33,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.24 $) [1];
+$VERSION = qw($Revision: 1.25 $) [1];
 
 =head1 NAME
 
@@ -924,6 +924,7 @@ sub _AddSystemNotifications {
 
     # set up some standard texts
     my $BasicChangeInfoEn = "\n"
+        . "\n"
         . "Change title: <OTRS_CHANGE_ChangeTitle>\n"
         . "Current change state: <OTRS_CHANGE_ChangeState>\n"
         . "\n"
@@ -932,6 +933,7 @@ sub _AddSystemNotifications {
         . "Your OTRS Notification Master\n";
 
     my $BasicChangeInfoDe = "\n"
+        . "\n"
         . "Change Titel: <OTRS_CHANGE_ChangeTitle>\n"
         . "Aktueller Change Status: <OTRS_CHANGE_ChangeState>\n"
         . "\n"
@@ -940,6 +942,7 @@ sub _AddSystemNotifications {
         . "Ihr OTRS Notification Master\n";
 
     my $BasicWorkOrderInfoEn = "\n"
+        . "\n"
         . "Change title: <OTRS_CHANGE_ChangeTitle>\n"
         . "Workorder title: <OTRS_WORKORDER_WorkOrderTitle>\n"
         . "Current change state: <OTRS_CHANGE_ChangeState>\n"
@@ -948,6 +951,7 @@ sub _AddSystemNotifications {
         . "Your OTRS Notification Master\n";
 
     my $BasicWorkOrderInfoDe = "\n"
+        . "\n"
         . "Change Titel: <OTRS_CHANGE_ChangeTitle>\n"
         . "Workorder Titel: <OTRS_WORKORDER_WorkOrderTitle>\n"
         . "Aktueller Change Status: <OTRS_CHANGE_ChangeState>\n"
@@ -1467,6 +1471,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.24 $ $Date: 2010-01-11 15:57:00 $
+$Revision: 1.25 $ $Date: 2010-01-11 17:51:27 $
 
 =cut
