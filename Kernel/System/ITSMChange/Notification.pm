@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Notification.pm - lib for notifications in change management
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.27 2010-01-08 11:53:20 bes Exp $
+# $Id: Notification.pm,v 1.28 2010-01-11 14:35:56 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.27 $) [1];
+$VERSION = qw($Revision: 1.28 $) [1];
 
 =head1 NAME
 
@@ -214,7 +214,13 @@ sub NotificationSend {
         }
     }
 
+    my %AgentsSent;
+
+    AGENTID:
     for my $AgentID ( @{ $Param{AgentIDs} } ) {
+
+        # check if notification was already sent to this agent
+        next AGENTID if $AgentsSent{$AgentID};
 
         # User info for prefered language and macro replacement
         my %User = $Self->{UserObject}->GetUserData(
@@ -266,9 +272,17 @@ sub NotificationSend {
             Body     => $Notification->{Body},
             Loop     => 1,
         );
+
+        $AgentsSent{$AgentID} = 1;
     }
 
+    my %CustomersSent;
+
+    CUSTOMERID:
     for my $CustomerID ( @{ $Param{CustomerIDs} } ) {
+
+        # check if notification was already sent to customer
+        next CUSTOMERID if $CustomersSent{$CustomerID};
 
         # User info for prefered language and macro replacement
         my %CustomerUser = $Self->{CustomerUserObject}->CustomerUserDataGet(
@@ -318,6 +332,8 @@ sub NotificationSend {
             Body     => $Notification->{Body},
             Loop     => 1,
         );
+
+        $CustomersSent{$CustomerID} = 1;
     }
 
     return 1;
@@ -1167,6 +1183,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.27 $ $Date: 2010-01-08 11:53:20 $
+$Revision: 1.28 $ $Date: 2010-01-11 14:35:56 $
 
 =cut
