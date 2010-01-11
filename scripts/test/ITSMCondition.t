@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.23 2010-01-11 11:46:12 ub Exp $
+# $Id: ITSMCondition.t,v 1.24 2010-01-11 11:57:43 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -329,7 +329,7 @@ for my $AttributeID (@ConditionAttributeCreated) {
 my @ConditionOperators = (
 
     # common matching
-    'is', 'is not',
+    'is', 'is not', 'is empty',
 
     # digit matching
     'is greater than', 'is less than',
