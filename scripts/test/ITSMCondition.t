@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.22 2010-01-08 15:20:25 mae Exp $
+# $Id: ITSMCondition.t,v 1.23 2010-01-11 11:46:12 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -622,7 +622,7 @@ my @ExpressionTests = (
                 },
 
                 # static fields
-                Selector     => 'NewDummySelector' . int rand 1_000_000,
+                Selector     => 'NewSelector' . int rand 1_000_000,
                 CompareValue => 'NewDummyCompareValue' . int rand 1_000_000,
                 UserID       => 1,
             },
