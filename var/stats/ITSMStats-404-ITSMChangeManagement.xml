@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<otrs_stats>
+<Cache>0</Cache>
+<Description>This report calculates all tickets of type &quot;incident&quot; and all changes in the system.</Description>
+<File></File>
+<Format>CSV</Format>
+<Format>Print</Format>
+<Object>ITSMChangeManagementChangesIncidents</Object>
+<ObjectModule>Kernel::System::Stats::Dynamic::ITSMChangeManagementChangesIncidents</ObjectModule>
+<ObjectName>ITSMChangeManagementChangesIncidents</ObjectName>
+<Permission>stats</Permission>
+<StatType>dynamic</StatType>
+<SumCol>0</SumCol>
+<SumRow>0</SumRow>
+<Title>Relation Incidents &lt;-&gt; Changes</Title>
+<UseAsValueSeries Element="Object" Fixed="1">
+<SelectedValues>Changes</SelectedValues>
+<SelectedValues>Incidents</SelectedValues>
+</UseAsValueSeries>
+<UseAsXvalue Element="TimePeriod" TimeScaleCount="1" TimeStart="2009-01-01 00:00:00" TimeStop="2010-12-31 23:59:59">
+<SelectedValues>Day</SelectedValues>
+</UseAsXvalue>
+<Valid>1</Valid>
+</otrs_stats>
