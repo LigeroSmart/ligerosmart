@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition.pm - all condition functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.pm,v 1.13 2010-01-11 16:29:54 ub Exp $
+# $Id: ITSMCondition.pm,v 1.14 2010-01-12 12:32:42 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use base qw(Kernel::System::ITSMChange::ITSMCondition::Operator);
 use base qw(Kernel::System::ITSMChange::ITSMCondition::Expression);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 =head1 NAME
 
@@ -450,12 +450,18 @@ sub ConditionDelete {
         }
     }
 
+    # TODO: execute ConditionDeletePre Event
+    # TODO it may be neccessary to get the ChangeID from ConditionGet()
+    # so that the history entry will be written to the correct change
+
     # delete condition from database
     return if !$Self->{DBObject}->Do(
         SQL => 'DELETE FROM change_condition '
             . 'WHERE id = ?',
         Bind => [ \$Param{ConditionID} ],
     );
+
+    # TODO: execute ConditionDeletePost Event
 
     return 1;
 }
@@ -538,6 +544,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.13 $ $Date: 2010-01-11 16:29:54 $
+$Revision: 1.14 $ $Date: 2010-01-12 12:32:42 $
 
 =cut
