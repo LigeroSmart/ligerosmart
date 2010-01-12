@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.133 2010-01-12 11:31:19 reb Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.134 2010-01-12 14:25:53 reb Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -2277,6 +2277,17 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::Stats::Dynamic::ITSMChangeManagementHistory</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Stats::DynamicObjectRegistration###ITSMChangeManagementChangesIncidents" Required="0" Valid="1">
+        <Description Lang="en">Here you can decide if the common stats module may generate stats about changes.</Description>
+        <Description Lang="de">Hier können Sie festlegen, ob das Statistik-Modul auch allgemeine Statistiken über Changes generieren darf.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::Stats</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::System::Stats::Dynamic::ITSMChangeManagementChangesIncidents</Item>
             </Hash>
         </Setting>
     </ConfigItem>
