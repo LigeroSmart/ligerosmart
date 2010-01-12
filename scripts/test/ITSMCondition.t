@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.36 2010-01-12 11:49:03 mae Exp $
+# $Id: ITSMCondition.t,v 1.37 2010-01-12 11:53:23 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -310,6 +310,19 @@ for my $ChangeID ( keys %ConditionCount ) {
     $Self->Is(
         scalar @{$ConditionIDsRef},
         $ConditionCount{$ChangeID} - 1,
+        'Test ' . $TestCount++ . " - ConditionList -> Number of conditions for ChangeID: $ChangeID",
+    );
+
+    # get condition list again, but now with also the invalid conditions
+    $ConditionIDsRef = $Self->{ConditionObject}->ConditionList(
+        ChangeID => $ChangeID,
+        Valid    => 0,
+        UserID   => 1,
+    );
+
+    $Self->Is(
+        scalar @{$ConditionIDsRef},
+        $ConditionCount{$ChangeID},
         'Test ' . $TestCount++ . " - ConditionList -> Number of conditions for ChangeID: $ChangeID",
     );
 
