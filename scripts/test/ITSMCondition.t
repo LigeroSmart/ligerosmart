@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.33 2010-01-12 09:37:09 mae Exp $
+# $Id: ITSMCondition.t,v 1.34 2010-01-12 11:04:05 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -197,7 +197,7 @@ for my $CreateCondition ( 0 .. 9 ) {
 
     $Self->True(
         $ConditionID,
-        'Test ' . $TestCount++ . " - ConditionAdd -> $ConditionID",
+        'Test ' . $TestCount++ . " - ConditionAdd -> ConditionID: $ConditionID",
     );
 
     next CREATECONDITION if !$ConditionID;
@@ -205,7 +205,7 @@ for my $CreateCondition ( 0 .. 9 ) {
     # remember change id for later tests
     $ConditionCount{$ChangeID}++;
 
-    # get a condition
+    # get the added condition
     my $ConditionData = $Self->{ConditionObject}->ConditionGet(
         ConditionID => $ConditionID,
         UserID      => 1,
@@ -214,10 +214,56 @@ for my $CreateCondition ( 0 .. 9 ) {
     $Self->Is(
         $ConditionData->{ConditionID},
         $ConditionID,
-        'Test ' . $TestCount++ . " - ConditionGet -> $ConditionID",
+        'Test ' . $TestCount++ . " - ConditionGet -> ConditionID: $ConditionID",
     );
 
+    # remember all created conditions ids
     push @ConditionIDs, $ConditionID;
+
+    # condition update tests
+    my $Success = $Self->{ConditionObject}->ConditionUpdate(
+        ConditionID           => $ConditionID,
+        ExpressionConjunction => 'all',
+        Comments              => 'An updated comment',
+        UserID                => 1,
+    );
+
+    $Self->True(
+        $Success,
+        'Test ' . $TestCount++ . " - ConditionUpdate -> ConditionID: $ConditionID",
+    );
+
+    # get the updated condition
+    $ConditionData = $Self->{ConditionObject}->ConditionGet(
+        ConditionID => $ConditionID,
+        UserID      => 1,
+    );
+
+    $Self->Is(
+        $ConditionData->{Comments},
+        'An updated comment',
+        'Test ' . $TestCount++ . " - ConditionGet -> ConditionID: $ConditionID",
+    );
+
+    # try to add the same condition again (ChangeID and Name are the same) (must fail)
+    $ConditionID = $Self->{ConditionObject}->ConditionAdd(
+        ChangeID              => $ChangeID,
+        Name                  => $ConditionName,
+        ExpressionConjunction => 'all',
+        ValidID               => 1,
+        UserID                => 1,
+    );
+
+    $Self->False(
+        $ConditionID,
+        'Test ' . $TestCount++ . " - ConditionAdd",
+    );
+
+    # just in case if the condition could be added
+    if ($ConditionID) {
+        push @ConditionIDs, $ConditionID;
+    }
+
 }
 
 # condition list test
@@ -257,7 +303,7 @@ for my $ConditionObject (@ConditionObjects) {
     # check on return value
     $Self->True(
         $ObjectID,
-        'Test ' . $TestCount++ . " - ObjectLookup on '$ConditionObject' -> '$ObjectID'",
+        'Test ' . $TestCount++ . " - ObjectLookup on '$ConditionObject' -> ObjectID: $ObjectID",
     );
 
     # get object data with object id
@@ -287,7 +333,7 @@ for my $Counter ( 1 .. 3 ) {
     # check on return value
     $Self->True(
         $ObjectID,
-        'Test ' . $TestCount++ . " - ObjectAdd -> '$ObjectID'",
+        'Test ' . $TestCount++ . " - ObjectAdd -> ObjectID: $ObjectID",
     );
 
     # save object id for delete test
@@ -339,7 +385,7 @@ for my $ObjectID (@ConditionObjectCreated) {
             ObjectID => $ObjectID,
             UserID   => 1,
         ),
-        'Test ' . $TestCount++ . " - ObjectDelete -> '$ObjectID'",
+        'Test ' . $TestCount++ . " - ObjectDelete -> ObjectID: $ObjectID",
     );
 }
 
@@ -367,7 +413,9 @@ for my $ConditionAttribute (@ConditionAttributes) {
     # check on return value
     $Self->True(
         $AttributeID,
-        'Test ' . $TestCount++ . " - AttributeLookup on '$ConditionAttribute' -> '$AttributeID'",
+        'Test '
+            . $TestCount++
+            . " - AttributeLookup on '$ConditionAttribute' -> AttributeID: $AttributeID'",
     );
 
     # get attribute data with attribute id
@@ -397,7 +445,7 @@ for my $Counter ( 1 .. 3 ) {
     # check on return value
     $Self->True(
         $AttributeID,
-        'Test ' . $TestCount++ . " - AttributeAdd -> '$AttributeID'",
+        'Test ' . $TestCount++ . " - AttributeAdd -> AttributeID: $AttributeID",
     );
 
     # save object it for delete test
@@ -449,7 +497,7 @@ for my $AttributeID (@ConditionAttributeCreated) {
             UserID      => 1,
             AttributeID => $AttributeID,
         ),
-        'Test ' . $TestCount++ . " - AttributeDelete -> '$AttributeID'",
+        'Test ' . $TestCount++ . " - AttributeDelete -> AttributeID: $AttributeID",
     );
 }
 
@@ -488,7 +536,9 @@ for my $ConditionOperator (@ConditionOperators) {
     # check on return value
     $Self->True(
         $OperatorID,
-        'Test ' . $TestCount++ . " - OperatorLookup on '$ConditionOperator' -> '$OperatorID'",
+        'Test '
+            . $TestCount++
+            . " - OperatorLookup on '$ConditionOperator' -> OperatorID: $OperatorID",
     );
 
     # get operator data with operator id
@@ -518,7 +568,7 @@ for my $Counter ( 1 .. 3 ) {
     # check on return value
     $Self->True(
         $OperatorID,
-        'Test ' . $TestCount++ . " - OperatorAdd -> '$OperatorID'",
+        'Test ' . $TestCount++ . " - OperatorAdd -> OperatorID: $OperatorID",
     );
 
     # save object it for delete test
@@ -570,7 +620,7 @@ for my $OperatorID (@ConditionOperatorCreated) {
             UserID     => 1,
             OperatorID => $OperatorID,
         ),
-        'Test ' . $TestCount++ . " - OperatorDelete -> '$OperatorID'",
+        'Test ' . $TestCount++ . " - OperatorDelete -> OperatorID: $OperatorID",
     );
 }
 
@@ -1182,7 +1232,7 @@ for my $ExpressionCounter ( 0 .. ( scalar @ExpressionIDs - 1 ) ) {
             $ExpressionMatch,
             'Test '
                 . $TestCount++
-                . " - ExpressionMatch return true -> '$ExpressionIDs[$ExpressionCounter]'",
+                . " - ExpressionMatch return true -> ExpressionID: $ExpressionIDs[$ExpressionCounter]",
         );
     }
     else {
@@ -1190,7 +1240,7 @@ for my $ExpressionCounter ( 0 .. ( scalar @ExpressionIDs - 1 ) ) {
             $ExpressionMatch,
             'Test '
                 . $TestCount++
-                . " - ExpressionMatch return false -> '$ExpressionIDs[$ExpressionCounter]'",
+                . " - ExpressionMatch return false -> ExpressionID: $ExpressionIDs[$ExpressionCounter]",
         );
     }
 }
@@ -1202,7 +1252,7 @@ for my $ExpressionID (@ExpressionIDs) {
             UserID       => 1,
             ExpressionID => $ExpressionID,
         ),
-        'Test ' . $TestCount++ . " - ExpressionDelete -> '$ExpressionID'",
+        'Test ' . $TestCount++ . " - ExpressionDelete -> ExpressionID: $ExpressionID",
     );
 }
 
@@ -1216,7 +1266,7 @@ for my $ConditionID (@ConditionIDs) {
 
     $Self->True(
         $DeleteSuccess,
-        'Test ' . $TestCount++ . " - ConditionDelete -> '$ConditionID'",
+        'Test ' . $TestCount++ . " - ConditionDelete -> ConditionID: $ConditionID",
     );
 
 }
@@ -1228,7 +1278,7 @@ for my $ChangeID (@ChangeIDs) {
             ChangeID => $ChangeID,
             UserID   => 1,
         ),
-        'Test ' . $TestCount++ . " - ChangeDelete -> '$ChangeID'",
+        'Test ' . $TestCount++ . " - ChangeDelete -> ChangeID: $ChangeID",
     );
 }
 
