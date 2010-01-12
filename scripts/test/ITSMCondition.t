@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.29 2010-01-11 18:32:21 ub Exp $
+# $Id: ITSMCondition.t,v 1.30 2010-01-12 09:13:21 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -124,7 +124,7 @@ for my $ObjectMethod (@ObjectMethods) {
 my @ChangeIDs;
 my @ChangeTitles;
 CREATECHANGE:
-for my $CreateChange ( 0 .. 2 ) {
+for my $CreateChange ( 0 .. 10 ) {
     my $ChangeTitle = 'UnitTestChange' . $CreateChange;
     my $ChangeID    = $Self->{ChangeObject}->ChangeAdd(
         ChangeTitle => $ChangeTitle,
@@ -307,8 +307,8 @@ $Self->True(
 
 # check for object list as array ref
 $Self->Is(
-    'ARRAY',
     ref $ObjectList,
+    'ARRAY',
     'Test ' . $TestCount++ . " - ObjectList type",
 );
 
@@ -327,8 +327,8 @@ my $ConditionObjectUpdate = $Self->{ConditionObject}->ObjectGet(
     UserID   => 1,
 );
 $Self->Is(
-    $ConditionObjectNewName,
     $ConditionObjectUpdate->{Name},
+    $ConditionObjectNewName,
     'Test ' . $TestCount++ . " - ObjectUpdate verify update",
 );
 
@@ -417,8 +417,8 @@ $Self->True(
 
 # check for attribute list as array ref
 $Self->Is(
-    'ARRAY',
     ref $AttributeList,
+    'ARRAY',
     'Test ' . $TestCount++ . " - AttributeList type",
 );
 
@@ -437,8 +437,8 @@ my $ConditionAttributeUpdate = $Self->{ConditionObject}->AttributeGet(
     AttributeID => $ConditionAttributeCreated[0],
 );
 $Self->Is(
-    $ConditionAttributeNewName,
     $ConditionAttributeUpdate->{Name},
+    $ConditionAttributeNewName,
     'Test ' . $TestCount++ . " - AttributeUpdate verify update",
 );
 
@@ -538,8 +538,8 @@ $Self->True(
 
 # check for operator list as array ref
 $Self->Is(
-    'ARRAY',
     ref $OperatorList,
+    'ARRAY',
     'Test ' . $TestCount++ . " - OperatorList type",
 );
 
@@ -558,8 +558,8 @@ my $ConditionOperatorUpdate = $Self->{ConditionObject}->OperatorGet(
     OperatorID => $ConditionOperatorCreated[0],
 );
 $Self->Is(
-    $ConditionOperatorNewName,
     $ConditionOperatorUpdate->{Name},
+    $ConditionOperatorNewName,
     'Test ' . $TestCount++ . " - OperatorUpdate verify update",
 );
 
@@ -1155,8 +1155,8 @@ for my $ConditionID (@ConditionIDs) {
     );
 
     $Self->Is(
-        'ARRAY',
         ref $ExpressionList,
+        'ARRAY',
         'Test ' . $TestCount++ . ' - ExpressionList return value',
     );
 
@@ -1164,8 +1164,8 @@ for my $ConditionID (@ConditionIDs) {
     next CONDITIONID if ref $ExpressionList ne 'ARRAY';
 
     $Self->Is(
-        $ExpressionTestCount,
         scalar @{$ExpressionList},
+        $ExpressionTestCount,
         'Test ' . $TestCount++ . " - ExpressionList -> $ConditionID",
     );
 }
