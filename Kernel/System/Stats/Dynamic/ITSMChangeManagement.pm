@@ -2,7 +2,7 @@
 # Kernel/System/Stats/Dynamic/ITSMChangeManagement.pm - all advice functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.5 2010-01-12 11:29:50 reb Exp $
+# $Id: ITSMChangeManagement.pm,v 1.6 2010-01-12 14:34:56 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -48,12 +48,6 @@ sub GetObjectName {
 
 sub GetObjectAttributes {
     my ( $Self, %Param ) = @_;
-
-    # get user list
-    my %UserList = $Self->{UserObject}->UserList(
-        Type  => 'Long',
-        Valid => 0,
-    );
 
     # get change state list
     my $ChangeStates = $Self->{ChangeObject}->ChangePossibleStatesGet(
