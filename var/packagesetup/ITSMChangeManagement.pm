@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.25 2010-01-11 17:51:27 bes Exp $
+# $Id: ITSMChangeManagement.pm,v 1.26 2010-01-12 13:31:34 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,7 +33,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.25 $) [1];
+$VERSION = qw($Revision: 1.26 $) [1];
 
 =head1 NAME
 
@@ -612,11 +612,11 @@ sub _StateMachineDefaultSet {
 
     # define WorkOrderState transitions
     my %WorkOrderStateTransitions = (
-        0             => ['created'],
-        'created'     => [ 'accepted', 'canceled' ],
-        'accepted'    => [ 'ready', 'canceled' ],
+        0          => ['created'],
+        'created'  => [ 'accepted', 'canceled' ],
+        'accepted' => [ 'created', 'ready', 'canceled' ],
         'ready'       => [ 'in progress', 'canceled' ],
-        'in progress' => [ 'closed', 'canceled' ],
+        'in progress' => [ 'closed',      'canceled' ],
         'canceled'    => [0],
         'closed'      => [0],
     );
@@ -1471,6 +1471,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.25 $ $Date: 2010-01-11 17:51:27 $
+$Revision: 1.26 $ $Date: 2010-01-12 13:31:34 $
 
 =cut
