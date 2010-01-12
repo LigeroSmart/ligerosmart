@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.38 2010-01-12 12:49:14 mae Exp $
+# $Id: ITSMCondition.t,v 1.39 2010-01-12 13:01:30 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1133,6 +1133,99 @@ my @ExpressionTests = (
                 OperatorID => {
                     OperatorLookup => {
                         Name   => 'is greater than',
+                        UserID => 1,
+                    },
+                },
+
+                # static fields
+                ConditionID  => $ConditionIDs[2],
+                Selector     => $WorkOrderIDs[0],
+                CompareValue => 0,
+                UserID       => 1,
+            },
+        },
+    },
+    {
+        MatchSuccess => 0,
+        SourceData   => {
+            ExpressionAdd => {
+                ObjectID => {
+                    ObjectLookup => {
+                        Name   => 'ITSMWorkOrder',
+                        UserID => 1,
+                    },
+                },
+                AttributeID => {
+                    AttributeLookup => {
+                        Name   => 'WorkOrderNumber',
+                        UserID => 1,
+                    },
+                },
+                OperatorID => {
+                    OperatorLookup => {
+                        Name   => 'is greater than',
+                        UserID => 1,
+                    },
+                },
+
+                # static fields
+                ConditionID  => $ConditionIDs[2],
+                Selector     => $WorkOrderIDs[0],
+                CompareValue => 1_000_000,
+                UserID       => 1,
+            },
+        },
+    },
+    {
+        MatchSuccess => 1,
+        SourceData   => {
+            ExpressionAdd => {
+                ObjectID => {
+                    ObjectLookup => {
+                        Name   => 'ITSMWorkOrder',
+                        UserID => 1,
+                    },
+                },
+                AttributeID => {
+                    AttributeLookup => {
+                        Name   => 'WorkOrderNumber',
+                        UserID => 1,
+                    },
+                },
+                OperatorID => {
+                    OperatorLookup => {
+                        Name   => 'is less than',
+                        UserID => 1,
+                    },
+                },
+
+                # static fields
+                ConditionID  => $ConditionIDs[2],
+                Selector     => $WorkOrderIDs[0],
+                CompareValue => 1_000_000,
+                UserID       => 1,
+            },
+        },
+    },
+    {
+        MatchSuccess => 0,
+        SourceData   => {
+            ExpressionAdd => {
+                ObjectID => {
+                    ObjectLookup => {
+                        Name   => 'ITSMWorkOrder',
+                        UserID => 1,
+                    },
+                },
+                AttributeID => {
+                    AttributeLookup => {
+                        Name   => 'WorkOrderNumber',
+                        UserID => 1,
+                    },
+                },
+                OperatorID => {
+                    OperatorLookup => {
+                        Name   => 'is less than',
                         UserID => 1,
                     },
                 },
