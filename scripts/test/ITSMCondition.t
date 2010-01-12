@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.34 2010-01-12 11:04:05 ub Exp $
+# $Id: ITSMCondition.t,v 1.35 2010-01-12 11:43:58 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -177,96 +177,98 @@ for my $CreateWorkOrder ( 0 .. ( ( 3 * ( scalar @ChangeIDs ) ) - 1 ) ) {
 # create new condition
 my @ConditionIDs;
 my %ConditionCount;
-CREATECONDITION:
-for my $CreateCondition ( 0 .. 9 ) {
+CHANGEID:
+for my $ChangeID (@ChangeIDs) {
 
-    # build condition name
-    my $ConditionName = "UnitTestConditionName_${CreateCondition}_" . int rand 1_000_000;
+    # add some conditions to each change
+    CONDITIONCOUNTER:
+    for my $ConditionCounter ( 0 .. 5 ) {
 
-    # set the change id
-    my $ChangeID = $ChangeIDs[$CreateCondition] || $ChangeIDs[0];
+        # build condition name
+        my $ConditionName = "UnitTestConditionName_${ChangeID}_" . int rand 1_000_000;
 
-    # add a condition
-    my $ConditionID = $Self->{ConditionObject}->ConditionAdd(
-        ChangeID              => $ChangeID,
-        Name                  => $ConditionName,
-        ExpressionConjunction => 'all',
-        ValidID               => 1,
-        UserID                => 1,
-    );
+        # add a condition
+        my $ConditionID = $Self->{ConditionObject}->ConditionAdd(
+            ChangeID              => $ChangeID,
+            Name                  => $ConditionName,
+            ExpressionConjunction => 'all',
+            ValidID               => 1,
+            UserID                => 1,
+        );
 
-    $Self->True(
-        $ConditionID,
-        'Test ' . $TestCount++ . " - ConditionAdd -> ConditionID: $ConditionID",
-    );
+        $Self->True(
+            $ConditionID,
+            'Test ' . $TestCount++ . " - ConditionAdd -> ConditionID: $ConditionID",
+        );
 
-    next CREATECONDITION if !$ConditionID;
+        next CONDITIONCOUNTER if !$ConditionID;
 
-    # remember change id for later tests
-    $ConditionCount{$ChangeID}++;
+        # remember change id for later tests
+        $ConditionCount{$ChangeID}++;
 
-    # get the added condition
-    my $ConditionData = $Self->{ConditionObject}->ConditionGet(
-        ConditionID => $ConditionID,
-        UserID      => 1,
-    );
+        # get the added condition
+        my $ConditionData = $Self->{ConditionObject}->ConditionGet(
+            ConditionID => $ConditionID,
+            UserID      => 1,
+        );
 
-    $Self->Is(
-        $ConditionData->{ConditionID},
-        $ConditionID,
-        'Test ' . $TestCount++ . " - ConditionGet -> ConditionID: $ConditionID",
-    );
+        $Self->Is(
+            $ConditionData->{ConditionID},
+            $ConditionID,
+            'Test ' . $TestCount++ . " - ConditionGet -> ConditionID: $ConditionID",
+        );
 
-    # remember all created conditions ids
-    push @ConditionIDs, $ConditionID;
-
-    # condition update tests
-    my $Success = $Self->{ConditionObject}->ConditionUpdate(
-        ConditionID           => $ConditionID,
-        ExpressionConjunction => 'all',
-        Comments              => 'An updated comment',
-        UserID                => 1,
-    );
-
-    $Self->True(
-        $Success,
-        'Test ' . $TestCount++ . " - ConditionUpdate -> ConditionID: $ConditionID",
-    );
-
-    # get the updated condition
-    $ConditionData = $Self->{ConditionObject}->ConditionGet(
-        ConditionID => $ConditionID,
-        UserID      => 1,
-    );
-
-    $Self->Is(
-        $ConditionData->{Comments},
-        'An updated comment',
-        'Test ' . $TestCount++ . " - ConditionGet -> ConditionID: $ConditionID",
-    );
-
-    # try to add the same condition again (ChangeID and Name are the same) (must fail)
-    $ConditionID = $Self->{ConditionObject}->ConditionAdd(
-        ChangeID              => $ChangeID,
-        Name                  => $ConditionName,
-        ExpressionConjunction => 'all',
-        ValidID               => 1,
-        UserID                => 1,
-    );
-
-    $Self->False(
-        $ConditionID,
-        'Test ' . $TestCount++ . " - ConditionAdd",
-    );
-
-    # just in case if the condition could be added
-    if ($ConditionID) {
+        # remember all created conditions ids
         push @ConditionIDs, $ConditionID;
-    }
 
+        # condition update tests
+        my $Success = $Self->{ConditionObject}->ConditionUpdate(
+            ConditionID           => $ConditionID,
+            ExpressionConjunction => 'all',
+            Comments              => 'An updated comment',
+            UserID                => 1,
+        );
+
+        $Self->True(
+            $Success,
+            'Test ' . $TestCount++ . " - ConditionUpdate -> ConditionID: $ConditionID",
+        );
+
+        # get the updated condition
+        $ConditionData = $Self->{ConditionObject}->ConditionGet(
+            ConditionID => $ConditionID,
+            UserID      => 1,
+        );
+
+        $Self->Is(
+            $ConditionData->{Comments},
+            'An updated comment',
+            'Test ' . $TestCount++ . " - ConditionGet -> ConditionID: $ConditionID",
+        );
+
+        # try to add the same condition again (ChangeID and Name are the same) (must fail)
+        $ConditionID = $Self->{ConditionObject}->ConditionAdd(
+            ChangeID              => $ChangeID,
+            Name                  => $ConditionName,
+            ExpressionConjunction => 'all',
+            ValidID               => 1,
+            UserID                => 1,
+        );
+
+        $Self->False(
+            $ConditionID,
+            'Test ' . $TestCount++ . " - ConditionAdd",
+        );
+
+        # just in case if the condition could be added
+        if ($ConditionID) {
+            push @ConditionIDs, $ConditionID;
+        }
+    }
 }
 
 # condition list test
+CHANGEID:
 for my $ChangeID ( keys %ConditionCount ) {
 
     # get condition list
@@ -279,6 +281,34 @@ for my $ChangeID ( keys %ConditionCount ) {
     $Self->Is(
         scalar @{$ConditionIDsRef},
         $ConditionCount{$ChangeID},
+        'Test ' . $TestCount++ . " - ConditionList -> Number of conditions for ChangeID: $ChangeID",
+    );
+
+    # if no conditions exist for this change
+    next CHANGEID if !@{$ConditionIDsRef};
+
+    # set the first condition of the current change invalid
+    my $Success = $Self->{ConditionObject}->ConditionUpdate(
+        ConditionID => $ConditionIDsRef->[0],
+        ValidID     => 2,                       # invalid
+        UserID      => 1,
+    );
+
+    $Self->True(
+        $Success,
+        'Test ' . $TestCount++ . " - ConditionUpdate -> ConditionID: $ConditionIDsRef->[0]",
+    );
+
+    # get condition list again
+    $ConditionIDsRef = $Self->{ConditionObject}->ConditionList(
+        ChangeID => $ChangeID,
+        Valid    => 1,
+        UserID   => 1,
+    );
+
+    $Self->Is(
+        scalar @{$ConditionIDsRef},
+        $ConditionCount{$ChangeID} - 1,
         'Test ' . $TestCount++ . " - ConditionList -> Number of conditions for ChangeID: $ChangeID",
     );
 
