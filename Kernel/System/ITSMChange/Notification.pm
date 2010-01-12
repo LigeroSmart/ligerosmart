@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Notification.pm - lib for notifications in change management
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.29 2010-01-11 15:25:10 bes Exp $
+# $Id: Notification.pm,v 1.30 2010-01-12 19:48:14 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.29 $) [1];
+$VERSION = qw($Revision: 1.30 $) [1];
 
 =head1 NAME
 
@@ -916,19 +916,21 @@ sub _NotificationReplaceMacros {
 
     # html quoting of content
     if ( $Param{RichText} ) {
-        for ( keys %CurrentUser ) {
-            next if !$CurrentUser{$_};
-            $CurrentUser{$_} = $Self->{HTMLUtilsObject}->ToHTML(
-                String => $CurrentUser{$_},
+        KEY:
+        for my $Key ( keys %CurrentUser ) {
+            next KEY if !$CurrentUser{$Key};
+            $CurrentUser{$Key} = $Self->{HTMLUtilsObject}->ToHTML(
+                String => $CurrentUser{$Key},
             );
         }
     }
 
     # replace it
-    for ( keys %CurrentUser ) {
-        next if !defined $CurrentUser{$_};
-        $Text =~ s{ $Tag $_ $End }{$CurrentUser{$_}}gxmsi;
-        $Text =~ s{ $Tag2 $_ $End }{$CurrentUser{$_}}gxmsi;
+    KEY:
+    for my $Key ( keys %CurrentUser ) {
+        next KEY if !defined $CurrentUser{$Key};
+        $Text =~ s{ $Tag $Key $End }{$CurrentUser{$Key}}gxmsi;
+        $Text =~ s{ $Tag2 $Key $End }{$CurrentUser{$Key}}gxmsi;
     }
 
     # replace other needed stuff
@@ -957,18 +959,20 @@ sub _NotificationReplaceMacros {
 
     # html quoting of content
     if ( $Param{RichText} ) {
-        for ( keys %ChangeData ) {
-            next if !$ChangeData{$_};
-            $ChangeData{$_} = $Self->{HTMLUtilsObject}->ToHTML(
-                String => $ChangeData{$_},
+        KEY:
+        for my $Key ( keys %ChangeData ) {
+            next KEY if !$ChangeData{$Key};
+            $ChangeData{$Key} = $Self->{HTMLUtilsObject}->ToHTML(
+                String => $ChangeData{$Key},
             );
         }
     }
 
     # replace it
-    for ( keys %ChangeData ) {
-        next if !defined $ChangeData{$_};
-        $Text =~ s{ $Tag $_ $End }{$ChangeData{$_}}gxmsi;
+    KEY:
+    for my $Key ( keys %ChangeData ) {
+        next KEY if !defined $ChangeData{$Key};
+        $Text =~ s{ $Tag $Key $End }{$ChangeData{$Key}}gxmsi;
     }
 
     # cleanup
@@ -980,18 +984,20 @@ sub _NotificationReplaceMacros {
 
     # html quoting of content
     if ( $Param{RichText} ) {
-        for ( keys %WorkOrderData ) {
-            next if !$WorkOrderData{$_};
-            $WorkOrderData{$_} = $Self->{HTMLUtilsObject}->ToHTML(
-                String => $WorkOrderData{$_},
+        KEY:
+        for my $Key ( keys %WorkOrderData ) {
+            next KEY if !$WorkOrderData{$Key};
+            $WorkOrderData{$Key} = $Self->{HTMLUtilsObject}->ToHTML(
+                String => $WorkOrderData{$Key},
             );
         }
     }
 
     # replace it
-    for ( keys %WorkOrderData ) {
-        next if !defined $WorkOrderData{$_};
-        $Text =~ s{ $Tag $_ $End }{$WorkOrderData{$_}}gxmsi;
+    KEY:
+    for my $Key ( keys %WorkOrderData ) {
+        next KEY if !defined $WorkOrderData{$Key};
+        $Text =~ s{ $Tag $Key $End }{$WorkOrderData{$Key}}gxmsi;
     }
 
     # cleanup
@@ -1035,19 +1041,21 @@ sub _NotificationReplaceMacros {
 
         # html quoting of content
         if ( $Param{RichText} ) {
-            for ( keys %{ $Param{Recipient} } ) {
-                next if !$Param{Recipient}->{$_};
-                $Param{Recipient}->{$_} = $Self->{HTMLUtilsObject}->ToHTML(
-                    String => $Param{Recipient}->{$_},
+            KEY:
+            for my $Key ( keys %{ $Param{Recipient} } ) {
+                next KEY if !$Param{Recipient}->{$Key};
+                $Param{Recipient}->{$Key} = $Self->{HTMLUtilsObject}->ToHTML(
+                    String => $Param{Recipient}->{$Key},
                 );
             }
         }
 
         # replace it
-        for ( keys %{ $Param{Recipient} } ) {
-            next if !defined $Param{Recipient}->{$_};
-            my $Value = $Param{Recipient}->{$_};
-            $Text =~ s{ $Tag $_ $End }{$Value}gxmsi;
+        KEY:
+        for my $Key ( keys %{ $Param{Recipient} } ) {
+            next KEY if !defined $Param{Recipient}->{$Key};
+            my $Value = $Param{Recipient}->{$Key};
+            $Text =~ s{ $Tag $Key $End }{$Value}gxmsi;
         }
     }
 
@@ -1189,6 +1197,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.29 $ $Date: 2010-01-11 15:25:10 $
+$Revision: 1.30 $ $Date: 2010-01-12 19:48:14 $
 
 =cut
