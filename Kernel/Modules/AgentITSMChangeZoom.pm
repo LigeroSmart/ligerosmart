@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeZoom.pm - the OTRS::ITSM::ChangeManagement change zoom module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.pm,v 1.45 2010-01-04 11:01:48 reb Exp $
+# $Id: AgentITSMChangeZoom.pm,v 1.46 2010-01-12 19:42:42 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.45 $) [1];
+$VERSION = qw($Revision: 1.46 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -495,7 +495,9 @@ sub Run {
         for my $Object ( keys %{$LinkListWithDataWorkOrder} ) {
 
             # only show linked services and config items of workorder
-            next OBJECT if ( $Object ne 'Service' && $Object ne 'ITSMConfigItem' );
+            if ( $Object ne 'Service' && $Object ne 'ITSMConfigItem' ) {
+                next OBJECT;
+            }
 
             LINKTYPE:
             for my $LinkType ( keys %{ $LinkListWithDataWorkOrder->{$Object} } ) {

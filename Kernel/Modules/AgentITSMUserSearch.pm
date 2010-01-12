@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMUserSearch.pm - a module used for the autocomplete feature
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMUserSearch.pm,v 1.10 2010-01-06 13:24:39 bes Exp $
+# $Id: AgentITSMUserSearch.pm,v 1.11 2010-01-12 19:42:42 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::User;
 use Kernel::System::Group;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -100,7 +100,9 @@ sub Run {
 
             # if groups are required and user is not member of one of the groups
             # then skip the user
-            next USERID if $Groups && !$GroupUsers{$UserID};
+            if ( $Groups && !$GroupUsers{$UserID} ) {
+                next USERID;
+            }
 
             # The values in %UserList are in the form: 'mm Max Mustermann'.
             # So assemble a neater string for display.

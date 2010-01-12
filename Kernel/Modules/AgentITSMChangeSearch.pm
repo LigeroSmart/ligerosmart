@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.45 2010-01-06 13:25:12 bes Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.46 2010-01-12 19:42:42 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.45 $) [1];
+$VERSION = qw($Revision: 1.46 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -243,6 +243,7 @@ sub Run {
             }
 
             # get and check the time search parameters
+            TIMETYPE:
             for my $TimeType (
                 qw( Requested PlannedStart PlannedEnd ActualStart ActualEnd Create Change )
                 )
@@ -263,7 +264,7 @@ sub Run {
                 }
 
                 # nothing to do, when no time search type has been selected
-                next if !$TimeSelectionParam{SearchType};
+                next TIMETYPE if !$TimeSelectionParam{SearchType};
 
                 if ( $TimeSelectionParam{SearchType} eq 'TimeSlot' ) {
 
@@ -509,8 +510,6 @@ sub _MaskForm {
 
     # build change manager dropdown
     $Param{'ChangeManagerSelectionStrg'} = $Self->{LayoutObject}->BuildSelection(
-
-        #Data       => \%ChangeManagerID2Name,
         Data       => \%Users,
         Name       => 'ChangeManagerIDs',
         Multiple   => 1,
@@ -520,8 +519,6 @@ sub _MaskForm {
 
     # build change builder dropdown
     $Param{'ChangeBuilderSelectionStrg'} = $Self->{LayoutObject}->BuildSelection(
-
-        #Data       => \%ChangeBuilderID2Name,
         Data       => \%Users,
         Name       => 'ChangeBuilderIDs',
         Multiple   => 1,
@@ -615,11 +612,14 @@ sub _MaskForm {
         { Prefix => 'Change',       Title => 'Change Time', },
     );
 
+    TIMETYPE:
     for my $TimeType (@TimeTypes) {
         my $Prefix = $TimeType->{Prefix};
 
         # show RequestedTime only when enabled in SysConfig
-        next if ( $Prefix eq 'Requested' && !$Self->{Config}->{RequestedTime} );
+        if ( $Prefix eq 'Requested' && !$Self->{Config}->{RequestedTime} ) {
+            next TIMETYPE;
+        }
 
         my %TimeSelectionData = (
             Prefix       => $Prefix,
@@ -698,11 +698,14 @@ sub _MaskForm {
         }
     }
 
+    TIMETYPE:
     for my $TimeType (@TimeTypes) {
         my $Prefix = $TimeType->{Prefix};
 
         # show RequestedTime only when enabled in SysConfig
-        next if ( $Prefix eq 'Requested' && !$Self->{Config}->{RequestedTime} );
+        if ( $Prefix eq 'Requested' && !$Self->{Config}->{RequestedTime} ) {
+            next TIMETYPE;
+        }
 
         # show JS code for time field
         $Self->{LayoutObject}->Block(

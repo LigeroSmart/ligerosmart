@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderZoom.pm - the OTRS::ITSM::ChangeManagement workorder zoom module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderZoom.pm,v 1.34 2010-01-04 12:14:56 reb Exp $
+# $Id: AgentITSMWorkOrderZoom.pm,v 1.35 2010-01-12 19:43:51 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.34 $) [1];
+$VERSION = qw($Revision: 1.35 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -125,7 +125,7 @@ sub Run {
 
             # translate
             $WorkOrder->{$Param} = $Self->{LayoutObject}->{LanguageObject}->Get(
-                $WorkOrder->{$Param}
+                $WorkOrder->{$Param},
             );
         }
     }

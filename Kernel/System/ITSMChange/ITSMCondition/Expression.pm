@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Expression.pm - all condition expression functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Expression.pm,v 1.14 2010-01-12 12:45:20 mae Exp $
+# $Id: Expression.pm,v 1.15 2010-01-12 19:47:00 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 =head1 NAME
 
@@ -173,7 +173,8 @@ sub ExpressionUpdate {
     for my $Attribute ( keys %Attribute ) {
 
         # preserve the old value, when the column isn't in function parameters
-        next ATTRIBUTE if !exists $Param{$Attribute} || !defined $Param{$Attribute};
+        next ATTRIBUTE if !exists $Param{$Attribute};
+        next ATTRIBUTE if !defined $Param{$Attribute};
 
         # param checking has already been done, so this is safe
         $SQL .= "$Attribute{$Attribute} = ?, ";
@@ -534,6 +535,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.14 $ $Date: 2010-01-12 12:45:20 $
+$Revision: 1.15 $ $Date: 2010-01-12 19:47:00 $
 
 =cut

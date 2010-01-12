@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/Notification.pm - a event module to send notifications
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.18 2010-01-12 12:33:21 ub Exp $
+# $Id: Notification.pm,v 1.19 2010-01-12 19:47:34 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Group;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 =head1 NAME
 
@@ -204,7 +204,9 @@ sub Run {
         }
 
         # no notification if the attribute is not relevant
-        next RULE_ID if $Attribute && !exists $Param{Data}->{$Attribute};
+        if ( $Attribute && !exists $Param{Data}->{$Attribute} ) {
+            next RULE_ID;
+        }
 
         # in case of an update, check whether the attribute has changed
         if (
@@ -237,8 +239,14 @@ sub Run {
 
         # should the notification be sent ?
         # the x-modifier is harmful here, as $Rule->{Rule} can contain spaces
-        next RULE_ID if defined $Rule->{Rule} && defined $NewFieldContent
-                && $NewFieldContent !~ m/^$Rule->{Rule}$/;
+        if (
+            defined $Rule->{Rule}
+            && defined $NewFieldContent
+            && $NewFieldContent !~ m/^$Rule->{Rule}$/
+            )
+        {
+            next RULE_ID;
+        }
 
         # determine list of agents and customers
         my $AgentAndCustomerIDs = $Self->_AgentAndCustomerIDsGet(
@@ -525,6 +533,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.18 $ $Date: 2010-01-12 12:33:21 $
+$Revision: 1.19 $ $Date: 2010-01-12 19:47:34 $
 
 =cut

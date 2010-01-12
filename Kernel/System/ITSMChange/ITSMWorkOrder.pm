@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.73 2010-01-08 15:02:22 bes Exp $
+# $Id: ITSMWorkOrder.pm,v 1.74 2010-01-12 19:45:30 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.73 $) [1];
+$VERSION = qw($Revision: 1.74 $) [1];
 
 =head1 NAME
 
@@ -2554,7 +2554,9 @@ sub _CheckTimestamps {
     for my $Type (qw(Actual Planned)) {
 
         # check only when a start or a end time is given
-        next TYPE if !exists $Param{ $Type . 'StartTime' } && !exists $Param{ $Type . 'EndTime' };
+        if ( !exists $Param{ $Type . 'StartTime' } && !exists $Param{ $Type . 'EndTime' } ) {
+            next TYPE;
+        }
 
         # for the log messages
         my $TypeLc = lc $Type;
@@ -2614,7 +2616,9 @@ sub _CheckTimestamps {
         }
 
         # don't check actual start time when the workorder has not ended yet
-        next TYPE if $Type eq 'Actual' && $StartTime && !$EndTime;
+        if ( $Type eq 'Actual' && $StartTime && !$EndTime ) {
+            next TYPE;
+        }
 
         # the check fails if not both (start and end) times are present
         if ( !$StartTime || !$EndTime ) {
@@ -2675,6 +2679,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.73 $ $Date: 2010-01-08 15:02:22 $
+$Revision: 1.74 $ $Date: 2010-01-12 19:45:30 $
 
 =cut
