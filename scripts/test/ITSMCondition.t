@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.37 2010-01-12 11:53:23 ub Exp $
+# $Id: ITSMCondition.t,v 1.38 2010-01-12 12:49:14 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1052,6 +1052,99 @@ my @ExpressionTests = (
             },
         },
     },
+    {
+        MatchSuccess => 0,
+        SourceData   => {
+            ExpressionAdd => {
+                ObjectID => {
+                    ObjectLookup => {
+                        Name   => 'ITSMWorkOrder',
+                        UserID => 1,
+                    },
+                },
+                AttributeID => {
+                    AttributeLookup => {
+                        Name   => 'WorkOrderTitle',
+                        UserID => 1,
+                    },
+                },
+                OperatorID => {
+                    OperatorLookup => {
+                        Name   => 'is empty',
+                        UserID => 1,
+                    },
+                },
+
+                # static fields
+                ConditionID  => $ConditionIDs[2],
+                Selector     => $WorkOrderIDs[0],
+                CompareValue => $WorkOrderTitles[0],
+                UserID       => 1,
+            },
+        },
+    },
+    {
+        MatchSuccess => 1,
+        SourceData   => {
+            ExpressionAdd => {
+                ObjectID => {
+                    ObjectLookup => {
+                        Name   => 'ITSMWorkOrder',
+                        UserID => 1,
+                    },
+                },
+                AttributeID => {
+                    AttributeLookup => {
+                        Name   => 'WorkOrderTitle',
+                        UserID => 1,
+                    },
+                },
+                OperatorID => {
+                    OperatorLookup => {
+                        Name   => 'is not empty',
+                        UserID => 1,
+                    },
+                },
+
+                # static fields
+                ConditionID  => $ConditionIDs[2],
+                Selector     => $WorkOrderIDs[0],
+                CompareValue => $WorkOrderTitles[0],
+                UserID       => 1,
+            },
+        },
+    },
+    {
+        MatchSuccess => 1,
+        SourceData   => {
+            ExpressionAdd => {
+                ObjectID => {
+                    ObjectLookup => {
+                        Name   => 'ITSMWorkOrder',
+                        UserID => 1,
+                    },
+                },
+                AttributeID => {
+                    AttributeLookup => {
+                        Name   => 'WorkOrderNumber',
+                        UserID => 1,
+                    },
+                },
+                OperatorID => {
+                    OperatorLookup => {
+                        Name   => 'is greater than',
+                        UserID => 1,
+                    },
+                },
+
+                # static fields
+                ConditionID  => $ConditionIDs[2],
+                Selector     => $WorkOrderIDs[0],
+                CompareValue => 0,
+                UserID       => 1,
+            },
+        },
+    },
 );
 
 # check condition expressions
@@ -1088,7 +1181,8 @@ for my $ExpressionTest (@ExpressionTests) {
             for my $StaticField (@StaticFields) {
 
                 # ommit static field if it is not set
-                next STATICFIELD if !$ExpressionAddSourceData{$StaticField};
+                next STATICFIELD if !exists $ExpressionAddSourceData{$StaticField}
+                        || !defined $ExpressionAddSourceData{$StaticField};
 
                 # safe data
                 $ExpressionAddData{$StaticField} = $ExpressionAddSourceData{$StaticField};
@@ -1114,7 +1208,7 @@ for my $ExpressionTest (@ExpressionTests) {
             # add expression
             $ExpressionID = $Self->{ConditionObject}->ExpressionAdd(
                 %ExpressionAddData,
-            );
+            ) || 0;
 
             $Self->True(
                 $ExpressionID,
