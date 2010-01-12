@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.40 2010-01-12 15:30:16 mae Exp $
+# $Id: ITSMCondition.t,v 1.41 2010-01-12 20:17:40 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -90,6 +90,7 @@ my @ObjectMethods = qw(
     ConditionUpdate
     ExpressionAdd
     ExpressionDelete
+    ExpressionDeleteAll
     ExpressionGet
     ExpressionList
     ExpressionMatch
