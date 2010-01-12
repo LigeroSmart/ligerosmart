@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/History.pm - all change and workorder history functions
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: History.pm,v 1.23 2009-12-30 17:17:08 reb Exp $
+# $Id: History.pm,v 1.24 2010-01-12 11:28:17 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.23 $) [1];
+$VERSION = qw($Revision: 1.24 $) [1];
 
 =head1 NAME
 
@@ -592,6 +592,219 @@ sub HistoryUpdate {
     return 1;
 }
 
+=item HistorySearch()
+
+Searches for changes/workorders that matches the given search criteria. It returns
+an array reference with change or workorder IDs. If "Result => 'COUNT'" then the
+number of found changes is returned.
+
+    my $IDs = $HistoryObject->HistorySearch(
+        Type                => 'Change',       # Change|Workorder which IDs should be returned
+        Attribute           => 'ChangeState',
+        OldValues           => [ 'rejected' ], # optional - OldValues OR NewValues is needed
+        NewValues           => [ 'approved' ], # optional - OldValues OR NewValues is needed
+        ChangeBy            => [ 1, 2, 3 ],    # optional
+        ChangeDateNewerDate => '2009-01-13 00:00:01', #optional
+        ChangeDateOlderDate => '2009-01-13 00:00:01', #optional
+        UserID              => 1,
+        UsingWildcards      => 0,              # 0|1 - default 1
+        Result              => 'ARRAY',        # ARRAY|COUNT - default ARRAY
+    );
+
+=cut
+
+sub HistorySearch {
+    my ( $Self, %Param ) = @_;
+
+    # check for needed stuff
+    for my $Attribute (qw(Type Attribute UserID)) {
+        if ( !$Param{$Attribute} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Attribute!",
+            );
+            return;
+        }
+    }
+
+    # verify that all passed array parameters contain an arrayref
+    ARGUMENT:
+    for my $Argument (
+        qw(
+        OldValues
+        NewValues
+        ChangeBy
+        )
+        )
+    {
+        if ( !defined $Param{$Argument} ) {
+            $Param{$Argument} ||= [];
+
+            next ARGUMENT;
+        }
+
+        if ( ref $Param{$Argument} ne 'ARRAY' ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "$Argument must be an array reference!",
+            );
+            return;
+        }
+    }
+
+    # set default values
+    if ( !defined $Param{UsingWildcards} ) {
+        $Param{UsingWildcards} = 1;
+    }
+
+    # set the default behaviour for the return type
+    my $Result = $Param{Result} || 'ARRAY';
+
+    my @SQLWhere;    # assemble the conditions used in the WHERE clause
+
+    # add string params to the WHERE clause
+    my %StringParams = (
+
+        # strings in change_history
+        Attribute => 'ch.fieldname',
+    );
+
+    # add string params to sql-where-array
+    STRINGPARAM:
+    for my $StringParam ( keys %StringParams ) {
+
+        # check string params for useful values, the string '0' is allowed
+        next STRINGPARAM if !exists $Param{$StringParam};
+        next STRINGPARAM if !defined $Param{$StringParam};
+        next STRINGPARAM if $Param{$StringParam} eq '';
+
+        # quote
+        $Param{$StringParam} = $Self->{DBObject}->Quote( $Param{$StringParam} );
+
+        # wildcards are used
+        if ( $Param{UsingWildcards} ) {
+
+            # Quote
+            $Param{$StringParam} = $Self->{DBObject}->Quote( $Param{$StringParam}, 'Like' );
+
+            # replace * with %
+            $Param{$StringParam} =~ s{ \*+ }{%}xmsg;
+
+            # do not use string params which contain only %
+            next STRINGPARAM if $Param{$StringParam} =~ m{ \A %* \z }xms;
+
+            push @SQLWhere,
+                "LOWER($StringParams{$StringParam}) LIKE LOWER('$Param{$StringParam}')";
+        }
+
+        # no wildcards are used
+        else {
+            push @SQLWhere,
+                "LOWER($StringParams{$StringParam}) = LOWER('$Param{$StringParam}')";
+        }
+    }
+
+    # set array params
+    my %ArrayParams = (
+        OldValues => 'ch.content_old',
+        NewValues => 'ch.content_new',
+        ChangeBy  => 'ch.create_by',
+    );
+
+    # add array params to sql-where-array
+    ARRAYPARAM:
+    for my $ArrayParam ( keys %ArrayParams ) {
+
+        # ignore empty lists
+        next ARRAYPARAM if !@{ $Param{$ArrayParam} };
+
+        # quote
+        for my $OneParam ( @{ $Param{$ArrayParam} } ) {
+            $OneParam = $Self->{DBObject}->Quote($OneParam);
+
+            # for strings we need single quotes
+            if ( $OneParam !~ m{ \A [+-]? \d+ (?:\.\d+)? \z }xms ) {
+                $OneParam = "'$OneParam'";
+            }
+        }
+
+        # create string
+        my $InString = join ', ', @{ $Param{$ArrayParam} };
+
+        push @SQLWhere, "$ArrayParams{$ArrayParam} IN ($InString)";
+    }
+
+    # set time params
+    my %TimeParams = (
+
+        # times in change_history
+        ChangeTimeNewerDate => 'ch.create_time >=',
+        ChangeTimeOlderDate => 'ch.create_time <=',
+    );
+
+    # check and add time params to WHERE
+    TIMEPARAM:
+    for my $TimeParam ( keys %TimeParams ) {
+
+        next TIMEPARAM if !$Param{$TimeParam};
+
+        if ( $Param{$TimeParam} !~ m{ \A \d\d\d\d-\d\d-\d\d \s \d\d:\d\d:\d\d \z }xms ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "The parameter $TimeParam has an invalid date format!",
+            );
+
+            return;
+        }
+
+        $Param{$TimeParam} = $Self->{DBObject}->Quote( $Param{$TimeParam} );
+
+        # the time attributes of change_history show up in the WHERE clause
+        push @SQLWhere, "$TimeParams{$TimeParam} '$Param{$TimeParam}'";
+    }
+
+    # create SQL statement
+    my $Type = lc $Param{Type};
+    my $SQL  = "SELECT DISTINCT ch.${Type}_id FROM change_history ch ";
+
+    if ( $Result eq 'COUNT' ) {
+        $SQL = "SELECT COUNT( DISTINCT( ch.${Type}_id ) ) FROM change_history ch ";
+    }
+
+    # add the WHERE clause
+    if (@SQLWhere) {
+        $SQL .= 'WHERE ';
+        $SQL .= join ' AND ', map {"( $_ )"} @SQLWhere;
+        $SQL .= ' ';
+    }
+
+    # ignore the parameter 'Limit' when result type is 'COUNT'
+    if ( $Result eq 'COUNT' ) {
+        delete $Param{Limit};
+    }
+
+    # ask database
+    return if !$Self->{DBObject}->Prepare(
+        SQL   => $SQL,
+        Limit => $Param{Limit},
+    );
+
+    # fetch the result
+    my @IDs;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        push @IDs, $Row[0];
+    }
+
+    if ( $Result eq 'COUNT' ) {
+
+        # return the COUNT(c.id) attribute
+        return $IDs[0];
+    }
+    else {
+        return \@IDs;
+    }
+}
+
 =item HistoryTypeLookup()
 
 This method does a lookup for a history type. If a history type id is given,
@@ -709,6 +922,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.23 $ $Date: 2009-12-30 17:17:08 $
+$Revision: 1.24 $ $Date: 2010-01-12 11:28:17 $
 
 =cut
