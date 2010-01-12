@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Operator.pm - all condition operator functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Operator.pm,v 1.6 2010-01-11 17:01:21 mae Exp $
+# $Id: Operator.pm,v 1.7 2010-01-12 12:48:39 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 =head1 NAME
 
@@ -376,7 +376,6 @@ sub OperatorExecute {
         Attribute
         Selector
         ObjectData
-        CompareValue
         UserID
         )
         )
@@ -388,6 +387,15 @@ sub OperatorExecute {
             );
             return;
         }
+    }
+
+    # handle 'CompareValue' in a special way
+    if ( !exists $Param{CompareValue} || !defined $Param{CompareValue} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need CompareValue!',
+        );
+        return;
     }
 
     # get object data
@@ -450,8 +458,19 @@ sub _OperatorExecute {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(OperatorName Value1 Value2 UserID)) {
-        if ( !$Param{$Argument} ) {
+    for my $Argument (qw(OperatorName UserID)) {
+        if ( !exists $Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # check needed stuff
+    for my $Argument (qw(Value1 Value2)) {
+        if ( !exists $Param{$Argument} || !defined $Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
@@ -462,8 +481,29 @@ sub _OperatorExecute {
 
     # map for operator action
     my %OperatorAction = (
-        'is'     => \&_OperatorEqual,
-        'is not' => \&_OperatorNotEqual,
+
+        # common matching
+        'is'           => \&_OperatorEqual,
+        'is not'       => \&_OperatorNotEqual,
+        'is empty'     => \&_OperatorIsEmpty,
+        'is not empty' => \&_OperatorIsNotEmpty,
+
+        # digit matching
+        'is greater than' => \&_OperatorIsGreaterThan,
+        'is less than'    => \&_OperatorIsLessThan,
+
+        # date matching
+        'is before' => \&_OperatorIsBefore,
+        'is after'  => \&_OperatorIsAfter,
+
+        # string matching
+        'contains'    => \&_OperatorContains,
+        'begins with' => \&_OperatorBeginsWith,
+        'ends with'   => \&_OperatorEndWith,
+
+        # action operators
+        'set'  => \&_OperatorIsEmpty,
+        'lock' => \&_OperatorIsEmpty,
     );
 
     # get operator name
@@ -505,7 +545,7 @@ sub _OperatorEqual {
 
     # check needed stuff
     for my $Argument (qw(Value1 Value2)) {
-        if ( !$Param{$Argument} ) {
+        if ( !exists $Param{$Argument} || !defined $Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
@@ -534,7 +574,7 @@ sub _OperatorNotEqual {
 
     # check needed stuff
     for my $Argument (qw(Value1 Value2)) {
-        if ( !$Param{$Argument} ) {
+        if ( !exists $Param{$Argument} || !defined $Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
@@ -546,6 +586,137 @@ sub _OperatorNotEqual {
     # return result of negated equation
     return !$Self->_OperatorEqual(%Param);
 }
+
+=item _OperatorIsEmpty()
+
+Returns true or false (1/undef) if given value is empty.
+
+    my $Result = $ConditionObject->_OperatorIsEmpty(
+        Value1 => '',
+    );
+
+=cut
+
+sub _OperatorIsEmpty {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(Value1)) {
+        if ( !exists $Param{$Argument} || !defined $Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # return result of length check
+    return ( length $Param{Value1} == 0 );
+}
+
+=item _OperatorIsNotEmpty()
+
+Returns true or false (1/undef) if given value is not empty.
+
+    my $Result = $ConditionObject->_OperatorIsNotEmpty(
+        Value1 => 'SomeValue',
+    );
+
+=cut
+
+sub _OperatorIsNotEmpty {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(Value1)) {
+        if ( !exists $Param{$Argument} || !defined $Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # return result of negated equation
+    return !$Self->_OperatorIsEmpty(%Param);
+}
+
+=item _OperatorIsGreaterThan()
+
+Returns true or false (1/undef) if Value1 is greater than
+the compare Value2.
+
+    my $Result = $ConditionObject->_OperatorIsGreaterThan(
+        Value1 => 2345,
+        Value2 => 1234,
+    );
+
+=cut
+
+sub _OperatorIsGreaterThan {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(Value1 Value2)) {
+        if ( !exists $Param{$Argument} || !defined $Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # check for digits
+    return
+        if (
+        $Param{Value1} !~ m{ \A \d+ \z }smx
+        || $Param{Value2} !~ m{\A \d+ \z }smx
+        );
+
+    # return result of greater than check
+    return ( $Param{Value1} gt $Param{Value2} );
+}
+
+=item _OperatorIsLessThan()
+
+Returns true or false (1/undef) if Value1 is less than
+the compare Value2.
+
+    my $Result = $ConditionObject->_OperatorIsLessThan(
+        Value1 => 2345,
+        Value2 => 1234,
+    );
+
+=cut
+
+sub _OperatorIsLessThan {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(Value1 Value2)) {
+        if ( !exists $Param{$Argument} || !defined $Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # check for digits
+    return
+        if (
+        $Param{Value1} !~ m{ \A \d+ \z }smx
+        || $Param{Value2} !~ m{\A \d+ \z }smx
+        );
+
+    # return result of negated equation
+    return !$Self->_OperatorIsGreaterThan(%Param);
+}
+
 1;
 
 =back
@@ -562,6 +733,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.6 $ $Date: 2010-01-11 17:01:21 $
+$Revision: 1.7 $ $Date: 2010-01-12 12:48:39 $
 
 =cut
