@@ -2,7 +2,7 @@
 # ITSMStateMachine.t - StateMachine tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMStateMachine.t,v 1.6 2010-01-12 13:31:05 ub Exp $
+# $Id: ITSMStateMachine.t,v 1.7 2010-01-12 13:51:24 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -115,11 +115,11 @@ my %WorkOrderStateID2Name = reverse %Name2WorkOrderStateID;
 
 # default WorkOrderState Transitions
 my %DefaultWorkOrderStateTransitions = (
-    0          => ['created'],
-    'created'  => [ 'accepted', 'canceled' ],
-    'accepted' => [ 'created', 'ready', 'canceled' ],
+    0             => ['created'],
+    'created'     => [ 'accepted', 'canceled' ],
+    'accepted'    => [ 'ready', 'canceled' ],
     'ready'       => [ 'in progress', 'canceled' ],
-    'in progress' => [ 'closed',      'canceled' ],
+    'in progress' => [ 'closed', 'canceled' ],
     'canceled'    => [0],
     'closed'      => [0],
 );
