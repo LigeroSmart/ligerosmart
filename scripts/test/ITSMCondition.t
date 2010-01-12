@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.30 2010-01-12 09:13:21 ub Exp $
+# $Id: ITSMCondition.t,v 1.31 2010-01-12 09:14:47 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -124,7 +124,7 @@ for my $ObjectMethod (@ObjectMethods) {
 my @ChangeIDs;
 my @ChangeTitles;
 CREATECHANGE:
-for my $CreateChange ( 0 .. 10 ) {
+for my $CreateChange ( 0 .. 2 ) {
     my $ChangeTitle = 'UnitTestChange' . $CreateChange;
     my $ChangeID    = $Self->{ChangeObject}->ChangeAdd(
         ChangeTitle => $ChangeTitle,
