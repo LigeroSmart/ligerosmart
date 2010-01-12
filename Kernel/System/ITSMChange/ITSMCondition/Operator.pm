@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Operator.pm - all condition operator functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Operator.pm,v 1.8 2010-01-12 15:30:16 mae Exp $
+# $Id: Operator.pm,v 1.9 2010-01-12 15:50:11 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 =head1 NAME
 
@@ -483,27 +483,27 @@ sub _OperatorExecute {
     my %OperatorAction = (
 
         # common matching
-        'is'           => \&_OperatorEqual,
-        'is not'       => \&_OperatorNotEqual,
-        'is empty'     => \&_OperatorIsEmpty,
-        'is not empty' => \&_OperatorIsNotEmpty,
+        'is'           => '_OperatorEqual',
+        'is not'       => '_OperatorNotEqual',
+        'is empty'     => '_OperatorIsEmpty',
+        'is not empty' => '_OperatorIsNotEmpty',
 
         # digit matching
-        'is greater than' => \&_OperatorIsGreaterThan,
-        'is less than'    => \&_OperatorIsLessThan,
+        'is greater than' => '_OperatorIsGreaterThan',
+        'is less than'    => '_OperatorIsLessThan',
 
         # date matching
-        'is before' => \&_OperatorIsBefore,
-        'is after'  => \&_OperatorIsAfter,
+        'is before' => '_OperatorIsBefore',
+        'is after'  => '_OperatorIsAfter',
 
         # string matching
-        'contains'    => \&_OperatorContains,
-        'begins with' => \&_OperatorBeginsWith,
-        'ends with'   => \&_OperatorEndWith,
+        'contains'    => '_OperatorContains',
+        'begins with' => '_OperatorBeginsWith',
+        'ends with'   => '_OperatorEndWith',
 
         # action operators
-        'set'  => \&_OperatorIsEmpty,
-        'lock' => \&_OperatorIsEmpty,
+        'set'  => '_OperatorIsEmpty',
+        'lock' => '_OperatorIsEmpty',
     );
 
     # get operator name
@@ -520,6 +520,15 @@ sub _OperatorExecute {
 
     # extract operator sub
     my $Sub = $OperatorAction{$OperatorName};
+
+    # check for available function
+    if ( !$Self->can($Sub) ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "No function '$Sub' available for '$OperatorName'!",
+        );
+        return;
+    }
 
     # return extracted match
     return $Self->$Sub(
@@ -818,6 +827,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.8 $ $Date: 2010-01-12 15:30:16 $
+$Revision: 1.9 $ $Date: 2010-01-12 15:50:11 $
 
 =cut
