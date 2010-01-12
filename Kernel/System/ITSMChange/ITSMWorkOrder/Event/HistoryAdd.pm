@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder/Event/HistoryAdd.pm - HistoryAdd event module for WorkOrder
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: HistoryAdd.pm,v 1.20 2010-01-04 12:06:54 bes Exp $
+# $Id: HistoryAdd.pm,v 1.21 2010-01-12 19:39:29 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 =head1 NAME
 
@@ -179,14 +179,15 @@ sub Run {
             next FIELD if $Field eq 'InstructionPlain';
 
             # check if field has changed
-            my $FieldHasChanged = $Self->HasFieldChanged(
+            my $FieldHasChanged = $Self->_HasFieldChanged(
                 New => $Param{Data}->{$Field},
                 Old => $OldData->{$Field},
             );
 
             # save history if field changed
             if ($FieldHasChanged) {
-                next FIELD if !$Self->{HistoryObject}->HistoryAdd(
+
+                my $Success = $Self->{HistoryObject}->HistoryAdd(
                     WorkOrderID => $Param{Data}->{WorkOrderID},
                     Fieldname   => $Field,
                     ContentNew  => $Param{Data}->{$Field},
@@ -195,6 +196,8 @@ sub Run {
                     HistoryType => $HistoryType,
                     ChangeID    => $OldData->{ChangeID},
                 );
+
+                next FIELD if !$Success;
             }
         }
     }
@@ -281,19 +284,21 @@ sub Run {
     return 1;
 }
 
-=item HasFieldChanged()
+=begin Internal:
+
+=item _HasFieldChanged()
 
 This method checks whether a field was changed or not. It returns 1 when field
 was changed, 0 otherwise
 
-    my $FieldHasChanged = $HistoryObject->HasFieldChanged(
+    my $FieldHasChanged = $HistoryObject->_HasFieldChanged(
         Old => 'old value', # can be array reference or hash reference as well
         New => 'new value', # can be array reference or hash reference as well
     );
 
 =cut
 
-sub HasFieldChanged {
+sub _HasFieldChanged {
     my ( $Self, %Param ) = @_;
 
     # field has changed when either 'new' or 'old is not set
@@ -338,6 +343,8 @@ sub HasFieldChanged {
 
 1;
 
+=end Internal:
+
 =back
 
 =head1 TERMS AND CONDITIONS
@@ -352,6 +359,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.20 $ $Date: 2010-01-04 12:06:54 $
+$Revision: 1.21 $ $Date: 2010-01-12 19:39:29 $
 
 =cut
