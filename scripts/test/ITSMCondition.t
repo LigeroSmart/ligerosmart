@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.31 2010-01-12 09:14:47 ub Exp $
+# $Id: ITSMCondition.t,v 1.32 2010-01-12 09:31:49 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -124,7 +124,7 @@ for my $ObjectMethod (@ObjectMethods) {
 my @ChangeIDs;
 my @ChangeTitles;
 CREATECHANGE:
-for my $CreateChange ( 0 .. 2 ) {
+for my $CreateChange ( 0 .. 9 ) {
     my $ChangeTitle = 'UnitTestChange' . $CreateChange;
     my $ChangeID    = $Self->{ChangeObject}->ChangeAdd(
         ChangeTitle => $ChangeTitle,
@@ -148,7 +148,7 @@ for my $CreateChange ( 0 .. 2 ) {
 my @WorkOrderIDs;
 my @WorkOrderTitles;
 CREATEWORKORDER:
-for my $CreateWorkOrder ( 0 .. 8 ) {
+for my $CreateWorkOrder ( 0 .. 29 ) {
     my $WorkOrderTitle = 'UnitTestWO' . $CreateWorkOrder;
     my $WorkOrderID    = $Self->{WorkOrderObject}->WorkOrderAdd(
         ChangeID => $ChangeIDs[ ( $CreateWorkOrder % scalar @ChangeIDs ) ],
@@ -178,7 +178,7 @@ for my $CreateWorkOrder ( 0 .. 8 ) {
 my @ConditionIDs;
 my %ConditionCount;
 CREATECONDITION:
-for my $CreateCondition ( 0 .. 10 ) {
+for my $CreateCondition ( 0 .. 9 ) {
 
     # build condition name
     my $ConditionName = "UnitTestConditionName_${CreateCondition}_" . int rand 1_000_000;
