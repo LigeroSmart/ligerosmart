@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.35 2010-01-12 11:43:58 ub Exp $
+# $Id: ITSMCondition.t,v 1.36 2010-01-12 11:49:03 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -102,6 +102,7 @@ my @ObjectMethods = qw(
     ObjectUpdate
     OperatorAdd
     OperatorDelete
+    OperatorExecute
     OperatorGet
     OperatorList
     OperatorLookup
@@ -539,7 +540,7 @@ for my $AttributeID (@ConditionAttributeCreated) {
 my @ConditionOperators = (
 
     # common matching
-    'is', 'is not', 'is empty',
+    'is', 'is not', 'is empty', 'is not empty',
 
     # digit matching
     'is greater than', 'is less than',
@@ -1033,7 +1034,7 @@ my @ExpressionTests = (
                 # static fields
                 ConditionID  => $ConditionIDs[2],
                 Selector     => 'any',
-                CompareValue => $WorkOrderTitles[2],
+                CompareValue => $WorkOrderTitles[0],
                 UserID       => 1,
             },
         },
