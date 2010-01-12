@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Operator.pm - all condition operator functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Operator.pm,v 1.7 2010-01-12 12:48:39 mae Exp $
+# $Id: Operator.pm,v 1.8 2010-01-12 15:30:16 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 =head1 NAME
 
@@ -717,6 +717,91 @@ sub _OperatorIsLessThan {
     return !$Self->_OperatorIsGreaterThan(%Param);
 }
 
+=item _OperatorIsBefore()
+
+Returns true or false (1/undef) if Value1 is before the compare Value2.
+
+    my $Result = $ConditionObject->_OperatorIsBefore(
+        Value1 => '2010-01-01 01:01:01',
+        Value2 => '2010-01-01 10:01:01',
+    );
+
+=cut
+
+sub _OperatorIsBefore {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(Value1 Value2)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # check for date format
+    return
+        if (
+        $Param{Value1} !~ m{ \A \d{4}-\d{2}-\d{2} \s \d{2}:\d{2}:\d{2}  \z }smx
+        || $Param{Value2} !~ m{ \A \d{4}-\d{2}-\d{2} \s \d{2}:\d{2}:\d{2}  \z }smx
+        );
+
+    # get timestamps
+    my %Timestamp;
+    for my $Date (qw(Value1 Value2)) {
+
+        # convert time
+        $Timestamp{$Date} = $Self->{TimeObject}->TimeStamp2SystemTime(
+            String => $Param{$Date},
+        );
+
+        # check for time
+        return if !$Timestamp{$Date};
+    }
+
+    # return result of greater than check
+    return ( $Timestamp{Value1} lt $Timestamp{Value2} );
+}
+
+=item _OperatorIsAfter()
+
+Returns true or false (1/undef) if Value1 is after the compare Value2.
+
+    my $Result = $ConditionObject->_OperatorIsAfter(
+        Value1 => '2010-01-01 10:01:01',
+        Value2 => '2010-01-01 01:01:01',
+    );
+
+=cut
+
+sub _OperatorIsAfter {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(Value1 Value2)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # check for date format
+    return
+        if (
+        $Param{Value1} !~ m{ \A \d{4}-\d{2}-\d{2} \s \d{2}:\d{2}:\d{2}  \z }smx
+        || $Param{Value2} !~ m{ \A \d{4}-\d{2}-\d{2} \s \d{2}:\d{2}:\d{2}  \z }smx
+        );
+
+    # return result of negated equation
+    return !$Self->_OperatorIsBefore(%Param);
+}
+
 1;
 
 =back
@@ -733,6 +818,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.7 $ $Date: 2010-01-12 12:48:39 $
+$Revision: 1.8 $ $Date: 2010-01-12 15:30:16 $
 
 =cut

@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.39 2010-01-12 13:01:30 mae Exp $
+# $Id: ITSMCondition.t,v 1.40 2010-01-12 15:30:16 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -153,8 +153,16 @@ for my $CreateWorkOrder ( 0 .. ( ( 3 * ( scalar @ChangeIDs ) ) - 1 ) ) {
     my $WorkOrderTitle = 'UnitTestWO' . $CreateWorkOrder;
     my $WorkOrderID    = $Self->{WorkOrderObject}->WorkOrderAdd(
         ChangeID => $ChangeIDs[ ( $CreateWorkOrder % scalar @ChangeIDs ) ],
-        WorkOrderTitle => $WorkOrderTitle,
-        UserID         => 1,
+        WorkOrderTitle   => $WorkOrderTitle,
+        PlannedStartTime => $Self->{TimeObject}->CurrentTimestamp(),
+        PlannedEndTime   => $Self->{TimeObject}->SystemTime2TimeStamp(
+            SystemTime => ( $Self->{TimeObject}->SystemTime() + 100 ),
+        ),
+        ActualStartTime => $Self->{TimeObject}->CurrentTimestamp(),
+        ActualEndTime   => $Self->{TimeObject}->SystemTime2TimeStamp(
+            SystemTime => ( $Self->{TimeObject}->SystemTime() + 100 ),
+        ),
+        UserID => 1,
     );
 
     $Self->True(
@@ -1235,6 +1243,138 @@ my @ExpressionTests = (
                 Selector     => $WorkOrderIDs[0],
                 CompareValue => 0,
                 UserID       => 1,
+            },
+        },
+    },
+    {
+        MatchSuccess => 1,
+        SourceData   => {
+            ExpressionAdd => {
+                ObjectID => {
+                    ObjectLookup => {
+                        Name   => 'ITSMWorkOrder',
+                        UserID => 1,
+                    },
+                },
+                AttributeID => {
+                    AttributeLookup => {
+                        Name   => 'PlannedStartTime',
+                        UserID => 1,
+                    },
+                },
+                OperatorID => {
+                    OperatorLookup => {
+                        Name   => 'is before',
+                        UserID => 1,
+                    },
+                },
+
+                # static fields
+                ConditionID  => $ConditionIDs[2],
+                Selector     => $WorkOrderIDs[0],
+                CompareValue => $Self->{TimeObject}->SystemTime2TimeStamp(
+                    SystemTime => ( $Self->{TimeObject}->SystemTime() + 10 ),
+                ),
+                UserID => 1,
+            },
+        },
+    },
+    {
+        MatchSuccess => 0,
+        SourceData   => {
+            ExpressionAdd => {
+                ObjectID => {
+                    ObjectLookup => {
+                        Name   => 'ITSMWorkOrder',
+                        UserID => 1,
+                    },
+                },
+                AttributeID => {
+                    AttributeLookup => {
+                        Name   => 'PlannedStartTime',
+                        UserID => 1,
+                    },
+                },
+                OperatorID => {
+                    OperatorLookup => {
+                        Name   => 'is before',
+                        UserID => 1,
+                    },
+                },
+
+                # static fields
+                ConditionID  => $ConditionIDs[2],
+                Selector     => $WorkOrderIDs[0],
+                CompareValue => $Self->{TimeObject}->SystemTime2TimeStamp(
+                    SystemTime => ( $Self->{TimeObject}->SystemTime() - 10 ),
+                ),
+                UserID => 1,
+            },
+        },
+    },
+    {
+        MatchSuccess => 1,
+        SourceData   => {
+            ExpressionAdd => {
+                ObjectID => {
+                    ObjectLookup => {
+                        Name   => 'ITSMWorkOrder',
+                        UserID => 1,
+                    },
+                },
+                AttributeID => {
+                    AttributeLookup => {
+                        Name   => 'PlannedStartTime',
+                        UserID => 1,
+                    },
+                },
+                OperatorID => {
+                    OperatorLookup => {
+                        Name   => 'is after',
+                        UserID => 1,
+                    },
+                },
+
+                # static fields
+                ConditionID  => $ConditionIDs[2],
+                Selector     => $WorkOrderIDs[0],
+                CompareValue => $Self->{TimeObject}->SystemTime2TimeStamp(
+                    SystemTime => ( $Self->{TimeObject}->SystemTime() - 10 ),
+                ),
+                UserID => 1,
+            },
+        },
+    },
+    {
+        MatchSuccess => 0,
+        SourceData   => {
+            ExpressionAdd => {
+                ObjectID => {
+                    ObjectLookup => {
+                        Name   => 'ITSMWorkOrder',
+                        UserID => 1,
+                    },
+                },
+                AttributeID => {
+                    AttributeLookup => {
+                        Name   => 'PlannedStartTime',
+                        UserID => 1,
+                    },
+                },
+                OperatorID => {
+                    OperatorLookup => {
+                        Name   => 'is after',
+                        UserID => 1,
+                    },
+                },
+
+                # static fields
+                ConditionID  => $ConditionIDs[2],
+                Selector     => $WorkOrderIDs[0],
+                CompareValue => $Self->{TimeObject}->SystemTime2TimeStamp(
+                    SystemTime => ( $Self->{TimeObject}->SystemTime() + 10 ),
+                ),
+                UserID => 1,
             },
         },
     },
