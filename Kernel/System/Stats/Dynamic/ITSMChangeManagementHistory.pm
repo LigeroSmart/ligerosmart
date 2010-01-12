@@ -2,7 +2,7 @@
 # Kernel/System/Stats/Dynamic/ITSMChangeManagementHistory.pm - all advice functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagementHistory.pm,v 1.2 2010-01-12 12:29:40 reb Exp $
+# $Id: ITSMChangeManagementHistory.pm,v 1.3 2010-01-12 13:10:06 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -88,14 +88,12 @@ sub GetObjectAttributes {
 sub GetStatElement {
     my ( $Self, %Param ) = @_;
 
-    # search tickets
+    # search history
     my $IDs = $Self->{HistoryObject}->HistorySearch(
         UserID    => 1,
         Type      => 'Change',
         Attribute => 'ChangeStateID',
-
-        #Result     => 'COUNT',
-        Limit => 100_000_000,
+        Limit     => 100_000_000,
         %Param,
     );
 
