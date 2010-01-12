@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.32 2010-01-12 09:31:49 ub Exp $
+# $Id: ITSMCondition.t,v 1.33 2010-01-12 09:37:09 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -148,7 +148,7 @@ for my $CreateChange ( 0 .. 9 ) {
 my @WorkOrderIDs;
 my @WorkOrderTitles;
 CREATEWORKORDER:
-for my $CreateWorkOrder ( 0 .. 29 ) {
+for my $CreateWorkOrder ( 0 .. ( ( 3 * ( scalar @ChangeIDs ) ) - 1 ) ) {
     my $WorkOrderTitle = 'UnitTestWO' . $CreateWorkOrder;
     my $WorkOrderID    = $Self->{WorkOrderObject}->WorkOrderAdd(
         ChangeID => $ChangeIDs[ ( $CreateWorkOrder % scalar @ChangeIDs ) ],
@@ -953,7 +953,7 @@ my @ExpressionTests = (
                 # static fields
                 ConditionID  => $ConditionIDs[2],
                 Selector     => 'any',
-                CompareValue => $WorkOrderTitles[8],
+                CompareValue => $WorkOrderTitles[2],
                 UserID       => 1,
             },
         },
