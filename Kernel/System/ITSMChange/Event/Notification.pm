@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/Notification.pm - a event module to send notifications
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.17 2010-01-11 14:44:18 bes Exp $
+# $Id: Notification.pm,v 1.18 2010-01-12 12:33:21 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Group;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 =head1 NAME
 
@@ -103,7 +103,7 @@ sub new {
     $Self->{LinkObject}               = Kernel::System::LinkObject->new( %{$Self} );
     $Self->{GroupObject}              = Kernel::System::Group->new( %{$Self} );
 
-    # TODO: find better was to look up event ids
+    # TODO: find better way to look up event ids
     $Self->{HistoryObject} = Kernel::System::ITSMChange::History->new( %{$Self} );
 
     return $Self;
@@ -124,7 +124,7 @@ It returns 1 on success, C<undef> otherwise.
         },
         Config => {
             Event       => '(ChangeAddPost|ChangeUpdatePost|ChangeCABUpdatePost|ChangeCABDeletePost|ChangeDeletePost)',
-            Module      => 'Kernel::System::ITSMChange::Event::NotificationEvent',
+            Module      => 'Kernel::System::ITSMChange::Event::Notification',
             Transaction => '0',
         },
         UserID => 1,
@@ -525,6 +525,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.17 $ $Date: 2010-01-11 14:44:18 $
+$Revision: 1.18 $ $Date: 2010-01-12 12:33:21 $
 
 =cut
