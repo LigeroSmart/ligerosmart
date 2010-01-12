@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition.pm - all condition functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.pm,v 1.14 2010-01-12 12:32:42 ub Exp $
+# $Id: ITSMCondition.pm,v 1.15 2010-01-12 20:19:11 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use base qw(Kernel::System::ITSMChange::ITSMCondition::Operator);
 use base qw(Kernel::System::ITSMChange::ITSMCondition::Expression);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 =head1 NAME
 
@@ -466,6 +466,71 @@ sub ConditionDelete {
     return 1;
 }
 
+=item ConditionDeleteAll()
+
+Delete all conditions for a given ChangeID.
+All related expressions and actions will be deleted first.
+
+    my $Success = $ConditionObject->ConditionDeleteAll(
+        ChangeID => 123,
+        UserID   => 1,
+    );
+
+=cut
+
+sub ConditionDeleteAll {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(ChangeID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # get all condition ids (including invalid) for the given change id
+    my $ConditionIDsRef = $Self->ConditionList(
+        ChangeID => $Param{ChangeID},
+        Valid    => 0,
+        UserID   => $Param{UserID},
+    );
+
+    # TODO: execute ConditionDeleteAllPre Event
+
+    for my $ConditionID ( @{$ConditionIDsRef} ) {
+
+        # delete all expressions for this condition id
+        $Self->ExpressionDeleteAll(
+            ConditionID => $ConditionID,
+            UserID      => $Param{UserID},
+        );
+
+        # TODO: implement this function in action module and enable the code below
+        # delete all actions for this condition id
+        #        $Self->ActionDeleteAll(
+        #            ConditionID => $ConditionID,
+        #            UserID      => $Param{UserID},
+        #        );
+    }
+
+    # TODO: execute ConditionDeleteAllPost Event
+    # this must be myabe done before deleting the conditions from the database,
+    # because of possible foreign key constraints in the change_history table
+
+    # delete conditions from database
+    return if !$Self->{DBObject}->Do(
+        SQL => 'DELETE FROM change_condition '
+            . 'WHERE change_id = ?',
+        Bind => [ \$Param{ChangeID} ],
+    );
+
+    return 1;
+}
+
 =item ConditionMatchExecuteAll()
 
 This functions finds all conditions for a given ChangeID, and in case a condition matches,
@@ -544,6 +609,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.14 $ $Date: 2010-01-12 12:32:42 $
+$Revision: 1.15 $ $Date: 2010-01-12 20:19:11 $
 
 =cut
