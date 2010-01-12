@@ -2,7 +2,7 @@
 # Kernel/System/Stats/Dynamic/ITSMChangeManagementHistory.pm - all advice functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagementHistory.pm,v 1.1 2010-01-12 11:31:19 reb Exp $
+# $Id: ITSMChangeManagementHistory.pm,v 1.2 2010-01-12 12:29:40 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -129,7 +129,7 @@ sub ExportWrapper {
             my $ElementName = $Element->{Element};
             my $Values      = $Element->{SelectedValues};
 
-            if ( $ElementName eq 'StateIDs' ) {
+            if ( $ElementName eq 'NewValues' ) {
                 my $StateList = $Self->{ChangeObject}->ChangePossibleStatesGet( UserID => 1 );
                 ID:
                 for my $ID ( @{$Values} ) {
@@ -158,7 +158,7 @@ sub ImportWrapper {
             my $ElementName = $Element->{Element};
             my $Values      = $Element->{SelectedValues};
 
-            if ( $ElementName eq 'StateIDs' ) {
+            if ( $ElementName eq 'NewValues' ) {
                 ID:
                 for my $ID ( @{$Values} ) {
                     next ID if !$ID;
