@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/Notification.pm - a event module to send notifications
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.19 2010-01-12 19:47:34 ub Exp $
+# $Id: Notification.pm,v 1.20 2010-01-13 01:09:00 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Group;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 =head1 NAME
 
@@ -390,7 +390,8 @@ sub _AgentAndCustomerIDsGet {
             if ( $Param{Event} ne 'ChangeUpdate' ) {
                 $Self->{LogObject}->Log(
                     Priority => 'error',
-                    Message  => "Recipient $Recipient is only valid for ChangeUpdate events!",
+                    Message  => "Recipient $Recipient is only valid for ChangeUpdate events, "
+                        . "but the event was a '$Param{Event}' event!",
                 );
             }
             else {
@@ -410,7 +411,8 @@ sub _AgentAndCustomerIDsGet {
             if ( $Param{Type} ne 'WorkOrder' ) {
                 $Self->{LogObject}->Log(
                     Priority => 'error',
-                    Message  => "Recipient $Recipient is only valid for workorder events!",
+                    Message  => "Recipient $Recipient is only valid for workorder events "
+                        . "but the event was a '$Param{Event}' event!",
                 );
             }
             else {
@@ -421,7 +423,8 @@ sub _AgentAndCustomerIDsGet {
             if ( $Param{Event} ne 'WorkOrderUpdate' ) {
                 $Self->{LogObject}->Log(
                     Priority => 'error',
-                    Message  => "Recipient $Recipient is only valid for WorkOrderUpdate events!",
+                    Message  => "Recipient $Recipient is only valid for WorkOrderUpdate events "
+                        . "but the event was a '$Param{Event}' event!",
                 );
             }
             else {
@@ -533,6 +536,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.19 $ $Date: 2010-01-12 19:47:34 $
+$Revision: 1.20 $ $Date: 2010-01-13 01:09:00 $
 
 =cut
