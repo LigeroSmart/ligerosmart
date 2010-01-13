@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Expression.pm - all condition expression functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Expression.pm,v 1.18 2010-01-13 11:13:49 ub Exp $
+# $Id: Expression.pm,v 1.19 2010-01-13 12:06:57 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 =head1 NAME
 
@@ -376,7 +376,7 @@ Returns the boolean value of an expression.
 
     my $Match = $ConditionObject->ExpressionMatch(
         ExpressionID      => 123,
-        AttributesChanged => { ITSMChange => [ ChangeTitle, ChangeDescription] },  # (optional)
+        AttributesChanged => { ITSMChange => [ ChangeTitle, ChangeDescription, ] },  # (optional)
         UserID            => 1,
     );
 
@@ -414,10 +414,52 @@ sub ExpressionMatch {
     # check expression attributes
     return if !$ExpressionData;
 
-    # TODO: check for changed fields
+    # get change dattributes
+    my $AttributesChangedType;
+    my @AttributesChanged;
+    if ( exists $Param{AttributesChanged} && defined $Param{AttributesChanged} ) {
+
+        # changed attributes
+        my %AttributeChanged;
+
+        # check for reference type
+        if ( ref $Param{AttributesChanged} eq 'HASH' ) {
+            %AttributeChanged = %{ $Param{AttributesChanged} };
+
+            # get attribute type
+            $AttributesChangedType = ( keys %AttributeChanged )[0];
+        }
+
+        # check for reference type
+        if ( $AttributesChangedType && ref $AttributeChanged{$AttributesChangedType} eq 'ARRAY' ) {
+
+            # get list of changed attributes
+            @AttributesChanged = @{ $AttributeChanged{$AttributesChangedType} };
+        }
+    }
 
     # get object name
     my $ObjectName = $ExpressionData->{Object}->{Name};
+
+    # check for changed attributes types
+    if ( $AttributesChangedType && $AttributesChangedType ne $ObjectName ) {
+
+        # this expression does not match requested type
+        return;
+    }
+
+    # get attribute type
+    my $AttributeType = $ExpressionData->{Attribute}->{Name};
+
+    # check for changed attributes and available attributes of expression
+    if ( $AttributeType && @AttributesChanged ) {
+
+        # check for our attribute in changed attribute list
+        my @AttributeFound = grep { $_ eq $AttributeType } @AttributesChanged;
+
+        # this expression does not have the requested attribute
+        return if !@AttributeFound;
+    }
 
     # get object data
     my $ExpressionObjectData = $Self->ObjectDataGet(
@@ -441,9 +483,6 @@ sub ExpressionMatch {
         );
         return;
     }
-
-    # get attribute type
-    my $AttributeType = $ExpressionData->{Attribute}->{Name};
 
     # check attribute type
     if ( !$AttributeType ) {
@@ -563,6 +602,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.18 $ $Date: 2010-01-13 11:13:49 $
+$Revision: 1.19 $ $Date: 2010-01-13 12:06:57 $
 
 =cut
