@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<otrs_stats>
+<Cache>0</Cache>
+<Description>This report calculates the number of 'RfC' tickets per requester.</Description>
+<File></File>
+<Format>CSV</Format>
+<Format>Print</Format>
+<Object>ITSMChangeManagementRfcRequester</Object>
+<ObjectModule>Kernel::System::Stats::Dynamic::ITSMChangeManagementRfcRequester</ObjectModule>
+<ObjectName>ITSMChangeManagementRfcRequester</ObjectName>
+<Permission>stats</Permission>
+<StatType>dynamic</StatType>
+<SumCol>0</SumCol>
+<SumRow>0</SumRow>
+<Title>RfCs per Requester</Title>
+<UseAsValueSeries Element="Requester">
+<SelectedValues>agent_1</SelectedValues>
+</UseAsValueSeries>
+<UseAsXvalue Element="TimePeriod" TimeScaleCount="1" TimeStart="2009-01-01 00:00:00" TimeStop="2037-12-31 23:59:59">
+<SelectedValues>Day</SelectedValues>
+</UseAsXvalue>
+<Valid>1</Valid>
+</otrs_stats>
