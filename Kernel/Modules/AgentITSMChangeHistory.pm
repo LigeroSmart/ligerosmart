@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMChangeHistory.pm - the OTRS::ITSM::ChangeManagement change history module
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeHistory.pm,v 1.28 2009-12-28 13:04:28 bes Exp $
+# $Id: AgentITSMChangeHistory.pm,v 1.29 2010-01-13 15:15:50 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::History;
 use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.28 $) [1];
+$VERSION = qw($Revision: 1.29 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -136,15 +136,38 @@ sub Run {
                 }
                 else {
 
-                    # for CIP fields we replace ID with its textual value
+                    # for CIP fields, change states, and workorder states and types
+                    # we replace ID with its textual value
                     my $Field = $HistoryEntry->{Fieldname};
-                    if ( $Field =~ m{ \A Category | Impact | Priority }xms ) {
+                    if (
+                        $Field
+                        =~ m{ \A Category | Impact | Priority | ChangeState | WorkOrderState | WorkOrderType }xms
+                        )
+                    {
                         ( my $Type = $Field ) =~ s{ ID \z }{}xms;
 
-                        my $Value = $Self->{ChangeObject}->ChangeCIPLookup(
-                            ID   => $HistoryEntry->{$Fieldname},
-                            Type => $Type,
-                        );
+                        my $Value;
+                        if ( $Type eq 'WorkOrderState' ) {
+                            $Value = $Self->{WorkOrderObject}->WorkOrderStateLookup(
+                                WorkOrderStateID => $HistoryEntry->{$Fieldname},
+                            );
+                        }
+                        elsif ( $Type eq 'WorkOrderType' ) {
+                            $Value = $Self->{WorkOrderObject}->WorkOrderTypeLookup(
+                                WorkOrderTypeID => $HistoryEntry->{$Fieldname},
+                            );
+                        }
+                        elsif ( $Type eq 'ChangeState' ) {
+                            $Value = $Self->{ChangeObject}->ChangeStateLookup(
+                                ChangeStateID => $HistoryEntry->{$Fieldname},
+                            );
+                        }
+                        else {
+                            $Value = $Self->{ChangeObject}->ChangeCIPLookup(
+                                ID   => $HistoryEntry->{$Fieldname},
+                                Type => $Type,
+                            );
+                        }
 
                         my $TranslatedValue = $Self->{LayoutObject}->{LanguageObject}->Get(
                             $Value,
@@ -156,7 +179,7 @@ sub Run {
                         $HistoryEntry->{Fieldname} = $Type;
                     }
 
-                    # replace html breaks with single space
+                    # replace HTML breaks with single space
                     $HistoryEntry->{$Fieldname} =~ s{ < br \s*? /? > }{ }xmsg;
                 }
             }
@@ -237,10 +260,9 @@ sub Run {
             $Data{Content} =~ s{ % s }{}xmsg;
         }
 
-        # seperate each searchresult line by using several css
+        # separate each searchresult line by using several css
         $Data{css} = $Counter % 2 ? 'searchpassive' : 'searchactive';
 
-        # show a history entry
         $Self->{LayoutObject}->Block(
             Name => 'Row',
             Data => {%Data},

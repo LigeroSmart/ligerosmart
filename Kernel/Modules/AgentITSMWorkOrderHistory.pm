@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMWorkOrderHistory.pm - the OTRS::ITSM::ChangeManagement workorder history module
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderHistory.pm,v 1.15 2009-11-25 08:56:50 mae Exp $
+# $Id: AgentITSMWorkOrderHistory.pm,v 1.16 2010-01-13 15:15:50 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::History;
 use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -79,7 +79,7 @@ sub Run {
         );
     }
 
-    # get change information
+    # get workorder information
     my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
         WorkOrderID => $WorkOrderID,
         UserID      => $Self->{UserID},
@@ -143,11 +143,6 @@ sub Run {
         my $HistoryType = $HistoryEntry->{HistoryType};
         if ( $HistoryType =~ m{ Update \z }xms ) {
 
-            # tranlate fieldname for display
-            my $TranslatedFieldname = $Self->{LayoutObject}->{LanguageObject}->Get(
-                $HistoryEntry->{Fieldname},
-            );
-
             # set default values for some keys
             for my $Fieldname (qw(ContentNew ContentOld)) {
                 if ( !defined $HistoryEntry->{$Fieldname} ) {
@@ -155,10 +150,42 @@ sub Run {
                 }
                 else {
 
+                    # for workorder state and type fields we replace ID with its textual value
+                    my $Field = $HistoryEntry->{Fieldname};
+                    if ( $Field =~ m{ \A WorkOrderState | WorkOrderType }xms ) {
+                        ( my $Type = $Field ) =~ s{ ID \z }{}xms;
+
+                        my $Value;
+                        if ( $Type eq 'WorkOrderState' ) {
+                            $Value = $Self->{WorkOrderObject}->WorkOrderStateLookup(
+                                WorkOrderStateID => $HistoryEntry->{$Fieldname},
+                            );
+                        }
+                        else {
+                            $Value = $Self->{WorkOrderObject}->WorkOrderTypeLookup(
+                                WorkOrderTypeID => $HistoryEntry->{$Fieldname},
+                            );
+                        }
+
+                        my $TranslatedValue = $Self->{LayoutObject}->{LanguageObject}->Get(
+                            $Value,
+                        );
+
+                        $HistoryEntry->{$Fieldname} = $TranslatedValue . ' (ID='
+                            . $HistoryEntry->{$Fieldname} . ')';
+
+                        $HistoryEntry->{Fieldname} = $Type;
+                    }
+
                     # replace HTML breaks with single space
                     $HistoryEntry->{$Fieldname} =~ s{ < br \s*? /? > }{ }xmsg;
                 }
             }
+
+            # tranlate fieldname for display
+            my $TranslatedFieldname = $Self->{LayoutObject}->{LanguageObject}->Get(
+                $HistoryEntry->{Fieldname},
+            );
 
             # trim strings to a max length of $MaxLength
             my $ContentNew = $Self->{HTMLUtilsObject}->ToAscii(
