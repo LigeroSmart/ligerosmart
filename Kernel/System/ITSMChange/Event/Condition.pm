@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/Condition.pm - a event module to match conditions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Condition.pm,v 1.2 2010-01-13 05:31:22 ub Exp $
+# $Id: Condition.pm,v 1.3 2010-01-13 11:13:06 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::ITSMCondition;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
@@ -142,11 +142,17 @@ sub Run {
     # to store the change id
     my $ChangeID;
 
+    # to store the object were the data comes from
+    my $Object;
+
     # handle change events
     if ( $Param{Event} =~ m{ \A Change }xms ) {
 
-        # get the change id
+        # set the change id
         $ChangeID = $Param{Data}->{ChangeID};
+
+        # set the object
+        $Object = 'ITMSChange';
     }
 
     # handle workorder events
@@ -158,8 +164,11 @@ sub Run {
             UserID      => $Param{UserID},
         );
 
-        # get the change id from workorder data
+        # set the change id from workorder data
         $ChangeID = $WorkOrder->{ChangeID};
+
+        # set the object
+        $Object = 'ITMSWorkOrder';
     }
 
     # TODO: Add event for cron job, i.e. TimeEvent if the PlannedStartTime is reached
@@ -267,7 +276,7 @@ sub Run {
     # match all conditions for this change and execute all actions
     my $Success = $Self->{ConditionObject}->ConditionMatchExecuteAll(
         ChangeID          => $ChangeID,
-        AttributesChanged => \@AttributesChanged,
+        AttributesChanged => { $Object => \@AttributesChanged },
         UserID            => $Param{UserID},
     );
 
@@ -359,6 +368,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2010-01-13 05:31:22 $
+$Revision: 1.3 $ $Date: 2010-01-13 11:13:06 $
 
 =cut

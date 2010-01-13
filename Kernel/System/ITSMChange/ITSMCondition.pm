@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition.pm - all condition functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.pm,v 1.18 2010-01-13 06:17:42 ub Exp $
+# $Id: ITSMCondition.pm,v 1.19 2010-01-13 11:11:23 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use base qw(Kernel::System::ITSMChange::ITSMCondition::Operator);
 use base qw(Kernel::System::ITSMChange::ITSMCondition::Expression);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 =head1 NAME
 
@@ -538,7 +538,7 @@ all defined actions will be executed.
 
     my $Success = $ConditionObject->ConditionMatchExecuteAll(
         ChangeID          => 123,
-        AttributesChanged => [ 'ChangeTitle', 'ChangeStateID' ],  # (optional)
+        AttributesChanged => { ITSMChange => [ ChangeTitle, ChangeDescription] },  # (optional)
         UserID            => 1,
     );
 
@@ -565,18 +565,24 @@ sub ConditionMatchExecuteAll {
     # debug output
     if ( $Self->{Debug} ) {
 
-        # list of changed attributes
-        my $DebugString = "\n\n"
-            . "AttributesChanged: "
-            . ( join ', ', @{ $Param{AttributesChanged} } )
-            . "\n\n";
+        if ( $Param{AttributesChanged} ) {
 
-        print STDERR $DebugString;
+            my ($Object) = keys %{ $Param{AttributesChanged} };
 
-        $Self->{LogObject}->Log(
-            Priority => 'debug',
-            Message  => "$DebugString",
-        );
+            # list of changed attributes
+            my $DebugString = "\n\n"
+                . "Object: $Object\n"
+                . "AttributesChanged: "
+                . ( join ', ', @{ $Param{AttributesChanged}->{$Object} } )
+                . "\n\n";
+
+            print STDERR $DebugString;
+
+            $Self->{LogObject}->Log(
+                Priority => 'debug',
+                Message  => "$DebugString",
+            );
+        }
     }
 
     # get all condition ids for the given change id
@@ -624,7 +630,7 @@ must be listed in 'AttributesChanged'.
 
     my $Success = $ConditionObject->ConditionMatchExecute(
         ConditionID       => 123,
-        AttributesChanged => [ 'ChangeTitle', 'ChangeStateID' ],  # (optional)
+        AttributesChanged => { ITSMChange => [ ChangeTitle, ChangeDescription] },  # (optional)
         UserID            => 1,
     );
 
@@ -683,6 +689,18 @@ sub ConditionMatchExecute {
     EXPRESSIONID:
     for my $ExpressionID ( @{$ExpressionIDsRef} ) {
 
+        # TODO
+        # wenn ExpressionConjunjtion = any
+        # -> dann AttributesChanged übergeben
+
+        # wenn ExpressionConjunjtion = all
+        # UND nur eine Expression
+        # -> dann AttributesChanged übergeben
+
+        # wenn ExpressionConjunjtion = all
+        # UND nur mehr als eine Expression
+        # -> dann AttributesChanged NICHT übergeben
+
         my $ExpressionMatch = $Self->ExpressionMatch(
             ExpressionID      => $ExpressionID,
             AttributesChanged => $Param{AttributesChanged},
@@ -710,6 +728,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.18 $ $Date: 2010-01-13 06:17:42 $
+$Revision: 1.19 $ $Date: 2010-01-13 11:11:23 $
 
 =cut
