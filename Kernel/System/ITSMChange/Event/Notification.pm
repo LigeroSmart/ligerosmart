@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/Notification.pm - a event module to send notifications
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.20 2010-01-13 01:09:00 ub Exp $
+# $Id: Notification.pm,v 1.21 2010-01-13 01:11:40 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Group;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 =head1 NAME
 
@@ -508,14 +508,16 @@ sub _AgentAndCustomerIDsGet {
     }
 
     # no need to eliminate duplicates, NotificationSend() takes care of that
-    # remove empty IDs,
+    # remove empty IDs
     @AgentIDs    = grep {$_} @AgentIDs;
     @CustomerIDs = grep {$_} @CustomerIDs;
 
-    return {
+    my %AgentAndCustomerIDs = (
         AgentIDs    => \@AgentIDs,
         CustomerIDs => \@CustomerIDs,
-    };
+    );
+
+    return \%AgentAndCustomerIDs;
 }
 
 1;
@@ -536,6 +538,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.20 $ $Date: 2010-01-13 01:09:00 $
+$Revision: 1.21 $ $Date: 2010-01-13 01:11:40 $
 
 =cut
