@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.122 2010-01-13 02:18:37 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.123 2010-01-13 13:27:51 reb Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -114,6 +114,7 @@
         <File Permission="644" Location="Kernel/System/Stats/Dynamic/ITSMChangeManagement.pm"/>
         <File Permission="644" Location="Kernel/System/Stats/Dynamic/ITSMChangeManagementChangesIncidents.pm"/>
         <File Permission="644" Location="Kernel/System/Stats/Dynamic/ITSMChangeManagementHistory.pm"/>
+        <File Permission="644" Location="Kernel/System/Stats/Dynamic/ITSMChangeManagementRfcRequester.pm"/>
         <File Permission="644" Location="Kernel/System/Ticket/Acl/RestrictTicketTypes.pm"/>
         <File Permission="644" Location="scripts/test/ITSMChange.t"/>
         <File Permission="644" Location="scripts/test/ITSMCondition.t"/>
