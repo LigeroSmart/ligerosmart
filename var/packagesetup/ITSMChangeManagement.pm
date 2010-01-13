@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.27 2010-01-12 13:51:24 ub Exp $
+# $Id: ITSMChangeManagement.pm,v 1.28 2010-01-13 10:06:16 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,7 +33,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.27 $) [1];
+$VERSION = qw($Revision: 1.28 $) [1];
 
 =head1 NAME
 
@@ -841,6 +841,17 @@ sub _AddNotifications {
             ],
         },
         {
+            Name       => 'new workorder',
+            Attribute  => '',
+            Event      => 'WorkOrderAdd',
+            ValidID    => 1,
+            Comment    => 'inform recipients that a workorder was added',
+            Rule       => '',
+            Recipients => [
+                'ChangeBuilder', 'WorkOrderAgent',
+            ],
+        },
+        {
             Name       => 'updated state for workorder',
             Attribute  => 'WorkOrderState',
             Event      => 'WorkOrderUpdate',
@@ -848,7 +859,7 @@ sub _AddNotifications {
             Comment    => 'inform recipients that a the state of a workorder was changed',
             Rule       => '.*',
             Recipients => [
-                'WorkOrderAgents',
+                'ChangeBuilder', 'WorkOrderAgents',
             ],
         },
         {
@@ -859,7 +870,7 @@ sub _AddNotifications {
             Comment    => 'inform recipients that the workorder agent was replaced',
             Rule       => '.*',
             Recipients => [
-                'WorkOrderAgent', 'OldWorkOrderAgent',
+                'ChangeBuilder', 'WorkOrderAgent', 'OldWorkOrderAgent',
             ],
         },
         {
@@ -870,7 +881,7 @@ sub _AddNotifications {
             Comment    => 'inform recipients that a ticket was linked to the change',
             Rule       => '',
             Recipients => [
-                'ChangeInitiators',
+                'ChangeBuilder', 'ChangeInitiators',
             ],
         },
     );
@@ -1471,6 +1482,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.27 $ $Date: 2010-01-12 13:51:24 $
+$Revision: 1.28 $ $Date: 2010-01-13 10:06:16 $
 
 =cut
