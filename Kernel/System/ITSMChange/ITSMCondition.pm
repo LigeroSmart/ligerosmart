@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition.pm - all condition functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.pm,v 1.16 2010-01-13 06:14:41 ub Exp $
+# $Id: ITSMCondition.pm,v 1.17 2010-01-13 06:16:46 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use base qw(Kernel::System::ITSMChange::ITSMCondition::Operator);
 use base qw(Kernel::System::ITSMChange::ITSMCondition::Expression);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 =head1 NAME
 
@@ -680,16 +680,17 @@ sub ConditionMatchExecute {
     #    # no error if just no actions were found
     #    return 1 if !@{ $ActionIDsRef };
 
-    #    EXPRESSIONID:
-    #    for my $ExpressionID ( @{ $ExpressionIDsRef } ) {
-    #
-    #        my $ExpressionMatch = $Self->ExpressionMatch(
-    #            ExpressionID      => $ExpressionID,
-    #            AttributesChanged => $Param{AttributesChanged}
-    #            UserID            => $Param{UserID},
-    #        );
-    #
-    #    }
+    EXPRESSIONID:
+    for my $ExpressionID ( @{$ExpressionIDsRef} ) {
+
+        #        my $ExpressionMatch = $Self->ExpressionMatch(
+        #            ExpressionID      => $ExpressionID,
+        #            AttributesChanged => $Param{AttributesChanged}
+        #            UserID            => $Param{UserID},
+        #        );
+        #
+
+    }
 
     return 1;
 }
@@ -710,6 +711,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.16 $ $Date: 2010-01-13 06:14:41 $
+$Revision: 1.17 $ $Date: 2010-01-13 06:16:46 $
 
 =cut
