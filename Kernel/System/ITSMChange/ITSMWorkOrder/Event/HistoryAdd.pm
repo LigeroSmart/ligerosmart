@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder/Event/HistoryAdd.pm - HistoryAdd event module for WorkOrder
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: HistoryAdd.pm,v 1.21 2010-01-12 19:39:29 ub Exp $
+# $Id: HistoryAdd.pm,v 1.22 2010-01-13 02:56:52 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.21 $) [1];
+$VERSION = qw($Revision: 1.22 $) [1];
 
 =head1 NAME
 
@@ -178,6 +178,32 @@ sub Run {
             next FIELD if $Field eq 'ReportPlain';
             next FIELD if $Field eq 'InstructionPlain';
 
+            # special handling for accounted time
+            if ( $Field eq 'AccountedTime' ) {
+
+                # we do do track if accounted time was empty
+                next FIELD if !$Param{AccountedTime};
+
+                # get workorder data
+                my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+                    WorkOrderID => $Param{Data}->{WorkOrderID},
+                    UserID      => $Param{UserID},
+                );
+
+                # save history if accounted time has changed
+                $Self->{HistoryObject}->HistoryAdd(
+                    WorkOrderID => $Param{Data}->{WorkOrderID},
+                    Fieldname   => $Field,
+                    ContentNew  => $WorkOrder->{$Field},
+                    ContentOld  => $OldData->{$Field},
+                    UserID      => $Param{UserID},
+                    HistoryType => $HistoryType,
+                    ChangeID    => $OldData->{ChangeID},
+                );
+
+                next FIELD;
+            }
+
             # check if field has changed
             my $FieldHasChanged = $Self->_HasFieldChanged(
                 New => $Param{Data}->{$Field},
@@ -234,7 +260,7 @@ sub Run {
     # handle link events
     elsif ( $HistoryType eq 'WorkOrderLinkAdd' || $HistoryType eq 'WorkOrderLinkDelete' ) {
 
-        # get workorder
+        # get workorder data
         my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
             WorkOrderID => $Param{Data}->{WorkOrderID},
             UserID      => $Param{UserID},
@@ -359,6 +385,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.21 $ $Date: 2010-01-12 19:39:29 $
+$Revision: 1.22 $ $Date: 2010-01-13 02:56:52 $
 
 =cut
