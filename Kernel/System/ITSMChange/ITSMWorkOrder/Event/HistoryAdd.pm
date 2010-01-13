@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder/Event/HistoryAdd.pm - HistoryAdd event module for WorkOrder
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: HistoryAdd.pm,v 1.23 2010-01-13 02:57:47 ub Exp $
+# $Id: HistoryAdd.pm,v 1.24 2010-01-13 15:31:41 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.23 $) [1];
+$VERSION = qw($Revision: 1.24 $) [1];
 
 =head1 NAME
 
@@ -111,7 +111,7 @@ sub new {
 =item Run()
 
 The C<Run()> method handles the events and adds/deletes the history entries for
-the given workorder object.
+the given workorder.
 
 It returns 1 on success, C<undef> otherwise.
 
@@ -146,9 +146,8 @@ sub Run {
         }
     }
 
-    # in history we use event name without 'Post'
-    my $HistoryType = $Param{Event};
-    $HistoryType =~ s{ Post \z }{}xms;
+    # in history event handling we use Event name without the trailing 'Post'
+    ( my $HistoryType = $Param{Event} ) =~ s{ Post \z }{}xms;
 
     # do history stuff
     if ( $HistoryType eq 'WorkOrderAdd' ) {
@@ -156,10 +155,10 @@ sub Run {
         # tell history that a change was added
         return if !$Self->{HistoryObject}->HistoryAdd(
             HistoryType => $HistoryType,
-            WorkOrderID => $Param{Data}->{WorkOrderID},
-            UserID      => $Param{UserID},
-            ContentNew  => $Param{Data}->{WorkOrderID},
             ChangeID    => $Param{Data}->{ChangeID},
+            WorkOrderID => $Param{Data}->{WorkOrderID},
+            ContentNew  => $Param{Data}->{WorkOrderID},
+            UserID      => $Param{UserID},
         );
     }
     elsif ( $HistoryType eq 'WorkOrderUpdate' ) {
@@ -385,6 +384,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.23 $ $Date: 2010-01-13 02:57:47 $
+$Revision: 1.24 $ $Date: 2010-01-13 15:31:41 $
 
 =cut

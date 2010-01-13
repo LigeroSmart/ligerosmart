@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/HistoryAdd.pm - HistoryAdd event module for ITSMChange
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: HistoryAdd.pm,v 1.24 2010-01-12 19:38:47 ub Exp $
+# $Id: HistoryAdd.pm,v 1.25 2010-01-13 15:31:41 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,15 +17,15 @@ use warnings;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.24 $) [1];
+$VERSION = qw($Revision: 1.25 $) [1];
 
 =head1 NAME
 
-Kernel::System::ITSMChange::Event::HistoryAdd - ITSMChange history add lib
+Kernel::System::ITSMChange::Event::HistoryAdd - Change history add lib
 
 =head1 SYNOPSIS
 
-Event handler module for history add in ITSMChange.
+Event handler module for history add in Change.
 
 =head1 PUBLIC INTERFACE
 
@@ -111,7 +111,7 @@ sub new {
 =item Run()
 
 The C<Run()> method handles the events and adds/deletes the history entries for
-the given change object.
+the given change.
 
 It returns 1 on success, C<undef> otherwise.
 
@@ -145,9 +145,8 @@ sub Run {
         }
     }
 
-    # in history event handling we use Event name without 'Post'
-    my $HistoryType = $Param{Event};
-    $HistoryType =~ s{ Post \z }{}xms;
+    # in history event handling we use Event name without the trailing 'Post'
+    ( my $HistoryType = $Param{Event} ) =~ s{ Post \z }{}xms;
 
     # do history stuff
     if ( $HistoryType eq 'ChangeAdd' ) {
@@ -156,8 +155,8 @@ sub Run {
         return if !$Self->{HistoryObject}->HistoryAdd(
             HistoryType => $HistoryType,
             ChangeID    => $Param{Data}->{ChangeID},
-            UserID      => $Param{UserID},
             ContentNew  => $Param{Data}->{ChangeID},
+            UserID      => $Param{UserID},
         );
     }
     elsif ( $HistoryType eq 'ChangeUpdate' ) {
@@ -359,6 +358,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.24 $ $Date: 2010-01-12 19:38:47 $
+$Revision: 1.25 $ $Date: 2010-01-13 15:31:41 $
 
 =cut
