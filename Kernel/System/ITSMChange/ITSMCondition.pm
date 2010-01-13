@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition.pm - all condition functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.pm,v 1.19 2010-01-13 11:11:23 ub Exp $
+# $Id: ITSMCondition.pm,v 1.20 2010-01-13 17:38:04 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use base qw(Kernel::System::ITSMChange::ITSMCondition::Operator);
 use base qw(Kernel::System::ITSMChange::ITSMCondition::Expression);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 =head1 NAME
 
@@ -672,8 +672,12 @@ sub ConditionMatchExecute {
     # no error if just no expressions were found
     return 1 if !@{$ExpressionIDsRef};
 
-    # TODO: implement this function in action module and enable the code below
+    # count the number of expression ids
+    my $ExpressionIDCount = scalar @{$ExpressionIDsRef};
+
+    #    # TODO: implement this function in action module and enable the code below
     #    # get all actions for the given condition id
+    #    # TODO: ActionList should return the action ids sorted ascending by action_number
     #    my $ActionIDsRef = $Self->ActionList(
     #        ConditionID => $Param{ConditionID},
     #        UserID      => $Param{UserID},
@@ -684,30 +688,84 @@ sub ConditionMatchExecute {
     #    return if ref $ActionIDsRef ne 'ARRAY';
     #
     #    # no error if just no actions were found
-    #    return 1 if !@{ $ActionIDsRef };
+    #    return 1 if !@{$ActionIDsRef};
 
+    # to store the number of positive (true) expressions
+    my @ExpressionMatchResult;
+
+    # to store if the condition matches
+    my $ConditionMatch;
+
+    # try to match each expression
     EXPRESSIONID:
     for my $ExpressionID ( @{$ExpressionIDsRef} ) {
 
-        # TODO
-        # wenn ExpressionConjunjtion = any
-        # -> dann AttributesChanged übergeben
+        # normally give the list of changed attributes to ExpressionMatch() function
+        my $AttributesChanged = $Param{AttributesChanged};
 
-        # wenn ExpressionConjunjtion = all
-        # UND nur eine Expression
-        # -> dann AttributesChanged übergeben
+        # expression conjunction is 'all' and there is more than one expresion
+        if ( $ConditionData->{ExpressionConjunction} eq 'all' && $ExpressionIDCount > 1 ) {
 
-        # wenn ExpressionConjunjtion = all
-        # UND nur mehr als eine Expression
-        # -> dann AttributesChanged NICHT übergeben
+            # do not give the list of changed attributes to ExpressionMatch()
+            $AttributesChanged = undef;
+        }
 
+        # match expression
         my $ExpressionMatch = $Self->ExpressionMatch(
             ExpressionID      => $ExpressionID,
-            AttributesChanged => $Param{AttributesChanged},
+            AttributesChanged => $AttributesChanged,
             UserID            => $Param{UserID},
         );
 
+        # set ConditionMatch true if ExpressionMatch is true and 'any' is requested
+        if ( $ConditionData->{ExpressionConjunction} eq 'any' && $ExpressionMatch ) {
+            $ConditionMatch = 1;
+            last EXPRESSIONID;
+        }
+
+        # leave ConditionMatch false if ExpressionMatch is false and 'all' is requested
+        if ( $ConditionData->{ExpressionConjunction} eq 'all' && !$ExpressionMatch ) {
+            last EXPRESSIONID;
+        }
+
+        # save current expression match result for later checks
+        push @ExpressionMatchResult, $ExpressionMatch;
     }
+
+    # count all results which have a true value
+    my $TrueCount = scalar grep { $_ == 1 } @ExpressionMatchResult;
+
+    # if the condition did not match already, and not all expressions are true
+    if ( !$ConditionMatch && $TrueCount != $ExpressionIDCount ) {
+
+        # no error: if just the condition did not match,
+        # there is no need to execute any actions
+        return 1;
+    }
+
+    #    # TODO: implement this function in action module and enable the code below
+    #    # at this point the condition has matched (is true)
+    #    # and we can go on and execute the actions for this condition
+    #    ACTIONID:
+    #    for my $ActionID ( @{$ActionIDsRef} ) {
+    #
+    #        # execute each action
+    #        my $Success = $Self->ActionExecute(
+    #            ActionID => $ActionID,
+    #            UserID   => $Param{UserID},
+    #        );
+    #
+    #        # check error
+    #        if ( !$Success ) {
+    #            $Self->{LogObject}->Log(
+    #                Priority => 'error',
+    #                Message  => "ActionID '$ActionID' could not be executed successfully "
+    #                    . "for ConditionID '$Param{ConditionID}'. Stopping further execution "
+    #                    . "of other actions of this condition now!",
+    #            );
+    #            return;
+    #        }
+    #    }
 
     return 1;
 }
@@ -728,6 +786,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.19 $ $Date: 2010-01-13 11:11:23 $
+$Revision: 1.20 $ $Date: 2010-01-13 17:38:04 $
 
 =cut
