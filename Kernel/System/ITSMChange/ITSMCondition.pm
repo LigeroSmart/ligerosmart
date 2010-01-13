@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition.pm - all condition functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.pm,v 1.15 2010-01-12 20:19:11 ub Exp $
+# $Id: ITSMCondition.pm,v 1.16 2010-01-13 06:14:41 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use base qw(Kernel::System::ITSMChange::ITSMCondition::Operator);
 use base qw(Kernel::System::ITSMChange::ITSMCondition::Expression);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 =head1 NAME
 
@@ -558,6 +558,60 @@ sub ConditionMatchExecuteAll {
         }
     }
 
+    # TODO: Delete this later!
+    $Self->{Debug} = 1;
+
+    # TODO: Delete this later!
+    # debug output
+    if ( $Self->{Debug} ) {
+
+        # list of changed attributes
+        my $DebugString = "\n\n"
+            . "AttributesChanged: "
+            . ( join ', ', @{ $Param{AttributesChanged} } )
+            . "\n\n";
+
+        print STDERR $DebugString;
+
+        $Self->{LogObject}->Log(
+            Priority => 'debug',
+            Message  => "$DebugString",
+        );
+    }
+
+    # get all condition ids for the given change id
+    my $ConditionIDsRef = $Self->ConditionList(
+        ChangeID => $Param{ChangeID},
+        Valid    => 1,
+        UserID   => $Param{UserID},
+    );
+
+    # check errors
+    return if !$ConditionIDsRef;
+    return if ref $ConditionIDsRef ne 'ARRAY';
+
+    # no error if just no valid conditions were found
+    return 1 if !@{$ConditionIDsRef};
+
+    # match and execute all conditions
+    for my $ConditionID ( @{$ConditionIDsRef} ) {
+
+        # match and execute each condition
+        my $Success = $Self->ConditionMatchExecute(
+            ConditionID       => $ConditionID,
+            AttributesChanged => $Param{AttributesChanged},
+            UserID            => $Param{UserID},
+        );
+
+        # write log entry but do not return
+        if ( !$Success ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "ConditionMatchExecute for ConditionID '$ConditionID' failed!",
+            );
+        }
+    }
+
     return 1;
 }
 
@@ -590,6 +644,53 @@ sub ConditionMatchExecute {
         }
     }
 
+    # get condition data
+    my $ConditionData = $Self->ConditionGet(
+        ConditionID => $Param{ConditionID},
+        UserID      => $Param{UserID},
+    );
+
+    # check error
+    return if !$ConditionData;
+
+    # get all expressions for the given condition id
+    my $ExpressionIDsRef = $Self->ExpressionList(
+        ConditionID => $Param{ConditionID},
+        UserID      => $Param{UserID},
+    );
+
+    # check errors
+    return if !$ExpressionIDsRef;
+    return if ref $ExpressionIDsRef ne 'ARRAY';
+
+    # no error if just no expressions were found
+    return 1 if !@{$ExpressionIDsRef};
+
+    # TODO: implement this function in action module and enable the code below
+    #    # get all actions for the given condition id
+    #    my $ActionIDsRef = $Self->ActionList(
+    #        ConditionID => $Param{ConditionID},
+    #        UserID      => $Param{UserID},
+    #    );
+    #
+    #    # check errors
+    #    return if !$ActionIDsRef;
+    #    return if ref $ActionIDsRef ne 'ARRAY';
+    #
+    #    # no error if just no actions were found
+    #    return 1 if !@{ $ActionIDsRef };
+
+    #    EXPRESSIONID:
+    #    for my $ExpressionID ( @{ $ExpressionIDsRef } ) {
+    #
+    #        my $ExpressionMatch = $Self->ExpressionMatch(
+    #            ExpressionID      => $ExpressionID,
+    #            AttributesChanged => $Param{AttributesChanged}
+    #            UserID            => $Param{UserID},
+    #        );
+    #
+    #    }
+
     return 1;
 }
 
@@ -609,6 +710,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.15 $ $Date: 2010-01-12 20:19:11 $
+$Revision: 1.16 $ $Date: 2010-01-13 06:14:41 $
 
 =cut
