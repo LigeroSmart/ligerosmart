@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Notification.pm - lib for notifications in change management
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.30 2010-01-12 19:48:14 ub Exp $
+# $Id: Notification.pm,v 1.31 2010-01-13 08:52:20 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.30 $) [1];
+$VERSION = qw($Revision: 1.31 $) [1];
 
 =head1 NAME
 
@@ -176,11 +176,23 @@ sub NotificationSend {
 
     # start with workorder, as the change id might be taken from the workorder
     if ( $Param{Data}->{WorkOrderID} ) {
+
         $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
             WorkOrderID => $Param{Data}->{WorkOrderID},
             UserID      => $Param{UserID},
             LogNo       => 1,
         );
+
+        # The event 'WorkOrderAdd' is a special case, as the workorder
+        # is not completely initialized yet. So also take
+        # the params for WorkOrderAdd() into account.
+        # WorkOrderGet() must still be called, as it provides translation
+        # for some IDs that were set in WorkOrderAdd().
+        if ( $Param{Event} eq 'WorkOrderAdd' ) {
+            for my $Attribute ( keys %{$WorkOrder} ) {
+                $WorkOrder->{$Attribute} ||= $Param{Data}->{$Attribute};
+            }
+        }
 
         if ( $WorkOrder->{WorkOrderAgentID} ) {
             $Param{Data}->{WorkOrderAgent} = {
@@ -197,11 +209,23 @@ sub NotificationSend {
     }
 
     if ( $Param{Data}->{ChangeID} ) {
+
         $Change = $Self->{ChangeObject}->ChangeGet(
             ChangeID => $Param{Data}->{ChangeID},
             UserID   => $Param{UserID},
             LogNo    => 1,
         );
+
+        # The event 'ChangeAdd' is a special case, as the change
+        # is not completely initialized yet. So also take
+        # the params for ChangeAdd() into account.
+        # ChangeGet() must still be called, as it provides translation
+        # for some IDs that were set in ChangeAdd().
+        if ( $Param{Event} eq 'ChangeAdd' ) {
+            for my $Attribute ( keys %{$Change} ) {
+                $Change->{$Attribute} ||= $Param{Data}->{$Attribute};
+            }
+        }
 
         if ( $Change->{ChangeBuilderID} ) {
             $Param{Data}->{ChangeBuilder} = {
@@ -1197,6 +1221,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.30 $ $Date: 2010-01-12 19:48:14 $
+$Revision: 1.31 $ $Date: 2010-01-13 08:52:20 $
 
 =cut
