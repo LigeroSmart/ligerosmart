@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Operator.pm - all condition operator functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Operator.pm,v 1.11 2010-01-13 01:16:03 ub Exp $
+# $Id: Operator.pm,v 1.12 2010-01-13 12:17:14 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 =head1 NAME
 
@@ -535,7 +535,6 @@ sub _OperatorExecute {
     );
 
     return $Result;
-
 }
 
 =item _OperatorEqual()
@@ -620,8 +619,11 @@ sub _OperatorIsEmpty {
         }
     }
 
+    # check length of value
+    my $ValueLength = length $Param{Value1};
+
     # return result of length check
-    return ( length $Param{Value1} == 0 );
+    return $ValueLength == 0;
 }
 
 =item _OperatorIsNotEmpty()
@@ -683,7 +685,7 @@ sub _OperatorIsGreaterThan {
     return if $Param{Value2} !~ m{ \A \d+ \z }xms;
 
     # return result of greater than check
-    return ( $Param{Value1} > $Param{Value2} );
+    return $Param{Value1} > $Param{Value2};
 }
 
 =item _OperatorIsLessThan()
@@ -746,8 +748,8 @@ sub _OperatorIsBefore {
     }
 
     # check for date format
-    return if $Param{Value1} !~ m{ \A \d{4}-\d{2}-\d{2} \s \d{2}:\d{2}:\d{2}  \z }xms;
-    return if $Param{Value2} !~ m{ \A \d{4}-\d{2}-\d{2} \s \d{2}:\d{2}:\d{2}  \z }xms;
+    return if $Param{Value1} !~ m{ \A \d{4}-\d{2}-\d{2} \s \d{2}:\d{2}:\d{2} \z }xms;
+    return if $Param{Value2} !~ m{ \A \d{4}-\d{2}-\d{2} \s \d{2}:\d{2}:\d{2} \z }xms;
 
     # get timestamps
     my %Timestamp;
@@ -763,7 +765,7 @@ sub _OperatorIsBefore {
     }
 
     # return result of lower than check
-    return ( $Timestamp{Value1} lt $Timestamp{Value2} );
+    return $Timestamp{Value1} < $Timestamp{Value2};
 }
 
 =item _OperatorIsAfter()
@@ -815,6 +817,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.11 $ $Date: 2010-01-13 01:16:03 $
+$Revision: 1.12 $ $Date: 2010-01-13 12:17:14 $
 
 =cut
