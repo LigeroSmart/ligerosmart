@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.28 2010-01-13 10:06:16 bes Exp $
+# $Id: ITSMChangeManagement.pm,v 1.29 2010-01-13 12:56:22 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,7 +33,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.28 $) [1];
+$VERSION = qw($Revision: 1.29 $) [1];
 
 =head1 NAME
 
@@ -955,8 +955,10 @@ sub _AddSystemNotifications {
     my $BasicWorkOrderInfoEn = "\n"
         . "\n"
         . "Change title: <OTRS_CHANGE_ChangeTitle>\n"
-        . "Workorder title: <OTRS_WORKORDER_WorkOrderTitle>\n"
         . "Current change state: <OTRS_CHANGE_ChangeState>\n"
+        . "\n"
+        . "Workorder title: <OTRS_WORKORDER_WorkOrderTitle>\n"
+        . "Workorder type: <OTRS_WORKORDER_WorkOrderType>\n"
         . "Current workorder state: <OTRS_WORKORDER_WorkOrderState>\n"
         . "\n"
         . "Your OTRS Notification Master\n";
@@ -964,11 +966,13 @@ sub _AddSystemNotifications {
     my $BasicWorkOrderInfoDe = "\n"
         . "\n"
         . "Change Titel: <OTRS_CHANGE_ChangeTitle>\n"
-        . "Workorder Titel: <OTRS_WORKORDER_WorkOrderTitle>\n"
         . "Aktueller Change Status: <OTRS_CHANGE_ChangeState>\n"
+        . "\n"
+        . "Workorder Titel: <OTRS_WORKORDER_WorkOrderTitle>\n"
+        . "Workorder Typ: <OTRS_WORKORDER_WorkOrderType>\n"
         . "Aktueller Workorder Status: <OTRS_WORKORDER_WorkOrderState>\n"
         . "\n"
-        . "Your OTRS Notification Master'\n";
+        . "Ihr OTRS Notification Master\n";
 
     # define notifications
     my @AgentNotifications = (
@@ -976,7 +980,7 @@ sub _AddSystemNotifications {
             'Agent::Change::ChangeAdd',
             'de',
             '[Change #<OTRS_CHANGE_ChangeNumber>] neu erstellt',
-            'Change #<OTRS_CHANGE_ChangeNumber> wurde neu erstellt.' . $BasicChangeInfoDe,
+            'Der Change #<OTRS_CHANGE_ChangeNumber> wurde neu erstellt.' . $BasicChangeInfoDe,
         ],
         [
             'Agent::Change::ChangeAdd',
@@ -988,7 +992,7 @@ sub _AddSystemNotifications {
             'Agent::Change::ChangeUpdate',
             'de',
             '[Change #<OTRS_CHANGE_ChangeNumber>] aktualisiert',
-            'Change #<OTRS_CHANGE_ChangeNumber> wurde aktualisiert.' . $BasicChangeInfoDe,
+            'Der Change #<OTRS_CHANGE_ChangeNumber> wurde aktualisiert.' . $BasicChangeInfoDe,
         ],
         [
             'Agent::Change::ChangeUpdate',
@@ -1048,7 +1052,7 @@ sub _AddSystemNotifications {
             'Agent::Change::ChangeDelete',
             'de',
             '[Change #<OTRS_CHANGE_ChangeNumber>] gelöscht',
-            'Change #<OTRS_CHANGE_ChangeNumber> wurde gelöscht.',
+            'Der Change #<OTRS_CHANGE_ChangeNumber> wurde gelöscht.',
         ],
         [
             'Agent::Change::ChangeDelete',
@@ -1060,7 +1064,7 @@ sub _AddSystemNotifications {
             'Agent::WorkOrder::WorkOrderAdd',
             'de',
             '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] neu erstellt',
-            'The Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde neu erstellt.'
+            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde neu erstellt.'
                 . $BasicWorkOrderInfoDe,
         ],
         [
@@ -1074,7 +1078,7 @@ sub _AddSystemNotifications {
             'Agent::WorkOrder::WorkOrderUpdate',
             'de',
             '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] aktualisiert',
-            'The Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde aktualisiert.'
+            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde aktualisiert.'
                 . $BasicWorkOrderInfoDe,
         ],
         [
@@ -1183,7 +1187,7 @@ sub _AddSystemNotifications {
             'Customer::Change::ChangeAdd',
             'de',
             '[Change #<OTRS_CHANGE_ChangeNumber>] neu erstellt',
-            'Change #<OTRS_CHANGE_ChangeNumber> wurde neu erstellt.' . $BasicChangeInfoDe,
+            'Der Change #<OTRS_CHANGE_ChangeNumber> wurde neu erstellt.' . $BasicChangeInfoDe,
         ],
         [
             'Customer::Change::ChangeAdd',
@@ -1195,7 +1199,7 @@ sub _AddSystemNotifications {
             'Customer::Change::ChangeUpdate',
             'de',
             '[Change #<OTRS_CHANGE_ChangeNumber>] aktualisiert',
-            'Change #<OTRS_CHANGE_ChangeNumber> wurde aktualisiert.' . $BasicChangeInfoDe,
+            'Der Change #<OTRS_CHANGE_ChangeNumber> wurde aktualisiert.' . $BasicChangeInfoDe,
         ],
         [
             'Customer::Change::ChangeUpdate',
@@ -1255,7 +1259,7 @@ sub _AddSystemNotifications {
             'Customer::Change::ChangeDelete',
             'de',
             '[Change #<OTRS_CHANGE_ChangeNumber>] gelöscht',
-            'Change #<OTRS_CHANGE_ChangeNumber> wurde gelöscht.',
+            'Der Change #<OTRS_CHANGE_ChangeNumber> wurde gelöscht.',
         ],
         [
             'Customer::Change::ChangeDelete',
@@ -1267,7 +1271,7 @@ sub _AddSystemNotifications {
             'Customer::WorkOrder::WorkOrderAdd',
             'de',
             '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] neu erstellt',
-            'The Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde neu erstellt.'
+            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde neu erstellt.'
                 . $BasicWorkOrderInfoDe,
         ],
         [
@@ -1281,7 +1285,7 @@ sub _AddSystemNotifications {
             'Customer::WorkOrder::WorkOrderUpdate',
             'de',
             '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] aktualisiert',
-            'The Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde aktualisiert.'
+            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde aktualisiert.'
                 . $BasicWorkOrderInfoDe,
         ],
         [
@@ -1482,6 +1486,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.28 $ $Date: 2010-01-13 10:06:16 $
+$Revision: 1.29 $ $Date: 2010-01-13 12:56:22 $
 
 =cut
