@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Object.pm - all condition object functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Object.pm,v 1.12 2010-01-13 00:23:08 ub Exp $
+# $Id: Object.pm,v 1.13 2010-01-13 00:33:53 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 =head1 NAME
 
@@ -408,7 +408,7 @@ sub ObjectDataGet {
     my $ActionSelector = $ObjectSelector{$ObjectType};
 
     # handle 'all' or 'any' in a special way
-    if ( $Param{Selector} =~ m{ ( all | any ) }smx ) {
+    if ( $Param{Selector} =~ m{ ( all | any ) }xms ) {
         $ActionSub = $ObjectAction{ $ObjectType . 'All' };
         return $Self->$ActionSub(
             ConditionID     => $Param{ConditionID},
@@ -521,6 +521,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.12 $ $Date: 2010-01-13 00:23:08 $
+$Revision: 1.13 $ $Date: 2010-01-13 00:33:53 $
 
 =cut

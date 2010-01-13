@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: LayoutITSMChange.pm,v 1.32 2010-01-12 19:43:51 ub Exp $
+# $Id: LayoutITSMChange.pm,v 1.33 2010-01-13 00:34:24 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use POSIX qw(ceil);
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.32 $) [1];
+$VERSION = qw($Revision: 1.33 $) [1];
 
 =over 4
 
@@ -109,16 +109,16 @@ sub ITSMChangeBuildWorkOrderGraph {
 
     # get smallest start time
     if ( !$Time{StartTime} ) {
-        $Time{StartTime} =
-            ( $Time{PlannedStartTime} < $Time{ActualStartTime} )
+        $Time{StartTime}
+            = ( $Time{PlannedStartTime} < $Time{ActualStartTime} )
             ? $Time{PlannedStartTime}
             : $Time{ActualStartTime};
     }
 
     # get highest end time
     if ( !$Time{EndTime} ) {
-        $Time{EndTime} =
-            ( $Time{PlannedEndTime} > $Time{ActualEndTime} )
+        $Time{EndTime}
+            = ( $Time{PlannedEndTime} > $Time{ActualEndTime} )
             ? $Time{PlannedEndTime}
             : $Time{ActualEndTime};
     }
@@ -166,8 +166,7 @@ sub ITSMChangeBuildWorkOrderGraph {
     if ( !$ChangeZoomConfig->{WorkOrderGraph} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message =>
-                'Need SysConfig settings for '
+            Message  => 'Need SysConfig settings for '
                 . 'ITSMChange::Frontend::AgentITSMChangeZoom###WorkOrderGraph!',
         );
         return;
@@ -191,8 +190,7 @@ sub ITSMChangeBuildWorkOrderGraph {
             # display error and return
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message =>
-                    "Need SysConfig setting '$GraphSetting' in "
+                Message  => "Need SysConfig setting '$GraphSetting' in "
                     . "ITSMChange::Frontend::AgentITSMChangeZoom###WorkOrderGraph!",
             );
             return;
@@ -201,15 +199,14 @@ sub ITSMChangeBuildWorkOrderGraph {
         # check validity of config setting
         if (
             $WorkOrderGraphConfig->{$GraphSetting}
-            !~ m{\A $WorkOrderGraphCheck{$GraphSetting} \z}smx
+            !~ m{ \A $WorkOrderGraphCheck{$GraphSetting} \z }xms
             )
         {
 
             # display error and return
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message =>
-                    "SysConfig setting '$GraphSetting' is invalid in "
+                Message  => "SysConfig setting '$GraphSetting' is invalid in "
                     . "ITSMChange::Frontend::AgentITSMChangeZoom###WorkOrderGraph!",
             );
             return;
@@ -241,20 +238,18 @@ sub ITSMChangeBuildWorkOrderGraph {
         # check contents of name
         next WORKORDERTYPE if !$WorkOrderTypeName;
 
-        for my $WorkOrderColor (qw(_planned _actual)) {
+        for my $WorkOrderColor (qw( _planned _actual )) {
 
             # get configured or fallback planned color for workorder
-            my $WorkOrderTypeColor =
-                $WorkOrderGraphConfig->{"${WorkOrderTypeName}${WorkOrderColor}_color"};
+            my $WorkOrderTypeColor
+                = $WorkOrderGraphConfig->{"${WorkOrderTypeName}${WorkOrderColor}_color"};
 
             # set default color if no color is found
-            $WorkOrderTypeColor ||=
-                $WorkOrderGraphConfig->{"undefined${WorkOrderColor}_color"};
+            $WorkOrderTypeColor ||= $WorkOrderGraphConfig->{"undefined${WorkOrderColor}_color"};
 
             # check validity of workorder color
-            if ( $WorkOrderTypeColor !~ m{\A # [A-Za-z\d]{6} \z}smx ) {
-                $WorkOrderTypeColor =
-                    $WorkOrderGraphConfig->{"undefined${WorkOrderColor}_color"};
+            if ( $WorkOrderTypeColor !~ m{ \A # [A-Za-z\d]{6} \z }xms ) {
+                $WorkOrderTypeColor = $WorkOrderGraphConfig->{"undefined${WorkOrderColor}_color"};
             }
 
             # display css definitions for planned
@@ -280,8 +275,7 @@ sub ITSMChangeBuildWorkOrderGraph {
         # calculate height of time line
         my $WorkOrderHeight = 16;
         my $ScaleMargin     = 11;
-        $TimeLine->{TimeLineHeight} =
-            ( ( scalar @WorkOrders ) * $WorkOrderHeight ) + $ScaleMargin;
+        $TimeLine->{TimeLineHeight} = ( ( scalar @WorkOrders ) * $WorkOrderHeight ) + $ScaleMargin;
 
         # display css of timeline
         $Self->Block(
@@ -780,15 +774,7 @@ sub _ITSMChangeGetWorkOrderGraph {
     # hash for time values
     my %Time;
 
-    for my $TimeType (
-        qw(
-        PlannedStartTime
-        PlannedEndTime
-        ActualStartTime
-        ActualEndTime
-        )
-        )
-    {
+    for my $TimeType (qw(PlannedStartTime PlannedEndTime ActualStartTime ActualEndTime)) {
 
         # translate time
         $Time{$TimeType} = $Self->{TimeObject}->TimeStamp2SystemTime(
