@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.42 2010-01-12 20:38:12 ub Exp $
+# $Id: ITSMCondition.t,v 1.43 2010-01-13 00:20:51 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1641,7 +1641,6 @@ for my $ConditionID (@ConditionIDs) {
         $DeleteSuccess,
         'Test ' . $TestCount++ . " - ConditionDelete -> ConditionID: $ConditionID",
     );
-
 }
 
 # delete created changes

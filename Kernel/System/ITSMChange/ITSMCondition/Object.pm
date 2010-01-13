@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Object.pm - all condition object functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Object.pm,v 1.11 2010-01-11 17:01:21 mae Exp $
+# $Id: Object.pm,v 1.12 2010-01-13 00:23:08 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 =head1 NAME
 
@@ -358,7 +358,7 @@ Return the data of a given type and selector of a certain object.
     my $ObjectDataRef = $ConditionObject->ObjectDataGet(
         ConditionID => 1234,
         ObjectName  => 'ITSMChange',
-        Selector    => ( '123' | 'all' | 'any' ),
+        Selector    => '123',           #  ( ObjectKey | any | all )
         UserID      => 1,
     );
 
@@ -521,6 +521,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.11 $ $Date: 2010-01-11 17:01:21 $
+$Revision: 1.12 $ $Date: 2010-01-13 00:23:08 $
 
 =cut

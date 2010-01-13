@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Expression.pm - all condition expression functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Expression.pm,v 1.16 2010-01-12 20:16:48 ub Exp $
+# $Id: Expression.pm,v 1.17 2010-01-13 00:18:48 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 =head1 NAME
 
@@ -49,17 +49,7 @@ sub ExpressionAdd {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (
-        qw(
-        ConditionID
-        ObjectID
-        AttributeID
-        OperatorID
-        Selector
-        UserID
-        )
-        )
-    {
+    for my $Argument (qw(ConditionID ObjectID AttributeID OperatorID Selector UserID)) {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -316,7 +306,7 @@ Deletes a condition expression.
 
     my $Success = $ConditionObject->ExpressionDelete(
         ExpressionID => 123,
-        UserID      => 1,
+        UserID       => 1,
     );
 
 =cut
@@ -476,7 +466,7 @@ sub ExpressionMatch {
     }
 
     # return result of the expressions execution
-    return $Self->OperatorExecute(
+    my $Result = $Self->OperatorExecute(
         OperatorName => $ExpressionData->{Operator}->{Name},
         Attribute    => $AttributeType,
         Selector     => $Expression->{Selector},
@@ -484,6 +474,9 @@ sub ExpressionMatch {
         CompareValue => $Expression->{CompareValue},
         UserID       => $Param{UserID},
     );
+
+    # return result of the expressions execution
+    return $Result;
 }
 
 =item _ExpressionMatchInit()
@@ -570,6 +563,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.16 $ $Date: 2010-01-12 20:16:48 $
+$Revision: 1.17 $ $Date: 2010-01-13 00:18:48 $
 
 =cut

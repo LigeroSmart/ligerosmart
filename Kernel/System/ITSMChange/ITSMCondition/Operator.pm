@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Operator.pm - all condition operator functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Operator.pm,v 1.9 2010-01-12 15:50:11 mae Exp $
+# $Id: Operator.pm,v 1.10 2010-01-13 00:21:59 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 =head1 NAME
 
@@ -358,7 +358,7 @@ Returns true or false (1/undef) if given values are equal.
     my $Result = $ConditionObject->OperatorExecute(
         OperatorName => 'is',
         Attribute    => 'WorkOrderStateID',
-        Selector     => ( '1234 | 'all' | 'any' ),
+        Selector     => '1234,                                 #  ( ObjectKey | any | all )
         ObjectData   => [ $WorkOrderData1, $WorkOrderData2 ],
         CompareValue => 'SomeValue',
         UserID       => 1234,
@@ -370,16 +370,7 @@ sub OperatorExecute {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (
-        qw(
-        OperatorName
-        Attribute
-        Selector
-        ObjectData
-        UserID
-        )
-        )
-    {
+    for my $Argument (qw(OperatorName Attribute Selector ObjectData UserID)) {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -426,19 +417,26 @@ sub OperatorExecute {
         ) || 0;
 
         # return true if result is positive and 'any' is requested
-        return 1 if $Param{Selector} eq 'any' && $Result;
+        if ( $Param{Selector} eq 'any' && $Result ) {
+            return 1;
+        }
 
         # return false if result is negative and 'all' is requested
-        return if $Param{Selector} eq 'all' && !$Result;
+        if ( $Param{Selector} eq 'all' && !$Result ) {
+            return;
+        }
 
         # save current result for coming checks
         push @OperatorExecuteResult, $Result;
     }
 
-    # we need to check all results be true
-    return (
-        scalar @{$ObjectData} == scalar grep { $_ == 1 } @OperatorExecuteResult
-    );
+    # count all results which have a true value
+    my $TrueCount = scalar grep { $_ == 1 } @OperatorExecuteResult;
+
+    # return false if not all results are true
+    return if $TrueCount != scalar @{$ObjectData};
+
+    return 1;
 }
 
 =item _OperatorExecute()
@@ -679,14 +677,11 @@ sub _OperatorIsGreaterThan {
     }
 
     # check for digits
-    return
-        if (
-        $Param{Value1} !~ m{ \A \d+ \z }smx
-        || $Param{Value2} !~ m{\A \d+ \z }smx
-        );
+    return if $Param{Value1} !~ m{ \A \d+ \z }xms;
+    return if $Param{Value2} !~ m{ \A \d+ \z }xms;
 
     # return result of greater than check
-    return ( $Param{Value1} gt $Param{Value2} );
+    return ( $Param{Value1} > $Param{Value2} );
 }
 
 =item _OperatorIsLessThan()
@@ -716,11 +711,8 @@ sub _OperatorIsLessThan {
     }
 
     # check for digits
-    return
-        if (
-        $Param{Value1} !~ m{ \A \d+ \z }smx
-        || $Param{Value2} !~ m{\A \d+ \z }smx
-        );
+    return if $Param{Value1} !~ m{ \A \d+ \z }xms;
+    return if $Param{Value2} !~ m{ \A \d+ \z }xms;
 
     # return result of negated equation
     return !$Self->_OperatorIsGreaterThan(%Param);
@@ -752,11 +744,8 @@ sub _OperatorIsBefore {
     }
 
     # check for date format
-    return
-        if (
-        $Param{Value1} !~ m{ \A \d{4}-\d{2}-\d{2} \s \d{2}:\d{2}:\d{2}  \z }smx
-        || $Param{Value2} !~ m{ \A \d{4}-\d{2}-\d{2} \s \d{2}:\d{2}:\d{2}  \z }smx
-        );
+    return if $Param{Value1} !~ m{ \A \d{4}-\d{2}-\d{2} \s \d{2}:\d{2}:\d{2}  \z }xms;
+    return if $Param{Value2} !~ m{ \A \d{4}-\d{2}-\d{2} \s \d{2}:\d{2}:\d{2}  \z }xms;
 
     # get timestamps
     my %Timestamp;
@@ -771,7 +760,7 @@ sub _OperatorIsBefore {
         return if !$Timestamp{$Date};
     }
 
-    # return result of greater than check
+    # return result of lower than check
     return ( $Timestamp{Value1} lt $Timestamp{Value2} );
 }
 
@@ -801,11 +790,8 @@ sub _OperatorIsAfter {
     }
 
     # check for date format
-    return
-        if (
-        $Param{Value1} !~ m{ \A \d{4}-\d{2}-\d{2} \s \d{2}:\d{2}:\d{2}  \z }smx
-        || $Param{Value2} !~ m{ \A \d{4}-\d{2}-\d{2} \s \d{2}:\d{2}:\d{2}  \z }smx
-        );
+    return if $Param{Value1} !~ m{ \A \d{4}-\d{2}-\d{2} \s \d{2}:\d{2}:\d{2}  \z }xms;
+    return if $Param{Value2} !~ m{ \A \d{4}-\d{2}-\d{2} \s \d{2}:\d{2}:\d{2}  \z }xms;
 
     # return result of negated equation
     return !$Self->_OperatorIsBefore(%Param);
@@ -827,6 +813,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.9 $ $Date: 2010-01-12 15:50:11 $
+$Revision: 1.10 $ $Date: 2010-01-13 00:21:59 $
 
 =cut
