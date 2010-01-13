@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Object.pm - all condition object functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Object.pm,v 1.14 2010-01-13 11:03:01 mae Exp $
+# $Id: Object.pm,v 1.15 2010-01-13 11:34:57 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 =head1 NAME
 
@@ -416,10 +416,7 @@ sub ObjectDataGet {
         return;
     }
 
-    # object data
-    my @ObjectData;
-
-    # handle 'all' or 'any' in a special way
+    # handle 'all' or 'any' selector in a special way
     if ( $Param{Selector} =~ m{ ( all | any ) }xms ) {
 
         # get function name for getting all objects
@@ -432,25 +429,25 @@ sub ObjectDataGet {
             UserID          => $Param{UserID},
         ) || [];
 
-        # extract data
-        @ObjectData = @{$AllObjects};
-
-        return \@ObjectData;
+        # return object data
+        return $AllObjects;
     }
 
     # get object data
+    my @ObjectData;
     push @ObjectData, $Self->$ActionSub(
         ConditionID     => $Param{ConditionID},
         $ActionSelector => $Param{Selector},
         UserID          => $Param{UserID},
     ) || {};
 
+    # return object data
     return \@ObjectData;
 }
 
 =item _ObjectITSMChange()
 
-Returns a change object.
+Returns a change object as anon hash ref.
 
     my $Change = $ConditionObject->_ObjectITSMChange();
 
@@ -459,13 +456,16 @@ Returns a change object.
 sub _ObjectITSMChange {
     my ( $Self, %Param ) = @_;
 
-    # get and return change data
-    return $Self->{ChangeObject}->ChangeGet(%Param);
+    # get change data as anon hash ref
+    my $Change = $Self->{ChangeObject}->ChangeGet(%Param) || {};
+
+    # return change data
+    return $Change;
 }
 
 =item _ObjectITSMWorkOrder()
 
-Returns a workorder object.
+Returns a workorder object as anon hash ref.
 
     my $WorkOrder = $ConditionObject->_ObjectITSMWorkOrder();
 
@@ -474,8 +474,11 @@ Returns a workorder object.
 sub _ObjectITSMWorkOrder {
     my ( $Self, %Param ) = @_;
 
-    # get and return workorder data
-    return $Self->{WorkOrderObject}->WorkOrderGet(%Param);
+    # get workorder data as anon hash ref
+    my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(%Param) || {};
+
+    # return workorder data
+    return $WorkOrder;
 }
 
 =item _ObjectITSMWorkOrderAll()
@@ -505,7 +508,9 @@ sub _ObjectITSMWorkOrderAll {
     );
 
     # check for workorder ids
-    return if !$WorkOrderIDs || ref $WorkOrderIDs ne 'ARRAY';
+    return if !$WorkOrderIDs;
+    return if ref $WorkOrderIDs ne 'ARRAY';
+    return if !@{$WorkOrderIDs};
 
     # get workorder data
     my @WorkOrderData;
@@ -523,6 +528,7 @@ sub _ObjectITSMWorkOrderAll {
         push @WorkOrderData, $WorkOrder;
     }
 
+    # return workorder data
     return \@WorkOrderData;
 }
 
@@ -542,6 +548,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.14 $ $Date: 2010-01-13 11:03:01 $
+$Revision: 1.15 $ $Date: 2010-01-13 11:34:57 $
 
 =cut
