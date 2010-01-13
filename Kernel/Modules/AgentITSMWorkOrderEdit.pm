@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderEdit.pm - the OTRS::ITSM::ChangeManagement workorder edit module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderEdit.pm,v 1.37 2010-01-13 03:48:42 ub Exp $
+# $Id: AgentITSMWorkOrderEdit.pm,v 1.38 2010-01-13 04:23:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.37 $) [1];
+$VERSION = qw($Revision: 1.38 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -220,6 +220,7 @@ sub Run {
 
     # handle attachment actions
     elsif ( $Self->{Subaction} eq 'SaveAttachment' ) {
+
         my %UploadStuff = $Self->{ParamObject}->GetUploadAll(
             Param  => "AttachmentNew",
             Source => 'string',
@@ -256,6 +257,7 @@ sub Run {
         }
     }
     elsif ( $Self->{Subaction} eq 'DeleteAttachment' ) {
+
         for my $AttachmentID ( keys %Attachments ) {
             if ( $Self->{ParamObject}->GetParam( Param => 'DeleteAttachment' . $AttachmentID ) ) {
 
@@ -384,6 +386,7 @@ sub Run {
             Name => 'ShowPlannedEffort',
             Data => {
                 %{$WorkOrder},
+                %GetParam,
             },
         );
     }
