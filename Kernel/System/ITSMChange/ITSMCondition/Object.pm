@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Object.pm - all condition object functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Object.pm,v 1.13 2010-01-13 00:33:53 ub Exp $
+# $Id: Object.pm,v 1.14 2010-01-13 11:03:01 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 =head1 NAME
 
@@ -380,9 +380,9 @@ sub ObjectDataGet {
 
     # define known objects and function calls
     my %ObjectAction = (
-        ITSMChange       => \&_ObjectITSMChange,
-        ITSMWorkOrder    => \&_ObjectITSMWorkOrder,
-        ITSMWorkOrderAll => \&_ObjectITSMWorkOrderAll,
+        ITSMChange       => '_ObjectITSMChange',
+        ITSMWorkOrder    => '_ObjectITSMWorkOrder',
+        ITSMWorkOrderAll => '_ObjectITSMWorkOrderAll',
     );
 
     # define the needed selectors
@@ -407,24 +407,45 @@ sub ObjectDataGet {
     my $ActionSub      = $ObjectAction{$ObjectType};
     my $ActionSelector = $ObjectSelector{$ObjectType};
 
-    # handle 'all' or 'any' in a special way
-    if ( $Param{Selector} =~ m{ ( all | any ) }xms ) {
-        $ActionSub = $ObjectAction{ $ObjectType . 'All' };
-        return $Self->$ActionSub(
-            ConditionID     => $Param{ConditionID},
-            $ActionSelector => $Param{Selector},
-            UserID          => $Param{UserID},
+    # check for available function
+    if ( !$Self->can($ActionSub) ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "No function '$ActionSub' available for '$ObjectType'!",
         );
+        return;
     }
 
-    # get and return object
-    return [
-        $Self->$ActionSub(
+    # object data
+    my @ObjectData;
+
+    # handle 'all' or 'any' in a special way
+    if ( $Param{Selector} =~ m{ ( all | any ) }xms ) {
+
+        # get function name for getting all objects
+        $ActionSub = $ObjectAction{ $ObjectType . 'All' };
+
+        # get all objects
+        my $AllObjects = $Self->$ActionSub(
             ConditionID     => $Param{ConditionID},
             $ActionSelector => $Param{Selector},
             UserID          => $Param{UserID},
-            )
-    ];
+        ) || [];
+
+        # extract data
+        @ObjectData = @{$AllObjects};
+
+        return \@ObjectData;
+    }
+
+    # get object data
+    push @ObjectData, $Self->$ActionSub(
+        ConditionID     => $Param{ConditionID},
+        $ActionSelector => $Param{Selector},
+        UserID          => $Param{UserID},
+    ) || {};
+
+    return \@ObjectData;
 }
 
 =item _ObjectITSMChange()
@@ -521,6 +542,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.13 $ $Date: 2010-01-13 00:33:53 $
+$Revision: 1.14 $ $Date: 2010-01-13 11:03:01 $
 
 =cut
