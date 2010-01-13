@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.134 2010-01-12 14:25:53 reb Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.135 2010-01-13 02:16:22 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -1022,6 +1022,19 @@
             </Hash>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="ITSMChange::EventModule###03-Condition" Required="0" Valid="1">
+        <Description Lang="en">ITSM event module that matches conditions and executes actions.</Description>
+        <Description Lang="de">ITSM Event Modul zum Überprüfen von Conditions und zum Ausführen von Actions.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::Event</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::System::ITSMChange::Event::Condition</Item>
+                <Item Key="Event">(ChangeAddPost|ChangeUpdatePost|ChangeDeletePost)</Item>
+                <Item Key="Transaction">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::EventModule###01-HistoryAdd" Required="0" Valid="1">
         <Description Lang="en">ITSM event module updates the history of workorder objects.</Description>
         <Description Lang="de">ITSM Event Modul aktualisiert die Historie von Workorder Objekten.</Description>
@@ -1057,6 +1070,19 @@
             <Hash>
                 <Item Key="Module">Kernel::System::ITSMChange::Event::Notification</Item>
                 <Item Key="Event">(WorkOrderAddPost|WorkOrderUpdatePost|WorkOrderDeletePost|WorkOrderLinkAddPost|WorkOrderLinkDeletePost|WorkOrderAttachmentAddPost|WorkOrderAttachmentDeletePost)</Item>
+                <Item Key="Transaction">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMWorkOrder::EventModule###03-Notification" Required="0" Valid="1">
+        <Description Lang="en">ITSM event module that matches conditions and executes actions.</Description>
+        <Description Lang="de">ITSM Event Modul zum Überprüfen von Conditions und zum Ausführen von Actions.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::Event</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::System::ITSMChange::Event::Condition</Item>
+                <Item Key="Event">(WorkOrderAddPost|WorkOrderUpdatePost)</Item>
                 <Item Key="Transaction">0</Item>
             </Hash>
         </Setting>
