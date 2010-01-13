@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.74 2010-01-12 19:45:30 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.75 2010-01-13 05:27:28 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.74 $) [1];
+$VERSION = qw($Revision: 1.75 $) [1];
 
 =head1 NAME
 
@@ -494,14 +494,6 @@ sub WorkOrderUpdate {
         UserID => $Param{UserID},
     );
 
-    # Handle the special cases for the time
-    my $DefaultTimeStamp = '9999-01-01 00:00:00';
-    for my $TimeType (qw(ActualStartTime ActualEndTime PlannedStartTime PlannedEndTime)) {
-        if ( exists $Param{$TimeType} && !defined $Param{$TimeType} ) {
-            $Param{$TimeType} = $DefaultTimeStamp;
-        }
-    }
-
     # map update attributes to column names
     my %Attribute = (
         WorkOrderTitle   => 'title',
@@ -525,15 +517,26 @@ sub WorkOrderUpdate {
     my $SQL = 'UPDATE change_workorder SET ';
     my @Bind;
 
+    # define the DefaultTimeStamp
+    my $DefaultTimeStamp = '9999-01-01 00:00:00';
+
     ATTRIBUTE:
     for my $Attribute ( keys %Attribute ) {
 
         # preserve the old value, when the column isn't in function parameters
         next ATTRIBUTE if !exists $Param{$Attribute};
 
-        # param checking has already been done, so this is safe
-        $SQL .= "$Attribute{$Attribute} = ?, ";
-        push @Bind, \$Param{$Attribute};
+        # attribute is defined
+        if ( defined $Param{$Attribute} ) {
+            $SQL .= "$Attribute{$Attribute} = ?, ";
+            push @Bind, \$Param{$Attribute};
+        }
+
+        # attribute is not defined and is one of the time parameters
+        elsif ( $Attribute =~ m{ \A ( Actual | Planned ) ( Start | End ) Time \z }xms ) {
+            $SQL .= "$Attribute{$Attribute} = ?, ";
+            push @Bind, \$DefaultTimeStamp;
+        }
     }
 
     # addition of accounted time
@@ -2679,6 +2682,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.74 $ $Date: 2010-01-12 19:45:30 $
+$Revision: 1.75 $ $Date: 2010-01-13 05:27:28 $
 
 =cut
