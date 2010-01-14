@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeHistory.pm - the OTRS::ITSM::ChangeManagement change history module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeHistory.pm,v 1.33 2010-01-14 16:10:10 bes Exp $
+# $Id: AgentITSMChangeHistory.pm,v 1.34 2010-01-14 17:17:58 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::History;
 use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.33 $) [1];
+$VERSION = qw($Revision: 1.34 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -125,7 +125,7 @@ sub Run {
 
         # determine what should be shown
         my $HistoryType = $HistoryEntry->{HistoryType};
-        if ( $HistoryType =~ m{ Update \z }xms ) {
+        if ( $HistoryType =~ m{ \A (?: Change | ChangeCAB | WorkOrder ) Update \z }xms ) {
 
             # The displayed fieldname might be changed in the following loop
             my $DisplayedFieldname = $HistoryEntry->{Fieldname};
@@ -148,7 +148,7 @@ sub Run {
                                 | WorkOrderAgent | ChangeBuilder | ChangeManager
                             )           # end capture of $Type
                             ID          # processing only for the 'ID' fields
-                            }xms
+                        }xms
                         )
                     {
                         my $Value;
@@ -199,6 +199,16 @@ sub Run {
                         # The content has changed, so change the displayed fieldname as well
                         $DisplayedFieldname = $Type;
                     }
+                    elsif (
+                        $HistoryEntry->{Fieldname} eq 'CABAgents'
+                        || $HistoryEntry->{Fieldname} eq 'CABCustomers'
+                        )
+                    {
+
+                        # ContentNew and ContentOld contain a '%%' seperated list of user ids
+                        # reformat it as a comma separated list
+                        $HistoryEntry->{$ContentNewOrOld} =~ s{ % % }{,}xmsg;
+                    }
 
                     # replace HTML breaks with single space
                     $HistoryEntry->{$ContentNewOrOld} =~ s{ < br \s* /? > }{ }xmsg;
@@ -226,9 +236,7 @@ sub Run {
             }
 
             # set description
-            $Data{Content} = join '%%', $DisplayedFieldname,
-                $ContentNew,
-                $ContentOld;
+            $Data{Content} = join '%%', $DisplayedFieldname, $ContentNew, $ContentOld;
         }
         else {
             $Data{Content} = $HistoryEntry->{ContentNew};
@@ -248,10 +256,10 @@ sub Run {
             # clean the values
             for my $Value (@Values) {
                 if ( $Data{Content} ) {
-                    $Data{Content} .= "\", ";
+                    $Data{Content} .= '", ';
                 }
 
-                $Data{Content} .= "\"$Value";
+                $Data{Content} .= qq{"$Value};
             }
 
             # we need at least a double quote
@@ -272,7 +280,9 @@ sub Run {
                 $Data{Content} = '"' . $HistoryEntry->{WorkOrderID} . '", ' . $Data{Content};
             }
 
-            # show 'nice' output
+            # show 'nice' output with variable substitution
+            # sample input:
+            # ChangeHistory::ChangeLinkAdd", "Ticket", "1
             $Data{Content} = $Self->{LayoutObject}->{LanguageObject}->Get(
                 $HistoryItemType . 'History::' . $HistoryEntryType . '", ' . $Data{Content},
             );

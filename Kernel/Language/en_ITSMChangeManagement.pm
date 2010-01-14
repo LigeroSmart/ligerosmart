@@ -2,7 +2,7 @@
 # Kernel/Language/en_ITSMChangeManagement.pm - the english translation of ITSMChangeManagement
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: en_ITSMChangeManagement.pm,v 1.14 2010-01-14 15:28:06 bes Exp $
+# $Id: en_ITSMChangeManagement.pm,v 1.15 2010-01-14 17:17:58 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -34,7 +34,7 @@ sub Data {
     $Lang->{'ChangeHistory::ChangeUpdate'}           = '%s: New: %s -> Old: %s';
     $Lang->{'ChangeHistory::ChangeLinkAdd'}          = 'Link to %s (ID=%s) added';
     $Lang->{'ChangeHistory::ChangeLinkDelete'}       = 'Link to %s (ID=%s) deleted';
-    $Lang->{'ChangeHistory::ChangeCABUpdate'}        = 'CAB %s';
+    $Lang->{'ChangeHistory::ChangeCABUpdate'}        = '%s: New: %s -> Old: %s';
     $Lang->{'ChangeHistory::ChangeCABDelete'}        = 'CAB Deleted %s';
     $Lang->{'ChangeHistory::ChangeAttachmentAdd'}    = 'New Attachment: %s';
     $Lang->{'ChangeHistory::ChangeAttachmentDelete'} = 'Deleted Attachment %s';
