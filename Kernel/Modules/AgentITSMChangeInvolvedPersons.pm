@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeInvolvedPersons.pm - the OTRS::ITSM::ChangeManagement change involved persons module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.31 2010-01-06 13:11:56 bes Exp $
+# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.32 2010-01-14 10:59:55 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,11 +15,10 @@ use strict;
 use warnings;
 
 use Kernel::System::ITSMChange;
-use Kernel::System::User;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.31 $) [1];
+$VERSION = qw($Revision: 1.32 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -29,7 +28,7 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Object (qw(ParamObject DBObject LayoutObject LogObject ConfigObject)) {
+    for my $Object (qw(ParamObject DBObject LayoutObject LogObject UserObject ConfigObject)) {
         if ( !$Self->{$Object} ) {
             $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
         }
@@ -37,7 +36,6 @@ sub new {
 
     # create needed objects
     $Self->{CustomerUserObject} = Kernel::System::CustomerUser->new(%Param);
-    $Self->{UserObject}         = Kernel::System::User->new(%Param);
     $Self->{ChangeObject}       = Kernel::System::ITSMChange->new(%Param);
 
     # get config of frontend module
