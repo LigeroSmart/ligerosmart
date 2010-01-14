@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.44 2010-01-14 09:52:40 mae Exp $
+# $Id: ITSMCondition.t,v 1.45 2010-01-14 10:17:32 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1562,6 +1562,130 @@ my @ExpressionTests = (
                 ConditionID  => $ConditionIDs[2],
                 Selector     => $WorkOrderIDs[0],
                 CompareValue => $WorkOrderTitles[0],
+                UserID       => 1,
+            },
+        },
+    },
+    {
+        MatchSuccess => 1,
+        SourceData   => {
+            ExpressionAdd => {
+                ObjectID => {
+                    ObjectLookup => {
+                        Name   => 'ITSMWorkOrder',
+                        UserID => 1,
+                    },
+                },
+                AttributeID => {
+                    AttributeLookup => {
+                        Name   => 'WorkOrderTitle',
+                        UserID => 1,
+                    },
+                },
+                OperatorID => {
+                    OperatorLookup => {
+                        Name   => 'begins with',
+                        UserID => 1,
+                    },
+                },
+
+                # static fields
+                ConditionID  => $ConditionIDs[2],
+                Selector     => $WorkOrderIDs[0],
+                CompareValue => substr( $WorkOrderTitles[0], 0, 4 ),
+                UserID       => 1,
+            },
+        },
+    },
+    {
+        MatchSuccess => 0,
+        SourceData   => {
+            ExpressionAdd => {
+                ObjectID => {
+                    ObjectLookup => {
+                        Name   => 'ITSMWorkOrder',
+                        UserID => 1,
+                    },
+                },
+                AttributeID => {
+                    AttributeLookup => {
+                        Name   => 'WorkOrderTitle',
+                        UserID => 1,
+                    },
+                },
+                OperatorID => {
+                    OperatorLookup => {
+                        Name   => 'begins with',
+                        UserID => 1,
+                    },
+                },
+
+                # static fields
+                ConditionID  => $ConditionIDs[2],
+                Selector     => $WorkOrderIDs[0],
+                CompareValue => substr( $WorkOrderTitles[0], 1 ),
+                UserID       => 1,
+            },
+        },
+    },
+    {
+        MatchSuccess => 1,
+        SourceData   => {
+            ExpressionAdd => {
+                ObjectID => {
+                    ObjectLookup => {
+                        Name   => 'ITSMWorkOrder',
+                        UserID => 1,
+                    },
+                },
+                AttributeID => {
+                    AttributeLookup => {
+                        Name   => 'WorkOrderTitle',
+                        UserID => 1,
+                    },
+                },
+                OperatorID => {
+                    OperatorLookup => {
+                        Name   => 'ends with',
+                        UserID => 1,
+                    },
+                },
+
+                # static fields
+                ConditionID  => $ConditionIDs[2],
+                Selector     => $WorkOrderIDs[0],
+                CompareValue => substr( $WorkOrderTitles[0], -4 ),
+                UserID       => 1,
+            },
+        },
+    },
+    {
+        MatchSuccess => 0,
+        SourceData   => {
+            ExpressionAdd => {
+                ObjectID => {
+                    ObjectLookup => {
+                        Name   => 'ITSMWorkOrder',
+                        UserID => 1,
+                    },
+                },
+                AttributeID => {
+                    AttributeLookup => {
+                        Name   => 'WorkOrderTitle',
+                        UserID => 1,
+                    },
+                },
+                OperatorID => {
+                    OperatorLookup => {
+                        Name   => 'ends with',
+                        UserID => 1,
+                    },
+                },
+
+                # static fields
+                ConditionID  => $ConditionIDs[2],
+                Selector     => $WorkOrderIDs[0],
+                CompareValue => substr( $WorkOrderTitles[0], 1, 3 ),
                 UserID       => 1,
             },
         },

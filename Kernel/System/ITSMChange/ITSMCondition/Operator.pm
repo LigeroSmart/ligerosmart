@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Operator.pm - all condition operator functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Operator.pm,v 1.13 2010-01-14 09:52:40 mae Exp $
+# $Id: Operator.pm,v 1.14 2010-01-14 10:17:32 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 =head1 NAME
 
@@ -498,7 +498,7 @@ sub _OperatorExecute {
         'contains'     => '_OperatorContains',
         'not contains' => '_OperatorNotContains',
         'begins with'  => '_OperatorBeginsWith',
-        'ends with'    => '_OperatorEndWith',
+        'ends with'    => '_OperatorEndsWith',
 
         # action operators
         'set'  => '_OperatorIsEmpty',
@@ -867,6 +867,81 @@ sub _OperatorNotContains {
     return !$Self->_OperatorContains(%Param);
 }
 
+=item _OperatorBeginsWith()
+
+Returns true or false (1/undef) if value1 begins with value2.
+
+    my $Result = $ConditionObject->_OperatorBeginsWith(
+        Value1 => 'SomeValue',
+        Value2 => 'Some',
+    );
+
+=cut
+
+sub _OperatorBeginsWith {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(Value1 Value2)) {
+        if ( !exists $Param{$Argument} || !defined $Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # get lower case, for performance issues
+    my $LowerValue1 = lc $Param{Value1};
+    my $LowerValue2 = lc $Param{Value2};
+
+    # check embedded string
+    my $BeginsWith = $LowerValue1 =~ m{ \A $LowerValue2 .* \z }xms;
+
+    # return result of equation
+    return $BeginsWith;
+}
+
+=item _OperatorEndsWith()
+
+Returns true or false (1/undef) if value1 ends with value2.
+
+    my $Result = $ConditionObject->_OperatorEndsWith(
+        Value1 => 'SomeValue',
+        Value2 => 'Value',
+    );
+
+=cut
+
+sub _OperatorEndsWith {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(Value1 Value2)) {
+        if ( !exists $Param{$Argument} || !defined $Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # get lower case, for performance issues
+    my $LowerValue1 = lc $Param{Value1};
+    my $LowerValue2 = lc $Param{Value2};
+
+    # check embedded string
+    my $EndsWith = $LowerValue1 =~ m{ \A .* $LowerValue2 \z }xms;
+
+    # return result of equation
+    return $EndsWith;
+}
+
+# TODO: add 'set' operator
+# TODO: add 'lock' operator
+
 1;
 
 =back
@@ -883,6 +958,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.13 $ $Date: 2010-01-14 09:52:40 $
+$Revision: 1.14 $ $Date: 2010-01-14 10:17:32 $
 
 =cut
