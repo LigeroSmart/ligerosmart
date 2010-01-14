@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/History.pm - all change and workorder history functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: History.pm,v 1.24 2010-01-12 11:28:17 reb Exp $
+# $Id: History.pm,v 1.25 2010-01-14 15:14:10 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.24 $) [1];
+$VERSION = qw($Revision: 1.25 $) [1];
 
 =head1 NAME
 
@@ -108,9 +108,9 @@ Adds a single history entry to the history. Returns 1 on success, C<undef> other
         HistoryType   => 'WorkOrderAdd',  # either HistoryType or HistoryTypeID is needed
         HistoryTypeID => 1,               # either HistoryType or HistoryTypeID is needed
         Fieldname     => 'Justification', # optional
-        UserID        => 1,
         ContentNew    => 'Any useful information', # optional
         ContentOld    => 'Old value of field',     # optional
+        UserID        => 1,
     );
 
 =cut
@@ -119,6 +119,7 @@ sub HistoryAdd {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
+    # ChangeID is always needed, workorder id is only needed for workorder events
     for my $Needed (qw(UserID ChangeID)) {
         if ( !$Param{$Needed} ) {
             $Self->{LogObject}->Log(
@@ -134,15 +135,6 @@ sub HistoryAdd {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message  => 'Need HistoryType or HistoryTypeID!',
-        );
-        return;
-    }
-
-    # either ChangeID or WorkOrderID is needed
-    if ( !( $Param{ChangeID} || $Param{WorkOrderID} ) ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => 'Need ChangeID or WorkOrderID!',
         );
         return;
     }
@@ -922,6 +914,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.24 $ $Date: 2010-01-12 11:28:17 $
+$Revision: 1.25 $ $Date: 2010-01-14 15:14:10 $
 
 =cut

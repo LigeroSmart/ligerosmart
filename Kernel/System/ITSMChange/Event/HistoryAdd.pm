@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/HistoryAdd.pm - HistoryAdd event module for ITSMChange
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: HistoryAdd.pm,v 1.25 2010-01-13 15:31:41 bes Exp $
+# $Id: HistoryAdd.pm,v 1.26 2010-01-14 15:14:10 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,15 +17,15 @@ use warnings;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.25 $) [1];
+$VERSION = qw($Revision: 1.26 $) [1];
 
 =head1 NAME
 
-Kernel::System::ITSMChange::Event::HistoryAdd - Change history add lib
+Kernel::System::ITSMChange::Event::HistoryAdd - Change and workorder history add lib
 
 =head1 SYNOPSIS
 
-Event handler module for history add in Change.
+Event handler module for history add in change management.
 
 =head1 PUBLIC INTERFACE
 
@@ -41,7 +41,6 @@ create an object
     use Kernel::System::DB;
     use Kernel::System::Main;
     use Kernel::System::Time;
-    use Kernel::System::ITSMChange;
     use Kernel::System::ITSMChange::Event::HistoryAdd;
 
     my $ConfigObject = Kernel::Config->new();
@@ -67,14 +66,6 @@ create an object
         LogObject    => $LogObject,
         MainObject   => $MainObject,
     );
-    my $ChangeObject = Kernel::System::ITSMChange->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        DBObject     => $DBObject,
-        TimeObject   => $TimeObject,
-        MainObject   => $MainObject,
-    );
     my $HistoryAddObject = Kernel::System::ITSMChange::Event::HistoryAdd->new(
         ConfigObject => $ConfigObject,
         EncodeObject => $EncodeObject,
@@ -82,7 +73,6 @@ create an object
         DBObject     => $DBObject,
         TimeObject   => $TimeObject,
         MainObject   => $MainObject,
-        ChangeObject => $ChangeObject,
     );
 
 =cut
@@ -96,14 +86,16 @@ sub new {
 
     # get needed objects
     for my $Object (
-        qw(DBObject ConfigObject EncodeObject LogObject MainObject TimeObject ChangeObject)
+        qw(DBObject ConfigObject EncodeObject LogObject MainObject TimeObject)
         )
     {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
     # create additional objects
-    $Self->{HistoryObject} = Kernel::System::ITSMChange::History->new( %{$Self} );
+    $Self->{ChangeObject}    = Kernel::System::ITSMChange->new( %{$Self} );
+    $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
+    $Self->{HistoryObject}   = Kernel::System::ITSMChange::History->new( %{$Self} );
 
     return $Self;
 }
@@ -111,19 +103,35 @@ sub new {
 =item Run()
 
 The C<Run()> method handles the events and adds/deletes the history entries for
-the given change.
+the given change or workorder.
 
 It returns 1 on success, C<undef> otherwise.
 
     my $Success = $HistoryAddObject->Run(
         Event => 'ChangeUpdatePost',
         Data => {
-            ChangeID    => 123,
-            ChangeTitle => 'test',
+            ChangeID       => 123,
+            ChangeTitle    => 'test',
         },
         Config => {
             Event       => '(ChangeAddPost|ChangeUpdatePost|ChangeCABUpdatePost|ChangeCABDeletePost|ChangeDeletePost)',
             Module      => 'Kernel::System::ITSMChange::Event::HistoryAdd',
+            Transaction => '0',
+        },
+        UserID => 1,
+    );
+
+For workorder events the C<WorkOrderID> is expected.
+
+    my $Success = $HistorAddObject->Run(
+        Event => 'WorkOrderUpdatePost',
+        Data => {
+            WorkOrderID    => 456,
+            WorkOrderTitle => 'test',
+        },
+        Config => {
+            Event       => '(WorkOrderAddPost|WorkOrderUpdatePost|WorkOrderDeletePost)',
+            Module      => 'Kernel::System::ITSMChange::ITSMWorkOrder::Event::HistoryAdd',
             Transaction => '0',
         },
         UserID => 1,
@@ -146,34 +154,75 @@ sub Run {
     }
 
     # in history event handling we use Event name without the trailing 'Post'
-    ( my $HistoryType = $Param{Event} ) =~ s{ Post \z }{}xms;
+    ( my $Event = $Param{Event} ) =~ s{ Post \z }{}xms;
+
+    # distinguish between Change and WorkOrder events, based on naming convention
+    my ($Type) = $Event =~ m{ \A (Change|WorkOrder) }xms;
+    if ( !$Type ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Could not determine the object type for the event '$Event'!"
+        );
+        return;
+    }
 
     # do history stuff
-    if ( $HistoryType eq 'ChangeAdd' ) {
+    if ( $Event eq 'ChangeAdd' || $Event eq 'WorkOrderAdd' ) {
 
         # tell history that a change was added
         return if !$Self->{HistoryObject}->HistoryAdd(
-            HistoryType => $HistoryType,
             ChangeID    => $Param{Data}->{ChangeID},
-            ContentNew  => $Param{Data}->{ChangeID},
+            WorkOrderID => $Param{Data}->{WorkOrderID},
+            HistoryType => $Event,
+            ContentNew  => $Param{Data}->{ $Type . 'ID' },
             UserID      => $Param{UserID},
         );
     }
-    elsif ( $HistoryType eq 'ChangeUpdate' ) {
+    elsif ( $Event eq 'ChangeUpdate' || $Event eq 'WorkOrderUpdate' ) {
 
-        # get old data
-        my $OldData = $Param{Data}->{OldChangeData};
+        # get old data, either from change or workorder
+        my $OldData  = $Param{Data}->{"Old${Type}Data"};
+        my $ChangeID = $OldData->{ChangeID};               # works for change and workorder events
 
         FIELD:
         for my $Field ( keys %{ $Param{Data} } ) {
 
             # avoid recursion
-            next FIELD if $Field eq 'OldChangeData';
+            next FIELD if $Field eq "Old{$Type}Data";
 
             # we do not track the user id and "plain" columns
             next FIELD if $Field eq 'UserID';
-            next FIELD if $Field eq 'JustificationPlain';
-            next FIELD if $Field eq 'DescriptionPlain';
+            next FIELD if $Field eq 'JustificationPlain';    # change
+            next FIELD if $Field eq 'DescriptionPlain';      # change
+            next FIELD if $Field eq 'ReportPlain';           # workorder
+            next FIELD if $Field eq 'InstructionPlain';      # workorder
+
+            # special handling for accounted time
+            if ( $Type eq 'WorkOrder' && $Field eq 'AccountedTime' ) {
+
+                # we do not track if accounted time was empty
+                # TODO: or $Param{Data}->{AccountedTime};  ?
+                next FIELD if !$Param{AccountedTime};
+
+                # get workorder data
+                my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+                    WorkOrderID => $Param{Data}->{WorkOrderID},
+                    UserID      => $Param{UserID},
+                );
+
+                # save history if accounted time has changed
+                $Self->{HistoryObject}->HistoryAdd(
+                    ChangeID    => $ChangeID,
+                    WorkOrderID => $Param{Data}->{WorkOrderID},
+                    HistoryType => $Event,
+                    Fieldname   => $Field,
+                    ContentNew  => $WorkOrder->{$Field},
+                    ContentOld  => $OldData->{$Field},
+                    UserID      => $Param{UserID},
+                );
+
+                next FIELD;
+            }
 
             # check if field has changed
             my $FieldHasChanged = $Self->_HasFieldChanged(
@@ -184,23 +233,50 @@ sub Run {
             # save history if field changed
             if ($FieldHasChanged) {
 
-                my $ContentNew = $Param{Data}->{$Field};
-                my $ContentOld = $OldData->{$Field};
-
                 my $Success = $Self->{HistoryObject}->HistoryAdd(
-                    ChangeID    => $Param{Data}->{ChangeID},
+                    ChangeID    => $ChangeID,
+                    WorkOrderID => $Param{Data}->{WorkOrderID},
+                    HistoryType => $Event,
                     Fieldname   => $Field,
-                    ContentNew  => $ContentNew,
-                    ContentOld  => $ContentOld,
+                    ContentNew  => $Param{Data}->{$Field},
+                    ContentOld  => $OldData->{$Field},
                     UserID      => $Param{Data}->{UserID},
-                    HistoryType => $HistoryType,
                 );
 
                 next FIELD if !$Success;
             }
         }
     }
-    elsif ( $HistoryType eq 'ChangeDelete' ) {
+    elsif ( $Event eq 'WorkOrderDelete' ) {
+
+        # get old data
+        my $OldData = $Param{Data}->{OldWorkOrderData};
+
+        # get existing history entries for this workorder
+        my $HistoryEntries = $Self->{HistoryObject}->WorkOrderHistoryGet(
+            WorkOrderID => $OldData->{WorkOrderID},
+            UserID      => $Param{UserID},
+        );
+
+        # update history entries: delete workorder id
+        HISTORYENTRY:
+        for my $HistoryEntry ( @{$HistoryEntries} ) {
+            $Self->{HistoryObject}->HistoryUpdate(
+                HistoryEntryID => $HistoryEntry->{HistoryEntryID},
+                WorkOrderID    => undef,
+                UserID         => $Param{UserID},
+            );
+        }
+
+        # add history entry for WorkOrder deletion
+        return if !$Self->{HistoryObject}->HistoryAdd(
+            ChangeID    => $OldData->{ChangeID},
+            HistoryType => $Event,
+            ContentNew  => $OldData->{WorkOrderID},
+            UserID      => $Param{UserID},
+        );
+    }
+    elsif ( $Event eq 'ChangeDelete' ) {
 
         # delete history of change
         return if !$Self->{HistoryObject}->ChangeHistoryDelete(
@@ -210,7 +286,7 @@ sub Run {
     }
 
     # handle ChangeCAB events
-    elsif ( $HistoryType eq 'ChangeCABUpdate' || $HistoryType eq 'ChangeCABDelete' ) {
+    elsif ( $Event eq 'ChangeCABUpdate' || $Event eq 'ChangeCABDelete' ) {
 
         # get old data
         my $OldData = $Param{Data}->{OldChangeCABData};
@@ -232,11 +308,11 @@ sub Run {
 
                 my $Success = $Self->{HistoryObject}->HistoryAdd(
                     ChangeID    => $Param{Data}->{ChangeID},
+                    HistoryType => $Event,
                     Fieldname   => $Field,
                     ContentNew  => join( '%%', @{ $Param{Data}->{$Field} } ),
                     ContentOld  => join( '%%', @{ $OldData->{$Field} } ),
                     UserID      => $Param{Data}->{UserID},
-                    HistoryType => $HistoryType,
                 );
 
                 next FIELD if !$Success;
@@ -245,26 +321,40 @@ sub Run {
     }
 
     # handle link events
-    elsif ( $HistoryType eq 'ChangeLinkAdd' || $HistoryType eq 'ChangeLinkDelete' ) {
+    elsif (
+        $Event    eq 'ChangeLinkAdd'
+        || $Event eq 'ChangeLinkDelete'
+        || $Event eq 'WorkOrderLinkAdd'
+        || $Event eq 'WorkOrderLinkDelete'
+        )
+    {
 
         # tell history that a link was added
         return if !$Self->{HistoryObject}->HistoryAdd(
-            HistoryType => $HistoryType,
             ChangeID    => $Param{Data}->{ChangeID},
-            UserID      => $Param{UserID},
+            WorkOrderID => $Param{Data}->{WorkOrderID},
+            HistoryType => $Event,
             ContentNew  => join( '%%', $Param{Data}->{SourceObject}, $Param{Data}->{SourceKey} ),
+            UserID      => $Param{UserID},
         );
     }
 
     # handle attachment events
-    elsif ( $HistoryType eq 'ChangeAttachmentAdd' || $HistoryType eq 'ChangeAttachmentDelete' ) {
+    elsif (
+        $Event    eq 'ChangeAttachmentAdd'
+        || $Event eq 'ChangeAttachmentDelete'
+        || $Event eq 'WorkOrderAttachmentAdd'
+        || $Event eq 'WorkOrderAttachmentDelete'
+        )
+    {
 
         # tell history that an attachment event was triggered
         return if !$Self->{HistoryObject}->HistoryAdd(
-            HistoryType => $HistoryType,
             ChangeID    => $Param{Data}->{ChangeID},
-            UserID      => $Param{UserID},
+            WorkOrderID => $Param{Data}->{WorkOrderID},
+            HistoryType => $Event,
             ContentNew  => $Param{Data}->{Filename},
+            UserID      => $Param{UserID},
         );
     }
 
@@ -358,6 +448,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.25 $ $Date: 2010-01-13 15:31:41 $
+$Revision: 1.26 $ $Date: 2010-01-14 15:14:10 $
 
 =cut
