@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Action.pm - all condition action functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Action.pm,v 1.1 2010-01-14 14:17:19 mae Exp $
+# $Id: Action.pm,v 1.2 2010-01-14 15:01:50 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -34,13 +34,14 @@ All functions for condition actions in ITSMChangeManagement.
 Add a new condition action.
 
     my $ActionID = $ConditionObject->ActionAdd(
-        ConditionID => 123,
-        ObjectID    => 234,
-        AttributeID => 345,
-        OperatorID  => 456,
-        Selector    => 1234',
-        ActionValue => 'rejected',
-        UserID      => 1,
+        ConditionID  => 123,
+        ActionNumber => 5,
+        ObjectID     => 234,
+        AttributeID  => 345,
+        OperatorID   => 456,
+        Selector     => 1234',
+        ActionValue  => 'rejected',
+        UserID       => 1,
     );
 
 =cut
@@ -70,15 +71,23 @@ sub ActionAdd {
 
     # TODO: execute ActionAddPre Event
 
+    # get default action number if not given
+    my $ActionNumber = delete $Param{ActionNumber};
+    if ( !$ActionNumber ) {
+        $ActionNumber = $Self->_GetActionNumber(%Param);
+    }
+
     # add new action name to database
     return if !$Self->{DBObject}->Do(
         SQL => 'INSERT INTO condition_action '
-            . '(condition_id, object_id, attribute_id, '
-            . 'operator_id, selector, action_value) '
+            . '(condition_id, action_number, object_id, '
+            . 'attribute_id, operator_id, selector, '
+            . ' action_value) '
             . 'VALUES (?, ?, ?, ?, ?, ?)',
         Bind => [
-            \$Param{ConditionID}, \$Param{ObjectID}, \$Param{AttributeID},
-            \$Param{OperatorID},  \$Param{Selector}, \$Param{ActionValue},
+            \$Param{ConditionID}, \$ActionNumber, \$Param{ObjectID},
+            \$Param{AttributeID}, \$Param{OperatorID}, \$Param{Selector},
+            \$Param{ActionValue},
         ],
     );
 
@@ -86,11 +95,13 @@ sub ActionAdd {
     my $ActionID;
     return if !$Self->{DBObject}->Prepare(
         SQL => 'SELECT id FROM condition_action '
-            . 'WHERE condition_id = ? AND object_id = ? AND attribute_id = ? '
-            . 'AND operator_id = ? AND selector = ? AND action_value = ?',
+            . 'WHERE condition_id = ? AND action_number = ? AND object_id = ? '
+            . 'AND attribute_id = ? AND operator_id = ? AND selector = ? '
+            . 'AND action_value = ?',
         Bind => [
-            \$Param{ConditionID}, \$Param{ObjectID}, \$Param{AttributeID},
-            \$Param{OperatorID},  \$Param{Selector}, \$Param{ActionValue},
+            \$Param{ConditionID}, \$Param{ActionNumber}, \$Param{ObjectID},
+            \$Param{AttributeID}, \$Param{OperatorID},   \$Param{Selector},
+            \$Param{ActionValue},
         ],
         Limit => 1,
     );
@@ -119,13 +130,14 @@ sub ActionAdd {
 Update a condition action.
 
     my $Success = $ConditionObject->ActionUpdate(
-        ActionID    => 1234,
-        ObjectID    => 234,        # (optional)
-        AttributeID => 345,        # (optional)
-        OperatorID  => 456,        # (optional)
-        Selector    => 1234',      # (optional)
-        ActionValue => 'rejected', # (optional)
-        UserID      => 1,
+        ActionID     => 1234,
+        ActionNumber => 1,          # (optional)
+        ObjectID     => 234,        # (optional)
+        AttributeID  => 345,        # (optional)
+        OperatorID   => 456,        # (optional)
+        Selector     => 1234',      # (optional)
+        ActionValue  => 'rejected', # (optional)
+        UserID       => 1,
     );
 
 =cut
@@ -148,11 +160,12 @@ sub ActionUpdate {
 
     # map update attributes to column names
     my %Attribute = (
-        ObjectID    => 'object_id',
-        AttributeID => 'attribute_id',
-        OperatorID  => 'operator_id',
-        Selector    => 'selector',
-        ActionValue => 'action_value',
+        ActionNumber => 'action_number',
+        ObjectID     => 'object_id',
+        AttributeID  => 'attribute_id',
+        OperatorID   => 'operator_id',
+        Selector     => 'selector',
+        ActionValue  => 'action_value',
     );
 
     # build SQL to update action
@@ -203,6 +216,7 @@ The returned hash reference contains following elements:
 
     $ConditionAction{ActionID}
     $ConditionAction{ConditionID}
+    $ConditionAction{ActionNumber}
     $ConditionAction{ObjectID}
     $ConditionAction{AttributeID}
     $ConditionAction{OperatorID}
@@ -227,8 +241,8 @@ sub ActionGet {
 
     # prepare SQL statement
     return if !$Self->{DBObject}->Prepare(
-        SQL => 'SELECT id, condition_id, object_id, attribute_id, '
-            . 'operator_id, selector, action_value '
+        SQL => 'SELECT id, condition_id, action_number, object_id, '
+            . 'attribute_id, operator_id, selector, action_value '
             . 'FROM condition_action WHERE id = ?',
         Bind  => [ \$Param{ActionID} ],
         Limit => 1,
@@ -237,13 +251,14 @@ sub ActionGet {
     # fetch the result
     my %ActionData;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $ActionData{ActionID}    = $Row[0];
-        $ActionData{ConditionID} = $Row[1];
-        $ActionData{ObjectID}    = $Row[2];
-        $ActionData{AttributeID} = $Row[3];
-        $ActionData{OperatorID}  = $Row[4];
-        $ActionData{Selector}    = $Row[5];
-        $ActionData{ActionValue} = $Row[6];
+        $ActionData{ActionID}     = $Row[0];
+        $ActionData{ConditionID}  = $Row[1];
+        $ActionData{ActionNumber} = $Row[2];
+        $ActionData{ObjectID}     = $Row[3];
+        $ActionData{AttributeID}  = $Row[4];
+        $ActionData{OperatorID}   = $Row[5];
+        $ActionData{Selector}     = $Row[6];
+        $ActionData{ActionValue}  = $Row[7];
     }
 
     # check error
@@ -545,6 +560,52 @@ sub _ActionExecuteInit {
     return \%ActionData;
 }
 
+=item _GetActionNumber()
+
+Get a new unused action number for the given condition.
+The highest current action number for the given condition is
+looked up and incremented by one.
+
+    my $ActionNumber = $ConditionObject->_GetActionNumber(
+        ConditionID => 123,
+    );
+
+=cut
+
+sub _GetActionNumber {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    if ( !$Param{ConditionID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need ConditionID!',
+        );
+        return;
+    }
+
+    # get the largest action number
+    return if !$Self->{DBObject}->Prepare(
+        SQL => 'SELECT MAX(action_number) '
+            . 'FROM condition_action '
+            . 'WHERE condition_id = ?',
+        Bind  => [ \$Param{ConditionID} ],
+        Limit => 1,
+    );
+
+    # fetch the result, default to 0 when there are no actions yet
+    my $ActionNumber;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray ) {
+        $ActionNumber = $Row[0];
+    }
+    $ActionNumber ||= 0;
+
+    # increment number to get a non-existent action number
+    $ActionNumber++;
+
+    return $ActionNumber;
+}
+
 1;
 
 =back
@@ -561,6 +622,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2010-01-14 14:17:19 $
+$Revision: 1.2 $ $Date: 2010-01-14 15:01:50 $
 
 =cut
