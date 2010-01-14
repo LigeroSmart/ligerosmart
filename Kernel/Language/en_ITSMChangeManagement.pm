@@ -1,8 +1,8 @@
 # --
 # Kernel/Language/en_ITSMChangeManagement.pm - the english translation of ITSMChangeManagement
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: en_ITSMChangeManagement.pm,v 1.12 2009-12-30 11:00:21 reb Exp $
+# $Id: en_ITSMChangeManagement.pm,v 1.13 2010-01-14 15:23:55 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -30,30 +30,32 @@ sub Data {
     $Lang->{'ITSM Change'} = 'Change';
 
     # Change history
-    $Lang->{'ChangeHistory::ChangeAdd'}        = 'New Change (ID=%s)';
-    $Lang->{'ChangeHistory::ChangeUpdate'}     = '%s: New: %s -> Old: %s';
-    $Lang->{'ChangeHistory::ChangeLinkAdd'}    = 'Link to %s (ID=%s) added';
-    $Lang->{'ChangeHistory::ChangeLinkDelete'} = 'Link to %s (ID=%s) deleted';
-    $Lang->{'ChangeHistory::ChangeCABUpdate'}  = 'CAB %s';
-    $Lang->{'ChangeHistory::ChangeCABDelete'}  = 'CAB Deleted %s';
+    $Lang->{'ChangeHistory::ChangeAdd'}              = 'New Change (ID=%s)';
+    $Lang->{'ChangeHistory::ChangeUpdate'}           = '%s: New: %s -> Old: %s';
+    $Lang->{'ChangeHistory::ChangeLinkAdd'}          = 'Link to %s (ID=%s) added';
+    $Lang->{'ChangeHistory::ChangeLinkDelete'}       = 'Link to %s (ID=%s) deleted';
+    $Lang->{'ChangeHistory::ChangeCABUpdate'}        = 'CAB %s';
+    $Lang->{'ChangeHistory::ChangeCABDelete'}        = 'CAB Deleted %s';
     $Lang->{'ChangeHistory::ChangeAttachmentAdd'}    = 'New Attachment: %s';
     $Lang->{'ChangeHistory::ChangeAttachmentDelete'} = 'Deleted Attachment %s';
 
     # WorkOrder history
-    $Lang->{'WorkOrderHistory::WorkOrderAdd'}        = 'New Workorder (ID=%s)';
-    $Lang->{'WorkOrderHistory::WorkOrderUpdate'}     = '%s: New: %s -> Old: %s';
-    $Lang->{'WorkOrderHistory::WorkOrderLinkAdd'}    = 'Link to %s (ID=%s) added';
-    $Lang->{'WorkOrderHistory::WorkOrderLinkDelete'} = 'Link to %s (ID=%s) deleted';
-    $Lang->{'WorkOrderHistory::WorkOrderDelete'}     = 'Workorder (ID=%s) deleted';
-    $Lang->{'WorkOrderHistory::WorkOrderAttachmentAdd'}       = 'New Attachment for WorkOrder: %s';
-    $Lang->{'WorkOrderHistory::WorkOrderAttachmentDelete'}    = 'Deleted Attachment from WorkOrder: %s';
+    $Lang->{'WorkOrderHistory::WorkOrderAdd'}              = 'New Workorder (ID=%s)';
+    $Lang->{'WorkOrderHistory::WorkOrderUpdate'}           = '%s: New: %s -> Old: %s';
+    $Lang->{'WorkOrderHistory::WorkOrderLinkAdd'}          = 'Link to %s (ID=%s) added';
+    $Lang->{'WorkOrderHistory::WorkOrderLinkDelete'}       = 'Link to %s (ID=%s) deleted';
+    $Lang->{'WorkOrderHistory::WorkOrderDelete'}           = 'Workorder (ID=%s) deleted';
+    $Lang->{'WorkOrderHistory::WorkOrderAttachmentAdd'}    = 'New Attachment for WorkOrder: %s';
+    $Lang->{'WorkOrderHistory::WorkOrderAttachmentDelete'} = 'Deleted Attachment from WorkOrder: %s';
 
     # long WorkOrder history
-    $Lang->{'WorkOrderHistory::WorkOrderAddWithWorkorderID'}        = 'New Workorder (ID=%s)';
-    $Lang->{'WorkOrderHistory::WorkOrderUpdateWithWorkorderID'}     = '(ID=%s) %s: New: %s -> Old: %s';
-    $Lang->{'WorkOrderHistory::WorkOrderLinkAddWithWorkorderID'}    = '(ID=%s) Link to %s (ID=%s) added';
-    $Lang->{'WorkOrderHistory::WorkOrderLinkDeleteWithWorkorderID'} = '(ID=%s) Link to %s (ID=%s) deleted';
-    $Lang->{'WorkOrderHistory::WorkOrderDeleteWithWorkorderID'}     = 'Workorder (ID=%s) deleted';
+    $Lang->{'WorkOrderHistory::WorkOrderAddWithWorkorderID'}              = 'New Workorder (ID=%s)';
+    $Lang->{'WorkOrderHistory::WorkOrderUpdateWithWorkorderID'}           = '(ID=%s) %s: New: %s -> Old: %s';
+    $Lang->{'WorkOrderHistory::WorkOrderLinkAddWithWorkorderID'}          = '(ID=%s) Link to %s (ID=%s) added';
+    $Lang->{'WorkOrderHistory::WorkOrderLinkDeleteWithWorkorderID'}       = '(ID=%s) Link to %s (ID=%s) deleted';
+    $Lang->{'WorkOrderHistory::WorkOrderDeleteWithWorkorderID'}           = 'Workorder (ID=%s) deleted';
+    $Lang->{'WorkOrderHistory::WorkOrderAttachmentAddWithWorkorderID'}    = '(ID=%s) New Attachment for WorkOrder: %s';
+    $Lang->{'WorkOrderHistory::WorkOrderAttachmentDeleteWithWorkorderID'} = '(ID=%s) Deleted Attachment from WorkOrder: %s';
 
     # change states
     $Lang->{'requested'}        = 'Requested';

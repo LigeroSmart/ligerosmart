@@ -1,8 +1,8 @@
 # --
 # Kernel/Language/de_ITSMChangeManagement.pm - the german translation of ITSMChangeManagement
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: de_ITSMChangeManagement.pm,v 1.15 2009-12-30 11:00:21 reb Exp $
+# $Id: de_ITSMChangeManagement.pm,v 1.16 2010-01-14 15:23:55 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -37,30 +37,32 @@ sub Data {
     $Lang->{'ITSM Change'} = 'Change';
 
     # Change history
-    $Lang->{'ChangeHistory::ChangeAdd'}        = 'Neuer Change (ID=%s)';
-    $Lang->{'ChangeHistory::ChangeUpdate'}     = '%s: Neu: %s -> Alt: %s';
-    $Lang->{'ChangeHistory::ChangeLinkAdd'}    = 'Link zu %s (ID=%s) hinzugefügt';
-    $Lang->{'ChangeHistory::ChangeLinkDelete'} = 'Link zu %s (ID=%s) gelöscht';
-    $Lang->{'ChangeHistory::ChangeCABUpdate'}  = 'CAB %s';
-    $Lang->{'ChangeHistory::ChangeCABDelete'}  = 'CAB gelöscht %s';
+    $Lang->{'ChangeHistory::ChangeAdd'}              = 'Neuer Change (ID=%s)';
+    $Lang->{'ChangeHistory::ChangeUpdate'}           = '%s: Neu: %s -> Alt: %s';
+    $Lang->{'ChangeHistory::ChangeLinkAdd'}          = 'Link zu %s (ID=%s) hinzugefügt';
+    $Lang->{'ChangeHistory::ChangeLinkDelete'}       = 'Link zu %s (ID=%s) gelöscht';
+    $Lang->{'ChangeHistory::ChangeCABUpdate'}        = 'CAB %s';
+    $Lang->{'ChangeHistory::ChangeCABDelete'}        = 'CAB gelöscht %s';
     $Lang->{'ChangeHistory::ChangeAttachmentAdd'}    = 'Neuer Anhang: %s';
     $Lang->{'ChangeHistory::ChangeAttachmentDelete'} = 'Anhang gelöscht: %s';
 
     # WorkOrder history
-    $Lang->{'WorkOrderHistory::WorkOrderAdd'}        = 'Neue Workorder (ID=%s)';
-    $Lang->{'WorkOrderHistory::WorkOrderUpdate'}     = '%s: Neu: %s -> Alt: %s';
-    $Lang->{'WorkOrderHistory::WorkOrderLinkAdd'}    = 'Link zu %s (ID=%s) hinzugefügt';
-    $Lang->{'WorkOrderHistory::WorkOrderLinkDelete'} = 'Link to %s (ID=%s) gelöscht';
-    $Lang->{'WorkOrderHistory::WorkOrderDelete'}     = 'Workorder (ID=%s) gelöscht';
-    $Lang->{'WorkOrderHistory::WorkOrderAttachmentAdd'}       = 'Neuer Anhang für Workorder: %s';
-    $Lang->{'WorkOrderHistory::WorkOrderAttachmentDelete'}    = 'Anhang von Workorder gelöscht: %s';
+    $Lang->{'WorkOrderHistory::WorkOrderAdd'}              = 'Neue Workorder (ID=%s)';
+    $Lang->{'WorkOrderHistory::WorkOrderUpdate'}           = '%s: Neu: %s -> Alt: %s';
+    $Lang->{'WorkOrderHistory::WorkOrderLinkAdd'}          = 'Link zu %s (ID=%s) hinzugefügt';
+    $Lang->{'WorkOrderHistory::WorkOrderLinkDelete'}       = 'Link to %s (ID=%s) gelöscht';
+    $Lang->{'WorkOrderHistory::WorkOrderDelete'}           = 'Workorder (ID=%s) gelöscht';
+    $Lang->{'WorkOrderHistory::WorkOrderAttachmentAdd'}    = 'Neuer Anhang für Workorder: %s';
+    $Lang->{'WorkOrderHistory::WorkOrderAttachmentDelete'} = 'Anhang von Workorder gelöscht: %s';
 
     # long WorkOrder history
-    $Lang->{'WorkOrderHistory::WorkOrderAddWithWorkorderID'}        = 'Neue Workorder (ID=%s)';
-    $Lang->{'WorkOrderHistory::WorkOrderUpdateWithWorkorderID'}     = '(ID=%s) %s: Neu: %s -> Alt: %s';
-    $Lang->{'WorkOrderHistory::WorkOrderLinkAddWithWorkorderID'}    = '(ID=%s) Link zu %s (ID=%s) hinzugefügt';
-    $Lang->{'WorkOrderHistory::WorkOrderLinkDeleteWithWorkorderID'} = '(ID=%s) Link to %s (ID=%s) gelöscht';
-    $Lang->{'WorkOrderHistory::WorkOrderDeleteWithWorkorderID'}     = 'Workorder (ID=%s) gelöscht';
+    $Lang->{'WorkOrderHistory::WorkOrderAddWithWorkorderID'}              = 'Neue Workorder (ID=%s)';
+    $Lang->{'WorkOrderHistory::WorkOrderUpdateWithWorkorderID'}           = '(ID=%s) %s: Neu: %s -> Alt: %s';
+    $Lang->{'WorkOrderHistory::WorkOrderLinkAddWithWorkorderID'}          = '(ID=%s) Link zu %s (ID=%s) hinzugefügt';
+    $Lang->{'WorkOrderHistory::WorkOrderLinkDeleteWithWorkorderID'}       = '(ID=%s) Link to %s (ID=%s) gelöscht';
+    $Lang->{'WorkOrderHistory::WorkOrderDeleteWithWorkorderID'}           = 'Workorder (ID=%s) gelöscht';
+    $Lang->{'WorkOrderHistory::WorkOrderAttachmentAddWithWorkorderID'}    = '(ID=%s) Neuer Anhang für Workorder: %s';
+    $Lang->{'WorkOrderHistory::WorkOrderAttachmentDeleteWithWorkorderID'} = '(ID=%s) Anhang von Workorder gelöscht: %s';
 
     # CIP matrix
     $Lang->{'Category'}                         = 'Kategorie';
