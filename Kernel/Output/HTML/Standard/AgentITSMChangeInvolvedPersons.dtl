@@ -2,7 +2,7 @@
 # AgentITSMChangeInvolvedPersons.dtl - provides HTML form for AgentITSMChangeInvolvedPersons
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.21 2010-01-08 10:31:10 bes Exp $
+# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.22 2010-01-14 10:42:31 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -238,7 +238,9 @@ document.observe( "dom:loaded", function() {
 <!-- dtl:block:AgentCAB -->
                                 <tr>
                                     <td class="contentkey">&nbsp;</td>
-                                    <td class="contentvalue">$QData{"UserLogin","25"} ($Quote{"$Data{"UserFirstname"} $Data{"UserLastname"}","25"})</td>
+                                    <td class="contentvalue">
+                                        <span title="$QData{"UserLogin"} ($Quote{"$Data{"UserFirstname"} $Data{"UserLastname"}"})">$QData{"UserLogin","25"} ($Quote{"$Data{"UserFirstname"} $Data{"UserLastname"}","25"})</span>
+                                    </td>
                                     <td class="contentvalue"><input type="submit" class="button" name="DeleteCABAgent$QData{"UserID"}" value="$Text{"Delete"}"></td>
                                 </tr>
 <!-- dtl:block:AgentCAB -->
@@ -250,7 +252,9 @@ document.observe( "dom:loaded", function() {
 <!-- dtl:block:CustomerCAB -->
                                 <tr>
                                     <td class="contentkey">&nbsp;</td>
-                                    <td>$QData{"UserLogin","25"} ($Quote{"$Data{"UserFirstname"} $Data{"UserLastname"}","25"})</td>
+                                    <td class="contentvalue">
+                                        <span title="$QData{"UserLogin"} ($Quote{"$Data{"UserFirstname"} $Data{"UserLastname"}"})">$QData{"UserLogin","25"} ($Quote{"$Data{"UserFirstname"} $Data{"UserLastname"}","25"})</span>
+                                    </td>
                                     <td class="contentvalue"><input type="submit" class="button" name="DeleteCABCustomer$QData{"UserLogin"}" value="$Text{"Delete"}"></td>
                                 </tr>
 <!-- dtl:block:CustomerCAB -->
