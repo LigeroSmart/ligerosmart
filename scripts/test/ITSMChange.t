@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.162 2010-01-08 15:02:22 bes Exp $
+# $Id: ITSMChange.t,v 1.163 2010-01-14 12:10:15 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -2576,7 +2576,7 @@ continue {
 # test for ChangeLookup
 # ------------------------------------------------------------ #
 
-my ($ChangeLookupTestChangeID) = @{ $Label2ChangeIDs{ChangeLookupTest} };
+my ($ChangeLookupTestChangeID) = @{ $Label2ChangeIDs{ChangeLookupTest} || [] };
 
 if ($ChangeLookupTestChangeID) {
     my $ChangeData = $Self->{ChangeObject}->ChangeGet(
