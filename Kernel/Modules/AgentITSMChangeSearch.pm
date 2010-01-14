@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.47 2010-01-14 10:59:55 bes Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.48 2010-01-14 11:12:29 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,13 +15,12 @@ use strict;
 use warnings;
 
 use Kernel::System::CustomerUser;
-use Kernel::System::Group;
+use Kernel::System::SearchProfile;
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
-use Kernel::System::SearchProfile;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.47 $) [1];
+$VERSION = qw($Revision: 1.48 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -32,7 +31,7 @@ sub new {
 
     # check needed objects
     for my $Object (
-        qw(ParamObject DBObject LayoutObject LogObject UserObject ConfigObject MainObject EncodeObject)
+        qw(ParamObject DBObject LayoutObject LogObject UserObject GroupObject ConfigObject MainObject EncodeObject)
         )
     {
         if ( !$Self->{$Object} ) {
@@ -42,10 +41,9 @@ sub new {
 
     # create needed objects
     $Self->{CustomerUserObject}  = Kernel::System::CustomerUser->new(%Param);
-    $Self->{GroupObject}         = Kernel::System::Group->new(%Param);
+    $Self->{SearchProfileObject} = Kernel::System::SearchProfile->new(%Param);
     $Self->{ChangeObject}        = Kernel::System::ITSMChange->new(%Param);
     $Self->{WorkOrderObject}     = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
-    $Self->{SearchProfileObject} = Kernel::System::SearchProfile->new(%Param);
 
     # get config for frontend
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");

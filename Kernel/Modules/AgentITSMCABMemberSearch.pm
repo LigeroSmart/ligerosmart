@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMCABMemberSearch.pm - a module used for the autocomplete feature
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMCABMemberSearch.pm,v 1.8 2010-01-14 10:59:55 bes Exp $
+# $Id: AgentITSMCABMemberSearch.pm,v 1.9 2010-01-14 11:12:29 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,10 +15,9 @@ use strict;
 use warnings;
 
 use Kernel::System::CustomerUser;
-use Kernel::System::Group;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -28,17 +27,19 @@ sub new {
     bless( $Self, $Type );
 
     # check all needed objects
-    for my $Object (qw(ParamObject DBObject LayoutObject ConfigObject LogObject UserObject)) {
+    for my $Object (
+        qw(ParamObject DBObject LayoutObject ConfigObject LogObject UserObject GroupObject)
+        )
+    {
         if ( !$Self->{$Object} ) {
             $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
         }
     }
 
     # create needed objects
-    $Self->{GroupObject}        = Kernel::System::Group->new(%Param);
     $Self->{CustomerUserObject} = Kernel::System::CustomerUser->new(%Param);
 
-    # get config
+    # get config for frontend
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
 
     return $Self;
