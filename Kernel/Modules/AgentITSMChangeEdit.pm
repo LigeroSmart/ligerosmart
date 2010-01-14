@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeEdit.pm - the OTRS::ITSM::ChangeManagement change edit module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.pm,v 1.38 2010-01-07 09:43:10 reb Exp $
+# $Id: AgentITSMChangeEdit.pm,v 1.39 2010-01-14 13:26:17 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.38 $) [1];
+$VERSION = qw($Revision: 1.39 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -129,10 +129,6 @@ sub Run {
             $Self->{Subaction} = 'DeleteAttachment';
         }
     }
-
-    # set default values for category and impact
-    $Param{CategoryID} = $Change->{CategoryID};
-    $Param{ImpactID}   = $Change->{ImpactID};
 
     # keep ChangeStateID only if configured
     if ( $Self->{Config}->{State} ) {
@@ -246,16 +242,16 @@ sub Run {
         }
     }
 
-    # handle AJAXUpdate
+    # handle AJAXUpdate, only for setting the priority
     elsif ( $Self->{Subaction} eq 'AJAXUpdate' ) {
 
-        # get priorities
+        # get all possible priorities
         my $Priorities = $Self->{ChangeObject}->ChangePossibleCIPGet(
             Type => 'Priority',
         );
 
-        # get selected priority
-        my $SelectedPriority = $Self->{CIPAllocateObject}->PriorityAllocationGet(
+        # propose a priority, based on the category and the impact the proposed p selected priority
+        my $ProposedPriority = $Self->{CIPAllocateObject}->PriorityAllocationGet(
             CategoryID => $GetParam{CategoryID},
             ImpactID   => $GetParam{ImpactID},
         );
@@ -266,7 +262,7 @@ sub Run {
                 {
                     Name        => 'PriorityID',
                     Data        => $Priorities,
-                    SelectedID  => $SelectedPriority,
+                    SelectedID  => $ProposedPriority,
                     Translation => 1,
                     Max         => 100,
                 },
@@ -451,16 +447,16 @@ sub Run {
         );
     }
 
-    # get categories
-    $Param{Categories} = $Self->{ChangeObject}->ChangePossibleCIPGet(
+    # create dropdown for the category
+    # all categories are selectable
+    # when the category is changed, a new priority is proposed
+    my $Categories = $Self->{ChangeObject}->ChangePossibleCIPGet(
         Type => 'Category',
     );
-
-    # create category selection string
-    $Param{'CategoryStrg'} = $Self->{LayoutObject}->BuildSelection(
-        Data       => $Param{Categories},
+    my $CategorySelectionString = $Self->{LayoutObject}->BuildSelection(
+        Data       => $Categories,
         Name       => 'CategoryID',
-        SelectedID => $Param{CategoryID},
+        SelectedID => $GetParam{CategoryID} || $Change->{CategoryID},
         Ajax       => {
             Update => [
                 'PriorityID',
@@ -474,11 +470,11 @@ sub Run {
         },
     );
 
-    # show category dropdown
+    # show dropdown for category
     $Self->{LayoutObject}->Block(
         Name => 'Category',
         Data => {
-            %Param,
+            CategorySelectionString => $CategorySelectionString,
         },
     );
 
@@ -487,16 +483,16 @@ sub Run {
         $Self->{LayoutObject}->Block( Name => 'InvalidCategory' );
     }
 
-    # get impacts
-    $Param{Impacts} = $Self->{ChangeObject}->ChangePossibleCIPGet(
+    # create dropdown for the impact
+    # all impacts are selectable
+    # when the impact is changed, a new priority is proposed
+    my $Impacts = $Self->{ChangeObject}->ChangePossibleCIPGet(
         Type => 'Impact',
     );
-
-    # create impact string
-    $Param{'ImpactStrg'} = $Self->{LayoutObject}->BuildSelection(
-        Data       => $Param{Impacts},
+    my $ImpactSelectionString = $Self->{LayoutObject}->BuildSelection(
+        Data       => $Impacts,
         Name       => 'ImpactID',
-        SelectedID => $Param{ImpactID},
+        SelectedID => $GetParam{ImpactID} || $Change->{ImpactID},
         Ajax       => {
             Update => [
                 'PriorityID',
@@ -514,7 +510,7 @@ sub Run {
     $Self->{LayoutObject}->Block(
         Name => 'Impact',
         Data => {
-            %Param,
+            ImpactSelectionString => $ImpactSelectionString,
         },
     );
 
@@ -523,30 +519,26 @@ sub Run {
         $Self->{LayoutObject}->Block( Name => 'InvalidImpact' );
     }
 
-    # get priorities
-    $Param{Priorities} = $Self->{ChangeObject}->ChangePossibleCIPGet(
+    # create dropdown for priority,
+    # all priorities are selectable
+    my $Priorities = $Self->{ChangeObject}->ChangePossibleCIPGet(
         Type => 'Priority',
     );
-
-    # get selected priority
-    my $SelectedPriority = $GetParam{PriorityID} || $Change->{PriorityID};
-
-    # create impact string
-    $Param{'PriorityStrg'} = $Self->{LayoutObject}->BuildSelection(
-        Data       => $Param{Priorities},
+    my $PrioritySelectionString = $Self->{LayoutObject}->BuildSelection(
+        Data       => $Priorities,
         Name       => 'PriorityID',
-        SelectedID => $SelectedPriority,
+        SelectedID => $GetParam{PriorityID} || $Change->{PriorityID},
     );
 
-    # show priority dropdown
+    # show dropdown for priority
     $Self->{LayoutObject}->Block(
         Name => 'Priority',
         Data => {
-            %Param,
+            PrioritySelectionString => $PrioritySelectionString,
         },
     );
 
-    # show error block
+    # show error block for priority
     if ( $CIPErrors{Priority} ) {
         $Self->{LayoutObject}->Block( Name => 'InvalidPriority' );
     }

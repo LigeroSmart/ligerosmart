@@ -2,7 +2,7 @@
 # AgentITSMChangeEdit.dtl - provides HTML form for AgentITSMChangeEdit
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.dtl,v 1.36 2010-01-07 09:43:10 reb Exp $
+# $Id: AgentITSMChangeEdit.dtl,v 1.37 2010-01-14 13:26:17 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -118,7 +118,7 @@ $Include{"RichTextEditorITSM"}
                                         <font color="red" title="$Text{"Required"}">*</font>
                                     </td>
                                     <td class="contentvalue">
-                                        $Data{"CategoryStrg"}
+                                        $Data{"CategorySelectionString"}
 <!-- dtl:block:InvalidCategory -->
                                         <br />
                                         <font color="red" size="-2">$Text{"Input invalid"}</font>
@@ -133,7 +133,7 @@ $Include{"RichTextEditorITSM"}
                                         <font color="red" title="$Text{"Required"}">*</font>
                                     </td>
                                     <td class="contentvalue">
-                                        $Data{"ImpactStrg"}
+                                        $Data{"ImpactSelectionString"}
 <!-- dtl:block:InvalidImpact -->
                                         <br />
                                         <font color="red" size="-2">$Text{"Input invalid"}</font>
@@ -148,7 +148,7 @@ $Include{"RichTextEditorITSM"}
                                         <font color="red" title="$Text{"Required"}">*</font>
                                     </td>
                                     <td class="contentvalue">
-                                        $Data{"PriorityStrg"}
+                                        $Data{"PrioritySelectionString"}
 <!-- dtl:block:InvalidPriority -->
                                         <br />
                                         <font color="red" size="-2">$Text{"Input invalid"}</font>
