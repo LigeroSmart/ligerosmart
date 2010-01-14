@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderHistory.pm - the OTRS::ITSM::ChangeManagement workorder history module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderHistory.pm,v 1.17 2010-01-14 10:22:00 bes Exp $
+# $Id: AgentITSMWorkOrderHistory.pm,v 1.18 2010-01-14 10:29:35 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::History;
 use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -154,11 +154,13 @@ sub Run {
                     # for the ID fields, we replace ID with its textual value
                     if (
                         my ($Type)
-                        = $HistoryEntry->{Fieldname} =~ m{ \A # string start
-                            ( # start capture the $Type
-                                WorkOrderState | WorkOrderType | WorkOrderAgent
-                            ) # end capture of $Type
-                            ID
+                        = $HistoryEntry->{Fieldname} =~ m{
+                            \A          # string start
+                            (           # start capture the $Type
+                                WorkOrderState | WorkOrderType
+                                | WorkOrderAgent
+                            )           # end capture of $Type
+                            ID          # processing only for the 'ID' fields
                             }xms
                         )
                     {
