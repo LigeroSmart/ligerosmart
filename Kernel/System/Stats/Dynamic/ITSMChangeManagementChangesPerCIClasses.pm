@@ -2,7 +2,7 @@
 # Kernel/System/Stats/Dynamic/ITSMChangeManagementChangesPerCIClasses.pm - all advice functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagementChangesPerCIClasses.pm,v 1.5 2010-01-14 17:43:41 reb Exp $
+# $Id: ITSMChangeManagementChangesPerCIClasses.pm,v 1.6 2010-01-14 19:39:28 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -77,8 +77,8 @@ sub GetObjectAttributes {
     my @ObjectAttributes = (
         {
             Name             => 'ConfigItem Classes',
-            UseAsXvalue      => 1,
-            UseAsValueSeries => 0,
+            UseAsXvalue      => 0,
+            UseAsValueSeries => 1,
             UseAsRestriction => 0,
             Element          => 'CIClassIDs',
             Block            => 'MultiSelectField',
@@ -87,8 +87,8 @@ sub GetObjectAttributes {
         },
         {
             Name             => 'Category',
-            UseAsXvalue      => 0,
-            UseAsValueSeries => 1,
+            UseAsXvalue      => 1,
+            UseAsValueSeries => 0,
             UseAsRestriction => 0,
             Element          => 'CategoryIDs',
             Block            => 'MultiSelectField',
@@ -303,16 +303,26 @@ sub ImportWrapper {
             my $Values      = $Element->{SelectedValues};
 
             if ( $ElementName eq 'CIStateIDs' ) {
-                for my $Key ( keys %{$InciStateList} ) {
-                    if ( $ID->{Content} eq $InciStateListe->{$Key} ) {
-                        $ID->{Content} = $InciStateList->{$Key};
+                ID:
+                for my $ID ( @{$Values} ) {
+                    next ID if !$ID;
+
+                    for my $Key ( keys %{$InciStateList} ) {
+                        if ( $ID->{Content} eq $InciStateList->{$Key} ) {
+                            $ID->{Content} = $InciStateList->{$Key};
+                        }
                     }
                 }
             }
             elsif ( $ElementName eq 'CIClassIDs' ) {
-                for my $Key ( keys %{$ClassList} ) {
-                    if ( $ID->{Content} eq $ClassListe->{$Key} ) {
-                        $ID->{Content} = $ClassList->{$Key};
+                ID:
+                for my $ID ( @{$Values} ) {
+                    next ID if !$ID;
+
+                    for my $Key ( keys %{$ClassList} ) {
+                        if ( $ID->{Content} eq $ClassList->{$Key} ) {
+                            $ID->{Content} = $ClassList->{$Key};
+                        }
                     }
                 }
             }
