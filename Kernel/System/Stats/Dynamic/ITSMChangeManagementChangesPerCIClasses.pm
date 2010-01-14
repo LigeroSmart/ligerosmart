@@ -2,7 +2,7 @@
 # Kernel/System/Stats/Dynamic/ITSMChangeManagementChangesPerCIClasses.pm - all advice functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagementChangesPerCIClasses.pm,v 1.1 2010-01-14 08:48:58 reb Exp $
+# $Id: ITSMChangeManagementChangesPerCIClasses.pm,v 1.2 2010-01-14 17:07:45 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,9 +16,10 @@ use warnings;
 
 use Kernel::System::ITSMChange;
 use Kernel::System::GeneralCatalog;
+use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -38,6 +39,7 @@ sub new {
     # created needed objects
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
     $Self->{ChangeObject}         = Kernel::System::ITSMChange->new( %{$Self} );
+    $Self->{LinkObject}           = Kernel::System::LinkObject->new( %{$Self} );
 
     return $Self;
 }
@@ -98,9 +100,9 @@ sub GetObjectAttributes {
             UseAsValueSeries => 0,
             UseAsRestriction => 1,
             Element          => 'CIStatusID',
-            Block            => 'SelectField',
+            Block            => 'MultiSelectField',
             Translation      => 0,
-            Values           => \$InciStateList,
+            Values           => $InciStateList,
         },
         {
             Name             => 'Timeperiod',
@@ -132,7 +134,7 @@ sub GetStatElement {
     return if !$ConfigItemObjectID;
 
     my $ChangeObjectID = $Self->{LinkObject}->ObjectLookup(
-        Name   => 'ITSMChange',
+        Name   => 'ITSMWorkOrder',
         UserID => 1,
     );
 
@@ -141,9 +143,9 @@ sub GetStatElement {
     # get change id and config item id
     return if !$Self->{DBObject}->Prepare(
         SQL => 'SELECT chi.id AS change_id, ci.id AS ci_id '
-            . 'FROM change_item chi, change_workorder chw, link_relation lr, config_item ci '
+            . 'FROM change_item chi, change_workorder chw, link_relation lr, configitem ci '
             . 'WHERE chi.id = chw.change_id '
-            . 'AND ci.category_id = ? '
+            . 'AND chi.category_id = ? '
             . 'AND ( '
             . '( '
             . 'chw.id = lr.target_key '
@@ -180,7 +182,7 @@ sub GetStatElement {
 
     # check for each change if the config item is/was in appropriate status
     # if so, count the change
-    my $Counter = 0;
+    my $Counter = scalar @Matches;
     for my $Match (@Matches) {
 
         # ...
