@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.128 2010-01-14 15:14:10 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.129 2010-01-14 23:57:12 ub Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -8,7 +8,7 @@
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
-    <Description Lang="en">The OTRS::ITSM change management package.</Description>
+    <Description Lang="en">The OTRS::ITSM Change Management package.</Description>
     <Description Lang="de">Das OTRS::ITSM Change Management Paket.</Description>
     <Filelist>
         <File Permission="644" Location="Kernel/Config/Files/ITSMChangeManagement.xml"/>
