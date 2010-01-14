@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeHistory.pm - the OTRS::ITSM::ChangeManagement change history module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeHistory.pm,v 1.29 2010-01-13 15:15:50 bes Exp $
+# $Id: AgentITSMChangeHistory.pm,v 1.30 2010-01-14 10:22:00 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::History;
 use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.29 $) [1];
+$VERSION = qw($Revision: 1.30 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -30,7 +30,7 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Object (qw(ParamObject DBObject LayoutObject LogObject ConfigObject)) {
+    for my $Object (qw(ParamObject DBObject LayoutObject LogObject UserObject ConfigObject)) {
         if ( !$Self->{$Object} ) {
             $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
         }
@@ -120,73 +120,93 @@ sub Run {
     for my $HistoryEntry (@HistoryLines) {
         $Counter++;
 
-        # data for a single row
-        my %Data = (
-            %{$HistoryEntry},
-        );
+        # data for a single row, will be passed to the dtl
+        my %Data = %{$HistoryEntry};
 
         # determine what should be shown
         my $HistoryType = $HistoryEntry->{HistoryType};
         if ( $HistoryType =~ m{ Update \z }xms ) {
 
+            # The displayed fieldname might be changed in the following loop
+            my $DisplayedFieldname = $HistoryEntry->{Fieldname};
+
             # set default values for some keys
-            for my $Fieldname (qw(ContentNew ContentOld)) {
-                if ( !defined $HistoryEntry->{$Fieldname} ) {
-                    $HistoryEntry->{$Fieldname} = '-';
+            for my $ContentNewOrOld (qw(ContentNew ContentOld)) {
+                if ( !defined $HistoryEntry->{$ContentNewOrOld} ) {
+                    $HistoryEntry->{$ContentNewOrOld} = '-';
                 }
                 else {
 
-                    # for CIP fields, change states, and workorder states and types
-                    # we replace ID with its textual value
-                    my $Field = $HistoryEntry->{Fieldname};
+                    # for the ID fields, we replace ID with its textual value
                     if (
-                        $Field
-                        =~ m{ \A Category | Impact | Priority | ChangeState | WorkOrderState | WorkOrderType }xms
+                        my ($Type) = $HistoryEntry->{Fieldname} =~ m{ \A # string start
+                            ( # start capture of $Type
+                                Category | Impact | Priority
+                                | ChangeState
+                                | WorkOrderState | WorkOrderType
+                                | WorkOrderAgent | ChangeBuilder | ChangeManager
+                            ) # end capture of $Type
+                            ID
+                            }xms
                         )
                     {
-                        ( my $Type = $Field ) =~ s{ ID \z }{}xms;
-
                         my $Value;
                         if ( $Type eq 'WorkOrderState' ) {
                             $Value = $Self->{WorkOrderObject}->WorkOrderStateLookup(
-                                WorkOrderStateID => $HistoryEntry->{$Fieldname},
+                                WorkOrderStateID => $HistoryEntry->{$ContentNewOrOld},
                             );
                         }
                         elsif ( $Type eq 'WorkOrderType' ) {
                             $Value = $Self->{WorkOrderObject}->WorkOrderTypeLookup(
-                                WorkOrderTypeID => $HistoryEntry->{$Fieldname},
+                                WorkOrderTypeID => $HistoryEntry->{$ContentNewOrOld},
                             );
                         }
                         elsif ( $Type eq 'ChangeState' ) {
                             $Value = $Self->{ChangeObject}->ChangeStateLookup(
-                                ChangeStateID => $HistoryEntry->{$Fieldname},
+                                ChangeStateID => $HistoryEntry->{$ContentNewOrOld},
+                            );
+                        }
+                        elsif (
+                            $Type    eq 'WorkOrderAgent'
+                            || $Type eq 'ChangeBuilder'
+                            || $Type eq 'ChangeManager'
+                            )
+                        {
+                            $Value = $Self->{UserObject}->UserLookup(
+                                UserID => $HistoryEntry->{$ContentNewOrOld},
+                            );
+                        }
+                        elsif ( $Type eq 'Category' || $Type eq 'Impact' || $Type eq 'Priority' ) {
+                            $Value = $Self->{ChangeObject}->ChangeCIPLookup(
+                                ID   => $HistoryEntry->{$ContentNewOrOld},
+                                Type => $Type,
                             );
                         }
                         else {
-                            $Value = $Self->{ChangeObject}->ChangeCIPLookup(
-                                ID   => $HistoryEntry->{$Fieldname},
-                                Type => $Type,
+                            return $Self->{LayoutObject}->ErrorScreen(
+                                Message => "Unknown type '$Type' encountered!",
+                                Comment => 'Please contact the admin.',
                             );
                         }
 
                         my $TranslatedValue = $Self->{LayoutObject}->{LanguageObject}->Get(
                             $Value,
                         );
+                        $HistoryEntry->{$ContentNewOrOld} = $TranslatedValue . ' (ID='
+                            . $HistoryEntry->{$ContentNewOrOld} . ')';
 
-                        $HistoryEntry->{$Fieldname} = $TranslatedValue . ' (ID='
-                            . $HistoryEntry->{$Fieldname} . ')';
-
-                        $HistoryEntry->{Fieldname} = $Type;
+                        # The content has changed, so change the displayed fieldname as well
+                        $DisplayedFieldname = $Type;
                     }
 
                     # replace HTML breaks with single space
-                    $HistoryEntry->{$Fieldname} =~ s{ < br \s*? /? > }{ }xmsg;
+                    $HistoryEntry->{$ContentNewOrOld} =~ s{ < br \s*? /? > }{ }xmsg;
                 }
             }
 
             # tranlate fieldname for display
-            my $TranslatedFieldname = $Self->{LayoutObject}->{LanguageObject}->Get(
-                $HistoryEntry->{Fieldname},
+            $DisplayedFieldname = $Self->{LayoutObject}->{LanguageObject}->Get(
+                $DisplayedFieldname,
             );
 
             # trim strings to a max length of $MaxLength
@@ -205,7 +225,7 @@ sub Run {
             }
 
             # set description
-            $Data{Content} = join '%%', $TranslatedFieldname,
+            $Data{Content} = join '%%', $DisplayedFieldname,
                 $ContentNew,
                 $ContentOld;
         }
