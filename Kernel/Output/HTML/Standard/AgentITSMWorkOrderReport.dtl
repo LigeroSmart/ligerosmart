@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderReport.dtl - provides HTML form for AgentITSMWorkOrderReport
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderReport.dtl,v 1.20 2010-01-04 12:14:56 reb Exp $
+# $Id: AgentITSMWorkOrderReport.dtl,v 1.21 2010-01-14 17:50:26 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,6 +14,8 @@
 <!--
 
 function submit_compose() {
+
+<!-- dtl:block:ActualTimeSpanJS -->
 
     // check the actual start time
     if ( document.compose.ActualStartTimeUsed.checked && !CheckTime( 'ActualStartTime' ) ) {
@@ -42,6 +44,8 @@ function submit_compose() {
             return false;
         }
     }
+
+<!-- dtl:block:ActualTimeSpanJS -->
 
     return true;
 }

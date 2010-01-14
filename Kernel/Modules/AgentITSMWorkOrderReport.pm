@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderReport.pm - the OTRS::ITSM::ChangeManagement workorder report module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderReport.pm,v 1.23 2010-01-12 19:43:51 ub Exp $
+# $Id: AgentITSMWorkOrderReport.pm,v 1.24 2010-01-14 17:50:26 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.23 $) [1];
+$VERSION = qw($Revision: 1.24 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -277,6 +277,13 @@ sub Run {
     }
 
     if ( $Self->{Config}->{ActualTimeSpan} ) {
+
+        # enable the time checks, only when ActualStartTime and ActualEndTime are selectable
+        $Self->{LayoutObject}->Block(
+            Name => 'ActualTimeSpanJS',
+            Data => {},
+        );
+
         for my $TimeType (qw(ActualStartTime ActualEndTime)) {
 
             # time period that can be selected from the GUI
