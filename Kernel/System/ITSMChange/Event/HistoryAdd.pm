@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/HistoryAdd.pm - HistoryAdd event module for ITSMChange
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: HistoryAdd.pm,v 1.26 2010-01-14 15:14:10 bes Exp $
+# $Id: HistoryAdd.pm,v 1.27 2010-01-14 15:43:10 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.26 $) [1];
+$VERSION = qw($Revision: 1.27 $) [1];
 
 =head1 NAME
 
@@ -240,7 +240,7 @@ sub Run {
                     Fieldname   => $Field,
                     ContentNew  => $Param{Data}->{$Field},
                     ContentOld  => $OldData->{$Field},
-                    UserID      => $Param{Data}->{UserID},
+                    UserID      => $Param{UserID},
                 );
 
                 next FIELD if !$Success;
@@ -281,7 +281,7 @@ sub Run {
         # delete history of change
         return if !$Self->{HistoryObject}->ChangeHistoryDelete(
             ChangeID => $Param{Data}->{ChangeID},
-            UserID   => $Param{Data}->{UserID},
+            UserID   => $Param{UserID},
         );
     }
 
@@ -312,7 +312,7 @@ sub Run {
                     Fieldname   => $Field,
                     ContentNew  => join( '%%', @{ $Param{Data}->{$Field} } ),
                     ContentOld  => join( '%%', @{ $OldData->{$Field} } ),
-                    UserID      => $Param{Data}->{UserID},
+                    UserID      => $Param{UserID},
                 );
 
                 next FIELD if !$Success;
@@ -448,6 +448,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.26 $ $Date: 2010-01-14 15:14:10 $
+$Revision: 1.27 $ $Date: 2010-01-14 15:43:10 $
 
 =cut
