@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Expression.pm - all condition expression functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Expression.pm,v 1.20 2010-01-13 17:36:44 ub Exp $
+# $Id: Expression.pm,v 1.21 2010-01-14 14:16:07 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 =head1 NAME
 
@@ -535,7 +535,7 @@ sub _ExpressionMatchInit {
     # extract expression
     my $Expression = $Param{Expression};
 
-    # declate expression data
+    # declare expression data
     my %ExpressionData;
 
     # get object data
@@ -602,6 +602,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.20 $ $Date: 2010-01-13 17:36:44 $
+$Revision: 1.21 $ $Date: 2010-01-14 14:16:07 $
 
 =cut
