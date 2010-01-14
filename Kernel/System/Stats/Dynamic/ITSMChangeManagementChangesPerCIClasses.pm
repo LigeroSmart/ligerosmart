@@ -2,7 +2,7 @@
 # Kernel/System/Stats/Dynamic/ITSMChangeManagementChangesPerCIClasses.pm - all advice functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagementChangesPerCIClasses.pm,v 1.4 2010-01-14 17:31:51 reb Exp $
+# $Id: ITSMChangeManagementChangesPerCIClasses.pm,v 1.5 2010-01-14 17:43:41 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -243,22 +243,21 @@ sub ExportWrapper {
             my $Values      = $Element->{SelectedValues};
 
             if ( $ElementName eq 'CIStateIDs' ) {
-                my $StateList = $Self->{ChangeObject}->ChangePossibleStatesGet( UserID => 1 );
                 ID:
                 for my $ID ( @{$Values} ) {
                     next ID if !$ID;
 
-                    STATE:
-                    for my $State ( @{$StateList} ) {
-                        next STATE if $ID->{Content} ne $State->{Key};
-                        $ID->{Content} = $State->{Value};
-                    }
+                    $ID->{Content} = $InciStateList->{ $ID->{Content} };
                 }
             }
             elsif ( $ElementName eq 'CIClassIDs' ) {
+                ID:
+                for my $ID ( @{$Values} ) {
+                    next ID if !$ID;
 
+                    $ID->{Content} = $ClassList->{ $ID->{Content} };
+                }
             }
-
             elsif ( $ElementName eq 'CategoryIDs' ) {
 
                 my $CIPList = $Self->{ChangeObject}->ChangePossibleCIPGet(
@@ -285,6 +284,16 @@ sub ExportWrapper {
 sub ImportWrapper {
     my ( $Self, %Param ) = @_;
 
+    # get class list
+    my $ClassList = $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::ConfigItem::Class',
+    );
+
+    # get incident state list
+    my $InciStateList = $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::Core::IncidentState',
+    );
+
     # wrap used spelling to ids
     for my $Use (qw(UseAsValueSeries UseAsRestriction UseAsXvalue)) {
         ELEMENT:
@@ -293,30 +302,23 @@ sub ImportWrapper {
             my $ElementName = $Element->{Element};
             my $Values      = $Element->{SelectedValues};
 
-            if ( $ElementName eq 'StateIDs' ) {
-                ID:
-                for my $ID ( @{$Values} ) {
-                    next ID if !$ID;
-
-                    my $StateID = $Self->{ChangeObject}->ChangeStateLookup(
-                        ChangeState => $ID->{Content},
-                        Cache       => 1,
-                    );
-                    if ($StateID) {
-                        $ID->{Content} = $StateID;
+            if ( $ElementName eq 'CIStateIDs' ) {
+                for my $Key ( keys %{$InciStateList} ) {
+                    if ( $ID->{Content} eq $InciStateListe->{$Key} ) {
+                        $ID->{Content} = $InciStateList->{$Key};
                     }
-                    else {
-                        $Self->{LogObject}->Log(
-                            Priority => 'error',
-                            Message  => "Import: Can' find state $ID->{Content}!"
-                        );
-                        $ID = undef;
+                }
+            }
+            elsif ( $ElementName eq 'CIClassIDs' ) {
+                for my $Key ( keys %{$ClassList} ) {
+                    if ( $ID->{Content} eq $ClassListe->{$Key} ) {
+                        $ID->{Content} = $ClassList->{$Key};
                     }
                 }
             }
 
             # import wrapper for CIP
-            for my $Type (qw(Category Impact Priority)) {
+            for my $Type (qw(Category)) {
                 if ( $ElementName eq $Type . 'IDs' ) {
                     ID:
                     for my $ID ( @{$Values} ) {
