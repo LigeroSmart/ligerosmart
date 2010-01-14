@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.124 2010-01-14 09:51:15 mae Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.125 2010-01-14 13:32:11 mae Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -89,6 +89,7 @@
         <File Permission="644" Location="Kernel/System/ITSMChange/History.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/ITSMChangeCIPAllocate.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/ITSMCondition.pm"/>
+        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMCondition/Action.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/ITSMCondition/Attribute.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/ITSMCondition/Expression.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/ITSMCondition/Object.pm"/>
@@ -522,7 +523,7 @@
             <Column Name="object_id" Required="true" Type="SMALLINT"/>
             <Column Name="attribute_id" Required="true" Type="SMALLINT"/>
             <Column Name="operator_id" Required="true" Type="SMALLINT"/>
-            <Column Name="selector" Required="false" Size="250" Type="VARCHAR"/>
+            <Column Name="selector" Required="false" Size="20" Type="VARCHAR"/>
             <Column Name="action_value" Required="false" Size="250" Type="VARCHAR"/>
             <Index Name="condition_action_condition_id">
                 <IndexColumn Name="condition_id"/>
@@ -545,6 +546,14 @@
             <Index Name="condition_action_action_value">
                 <IndexColumn Name="action_value"/>
             </Index>
+            <Unique Name="condition_expression_unique">
+                <UniqueColumn Name="condition_id"/>
+                <UniqueColumn Name="object_id"/>
+                <UniqueColumn Name="attribute_id"/>
+                <UniqueColumn Name="operator_id"/>
+                <UniqueColumn Name="selector"/>
+                <UniqueColumn Name="action_value"/>
+            </Unique>
             <ForeignKey ForeignTable="change_condition">
                 <Reference Local="condition_id" Foreign="id"/>
             </ForeignKey>
