@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/HistoryAdd.pm - HistoryAdd event module for ITSMChange
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: HistoryAdd.pm,v 1.27 2010-01-14 15:43:10 bes Exp $
+# $Id: HistoryAdd.pm,v 1.28 2010-01-14 17:31:02 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.27 $) [1];
+$VERSION = qw($Revision: 1.28 $) [1];
 
 =head1 NAME
 
@@ -201,8 +201,7 @@ sub Run {
             if ( $Type eq 'WorkOrder' && $Field eq 'AccountedTime' ) {
 
                 # we do not track if accounted time was empty
-                # TODO: or $Param{Data}->{AccountedTime};  ?
-                next FIELD if !$Param{AccountedTime};
+                next FIELD if !$Param{Data}->{$Field};
 
                 # get workorder data
                 my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
@@ -295,7 +294,7 @@ sub Run {
         for my $Field (qw(CABAgents CABCustomers)) {
 
             # we do not track when the param has not been passed
-            next FIELD if !$Param{$Field};
+            next FIELD if !$Param{Data}->{$Field};
 
             # check if field has changed
             my $FieldHasChanged = $Self->_HasFieldChanged(
@@ -364,7 +363,7 @@ sub Run {
         # an unknown event
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "$Param{Event} is an unknown event!",
+            Message  => "$Event is an unknown event!",
         );
 
         return;
@@ -448,6 +447,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.27 $ $Date: 2010-01-14 15:43:10 $
+$Revision: 1.28 $ $Date: 2010-01-14 17:31:02 $
 
 =cut
