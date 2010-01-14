@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition.pm - all condition functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.pm,v 1.20 2010-01-13 17:38:04 ub Exp $
+# $Id: ITSMCondition.pm,v 1.21 2010-01-14 14:17:19 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,9 +23,10 @@ use base qw(Kernel::System::ITSMChange::ITSMCondition::Object);
 use base qw(Kernel::System::ITSMChange::ITSMCondition::Attribute);
 use base qw(Kernel::System::ITSMChange::ITSMCondition::Operator);
 use base qw(Kernel::System::ITSMChange::ITSMCondition::Expression);
+use base qw(Kernel::System::ITSMChange::ITSMCondition::Action);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 =head1 NAME
 
@@ -675,20 +676,18 @@ sub ConditionMatchExecute {
     # count the number of expression ids
     my $ExpressionIDCount = scalar @{$ExpressionIDsRef};
 
-    #    # TODO: implement this function in action module and enable the code below
-    #    # get all actions for the given condition id
-    #    # TODO: ActionList should return the action ids sorted ascending by action_number
-    #    my $ActionIDsRef = $Self->ActionList(
-    #        ConditionID => $Param{ConditionID},
-    #        UserID      => $Param{UserID},
-    #    );
-    #
-    #    # check errors
-    #    return if !$ActionIDsRef;
-    #    return if ref $ActionIDsRef ne 'ARRAY';
-    #
-    #    # no error if just no actions were found
-    #    return 1 if !@{$ActionIDsRef};
+    # get all actions for the given condition id
+    my $ActionIDsRef = $Self->ActionList(
+        ConditionID => $Param{ConditionID},
+        UserID      => $Param{UserID},
+    );
+
+    # check errors
+    return if !$ActionIDsRef;
+    return if ref $ActionIDsRef ne 'ARRAY';
+
+    # no error if just no actions were found
+    return 1 if !@{$ActionIDsRef};
 
     # to store the number of positive (true) expressions
     my @ExpressionMatchResult;
@@ -723,9 +722,9 @@ sub ConditionMatchExecute {
             last EXPRESSIONID;
         }
 
-        # leave ConditionMatch false if ExpressionMatch is false and 'all' is requested
+        # condition is fals at all, so return true
         if ( $ConditionData->{ExpressionConjunction} eq 'all' && !$ExpressionMatch ) {
-            last EXPRESSIONID;
+            return 1;
         }
 
         # save current expression match result for later checks
@@ -743,29 +742,25 @@ sub ConditionMatchExecute {
         return 1;
     }
 
-    #    # TODO: implement this function in action module and enable the code below
-    #    # at this point the condition has matched (is true)
-    #    # and we can go on and execute the actions for this condition
-    #    ACTIONID:
-    #    for my $ActionID ( @{$ActionIDsRef} ) {
-    #
-    #        # execute each action
-    #        my $Success = $Self->ActionExecute(
-    #            ActionID => $ActionID,
-    #            UserID   => $Param{UserID},
-    #        );
-    #
-    #        # check error
-    #        if ( !$Success ) {
-    #            $Self->{LogObject}->Log(
-    #                Priority => 'error',
-    #                Message  => "ActionID '$ActionID' could not be executed successfully "
-    #                    . "for ConditionID '$Param{ConditionID}'. Stopping further execution "
-    #                    . "of other actions of this condition now!",
-    #            );
-    #            return;
-    #        }
-    #    }
+    # execute all actions of this condition
+    ACTIONID:
+    for my $ActionID ( @{$ActionIDsRef} ) {
+
+        # execute each action
+        my $Success = $Self->ActionExecute(
+            ActionID => $ActionID,
+            UserID   => $Param{UserID},
+        );
+
+        # check error
+        if ( !$Success ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "ActionID '$ActionID' could not be executed successfully "
+                    . "for ConditionID '$Param{ConditionID}'.",
+            );
+        }
+    }
 
     return 1;
 }
@@ -786,6 +781,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.20 $ $Date: 2010-01-13 17:38:04 $
+$Revision: 1.21 $ $Date: 2010-01-14 14:17:19 $
 
 =cut
