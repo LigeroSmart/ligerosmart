@@ -1,0 +1,308 @@
+# --
+# Kernel/System/Stats/Dynamic/ITSMChangeManagementChangesPerCIClasses.pm - all advice functions
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# --
+# $Id: ITSMChangeManagementChangesPerCIClasses.pm,v 1.1 2010-01-14 08:48:58 reb Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+package Kernel::System::Stats::Dynamic::ITSMChangeManagementChangesPerCIClasses;
+
+use strict;
+use warnings;
+
+use Kernel::System::ITSMChange;
+use Kernel::System::GeneralCatalog;
+
+use vars qw($VERSION);
+$VERSION = qw($Revision: 1.1 $) [1];
+
+sub new {
+    my ( $Type, %Param ) = @_;
+
+    # allocate new hash for object
+    my $Self = {};
+    bless( $Self, $Type );
+
+    # check needed objects
+    for my $Object (
+        qw(DBObject ConfigObject LogObject UserObject TimeObject MainObject EncodeObject)
+        )
+    {
+        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
+    }
+
+    # created needed objects
+    $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
+    $Self->{ChangeObject}         = Kernel::System::ITSMChange->new( %{$Self} );
+
+    return $Self;
+}
+
+sub GetObjectName {
+    my ( $Self, %Param ) = @_;
+
+    return 'ITSMChangeManagementChangesPerCIClasses';
+}
+
+sub GetObjectAttributes {
+    my ( $Self, %Param ) = @_;
+
+    # get cip lists
+    my $Categories = $Self->{ChangeObject}->ChangePossibleCIPGet(
+        Type => 'Category',
+    );
+    my %CategoryList = map { $_->{Key} => $_->{Value} } @{$Categories};
+
+    # get class list
+    my $ClassList = $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::ConfigItem::Class',
+    );
+
+    # get deployment state list
+    my $DeplStateList = $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::ConfigItem::DeploymentState',
+    );
+
+    # get incident state list
+    my $InciStateList = $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::Core::IncidentState',
+    );
+
+    my @ObjectAttributes = (
+        {
+            Name             => 'ConfigItem Classes',
+            UseAsXvalue      => 1,
+            UseAsValueSeries => 0,
+            UseAsRestriction => 0,
+            Element          => 'CIClassIDs',
+            Block            => 'MultiSelectField',
+            Translation      => 0,
+            Values           => $ClassList,
+        },
+        {
+            Name             => 'Category',
+            UseAsXvalue      => 0,
+            UseAsValueSeries => 1,
+            UseAsRestriction => 0,
+            Element          => 'CategoryIDs',
+            Block            => 'MultiSelectField',
+            Values           => \%CategoryList,
+        },
+        {
+            Name             => 'ConfigItem Status',
+            UseAsXvalue      => 0,
+            UseAsValueSeries => 0,
+            UseAsRestriction => 1,
+            Element          => 'CIStatusID',
+            Block            => 'SelectField',
+            Translation      => 0,
+            Values           => \$InciStateList,
+        },
+        {
+            Name             => 'Timeperiod',
+            UseAsXvalue      => 0,
+            UseAsValueSeries => 0,
+            UseAsRestriction => 1,
+            Element          => 'TimePeriod',
+            TimePeriodFormat => 'DateInputFormat',    # 'DateInputFormatLong',
+            Block            => 'Time',
+            Values           => {
+                TimeStart => 'CreateTimeNewerDate',
+                TimeStop  => 'CreateTimeOlderDate',
+            },
+        },
+    );
+
+    return @ObjectAttributes;
+}
+
+sub GetStatElement {
+    my ( $Self, %Param ) = @_;
+
+    # get object ids for change and config item
+    my $ConfigItemObjectID = $Self->{LinkObject}->ObjectLookup(
+        Name   => 'ITSMConfigItem',
+        UserID => 1,
+    );
+
+    return if !$ConfigItemObjectID;
+
+    my $ChangeObjectID = $Self->{LinkObject}->ObjectLookup(
+        Name   => 'ITSMChange',
+        UserID => 1,
+    );
+
+    return if !$ChangeObjectID;
+
+    # get change id and config item id
+    return if !$Self->{DBObject}->Prepare(
+        SQL => 'SELECT chi.id AS change_id, ci.id AS ci_id '
+            . 'FROM change_item chi, change_workorder chw, link_relation lr, config_item ci '
+            . 'WHERE chi.id = chw.change_id '
+            . 'AND ci.category_id = ? '
+            . 'AND ( '
+            . '( '
+            . 'chw.id = lr.target_key '
+            . 'AND lr.target_object_id = ? '
+            . 'AND lr.source_object_id = ? '
+            . 'AND lr.source_key = ci.id '
+            . 'AND ci.class_id = ? '
+            . ') '
+            . 'OR '
+            . '( '
+            . 'chw.id = lr.source_key '
+            . 'AND lr.source_object_id = ? '
+            . 'AND lr.target_object_id = ? '
+            . 'AND lr.target_key = ci.id '
+            . 'AND ci.class_id = ? '
+            . ') '
+            . ')',
+        Bind => [
+            \( $Param{CategoryIDs}->[0] ),
+            \$ChangeObjectID,
+            \$ConfigItemObjectID,
+            \( $Param{CIClassIDs}->[0] ),
+            \$ChangeObjectID,
+            \$ConfigItemObjectID,
+            \( $Param{CIClassIDs}->[0] ),
+        ],
+    );
+
+    # fetch change and config item ids
+    my @Matches;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        push @Matches, \@Row;
+    }
+
+    # check for each change if the config item is/was in appropriate status
+    # if so, count the change
+    my $Counter = 0;
+    for my $Match (@Matches) {
+
+        # ...
+    }
+
+    # return the number of changes
+    return $Counter;
+}
+
+sub ExportWrapper {
+    my ( $Self, %Param ) = @_;
+
+    # wrap ids to used spelling
+    for my $Use (qw(UseAsValueSeries UseAsRestriction UseAsXvalue)) {
+        ELEMENT:
+        for my $Element ( @{ $Param{$Use} } ) {
+            next ELEMENT if !$Element || !$Element->{SelectedValues};
+            my $ElementName = $Element->{Element};
+            my $Values      = $Element->{SelectedValues};
+
+            if ( $ElementName eq 'StateIDs' ) {
+                my $StateList = $Self->{ChangeObject}->ChangePossibleStatesGet( UserID => 1 );
+                ID:
+                for my $ID ( @{$Values} ) {
+                    next ID if !$ID;
+
+                    STATE:
+                    for my $State ( @{$StateList} ) {
+                        next STATE if $ID->{Content} ne $State->{Key};
+                        $ID->{Content} = $State->{Value};
+                    }
+                }
+            }
+
+            elsif (
+                $ElementName eq 'CategoryIDs' || $ElementName eq 'ImpactIDs'
+                || $ElementName eq 'PriorityIDs'
+                )
+            {
+                my ($Type) = $ElementName =~ m{ \A (.*?) IDs \z }xms;
+
+                my $CIPList = $Self->{ChangeObject}->ChangePossibleCIPGet(
+                    Type   => $Type,
+                    UserID => 1,
+                );
+
+                ID:
+                for my $ID ( @{$Values} ) {
+                    next ID if !$ID;
+
+                    ELEMENT:
+                    for my $Element ( @{$CIPList} ) {
+                        next ELEMENT if $ID->{Content} ne $Element->{Key};
+                        $ID->{Content} = $Element->{Value};
+                    }
+                }
+            }
+        }
+    }
+    return \%Param;
+}
+
+sub ImportWrapper {
+    my ( $Self, %Param ) = @_;
+
+    # wrap used spelling to ids
+    for my $Use (qw(UseAsValueSeries UseAsRestriction UseAsXvalue)) {
+        ELEMENT:
+        for my $Element ( @{ $Param{$Use} } ) {
+            next ELEMENT if !$Element || !$Element->{SelectedValues};
+            my $ElementName = $Element->{Element};
+            my $Values      = $Element->{SelectedValues};
+
+            if ( $ElementName eq 'StateIDs' ) {
+                ID:
+                for my $ID ( @{$Values} ) {
+                    next ID if !$ID;
+
+                    my $StateID = $Self->{ChangeObject}->ChangeStateLookup(
+                        ChangeState => $ID->{Content},
+                        Cache       => 1,
+                    );
+                    if ($StateID) {
+                        $ID->{Content} = $StateID;
+                    }
+                    else {
+                        $Self->{LogObject}->Log(
+                            Priority => 'error',
+                            Message  => "Import: Can' find state $ID->{Content}!"
+                        );
+                        $ID = undef;
+                    }
+                }
+            }
+
+            # import wrapper for CIP
+            for my $Type (qw(Category Impact Priority)) {
+                if ( $ElementName eq $Type . 'IDs' ) {
+                    ID:
+                    for my $ID ( @{$Values} ) {
+                        next ID if !$ID;
+
+                        my $CIPID = $Self->{ChangeObject}->ChangeCIPLookup(
+                            CIP  => $ID->{Content},
+                            Type => $Type,
+                        );
+                        if ($CIPID) {
+                            $ID->{Content} = $CIPID;
+                        }
+                        else {
+                            $Self->{LogObject}->Log(
+                                Priority => 'error',
+                                Message  => "Import: Can' find $Type $ID->{Content}!"
+                            );
+                            $ID = undef;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return \%Param;
+}
+
+1;
