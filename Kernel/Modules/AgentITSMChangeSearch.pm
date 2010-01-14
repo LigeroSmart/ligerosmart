@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.48 2010-01-14 11:12:29 bes Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.49 2010-01-14 17:56:45 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.48 $) [1];
+$VERSION = qw($Revision: 1.49 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -496,7 +496,7 @@ sub _MaskForm {
     );
 
     # dropdown menu for 'created by users'
-    $Param{'CreateBySelectionStrg'} = $Self->{LayoutObject}->BuildSelection(
+    $Param{'CreateBySelectionString'} = $Self->{LayoutObject}->BuildSelection(
         Data       => \%Users,
         Name       => 'CreateBy',
         Multiple   => 1,
@@ -505,7 +505,7 @@ sub _MaskForm {
     );
 
     # build change manager dropdown
-    $Param{'ChangeManagerSelectionStrg'} = $Self->{LayoutObject}->BuildSelection(
+    $Param{'ChangeManagerSelectionString'} = $Self->{LayoutObject}->BuildSelection(
         Data       => \%Users,
         Name       => 'ChangeManagerIDs',
         Multiple   => 1,
@@ -514,7 +514,7 @@ sub _MaskForm {
     );
 
     # build change builder dropdown
-    $Param{'ChangeBuilderSelectionStrg'} = $Self->{LayoutObject}->BuildSelection(
+    $Param{'ChangeBuilderSelectionString'} = $Self->{LayoutObject}->BuildSelection(
         Data       => \%Users,
         Name       => 'ChangeBuilderIDs',
         Multiple   => 1,
@@ -526,7 +526,7 @@ sub _MaskForm {
     my $Categories = $Self->{ChangeObject}->ChangePossibleCIPGet(
         Type => 'Category',
     );
-    $Param{'ChangeCategorySelectionStrg'} = $Self->{LayoutObject}->BuildSelection(
+    $Param{'ChangeCategorySelectionString'} = $Self->{LayoutObject}->BuildSelection(
         Data       => $Categories,
         Name       => 'CategoryIDs',
         Multiple   => 1,
@@ -538,7 +538,7 @@ sub _MaskForm {
     my $Impacts = $Self->{ChangeObject}->ChangePossibleCIPGet(
         Type => 'Impact',
     );
-    $Param{'ChangeImpactSelectionStrg'} = $Self->{LayoutObject}->BuildSelection(
+    $Param{'ChangeImpactSelectionString'} = $Self->{LayoutObject}->BuildSelection(
         Data       => $Impacts,
         Name       => 'ImpactIDs',
         Multiple   => 1,
@@ -550,7 +550,7 @@ sub _MaskForm {
     my $Priorities = $Self->{ChangeObject}->ChangePossibleCIPGet(
         Type => 'Priority',
     );
-    $Param{'ChangePrioritySelectionStrg'} = $Self->{LayoutObject}->BuildSelection(
+    $Param{'ChangePrioritySelectionString'} = $Self->{LayoutObject}->BuildSelection(
         Data       => $Priorities,
         Name       => 'PriorityIDs',
         Multiple   => 1,
@@ -562,7 +562,7 @@ sub _MaskForm {
     my $ChangeStates = $Self->{ChangeObject}->ChangePossibleStatesGet(
         UserID => $Self->{UserID},
     );
-    $Param{'ChangeStateSelectionStrg'} = $Self->{LayoutObject}->BuildSelection(
+    $Param{'ChangeStateSelectionString'} = $Self->{LayoutObject}->BuildSelection(
         Data       => $ChangeStates,
         Name       => 'ChangeStateIDs',
         Multiple   => 1,
@@ -571,7 +571,7 @@ sub _MaskForm {
     );
 
     # get workorder agents
-    $Param{'WorkOrderAgentIDSelectionStrg'} = $Self->{LayoutObject}->BuildSelection(
+    $Param{'WorkOrderAgentIDSelectionString'} = $Self->{LayoutObject}->BuildSelection(
         Data       => \%Users,
         Name       => 'WorkOrderAgentIDs',
         Multiple   => 1,
@@ -583,7 +583,7 @@ sub _MaskForm {
     my $WorkOrderStates = $Self->{WorkOrderObject}->WorkOrderPossibleStatesGet(
         UserID => 1,
     );
-    $Param{'WorkOrderStateSelectionStrg'} = $Self->{LayoutObject}->BuildSelection(
+    $Param{'WorkOrderStateSelectionString'} = $Self->{LayoutObject}->BuildSelection(
         Data       => $WorkOrderStates,
         Name       => 'WorkOrderStateIDs',
         Multiple   => 1,
@@ -869,7 +869,7 @@ sub _GetExpandInfo {
                 $Info{ 'SelectedUser' . $Key } = '';
 
                 # build drop down with found users
-                $Info{ $Name . 'SelectionStrg' } = $Self->{LayoutObject}->BuildSelection(
+                $Info{ $Name . 'SelectionString' } = $Self->{LayoutObject}->BuildSelection(
                     Name => $Name . 'ID',
                     Data => \%UserList,
                 );
@@ -957,7 +957,7 @@ sub _GetExpandInfo {
             $Info{CABCustomer} = '';
 
             # build drop down with found customer users
-            $Info{CABCustomerSelectionStrg} = $Self->{LayoutObject}->BuildSelection(
+            $Info{CABCustomerSelectionString} = $Self->{LayoutObject}->BuildSelection(
                 Name => 'CABCustomerID',
                 Data => \@UserListForDropDown,
             );
