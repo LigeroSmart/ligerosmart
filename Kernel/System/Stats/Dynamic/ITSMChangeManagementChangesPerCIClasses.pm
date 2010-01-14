@@ -2,7 +2,7 @@
 # Kernel/System/Stats/Dynamic/ITSMChangeManagementChangesPerCIClasses.pm - all advice functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagementChangesPerCIClasses.pm,v 1.2 2010-01-14 17:07:45 reb Exp $
+# $Id: ITSMChangeManagementChangesPerCIClasses.pm,v 1.3 2010-01-14 17:29:03 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -99,7 +99,7 @@ sub GetObjectAttributes {
             UseAsXvalue      => 0,
             UseAsValueSeries => 0,
             UseAsRestriction => 1,
-            Element          => 'CIStatusID',
+            Element          => 'CIStateIDs',
             Block            => 'MultiSelectField',
             Translation      => 0,
             Values           => $InciStateList,
@@ -180,12 +180,39 @@ sub GetStatElement {
         push @Matches, \@Row;
     }
 
-    # check for each change if the config item is/was in appropriate status
+    # check for each change if the config item is in appropriate status
     # if so, count the change
-    my $Counter = scalar @Matches;
+    my $Counter = 0;
+    MATCH:
     for my $Match (@Matches) {
 
-        # ...
+        # get current state of the config item
+        next MATCH if !$Self->{DBObject}->Prepare(
+            SQL => 'SELECT inci_state_id FROM configitem_version '
+                . 'WHERE configitem_id = ? '
+                . 'AND create_time >= ? AND create_time <= ?',
+            Bind => [
+                \( $Match->[1] ),
+                \( $Param{CreateTimeNewerDate} ),
+                \( $Param{CreateTimeOlderDate} ),
+            ],
+            Limit => 1,
+        );
+
+        # fetch current incident state
+        my $IncidentStateID;
+        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+            $IncidentStateID = $Row[0];
+        }
+
+        next MATCH if !$IncidentStateID;
+
+        # check if user has selected this state
+        my ($Found) = grep { $_ == $IncidentStateID } @{ $Param{CIStateIDs} };
+
+        next MATCH if !$Found;
+
+        $Counter++;
     }
 
     # return the number of changes
@@ -195,6 +222,16 @@ sub GetStatElement {
 sub ExportWrapper {
     my ( $Self, %Param ) = @_;
 
+    # get class list
+    my $ClassList = $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::ConfigItem::Class',
+    );
+
+    # get incident state list
+    my $InciStateList = $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::Core::IncidentState',
+    );
+
     # wrap ids to used spelling
     for my $Use (qw(UseAsValueSeries UseAsRestriction UseAsXvalue)) {
         ELEMENT:
@@ -203,7 +240,7 @@ sub ExportWrapper {
             my $ElementName = $Element->{Element};
             my $Values      = $Element->{SelectedValues};
 
-            if ( $ElementName eq 'StateIDs' ) {
+            if ( $ElementName eq 'CIStateIDs' ) {
                 my $StateList = $Self->{ChangeObject}->ChangePossibleStatesGet( UserID => 1 );
                 ID:
                 for my $ID ( @{$Values} ) {
@@ -216,16 +253,14 @@ sub ExportWrapper {
                     }
                 }
             }
+            elsif ( $ElementName eq 'CIClassIDs' ) {
 
-            elsif (
-                $ElementName eq 'CategoryIDs' || $ElementName eq 'ImpactIDs'
-                || $ElementName eq 'PriorityIDs'
-                )
-            {
-                my ($Type) = $ElementName =~ m{ \A (.*?) IDs \z }xms;
+            }
+
+            elsif ( $ElementName eq 'CategoryIDs' ) {
 
                 my $CIPList = $Self->{ChangeObject}->ChangePossibleCIPGet(
-                    Type   => $Type,
+                    Type   => 'Category',
                     UserID => 1,
                 );
 
