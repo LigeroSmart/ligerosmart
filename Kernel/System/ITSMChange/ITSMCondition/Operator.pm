@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Operator.pm - all condition operator functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Operator.pm,v 1.12 2010-01-13 12:17:14 mae Exp $
+# $Id: Operator.pm,v 1.13 2010-01-14 09:52:40 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 =head1 NAME
 
@@ -495,9 +495,10 @@ sub _OperatorExecute {
         'is after'  => '_OperatorIsAfter',
 
         # string matching
-        'contains'    => '_OperatorContains',
-        'begins with' => '_OperatorBeginsWith',
-        'ends with'   => '_OperatorEndWith',
+        'contains'     => '_OperatorContains',
+        'not contains' => '_OperatorNotContains',
+        'begins with'  => '_OperatorBeginsWith',
+        'ends with'    => '_OperatorEndWith',
 
         # action operators
         'set'  => '_OperatorIsEmpty',
@@ -801,6 +802,71 @@ sub _OperatorIsAfter {
     return !$Self->_OperatorIsBefore(%Param);
 }
 
+=item _OperatorContains()
+
+Returns true or false (1/undef) if value1 contains value2.
+
+    my $Result = $ConditionObject->_OperatorContains(
+        Value1 => 'SomeValue',
+        Value2 => 'Value',
+    );
+
+=cut
+
+sub _OperatorContains {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(Value1 Value2)) {
+        if ( !exists $Param{$Argument} || !defined $Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # get lower case, for performance issues
+    my $LowerValue1 = lc $Param{Value1};
+    my $LowerValue2 = lc $Param{Value2};
+
+    # check embedded string
+    my $Contains = $LowerValue1 =~ m{ \A .* $LowerValue2 .* \z }xms;
+
+    # return result of equation
+    return $Contains;
+}
+
+=item _OperatorNotContains()
+
+Returns true or false (1/undef) if value1 not contains value2.
+
+    my $Result = $ConditionObject->_OperatorNotContains(
+        Value1 => 'SomeValue',
+        Value2 => 'SomeOtherValue',
+    );
+
+=cut
+
+sub _OperatorNotContains {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(Value1 Value2)) {
+        if ( !exists $Param{$Argument} || !defined $Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # return result of negated equation
+    return !$Self->_OperatorContains(%Param);
+}
+
 1;
 
 =back
@@ -817,6 +883,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.12 $ $Date: 2010-01-13 12:17:14 $
+$Revision: 1.13 $ $Date: 2010-01-14 09:52:40 $
 
 =cut

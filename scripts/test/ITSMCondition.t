@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.43 2010-01-13 00:20:51 ub Exp $
+# $Id: ITSMCondition.t,v 1.44 2010-01-14 09:52:40 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -572,7 +572,7 @@ my @ConditionOperators = (
     'is before', 'is after',
 
     # string matching
-    'contains', 'begins with', 'ends with',
+    'contains', 'not contains', 'begins with', 'ends with',
 
     # action operator
     'set', 'lock',
@@ -1377,6 +1377,192 @@ my @ExpressionTests = (
                     SystemTime => ( $Self->{TimeObject}->SystemTime() + 10 ),
                 ),
                 UserID => 1,
+            },
+        },
+    },
+    {
+        MatchSuccess => 1,
+        SourceData   => {
+            ExpressionAdd => {
+                ObjectID => {
+                    ObjectLookup => {
+                        Name   => 'ITSMWorkOrder',
+                        UserID => 1,
+                    },
+                },
+                AttributeID => {
+                    AttributeLookup => {
+                        Name   => 'WorkOrderTitle',
+                        UserID => 1,
+                    },
+                },
+                OperatorID => {
+                    OperatorLookup => {
+                        Name   => 'is',
+                        UserID => 1,
+                    },
+                },
+
+                # static fields
+                ConditionID  => $ConditionIDs[2],
+                Selector     => $WorkOrderIDs[0],
+                CompareValue => $WorkOrderTitles[0],
+                UserID       => 1,
+            },
+        },
+    },
+    {
+        MatchSuccess => 1,
+        SourceData   => {
+            ExpressionAdd => {
+                ObjectID => {
+                    ObjectLookup => {
+                        Name   => 'ITSMWorkOrder',
+                        UserID => 1,
+                    },
+                },
+                AttributeID => {
+                    AttributeLookup => {
+                        Name   => 'WorkOrderTitle',
+                        UserID => 1,
+                    },
+                },
+                OperatorID => {
+                    OperatorLookup => {
+                        Name   => 'contains',
+                        UserID => 1,
+                    },
+                },
+
+                # static fields
+                ConditionID  => $ConditionIDs[2],
+                Selector     => $WorkOrderIDs[0],
+                CompareValue => substr( $WorkOrderTitles[0], -4 ),
+                UserID       => 1,
+            },
+        },
+    },
+    {
+        MatchSuccess => 1,
+        SourceData   => {
+            ExpressionAdd => {
+                ObjectID => {
+                    ObjectLookup => {
+                        Name   => 'ITSMWorkOrder',
+                        UserID => 1,
+                    },
+                },
+                AttributeID => {
+                    AttributeLookup => {
+                        Name   => 'WorkOrderTitle',
+                        UserID => 1,
+                    },
+                },
+                OperatorID => {
+                    OperatorLookup => {
+                        Name   => 'contains',
+                        UserID => 1,
+                    },
+                },
+
+                # static fields
+                ConditionID  => $ConditionIDs[2],
+                Selector     => $WorkOrderIDs[0],
+                CompareValue => $WorkOrderTitles[0],
+                UserID       => 1,
+            },
+        },
+    },
+    {
+        MatchSuccess => 0,
+        SourceData   => {
+            ExpressionAdd => {
+                ObjectID => {
+                    ObjectLookup => {
+                        Name   => 'ITSMWorkOrder',
+                        UserID => 1,
+                    },
+                },
+                AttributeID => {
+                    AttributeLookup => {
+                        Name   => 'WorkOrderTitle',
+                        UserID => 1,
+                    },
+                },
+                OperatorID => {
+                    OperatorLookup => {
+                        Name   => 'contains',
+                        UserID => 1,
+                    },
+                },
+
+                # static fields
+                ConditionID  => $ConditionIDs[2],
+                Selector     => $WorkOrderIDs[0],
+                CompareValue => 'Not A Valid Value ' . int rand 1_000_000,
+                UserID       => 1,
+            },
+        },
+    },
+    {
+        MatchSuccess => 1,
+        SourceData   => {
+            ExpressionAdd => {
+                ObjectID => {
+                    ObjectLookup => {
+                        Name   => 'ITSMWorkOrder',
+                        UserID => 1,
+                    },
+                },
+                AttributeID => {
+                    AttributeLookup => {
+                        Name   => 'WorkOrderTitle',
+                        UserID => 1,
+                    },
+                },
+                OperatorID => {
+                    OperatorLookup => {
+                        Name   => 'not contains',
+                        UserID => 1,
+                    },
+                },
+
+                # static fields
+                ConditionID  => $ConditionIDs[2],
+                Selector     => $WorkOrderIDs[0],
+                CompareValue => 'Not A Valid Value ' . int rand 1_000_000,
+                UserID       => 1,
+            },
+        },
+    },
+    {
+        MatchSuccess => 0,
+        SourceData   => {
+            ExpressionAdd => {
+                ObjectID => {
+                    ObjectLookup => {
+                        Name   => 'ITSMWorkOrder',
+                        UserID => 1,
+                    },
+                },
+                AttributeID => {
+                    AttributeLookup => {
+                        Name   => 'WorkOrderTitle',
+                        UserID => 1,
+                    },
+                },
+                OperatorID => {
+                    OperatorLookup => {
+                        Name   => 'not contains',
+                        UserID => 1,
+                    },
+                },
+
+                # static fields
+                ConditionID  => $ConditionIDs[2],
+                Selector     => $WorkOrderIDs[0],
+                CompareValue => $WorkOrderTitles[0],
+                UserID       => 1,
             },
         },
     },
