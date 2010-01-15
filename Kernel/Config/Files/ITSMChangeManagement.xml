@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.139 2010-01-14 17:07:45 reb Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.140 2010-01-15 10:47:58 reb Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -2284,6 +2284,18 @@
             </Hash>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="Stats::ExchangeAxis" Required="0" Valid="1">
+        <Description Lang="en">If you activate this option an agent can exchange the axis of a stat if he generates one.</Description>
+        <Description Lang="de">Wenn diese Option aktiviert wird, hat der Agent die Möglichkeit beim Generieren einer Statistik die beiden Achsen zu vertauschen.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Frontend::Agent::Stats</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="Stats::DynamicObjectRegistration###ITSMChangeManagement" Required="0" Valid="1">
         <Description Lang="en">Here you can decide if the common stats module may generate stats about changes.</Description>
         <Description Lang="de">Hier können Sie festlegen, ob das Statistik-Modul auch allgemeine Statistiken über Changes generieren darf.</Description>
@@ -2296,8 +2308,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Stats::DynamicObjectRegistration###ITSMChangeManagementHistory" Required="0" Valid="1">
-        <Description Lang="en">Here you can decide if the common stats module may generate stats about changes.</Description>
-        <Description Lang="de">Hier können Sie festlegen, ob das Statistik-Modul auch allgemeine Statistiken über Changes generieren darf.</Description>
+        <Description Lang="en">Here you can decide if the common stats module may generate stats about changes regarding change state updates within a timeperiod.</Description>
+        <Description Lang="de">Hier können Sie festlegen, ob das Statistik-Modul auch allgemeine Statistiken über Changes bzgl. Status-Updates innerhalb einer Zeitperiode generieren darf.</Description>
         <Group>Framework</Group>
         <SubGroup>Core::Stats</SubGroup>
         <Setting>
@@ -2307,8 +2319,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Stats::DynamicObjectRegistration###ITSMChangeManagementChangesIncidents" Required="0" Valid="1">
-        <Description Lang="en">Here you can decide if the common stats module may generate stats about changes.</Description>
-        <Description Lang="de">Hier können Sie festlegen, ob das Statistik-Modul auch allgemeine Statistiken über Changes generieren darf.</Description>
+        <Description Lang="en">Here you can decide if the common stats module may generate stats about changes regarding the relation between changes and incident tickets.</Description>
+        <Description Lang="de">Hier können Sie festlegen, ob das Statistik-Modul auch allgemeine Statistiken über Changes bzgl. dem Zusammenhang zwischen Changes und Vorfalls-Tickets generieren darf.</Description>
         <Group>Framework</Group>
         <SubGroup>Core::Stats</SubGroup>
         <Setting>
@@ -2318,8 +2330,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Stats::DynamicObjectRegistration###ITSMChangeManagementRfcRequester" Required="0" Valid="1">
-        <Description Lang="en">Here you can decide if the common stats module may generate stats about changes.</Description>
-        <Description Lang="de">Hier können Sie festlegen, ob das Statistik-Modul auch allgemeine Statistiken über Changes generieren darf.</Description>
+        <Description Lang="en">Here you can decide if the common stats module may generate stats about the number of Rfc tickets a requester created.</Description>
+        <Description Lang="de">Hier können Sie festlegen, ob das Statistik-Modul auch allgemeine Statistiken über die Anzahl von RfC-Tickets, die von Benutzern erzeugt wurden, generieren darf.</Description>
         <Group>Framework</Group>
         <SubGroup>Core::Stats</SubGroup>
         <Setting>
@@ -2329,8 +2341,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Stats::DynamicObjectRegistration###ITSMChangeManagementChangesPerCIClasses" Required="0" Valid="1">
-        <Description Lang="en">Here you can decide if the common stats module may generate stats about changes.</Description>
-        <Description Lang="de">Hier können Sie festlegen, ob das Statistik-Modul auch allgemeine Statistiken über Changes generieren darf.</Description>
+        <Description Lang="en">Here you can decide if the common stats module may generate stats about changes done for config item classes.</Description>
+        <Description Lang="de">Hier können Sie festlegen, ob das Statistik-Modul auch allgemeine Statistiken über die Anzahl der durchgeführten Changes nach CI-Klasse generieren darf.</Description>
         <Group>Framework</Group>
         <SubGroup>Core::Stats</SubGroup>
         <Setting>
