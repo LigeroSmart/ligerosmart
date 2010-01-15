@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: LayoutITSMChange.pm,v 1.33 2010-01-13 00:34:24 ub Exp $
+# $Id: LayoutITSMChange.pm,v 1.34 2010-01-15 14:42:53 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use POSIX qw(ceil);
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.33 $) [1];
+$VERSION = qw($Revision: 1.34 $) [1];
 
 =over 4
 
@@ -327,12 +327,13 @@ sub ITSMChangeBuildWorkOrderGraph {
 
 Returns a list of changes as sortable list with pagination.
 
-(This function is similar to TicketListShow() in Kernel/Output/HTML/LayoutTicket.pm)
+This function is similar to L<Kernel::Output::HTML::LayoutTicket::TicketListShow()>
+in F<Kernel/Output/HTML/LayoutTicket.pm>.
 
     my $Output = $LayoutObject->ITSMChangeListShow(
-        ChangeIDs  => $ChangeIDsRef,
-        Total      => scalar @{ $ChangeIDsRef },
-        View       => $Self->{View},
+        ChangeIDs  => $ChangeIDsRef,                      # total list of change ids, that can be listed
+        Total      => scalar @{ $ChangeIDsRef },          # total number of list items, changes in this case
+        View       => $Self->{View},                      # optional, the default value is 'Small'
         Filter     => 'All',
         Filters    => \%NavBarFilter,
         FilterLink => $LinkFilter,
@@ -349,8 +350,7 @@ sub ITSMChangeListShow {
     my ( $Self, %Param ) = @_;
 
     # take object ref to local, remove it from %Param (prevent memory leak)
-    my $Env = $Param{Env};
-    delete $Param{Env};
+    my $Env = delete $Param{Env};
 
     # lookup latest used view mode
     if ( !$Param{View} && $Self->{ 'UserITSMChangeOverview' . $Env->{Action} } ) {
