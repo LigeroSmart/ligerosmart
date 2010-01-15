@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMTemplate.pm - all condition functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.1 2010-01-15 14:39:56 reb Exp $
+# $Id: Template.pm,v 1.2 2010-01-15 15:39:51 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,9 +18,10 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::Valid;
+use Data::Dumper;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -536,20 +537,85 @@ sub TemplateTypeLookup {
 
 =item TemplateSerialize()
 
+This method is in fact a dispatcher for different template types.
+Currently ITSMChangeManagement supports these template types:
+
+ITSMChange
+
+The method returns a datastruction, serialized with Data::Dumper.
+
+    my $ChangeTemplate = $TemplateObject->TemplateSerialize(
+        TemplateType => 'ITSMChange',
+        UserID       => 1,
+
+        # other options needed depending on the template type
+        ChangeID => 123,
+    );
+
 =cut
 
 sub TemplateSerialize {
     my ( $Self, %Param ) = @_;
 
-    my %Dispatcher = (
+    # check needed stuff
+    if ( !$Param{UserID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need UserID!',
+        );
+        return;
+    }
+
+    # the template type or the template id must be passed
+    if ( !$Param{TemplateTypeID} && !$Param{TemplateType} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need the TemplateTypeID or the TemplateType!',
+        );
+        return;
+    }
+
+    # only one of template id and template type can be passed
+    if ( $Param{TemplateType} && $Param{TemplateTypeID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need either the TemplateTypeID or the TemplateType, not both!',
+        );
+        return;
+    }
+
+    my $TemplateType = $Param{TemplateType};
+    if ( $Param{TemplateTypeID} ) {
+        $TemplateType = $Self->TemplateTypeLookup(
+            TemplateID => $Param{TemplateTypeID},
+        );
+    }
+
+    # what types of templates are supported and what subroutines do the serialization
+    my %Types2Subroutines = (
         ITSMChange    => '_ITSMChangeSerialize',
         ITSMWorkOrder => '_ITSMWorkOrderSerialize',
         ITSMCondition => '_ConditionSerialize',
         CAB           => '_CABSerialize',
     );
+
+    return if !exists $Types2Soubroutines{$TemplateType};
+
+    my $Sub            = $Types2Soubroutines{$TemplateType};
+    my $SerializedData = $Self->$Sub(%Param);
+
+    return $SerializedData;
 }
 
 =item TemplateDeSerialize()
+
+This method deserializes the template content. A Perl datastructure is returned. Actually
+it is an array reference with hash references as elements.
+
+    my $ArrayReference = $TemplateObject->TemplateDeSerialize(
+        TemplateID => 123,
+        UserID     => 1,
+    );
 
 =cut
 
@@ -589,7 +655,73 @@ sub TemplateDeSerialize {
 =cut
 
 sub _ITSMChangeSerialize {
+    my ( $Self, %Param ) = @_;
 
+    # check needed stuff
+    for my $Argument (qw(UserID ChangeID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # get change
+    my $Change = $Self->{ChangeObject}->ChangeGet(
+        ChangeID => $Param{ChangeID},
+        UserID   => $Param{UserID},
+    );
+
+    return if !$Change;
+
+    # the ids are needed later
+    my $WorkOrderIDs = $Change->{WorkOrderIDs};
+
+    # delete not needed values from change
+    for my $Attribute
+        (
+        qw(ChangeState ChangeStateSignal Category Impact Priority WorkOrderIDs
+        WorkOrderCount PlannedStartTime PlannedEndTime ActualStartTime ActualEndTime
+        PlannedEffort AccountedTime)
+        )
+    {
+        delete $Change->{$Attribute};
+    }
+
+    my $OriginalData = [ { ChangeAdd => $Change } ];
+
+    # get workorders
+    WORKORDERID:
+    for my $WorkOrderID ( @{$WorkOrderIDs} ) {
+        my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+            WorkOrderID => $WorkOrderID,
+            UserID      => $Param{UserID},
+        );
+
+        next WORKORDERID if !$WorkOrder;
+
+        # delete not needed attributes from workorder
+        for my $Attribute (qw(WorkOrderState WorkOrderStateSignal WorkOrderType)) {
+            delete $WorkOrder->{$Attribute};
+        }
+
+        push @{$OriginalData}, { WorkOrderAdd => $WorkOrder };
+    }
+
+    # get conditions
+
+    # no indentation (saves space)
+    local $Data::Dumper::Indent = 0;
+
+    # do not use cross-referencing
+    local $Data::Dumper::Deepcopy = 1;
+
+    # serialize the data (do not use $VAR1, but $TemplateData for Dumper output)
+    my $SerializedData = Data::Dumper->Dump( [$OriginalData], ['TemplateData'] );
+
+    return $SerializedData;
 }
 
 =item _ITSMWorkOrderSerialize()
@@ -634,6 +766,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2010-01-15 14:39:56 $
+$Revision: 1.2 $ $Date: 2010-01-15 15:39:51 $
 
 =cut
