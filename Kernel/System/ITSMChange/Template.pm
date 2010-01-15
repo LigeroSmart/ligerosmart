@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMTemplate.pm - all condition functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.2 2010-01-15 15:39:51 reb Exp $
+# $Id: Template.pm,v 1.3 2010-01-15 18:06:28 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Valid;
 use Data::Dumper;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
@@ -599,9 +599,9 @@ sub TemplateSerialize {
         CAB           => '_CABSerialize',
     );
 
-    return if !exists $Types2Soubroutines{$TemplateType};
+    return if !exists $Types2Subroutines{$TemplateType};
 
-    my $Sub            = $Types2Soubroutines{$TemplateType};
+    my $Sub            = $Types2Subroutines{$TemplateType};
     my $SerializedData = $Self->$Sub(%Param);
 
     return $SerializedData;
@@ -766,6 +766,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2010-01-15 15:39:51 $
+$Revision: 1.3 $ $Date: 2010-01-15 18:06:28 $
 
 =cut
