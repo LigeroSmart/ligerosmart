@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.75 2010-01-13 05:27:28 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.76 2010-01-15 09:41:18 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.75 $) [1];
+$VERSION = qw($Revision: 1.76 $) [1];
 
 =head1 NAME
 
@@ -126,7 +126,8 @@ sub new {
 =item WorkOrderAdd()
 
 Add a new workorder.
-Internally first a minimal workorder is created, then WorkOrderUpdate() is called.
+Internally first a minimal workorder is created,
+then WorkOrderUpdate() is called for setting the remaining arguments.
 
     my $WorkOrderID = $WorkOrderObject->WorkOrderAdd(
         ChangeID => 123,
@@ -361,7 +362,6 @@ There passing C<undef> indicates that the workorder time should be cleared.
 
     my $Success = $WorkOrderObject->WorkOrderUpdate(
         WorkOrderID      => 4,
-        ChangeID         => 123,                                       # (optional)
         WorkOrderNumber  => 5,                                         # (optional)
         WorkOrderTitle   => 'Replacement of mail server',              # (optional)
         Instruction      => 'Install the the new server',              # (optional)
@@ -500,7 +500,6 @@ sub WorkOrderUpdate {
         WorkOrderNumber  => 'workorder_number',
         Instruction      => 'instruction',
         Report           => 'report',
-        ChangeID         => 'change_id',
         WorkOrderStateID => 'workorder_state_id',
         WorkOrderTypeID  => 'workorder_type_id',
         WorkOrderAgentID => 'workorder_agent_id',
@@ -2682,6 +2681,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.75 $ $Date: 2010-01-13 05:27:28 $
+$Revision: 1.76 $ $Date: 2010-01-15 09:41:18 $
 
 =cut
