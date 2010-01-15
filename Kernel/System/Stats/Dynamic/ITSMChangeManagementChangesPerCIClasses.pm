@@ -2,7 +2,7 @@
 # Kernel/System/Stats/Dynamic/ITSMChangeManagementChangesPerCIClasses.pm - all advice functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagementChangesPerCIClasses.pm,v 1.6 2010-01-14 19:39:28 reb Exp $
+# $Id: ITSMChangeManagementChangesPerCIClasses.pm,v 1.7 2010-01-15 09:17:11 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -307,9 +307,11 @@ sub ImportWrapper {
                 for my $ID ( @{$Values} ) {
                     next ID if !$ID;
 
+                    KEY:
                     for my $Key ( keys %{$InciStateList} ) {
                         if ( $ID->{Content} eq $InciStateList->{$Key} ) {
-                            $ID->{Content} = $InciStateList->{$Key};
+                            $ID->{Content} = $Key;
+                            last KEY;
                         }
                     }
                 }
@@ -321,7 +323,7 @@ sub ImportWrapper {
 
                     for my $Key ( keys %{$ClassList} ) {
                         if ( $ID->{Content} eq $ClassList->{$Key} ) {
-                            $ID->{Content} = $ClassList->{$Key};
+                            $ID->{Content} = $Key;
                         }
                     }
                 }
