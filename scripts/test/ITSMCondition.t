@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.46 2010-01-14 12:04:26 mae Exp $
+# $Id: ITSMCondition.t,v 1.47 2010-01-15 02:06:50 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -54,9 +54,9 @@ $Self->True(
 my $ChangeNotificationSettingsOrg;
 {
     my $EventModule = $Self->{ConfigObject}->Get('ITSMChange::EventModule');
-    $ChangeNotificationSettingsOrg = $EventModule->{'02-Notification'};
+    $ChangeNotificationSettingsOrg = $EventModule->{'03-Notification'};
     $Self->{ConfigObject}->Set(
-        Key => 'ITSMChange::EventModule###02-Notification',
+        Key => 'ITSMChange::EventModule###03-Notification',
     );
 }
 
