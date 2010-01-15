@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.47 2010-01-15 02:06:50 ub Exp $
+# $Id: ITSMCondition.t,v 1.48 2010-01-15 02:08:07 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -2062,7 +2062,7 @@ for my $ChangeID (@ChangeIDs) {
 # set change notifications to their original value
 if ($ChangeNotificationSettingsOrg) {
     $Self->{ConfigObject}->Set(
-        Key   => 'ITSMChange::EventModule###02-Notification',
+        Key   => 'ITSMChange::EventModule###03-Notification',
         Value => $ChangeNotificationSettingsOrg,
     );
 }
