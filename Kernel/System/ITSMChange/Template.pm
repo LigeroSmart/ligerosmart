@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMTemplate.pm - all condition functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.4 2010-01-15 18:23:35 reb Exp $
+# $Id: Template.pm,v 1.5 2010-01-15 18:47:23 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Valid;
 use Data::Dumper;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 =head1 NAME
 
@@ -640,10 +640,37 @@ sub TemplateDeSerialize {
 
     return if !$Template;
 
+    # get the Perl datastructure
     my $TemplateContent = $Template->{Content};
     my $TemplateData;
 
     eval "\$TemplateData = $TemplateContent; 1;" or return;
+
+    # dispatch table
+    my %Method2Subroutine = (
+        ChangeAdd    => '_ChangeAdd',
+        WorkOrderAdd => '_WorkOrderAdd',
+        CABAdd       => '_CABAdd',
+        ConditionAdd => '_ConditionAdd',
+    );
+
+    # create entities defined by the template
+    my $ChangeID = $Param{ChangeID};
+
+    ENTITY:
+    for my $Entity ( @{$TemplateData} ) {
+        my ( $Method, $Data ) = each %{$Entity};
+
+        my $Sub = $Method2Subroutine{$Method};
+
+        next ENTITY if !$Sub;
+
+        $ChangeID = $Self->$Sub(
+            %{$Data},
+            ChangeID => $ChangeID,
+            UserID   => $Param{UserID},
+        );
+    }
 
     return $TemplateData;
 }
@@ -882,6 +909,69 @@ sub _ConditionSerialize {
     return $SerializedData;
 }
 
+=item _ChangeAdd()
+
+Creates a new change based on a template. It returns the new ChangeID.
+
+    my $ChangeID = $TemplateObject->_ChangeAdd(
+        ChangeID => 0,
+
+    );
+
+=cut
+
+sub _ChangeAdd {
+    my ( $Self, %Param ) = @_;
+
+    # we should not pass the ChangeID to ChangeAdd
+    delete $Param{ChangeID};
+
+    # add the change
+    my $ChangeID = $Self->{ChangeObject}->ChangeAdd(
+        %Param,
+    );
+
+    return $ChangeID;
+}
+
+=item _WorkOrderAdd()
+
+Creates a new workorder based on a template. It returns the
+change id it was created for.
+
+    my $ChangeID = $TemplateObject->_WorkOrderAdd(
+    );
+
+=cut
+
+sub _WorkOrderAdd {
+    my ( $Self, %Param ) = @_;
+
+    return if !$Self->{WorkOrderObject}->WorkOrderAdd(
+        %Param,
+    );
+
+    return $Param{ChangeID};
+}
+
+=item _CABAdd()
+
+=cut
+
+sub _CABAdd {
+    my ( $Self, %Param ) = @_;
+    return $Param{ChangeID};
+}
+
+=item _ConditionAdd()
+
+=cut
+
+sub _ConditionAdd {
+    my ( $Self, %Param ) = @_;
+    return $Param{ChangeID};
+}
+
 1;
 
 =end Internal:
@@ -900,6 +990,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2010-01-15 18:23:35 $
+$Revision: 1.5 $ $Date: 2010-01-15 18:47:23 $
 
 =cut
