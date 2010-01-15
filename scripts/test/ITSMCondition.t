@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.48 2010-01-15 02:08:07 ub Exp $
+# $Id: ITSMCondition.t,v 1.49 2010-01-15 02:42:27 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -236,7 +236,7 @@ for my $ChangeID (@ChangeIDs) {
         my $Success = $Self->{ConditionObject}->ConditionUpdate(
             ConditionID           => $ConditionID,
             ExpressionConjunction => 'all',
-            Comments              => 'An updated comment',
+            Comment               => 'An updated comment',
             UserID                => 1,
         );
 
@@ -252,7 +252,7 @@ for my $ChangeID (@ChangeIDs) {
         );
 
         $Self->Is(
-            $ConditionData->{Comments},
+            $ConditionData->{Comment},
             'An updated comment',
             'Test ' . $TestCount++ . " - ConditionGet -> ConditionID: $ConditionID",
         );

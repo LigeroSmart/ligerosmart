@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition.pm - all condition functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.pm,v 1.21 2010-01-14 14:17:19 mae Exp $
+# $Id: ITSMCondition.pm,v 1.22 2010-01-15 02:43:13 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use base qw(Kernel::System::ITSMChange::ITSMCondition::Expression);
 use base qw(Kernel::System::ITSMChange::ITSMCondition::Action);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.21 $) [1];
+$VERSION = qw($Revision: 1.22 $) [1];
 
 =head1 NAME
 
@@ -128,7 +128,7 @@ Add a new condition.
         ChangeID              => 123,
         Name                  => 'The condition name',
         ExpressionConjunction => 'any',                 # (any|all)
-        Comments              => 'A comment',           # (optional)
+        Comment               => 'A comment',           # (optional)
         ValidID               => 1,
         UserID                => 1,
     );
@@ -185,7 +185,7 @@ sub ConditionAdd {
             . 'VALUES (?, ?, ?, ?, ?, current_timestamp, ?, current_timestamp, ?)',
         Bind => [
             \$Param{ChangeID}, \$Param{Name}, \$Param{ExpressionConjunction},
-            \$Param{Comments}, \$Param{ValidID}, \$Param{UserID}, \$Param{UserID},
+            \$Param{Comment}, \$Param{ValidID}, \$Param{UserID}, \$Param{UserID},
         ],
     );
 
@@ -226,7 +226,7 @@ Update a condition.
         ConditionID           => 1234,
         Name                  => 'The condition name',  # (optional)
         ExpressionConjunction => 'any',                 # (optional) (any|all)
-        Comments              => 'A comment',           # (optional)
+        Comment               => 'A comment',           # (optional)
         ValidID               => 1,                     # (optional)
         UserID                => 1,
     );
@@ -253,7 +253,7 @@ sub ConditionUpdate {
     my %Attribute = (
         Name                  => 'name',
         ExpressionConjunction => 'expression_conjunction',
-        Comments              => 'comments',
+        Comment               => 'comments',
         ValidID               => 'valid_id',
     );
 
@@ -306,7 +306,7 @@ The returned hash reference contains following elements:
     $ConditionData{ChangeID}
     $ConditionData{Name}
     $ConditionData{ExpressionConjunction}
-    $ConditionData{Comments}
+    $ConditionData{Comment}
     $ConditionData{ValidID}
     $ConditionData{CreateTime}
     $ConditionData{CreateBy}
@@ -346,7 +346,7 @@ sub ConditionGet {
         $ConditionData{ChangeID}              = $Row[1];
         $ConditionData{Name}                  = $Row[2];
         $ConditionData{ExpressionConjunction} = $Row[3];
-        $ConditionData{Comments}              = $Row[4];
+        $ConditionData{Comment}               = $Row[4];
         $ConditionData{ValidID}               = $Row[5];
         $ConditionData{CreateTime}            = $Row[6];
         $ConditionData{CreateBy}              = $Row[7];
@@ -722,7 +722,7 @@ sub ConditionMatchExecute {
             last EXPRESSIONID;
         }
 
-        # condition is fals at all, so return true
+        # condition is false at all, so return true
         if ( $ConditionData->{ExpressionConjunction} eq 'all' && !$ExpressionMatch ) {
             return 1;
         }
@@ -781,6 +781,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.21 $ $Date: 2010-01-14 14:17:19 $
+$Revision: 1.22 $ $Date: 2010-01-15 02:43:13 $
 
 =cut
