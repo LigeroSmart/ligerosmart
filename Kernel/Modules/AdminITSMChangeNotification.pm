@@ -3,7 +3,7 @@
 # notification rules for ITSM change management
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMChangeNotification.pm,v 1.10 2010-01-12 08:43:15 bes Exp $
+# $Id: AdminITSMChangeNotification.pm,v 1.11 2010-01-15 10:20:59 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::Notification;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -105,15 +105,9 @@ sub Run {
     # add
     # ------------------------------------------------------------ #
     elsif ( $Self->{Subaction} eq 'Add' ) {
-        my %GetParam = ();
-        for my $Param (qw(Name)) {
-            $GetParam{$Param} = $Self->{ParamObject}->GetParam( Param => $Param );
-        }
-
         $Self->_Edit(
             Action      => 'Add',
             ActionLabel => 'Add',
-            %GetParam,
         );
     }
 
@@ -176,6 +170,7 @@ sub Run {
 
 }
 
+# show the edit mask for a notification rule
 sub _Edit {
     my ( $Self, %Param ) = @_;
 
@@ -183,7 +178,7 @@ sub _Edit {
         Name => 'Overview',
         Data => \%Param,
     );
-    $Param{'ValidOption'} = $Self->{LayoutObject}->BuildSelection(
+    $Param{ValidOption} = $Self->{LayoutObject}->BuildSelection(
         Data => {
             $Self->{ValidObject}->ValidList(),
         },
@@ -200,7 +195,7 @@ sub _Edit {
         Data => $Self->{NotificationObject}->RecipientList( UserID => 1 ) || [],
         Name => 'RecipientIDs',
         Multiple   => 1,
-        Size       => 5,
+        Size       => 13,                    # current number of default recipients, avoid scrolling
         SelectedID => $Param{RecipientIDs},
     );
 
@@ -208,6 +203,7 @@ sub _Edit {
         Name => 'OverviewUpdate',
         Data => \%Param,
     );
+
     return 1;
 }
 
