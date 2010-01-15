@@ -1,8 +1,8 @@
 // --
 // itsm-changemanagement.js - provides JavaScript functions
-// Copyright (C) 2003-2009 OTRS AG, http://otrs.com/\n";
+// Copyright (C) 2003-2010 OTRS AG, http://otrs.com/\n";
 // --
-// $Id: itsm-changemanagement.js,v 1.6 2009-11-18 09:29:02 reb Exp $
+// $Id: itsm-changemanagement.js,v 1.7 2010-01-15 16:52:25 bes Exp $
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -10,7 +10,8 @@
 // --
 
 
-// check if time is valid
+// Check if the time could be valid.
+// Beware that days like 2010-02-29 are allowed.
 function CheckTime( id_base ) {
 
     // check the planned end time
