@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeHistory.pm - the OTRS::ITSM::ChangeManagement change history module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeHistory.pm,v 1.34 2010-01-14 17:17:58 bes Exp $
+# $Id: AgentITSMChangeHistory.pm,v 1.35 2010-01-15 08:50:27 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::History;
 use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.34 $) [1];
+$VERSION = qw($Revision: 1.35 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -199,15 +199,21 @@ sub Run {
                         # The content has changed, so change the displayed fieldname as well
                         $DisplayedFieldname = $Type;
                     }
-                    elsif (
-                        $HistoryEntry->{Fieldname} eq 'CABAgents'
-                        || $HistoryEntry->{Fieldname} eq 'CABCustomers'
-                        )
-                    {
+                    elsif ( $HistoryEntry->{Fieldname} eq 'CABCustomers' ) {
+
+                      # ContentNew and ContentOld contain a '%%' seperated list of customer user ids
+                      # reformat it as a comma separated list
+                        $HistoryEntry->{$ContentNewOrOld} =~ s{ % % }{,}xmsg;
+                    }
+                    elsif ( $HistoryEntry->{Fieldname} eq 'CABAgents' ) {
 
                         # ContentNew and ContentOld contain a '%%' seperated list of user ids
-                        # reformat it as a comma separated list
-                        $HistoryEntry->{$ContentNewOrOld} =~ s{ % % }{,}xmsg;
+                        # look up the login names from the user ids and
+                        # format it as a comma separated list
+                        my @UserIDs = split m/%%/, $HistoryEntry->{$ContentNewOrOld};
+                        my @UserLogins
+                            = map { $Self->{UserObject}->UserLookup( UserID => $_ ) } @UserIDs;
+                        $HistoryEntry->{$ContentNewOrOld} = join ',', @UserLogins;
                     }
 
                     # replace HTML breaks with single space
