@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.130 2010-01-15 10:59:52 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.131 2010-01-15 14:49:27 reb Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -97,6 +97,7 @@
         <File Permission="644" Location="Kernel/System/ITSMChange/ITSMStateMachine.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/ITSMWorkOrder.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/Notification.pm"/>
+        <File Permission="644" Location="Kernel/System/ITSMChange/Template.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/Event/Condition.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/Event/HistoryAdd.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/Event/Notification.pm"/>
@@ -1195,6 +1196,38 @@
         </Insert>
         <Insert Table="change_notification_grps">
             <Data Key="name" Type="Quote">GroupITSMChangeManager</Data>
+        </Insert>
+        <Insert Table="change_template_type">
+            <Data Key="name" Type="Quote">ITSMChange</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_template_type">
+            <Data Key="name" Type="Quote">ITSMWorkOrder</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_template_type">
+            <Data Key="name" Type="Quote">CAB</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_template_type">
+            <Data Key="name" Type="Quote">ITSMCondition</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
         </Insert>
     </DatabaseInstall>
     <DatabaseUpgrade>
