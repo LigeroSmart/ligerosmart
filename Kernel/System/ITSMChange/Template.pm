@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMTemplate.pm - all condition functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.3 2010-01-15 18:06:28 reb Exp $
+# $Id: Template.pm,v 1.4 2010-01-15 18:23:35 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Valid;
 use Data::Dumper;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 =head1 NAME
 
@@ -710,7 +710,27 @@ sub _ITSMChangeSerialize {
         push @{$OriginalData}, { WorkOrderAdd => $WorkOrder };
     }
 
-    # get conditions
+    # get condition list for the change
+    my $ConditionList = $Self->{ConditionObject}->ConditionList(
+        ChangeID => $Param{ChangeID},
+        Valid    => 0,
+        UserID   => $Param{UserID},
+    ) || [];
+
+    # get each condition
+    CONDITIONID:
+    for my $ConditionID ( @{$ConditionList} ) {
+        my $Condition = $Self->{ConditionObject}->ConditionGet(
+            ConditionID => $ConditionID,
+            UserID      => $Param{UserID},
+        );
+
+        next CONDITIONID if !$Condition;
+
+        push @{$OriginalData}, { ConditionAdd => $Condition };
+    }
+
+    # TODO: get attachments
 
     # no indentation (saves space)
     local $Data::Dumper::Indent = 0;
@@ -729,7 +749,47 @@ sub _ITSMChangeSerialize {
 =cut
 
 sub _ITSMWorkOrderSerialize {
+    my ( $Self, %Param ) = @_;
 
+    # check needed stuff
+    for my $Argument (qw(UserID WorkOrderID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # get workorder
+    my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+        WorkOrderID => $Param{WorkOrderID},
+        UserID      => $Param{UserID},
+    );
+
+    return if !$WorkOrder;
+
+    # delete not needed attributes from workorder
+    for my $Attribute (qw(WorkOrderState WorkOrderStateSignal WorkOrderType)) {
+        delete $WorkOrder->{$Attribute};
+    }
+
+    # TODO: get Attachments
+
+    # no indentation (saves space)
+    local $Data::Dumper::Indent = 0;
+
+    # do not use cross-referencing
+    local $Data::Dumper::Deepcopy = 1;
+
+    # templates have to be an array reference;
+    my $OriginalData = [ { WorkOrderAdd => $WorkOrder } ];
+
+    # serialize the data (do not use $VAR1, but $TemplateData for Dumper output)
+    my $SerializedData = Data::Dumper->Dump( [$OriginalData], ['TemplateData'] );
+
+    return $SerializedData;
 }
 
 =item _CABSerialize()
@@ -737,6 +797,47 @@ sub _ITSMWorkOrderSerialize {
 =cut
 
 sub _CABSerialize {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(UserID ChangeID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # get CAB of the change
+    my $Change = $Self->{ChangeObject}->ChangeGet(
+        ChangeID => $Param{ChangeID},
+        UserID   => $Param{UserID},
+    );
+
+    return if !$Change;
+
+    # no indentation (saves space)
+    local $Data::Dumper::Indent = 0;
+
+    # do not use cross-referencing
+    local $Data::Dumper::Deepcopy = 1;
+
+    # templates have to be an array reference;
+    my $OriginalData = [
+        {
+            CABAdd => {
+                CABCustomers => $Change->{CABCustomers},
+                CABAgents    => $Change->{CABAgents},
+                }
+        }
+    ];
+
+    # serialize the data (do not use $VAR1, but $TemplateData for Dumper output)
+    my $SerializedData = Data::Dumper->Dump( [$OriginalData], ['TemplateData'] );
+
+    return $SerializedData;
 
 }
 
@@ -745,7 +846,40 @@ sub _CABSerialize {
 =cut
 
 sub _ConditionSerialize {
+    my ( $Self, %Param ) = @_;
 
+    # check needed stuff
+    for my $Argument (qw(UserID ConditionID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # get condition
+    my $Condition = $Self->{ConditionObject}->ConditionGet(
+        ConditionID => $Param{ConditionID},
+        UserID      => $Param{UserID},
+    );
+
+    return if !$Condition;
+
+    # no indentation (saves space)
+    local $Data::Dumper::Indent = 0;
+
+    # do not use cross-referencing
+    local $Data::Dumper::Deepcopy = 1;
+
+    # templates have to be an array reference;
+    my $OriginalData = [ { ConditionAdd => $Condition } ];
+
+    # serialize the data (do not use $VAR1, but $TemplateData for Dumper output)
+    my $SerializedData = Data::Dumper->Dump( [$OriginalData], ['TemplateData'] );
+
+    return $SerializedData;
 }
 
 1;
@@ -766,6 +900,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2010-01-15 18:06:28 $
+$Revision: 1.4 $ $Date: 2010-01-15 18:23:35 $
 
 =cut
