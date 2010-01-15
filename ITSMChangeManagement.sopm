@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.129 2010-01-14 23:57:12 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.130 2010-01-15 10:59:52 bes Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -933,6 +933,14 @@
             <Data Key="change_by">1</Data>
         </Insert>
         <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">ChangeDelete</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
             <Data Key="name" Type="Quote">ChangeCABUpdate</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
@@ -965,7 +973,15 @@
             <Data Key="change_by">1</Data>
         </Insert>
         <Insert Table="change_history_type">
-            <Data Key="name" Type="Quote">ChangeDelete</Data>
+            <Data Key="name" Type="Quote">ChangeAttachmentAdd</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">ChangeAttachmentDelete</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -1006,22 +1022,6 @@
         </Insert>
         <Insert Table="change_history_type">
             <Data Key="name" Type="Quote">WorkOrderLinkDelete</Data>
-            <Data Key="valid_id">1</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
-        <Insert Table="change_history_type">
-            <Data Key="name" Type="Quote">ChangeAttachmentAdd</Data>
-            <Data Key="valid_id">1</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
-        <Insert Table="change_history_type">
-            <Data Key="name" Type="Quote">ChangeAttachmentDelete</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>

@@ -3,7 +3,7 @@
 # notification rules for ITSM change management
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMChangeNotification.pm,v 1.11 2010-01-15 10:20:59 bes Exp $
+# $Id: AdminITSMChangeNotification.pm,v 1.12 2010-01-15 10:59:54 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::Notification;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -47,6 +47,7 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    # hash with feedback to the user
     my %Notification;
 
     # ------------------------------------------------------------ #
@@ -207,10 +208,9 @@ sub _Edit {
     return 1;
 }
 
+# show a table of notification rules
 sub _Overview {
     my ( $Self, %Param ) = @_;
-
-    my $Output = '';
 
     $Self->{LayoutObject}->Block(
         Name => 'Overview',
@@ -220,12 +220,12 @@ sub _Overview {
         Name => 'OverviewResult',
         Data => \%Param,
     );
-    my $List = $Self->{NotificationObject}->NotificationRuleList() || [];
+    my $RuleIDs = $Self->{NotificationObject}->NotificationRuleList() || [];
 
     # get valid list
     my %ValidList = $Self->{ValidObject}->ValidList();
     my $CssClass  = '';
-    for my $RuleID ( sort @{$List} ) {
+    for my $RuleID ( @{$RuleIDs} ) {
 
         # set output class
         if ( $CssClass && $CssClass eq 'searchactive' ) {
