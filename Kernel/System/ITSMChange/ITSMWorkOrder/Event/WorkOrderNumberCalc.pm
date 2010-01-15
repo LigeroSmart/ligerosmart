@@ -1,9 +1,9 @@
 # --
 # Kernel/System/ITSMChange/ITSMWorkOrder/Event/WorkOrderNumberCalc.pm - WorkOrderNumberCalc
 # event module for ITSMWorkOrder
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrderNumberCalc.pm,v 1.9 2010-01-14 15:14:10 bes Exp $
+# $Id: WorkOrderNumberCalc.pm,v 1.10 2010-01-15 09:34:19 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 =head1 NAME
 
@@ -107,10 +107,13 @@ sub new {
 
 =item Run()
 
-The C<Run()> method recalculates the workordernumbers for a given change.
-This is triggered by WorkOrderAdd, WorkOrderUpdate, WorkOrderDelete events.
+The C<Run()> method recalculates the workorder numbers for the given workorder
+and it's siblings.
+This is triggered by the C<WorkOrderUpdate> and C<WorkOrderDelete> events.
+This isn't triggered by C<WorkOrderAdd> events as C<WorkOrderAdd()> sets the
+correct workorder number by itself.
 
-It returns 1 on success, C<undef> otherwise.
+The methods returns 1 on success, C<undef> otherwise.
 
     my $Success = $EventObject->Run(
         Event => 'WorkOrderUpdatePost',
@@ -144,7 +147,7 @@ sub Run {
     # handle WorkOrderUpdate und WorkOrderDelete events
     if ( $Param{Event} eq 'WorkOrderUpdatePost' ) {
 
-        # get WorkOrder
+        # get WorkOrder, especially the ChangeID
         my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
             WorkOrderID => $Param{Data}->{WorkOrderID},
             UserID      => $Param{UserID},
@@ -190,8 +193,9 @@ sub Run {
 
 =item _WorkOrderNumberCalc()
 
-This method actually recalculates the WorkOrderNumbers. It returns 1
-on success, C<undef> otherwise.
+This method actually recalculates the WorkOrderNumbers for the workorders of
+the given change.
+It returns 1 on success, C<undef> otherwise.
 
     my $Success = $EventObject->_WorkOrderNumberCalc(
         ChangeID => 123,
@@ -286,6 +290,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.9 $ $Date: 2010-01-14 15:14:10 $
+$Revision: 1.10 $ $Date: 2010-01-15 09:34:19 $
 
 =cut
