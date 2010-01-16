@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition.pm - all condition functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.pm,v 1.22 2010-01-15 02:43:13 ub Exp $
+# $Id: ITSMCondition.pm,v 1.23 2010-01-16 15:10:22 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use base qw(Kernel::System::ITSMChange::ITSMCondition::Expression);
 use base qw(Kernel::System::ITSMChange::ITSMCondition::Action);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 =head1 NAME
 
@@ -455,6 +455,22 @@ sub ConditionDelete {
     # TODO it may be neccessary to get the ChangeID from ConditionGet()
     # so that the history entry will be written to the correct change
 
+    # delete all expressions for this condition id
+    my $Success = $Self->ExpressionDeleteAll(
+        ConditionID => $Param{ConditionID},
+        UserID      => $Param{UserID},
+    );
+
+    return if !$Success;
+
+    # delete all actions for this condition id
+    $Success = $Self->ActionDeleteAll(
+        ConditionID => $Param{ConditionID},
+        UserID      => $Param{UserID},
+    );
+
+    return if !$Success;
+
     # delete condition from database
     return if !$Self->{DBObject}->Do(
         SQL => 'DELETE FROM change_condition '
@@ -505,17 +521,20 @@ sub ConditionDeleteAll {
     for my $ConditionID ( @{$ConditionIDsRef} ) {
 
         # delete all expressions for this condition id
-        $Self->ExpressionDeleteAll(
+        my $Success = $Self->ExpressionDeleteAll(
             ConditionID => $ConditionID,
             UserID      => $Param{UserID},
         );
 
-        # TODO: implement this function in action module and enable the code below
+        return if !$Success;
+
         # delete all actions for this condition id
-        #        $Self->ActionDeleteAll(
-        #            ConditionID => $ConditionID,
-        #            UserID      => $Param{UserID},
-        #        );
+        $Success = $Self->ActionDeleteAll(
+            ConditionID => $ConditionID,
+            UserID      => $Param{UserID},
+        );
+
+        return if !$Success;
     }
 
     # TODO: execute ConditionDeleteAllPost Event
@@ -781,6 +800,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.22 $ $Date: 2010-01-15 02:43:13 $
+$Revision: 1.23 $ $Date: 2010-01-16 15:10:22 $
 
 =cut
