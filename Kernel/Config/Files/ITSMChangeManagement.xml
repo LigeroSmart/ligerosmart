@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.141 2010-01-15 15:00:33 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.142 2010-01-16 00:02:55 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -133,6 +133,20 @@
                     <AccessKey></AccessKey>
                     <Prio>500</Prio>
                 </NavBar>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentITSMChangeCondition" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AgentITSMChangeCondition object in the agent interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration des AgentITSMChangeCondition-Objekts im Agenteninterface.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <GroupRo>itsm-change</GroupRo>
+                <Description>ITSM Change Condition Overview.</Description>
+                <Title>Condition</Title>
+                <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -591,7 +605,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMChangeMenuGeneric</Item>
                 <Item Key="Name">Print</Item>
-                <Item Key="Description">Print</Item>
+                <Item Key="Description">Print the change</Item>
                 <Item Key="Action">AgentITSMChangePrint</Item>
                 <Item Key="Link">Action=AgentITSMChangePrint&amp;ChangeID=$QData{"ChangeID"}</Item>
             </Hash>
@@ -606,7 +620,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMChangeMenuGeneric</Item>
                 <Item Key="Name">Edit</Item>
-                <Item Key="Description">Edit a Change</Item>
+                <Item Key="Description">Edit the change</Item>
                 <Item Key="Action">AgentITSMChangeEdit</Item>
                 <Item Key="Link">Action=AgentITSMChangeEdit&amp;ChangeID=$QData{"ChangeID"}</Item>
             </Hash>
@@ -621,7 +635,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMChangeMenuGeneric</Item>
                 <Item Key="Name">Involved Persons</Item>
-                <Item Key="Description">Change Involved Persons of a Change</Item>
+                <Item Key="Description">Change involved persons of the change</Item>
                 <Item Key="Action">AgentITSMChangeInvolvedPersons</Item>
                 <Item Key="Link">Action=AgentITSMChangeInvolvedPersons&amp;ChangeID=$QData{"ChangeID"}</Item>
             </Hash>
@@ -636,9 +650,24 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMChangeMenuGeneric</Item>
                 <Item Key="Name">Add Workorder</Item>
-                <Item Key="Description">Add a Workorder to the Change</Item>
+                <Item Key="Description">Add a workorder to the change</Item>
                 <Item Key="Action">AgentITSMWorkOrderAdd</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderAdd&amp;ChangeID=$QData{"ChangeID"}</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::MenuModule###060-Conditions" Required="0" Valid="1">
+        <Description Lang="en">Module to show the 'Conditions' link in change menu.</Description>
+        <Description Lang="de">Mit diesem Modul wird der 'Conditions'-Link in der Linkleiste der Change-Ansicht angezeigt.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ITSMChangeMenuGeneric</Item>
+                <Item Key="Name">Conditions</Item>
+                <Item Key="Description">Edit the conditions of the change</Item>
+                <Item Key="Action">AgentITSMChangeCondition</Item>
+                <Item Key="Link">Action=AgentITSMChangeCondition&amp;ChangeID=$QData{"ChangeID"}</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -651,7 +680,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMChangeMenuGeneric</Item>
                 <Item Key="Name">Link</Item>
-                <Item Key="Description">Link another object to the Change</Item>
+                <Item Key="Description">Link another object to the change</Item>
                 <Item Key="Action">AgentLinkObject</Item>
                 <Item Key="Link">Action=AgentLinkObject&amp;SourceObject=ITSMChange&amp;SourceKey=$QData{"ChangeID"}</Item>
             </Hash>
@@ -681,7 +710,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMChangeMenuGeneric</Item>
                 <Item Key="Name">Template</Item>
-                <Item Key="Description">Template</Item>
+                <Item Key="Description">Create a template from this change</Item>
                 <Item Key="Action">AgentITSMChangeXXX</Item>
                 <Item Key="Link">Action=AgentITSMChangeXXX&amp;ChangeID=$QData{"ChangeID"}</Item>
             </Hash>
@@ -756,7 +785,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrderMenuWithPermissionFromChange</Item>
                 <Item Key="Name">WorkOrderAgent</Item>
-                <Item Key="Description">WorkOrderAgent</Item>
+                <Item Key="Description">Set the agent for the workorder</Item>
                 <Item Key="Action">AgentITSMWorkOrderAgent</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderAgent&amp;WorkOrderID=$QData{"WorkOrderID"}</Item>
             </Hash>
@@ -786,7 +815,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrderMenuGeneric</Item>
                 <Item Key="Name">Link</Item>
-                <Item Key="Description">Link</Item>
+                <Item Key="Description">Link another object to the workorder</Item>
                 <Item Key="Action">AgentLinkObject</Item>
                 <Item Key="Link">Action=AgentLinkObject&amp;SourceObject=ITSMWorkOrder&amp;SourceKey=$QData{"WorkOrderID"}</Item>
             </Hash>
@@ -801,7 +830,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrderMenuWithPermissionFromChange</Item>
                 <Item Key="Name">Template</Item>
-                <Item Key="Description">Template</Item>
+                <Item Key="Description">Create a template from this workorder</Item>
                 <Item Key="Action">AgentITSMWorkOrderXXX</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderXXX&amp;WorkOrderID=$QData{"WorkOrderID"}</Item>
             </Hash>
@@ -1316,6 +1345,15 @@
                 <Item Key="0">No</Item>
                 <Item Key="1">Yes</Item>
             </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeCondition###Permission" Required="1" Valid="1">
+        <Description Lang="en">Required privilege to edit the conditions of changes.</Description>
+        <Description Lang="de">Benötigtes Recht zum Bearbeiten der Conditions von Changes.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ViewChangeCondition</SubGroup>
+        <Setting>
+            <String Regex="^(rw|ro)$">rw</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeEdit###Permission" Required="1" Valid="1">
