@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.39 2010-01-16 13:10:48 bes Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.40 2010-01-16 13:17:11 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.39 $) [1];
+$VERSION = qw($Revision: 1.40 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -459,8 +459,8 @@ sub Run {
         );
     }
 
-    # handle AJAXUpdatePriority
-    elsif ( $Self->{Subaction} eq 'AJAXUpdatePriority' ) {
+    # handle AJAXUpdate
+    elsif ( $Self->{Subaction} eq 'AJAXUpdate' ) {
 
         # get priorities
         my $Priorities = $Self->{ChangeObject}->ChangePossibleCIPGet(
@@ -591,7 +591,7 @@ sub Run {
                 'CategoryID',
                 'ImpactID',
             ],
-            Subaction => 'AJAXUpdatePriority',
+            Subaction => 'AJAXUpdate',
         },
     );
 
@@ -626,7 +626,7 @@ sub Run {
                 'CategoryID',
                 'ImpactID',
             ],
-            Subaction => 'AJAXUpdatePriority',
+            Subaction => 'AJAXUpdate',
         },
     );
 
