@@ -1,0 +1,144 @@
+# --
+# AgentITSMChangeCondition.dtl - provides HTML form for AgentITSMChangeCondition
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# --
+# $Id: AgentITSMChangeCondition.dtl,v 1.1 2010-01-16 00:16:17 ub Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<!-- dtl:block:Edit -->
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+    <tr>
+        <td class="mainhead">
+            $Env{"Box0"}$Text{"Edit"} $Text{"Condition"}: $Text{"Change#"}: $QData{"ChangeNumber"} $Env{"Box1"}
+        </td>
+    </tr>
+    <tr>
+        <td class="mainbody" align="center">
+            <br>
+            <table border="0" width="800" cellspacing="0" cellpadding="4">
+                <tr class="contenthead">
+                    <td class="contentkey">$Text{"Condition"}</td>
+                </tr>
+                <tr class="contentbody">
+                    <td>
+                        <table width="100%" border="0" cellpadding="5" cellspacing="0">
+                            <tr>
+                                <td>
+                                    <table width="100%" border="0" cellpadding="3" cellspacing="0">
+                                        <colgroup>
+                                            <col width="20%">
+                                            <col width="80%">
+                                        </colgroup>
+                                        <tr>
+                                            <td class="contentkey">
+                                                $Text{"Name"}:
+                                                <font color="red" title="$Text{"Required"}">*</font>
+                                            </td>
+                                            <td class="contentvalue">
+                                                <input type="text" name="Name" value="$QData{"Name"}" size="70" maxlength="250">
+<!-- dtl:block:InvalidTitle -->
+                                                <br/>
+                                                <font color="red" size="-2">$Text{"Input invalid"}</font>
+<!-- dtl:block:InvalidTitle -->
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="contentkey">$Text{"Matching"}: </td>
+                                            <td class="contentvalue">
+                                                <input name="ExpressionConjunction" type="radio" value="any" checked="checked" /> Any expression
+                                                <input name="ExpressionConjunction" type="radio" value="all"/> All expressions
+                                            </td>
+                                        </tr>
+                                        <tr class="contentbody">
+                                            <td class="contentkey">$Text{"Valid"}: </td>
+                                            <td class="contentvalue">$Data{"ValidOptionString"}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="contentkey">$Text{"Comment"}: </td>
+                                            <td class="contentvalue">
+                                                <input type="text" name="Name" value="$QData{"Comment"}" size="70" maxlength="250">
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr class="contenthead">
+                    <td class="contentkey">Expressions</td>
+                </tr>
+
+                <tr class="contentfooter">
+                    <td>&nbsp;</td>
+                </tr>
+            </table>
+            <br>
+        </td>
+    </tr>
+</table>
+<!-- dtl:block:Edit -->
+
+<!-- dtl:block:Overview -->
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+    <tr>
+        <td class="mainhead">
+            $Env{"Box0"}$Text{"Overview"}: $Text{"Conditions and Actions"} : $Text{"Change#"}: $QData{"ChangeNumber"} $Env{"Box1"}
+        </td>
+    </tr>
+    <tr>
+        <td class="mainbody" align="center">
+            <br>
+            <table border="0" width="800" cellspacing="0" cellpadding="4">
+                <tr class="contenthead">
+                    <td class="contentkey">$Text{"Conditions and Actions"}</td>
+                </tr>
+                <tr class="contentbody">
+                    <td>
+                        <table width="100%" border="0" cellpadding="3" cellspacing="0">
+                            <tr class="contentbody">
+                                <td class="contentkey" width="250px">$Text{"Name"}</td>
+                                <td class="contentkey" width="*">$Text{"Comment"}</td>
+                                <td class="contentkey" width="100px" align="center">$Text{"valid"}/$Text{"invalid"}</td>
+                                <td class="contentkey" width="150">$Text{"Changed"}</td>
+                                <td class="contentkey" width="10px">&nbsp;</td>
+                            </tr>
+<!-- dtl:block:OverviewRow -->
+                            <tr class="$QData{"CssClass"}">
+                                <td>
+                                    <a href="$Env{"Baselink"}Action=AgentITSMChangeCondition;Subaction=ConditionEdit;ChangeID=$QData{"ChangeID"};ConditionID=$QData{"ConditionID"}">
+                                    $QData{"Name"}
+                                    </a>
+                                </td>
+                                <td>$Text{"$QData{"Comment"}"}</td>
+                                <td align="center">$Text{"$QData{"Valid"}"}</td>
+                                <td>$TimeLong{"$QData{"ChangeTime"}"}</td>
+                                <td width="10px"><input class="button" type="submit" value="$Text{"Delete"}" name="DeleteCondition$QData{"ConditionID"}"></td>
+                            </tr>
+<!-- dtl:block:OverviewRow -->
+                        </table>
+                    </td>
+                </tr>
+                <tr class="contenthead">
+                    <td class="contentkey">$Text{"Add"}</td>
+                </tr>
+                <tr class="contentbody">
+                    <td>
+                        $Text{"Add new condition and action pair"}.&nbsp;&nbsp;
+                        <input class="button" type="submit" value="$Text{"Add"}">
+                    </td>
+                </tr>
+                <tr class="contentfooter">
+                    <td>&nbsp;</td>
+                </tr>
+            </table>
+            <br>
+        </td>
+    </tr>
+</table>
+<!-- dtl:block:Overview -->
