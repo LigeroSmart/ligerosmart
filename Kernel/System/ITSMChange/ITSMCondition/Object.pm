@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Object.pm - all condition object functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Object.pm,v 1.15 2010-01-13 11:34:57 mae Exp $
+# $Id: Object.pm,v 1.16 2010-01-16 20:15:36 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 =head1 NAME
 
@@ -447,7 +447,7 @@ sub ObjectDataGet {
 
 =item _ObjectITSMChange()
 
-Returns a change object as anon hash ref.
+Returns the change data as hash reference.
 
     my $Change = $ConditionObject->_ObjectITSMChange();
 
@@ -465,7 +465,7 @@ sub _ObjectITSMChange {
 
 =item _ObjectITSMWorkOrder()
 
-Returns a workorder object as anon hash ref.
+Returns the workorder data as hash reference.
 
     my $WorkOrder = $ConditionObject->_ObjectITSMWorkOrder();
 
@@ -483,7 +483,7 @@ sub _ObjectITSMWorkOrder {
 
 =item _ObjectITSMWorkOrderAll()
 
-Returns a workorder ids of a change.
+Returns an array reference with hash references of all workorder data of a change.
 
     my $WorkOrderIDsRef = $ConditionObject->_ObjectITSMWorkOrderAll();
 
@@ -548,6 +548,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.15 $ $Date: 2010-01-13 11:34:57 $
+$Revision: 1.16 $ $Date: 2010-01-16 20:15:36 $
 
 =cut
