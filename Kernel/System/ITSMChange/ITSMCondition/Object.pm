@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Object.pm - all condition object functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Object.pm,v 1.16 2010-01-16 20:15:36 ub Exp $
+# $Id: Object.pm,v 1.17 2010-01-16 20:45:16 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 =head1 NAME
 
@@ -357,7 +357,8 @@ Return the data of a given type and selector of a certain object.
 
     my $ObjectDataRef = $ConditionObject->ObjectDataGet(
         ConditionID => 1234,
-        ObjectName  => 'ITSMChange',
+        ObjectName  => 'ITSMChange',    # or ObjectID
+        ObjectID    => 1,               # or ObjectName
         Selector    => '123',           #  ( ObjectKey | any | all )
         UserID      => 1,
     );
@@ -368,7 +369,7 @@ sub ObjectDataGet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(ConditionID ObjectName Selector UserID)) {
+    for my $Argument (qw(ConditionID Selector UserID)) {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -377,6 +378,36 @@ sub ObjectDataGet {
             return;
         }
     }
+
+    # either ObjectName or ObjectID must be passed
+    if ( !$Param{ObjectName} && !$Param{ObjectID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'ObjectName ID or ObjectID!',
+        );
+        return;
+    }
+
+    # check that not both ObjectName and ObjectID are given
+    if ( $Param{ObjectName} && $Param{ObjectID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need either ObjectName OR ObjectID - not both!',
+        );
+        return;
+    }
+
+    # set object name
+    my $ObjectName = $Param{ObjectName};
+    if ( $Param{ObjectID} ) {
+        $ObjectName = $Self->ObjectLookup(
+            ObjectID => $Param{ObjectID},
+            UserID   => $Param{UserID},
+        );
+    }
+
+    # get object type
+    my $ObjectType = $ObjectName;
 
     # define known objects and function calls
     my %ObjectAction = (
@@ -390,9 +421,6 @@ sub ObjectDataGet {
         ITSMChange    => 'ChangeID',
         ITSMWorkOrder => 'WorkOrderID',
     );
-
-    # get object type
-    my $ObjectType = $Param{ObjectName};
 
     # check for manageable object
     if ( !exists $ObjectAction{$ObjectType} ) {
@@ -548,6 +576,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.16 $ $Date: 2010-01-16 20:15:36 $
+$Revision: 1.17 $ $Date: 2010-01-16 20:45:16 $
 
 =cut
