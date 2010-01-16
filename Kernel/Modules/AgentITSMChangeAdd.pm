@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.34 2010-01-07 09:43:10 reb Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.35 2010-01-16 10:45:49 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.34 $) [1];
+$VERSION = qw($Revision: 1.35 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -80,6 +80,7 @@ sub Run {
         ChangeTitle Description Justification TicketID
         OldCategoryID CategoryID OldImpactID ImpactID OldPriorityID PriorityID
         ElementChanged SaveAttachment FileID
+        MoveTimeType
         )
         )
     {
@@ -87,7 +88,12 @@ sub Run {
     }
 
     # store time related fields in %GetParam
-    if ( $Self->{Config}->{RequestedTime} ) {
+    TIME_TYPE:
+    for my $TimeType (qw(RequestedTime MoveTime)) {
+
+        # skip the requested time if not configured
+        next TIME_TYPE if ( $TimeType eq 'RequestedTime' && !$Self->{Config}->{RequestedTime} );
+
         for my $TimePart (qw(Year Month Day Hour Minute Used)) {
             my $ParamName = 'RequestedTime' . $TimePart;
             $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
@@ -434,8 +440,8 @@ sub Run {
         );
     }
 
-    # handle AJAXUpdate
-    elsif ( $Self->{Subaction} eq 'AJAXUpdate' ) {
+    # handle AJAXUpdatePriority
+    elsif ( $Self->{Subaction} eq 'AJAXUpdatePriority' ) {
 
         # get priorities
         my $Priorities = $Self->{ChangeObject}->ChangePossibleCIPGet(
@@ -472,16 +478,43 @@ sub Run {
 
     # build template dropdown
     # TODO: fill dropdown with data
-    my $TemplateDropDown = $Self->{LayoutObject}->BuildSelection(
+    my $TemplateSelectionString = $Self->{LayoutObject}->BuildSelection(
         Name => 'ChangeTemplate',
         Data => {},
     );
+
+    # build drop-down with time types
+    my $MoveTimeTypeSelectionString = $Self->{LayoutObject}->BuildSelection(
+        Data => [
+            { Key => 'PlannedStartTime', Value => 'Planned start time' },
+            { Key => 'PlannedEndTime',   Value => 'Planned end time' },
+        ],
+        Name => 'MoveTimeType',
+        SelectedID => $GetParam{MoveTimeType} || 'PlannedStartTime',
+    );
+
+    # time period that can be selected from the GUI
+    my %TimePeriod = %{ $Self->{ConfigObject}->Get('ITSMWorkOrder::TimePeriod') };
+
+    # add selection for the time
+    my $MoveTimeSelectionString = $Self->{LayoutObject}->BuildDateSelection(
+        %GetParam,
+        Format           => 'DateInputFormatLong',
+        Prefix           => 'MoveTime',
+        MoveTimeOptional => 1,
+        %TimePeriod,
+    );
+
+    # remove AJAX-Loading images in date selection fields to avoid jitter effect
+    $MoveTimeSelectionString =~ s{ <a [ ] id="AJAXImage [^<>]+ "></a> }{}xmsg;
 
     # show block with template dropdown
     $Self->{LayoutObject}->Block(
         Name => 'ChangeTemplate',
         Data => {
-            TemplatesStrg => $TemplateDropDown,
+            TemplateSelectionString     => $TemplateSelectionString,
+            MoveTimeTypeSelectionString => $MoveTimeTypeSelectionString,
+            MoveTimeSelectionString     => $MoveTimeSelectionString,
         },
     );
 
@@ -539,7 +572,7 @@ sub Run {
                 'CategoryID',
                 'ImpactID',
             ],
-            Subaction => 'AJAXUpdate',
+            Subaction => 'AJAXUpdatePriority',
         },
     );
 
@@ -562,7 +595,7 @@ sub Run {
     );
 
     # create impact string
-    $Param{'ImpactStrg'} = $Self->{LayoutObject}->BuildSelection(
+    $Param{ImpactStrg} = $Self->{LayoutObject}->BuildSelection(
         Data       => $Param{Impacts},
         Name       => 'ImpactID',
         SelectedID => $Param{ImpactID},
@@ -574,7 +607,7 @@ sub Run {
                 'CategoryID',
                 'ImpactID',
             ],
-            Subaction => 'AJAXUpdate',
+            Subaction => 'AJAXUpdatePriority',
         },
     );
 
@@ -604,7 +637,7 @@ sub Run {
     );
 
     # create impact string
-    $Param{'PriorityStrg'} = $Self->{LayoutObject}->BuildSelection(
+    $Param{PriorityStrg} = $Self->{LayoutObject}->BuildSelection(
         Data       => $Param{Priorities},
         Name       => 'PriorityID',
         SelectedID => $SelectedPriority,

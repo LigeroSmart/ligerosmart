@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAdd.pm - the OTRS::ITSM::ChangeManagement workorder add module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.pm,v 1.34 2010-01-07 12:04:54 ub Exp $
+# $Id: AgentITSMWorkOrderAdd.pm,v 1.35 2010-01-16 10:45:50 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.34 $) [1];
+$VERSION = qw($Revision: 1.35 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -100,14 +100,19 @@ sub Run {
     # store needed parameters in %GetParam to make it reloadable
     my %GetParam;
     for my $ParamName (
-        qw(WorkOrderTitle Instruction WorkOrderTypeID SaveAttachment FileID PlannedEffort)
+        qw(
+        WorkOrderTitle Instruction WorkOrderTypeID
+        SaveAttachment FileID
+        PlannedEffort
+        MoveTimeType
+        )
         )
     {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
     # store time related fields in %GetParam
-    for my $TimeType (qw(PlannedStartTime PlannedEndTime)) {
+    for my $TimeType (qw(PlannedStartTime PlannedEndTime MoveTime)) {
         for my $TimePart (qw(Year Month Day Hour Minute)) {
             my $ParamName = $TimeType . $TimePart;
             $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
@@ -366,16 +371,43 @@ sub Run {
 
     # build template dropdown
     # TODO: fill dropdown with data
-    my $TemplateDropDown = $Self->{LayoutObject}->BuildSelection(
+    my $TemplateSelectionString = $Self->{LayoutObject}->BuildSelection(
         Name => 'WorkOrderTemplate',
         Data => {},
     );
+
+    # build drop-down with time types
+    my $MoveTimeTypeSelectionString = $Self->{LayoutObject}->BuildSelection(
+        Data => [
+            { Key => 'PlannedStartTime', Value => 'Planned start time' },
+            { Key => 'PlannedEndTime',   Value => 'Planned end time' },
+        ],
+        Name => 'MoveTimeType',
+        SelectedID => $GetParam{MoveTimeType} || 'PlannedStartTime',
+    );
+
+    # time period that can be selected from the GUI
+    my %TimePeriod = %{ $Self->{ConfigObject}->Get('ITSMWorkOrder::TimePeriod') };
+
+    # add selection for the time
+    my $MoveTimeSelectionString = $Self->{LayoutObject}->BuildDateSelection(
+        %GetParam,
+        Format           => 'DateInputFormatLong',
+        Prefix           => 'MoveTime',
+        MoveTimeOptional => 1,
+        %TimePeriod,
+    );
+
+    # remove AJAX-Loading images in date selection fields to avoid jitter effect
+    $MoveTimeSelectionString =~ s{ <a [ ] id="AJAXImage [^<>]+ "></a> }{}xmsg;
 
     # show block with template dropdown
     $Self->{LayoutObject}->Block(
         Name => 'WorkOrderTemplate',
         Data => {
-            TemplatesStrg => $TemplateDropDown,
+            TemplateSelectionString     => $TemplateSelectionString,
+            MoveTimeTypeSelectionString => $MoveTimeTypeSelectionString,
+            MoveTimeSelectionString     => $MoveTimeSelectionString,
         },
     );
 
@@ -415,9 +447,6 @@ sub Run {
         },
     );
 
-    # time period that can be selected from the GUI
-    my %TimePeriod = %{ $Self->{ConfigObject}->Get('ITSMWorkOrder::TimePeriod') };
-
     # set the time selection
     for my $TimeType (qw(PlannedStartTime PlannedEndTime)) {
 
@@ -436,7 +465,7 @@ sub Run {
         );
     }
 
-    # show planned time if it is configured
+    # show planned effort if it is configured
     if ( $Self->{Config}->{PlannedEffort} ) {
         $Self->{LayoutObject}->Block(
             Name => 'ShowPlannedEffort',

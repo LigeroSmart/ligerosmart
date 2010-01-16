@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeTimeSlot.pm - the OTRS::ITSM::ChangeManagement move time slot module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeTimeSlot.pm,v 1.19 2010-01-15 23:46:20 ub Exp $
+# $Id: AgentITSMChangeTimeSlot.pm,v 1.20 2010-01-16 10:45:49 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -105,13 +105,13 @@ sub Run {
 
     # store needed parameters in %GetParam to make it reloadable
     my %GetParam;
-    $GetParam{TimeType} = $Self->{ParamObject}->GetParam(
-        Param => 'TimeType',
+    $GetParam{MoveTimeType} = $Self->{ParamObject}->GetParam(
+        Param => 'MoveTimeType',
     ) || 'PlannedStartTime';
 
     # store time related fields in %GetParam
     for my $TimePart (qw(Year Month Day Hour Minute)) {
-        my $ParamName = 'Planned' . $TimePart;
+        my $ParamName = 'MoveTime' . $TimePart;
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam(
             Param => $ParamName,
         );
@@ -125,10 +125,10 @@ sub Run {
     if ( $Self->{Subaction} eq 'MoveTimeSlot' ) {
 
         # check validity of the time type
-        my $TimeType = $GetParam{TimeType};
+        my $MoveTimeType = $GetParam{MoveTimeType};
         if (
-            !defined $TimeType
-            || ( $TimeType ne 'PlannedStartTime' && $TimeType ne 'PlannedEndTime' )
+            !defined $MoveTimeType
+            || ( $MoveTimeType ne 'PlannedStartTime' && $MoveTimeType ne 'PlannedEndTime' )
             )
         {
             push @ValidationErrors, 'InvalidTimeType';
@@ -137,27 +137,27 @@ sub Run {
         # check the completeness of the time parameter list,
         # only hour and minute are allowed to be '0'
         if (
-            !$GetParam{PlannedYear}
-            || !$GetParam{PlannedMonth}
-            || !$GetParam{PlannedDay}
-            || !defined $GetParam{PlannedHour}
-            || !defined $GetParam{PlannedMinute}
+            !$GetParam{MoveTimeYear}
+            || !$GetParam{MoveTimeMonth}
+            || !$GetParam{MoveTimeDay}
+            || !defined $GetParam{MoveTimeHour}
+            || !defined $GetParam{MoveTimeMinute}
             )
         {
-            push @ValidationErrors, 'InvalidPlannedTime';
+            push @ValidationErrors, 'InvalidMoveTime';
         }
 
-        # get the system time from the input, it can't be determined we have a validation error
+        # get the system time from the input, if it can't be determined we have a validation error
         my $PlannedSystemTime;
         if ( !@ValidationErrors ) {
 
             # format as timestamp
             my $PlannedTime = sprintf '%04d-%02d-%02d %02d:%02d:00',
-                $GetParam{PlannedYear},
-                $GetParam{PlannedMonth},
-                $GetParam{PlannedDay},
-                $GetParam{PlannedHour},
-                $GetParam{PlannedMinute};
+                $GetParam{MoveTimeYear},
+                $GetParam{MoveTimeMonth},
+                $GetParam{MoveTimeDay},
+                $GetParam{MoveTimeHour},
+                $GetParam{MoveTimeMinute};
 
             # sanity check of the assembled timestamp
             $PlannedSystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
@@ -165,7 +165,7 @@ sub Run {
             );
 
             if ( !$PlannedSystemTime ) {
-                push @ValidationErrors, 'InvalidPlannedTime';
+                push @ValidationErrors, 'InvalidMoveTime';
             }
         }
 
@@ -173,7 +173,7 @@ sub Run {
         if ( !@ValidationErrors ) {
 
             # Determine the difference in seconds
-            my $CurrentPlannedTime = $Change->{$TimeType};
+            my $CurrentPlannedTime = $Change->{$MoveTimeType};
 
             # Even when there are workorders, a change might still miss a planned time.
             # In that case moving the time slot is not possible.
@@ -181,8 +181,8 @@ sub Run {
 
                 # show error message
                 return $Self->{LayoutObject}->ErrorScreen(
-                    Message => "The current $TimeType could not be determined.",
-                    Comment => "The $TimeType of all workorders has to be defined.",
+                    Message => "The current $MoveTimeType could not be determined.",
+                    Comment => "The $MoveTimeType of all workorders has to be defined.",
                 );
             }
 
@@ -259,11 +259,11 @@ sub Run {
             );
         }
     }
-    elsif ( $Self->{Subaction} eq 'AJAXUpdate' ) {
+    elsif ( $Self->{Subaction} eq 'AJAXUpdateMoveTime' ) {
 
         # get planned start time or planned end time from the change
         my $SystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
-            String => $Change->{ $GetParam{TimeType} },
+            String => $Change->{ $GetParam{MoveTimeType} },
         );
 
         # set the parameter hash for the answers
@@ -281,29 +281,29 @@ sub Run {
         my $JSON = $Self->{LayoutObject}->BuildJSON(
             [
                 {
-                    Name       => 'PlannedMinute',
+                    Name       => 'MoveTimeMinute',
                     Data       => [ map { sprintf '%02d', $_ } ( 0 .. 59 ) ],
                     SelectedID => $Minute,
                 },
                 {
-                    Name       => 'PlannedHour',
+                    Name       => 'MoveTimeHour',
                     Data       => [ map { sprintf '%02d', $_ } ( 0 .. 23 ) ],
                     SelectedID => $Hour,
                 },
                 {
-                    Name       => 'PlannedDay',
+                    Name       => 'MoveTimeDay',
                     Data       => [ map { sprintf '%02d', $_ } ( 1 .. 31 ) ],
                     SelectedID => $Day,
                 },
                 {
-                    Name       => 'PlannedMonth',
+                    Name       => 'MoveTimeMonth',
                     Data       => [ map { sprintf '%02d', $_ } ( 1 .. 12 ) ],
                     SelectedID => $Month,
                 },
                 {
-                    Name       => 'PlannedYear',
+                    Name       => 'MoveTimeYear',
                     Data       => [ $StartYear .. $EndYear ],
-                    SelectedID => $GetParam{PlannedYear},
+                    SelectedID => $GetParam{MoveTimeYear},
                 },
             ],
         );
@@ -320,7 +320,7 @@ sub Run {
         # no subaction,
         # get planned start time or planned end time from the change
         my $SystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
-            String => $Change->{ $GetParam{TimeType} },
+            String => $Change->{ $GetParam{MoveTimeType} },
         );
 
         # set the parameter hash for BuildDateSelection()
@@ -328,29 +328,29 @@ sub Run {
         my ( $Second, $Minute, $Hour, $Day, $Month, $Year ) = $Self->{TimeObject}->SystemTime2Date(
             SystemTime => $SystemTime,
         );
-        $GetParam{PlannedMinute} = $Minute;
-        $GetParam{PlannedHour}   = $Hour;
-        $GetParam{PlannedDay}    = $Day;
-        $GetParam{PlannedMonth}  = $Month;
-        $GetParam{PlannedYear}   = $Year;
+        $GetParam{MoveTimeMinute} = $Minute;
+        $GetParam{MoveTimeHour}   = $Hour;
+        $GetParam{MoveTimeDay}    = $Day;
+        $GetParam{MoveTimeMonth}  = $Month;
+        $GetParam{MoveTimeYear}   = $Year;
     }
 
     # build drop-down with time types
-    my $TimeTypeSelectionString = $Self->{LayoutObject}->BuildSelection(
+    my $MoveTimeTypeSelectionString = $Self->{LayoutObject}->BuildSelection(
         Data => [
             { Key => 'PlannedStartTime', Value => 'Planned start time' },
             { Key => 'PlannedEndTime',   Value => 'Planned end time' },
         ],
-        Name       => 'TimeType',
-        SelectedID => $GetParam{TimeType},
+        Name       => 'MoveTimeType',
+        SelectedID => $GetParam{MoveTimeType},
         Ajax       => {
             Update => [
-                qw(PlannedMinute PlannedHour PlannedDay PlannedMonth PlannedYear),
+                qw(MoveTimeMinute MoveTimeHour MoveTimeDay MoveTimeMonth MoveTimeYear),
             ],
             Depend => [
-                qw(ChangeID TimeType),
+                qw(ChangeID MoveTimeType),
             ],
-            Subaction => 'AJAXUpdate',
+            Subaction => 'AJAXUpdateMoveTime',
         },
     );
 
@@ -358,15 +358,15 @@ sub Run {
     my %TimePeriod = %{ $Self->{ConfigObject}->Get('ITSMWorkOrder::TimePeriod') };
 
     # add selection for the time
-    my $TimeSelectionString = $Self->{LayoutObject}->BuildDateSelection(
+    my $MoveTimeSelectionString = $Self->{LayoutObject}->BuildDateSelection(
         %GetParam,
         Format => 'DateInputFormatLong',
-        Prefix => 'Planned',
+        Prefix => 'MoveTime',
         %TimePeriod,
     );
 
     # remove AJAX-Loading images in date selection fields to avoid jitter effect
-    $TimeSelectionString =~ s{ <a [ ] id="AJAXImage [^<>]+ "></a> }{}xmsg;
+    $MoveTimeSelectionString =~ s{ <a [ ] id="AJAXImage [^<>]+ "></a> }{}xmsg;
 
     # output header
     my $Output = $Self->{LayoutObject}->Header(
@@ -386,8 +386,8 @@ sub Run {
         TemplateFile => 'AgentITSMChangeTimeSlot',
         Data         => {
             %{$Change},
-            TimeTypeSelectionString => $TimeTypeSelectionString,
-            TimeSelectionString     => $TimeSelectionString,
+            MoveTimeTypeSelectionString => $MoveTimeTypeSelectionString,
+            MoveTimeSelectionString     => $MoveTimeSelectionString,
         },
     );
 
