@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.36 2010-01-16 11:36:14 bes Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.37 2010-01-16 12:01:09 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.36 $) [1];
+$VERSION = qw($Revision: 1.37 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -79,7 +79,8 @@ sub Run {
         qw(
         ChangeTitle Description Justification TicketID
         OldCategoryID CategoryID OldImpactID ImpactID OldPriorityID PriorityID
-        ElementChanged SaveAttachment FileID
+        ElementChanged
+        SaveAttachment FileID
         MoveTimeType
         )
         )
@@ -94,8 +95,8 @@ sub Run {
         # skip the requested time if not configured
         next TIME_TYPE if ( $TimeType eq 'RequestedTime' && !$Self->{Config}->{RequestedTime} );
 
-        for my $TimePart (qw(Year Month Day Hour Minute Used)) {
-            my $ParamName = 'RequestedTime' . $TimePart;
+        for my $TimePart (qw(Used Year Month Day Hour Minute)) {
+            my $ParamName = $TimeType . $TimePart;
             $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
         }
     }
@@ -118,23 +119,24 @@ sub Run {
     my @ValidationErrors;
     my %CIPErrors;
 
+    # get meta data for all already uploaded files
+    my @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
+        FormID => $Self->{FormID},
+    );
+
+    # reset subaction
     # if attachment upload is requested
     if ( $GetParam{SaveAttachment} ) {
 
         # get upload data
         my %UploadStuff = $Self->{ParamObject}->GetUploadAll(
-            Param  => "AttachmentNew",
+            Param  => 'AttachmentNew',
             Source => 'string',
-        );
-
-        # get meta data from all already uploaded files
-        my @AllFilesMetaData = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
-            FormID => $Self->{FormID},
         );
 
         # check if file was already uploaded
         my $FileAlreadyUploaded = 0;
-        for my $FileMetaData (@AllFilesMetaData) {
+        for my $FileMetaData (@Attachments) {
             if ( $FileMetaData->{Filename} eq $UploadStuff{Filename} ) {
                 $FileAlreadyUploaded = 1;
 
@@ -148,17 +150,18 @@ sub Run {
                 FormID => $Self->{FormID},
                 %UploadStuff,
             );
+
+            # reload attachment list, as an attachment was added
+            @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
+                FormID => $Self->{FormID},
+            );
         }
 
         $Self->{Subaction} = 'SaveAttachment';
     }
 
-    # get all attachments meta data
-    my @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
-        FormID => $Self->{FormID},
-    );
-
-    # check if attachment should be deleted
+    # reset subaction
+    # if attachment should be deleted
     for my $Attachment (@Attachments) {
         if ( $Self->{ParamObject}->GetParam( Param => 'DeleteAttachment' . $Attachment->{FileID} ) )
         {
@@ -411,6 +414,13 @@ sub Run {
                 );
             }
         }
+    }
+
+    # handle saaveattachment subaction
+    elsif ( $Self->{Subaction} eq 'SaveAttachment' ) {
+
+        # nothing to do
+        # attachments were already saved above
     }
 
     # handle attachment deletion
