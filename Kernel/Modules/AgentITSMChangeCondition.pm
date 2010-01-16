@@ -1,8 +1,8 @@
 # --
-# Kernel/Modules/AgentITSMChangeCondition.pm - the OTRS::ITSM Condition module
+# Kernel/Modules/AgentITSMChangeCondition.pm - the OTRS::ITSM::ChangeManagement condition overview module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeCondition.pm,v 1.1 2010-01-16 00:16:17 ub Exp $
+# $Id: AgentITSMChangeCondition.pm,v 1.2 2010-01-16 19:52:16 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -49,11 +49,14 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    # get needed ChangeID
-    my $ChangeID = $Self->{ParamObject}->GetParam( Param => 'ChangeID' );
+    # store needed parameters in %GetParam to make this page reloadable
+    my %GetParam;
+    for my $ParamName (qw(ChangeID ConditionID AddCondition)) {
+        $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+    }
 
     # check needed stuff
-    if ( !$ChangeID ) {
+    if ( !$GetParam{ChangeID} ) {
         return $Self->{LayoutObject}->ErrorScreen(
             Message => 'No ChangeID is given!',
             Comment => 'Please contact the admin.',
@@ -63,7 +66,7 @@ sub Run {
     # check permissions
     my $Access = $Self->{ChangeObject}->Permission(
         Type     => $Self->{Config}->{Permission},
-        ChangeID => $ChangeID,
+        ChangeID => $GetParam{ChangeID},
         UserID   => $Self->{UserID},
     );
 
@@ -77,14 +80,14 @@ sub Run {
 
     # get change data
     my $ChangeData = $Self->{ChangeObject}->ChangeGet(
-        ChangeID => $ChangeID,
+        ChangeID => $GetParam{ChangeID},
         UserID   => $Self->{UserID},
     );
 
     # check if change is found
     if ( !$ChangeData ) {
         return $Self->{LayoutObject}->ErrorScreen(
-            Message => "Change $ChangeID not found in database!",
+            Message => "Change $GetParam{ChangeID} not found in database!",
             Comment => 'Please contact the admin.',
         );
     }
@@ -92,74 +95,50 @@ sub Run {
     # get valid list
     my %ValidList = $Self->{ValidObject}->ValidList();
 
-    # ------------------------------------------------------------ #
-    # condition edit
-    # ------------------------------------------------------------ #
-    if ( $Self->{Subaction} eq 'ConditionEdit' ) {
+    # add condition button was pressed
+    if ( $GetParam{AddCondition} ) {
 
-        my %ConditionData;
+        # redirect to condition edit mask
+        return $Self->{LayoutObject}->Redirect(
+            OP =>
+                "Action=AgentITSMChangeConditionEdit;ChangeID=$GetParam{ChangeID};ConditionID=NEW",
+        );
+    }
 
-        # get ConditionID
-        $ConditionData{ConditionID} = $Self->{ParamObject}->GetParam( Param => "ConditionID" );
+    # get all condition ids for the given change id, including invalid conditions
+    my $ConditionIDsRef = $Self->{ConditionObject}->ConditionList(
+        ChangeID => $GetParam{ChangeID},
+        Valid    => 0,
+        UserID   => $Self->{UserID},
+    );
 
-        # if this is an existing condition
-        if ( $ConditionData{ConditionID} ne 'NEW' ) {
+    # check if a condition should be deleted
+    for my $ConditionID ( @{$ConditionIDsRef} ) {
+        if ( $Self->{ParamObject}->GetParam( Param => 'DeleteCondition' . $ConditionID ) ) {
 
-            # get condition data
-            my $Condition = $Self->{ConditionObject}->ConditionGet(
-                ConditionID => $ConditionData{ConditionID},
+            # delete the condition
+            my $Success = $Self->{ConditionObject}->ConditionDelete(
+                ConditionID => $ConditionID,
                 UserID      => $Self->{UserID},
             );
 
-            # check if the condition belongs to the given change
-            if ( $Condition->{ChangeID} ne $ChangeID ) {
+            # check error
+            if ( !$Success ) {
                 return $Self->{LayoutObject}->ErrorScreen(
-                    Message => "ConditionID $ConditionData{ConditionID} belongs to "
-                        . " ChangeID $Condition->{ChangeID} and not to the given $ChangeID!",
+                    Message => "Could not delete ConditionID $ConditionID!",
                     Comment => 'Please contact the admin.',
                 );
             }
 
-            # add data from condition
-            %ConditionData = ( %ConditionData, %{$Condition} );
+            # redirect to overview
+            return $Self->{LayoutObject}->Redirect(
+                OP => "Action=$Self->{Action};ChangeID=$GetParam{ChangeID}",
+            );
         }
-
-        # output header
-        my $Output = $Self->{LayoutObject}->Header();
-        $Output .= $Self->{LayoutObject}->NavigationBar();
-
-        # generate ValidOptionString
-        $ConditionData{ValidOptionString} = $Self->{LayoutObject}->BuildSelection(
-            Data       => \%ValidList,
-            Name       => 'ValidID',
-            SelectedID => $ConditionData{ValidID} || ( $Self->{ValidObject}->ValidIDsGet() )[0],
-            Sort       => 'NumericKey',
-        );
-
-        # output overview
-        $Self->{LayoutObject}->Block(
-            Name => 'Edit',
-            Data => {
-                %Param,
-                %{$ChangeData},
-                %ConditionData,
-            },
-        );
-
-        # generate output
-        $Output .= $Self->{LayoutObject}->Output(
-            TemplateFile => 'AgentITSMChangeCondition',
-            Data         => {%Param},
-        );
-        $Output .= $Self->{LayoutObject}->Footer();
-
-        return $Output;
     }
 
-    # ------------------------------------------------------------ #
-    # condition overview
-    # ------------------------------------------------------------ #
-    else {
+    # only show the table headline if there conditions to be shown
+    if ( @{$ConditionIDsRef} ) {
 
         # output overview
         $Self->{LayoutObject}->Block(
@@ -169,52 +148,48 @@ sub Run {
                 %{$ChangeData},
             },
         );
-
-        # get all condition ids for the given change id, including invalid conditions
-        my $ConditionIDsRef = $Self->{ConditionObject}->ConditionList(
-            ChangeID => $ChangeID,
-            Valid    => 0,
-            UserID   => $Self->{UserID},
-        );
-
-        my $CssClass = '';
-        for my $ConditionID ( sort { $a cmp $b } @{$ConditionIDsRef} ) {
-
-            # set output object
-            $CssClass = $CssClass eq 'searchactive' ? 'searchpassive' : 'searchactive';
-
-            # get condition data
-            my $ConditionData = $Self->{ConditionObject}->ConditionGet(
-                ConditionID => $ConditionID,
-                UserID      => $Self->{UserID},
-            );
-
-            # output overview row
-            $Self->{LayoutObject}->Block(
-                Name => 'OverviewRow',
-                Data => {
-                    CssClass => $CssClass,
-                    Valid    => $ValidList{ $ConditionData->{ValidID} },
-                    %{$ConditionData},
-                },
-            );
-        }
-
-        # output header
-        my $Output = $Self->{LayoutObject}->Header(
-            Title => 'Overview',
-        );
-        $Output .= $Self->{LayoutObject}->NavigationBar();
-
-        # generate output
-        $Output .= $Self->{LayoutObject}->Output(
-            TemplateFile => 'AgentITSMChangeCondition',
-            Data         => {%Param},
-        );
-        $Output .= $Self->{LayoutObject}->Footer();
-
-        return $Output;
     }
+
+    my $CssClass = '';
+    for my $ConditionID ( sort { $a cmp $b } @{$ConditionIDsRef} ) {
+
+        # set output object
+        $CssClass = $CssClass eq 'searchactive' ? 'searchpassive' : 'searchactive';
+
+        # get condition data
+        my $ConditionData = $Self->{ConditionObject}->ConditionGet(
+            ConditionID => $ConditionID,
+            UserID      => $Self->{UserID},
+        );
+
+        # output overview row
+        $Self->{LayoutObject}->Block(
+            Name => 'OverviewRow',
+            Data => {
+                CssClass => $CssClass,
+                Valid    => $ValidList{ $ConditionData->{ValidID} },
+                %{$ConditionData},
+            },
+        );
+    }
+
+    # output header
+    my $Output = $Self->{LayoutObject}->Header(
+        Title => 'Overview',
+    );
+    $Output .= $Self->{LayoutObject}->NavigationBar();
+
+    # generate output
+    $Output .= $Self->{LayoutObject}->Output(
+        TemplateFile => 'AgentITSMChangeCondition',
+        Data         => {
+            %Param,
+            %{$ChangeData},
+        },
+    );
+    $Output .= $Self->{LayoutObject}->Footer();
+
+    return $Output;
 }
 
 1;
