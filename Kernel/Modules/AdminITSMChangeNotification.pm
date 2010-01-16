@@ -3,7 +3,7 @@
 # notification rules for ITSM change management
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMChangeNotification.pm,v 1.12 2010-01-15 10:59:54 bes Exp $
+# $Id: AdminITSMChangeNotification.pm,v 1.13 2010-01-16 19:58:00 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::Notification;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -55,7 +55,7 @@ sub Run {
     # ------------------------------------------------------------ #
     if ( $Self->{Subaction} eq 'Change' ) {
         my $ID = $Self->{ParamObject}->GetParam( Param => 'ID' ) || '';
-        my $Data = $Self->{NotificationObject}->NotificationRuleGet( ID => $ID, );
+        my $Data = $Self->{NotificationObject}->NotificationRuleGet( ID => $ID );
 
         $Self->_Edit(
             Action      => 'Change',
@@ -235,7 +235,7 @@ sub _Overview {
             $CssClass = 'searchactive';
         }
 
-        my $Data = $Self->{NotificationObject}->NotificationRuleGet( ID => $RuleID, );
+        my $Data = $Self->{NotificationObject}->NotificationRuleGet( ID => $RuleID );
         my $Recipients = join ', ', @{ $Data->{Recipients} || [] };
 
         $Self->{LayoutObject}->Block(
