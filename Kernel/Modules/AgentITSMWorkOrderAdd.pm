@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAdd.pm - the OTRS::ITSM::ChangeManagement workorder add module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.pm,v 1.38 2010-01-16 12:51:20 bes Exp $
+# $Id: AgentITSMWorkOrderAdd.pm,v 1.39 2010-01-16 13:10:48 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.38 $) [1];
+$VERSION = qw($Revision: 1.39 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -75,7 +75,7 @@ sub Run {
         UserID   => $Self->{UserID},
     );
 
-    # error screen, don't show workorder add mask
+    # error screen, don't show the add mask
     if ( !$Access ) {
         return $Self->{LayoutObject}->NoPermission(
             Message    => "You need $Self->{Config}->{Permission} permissions!",
@@ -339,7 +339,7 @@ sub Run {
         );
 
         # get data for requested attachment
-        ( my $AttachmentData ) = grep { $_->{FileID} == $GetParam{FileID} } @Attachments;
+        ( my $AttachmentData ) = grep { $_->{FileID} == $GetParam{FileID} } @CachedAttachments;
 
         # return error if file does not exist
         if ( !$AttachmentData ) {
@@ -480,7 +480,8 @@ sub Run {
             Name => 'AttachmentRow',
             Data => {
                 %{$Attachment},
-                FormID => $Self->{FormID},
+                FormID   => $Self->{FormID},
+                ChangeID => $ChangeID,
             },
         );
     }

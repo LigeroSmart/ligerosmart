@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.38 2010-01-16 12:51:20 bes Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.39 2010-01-16 13:10:48 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.38 $) [1];
+$VERSION = qw($Revision: 1.39 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -65,7 +65,7 @@ sub Run {
         UserID => $Self->{UserID},
     );
 
-    # error screen, don't show change add mask
+    # error screen, don't show the add mask
     if ( !$Access ) {
         return $Self->{LayoutObject}->NoPermission(
             Message    => "You need $Self->{Config}->{Permission} permissions!",
