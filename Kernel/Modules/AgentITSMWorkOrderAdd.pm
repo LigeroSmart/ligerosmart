@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAdd.pm - the OTRS::ITSM::ChangeManagement workorder add module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.pm,v 1.35 2010-01-16 10:45:50 bes Exp $
+# $Id: AgentITSMWorkOrderAdd.pm,v 1.36 2010-01-16 11:36:14 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.35 $) [1];
+$VERSION = qw($Revision: 1.36 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -120,6 +120,7 @@ sub Run {
     }
 
     # reset subaction
+    # if attachment upload is requested
     if ( $GetParam{SaveAttachment} ) {
         $Self->{Subaction} = 'SaveAttachment';
     }
@@ -133,6 +134,14 @@ sub Run {
     for my $Attachment (@Attachments) {
         if ( $Self->{ParamObject}->GetParam( Param => 'DeleteAttachment' . $Attachment->{FileID} ) )
         {
+
+            # delete attachment
+            $Self->{UploadCacheObject}->FormIDRemoveFile(
+                FormID => $Self->{FormID},
+                FileID => $Attachment->{FileID},
+            );
+
+            # set marker that the attachment list needs to be reloaded
             $Self->{Subaction} = 'DeleteAttachment';
         }
     }
@@ -144,7 +153,7 @@ sub Run {
     # add workorder
     if ( $Self->{Subaction} eq 'Save' ) {
 
-        # add workorder only if WorkOrderTitle is given
+        # add workorder only if the title is given
         if ( !$GetParam{WorkOrderTitle} ) {
             push @ValidationErrors, 'InvalidTitle';
         }
@@ -306,26 +315,11 @@ sub Run {
     # handle attachment deletion
     elsif ( $Self->{Subaction} eq 'DeleteAttachment' ) {
 
-        # check if attachment should be deleted
-        for my $Attachment (@Attachments) {
-            if (
-                $Self->{ParamObject}
-                ->GetParam( Param => 'DeleteAttachment' . $Attachment->{FileID} )
-                )
-            {
-
-                # delete attachment
-                $Self->{UploadCacheObject}->FormIDRemoveFile(
-                    FormID => $Self->{FormID},
-                    FileID => $Attachment->{FileID},
-                );
-            }
-
-            # reload attachment list
-            @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
-                FormID => $Self->{FormID},
-            );
-        }
+        # reload the attachment list,
+        # as at least one attachment was deleted above
+        @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
+            FormID => $Self->{FormID},
+        );
     }
 
     # handle attachment downloads

@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.35 2010-01-16 10:45:49 bes Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.36 2010-01-16 11:36:14 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.35 $) [1];
+$VERSION = qw($Revision: 1.36 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -65,7 +65,7 @@ sub Run {
         UserID => $Self->{UserID},
     );
 
-    # error screen
+    # error screen, don't show change add mask
     if ( !$Access ) {
         return $Self->{LayoutObject}->NoPermission(
             Message    => "You need $Self->{Config}->{Permission} permissions!",
@@ -169,11 +169,7 @@ sub Run {
                 FileID => $Attachment->{FileID},
             );
 
-            # reload attachment list
-            @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
-                FormID => $Self->{FormID},
-            );
-
+            # set marker that the attachment list needs to be reloaded
             $Self->{Subaction} = 'DeleteAttachment';
         }
     }
@@ -251,10 +247,10 @@ sub Run {
         }
     }
 
-    # update change
+    # add change
     if ( $Self->{Subaction} eq 'Save' ) {
 
-        # check the title
+        # add change only if the title is given
         if ( !$GetParam{ChangeTitle} ) {
             push @ValidationErrors, 'InvalidTitle';
         }
@@ -415,6 +411,16 @@ sub Run {
                 );
             }
         }
+    }
+
+    # handle attachment deletion
+    elsif ( $Self->{Subaction} eq 'DeleteAttachment' ) {
+
+        # reload the attachment list,
+        # as at least one attachment was deleted above
+        @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
+            FormID => $Self->{FormID},
+        );
     }
 
     # handle attachment downloads
