@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.37 2010-01-16 12:01:09 bes Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.38 2010-01-16 12:51:20 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.37 $) [1];
+$VERSION = qw($Revision: 1.38 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -250,10 +250,10 @@ sub Run {
         }
     }
 
-    # add change
+    # perform the adding
     if ( $Self->{Subaction} eq 'Save' ) {
 
-        # add change only if the title is given
+        # the title is required
         if ( !$GetParam{ChangeTitle} ) {
             push @ValidationErrors, 'InvalidTitle';
         }
@@ -334,7 +334,7 @@ sub Run {
                 %AdditionalParam,
             );
 
-            # change could be added successfully
+            # adding was successful
             if ($ChangeID) {
 
                 # if the change add mask was called from the ticket zoom
@@ -400,16 +400,16 @@ sub Run {
                     }
                 }
 
-                # redirect to zoom mask
+                # redirect to zoom mask, when adding was successful
                 return $Self->{LayoutObject}->Redirect(
                     OP => "Action=AgentITSMChangeZoom&ChangeID=$ChangeID",
                 );
             }
             else {
 
-                # show error message
+                # show error message, when adding failed
                 return $Self->{LayoutObject}->ErrorScreen(
-                    Message => 'Was not able to add Change!',
+                    Message => 'Was not able to add change!',
                     Comment => 'Please contact the admin.',
                 );
             }
@@ -436,10 +436,13 @@ sub Run {
     # handle attachment downloads
     elsif ( $Self->{Subaction} eq 'DownloadAttachment' ) {
 
-        # get data for attachment
-        my $AttachmentData = $Self->{ChangeObject}->ChangeAttachmentGet(
-            FileID => $GetParam{FileID},
+        # get meta-data and content of the cached attachments
+        my @CachedAttachments = $Self->{UploadCacheObject}->FormIDGetAllFilesData(
+            FormID => $Self->{FormID},
         );
+
+        # get data for requested attachment
+        ( my $AttachmentData ) = grep { $_->{FileID} == $GetParam{FileID} } @CachedAttachments;
 
         # return error if file does not exist
         if ( !$AttachmentData ) {
@@ -576,7 +579,7 @@ sub Run {
     );
 
     # create category selection string
-    $Param{'CategoryStrg'} = $Self->{LayoutObject}->BuildSelection(
+    $Param{CategoryStrg} = $Self->{LayoutObject}->BuildSelection(
         Data       => $Param{Categories},
         Name       => 'CategoryID',
         SelectedID => $Param{CategoryID},
@@ -672,8 +675,7 @@ sub Run {
         $Self->{LayoutObject}->Block( Name => 'InvalidPriority' );
     }
 
-    # Add the validation error messages as late as possible
-    # as the enclosing blocks, e.g. 'RequestedTime' muss first be set.
+    # Add the validation error messages.
     for my $BlockName (@ValidationErrors) {
 
         # show validation error message
@@ -688,6 +690,7 @@ sub Run {
             Name => 'AttachmentRow',
             Data => {
                 %{$Attachment},
+                FormID => $Self->{FormID},
             },
         );
     }

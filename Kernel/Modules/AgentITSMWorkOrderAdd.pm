@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAdd.pm - the OTRS::ITSM::ChangeManagement workorder add module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.pm,v 1.37 2010-01-16 12:01:09 bes Exp $
+# $Id: AgentITSMWorkOrderAdd.pm,v 1.38 2010-01-16 12:51:20 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.37 $) [1];
+$VERSION = qw($Revision: 1.38 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -119,6 +119,10 @@ sub Run {
         }
     }
 
+    # Remember the reason why saving was not attempted.
+    # The entries are the names of the dtl validation error blocks.
+    my @ValidationErrors;
+
     # get meta data for all already uploaded files
     my @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
         FormID => $Self->{FormID},
@@ -177,14 +181,10 @@ sub Run {
         }
     }
 
-    # Remember the reason why saving was not attempted.
-    # This entries are the names of the dtl validation error blocks.
-    my @ValidationErrors;
-
-    # add workorder
+    # perform the adding
     if ( $Self->{Subaction} eq 'Save' ) {
 
-        # add workorder only if the title is given
+        # the title is required
         if ( !$GetParam{WorkOrderTitle} ) {
             push @ValidationErrors, 'InvalidTitle';
         }
@@ -252,7 +252,7 @@ sub Run {
             push @ValidationErrors, 'InvalidPlannedEffort';
         }
 
-        # if all passed data is valid
+        # add only when there are no input validation errors
         if ( !@ValidationErrors ) {
             my $WorkOrderID = $Self->{WorkOrderObject}->WorkOrderAdd(
                 ChangeID         => $ChangeID,
@@ -265,6 +265,7 @@ sub Run {
                 UserID           => $Self->{UserID},
             );
 
+            # adding was successful
             if ($WorkOrderID) {
 
                 # move attachments from cache to virtual fs
@@ -305,7 +306,7 @@ sub Run {
 
                 # show error message, when adding failed
                 return $Self->{LayoutObject}->ErrorScreen(
-                    Message => 'Was not able to add WorkOrder!',
+                    Message => 'Was not able to add workorder!',
                     Comment => 'Please contact the admin.',
                 );
             }
@@ -332,25 +333,21 @@ sub Run {
     # handle attachment downloads
     elsif ( $Self->{Subaction} eq 'DownloadAttachment' ) {
 
-        # get data for all attachments
-        my @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesData(
+        # get meta-data and content of the cached attachments
+        my @CachedAttachments = $Self->{UploadCacheObject}->FormIDGetAllFilesData(
             FormID => $Self->{FormID},
         );
 
         # get data for requested attachment
-        my $AttachmentData;
-        for my $Attachment (@Attachments) {
-            $AttachmentData = $Attachment if $Attachment->{FileID} == $GetParam{FileID};
-        }
+        ( my $AttachmentData ) = grep { $_->{FileID} == $GetParam{FileID} } @Attachments;
 
-        # check if file can be found
+        # return error if file does not exist
         if ( !$AttachmentData ) {
             $Self->{LogObject}->Log(
+                Message  => "No such attachment ($GetParam{FileID})! May be an attack!!!",
                 Priority => 'error',
-                Message  => 'invalid FileID $GetParam{FileID}',
             );
-
-            return;
+            return $Self->{LayoutObject}->ErrorScreen();
         }
 
         return $Self->{LayoutObject}->Attachment(
@@ -358,17 +355,6 @@ sub Run {
             Type => 'attachment',
         );
     }
-
-    # get all attachments meta data
-    @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
-        FormID => $Self->{FormID},
-    );
-
-    # output header
-    my $Output = $Self->{LayoutObject}->Header(
-        Title => 'Add',
-    );
-    $Output .= $Self->{LayoutObject}->NavigationBar();
 
     # build template dropdown
     # TODO: fill dropdown with data
@@ -411,6 +397,12 @@ sub Run {
             MoveTimeSelectionString     => $MoveTimeSelectionString,
         },
     );
+
+    # output header
+    my $Output = $Self->{LayoutObject}->Header(
+        Title => 'Add',
+    );
+    $Output .= $Self->{LayoutObject}->NavigationBar();
 
     # add rich text editor
     if ( $Self->{ConfigObject}->Get('Frontend::RichText') ) {
@@ -488,8 +480,7 @@ sub Run {
             Name => 'AttachmentRow',
             Data => {
                 %{$Attachment},
-                ChangeID => $ChangeID,
-                FormID   => $Self->{FormID},
+                FormID => $Self->{FormID},
             },
         );
     }
