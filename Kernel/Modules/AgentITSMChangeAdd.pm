@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.41 2010-01-16 17:59:29 bes Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.42 2010-01-17 10:32:12 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.41 $) [1];
+$VERSION = qw($Revision: 1.42 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -101,23 +101,29 @@ sub Run {
         }
     }
 
-    # set default values for category and impact
-    my $DefaultCategory = $Self->{ConfigObject}->Get('ITSMChange::Category::Default');
-    $Param{CategoryID} = $GetParam{CategoryID} || $Self->{ChangeObject}->ChangeCIPLookup(
-        CIP  => $DefaultCategory,
-        Type => 'Category',
-    );
+    # set default value for category
+    $Param{CategoryID} = $GetParam{CategoryID};
+    if ( !$Param{CategoryID} ) {
+        my $DefaultCategory = $Self->{ConfigObject}->Get('ITSMChange::Category::Default');
+        $Param{CategoryID} = $Self->{ChangeObject}->ChangeCIPLookup(
+            CIP  => $DefaultCategory,
+            Type => 'Category',
+        );
+    }
 
-    my $DefaultImpact = $Self->{ConfigObject}->Get('ITSMChange::Impact::Default');
-    $Param{ImpactID} = $GetParam{ImpactID} || $Self->{ChangeObject}->ChangeCIPLookup(
-        CIP  => $DefaultImpact,
-        Type => 'Impact',
-    );
+    # set default value for impact
+    $Param{ImpactID} = $GetParam{ImpactID};
+    if ( !$Param{ImpactID} ) {
+        my $DefaultImpact = $Self->{ConfigObject}->Get('ITSMChange::Impact::Default');
+        $Param{ImpactID} = $Self->{ChangeObject}->ChangeCIPLookup(
+            CIP  => $DefaultImpact,
+            Type => 'Impact',
+        );
+    }
 
     # Remember the reason why saving was not attempted.
     # The entries are the names of the dtl validation error blocks.
     my @ValidationErrors;
-    my %CIPErrors;
 
     # get meta data for all already uploaded files
     my @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
@@ -260,9 +266,8 @@ sub Run {
 
         # check CIP
         for my $Type (qw(Category Impact Priority)) {
-            if ( !$GetParam{"${Type}ID"} ) {
+            if ( !$GetParam{"${Type}ID"} || $GetParam{"${Type}ID"} !~ m{ \A \d+ \z }xms ) {
                 push @ValidationErrors, 'Invalid' . $Type;
-                $CIPErrors{$Type} = 1;
             }
             else {
                 my $CIPIsValid = $Self->{ChangeObject}->ChangeCIPLookup(
@@ -272,7 +277,6 @@ sub Run {
 
                 if ( !$CIPIsValid ) {
                     push @ValidationErrors, 'Invalid' . $Type;
-                    $CIPErrors{$Type} = 1;
                 }
             }
         }
@@ -573,14 +577,14 @@ sub Run {
         );
     }
 
-    # get categories
-    $Param{Categories} = $Self->{ChangeObject}->ChangePossibleCIPGet(
+    # create dropdown for the category
+    # all categories are selectable
+    # when the category is changed, a new priority is proposed
+    my $Categories = $Self->{ChangeObject}->ChangePossibleCIPGet(
         Type => 'Category',
     );
-
-    # create category selection string
-    $Param{CategoryStrg} = $Self->{LayoutObject}->BuildSelection(
-        Data       => $Param{Categories},
+    $Param{CategorySelectionString} = $Self->{LayoutObject}->BuildSelection(
+        Data       => $Categories,
         Name       => 'CategoryID',
         SelectedID => $Param{CategoryID},
         Ajax       => {
@@ -595,27 +599,14 @@ sub Run {
         },
     );
 
-    # show category dropdown
-    $Self->{LayoutObject}->Block(
-        Name => 'Category',
-        Data => {
-            %Param,
-        },
-    );
-
-    # show error block
-    if ( $CIPErrors{Category} ) {
-        $Self->{LayoutObject}->Block( Name => 'InvalidCategory' );
-    }
-
-    # get impacts
-    $Param{Impacts} = $Self->{ChangeObject}->ChangePossibleCIPGet(
+    # create dropdown for the impact
+    # all impacts are selectable
+    # when the impact is changed, a new priority is proposed
+    my $Impacts = $Self->{ChangeObject}->ChangePossibleCIPGet(
         Type => 'Impact',
     );
-
-    # create impact string
-    $Param{ImpactStrg} = $Self->{LayoutObject}->BuildSelection(
-        Data       => $Param{Impacts},
+    $Param{ImpactSelectionString} = $Self->{LayoutObject}->BuildSelection(
+        Data       => $Impacts,
         Name       => 'ImpactID',
         SelectedID => $Param{ImpactID},
         Ajax       => {
@@ -630,50 +621,22 @@ sub Run {
         },
     );
 
-    # show impact dropdown
-    $Self->{LayoutObject}->Block(
-        Name => 'Impact',
-        Data => {
-            %Param,
-        },
-    );
-
-    # show error block
-    if ( $CIPErrors{Impact} ) {
-        $Self->{LayoutObject}->Block( Name => 'InvalidImpact' );
-    }
-
-    # get priorities
-    $Param{Priorities} = $Self->{ChangeObject}->ChangePossibleCIPGet(
+    # create dropdown for priority,
+    # all priorities are selectable
+    # the default value might depend on category and impact
+    my $Priorities = $Self->{ChangeObject}->ChangePossibleCIPGet(
         Type => 'Priority',
     );
-
-    # get selected priority, or the default value
-    my $SelectedPriority = $GetParam{PriorityID};
-    $SelectedPriority ||= $Self->{CIPAllocateObject}->PriorityAllocationGet(
+    my $SelectedPriority = $GetParam{PriorityID}
+        || $Self->{CIPAllocateObject}->PriorityAllocationGet(
         CategoryID => $Param{CategoryID},
         ImpactID   => $Param{ImpactID},
-    );
-
-    # create impact string
-    $Param{PriorityStrg} = $Self->{LayoutObject}->BuildSelection(
-        Data       => $Param{Priorities},
+        );
+    $Param{PrioritySelectionString} = $Self->{LayoutObject}->BuildSelection(
+        Data       => $Priorities,
         Name       => 'PriorityID',
         SelectedID => $SelectedPriority,
     );
-
-    # show priority dropdown
-    $Self->{LayoutObject}->Block(
-        Name => 'Priority',
-        Data => {
-            %Param,
-        },
-    );
-
-    # show error block
-    if ( $CIPErrors{Priority} ) {
-        $Self->{LayoutObject}->Block( Name => 'InvalidPriority' );
-    }
 
     # Add the validation error messages.
     for my $BlockName (@ValidationErrors) {

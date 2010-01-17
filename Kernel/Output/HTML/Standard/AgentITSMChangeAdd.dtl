@@ -2,7 +2,7 @@
 # AgentITSMChangeAdd.dtl - provides HTML form for AgentITSMChangeAdd
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.dtl,v 1.41 2010-01-16 12:51:20 bes Exp $
+# $Id: AgentITSMChangeAdd.dtl,v 1.42 2010-01-17 10:32:13 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -192,51 +192,45 @@ $Include{"RichTextEditorITSM"}
                                 <tr>
                                     <td colspan="2">&nbsp;</td>
                                 </tr>
-<!-- dtl:block:Category -->
                                 <tr>
                                     <td class="contentkey">
                                         $Text{"Category"}:
                                         <font color="red" title="$Text{"Required"}">*</font>
                                     </td>
                                     <td class="contentvalue">
-                                        $Data{"CategoryStrg"}
+                                        $Data{"CategorySelectionString"}
 <!-- dtl:block:InvalidCategory -->
                                         <br />
                                         <font color="red" size="-2">$Text{"Input invalid"}</font>
 <!-- dtl:block:InvalidCategory -->
                                     </td>
                                 </tr>
-<!-- dtl:block:Category -->
-<!-- dtl:block:Impact -->
                                 <tr>
                                     <td class="contentkey">
                                         $Text{"Impact"}:
                                         <font color="red" title="$Text{"Required"}">*</font>
                                     </td>
                                     <td class="contentvalue">
-                                        $Data{"ImpactStrg"}
+                                        $Data{"ImpactSelectionString"}
 <!-- dtl:block:InvalidImpact -->
                                         <br />
                                         <font color="red" size="-2">$Text{"Input invalid"}</font>
 <!-- dtl:block:InvalidImpact -->
                                     </td>
                                 </tr>
-<!-- dtl:block:Impact -->
-<!-- dtl:block:Priority -->
                                 <tr>
                                     <td class="contentkey">
                                         $Text{"Priority"}:
                                         <font color="red" title="$Text{"Required"}">*</font>
                                     </td>
                                     <td class="contentvalue">
-                                        $Data{"PriorityStrg"}
+                                        $Data{"PrioritySelectionString"}
 <!-- dtl:block:InvalidPriority -->
                                         <br />
                                         <font color="red" size="-2">$Text{"Input invalid"}</font>
 <!-- dtl:block:InvalidPriority -->
                                     </td>
                                 </tr>
-<!-- dtl:block:Priority -->
                                 <tr>
                                     <td colspan="2">&nbsp;</td>
                                 </tr>

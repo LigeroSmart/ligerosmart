@@ -2,7 +2,7 @@
 # AgentITSMChangeEdit.dtl - provides HTML form for AgentITSMChangeEdit
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.dtl,v 1.37 2010-01-14 13:26:17 bes Exp $
+# $Id: AgentITSMChangeEdit.dtl,v 1.38 2010-01-17 10:32:13 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -111,7 +111,6 @@ $Include{"RichTextEditorITSM"}
                                 <tr>
                                     <td colspan="2">&nbsp;</td>
                                 </tr>
-<!-- dtl:block:Category -->
                                 <tr>
                                     <td class="contentkey">
                                         $Text{"Category"}:
@@ -125,8 +124,6 @@ $Include{"RichTextEditorITSM"}
 <!-- dtl:block:InvalidCategory -->
                                     </td>
                                 </tr>
-<!-- dtl:block:Category -->
-<!-- dtl:block:Impact -->
                                 <tr>
                                     <td class="contentkey">
                                         $Text{"Impact"}:
@@ -140,8 +137,6 @@ $Include{"RichTextEditorITSM"}
 <!-- dtl:block:InvalidImpact -->
                                     </td>
                                 </tr>
-<!-- dtl:block:Impact -->
-<!-- dtl:block:Priority -->
                                 <tr>
                                     <td class="contentkey">
                                         $Text{"Priority"}:
@@ -155,14 +150,13 @@ $Include{"RichTextEditorITSM"}
 <!-- dtl:block:InvalidPriority -->
                                     </td>
                                 </tr>
-<!-- dtl:block:Priority -->
                                 <tr>
                                     <td colspan="2">&nbsp;</td>
                                 </tr>
 <!-- dtl:block:State -->
                                 <tr>
                                     <td class="contentkey">$Text{"State"}:</td>
-                                    <td class="contentvalue">$Data{"StateSelectString"}</td>
+                                    <td class="contentvalue">$Data{"StateSelectionString"}</td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">&nbsp;</td>

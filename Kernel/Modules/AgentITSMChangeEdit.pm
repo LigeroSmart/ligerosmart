@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeEdit.pm - the OTRS::ITSM::ChangeManagement change edit module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.pm,v 1.39 2010-01-14 13:26:17 bes Exp $
+# $Id: AgentITSMChangeEdit.pm,v 1.40 2010-01-17 10:32:12 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.39 $) [1];
+$VERSION = qw($Revision: 1.40 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -111,7 +111,6 @@ sub Run {
     # Remember the reason why perfoming the subaction was not attempted.
     # The entries are the names of the dtl validation error blocks.
     my @ValidationErrors;
-    my %CIPErrors;
 
     # if attachment upload is requested
     if ( $GetParam{SaveAttachment} ) {
@@ -145,9 +144,8 @@ sub Run {
 
         # check CIP
         for my $Type (qw(Category Impact Priority)) {
-            if ( !$GetParam{"${Type}ID"} ) {
+            if ( !$GetParam{"${Type}ID"} || $GetParam{"${Type}ID"} !~ m{ \A \d+ \z }xms ) {
                 push @ValidationErrors, 'Invalid' . $Type;
-                $CIPErrors{$Type} = 1;
             }
             else {
                 my $CIPIsValid = $Self->{ChangeObject}->ChangeCIPLookup(
@@ -157,7 +155,6 @@ sub Run {
 
                 if ( !$CIPIsValid ) {
                     push @ValidationErrors, 'Invalid' . $Type;
-                    $CIPErrors{$Type} = 1;
                 }
             }
         }
@@ -396,7 +393,7 @@ sub Run {
         );
 
         # build drop-down with change states
-        my $StateSelectString = $Self->{LayoutObject}->BuildSelection(
+        my $StateSelectionString = $Self->{LayoutObject}->BuildSelection(
             Data       => $ChangePossibleStates,
             Name       => 'ChangeStateID',
             SelectedID => $GetParam{ChangeStateID},
@@ -406,7 +403,7 @@ sub Run {
         $Self->{LayoutObject}->Block(
             Name => 'State',
             Data => {
-                StateSelectString => $StateSelectString,
+                StateSelectionString => $StateSelectionString,
             },
         );
     }
@@ -453,7 +450,7 @@ sub Run {
     my $Categories = $Self->{ChangeObject}->ChangePossibleCIPGet(
         Type => 'Category',
     );
-    my $CategorySelectionString = $Self->{LayoutObject}->BuildSelection(
+    $Param{CategorySelectionString} = $Self->{LayoutObject}->BuildSelection(
         Data       => $Categories,
         Name       => 'CategoryID',
         SelectedID => $GetParam{CategoryID} || $Change->{CategoryID},
@@ -470,26 +467,13 @@ sub Run {
         },
     );
 
-    # show dropdown for category
-    $Self->{LayoutObject}->Block(
-        Name => 'Category',
-        Data => {
-            CategorySelectionString => $CategorySelectionString,
-        },
-    );
-
-    # show error block
-    if ( $CIPErrors{Category} ) {
-        $Self->{LayoutObject}->Block( Name => 'InvalidCategory' );
-    }
-
     # create dropdown for the impact
     # all impacts are selectable
     # when the impact is changed, a new priority is proposed
     my $Impacts = $Self->{ChangeObject}->ChangePossibleCIPGet(
         Type => 'Impact',
     );
-    my $ImpactSelectionString = $Self->{LayoutObject}->BuildSelection(
+    $Param{ImpactSelectionString} = $Self->{LayoutObject}->BuildSelection(
         Data       => $Impacts,
         Name       => 'ImpactID',
         SelectedID => $GetParam{ImpactID} || $Change->{ImpactID},
@@ -506,45 +490,18 @@ sub Run {
         },
     );
 
-    # show impact dropdown
-    $Self->{LayoutObject}->Block(
-        Name => 'Impact',
-        Data => {
-            ImpactSelectionString => $ImpactSelectionString,
-        },
-    );
-
-    # show error block
-    if ( $CIPErrors{Impact} ) {
-        $Self->{LayoutObject}->Block( Name => 'InvalidImpact' );
-    }
-
     # create dropdown for priority,
     # all priorities are selectable
     my $Priorities = $Self->{ChangeObject}->ChangePossibleCIPGet(
         Type => 'Priority',
     );
-    my $PrioritySelectionString = $Self->{LayoutObject}->BuildSelection(
+    $Param{PrioritySelectionString} = $Self->{LayoutObject}->BuildSelection(
         Data       => $Priorities,
         Name       => 'PriorityID',
         SelectedID => $GetParam{PriorityID} || $Change->{PriorityID},
     );
 
-    # show dropdown for priority
-    $Self->{LayoutObject}->Block(
-        Name => 'Priority',
-        Data => {
-            PrioritySelectionString => $PrioritySelectionString,
-        },
-    );
-
-    # show error block for priority
-    if ( $CIPErrors{Priority} ) {
-        $Self->{LayoutObject}->Block( Name => 'InvalidPriority' );
-    }
-
-    # Add the validation error messages as late as possible
-    # as the enclosing blocks muss first be set.
+    # Add the validation error messages.
     for my $BlockName (@ValidationErrors) {
         $Self->{LayoutObject}->Block(
             Name => $BlockName,
