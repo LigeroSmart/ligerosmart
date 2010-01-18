@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.43 2010-01-18 12:38:32 reb Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.44 2010-01-18 12:47:36 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.43 $) [1];
+$VERSION = qw($Revision: 1.44 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -420,6 +420,31 @@ sub Run {
                 );
             }
         }
+    }
+
+    # create change from template
+    elsif ( $Self->{Subaction} eq 'CreateFromTemplate' ) {
+
+        # TODO: pass new time slot
+        my $ChangeID = $Self->{TemplateObject}->TemplateDeSerialize(
+            UserID => $Self->{UserID},
+            TemplateID => $Self->{ParamObject}->GetParam( Param => 'ChangeTemplate' ),
+        );
+
+        # change could not be created
+        if ( !$ChangeID ) {
+
+            # show error message, when adding failed
+            return $Self->{LayoutObject}->ErrorScreen(
+                Message => 'Was not able to add change!',
+                Comment => 'Please contact the admin.',
+            );
+        }
+
+        # redirect to zoom mask, when adding was successful
+        return $Self->{LayoutObject}->Redirect(
+            OP => "Action=AgentITSMChangeZoom&ChangeID=$ChangeID",
+        );
     }
 
     # handle saaveattachment subaction
