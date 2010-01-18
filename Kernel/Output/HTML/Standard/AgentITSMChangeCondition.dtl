@@ -2,7 +2,7 @@
 # AgentITSMChangeCondition.dtl - provides HTML form for AgentITSMChangeCondition
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeCondition.dtl,v 1.2 2010-01-16 19:51:48 ub Exp $
+# $Id: AgentITSMChangeCondition.dtl,v 1.3 2010-01-18 12:24:26 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -13,6 +13,11 @@
     <tr>
         <td class="mainhead">
             $Env{"Box0"}$Text{"Overview"}: $Text{"Conditions and Actions"} : $Text{"Change#"}: $QData{"ChangeNumber"} $Env{"Box1"}
+        </td>
+    </tr>
+    <tr>
+        <td class="menu">
+            <a href="$Env{"Baselink"}$Env{"LastScreenView"}" onmouseover="window.status='$JSText{"Back"}'; return true;" onmouseout="window.status='';" class="menuitem">$Text{"Back"}</a>
         </td>
     </tr>
     <tr>
