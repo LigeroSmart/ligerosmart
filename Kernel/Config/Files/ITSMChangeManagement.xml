@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.146 2010-01-18 12:19:36 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.147 2010-01-18 16:37:11 bes Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -492,6 +492,20 @@
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentITSMWorkOrderTemplate" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AgentITSMWorkOrderTemplate object in the agent interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration des AgentITSMWorkOrderTemplate-Objekts im Agenteninterface.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <GroupRo>itsm-change</GroupRo>
+                <Description>Template</Description>
+                <Title>Template</Title>
+                <NavBarName>ITSM Change</NavBarName>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="Frontend::Module###AgentITSMWorkOrderZoom" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AgentITSMWorkOrderZoom object in the agent interface.</Description>
         <Description Lang="de">Frontendmodul-Registration des AgentITSMWorkOrderZoom-Objekts im Agenteninterface.</Description>
@@ -849,7 +863,7 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###080-Template" Required="0" Valid="0">
+    <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###080-Template" Required="0" Valid="1">
         <Description Lang="en">Module to show the 'Template' link in workorder menu.</Description>
         <Description Lang="de">Mit diesem Modul wird der 'Template'-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
@@ -2188,6 +2202,15 @@
         <SubGroup>Frontend::Agent::ViewWorkOrderHistoryZoom</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">ro</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMWorkOrderTemplate###Permission" Required="1" Valid="1">
+        <Description Lang="en">Required privilege to create a template from a workorder.</Description>
+        <Description Lang="de">Benötigtes Recht um eine Vorlage aus einer Workorder zu erstellen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ViewWorkOrderTemplate</SubGroup>
+        <Setting>
+            <String Regex="^(rw|ro)$">rw</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderReport###AccountedTime" Required="1" Valid="1">
