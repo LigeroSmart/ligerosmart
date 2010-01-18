@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template.pm - all template functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.6 2010-01-18 10:10:23 bes Exp $
+# $Id: Template.pm,v 1.7 2010-01-18 10:26:49 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Valid;
 use Data::Dumper;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 =head1 NAME
 
@@ -126,7 +126,7 @@ sub TemplateAdd {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(ChangeID Name TypeID ValidID UserID)) {
+    for my $Argument (qw(Content Name TypeID ValidID UserID)) {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -167,7 +167,7 @@ sub TemplateAdd {
             . 'create_time, create_by, change_time, change_by) '
             . 'VALUES (?, ?, ?, ?, ?, current_timestamp, ?, current_timestamp, ?)',
         Bind => [
-            \$Param{Name}, \$Param{Comment}, \$Param{Content}, \$Param{TypeID}, \$Param{ValidID},
+            \$Param{Name}, \$Param{Comment}, \$Param{Content}, \$Param{TypeID},
             \$Param{ValidID}, \$Param{UserID}, \$Param{UserID},
         ],
     );
@@ -188,7 +188,7 @@ sub TemplateAdd {
     if ( !$TemplateID ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "TemplateAdd() failed!",
+            Message  => 'TemplateAdd() failed!',
         );
         return;
     }
@@ -313,7 +313,7 @@ sub TemplateGet {
 
     # prepare SQL statement
     return if !$Self->{DBObject}->Prepare(
-        SQL => 'SELECT ct.id, ct.name, comments, type_id, ctt.name '
+        SQL => 'SELECT ct.id, ct.name, comments, content, type_id, ctt.name, '
             . 'ct.valid_id, ct.create_time, ct.create_by, ct.change_time, ct.change_by '
             . 'FROM change_template ct, change_template_type ctt '
             . 'WHERE ct.type_id = ctt.id AND ct.id = ?',
@@ -327,13 +327,14 @@ sub TemplateGet {
         $TemplateData{TemplateID} = $Row[0];
         $TemplateData{Name}       = $Row[1];
         $TemplateData{Comment}    = $Row[2];
-        $TemplateData{TypeID}     = $Row[3];
-        $TemplateData{Type}       = $Row[4];
-        $TemplateData{ValidID}    = $Row[5];
-        $TemplateData{CreateTime} = $Row[6];
-        $TemplateData{CreateBy}   = $Row[7];
-        $TemplateData{ChangeTime} = $Row[8];
-        $TemplateData{ChangeBy}   = $Row[9];
+        $TemplateData{Content}    = $Row[3];
+        $TemplateData{TypeID}     = $Row[4];
+        $TemplateData{Type}       = $Row[5];
+        $TemplateData{ValidID}    = $Row[6];
+        $TemplateData{CreateTime} = $Row[7];
+        $TemplateData{CreateBy}   = $Row[8];
+        $TemplateData{ChangeTime} = $Row[9];
+        $TemplateData{ChangeBy}   = $Row[10];
     }
 
     # check error
@@ -542,7 +543,7 @@ Currently ITSMChangeManagement supports these template types:
 
 ITSMChange
 
-The method returns a datastruction, serialized with Data::Dumper.
+The method returns a datastructure, serialized with Data::Dumper.
 
     my $ChangeTemplate = $TemplateObject->TemplateSerialize(
         TemplateType => 'ITSMChange',
@@ -861,7 +862,7 @@ sub _CABSerialize {
             CABAdd => {
                 CABCustomers => $Change->{CABCustomers},
                 CABAgents    => $Change->{CABAgents},
-                }
+            },
         }
     ];
 
@@ -932,6 +933,12 @@ sub _ChangeAdd {
     # we should not pass the ChangeID to ChangeAdd
     delete $Param{ChangeID};
 
+    # delete all parameters whose values are 'undef'
+    # _CheckChangeParams throws an error otherwise
+    for my $Parameter ( keys %Param ) {
+        delete $Param{$Parameter} if !defined $Param{$Parameter};
+    }
+
     # add the change
     my $ChangeID = $Self->{ChangeObject}->ChangeAdd(
         %Param,
@@ -953,6 +960,23 @@ change id it was created for.
 sub _WorkOrderAdd {
     my ( $Self, %Param ) = @_;
 
+    # delete all parameters whose values are 'undef'
+    # _CheckWorkOrderParams throws an error otherwise
+    for my $Parameter ( keys %Param ) {
+        delete $Param{$Parameter} if !defined $Param{$Parameter};
+    }
+
+    # xxx(?:Start|End)Times are empty strings on WorkOrderGet when
+    # no time value is set. This confuses _CheckTimestamps. Thus
+    # delete these parameters.
+    for my $Prefix (qw(Actual Planned)) {
+        for my $Suffix (qw(Start End)) {
+            if ( $Param{"$Prefix${Suffix}Time"} eq '' ) {
+                delete $Param{"$Prefix${Suffix}Time"};
+            }
+        }
+    }
+
     return if !$Self->{WorkOrderObject}->WorkOrderAdd(
         %Param,
     );
@@ -967,6 +991,11 @@ sub _WorkOrderAdd {
 sub _CABAdd {
     my ( $Self, %Param ) = @_;
 
+    # a CAB add is actually a CAB update on a change
+    return if !$Self->{ChangeObject}->ChangeCABUpdate(
+        %Param,
+    );
+
     return $Param{ChangeID};
 }
 
@@ -976,6 +1005,12 @@ sub _CABAdd {
 
 sub _ConditionAdd {
     my ( $Self, %Param ) = @_;
+
+    # add condition
+    return if !$Self->{ConditionObject}->ConditionAdd(
+        %Param,
+    );
+
     return $Param{ChangeID};
 }
 
@@ -997,6 +1032,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.6 $ $Date: 2010-01-18 10:10:23 $
+$Revision: 1.7 $ $Date: 2010-01-18 10:26:49 $
 
 =cut
