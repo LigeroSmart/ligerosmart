@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template.pm - all template functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.10 2010-01-18 11:43:32 reb Exp $
+# $Id: Template.pm,v 1.11 2010-01-18 11:59:32 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Valid;
 use Data::Dumper;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 =head1 NAME
 
@@ -454,18 +454,19 @@ sub TemplateDelete {
 
 =item TemplateTypeLookup()
 
-Return the template id when the template name is passed.
-Return the template name when the template id is passed.
-When no template id or template name is found, then the undefined value is returned.
+Return the template type id when the template type name is passed.
+Return the template type name when the template type id is passed.
+When no template type id or template type name is found, then the
+undefined value is returned.
 
-    my $TemplateID = $TemplateObject->TemplateTypeLookup(
-        TemplateName => 'my template name',
+    my $TypeID = $TemplateObject->TemplateTypeLookup(
+        TemplateType => 'my template type name',
         UserID       => 1,
     );
 
-    my $TemplateName = $TemplateObject->TemplateTypeLookup(
-        TemplateID => 42,
-        UserID     => 1,
+    my $TxpeName = $TemplateObject->TemplateTypeLookup(
+        TemplateTypeID => 42,
+        UserID         => 1,
     );
 
 =cut
@@ -483,54 +484,54 @@ sub TemplateTypeLookup {
     }
 
     # the change id or the change number must be passed
-    if ( !$Param{TemplateID} && !$Param{TemplateName} ) {
+    if ( !$Param{TemplateTypeID} && !$Param{TemplateType} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'Need the TemplateID or the TemplateName!',
+            Message  => 'Need the TemplateTypeID or the TemplateType!',
         );
         return;
     }
 
     # only one of template id and template name can be passed
-    if ( $Param{TemplateID} && $Param{TemplateName} ) {
+    if ( $Param{TemplateTypeID} && $Param{TemplateType} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'Need either the TemplateName or the TemplateID, not both!',
+            Message  => 'Need either the TemplateType or the TemplateTemplateID, not both!',
         );
         return;
     }
 
-    # get template id
-    if ( $Param{TemplateName} ) {
+    # get type id
+    if ( $Param{TemplateType} ) {
         return if !$Self->{DBObject}->Prepare(
-            SQL   => 'SELECT id FROM change_template WHERE name = ?',
-            Bind  => [ \$Param{TemplateName} ],
+            SQL   => 'SELECT id FROM change_template_type WHERE name = ?',
+            Bind  => [ \$Param{TemplateType} ],
             Limit => 1,
         );
 
-        my $TemplateID;
+        my $TypeID;
         while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-            $TemplateID = $Row[0];
+            $TypeID = $Row[0];
         }
 
-        return $TemplateID;
+        return $TypeID;
     }
 
-    # get template name
-    elsif ( $Param{TemplateID} ) {
+    # get type name
+    elsif ( $Param{TemplateTypeID} ) {
 
         return if !$Self->{DBObject}->Prepare(
             SQL   => 'SELECT name FROM change_template_type WHERE id = ?',
-            Bind  => [ \$Param{TemplateID} ],
+            Bind  => [ \$Param{TemplateTypeID} ],
             Limit => 1,
         );
 
-        my $TemplateName;
+        my $TypeName;
         while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-            $TemplateName = $Row[0];
+            $TypeName = $Row[0];
         }
 
-        return $TemplateName;
+        return $TypeName;
     }
 
     return;
@@ -588,7 +589,7 @@ sub TemplateSerialize {
     my $TemplateType = $Param{TemplateType};
     if ( $Param{TemplateTypeID} ) {
         $TemplateType = $Self->TemplateTypeLookup(
-            TemplateID => $Param{TemplateTypeID},
+            TemplateTypeID => $Param{TemplateTypeID},
         );
     }
 
@@ -1162,6 +1163,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.10 $ $Date: 2010-01-18 11:43:32 $
+$Revision: 1.11 $ $Date: 2010-01-18 11:59:32 $
 
 =cut
