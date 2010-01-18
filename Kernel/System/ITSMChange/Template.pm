@@ -1,8 +1,8 @@
 # --
-# Kernel/System/ITSMChange/ITSMTemplate.pm - all condition functions
+# Kernel/System/ITSMChange/Template.pm - all template functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.5 2010-01-15 18:47:23 reb Exp $
+# $Id: Template.pm,v 1.6 2010-01-18 10:10:23 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Valid;
 use Data::Dumper;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 =head1 NAME
 
@@ -149,7 +149,7 @@ sub TemplateAdd {
         $TemplateID = $Row[0];
     }
 
-    # a condition with this name and change id exists already
+    # a template with this name exists already
     if ($TemplateID) {
         $Self->{LogObject}->Log(
             Priority => 'error',
@@ -160,7 +160,7 @@ sub TemplateAdd {
 
     # TODO: execute TemplateAddPre Event
 
-    # add new condition to database
+    # add new template to database
     return if !$Self->{DBObject}->Do(
         SQL => 'INSERT INTO change_template '
             . '(name, comments, content, type_id, valid_id, '
@@ -184,7 +184,7 @@ sub TemplateAdd {
         $TemplateID = $Row[0];
     }
 
-    # check if condition could be added
+    # check if template could be added
     if ( !$TemplateID ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
@@ -485,12 +485,12 @@ sub TemplateTypeLookup {
     if ( !$Param{TemplateID} && !$Param{TemplateName} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'Need the ChangeID or the ChangeNumber!',
+            Message  => 'Need the TemplateID or the TemplateName!',
         );
         return;
     }
 
-    # only one of change id and change number can be passed
+    # only one of template id and template name can be passed
     if ( $Param{TemplateID} && $Param{TemplateName} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
@@ -499,7 +499,7 @@ sub TemplateTypeLookup {
         return;
     }
 
-    # get change id
+    # get template id
     if ( $Param{TemplateName} ) {
         return if !$Self->{DBObject}->Prepare(
             SQL   => 'SELECT id FROM change_template WHERE name = ?',
@@ -566,7 +566,7 @@ sub TemplateSerialize {
         return;
     }
 
-    # the template type or the template id must be passed
+    # the template type id or the template type name must be passed
     if ( !$Param{TemplateTypeID} && !$Param{TemplateType} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
@@ -575,7 +575,7 @@ sub TemplateSerialize {
         return;
     }
 
-    # only one of template id and template type can be passed
+    # only one of template type name and template type id can be passed
     if ( $Param{TemplateType} && $Param{TemplateTypeID} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
@@ -679,6 +679,8 @@ sub TemplateDeSerialize {
 
 =item _ITSMChangeSerialize()
 
+Serialize a change.
+
 =cut
 
 sub _ITSMChangeSerialize {
@@ -772,6 +774,8 @@ sub _ITSMChangeSerialize {
 }
 
 =item _ITSMWorkOrderSerialize()
+
+Serialize a workorder.
 
 =cut
 
@@ -870,6 +874,8 @@ sub _CABSerialize {
 
 =item _ConditionSerialize()
 
+Serialize a condition.
+
 =cut
 
 sub _ConditionSerialize {
@@ -960,6 +966,7 @@ sub _WorkOrderAdd {
 
 sub _CABAdd {
     my ( $Self, %Param ) = @_;
+
     return $Param{ChangeID};
 }
 
@@ -990,6 +997,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2010-01-15 18:47:23 $
+$Revision: 1.6 $ $Date: 2010-01-18 10:10:23 $
 
 =cut
