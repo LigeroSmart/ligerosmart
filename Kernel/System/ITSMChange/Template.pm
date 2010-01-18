@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template.pm - all template functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.8 2010-01-18 10:38:35 reb Exp $
+# $Id: Template.pm,v 1.9 2010-01-18 11:35:00 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Valid;
 use Data::Dumper;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 =head1 NAME
 
@@ -680,7 +680,18 @@ sub TemplateDeSerialize {
 
 =item _ITSMChangeSerialize()
 
-Serialize a change.
+Serialize a change. This is done with Data::Dumper. It returns
+a serialized string of the datastructure. The change actions
+are "wrapped" within an arrayreference...
+
+    my $TemplateString = $TemplateObject->_ITSMChangeSerialize(
+        ChangeID => 1,
+        UserID   => 1,
+    );
+
+returns
+
+    '[{ChangeAdd => {Title => 'title', ...}}, {WorkOrderAdd => { ChangeID => 123, ... }}]'
 
 =cut
 
@@ -782,7 +793,18 @@ sub _ITSMChangeSerialize {
 
 =item _ITSMWorkOrderSerialize()
 
-Serialize a workorder.
+Serialize a workorder. This is done with Data::Dumper. It returns
+a serialized string of the datastructure. The change actions
+are "wrapped" within an arrayreference...
+
+    my $TemplateString = $TemplateObject->_ITSMWorkOrderSerialize(
+        WorkOrderID => 1,
+        UserID      => 1,
+    );
+
+returns
+
+    '[{WorkOrderAdd => { ChangeID => 123, ... }}]'
 
 =cut
 
@@ -839,6 +861,19 @@ sub _ITSMWorkOrderSerialize {
 
 =item _CABSerialize()
 
+Serialize the CAB of a change. This is done with Data::Dumper. It returns
+a serialized string of the datastructure. The change actions
+are "wrapped" within an arrayreference...
+
+    my $TemplateString = $TemplateObject->_CABSerialize(
+        ChangeID => 1,
+        UserID   => 1,
+    );
+
+returns
+
+    '[{CABAdd => { CABCustomers => [ 'mm@localhost' ], ... }}]'
+
 =cut
 
 sub _CABSerialize {
@@ -888,7 +923,18 @@ sub _CABSerialize {
 
 =item _ConditionSerialize()
 
-Serialize a condition.
+Serialize a condition. This is done with Data::Dumper. It returns
+a serialized string of the datastructure. The change actions
+are "wrapped" within an arrayreference...
+
+    my $TemplateString = $TemplateObject->_ConditionSerialize(
+        ConditionID => 1,
+        UserID      => 1,
+    );
+
+returns
+
+    '[{ConditionAdd => { ... }}]'
 
 =cut
 
@@ -934,14 +980,27 @@ sub _ConditionSerialize {
 Creates a new change based on a template. It returns the new ChangeID.
 
     my $ChangeID = $TemplateObject->_ChangeAdd(
+        ChangeTitle => 'test',
+        # other change attributes
         ChangeID => 0,
-
+        UserID   => 1,
     );
 
 =cut
 
 sub _ChangeAdd {
     my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(UserID ChangeTitle)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
 
     # we should not pass the ChangeID to ChangeAdd
     delete $Param{ChangeID};
@@ -966,12 +1025,26 @@ Creates a new workorder based on a template. It returns the
 change id it was created for.
 
     my $ChangeID = $TemplateObject->_WorkOrderAdd(
+        WorkOrderTitle => 'test',
+        ChangeID       => 1,
+        UserID         => 1,
     );
 
 =cut
 
 sub _WorkOrderAdd {
     my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(UserID ChangeID WorkOrderTitle)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
 
     # delete all parameters whose values are 'undef'
     # _CheckWorkOrderParams throws an error otherwise
@@ -999,14 +1072,44 @@ sub _WorkOrderAdd {
 
 =item _CABAdd()
 
+Updates the CAB of a change based on the given CAB template. It
+returns the change id the cab is for.
+
+    my $ChangeID = $TemplateObject->_CABAdd(
+        ChangeID     => 1,
+        CABCustomers => [ 'mm@localhost' ],
+        CABAgents    => [ 1, 2 ],
+        UserID       => 1,
+    );
+
 =cut
 
 sub _CABAdd {
     my ( $Self, %Param ) = @_;
 
+    # check needed stuff
+    for my $Argument (qw(UserID ChangeID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # get current CAB of change
+    my $Change = $Self->{ChangeObject}->ChangeGet(
+        ChangeID => $Param{ChangeID},
+        UserID   => $Param{UserID},
+    );
+
     # a CAB add is actually a CAB update on a change
     return if !$Self->{ChangeObject}->ChangeCABUpdate(
-        %Param,
+        ChangeID     => $Param{ChangeID},
+        CABCustomers => [ @{ $Param{CABCustomers} }, @{ $Change->{CABCustomers} } ],
+        CABAgents    => [ @{ $Param{CABAgents} }, @{ $Change->{CABAgents} } ],
+        UserID       => $Param{UserID},
     );
 
     return $Param{ChangeID};
@@ -1045,6 +1148,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.8 $ $Date: 2010-01-18 10:38:35 $
+$Revision: 1.9 $ $Date: 2010-01-18 11:35:00 $
 
 =cut
