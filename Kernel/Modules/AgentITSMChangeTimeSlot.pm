@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeTimeSlot.pm - the OTRS::ITSM::ChangeManagement move time slot module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeTimeSlot.pm,v 1.22 2010-01-18 12:19:36 bes Exp $
+# $Id: AgentITSMChangeTimeSlot.pm,v 1.23 2010-01-18 15:30:55 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -191,66 +191,14 @@ sub Run {
             );
             my $DiffSeconds = $PlannedSystemTime - $CurrentPlannedSystemTime;
 
-            # TODO: think about locking
-            my @CollectedUpdateParams;    # an array of params for WorkOrderUpdate()
-            my %WorkOrderID2Number;       # Used only for error messages.
-            WORKORDERID:
-            for my $WorkOrderID ( @{ $Change->{WorkOrderIDs} } ) {
-                my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
-                    WorkOrderID => $WorkOrderID,
-                    UserID      => $Self->{UserID},
-                );
+            my $MoveError = $Self->_MoveWorkOrders(
+                DiffSeconds  => $DiffSeconds,
+                WorkOrderIDs => $Change->{WorkOrderIDs},
+                ChangeNumber => $Change->{ChangeNumber},
+            );
 
-                next WORKORDERID if !$WorkOrder;
-                next WORKORDERID if ref $WorkOrder ne 'HASH';
-                next WORKORDERID if !%{$WorkOrder};
-
-                $WorkOrderID2Number{$WorkOrderID} = $WorkOrder->{WorkOrderNumber};
-                my %UpdateParams;
-                TYPE:
-                for my $Type (qw(PlannedStartTime PlannedEndTime)) {
-
-                    next TYPE if !$WorkOrder->{$Type};
-
-                    my $SystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
-                        String => $WorkOrder->{$Type},
-                    );
-                    next TYPE if !$SystemTime;
-
-                    # add the number of seconds that the time slot should be moved
-                    $SystemTime += $DiffSeconds;
-                    $UpdateParams{$Type} = $Self->{TimeObject}->SystemTime2TimeStamp(
-                        SystemTime => $SystemTime,
-                    );
-                }
-
-                next WORKORDERID if !%UpdateParams;
-
-                # remember the workorder that should be moved
-                $UpdateParams{WorkOrderID} = $WorkOrderID;
-
-                push @CollectedUpdateParams, \%UpdateParams;
-            }
-
-            UPDATEPARAMS:
-            for my $UpdateParams (@CollectedUpdateParams) {
-                my $UpdateOk = $Self->{WorkOrderObject}->WorkOrderUpdate(
-                    %{$UpdateParams},
-                    UserID => $Self->{UserID},
-                );
-
-                if ( !$UpdateOk ) {
-
-                    # show error message
-                    my $Number = $Change->{ChangeNumber}
-                        . '-'
-                        . $WorkOrderID2Number{ $UpdateParams->{WorkOrderID} };
-
-                    return $Self->{LayoutObject}->ErrorScreen(
-                        Message => "Was not able to move time slot for workorder #$Number!",
-                        Comment => 'Please contact the admin.',
-                    );
-                }
+            if ($MoveError) {
+                return $MoveError;
             }
 
             # everything went well, redirect to zoom mask
@@ -374,10 +322,8 @@ sub Run {
     );
     $Output .= $Self->{LayoutObject}->NavigationBar();
 
-    # Add the validation error messages.
+    # Show the validation error messages.
     for my $BlockName (@ValidationErrors) {
-
-        # show validation error message
         $Self->{LayoutObject}->Block( Name => $BlockName );
     }
 
@@ -395,6 +341,79 @@ sub Run {
     $Output .= $Self->{LayoutObject}->Footer();
 
     return $Output;
+}
+
+# the actual moving is done here
+sub _MoveWorkOrders {
+    my ( $Self, %Param ) = @_;
+
+    # TODO: think about locking
+    my @CollectedUpdateParams;    # an array of params for WorkOrderUpdate()
+    my %WorkOrderID2Number;       # used only for error messages
+
+    # determine the new times
+    WORKORDERID:
+    for my $WorkOrderID ( @{ $Param{WorkOrderIDs} } ) {
+        my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+            WorkOrderID => $WorkOrderID,
+            UserID      => $Self->{UserID},
+        );
+
+        next WORKORDERID if !$WorkOrder;
+        next WORKORDERID if ref $WorkOrder ne 'HASH';
+        next WORKORDERID if !%{$WorkOrder};
+
+        $WorkOrderID2Number{$WorkOrderID} = $WorkOrder->{WorkOrderNumber};
+        my %UpdateParams;
+        TYPE:
+        for my $Type (qw(PlannedStartTime PlannedEndTime)) {
+
+            next TYPE if !$WorkOrder->{$Type};
+
+            my $SystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
+                String => $WorkOrder->{$Type},
+            );
+            next TYPE if !$SystemTime;
+
+            # add the number of seconds that the time slot should be moved
+            $SystemTime += $Param{DiffSeconds};
+            $UpdateParams{$Type} = $Self->{TimeObject}->SystemTime2TimeStamp(
+                SystemTime => $SystemTime,
+            );
+        }
+
+        next WORKORDERID if !%UpdateParams;
+
+        # remember the workorder that should be moved
+        $UpdateParams{WorkOrderID} = $WorkOrderID;
+
+        push @CollectedUpdateParams, \%UpdateParams;
+    }
+
+    # do the updating
+    UPDATEPARAMS:
+    for my $UpdateParams (@CollectedUpdateParams) {
+        my $UpdateOk = $Self->{WorkOrderObject}->WorkOrderUpdate(
+            %{$UpdateParams},
+            UserID => $Self->{UserID},
+        );
+
+        if ( !$UpdateOk ) {
+
+            # show error message
+            my $Number = join '-',
+                $Param{ChangeNumber},
+                $WorkOrderID2Number{ $UpdateParams->{WorkOrderID} };
+
+            return $Self->{LayoutObject}->ErrorScreen(
+                Message => "Was not able to move time slot for workorder #$Number!",
+                Comment => 'Please contact the admin.',
+            );
+        }
+    }
+
+    # moving was successful
+    return;
 }
 
 1;
