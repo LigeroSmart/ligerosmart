@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template.pm - all template functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.7 2010-01-18 10:26:49 reb Exp $
+# $Id: Template.pm,v 1.8 2010-01-18 10:38:35 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Valid;
 use Data::Dumper;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 =head1 NAME
 
@@ -706,25 +706,24 @@ sub _ITSMChangeSerialize {
 
     return if !$Change;
 
-    # the ids are needed later
-    my $WorkOrderIDs = $Change->{WorkOrderIDs};
-
-    # delete not needed values from change
+    # keep only wanted attributes
+    my $CleanChange;
     for my $Attribute
         (
-        qw(ChangeState ChangeStateSignal Category Impact Priority WorkOrderIDs
-        WorkOrderCount PlannedStartTime PlannedEndTime ActualStartTime ActualEndTime
-        PlannedEffort AccountedTime)
+        qw(ChangeID ChangeNumber ChangeStateID ChangeTitle Description DescriptionPlain
+        Justification JustificationPlain ChangeManagerID ChangeBuilderID CategoryID
+        ImpactID PriorityID CABAgents CABCustomers RequestedTime CreateTime CreateBy
+        ChangeTime ChangeBy)
         )
     {
-        delete $Change->{$Attribute};
+        $CleanChange->{$Attribute} = $Change->{$Attribute};
     }
 
-    my $OriginalData = [ { ChangeAdd => $Change } ];
+    my $OriginalData = [ { ChangeAdd => $CleanChange } ];
 
     # get workorders
     WORKORDERID:
-    for my $WorkOrderID ( @{$WorkOrderIDs} ) {
+    for my $WorkOrderID ( @{ $Change->{WorkOrderIDs} } ) {
         my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
             WorkOrderID => $WorkOrderID,
             UserID      => $Param{UserID},
@@ -732,12 +731,19 @@ sub _ITSMChangeSerialize {
 
         next WORKORDERID if !$WorkOrder;
 
-        # delete not needed attributes from workorder
-        for my $Attribute (qw(WorkOrderState WorkOrderStateSignal WorkOrderType)) {
-            delete $WorkOrder->{$Attribute};
+        # keep just wanted attributes
+        my $CleanWorkOrder;
+        for my $Attribute (
+            qw(WorkOrderID ChangeID WorkOrderNumber WorkOrderTitle Instruction InstructionPlain
+            Report ReportPlain WorkOrderStateID WorkOrderTypeID WorkOrderAgentID PlannedStartTime
+            PlannedEndTime ActualStartTime ActualEndTime AccountedTime PlannedEffort
+            CreateTime CreateBy ChangeTime ChangeBy)
+            )
+        {
+            $CleanWorkOrder->{$Attribute} = $WorkOrder->{$Attribute};
         }
 
-        push @{$OriginalData}, { WorkOrderAdd => $WorkOrder };
+        push @{$OriginalData}, { WorkOrderAdd => $CleanWorkOrder };
     }
 
     # get condition list for the change
@@ -802,9 +808,16 @@ sub _ITSMWorkOrderSerialize {
 
     return if !$WorkOrder;
 
-    # delete not needed attributes from workorder
-    for my $Attribute (qw(WorkOrderState WorkOrderStateSignal WorkOrderType)) {
-        delete $WorkOrder->{$Attribute};
+    # keep just wanted attributes
+    my $CleanWorkOrder;
+    for my $Attribute (
+        qw(WorkOrderID ChangeID WorkOrderNumber WorkOrderTitle Instruction InstructionPlain
+        Report ReportPlain WorkOrderStateID WorkOrderTypeID WorkOrderAgentID PlannedStartTime
+        PlannedEndTime ActualStartTime ActualEndTime AccountedTime PlannedEffort
+        CreateTime CreateBy ChangeTime ChangeBy)
+        )
+    {
+        $CleanWorkOrder->{$Attribute} = $WorkOrder->{$Attribute};
     }
 
     # TODO: get Attachments
@@ -816,7 +829,7 @@ sub _ITSMWorkOrderSerialize {
     local $Data::Dumper::Deepcopy = 1;
 
     # templates have to be an array reference;
-    my $OriginalData = [ { WorkOrderAdd => $WorkOrder } ];
+    my $OriginalData = [ { WorkOrderAdd => $CleanWorkOrder } ];
 
     # serialize the data (do not use $VAR1, but $TemplateData for Dumper output)
     my $SerializedData = Data::Dumper->Dump( [$OriginalData], ['TemplateData'] );
@@ -1032,6 +1045,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.7 $ $Date: 2010-01-18 10:26:49 $
+$Revision: 1.8 $ $Date: 2010-01-18 10:38:35 $
 
 =cut
