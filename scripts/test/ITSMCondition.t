@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.49 2010-01-15 02:42:27 ub Exp $
+# $Id: ITSMCondition.t,v 1.50 2010-01-18 09:45:20 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -50,24 +50,12 @@ $Self->True(
     'Test ' . $TestCount++ . ' - construction of condition object',
 );
 
-# turn off notifications, in order to avoid a lot of useless mails
-my $ChangeNotificationSettingsOrg;
-{
-    my $EventModule = $Self->{ConfigObject}->Get('ITSMChange::EventModule');
-    $ChangeNotificationSettingsOrg = $EventModule->{'03-Notification'};
-    $Self->{ConfigObject}->Set(
-        Key => 'ITSMChange::EventModule###03-Notification',
-    );
-}
-
-my $WorkOrderNotificationSettingsOrg;
-{
-    my $EventModule = $Self->{ConfigObject}->Get('ITSMWorkOrder::EventModule');
-    $WorkOrderNotificationSettingsOrg = $EventModule->{'03-Notification'};
-    $Self->{ConfigObject}->Set(
-        Key => 'ITSMWorkOrder::EventModule###03-Notification',
-    );
-}
+# turn off SendNotifications, in order to avoid a lot of useless mails
+my $SendNotificationsOrg = $Self->{ConfigObject}->Get('ITSMChange::SendNotifcations');
+$Self->{ConfigObject}->Set(
+    Key   => 'ITSMChange::SendNotifications',
+    Value => 0,
+);
 
 # ------------------------------------------------------------ #
 # test Condition API
@@ -2059,20 +2047,10 @@ for my $ChangeID (@ChangeIDs) {
     );
 }
 
-# set change notifications to their original value
-if ($ChangeNotificationSettingsOrg) {
-    $Self->{ConfigObject}->Set(
-        Key   => 'ITSMChange::EventModule###03-Notification',
-        Value => $ChangeNotificationSettingsOrg,
-    );
-}
-
-# set workorder notifications to their original value
-if ($WorkOrderNotificationSettingsOrg) {
-    $Self->{ConfigObject}->Set(
-        Key   => 'ITSMWorkOrder::EventModule###03-Notification',
-        Value => $WorkOrderNotificationSettingsOrg,
-    );
-}
+# set SendNotifications to it's original value
+$Self->{ConfigObject}->Set(
+    Key   => 'ITSMChange::SendNotifications',
+    Value => $SendNotificationsOrg,
+);
 
 1;
