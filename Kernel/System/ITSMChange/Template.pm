@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template.pm - all template functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.16 2010-01-18 16:46:40 reb Exp $
+# $Id: Template.pm,v 1.17 2010-01-18 17:24:29 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Valid;
 use Data::Dumper;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 =head1 NAME
 
@@ -750,7 +750,7 @@ sub _ITSMChangeSerialize {
         qw(ChangeID ChangeNumber ChangeStateID ChangeTitle Description DescriptionPlain
         Justification JustificationPlain ChangeManagerID ChangeBuilderID CategoryID
         ImpactID PriorityID CABAgents CABCustomers RequestedTime CreateTime CreateBy
-        ChangeTime ChangeBy)
+        ChangeTime ChangeBy PlannedStartTime PlannedEndTime)
         )
     {
         $CleanChange->{$Attribute} = $Change->{$Attribute};
@@ -1035,6 +1035,10 @@ sub _ChangeAdd {
     # we should not pass the ChangeID to ChangeAdd
     delete $Data{ChangeID};
 
+    # PlannedXXXTime was saved just for "move time" purposes
+    delete $Data{PlannedEndTime};
+    delete $Data{PlannedStartTime};
+
     # delete all parameters whose values are 'undef'
     # _CheckChangeParams throws an error otherwise
     for my $Parameter ( keys %Data ) {
@@ -1169,6 +1173,86 @@ sub _ConditionAdd {
     return ( $Param{ChangeID}, $ConditionID );
 }
 
+=item _GetTimeDifference()
+
+If a new planned start/end time was given, the difference is needed
+to move all time values
+
+    my $DiffInSeconds = $TemplateObject->_GetTimeDifference(
+        CurrentTime => '2010-01-12 00:00:00',
+        NewTime      => '2010-01-13 00:00:00',
+    );
+
+=cut
+
+sub _GetTimeDifference {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(CurrentTime NewTime)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # get planned time as timestamp
+    my $NewSystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
+        String => $Param{NewTime},
+    );
+
+    # get current time as timestamp
+    my $CurrentSystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
+        String => $Param{CurrentTime},
+    );
+
+    my $DiffSeconds = $NewSystemTime - $CurrentSystemTime;
+
+    return $DiffSeconds;
+}
+
+=item _MoveTime()
+
+This method returns the new value for a time column based on the
+difference.
+
+    my $TimeValue = $TemplateObject->_MoveTime(
+        CurrentTime => '2010-01-12 00:00:00',
+        Difference  => 135,                     # in seconds
+    );
+
+=cut
+
+sub _MoveTime {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(CurrentTime Difference)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # get current time as timestamp
+    my $CurrentSystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
+        String => $Param{OriginalValue},
+    );
+
+    # get planned time as timestamp
+    my $NewTime = $Self->{TimeObject}->SystemTime2TimeStamp(
+        SystemTime => $CurrentSystemTime + $Param{Difference},
+    );
+
+    return $NewTime;
+}
+
 1;
 
 =end Internal:
@@ -1187,6 +1271,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.16 $ $Date: 2010-01-18 16:46:40 $
+$Revision: 1.17 $ $Date: 2010-01-18 17:24:29 $
 
 =cut
