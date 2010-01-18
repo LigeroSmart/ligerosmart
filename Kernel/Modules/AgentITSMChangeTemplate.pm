@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeTemplate.pm - the OTRS::ITSM::ChangeManagement add template module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeTemplate.pm,v 1.1 2010-01-18 12:19:36 bes Exp $
+# $Id: AgentITSMChangeTemplate.pm,v 1.2 2010-01-18 13:36:00 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,9 +16,10 @@ use warnings;
 
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::Template;
+use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -37,6 +38,7 @@ sub new {
     # create additional objects
     $Self->{ChangeObject}   = Kernel::System::ITSMChange->new(%Param);
     $Self->{TemplateObject} = Kernel::System::ITSMChange::Template->new(%Param);
+    $Self->{ValidObject}    = Kernel::System::Valid->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
@@ -75,7 +77,7 @@ sub Run {
 
     # store needed parameters in %GetParam to make it reloadable
     my %GetParam;
-    for my $ParamName (qw(TemplateName TemplateComment)) {
+    for my $ParamName (qw(TemplateName Comment ValidID )) {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
@@ -125,10 +127,10 @@ sub Run {
             # store the serialized change
             my $TemplateID = $Self->{TemplateObject}->TemplateAdd(
                 Name    => $GetParam{TemplateName},
-                Content => $TemplateContent,
-                Comment => $GetParam{TemplateComment},
+                Comment => $GetParam{Comment},
+                ValidID => $GetParam{ValidID},
                 TypeID  => $TemplateTypeID,
-                ValidID => 1,
+                Content => $TemplateContent,
                 UserID  => $Self->{UserID},
             );
 
@@ -157,6 +159,15 @@ sub Run {
     );
     $Output .= $Self->{LayoutObject}->NavigationBar();
 
+    my $ValidSelectionString = $Self->{LayoutObject}->BuildSelection(
+        Data => {
+            $Self->{ValidObject}->ValidList(),
+        },
+        Name       => 'ValidID',
+        SelectedID => $GetParam{ValidID} || ( $Self->{ValidObject}->ValidIDsGet() )[0],
+        Sort       => 'NumericKey',
+    );
+
     # Add the validation error messages.
     for my $BlockName (@ValidationErrors) {
 
@@ -169,7 +180,8 @@ sub Run {
         TemplateFile => 'AgentITSMChangeTemplate',
         Data         => {
             %GetParam,
-            ChangeID => $ChangeID,
+            ChangeID             => $ChangeID,
+            ValidSelectionString => $ValidSelectionString,
         },
     );
 
