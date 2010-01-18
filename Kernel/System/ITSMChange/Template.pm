@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template.pm - all template functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.15 2010-01-18 16:18:34 bes Exp $
+# $Id: Template.pm,v 1.16 2010-01-18 16:46:40 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Valid;
 use Data::Dumper;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 =head1 NAME
 
@@ -681,6 +681,7 @@ sub TemplateDeSerialize {
 
     # create entities defined by the template
     my $ChangeID = $Param{ChangeID};
+    my $ThingID  = $Param{ChangeID};
 
     ENTITY:
     for my $Entity ( @{$TemplateData} ) {
@@ -690,7 +691,7 @@ sub TemplateDeSerialize {
 
         next ENTITY if !$Sub;
 
-        $ChangeID = $Self->$Sub(
+        ( $ChangeID, $ThingID ) = $Self->$Sub(
             %Param,
             Data     => $Data,
             ChangeID => $ChangeID,
@@ -1046,7 +1047,7 @@ sub _ChangeAdd {
         UserID => $Param{UserID},
     );
 
-    return $ChangeID;
+    return ( $ChangeID, $ChangeID );
 }
 
 =item _WorkOrderAdd()
@@ -1097,13 +1098,13 @@ sub _WorkOrderAdd {
         }
     }
 
-    return if !$Self->{WorkOrderObject}->WorkOrderAdd(
+    my $WorkOrderID = $Self->{WorkOrderObject}->WorkOrderAdd(
         %Data,
         ChangeID => $Param{ChangeID},
         UserID   => $Param{UserID},
     );
 
-    return $Param{ChangeID};
+    return ( $Param{ChangeID}, $WorkOrderID );
 }
 
 =item _CABAdd()
@@ -1150,7 +1151,7 @@ sub _CABAdd {
         UserID       => $Param{UserID},
     );
 
-    return $Param{ChangeID};
+    return ( $Param{ChangeID}, $Param{ChangeID} );
 }
 
 =item _ConditionAdd()
@@ -1161,11 +1162,11 @@ sub _ConditionAdd {
     my ( $Self, %Param ) = @_;
 
     # add condition
-    return if !$Self->{ConditionObject}->ConditionAdd(
+    my $ConditionID = $Self->{ConditionObject}->ConditionAdd(
         %Param,
     );
 
-    return $Param{ChangeID};
+    return ( $Param{ChangeID}, $ConditionID );
 }
 
 1;
@@ -1186,6 +1187,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.15 $ $Date: 2010-01-18 16:18:34 $
+$Revision: 1.16 $ $Date: 2010-01-18 16:46:40 $
 
 =cut
