@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template.pm - all template functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.14 2010-01-18 13:08:24 bes Exp $
+# $Id: Template.pm,v 1.15 2010-01-18 16:18:34 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Valid;
 use Data::Dumper;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 =head1 NAME
 
@@ -633,10 +633,11 @@ sub TemplateSerialize {
 
 =item TemplateDeSerialize()
 
-This method deserializes the template content. A Perl datastructure is returned. Actually
+This method deserializes the template content. An ID and a Perl datastructure is returned. Actually
 it is an array reference with hash references as elements.
+TODO: find better way to pass back the IDs of the generated changes, workorders, ...
 
-    my $ArrayReference = $TemplateObject->TemplateDeSerialize(
+    my ( $ID, $ArrayReference ) = $TemplateObject->TemplateDeSerialize(
         TemplateID => 123,
         UserID     => 1,
     );
@@ -697,7 +698,7 @@ sub TemplateDeSerialize {
         );
     }
 
-    return $TemplateData;
+    return ( $ChangeID, $TemplateData );
 }
 
 =begin Internal:
@@ -1185,6 +1186,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.14 $ $Date: 2010-01-18 13:08:24 $
+$Revision: 1.15 $ $Date: 2010-01-18 16:18:34 $
 
 =cut
