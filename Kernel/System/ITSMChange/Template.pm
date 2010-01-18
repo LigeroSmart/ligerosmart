@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template.pm - all template functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.12 2010-01-18 12:17:42 bes Exp $
+# $Id: Template.pm,v 1.13 2010-01-18 12:39:15 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Valid;
 use Data::Dumper;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 =head1 NAME
 
@@ -354,8 +354,9 @@ sub TemplateGet {
 return a hashref of all templates
 
     my $Templates = $TemplateObject->TemplateList(
-        Valid    => 0,   # (optional) default 1 (0|1)
-        UserID   => 1,
+        Valid         => 0,   # (optional) default 1 (0|1)
+        CommentLength => 15, # (optional) default 0
+        UserID        => 1,
     );
 
 returns
@@ -364,6 +365,9 @@ returns
         1 => 'my template',
         3 => 'your template name',
     };
+
+If parameter "CommentLength" is passed, an excerpt (of the passed length)
+from the comment is appended to the template name.
 
 =cut
 
@@ -387,7 +391,7 @@ sub TemplateList {
     }
 
     # define SQL statement
-    my $SQL = 'SELECT id, name FROM change_template';
+    my $SQL = 'SELECT id, name, comments FROM change_template';
 
     # get only valid template ids
     if ( $Param{Valid} ) {
@@ -395,7 +399,7 @@ sub TemplateList {
         my @ValidIDs = $Self->{ValidObject}->ValidIDsGet();
         my $ValidIDString = join ', ', @ValidIDs;
 
-        $SQL .= "AND valid_id IN ( $ValidIDString )";
+        $SQL .= " WHERE valid_id IN ( $ValidIDString )";
     }
 
     # prepare SQL statement
@@ -406,7 +410,22 @@ sub TemplateList {
     # fetch the result
     my %Templates;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $Templates{ $Row[0] } = $Row[1];
+        $Templates{ $Row[0] } = [ $Row[1], $Row[2] ];
+    }
+
+    for my $Key ( keys %Templates ) {
+        my ( $Name, $Comment ) = @{ $Templates{$Key} };
+
+        my $CommentAppend = '';
+        if ( $Param{CommentLength} ) {
+            my $Length = $Param{CommentLength} > length $Comment
+                ? length $Comment
+                : $Param{CommentLength};
+            $Comment = substr $Comment, 0, $Length;
+            $CommentAppend = ' (' . $Comment . '...)';
+        }
+
+        $Templates{$Key} = $Name . $CommentAppend;
     }
 
     return \%Templates;
@@ -1163,6 +1182,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.12 $ $Date: 2010-01-18 12:17:42 $
+$Revision: 1.13 $ $Date: 2010-01-18 12:39:15 $
 
 =cut
