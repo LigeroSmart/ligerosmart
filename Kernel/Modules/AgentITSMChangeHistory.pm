@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeHistory.pm - the OTRS::ITSM::ChangeManagement change history module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeHistory.pm,v 1.35 2010-01-15 08:50:27 bes Exp $
+# $Id: AgentITSMChangeHistory.pm,v 1.36 2010-01-18 08:38:31 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::History;
 use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.35 $) [1];
+$VERSION = qw($Revision: 1.36 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -151,50 +151,68 @@ sub Run {
                         }xms
                         )
                     {
-                        my $Value;
-                        if ( $Type eq 'WorkOrderState' ) {
-                            $Value = $Self->{WorkOrderObject}->WorkOrderStateLookup(
-                                WorkOrderStateID => $HistoryEntry->{$ContentNewOrOld},
-                            );
-                        }
-                        elsif ( $Type eq 'WorkOrderType' ) {
-                            $Value = $Self->{WorkOrderObject}->WorkOrderTypeLookup(
-                                WorkOrderTypeID => $HistoryEntry->{$ContentNewOrOld},
-                            );
-                        }
-                        elsif ( $Type eq 'ChangeState' ) {
-                            $Value = $Self->{ChangeObject}->ChangeStateLookup(
-                                ChangeStateID => $HistoryEntry->{$ContentNewOrOld},
-                            );
-                        }
-                        elsif (
-                            $Type    eq 'WorkOrderAgent'
-                            || $Type eq 'ChangeBuilder'
-                            || $Type eq 'ChangeManager'
-                            )
-                        {
-                            $Value = $Self->{UserObject}->UserLookup(
-                                UserID => $HistoryEntry->{$ContentNewOrOld},
-                            );
-                        }
-                        elsif ( $Type eq 'Category' || $Type eq 'Impact' || $Type eq 'Priority' ) {
-                            $Value = $Self->{ChangeObject}->ChangeCIPLookup(
-                                ID   => $HistoryEntry->{$ContentNewOrOld},
-                                Type => $Type,
-                            );
+                        if ( $HistoryEntry->{$ContentNewOrOld} ) {
+                            my $Value;
+                            my $TranslationNeeded = 1;
+                            if ( $Type eq 'WorkOrderState' ) {
+                                $Value = $Self->{WorkOrderObject}->WorkOrderStateLookup(
+                                    WorkOrderStateID => $HistoryEntry->{$ContentNewOrOld},
+                                );
+                            }
+                            elsif ( $Type eq 'WorkOrderType' ) {
+                                $Value = $Self->{WorkOrderObject}->WorkOrderTypeLookup(
+                                    WorkOrderTypeID => $HistoryEntry->{$ContentNewOrOld},
+                                );
+                            }
+                            elsif ( $Type eq 'ChangeState' ) {
+                                $Value = $Self->{ChangeObject}->ChangeStateLookup(
+                                    ChangeStateID => $HistoryEntry->{$ContentNewOrOld},
+                                );
+                            }
+                            elsif (
+                                $Type    eq 'WorkOrderAgent'
+                                || $Type eq 'ChangeBuilder'
+                                || $Type eq 'ChangeManager'
+                                )
+                            {
+                                $Value = $Self->{UserObject}->UserLookup(
+                                    UserID => $HistoryEntry->{$ContentNewOrOld},
+                                );
+
+                                # the login names are not to be translated
+                                $TranslationNeeded = 0;
+                            }
+                            elsif (
+                                $Type    eq 'Category'
+                                || $Type eq 'Impact'
+                                || $Type eq 'Priority'
+                                )
+                            {
+                                $Value = $Self->{ChangeObject}->ChangeCIPLookup(
+                                    ID   => $HistoryEntry->{$ContentNewOrOld},
+                                    Type => $Type,
+                                );
+                            }
+                            else {
+                                return $Self->{LayoutObject}->ErrorScreen(
+                                    Message => "Unknown type '$Type' encountered!",
+                                    Comment => 'Please contact the admin.',
+                                );
+                            }
+
+                            # E.g. the usernames should not be translated
+                            my $TranslatedValue = $TranslationNeeded
+                                ?
+                                $Self->{LayoutObject}->{LanguageObject}->Get($Value)
+                                :
+                                $Value;
+
+                            $HistoryEntry->{$ContentNewOrOld} = sprintf '%s (ID=%s)',
+                                $TranslatedValue, $HistoryEntry->{$ContentNewOrOld};
                         }
                         else {
-                            return $Self->{LayoutObject}->ErrorScreen(
-                                Message => "Unknown type '$Type' encountered!",
-                                Comment => 'Please contact the admin.',
-                            );
+                            $HistoryEntry->{$ContentNewOrOld} = '-';
                         }
-
-                        my $TranslatedValue = $Self->{LayoutObject}->{LanguageObject}->Get(
-                            $Value,
-                        );
-                        $HistoryEntry->{$ContentNewOrOld} = $TranslatedValue . ' (ID='
-                            . $HistoryEntry->{$ContentNewOrOld} . ')';
 
                         # The content has changed, so change the displayed fieldname as well
                         $DisplayedFieldname = $Type;
