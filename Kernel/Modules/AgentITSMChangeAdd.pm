@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.42 2010-01-17 10:32:12 bes Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.43 2010-01-18 12:38:32 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,11 +16,12 @@ use warnings;
 
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
+use Kernel::System::ITSMChange::Template;
 use Kernel::System::LinkObject;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.42 $) [1];
+$VERSION = qw($Revision: 1.43 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -41,6 +42,7 @@ sub new {
     $Self->{LinkObject}        = Kernel::System::LinkObject->new(%Param);
     $Self->{CIPAllocateObject} = Kernel::System::ITSMChange::ITSMChangeCIPAllocate->new(%Param);
     $Self->{UploadCacheObject} = Kernel::System::Web::UploadCache->new(%Param);
+    $Self->{TemplateObject}    = Kernel::System::ITSMChange::Template->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
@@ -500,10 +502,13 @@ sub Run {
     }
 
     # build template dropdown
-    # TODO: fill dropdown with data
+    my $TemplateList = $Self->{TemplateObject}->TemplateList(
+        UserID        => $Self->{UserID},
+        CommentLength => 15,
+    );
     my $TemplateSelectionString = $Self->{LayoutObject}->BuildSelection(
         Name => 'ChangeTemplate',
-        Data => {},
+        Data => $TemplateList,
     );
 
     # build drop-down with time types
