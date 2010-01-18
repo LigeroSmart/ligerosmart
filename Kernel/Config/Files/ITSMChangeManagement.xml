@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.143 2010-01-16 19:51:23 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.144 2010-01-18 08:41:29 bes Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -835,7 +835,7 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###080-Template" Required="0" Valid="1">
+    <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###080-Template" Required="0" Valid="0">
         <Description Lang="en">Module to show the 'Template' link in workorder menu.</Description>
         <Description Lang="de">Mit diesem Modul wird der 'Template'-Link in der Linkleiste der Workorder-Ansicht angezeigt.</Description>
         <Group>ITSM Change Management</Group>
