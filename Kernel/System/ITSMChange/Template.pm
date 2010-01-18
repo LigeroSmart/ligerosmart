@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template.pm - all template functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.13 2010-01-18 12:39:15 reb Exp $
+# $Id: Template.pm,v 1.14 2010-01-18 13:08:24 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Valid;
 use Data::Dumper;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 =head1 NAME
 
@@ -421,8 +421,11 @@ sub TemplateList {
             my $Length = $Param{CommentLength} > length $Comment
                 ? length $Comment
                 : $Param{CommentLength};
+            my $Ellipsis = $Param{CommentLength} > length $Comment
+                ? ''
+                : '...';
             $Comment = substr $Comment, 0, $Length;
-            $CommentAppend = ' (' . $Comment . '...)';
+            $CommentAppend = ' (' . $Comment . $Ellipsis . ')';
         }
 
         $Templates{$Key} = $Name . $CommentAppend;
@@ -1182,6 +1185,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.13 $ $Date: 2010-01-18 12:39:15 $
+$Revision: 1.14 $ $Date: 2010-01-18 13:08:24 $
 
 =cut
