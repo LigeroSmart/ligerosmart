@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template.pm - all template functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.9 2010-01-18 11:35:00 reb Exp $
+# $Id: Template.pm,v 1.10 2010-01-18 11:43:32 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Valid;
 use Data::Dumper;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 =head1 NAME
 
@@ -667,7 +667,8 @@ sub TemplateDeSerialize {
         next ENTITY if !$Sub;
 
         $ChangeID = $Self->$Sub(
-            %{$Data},
+            %Param,
+            Data     => $Data,
             ChangeID => $ChangeID,
             UserID   => $Param{UserID},
         );
@@ -980,7 +981,9 @@ sub _ConditionSerialize {
 Creates a new change based on a template. It returns the new ChangeID.
 
     my $ChangeID = $TemplateObject->_ChangeAdd(
-        ChangeTitle => 'test',
+        Data => {
+            ChangeTitle => 'test',
+        },
         # other change attributes
         ChangeID => 0,
         UserID   => 1,
@@ -992,7 +995,7 @@ sub _ChangeAdd {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(UserID ChangeTitle)) {
+    for my $Argument (qw(UserID Data)) {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -1002,18 +1005,21 @@ sub _ChangeAdd {
         }
     }
 
+    my %Data = %{ $Param{Data} };
+
     # we should not pass the ChangeID to ChangeAdd
-    delete $Param{ChangeID};
+    delete $Data{ChangeID};
 
     # delete all parameters whose values are 'undef'
     # _CheckChangeParams throws an error otherwise
-    for my $Parameter ( keys %Param ) {
-        delete $Param{$Parameter} if !defined $Param{$Parameter};
+    for my $Parameter ( keys %Data ) {
+        delete $Data{$Parameter} if !defined $Data{$Parameter};
     }
 
     # add the change
     my $ChangeID = $Self->{ChangeObject}->ChangeAdd(
-        %Param,
+        %Data,
+        UserID => $Param{UserID},
     );
 
     return $ChangeID;
@@ -1025,7 +1031,9 @@ Creates a new workorder based on a template. It returns the
 change id it was created for.
 
     my $ChangeID = $TemplateObject->_WorkOrderAdd(
-        WorkOrderTitle => 'test',
+        Data => {
+            WorkOrderTitle => 'test',
+        },
         ChangeID       => 1,
         UserID         => 1,
     );
@@ -1036,7 +1044,7 @@ sub _WorkOrderAdd {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(UserID ChangeID WorkOrderTitle)) {
+    for my $Argument (qw(UserID ChangeID Data)) {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -1046,10 +1054,12 @@ sub _WorkOrderAdd {
         }
     }
 
+    my %Data = %{ $Param{Data} };
+
     # delete all parameters whose values are 'undef'
     # _CheckWorkOrderParams throws an error otherwise
-    for my $Parameter ( keys %Param ) {
-        delete $Param{$Parameter} if !defined $Param{$Parameter};
+    for my $Parameter ( keys %Data ) {
+        delete $Data{$Parameter} if !defined $Data{$Parameter};
     }
 
     # xxx(?:Start|End)Times are empty strings on WorkOrderGet when
@@ -1057,14 +1067,16 @@ sub _WorkOrderAdd {
     # delete these parameters.
     for my $Prefix (qw(Actual Planned)) {
         for my $Suffix (qw(Start End)) {
-            if ( $Param{"$Prefix${Suffix}Time"} eq '' ) {
-                delete $Param{"$Prefix${Suffix}Time"};
+            if ( $Data{"$Prefix${Suffix}Time"} eq '' ) {
+                delete $Data{"$Prefix${Suffix}Time"};
             }
         }
     }
 
     return if !$Self->{WorkOrderObject}->WorkOrderAdd(
-        %Param,
+        %Data,
+        ChangeID => $Param{ChangeID},
+        UserID   => $Param{UserID},
     );
 
     return $Param{ChangeID};
@@ -1076,10 +1088,12 @@ Updates the CAB of a change based on the given CAB template. It
 returns the change id the cab is for.
 
     my $ChangeID = $TemplateObject->_CABAdd(
-        ChangeID     => 1,
-        CABCustomers => [ 'mm@localhost' ],
-        CABAgents    => [ 1, 2 ],
-        UserID       => 1,
+        Data => {
+            CABCustomers => [ 'mm@localhost' ],
+            CABAgents    => [ 1, 2 ],
+        },
+        ChangeID => 1,
+        UserID   => 1,
     );
 
 =cut
@@ -1088,7 +1102,7 @@ sub _CABAdd {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(UserID ChangeID)) {
+    for my $Argument (qw(UserID ChangeID Data)) {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -1107,8 +1121,8 @@ sub _CABAdd {
     # a CAB add is actually a CAB update on a change
     return if !$Self->{ChangeObject}->ChangeCABUpdate(
         ChangeID     => $Param{ChangeID},
-        CABCustomers => [ @{ $Param{CABCustomers} }, @{ $Change->{CABCustomers} } ],
-        CABAgents    => [ @{ $Param{CABAgents} }, @{ $Change->{CABAgents} } ],
+        CABCustomers => [ @{ $Param{Data}->{CABCustomers} }, @{ $Change->{CABCustomers} } ],
+        CABAgents    => [ @{ $Param{Data}->{CABAgents} }, @{ $Change->{CABAgents} } ],
         UserID       => $Param{UserID},
     );
 
@@ -1148,6 +1162,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.9 $ $Date: 2010-01-18 11:35:00 $
+$Revision: 1.10 $ $Date: 2010-01-18 11:43:32 $
 
 =cut
