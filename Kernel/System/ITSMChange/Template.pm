@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template.pm - all template functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.11 2010-01-18 11:59:32 reb Exp $
+# $Id: Template.pm,v 1.12 2010-01-18 12:17:42 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Valid;
 use Data::Dumper;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 =head1 NAME
 
@@ -112,9 +112,9 @@ sub new {
 Add a new template.
 
     my $TemplateID = $TemplateObject->TemplateAdd(
-        Name     => 'The condition name',
-        Content  => [{ ChangeAdd => { ... } }],
-        Comment  => 'A comment',           # (optional)
+        Name     => 'The template name',
+        Content  => '[{ ChangeAdd => { ... } }]',   # a serialized change, workorder, ...
+        Comment  => 'A comment',                    # (optional)
         TypeID   => 1,
         ValidID  => 1,
         UserID   => 1,
@@ -204,11 +204,11 @@ Update a template.
 
     my $Success = $TemplateObject->TemplateUpdate(
         TemplateID => 1234,
-        Name       => 'The template name',   # (optional)
-        Comment    => 'A comment',           # (optional)
-        Content    => [ ... ],               # (optional)
-        ValidID    => 1,                     # (optional)
-        TypeID     => 1,                     # (optional)
+        Name       => 'The template name',          # (optional)
+        Comment    => 'A comment',                  # (optional)
+        Content  => '[{ ChangeAdd => { ... } }]',   # (optional) a serialized change, workorder, ...
+        ValidID    => 1,                            # (optional)
+        TypeID     => 1,                            # (optional)
         UserID     => 1,
     );
 
@@ -1163,6 +1163,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.11 $ $Date: 2010-01-18 11:59:32 $
+$Revision: 1.12 $ $Date: 2010-01-18 12:17:42 $
 
 =cut
