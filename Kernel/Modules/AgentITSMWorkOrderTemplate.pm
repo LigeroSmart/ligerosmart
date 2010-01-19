@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderTemplate.pm - the OTRS::ITSM::ChangeManagement add template module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderTemplate.pm,v 1.1 2010-01-18 16:37:11 bes Exp $
+# $Id: AgentITSMWorkOrderTemplate.pm,v 1.2 2010-01-19 09:28:20 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,12 +14,13 @@ package Kernel::Modules::AgentITSMWorkOrderTemplate;
 use strict;
 use warnings;
 
+use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::Template;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -36,6 +37,7 @@ sub new {
     }
 
     # create additional objects
+    $Self->{ChangeObject}    = Kernel::System::ITSMChange->new(%Param);
     $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
     $Self->{TemplateObject}  = Kernel::System::ITSMChange::Template->new(%Param);
     $Self->{ValidObject}     = Kernel::System::Valid->new(%Param);
@@ -84,23 +86,23 @@ sub Run {
     }
 
     # check permissions
-    my $Access = $Self->{ChangeObject}->Permission(
-        Type     => $Self->{Config}->{Permission},
-        ChangeID => $WorkOrder->{ChangeID},
-        UserID   => $Self->{UserID},
+    my $Access = $Self->{WorkOrderObject}->Permission(
+        Type        => $Self->{Config}->{Permission},
+        WorkOrderID => $WorkOrderID,
+        UserID      => $Self->{UserID},
     );
 
     # error screen
     if ( !$Access ) {
         return $Self->{LayoutObject}->NoPermission(
-            Message    => "You need $Self->{Config}->{Permission} permissions on the change!",
+            Message    => "You need $Self->{Config}->{Permission} permissions!",
             WithHeader => 'yes',
         );
     }
 
     # store needed parameters in %GetParam to make it reloadable
     my %GetParam;
-    for my $ParamName (qw(TemplateName Comment ValidID )) {
+    for my $ParamName (qw(TemplateName Comment ValidID)) {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
@@ -176,6 +178,20 @@ sub Run {
         # no subaction,
     }
 
+    # get change that the workorder belongs to
+    my $Change = $Self->{ChangeObject}->ChangeGet(
+        ChangeID => $WorkOrder->{ChangeID},
+        UserID   => $Self->{UserID},
+    );
+
+    # no change found
+    if ( !$Change ) {
+        return $Self->{LayoutObject}->ErrorScreen(
+            Message => "Could not find Change for WorkOrder $WorkOrderID!",
+            Comment => 'Please contact the admin.',
+        );
+    }
+
     # output header
     my $Output = $Self->{LayoutObject}->Header(
         Title => 'Template',
@@ -200,10 +216,11 @@ sub Run {
 
     # start template output
     $Output .= $Self->{LayoutObject}->Output(
-        TemplateFile => 'AgentITSMChangeTemplate',
+        TemplateFile => 'AgentITSMWorkOrderTemplate',
         Data         => {
             %GetParam,
-            ChangeID             => $ChangeID,
+            %{$Change},
+            %{$WorkOrder},
             ValidSelectionString => $ValidSelectionString,
         },
     );

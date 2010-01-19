@@ -2,7 +2,7 @@
 # AgentITSMChangeTemplate.dtl - provides HTML form for AgentITSMChangeTemplate
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeTemplate.dtl,v 1.3 2010-01-18 16:37:11 bes Exp $
+# $Id: AgentITSMChangeTemplate.dtl,v 1.4 2010-01-19 09:28:21 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -46,9 +46,9 @@ function submit_compose() {
         <td class="mainbody">
             <br>
             <form action="$Env{"CGIHandle"}" method="post" name="compose">
-                <input type="hidden" name="Action"    value="$Env{"Action"}">
-                <input type="hidden" name="Subaction" value="AddTemplate">
-                <input type="hidden" name="ChangeID"  value="$QData{"ChangeID"}">
+                <input type="hidden" name="Action"       value="$Env{"Action"}">
+                <input type="hidden" name="Subaction"    value="AddTemplate">
+                <input type="hidden" name="ChangeID"     value="$QData{"ChangeID"}">
                 <table border="0" width="800px" align="center" cellspacing="0" cellpadding="4">
                     <tr>
                         <td class="contenthead">$Text{"Add Template"}</td>

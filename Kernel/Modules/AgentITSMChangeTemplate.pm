@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeTemplate.pm - the OTRS::ITSM::ChangeManagement add template module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeTemplate.pm,v 1.3 2010-01-18 16:53:11 reb Exp $
+# $Id: AgentITSMChangeTemplate.pm,v 1.4 2010-01-19 09:28:20 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::Template;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -91,7 +91,7 @@ sub Run {
 
     # store needed parameters in %GetParam to make it reloadable
     my %GetParam;
-    for my $ParamName (qw(TemplateName Comment ValidID )) {
+    for my $ParamName (qw(TemplateName Comment ValidID)) {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
