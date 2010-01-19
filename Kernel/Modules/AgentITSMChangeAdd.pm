@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.45 2010-01-18 16:18:34 bes Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.46 2010-01-19 10:21:14 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.45 $) [1];
+$VERSION = qw($Revision: 1.46 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -427,8 +427,8 @@ sub Run {
 
         # TODO: pass new time slot
         my ( $ChangeID, $TemplateData ) = $Self->{TemplateObject}->TemplateDeSerialize(
+            TemplateID => $Self->{ParamObject}->GetParam( Param => 'TemplateID' ),
             UserID => $Self->{UserID},
-            TemplateID => $Self->{ParamObject}->GetParam( Param => 'ChangeTemplate' ),
         );
 
         # change could not be created
@@ -436,7 +436,7 @@ sub Run {
 
             # show error message, when adding failed
             return $Self->{LayoutObject}->ErrorScreen(
-                Message => 'Was not able to add change!',
+                Message => 'Was not able to create change from template!',
                 Comment => 'Please contact the admin.',
             );
         }
@@ -530,9 +530,10 @@ sub Run {
     my $TemplateList = $Self->{TemplateObject}->TemplateList(
         UserID        => $Self->{UserID},
         CommentLength => 15,
+        TemplateType  => 'ITSMChange',
     );
     my $TemplateSelectionString = $Self->{LayoutObject}->BuildSelection(
-        Name => 'ChangeTemplate',
+        Name => 'TemplateID',
         Data => $TemplateList,
     );
 

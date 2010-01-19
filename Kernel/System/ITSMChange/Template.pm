@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template.pm - all template functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.17 2010-01-18 17:24:29 reb Exp $
+# $Id: Template.pm,v 1.18 2010-01-19 10:21:14 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Valid;
 use Data::Dumper;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 =head1 NAME
 
@@ -354,9 +354,11 @@ sub TemplateGet {
 return a hashref of all templates
 
     my $Templates = $TemplateObject->TemplateList(
-        Valid         => 0,   # (optional) default 1 (0|1)
-        CommentLength => 15, # (optional) default 0
-        UserID        => 1,
+        Valid          => 0,             # (optional) default 1 (0|1)
+        CommentLength  => 15,            # (optional) default 0
+        TemplateType   => 'ITSMChange'   # (optional)
+        TemplateTypeID => 1,             # (optional)
+        UserID         => 1,
     );
 
 returns
@@ -366,8 +368,10 @@ returns
         3 => 'your template name',
     };
 
-If parameter "CommentLength" is passed, an excerpt (of the passed length)
-from the comment is appended to the template name.
+If parameter C<CommentLength> is passed, an excerpt (of the passed length)
+of the comment is appended to the template name.
+If the parameter C<TemplateType> or C<TemplateTypeID> is passen, then the
+list of templates is restricted to the passed type.
 
 =cut
 
@@ -385,13 +389,38 @@ sub TemplateList {
         }
     }
 
+    # check that not both TemplateType and TemplateTypeID are given
+    if ( $Param{TemplateType} && $Param{TemplateTypeID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need either TemplateType OR TemplateTypeID - not both!',
+        );
+        return;
+    }
+
+    # when the template type is given, then look up the ID
+    if ( $Param{TemplateType} ) {
+        $Param{TemplateTypeID} = $Self->TemplateTypeLookup(
+            TemplateType => $Param{TemplateType},
+            UserID       => $Param{UserID},
+        );
+    }
+
     # check valid param
     if ( !defined $Param{Valid} ) {
         $Param{Valid} = 1;
     }
 
     # define SQL statement
-    my $SQL = 'SELECT id, name, comments FROM change_template';
+    my $SQL = 'SELECT id, name, comments FROM change_template ';
+    my @SQLWhere;    # assemble the conditions used in the WHERE clause
+    my @SQLBind;
+
+    # restrict by template type
+    if ( $Param{TemplateTypeID} ) {
+        push @SQLWhere, "type_id = ?";
+        push @SQLBind,  \$Param{TemplateTypeID};
+    }
 
     # get only valid template ids
     if ( $Param{Valid} ) {
@@ -399,12 +428,20 @@ sub TemplateList {
         my @ValidIDs = $Self->{ValidObject}->ValidIDsGet();
         my $ValidIDString = join ', ', @ValidIDs;
 
-        $SQL .= " WHERE valid_id IN ( $ValidIDString )";
+        push @SQLWhere, "valid_id IN ( $ValidIDString )";
+    }
+
+    # append the WHERE-clause
+    if (@SQLWhere) {
+        $SQL .= 'WHERE ';
+        $SQL .= join ' AND ', map {"( $_ )"} @SQLWhere;
+        $SQL .= ' ';
     }
 
     # prepare SQL statement
     return if !$Self->{DBObject}->Prepare(
-        SQL => $SQL,
+        SQL  => $SQL,
+        Bind => \@SQLBind,
     );
 
     # fetch the result
@@ -1271,6 +1308,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.17 $ $Date: 2010-01-18 17:24:29 $
+$Revision: 1.18 $ $Date: 2010-01-19 10:21:14 $
 
 =cut

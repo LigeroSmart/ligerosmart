@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAdd.pm - the OTRS::ITSM::ChangeManagement workorder add module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.pm,v 1.40 2010-01-16 17:59:29 bes Exp $
+# $Id: AgentITSMWorkOrderAdd.pm,v 1.41 2010-01-19 10:21:14 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,10 +16,11 @@ use warnings;
 
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
+use Kernel::System::ITSMChange::Template;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.40 $) [1];
+$VERSION = qw($Revision: 1.41 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -39,6 +40,7 @@ sub new {
     $Self->{ChangeObject}      = Kernel::System::ITSMChange->new(%Param);
     $Self->{WorkOrderObject}   = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
     $Self->{UploadCacheObject} = Kernel::System::Web::UploadCache->new(%Param);
+    $Self->{TemplateObject}    = Kernel::System::ITSMChange::Template->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
@@ -313,6 +315,32 @@ sub Run {
         }
     }
 
+    # create workorder from template
+    elsif ( $Self->{Subaction} eq 'CreateFromTemplate' ) {
+
+        # TODO: pass new time slot
+        my ( $WorkOrderID, $TemplateData ) = $Self->{TemplateObject}->TemplateDeSerialize(
+            ChangeID   => $ChangeID,
+            TemplateID => $Self->{ParamObject}->GetParam( Param => 'TemplateID' ),
+            UserID     => $Self->{UserID},
+        );
+
+        # change could not be created
+        if ( !$WorkOrderID ) {
+
+            # show error message, when adding failed
+            return $Self->{LayoutObject}->ErrorScreen(
+                Message => 'Was not able to create workorder from template!',
+                Comment => 'Please contact the admin.',
+            );
+        }
+
+        # redirect to zoom mask, when adding was successful
+        return $Self->{LayoutObject}->Redirect(
+            OP => "Action=AgentITSMWorkOrderZoom&WorkOrderID=$WorkOrderID",
+        );
+    }
+
     # handle saaveattachment subaction
     elsif ( $Self->{Subaction} eq 'SaveAttachment' ) {
 
@@ -357,10 +385,14 @@ sub Run {
     }
 
     # build template dropdown
-    # TODO: fill dropdown with data
+    my $TemplateList = $Self->{TemplateObject}->TemplateList(
+        UserID        => $Self->{UserID},
+        CommentLength => 15,
+        TemplateType  => 'ITSMWorkOrder',
+    );
     my $TemplateSelectionString = $Self->{LayoutObject}->BuildSelection(
-        Name => 'WorkOrderTemplate',
-        Data => {},
+        Name => 'TemplateID',
+        Data => $TemplateList,
     );
 
     # build drop-down with time types
@@ -392,6 +424,7 @@ sub Run {
     $Self->{LayoutObject}->Block(
         Name => 'WorkOrderTemplate',
         Data => {
+            ChangeID                    => $ChangeID,
             TemplateSelectionString     => $TemplateSelectionString,
             MoveTimeTypeSelectionString => $MoveTimeTypeSelectionString,
             MoveTimeSelectionString     => $MoveTimeSelectionString,
