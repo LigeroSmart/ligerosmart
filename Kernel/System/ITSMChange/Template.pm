@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template.pm - all template functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.19 2010-01-19 10:57:41 bes Exp $
+# $Id: Template.pm,v 1.20 2010-01-19 12:11:03 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Valid;
 use Data::Dumper;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 =head1 NAME
 
@@ -754,7 +754,7 @@ sub TemplateDeSerialize {
         );
     }
 
-    return ( $ChangeID, $TemplateData );
+    return ( $ThingID, $TemplateData );
 }
 
 =begin Internal:
@@ -1087,8 +1087,9 @@ sub _ChangeAdd {
 
     my %Data = %{ $Param{Data} };
 
-    # we should not pass the ChangeID to ChangeAdd
+    # we should not pass the ChangeID and ChangeNumber to ChangeAdd
     delete $Data{ChangeID};
+    delete $Data{ChangeNumber};
 
     # PlannedXXXTime was saved just for "move time" purposes
     delete $Data{PlannedEndTime};
@@ -1112,9 +1113,9 @@ sub _ChangeAdd {
 =item _WorkOrderAdd()
 
 Creates a new workorder based on a template. It returns the
-change id it was created for.
+change id it was created for and the new workorder id.
 
-    my $ChangeID = $TemplateObject->_WorkOrderAdd(
+    my ( $ChangeID, $WorkOrderID ) = $TemplateObject->_WorkOrderAdd(
         Data => {
             WorkOrderTitle => 'test',
         },
@@ -1157,6 +1158,11 @@ sub _WorkOrderAdd {
         }
     }
 
+    # we should not pass the WorkOrderID and WorkOrderNumber to WorkOrderAdd
+    delete $Data{WorkOrderNumber};
+    delete $Data{WorkOrderID};
+
+    # override the change id from the template
     my $WorkOrderID = $Self->{WorkOrderObject}->WorkOrderAdd(
         %Data,
         ChangeID => $Param{ChangeID},
@@ -1326,6 +1332,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.19 $ $Date: 2010-01-19 10:57:41 $
+$Revision: 1.20 $ $Date: 2010-01-19 12:11:03 $
 
 =cut
