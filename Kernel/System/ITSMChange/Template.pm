@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template.pm - all template functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.21 2010-01-19 14:44:48 bes Exp $
+# $Id: Template.pm,v 1.22 2010-01-19 15:08:01 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Valid;
 use Data::Dumper;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.21 $) [1];
+$VERSION = qw($Revision: 1.22 $) [1];
 
 =head1 NAME
 
@@ -1091,11 +1091,11 @@ sub _ChangeAdd {
         }
     }
 
+    # make a local copy
     my %Data = %{ $Param{Data} };
 
-    # we should not pass the ChangeID and ChangeNumber to ChangeAdd
-    delete $Data{ChangeID};
-    delete $Data{ChangeNumber};
+    # these attributes are generated automatically, so don't pass them to ChangeAdd()
+    delete @Data{qw(ChangeID ChangeNumber CreateTime CreateBy ChangeTime ChangeBy)};
 
     # PlannedXXXTime was saved just for "move time" purposes
     delete $Data{PlannedEndTime};
@@ -1145,7 +1145,11 @@ sub _WorkOrderAdd {
         }
     }
 
+    # make a local copy
     my %Data = %{ $Param{Data} };
+
+    # these attributes are generated automatically, so don't pass them to WorkOrderAdd()
+    delete @Data{qw(WorkOrderID WorkOrderNumber CreateTime CreateBy ChangeTime ChangeBy)};
 
     # delete all parameters whose values are 'undef'
     # _CheckWorkOrderParams throws an error otherwise
@@ -1163,10 +1167,6 @@ sub _WorkOrderAdd {
             }
         }
     }
-
-    # we should not pass the WorkOrderID and WorkOrderNumber to WorkOrderAdd
-    delete $Data{WorkOrderNumber};
-    delete $Data{WorkOrderID};
 
     # override the change id from the template
     my $WorkOrderID = $Self->{WorkOrderObject}->WorkOrderAdd(
@@ -1338,6 +1338,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.21 $ $Date: 2010-01-19 14:44:48 $
+$Revision: 1.22 $ $Date: 2010-01-19 15:08:01 $
 
 =cut
