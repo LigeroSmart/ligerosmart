@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/HistoryAdd.pm - HistoryAdd event module for ITSMChange
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: HistoryAdd.pm,v 1.29 2010-01-15 10:04:09 bes Exp $
+# $Id: HistoryAdd.pm,v 1.30 2010-01-19 15:35:18 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.29 $) [1];
+$VERSION = qw($Revision: 1.30 $) [1];
 
 =head1 NAME
 
@@ -190,12 +190,19 @@ sub Run {
             # do not track special fields 'OldChangeData' or 'OldWorkOrderData'
             next FIELD if $Field eq "Old${Type}Data";
 
-            # we do not track the user id and "plain" columns
+            # we do not track the user id
             next FIELD if $Field eq 'UserID';
+
+            # we do not the "plain" columns, only the non-plain columns
             next FIELD if $Field eq 'JustificationPlain';    # change
             next FIELD if $Field eq 'DescriptionPlain';      # change
             next FIELD if $Field eq 'ReportPlain';           # workorder
             next FIELD if $Field eq 'InstructionPlain';      # workorder
+
+            # The history of CAB updates is not tracked here,
+            # but in the handler for ChangeCABUpdate.
+            next FIELD if $Field eq 'CABAgents';             # change
+            next FIELD if $Field eq 'CABCustomers';          # change
 
             # special handling for accounted time
             if ( $Type eq 'WorkOrder' && $Field eq 'AccountedTime' ) {
@@ -449,6 +456,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.29 $ $Date: 2010-01-15 10:04:09 $
+$Revision: 1.30 $ $Date: 2010-01-19 15:35:18 $
 
 =cut
