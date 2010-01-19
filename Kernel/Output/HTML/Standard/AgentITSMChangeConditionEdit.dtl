@@ -2,7 +2,7 @@
 # AgentITSMChangeConditionEdit.dtl - provides HTML form for AgentITSMChangeConditionEdit
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeConditionEdit.dtl,v 1.1 2010-01-16 19:50:37 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.dtl,v 1.2 2010-01-19 23:53:14 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,6 @@
     </tr>
     <tr>
         <td class="mainbody" align="center">
-
             <form action="$Env{"CGIHandle"}" method="post">
                 <input type="hidden" name="Action" value="$Env{"Action"}"/>
                 <input type="hidden" name="Subaction" value="Save"/>
@@ -58,7 +57,7 @@
                                                     <input name="ExpressionConjunction" type="radio" value="all"/> All expressions
                                                 </td>
                                             </tr>
-                                            <tr class="contentbody">
+                                            <tr>
                                                 <td class="contentkey">$Text{"Valid"}: </td>
                                                 <td class="contentvalue">$Data{"ValidOptionString"}</td>
                                             </tr>
@@ -78,16 +77,33 @@
                         <td class="contentkey">Expressions</td>
                     </tr>
                     <tr class="contentbody">
+                        <td>
+                            <table width="100%" border="0" cellpadding="3" cellspacing="0">
+<!-- dtl:block:ExpressionOverviewRow -->
+                                <tr class="contentbody">
+<!-- dtl:block:ExpressionOverviewRowElementObject -->
+                                    <td align="left" width="10%" class="contentvalue">$Data{"ObjectOptionString"}</td>
+<!-- dtl:block:ExpressionOverviewRowElementObject -->
+<!-- dtl:block:ExpressionOverviewRowElementSelector -->
+                                    <td align="left" width="10%" class="contentvalue">$Data{"SelectorOptionString"}</td>
+<!-- dtl:block:ExpressionOverviewRowElementSelector -->
+<!-- dtl:block:ExpressionOverviewRowElementAttribute -->
+                                    <td align="left" width="10%" class="contentvalue">$Data{"AttributeOptionString"}</td>
+<!-- dtl:block:ExpressionOverviewRowElementAttribute -->
+<!-- dtl:block:ExpressionOverviewRowElementOperator -->
+                                    <td align="left" width="10%" class="contentvalue">$Data{"OperatorOptionString"}</td>
+<!-- dtl:block:ExpressionOverviewRowElementOperator -->
+                                </tr>
+<!-- dtl:block:ExpressionOverviewRow -->
+                            </table>
+                        </td>
+                    </tr>
+                    <tr class="contentbody">
                         <td align="right">
                             $Text{"Add new expression"}.&nbsp;&nbsp;
                             <input class="button" type="submit" value="$Text{"Add"}" name="AddExpression">
                         </td>
                     </tr>
-
-<!-- dtl:block:ExpressionOverviewRow -->
-
-<!-- dtl:block:ExpressionOverviewRow -->
-
                     <tr class="contenthead">
                         <td class="contentkey">Actions</td>
                     </tr>

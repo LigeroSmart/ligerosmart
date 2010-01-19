@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeConditionEdit.pm - the OTRS::ITSM::ChangeManagement condition edit module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeConditionEdit.pm,v 1.1 2010-01-16 19:50:37 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.pm,v 1.2 2010-01-19 23:56:22 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -261,11 +261,10 @@ sub _ExpressionOverview {
     return if ref $ExpressionIDsRef ne 'ARRAY';
     return if !@{$ExpressionIDsRef};
 
-    my $CssClass = '';
-    for my $ExpressionID ( sort { $a cmp $b } @{$ExpressionIDsRef} ) {
+    my %Data;
 
-        # set output object
-        $CssClass = $CssClass eq 'searchactive' ? 'searchpassive' : 'searchactive';
+    EXPRESSIONID:
+    for my $ExpressionID ( sort { $a cmp $b } @{$ExpressionIDsRef} ) {
 
         # get condition data
         my $ExpressionData = $Self->{ConditionObject}->ExpressionGet(
@@ -273,19 +272,200 @@ sub _ExpressionOverview {
             UserID       => $Self->{UserID},
         );
 
-        # TODO build dropdown and input fields
+        next EXPRESSIONID if !$ExpressionData;
 
         # output overview row
         $Self->{LayoutObject}->Block(
             Name => 'ExpressionOverviewRow',
-            Data => {
-                CssClass => $CssClass,
-                %{$ExpressionData},
-
-                # ...
-            },
+            Data => {},
         );
+
+        # show object selection
+        $Self->_ObjectSelection(
+            %{$ExpressionData},
+        );
+
+        # show selecor selection
+        $Self->_SelectorSelection(
+            %{$ExpressionData},
+        );
+
+        # show attribute selection
+        $Self->_AttributeSelection(
+            %{$ExpressionData},
+        );
+
+        # show operator selection
+        $Self->_OperatorSelection(
+            %{$ExpressionData},
+        );
+
+        # TODO show dropdownfield or textfield (or date selection) for the caompare value
+
+        #          'Selector' => '31',
+        #          'ObjectID' => '1',
+        #          'ExpressionID' => '94',
+        #          'OperatorID' => '1',
+        #          'ConditionID' => '184',
+        #          'CompareValue' => 'DummyCompareValue1',
+        #          'AttributeID' => '2'
+
     }
+
+    return 1;
+}
+
+# show object dropdown field
+sub _ObjectSelection {
+    my ( $Self, %Param ) = @_;
+
+    # get object list
+    my $ObjectList = $Self->{ConditionObject}->ObjectList(
+        UserID => $Self->{UserID},
+    );
+
+    # add an empty selection if no list is available or nothing is selected
+    my $PossibleNone = 0;
+    if ( !$ObjectList || !ref $ObjectList eq 'HASH' || !%{$ObjectList} || !$Param{ObjectID} ) {
+        $PossibleNone = 1;
+    }
+
+    # generate ObjectOptionString
+    my $ObjectOptionString = $Self->{LayoutObject}->BuildSelection(
+        Data         => $ObjectList,
+        Name         => 'ObjectID',
+        SelectedID   => $Param{ObjectID},
+        PossibleNone => $PossibleNone,
+    );
+
+    # output object selection
+    $Self->{LayoutObject}->Block(
+        Name => 'ExpressionOverviewRowElementObject',
+        Data => {
+            ObjectOptionString => $ObjectOptionString,
+        },
+    );
+
+    return 1;
+}
+
+# show selector dropdown field
+sub _SelectorSelection {
+    my ( $Self, %Param ) = @_;
+
+    # get selector list
+    my $SelectorList = $Self->{ConditionObject}->ObjectSelectorList(
+        ObjectID    => $Param{ObjectID},
+        ConditionID => $Param{ConditionID},
+        UserID      => $Self->{UserID},
+    );
+
+    # add an empty selection if no list is available or nothing is selected
+    my $PossibleNone = 0;
+    if ( !$SelectorList || !ref $SelectorList eq 'HASH' || !%{$SelectorList} || !$Param{Selector} )
+    {
+        $PossibleNone = 1;
+    }
+
+    # generate SelectorOptionString
+    my $SelectorOptionString = $Self->{LayoutObject}->BuildSelection(
+        Data         => $SelectorList,
+        Name         => 'Selector',
+        SelectedID   => $Param{Selector},
+        PossibleNone => $PossibleNone,
+    );
+
+    # output selector selection
+    $Self->{LayoutObject}->Block(
+        Name => 'ExpressionOverviewRowElementSelector',
+        Data => {
+            SelectorOptionString => $SelectorOptionString,
+        },
+    );
+
+    return 1;
+}
+
+# show attribute dropdown field
+sub _AttributeSelection {
+    my ( $Self, %Param ) = @_;
+
+    # get attribute list
+    my $AttributeList = $Self->{ConditionObject}->AttributeList(
+        UserID => $Self->{UserID},
+    );
+
+    # TODO add code to check sysconfig for valid attributes for the given parameters
+
+    # add an empty selection if no list is available or nothing is selected
+    my $PossibleNone = 0;
+    if (
+        !$AttributeList
+        || !ref $AttributeList eq 'HASH'
+        || !%{$AttributeList}
+        || !$Param{AttributeID}
+        )
+    {
+        $PossibleNone = 1;
+    }
+
+    # generate AttributeOptionString
+    my $AttributeOptionString = $Self->{LayoutObject}->BuildSelection(
+        Data         => $AttributeList,
+        Name         => 'AttributeID',
+        SelectedID   => $Param{AttributeID},
+        PossibleNone => $PossibleNone,
+    );
+
+    # output attribute selection
+    $Self->{LayoutObject}->Block(
+        Name => 'ExpressionOverviewRowElementAttribute',
+        Data => {
+            AttributeOptionString => $AttributeOptionString,
+        },
+    );
+
+    return 1;
+}
+
+# show operator dropdown field
+sub _OperatorSelection {
+    my ( $Self, %Param ) = @_;
+
+    # get operator list
+    my $OperatorList = $Self->{ConditionObject}->OperatorList(
+        UserID => $Self->{UserID},
+    );
+
+    # TODO add code to check sysconfig for valid operators for the given attribute
+
+    # add an empty selection if no list is available or nothing is selected
+    my $PossibleNone = 0;
+    if (
+        !$OperatorList
+        || !ref $OperatorList eq 'HASH'
+        || !%{$OperatorList}
+        || !$Param{OperatorID}
+        )
+    {
+        $PossibleNone = 1;
+    }
+
+    # generate OperatorOptionString
+    my $OperatorOptionString = $Self->{LayoutObject}->BuildSelection(
+        Data         => $OperatorList,
+        Name         => 'OperatorID',
+        SelectedID   => $Param{OperatorID},
+        PossibleNone => $PossibleNone,
+    );
+
+    # output operator selection
+    $Self->{LayoutObject}->Block(
+        Name => 'ExpressionOverviewRowElementOperator',
+        Data => {
+            OperatorOptionString => $OperatorOptionString,
+        },
+    );
 
     return 1;
 }
