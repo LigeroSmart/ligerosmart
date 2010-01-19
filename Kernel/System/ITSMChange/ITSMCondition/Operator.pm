@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Operator.pm - all condition operator functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Operator.pm,v 1.14 2010-01-14 10:17:32 mae Exp $
+# $Id: Operator.pm,v 1.15 2010-01-19 23:01:16 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 =head1 NAME
 
@@ -282,11 +282,15 @@ sub OperatorLookup {
 
 =item OperatorList()
 
-Returns a list of all condition operator ids as array reference
+Returns a list of all condition operators as hash reference
 
-    my $ConditionOperatorIDsRef = $ConditionObject->OperatorList(
+    my $ConditionOperatorsRef = $ConditionObject->OperatorList(
         UserID => 1,
     );
+
+The returned hash reference contains entries like this:
+
+    $ConditionOperator{ObjectID} = 'ObjectName'
 
 =cut
 
@@ -304,16 +308,16 @@ sub OperatorList {
 
     # prepare SQL statement
     return if !$Self->{DBObject}->Prepare(
-        SQL => 'SELECT name FROM condition_operator',
+        SQL => 'SELECT id, name FROM condition_operator',
     );
 
     # fetch the result
-    my @OperatorList;
+    my %OperatorList;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        push @OperatorList, $Row[0];
+        $OperatorList{ $Row[0] } = $Row[1];
     }
 
-    return \@OperatorList;
+    return \%OperatorList;
 }
 
 =item OperatorDelete()
@@ -958,6 +962,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.14 $ $Date: 2010-01-14 10:17:32 $
+$Revision: 1.15 $ $Date: 2010-01-19 23:01:16 $
 
 =cut

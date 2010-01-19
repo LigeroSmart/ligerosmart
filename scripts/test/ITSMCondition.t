@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.50 2010-01-18 09:45:20 bes Exp $
+# $Id: ITSMCondition.t,v 1.51 2010-01-19 23:03:18 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -393,10 +393,10 @@ $Self->True(
     'Test ' . $TestCount++ . " - ObjectList is not empty",
 );
 
-# check for object list as array ref
+# check for object list as hash ref
 $Self->Is(
     ref $ObjectList,
-    'ARRAY',
+    'HASH',
     'Test ' . $TestCount++ . " - ObjectList type",
 );
 
@@ -505,10 +505,10 @@ $Self->True(
     'Test ' . $TestCount++ . " - AttributeList is not empty",
 );
 
-# check for attribute list as array ref
+# check for attribute list as hash ref
 $Self->Is(
     ref $AttributeList,
-    'ARRAY',
+    'HASH',
     'Test ' . $TestCount++ . " - AttributeList type",
 );
 
@@ -628,10 +628,10 @@ $Self->True(
     'Test ' . $TestCount++ . " - OperatorList is not empty",
 );
 
-# check for operator list as array ref
+# check for operator list as hash ref
 $Self->Is(
     ref $OperatorList,
-    'ARRAY',
+    'HASH',
     'Test ' . $TestCount++ . " - OperatorList type",
 );
 

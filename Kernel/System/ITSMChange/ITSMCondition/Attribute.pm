@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Attribute.pm - all condition attribute functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Attribute.pm,v 1.7 2010-01-03 15:52:57 ub Exp $
+# $Id: Attribute.pm,v 1.8 2010-01-19 23:00:00 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 =head1 NAME
 
@@ -282,11 +282,15 @@ sub AttributeLookup {
 
 =item AttributeList()
 
-Returns a list of all condition attribute ids as array reference
+Returns a list of all condition attributes as hash reference
 
-    my $ConditionAttributeIDsRef = $ConditionObject->AttributeList(
+    my $ConditionAttributesRef = $ConditionObject->AttributeList(
         UserID => 1,
     );
+
+The returned hash reference contains entries like this:
+
+    $ConditionAttribute{AttributeID} = 'AttributeName'
 
 =cut
 
@@ -304,16 +308,16 @@ sub AttributeList {
 
     # prepare SQL statement
     return if !$Self->{DBObject}->Prepare(
-        SQL => 'SELECT name FROM condition_attribute',
+        SQL => 'SELECT id, name FROM condition_attribute',
     );
 
     # fetch the result
-    my @AttributeList;
+    my %AttributeList;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        push @AttributeList, $Row[0];
+        $AttributeList{ $Row[0] } = $Row[1];
     }
 
-    return \@AttributeList;
+    return \%AttributeList;
 }
 
 =item AttributeDelete()
@@ -367,6 +371,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.7 $ $Date: 2010-01-03 15:52:57 $
+$Revision: 1.8 $ $Date: 2010-01-19 23:00:00 $
 
 =cut
