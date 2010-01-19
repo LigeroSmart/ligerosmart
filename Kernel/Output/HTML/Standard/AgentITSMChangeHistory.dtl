@@ -1,8 +1,8 @@
 # --
 # AgentITSMChangeHistory.dtl - provides HTML form for AgentITSMChangeHistory
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeHistory.dtl,v 1.13 2009-11-27 11:01:42 bes Exp $
+# $Id: AgentITSMChangeHistory.dtl,v 1.14 2010-01-19 16:16:47 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,12 +26,12 @@
         <td class="mainbody">
             <table border="0" cellspacing="0" cellpadding="2" width="100%">
                 <colgroup>
-                <col>
-                <col>
-                <col width="60px" align="center">
-                <col width="60px" align="center">
-                <col>
-                <col>
+                    <col>
+                    <col>
+                    <col width="60px" align="center">
+                    <col width="60px" align="center">
+                    <col>
+                    <col>
                 </colgroup>
                 <tr class="contenthead">
                     <td>
