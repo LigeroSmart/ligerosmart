@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAdd.pm - the OTRS::ITSM::ChangeManagement workorder add module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.pm,v 1.41 2010-01-19 10:21:14 bes Exp $
+# $Id: AgentITSMWorkOrderAdd.pm,v 1.42 2010-01-19 14:44:48 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::Template;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.41 $) [1];
+$VERSION = qw($Revision: 1.42 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -319,11 +319,12 @@ sub Run {
     elsif ( $Self->{Subaction} eq 'CreateFromTemplate' ) {
 
         # TODO: pass new time slot
-        my ( $WorkOrderID, $TemplateData ) = $Self->{TemplateObject}->TemplateDeSerialize(
+        my ( $ChangeID, $WorkOrderID, $TemplateData )
+            = $Self->{TemplateObject}->TemplateDeSerialize(
             ChangeID   => $ChangeID,
             TemplateID => $Self->{ParamObject}->GetParam( Param => 'TemplateID' ),
             UserID     => $Self->{UserID},
-        );
+            );
 
         # change could not be created
         if ( !$WorkOrderID ) {

@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template.pm - all template functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.20 2010-01-19 12:11:03 bes Exp $
+# $Id: Template.pm,v 1.21 2010-01-19 14:44:48 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Valid;
 use Data::Dumper;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 =head1 NAME
 
@@ -688,11 +688,17 @@ sub TemplateSerialize {
 
 =item TemplateDeSerialize()
 
-This method deserializes the template content. An ID and a Perl datastructure is returned. Actually
-it is an array reference with hash references as elements.
+This method deserializes the template content.
+Two IDs and a Perl datastructure is returned. Actually,
+they datastructure is an array reference with hash references as elements.
 TODO: find better way to pass back the IDs of the generated changes, workorders, ...
+The first returned ID is the ChangeID of the newly created change, or
+the change id to which a workorder was added.
+The second ID is the ID of the last created change or workorder.
+When only a workorder was added, the ThingID can be used for redirecting to the
+new workorder.
 
-    my ( $ID, $ArrayReference ) = $TemplateObject->TemplateDeSerialize(
+    my ( $ChangeID, $ThingID, $ArrayReference ) = $TemplateObject->TemplateDeSerialize(
         TemplateID => 123,
         UserID     => 1,
     );
@@ -754,7 +760,7 @@ sub TemplateDeSerialize {
         );
     }
 
-    return ( $ThingID, $TemplateData );
+    return ( $ChangeID, $ThingID, $TemplateData );
 }
 
 =begin Internal:
@@ -1332,6 +1338,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.20 $ $Date: 2010-01-19 12:11:03 $
+$Revision: 1.21 $ $Date: 2010-01-19 14:44:48 $
 
 =cut
