@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderHistory.pm - the OTRS::ITSM::ChangeManagement workorder history module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderHistory.pm,v 1.19 2010-01-14 10:58:49 bes Exp $
+# $Id: AgentITSMWorkOrderHistory.pm,v 1.20 2010-01-19 16:11:38 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::History;
 use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -51,7 +51,7 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    # get needed change id
+    # get needed workorder id
     my $WorkOrderID = $Self->{ParamObject}->GetParam( Param => 'WorkOrderID' );
 
     # check needed stuff
@@ -59,7 +59,7 @@ sub Run {
 
         # error page
         return $Self->{LayoutObject}->ErrorScreen(
-            Message => "Can't show history, no WorkOrderID is given!",
+            Message => "Can't show history, as no WorkOrderID is given!",
             Comment => 'Please contact the admin.',
         );
     }
@@ -102,7 +102,7 @@ sub Run {
     # check error
     if ( !$Change ) {
         return $Self->{LayoutObject}->ErrorScreen(
-            Message => 'Change ' . $WorkOrder->{ChangeID} . ' not found in database!',
+            Message => "Change $WorkOrder->{ChangeID} not found in database!",
             Comment => 'Please contact the admin.',
         );
     }
@@ -118,7 +118,7 @@ sub Run {
     my $HistoryEntriesRef = $Self->{HistoryObject}->WorkOrderHistoryGet(
         WorkOrderID => $WorkOrderID,
         UserID      => $Self->{UserID},
-    );
+    ) || [];
 
     # get order direction
     my @HistoryLines = @{$HistoryEntriesRef};
@@ -139,7 +139,7 @@ sub Run {
 
         # determine what should be shown
         my $HistoryType = $HistoryEntry->{HistoryType};
-        if ( $HistoryType =~ m{ Update \z }xms ) {
+        if ( $HistoryType eq 'WorkOrderUpdate' ) {
 
             # The displayed fieldname might be changed in the following loop
             my $DisplayedFieldname = $HistoryEntry->{Fieldname};
@@ -155,53 +155,66 @@ sub Run {
                     if (
                         my ($Type) = $HistoryEntry->{Fieldname} =~ m{
                             \A          # string start
-                            (           # start capture the $Type
+                            (           # start capture of $Type
                                 WorkOrderState | WorkOrderType
                                 | WorkOrderAgent
                             )           # end capture of $Type
                             ID          # processing only for the 'ID' fields
-                            }xms
+                        }xms
                         )
                     {
-                        my $Value;
-                        if ( $Type eq 'WorkOrderState' ) {
-                            $Value = $Self->{WorkOrderObject}->WorkOrderStateLookup(
-                                WorkOrderStateID => $HistoryEntry->{$ContentNewOrOld},
-                            );
-                        }
-                        elsif ( $Type eq 'WorkOrderType' ) {
-                            $Value = $Self->{WorkOrderObject}->WorkOrderTypeLookup(
-                                WorkOrderTypeID => $HistoryEntry->{$ContentNewOrOld},
-                            );
-                        }
-                        elsif ( $Type eq 'WorkOrderAgent' ) {
-                            $Value = $Self->{UserObject}->UserLookup(
-                                UserID => $HistoryEntry->{$ContentNewOrOld},
-                            );
+                        if ( $HistoryEntry->{$ContentNewOrOld} ) {
+                            my $Value;
+                            my $TranslationNeeded = 1;
+                            if ( $Type eq 'WorkOrderState' ) {
+                                $Value = $Self->{WorkOrderObject}->WorkOrderStateLookup(
+                                    WorkOrderStateID => $HistoryEntry->{$ContentNewOrOld},
+                                );
+                            }
+                            elsif ( $Type eq 'WorkOrderType' ) {
+                                $Value = $Self->{WorkOrderObject}->WorkOrderTypeLookup(
+                                    WorkOrderTypeID => $HistoryEntry->{$ContentNewOrOld},
+                                );
+                            }
+                            elsif ( $Type eq 'WorkOrderAgent' ) {
+                                $Value = $Self->{UserObject}->UserLookup(
+                                    UserID => $HistoryEntry->{$ContentNewOrOld},
+                                );
+
+                                # the login names are not to be translated
+                                $TranslationNeeded = 0;
+                            }
+                            else {
+                                return $Self->{LayoutObject}->ErrorScreen(
+                                    Message => "Unknown type '$Type' encountered!",
+                                    Comment => 'Please contact the admin.',
+                                );
+                            }
+
+                            # E.g. the usernames should not be translated
+                            my $TranslatedValue = $TranslationNeeded
+                                ?
+                                $Self->{LayoutObject}->{LanguageObject}->Get($Value)
+                                :
+                                $Value;
+
+                            $HistoryEntry->{$ContentNewOrOld} = sprintf '%s (ID=%s)',
+                                $TranslatedValue, $HistoryEntry->{$ContentNewOrOld};
                         }
                         else {
-                            return $Self->{LayoutObject}->ErrorScreen(
-                                Message => "Unknown type '$Type' encountered!",
-                                Comment => 'Please contact the admin.',
-                            );
+                            $HistoryEntry->{$ContentNewOrOld} = '-';
                         }
-
-                        my $TranslatedValue = $Self->{LayoutObject}->{LanguageObject}->Get(
-                            $Value,
-                        );
-                        $HistoryEntry->{$ContentNewOrOld} = $TranslatedValue . ' (ID='
-                            . $HistoryEntry->{$ContentNewOrOld} . ')';
 
                         # The content has changed, so change the displayed fieldname as well
                         $DisplayedFieldname = $Type;
                     }
 
                     # replace HTML breaks with single space
-                    $HistoryEntry->{$ContentNewOrOld} =~ s{ < br \s*? /? > }{ }xmsg;
+                    $HistoryEntry->{$ContentNewOrOld} =~ s{ < br \s* /? > }{ }xmsg;
                 }
             }
 
-            # tranlate fieldname for display
+            # translate fieldname for display
             $DisplayedFieldname = $Self->{LayoutObject}->{LanguageObject}->Get(
                 $DisplayedFieldname,
             );
@@ -216,15 +229,13 @@ sub Run {
 
             # show [...] for too long strings
             for my $Content ( $ContentNew, $ContentOld ) {
-                if ( length $Content > $MaxLength ) {
+                if ( $Content && ( length $Content > $MaxLength ) ) {
                     $Content = substr( $Content, 0, $MaxLength ) . '[...]';
                 }
             }
 
             # set description
-            $Data{Content} = join '%%', $DisplayedFieldname,
-                $ContentNew,
-                $ContentOld;
+            $Data{Content} = join '%%', $DisplayedFieldname, $ContentNew, $ContentOld;
         }
         else {
             $Data{Content} = $HistoryEntry->{ContentNew};
@@ -244,10 +255,10 @@ sub Run {
             # clean the values
             for my $Value (@Values) {
                 if ( $Data{Content} ) {
-                    $Data{Content} .= "\", ";
+                    $Data{Content} .= '", ';
                 }
 
-                $Data{Content} .= "\"$Value";
+                $Data{Content} .= qq{"$Value};
             }
 
             # we need at least a double quote
@@ -255,13 +266,15 @@ sub Run {
                 $Data{Content} = '" ';
             }
 
-            # show 'nice' output
+            # show 'nice' output with variable substitution
+            # sample input:
+            # ChangeHistory::ChangeLinkAdd", "Ticket", "1
             $Data{Content} = $Self->{LayoutObject}->{LanguageObject}->Get(
                 'WorkOrderHistory::' . $Data{HistoryType} . '", ' . $Data{Content}
             );
 
             # remove not needed place holder
-            $Data{Content} =~ s{ \%s }{}xmsg;
+            $Data{Content} =~ s{ % s }{}xmsg;
         }
 
         # separate each searchresult line by using several css
@@ -272,6 +285,7 @@ sub Run {
             Data => {%Data},
         );
 
+        # show a 'more info' link
         if (
             ( $HistoryEntry->{ContentNew} && length( $HistoryEntry->{ContentNew} ) > $MaxLength )
             || ( $HistoryEntry->{ContentOld} && length( $HistoryEntry->{ContentOld} ) > $MaxLength )
@@ -283,7 +297,6 @@ sub Run {
                 Name => 'HistoryZoom',
                 Data => {%Data},
             );
-
         }
 
         # don't show a link

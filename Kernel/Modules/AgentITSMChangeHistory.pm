@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeHistory.pm - the OTRS::ITSM::ChangeManagement change history module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeHistory.pm,v 1.36 2010-01-18 08:38:31 bes Exp $
+# $Id: AgentITSMChangeHistory.pm,v 1.37 2010-01-19 16:11:38 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::History;
 use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.36 $) [1];
+$VERSION = qw($Revision: 1.37 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -59,7 +59,7 @@ sub Run {
 
         # error page
         return $Self->{LayoutObject}->ErrorScreen(
-            Message => "Can't show history, no ChangeID is given!",
+            Message => "Can't show history, as no ChangeID is given!",
             Comment => 'Please contact the admin.',
         );
     }
@@ -239,7 +239,7 @@ sub Run {
                 }
             }
 
-            # tranlate fieldname for display
+            # translate fieldname for display
             $DisplayedFieldname = $Self->{LayoutObject}->{LanguageObject}->Get(
                 $DisplayedFieldname,
             );
