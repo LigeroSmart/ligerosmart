@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Object.pm - all condition object functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Object.pm,v 1.17 2010-01-16 20:45:16 ub Exp $
+# $Id: Object.pm,v 1.18 2010-01-19 23:02:40 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 =head1 NAME
 
@@ -282,11 +282,15 @@ sub ObjectLookup {
 
 =item ObjectList()
 
-Returns a list of all condition object ids as array reference
+Returns a list of all condition objects as hash reference
 
-    my $ConditionObjectIDsRef = $ConditionObject->ObjectList(
+    my $ConditionObjectsRef = $ConditionObject->ObjectList(
         UserID => 1,
     );
+
+The returned hash reference contains entries like this:
+
+    $ConditionObject{ObjectID} = 'ObjectName'
 
 =cut
 
@@ -304,16 +308,16 @@ sub ObjectList {
 
     # prepare SQL statement
     return if !$Self->{DBObject}->Prepare(
-        SQL => 'SELECT name FROM condition_object',
+        SQL => 'SELECT id, name FROM condition_object',
     );
 
     # fetch the result
-    my @ObjectList;
+    my %ObjectList;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        push @ObjectList, $Row[0];
+        $ObjectList{ $Row[0] } = $Row[1];
     }
 
-    return \@ObjectList;
+    return \%ObjectList;
 }
 
 =item ObjectDelete()
@@ -349,6 +353,81 @@ sub ObjectDelete {
     );
 
     return 1;
+}
+
+=item ObjectSelectorList()
+
+Returns a list of all selectors available for the given object id and condition id as hash reference
+
+    my $SelectorList = $ConditionObject->ObjectSelectorList(
+        ObjectID    => 1234,
+        ConditionID => 5,
+        UserID      => 1,
+    );
+
+Returns a hash reference like this (for workorder objects)
+
+    $SelectorList = {
+        10    => '1 - WorkorderTitle of Workorder 1',
+        12    => '2 - WorkorderTitle of Workorder 2',
+        34    => '3 - WorkorderTitle of Workorder 3',
+        'any' => 'any',
+        'all' => 'all',
+    }
+
+or for change objects:
+
+    $SelectorList = {
+        456 => 'Change# 2010011610000618',
+    }
+
+=cut
+
+sub ObjectSelectorList {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(ObjectID ConditionID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # lookup object name
+    my $ObjectName = $Self->ObjectLookup(
+        ObjectID => $Param{ObjectID},
+        UserID   => $Param{UserID},
+    );
+
+    # define known objects and function calls
+    my %ObjectAction = (
+        ITSMChange    => '_ObjectITSMChangeSelectorList',
+        ITSMWorkOrder => '_ObjectITSMWorkOrderSelectorList',
+    );
+
+    # check for manageable object
+    if ( !exists $ObjectAction{$ObjectName} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "No object action for $ObjectName found!",
+        );
+        return;
+    }
+
+    # get the name of the action subroutine
+    my $ActionSub = $ObjectAction{$ObjectName};
+
+    # execute the action subroutine
+    my $SelectorList = $Self->$ActionSub(
+        ConditionID => $Param{ConditionID},
+        UserID      => $Param{UserID},
+    ) || {};
+
+    return $SelectorList;
 }
 
 =item ObjectDataGet()
@@ -473,6 +552,8 @@ sub ObjectDataGet {
     return \@ObjectData;
 }
 
+=begin Internal:
+
 =item _ObjectITSMChange()
 
 Returns the change data as hash reference.
@@ -521,17 +602,17 @@ sub _ObjectITSMWorkOrderAll {
     my ( $Self, %Param ) = @_;
 
     # get condition
-    my $Condition = $Self->ConditionGet(
+    my $ConditionData = $Self->ConditionGet(
         ConditionID => $Param{ConditionID},
         UserID      => $Param{UserID},
     );
 
     # check for condition
-    return if !$Condition;
+    return if !$ConditionData;
 
     # get all workorder ids of change
     my $WorkOrderIDs = $Self->{WorkOrderObject}->WorkOrderList(
-        ChangeID => $Condition->{ChangeID},
+        ChangeID => $ConditionData->{ChangeID},
         UserID   => $Param{UserID},
     );
 
@@ -560,7 +641,122 @@ sub _ObjectITSMWorkOrderAll {
     return \@WorkOrderData;
 }
 
+=item _ObjectITSMChangeSelectorList()
+
+Returns a list of all selectors available for the given change object id and condition id as hash reference
+
+    my $SelectorList = $ConditionObject->_ObjectITSMChangeSelectorList(
+        ObjectID    => 1234,
+        ConditionID => 5,
+        UserID      => 1,
+    );
+
+Returns a hash reference like this:
+
+    $SelectorList = {
+        456 => 'Change# 2010011610000618',
+    }
+
+=cut
+
+sub _ObjectITSMChangeSelectorList {
+    my ( $Self, %Param ) = @_;
+
+    # get condition data
+    my $ConditionData = $Self->ConditionGet(
+        ConditionID => $Param{ConditionID},
+        UserID      => $Param{UserID},
+    );
+
+    # check for error
+    return if !$ConditionData;
+
+    # get change data
+    my $ChangeData = $Self->{ChangeObject}->ChangeGet(
+        ChangeID => $ConditionData->{ChangeID},
+        UserID   => $Param{UserID},
+    );
+
+    # check error
+    return if !$ConditionData;
+
+    # build selector list
+    my %SelectorList;
+    if ($ChangeData) {
+        $SelectorList{ $ChangeData->{ChangeID} } = '#' . $ChangeData->{ChangeNumber};
+    }
+
+    return \%SelectorList;
+}
+
+=item _ObjectITSMWorkOrderSelectorList()
+
+Returns a list of all selectors available for the given workorder object id and condition id as hash reference
+
+    my $SelectorList = $ConditionObject->_ObjectITSMWorkOrderSelectorList(
+        ObjectID    => 1234,
+        ConditionID => 5,
+        UserID      => 1,
+    );
+
+Returns a hash reference like this:
+
+    $SelectorList = {
+        10    => '1 - WorkorderTitle of Workorder 1',
+        12    => '2 - WorkorderTitle of Workorder 2',
+        34    => '3 - WorkorderTitle of Workorder 3',
+        'any' => 'any',
+        'all' => 'all',
+    }
+
+=cut
+
+sub _ObjectITSMWorkOrderSelectorList {
+    my ( $Self, %Param ) = @_;
+
+    # get condition
+    my $ConditionData = $Self->ConditionGet(
+        ConditionID => $Param{ConditionID},
+        UserID      => $Param{UserID},
+    );
+
+    # check for condition
+    return if !$ConditionData;
+
+    # get all workorder ids of change
+    my $WorkOrderIDs = $Self->{WorkOrderObject}->WorkOrderList(
+        ChangeID => $ConditionData->{ChangeID},
+        UserID   => $Param{UserID},
+    );
+
+    # check for workorder ids
+    return if !$WorkOrderIDs;
+    return if ref $WorkOrderIDs ne 'ARRAY';
+
+    # build selector list
+    my %SelectorList;
+    for my $WorkOrderID ( @{$WorkOrderIDs} ) {
+
+        # get workorder data
+        my $WorkOrderData = $Self->{WorkOrderObject}->WorkOrderGet(
+            WorkOrderID => $WorkOrderID,
+            UserID      => $Param{UserID},
+        );
+
+        $SelectorList{ $WorkOrderData->{WorkOrderID} }
+            = $WorkOrderData->{WorkOrderNumber} . ' - ' . $WorkOrderData->{WorkOrderTitle};
+    }
+
+    # add 'any' and 'all'
+    $SelectorList{'any'} = 'any';
+    $SelectorList{'all'} = 'all';
+
+    return \%SelectorList;
+}
+
 1;
+
+=end Internal:
 
 =back
 
@@ -576,6 +772,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.17 $ $Date: 2010-01-16 20:45:16 $
+$Revision: 1.18 $ $Date: 2010-01-19 23:02:40 $
 
 =cut
