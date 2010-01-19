@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template.pm - all template functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.18 2010-01-19 10:21:14 bes Exp $
+# $Id: Template.pm,v 1.19 2010-01-19 10:57:41 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Valid;
 use Data::Dumper;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 =head1 NAME
 
@@ -112,12 +112,13 @@ sub new {
 Add a new template.
 
     my $TemplateID = $TemplateObject->TemplateAdd(
-        Name     => 'The template name',
-        Content  => '[{ ChangeAdd => { ... } }]',   # a serialized change, workorder, ...
-        Comment  => 'A comment',                    # (optional)
-        TypeID   => 1,
-        ValidID  => 1,
-        UserID   => 1,
+        Name           => 'The template name',
+        Content        => '[{ ChangeAdd => { ... } }]',   # a serialized change, workorder, ...
+        Comment        => 'A comment',                    # (optional)
+        TemplateType   => 'ITSMChange',                   # alternatively: TemplateTypeID
+        TemplateTypeID => 1,                              # alternatively: TemplateType
+        ValidID        => 1,
+        UserID         => 1,
     );
 
 =cut
@@ -125,8 +126,25 @@ Add a new template.
 sub TemplateAdd {
     my ( $Self, %Param ) = @_;
 
+    # check that not both TemplateType and TemplateTypeID are given
+    if ( $Param{TemplateType} && $Param{TemplateTypeID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need either TemplateType OR TemplateTypeID - not both!',
+        );
+        return;
+    }
+
+    # when the template type is given, then look up the ID
+    if ( $Param{TemplateType} ) {
+        $Param{TemplateTypeID} = $Self->TemplateTypeLookup(
+            TemplateType => $Param{TemplateType},
+            UserID       => $Param{UserID},
+        );
+    }
+
     # check needed stuff
-    for my $Argument (qw(Content Name TypeID ValidID UserID)) {
+    for my $Argument (qw(Content Name TemplateTypeID ValidID UserID)) {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -167,7 +185,7 @@ sub TemplateAdd {
             . 'create_time, create_by, change_time, change_by) '
             . 'VALUES (?, ?, ?, ?, ?, current_timestamp, ?, current_timestamp, ?)',
         Bind => [
-            \$Param{Name}, \$Param{Comment}, \$Param{Content}, \$Param{TypeID},
+            \$Param{Name}, \$Param{Comment}, \$Param{Content}, \$Param{TemplateTypeID},
             \$Param{ValidID}, \$Param{UserID}, \$Param{UserID},
         ],
     );
@@ -356,8 +374,8 @@ return a hashref of all templates
     my $Templates = $TemplateObject->TemplateList(
         Valid          => 0,             # (optional) default 1 (0|1)
         CommentLength  => 15,            # (optional) default 0
-        TemplateType   => 'ITSMChange'   # (optional)
-        TemplateTypeID => 1,             # (optional)
+        TemplateType   => 'ITSMChange'   # (optional) or TemplateTypeID
+        TemplateTypeID => 1,             # (optional) or TemplateType
         UserID         => 1,
     );
 
@@ -370,8 +388,8 @@ returns
 
 If parameter C<CommentLength> is passed, an excerpt (of the passed length)
 of the comment is appended to the template name.
-If the parameter C<TemplateType> or C<TemplateTypeID> is passen, then the
-list of templates is restricted to the passed type.
+If the parameter C<TemplateType> or C<TemplateTypeID> is passed, then the
+list of templates is restricted to the given type.
 
 =cut
 
@@ -1308,6 +1326,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.18 $ $Date: 2010-01-19 10:21:14 $
+$Revision: 1.19 $ $Date: 2010-01-19 10:57:41 $
 
 =cut

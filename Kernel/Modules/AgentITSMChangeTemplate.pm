@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeTemplate.pm - the OTRS::ITSM::ChangeManagement add template module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeTemplate.pm,v 1.4 2010-01-19 09:28:20 bes Exp $
+# $Id: AgentITSMChangeTemplate.pm,v 1.5 2010-01-19 10:57:41 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::Template;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -99,7 +99,7 @@ sub Run {
     # The items are the names of the dtl validation error blocks.
     my @ValidationErrors;
 
-    # move time slot of change
+    # add a template
     if ( $Self->{Subaction} eq 'AddTemplate' ) {
 
         # check validity of the template name
@@ -125,27 +125,14 @@ sub Run {
                 );
             }
 
-            my $TemplateTypeID = $Self->{TemplateObject}->TemplateTypeLookup(
-                TemplateType => 'ITSMChange',
-                UserID       => $Self->{UserID},
-            );
-
-            # show error message
-            if ( !$TemplateTypeID ) {
-                return $Self->{LayoutObject}->ErrorScreen(
-                    Message => "The template type 'ITSMChange' is not known.",
-                    Comment => 'Please contact the admin.',
-                );
-            }
-
             # store the serialized change
             my $TemplateID = $Self->{TemplateObject}->TemplateAdd(
-                Name    => $GetParam{TemplateName},
-                Comment => $GetParam{Comment},
-                ValidID => $GetParam{ValidID},
-                TypeID  => $TemplateTypeID,
-                Content => $TemplateContent,
-                UserID  => $Self->{UserID},
+                Name         => $GetParam{TemplateName},
+                Comment      => $GetParam{Comment},
+                ValidID      => $GetParam{ValidID},
+                TemplateType => 'ITSMChange',
+                Content      => $TemplateContent,
+                UserID       => $Self->{UserID},
             );
 
             # show error message
