@@ -1,23 +1,24 @@
 # --
-# Kernel/Modules/AgentITSMChange.pm - the OTRS::ITSM::ChangeManagement change overview module
+# Kernel/Modules/AgentITSMTemplateOverview.pm - the template overview module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChange.pm,v 1.24 2010-01-20 16:16:26 bes Exp $
+# $Id: AgentITSMTemplateOverview.pm,v 1.1 2010-01-20 16:16:26 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Modules::AgentITSMChange;
+package Kernel::Modules::AgentITSMTemplateOverview;
 
 use strict;
 use warnings;
 
 use Kernel::System::ITSMChange;
+use Kernel::System::ITSMChange::Template;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.24 $) [1];
+$VERSION = qw($Revision: 1.1 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -34,14 +35,14 @@ sub new {
     }
 
     # create additional objects
-    $Self->{ChangeObject} = Kernel::System::ITSMChange->new(%Param);
+    $Self->{ChangeObject}   = Kernel::System::ITSMChange->new(%Param);
+    $Self->{TemplateObject} = Kernel::System::ITSMChange::Template->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
 
-    # get filter and view params
+    # get filter params
     $Self->{Filter} = $Self->{ParamObject}->GetParam( Param => 'Filter' ) || 'All';
-    $Self->{View}   = $Self->{ParamObject}->GetParam( Param => 'View' )   || '';
 
     return $Self;
 }
@@ -66,22 +67,9 @@ sub Run {
     # store last screen, used for backlinks
     $Self->{SessionObject}->UpdateSessionID(
         SessionID => $Self->{SessionID},
-        Key       => 'LastScreenChanges',
+        Key       => 'LastScreenTemplates',
         Value     => $Self->{RequestedURL},
     );
-
-    # get sorting parameters
-    my $SortBy = $Self->{ParamObject}->GetParam( Param => 'SortBy' )
-        || $Self->{Config}->{'SortBy::Default'}
-        || 'ChangeNumber';
-
-    # get ordering parameters
-    my $OrderBy = $Self->{ParamObject}->GetParam( Param => 'OrderBy' )
-        || $Self->{Config}->{'Order::Default'}
-        || 'Up';
-
-    my @SortByArray  = ($SortBy);
-    my @OrderByArray = ($OrderBy);
 
     # investigate refresh
     my $Refresh = $Self->{UserRefreshTime} ? 60 * $Self->{UserRefreshTime} : undef;
@@ -92,58 +80,47 @@ sub Run {
     $Self->{LayoutObject}->Print( Output => \$Output );
     $Output = '';
 
-    # find out which columns should be shown
-    my @ShowColumns;
-    if ( $Self->{Config}->{ShowColumns} ) {
-
-        # get all possible columns from config
-        my %PossibleColumn = %{ $Self->{Config}->{ShowColumns} };
-
-        # get the column names that should be shown
-        COLUMNNAME:
-        for my $Name ( keys %PossibleColumn ) {
-            next COLUMNNAME if !$PossibleColumn{$Name};
-            push @ShowColumns, $Name;
-        }
-    }
+    # hardcode which columns should be shown
+    my @ShowColumns = qw(
+        TemplateID Name Comment TypeID Type ValidID
+        CreateTime CreateBy ChangeTime ChangeBy
+    );
 
     # to store the filters
     my %Filters;
 
-    # set other filters based on change state
-    if ( $Self->{Config}->{'Filter::ChangeStates'} ) {
+    # set other filters based on template type
+    if ( $Self->{Config}->{'Filter::TemplateTypes'} ) {
 
         # define position of the filter in the frontend
         my $PrioCounter = 1000;
 
         # get all change states that should be used as filters
-        CHANGESTATE:
-        for my $ChangeState ( @{ $Self->{Config}->{'Filter::ChangeStates'} } ) {
+        TEMPLATE_TYPE:
+        for my $TemplateType ( @{ $Self->{Config}->{'Filter::TemplateTypes'} } ) {
 
-            # do not use empty change states
-            next CHANGESTATE if !$ChangeState;
+            # do not use empty template types
+            next TEMPLATE_TYPE if !$TemplateType;
 
-            # check if state is valid by looking up the state id
-            my $ChangeStateID = $Self->{ChangeObject}->ChangeStateLookup(
-                ChangeState => $ChangeState,
+            # check if the template type is valid by looking up the id
+            my $TemplateTypeID = $Self->{TemplateObject}->TemplateTypeLookup(
+                TemplateType => $TemplateType,
+                UserID       => $Self->{UserID},
             );
 
             # do not use invalid change states
-            next CHANGESTATE if !$ChangeStateID;
+            next TEMPLATE_TYPE if !$TemplateTypeID;
 
             # increase the PrioCounter
             $PrioCounter++;
 
             # add filter for the current change state
-            $Filters{$ChangeState} = {
-                Name   => $ChangeState,
+            $Filters{$TemplateType} = {
+                Name   => $TemplateType,
                 Prio   => $PrioCounter,
                 Search => {
-                    ChangeStates     => [$ChangeState],
-                    OrderBy          => \@SortByArray,
-                    OrderByDirection => \@OrderByArray,
-                    Limit            => 1000,
-                    UserID           => $Self->{UserID},
+                    TemplateType => $TemplateType,
+                    UserID       => $Self->{UserID},
                 },
             };
         }
@@ -165,10 +142,7 @@ sub Run {
             Name   => 'All',
             Prio   => 1000,
             Search => {
-                OrderBy          => \@SortByArray,
-                OrderByDirection => \@OrderByArray,
-                Limit            => 1000,
-                UserID           => $Self->{UserID},
+                UserID => $Self->{UserID},
             },
         };
     }
@@ -178,24 +152,20 @@ sub Run {
         $Self->{LayoutObject}->FatalError( Message => "Invalid Filter: $Self->{Filter}!" );
     }
 
-    # search changes which match the selected filter
-    my $ChangeIDsRef = $Self->{ChangeObject}->ChangeSearch(
+    # search templates which match the selected filter
+    my $TemplateList = $Self->{TemplateObject}->TemplateList(
         %{ $Filters{ $Self->{Filter} }->{Search} },
     );
+
+    # for now simply sort numerically
+    my @TemplateIDs = sort { $a <=> $b } keys %{$TemplateList};
 
     # display all navbar filters
     my %NavBarFilter;
     for my $Filter ( keys %Filters ) {
 
-        # count the number of changes for each filter
-        my $Count = $Self->{ChangeObject}->ChangeSearch(
-            %{ $Filters{$Filter}->{Search} },
-            Result => 'COUNT',
-        );
-
         # display the navbar filter
         $NavBarFilter{ $Filters{$Filter}->{Prio} } = {
-            Count  => $Count,
             Filter => $Filter,
             %{ $Filters{$Filter} },
         };
@@ -204,30 +174,22 @@ sub Run {
     # show changes
     my $LinkPage = 'Filter='
         . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
-        . '&View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
-        . '&SortBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $SortBy )
-        . '&OrderBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $OrderBy )
         . '&';
     my $LinkSort = 'Filter='
         . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
-        . '&View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
         . '&';
-    my $LinkFilter = 'SortBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $SortBy )
-        . '&OrderBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $OrderBy )
-        . '&View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
+    my $LinkFilter = ''
         . '&';
-    $Output .= $Self->{LayoutObject}->ITSMChangeListShow(
+    $Output .= $Self->{LayoutObject}->ITSMTemplateListShow(
 
-        ChangeIDs => $ChangeIDsRef,
-        Total     => scalar @{$ChangeIDsRef},
-
-        View => $Self->{View},
+        TemplateIDs => \@TemplateIDs,
+        Total       => scalar @TemplateIDs,
 
         Filter     => $Self->{Filter},
         Filters    => \%NavBarFilter,
         FilterLink => $LinkFilter,
 
-        TitleName  => 'Overview: Change',
+        TitleName  => 'Overview: Template',
         TitleValue => $Self->{Filter},
 
         Env      => $Self,

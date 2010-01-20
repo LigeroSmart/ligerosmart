@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.134 2010-01-19 22:58:40 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.135 2010-01-20 16:16:26 bes Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -37,6 +37,7 @@
         <File Permission="644" Location="Kernel/Modules/AgentITSMChangeTemplate.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMChangeTimeSlot.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMChangeZoom.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentITSMTemplateOverview.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMUserSearch.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderAdd.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderAgent.pm"/>
@@ -52,10 +53,12 @@
         <File Permission="644" Location="Kernel/Output/HTML/ITSMChangeMenuWorkOrdersNeeded.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ITSMChangeMenuTimeSlot.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ITSMChangeOverviewSmall.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/ITSMTemplateOverviewSmall.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ITSMWorkOrderMenuGeneric.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ITSMWorkOrderMenuWithPermissionFromChange.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/TicketMenuITSMChange.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/LayoutITSMChange.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/LayoutITSMTemplate.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/LinkObjectITSMChange.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/LinkObjectITSMWorkOrder.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/NavBarChangeManager.pm"/>
@@ -81,6 +84,9 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeTemplate.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeTimeSlot.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeZoom.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMTemplateOverviewNavBar.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMTemplateOverviewNavBarSmall.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMTemplateOverviewSmall.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMUserSearch.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMWorkOrderAdd.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMWorkOrderAgent.dtl"/>

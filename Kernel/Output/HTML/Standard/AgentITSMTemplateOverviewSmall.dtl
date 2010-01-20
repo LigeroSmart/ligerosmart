@@ -1,0 +1,110 @@
+# --
+# AgentITSMTemplateOverviewSmall.dtl - html for template overview table
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# --
+# $Id: AgentITSMTemplateOverviewSmall.dtl,v 1.1 2010-01-20 16:16:26 bes Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<table border="0" width="100%" cellspacing="0" cellpadding="4">
+    <tr>
+        <td class="mainbody">
+            <table border="0" width="100%" cellspacing="0" cellpadding="3">
+                <tr class="contenthead" align="left">
+<!-- dtl:block:RecordTemplateIDHeader -->
+                    <th>$Text{"TemplateID"}</th>
+<!-- dtl:block:RecordTemplateIDHeader -->
+<!-- dtl:block:RecordNameHeader -->
+                    <th>$Text{"Name"}</th>
+<!-- dtl:block:RecordNameHeader -->
+<!-- dtl:block:RecordCommentHeader -->
+                    <th>$Text{"Comment"}</th>
+<!-- dtl:block:RecordCommentHeader -->
+<!-- dtl:block:RecordTypeIDHeader -->
+                    <th>$Text{"TypeID"}</th>
+<!-- dtl:block:RecordTypeIDHeader -->
+<!-- dtl:block:RecordTypeHeader -->
+                    <th>$Text{"Type"}</th>
+<!-- dtl:block:RecordTypeHeader -->
+<!-- dtl:block:RecordValidIDHeader -->
+                    <th>$Text{"ValidID"}</th>
+<!-- dtl:block:RecordValidIDHeader -->
+<!-- dtl:block:RecordCreateTimeHeader -->
+                    <th>$Text{"CreateTime"}</th>
+<!-- dtl:block:RecordCreateTimeHeader -->
+<!-- dtl:block:RecordCreateByHeader -->
+                    <th>$Text{"CreateBy"}</th>
+<!-- dtl:block:RecordCreateByHeader -->
+<!-- dtl:block:RecordChangeTimeHeader -->
+                    <th>$Text{"ChangeTime"}</th>
+<!-- dtl:block:RecordChangeTimeHeader -->
+<!-- dtl:block:RecordChangeByHeader -->
+                    <th>$Text{"ChangeBy"}</th>
+<!-- dtl:block:RecordChangeByHeader -->
+                </tr>
+<!-- dtl:block:Record -->
+                <tr class="$QData{"CssClass"}">
+<!-- dtl:block:RecordTemplateID -->
+                    <td>
+                        <div title="$QData{"TemplateID"}">$QData{"TemplateID","40"}</div>
+                    </td>
+<!-- dtl:block:RecordTemplateID -->
+<!-- dtl:block:RecordName -->
+                    <td>
+                        <div title="$QData{"Name"}">$QData{"Name","40"}</div>
+                    </td>
+<!-- dtl:block:RecordName -->
+<!-- dtl:block:RecordComment -->
+                    <td>
+                        <div title="$QData{"Comment"}">$QData{"Comment","40"}</div>
+                    </td>
+<!-- dtl:block:RecordComment -->
+<!-- dtl:block:RecordTypeID -->
+                    <td>
+                        <div title="$QData{"TypeID"}">$QData{"TypeID","40"}</div>
+                    </td>
+<!-- dtl:block:RecordTypeID -->
+<!-- dtl:block:RecordType -->
+                    <td>
+                        <div title="$QData{"Type"}">$QData{"Type","40"}</div>
+                    </td>
+<!-- dtl:block:RecordType -->
+<!-- dtl:block:RecordValidID -->
+                    <td>
+                        <div title="$QData{"ValidID"}">$QData{"ValidID","40"}</div>
+                    </td>
+<!-- dtl:block:RecordValidID -->
+<!-- dtl:block:RecordCreateTime -->
+                    <td>
+                        <div title="$QData{"CreateTime"}">$QData{"CreateTime","40"}</div>
+                    </td>
+<!-- dtl:block:RecordCreateTime -->
+<!-- dtl:block:RecordCreateBy -->
+                    <td>
+                        <div title="$QData{"CreateBy"}">$QData{"CreateBy","40"}</div>
+                    </td>
+<!-- dtl:block:RecordCreateBy -->
+<!-- dtl:block:RecordChangeTime -->
+                    <td>
+                        <div title="$QData{"ChangeTime"}">$QData{"ChangeTime","40"}</div>
+                    </td>
+<!-- dtl:block:RecordChangeTime -->
+<!-- dtl:block:RecordChangeBy -->
+                    <td>
+                        <div title="$QData{"ChangeBy"}">$QData{"ChangeBy","40"}</div>
+                    </td>
+<!-- dtl:block:RecordChangeBy -->
+                </tr>
+<!-- dtl:block:Record -->
+                <tr class="contentfooter">
+                    <td align="left" colspan="$QData{"ColumnCount"}">
+                        &nbsp;
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

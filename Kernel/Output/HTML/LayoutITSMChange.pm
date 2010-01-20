@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: LayoutITSMChange.pm,v 1.34 2010-01-15 14:42:53 bes Exp $
+# $Id: LayoutITSMChange.pm,v 1.35 2010-01-20 16:16:26 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use POSIX qw(ceil);
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.34 $) [1];
+$VERSION = qw($Revision: 1.35 $) [1];
 
 =over 4
 
@@ -385,7 +385,7 @@ sub ITSMChangeListShow {
     # check for config key
     if ( !$Backends->{$View} ) {
         return $Env->{LayoutObject}->FatalError(
-            Message => "No Config option found for $View!",
+            Message => "No config option found for the view '$View'!",
         );
     }
 

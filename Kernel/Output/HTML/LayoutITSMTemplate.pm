@@ -1,0 +1,326 @@
+# --
+# Kernel/Output/HTML/LayoutITSMTemplate.pm - provides generic HTML output for templates
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# --
+# $Id: LayoutITSMTemplate.pm,v 1.1 2010-01-20 16:16:26 bes Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+package Kernel::Output::HTML::LayoutITSMTemplate;
+
+use strict;
+use warnings;
+
+use POSIX qw(ceil);
+
+use Kernel::Output::HTML::Layout;
+
+use vars qw($VERSION);
+$VERSION = qw($Revision: 1.1 $) [1];
+
+=over 4
+
+=item ITSMTemplateListShow()
+
+Returns a list of templates as sortable list with pagination.
+
+This function is similar to L<Kernel::Output::HTML::LayoutITSMChange::ITMChangeListShow()>
+in F<Kernel/Output/HTML/LayoutITSMChange.pm>.
+
+    my $Output = $LayoutObject->ITSMTemplateListShow(
+        TemplateIDs  => $TemplateIDsRef,                  # total list of template ids, that can be listed
+        Total      => scalar @{ $TemplateIDsRef },        # total number of list items, templates in this case
+        Filter     => 'All',
+        Filters    => \%NavBarFilter,
+        FilterLink => $LinkFilter,
+        TitleName  => 'Overview: Template',
+        TitleValue => $Self->{Filter},
+        Env        => $Self,
+        LinkPage   => $LinkPage,
+        LinkSort   => $LinkSort,
+    );
+
+=cut
+
+sub ITSMTemplateListShow {
+    my ( $Self, %Param ) = @_;
+
+    # take object ref to local, remove it from %Param (prevent memory leak)
+    my $Env = delete $Param{Env};
+
+    # for now there is only the 'Small' view
+    my $View = 'Small';
+
+    # get backend from config
+    my $Backends = $Self->{ConfigObject}->Get('ITSMChange::Frontend::TemplateOverview');
+    if ( !$Backends ) {
+        return $Env->{LayoutObject}->FatalError(
+            Message => 'Need config option ITSMChange::Frontend::TemplateOverview',
+        );
+    }
+
+    # check for hash-ref
+    if ( ref $Backends ne 'HASH' ) {
+        return $Env->{LayoutObject}->FatalError(
+            Message =>
+                'Config option ITSMChange::Frontend::TemplateOverview needs to be a HASH ref!',
+        );
+    }
+
+    # check for config key
+    if ( !$Backends->{$View} ) {
+        return $Env->{LayoutObject}->FatalError(
+            Message => "No config option found for the view '$View'!",
+        );
+    }
+
+    # nav bar
+    my $StartHit = $Self->{ParamObject}->GetParam(
+        Param => 'StartHit',
+    ) || 1;
+
+    # check start option, if higher then elements available, set
+    # it to the last overview page (Thanks to Stefan Schmidt!)
+    my $PageShown = $Backends->{$View}->{PageShown};
+    if ( $StartHit > $Param{Total} ) {
+        my $Pages = int( ( $Param{Total} / $PageShown ) + 0.99999 );
+        $StartHit = ( ( $Pages - 1 ) * $PageShown ) + 1;
+    }
+
+    # set page limit and build page nav
+    my $Limit = $Param{Limit} || 20_000;
+    my %PageNav = $Env->{LayoutObject}->PageNavBar(
+        Limit     => $Limit,
+        StartHit  => $StartHit,
+        PageShown => $PageShown,
+        AllHits   => $Param{Total} || 0,
+        Action    => 'Action=' . $Env->{LayoutObject}->{Action},
+        Link      => $Param{LinkPage},
+    );
+
+    # build navbar content
+    $Env->{LayoutObject}->Block(
+        Name => 'OverviewNavBar',
+        Data => \%Param,
+    );
+
+    # back link
+    if ( $Param{LinkBack} ) {
+        $Env->{LayoutObject}->Block(
+            Name => 'OverviewNavBarPageBack',
+            Data => \%Param,
+        );
+    }
+
+    # get filters
+    if ( $Param{Filters} ) {
+
+        # get given filters
+        my @NavBarFilters;
+        for my $Prio ( sort keys %{ $Param{Filters} } ) {
+            push @NavBarFilters, $Param{Filters}->{$Prio};
+        }
+
+        # build filter content
+        $Env->{LayoutObject}->Block(
+            Name => 'OverviewNavBarFilter',
+            Data => {
+                %Param,
+            },
+        );
+
+        # loop over filters
+        my $Count = 0;
+        for my $Filter (@NavBarFilters) {
+
+            # at least a second filter is set, build split content
+            if ($Count) {
+                $Env->{LayoutObject}->Block(
+                    Name => 'OverviewNavBarFilterItemSplit',
+                    Data => {
+                        %Param,
+                        %{$Filter},
+                    },
+                );
+            }
+
+            # increment filter count and build filter item
+            $Count++;
+            $Env->{LayoutObject}->Block(
+                Name => 'OverviewNavBarFilterItem',
+                Data => {
+                    %Param,
+                    %{$Filter},
+                },
+            );
+
+            # filter is selected
+            if ( $Filter->{Filter} eq $Param{Filter} ) {
+                $Env->{LayoutObject}->Block(
+                    Name => 'OverviewNavBarFilterItemSelected',
+                    Data => {
+                        %Param,
+                        %{$Filter},
+                    },
+                );
+            }
+            else {
+                $Env->{LayoutObject}->Block(
+                    Name => 'OverviewNavBarFilterItemSelectedNot',
+                    Data => {
+                        %Param,
+                        %{$Filter},
+                    },
+                );
+            }
+        }
+    }
+
+    # loop over configured backends
+    for my $Backend ( keys %{$Backends} ) {
+
+        # build navbar view mode
+        $Env->{LayoutObject}->Block(
+            Name => 'OverviewNavBarViewMode',
+            Data => {
+                %Param,
+                %{ $Backends->{$Backend} },
+                Filter => $Param{Filter},
+                View   => $Backend,
+            },
+        );
+
+        # current view is configured in backend
+        if ( $View eq $Backend ) {
+            $Env->{LayoutObject}->Block(
+                Name => 'OverviewNavBarViewModeSelected',
+                Data => {
+                    %Param,
+                    %{ $Backends->{$Backend} },
+                    Filter => $Param{Filter},
+                    View   => $Backend,
+                },
+            );
+        }
+        else {
+            $Env->{LayoutObject}->Block(
+                Name => 'OverviewNavBarViewModeNotSelected',
+                Data => {
+                    %Param,
+                    %{ $Backends->{$Backend} },
+                    Filter => $Param{Filter},
+                    View   => $Backend,
+                },
+            );
+        }
+    }
+
+    # check if page nav is available
+    if (%PageNav) {
+        $Env->{LayoutObject}->Block(
+            Name => 'OverviewNavBarPageNavBar',
+            Data => \%PageNav,
+        );
+    }
+
+    # check if nav bar is available
+    if ( $Param{NavBar} ) {
+        if ( $Param{NavBar}->{MainName} ) {
+            $Env->{LayoutObject}->Block(
+                Name => 'OverviewNavBarMain',
+                Data => $Param{NavBar},
+            );
+        }
+    }
+
+    # build html content
+    my $OutputNavBar = $Env->{LayoutObject}->Output(
+        TemplateFile => 'AgentITSMTemplateOverviewNavBar',
+        Data         => {%Param},
+    );
+
+    # create output
+    my $OutputRaw = '';
+    if ( !$Param{Output} ) {
+        $Env->{LayoutObject}->Print(
+            Output => \$OutputNavBar,
+        );
+    }
+    else {
+        $OutputRaw .= $OutputNavBar;
+    }
+
+    # load module
+    if ( !$Self->{MainObject}->Require( $Backends->{$View}->{Module} ) ) {
+        return $Env->{LayoutObject}->FatalError();
+    }
+
+    # check for backend object
+    my $Object = $Backends->{$View}->{Module}->new( %{$Env} );
+    return if !$Object;
+
+    # run module
+    my $Output = $Object->Run(
+        %Param,
+        Limit     => $Limit,
+        StartHit  => $StartHit,
+        PageShown => $PageShown,
+        AllHits   => $Param{Total} || 0,
+    );
+
+    # create output
+    if ( !$Param{Output} ) {
+        $Env->{LayoutObject}->Print(
+            Output => \$Output,
+        );
+    }
+    else {
+        $OutputRaw .= $Output;
+    }
+
+    # create overview nav bar
+    $Env->{LayoutObject}->Block(
+        Name => 'OverviewNavBar',
+        Data => {%Param},
+    );
+
+    # check for page nav and create content
+    if (%PageNav) {
+        $Env->{LayoutObject}->Block(
+            Name => 'OverviewNavBarPageNavBar',
+            Data => {%PageNav},
+        );
+    }
+
+    # create smal nav bar
+    my $OutputNavBarSmall = $Env->{LayoutObject}->Output(
+        TemplateFile => 'AgentITSMTemplateOverviewNavBarSmall',
+        Data         => {%Param},
+    );
+
+    # create output
+    if ( !$Param{Output} ) {
+        $Env->{LayoutObject}->Print(
+            Output => \$OutputNavBarSmall,
+        );
+    }
+    else {
+        $OutputRaw .= $OutputNavBarSmall;
+    }
+
+    # return content if available
+    return $OutputRaw;
+}
+
+=begin Internal:
+
+=end Internal:
+
+=back
+
+=cut
+
+1;
