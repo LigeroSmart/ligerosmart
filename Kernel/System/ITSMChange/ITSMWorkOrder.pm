@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.76 2010-01-15 09:41:18 bes Exp $
+# $Id: ITSMWorkOrder.pm,v 1.77 2010-01-20 10:07:11 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.76 $) [1];
+$VERSION = qw($Revision: 1.77 $) [1];
 
 =head1 NAME
 
@@ -138,7 +138,6 @@ or
 
     my $WorkOrderID = $WorkOrderObject->WorkOrderAdd(
         ChangeID         => 123,
-        WorkOrderNumber  => 5,                                         # (optional)
         WorkOrderTitle   => 'Replacement of mail server',              # (optional)
         Instruction      => 'Install the the new server',              # (optional)
         Report           => 'Installed new server without problems',   # (optional)
@@ -276,11 +275,8 @@ sub WorkOrderAdd {
         $WorkOrderTypeID = $ItemDataRef->{ItemID};
     }
 
-    # get default workorder number if not given
-    my $WorkOrderNumber = delete $Param{WorkOrderNumber};
-    if ( !$WorkOrderNumber ) {
-        $WorkOrderNumber = $Self->_GetWorkOrderNumber(%Param);
-    }
+    # get a unique workorder number
+    my $WorkOrderNumber = $Self->_GetWorkOrderNumber(%Param);
 
     # add WorkOrder to database
     return if !$Self->{DBObject}->Do(
@@ -2681,6 +2677,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.76 $ $Date: 2010-01-15 09:41:18 $
+$Revision: 1.77 $ $Date: 2010-01-20 10:07:11 $
 
 =cut
