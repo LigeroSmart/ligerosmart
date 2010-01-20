@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template.pm - all template functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.22 2010-01-19 15:08:01 bes Exp $
+# $Id: Template.pm,v 1.23 2010-01-20 09:59:47 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Valid;
 use Data::Dumper;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 =head1 NAME
 
@@ -732,6 +732,31 @@ sub TemplateDeSerialize {
 
     eval "\$TemplateData = $TemplateContent; 1;" or return;
 
+    return if !$TemplateData;
+    return if ref $TemplateData ne 'HASH';
+
+    # create entities defined by the template
+    my $ElementID = $Self->_CreateTemplateElements(
+        %Param,
+        Template => $TemplateData,
+    );
+
+    return $ElementID;
+}
+
+=begin Internal:
+
+=item _CreateTemplateElements()
+
+=cut
+
+sub _CreateTemplateElements {
+    my ( $Self, %Param ) = @_;
+
+    # get children
+    my $Children = delete $Param{Template}->{Children};
+    $Children ||= [];
+
     # dispatch table
     my %Method2Subroutine = (
         ChangeAdd    => '_ChangeAdd',
@@ -740,30 +765,29 @@ sub TemplateDeSerialize {
         ConditionAdd => '_ConditionAdd',
     );
 
-    # create entities defined by the template
-    my $ChangeID = $Param{ChangeID};
-    my $ThingID  = $Param{ChangeID};
+    # get action
+    my ( $Method, $Data ) = each %{ $Param{Template} };
+    my $Sub = $Method2Subroutine{$Method};
 
-    ENTITY:
-    for my $Entity ( @{$TemplateData} ) {
-        my ( $Method, $Data ) = each %{$Entity};
+    return if !$Sub;
 
-        my $Sub = $Method2Subroutine{$Method};
+    # create parent element
+    my %ParentReturn = $Self->$Sub(
+        %Param,
+        Data => $Data,
+    );
 
-        next ENTITY if !$Sub;
-
-        ( $ChangeID, $ThingID ) = $Self->$Sub(
+    # create child elements
+    for my $Child ( @{$Children} ) {
+        $Self->_CreateTemplateElements(
             %Param,
-            Data     => $Data,
-            ChangeID => $ChangeID,
-            UserID   => $Param{UserID},
+            %ParentReturn,
+            Template => $Child,
         );
     }
 
-    return ( $ChangeID, $ThingID, $TemplateData );
+    return $ParentReturn{ID};
 }
-
-=begin Internal:
 
 =item _ITSMChangeSerialize()
 
@@ -774,11 +798,29 @@ are "wrapped" within an arrayreference...
     my $TemplateString = $TemplateObject->_ITSMChangeSerialize(
         ChangeID => 1,
         UserID   => 1,
+        Return   => 'HASH', # (optional) HASH|STRING default 'STRING'
     );
 
 returns
 
-    '[{ChangeAdd => {Title => 'title', ...}}, {WorkOrderAdd => { ChangeID => 123, ... }}]'
+    '{ChangeAdd => {Title => 'title', ...}}, {WorkOrderAdd => { ChangeID => 123, ... }}'
+
+If parameter C<Return> is set to C<HASH>, the Perl datastructure
+is returned
+
+    {
+        ChangeAdd => { ... },
+        Children  => [
+            {
+                WorkOrderAdd => { ... },
+                Children     => [ ... ],
+            },
+            {
+                WorkOrderAdd => { ... },
+                Children     => [ ... ],
+            },
+        ],
+    }
 
 =cut
 
@@ -795,6 +837,9 @@ sub _ITSMChangeSerialize {
             return;
         }
     }
+
+    # set default value for 'Return'
+    $Param{Return} ||= 'STRING';
 
     # get change
     my $Change = $Self->{ChangeObject}->ChangeGet(
@@ -817,31 +862,20 @@ sub _ITSMChangeSerialize {
         $CleanChange->{$Attribute} = $Change->{$Attribute};
     }
 
-    my $OriginalData = [ { ChangeAdd => $CleanChange } ];
+    my $OriginalData = { ChangeAdd => $CleanChange };
 
     # get workorders
     WORKORDERID:
     for my $WorkOrderID ( @{ $Change->{WorkOrderIDs} } ) {
-        my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+        my $WorkOrder = $Self->_ITSMWorkOrderSerialize(
             WorkOrderID => $WorkOrderID,
             UserID      => $Param{UserID},
+            Return      => 'HASH',
         );
 
         next WORKORDERID if !$WorkOrder;
 
-        # keep just wanted attributes
-        my $CleanWorkOrder;
-        for my $Attribute (
-            qw(WorkOrderID ChangeID WorkOrderNumber WorkOrderTitle Instruction InstructionPlain
-            Report ReportPlain WorkOrderStateID WorkOrderTypeID WorkOrderAgentID PlannedStartTime
-            PlannedEndTime ActualStartTime ActualEndTime AccountedTime PlannedEffort
-            CreateTime CreateBy ChangeTime ChangeBy)
-            )
-        {
-            $CleanWorkOrder->{$Attribute} = $WorkOrder->{$Attribute};
-        }
-
-        push @{$OriginalData}, { WorkOrderAdd => $CleanWorkOrder };
+        push @{ $OriginalData->{Children} }, $WorkOrder;
     }
 
     # get condition list for the change
@@ -854,17 +888,22 @@ sub _ITSMChangeSerialize {
     # get each condition
     CONDITIONID:
     for my $ConditionID ( @{$ConditionList} ) {
-        my $Condition = $Self->{ConditionObject}->ConditionGet(
+        my $Condition = $Self->_ConditionSerialize(
             ConditionID => $ConditionID,
             UserID      => $Param{UserID},
+            Return      => 'HASH',
         );
 
         next CONDITIONID if !$Condition;
 
-        push @{$OriginalData}, { ConditionAdd => $Condition };
+        push @{ $OriginalData->{Children} }, $Condition;
     }
 
     # TODO: get attachments
+
+    if ( $Param{Return} eq 'HASH' ) {
+        return $OriginalData;
+    }
 
     # no indentation (saves space)
     local $Data::Dumper::Indent = 0;
@@ -881,17 +920,26 @@ sub _ITSMChangeSerialize {
 =item _ITSMWorkOrderSerialize()
 
 Serialize a workorder. This is done with Data::Dumper. It returns
-a serialized string of the datastructure. The change actions
-are "wrapped" within an arrayreference...
+a serialized string of the datastructure. The workorder actions
+are "wrapped" within a hashreference...
 
     my $TemplateString = $TemplateObject->_ITSMWorkOrderSerialize(
         WorkOrderID => 1,
         UserID      => 1,
+        Return      => 'HASH', # (optional) HASH|STRING default 'STRING'
     );
 
 returns
 
-    '[{WorkOrderAdd => { ChangeID => 123, ... }}]'
+    '{WorkOrderAdd => { ChangeID => 123, ... }}'
+
+If parameter C<Return> is set to C<HASH>, the Perl datastructure
+is returned
+
+    {
+        WorkOrderAdd => { ... },
+        Children     => [ ... ],
+    }
 
 =cut
 
@@ -908,6 +956,9 @@ sub _ITSMWorkOrderSerialize {
             return;
         }
     }
+
+    # set default value for 'Return'
+    $Param{Return} ||= 'STRING';
 
     # get workorder
     my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
@@ -931,14 +982,18 @@ sub _ITSMWorkOrderSerialize {
 
     # TODO: get Attachments
 
+    # templates have to be an array reference;
+    my $OriginalData = { WorkOrderAdd => $CleanWorkOrder };
+
+    if ( $Param{Return} eq 'HASH' ) {
+        return $OriginalData;
+    }
+
     # no indentation (saves space)
     local $Data::Dumper::Indent = 0;
 
     # do not use cross-referencing
     local $Data::Dumper::Deepcopy = 1;
-
-    # templates have to be an array reference;
-    my $OriginalData = [ { WorkOrderAdd => $CleanWorkOrder } ];
 
     # serialize the data (do not use $VAR1, but $TemplateData for Dumper output)
     my $SerializedData = Data::Dumper->Dump( [$OriginalData], ['TemplateData'] );
@@ -949,17 +1004,26 @@ sub _ITSMWorkOrderSerialize {
 =item _CABSerialize()
 
 Serialize the CAB of a change. This is done with Data::Dumper. It returns
-a serialized string of the datastructure. The change actions
-are "wrapped" within an arrayreference...
+a serialized string of the datastructure. The CAB actions
+are "wrapped" within a hashreference...
 
     my $TemplateString = $TemplateObject->_CABSerialize(
         ChangeID => 1,
         UserID   => 1,
+        Return   => 'HASH', # (optional) HASH|STRING default 'STRING'
     );
 
 returns
 
-    '[{CABAdd => { CABCustomers => [ 'mm@localhost' ], ... }}]'
+    '{CABAdd => { CABCustomers => [ 'mm@localhost' ], ... }}'
+
+If parameter C<Return> is set to C<HASH>, the Perl datastructure
+is returned
+
+    {
+        CABAdd   => { ... },
+        Children => [ ... ],
+    }
 
 =cut
 
@@ -977,6 +1041,9 @@ sub _CABSerialize {
         }
     }
 
+    # set default value for 'Return'
+    $Param{Return} ||= 'STRING';
+
     # get CAB of the change
     my $Change = $Self->{ChangeObject}->ChangeGet(
         ChangeID => $Param{ChangeID},
@@ -985,21 +1052,23 @@ sub _CABSerialize {
 
     return if !$Change;
 
+    # templates have to be an array reference;
+    my $OriginalData = {
+        CABAdd => {
+            CABCustomers => $Change->{CABCustomers},
+            CABAgents    => $Change->{CABAgents},
+        },
+    };
+
+    if ( $Param{Return} eq 'HASH' ) {
+        return $OriginalData;
+    }
+
     # no indentation (saves space)
     local $Data::Dumper::Indent = 0;
 
     # do not use cross-referencing
     local $Data::Dumper::Deepcopy = 1;
-
-    # templates have to be an array reference;
-    my $OriginalData = [
-        {
-            CABAdd => {
-                CABCustomers => $Change->{CABCustomers},
-                CABAgents    => $Change->{CABAgents},
-            },
-        }
-    ];
 
     # serialize the data (do not use $VAR1, but $TemplateData for Dumper output)
     my $SerializedData = Data::Dumper->Dump( [$OriginalData], ['TemplateData'] );
@@ -1011,17 +1080,26 @@ sub _CABSerialize {
 =item _ConditionSerialize()
 
 Serialize a condition. This is done with Data::Dumper. It returns
-a serialized string of the datastructure. The change actions
-are "wrapped" within an arrayreference...
+a serialized string of the datastructure. The condition actions
+are "wrapped" within a hashreference...
 
     my $TemplateString = $TemplateObject->_ConditionSerialize(
         ConditionID => 1,
         UserID      => 1,
+        Return      => 'HASH', # (optional) HASH|STRING default 'STRING'
     );
 
 returns
 
-    '[{ConditionAdd => { ... }}]'
+    '{ConditionAdd => { ... }}'
+
+If parameter C<Return> is set to C<HASH>, the Perl datastructure
+is returned
+
+    {
+        ConditionAdd => { ... },
+        Children     => [ ... ],
+    }
 
 =cut
 
@@ -1039,6 +1117,9 @@ sub _ConditionSerialize {
         }
     }
 
+    # set default value for 'Return'
+    $Param{Return} ||= 'STRING';
+
     # get condition
     my $Condition = $Self->{ConditionObject}->ConditionGet(
         ConditionID => $Param{ConditionID},
@@ -1047,14 +1128,18 @@ sub _ConditionSerialize {
 
     return if !$Condition;
 
+    # templates have to be an array reference;
+    my $OriginalData = { ConditionAdd => $Condition };
+
+    if ( $Param{Return} eq 'HASH' ) {
+        return $OriginalData;
+    }
+
     # no indentation (saves space)
     local $Data::Dumper::Indent = 0;
 
     # do not use cross-referencing
     local $Data::Dumper::Deepcopy = 1;
-
-    # templates have to be an array reference;
-    my $OriginalData = [ { ConditionAdd => $Condition } ];
 
     # serialize the data (do not use $VAR1, but $TemplateData for Dumper output)
     my $SerializedData = Data::Dumper->Dump( [$OriginalData], ['TemplateData'] );
@@ -1064,9 +1149,10 @@ sub _ConditionSerialize {
 
 =item _ChangeAdd()
 
-Creates a new change based on a template. It returns the new ChangeID.
+Creates a new change based on a template. It returns a hash with additional
+info like ChangeID.
 
-    my $ChangeID = $TemplateObject->_ChangeAdd(
+    my %Return = $TemplateObject->_ChangeAdd(
         Data => {
             ChangeTitle => 'test',
         },
@@ -1097,6 +1183,16 @@ sub _ChangeAdd {
     # these attributes are generated automatically, so don't pass them to ChangeAdd()
     delete @Data{qw(ChangeID ChangeNumber CreateTime CreateBy ChangeTime ChangeBy)};
 
+    # if user set a new time, calculate difference
+    my $Difference;
+    if ( $Param{NewTimeInEpoche} ) {
+        my $OldTime = $Data{ $Param{MoveTimeType} };
+        $Difference = $Self->_GetTimeDifference(
+            CurrentTime     => $OldTime,
+            NewTimeInEpoche => $Param{NewTimeInEpoche},
+        );
+    }
+
     # PlannedXXXTime was saved just for "move time" purposes
     delete $Data{PlannedEndTime};
     delete $Data{PlannedStartTime};
@@ -1113,7 +1209,13 @@ sub _ChangeAdd {
         UserID => $Param{UserID},
     );
 
-    return ( $ChangeID, $ChangeID );
+    my %Info = (
+        ID             => $ChangeID,
+        ChangeID       => $ChangeID,
+        TimeDifference => $Difference,
+    );
+
+    return %Info;
 }
 
 =item _WorkOrderAdd()
@@ -1166,6 +1268,32 @@ sub _WorkOrderAdd {
                 delete $Data{"$Prefix${Suffix}Time"};
             }
         }
+    }
+
+    # move time slot for workorder if
+    my $Difference = $Param{TimeDifference};
+    if ( $Difference || $Param{NewTimeInEpoche} ) {
+
+        # calc new values for start and end time
+        for my $Suffix (qw(Start End)) {
+            if ( $Data{"Planned${Suffix}Time"} ) {
+
+                # get difference if not already calculated
+                if ( !$Difference && $Param{NewTimeInEpoche} ) {
+                    $Difference = $Self->_GetTimeDifference(
+                        CurrentTime     => $Data{"Planned${Suffix}Time"},
+                        NewTimeInEpoche => $Param{NewTimeInEpoche},
+                    );
+                }
+
+                # get new value
+                $Data{"Planned${Suffix}Time"} = $Self->_MoveTime(
+                    CurrentTime => $Data{"Planned${Suffix}Time"},
+                    Difference  => $Difference,
+                );
+            }
+        }
+
     }
 
     # override the change id from the template
@@ -1246,8 +1374,8 @@ If a new planned start/end time was given, the difference is needed
 to move all time values
 
     my $DiffInSeconds = $TemplateObject->_GetTimeDifference(
-        CurrentTime => '2010-01-12 00:00:00',
-        NewTime      => '2010-01-13 00:00:00',
+        CurrentTime     => '2010-01-12 00:00:00',
+        NewTimeInEpoche => 1234567890,
     );
 
 =cut
@@ -1256,7 +1384,7 @@ sub _GetTimeDifference {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(CurrentTime NewTime)) {
+    for my $Argument (qw(CurrentTime NewTimeInEpoche)) {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -1266,17 +1394,12 @@ sub _GetTimeDifference {
         }
     }
 
-    # get planned time as timestamp
-    my $NewSystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
-        String => $Param{NewTime},
-    );
-
     # get current time as timestamp
     my $CurrentSystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
         String => $Param{CurrentTime},
     );
 
-    my $DiffSeconds = $NewSystemTime - $CurrentSystemTime;
+    my $DiffSeconds = $Param{NewTimeInEpoche} - $CurrentSystemTime;
 
     return $DiffSeconds;
 }
@@ -1309,7 +1432,7 @@ sub _MoveTime {
 
     # get current time as timestamp
     my $CurrentSystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
-        String => $Param{OriginalValue},
+        String => $Param{CurrentTime},
     );
 
     # get planned time as timestamp
@@ -1338,6 +1461,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.22 $ $Date: 2010-01-19 15:08:01 $
+$Revision: 1.23 $ $Date: 2010-01-20 09:59:47 $
 
 =cut
