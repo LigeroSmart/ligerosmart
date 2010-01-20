@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMStateMachine.pm - all state machine functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMStateMachine.pm,v 1.9 2010-01-06 10:32:48 ub Exp $
+# $Id: ITSMStateMachine.pm,v 1.10 2010-01-20 00:15:04 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::GeneralCatalog;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 =head1 NAME
 
@@ -238,7 +238,7 @@ sub StateTransitionAdd {
         if ( $NextStateIDs && @{$NextStateIDs} && scalar @{$NextStateIDs} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "StateTransitionAdd() failed! Can not set state "
+                Message  => "Can not set state "
                     . "'$StateID2State{$Param{StateID}}' (ID: $Param{StateID}) as end state, "
                     . "because other following states exist, which must be deleted first!",
             );
@@ -259,7 +259,7 @@ sub StateTransitionAdd {
         if ( $NextStateIDs && @{$NextStateIDs} && !$NextStateIDs->[0] ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "StateTransitionAdd() failed! State '$StateID2State{$Param{StateID}}' "
+                Message  => "State '$StateID2State{$Param{StateID}}' "
                     . "(ID: $Param{StateID}) is defined as an end state, "
                     . "it must be deleted first, before new following states can be added!",
             );
@@ -667,7 +667,7 @@ sub StateTransitionUpdate {
 
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "StateTransitionUpdate() failed! Can not set state "
+                Message  => "Can not set state "
                     . "'$StateID2State{$Param{StateID}}' (ID: $Param{StateID}) as end state, "
                     . "because other following states exist, which must be deleted first!",
             );
@@ -863,6 +863,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.9 $ $Date: 2010-01-06 10:32:48 $
+$Revision: 1.10 $ $Date: 2010-01-20 00:15:04 $
 
 =cut
