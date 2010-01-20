@@ -1,8 +1,8 @@
 # --
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.47 2009-10-07 13:18:04 reb Exp $
+# $Id: GeneralCatalog.pm,v 1.48 2010-01-20 13:56:38 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Valid;
 use Kernel::System::CheckItem;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.47 $) [1];
+$VERSION = qw($Revision: 1.48 $) [1];
 
 =head1 NAME
 
@@ -319,7 +319,7 @@ Return
     $ItemData{ChangeBy}
 
     my $ItemDataRef = $GeneralCatalogObject->ItemGet(
-        ItemID  => 3,
+        ItemID => 3,
     );
 
     or
@@ -686,6 +686,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.47 $ $Date: 2009-10-07 13:18:04 $
+$Revision: 1.48 $ $Date: 2010-01-20 13:56:38 $
 
 =cut
