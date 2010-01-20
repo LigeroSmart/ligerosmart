@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderEdit.pm - the OTRS::ITSM::ChangeManagement workorder edit module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderEdit.pm,v 1.38 2010-01-13 04:23:25 ub Exp $
+# $Id: AgentITSMWorkOrderEdit.pm,v 1.39 2010-01-20 11:47:07 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.38 $) [1];
+$VERSION = qw($Revision: 1.39 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -98,7 +98,14 @@ sub Run {
 
     # store needed parameters in %GetParam to make it reloadable
     my %GetParam;
-    for my $ParamName (qw(WorkOrderTitle Instruction SaveAttachment FileID PlannedEffort)) {
+    for my $ParamName (
+        qw(
+        WorkOrderTitle Instruction
+        PlannedEffort
+        SaveAttachment FileID
+        )
+        )
+    {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
@@ -183,7 +190,7 @@ sub Run {
             push @ValidationErrors, 'InvalidPlannedEndTime';
         }
 
-        # check format of planned effort
+        # check format of planned effort, empty is allowed
         if ( $GetParam{PlannedEffort} !~ m{ \A \d* (?: [.] \d{1,2} )? \z }xms ) {
             push @ValidationErrors, 'InvalidPlannedEffort';
         }
@@ -362,7 +369,7 @@ sub Run {
     # time period that can be selected from the GUI
     my %TimePeriod = %{ $Self->{ConfigObject}->Get('ITSMWorkOrder::TimePeriod') };
 
-    # set time selections
+    # set the time selections
     for my $TimeType (qw(PlannedStartTime PlannedEndTime)) {
 
         # set default value for $DiffTime
@@ -391,7 +398,7 @@ sub Run {
         );
     }
 
-    # Add the validation error messages
+    # add the validation error messages
     for my $BlockName (@ValidationErrors) {
 
         # show validation error message
