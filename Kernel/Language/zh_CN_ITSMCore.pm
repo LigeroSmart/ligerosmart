@@ -1,8 +1,8 @@
 # --
 # Kernel/Language/zh_CN_ITSMCore.pm - the Chinese simple translation of ITSMCore
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: zh_CN_ITSMCore.pm,v 1.2 2009-10-14 20:45:11 ub Exp $
+# $Id: zh_CN_ITSMCore.pm,v 1.3 2010-01-20 11:47:27 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -27,7 +27,7 @@ sub Data {
     $Lang->{'Criticality'}                         = '危急程度';
     $Lang->{'Impact'}                              = '影响度';
     $Lang->{'Criticality <-> Impact <-> Priority'} = '危急程度 <-> 影响度 <-> 优先级别';
-    $Lang->{'allocate'}                            = '分配';
+    $Lang->{'allocation'}                          = '分配';
     $Lang->{'Relevant to'}                         = '相关';
     $Lang->{'Includes'}                            = '包括';
     $Lang->{'Part of'}                             = '部分于';

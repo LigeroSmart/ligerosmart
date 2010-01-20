@@ -1,9 +1,9 @@
 # --
 # Kernel/Language/cz_ITSMCore.pm - the czech translation of ITSMCore
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2007-2008 Milen Koutev
 # --
-# $Id: cz_ITSMCore.pm,v 1.13 2009-07-20 12:21:17 ub Exp $
+# $Id: cz_ITSMCore.pm,v 1.14 2010-01-20 11:48:12 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -28,7 +28,7 @@ sub Data {
     $Lang->{'Criticality'}                         = 'Kritiènost';
     $Lang->{'Impact'}                              = 'Vliv';
     $Lang->{'Criticality <-> Impact <-> Priority'} = 'Kritiènost<->Vliv<->Priorita';
-    $Lang->{'allocate'}                            = 'Urèen';
+    $Lang->{'allocation'}                          = 'Urèen';
     $Lang->{'Relevant to'}                         = 'Relevantní';
     $Lang->{'Includes'}                            = 'zahrnuté';
     $Lang->{'Part of'}                             = 'èást';

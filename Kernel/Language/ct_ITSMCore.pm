@@ -1,9 +1,9 @@
 # --
 # Kernel/Language/ct_ITSMCore.pm - the catalan translation of ITSMCore
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2008 Sistemes OTIC (ibsalut) - Antonio Linde
 # --
-# $Id: ct_ITSMCore.pm,v 1.3 2009-05-18 09:48:24 mh Exp $
+# $Id: ct_ITSMCore.pm,v 1.4 2010-01-20 11:48:12 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -28,7 +28,7 @@ sub Data {
     $Lang->{'Criticality'}                         = 'Estat crític';
     $Lang->{'Impact'}                              = 'Impacte';
     $Lang->{'Criticality <-> Impact <-> Priority'} = 'Estat crític <-> Impacte <-> Prioritat';
-    $Lang->{'allocate'}                            = 'assignar';
+    $Lang->{'allocation'}                          = 'assignar';
     $Lang->{'Relevant to'}                         = 'Relevant per';
     $Lang->{'Includes'}                            = 'Inclou';
     $Lang->{'Part of'}                             = 'Part de';

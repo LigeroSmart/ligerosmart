@@ -1,9 +1,9 @@
 # --
 # Kernel/Language/es_ITSMCore.pm - the spanish translation of ITSMCore
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2008 Aquiles Cohen
 # --
-# $Id: es_ITSMCore.pm,v 1.4 2009-05-18 09:48:24 mh Exp $
+# $Id: es_ITSMCore.pm,v 1.5 2010-01-20 11:48:42 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -28,7 +28,7 @@ sub Data {
     $Lang->{'Criticality'}                         = 'Urgencia';
     $Lang->{'Impact'}                              = 'Impacto';
     $Lang->{'Criticality <-> Impact <-> Priority'} = 'Urgencia <-> Impacto <-> Prioridad';
-    $Lang->{'allocate'}                            = 'Asignar';
+    $Lang->{'allocation'}                          = 'Asignar';
     $Lang->{'Relevant to'}                         = 'Relevante a';
     $Lang->{'Includes'}                            = 'Incluye';
     $Lang->{'Part of'}                             = 'Parte de';

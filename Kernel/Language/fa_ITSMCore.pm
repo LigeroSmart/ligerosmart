@@ -1,9 +1,9 @@
 # --
 # Kernel/Language/fa_ITSMCore.pm - the persian (farsi) translation of ITSMCore
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2003-2009 Afshar Mohebbi <afshar.mohebbi at gmail.com>
 # ---
-# $Id: fa_ITSMCore.pm,v 1.1 2009-07-20 10:07:31 ub Exp $
+# $Id: fa_ITSMCore.pm,v 1.2 2010-01-20 11:48:42 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -28,7 +28,7 @@ sub Data {
     $Lang->{'Criticality'}                         = 'اهمیت';
     $Lang->{'Impact'}                              = 'اثر';
     $Lang->{'Criticality <-> Impact <-> Priority'} = 'اهمیت <-> اثر <-> اولویت';
-    $Lang->{'allocate'}                            = 'اختصاص';
+    $Lang->{'allocation'}                          = 'اختصاص';
     $Lang->{'Relevant to'}                         = 'مرتبط با';
     $Lang->{'Includes'}                            = 'مشتمل است بر';
     $Lang->{'Part of'}                             = 'بخشی از';
