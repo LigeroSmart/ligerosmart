@@ -3,7 +3,7 @@
 # event module for ITSMWorkOrder
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrderNumberCalc.pm,v 1.10 2010-01-15 09:34:19 bes Exp $
+# $Id: WorkOrderNumberCalc.pm,v 1.11 2010-01-20 12:07:34 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 =head1 NAME
 
@@ -220,7 +220,7 @@ sub _WorkOrderNumberCalc {
 
     # use WorkOrderSearch: Search for given IDs, ordered by:
     # ActualStartTime, PlannedStartTime, ActualEndTime, PlannedEndTime, WorOrderID
-    my $WorkOrders = $Self->{WorkOrderObject}->WorkOrderSearch(
+    my $SortedWorkOrderIDs = $Self->{WorkOrderObject}->WorkOrderSearch(
         ChangeIDs => [ $Param{ChangeID} ],
         OrderBy   => [
             qw(
@@ -248,7 +248,7 @@ sub _WorkOrderNumberCalc {
 
     # set new WorkOrderNumber
     WORKORDERID:
-    for my $WorkOrderID ( @{$WorkOrders} ) {
+    for my $WorkOrderID ( @{$SortedWorkOrderIDs} ) {
 
         # increment Counter to get new WorkOrderNumber
         $Counter++;
@@ -290,6 +290,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.10 $ $Date: 2010-01-15 09:34:19 $
+$Revision: 1.11 $ $Date: 2010-01-20 12:07:34 $
 
 =cut
