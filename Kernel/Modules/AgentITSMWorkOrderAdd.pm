@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAdd.pm - the OTRS::ITSM::ChangeManagement workorder add module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.pm,v 1.42 2010-01-19 14:44:48 bes Exp $
+# $Id: AgentITSMWorkOrderAdd.pm,v 1.43 2010-01-20 11:13:46 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::Template;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.42 $) [1];
+$VERSION = qw($Revision: 1.43 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -245,12 +245,8 @@ sub Run {
             push @ValidationErrors, 'InvalidPlannedEndTime';
         }
 
-        # check format of planned effort
-        if (
-            $GetParam{PlannedEffort}
-            && $GetParam{PlannedEffort} !~ m{ \A \d* (?: [.] \d{1,2} )? \z }xms
-            )
-        {
+        # check format of planned effort, empty is allowed
+        if ( $GetParam{PlannedEffort} !~ m{ \A \d* (?: [.] \d{1,2} )? \z }xms ) {
             push @ValidationErrors, 'InvalidPlannedEffort';
         }
 
@@ -263,7 +259,7 @@ sub Run {
                 PlannedStartTime => $GetParam{PlannedStartTime},
                 PlannedEndTime   => $GetParam{PlannedEndTime},
                 WorkOrderTypeID  => $GetParam{WorkOrderTypeID},
-                PlannedEffort    => $GetParam{PlannedEffort},
+                PlannedEffort    => $GetParam{PlannedEffort} || '0',
                 UserID           => $Self->{UserID},
             );
 
@@ -474,7 +470,7 @@ sub Run {
         },
     );
 
-    # set the time selection
+    # set the time selections
     for my $TimeType (qw(PlannedStartTime PlannedEndTime)) {
 
         # set default value for $DiffTime
@@ -496,10 +492,13 @@ sub Run {
     if ( $Self->{Config}->{PlannedEffort} ) {
         $Self->{LayoutObject}->Block(
             Name => 'ShowPlannedEffort',
+            Data => {
+                PlannedEffort => $GetParam{PlannedEffort},
+            },
         );
     }
 
-    # Add the validation error messages.
+    # add the validation error messages
     for my $BlockName (@ValidationErrors) {
 
         # show validation error message

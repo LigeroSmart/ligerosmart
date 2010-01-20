@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.149 2010-01-20 10:49:08 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.150 2010-01-20 11:13:45 bes Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -2135,7 +2135,7 @@
             <String Regex="^(rw|ro)$">rw</String>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderAdd###PlannedEffort" Required="1" Valid="1">
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMWorkOrderAdd###PlannedEffort" Required="1" Valid="1">
         <Description Lang="en">If you want to show the planned effort.</Description>
         <Description Lang="de">Soll der geplante Aufwand angezeigt werden.</Description>
         <Group>ITSM Change Management</Group>
