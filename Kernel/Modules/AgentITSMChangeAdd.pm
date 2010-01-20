@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.47 2010-01-19 14:44:48 bes Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.48 2010-01-20 09:56:21 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.47 $) [1];
+$VERSION = qw($Revision: 1.48 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -83,7 +83,8 @@ sub Run {
         OldCategoryID CategoryID OldImpactID ImpactID OldPriorityID PriorityID
         ElementChanged
         SaveAttachment FileID
-        MoveTimeType
+        MoveTimeType MoveTimeYear MoveTimeMonth MoveTimeDay MoveTimeHour
+        MoveTimeMinute MoveTimeUsed
         )
         )
     {
@@ -425,26 +426,80 @@ sub Run {
     # create change from template
     elsif ( $Self->{Subaction} eq 'CreateFromTemplate' ) {
 
-        # TODO: pass new time slot
-        my ( $ChangeID, $ThingID, $TemplateData ) = $Self->{TemplateObject}->TemplateDeSerialize(
-            TemplateID => $Self->{ParamObject}->GetParam( Param => 'TemplateID' ),
-            UserID => $Self->{UserID},
-        );
+        my $NewTime;
 
-        # change could not be created
-        if ( !$ChangeID ) {
+        if ( $GetParam{MoveTimeUsed} ) {
 
-            # show error message, when adding failed
-            return $Self->{LayoutObject}->ErrorScreen(
-                Message => 'Was not able to create change from template!',
-                Comment => 'Please contact the admin.',
-            );
+            # check validity of the time type
+            my $MoveTimeType = $GetParam{MoveTimeType};
+            if (
+                !defined $MoveTimeType
+                || ( $MoveTimeType ne 'PlannedStartTime' && $MoveTimeType ne 'PlannedEndTime' )
+                )
+            {
+                push @ValidationErrors, 'InvalidTimeType';
+            }
+
+            # check the completeness of the time parameter list,
+            # only hour and minute are allowed to be '0'
+            if (
+                !$GetParam{MoveTimeYear}
+                || !$GetParam{MoveTimeMonth}
+                || !$GetParam{MoveTimeDay}
+                || !defined $GetParam{MoveTimeHour}
+                || !defined $GetParam{MoveTimeMinute}
+                )
+            {
+                push @ValidationErrors, 'InvalidMoveTime';
+            }
+
+          # get the system time from the input, if it can't be determined we have a validation error
+            if ( !@ValidationErrors ) {
+
+                # format as timestamp
+                my $PlannedTime = sprintf '%04d-%02d-%02d %02d:%02d:00',
+                    $GetParam{MoveTimeYear},
+                    $GetParam{MoveTimeMonth},
+                    $GetParam{MoveTimeDay},
+                    $GetParam{MoveTimeHour},
+                    $GetParam{MoveTimeMinute};
+
+                # sanity check of the assembled timestamp
+                $NewTime = $Self->{TimeObject}->TimeStamp2SystemTime(
+                    String => $PlannedTime,
+                );
+
+                if ( !$NewTime ) {
+                    push @ValidationErrors, 'InvalidMoveTime';
+                }
+            }
         }
 
-        # redirect to zoom mask, when adding was successful
-        return $Self->{LayoutObject}->Redirect(
-            OP => "Action=AgentITSMChangeZoom&ChangeID=$ChangeID",
-        );
+        if ( !@ValidationErrors ) {
+
+            # create change based on the template
+            my ( $ChangeID, $TemplateData ) = $Self->{TemplateObject}->TemplateDeSerialize(
+                TemplateID => $Self->{ParamObject}->GetParam( Param => 'TemplateID' ),
+                UserID => $Self->{UserID},
+                NewTimeInEpoche => $NewTime,
+                MoveTimeType    => $GetParam{MoveTimeType},
+            );
+
+            # change could not be created
+            if ( !$ChangeID ) {
+
+                # show error message, when adding failed
+                return $Self->{LayoutObject}->ErrorScreen(
+                    Message => 'Was not able to create change from template!',
+                    Comment => 'Please contact the admin.',
+                );
+            }
+
+            # redirect to zoom mask, when adding was successful
+            return $Self->{LayoutObject}->Redirect(
+                OP => "Action=AgentITSMChangeZoom&ChangeID=$ChangeID",
+            );
+        }
     }
 
     # handle saaveattachment subaction
@@ -571,6 +626,17 @@ sub Run {
             MoveTimeSelectionString     => $MoveTimeSelectionString,
         },
     );
+
+    # show validation errors in ChangeTemplate block
+    my %ValidationErrorNames;
+    @ValidationErrorNames{@ValidationErrors} = (1) x @ValidationErrors;
+    for my $ChangeTemplateValidationError (qw(InvalidMoveTimeType InvalidMoveTime)) {
+        if ( $ValidationErrorNames{$ChangeTemplateValidationError} ) {
+            $Self->{LayoutObject}->Block(
+                Name => $ChangeTemplateValidationError,
+            );
+        }
+    }
 
     # output header
     my $Output = $Self->{LayoutObject}->Header(
