@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template.pm - all template functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.23 2010-01-20 09:59:47 reb Exp $
+# $Id: Template.pm,v 1.24 2010-01-20 11:55:56 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,8 +20,10 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::Valid;
 use Data::Dumper;
 
+use base qw(Kernel::System::EventHandler);
+
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.23 $) [1];
+$VERSION = qw($Revision: 1.24 $) [1];
 
 =head1 NAME
 
@@ -104,6 +106,15 @@ sub new {
     $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
     $Self->{ValidObject}     = Kernel::System::Valid->new( %{$Self} );
 
+    # init of event handler
+    $Self->EventHandlerInit(
+        Config     => 'ITSMTemplate::EventModule',
+        BaseObject => 'TemplateObject',
+        Objects    => {
+            %{$Self},
+        },
+    );
+
     return $Self;
 }
 
@@ -176,7 +187,14 @@ sub TemplateAdd {
         return;
     }
 
-    # TODO: execute TemplateAddPre Event
+    # trigger TemplateAddPre-Event
+    $Self->EventHandler(
+        Event => 'TemplateAddPre',
+        Data  => {
+            %Param,
+        },
+        UserID => $Param{UserID},
+    );
 
     # add new template to database
     return if !$Self->{DBObject}->Do(
@@ -211,7 +229,15 @@ sub TemplateAdd {
         return;
     }
 
-    # TODO: execute TemplateAddPost Event
+    # trigger TemplateAddPost-Event
+    $Self->EventHandler(
+        Event => 'TemplateUpdatePre',
+        Data  => {
+            %Param,
+            TemplateID => $TemplateID,
+        },
+        UserID => $Param{UserID},
+    );
 
     return $TemplateID;
 }
@@ -246,7 +272,20 @@ sub TemplateUpdate {
         }
     }
 
-    # TODO: execute TemplateUpdatePre Event
+    # trigger TemplateUpdatePre-Event
+    $Self->EventHandler(
+        Event => 'TemplateUpdatePre',
+        Data  => {
+            %Param,
+        },
+        UserID => $Param{UserID},
+    );
+
+    # get template data
+    my $TemplateData = $Self->TemplateGet(
+        TemplateID => $Param{TemplateID},
+        UserID     => $Param{UserID},
+    );
 
     # map update attributes to column names
     my %Attribute = (
@@ -286,7 +325,15 @@ sub TemplateUpdate {
         Bind => \@Bind,
     );
 
-    # TODO: execute TemplateUpdatePost Event
+    # trigger TemplateUpdatePost-Event
+    $Self->EventHandler(
+        Event => 'TemplateUpdatePost',
+        Data  => {
+            OldTemplateData => $TemplateData,
+            %Param,
+        },
+        UserID => $Param{UserID},
+    );
 
     return 1;
 }
@@ -514,9 +561,20 @@ sub TemplateDelete {
         }
     }
 
-    # TODO: execute TemplateDeletePre Event
-    # TODO it may be neccessary to get the ChangeID from TemplateGet()
-    # so that the history entry will be written to the correct change
+    # trigger TemplateDeletePre-Event
+    $Self->EventHandler(
+        Event => 'TemplateDeletePre',
+        Data  => {
+            %Param,
+        },
+        UserID => $Param{UserID},
+    );
+
+    # get template data
+    my $TemplateData = $Self->TemplateGet(
+        TemplateID => $Param{TemplateID},
+        UserID     => $Param{UserID},
+    );
 
     # delete template from database
     return if !$Self->{DBObject}->Do(
@@ -524,7 +582,15 @@ sub TemplateDelete {
         Bind => [ \$Param{TemplateID} ],
     );
 
-    # TODO: execute TemplateDeletePost Event
+    # trigger TemplateDeletePost-Event
+    $Self->EventHandler(
+        Event => 'TemplateDeletePost',
+        Data  => {
+            OldTemplateData => $TemplateData,
+            %Param,
+        },
+        UserID => $Param{UserID},
+    );
 
     return 1;
 }
@@ -620,6 +686,7 @@ This method is in fact a dispatcher for different template types.
 Currently ITSMChangeManagement supports these template types:
 
 ITSMChange
+ITSMWorkOrder
 
 The method returns a datastructure, serialized with Data::Dumper.
 
@@ -688,17 +755,10 @@ sub TemplateSerialize {
 
 =item TemplateDeSerialize()
 
-This method deserializes the template content.
-Two IDs and a Perl datastructure is returned. Actually,
-they datastructure is an array reference with hash references as elements.
-TODO: find better way to pass back the IDs of the generated changes, workorders, ...
-The first returned ID is the ChangeID of the newly created change, or
-the change id to which a workorder was added.
-The second ID is the ID of the last created change or workorder.
-When only a workorder was added, the ThingID can be used for redirecting to the
-new workorder.
+This method deserializes the template content. It returns the
+ID of the "main" element that was created based on the template.
 
-    my ( $ChangeID, $ThingID, $ArrayReference ) = $TemplateObject->TemplateDeSerialize(
+    my $ElementID = $TemplateObject->TemplateDeSerialize(
         TemplateID => 123,
         UserID     => 1,
     );
@@ -748,10 +808,45 @@ sub TemplateDeSerialize {
 
 =item _CreateTemplateElements()
 
+This method dispatches the elements creation. It calls the subroutine
+that belongs to the given type (e.g. ChangeAdd). After that it
+invokes itself for all the childrens of the main element.
+
+This method returns the ID of the main element.
+
+    my $ElementID = $TemplateObject->_CreateTemplateElements(
+        Template => {
+            ChangeAdd => { ... },
+            Children  => [
+                {
+                    WorkOrderAdd => { ... },
+                    Children     => [ ... ],
+                },
+                {
+                    WorkOrderAdd => { ... },
+                    Children     => [ ... ],
+                },
+            ],
+        },
+
+        # any other parameters can follow
+    )
+
 =cut
 
 sub _CreateTemplateElements {
     my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(Template)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
 
     # get children
     my $Children = delete $Param{Template}->{Children};
@@ -1303,7 +1398,13 @@ sub _WorkOrderAdd {
         UserID   => $Param{UserID},
     );
 
-    return ( $Param{ChangeID}, $WorkOrderID );
+    my %Info = (
+        ID          => $WorkOrderID,
+        WorkOrderID => $WorkOrderID,
+        ChangeID    => $Param{ChangeID},
+    );
+
+    return %Info;
 }
 
 =item _CABAdd()
@@ -1350,10 +1451,27 @@ sub _CABAdd {
         UserID       => $Param{UserID},
     );
 
-    return ( $Param{ChangeID}, $Param{ChangeID} );
+    my %Info = (
+        ID       => $Param{ChangeID},
+        ChangeID => $Param{ChangeID},
+    );
+
+    return %Info;
 }
 
 =item _ConditionAdd()
+
+Creates new conditions for a change based on the given template. It
+returns a hash of information (change id it was created for, id is
+the condition id)
+
+    my %Info = $TemplateObject->_ConditionAdd(
+        Data => {
+            # ... Params for ConditionAdd
+        },
+        ChangeID => 1,
+        UserID   => 1,
+    );
 
 =cut
 
@@ -1365,7 +1483,12 @@ sub _ConditionAdd {
         %Param,
     );
 
-    return ( $Param{ChangeID}, $ConditionID );
+    my %Info = (
+        ID       => $ConditionID,
+        ChangeID => $Param{ChangeID},
+    );
+
+    return %Info;
 }
 
 =item _GetTimeDifference()
@@ -1461,6 +1584,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.23 $ $Date: 2010-01-20 09:59:47 $
+$Revision: 1.24 $ $Date: 2010-01-20 11:55:56 $
 
 =cut
