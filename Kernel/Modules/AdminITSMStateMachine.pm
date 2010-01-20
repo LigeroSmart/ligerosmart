@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AdminITSMStateMachine.pm - to add/update/delete state transitions
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMStateMachine.pm,v 1.23 2009-12-23 21:44:12 bes Exp $
+# $Id: AdminITSMStateMachine.pm,v 1.24 2010-01-20 08:30:37 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange::ITSMStateMachine;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.23 $) [1];
+$VERSION = qw($Revision: 1.24 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -381,6 +381,21 @@ sub _OverviewStateTransitionsPageGet {
                     NextStateName => $NextStateName,
                 },
             );
+
+            # only show the delete link if it is not the statrt state
+            if ( $StateName ne '*START*' ) {
+                $Self->{LayoutObject}->Block(
+                    Name => 'StateTransitionDeleteButton',
+                    Data => {
+                        %Param,
+                        CssClass      => $CssClass,
+                        StateID       => $StateID,
+                        StateName     => $StateName,
+                        NextStateID   => $NextStateID,
+                        NextStateName => $NextStateName,
+                    },
+                );
+            }
         }
     }
 
