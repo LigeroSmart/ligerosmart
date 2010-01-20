@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.147 2010-01-18 16:37:11 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.148 2010-01-20 10:37:57 bes Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -752,7 +752,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMChangeMenuGeneric</Item>
                 <Item Key="Name">Template</Item>
-                <Item Key="Description">Create a template from this change</Item>
+                <Item Key="Description">Save change as a template</Item>
                 <Item Key="Action">AgentITSMChangeTemplate</Item>
                 <Item Key="Link">Action=AgentITSMChangeTemplate;ChangeID=$QData{"ChangeID"}</Item>
             </Hash>
@@ -872,7 +872,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrderMenuWithPermissionFromChange</Item>
                 <Item Key="Name">Template</Item>
-                <Item Key="Description">Create a template from this workorder</Item>
+                <Item Key="Description">Save workorder as a template</Item>
                 <Item Key="Action">AgentITSMWorkOrderTemplate</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderTemplate;WorkOrderID=$QData{"WorkOrderID"}</Item>
             </Hash>

@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMChangeManagement.pm - the german translation of ITSMChangeManagement
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: de_ITSMChangeManagement.pm,v 1.19 2010-01-16 10:45:49 bes Exp $
+# $Id: de_ITSMChangeManagement.pm,v 1.20 2010-01-20 10:37:57 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -34,6 +34,8 @@ sub Data {
         = 'Der geplante Start muss vor dem geplanten Ende liegen!';
     $Lang->{'Time type'}                          = 'Art des Zeitpunktes';
     $Lang->{'Requested (by customer) Date'}       = 'Wunschtermin (des Kunden)';
+    $Lang->{'Imperative::Save'}                   = 'Speichere';
+    $Lang->{'as Template'}                        = 'als Vorlage';
 
     # Change menu
     $Lang->{'ITSM Change'} = 'Change';
