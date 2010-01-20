@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAdd.pm - the OTRS::ITSM::ChangeManagement workorder add module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.pm,v 1.44 2010-01-20 11:47:07 bes Exp $
+# $Id: AgentITSMWorkOrderAdd.pm,v 1.45 2010-01-20 12:13:56 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::Template;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.44 $) [1];
+$VERSION = qw($Revision: 1.45 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -106,7 +106,8 @@ sub Run {
         WorkOrderTitle Instruction WorkOrderTypeID
         PlannedEffort
         SaveAttachment FileID
-        MoveTimeType
+        MoveTimeType MoveTimeYear MoveTimeMonth MoveTimeDay MoveTimeHour
+        MoveTimeMinute MoveTimeUsed
         )
         )
     {
@@ -314,28 +315,81 @@ sub Run {
     # create workorder from template
     elsif ( $Self->{Subaction} eq 'CreateFromTemplate' ) {
 
-        # TODO: pass new time slot
-        my ( $ChangeID, $WorkOrderID, $TemplateData )
-            = $Self->{TemplateObject}->TemplateDeSerialize(
-            ChangeID   => $ChangeID,
-            TemplateID => $Self->{ParamObject}->GetParam( Param => 'TemplateID' ),
-            UserID     => $Self->{UserID},
-            );
+        my $NewTime;
 
-        # change could not be created
-        if ( !$WorkOrderID ) {
+        if ( $GetParam{MoveTimeUsed} ) {
 
-            # show error message, when adding failed
-            return $Self->{LayoutObject}->ErrorScreen(
-                Message => 'Was not able to create workorder from template!',
-                Comment => 'Please contact the admin.',
-            );
+            # check validity of the time type
+            my $MoveTimeType = $GetParam{MoveTimeType};
+            if (
+                !defined $MoveTimeType
+                || ( $MoveTimeType ne 'PlannedStartTime' && $MoveTimeType ne 'PlannedEndTime' )
+                )
+            {
+                push @ValidationErrors, 'InvalidTimeType';
+            }
+
+            # check the completeness of the time parameter list,
+            # only hour and minute are allowed to be '0'
+            if (
+                !$GetParam{MoveTimeYear}
+                || !$GetParam{MoveTimeMonth}
+                || !$GetParam{MoveTimeDay}
+                || !defined $GetParam{MoveTimeHour}
+                || !defined $GetParam{MoveTimeMinute}
+                )
+            {
+                push @ValidationErrors, 'InvalidMoveTime';
+            }
+
+          # get the system time from the input, if it can't be determined we have a validation error
+            if ( !@ValidationErrors ) {
+
+                # format as timestamp
+                my $PlannedTime = sprintf '%04d-%02d-%02d %02d:%02d:00',
+                    $GetParam{MoveTimeYear},
+                    $GetParam{MoveTimeMonth},
+                    $GetParam{MoveTimeDay},
+                    $GetParam{MoveTimeHour},
+                    $GetParam{MoveTimeMinute};
+
+                # sanity check of the assembled timestamp
+                $NewTime = $Self->{TimeObject}->TimeStamp2SystemTime(
+                    String => $PlannedTime,
+                );
+
+                if ( !$NewTime ) {
+                    push @ValidationErrors, 'InvalidMoveTime';
+                }
+            }
         }
 
-        # redirect to zoom mask, when adding was successful
-        return $Self->{LayoutObject}->Redirect(
-            OP => "Action=AgentITSMWorkOrderZoom&WorkOrderID=$WorkOrderID",
-        );
+        if ( !@ValidationErrors ) {
+
+            # create workorder from template
+            my $WorkOrderID = $Self->{TemplateObject}->TemplateDeSerialize(
+                ChangeID        => $ChangeID,
+                TemplateID      => $Self->{ParamObject}->GetParam( Param => 'TemplateID' ),
+                UserID          => $Self->{UserID},
+                NewTimeInEpoche => $NewTime,
+                MoveTimeType    => $GetParam{MoveTimeType},
+            );
+
+            # change could not be created
+            if ( !$WorkOrderID ) {
+
+                # show error message, when adding failed
+                return $Self->{LayoutObject}->ErrorScreen(
+                    Message => 'Was not able to create workorder from template!',
+                    Comment => 'Please contact the admin.',
+                );
+            }
+
+            # redirect to zoom mask, when adding was successful
+            return $Self->{LayoutObject}->Redirect(
+                OP => "Action=AgentITSMWorkOrderZoom&WorkOrderID=$WorkOrderID",
+            );
+        }
     }
 
     # handle saaveattachment subaction
@@ -427,6 +481,17 @@ sub Run {
             MoveTimeSelectionString     => $MoveTimeSelectionString,
         },
     );
+
+    # show validation errors in WorkOrderTemplate block
+    my %ValidationErrorNames;
+    @ValidationErrorNames{@ValidationErrors} = (1) x @ValidationErrors;
+    for my $ChangeTemplateValidationError (qw(InvalidMoveTimeType InvalidMoveTime)) {
+        if ( $ValidationErrorNames{$ChangeTemplateValidationError} ) {
+            $Self->{LayoutObject}->Block(
+                Name => $ChangeTemplateValidationError,
+            );
+        }
+    }
 
     # output header
     my $Output = $Self->{LayoutObject}->Header(

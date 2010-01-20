@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.48 2010-01-20 09:56:21 reb Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.49 2010-01-20 12:13:56 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.48 $) [1];
+$VERSION = qw($Revision: 1.49 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -478,7 +478,7 @@ sub Run {
         if ( !@ValidationErrors ) {
 
             # create change based on the template
-            my ( $ChangeID, $TemplateData ) = $Self->{TemplateObject}->TemplateDeSerialize(
+            my $ChangeID = $Self->{TemplateObject}->TemplateDeSerialize(
                 TemplateID => $Self->{ParamObject}->GetParam( Param => 'TemplateID' ),
                 UserID => $Self->{UserID},
                 NewTimeInEpoche => $NewTime,
