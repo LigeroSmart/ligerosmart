@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.79 2010-01-20 11:47:07 bes Exp $
+# $Id: ITSMWorkOrder.pm,v 1.80 2010-01-20 12:06:40 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.79 $) [1];
+$VERSION = qw($Revision: 1.80 $) [1];
 
 =head1 NAME
 
@@ -452,7 +452,7 @@ sub WorkOrderUpdate {
         );
     }
 
-    # default value for planned start time,
+    # default value for planned effort
     # this avoids superflous history entries
     if ( exists $Param{PlannedEffort} ) {
         $Param{PlannedEffort} ||= 0;
@@ -2685,6 +2685,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.79 $ $Date: 2010-01-20 11:47:07 $
+$Revision: 1.80 $ $Date: 2010-01-20 12:06:40 $
 
 =cut
