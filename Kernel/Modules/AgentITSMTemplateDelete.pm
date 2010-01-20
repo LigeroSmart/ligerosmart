@@ -1,15 +1,15 @@
 # --
-# Kernel/Modules/AgentITSMTemplateEdit.pm - the template edit module
+# Kernel/Modules/AgentITSMTemplateDelete.pm - the OTRS::ITSM::ChangeManagement template delete module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMTemplateEdit.pm,v 1.2 2010-01-20 17:38:06 bes Exp $
+# $Id: AgentITSMTemplateDelete.pm,v 1.1 2010-01-20 17:38:06 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Modules::AgentITSMTemplateEdit;
+package Kernel::Modules::AgentITSMTemplateDelete;
 
 use strict;
 use warnings;
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::Template;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.1 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -72,44 +72,6 @@ sub Run {
         );
     }
 
-    # store all needed parameters in %GetParam to make it reloadable
-    my %GetParam;
-    for my $ParamName (qw(Name)) {
-        $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
-    }
-
-    my @ValidationErrors;
-
-    # handle the 'Save' subaction
-    if ( $Self->{Subaction} eq 'Save' ) {
-
-        # TODO: validate
-
-        if ( !@ValidationErrors ) {
-            my $CouldUpdateTemplate = $Self->{TemplateObject}->TemplateUpdate(
-                TemplateID => $TemplateID,
-                Name       => $GetParam{Name},
-                UserID     => $Self->{UserID},
-            );
-
-            if ($CouldUpdateTemplate) {
-
-                # redirect to zoom mask, TODO: use the stored last view
-                return $Self->{LayoutObject}->Redirect(
-                    OP => "Action=AgentITSMTemplateOverview",
-                );
-            }
-            else {
-
-                # show error message
-                return $Self->{LayoutObject}->ErrorScreen(
-                    Message => "Was not able to update Template $TemplateID!",
-                    Comment => 'Please contact the admin.',
-                );
-            }
-        }
-    }
-
     # get template data
     my $Template = $Self->{TemplateObject}->TemplateGet(
         TemplateID => $TemplateID,
@@ -124,15 +86,39 @@ sub Run {
         );
     }
 
+    if ( $Self->{Subaction} eq 'TemplateDelete' ) {
+
+        my $CouldDeleteTemplate = $Self->{TemplateObject}->TemplateDelete(
+            TemplateID => $TemplateID,
+            UserID     => $Self->{UserID},
+        );
+
+        if ($CouldDeleteTemplate) {
+
+            # redirect to change zoom mask, when update was successful
+            return $Self->{LayoutObject}->Redirect(
+                OP => "Action=AgentITSMTemplateOverview",
+            );
+        }
+        else {
+
+            # show error message, when delete failed
+            return $Self->{LayoutObject}->ErrorScreen(
+                Message => "Was not able to delete the template $TemplateID!",
+                Comment => 'Please contact the admin.',
+            );
+        }
+    }
+
     # output header
     my $Output = $Self->{LayoutObject}->Header(
-        Title => $Template->{Name},
+        Title => 'Delete',
     );
     $Output .= $Self->{LayoutObject}->NavigationBar();
 
     # start template output
     $Output .= $Self->{LayoutObject}->Output(
-        TemplateFile => 'AgentITSMTemplateEdit',
+        TemplateFile => 'AgentITSMTemplateDelete',
         Data         => {
             %{$Template},
         },

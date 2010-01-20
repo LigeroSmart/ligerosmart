@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.152 2010-01-20 17:07:34 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.153 2010-01-20 17:38:06 bes Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -391,6 +391,19 @@
                 <Description>Change Zoom</Description>
                 <Title>Zoom</Title>
                 <NavBarName>ITSM Change</NavBarName>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentITSMTemplateDelete" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AgentITSMTemplateDelete object in the agent interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration des AgentITSMTemplateDelete-Objekts im Agenteninterface.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <GroupRo>itsm-change</GroupRo>
+                <Description>ITSM Template Delete</Description>
+                <Title>ITSM Change</Title>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -2177,6 +2190,15 @@
                 <Item Key="workorder_planned_color">#006400</Item>
                 <Item Key="workorder_actual_color">#3CB371</Item>
             </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMTemplateDelete###Permission" Required="1" Valid="1">
+        <Description Lang="en">Required privilege to delete a template.</Description>
+        <Description Lang="de">Benötigtes Recht zum Löschen einer Vorlage.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ViewTemplateDelete</SubGroup>
+        <Setting>
+            <String Regex="^(rw|ro)$">rw</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMTemplateEdit###Permission" Required="1" Valid="1">
