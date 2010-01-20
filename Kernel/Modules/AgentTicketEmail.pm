@@ -1,9 +1,9 @@
 # --
 # Kernel/Modules/AgentTicketEmail.pm - to compose initial email to customer
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketEmail.pm,v 1.13 2009-09-30 17:52:29 ub Exp $
-# $OldId: AgentTicketEmail.pm,v 1.99.2.1 2009/09/30 09:10:15 mb Exp $
+# $Id: AgentTicketEmail.pm,v 1.14 2010-01-20 13:53:50 ub Exp $
+# $OldId: AgentTicketEmail.pm,v 1.99.2.3 2010/01/07 22:26:02 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,7 +33,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1229,11 +1229,17 @@ sub Run {
                 }
             }
         }
+
+        # convert Signature to ASCII, if RichText is on
+        if ( $Self->{ConfigObject}->Get('Frontend::RichText') ) {
+            $Signature = $Self->{HTMLUtilsObject}->ToAscii( String => $Signature, );
+        }
+
         my $JSON = $Self->{LayoutObject}->BuildJSON(
             [
                 {
                     Name         => 'Signature',
-                    Data         => $Self->{HTMLUtilsObject}->ToAscii( String => $Signature, ),
+                    Data         => $Signature,
                     Translation  => 1,
                     PossibleNone => 1,
                     Max          => 100,
@@ -1242,7 +1248,7 @@ sub Run {
                     Name         => 'NewUserID',
                     Data         => $Users,
                     SelectedID   => $GetParam{NewUserID},
-                    Translation  => 1,
+                    Translation  => 0,
                     PossibleNone => 1,
                     Max          => 100,
                 },
@@ -1250,7 +1256,7 @@ sub Run {
                     Name         => 'NewResponsibleID',
                     Data         => $ResponsibleUsers,
                     SelectedID   => $GetParam{NewResponsibleID},
-                    Translation  => 1,
+                    Translation  => 0,
                     PossibleNone => 1,
                     Max          => 100,
                 },
@@ -1285,7 +1291,7 @@ sub Run {
                     Data         => $Services,
                     SelectedID   => $GetParam{ServiceID},
                     PossibleNone => 1,
-                    Translation  => 1,
+                    Translation  => 0,
                     TreeView     => $TreeView,
                     Max          => 100,
                 },
@@ -1294,7 +1300,7 @@ sub Run {
                     Data         => $SLAs,
                     SelectedID   => $GetParam{SLAID},
                     PossibleNone => 1,
-                    Translation  => 1,
+                    Translation  => 0,
                     Max          => 100,
                 },
                 @ExtendedData,

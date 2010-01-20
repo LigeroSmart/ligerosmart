@@ -1,9 +1,9 @@
 # --
 # Kernel/Modules/AgentTicketPhone.pm - to handle phone calls
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.pm,v 1.14 2009-08-28 11:37:01 mh Exp $
-# $OldId: AgentTicketPhone.pm,v 1.113 2009/08/25 14:32:55 martin Exp $
+# $Id: AgentTicketPhone.pm,v 1.15 2010-01-20 13:53:50 ub Exp $
+# $OldId: AgentTicketPhone.pm,v 1.113.2.2 2010/01/07 22:26:02 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -31,7 +31,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -199,7 +199,11 @@ sub Run {
         }
 
         # store last queue screen
-        if ( $Self->{LastScreenOverview} !~ /Action=AgentTicketPhone/ ) {
+        if (
+            $Self->{LastScreenOverview} !~ /Action=AgentTicketPhone/
+            && $Self->{RequestedURL} !~ /Action=AgentTicketPhone.*LinkTicketID=/
+            )
+        {
             $Self->{SessionObject}->UpdateSessionID(
                 SessionID => $Self->{SessionID},
                 Key       => 'LastScreenOverview',
@@ -1247,7 +1251,7 @@ sub Run {
                     Name         => 'NewUserID',
                     Data         => $Users,
                     SelectedID   => $GetParam{NewUserID},
-                    Translation  => 1,
+                    Translation  => 0,
                     PossibleNone => 1,
                     Max          => 100,
                 },
@@ -1255,7 +1259,7 @@ sub Run {
                     Name         => 'NewResponsibleID',
                     Data         => $ResponsibleUsers,
                     SelectedID   => $GetParam{NewResponsibleID},
-                    Translation  => 1,
+                    Translation  => 0,
                     PossibleNone => 1,
                     Max          => 100,
                 },
@@ -1290,7 +1294,7 @@ sub Run {
                     Data         => $Services,
                     SelectedID   => $GetParam{ServiceID},
                     PossibleNone => 1,
-                    Translation  => 1,
+                    Translation  => 0,
                     TreeView     => $TreeView,
                     Max          => 100,
                 },
@@ -1299,7 +1303,7 @@ sub Run {
                     Data         => $SLAs,
                     SelectedID   => $GetParam{SLAID},
                     PossibleNone => 1,
-                    Translation  => 1,
+                    Translation  => 0,
                     Max          => 100,
                 },
                 @TicketFreeTextConfig,
