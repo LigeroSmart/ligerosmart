@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMTemplateOverview.pm - the template overview module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMTemplateOverview.pm,v 1.2 2010-01-21 09:07:22 bes Exp $
+# $Id: AgentITSMTemplateOverview.pm,v 1.3 2010-01-21 10:23:23 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::Template;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -95,7 +95,7 @@ sub Run {
         # define position of the filter in the frontend
         my $PrioCounter = 1000;
 
-        # get all change states that should be used as filters
+        # get all template types that should be used as filters
         TEMPLATE_TYPE:
         for my $TemplateType ( @{ $Self->{Config}->{'Filter::TemplateTypes'} } ) {
 
@@ -108,13 +108,13 @@ sub Run {
                 UserID       => $Self->{UserID},
             );
 
-            # do not use invalid change states
+            # do not use invalid template types
             next TEMPLATE_TYPE if !$TemplateTypeID;
 
             # increase the PrioCounter
             $PrioCounter++;
 
-            # add filter for the current change state
+            # add filter for the current template type
             $Filters{$TemplateType} = {
                 Name   => "TemplateType::$TemplateType",
                 Prio   => $PrioCounter,
@@ -171,7 +171,7 @@ sub Run {
         };
     }
 
-    # show changes
+    # show templates
     my $LinkPage = 'Filter='
         . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
         . '&';
