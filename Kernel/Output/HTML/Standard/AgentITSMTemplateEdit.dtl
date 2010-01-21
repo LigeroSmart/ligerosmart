@@ -2,18 +2,37 @@
 # AgentITSMTemplateEdit.dtl - provides HTML form for AgentITSMTemplateEdit
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMTemplateEdit.dtl,v 1.1 2010-01-20 17:07:35 bes Exp $
+# $Id: AgentITSMTemplateEdit.dtl,v 1.2 2010-01-21 12:44:00 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
+<script type="text/javascript">
+<!--
+
+function submit_compose() {
+
+    // check the template name, all whitespace counts as empty
+    if (document.compose.TemplateName.value.match(/^\s*$/)) {
+        alert('$JSText{"A template must have a name!"}');
+        document.compose.TemplateName.focus();
+
+        return false;
+    }
+
+    return true;
+}
+
+//-->
+</script>
+
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
         <td class="mainhead">
-            <div title="$Env{"Box0"}$Text{"Edit"} $Text{"Template"} $QData{"Name"} $Env{"Box1"}">
-                $Env{"Box0"}$Text{"Edit"} $Text{"Template"} $QData{"Name"} $Env{"Box1"}
+            <div title="$Env{"Box0"}$Text{"Edit"} $Text{"TemplateType::$QData{"Type"}"} $Text{"Template"} $QData{"Name"} $Env{"Box1"}">
+                $Env{"Box0"}$Text{"Edit"} $Text{"TemplateType::$QData{"Type"}"} $Text{"Template"} $QData{"Name"} $Env{"Box1"}
             </div>
         </td>
     </tr>
@@ -27,8 +46,8 @@
         <td class="mainbody">
             <br>
             <form action="$Env{"CGIHandle"}" method="post" name="compose">
-                <input type="hidden" name="Action"    value="$Env{"Action"}">
-                <input type="hidden" name="Subaction" value="Save">
+                <input type="hidden" name="Action"     value="$Env{"Action"}">
+                <input type="hidden" name="Subaction"  value="UpdateTemplate">
                 <input type="hidden" name="TemplateID" value="$QData{"TemplateID"}">
                 <table border="0" width="800px" align="center" cellspacing="0" cellpadding="4">
                     <tr>
@@ -38,28 +57,39 @@
                         <td>
                             <table border="0" width="100%" cellspacing="0" cellpadding="3">
                                 <colgroup>
-                                    <col width="130px">
-                                    <col>
+                                    <col width="130px"/>
                                 </colgroup>
                                 <tr>
                                     <td class="contentkey">
-                                        $Text{"Name"}:
+                                        $Text{"Template Name"}:
                                         <font color="red" title="$Text{"Required"}">*</font>
                                     </td>
                                     <td class="contentvalue">
-                                        <input type="text" name="Name" value="$QData{"Name"}" size="70"/>
-<!-- dtl:block:InvalidName -->
+                                        <input type="text" name="TemplateName" value="$QData{"TemplateName"}" size="70" maxlength="250">
+<!-- dtl:block:InvalidTemplateName -->
                                         <br />
                                         <font color="red" size="-2">$Text{"Input invalid"}</font>
-<!-- dtl:block:InvalidName -->
+<!-- dtl:block:InvalidTemplateName -->
                                     </td>
+                                </tr>
+                                <tr>
+                                    <td class="contentkey">
+                                        $Text{"Comment"}:
+                                    </td>
+                                    <td class="contentvalue">
+                                        <input type="text" name="Comment" value="$QData{"Comment"}" size="70" maxlength="250">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="contentkey">$Text{"Valid"}: </td>
+                                    <td class="contentvalue">$Data{"ValidSelectionString"}</td>
                                 </tr>
                             </table>
                         </td>
                     </tr>
                     <tr>
                         <td class="contentfooter">
-                            <input class="button" type="submit" name="Submit" value="$Text{"Save"}">
+                            <input class="button" id="submitEditTemplate" accesskey="g" type="submit" name="EditTemplate" value="$Text{"Save"}" onclick="return submit_compose();"/>
                         </td>
                     </tr>
                 </table>

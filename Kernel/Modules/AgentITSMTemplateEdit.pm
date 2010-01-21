@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMTemplateEdit.pm - the template edit module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMTemplateEdit.pm,v 1.2 2010-01-20 17:38:06 bes Exp $
+# $Id: AgentITSMTemplateEdit.pm,v 1.3 2010-01-21 12:44:00 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::Template;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -37,6 +37,7 @@ sub new {
     # create additional objects
     $Self->{ChangeObject}   = Kernel::System::ITSMChange->new(%Param);
     $Self->{TemplateObject} = Kernel::System::ITSMChange::Template->new(%Param);
+    $Self->{ValidObject}    = Kernel::System::Valid->new(%Param);
 
     # get config for frontend
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
@@ -72,23 +73,29 @@ sub Run {
         );
     }
 
-    # store all needed parameters in %GetParam to make it reloadable
+    # store needed parameters in %GetParam to make it reloadable
     my %GetParam;
-    for my $ParamName (qw(Name)) {
+    for my $ParamName (qw(TemplateName Comment ValidID)) {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
     my @ValidationErrors;
 
-    # handle the 'Save' subaction
-    if ( $Self->{Subaction} eq 'Save' ) {
+    # update the template
+    if ( $Self->{Subaction} eq 'UpdateTemplate' ) {
 
-        # TODO: validate
+        # check validity of the template name
+        my $TemplateName = $GetParam{TemplateName};
+        if ( !$TemplateName ) {
+            push @ValidationErrors, 'InvalidTemplateName';
+        }
 
         if ( !@ValidationErrors ) {
             my $CouldUpdateTemplate = $Self->{TemplateObject}->TemplateUpdate(
                 TemplateID => $TemplateID,
-                Name       => $GetParam{Name},
+                Name       => $GetParam{TemplateName},
+                Comment    => $GetParam{Comment},
+                ValidID    => $GetParam{ValidID},
                 UserID     => $Self->{UserID},
             );
 
@@ -109,6 +116,11 @@ sub Run {
             }
         }
     }
+    else {
+
+        # initially use the data from $Template
+        %GetParam = ();
+    }
 
     # get template data
     my $Template = $Self->{TemplateObject}->TemplateGet(
@@ -124,17 +136,38 @@ sub Run {
         );
     }
 
+    # fix up the name
+    $Template->{TemplateName} = $Template->{Name};
+
     # output header
     my $Output = $Self->{LayoutObject}->Header(
-        Title => $Template->{Name},
+        Title => $Template->{TemplateName},
     );
     $Output .= $Self->{LayoutObject}->NavigationBar();
+
+    my $ValidSelectionString = $Self->{LayoutObject}->BuildSelection(
+        Data => {
+            $Self->{ValidObject}->ValidList(),
+        },
+        Name       => 'ValidID',
+        SelectedID => $GetParam{ValidID}
+            || $Template->{ValidID}
+            || ( $Self->{ValidObject}->ValidIDsGet() )[0],
+        Sort => 'NumericKey',
+    );
+
+    # add the validation error messages
+    for my $BlockName (@ValidationErrors) {
+        $Self->{LayoutObject}->Block( Name => $BlockName );
+    }
 
     # start template output
     $Output .= $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentITSMTemplateEdit',
         Data         => {
             %{$Template},
+            %GetParam,
+            ValidSelectionString => $ValidSelectionString,
         },
     );
 
