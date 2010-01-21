@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAgent.pm - the OTRS::ITSM::ChangeManagement workorder agent edit module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAgent.pm,v 1.31 2010-01-20 17:07:34 bes Exp $
+# $Id: AgentITSMWorkOrderAgent.pm,v 1.32 2010-01-21 09:20:57 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.31 $) [1];
+$VERSION = qw($Revision: 1.32 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -90,18 +90,13 @@ sub Run {
         );
     }
 
-    # store all needed parameters in %GetParam to make it reloadable
+    # store needed parameters in %GetParam to make it reloadable
     # ExpandUserName1: find out whether 'Search User' was clicked
     # ExpandUserName2: find out whether 'Take this User' was clicked
     # ClearUser: find out whether 'Clear User' was clicked
     my %GetParam;
     for my $ParamName (qw(User ExpandUserName1 ExpandUserName2 SelectedUser ClearUser)) {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
-    }
-
-    # the autocompleter seems to add an extra space, the button version does not
-    if ( $GetParam{User} ) {
-        $GetParam{User} =~ s{ \s+ \z }{}xms;
     }
 
     # $DoNotSave implies that the user should not be saved as workorder agent
@@ -141,7 +136,8 @@ sub Run {
 
                     # show error message
                     return $Self->{LayoutObject}->ErrorScreen(
-                        Message => "Was not able to update WorkOrder $WorkOrder->{WorkOrderID}!",
+                        Message =>
+                            "Was not able to update the workorder '$WorkOrder->{WorkOrderID}'!",
                         Comment => 'Please contact the admin.',
                     );
                 }
@@ -280,7 +276,7 @@ sub Run {
         UserID   => $Self->{UserID},
     );
 
-    # check error
+    # check whether change was found
     if ( !$Change ) {
         return $Self->{LayoutObject}->ErrorScreen(
             Message => "Could not find Change for WorkOrder $WorkOrderID!",

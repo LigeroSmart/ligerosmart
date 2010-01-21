@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderEdit.pm - the OTRS::ITSM::ChangeManagement workorder edit module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderEdit.pm,v 1.39 2010-01-20 11:47:07 bes Exp $
+# $Id: AgentITSMWorkOrderEdit.pm,v 1.40 2010-01-21 09:20:57 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.39 $) [1];
+$VERSION = qw($Revision: 1.40 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -28,17 +28,20 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Object (qw(ParamObject DBObject LayoutObject LogObject ConfigObject)) {
+    for my $Object (
+        qw(ParamObject DBObject LayoutObject LogObject ConfigObject)
+        )
+    {
         if ( !$Self->{$Object} ) {
             $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
         }
     }
 
-    # create needed objects
+    # create additional objects
     $Self->{ChangeObject}    = Kernel::System::ITSMChange->new(%Param);
     $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
 
-    # get config of frontend module
+    # get config for frontend
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMWorkOrder::Frontend::$Self->{Action}");
 
     return $Self;
@@ -345,7 +348,7 @@ sub Run {
         UserID   => $Self->{UserID},
     );
 
-    # check if change is found
+    # check whether change was found
     if ( !$Change ) {
         return $Self->{LayoutObject}->ErrorScreen(
             Message => "Could not find Change for WorkOrder $WorkOrderID!",
