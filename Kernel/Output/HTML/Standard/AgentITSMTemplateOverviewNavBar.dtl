@@ -2,7 +2,7 @@
 # AgentITSMTemplateOverviewNavBar.dtl - html for template overview table
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMTemplateOverviewNavBar.dtl,v 1.1 2010-01-20 16:16:26 bes Exp $
+# $Id: AgentITSMTemplateOverviewNavBar.dtl,v 1.2 2010-01-21 08:57:44 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -35,10 +35,10 @@
                                     $Text{"Filter"}:
 <!-- dtl:block:OverviewNavBarFilterItem -->
 <!-- dtl:block:OverviewNavBarFilterItemSelected -->
-                                    <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"FilterLink"}Filter=$LQData{"Filter"}" style="text-decoration:none"><b>$Text{"$QData{"Name"}"}</b></a>
+                                    <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"FilterLink"}Filter=$LQData{"Filter"}" style="text-decoration:none"><b>$Text{"TemplateType::$QData{"Name"}"}</b></a>
 <!-- dtl:block:OverviewNavBarFilterItemSelected -->
 <!-- dtl:block:OverviewNavBarFilterItemSelectedNot -->
-                                    <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"FilterLink"}Filter=$LQData{"Filter"}">$Text{"$QData{"Name"}"}</a>
+                                    <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"FilterLink"}Filter=$LQData{"Filter"}">$Text{"TemplateType::$QData{"Name"}"}</a>
 <!-- dtl:block:OverviewNavBarFilterItemSelectedNot -->
 <!-- dtl:block:OverviewNavBarFilterItemSplit -->
                                     -
