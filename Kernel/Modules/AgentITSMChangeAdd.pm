@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.49 2010-01-20 12:13:56 reb Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.50 2010-01-21 12:57:38 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.49 $) [1];
+$VERSION = qw($Revision: 1.50 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -735,13 +735,9 @@ sub Run {
         SelectedID => $SelectedPriority,
     );
 
-    # Add the validation error messages.
+    # add the validation error messages
     for my $BlockName (@ValidationErrors) {
-
-        # show validation error message
-        $Self->{LayoutObject}->Block(
-            Name => $BlockName,
-        );
+        $Self->{LayoutObject}->Block( Name => $BlockName );
     }
 
     # show attachments

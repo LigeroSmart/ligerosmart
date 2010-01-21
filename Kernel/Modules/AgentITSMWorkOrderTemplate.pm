@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderTemplate.pm - the OTRS::ITSM::ChangeManagement add template module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderTemplate.pm,v 1.4 2010-01-21 12:50:49 bes Exp $
+# $Id: AgentITSMWorkOrderTemplate.pm,v 1.5 2010-01-21 12:57:38 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::Template;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -193,10 +193,8 @@ sub Run {
         Sort       => 'NumericKey',
     );
 
-    # Add the validation error messages.
+    # add the validation error messages
     for my $BlockName (@ValidationErrors) {
-
-        # show validation error message
         $Self->{LayoutObject}->Block( Name => $BlockName );
     }
 

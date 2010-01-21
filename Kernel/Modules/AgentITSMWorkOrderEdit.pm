@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderEdit.pm - the OTRS::ITSM::ChangeManagement workorder edit module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderEdit.pm,v 1.40 2010-01-21 09:20:57 bes Exp $
+# $Id: AgentITSMWorkOrderEdit.pm,v 1.41 2010-01-21 12:57:38 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.40 $) [1];
+$VERSION = qw($Revision: 1.41 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -403,11 +403,7 @@ sub Run {
 
     # add the validation error messages
     for my $BlockName (@ValidationErrors) {
-
-        # show validation error message
-        $Self->{LayoutObject}->Block(
-            Name => $BlockName,
-        );
+        $Self->{LayoutObject}->Block( Name => $BlockName );
     }
 
     # show attachments

@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeEdit.pm - the OTRS::ITSM::ChangeManagement change edit module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.pm,v 1.40 2010-01-17 10:32:12 bes Exp $
+# $Id: AgentITSMChangeEdit.pm,v 1.41 2010-01-21 12:57:38 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.40 $) [1];
+$VERSION = qw($Revision: 1.41 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -501,11 +501,9 @@ sub Run {
         SelectedID => $GetParam{PriorityID} || $Change->{PriorityID},
     );
 
-    # Add the validation error messages.
+    # add the validation error messages
     for my $BlockName (@ValidationErrors) {
-        $Self->{LayoutObject}->Block(
-            Name => $BlockName,
-        );
+        $Self->{LayoutObject}->Block( Name => $BlockName );
     }
 
     # show attachments
