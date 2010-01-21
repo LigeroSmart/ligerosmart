@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMTemplate.pm - provides generic HTML output for templates
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: LayoutITSMTemplate.pm,v 1.1 2010-01-20 16:16:26 bes Exp $
+# $Id: LayoutITSMTemplate.pm,v 1.2 2010-01-21 14:53:56 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use POSIX qw(ceil);
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =over 4
 
@@ -179,24 +179,13 @@ sub ITSMTemplateListShow {
         }
     }
 
-    # loop over configured backends
-    for my $Backend ( keys %{$Backends} ) {
+    # loop over configured backends, when there is more than a single backend
+    if ( scalar( keys %{$Backends} ) > 1 ) {
+        for my $Backend ( keys %{$Backends} ) {
 
-        # build navbar view mode
-        $Env->{LayoutObject}->Block(
-            Name => 'OverviewNavBarViewMode',
-            Data => {
-                %Param,
-                %{ $Backends->{$Backend} },
-                Filter => $Param{Filter},
-                View   => $Backend,
-            },
-        );
-
-        # current view is configured in backend
-        if ( $View eq $Backend ) {
+            # build navbar view mode
             $Env->{LayoutObject}->Block(
-                Name => 'OverviewNavBarViewModeSelected',
+                Name => 'OverviewNavBarViewMode',
                 Data => {
                     %Param,
                     %{ $Backends->{$Backend} },
@@ -204,17 +193,30 @@ sub ITSMTemplateListShow {
                     View   => $Backend,
                 },
             );
-        }
-        else {
-            $Env->{LayoutObject}->Block(
-                Name => 'OverviewNavBarViewModeNotSelected',
-                Data => {
-                    %Param,
-                    %{ $Backends->{$Backend} },
-                    Filter => $Param{Filter},
-                    View   => $Backend,
-                },
-            );
+
+            # current view is configured in backend
+            if ( $View eq $Backend ) {
+                $Env->{LayoutObject}->Block(
+                    Name => 'OverviewNavBarViewModeSelected',
+                    Data => {
+                        %Param,
+                        %{ $Backends->{$Backend} },
+                        Filter => $Param{Filter},
+                        View   => $Backend,
+                    },
+                );
+            }
+            else {
+                $Env->{LayoutObject}->Block(
+                    Name => 'OverviewNavBarViewModeNotSelected',
+                    Data => {
+                        %Param,
+                        %{ $Backends->{$Backend} },
+                        Filter => $Param{Filter},
+                        View   => $Backend,
+                    },
+                );
+            }
         }
     }
 
