@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeInvolvedPersons.pm - the OTRS::ITSM::ChangeManagement change involved persons module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.32 2010-01-14 10:59:55 bes Exp $
+# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.33 2010-01-21 08:27:46 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,10 +15,11 @@ use strict;
 use warnings;
 
 use Kernel::System::ITSMChange;
+use Kernel::System::ITSMChange::Template;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.32 $) [1];
+$VERSION = qw($Revision: 1.33 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -37,6 +38,7 @@ sub new {
     # create needed objects
     $Self->{CustomerUserObject} = Kernel::System::CustomerUser->new(%Param);
     $Self->{ChangeObject}       = Kernel::System::ITSMChange->new(%Param);
+    $Self->{TemplateObject}     = Kernel::System::ITSMChange::Template->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
@@ -177,7 +179,17 @@ sub Run {
         }
         elsif ( $GetParam{AddCABTemplate} ) {
 
-            # TODO: add a template
+            # create CAB based on the template
+            my $CreatedID = $Self->{TemplateObject}->TemplateDeSerialize(
+                TemplateID => $Self->{ParamObject}->GetParam( Param => 'TemplateID' ),
+                UserID     => $Self->{UserID},
+                ChangeID   => $ChangeID,
+            );
+
+            # redirect to zoom mask, when adding was successful
+            return $Self->{LayoutObject}->Redirect(
+                OP => "Action=AgentITSMChangeInvolvedPersons&ChangeID=$ChangeID",
+            );
         }
         elsif ($ExpandUser) {
 
@@ -419,10 +431,14 @@ sub Run {
     }
 
     # build template dropdown
-    # TODO: fill dropdown with data
+    my $TemplateList = $Self->{TemplateObject}->TemplateList(
+        UserID        => $Self->{UserID},
+        CommentLength => 15,
+        TemplateType  => 'CAB',
+    );
     my $TemplateDropDown = $Self->{LayoutObject}->BuildSelection(
-        Name => 'CABTemplate',
-        Data => {},
+        Name => 'TemplateID',
+        Data => $TemplateList,
     );
 
     # show block with template dropdown
