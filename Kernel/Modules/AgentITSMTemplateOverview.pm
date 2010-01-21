@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMTemplateOverview.pm - the template overview module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMTemplateOverview.pm,v 1.1 2010-01-20 16:16:26 bes Exp $
+# $Id: AgentITSMTemplateOverview.pm,v 1.2 2010-01-21 09:07:22 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::Template;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -116,7 +116,7 @@ sub Run {
 
             # add filter for the current change state
             $Filters{$TemplateType} = {
-                Name   => $TemplateType,
+                Name   => "TemplateType::$TemplateType",
                 Prio   => $PrioCounter,
                 Search => {
                     TemplateType => $TemplateType,
