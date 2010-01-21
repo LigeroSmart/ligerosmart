@@ -2,7 +2,7 @@
 # AgentITSMTemplateDelete.dtl - provides HTML form for AgentITSMTemplateDelete
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMTemplateDelete.dtl,v 1.1 2010-01-20 17:38:06 bes Exp $
+# $Id: AgentITSMTemplateDelete.dtl,v 1.2 2010-01-21 12:07:21 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -40,6 +40,14 @@
                             <tr>
                                 <td class="contentkey">$Text{"Name"}:</td>
                                 <td class="contentvalue">$QData{"Name"}</td>
+                            </tr>
+                            <tr>
+                                <td class="contentkey">$Text{"Type"}:</td>
+                                <td class="contentvalue">$Text{"TemplateType::$QData{"Type"}"}</td>
+                            </tr>
+                            <tr>
+                                <td class="contentkey">$Text{"Comment"}:</td>
+                                <td class="contentvalue">$QData{"Comment", "40"}</td>
                             </tr>
                             <tr>
                                 <td colspan="2">&nbsp;</td>
