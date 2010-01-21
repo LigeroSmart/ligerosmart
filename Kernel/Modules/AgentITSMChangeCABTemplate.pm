@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeCABTemplate.pm - the OTRS::ITSM::ChangeManagement add template module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeCABTemplate.pm,v 1.1 2010-01-21 08:16:01 reb Exp $
+# $Id: AgentITSMChangeCABTemplate.pm,v 1.2 2010-01-21 12:50:49 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::Template;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -103,8 +103,7 @@ sub Run {
     if ( $Self->{Subaction} eq 'AddTemplate' ) {
 
         # check validity of the template name
-        my $TemplateName = $GetParam{TemplateName};
-        if ( !$TemplateName ) {
+        if ( !$GetParam{TemplateName} ) {
             push @ValidationErrors, 'InvalidTemplateName';
         }
 
@@ -169,10 +168,8 @@ sub Run {
         Sort       => 'NumericKey',
     );
 
-    # Add the validation error messages.
+    # add the validation error messages
     for my $BlockName (@ValidationErrors) {
-
-        # show validation error message
         $Self->{LayoutObject}->Block( Name => $BlockName );
     }
 
