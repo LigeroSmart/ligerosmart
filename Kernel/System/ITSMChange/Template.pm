@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template.pm - all template functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.24 2010-01-20 11:55:56 reb Exp $
+# $Id: Template.pm,v 1.25 2010-01-21 11:29:37 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,12 +18,13 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::Valid;
+use Kernel::System::VirtualFS;
 use Data::Dumper;
 
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.24 $) [1];
+$VERSION = qw($Revision: 1.25 $) [1];
 
 =head1 NAME
 
@@ -105,6 +106,7 @@ sub new {
     $Self->{ConditionObject} = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
     $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
     $Self->{ValidObject}     = Kernel::System::Valid->new( %{$Self} );
+    $Self->{VirtualFSObject} = Kernel::System::VirtualFS->new( %{$Self} );
 
     # init of event handler
     $Self->EventHandlerInit(
@@ -854,10 +856,11 @@ sub _CreateTemplateElements {
 
     # dispatch table
     my %Method2Subroutine = (
-        ChangeAdd    => '_ChangeAdd',
-        WorkOrderAdd => '_WorkOrderAdd',
-        CABAdd       => '_CABAdd',
-        ConditionAdd => '_ConditionAdd',
+        ChangeAdd     => '_ChangeAdd',
+        WorkOrderAdd  => '_WorkOrderAdd',
+        CABAdd        => '_CABAdd',
+        ConditionAdd  => '_ConditionAdd',
+        AttachmentAdd => '_AttachmentAdd',
     );
 
     # get action
@@ -994,7 +997,15 @@ sub _ITSMChangeSerialize {
         push @{ $OriginalData->{Children} }, $Condition;
     }
 
-    # TODO: get attachments
+    # get attachments
+    my %ChangeAttachments = $Self->{ChangeObject}->ChangeAttachmentList(
+        ChangeID => $Change->{ChangeID},
+    );
+    for my $FileID ( keys %ChangeAttachments ) {
+
+        # save attachments to this template
+        push @{ $OriginalData->{Children} }, { AttachmentAdd => { FileID => $FileID } };
+    }
 
     if ( $Param{Return} eq 'HASH' ) {
         return $OriginalData;
@@ -1075,10 +1086,18 @@ sub _ITSMWorkOrderSerialize {
         $CleanWorkOrder->{$Attribute} = $WorkOrder->{$Attribute};
     }
 
-    # TODO: get Attachments
-
     # templates have to be an array reference;
     my $OriginalData = { WorkOrderAdd => $CleanWorkOrder };
+
+    # get attachments
+    my %WorkOrderAttachments = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
+        WorkOrderID => $WorkOrder->{WorkOrderID},
+    );
+    for my $FileID ( keys %WorkOrderAttachments ) {
+
+        # save attachments to this template
+        push @{ $OriginalData->{Children} }, { AttachmentAdd => { FileID => $FileID } };
+    }
 
     if ( $Param{Return} eq 'HASH' ) {
         return $OriginalData;
@@ -1491,6 +1510,56 @@ sub _ConditionAdd {
     return %Info;
 }
 
+=item _AttachmentAdd()
+
+=cut
+
+sub _AttachmentAdd {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(UserID ChangeID Data)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    my $Success;
+
+    # if this is a workorder attachment
+    if ( $Param{WorkOrderID} ) {
+        my $Attachment = $Self->{WorkOrderObject}->WorkOrderAttachmentGet(
+            FileID => $Param{Data}->{FileID},
+        );
+
+        $Success = $Self->{WorkOrderObject}->WorkOrderAttachmentAdd(
+            %{$Attachment},
+            ChangeID    => $Param{ChangeID},
+            WorkOrderID => $Param{WorkOrderID},
+            UserID      => $Param{UserID},
+        );
+    }
+
+    # if it is a change attachment
+    else {
+        my $Attachment = $Self->{ChangeObject}->ChangeAttachmentGet(
+            FileID => $Param{Data}->{FileID},
+        );
+
+        $Success = $Self->{ChangeObject}->ChangeAttachmentAdd(
+            %{$Attachment},
+            ChangeID => $Param{ChangeID},
+            UserID   => $Param{UserID},
+        );
+    }
+
+    return $Success;
+}
+
 =item _GetTimeDifference()
 
 If a new planned start/end time was given, the difference is needed
@@ -1584,6 +1653,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.24 $ $Date: 2010-01-20 11:55:56 $
+$Revision: 1.25 $ $Date: 2010-01-21 11:29:37 $
 
 =cut
