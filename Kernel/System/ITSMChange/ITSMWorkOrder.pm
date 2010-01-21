@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.80 2010-01-20 12:06:40 bes Exp $
+# $Id: ITSMWorkOrder.pm,v 1.81 2010-01-21 16:10:09 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.80 $) [1];
+$VERSION = qw($Revision: 1.81 $) [1];
 
 =head1 NAME
 
@@ -756,7 +756,7 @@ sub WorkOrderList {
 =item WorkOrderSearch()
 
 Returns either a list, as an arrayref, or a count of found workorder ids.
-The count of results is returned when the parameter C<Result = 'COUNT'> is passed.
+The count of results is returned when the parameter C<Result => 'COUNT'> is passed.
 
 The search criteria are logically AND connected.
 When a list is passed as criterium, the individual members are OR connected.
@@ -773,8 +773,10 @@ is ignored.
 
         WorkOrderStateIDs => [ 11, 12 ],                               # (optional)
         WorkOrderStates   => [ 'closed', 'canceled' ],                 # (optional)
+
         WorkOrderTypeIDs  => [ 21, 22 ],                               # (optional)
         WorkOrderTypes    => [ 'approval', 'workorder' ],              # (optional)
+
         WorkOrderAgentIDs => [ 1, 2, 3 ],                              # (optional)
         CreateBy          => [ 5, 2, 3 ],                              # (optional)
         ChangeBy          => [ 3, 2, 1 ],                              # (optional)
@@ -945,7 +947,7 @@ sub WorkOrderSearch {
         # remember the value to check if it appears more than once
         $OrderBySeen{$OrderBy} = 1;
 
-        # join the change table, when it is needed in the for the OrderBy clause
+        # join the change table, when it is needed for the OrderBy-clause
         if ( $OrderByTable{$OrderBy} =~ m{ \A c[.] }xms ) {
             push @InnerJoinTables, 'c';
         }
@@ -1003,23 +1005,23 @@ sub WorkOrderSearch {
     return if !$Self->_CheckWorkOrderTypeIDs( WorkOrderTypeIDs => $Param{WorkOrderTypeIDs} );
 
     # look up and thus check the WorkOrderTypes
-    for my $WorkOrderType ( @{ $Param{WorkOrderTypes} } ) {
+    for my $Type ( @{ $Param{WorkOrderTypes} } ) {
 
         # get the ID for the name
-        my $WorkOrderTypeID = $Self->WorkOrderTypeLookup(
-            WorkOrderType => $WorkOrderType,
+        my $TypeID = $Self->WorkOrderTypeLookup(
+            WorkOrderType => $Type,
         );
 
         # check whether the ID was found, whether the name exists
-        if ( !$WorkOrderTypeID ) {
+        if ( !$TypeID ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "The workorder type $WorkOrderType is not known!",
+                Message  => "The workorder type '$Type' is not known!",
             );
             return;
         }
 
-        push @{ $Param{WorkOrderTypeIDs} }, $WorkOrderTypeID;
+        push @{ $Param{WorkOrderTypeIDs} }, $TypeID;
     }
 
     # add string params to the WHERE clause
@@ -2685,6 +2687,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.80 $ $Date: 2010-01-20 12:06:40 $
+$Revision: 1.81 $ $Date: 2010-01-21 16:10:09 $
 
 =cut

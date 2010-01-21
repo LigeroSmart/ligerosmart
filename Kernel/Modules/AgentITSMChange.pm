@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChange.pm - the OTRS::ITSM::ChangeManagement change overview module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChange.pm,v 1.24 2010-01-20 16:16:26 bes Exp $
+# $Id: AgentITSMChange.pm,v 1.25 2010-01-21 16:10:08 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.24 $) [1];
+$VERSION = qw($Revision: 1.25 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -117,11 +117,11 @@ sub Run {
         my $PrioCounter = 1000;
 
         # get all change states that should be used as filters
-        CHANGESTATE:
+        CHANGE_STATE:
         for my $ChangeState ( @{ $Self->{Config}->{'Filter::ChangeStates'} } ) {
 
             # do not use empty change states
-            next CHANGESTATE if !$ChangeState;
+            next CHANGE_STATE if !$ChangeState;
 
             # check if state is valid by looking up the state id
             my $ChangeStateID = $Self->{ChangeObject}->ChangeStateLookup(
@@ -129,7 +129,7 @@ sub Run {
             );
 
             # do not use invalid change states
-            next CHANGESTATE if !$ChangeStateID;
+            next CHANGE_STATE if !$ChangeStateID;
 
             # increase the PrioCounter
             $PrioCounter++;
@@ -161,6 +161,7 @@ sub Run {
     else {
 
         # add default filter
+        # all changes are shown
         $Filters{All} = {
             Name   => 'All',
             Prio   => 1000,
@@ -179,7 +180,7 @@ sub Run {
     }
 
     # search changes which match the selected filter
-    my $ChangeIDsRef = $Self->{ChangeObject}->ChangeSearch(
+    my $IDsRef = $Self->{ChangeObject}->ChangeSearch(
         %{ $Filters{ $Self->{Filter} }->{Search} },
     );
 
@@ -218,8 +219,8 @@ sub Run {
         . '&';
     $Output .= $Self->{LayoutObject}->ITSMChangeListShow(
 
-        ChangeIDs => $ChangeIDsRef,
-        Total     => scalar @{$ChangeIDsRef},
+        ChangeIDs => $IDsRef,
+        Total     => scalar @{$IDsRef},
 
         View => $Self->{View},
 

@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template.pm - all template functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.28 2010-01-21 12:08:15 reb Exp $
+# $Id: Template.pm,v 1.29 2010-01-21 16:10:09 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Data::Dumper;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.28 $) [1];
+$VERSION = qw($Revision: 1.29 $) [1];
 
 =head1 NAME
 
@@ -547,6 +547,366 @@ sub TemplateList {
     }
 
     return \%Templates;
+}
+
+=item TemplateSearch()
+
+Returns either a list, as an arrayref, or a count of found template ids.
+The count of results is returned when the parameter C<Result => 'COUNT'> is passed.
+
+The search criteria are logically AND connected.
+When a list is passed as criterium, the individual members are OR connected.
+When an undef or a reference to an empty array is passed, then the search criterium
+is ignored.
+
+    my $TemplateIDsRef = $TemplateObject->TemplateSearch(
+
+        Name              => 'Sample template',                        # (optional)
+        Comment           => 'just an example',                        # (optional)
+
+        TemplateTypeIDs   => [ 11, 12 ],                               # (optional)
+        TemplateTypes     => [ 'ITSMChange', 'CAB' ],                  # (optional)
+
+        CreateBy          => [ 5, 2, 3 ],                              # (optional)
+        ChangeBy          => [ 3, 2, 1 ],                              # (optional)
+
+        # templates with created time after ...
+        CreateTimeNewerDate       => '2006-01-09 00:00:01',            # (optional)
+        # templates with created time before then ....
+        CreateTimeOlderDate       => '2006-01-19 23:59:59',            # (optional)
+
+        # templates with changed time after ...
+        ChangeTimeNewerDate       => '2006-01-09 00:00:01',            # (optional)
+        # templates with changed time before then ....
+        ChangeTimeOlderDate       => '2006-01-19 23:59:59',            # (optional)
+
+        OrderBy => [ 'TemplateID', 'Name' ],                           # (optional)
+        # ignored when the result type is 'COUNT'
+        # default: [ 'TemplateID' ],
+        # (TemplateID, Name, Comment, TemplateTypeID,
+        # CreateTime, CreateBy, ChangeTime, ChangeBy)
+
+        # Additional information for OrderBy:
+        # The OrderByDirection can be specified for each OrderBy attribute.
+        # The pairing is made by the array indices.
+
+        OrderByDirection => [ 'Down', 'Up' ],                          # (optional)
+        # ignored when the result type is 'COUNT'
+        # default: [ 'Down' ]
+        # (Down | Up)
+
+        UsingWildcards => 1,                                           # (optional)
+        # (0 | 1) default 1
+
+        Result => 'ARRAY' || 'COUNT',                                  # (optional)
+        # default: ARRAY, returns an array of template ids
+        # COUNT returns a scalar with the number of found templates
+
+        Limit => 100,                                                  # (optional)
+        # ignored when the result type is 'COUNT'
+
+        UserID => 1,
+    );
+
+=cut
+
+sub TemplateSearch {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    if ( !$Param{UserID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need UserID!',
+        );
+        return;
+    }
+
+    # verify that all passed array parameters contain an arrayref
+    ARGUMENT:
+    for my $Argument (
+        qw(
+        OrderBy
+        OrderByDirection
+        TemplateTypes
+        TemplateTypeIDs
+        CreateBy
+        ChangeBy
+        )
+        )
+    {
+        if ( !defined $Param{$Argument} ) {
+            $Param{$Argument} ||= [];
+
+            next ARGUMENT;
+        }
+
+        if ( ref $Param{$Argument} ne 'ARRAY' ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "$Argument must be an array reference!",
+            );
+            return;
+        }
+    }
+
+    my @SQLWhere;    # assemble the conditions used in the WHERE clause
+
+    # define order table
+    my %OrderByTable = (
+        TemplateID     => 't.id',
+        Name           => 't.name',
+        Comment        => 't.comments',
+        TemplateTypeID => 't.type_id',
+        CreateTime     => 't.create_time',
+        CreateBy       => 't.create_by',
+        ChangeTime     => 't.change_time',
+        ChangeBy       => 't.change_by',
+    );
+
+    # check if OrderBy contains only unique valid values
+    my %OrderBySeen;
+    for my $OrderBy ( @{ $Param{OrderBy} } ) {
+
+        if ( !$OrderBy || !$OrderByTable{$OrderBy} || $OrderBySeen{$OrderBy} ) {
+
+            # found an error
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "OrderBy contains invalid value '$OrderBy' "
+                    . 'or the value is used more than once!',
+            );
+            return;
+        }
+
+        # remember the value to check if it appears more than once
+        $OrderBySeen{$OrderBy} = 1;
+    }
+
+    # check if OrderByDirection array contains only 'Up' or 'Down'
+    DIRECTION:
+    for my $Direction ( @{ $Param{OrderByDirection} } ) {
+
+        # only 'Up' or 'Down' allowed
+        next DIRECTION if $Direction eq 'Up';
+        next DIRECTION if $Direction eq 'Down';
+
+        # found an error
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "OrderByDirection can only contain 'Up' or 'Down'!",
+        );
+        return;
+    }
+
+    # set default values
+    if ( !defined $Param{UsingWildcards} ) {
+        $Param{UsingWildcards} = 1;
+    }
+
+    # set the default behaviour for the return type
+    my $Result = $Param{Result} || 'ARRAY';
+
+    # check whether the given TemplateTypeIDs are all valid
+    return if !$Self->_CheckTemplateTypeIDs(
+        TemplateTypeIDs => $Param{TemplateTypeIDs},
+        UserID          => $Param{UserID},
+    );
+
+    # look up and thus check the TemplateTypes
+    for my $Type ( @{ $Param{TemplateTypes} } ) {
+
+        # get the ID for the name
+        my $TypeID = $Self->TemplateTypeLookup(
+            TemplateType => $Type,
+            UserID       => $Param{UserID},
+        );
+
+        # check whether the ID was found, whether the name exists
+        if ( !$TypeID ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "The template type '$Type' is not known!",
+            );
+            return;
+        }
+
+        push @{ $Param{TemplateTypeIDs} }, $TypeID;
+    }
+
+    # add string params to the WHERE clause
+    my %StringParams = (
+        Name    => 't.name',
+        Comment => 't.comments',
+    );
+
+    # add string params to sql-where-array
+    STRINGPARAM:
+    for my $StringParam ( keys %StringParams ) {
+
+        # check string params for useful values, the string '0' is allowed
+        next STRINGPARAM if !exists $Param{$StringParam};
+        next STRINGPARAM if !defined $Param{$StringParam};
+        next STRINGPARAM if $Param{$StringParam} eq '';
+
+        # quote
+        $Param{$StringParam} = $Self->{DBObject}->Quote( $Param{$StringParam} );
+
+        # wildcards are used
+        if ( $Param{UsingWildcards} ) {
+
+            # Quote
+            $Param{$StringParam} = $Self->{DBObject}->Quote( $Param{$StringParam}, 'Like' );
+
+            # replace * with %
+            $Param{$StringParam} =~ s{ \*+ }{%}xmsg;
+
+            # do not use string params which contain only %
+            next STRINGPARAM if $Param{$StringParam} =~ m{ \A %* \z }xms;
+
+            push @SQLWhere,
+                "LOWER($StringParams{$StringParam}) LIKE LOWER('$Param{$StringParam}')";
+        }
+
+        # no wildcards are used
+        else {
+            push @SQLWhere,
+                "LOWER($StringParams{$StringParam}) = LOWER('$Param{$StringParam}')";
+        }
+    }
+
+    # set array params
+    my %ArrayParams = (
+        TemplateTypeIDs => 't.type_id',
+        CreateBy        => 't.create_by',
+        ChangeBy        => 't.change_by',
+    );
+
+    # add array params to sql-where-array
+    ARRAYPARAM:
+    for my $ArrayParam ( keys %ArrayParams ) {
+
+        # ignore empty lists
+        next ARRAYPARAM if !@{ $Param{$ArrayParam} };
+
+        # quote
+        for my $OneParam ( @{ $Param{$ArrayParam} } ) {
+            $OneParam = $Self->{DBObject}->Quote($OneParam);
+        }
+
+        # create string
+        my $InString = join ', ', @{ $Param{$ArrayParam} };
+
+        push @SQLWhere, "$ArrayParams{$ArrayParam} IN ($InString)";
+    }
+
+    # check the time params and add them to the WHERE clause of the SELECT-Statement
+    my %TimeParams = (
+        CreateTimeNewerDate => 't.create_time >=',
+        CreateTimeOlderDate => 't.create_time <=',
+        ChangeTimeNewerDate => 't.change_time >=',
+        ChangeTimeOlderDate => 't.change_time <=',
+    );
+    TIMEPARAM:
+    for my $TimeParam ( keys %TimeParams ) {
+
+        next TIMEPARAM if !$Param{$TimeParam};
+
+        if ( $Param{$TimeParam} !~ m{ \A \d\d\d\d-\d\d-\d\d \s \d\d:\d\d:\d\d \z }xms ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "The parameter $TimeParam has an invalid date format!",
+            );
+            return;
+        }
+
+        # quote
+        $Param{$TimeParam} = $Self->{DBObject}->Quote( $Param{$TimeParam} );
+
+        push @SQLWhere, "$TimeParams{$TimeParam} '$Param{$TimeParam}'";
+    }
+
+    # delete the OrderBy parameter when the result type is 'COUNT'
+    if ( $Result eq 'COUNT' ) {
+        $Param{OrderBy} = [];
+    }
+
+    # assemble the ORDER BY clause
+    my @SQLOrderBy;
+    my $Count = 0;
+    for my $OrderBy ( @{ $Param{OrderBy} } ) {
+
+        # set the default order direction
+        my $Direction = 'DESC';
+
+        # add the given order direction
+        if ( $Param{OrderByDirection}->[$Count] ) {
+            if ( $Param{OrderByDirection}->[$Count] eq 'Up' ) {
+                $Direction = 'ASC';
+            }
+            elsif ( $Param{OrderByDirection}->[$Count] eq 'Down' ) {
+                $Direction = 'DESC';
+            }
+        }
+
+        # add SQL
+        push @SQLOrderBy, "$OrderByTable{$OrderBy} $Direction";
+    }
+    continue {
+        $Count++;
+    }
+
+    # if there is a possibility that the ordering is not determined
+    # we add an descending ordering by id
+    if ( !grep { $_ eq 'TemplateID' } ( @{ $Param{OrderBy} } ) ) {
+        push @SQLOrderBy, "$OrderByTable{TemplateID} DESC";
+    }
+
+    # assemble the SQL query
+    my $SQL = 'SELECT t.id FROM change_template t ';
+
+    # modify SQL when the result type is 'COUNT'.
+    # There is no 'GROUP BY' SQL-clause, therefore COUNT(c.id) always give the wanted count
+    if ( $Result eq 'COUNT' ) {
+        $SQL        = 'SELECT COUNT(t.id) FROM change_template t ';
+        @SQLOrderBy = ();
+    }
+
+    # add the WHERE clause
+    if (@SQLWhere) {
+        $SQL .= 'WHERE ';
+        $SQL .= join ' AND ', map {"( $_ )"} @SQLWhere;
+        $SQL .= ' ';
+    }
+
+    # add the ORDER BY clause
+    if (@SQLOrderBy) {
+        $SQL .= 'ORDER BY ';
+        $SQL .= join ', ', @SQLOrderBy;
+        $SQL .= ' ';
+    }
+
+    # ignore the parameter 'Limit' when result type is 'COUNT'
+    if ( $Result eq 'COUNT' ) {
+        $Param{Limit} = 1;
+    }
+
+    # ask database
+    return if !$Self->{DBObject}->Prepare(
+        SQL   => $SQL,
+        Limit => $Param{Limit},
+    );
+
+    # fetch the result
+    my @IDs;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        push @IDs, $Row[0];
+    }
+
+    # return the count as scalar
+    return $IDs[0] if $Result eq 'COUNT';
+
+    return \@IDs;
 }
 
 =item TemplateDelete()
@@ -1670,6 +2030,59 @@ sub _MoveTime {
     return $NewTime;
 }
 
+=item _CheckTemplateTypeIDs()
+
+check whether the given template type ids are all valid
+
+    my $Ok = $TemplateObject->_CheckTemplateTypeIDs(
+        TemplateTypeIDs => [ 2, 500 ],
+        UserID          => 1,
+    );
+
+=cut
+
+sub _CheckTemplateTypeIDs {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(TemplateTypeIDs UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    if ( ref $Param{TemplateTypeIDs} ne 'ARRAY' ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'The param TemplateTypeIDs must be an ARRAY reference!',
+        );
+
+        return;
+    }
+
+    # check if TemplateTypeIDs can be looked up
+    for my $TypeID ( @{ $Param{TemplateTypeIDs} } ) {
+        my $Type = $Self->TemplateTypeLookup(
+            TemplateTypeID => $TypeID,
+        );
+
+        if ( !$Type ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "The type id $TypeID is not valid!",
+            );
+
+            return;
+        }
+    }
+
+    return 1;
+}
+
 1;
 
 =end Internal:
@@ -1688,6 +2101,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.28 $ $Date: 2010-01-21 12:08:15 $
+$Revision: 1.29 $ $Date: 2010-01-21 16:10:09 $
 
 =cut

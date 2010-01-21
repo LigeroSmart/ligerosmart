@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMTemplateOverview.pm - the template overview module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMTemplateOverview.pm,v 1.5 2010-01-21 11:57:28 bes Exp $
+# $Id: AgentITSMTemplateOverview.pm,v 1.6 2010-01-21 16:10:08 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::Template;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -125,9 +125,12 @@ sub Run {
                 Name   => "TemplateType::$TemplateType",
                 Prio   => $PrioCounter,
                 Search => {
-                    TemplateType => $TemplateType,
-                    Valid        => 0,
-                    UserID       => $Self->{UserID},
+                    TemplateTypes => [$TemplateType],
+
+                    #OrderBy          => \@SortByArray,
+                    #OrderByDirection => \@OrderByArray,
+                    Limit  => 1000,
+                    UserID => $Self->{UserID},
                 },
             };
         }
@@ -145,12 +148,15 @@ sub Run {
     else {
 
         # add default filter
-        # all valid and invalid templates are shown
+        # all templates are shown
         $Filters{All} = {
             Name   => 'All',
             Prio   => 1000,
             Search => {
-                Valid  => 0,
+
+                #OrderBy          => \@SortByArray,
+                #OrderByDirection => \@OrderByArray,
+                Limit  => 1000,
                 UserID => $Self->{UserID},
             },
         };
@@ -162,19 +168,23 @@ sub Run {
     }
 
     # search templates which match the selected filter
-    my $TemplateList = $Self->{TemplateObject}->TemplateList(
+    my $IDsRef = $Self->{TemplateObject}->TemplateSearch(
         %{ $Filters{ $Self->{Filter} }->{Search} },
     );
-
-    # for now simply sort numerically
-    my @TemplateIDs = sort { $a <=> $b } keys %{$TemplateList};
 
     # display all navbar filters
     my %NavBarFilter;
     for my $Filter ( keys %Filters ) {
 
+        # count the number of templates for each filter
+        my $Count = $Self->{TemplateObject}->TemplateSearch(
+            %{ $Filters{$Filter}->{Search} },
+            Result => 'COUNT',
+        );
+
         # display the navbar filter
         $NavBarFilter{ $Filters{$Filter}->{Prio} } = {
+            Count  => $Count,
             Filter => $Filter,
             %{ $Filters{$Filter} },
         };
@@ -191,8 +201,8 @@ sub Run {
         . '&';
     $Output .= $Self->{LayoutObject}->ITSMTemplateListShow(
 
-        TemplateIDs => \@TemplateIDs,
-        Total       => scalar @TemplateIDs,
+        TemplateIDs => $IDsRef,
+        Total       => scalar @{$IDsRef},
 
         Filter     => $Self->{Filter},
         Filters    => \%NavBarFilter,
