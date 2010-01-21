@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template.pm - all template functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.27 2010-01-21 11:58:38 reb Exp $
+# $Id: Template.pm,v 1.28 2010-01-21 12:08:15 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Data::Dumper;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.27 $) [1];
+$VERSION = qw($Revision: 1.28 $) [1];
 
 =head1 NAME
 
@@ -241,6 +241,11 @@ sub TemplateAdd {
         UserID => $Param{UserID},
     );
 
+    # TODO: all attachments in the template should be copied
+    # in the virtual fs. Otherwise it could happen that an
+    # attachment is deleted after template creation and therefor
+    # no longer available.
+
     return $TemplateID;
 }
 
@@ -336,6 +341,11 @@ sub TemplateUpdate {
         },
         UserID => $Param{UserID},
     );
+
+    # TODO: all attachments in the template should be copied
+    # in the virtual fs. Otherwise it could happen that an
+    # attachment is deleted after template creation and therefor
+    # no longer available.
 
     return 1;
 }
@@ -1248,6 +1258,22 @@ sub _ConditionSerialize {
     # templates have to be an array reference;
     my $OriginalData = { ConditionAdd => $Condition };
 
+    # get expressions
+    my $Expressions = $Self->{ConditionObject}->ExpressionList(
+        ConditionID => $Param{ConditionID},
+        UserID      => $Param{UserID},
+    ) || [];
+
+    # add each expression to condition data
+    for my $ExpressionID ( @{$Expressions} ) {
+        my $Expression = $Self->{ConditionObject}->ExpressionGet(
+            ExpressionID => $ExpressionID,
+            UserID       => $Param{UserID},
+        );
+
+        push @{ $OriginalData->{Children} }, { ExpressionAdd => $Expression };
+    }
+
     if ( $Param{Return} eq 'HASH' ) {
         return $OriginalData;
     }
@@ -1316,6 +1342,9 @@ sub _ChangeAdd {
     # PlannedXXXTime was saved just for "move time" purposes
     delete $Data{PlannedEndTime};
     delete $Data{PlannedStartTime};
+
+    # RequestedTime should not be set
+    delete $Data{RequestedTime};
 
     # delete all parameters whose values are 'undef'
     # _CheckChangeParams throws an error otherwise
@@ -1659,6 +1688,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.27 $ $Date: 2010-01-21 11:58:38 $
+$Revision: 1.28 $ $Date: 2010-01-21 12:08:15 $
 
 =cut
