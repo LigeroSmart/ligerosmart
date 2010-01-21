@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template.pm - all template functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.25 2010-01-21 11:29:37 reb Exp $
+# $Id: Template.pm,v 1.26 2010-01-21 11:34:14 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Data::Dumper;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.25 $) [1];
+$VERSION = qw($Revision: 1.26 $) [1];
 
 =head1 NAME
 
@@ -354,6 +354,7 @@ The returned hash reference contains following elements:
     $TemplateData{TemplateID}
     $TemplateData{Name}
     $TemplateData{Comment}
+    $TemplateData{Content}
     $TemplateData{TypeID}
     $TemplateData{Type}
     $TemplateData{ValidID}
@@ -628,7 +629,7 @@ sub TemplateTypeLookup {
         return;
     }
 
-    # the change id or the change number must be passed
+    # the template type id or the template type name must be passed
     if ( !$Param{TemplateTypeID} && !$Param{TemplateType} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
@@ -689,6 +690,8 @@ Currently ITSMChangeManagement supports these template types:
 
 ITSMChange
 ITSMWorkOrder
+CAB
+ITSMCondition
 
 The method returns a datastructure, serialized with Data::Dumper.
 
@@ -1653,6 +1656,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.25 $ $Date: 2010-01-21 11:29:37 $
+$Revision: 1.26 $ $Date: 2010-01-21 11:34:14 $
 
 =cut

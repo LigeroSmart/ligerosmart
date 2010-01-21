@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ITSMTemplateOverviewSmall.pm.pm
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMTemplateOverviewSmall.pm,v 1.2 2010-01-21 10:32:49 bes Exp $
+# $Id: ITSMTemplateOverviewSmall.pm,v 1.3 2010-01-21 11:34:14 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -26,11 +26,14 @@ sub new {
 
     # get needed objects
     for my $Object (
-        qw(ConfigObject LogObject DBObject LayoutObject UserID UserObject GroupObject TicketObject MainObject QueueObject)
+        qw(ConfigObject LogObject DBObject LayoutObject UserID UserObject MainObject)
         )
     {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
+
+    # create additional objects
+    $Self->{ValidObject} = Kernel::System::Valid->new(%Param);
 
     return $Self;
 }
@@ -91,6 +94,33 @@ sub Run {
                 UserID     => $Self->{UserID},
             );
             my %Data = %{$Template};
+
+            # in the translation modules, the template type is prefixed
+            $Data{TranslatableType} = "TemplateType::$Data{Type}";
+
+            # human readable validity
+            $Data{Valid} = $Self->{ValidObject}->ValidLookup( ValidID => $Data{ValidID} );
+
+            # get user data for CreateBy and ChangeBy
+            USERTYPE:
+            for my $UserType (qw(CreateBy ChangeBy)) {
+
+                # check if UserType attribute exists in the template
+                next USERTYPE if !$Data{$UserType};
+
+                # get user data
+                my %User = $Self->{UserObject}->GetUserData(
+                    UserID => $Data{$UserType},
+                    Cached => 1,
+                );
+
+                # set user data
+                $Data{ $UserType . 'UserLogin' }        = $User{UserLogin};
+                $Data{ $UserType . 'UserFirstname' }    = $User{UserFirstname};
+                $Data{ $UserType . 'UserLastname' }     = $User{UserLastname};
+                $Data{ $UserType . 'LeftParenthesis' }  = '(';
+                $Data{ $UserType . 'RightParenthesis' } = ')';
+            }
 
             # set css class of the row
             $CssClass = $CssClass eq 'searchpassive' ? 'searchactive' : 'searchpassive';

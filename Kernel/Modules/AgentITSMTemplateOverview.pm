@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMTemplateOverview.pm - the template overview module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMTemplateOverview.pm,v 1.3 2010-01-21 10:23:23 bes Exp $
+# $Id: AgentITSMTemplateOverview.pm,v 1.4 2010-01-21 11:34:14 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::Template;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -81,9 +81,14 @@ sub Run {
     $Output = '';
 
     # hardcode which columns should be shown
+    # the possible columns are:
+    #      TemplateID Name Comment Content
+    #      TypeID TranslatableType Type
+    #      ValidID Valid
+    #      CreateBy CreateTime ChangeBy ChangeTime
     my @ShowColumns = qw(
-        TemplateID Name Comment TypeID Type ValidID
-        CreateTime CreateBy ChangeTime ChangeBy
+        Name Comment Content TranslatableType Valid
+        CreateBy CreateTime ChangeBy ChangeTime
     );
 
     # to store the filters

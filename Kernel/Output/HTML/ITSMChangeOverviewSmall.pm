@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/ITSMChangeOverviewSmall.pm.pm
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeOverviewSmall.pm,v 1.6 2009-11-27 09:00:18 ub Exp $
+# $Id: ITSMChangeOverviewSmall.pm,v 1.7 2010-01-21 11:34:14 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -26,7 +26,7 @@ sub new {
 
     # get needed objects
     for my $Object (
-        qw(ConfigObject LogObject DBObject LayoutObject UserID UserObject GroupObject TicketObject MainObject QueueObject)
+        qw(ConfigObject LogObject DBObject LayoutObject UserID UserObject MainObject)
         )
     {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
@@ -139,9 +139,6 @@ sub Run {
             # some change attributes, i.e. PlannedStartTime, etc... )
             %Data = ( %{$Change}, %Data );
 
-            # set css class of the row
-            $CssClass = $CssClass eq 'searchpassive' ? 'searchactive' : 'searchpassive';
-
             # get user data for change builder and change manager
             USERTYPE:
             for my $UserType (qw(ChangeBuilder ChangeManager WorkOrderAgent)) {
@@ -164,6 +161,9 @@ sub Run {
                 $Data{ $UserType . 'LeftParenthesis' }  = '(';
                 $Data{ $UserType . 'RightParenthesis' } = ')';
             }
+
+            # set css class of the row
+            $CssClass = $CssClass eq 'searchpassive' ? 'searchactive' : 'searchpassive';
 
             # build record block
             $Self->{LayoutObject}->Block(
