@@ -2,7 +2,7 @@
 # AgentITSMChangeCABTemplate.dtl - provides HTML form for AgentITSMChangeTemplate
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeCABTemplate.dtl,v 1.1 2010-01-21 08:16:01 reb Exp $
+# $Id: AgentITSMChangeCABTemplate.dtl,v 1.2 2010-01-21 12:51:30 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -66,10 +66,10 @@ function submit_compose() {
                                     </td>
                                     <td class="contentvalue">
                                         <input type="text" name="TemplateName" value="$QData{"TemplateName"}" size="70" maxlength="250">
-<!-- dtl:block:InvalidTitle -->
+<!-- dtl:block:InvalidTemplateName -->
                                         <br />
                                         <font color="red" size="-2">$Text{"Input invalid"}</font>
-<!-- dtl:block:InvalidTitle -->
+<!-- dtl:block:InvalidTemplateName -->
                                     </td>
                                 </tr>
                                 <tr>
