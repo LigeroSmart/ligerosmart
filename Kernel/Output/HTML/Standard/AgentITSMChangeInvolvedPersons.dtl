@@ -2,7 +2,7 @@
 # AgentITSMChangeInvolvedPersons.dtl - provides HTML form for AgentITSMChangeInvolvedPersons
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.22 2010-01-14 10:42:31 bes Exp $
+# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.23 2010-01-21 07:49:50 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -76,6 +76,8 @@ document.observe( "dom:loaded", function() {
     <tr>
         <td class="menu">
             <a href="$Env{"Baselink"}$Env{"LastScreenView"}" onmouseover="window.status='$JSText{"Back"}'; return true;" onmouseout="window.status='';" class="menuitem">$Text{"Back"}</a>
+            -
+            <a href="$Env{"Baselink"}Action=AgentITSMChangeCABTemplate;ChangeID=$Data{"ChangeID"}" class="menuitem">$Text{"Template"}</a>
         </td>
     </tr>
 
