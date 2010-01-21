@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.153 2010-01-20 17:38:06 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.154 2010-01-21 08:16:01 reb Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -133,6 +133,20 @@
                     <AccessKey></AccessKey>
                     <Prio>600</Prio>
                 </NavBar>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentITSMChangeCABTemplate" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
+        <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Admin::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <GroupRo>itsm-change</GroupRo>
+                <Description>ITSM Change CAB Templates</Description>
+                <Title>Change CAB Templates</Title>
+                <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -1465,6 +1479,15 @@
                 <Item Key="0">No</Item>
                 <Item Key="1">Yes</Item>
             </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeCABTemplate###Permission" Required="1" Valid="1">
+        <Description Lang="en">Required privilege to create a template from a changes' CAB.</Description>
+        <Description Lang="de">Benötigtes Recht um eine Vorlage aus einem CAB eines Change zu erstellen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ViewChangeCABTemplate</SubGroup>
+        <Setting>
+            <String Regex="^(rw|ro)$">rw</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeCondition###Permission" Required="1" Valid="1">

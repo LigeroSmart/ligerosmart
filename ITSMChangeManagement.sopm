@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.137 2010-01-20 17:38:05 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.138 2010-01-21 08:16:01 reb Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -20,6 +20,7 @@
         <File Permission="644" Location="Kernel/Modules/AgentITSMCABMemberSearch.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMChange.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMChangeAdd.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeCABTemplate.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMChangeCondition.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMChangeConditionEdit.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMChangeEdit.pm"/>
@@ -72,6 +73,7 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminITSMStateMachine.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMCABMemberSearch.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeAdd.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeCABTemplate.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeCondition.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeConditionEdit.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeEdit.dtl"/>
