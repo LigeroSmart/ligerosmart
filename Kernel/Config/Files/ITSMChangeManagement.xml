@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.154 2010-01-21 08:16:01 reb Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.155 2010-01-21 17:04:23 bes Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -2247,6 +2247,18 @@
             </Array>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMTemplateOverview###Order::Default" Required="1" Valid="1">
+        <Description Lang="en">Order default in the template overview.</Description>
+        <Description Lang="de">Standard Reihenfolge der Templates in der Template-Übersicht.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ViewTemplateOverview</SubGroup>
+        <Setting>
+            <Option SelectedID="Up">
+                <Item Key="Down">Down</Item>
+                <Item Key="Up">Up</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMTemplateOverview###Permission" Required="1" Valid="1">
         <Description Lang="en">Required privilege to view overview over all templates.</Description>
         <Description Lang="de">Benötigtes Recht zum Einsehen der Liste von Vorlagen.</Description>
@@ -2254,6 +2266,21 @@
         <SubGroup>Frontend::Agent::ViewTemplateOverview</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">ro</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMTemplateOverview###SortBy::Default" Required="1" Valid="1">
+        <Description Lang="en">Change sort by default in the template overview.</Description>
+        <Description Lang="de">Standard Sortierung der Templates in der Template-Übersicht.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ViewTemplateOverview</SubGroup>
+        <Setting>
+            <Option SelectedID="TemplateID">
+                <Item Key="Name">Name</Item>
+                <Item Key="TemplateTypeID">TemplateTypeID</Item>
+                <Item Key="ValidID">ValidID</Item>
+                <Item Key="CreateTime">CreateTime</Item>
+                <Item Key="ChangeTime">ChangeTime</Item>
+            </Option>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMWorkOrderAdd###Permission" Required="1" Valid="1">

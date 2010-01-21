@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMTemplateOverview.pm - the template overview module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMTemplateOverview.pm,v 1.6 2010-01-21 16:10:08 bes Exp $
+# $Id: AgentITSMTemplateOverview.pm,v 1.7 2010-01-21 17:04:23 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::Template;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -71,6 +71,19 @@ sub Run {
         Value     => $Self->{RequestedURL},
     );
 
+    # get sorting parameters
+    my $SortBy = $Self->{ParamObject}->GetParam( Param => 'SortBy' )
+        || $Self->{Config}->{'SortBy::Default'}
+        || 'ChangeNumber';
+
+    # get ordering parameters
+    my $OrderBy = $Self->{ParamObject}->GetParam( Param => 'OrderBy' )
+        || $Self->{Config}->{'Order::Default'}
+        || 'Up';
+
+    my @SortByArray  = ($SortBy);
+    my @OrderByArray = ($OrderBy);
+
     # investigate refresh
     my $Refresh = $Self->{UserRefreshTime} ? 60 * $Self->{UserRefreshTime} : undef;
 
@@ -119,18 +132,16 @@ sub Run {
             # increase the PrioCounter
             $PrioCounter++;
 
-            # add filter for the current template type,
-            # valid and invalid templates are shown
+            # add filter with params for the search method
             $Filters{$TemplateType} = {
                 Name   => "TemplateType::$TemplateType",
                 Prio   => $PrioCounter,
                 Search => {
-                    TemplateTypes => [$TemplateType],
-
-                    #OrderBy          => \@SortByArray,
-                    #OrderByDirection => \@OrderByArray,
-                    Limit  => 1000,
-                    UserID => $Self->{UserID},
+                    TemplateTypes    => [$TemplateType],
+                    OrderBy          => \@SortByArray,
+                    OrderByDirection => \@OrderByArray,
+                    Limit            => 1000,
+                    UserID           => $Self->{UserID},
                 },
             };
         }
@@ -153,11 +164,10 @@ sub Run {
             Name   => 'All',
             Prio   => 1000,
             Search => {
-
-                #OrderBy          => \@SortByArray,
-                #OrderByDirection => \@OrderByArray,
-                Limit  => 1000,
-                UserID => $Self->{UserID},
+                OrderBy          => \@SortByArray,
+                OrderByDirection => \@OrderByArray,
+                Limit            => 1000,
+                UserID           => $Self->{UserID},
             },
         };
     }
@@ -176,7 +186,7 @@ sub Run {
     my %NavBarFilter;
     for my $Filter ( keys %Filters ) {
 
-        # count the number of templates for each filter
+        # count the number of items for each filter
         my $Count = $Self->{TemplateObject}->TemplateSearch(
             %{ $Filters{$Filter}->{Search} },
             Result => 'COUNT',
@@ -190,17 +200,20 @@ sub Run {
         };
     }
 
-    # show templates
-    my $LinkPage = 'Filter='
-        . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
+    # show the list
+    my $LinkPage =
+        'Filter=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
+        . '&SortBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $SortBy )
+        . '&OrderBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $OrderBy )
         . '&';
-    my $LinkSort = 'Filter='
-        . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
+    my $LinkSort =
+        'Filter=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
         . '&';
-    my $LinkFilter = ''
+    my $LinkFilter =
+        'SortBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $SortBy )
+        . '&OrderBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $OrderBy )
         . '&';
     $Output .= $Self->{LayoutObject}->ITSMTemplateListShow(
-
         TemplateIDs => $IDsRef,
         Total       => scalar @{$IDsRef},
 
