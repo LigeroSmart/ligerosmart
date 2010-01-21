@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template.pm - all template functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.26 2010-01-21 11:34:14 bes Exp $
+# $Id: Template.pm,v 1.27 2010-01-21 11:58:38 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Data::Dumper;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.26 $) [1];
+$VERSION = qw($Revision: 1.27 $) [1];
 
 =head1 NAME
 
@@ -1304,10 +1304,13 @@ sub _ChangeAdd {
     my $Difference;
     if ( $Param{NewTimeInEpoche} ) {
         my $OldTime = $Data{ $Param{MoveTimeType} };
-        $Difference = $Self->_GetTimeDifference(
-            CurrentTime     => $OldTime,
-            NewTimeInEpoche => $Param{NewTimeInEpoche},
-        );
+
+        if ($OldTime) {
+            $Difference = $Self->_GetTimeDifference(
+                CurrentTime     => $OldTime,
+                NewTimeInEpoche => $Param{NewTimeInEpoche},
+            );
+        }
     }
 
     # PlannedXXXTime was saved just for "move time" purposes
@@ -1656,6 +1659,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.26 $ $Date: 2010-01-21 11:34:14 $
+$Revision: 1.27 $ $Date: 2010-01-21 11:58:38 $
 
 =cut
