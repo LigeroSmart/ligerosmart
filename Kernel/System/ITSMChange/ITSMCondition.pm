@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition.pm - all condition functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.pm,v 1.23 2010-01-16 15:10:22 ub Exp $
+# $Id: ITSMCondition.pm,v 1.24 2010-01-22 08:37:43 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use base qw(Kernel::System::ITSMChange::ITSMCondition::Expression);
 use base qw(Kernel::System::ITSMChange::ITSMCondition::Action);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.23 $) [1];
+$VERSION = qw($Revision: 1.24 $) [1];
 
 =head1 NAME
 
@@ -590,7 +590,7 @@ sub ConditionMatchExecuteAll {
             my ($Object) = keys %{ $Param{AttributesChanged} };
 
             # list of changed attributes
-            my $DebugString = "\n\n"
+            my $DebugString = "\n\nDebug Information:\n"
                 . "Object: $Object\n"
                 . "AttributesChanged: "
                 . ( join ', ', @{ $Param{AttributesChanged}->{$Object} } )
@@ -784,6 +784,78 @@ sub ConditionMatchExecute {
     return 1;
 }
 
+=item ConditionCompareValueFieldType()
+
+Returns the type of the compare value field as string, based on the given object id and attribute id.
+
+    my $FieldType = $ConditionObject->ConditionCompareValueFieldType(
+        ObjectID    => 1234,
+        AttributeID => 5,
+        UserID      => 1,
+    );
+
+Returns 'Text' or 'Selection' or 'Date'.
+
+TODO: Add 'Autocomplete' type for ChangeBuilder, ChangeManager, WorkOrderAgent, etc...
+
+=cut
+
+sub ConditionCompareValueFieldType {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(ObjectID AttributeID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # lookup object name
+    my $ObjectName = $Self->ObjectLookup(
+        ObjectID => $Param{ObjectID},
+        UserID   => $Param{UserID},
+    );
+
+    # check error
+    if ( !$ObjectName ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "ObjectID $Param{ObjectID} does not exist!",
+        );
+        return;
+    }
+
+    # lookup attribute name
+    my $AttributeName = $Self->AttributeLookup(
+        AttributeID => $Param{AttributeID},
+        UserID      => $Param{UserID},
+    );
+
+    # check error
+    if ( !$AttributeName ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "AttributeID $Param{AttributeID} does not exist!",
+        );
+        return;
+    }
+
+    # get the field type config for the given object
+    my $Config = $Self->{ConfigObject}->Get( $ObjectName . '::Attribute::CompareValue::FieldType' );
+
+    # check error
+    return if !$Config;
+
+    # get the field type for the given attribute
+    my $FieldType = $Config->{$AttributeName} || '';
+
+    return $FieldType;
+}
+
 1;
 
 =back
@@ -800,6 +872,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.23 $ $Date: 2010-01-16 15:10:22 $
+$Revision: 1.24 $ $Date: 2010-01-22 08:37:43 $
 
 =cut
