@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template.pm - all template functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.32 2010-01-22 10:13:58 reb Exp $
+# $Id: Template.pm,v 1.33 2010-01-22 10:19:26 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Data::Dumper;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.32 $) [1];
+$VERSION = qw($Revision: 1.33 $) [1];
 
 =head1 NAME
 
@@ -1698,6 +1698,7 @@ sub _ChangeAdd {
 
     # these attributes are generated automatically, so don't pass them to ChangeAdd()
     delete @Data{qw(ChangeID ChangeNumber CreateTime CreateBy ChangeTime ChangeBy)};
+    delete @Data{qw(DescriptionPlain JustificationPlain)};
 
     # if user set a new time, calculate difference
     my $Difference;
@@ -1778,6 +1779,7 @@ sub _WorkOrderAdd {
 
     # these attributes are generated automatically, so don't pass them to WorkOrderAdd()
     delete @Data{qw(WorkOrderID WorkOrderNumber CreateTime CreateBy ChangeTime ChangeBy)};
+    delete @Data{qw(InstructionPlain ReportPlain)};
 
     # delete all parameters whose values are 'undef'
     # _CheckWorkOrderParams throws an error otherwise
@@ -2202,6 +2204,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.32 $ $Date: 2010-01-22 10:13:58 $
+$Revision: 1.33 $ $Date: 2010-01-22 10:19:26 $
 
 =cut
