@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeEdit.pm - the OTRS::ITSM::ChangeManagement change edit module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.pm,v 1.41 2010-01-21 12:57:38 bes Exp $
+# $Id: AgentITSMChangeEdit.pm,v 1.42 2010-01-22 08:26:32 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.41 $) [1];
+$VERSION = qw($Revision: 1.42 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -130,7 +130,7 @@ sub Run {
     }
 
     # keep ChangeStateID only if configured
-    if ( $Self->{Config}->{State} ) {
+    if ( $Self->{Config}->{ChangeState} ) {
         $GetParam{ChangeStateID} = $Self->{ParamObject}->GetParam( Param => 'ChangeStateID' );
     }
 
@@ -200,9 +200,9 @@ sub Run {
         # update only when there are no input validation errors
         if ( !@ValidationErrors ) {
 
-            # setting of state and requested time is configurable
+            # setting of change state and requested time is configurable
             my %AdditionalParam;
-            if ( $Self->{Config}->{State} ) {
+            if ( $Self->{Config}->{ChangeState} ) {
                 $AdditionalParam{ChangeStateID} = $GetParam{ChangeStateID};
             }
             if ( $Self->{Config}->{RequestedTime} ) {
@@ -244,7 +244,8 @@ sub Run {
 
         # get all possible priorities
         my $Priorities = $Self->{ChangeObject}->ChangePossibleCIPGet(
-            Type => 'Priority',
+            Type   => 'Priority',
+            UserID => $Self->{UserID},
         );
 
         # propose a priority, based on the category and the impact the proposed p selected priority
@@ -360,7 +361,7 @@ sub Run {
     else {
         %GetParam = ();
 
-        if ( $Self->{Config}->{State} ) {
+        if ( $Self->{Config}->{ChangeState} ) {
             $GetParam{ChangeStateID} = $Change->{ChangeStateID};
         }
 
@@ -384,7 +385,7 @@ sub Run {
         }
     }
 
-    if ( $Self->{Config}->{State} ) {
+    if ( $Self->{Config}->{ChangeState} ) {
 
         # get change state list
         my $ChangePossibleStates = $Self->{ChangeObject}->ChangePossibleStatesGet(
@@ -448,7 +449,8 @@ sub Run {
     # all categories are selectable
     # when the category is changed, a new priority is proposed
     my $Categories = $Self->{ChangeObject}->ChangePossibleCIPGet(
-        Type => 'Category',
+        Type   => 'Category',
+        UserID => $Self->{UserID},
     );
     $Param{CategorySelectionString} = $Self->{LayoutObject}->BuildSelection(
         Data       => $Categories,
@@ -471,7 +473,8 @@ sub Run {
     # all impacts are selectable
     # when the impact is changed, a new priority is proposed
     my $Impacts = $Self->{ChangeObject}->ChangePossibleCIPGet(
-        Type => 'Impact',
+        Type   => 'Impact',
+        UserID => $Self->{UserID},
     );
     $Param{ImpactSelectionString} = $Self->{LayoutObject}->BuildSelection(
         Data       => $Impacts,
@@ -493,7 +496,8 @@ sub Run {
     # create dropdown for priority,
     # all priorities are selectable
     my $Priorities = $Self->{ChangeObject}->ChangePossibleCIPGet(
-        Type => 'Priority',
+        Type   => 'Priority',
+        UserID => $Self->{UserID},
     );
     $Param{PrioritySelectionString} = $Self->{LayoutObject}->BuildSelection(
         Data       => $Priorities,
