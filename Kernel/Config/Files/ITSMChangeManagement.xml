@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.155 2010-01-21 17:04:23 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.156 2010-01-22 08:25:03 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -1322,6 +1322,29 @@
             <String Regex="">3 normal</String>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="ITSMChange::Attribute::CompareValue::FieldType" Required="1" Valid="1">
+        <Description Lang="en">Defines the field type of CompareValue fields for change attributes used in AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. If a type is not defined, the field will not be shown.</Description>
+        <Description Lang="de">Definiert den Feld-Typ für CompareValue Felder für Change-Attribute in AgentITSMChangeConditionEdit. Gültige Werte sind Selection, Text und Date. Wenn kein Typ definiert ist, dann wird das feld nicht angezeigt.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="ChangeStateID">Selection</Item>
+                <Item Key="ChangeTitle">Text</Item>
+                <Item Key="CategoryID">Selection</Item>
+                <Item Key="ImpactID">Selection</Item>
+                <Item Key="PriorityID">Selection</Item>
+                <Item Key="ChangeManagerID">Selection</Item>
+                <Item Key="ChangeBuilderID">Selection</Item>
+                <Item Key="PlannedStartTime">Date</Item>
+                <Item Key="PlannedEndTime">Date</Item>
+                <Item Key="ActualStartTime">Date</Item>
+                <Item Key="ActualEndTime">Date</Item>
+                <Item Key="PlannedEffort">Text</Item>
+                <Item Key="AccountedTime">Text</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::State::Signal" Required="1" Valid="1">
         <Description Lang="en">Define the signal for workorder states.</Description>
         <Description Lang="de">Definieren eines Signals für einen Workorder-Status.</Description>
@@ -1356,6 +1379,27 @@
             <Hash>
                 <Item Key="YearPeriodPast">5</Item>
                 <Item Key="YearPeriodFuture">5</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMWorkOrder::Attribute::CompareValue::FieldType" Required="1" Valid="1">
+        <Description Lang="en">Defines the field types for CompareValue fields of workorder attributes used in AgentITSMChangeConditionEdit. If a type is not defined, the field will not be shown.</Description>
+        <Description Lang="de">Definiert den Feld-Typ für CompareValue Felder für Workorder-Attribute in AgentITSMChangeConditionEdit. Wenn kein Typ definiert ist, dann wird das feld nicht angezeigt.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="WorkOrderNumber">Text</Item>
+                <Item Key="WorkOrderStateID">Selection</Item>
+                <Item Key="WorkOrderTypeID">Selection</Item>
+                <Item Key="WorkOrderTitle">Text</Item>
+                <Item Key="WorkOrderAgentID">Selection</Item>
+                <Item Key="PlannedStartTime">Date</Item>
+                <Item Key="PlannedEndTime">Date</Item>
+                <Item Key="ActualStartTime">Date</Item>
+                <Item Key="ActualEndTime">Date</Item>
+                <Item Key="PlannedEffort">Text</Item>
+                <Item Key="AccountedTime">Text</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -1529,9 +1573,9 @@
             </Option>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeEdit###State" Required="1" Valid="1">
-        <Description Lang="en">If you want to set the state.</Description>
-        <Description Lang="de">Wenn der Status gesetzt werden soll.</Description>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeEdit###ChangeState" Required="1" Valid="1">
+        <Description Lang="en">Defines if the change state can be set in AgentITSMChangeEdit.</Description>
+        <Description Lang="de">Definiert ob der Change-Status in AgentITSMChangeEdit gesetzt werden kann.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ViewChangeEdit</SubGroup>
         <Setting>
@@ -2541,8 +2585,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Acl::Module###200-Ticket::Acl::Module" Required="0" Valid="1">
-        <Description Lang="en">This ACL module does not allow to use the ticket types which are defined in the sysconfig option 'ITSMChange::AddChangeLinkTicketTypes', if the user is not in one of the groups 'itsm-change', 'itsm-change-builder' or 'itsm-change-manager'.</Description>
-        <Description Lang="de">Dieses ACL Modul verhindert es, die Ticket-Typen zu verwenden, die in der Sysconfig-Option 'ITSMChange::AddChangeLinkTicketTypes' definiert sind, zu verwenden, wenn der Benutzer nicht Mitglied in einer der Gruppen 'itsm-change', 'itsm-change-builder' oder 'itsm-change-manager' ist.</Description>
+        <Description Lang="en">This ACL module restricts the usuage of the ticket types that are defined in the sysconfig option 'ITSMChange::AddChangeLinkTicketTypes', to users of the groups 'itsm-change', 'itsm-change-builder' or 'itsm-change-manager'.</Description>
+        <Description Lang="de">Dieses ACL Modul schränkt die Verwendung der Ticket-Typen, die in der Sysconfig-Option 'ITSMChange::AddChangeLinkTicketTypes' definiert sind, auf Benutzer ein die Mitglied in einer der Gruppen 'itsm-change', 'itsm-change-builder' oder 'itsm-change-manager' sind.</Description>
         <Group>Ticket</Group>
         <SubGroup>Core::TicketACL</SubGroup>
         <Setting>
