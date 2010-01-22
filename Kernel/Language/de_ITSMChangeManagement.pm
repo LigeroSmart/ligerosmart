@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMChangeManagement.pm - the german translation of ITSMChangeManagement
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: de_ITSMChangeManagement.pm,v 1.22 2010-01-21 09:07:22 bes Exp $
+# $Id: de_ITSMChangeManagement.pm,v 1.23 2010-01-22 10:35:35 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -50,7 +50,7 @@ sub Data {
     $Lang->{'ChangeHistory::ChangeAttachmentAdd'}    = 'Neuer Anhang: %s';
     $Lang->{'ChangeHistory::ChangeAttachmentDelete'} = 'Anhang gelöscht: %s';
 
-    # WorkOrder history
+    # workorder history
     $Lang->{'WorkOrderHistory::WorkOrderAdd'}              = 'Neue Workorder (ID=%s)';
     $Lang->{'WorkOrderHistory::WorkOrderUpdate'}           = '%s: Neu: %s -> Alt: %s';
     $Lang->{'WorkOrderHistory::WorkOrderLinkAdd'}          = 'Link zu %s (ID=%s) hinzugefügt';
@@ -59,7 +59,7 @@ sub Data {
     $Lang->{'WorkOrderHistory::WorkOrderAttachmentAdd'}    = 'Neuer Anhang für Workorder: %s';
     $Lang->{'WorkOrderHistory::WorkOrderAttachmentDelete'} = 'Anhang von Workorder gelöscht: %s';
 
-    # long WorkOrder history
+    # long workorder history
     $Lang->{'WorkOrderHistory::WorkOrderAddWithWorkOrderID'}              = 'Neue Workorder (ID=%s)';
     $Lang->{'WorkOrderHistory::WorkOrderUpdateWithWorkOrderID'}           = '(ID=%s) %s: Neu: %s -> Alt: %s';
     $Lang->{'WorkOrderHistory::WorkOrderLinkAddWithWorkOrderID'}          = '(ID=%s) Link zu %s (ID=%s) hinzugefügt';
@@ -68,11 +68,30 @@ sub Data {
     $Lang->{'WorkOrderHistory::WorkOrderAttachmentAddWithWorkOrderID'}    = '(ID=%s) Neuer Anhang für Workorder: %s';
     $Lang->{'WorkOrderHistory::WorkOrderAttachmentDeleteWithWorkOrderID'} = '(ID=%s) Anhang von Workorder gelöscht: %s';
 
+    # change states
+    $Lang->{'requested'}        = 'Requested';
+    $Lang->{'pending approval'} = 'Pending Approval';
+    $Lang->{'rejected'}         = 'Rejected';
+    $Lang->{'approved'}         = 'Approved';
+    $Lang->{'in progress'}      = 'In Progress';
+    $Lang->{'successful'}       = 'Successful';
+    $Lang->{'failed'}           = 'Failed';
+    $Lang->{'canceled'}         = 'Canceled';
+    $Lang->{'retracted'}        = 'Retracted';
+
+    # workorder states
+    $Lang->{'created'}     = 'Created';
+    $Lang->{'accepted'}    = 'Accepted';
+    $Lang->{'ready'}       = 'Ready';
+    $Lang->{'in progress'} = 'In Progress';
+    $Lang->{'closed'}      = 'Closed';
+    $Lang->{'canceled'}    = 'Canceled';
+
     # CIP matrix
     $Lang->{'Category'}                         = 'Kategorie';
     $Lang->{'Category <-> Impact <-> Priority'} = 'Kategorie <-> Auswirkung <-> Priorität';
 
-    # WorkOrder types
+    # workorder types
     $Lang->{'approval'}  = 'Genehmigung';
     $Lang->{'decision'}  = 'Entscheidung';
     $Lang->{'workorder'} = 'Arbeitsanweisung';
