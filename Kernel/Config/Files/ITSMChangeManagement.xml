@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.157 2010-01-22 11:35:15 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.158 2010-01-22 14:22:24 bes Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -341,6 +341,20 @@
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentITSMChangePrint" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AgentITSMChangePrint object in the agent interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration des AgentITSMChangePrint-Objekts im Agenteninterface.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <GroupRo>itsm-change</GroupRo>
+                <Description>Change Print</Description>
+                <Title>Print</Title>
+                <NavBarName>ITSM Change</NavBarName>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="Frontend::Module###AgentITSMChangeSearch" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AgentITSMChangeSearch object in the agent interface.</Description>
         <Description Lang="de">Frontendmodul-Registration des AgentITSMChangeSearch-Objekts im Agenteninterface.</Description>
@@ -557,6 +571,20 @@
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentITSMWorkOrderPrint" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AgentITSMWorkOrderPrint object in the agent interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration des AgentITSMWorkOrderPrint-Objekts im Agenteninterface.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <GroupRo>itsm-change</GroupRo>
+                <Description>Workorder Print</Description>
+                <Title>Print</Title>
+                <NavBarName>ITSM Change</NavBarName>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="Frontend::Module###AgentITSMWorkOrderReport" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AgentITSMWorkOrderReport object in the agent interface.</Description>
         <Description Lang="de">Frontendmodul-Registration des AgentITSMWorkOrderReport-Objekts im Agenteninterface.</Description>
@@ -729,7 +757,7 @@
                 <Item Key="Name">Print</Item>
                 <Item Key="Description">Print the change</Item>
                 <Item Key="Action">AgentITSMChangePrint</Item>
-                <Item Key="Link">Action=AgentITSMChangePrint&amp;ChangeID=$QData{"ChangeID"}</Item>
+                <Item Key="Link">Action=AgentITSMChangePrint;ChangeID=$QData{"ChangeID"}</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -879,7 +907,7 @@
                 <Item Key="Name">Print</Item>
                 <Item Key="Description">Print the workorder</Item>
                 <Item Key="Action">AgentITSMWorkOrderPrint</Item>
-                <Item Key="Link">Action=AgentITSMWorkOrderPrint&amp;WorkOrderID=$QData{"WorkOrderID"}</Item>
+                <Item Key="Link">Action=AgentITSMWorkOrderPrint;WorkOrderID=$QData{"WorkOrderID"}</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -2136,6 +2164,27 @@
             </Array>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangePrint###Permission" Required="1" Valid="1">
+        <Description Lang="en">Required privilege to print a change.</Description>
+        <Description Lang="de">Benötigtes Recht zum Drucken eines Changes.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ViewChangePrint</SubGroup>
+        <Setting>
+            <String Regex="^(rw|ro)$">ro</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeSearch###RequestedTime" Required="1" Valid="1">
+        <Description Lang="en">If you want to set the requested (by customer) date.</Description>
+        <Description Lang="de">Soll der Wunschtermin des Kunden eingestellt werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ViewChangeSearch</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeSearch###ShowColumns" Required="1" Valid="1">
         <Description Lang="en">Defines the shown columns in the change search. This option has no effect on the position of the column.</Description>
         <Description Lang="de">Definiert die angezeigten Tabellenspalten im Suchergebniss. Diese Option hat keinen Effekt auf die Position der Spalten.</Description>
@@ -2160,18 +2209,6 @@
                 <Item Key="ActualEndTime">0</Item>
                 <Item Key="CreateTime">0</Item>
             </Hash>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeSearch###RequestedTime" Required="1" Valid="1">
-        <Description Lang="en">If you want to set the requested (by customer) date.</Description>
-        <Description Lang="de">Soll der Wunschtermin des Kunden eingestellt werden.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ViewChangeSearch</SubGroup>
-        <Setting>
-            <Option SelectedID="1">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
-            </Option>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeTemplate###Permission" Required="1" Valid="1">
@@ -2425,13 +2462,13 @@
             <String Regex="^(rw|ro)$">ro</String>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMWorkOrderTemplate###Permission" Required="1" Valid="1">
-        <Description Lang="en">Required privilege to create a template from a workorder.</Description>
-        <Description Lang="de">Benötigtes Recht um eine Vorlage aus einer Workorder zu erstellen.</Description>
+    <ConfigItem Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderPrint###Permission" Required="1" Valid="1">
+        <Description Lang="en">Required privilege to print a workorder.</Description>
+        <Description Lang="de">Benötigtes Recht zum Drucken einer Workorder.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ViewWorkOrderTemplate</SubGroup>
+        <SubGroup>Frontend::Agent::ViewWorkOrderPrint</SubGroup>
         <Setting>
-            <String Regex="^(rw|ro)$">rw</String>
+            <String Regex="^(rw|ro)$">ro</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderReport###AccountedTime" Required="1" Valid="1">
@@ -2463,6 +2500,15 @@
         <Description Lang="de">Benötigtes Recht zum Verfassen eines Berichtes für eine Workorder.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ViewWorkOrderReport</SubGroup>
+        <Setting>
+            <String Regex="^(rw|ro)$">rw</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMWorkOrderTemplate###Permission" Required="1" Valid="1">
+        <Description Lang="en">Required privilege to create a template from a workorder.</Description>
+        <Description Lang="de">Benötigtes Recht um eine Vorlage aus einer Workorder zu erstellen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ViewWorkOrderTemplate</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">rw</String>
         </Setting>

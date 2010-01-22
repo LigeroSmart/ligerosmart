@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMChangePrint.pm - the OTRS::ITSM::ChangeManagement change print module
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePrint.pm,v 1.2 2009-11-02 17:34:01 bes Exp $
+# $Id: AgentITSMChangePrint.pm,v 1.3 2010-01-22 14:22:24 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -32,6 +32,8 @@ sub new {
             $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
         }
     }
+
+    # create additional objects
     $Self->{ChangeObject} = Kernel::System::ITSMChange->new(%Param);
 
     # get config of frontend module
@@ -43,9 +45,51 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    # get needed change id
+    my $ChangeID = $Self->{ParamObject}->GetParam( Param => 'ChangeID' );
+
+    # check needed stuff
+    if ( !$ChangeID ) {
+
+        # error page
+        return $Self->{LayoutObject}->ErrorScreen(
+            Message => "Can't generate PDF, as no ChangeID is given!",
+            Comment => 'Please contact the admin.',
+        );
+    }
+
+    # check permissions
+    my $Access = $Self->{ChangeObject}->Permission(
+        Type     => $Self->{Config}->{Permission},
+        ChangeID => $ChangeID,
+        UserID   => $Self->{UserID},
+    );
+
+    # error screen
+    if ( !$Access ) {
+        return $Self->{LayoutObject}->NoPermission(
+            Message    => "You need $Self->{Config}->{Permission} permissions!",
+            WithHeader => 'yes',
+        );
+    }
+
+    # get change information
+    my $Change = $Self->{ChangeObject}->ChangeGet(
+        ChangeID => $ChangeID,
+        UserID   => $Self->{UserID},
+    );
+
+    # check error
+    if ( !$Change ) {
+        return $Self->{LayoutObject}->ErrorScreen(
+            Message => "Change $ChangeID not found in database!",
+            Comment => 'Please contact the admin.',
+        );
+    }
+
     # output header
     my $Output = $Self->{LayoutObject}->Header(
-        Title =>    # ...,
+        Title => 'ChangePrint',
     );
     $Output .= $Self->{LayoutObject}->NavigationBar();
 
@@ -53,11 +97,8 @@ sub Run {
     $Output .= $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentITSMChangePrint',
         Data         => {
-
-            # ...
             %Param,
-
-            # ...
+            %{$Change},
         },
     );
 
