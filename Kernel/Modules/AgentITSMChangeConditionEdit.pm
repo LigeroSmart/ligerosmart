@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeConditionEdit.pm - the OTRS::ITSM::ChangeManagement condition edit module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeConditionEdit.pm,v 1.2 2010-01-19 23:56:22 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.pm,v 1.3 2010-01-22 08:41:21 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -214,7 +214,7 @@ sub Run {
 
             # TODO
             #            # show existing actions
-            #            $Self->_ActionOverview(
+            #            $Self->_ShowActionOverview(
             #                %ConditionData,
             #            );
 
@@ -281,26 +281,31 @@ sub _ExpressionOverview {
         );
 
         # show object selection
-        $Self->_ObjectSelection(
+        $Self->_ShowObjectSelection(
             %{$ExpressionData},
         );
 
         # show selecor selection
-        $Self->_SelectorSelection(
+        $Self->_ShowSelectorSelection(
             %{$ExpressionData},
         );
 
         # show attribute selection
-        $Self->_AttributeSelection(
+        $Self->_ShowAttributeSelection(
             %{$ExpressionData},
         );
 
         # show operator selection
-        $Self->_OperatorSelection(
+        $Self->_ShowOperatorSelection(
             %{$ExpressionData},
         );
 
-        # TODO show dropdownfield or textfield (or date selection) for the caompare value
+        # show compare value field
+        $Self->_ShowCompareValueField(
+            %{$ExpressionData},
+        );
+
+        # TODO show dropdownfield or textfield (or date selection) for the compare value
 
         #          'Selector' => '31',
         #          'ObjectID' => '1',
@@ -316,7 +321,7 @@ sub _ExpressionOverview {
 }
 
 # show object dropdown field
-sub _ObjectSelection {
+sub _ShowObjectSelection {
     my ( $Self, %Param ) = @_;
 
     # get object list
@@ -333,7 +338,7 @@ sub _ObjectSelection {
     # generate ObjectOptionString
     my $ObjectOptionString = $Self->{LayoutObject}->BuildSelection(
         Data         => $ObjectList,
-        Name         => 'ObjectID',
+        Name         => 'ExpressionID' . $Param{ExpressionID} . '::ObjectID',
         SelectedID   => $Param{ObjectID},
         PossibleNone => $PossibleNone,
     );
@@ -350,7 +355,7 @@ sub _ObjectSelection {
 }
 
 # show selector dropdown field
-sub _SelectorSelection {
+sub _ShowSelectorSelection {
     my ( $Self, %Param ) = @_;
 
     # get selector list
@@ -370,7 +375,7 @@ sub _SelectorSelection {
     # generate SelectorOptionString
     my $SelectorOptionString = $Self->{LayoutObject}->BuildSelection(
         Data         => $SelectorList,
-        Name         => 'Selector',
+        Name         => 'ExpressionID' . $Param{ExpressionID} . '::Selector',
         SelectedID   => $Param{Selector},
         PossibleNone => $PossibleNone,
     );
@@ -387,13 +392,18 @@ sub _SelectorSelection {
 }
 
 # show attribute dropdown field
-sub _AttributeSelection {
+sub _ShowAttributeSelection {
     my ( $Self, %Param ) = @_;
 
     # get attribute list
     my $AttributeList = $Self->{ConditionObject}->AttributeList(
         UserID => $Self->{UserID},
     );
+
+    # remove 'ID' at the end of the attribute for nicer display
+    for my $Attribute ( values %{$AttributeList} ) {
+        $Attribute =~ s{ ID \z }{}xms;
+    }
 
     # TODO add code to check sysconfig for valid attributes for the given parameters
 
@@ -412,7 +422,7 @@ sub _AttributeSelection {
     # generate AttributeOptionString
     my $AttributeOptionString = $Self->{LayoutObject}->BuildSelection(
         Data         => $AttributeList,
-        Name         => 'AttributeID',
+        Name         => 'ExpressionID' . $Param{ExpressionID} . '::AttributeID',
         SelectedID   => $Param{AttributeID},
         PossibleNone => $PossibleNone,
     );
@@ -429,7 +439,7 @@ sub _AttributeSelection {
 }
 
 # show operator dropdown field
-sub _OperatorSelection {
+sub _ShowOperatorSelection {
     my ( $Self, %Param ) = @_;
 
     # get operator list
@@ -454,7 +464,7 @@ sub _OperatorSelection {
     # generate OperatorOptionString
     my $OperatorOptionString = $Self->{LayoutObject}->BuildSelection(
         Data         => $OperatorList,
-        Name         => 'OperatorID',
+        Name         => 'ExpressionID' . $Param{ExpressionID} . '::OperatorID',
         SelectedID   => $Param{OperatorID},
         PossibleNone => $PossibleNone,
     );
@@ -466,6 +476,111 @@ sub _OperatorSelection {
             OperatorOptionString => $OperatorOptionString,
         },
     );
+
+    return 1;
+}
+
+# show compare value field
+sub _ShowCompareValueField {
+    my ( $Self, %Param ) = @_;
+
+    # lookup attribute name
+    my $AttributeName = $Self->{ConditionObject}->AttributeLookup(
+        AttributeID => $Param{AttributeID},
+        UserID      => $Self->{UserID},
+    );
+
+    # check error
+    if ( !$AttributeName ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "AttributeID $Param{AttributeID} does not exist!",
+        );
+        return;
+    }
+
+    # get the field type
+    my $FieldType = $Self->{ConditionObject}->ConditionCompareValueFieldType(
+        ObjectID    => $Param{ObjectID},
+        AttributeID => $Param{AttributeID},
+        UserID      => $Self->{UserID},
+    );
+
+    return if !$FieldType;
+
+    # TODO: Build date selection based on type: Date.
+    # Temporarily  display Dates as text too.
+    if ( $FieldType eq 'Date' ) {
+        $FieldType = 'Text';
+    }
+
+    # compare value is a text field
+    if ( $FieldType eq 'Text' ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'ExpressionOverviewRowElementCompareValueText',
+            Data => {
+                %Param,
+            },
+        );
+    }
+
+    # compare value is a selection field
+    elsif ( $FieldType eq 'Selection' ) {
+
+        # get compare value list
+        my $CompareValueList = $Self->{ConditionObject}->ObjectCompareValueList(
+            ObjectID      => $Param{ObjectID},
+            AttributeName => $AttributeName,
+            UserID        => $Self->{UserID},
+        );
+
+        # add an empty selection if no list is available or nothing is selected
+        my $PossibleNone = 0;
+        if (
+            !$Param{CompareValue}
+            || !$CompareValueList
+            || ( ref $CompareValueList eq 'HASH'  && !%{$CompareValueList} )
+            || ( ref $CompareValueList eq 'ARRAY' && !@{$CompareValueList} )
+            )
+        {
+            $PossibleNone = 1;
+        }
+
+        # generate CompareValueOptionString
+        my $CompareValueOptionString = $Self->{LayoutObject}->BuildSelection(
+            Data         => $CompareValueList,
+            Name         => 'ExpressionID' . $Param{ExpressionID} . '::CompareValue',
+            SelectedID   => $Param{CompareValue},
+            PossibleNone => $PossibleNone,
+        );
+
+        # output selection
+        $Self->{LayoutObject}->Block(
+            Name => 'ExpressionOverviewRowElementCompareValueSelection',
+            Data => {
+                CompareValueOptionString => $CompareValueOptionString,
+            },
+        );
+    }
+
+    # compare value is a date field
+    elsif ( $FieldType eq 'Date' ) {
+
+        # TODO : Implement date selection later!
+    }
+
+    # compare value is an autocomplete field
+    elsif ( $FieldType eq 'Autocomplete' ) {
+
+        # TODO : Implement autocomplete selection later!
+    }
+
+    # error if field type is unknown
+    else {
+
+        # TODO : Error message
+        return;
+    }
 
     return 1;
 }
