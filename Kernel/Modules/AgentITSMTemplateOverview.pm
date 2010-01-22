@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMTemplateOverview.pm - the template overview module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMTemplateOverview.pm,v 1.10 2010-01-22 11:35:16 bes Exp $
+# $Id: AgentITSMTemplateOverview.pm,v 1.11 2010-01-22 12:42:20 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::Template;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -123,7 +123,6 @@ sub Run {
             # check if the template type is valid by looking up the id
             my $TemplateTypeID = $Self->{TemplateObject}->TemplateTypeLookup(
                 TemplateType => $TemplateType,
-                UserID       => $Self->{UserID},
             );
 
             # do not use invalid template types

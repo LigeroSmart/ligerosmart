@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.165 2010-01-22 08:31:42 ub Exp $
+# $Id: ITSMChange.t,v 1.166 2010-01-22 12:42:20 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -2574,7 +2574,6 @@ if ($ChangeLookupTestChangeID) {
 
     my $ChangeID = $Self->{ChangeObject}->ChangeLookup(
         ChangeNumber => $ChangeData->{ChangeNumber},
-        UserID       => 1,
     );
 
     $Self->Is(
@@ -2586,7 +2585,6 @@ if ($ChangeLookupTestChangeID) {
 
     my $ChangeNumber = $Self->{ChangeObject}->ChangeLookup(
         ChangeID => $ChangeLookupTestChangeID,
-        UserID   => 1,
     );
 
     $Self->Is(
@@ -2598,13 +2596,18 @@ if ($ChangeLookupTestChangeID) {
     );
 
     # now some param checks for ChangeLookup()
-    my $LookupOk = $Self->{ChangeObject}->ChangeLookup(
-        UserID => 1,
-    );
+    my $LookupOk = $Self->{ChangeObject}->ChangeLookup( UserID => 1 );
 
     $Self->False(
         $LookupOk,
-        'No params passed to ChangeLookup()',
+        'Only an unused param passed to ChangeLookup()',
+    );
+
+    $LookupOk = $Self->{ChangeObject}->ChangeLookup();
+
+    $Self->False(
+        $LookupOk,
+        'No param passed to ChangeLookup()',
     );
 
     $LookupOk = $Self->{ChangeObject}->ChangeLookup(

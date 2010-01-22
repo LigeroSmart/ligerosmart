@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template.pm - all template functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.33 2010-01-22 10:19:26 reb Exp $
+# $Id: Template.pm,v 1.34 2010-01-22 12:42:20 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Data::Dumper;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.33 $) [1];
+$VERSION = qw($Revision: 1.34 $) [1];
 
 =head1 NAME
 
@@ -152,7 +152,6 @@ sub TemplateAdd {
     if ( $Param{TemplateType} ) {
         $Param{TemplateTypeID} = $Self->TemplateTypeLookup(
             TemplateType => $Param{TemplateType},
-            UserID       => $Param{UserID},
         );
     }
 
@@ -480,7 +479,6 @@ sub TemplateList {
     if ( $Param{TemplateType} ) {
         $Param{TemplateTypeID} = $Self->TemplateTypeLookup(
             TemplateType => $Param{TemplateType},
-            UserID       => $Param{UserID},
         );
     }
 
@@ -720,7 +718,6 @@ sub TemplateSearch {
         # get the ID for the name
         my $TypeID = $Self->TemplateTypeLookup(
             TemplateType => $Type,
-            UserID       => $Param{UserID},
         );
 
         # check whether the ID was found, whether the name exists
@@ -978,27 +975,16 @@ undefined value is returned.
 
     my $TypeID = $TemplateObject->TemplateTypeLookup(
         TemplateType => 'my template type name',
-        UserID       => 1,
     );
 
     my $TxpeName = $TemplateObject->TemplateTypeLookup(
         TemplateTypeID => 42,
-        UserID         => 1,
     );
 
 =cut
 
 sub TemplateTypeLookup {
     my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => 'Need UserID!',
-        );
-        return;
-    }
 
     # the template type id or the template type name must be passed
     if ( !$Param{TemplateTypeID} && !$Param{TemplateType} ) {
@@ -2204,6 +2190,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.33 $ $Date: 2010-01-22 10:19:26 $
+$Revision: 1.34 $ $Date: 2010-01-22 12:42:20 $
 
 =cut

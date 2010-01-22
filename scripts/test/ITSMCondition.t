@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.51 2010-01-19 23:03:18 ub Exp $
+# $Id: ITSMCondition.t,v 1.52 2010-01-22 12:42:20 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -448,8 +448,7 @@ for my $ConditionAttribute (@ConditionAttributes) {
 
     # make lookup to get attribute id
     my $AttributeID = $Self->{ConditionObject}->AttributeLookup(
-        UserID => 1,
-        Name   => $ConditionAttribute,
+        Name => $ConditionAttribute,
     ) || '';
 
     # check on return value
@@ -570,10 +569,7 @@ my @ConditionOperators = (
 for my $ConditionOperator (@ConditionOperators) {
 
     # make lookup to get operator id
-    my $OperatorID = $Self->{ConditionObject}->OperatorLookup(
-        UserID => 1,
-        Name   => $ConditionOperator,
-    ) || '';
+    my $OperatorID = $Self->{ConditionObject}->OperatorLookup( Name => $ConditionOperator ) || '';
 
     # check on return value
     $Self->True(
@@ -678,20 +674,17 @@ my @ExpressionTests = (
             ExpressionAdd => {
                 ObjectID => {
                     ObjectLookup => {
-                        Name   => 'ITSMChange',
-                        UserID => 1,
+                        Name => 'ITSMChange',
                     },
                 },
                 AttributeID => {
                     AttributeLookup => {
-                        Name   => 'ChangeTitle',
-                        UserID => 1,
+                        Name => 'ChangeTitle',
                     },
                 },
                 OperatorID => {
                     OperatorLookup => {
-                        Name   => 'is',
-                        UserID => 1,
+                        Name => 'is',
                     },
                 },
 
@@ -708,20 +701,17 @@ my @ExpressionTests = (
             ExpressionAdd => {
                 ObjectID => {
                     ObjectLookup => {
-                        Name   => 'ITSMChange',
-                        UserID => 1,
+                        Name => 'ITSMChange',
                     },
                 },
                 AttributeID => {
                     AttributeLookup => {
-                        Name   => 'ChangeManagerID',
-                        UserID => 1,
+                        Name => 'ChangeManagerID',
                     },
                 },
                 OperatorID => {
                     OperatorLookup => {
-                        Name   => 'is',
-                        UserID => 1,
+                        Name => 'is',
                     },
                 },
 
@@ -738,20 +728,17 @@ my @ExpressionTests = (
             ExpressionAdd => {
                 ObjectID => {
                     ObjectLookup => {
-                        Name   => 'ITSMWorkOrder',
-                        UserID => 1,
+                        Name => 'ITSMWorkOrder',
                     },
                 },
                 AttributeID => {
                     AttributeLookup => {
-                        Name   => 'WorkOrderTitle',
-                        UserID => 1,
+                        Name => 'WorkOrderTitle',
                     },
                 },
                 OperatorID => {
                     OperatorLookup => {
-                        Name   => 'is not',
-                        UserID => 1,
+                        Name => 'is not',
                     },
                 },
 
@@ -764,20 +751,17 @@ my @ExpressionTests = (
             ExpressionUpdate => {
                 ObjectID => {
                     ObjectLookup => {
-                        Name   => 'ITSMChange',
-                        UserID => 1,
+                        Name => 'ITSMChange',
                     },
                 },
                 AttributeID => {
                     AttributeLookup => {
-                        Name   => 'ChangeTitle',
-                        UserID => 1,
+                        Name => 'ChangeTitle',
                     },
                 },
                 OperatorID => {
                     OperatorLookup => {
-                        Name   => 'is',
-                        UserID => 1,
+                        Name => 'is',
                     },
                 },
 
@@ -794,20 +778,17 @@ my @ExpressionTests = (
             ExpressionAdd => {
                 ObjectID => {
                     ObjectLookup => {
-                        Name   => 'ITSMWorkOrder',
-                        UserID => 1,
+                        Name => 'ITSMWorkOrder',
                     },
                 },
                 AttributeID => {
                     AttributeLookup => {
-                        Name   => 'WorkOrderTitle',
-                        UserID => 1,
+                        Name => 'WorkOrderTitle',
                     },
                 },
                 OperatorID => {
                     OperatorLookup => {
-                        Name   => 'is not',
-                        UserID => 1,
+                        Name => 'is not',
                     },
                 },
 
@@ -827,20 +808,17 @@ my @ExpressionTests = (
             ExpressionAdd => {
                 ObjectID => {
                     ObjectLookup => {
-                        Name   => 'ITSMChange',
-                        UserID => 1,
+                        Name => 'ITSMChange',
                     },
                 },
                 AttributeID => {
                     AttributeLookup => {
-                        Name   => 'PlannedStartTime',
-                        UserID => 1,
+                        Name => 'PlannedStartTime',
                     },
                 },
                 OperatorID => {
                     OperatorLookup => {
-                        Name   => 'is greater than',
-                        UserID => 1,
+                        Name => 'is greater than',
                     },
                 },
 
@@ -853,8 +831,7 @@ my @ExpressionTests = (
             ExpressionUpdate => {
                 ObjectID => {
                     ObjectLookup => {
-                        Name   => 'ITSMWorkOrder',
-                        UserID => 1,
+                        Name => 'ITSMWorkOrder',
                     },
                 },
 
@@ -870,20 +847,17 @@ my @ExpressionTests = (
             ExpressionAdd => {
                 ObjectID => {
                     ObjectLookup => {
-                        Name   => 'ITSMChange',
-                        UserID => 1,
+                        Name => 'ITSMChange',
                     },
                 },
                 AttributeID => {
                     AttributeLookup => {
-                        Name   => 'ChangeTitle',
-                        UserID => 1,
+                        Name => 'ChangeTitle',
                     },
                 },
                 OperatorID => {
                     OperatorLookup => {
-                        Name   => 'is',
-                        UserID => 1,
+                        Name => 'is',
                     },
                 },
 
@@ -901,20 +875,17 @@ my @ExpressionTests = (
             ExpressionAdd => {
                 ObjectID => {
                     ObjectLookup => {
-                        Name   => 'ITSMChange',
-                        UserID => 1,
+                        Name => 'ITSMChange',
                     },
                 },
                 AttributeID => {
                     AttributeLookup => {
-                        Name   => 'ChangeTitle',
-                        UserID => 1,
+                        Name => 'ChangeTitle',
                     },
                 },
                 OperatorID => {
                     OperatorLookup => {
-                        Name   => 'is not',
-                        UserID => 1,
+                        Name => 'is not',
                     },
                 },
 
@@ -932,20 +903,17 @@ my @ExpressionTests = (
             ExpressionAdd => {
                 ObjectID => {
                     ObjectLookup => {
-                        Name   => 'ITSMChange',
-                        UserID => 1,
+                        Name => 'ITSMChange',
                     },
                 },
                 AttributeID => {
                     AttributeLookup => {
-                        Name   => 'ChangeTitle',
-                        UserID => 1,
+                        Name => 'ChangeTitle',
                     },
                 },
                 OperatorID => {
                     OperatorLookup => {
-                        Name   => 'is not',
-                        UserID => 1,
+                        Name => 'is not',
                     },
                 },
 
@@ -963,20 +931,17 @@ my @ExpressionTests = (
             ExpressionAdd => {
                 ObjectID => {
                     ObjectLookup => {
-                        Name   => 'ITSMWorkOrder',
-                        UserID => 1,
+                        Name => 'ITSMWorkOrder',
                     },
                 },
                 AttributeID => {
                     AttributeLookup => {
-                        Name   => 'WorkOrderTitle',
-                        UserID => 1,
+                        Name => 'WorkOrderTitle',
                     },
                 },
                 OperatorID => {
                     OperatorLookup => {
-                        Name   => 'is',
-                        UserID => 1,
+                        Name => 'is',
                     },
                 },
 
@@ -994,20 +959,17 @@ my @ExpressionTests = (
             ExpressionAdd => {
                 ObjectID => {
                     ObjectLookup => {
-                        Name   => 'ITSMWorkOrder',
-                        UserID => 1,
+                        Name => 'ITSMWorkOrder',
                     },
                 },
                 AttributeID => {
                     AttributeLookup => {
-                        Name   => 'WorkOrderTitle',
-                        UserID => 1,
+                        Name => 'WorkOrderTitle',
                     },
                 },
                 OperatorID => {
                     OperatorLookup => {
-                        Name   => 'is',
-                        UserID => 1,
+                        Name => 'is',
                     },
                 },
 
@@ -1025,20 +987,17 @@ my @ExpressionTests = (
             ExpressionAdd => {
                 ObjectID => {
                     ObjectLookup => {
-                        Name   => 'ITSMWorkOrder',
-                        UserID => 1,
+                        Name => 'ITSMWorkOrder',
                     },
                 },
                 AttributeID => {
                     AttributeLookup => {
-                        Name   => 'WorkOrderTitle',
-                        UserID => 1,
+                        Name => 'WorkOrderTitle',
                     },
                 },
                 OperatorID => {
                     OperatorLookup => {
-                        Name   => 'is',
-                        UserID => 1,
+                        Name => 'is',
                     },
                 },
 
@@ -1056,20 +1015,17 @@ my @ExpressionTests = (
             ExpressionAdd => {
                 ObjectID => {
                     ObjectLookup => {
-                        Name   => 'ITSMWorkOrder',
-                        UserID => 1,
+                        Name => 'ITSMWorkOrder',
                     },
                 },
                 AttributeID => {
                     AttributeLookup => {
-                        Name   => 'WorkOrderTitle',
-                        UserID => 1,
+                        Name => 'WorkOrderTitle',
                     },
                 },
                 OperatorID => {
                     OperatorLookup => {
-                        Name   => 'is empty',
-                        UserID => 1,
+                        Name => 'is empty',
                     },
                 },
 
@@ -1087,20 +1043,17 @@ my @ExpressionTests = (
             ExpressionAdd => {
                 ObjectID => {
                     ObjectLookup => {
-                        Name   => 'ITSMWorkOrder',
-                        UserID => 1,
+                        Name => 'ITSMWorkOrder',
                     },
                 },
                 AttributeID => {
                     AttributeLookup => {
-                        Name   => 'WorkOrderTitle',
-                        UserID => 1,
+                        Name => 'WorkOrderTitle',
                     },
                 },
                 OperatorID => {
                     OperatorLookup => {
-                        Name   => 'is not empty',
-                        UserID => 1,
+                        Name => 'is not empty',
                     },
                 },
 
@@ -1118,20 +1071,17 @@ my @ExpressionTests = (
             ExpressionAdd => {
                 ObjectID => {
                     ObjectLookup => {
-                        Name   => 'ITSMWorkOrder',
-                        UserID => 1,
+                        Name => 'ITSMWorkOrder',
                     },
                 },
                 AttributeID => {
                     AttributeLookup => {
-                        Name   => 'WorkOrderNumber',
-                        UserID => 1,
+                        Name => 'WorkOrderNumber',
                     },
                 },
                 OperatorID => {
                     OperatorLookup => {
-                        Name   => 'is greater than',
-                        UserID => 1,
+                        Name => 'is greater than',
                     },
                 },
 
@@ -1149,20 +1099,17 @@ my @ExpressionTests = (
             ExpressionAdd => {
                 ObjectID => {
                     ObjectLookup => {
-                        Name   => 'ITSMWorkOrder',
-                        UserID => 1,
+                        Name => 'ITSMWorkOrder',
                     },
                 },
                 AttributeID => {
                     AttributeLookup => {
-                        Name   => 'WorkOrderNumber',
-                        UserID => 1,
+                        Name => 'WorkOrderNumber',
                     },
                 },
                 OperatorID => {
                     OperatorLookup => {
-                        Name   => 'is greater than',
-                        UserID => 1,
+                        Name => 'is greater than',
                     },
                 },
 
@@ -1180,20 +1127,17 @@ my @ExpressionTests = (
             ExpressionAdd => {
                 ObjectID => {
                     ObjectLookup => {
-                        Name   => 'ITSMWorkOrder',
-                        UserID => 1,
+                        Name => 'ITSMWorkOrder',
                     },
                 },
                 AttributeID => {
                     AttributeLookup => {
-                        Name   => 'WorkOrderNumber',
-                        UserID => 1,
+                        Name => 'WorkOrderNumber',
                     },
                 },
                 OperatorID => {
                     OperatorLookup => {
-                        Name   => 'is less than',
-                        UserID => 1,
+                        Name => 'is less than',
                     },
                 },
 
@@ -1211,20 +1155,17 @@ my @ExpressionTests = (
             ExpressionAdd => {
                 ObjectID => {
                     ObjectLookup => {
-                        Name   => 'ITSMWorkOrder',
-                        UserID => 1,
+                        Name => 'ITSMWorkOrder',
                     },
                 },
                 AttributeID => {
                     AttributeLookup => {
-                        Name   => 'WorkOrderNumber',
-                        UserID => 1,
+                        Name => 'WorkOrderNumber',
                     },
                 },
                 OperatorID => {
                     OperatorLookup => {
-                        Name   => 'is less than',
-                        UserID => 1,
+                        Name => 'is less than',
                     },
                 },
 
@@ -1242,20 +1183,17 @@ my @ExpressionTests = (
             ExpressionAdd => {
                 ObjectID => {
                     ObjectLookup => {
-                        Name   => 'ITSMWorkOrder',
-                        UserID => 1,
+                        Name => 'ITSMWorkOrder',
                     },
                 },
                 AttributeID => {
                     AttributeLookup => {
-                        Name   => 'PlannedStartTime',
-                        UserID => 1,
+                        Name => 'PlannedStartTime',
                     },
                 },
                 OperatorID => {
                     OperatorLookup => {
-                        Name   => 'is before',
-                        UserID => 1,
+                        Name => 'is before',
                     },
                 },
 
@@ -1275,20 +1213,17 @@ my @ExpressionTests = (
             ExpressionAdd => {
                 ObjectID => {
                     ObjectLookup => {
-                        Name   => 'ITSMWorkOrder',
-                        UserID => 1,
+                        Name => 'ITSMWorkOrder',
                     },
                 },
                 AttributeID => {
                     AttributeLookup => {
-                        Name   => 'PlannedStartTime',
-                        UserID => 1,
+                        Name => 'PlannedStartTime',
                     },
                 },
                 OperatorID => {
                     OperatorLookup => {
-                        Name   => 'is before',
-                        UserID => 1,
+                        Name => 'is before',
                     },
                 },
 
@@ -1308,20 +1243,17 @@ my @ExpressionTests = (
             ExpressionAdd => {
                 ObjectID => {
                     ObjectLookup => {
-                        Name   => 'ITSMWorkOrder',
-                        UserID => 1,
+                        Name => 'ITSMWorkOrder',
                     },
                 },
                 AttributeID => {
                     AttributeLookup => {
-                        Name   => 'PlannedStartTime',
-                        UserID => 1,
+                        Name => 'PlannedStartTime',
                     },
                 },
                 OperatorID => {
                     OperatorLookup => {
-                        Name   => 'is after',
-                        UserID => 1,
+                        Name => 'is after',
                     },
                 },
 
@@ -1341,20 +1273,17 @@ my @ExpressionTests = (
             ExpressionAdd => {
                 ObjectID => {
                     ObjectLookup => {
-                        Name   => 'ITSMWorkOrder',
-                        UserID => 1,
+                        Name => 'ITSMWorkOrder',
                     },
                 },
                 AttributeID => {
                     AttributeLookup => {
-                        Name   => 'PlannedStartTime',
-                        UserID => 1,
+                        Name => 'PlannedStartTime',
                     },
                 },
                 OperatorID => {
                     OperatorLookup => {
-                        Name   => 'is after',
-                        UserID => 1,
+                        Name => 'is after',
                     },
                 },
 
@@ -1374,20 +1303,17 @@ my @ExpressionTests = (
             ExpressionAdd => {
                 ObjectID => {
                     ObjectLookup => {
-                        Name   => 'ITSMWorkOrder',
-                        UserID => 1,
+                        Name => 'ITSMWorkOrder',
                     },
                 },
                 AttributeID => {
                     AttributeLookup => {
-                        Name   => 'WorkOrderTitle',
-                        UserID => 1,
+                        Name => 'WorkOrderTitle',
                     },
                 },
                 OperatorID => {
                     OperatorLookup => {
-                        Name   => 'is',
-                        UserID => 1,
+                        Name => 'is',
                     },
                 },
 
@@ -1405,20 +1331,17 @@ my @ExpressionTests = (
             ExpressionAdd => {
                 ObjectID => {
                     ObjectLookup => {
-                        Name   => 'ITSMWorkOrder',
-                        UserID => 1,
+                        Name => 'ITSMWorkOrder',
                     },
                 },
                 AttributeID => {
                     AttributeLookup => {
-                        Name   => 'WorkOrderTitle',
-                        UserID => 1,
+                        Name => 'WorkOrderTitle',
                     },
                 },
                 OperatorID => {
                     OperatorLookup => {
-                        Name   => 'contains',
-                        UserID => 1,
+                        Name => 'contains',
                     },
                 },
 
@@ -1436,20 +1359,17 @@ my @ExpressionTests = (
             ExpressionAdd => {
                 ObjectID => {
                     ObjectLookup => {
-                        Name   => 'ITSMWorkOrder',
-                        UserID => 1,
+                        Name => 'ITSMWorkOrder',
                     },
                 },
                 AttributeID => {
                     AttributeLookup => {
-                        Name   => 'WorkOrderTitle',
-                        UserID => 1,
+                        Name => 'WorkOrderTitle',
                     },
                 },
                 OperatorID => {
                     OperatorLookup => {
-                        Name   => 'contains',
-                        UserID => 1,
+                        Name => 'contains',
                     },
                 },
 
@@ -1467,20 +1387,17 @@ my @ExpressionTests = (
             ExpressionAdd => {
                 ObjectID => {
                     ObjectLookup => {
-                        Name   => 'ITSMWorkOrder',
-                        UserID => 1,
+                        Name => 'ITSMWorkOrder',
                     },
                 },
                 AttributeID => {
                     AttributeLookup => {
-                        Name   => 'WorkOrderTitle',
-                        UserID => 1,
+                        Name => 'WorkOrderTitle',
                     },
                 },
                 OperatorID => {
                     OperatorLookup => {
-                        Name   => 'contains',
-                        UserID => 1,
+                        Name => 'contains',
                     },
                 },
 
@@ -1498,20 +1415,17 @@ my @ExpressionTests = (
             ExpressionAdd => {
                 ObjectID => {
                     ObjectLookup => {
-                        Name   => 'ITSMWorkOrder',
-                        UserID => 1,
+                        Name => 'ITSMWorkOrder',
                     },
                 },
                 AttributeID => {
                     AttributeLookup => {
-                        Name   => 'WorkOrderTitle',
-                        UserID => 1,
+                        Name => 'WorkOrderTitle',
                     },
                 },
                 OperatorID => {
                     OperatorLookup => {
-                        Name   => 'not contains',
-                        UserID => 1,
+                        Name => 'not contains',
                     },
                 },
 
@@ -1529,20 +1443,17 @@ my @ExpressionTests = (
             ExpressionAdd => {
                 ObjectID => {
                     ObjectLookup => {
-                        Name   => 'ITSMWorkOrder',
-                        UserID => 1,
+                        Name => 'ITSMWorkOrder',
                     },
                 },
                 AttributeID => {
                     AttributeLookup => {
-                        Name   => 'WorkOrderTitle',
-                        UserID => 1,
+                        Name => 'WorkOrderTitle',
                     },
                 },
                 OperatorID => {
                     OperatorLookup => {
-                        Name   => 'not contains',
-                        UserID => 1,
+                        Name => 'not contains',
                     },
                 },
 
@@ -1560,20 +1471,17 @@ my @ExpressionTests = (
             ExpressionAdd => {
                 ObjectID => {
                     ObjectLookup => {
-                        Name   => 'ITSMWorkOrder',
-                        UserID => 1,
+                        Name => 'ITSMWorkOrder',
                     },
                 },
                 AttributeID => {
                     AttributeLookup => {
-                        Name   => 'WorkOrderTitle',
-                        UserID => 1,
+                        Name => 'WorkOrderTitle',
                     },
                 },
                 OperatorID => {
                     OperatorLookup => {
-                        Name   => 'begins with',
-                        UserID => 1,
+                        Name => 'begins with',
                     },
                 },
 
@@ -1591,20 +1499,17 @@ my @ExpressionTests = (
             ExpressionAdd => {
                 ObjectID => {
                     ObjectLookup => {
-                        Name   => 'ITSMWorkOrder',
-                        UserID => 1,
+                        Name => 'ITSMWorkOrder',
                     },
                 },
                 AttributeID => {
                     AttributeLookup => {
-                        Name   => 'WorkOrderTitle',
-                        UserID => 1,
+                        Name => 'WorkOrderTitle',
                     },
                 },
                 OperatorID => {
                     OperatorLookup => {
-                        Name   => 'begins with',
-                        UserID => 1,
+                        Name => 'begins with',
                     },
                 },
 
@@ -1622,20 +1527,17 @@ my @ExpressionTests = (
             ExpressionAdd => {
                 ObjectID => {
                     ObjectLookup => {
-                        Name   => 'ITSMWorkOrder',
-                        UserID => 1,
+                        Name => 'ITSMWorkOrder',
                     },
                 },
                 AttributeID => {
                     AttributeLookup => {
-                        Name   => 'WorkOrderTitle',
-                        UserID => 1,
+                        Name => 'WorkOrderTitle',
                     },
                 },
                 OperatorID => {
                     OperatorLookup => {
-                        Name   => 'ends with',
-                        UserID => 1,
+                        Name => 'ends with',
                     },
                 },
 
@@ -1653,20 +1555,17 @@ my @ExpressionTests = (
             ExpressionAdd => {
                 ObjectID => {
                     ObjectLookup => {
-                        Name   => 'ITSMWorkOrder',
-                        UserID => 1,
+                        Name => 'ITSMWorkOrder',
                     },
                 },
                 AttributeID => {
                     AttributeLookup => {
-                        Name   => 'WorkOrderTitle',
-                        UserID => 1,
+                        Name => 'WorkOrderTitle',
                     },
                 },
                 OperatorID => {
                     OperatorLookup => {
-                        Name   => 'ends with',
-                        UserID => 1,
+                        Name => 'ends with',
                     },
                 },
 

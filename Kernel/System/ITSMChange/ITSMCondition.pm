@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition.pm - all condition functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.pm,v 1.24 2010-01-22 08:37:43 ub Exp $
+# $Id: ITSMCondition.pm,v 1.25 2010-01-22 12:42:20 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use base qw(Kernel::System::ITSMChange::ITSMCondition::Expression);
 use base qw(Kernel::System::ITSMChange::ITSMCondition::Action);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.24 $) [1];
+$VERSION = qw($Revision: 1.25 $) [1];
 
 =head1 NAME
 
@@ -817,7 +817,6 @@ sub ConditionCompareValueFieldType {
     # lookup object name
     my $ObjectName = $Self->ObjectLookup(
         ObjectID => $Param{ObjectID},
-        UserID   => $Param{UserID},
     );
 
     # check error
@@ -830,10 +829,7 @@ sub ConditionCompareValueFieldType {
     }
 
     # lookup attribute name
-    my $AttributeName = $Self->AttributeLookup(
-        AttributeID => $Param{AttributeID},
-        UserID      => $Param{UserID},
-    );
+    my $AttributeName = $Self->AttributeLookup( AttributeID => $Param{AttributeID} );
 
     # check error
     if ( !$AttributeName ) {
@@ -872,6 +868,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.24 $ $Date: 2010-01-22 08:37:43 $
+$Revision: 1.25 $ $Date: 2010-01-22 12:42:20 $
 
 =cut

@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.225 2010-01-22 08:28:31 ub Exp $
+# $Id: ITSMChange.pm,v 1.226 2010-01-22 12:42:20 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -28,7 +28,7 @@ use Kernel::System::VirtualFS;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.225 $) [1];
+$VERSION = qw($Revision: 1.226 $) [1];
 
 =head1 NAME
 
@@ -257,7 +257,6 @@ sub ChangeAdd {
 
     # get change id
     my $ChangeID = $Self->ChangeLookup(
-        UserID       => $Param{UserID},
         ChangeNumber => $ChangeNumber,
     );
 
@@ -953,27 +952,16 @@ When no change id or change number is found, then the undefined value is returne
 
     my $ChangeID = $ChangeObject->ChangeLookup(
         ChangeNumber => '2009091742000465',
-        UserID => 1,
     );
 
     my $ChangeNumber = $ChangeObject->ChangeLookup(
         ChangeID => 42,
-        UserID => 1,
     );
 
 =cut
 
 sub ChangeLookup {
     my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => 'Need UserID!',
-        );
-        return;
-    }
 
     # the change id or the change number must be passed
     if ( !$Param{ChangeID} && !$Param{ChangeNumber} ) {
@@ -1800,7 +1788,6 @@ sub ChangeDelete {
     # the change does not exist, when it can't be looked up
     return if !$Self->ChangeLookup(
         ChangeID => $Param{ChangeID},
-        UserID   => $Param{UserID},
     );
 
     # delete all links to this change
@@ -2803,7 +2790,6 @@ sub _ChangeNumberCreate {
         # lookup if change number exists already
         my $ChangeID = $Self->ChangeLookup(
             ChangeNumber => $ChangeNumber,
-            UserID       => 1,
         );
 
         # now we have a new unused change number and return it
@@ -3078,6 +3064,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.225 $ $Date: 2010-01-22 08:28:31 $
+$Revision: 1.226 $ $Date: 2010-01-22 12:42:20 $
 
 =cut

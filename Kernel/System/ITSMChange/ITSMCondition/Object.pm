@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Object.pm - all condition object functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Object.pm,v 1.19 2010-01-22 08:36:30 ub Exp $
+# $Id: Object.pm,v 1.20 2010-01-22 12:42:20 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 =head1 NAME
 
@@ -56,8 +56,7 @@ sub ObjectAdd {
 
     # make lookup with given name for checks
     my $ObjectID = $Self->ObjectLookup(
-        Name   => $Param{Name},
-        UserID => $Param{UserID},
+        Name => $Param{Name},
     );
 
     # check if object name already exists
@@ -79,8 +78,7 @@ sub ObjectAdd {
 
     # get id of created object
     $ObjectID = $Self->ObjectLookup(
-        Name   => $Param{Name},
-        UserID => $Param{UserID},
+        Name => $Param{Name},
     );
 
     # check if object could be added
@@ -215,27 +213,16 @@ object is given, the appropriate id is returned.
 
     my $ObjectName = $ConditionObject->ObjectLookup(
         ObjectID => 4321,
-        UserID   => 1234,
     );
 
     my $ObjectID = $ConditionObject->ObjectLookup(
         Name   => 'ObjectName',
-        UserID => 1234,
     );
 
 =cut
 
 sub ObjectLookup {
     my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "Need UserID!",
-        );
-        return;
-    }
 
     # check if both parameters are given
     if ( $Param{ObjectID} && $Param{Name} ) {
@@ -400,7 +387,6 @@ sub ObjectSelectorList {
     # lookup object name
     my $ObjectName = $Self->ObjectLookup(
         ObjectID => $Param{ObjectID},
-        UserID   => $Param{UserID},
     );
 
     # define known objects and function calls
@@ -470,7 +456,6 @@ sub ObjectCompareValueList {
     # lookup object name
     my $ObjectName = $Self->ObjectLookup(
         ObjectID => $Param{ObjectID},
-        UserID   => $Param{UserID},
     );
 
     # define known objects and function calls
@@ -551,7 +536,6 @@ sub ObjectDataGet {
     if ( $Param{ObjectID} ) {
         $ObjectName = $Self->ObjectLookup(
             ObjectID => $Param{ObjectID},
-            UserID   => $Param{UserID},
         );
     }
 
@@ -964,6 +948,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.19 $ $Date: 2010-01-22 08:36:30 $
+$Revision: 1.20 $ $Date: 2010-01-22 12:42:20 $
 
 =cut

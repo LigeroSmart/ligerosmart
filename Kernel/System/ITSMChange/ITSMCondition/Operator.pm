@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Operator.pm - all condition operator functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Operator.pm,v 1.16 2010-01-22 08:34:45 ub Exp $
+# $Id: Operator.pm,v 1.17 2010-01-22 12:42:20 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 =head1 NAME
 
@@ -55,10 +55,7 @@ sub OperatorAdd {
     }
 
     # make lookup with given name for checks
-    my $OperatorID = $Self->OperatorLookup(
-        Name   => $Param{Name},
-        UserID => $Param{UserID},
-    );
+    my $OperatorID = $Self->OperatorLookup( Name => $Param{Name} );
 
     # check if operator name already exists
     if ($OperatorID) {
@@ -78,10 +75,7 @@ sub OperatorAdd {
     );
 
     # get id of created operator
-    $OperatorID = $Self->OperatorLookup(
-        Name   => $Param{Name},
-        UserID => $Param{UserID},
-    );
+    $OperatorID = $Self->OperatorLookup( Name => $Param{Name} );
 
     # check if operator could be added
     if ( !$OperatorID ) {
@@ -215,27 +209,16 @@ operator is given, the appropriate id is returned.
 
     my $OperatorName = $ConditionObject->OperatorLookup(
         OperatorID => 4321,
-        UserID     => 1,
     );
 
     my $OperatorID = $ConditionObject->OperatorLookup(
         Name   => 'OperatorName',
-        UserID => 1,
     );
 
 =cut
 
 sub OperatorLookup {
     my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "Need UserID!",
-        );
-        return;
-    }
 
     # check if both parameters are given
     if ( $Param{OperatorID} && $Param{Name} ) {
@@ -962,6 +945,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.16 $ $Date: 2010-01-22 08:34:45 $
+$Revision: 1.17 $ $Date: 2010-01-22 12:42:20 $
 
 =cut

@@ -2,7 +2,7 @@
 # Kernel/System/Stats/Dynamic/ITSMChangeManagementChangesPerCIClasses.pm - all advice functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagementChangesPerCIClasses.pm,v 1.8 2010-01-22 08:30:59 ub Exp $
+# $Id: ITSMChangeManagementChangesPerCIClasses.pm,v 1.9 2010-01-22 12:42:20 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -128,15 +128,13 @@ sub GetStatElement {
 
     # get object ids for change and config item
     my $ConfigItemObjectID = $Self->{LinkObject}->ObjectLookup(
-        Name   => 'ITSMConfigItem',
-        UserID => 1,
+        Name => 'ITSMConfigItem',
     );
 
     return if !$ConfigItemObjectID;
 
     my $ChangeObjectID = $Self->{LinkObject}->ObjectLookup(
-        Name   => 'ITSMWorkOrder',
-        UserID => 1,
+        Name => 'ITSMWorkOrder',
     );
 
     return if !$ChangeObjectID;

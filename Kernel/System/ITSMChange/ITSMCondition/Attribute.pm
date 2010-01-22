@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Attribute.pm - all condition attribute functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Attribute.pm,v 1.9 2010-01-22 08:35:12 ub Exp $
+# $Id: Attribute.pm,v 1.10 2010-01-22 12:42:20 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 =head1 NAME
 
@@ -55,10 +55,7 @@ sub AttributeAdd {
     }
 
     # make lookup with given name for checks
-    my $AttributeID = $Self->AttributeLookup(
-        Name   => $Param{Name},
-        UserID => $Param{UserID},
-    );
+    my $AttributeID = $Self->AttributeLookup( Name => $Param{Name} );
 
     # check if attribute name already exists
     if ($AttributeID) {
@@ -78,10 +75,7 @@ sub AttributeAdd {
     );
 
     # get id of created attribute
-    $AttributeID = $Self->AttributeLookup(
-        Name   => $Param{Name},
-        UserID => $Param{UserID},
-    );
+    $AttributeID = $Self->AttributeLookup( Name => $Param{Name} );
 
     # check if attribute could be added
     if ( !$AttributeID ) {
@@ -215,27 +209,16 @@ attribute is given, the appropriate id is returned.
 
     my $AttributeName = $ConditionObject->AttributeLookup(
         AttributeID => 4321,
-        UserID      => 1,
     );
 
     my $AttributeID = $ConditionObject->AttributeLookup(
         Name   => 'AttributeName',
-        UserID => 1,
     );
 
 =cut
 
 sub AttributeLookup {
     my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "Need UserID!",
-        );
-        return;
-    }
 
     # check if both parameters are given
     if ( $Param{AttributeID} && $Param{Name} ) {
@@ -371,6 +354,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.9 $ $Date: 2010-01-22 08:35:12 $
+$Revision: 1.10 $ $Date: 2010-01-22 12:42:20 $
 
 =cut
