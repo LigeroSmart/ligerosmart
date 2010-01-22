@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template.pm - all template functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.30 2010-01-21 17:04:23 bes Exp $
+# $Id: Template.pm,v 1.31 2010-01-22 10:11:11 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Data::Dumper;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.30 $) [1];
+$VERSION = qw($Revision: 1.31 $) [1];
 
 =head1 NAME
 
@@ -532,7 +532,7 @@ sub TemplateList {
         my ( $Name, $Comment ) = @{ $Templates{$Key} };
 
         my $CommentAppend = '';
-        if ( $Param{CommentLength} ) {
+        if ( $Param{CommentLength} && $Comment ) {
             my $Length = $Param{CommentLength} > length $Comment
                 ? length $Comment
                 : $Param{CommentLength};
@@ -1172,12 +1172,12 @@ sub TemplateDeSerialize {
     return if ref $TemplateData ne 'HASH';
 
     # create entities defined by the template
-    my $ElementID = $Self->_CreateTemplateElements(
+    my %Info = $Self->_CreateTemplateElements(
         %Param,
         Template => $TemplateData,
     );
 
-    return $ElementID;
+    return $Info{ID};
 }
 
 =begin Internal:
@@ -1235,6 +1235,7 @@ sub _CreateTemplateElements {
         CABAdd        => '_CABAdd',
         ConditionAdd  => '_ConditionAdd',
         AttachmentAdd => '_AttachmentAdd',
+        ExpressionAdd => '_ExpressionAdd',
     );
 
     # get action
@@ -1249,16 +1250,24 @@ sub _CreateTemplateElements {
         Data => $Data,
     );
 
+    my %SiblingsInfo;
+
     # create child elements
     for my $Child ( @{$Children} ) {
-        $Self->_CreateTemplateElements(
+        my %ChildInfo = $Self->_CreateTemplateElements(
             %Param,
+            %SiblingsInfo,
             %ParentReturn,
             Template => $Child,
         );
+
+        # save info for next sibling
+        for my $Key ( keys %ChildInfo ) {
+            $SiblingsInfo{$Key} = $ChildInfo{$Key};
+        }
     }
 
-    return $ParentReturn{ID};
+    return %ParentReturn;
 }
 
 =item _ITSMChangeSerialize()
@@ -1684,6 +1693,9 @@ sub _ChangeAdd {
     # make a local copy
     my %Data = %{ $Param{Data} };
 
+    # we need the old change id for expressions
+    my $OldChangeID = $Data{ChangeID};
+
     # these attributes are generated automatically, so don't pass them to ChangeAdd()
     delete @Data{qw(ChangeID ChangeNumber CreateTime CreateBy ChangeTime ChangeBy)};
 
@@ -1723,6 +1735,7 @@ sub _ChangeAdd {
         ID             => $ChangeID,
         ChangeID       => $ChangeID,
         TimeDifference => $Difference,
+        OldChangeID    => $OldChangeID,
     );
 
     return %Info;
@@ -1759,6 +1772,9 @@ sub _WorkOrderAdd {
 
     # make a local copy
     my %Data = %{ $Param{Data} };
+
+    # we need the old change id for expressions
+    my $OldWorkOrderID = $Data{WorkOrderID};
 
     # these attributes are generated automatically, so don't pass them to WorkOrderAdd()
     delete @Data{qw(WorkOrderID WorkOrderNumber CreateTime CreateBy ChangeTime ChangeBy)};
@@ -1813,10 +1829,17 @@ sub _WorkOrderAdd {
         UserID   => $Param{UserID},
     );
 
+    # we need a mapping "old id" to "new id" for the conditions
+    my $OldIDs2NewIDs = {
+        %{ $Param{OldWorkOrderIDs} || {} },
+        $OldWorkOrderID => $WorkOrderID,
+    };
+
     my %Info = (
-        ID          => $WorkOrderID,
-        WorkOrderID => $WorkOrderID,
-        ChangeID    => $Param{ChangeID},
+        ID              => $WorkOrderID,
+        WorkOrderID     => $WorkOrderID,
+        ChangeID        => $Param{ChangeID},
+        OldWorkOrderIDs => $OldIDs2NewIDs,
     );
 
     return %Info;
@@ -1893,17 +1916,90 @@ the condition id)
 sub _ConditionAdd {
     my ( $Self, %Param ) = @_;
 
+    # check needed stuff
+    for my $Argument (qw(UserID ChangeID Data)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    my %Data = %{ $Param{Data} };
+
+    # delete attributes
+    delete $Data{ConditionID};
+
     # add condition
     my $ConditionID = $Self->{ConditionObject}->ConditionAdd(
-        %Param,
+        %Data,
+        ChangeID => $Param{ChangeID},
+        UserID   => $Param{UserID},
     );
 
     my %Info = (
-        ID       => $ConditionID,
-        ChangeID => $Param{ChangeID},
+        ID          => $ConditionID,
+        ChangeID    => $Param{ChangeID},
+        ConditionID => $ConditionID,
     );
 
     return %Info;
+}
+
+=item _ExpressionAdd()
+
+=cut
+
+sub _ExpressionAdd {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(UserID ChangeID Data ConditionID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    my %Data = %{ $Param{Data} };
+
+    # delete attributes that are not needed
+    delete $Data{ExpressionID};
+
+    # replace old ids with new ids
+    $Data{ConditionID} = $Param{ConditionID};
+
+    # replace old id only if it is an ID
+    if ( $Data{Selector} =~ m{ \A \d+ \z }xms ) {
+        my $Object = $Self->{ConditionObject}->ObjectGet(
+            ObjectID => $Data{ObjectID},
+            UserID   => $Param{UserID},
+        );
+
+        if ( $Object->{Name} eq 'ITSMChange' ) {
+            $Data{Selector} = $Param{ChangeID};
+        }
+        elsif ( $Object->{Name} eq 'ITSMWorkOrder' ) {
+            $Data{Selector} = $Param{OldWorkOrderIDs}->{ $Data{Selector} };
+        }
+    }
+
+    # add condition
+    my $ExpressionID = $Self->{ConditionObject}->ExpressionAdd(
+        %Data,
+        UserID => $Param{UserID},
+    );
+
+    my %Info = (
+        ID           => $ExpressionID,
+        ChangeID     => $Param{ChangeID},
+        ExpressionID => $ExpressionID,
+    );
 }
 
 =item _AttachmentAdd()
@@ -1953,7 +2049,11 @@ sub _AttachmentAdd {
         );
     }
 
-    return $Success;
+    my %Info = (
+        Success => $Success,
+    );
+
+    return %Info;
 }
 
 =item _GetTimeDifference()
@@ -2102,6 +2202,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.30 $ $Date: 2010-01-21 17:04:23 $
+$Revision: 1.31 $ $Date: 2010-01-22 10:11:11 $
 
 =cut
