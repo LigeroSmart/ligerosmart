@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMTemplateOverview.pm - the template overview module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMTemplateOverview.pm,v 1.9 2010-01-22 10:11:58 bes Exp $
+# $Id: AgentITSMTemplateOverview.pm,v 1.10 2010-01-22 11:35:16 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::Template;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -93,16 +93,16 @@ sub Run {
     $Self->{LayoutObject}->Print( Output => \$Output );
     $Output = '';
 
-    # hardcode which columns should be shown
-    # the possible columns are:
-    #      TemplateID Name Comment Content
-    #      TypeID TranslatableType Type
-    #      ValidID Valid
-    #      CreateBy CreateTime ChangeBy ChangeTime
-    my @ShowColumns = qw(
-        Name Comment Content TranslatableType Valid
-        CreateBy CreateTime ChangeBy ChangeTime
-    );
+    # find out which columns should be shown
+    my @ShowColumns;
+    if ( $Self->{Config}->{ShowColumns} ) {
+
+        # get all possible columns from config
+        my %PossibleColumn = %{ $Self->{Config}->{ShowColumns} };
+
+        # get the column names that should be shown
+        @ShowColumns = grep { $PossibleColumn{$_} } keys %PossibleColumn;
+    }
 
     # to store the filters
     my %Filters;
@@ -158,8 +158,7 @@ sub Run {
     }
     else {
 
-        # add default filter
-        # all templates are shown
+        # add default filter, which shows all items
         $Filters{All} = {
             Name   => 'All',
             Prio   => 1000,
@@ -203,16 +202,16 @@ sub Run {
     # show the list
     my $LinkPage =
         'Filter=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
-        . '&SortBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $SortBy )
-        . '&OrderBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $OrderBy )
-        . '&';
+        . ';SortBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $SortBy )
+        . ';OrderBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $OrderBy )
+        . ';';
     my $LinkSort =
         'Filter=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
-        . '&';
+        . ';';
     my $LinkFilter =
         'SortBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $SortBy )
-        . '&OrderBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $OrderBy )
-        . '&';
+        . ';OrderBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $OrderBy )
+        . ';';
     $Output .= $Self->{LayoutObject}->ITSMTemplateListShow(
         TemplateIDs => $IDsRef,
         Total       => scalar @{$IDsRef},

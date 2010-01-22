@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.156 2010-01-22 08:25:03 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.157 2010-01-22 11:35:15 bes Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -2310,6 +2310,26 @@
         <SubGroup>Frontend::Agent::ViewTemplateOverview</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">ro</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMTemplateOverview###ShowColumns" Required="1" Valid="1">
+        <Description Lang="en">Defines the shown columns in the template overview. This option has no effect on the position of the column.</Description>
+        <Description Lang="de">Definiert die angezeigten Tabellenspalten in der Template-Übersicht. Diese Option hat keinen Effekt auf die Position der Spalten.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ViewTemplateOverview</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="TemplateID">0</Item>
+                <Item Key="Name">1</Item>
+                <Item Key="Comment">1</Item>
+                <Item Key="Type">1</Item>
+                <Item Key="Valid">1</Item>
+                <Item Key="Delete">1</Item>
+                <Item Key="CreateBy">1</Item>
+                <Item Key="CreateTime">1</Item>
+                <Item Key="ChangeBy">0</Item>
+                <Item Key="ChangeTime">0</Item>
+            </Hash>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMTemplateOverview###SortBy::Default" Required="1" Valid="1">

@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ITSMTemplateOverviewSmall.pm.pm
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMTemplateOverviewSmall.pm,v 1.3 2010-01-21 11:34:14 bes Exp $
+# $Id: ITSMTemplateOverviewSmall.pm,v 1.4 2010-01-22 11:35:16 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -101,12 +101,12 @@ sub Run {
             # human readable validity
             $Data{Valid} = $Self->{ValidObject}->ValidLookup( ValidID => $Data{ValidID} );
 
-            # get user data for CreateBy and ChangeBy
-            USERTYPE:
+            # get user data for needed user types
+            USER_TYPE:
             for my $UserType (qw(CreateBy ChangeBy)) {
 
                 # check if UserType attribute exists in the template
-                next USERTYPE if !$Data{$UserType};
+                next USER_TYPE if !$Data{$UserType};
 
                 # get user data
                 my %User = $Self->{UserObject}->GetUserData(
@@ -157,7 +157,7 @@ sub Run {
         Data         => {
             %Param,
             Type        => $Self->{ViewType},
-            ColumnCount => scalar(@ShowColumns) + 1,    # take the delete column into account
+            ColumnCount => scalar @ShowColumns,
         },
     );
 

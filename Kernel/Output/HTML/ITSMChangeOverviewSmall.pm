@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ITSMChangeOverviewSmall.pm.pm
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeOverviewSmall.pm,v 1.7 2010-01-21 11:34:14 bes Exp $
+# $Id: ITSMChangeOverviewSmall.pm,v 1.8 2010-01-22 11:35:16 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -139,13 +139,13 @@ sub Run {
             # some change attributes, i.e. PlannedStartTime, etc... )
             %Data = ( %{$Change}, %Data );
 
-            # get user data for change builder and change manager
-            USERTYPE:
+            # get user data for needed user types
+            USER_TYPE:
             for my $UserType (qw(ChangeBuilder ChangeManager WorkOrderAgent)) {
 
                 # check if UserType attribute exists either in change or workorder
                 if ( !$Change->{ $UserType . 'ID' } && !$Data{ $UserType . 'ID' } ) {
-                    next USERTYPE;
+                    next USER_TYPE;
                 }
 
                 # get user data
