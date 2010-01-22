@@ -2,7 +2,7 @@
 # Kernel/System/Stats/Dynamic/ITSMChangeManagementChangesIncidents.pm
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagementChangesIncidents.pm,v 1.2 2010-01-12 19:46:17 ub Exp $
+# $Id: ITSMChangeManagementChangesIncidents.pm,v 1.3 2010-01-22 08:33:15 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::Ticket;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 my %Objects = (
     1 => 'Incidents',
@@ -97,7 +97,12 @@ sub GetStatElement {
             Result     => 'COUNT',
             Permission => 'ro',
             Limit      => 100_000_000,
-            Types      => ['incident'],
+
+            # TODO: Fix this! Wrong ticket type. The correct ticket type would be 'Incident'.
+            # But having the type fixed is not a good idea. Would be better to show
+            # a list of all ticket types in the stats frontend instead.
+            #Types      => ['incident'],
+            Types => ['Incident'],
             %Param,
         );
     }
