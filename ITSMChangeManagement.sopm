@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.139 2010-01-22 08:21:44 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.140 2010-01-22 13:23:41 bes Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -44,17 +44,17 @@
         <File Permission="644" Location="Kernel/Modules/AgentITSMUserSearch.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderAdd.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderAgent.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderHistory.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderHistoryZoom.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderDelete.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderEdit.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderHistory.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderHistoryZoom.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderPrint.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderReport.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderTemplate.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderZoom.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ITSMChangeMenuGeneric.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/ITSMChangeMenuWorkOrdersNeeded.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ITSMChangeMenuTimeSlot.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/ITSMChangeMenuWorkOrdersNeeded.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ITSMChangeOverviewSmall.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ITSMTemplateOverviewSmall.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ITSMWorkOrderMenuGeneric.pm"/>
@@ -106,6 +106,9 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMWorkOrderZoom.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/ITSMChange.dtl"/>
         <File Permission="644" Location="Kernel/System/ITSMChange.pm"/>
+        <File Permission="644" Location="Kernel/System/ITSMChange/Event/Condition.pm"/>
+        <File Permission="644" Location="Kernel/System/ITSMChange/Event/HistoryAdd.pm"/>
+        <File Permission="644" Location="Kernel/System/ITSMChange/Event/Notification.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/History.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/ITSMChangeCIPAllocate.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/ITSMCondition.pm"/>
@@ -116,20 +119,17 @@
         <File Permission="644" Location="Kernel/System/ITSMChange/ITSMCondition/Operator.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/ITSMStateMachine.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/ITSMWorkOrder.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/Notification.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/Template.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/Event/Condition.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/Event/HistoryAdd.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/Event/Notification.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/Permission/CABCheck.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/Permission/ChangeAgentCheck.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/Permission/ChangeBuilderCheck.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/Permission/ChangeManagerCheck.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/ITSMWorkOrder/Event/WorkOrderNumberCalc.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/ITSMWorkOrder/Permission/CABCheck.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/ITSMWorkOrder/Permission/ChangeBuilderCheck.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/ITSMWorkOrder/Permission/ChangeManagerCheck.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/ITSMWorkOrder/Permission/WorkOrderAgentCheck.pm"/>
+        <File Permission="644" Location="Kernel/System/ITSMChange/Notification.pm"/>
+        <File Permission="644" Location="Kernel/System/ITSMChange/Permission/CABCheck.pm"/>
+        <File Permission="644" Location="Kernel/System/ITSMChange/Permission/ChangeAgentCheck.pm"/>
+        <File Permission="644" Location="Kernel/System/ITSMChange/Permission/ChangeBuilderCheck.pm"/>
+        <File Permission="644" Location="Kernel/System/ITSMChange/Permission/ChangeManagerCheck.pm"/>
+        <File Permission="644" Location="Kernel/System/ITSMChange/Template.pm"/>
         <File Permission="644" Location="Kernel/System/LinkObject/ITSMChange.pm"/>
         <File Permission="644" Location="Kernel/System/LinkObject/ITSMWorkOrder.pm"/>
         <File Permission="644" Location="Kernel/System/Stats/Dynamic/ITSMChangeManagement.pm"/>
