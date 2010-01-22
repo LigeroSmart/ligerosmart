@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.49 2010-01-14 17:56:45 bes Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.50 2010-01-22 08:29:36 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.49 $) [1];
+$VERSION = qw($Revision: 1.50 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -524,7 +524,8 @@ sub _MaskForm {
 
     # get possible Change Categories
     my $Categories = $Self->{ChangeObject}->ChangePossibleCIPGet(
-        Type => 'Category',
+        Type   => 'Category',
+        UserID => $Self->{UserID},
     );
     $Param{'ChangeCategorySelectionString'} = $Self->{LayoutObject}->BuildSelection(
         Data       => $Categories,
@@ -536,7 +537,8 @@ sub _MaskForm {
 
     # get possible Change Impacts
     my $Impacts = $Self->{ChangeObject}->ChangePossibleCIPGet(
-        Type => 'Impact',
+        Type   => 'Impact',
+        UserID => $Self->{UserID},
     );
     $Param{'ChangeImpactSelectionString'} = $Self->{LayoutObject}->BuildSelection(
         Data       => $Impacts,
@@ -548,7 +550,8 @@ sub _MaskForm {
 
     # get possible Change Priorities
     my $Priorities = $Self->{ChangeObject}->ChangePossibleCIPGet(
-        Type => 'Priority',
+        Type   => 'Priority',
+        UserID => $Self->{UserID},
     );
     $Param{'ChangePrioritySelectionString'} = $Self->{LayoutObject}->BuildSelection(
         Data       => $Priorities,

@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.50 2010-01-21 12:57:38 bes Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.51 2010-01-22 08:27:52 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.50 $) [1];
+$VERSION = qw($Revision: 1.51 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -550,7 +550,8 @@ sub Run {
 
         # get priorities
         my $Priorities = $Self->{ChangeObject}->ChangePossibleCIPGet(
-            Type => 'Priority',
+            Type   => 'Priority',
+            UserID => $Self->{UserID},
         );
 
         # get selected priority
@@ -678,7 +679,8 @@ sub Run {
     # all categories are selectable
     # when the category is changed, a new priority is proposed
     my $Categories = $Self->{ChangeObject}->ChangePossibleCIPGet(
-        Type => 'Category',
+        Type   => 'Category',
+        UserID => $Self->{UserID},
     );
     $Param{CategorySelectionString} = $Self->{LayoutObject}->BuildSelection(
         Data       => $Categories,
@@ -700,7 +702,8 @@ sub Run {
     # all impacts are selectable
     # when the impact is changed, a new priority is proposed
     my $Impacts = $Self->{ChangeObject}->ChangePossibleCIPGet(
-        Type => 'Impact',
+        Type   => 'Impact',
+        UserID => $Self->{UserID},
     );
     $Param{ImpactSelectionString} = $Self->{LayoutObject}->BuildSelection(
         Data       => $Impacts,
@@ -722,7 +725,8 @@ sub Run {
     # all priorities are selectable
     # the default value might depend on category and impact
     my $Priorities = $Self->{ChangeObject}->ChangePossibleCIPGet(
-        Type => 'Priority',
+        Type   => 'Priority',
+        UserID => $Self->{UserID},
     );
     my $SelectedPriority = $GetParam{PriorityID}
         || $Self->{CIPAllocateObject}->PriorityAllocationGet(

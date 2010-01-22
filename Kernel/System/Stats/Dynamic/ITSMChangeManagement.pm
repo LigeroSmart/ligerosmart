@@ -2,7 +2,7 @@
 # Kernel/System/Stats/Dynamic/ITSMChangeManagement.pm - all advice functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.7 2010-01-12 19:46:17 ub Exp $
+# $Id: ITSMChangeManagement.pm,v 1.8 2010-01-22 08:30:13 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -57,17 +57,20 @@ sub GetObjectAttributes {
 
     # get cip lists
     my $Categories = $Self->{ChangeObject}->ChangePossibleCIPGet(
-        Type => 'Category',
+        Type   => 'Category',
+        UserID => $Self->{UserID},
     );
     my %CategoryList = map { $_->{Key} => $_->{Value} } @{$Categories};
 
     my $Impacts = $Self->{ChangeObject}->ChangePossibleCIPGet(
-        Type => 'Impact',
+        Type   => 'Impact',
+        UserID => $Self->{UserID},
     );
     my %ImpactList = map { $_->{Key} => $_->{Value} } @{$Impacts};
 
     my $Priorities = $Self->{ChangeObject}->ChangePossibleCIPGet(
-        Type => 'Priority',
+        Type   => 'Priority',
+        UserID => $Self->{UserID},
     );
     my %PriorityList = map { $_->{Key} => $_->{Value} } @{$Priorities};
 

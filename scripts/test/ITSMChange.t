@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.164 2010-01-18 09:45:20 bes Exp $
+# $Id: ITSMChange.t,v 1.165 2010-01-22 08:31:42 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -5559,7 +5559,8 @@ $Self->False(
 # ------------------------------------------------------------ #
 
 my $PossibleCIPGetOk = $Self->{ChangeObject}->ChangePossibleCIPGet(
-    Type => 'non-existent',
+    Type   => 'non-existent',
+    UserID => 1,
 );
 
 $Self->False(
@@ -5567,7 +5568,9 @@ $Self->False(
     'Invalid type passed to ChangePossibleCIPGet()',
 );
 
-$PossibleCIPGetOk = $Self->{ChangeObject}->ChangePossibleCIPGet();
+$PossibleCIPGetOk = $Self->{ChangeObject}->ChangePossibleCIPGet(
+    UserID => 1,
+);
 
 $Self->False(
     $PossibleCIPGetOk,
@@ -5578,7 +5581,8 @@ $Self->False(
 my $PossibleCIPReference = join ', ', @CIPValues;
 for my $Type (qw(Category Impact Priority)) {
     my $PossibleCIPs = $Self->{ChangeObject}->ChangePossibleCIPGet(
-        Type => $Type,
+        Type   => $Type,
+        UserID => 1,
     );
 
     $Self->Is(

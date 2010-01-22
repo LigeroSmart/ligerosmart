@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.224 2010-01-13 08:52:20 bes Exp $
+# $Id: ITSMChange.pm,v 1.225 2010-01-22 08:28:31 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -28,7 +28,7 @@ use Kernel::System::VirtualFS;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.224 $) [1];
+$VERSION = qw($Revision: 1.225 $) [1];
 
 =head1 NAME
 
@@ -1943,7 +1943,7 @@ If ChangeID is given, the list of possible change states for this
 change is returned.
 
     my $ChangeStateList = $ChangeObject->ChangePossibleStatesGet(
-        ChangeID => 123,    # optional
+        ChangeID => 123,    # (optional)
         UserID   => 1,
     );
 
@@ -1968,14 +1968,12 @@ sub ChangePossibleStatesGet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Attribute (qw(UserID)) {
-        if ( !$Param{$Attribute} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Attribute!",
-            );
-            return;
-        }
+    if ( !$Param{UserID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Need UserID!",
+        );
+        return;
     }
 
     # get change state list
@@ -2035,7 +2033,8 @@ sub ChangePossibleStatesGet {
 This method returns a list of possible categories, impacts or priorities.
 
     my $CIPList = $ChangeObject->ChangePossibleCIPGet(
-        Type => 'Category', # mandatory - Category|Impact|Priority
+        Type   => 'Category',  # Category|Impact|Priority
+        UserID => 1,
     );
 
 The return value is a reference to an array of hashrefs. The Element 'Key' is then
@@ -2057,6 +2056,15 @@ The array elements are sorted by id in ascending order.
 
 sub ChangePossibleCIPGet {
     my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    if ( !$Param{UserID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Need UserID!",
+        );
+        return;
+    }
 
     # check Type param for valid values
     if (
@@ -3070,6 +3078,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.224 $ $Date: 2010-01-13 08:52:20 $
+$Revision: 1.225 $ $Date: 2010-01-22 08:28:31 $
 
 =cut
