@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Object.pm - all condition object functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Object.pm,v 1.18 2010-01-19 23:02:40 ub Exp $
+# $Id: Object.pm,v 1.19 2010-01-22 08:36:30 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 =head1 NAME
 
@@ -55,13 +55,13 @@ sub ObjectAdd {
     }
 
     # make lookup with given name for checks
-    my $CheckObjectID = $Self->ObjectLookup(
+    my $ObjectID = $Self->ObjectLookup(
         Name   => $Param{Name},
         UserID => $Param{UserID},
     );
 
     # check if object name already exists
-    if ($CheckObjectID) {
+    if ($ObjectID) {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message  => "Condition object ($Param{Name}) already exists!",
@@ -78,7 +78,7 @@ sub ObjectAdd {
     );
 
     # get id of created object
-    my $ObjectID = $Self->ObjectLookup(
+    $ObjectID = $Self->ObjectLookup(
         Name   => $Param{Name},
         UserID => $Param{UserID},
     );
@@ -405,8 +405,8 @@ sub ObjectSelectorList {
 
     # define known objects and function calls
     my %ObjectAction = (
-        ITSMChange    => '_ObjectITSMChangeSelectorList',
-        ITSMWorkOrder => '_ObjectITSMWorkOrderSelectorList',
+        ITSMChange    => '_ObjectSelectorListITSMChange',
+        ITSMWorkOrder => '_ObjectSelectorListITSMWorkOrder',
     );
 
     # check for manageable object
@@ -428,6 +428,76 @@ sub ObjectSelectorList {
     ) || {};
 
     return $SelectorList;
+}
+
+=item ObjectCompareValueList()
+
+Returns a list of available CompareValues for the given object id and attribute id as hash reference.
+
+    my $CompareValueList = $ConditionObject->ObjectCompareValueList(
+        ObjectID      => 1234,
+        AttributeName => 'WorkOrderStateID',
+        UserID        => 1,
+    );
+
+Returns a hash reference like this, for a workorder object and the attribute 'WorkOrderStateID':
+
+    $CompareValueList = {
+        10    => 'created',
+        12    => 'accepted',
+        13    => 'ready',
+        14    => 'in progress',
+        15    => 'closed',
+        16    => 'canceled',
+    }
+
+=cut
+
+sub ObjectCompareValueList {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(ObjectID AttributeName UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # lookup object name
+    my $ObjectName = $Self->ObjectLookup(
+        ObjectID => $Param{ObjectID},
+        UserID   => $Param{UserID},
+    );
+
+    # define known objects and function calls
+    my %ObjectAction = (
+        ITSMChange    => '_ObjectCompareValueListITSMChange',
+        ITSMWorkOrder => '_ObjectCompareValueListITSMWorkOrder',
+    );
+
+    # check for manageable object
+    if ( !exists $ObjectAction{$ObjectName} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "No object action for $ObjectName found!",
+        );
+        return;
+    }
+
+    # get the name of the action subroutine
+    my $ActionSub = $ObjectAction{$ObjectName};
+
+    # execute the action subroutine
+    my $CompareValueList = $Self->$ActionSub(
+        AttributeName => $Param{AttributeName},
+        UserID        => $Param{UserID},
+    ) || {};
+
+    return $CompareValueList;
 }
 
 =item ObjectDataGet()
@@ -490,9 +560,9 @@ sub ObjectDataGet {
 
     # define known objects and function calls
     my %ObjectAction = (
-        ITSMChange       => '_ObjectITSMChange',
-        ITSMWorkOrder    => '_ObjectITSMWorkOrder',
-        ITSMWorkOrderAll => '_ObjectITSMWorkOrderAll',
+        ITSMChange       => '_ObjectDataGetITSMChange',
+        ITSMWorkOrder    => '_ObjectDataGetITSMWorkOrder',
+        ITSMWorkOrderAll => '_ObjectDataGetITSMWorkOrderAll',
     );
 
     # define the needed selectors
@@ -554,15 +624,15 @@ sub ObjectDataGet {
 
 =begin Internal:
 
-=item _ObjectITSMChange()
+=item _ObjectDataGetITSMChange()
 
 Returns the change data as hash reference.
 
-    my $Change = $ConditionObject->_ObjectITSMChange();
+    my $Change = $ConditionObject->_ObjectDataGetITSMChange();
 
 =cut
 
-sub _ObjectITSMChange {
+sub _ObjectDataGetITSMChange {
     my ( $Self, %Param ) = @_;
 
     # get change data as anon hash ref
@@ -572,15 +642,15 @@ sub _ObjectITSMChange {
     return $Change;
 }
 
-=item _ObjectITSMWorkOrder()
+=item _ObjectDataGetITSMWorkOrder()
 
 Returns the workorder data as hash reference.
 
-    my $WorkOrder = $ConditionObject->_ObjectITSMWorkOrder();
+    my $WorkOrder = $ConditionObject->_ObjectDataGetITSMWorkOrder();
 
 =cut
 
-sub _ObjectITSMWorkOrder {
+sub _ObjectDataGetITSMWorkOrder {
     my ( $Self, %Param ) = @_;
 
     # get workorder data as anon hash ref
@@ -590,15 +660,15 @@ sub _ObjectITSMWorkOrder {
     return $WorkOrder;
 }
 
-=item _ObjectITSMWorkOrderAll()
+=item _ObjectDataGetITSMWorkOrderAll()
 
 Returns an array reference with hash references of all workorder data of a change.
 
-    my $WorkOrderIDsRef = $ConditionObject->_ObjectITSMWorkOrderAll();
+    my $WorkOrderIDsRef = $ConditionObject->_ObjectDataGetITSMWorkOrderAll();
 
 =cut
 
-sub _ObjectITSMWorkOrderAll {
+sub _ObjectDataGetITSMWorkOrderAll {
     my ( $Self, %Param ) = @_;
 
     # get condition
@@ -641,11 +711,11 @@ sub _ObjectITSMWorkOrderAll {
     return \@WorkOrderData;
 }
 
-=item _ObjectITSMChangeSelectorList()
+=item _ObjectSelectorListITSMChange()
 
 Returns a list of all selectors available for the given change object id and condition id as hash reference
 
-    my $SelectorList = $ConditionObject->_ObjectITSMChangeSelectorList(
+    my $SelectorList = $ConditionObject->_ObjectSelectorListITSMChange(
         ObjectID    => 1234,
         ConditionID => 5,
         UserID      => 1,
@@ -659,7 +729,7 @@ Returns a hash reference like this:
 
 =cut
 
-sub _ObjectITSMChangeSelectorList {
+sub _ObjectSelectorListITSMChange {
     my ( $Self, %Param ) = @_;
 
     # get condition data
@@ -683,17 +753,17 @@ sub _ObjectITSMChangeSelectorList {
     # build selector list
     my %SelectorList;
     if ($ChangeData) {
-        $SelectorList{ $ChangeData->{ChangeID} } = '#' . $ChangeData->{ChangeNumber};
+        $SelectorList{ $ChangeData->{ChangeID} } = $ChangeData->{ChangeNumber};
     }
 
     return \%SelectorList;
 }
 
-=item _ObjectITSMWorkOrderSelectorList()
+=item _ObjectSelectorListITSMWorkOrder()
 
 Returns a list of all selectors available for the given workorder object id and condition id as hash reference
 
-    my $SelectorList = $ConditionObject->_ObjectITSMWorkOrderSelectorList(
+    my $SelectorList = $ConditionObject->_ObjectSelectorListITSMWorkOrder(
         ObjectID    => 1234,
         ConditionID => 5,
         UserID      => 1,
@@ -711,7 +781,7 @@ Returns a hash reference like this:
 
 =cut
 
-sub _ObjectITSMWorkOrderSelectorList {
+sub _ObjectSelectorListITSMWorkOrder {
     my ( $Self, %Param ) = @_;
 
     # get condition
@@ -754,6 +824,128 @@ sub _ObjectITSMWorkOrderSelectorList {
     return \%SelectorList;
 }
 
+=item _ObjectCompareValueListITSMChange()
+
+Returns a list of available CompareValues for the given attribute id of a change object as hash reference.
+
+    my $CompareValueList = $ConditionObject->_ObjectCompareValueListITSMChange(
+        AttributeName => 'PriorityID',
+        UserID        => 1,
+    );
+
+Returns a hash reference like this, for the change attribute 'Priority':
+
+    $CompareValueList = {
+        23    => '1 very low',
+        24    => '2 low',
+        25    => '3 normal',
+        26    => '4 high',
+        27    => '5 very high',
+    }
+
+=cut
+
+sub _ObjectCompareValueListITSMChange {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(AttributeName UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # to store the list
+    my $CompareValueList = {};
+
+    # CategoryID, ImpactID, PriorityID
+    if ( $Param{AttributeName} =~ m{ \A ( Category | Impact | Priority ) ID \z }xms ) {
+
+        # remove 'ID' at the end of attribute
+        my $Type = $1;
+
+        # get the category or impact or priority list
+        $CompareValueList = $Self->{ChangeObject}->ChangePossibleCIPGet(
+            Type   => $Type,
+            UserID => $Param{UserID},
+        );
+    }
+
+    # ChangeStateID
+    elsif ( $Param{AttributeName} eq 'ChangeStateID' ) {
+
+        # get change state list
+        $CompareValueList = $Self->{ChangeObject}->ChangePossibleStatesGet(
+            UserID => $Param{UserID},
+        );
+    }
+
+    return $CompareValueList;
+}
+
+=item _ObjectCompareValueListITSMWorkOrder()
+
+Returns a list of available CompareValues for the given attribute id of a workorder object as hash reference.
+
+    my $CompareValueList = $ConditionObject->_ObjectCompareValueListITSMWorkOrder(
+        AttributeName => 'WorkOrderStateID',
+        UserID        => 1,
+    );
+
+Returns a hash reference like this, for the workorder attribute 'WorkOrderStateID':
+
+    $CompareValueList = {
+        10    => 'created',
+        12    => 'accepted',
+        13    => 'ready',
+        14    => 'in progress',
+        15    => 'closed',
+        16    => 'canceled',
+    }
+=cut
+
+sub _ObjectCompareValueListITSMWorkOrder {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(AttributeName UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # to store the list
+    my $CompareValueList = {};
+
+    # WorkOrderStateID
+    if ( $Param{AttributeName} eq 'WorkOrderStateID' ) {
+
+        # get workorder state list
+        $CompareValueList = $Self->{WorkOrderObject}->WorkOrderPossibleStatesGet(
+            UserID => $Param{UserID},
+        );
+    }
+
+    # WorkOrderTypeID
+    elsif ( $Param{AttributeName} eq 'WorkOrderTypeID' ) {
+
+        # get workorder type list
+        $CompareValueList = $Self->{WorkOrderObject}->WorkOrderTypeList(
+            UserID => $Param{UserID},
+        );
+    }
+
+    return $CompareValueList;
+}
+
 1;
 
 =end Internal:
@@ -772,6 +964,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.18 $ $Date: 2010-01-19 23:02:40 $
+$Revision: 1.19 $ $Date: 2010-01-22 08:36:30 $
 
 =cut
