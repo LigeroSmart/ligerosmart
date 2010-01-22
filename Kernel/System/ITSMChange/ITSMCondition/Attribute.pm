@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Attribute.pm - all condition attribute functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Attribute.pm,v 1.8 2010-01-19 23:00:00 ub Exp $
+# $Id: Attribute.pm,v 1.9 2010-01-22 08:35:12 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 =head1 NAME
 
@@ -55,13 +55,13 @@ sub AttributeAdd {
     }
 
     # make lookup with given name for checks
-    my $CheckAttributeID = $Self->AttributeLookup(
+    my $AttributeID = $Self->AttributeLookup(
         Name   => $Param{Name},
         UserID => $Param{UserID},
     );
 
     # check if attribute name already exists
-    if ($CheckAttributeID) {
+    if ($AttributeID) {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message  => "Condition attribute ($Param{Name}) already exists!",
@@ -78,7 +78,7 @@ sub AttributeAdd {
     );
 
     # get id of created attribute
-    my $AttributeID = $Self->AttributeLookup(
+    $AttributeID = $Self->AttributeLookup(
         Name   => $Param{Name},
         UserID => $Param{UserID},
     );
@@ -371,6 +371,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.8 $ $Date: 2010-01-19 23:00:00 $
+$Revision: 1.9 $ $Date: 2010-01-22 08:35:12 $
 
 =cut
