@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: LayoutITSMChange.pm,v 1.35 2010-01-20 16:16:26 bes Exp $
+# $Id: LayoutITSMChange.pm,v 1.36 2010-01-23 19:45:05 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use POSIX qw(ceil);
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.35 $) [1];
+$VERSION = qw($Revision: 1.36 $) [1];
 
 =over 4
 
@@ -342,6 +342,7 @@ in F<Kernel/Output/HTML/LayoutTicket.pm>.
         Env        => $Self,
         LinkPage   => $LinkPage,
         LinkSort   => $LinkSort,
+        Frontend   => 'Agent',                           # optional (Agent|Customer), default: Agent, indicates from which frontend this function was called
     );
 
 =cut
@@ -356,6 +357,9 @@ sub ITSMChangeListShow {
     if ( !$Param{View} && $Self->{ 'UserITSMChangeOverview' . $Env->{Action} } ) {
         $Param{View} = $Self->{ 'UserITSMChangeOverview' . $Env->{Action} };
     }
+
+    # set frontend
+    my $Frontend = $Param{Frontend} || 'Agent';
 
     # set defaut view mode to 'small'
     my $View = $Param{View} || 'Small';
@@ -478,6 +482,17 @@ sub ITSMChangeListShow {
                         %{$Filter},
                     },
                 );
+
+                # show count of elements in filter
+                if ( defined $Filter->{Count} ) {
+                    $Env->{LayoutObject}->Block(
+                        Name => 'OverviewNavBarFilterItemSelectedCount',
+                        Data => {
+                            %Param,
+                            %{$Filter},
+                        },
+                    );
+                }
             }
             else {
                 $Env->{LayoutObject}->Block(
@@ -487,6 +502,17 @@ sub ITSMChangeListShow {
                         %{$Filter},
                     },
                 );
+
+                # show count of elements in filter
+                if ( defined $Filter->{Count} ) {
+                    $Env->{LayoutObject}->Block(
+                        Name => 'OverviewNavBarFilterItemSelectedNotCount',
+                        Data => {
+                            %Param,
+                            %{$Filter},
+                        },
+                    );
+                }
             }
         }
     }
@@ -581,6 +607,7 @@ sub ITSMChangeListShow {
         StartHit  => $StartHit,
         PageShown => $PageShown,
         AllHits   => $Param{Total} || 0,
+        Frontend  => $Frontend,
     );
 
     # create output

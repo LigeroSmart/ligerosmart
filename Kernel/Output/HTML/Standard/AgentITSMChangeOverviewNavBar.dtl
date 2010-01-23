@@ -2,7 +2,7 @@
 # AgentITSMChangeOverviewNavBar.dtl - html for change overview table
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeOverviewNavBar.dtl,v 1.6 2010-01-21 16:10:08 bes Exp $
+# $Id: AgentITSMChangeOverviewNavBar.dtl,v 1.7 2010-01-23 19:43:35 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -35,10 +35,22 @@
                                     $Text{"Filter"}:
 <!-- dtl:block:OverviewNavBarFilterItem -->
 <!-- dtl:block:OverviewNavBarFilterItemSelected -->
-                                    <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"FilterLink"}Filter=$LQData{"Filter"}" style="text-decoration:none"><b>$Text{"$QData{"Name"}"} ($QData{"Count"})</b></a>
+                                    <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"FilterLink"}Filter=$LQData{"Filter"}" style="text-decoration:none">
+                                    <b>
+                                    $Text{"$QData{"Name"}"}
+<!-- dtl:block:OverviewNavBarFilterItemSelectedCount -->
+                                    ($QData{"Count"})
+<!-- dtl:block:OverviewNavBarFilterItemSelectedCount -->
+                                    </b>
+                                    </a>
 <!-- dtl:block:OverviewNavBarFilterItemSelected -->
 <!-- dtl:block:OverviewNavBarFilterItemSelectedNot -->
-                                    <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"FilterLink"}Filter=$LQData{"Filter"}">$Text{"$QData{"Name"}"} ($QData{"Count"})</a>
+                                    <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"FilterLink"}Filter=$LQData{"Filter"}">
+                                    $Text{"$QData{"Name"}"}
+<!-- dtl:block:OverviewNavBarFilterItemSelectedNotCount -->
+                                    ($QData{"Count"})
+<!-- dtl:block:OverviewNavBarFilterItemSelectedNotCount -->
+                                    </a>
 <!-- dtl:block:OverviewNavBarFilterItemSelectedNot -->
 <!-- dtl:block:OverviewNavBarFilterItemSplit -->
                                     -
