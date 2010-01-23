@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.141 2010-01-23 14:39:27 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.142 2010-01-23 20:10:14 ub Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -52,6 +52,7 @@
         <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderReport.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderTemplate.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderZoom.pm"/>
+        <File Permission="644" Location="Kernel/Modules/CustomerITSMChangeSchedule.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ITSMChangeMenuGeneric.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ITSMChangeMenuTimeSlot.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ITSMChangeMenuWorkOrdersNeeded.pm"/>
