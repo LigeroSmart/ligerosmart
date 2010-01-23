@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.158 2010-01-22 14:22:24 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.159 2010-01-23 19:47:50 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -624,6 +624,30 @@
                 <Description>Workorder Zoom</Description>
                 <Title>Zoom</Title>
                 <NavBarName>ITSM Change</NavBarName>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="CustomerFrontend::Module###CustomerITSMChangeSchedule" Required="0" Valid="0">
+        <Description Lang="en">Frontend module registration for the CustomerITSMChangeSchedule object in the customer interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration des CustomerITSMChangeSchedule-Objekts im Customer-Interface.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Customer::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Description>Change schedule</Description>
+                <NavBarName>ITSM Change</NavBarName>
+                <Title>Change schedule</Title>
+                <NavBar>
+                    <Description>Change schedule</Description>
+                    <Name>Change schedule</Name>
+                    <Image>overview.png</Image>
+                    <Block></Block>
+                    <Type></Type>
+                    <NavBar></NavBar>
+                    <Link>Action=CustomerITSMChangeSchedule</Link>
+                    <AccessKey></AccessKey>
+                    <Prio>450</Prio>
+                </NavBar>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -1500,6 +1524,7 @@
                 <Item Key="Category">0</Item>
                 <Item Key="Impact">0</Item>
                 <Item Key="Priority">1</Item>
+                <Item Key="Services">0</Item>
                 <Item Key="RequestedTime">0</Item>
                 <Item Key="PlannedStartTime">1</Item>
                 <Item Key="PlannedEndTime">1</Item>
@@ -1614,8 +1639,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeFSC###Filter::ChangeStates" Required="1" Valid="1">
-        <Description Lang="en">Defines the change states that will be used as filters in the FSC overview. To be used as a filter, a change state needs to be also defined in ITSMChange::Frontend::AgentITSMChangeFSC###ChangeStates.</Description>
-        <Description Lang="de">Definiert die Change-States die als Filter in der FSC-Übersicht verwendet werden. Um als Filter verwendet werden zu können, muss ein Change-State ebenfalls in ITSMChange::Frontend::AgentITSMChangeFSC###ChangeStates definert sein.</Description>
+        <Description Lang="en">Defines the change states that will be used as filters in the FSC overview.</Description>
+        <Description Lang="de">Definiert die Change-States die als Filter in der FSC-Übersicht verwendet werden.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ViewFSCOverview</SubGroup>
         <Setting>
@@ -1662,6 +1687,7 @@
                 <Item Key="Category">0</Item>
                 <Item Key="Impact">0</Item>
                 <Item Key="Priority">1</Item>
+                <Item Key="Services">0</Item>
                 <Item Key="RequestedTime">0</Item>
                 <Item Key="PlannedStartTime">1</Item>
                 <Item Key="PlannedEndTime">1</Item>
@@ -1773,6 +1799,7 @@
                 <Item Key="Category">0</Item>
                 <Item Key="Impact">0</Item>
                 <Item Key="Priority">1</Item>
+                <Item Key="Services">0</Item>
                 <Item Key="RequestedTime">0</Item>
                 <Item Key="PlannedStartTime">1</Item>
                 <Item Key="PlannedEndTime">1</Item>
@@ -1857,6 +1884,7 @@
                 <Item Key="Category">0</Item>
                 <Item Key="Impact">0</Item>
                 <Item Key="Priority">1</Item>
+                <Item Key="Services">0</Item>
                 <Item Key="RequestedTime">0</Item>
                 <Item Key="PlannedStartTime">1</Item>
                 <Item Key="PlannedEndTime">1</Item>
@@ -1954,6 +1982,7 @@
                 <Item Key="Category">0</Item>
                 <Item Key="Impact">0</Item>
                 <Item Key="Priority">1</Item>
+                <Item Key="Services">1</Item>
                 <Item Key="RequestedTime">0</Item>
                 <Item Key="PlannedStartTime">1</Item>
                 <Item Key="PlannedEndTime">1</Item>
@@ -2024,6 +2053,7 @@
                 <Item Key="Category">0</Item>
                 <Item Key="Impact">0</Item>
                 <Item Key="Priority">0</Item>
+                <Item Key="Services">0</Item>
                 <Item Key="RequestedTime">0</Item>
                 <Item Key="PlannedStartTime">1</Item>
                 <Item Key="PlannedEndTime">1</Item>
@@ -2115,6 +2145,7 @@
                 <Item Key="Category">0</Item>
                 <Item Key="Impact">0</Item>
                 <Item Key="Priority">0</Item>
+                <Item Key="Services">0</Item>
                 <Item Key="RequestedTime">0</Item>
                 <Item Key="PlannedStartTime">1</Item>
                 <Item Key="PlannedEndTime">1</Item>
@@ -2202,6 +2233,7 @@
                 <Item Key="Category">0</Item>
                 <Item Key="Impact">0</Item>
                 <Item Key="Priority">1</Item>
+                <Item Key="Services">0</Item>
                 <Item Key="RequestedTime">0</Item>
                 <Item Key="PlannedStartTime">1</Item>
                 <Item Key="PlannedEndTime">1</Item>
@@ -2543,6 +2575,80 @@
             <Option SelectedID="1">
                 <Item Key="0">No</Item>
                 <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::CustomerITSMChangeSchedule###Filter::ChangeStates" Required="1" Valid="1">
+        <Description Lang="en">Defines the change states that will be used as filters in the customer change schedule overview.</Description>
+        <Description Lang="de">Definiert die Change-States die als Filter in der Kunden-Ansicht "Change Schedule" verwendet werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Customer::ViewChangeScheduleOverview</SubGroup>
+        <Setting>
+            <Array>
+                <Item>approved</Item>
+                <Item>in progress</Item>
+            </Array>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::CustomerITSMChangeSchedule###Order::Default" Required="1" Valid="1">
+        <Description Lang="en">Order default in the customer change schedule overview.</Description>
+        <Description Lang="de">Standard Reihenfolge der Changes in der Kunden-Ansicht "Change Schedule".</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Customer::ViewChangeScheduleOverview</SubGroup>
+        <Setting>
+            <Option SelectedID="Up">
+                <Item Key="Down">Down</Item>
+                <Item Key="Up">Up</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::CustomerITSMChangeSchedule###ShowColumns" Required="1" Valid="1">
+        <Description Lang="en">Defines the shown columns in the customer change schedule overview. This option has no effect on the position of the column.</Description>
+        <Description Lang="de">Definiert die angezeigten Tabellenspalten in der Kunden-Ansicht "Change Schedule". Diese Option hat keinen Effekt auf die Position der Spalten.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Customer::ViewChangeScheduleOverview</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="ChangeStateSignal">1</Item>
+                <Item Key="ChangeNumber">1</Item>
+                <Item Key="ChangeTitle">1</Item>
+                <Item Key="ChangeBuilder">0</Item>
+                <Item Key="ChangeManager">0</Item>
+                <Item Key="WorkOrderCount">0</Item>
+                <Item Key="ChangeState">1</Item>
+                <Item Key="Category">0</Item>
+                <Item Key="Impact">0</Item>
+                <Item Key="Priority">0</Item>
+                <Item Key="Services">1</Item>
+                <Item Key="RequestedTime">0</Item>
+                <Item Key="PlannedStartTime">1</Item>
+                <Item Key="PlannedEndTime">1</Item>
+                <Item Key="ActualStartTime">0</Item>
+                <Item Key="ActualEndTime">0</Item>
+                <Item Key="CreateTime">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::CustomerITSMChangeSchedule###SortBy::Default" Required="1" Valid="1">
+        <Description Lang="en">Change sort by default in the customer change schedule overview.</Description>
+        <Description Lang="de">Standard Sortierung der Changes in der Kunden-Ansicht "Change Schedule".</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Customer::ViewChangeScheduleOverview</SubGroup>
+        <Setting>
+            <Option SelectedID="PlannedStartTime">
+                <Item Key="ChangeNumber">ChangeNumber</Item>
+                <Item Key="ChangeTitle">ChangeTitle</Item>
+                <Item Key="ChangeStateID">ChangeState</Item>
+                <Item Key="CategoryID">Category</Item>
+                <Item Key="ImpactID">Impact</Item>
+                <Item Key="PriorityID">Priority</Item>
+                <Item Key="RequestedTime">RequestedTime</Item>
+                <Item Key="PlannedStartTime">PlannedStartTime</Item>
+                <Item Key="PlannedEndTime">PlannedEndTime</Item>
+                <Item Key="ActualStartTime">ActualStartTime</Item>
+                <Item Key="ActualEndTime">ActualEndTime</Item>
+                <Item Key="Priority">Priority</Item>
+                <Item Key="CreateTime">CreateTime</Item>
             </Option>
         </Setting>
     </ConfigItem>
