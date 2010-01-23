@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.140 2010-01-22 13:23:41 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.141 2010-01-23 14:39:27 ub Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -1118,12 +1118,6 @@
         <Insert Table="condition_attribute">
             <Data Key="name" Type="Quote">AccountedTime</Data>
         </Insert>
-<!-- TODO: I think this is not needed. Because this would be achieved with the selector. (Udo)
-
-        <Insert Table="condition_attribute">
-            <Data Key="name" Type="Quote">WorkOrderID</Data>
-        </Insert>
--->
         <Insert Table="condition_attribute">
             <Data Key="name" Type="Quote">WorkOrderNumber</Data>
         </Insert>
