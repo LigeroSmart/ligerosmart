@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ITSMChangeOverviewSmall.pm.pm
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeOverviewSmall.pm,v 1.8 2010-01-22 11:35:16 bes Exp $
+# $Id: ITSMChangeOverviewSmall.pm,v 1.9 2010-01-23 19:50:55 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,8 +14,12 @@ package Kernel::Output::HTML::ITSMChangeOverviewSmall;
 use strict;
 use warnings;
 
+use Kernel::System::User;
+use Kernel::System::LinkObject;
+use Kernel::System::Service;
+
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -30,6 +34,20 @@ sub new {
         )
     {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
+    }
+
+    # create needed objects
+    $Self->{LinkObject}    = Kernel::System::LinkObject->new(%Param);
+    $Self->{ServiceObject} = Kernel::System::Service->new(%Param);
+
+    # when called from the customer interface
+    if ( !$Self->{UserObject}->can('GetUserData') ) {
+
+        # workaround for customer interface
+        # in the customer interface the UserObject is in fact the CustomerUserObject
+        # so we need to correct this here by creating a new UserObject
+        $Self->{CustomerUserObject} = $Self->{UserObject};
+        $Self->{UserObject}         = Kernel::System::User->new(%Param);
     }
 
     return $Self;
@@ -67,6 +85,25 @@ sub Run {
         return;
     }
 
+    # in the customer frontend
+    my %CustomerUserServices;
+    if ( $Param{Frontend} eq 'Customer' ) {
+
+        # get all services the customer user is allowed to use
+        %CustomerUserServices = $Self->{ServiceObject}->CustomerUserServiceMemberList(
+            CustomerUserLogin => 'Test',
+            Result            => 'HASH',
+            DefaultServices   => 1,
+        );
+    }
+
+    # define incident signals, needed for services
+    my %InciSignals = (
+        operational => 'greenled',
+        warning     => 'yellowled',
+        incident    => 'redled',
+    );
+
     # store either the ChangeIDs or the WorkOrderIDs
     my @IDs;
     if ( $Param{ChangeIDs} && ref $Param{ChangeIDs} eq 'ARRAY' ) {
@@ -102,6 +139,9 @@ sub Run {
 
             # to store all data
             my %Data;
+
+            # to store data of sub-elements
+            my %SubElementData;
 
             my $ChangeID;
             if ( $Param{ChangeIDs} ) {
@@ -162,6 +202,127 @@ sub Run {
                 $Data{ $UserType . 'RightParenthesis' } = ')';
             }
 
+            # to store the linked service data
+            my $LinkListWithData = {};
+
+            my @WorkOrderIDs;
+
+            # store the combined linked services data from all workorders of this change
+            if ( $Param{ChangeIDs} ) {
+                @WorkOrderIDs = @{ $Change->{WorkOrderIDs} };
+            }
+
+            # store only the linked services for this workorder
+            elsif ( $Param{WorkOrderIDs} ) {
+                @WorkOrderIDs = ($ID);
+            }
+
+            # store the combined linked services data
+            for my $WorkOrderID (@WorkOrderIDs) {
+
+                # get linked objects of this workorder
+                my $LinkListWithDataWorkOrder = $Self->{LinkObject}->LinkListWithData(
+                    Object => 'ITSMWorkOrder',
+                    Key    => $WorkOrderID,
+                    State  => 'Valid',
+                    UserID => $Self->{UserID},
+                );
+
+                OBJECT:
+                for my $Object ( keys %{$LinkListWithDataWorkOrder} ) {
+
+                    # only show linked services of workorder
+                    if ( $Object ne 'Service' ) {
+                        next OBJECT;
+                    }
+
+                    LINKTYPE:
+                    for my $LinkType ( keys %{ $LinkListWithDataWorkOrder->{$Object} } ) {
+
+                        DIRECTION:
+                        for my $Direction (
+                            keys %{ $LinkListWithDataWorkOrder->{$Object}->{$LinkType} }
+                            )
+                        {
+
+                            ID:
+                            for my $ID (
+                                keys %{
+                                    $LinkListWithDataWorkOrder->{$Object}->{$LinkType}->{$Direction}
+                                }
+                                )
+                            {
+
+                                # combine the linked object data from all workorders
+                                $LinkListWithData->{$Object}->{$LinkType}->{$Direction}
+                                    ->{$ID}
+                                    = $LinkListWithDataWorkOrder->{$Object}->{$LinkType}
+                                    ->{$Direction}
+                                    ->{$ID};
+                            }
+                        }
+                    }
+                }
+            }
+
+            # get unique service ids
+            my %UniqueServiceIDs;
+            my $ServicesRef = $LinkListWithData->{Service} || {};
+            for my $LinkType ( keys %{$ServicesRef} ) {
+
+                # extract link type List
+                my $LinkTypeList = $ServicesRef->{$LinkType};
+
+                for my $Direction ( keys %{$LinkTypeList} ) {
+
+                    # extract direction list
+                    my $DirectionList = $ServicesRef->{$LinkType}->{$Direction};
+
+                    # collect unique service ids
+                    for my $ServiceID ( keys %{$DirectionList} ) {
+                        $UniqueServiceIDs{$ServiceID}++;
+                    }
+                }
+            }
+
+            # get the data for each service
+            my @ServicesData;
+            SERVICEID:
+            for my $ServiceID ( keys %UniqueServiceIDs ) {
+
+                # in the customer frontend
+                if ( $Param{Frontend} eq 'Customer' ) {
+
+                    # do not show this service if customer is not allowed to use it
+                    next SERVICEID if !$CustomerUserServices{$ServiceID};
+                }
+
+                # get service data
+                my %ServiceData = $Self->{ServiceObject}->ServiceGet(
+                    ServiceID => $ServiceID,
+                    UserID    => $Self->{UserID},
+                );
+
+                # add current incident signal
+                $ServiceData{CurInciSignal} = $InciSignals{ $ServiceData{CurInciStateType} };
+
+                # store service data
+                push @ServicesData, \%ServiceData;
+            }
+
+            # sort services data by service name
+            @ServicesData = sort { $a->{Name} cmp $b->{Name} } @ServicesData;
+
+            # in the customer frontend
+            if ( $Param{Frontend} eq 'Customer' ) {
+
+                # do not show the change if it has no services
+                next ID if !@ServicesData;
+            }
+
+            # store services data
+            $SubElementData{Services} = \@ServicesData;
+
             # set css class of the row
             $CssClass = $CssClass eq 'searchpassive' ? 'searchactive' : 'searchpassive';
 
@@ -177,9 +338,49 @@ sub Run {
 
             # build column record blocks
             if (@ShowColumns) {
+                COLUMN:
                 for my $Column (@ShowColumns) {
                     $Self->{LayoutObject}->Block(
                         Name => 'Record' . $Column,
+                        Data => {
+                            %Param,
+                            %Data,
+                            CssClass => $CssClass,
+                        },
+                    );
+
+                    # check if this column contains sub-elements
+                    if ( $SubElementData{$Column} && ref $SubElementData{$Column} eq 'ARRAY' ) {
+
+                        for my $SubElement ( @{ $SubElementData{$Column} } ) {
+
+                            # show sub-elements of column
+                            $Self->{LayoutObject}->Block(
+                                Name => 'Record' . $Column . 'SubElement',
+                                Data => {
+                                    %Param,
+                                    %Data,
+                                    %{$SubElement},
+                                    CssClass => $CssClass,
+                                },
+                            );
+                        }
+                    }
+
+                    # do not display columns as links in the customer frontend
+                    next COLUMN if $Param{Frontend} eq 'Customer';
+
+                    # show links if available
+                    $Self->{LayoutObject}->Block(
+                        Name => 'Record' . $Column . 'LinkStart',
+                        Data => {
+                            %Param,
+                            %Data,
+                            CssClass => $CssClass,
+                        },
+                    );
+                    $Self->{LayoutObject}->Block(
+                        Name => 'Record' . $Column . 'LinkEnd',
                         Data => {
                             %Param,
                             %Data,
