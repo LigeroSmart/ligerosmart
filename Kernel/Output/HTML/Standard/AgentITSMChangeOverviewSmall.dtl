@@ -2,7 +2,7 @@
 # AgentITSMChangeOverviewSmall.dtl - html for change overview table
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeOverviewSmall.dtl,v 1.13 2010-01-23 19:42:07 ub Exp $
+# $Id: AgentITSMChangeOverviewSmall.dtl,v 1.14 2010-01-23 19:55:58 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -256,7 +256,6 @@
 <!-- dtl:block:RecordServicesSubElement -->
                         <div title="$Text{"$QData{"Name"}"}">
                             <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"CurInciSignal"}-small.png" title="$Quote{"$Text{"$Data{"CurInciState"}"}"}" alt="$Quote{"$Text{"$Data{"CurInciState"}"}"}">
-                            &nbsp;
                             $QData{"Name"}
                         </div>
 <!-- dtl:block:RecordServicesSubElement -->
