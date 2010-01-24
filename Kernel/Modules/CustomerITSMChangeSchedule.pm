@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerITSMChangeSchedule.pm - the OTRS::ITSM::ChangeManagement customer change schedule overview module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: CustomerITSMChangeSchedule.pm,v 1.1 2010-01-23 19:45:58 ub Exp $
+# $Id: CustomerITSMChangeSchedule.pm,v 1.2 2010-01-24 15:21:38 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,9 +15,11 @@ use strict;
 use warnings;
 
 use Kernel::System::ITSMChange;
+use Kernel::System::LinkObject;
+use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -34,7 +36,9 @@ sub new {
     }
 
     # create needed objects
-    $Self->{ChangeObject} = Kernel::System::ITSMChange->new(%Param);
+    $Self->{ChangeObject}  = Kernel::System::ITSMChange->new(%Param);
+    $Self->{LinkObject}    = Kernel::System::LinkObject->new(%Param);
+    $Self->{ServiceObject} = Kernel::System::Service->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
@@ -191,24 +195,87 @@ sub Run {
     my $ChangeIDsRef = $Self->{ChangeObject}->ChangeSearch(
         %{ $Filters{ $Self->{Filter} }->{Search} },
     );
+    my @ChangeIDs = @{$ChangeIDsRef};
+
+    # if configured, get only changes which have workorders that are linked with a service
+    if ( $Self->{Config}->{ShowOnlyChangesWithAllowedServices} ) {
+
+        # get all services the customer user is allowed to use
+        my %CustomerUserServices = $Self->{ServiceObject}->CustomerUserServiceMemberList(
+            CustomerUserLogin => $Self->{UserID},
+            Result            => 'HASH',
+            DefaultServices   => 1,
+        );
+
+        my %UniqueChangeIDs;
+        CHANGEID:
+        for my $ChangeID (@ChangeIDs) {
+
+            # get change data
+            my $Change = $Self->{ChangeObject}->ChangeGet(
+                UserID   => $Self->{UserID},
+                ChangeID => $ChangeID,
+            );
+
+            # get workorder ids
+            my @WorkOrderIDs = @{ $Change->{WorkOrderIDs} };
+
+# add maybe a sysconfig option here too, to decide if a customer can see also changes with no services
+            next CHANGEID if !@WorkOrderIDs;
+
+            WORKORDERID:
+            for my $WorkOrderID (@WorkOrderIDs) {
+
+                # get the list of linked services
+                my %LinkKeyList = $Self->{LinkObject}->LinkKeyList(
+                    Object1 => 'ITSMWorkOrder',
+                    Key1    => $WorkOrderID,
+                    Object2 => 'Service',
+                    State   => 'Valid',
+                    UserID  => 1,
+                );
+
+                # workorder has no linked service
+                next WORKORDERID if !%LinkKeyList;
+
+                SERVICEID:
+                for my $ServiceID ( keys %LinkKeyList ) {
+
+                    # only use services where the customer is allowed to use the service
+                    next SERVICEID if !$CustomerUserServices{$ServiceID};
+
+                    # add change id to list of visible changes for the customer
+                    $UniqueChangeIDs{$ChangeID}++;
+                }
+            }
+        }
+
+        @ChangeIDs = keys %UniqueChangeIDs;
+    }
 
     # display all navbar filters
     my %NavBarFilter;
     for my $Filter ( keys %Filters ) {
 
-        # count the number of changes for each filter
-        my $Count = $Self->{ChangeObject}->ChangeSearch(
-            %{ $Filters{$Filter}->{Search} },
-            Result => 'COUNT',
-        );
+        # do not show the filter count in customer interface,
+        # if the feature ShowOnlyChangesWithAllowedServices is activevated
+        # because it is not accurate due to service restrictions for customer users
+        my $Count;
+        if ( $Self->{Config}->{ShowOnlyChangesWithAllowedServices} ) {
+            $Count = undef;
+        }
+        else {
+
+            # count the number of changes for each filter
+            $Count = $Self->{ChangeObject}->ChangeSearch(
+                %{ $Filters{$Filter}->{Search} },
+                Result => 'COUNT',
+            );
+        }
 
         # display the navbar filter
         $NavBarFilter{ $Filters{$Filter}->{Prio} } = {
-
-            # do not show the filter count in customer interface, because it is not accurate
-            # due to service restrictions for customer users
-            #Count  => $Count,
-
+            Count  => $Count,
             Filter => $Filter,
             %{ $Filters{$Filter} },
         };
@@ -231,8 +298,8 @@ sub Run {
         . '&';
     $Output .= $Self->{LayoutObject}->ITSMChangeListShow(
 
-        ChangeIDs => $ChangeIDsRef,
-        Total     => scalar @{$ChangeIDsRef},
+        ChangeIDs => \@ChangeIDs,
+        Total     => scalar @ChangeIDs,
 
         View => $Self->{View},
 

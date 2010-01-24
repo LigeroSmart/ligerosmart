@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ITSMChangeOverviewSmall.pm.pm
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeOverviewSmall.pm,v 1.10 2010-01-24 14:40:21 ub Exp $
+# $Id: ITSMChangeOverviewSmall.pm,v 1.11 2010-01-24 15:22:06 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -87,7 +87,7 @@ sub Run {
 
     # in the customer frontend
     my %CustomerUserServices;
-    if ( $Param{Frontend} eq 'Customer' ) {
+    if ( $Param{Frontend} eq 'Customer' && $Self->{Config}->{ShowOnlyChangesWithAllowedServices} ) {
 
         # get all services the customer user is allowed to use
         %CustomerUserServices = $Self->{ServiceObject}->CustomerUserServiceMemberList(
@@ -291,7 +291,11 @@ sub Run {
             for my $ServiceID ( keys %UniqueServiceIDs ) {
 
                 # in the customer frontend
-                if ( $Param{Frontend} eq 'Customer' ) {
+                if (
+                    $Param{Frontend} eq 'Customer'
+                    && $Self->{Config}->{ShowOnlyChangesWithAllowedServices}
+                    )
+                {
 
                     # do not show this service if customer is not allowed to use it
                     next SERVICEID if !$CustomerUserServices{$ServiceID};
@@ -314,7 +318,11 @@ sub Run {
             @ServicesData = sort { $a->{Name} cmp $b->{Name} } @ServicesData;
 
             # in the customer frontend
-            if ( $Param{Frontend} eq 'Customer' ) {
+            if (
+                $Param{Frontend} eq 'Customer'
+                && $Self->{Config}->{ShowOnlyChangesWithAllowedServices}
+                )
+            {
 
                 # do not show the change if it has no services
                 next ID if !@ServicesData;

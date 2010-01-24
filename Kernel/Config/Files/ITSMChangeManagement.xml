@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.159 2010-01-23 19:47:50 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.160 2010-01-24 15:20:52 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -2627,6 +2627,18 @@
                 <Item Key="ActualEndTime">0</Item>
                 <Item Key="CreateTime">0</Item>
             </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::CustomerITSMChangeSchedule###ShowOnlyChangesWithAllowedServices" Required="1" Valid="1">
+        <Description Lang="en">Defines that only changes will be shown, that contain workorders which are linked with services where the customer user is allowed to use them. Any other changes will not be shown.</Description>
+        <Description Lang="de">Definiert das nur Changes angezeigt werden, die Workorders enthalten, die mit Services verlinkt sind, für die der Kunden-Benutzer eine Berechtigung hat. Andere Changes werden nicht angezeigt.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Customer::ViewChangeScheduleOverview</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::CustomerITSMChangeSchedule###SortBy::Default" Required="1" Valid="1">
