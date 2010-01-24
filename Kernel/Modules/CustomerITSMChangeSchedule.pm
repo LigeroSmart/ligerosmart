@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerITSMChangeSchedule.pm - the OTRS::ITSM::ChangeManagement customer change schedule overview module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: CustomerITSMChangeSchedule.pm,v 1.2 2010-01-24 15:21:38 ub Exp $
+# $Id: CustomerITSMChangeSchedule.pm,v 1.3 2010-01-24 15:25:18 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -220,7 +220,7 @@ sub Run {
             # get workorder ids
             my @WorkOrderIDs = @{ $Change->{WorkOrderIDs} };
 
-# add maybe a sysconfig option here too, to decide if a customer can see also changes with no services
+            # don't show changes with no workorders (as they can not be linked with a service)
             next CHANGEID if !@WorkOrderIDs;
 
             WORKORDERID:
