@@ -2,7 +2,7 @@
 # AgentITSMChangeOverviewSmall.dtl - html for change overview table
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeOverviewSmall.dtl,v 1.14 2010-01-23 19:55:58 ub Exp $
+# $Id: AgentITSMChangeOverviewSmall.dtl,v 1.15 2010-01-24 09:40:42 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -250,18 +250,24 @@
                         <div title="$Text{"$QData{"Priority"}"}">$Text{"$QData{"Priority"}"}</div>
                     </td>
 <!-- dtl:block:RecordPriority -->
-
 <!-- dtl:block:RecordServices -->
                     <td>
 <!-- dtl:block:RecordServicesSubElement -->
                         <div title="$Text{"$QData{"Name"}"}">
-                            <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"CurInciSignal"}-small.png" title="$Quote{"$Text{"$Data{"CurInciState"}"}"}" alt="$Quote{"$Text{"$Data{"CurInciState"}"}"}">
-                            $QData{"Name"}
+                            <table border="0" cellspacing="0" cellpadding="1">
+                                <tr>
+                                    <td>
+                                        <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"CurInciSignal"}-small.png" title="$Quote{"$Text{"$Data{"CurInciState"}"}"}" alt="$Quote{"$Text{"$Data{"CurInciState"}"}"}">
+                                    </td>
+                                    <td>
+                                        $QData{"Name"}
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
 <!-- dtl:block:RecordServicesSubElement -->
                     </td>
 <!-- dtl:block:RecordServices -->
-
 <!-- dtl:block:RecordRequestedTime -->
                     <td>
                         <div title="$TimeLong{"$QData{"RequestedTime"}"}">$TimeLong{"$QData{"RequestedTime"}"}</div>
