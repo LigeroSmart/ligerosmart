@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template.pm - all template functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.35 2010-01-25 13:58:27 reb Exp $
+# $Id: Template.pm,v 1.36 2010-01-25 14:22:36 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Data::Dumper;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.35 $) [1];
+$VERSION = qw($Revision: 1.36 $) [1];
 
 =head1 NAME
 
@@ -1389,17 +1389,19 @@ sub _ITSMChangeSerialize {
 
     for my $TargetObject ( keys %{$LinkListWithData} ) {
         for my $Type ( keys %{ $LinkListWithData->{$TargetObject} } ) {
-            for my $TargetID ( keys %{ $LinkListWithData->{$TargetObject}->{$Type}->{Source} } ) {
-                my $LinkInfo = {
-                    SourceObject => 'ITSMChange',
-                    SourceKey    => $Change->{ChangeID},
-                    TargetObject => $TargetObject,
-                    TargetKey    => $TargetID,
-                    Type         => $Type,
-                    State        => 'Valid',
-                    UserID       => $Param{UserID},
-                };
-                push @{ $OriginalData->{Children} }, { LinkAdd => $LinkInfo };
+            for my $Key ( keys %{ $LinkListWithData->{$TargetObject}->{$Type} } ) {
+                for my $TargetID ( keys %{ $LinkListWithData->{$TargetObject}->{$Type}->{$Key} } ) {
+                    my $LinkInfo = {
+                        SourceObject => 'ITSMChange',
+                        SourceKey    => $Change->{ChangeID},
+                        TargetObject => $TargetObject,
+                        TargetKey    => $TargetID,
+                        Type         => $Type,
+                        State        => 'Valid',
+                        UserID       => $Param{UserID},
+                    };
+                    push @{ $OriginalData->{Children} }, { LinkAdd => $LinkInfo };
+                }
             }
         }
     }
@@ -1498,7 +1500,31 @@ sub _ITSMWorkOrderSerialize {
     }
 
     # get links to other object
-    # ...
+    my $LinkListWithData = $Self->{LinkObject}->LinkListWithData(
+        Object => 'ITSMWorkOrder',
+        Key    => $WorkOrder->{WorkOrderID},
+        State  => 'Valid',
+        UserID => $Param{UserID},
+    );
+
+    for my $TargetObject ( keys %{$LinkListWithData} ) {
+        for my $Type ( keys %{ $LinkListWithData->{$TargetObject} } ) {
+            for my $Key ( keys %{ $LinkListWithData->{$TargetObject}->{$Type} } ) {
+                for my $TargetID ( keys %{ $LinkListWithData->{$TargetObject}->{$Type}->{$Key} } ) {
+                    my $LinkInfo = {
+                        SourceObject => 'ITSMWorkOrder',
+                        SourceKey    => $WorkOrder->{WorkOrderID},
+                        TargetObject => $TargetObject,
+                        TargetKey    => $TargetID,
+                        Type         => $Type,
+                        State        => 'Valid',
+                        UserID       => $Param{UserID},
+                    };
+                    push @{ $OriginalData->{Children} }, { LinkAdd => $LinkInfo };
+                }
+            }
+        }
+    }
 
     if ( $Param{Return} eq 'HASH' ) {
         return $OriginalData;
@@ -2305,6 +2331,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.35 $ $Date: 2010-01-25 13:58:27 $
+$Revision: 1.36 $ $Date: 2010-01-25 14:22:36 $
 
 =cut
