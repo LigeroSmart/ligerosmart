@@ -2,7 +2,7 @@
 # AgentITSMChangeAdd.dtl - provides HTML form for AgentITSMChangeAdd
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.dtl,v 1.43 2010-01-18 11:12:19 bes Exp $
+# $Id: AgentITSMChangeAdd.dtl,v 1.44 2010-01-25 09:29:48 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -78,7 +78,7 @@ function submit_compose() {
             <form action="$Env{"CGIHandle"}" method="post" name="template">
                 <input type="hidden" name="Action"    value="$Env{"Action"}">
                 <input type="hidden" name="Subaction" value="CreateFromTemplate">
-                <table border="0" width="800px" align="center" cellspacing="0" cellpadding="4">
+                <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
                     <tr>
                         <td class="contenthead">$Text{"Select Change Template"}</td>
                     </tr>
@@ -86,7 +86,7 @@ function submit_compose() {
                         <td>
                             <table border="0" width="100%" cellspacing="0" cellpadding="3">
                                 <colgroup>
-                                    <col width="130px"/>
+                                    <col width="130"/>
                                 </colgroup>
                                 <tr>
                                     <td class="contentkey">
@@ -145,7 +145,7 @@ function submit_compose() {
                 <input type="hidden" name="TicketID"   value="$QData{"TicketID"}">
                 <input type="hidden" name="Subaction"  value="Save">
                 <input type="hidden" name="FormID"     value="$QData{"FormID"}">
-                <table border="0" width="800px" align="center" cellspacing="0" cellpadding="4">
+                <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
                     <tr>
                         <td class="contenthead">$Text{"ITSM Change"}</td>
                     </tr>
@@ -153,7 +153,7 @@ function submit_compose() {
                         <td>
                             <table border="0" width="100%" cellspacing="0" cellpadding="3">
                                 <colgroup>
-                                    <col width="130px"/>
+                                    <col width="130"/>
                                 </colgroup>
                                 <tr>
                                     <td class="contentkey">

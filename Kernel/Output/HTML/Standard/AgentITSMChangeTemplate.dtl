@@ -2,7 +2,7 @@
 # AgentITSMChangeTemplate.dtl - provides HTML form for AgentITSMChangeTemplate
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeTemplate.dtl,v 1.6 2010-01-21 12:51:30 bes Exp $
+# $Id: AgentITSMChangeTemplate.dtl,v 1.7 2010-01-25 09:29:48 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -49,7 +49,7 @@ function submit_compose() {
                 <input type="hidden" name="Action"       value="$Env{"Action"}">
                 <input type="hidden" name="Subaction"    value="AddTemplate">
                 <input type="hidden" name="ChangeID"     value="$QData{"ChangeID"}">
-                <table border="0" width="800px" align="center" cellspacing="0" cellpadding="4">
+                <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
                     <tr>
                         <td class="contenthead">$Text{"Imperative::Save"} $Text{"ITSM Change"} $Text{"as Template"}</td>
                     </tr>
@@ -57,7 +57,7 @@ function submit_compose() {
                         <td>
                             <table border="0" width="100%" cellspacing="0" cellpadding="3">
                                 <colgroup>
-                                    <col width="130px"/>
+                                    <col width="130"/>
                                 </colgroup>
                                 <tr>
                                     <td class="contentkey">

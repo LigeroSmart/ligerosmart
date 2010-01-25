@@ -2,7 +2,7 @@
 # AdminITSMChangeCIPAllocate.dtl - provides HTML form for AdminITSMChangeCIPAllocate
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMChangeCIPAllocate.dtl,v 1.4 2010-01-20 12:05:57 ub Exp $
+# $Id: AdminITSMChangeCIPAllocate.dtl,v 1.5 2010-01-25 09:29:48 bes Exp $
 # $OldId: AdminITSMCIPAllocate.dtl,v 1.7 2010/01/20 12:03:27 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -27,7 +27,7 @@
             <form action="$Env{"CGIHandle"}" method="post">
                 <input type="hidden" name="Action" value="$Env{"Action"}">
                 <input type="hidden" name="Subaction" value="CIPAllocate">
-                <table width="800px" cellspacing="0" cellpadding="4">
+                <table width="800" cellspacing="0" cellpadding="4">
                     <tr>
                         <td class="contenthead">
                             $Text{"Priority"} $Text{"allocation"}:

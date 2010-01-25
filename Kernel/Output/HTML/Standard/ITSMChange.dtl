@@ -1,8 +1,8 @@
 # --
 # ITSMChange.dtl - provides HTML elements for work order graph
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.dtl,v 1.19 2009-12-22 13:40:27 mae Exp $
+# $Id: ITSMChange.dtl,v 1.20 2010-01-25 09:29:48 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -56,10 +56,10 @@
 </style>
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
     <colgroup>
-        <col width="25px">
-        <col width="50px">
+        <col width="25">
+        <col width="50">
         <col width="*">
-        <col width="10px">
+        <col width="10">
     </colgroup>
     <tr>
         <td class="time_containter">&nbsp;</td>
@@ -104,10 +104,10 @@
                 </tr>
             </table>
             <span class="WorkOrderInformation">
-            <table width="400px" cellpadding="3" cellspacing="0" width="400px">
+            <table width="400" cellpadding="3" cellspacing="0" width="400">
                 <colgroup>
-                    <col width="130px">
-                    <col width="270px">
+                    <col width="130">
+                    <col width="270">
                 </colgroup>
                 <tr class="contenthead">
                     <td colspan="2">$Text{"Workorder Information"}</td>

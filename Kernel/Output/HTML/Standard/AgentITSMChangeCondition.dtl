@@ -2,7 +2,7 @@
 # AgentITSMChangeCondition.dtl - provides HTML form for AgentITSMChangeCondition
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeCondition.dtl,v 1.3 2010-01-18 12:24:26 bes Exp $
+# $Id: AgentITSMChangeCondition.dtl,v 1.4 2010-01-25 09:29:48 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -37,11 +37,11 @@
                         <td>
                             <table width="100%" border="0" cellpadding="3" cellspacing="0">
                                 <tr class="contentbody">
-                                    <td class="contentkey" width="250px">$Text{"Name"}</td>
+                                    <td class="contentkey" width="250">$Text{"Name"}</td>
                                     <td class="contentkey" width="*">$Text{"Comment"}</td>
-                                    <td class="contentkey" width="100px" align="center">$Text{"valid"}/$Text{"invalid"}</td>
+                                    <td class="contentkey" width="100" align="center">$Text{"valid"}/$Text{"invalid"}</td>
                                     <td class="contentkey" width="150">$Text{"Changed"}</td>
-                                    <td class="contentkey" width="10px">&nbsp;</td>
+                                    <td class="contentkey" width="10">&nbsp;</td>
                                 </tr>
 <!-- dtl:block:OverviewRow -->
                                 <tr class="$QData{"CssClass"}">
@@ -53,7 +53,7 @@
                                     <td>$Text{"$QData{"Comment"}"}</td>
                                     <td align="center">$Text{"$QData{"Valid"}"}</td>
                                     <td>$TimeLong{"$QData{"ChangeTime"}"}</td>
-                                    <td width="10px"><input class="button" type="submit" value="$Text{"Delete"}" name="DeleteCondition$QData{"ConditionID"}"></td>
+                                    <td width="10"><input class="button" type="submit" value="$Text{"Delete"}" name="DeleteCondition$QData{"ConditionID"}"></td>
                                 </tr>
 <!-- dtl:block:OverviewRow -->
                             </table>

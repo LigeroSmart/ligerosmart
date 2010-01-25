@@ -2,7 +2,7 @@
 # AgentITSMChangeSearch.dtl - provides HTML form for AgentITSMChangeSearch
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.dtl,v 1.27 2010-01-14 17:56:45 bes Exp $
+# $Id: AgentITSMChangeSearch.dtl,v 1.28 2010-01-25 09:29:48 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -108,7 +108,7 @@ document.observe( "dom:loaded", function() {
 <!-- ## HiddenFields for CABAgent Autocompletion ## -->
                 <input type="hidden" name="SelectedUser1"     value="$QData{"SelectedUser1"}">
                 <input type="hidden" name="UserSearchGroups1" value="">
-                <table width="800px" border="0" cellspacing="0" cellpadding="3">
+                <table width="800" border="0" cellspacing="0" cellpadding="3">
                     <colgroup>
                         <col width="50%">
                         <col width="50%">

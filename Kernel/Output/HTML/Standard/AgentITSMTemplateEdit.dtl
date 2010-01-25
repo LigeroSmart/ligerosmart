@@ -2,7 +2,7 @@
 # AgentITSMTemplateEdit.dtl - provides HTML form for AgentITSMTemplateEdit
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMTemplateEdit.dtl,v 1.2 2010-01-21 12:44:00 bes Exp $
+# $Id: AgentITSMTemplateEdit.dtl,v 1.3 2010-01-25 09:29:48 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -49,7 +49,7 @@ function submit_compose() {
                 <input type="hidden" name="Action"     value="$Env{"Action"}">
                 <input type="hidden" name="Subaction"  value="UpdateTemplate">
                 <input type="hidden" name="TemplateID" value="$QData{"TemplateID"}">
-                <table border="0" width="800px" align="center" cellspacing="0" cellpadding="4">
+                <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
                     <tr>
                         <td class="contenthead">$Text{"Edit Template"}</td>
                     </tr>
@@ -57,7 +57,7 @@ function submit_compose() {
                         <td>
                             <table border="0" width="100%" cellspacing="0" cellpadding="3">
                                 <colgroup>
-                                    <col width="130px"/>
+                                    <col width="130"/>
                                 </colgroup>
                                 <tr>
                                     <td class="contentkey">

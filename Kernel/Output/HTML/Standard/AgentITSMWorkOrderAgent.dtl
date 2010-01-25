@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderAgent.dtl - provides HTML form for AgentITSMWorkOrderAgent
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAgent.dtl,v 1.15 2010-01-08 10:31:10 bes Exp $
+# $Id: AgentITSMWorkOrderAgent.dtl,v 1.16 2010-01-25 09:29:48 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -67,7 +67,7 @@ document.observe( "dom:loaded", function() {
                 <input type="hidden" name="WorkOrderID" value="$QData{"WorkOrderID"}">
                 <input type="hidden" name="SelectedUser" value="$QData{"UserID"}">
                 <input type="hidden" name="UserSearchGroups" value="itsm-change">
-                <table border="0" width="800px" align="center" cellspacing="0" cellpadding="4">
+                <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
                     <tr>
                         <td class="contenthead">$Text{"Workorder Agent"}</td>
                     </tr>
@@ -75,7 +75,7 @@ document.observe( "dom:loaded", function() {
                         <td>
                             <table border="0" width="100%" cellspacing="0" cellpadding="3">
                                 <colgroup>
-                                    <col width="130px">
+                                    <col width="130">
                                     <col>
                                 </colgroup>
                                 <tr>
