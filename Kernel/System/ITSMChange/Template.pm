@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template.pm - all template functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.34 2010-01-22 12:42:20 bes Exp $
+# $Id: Template.pm,v 1.35 2010-01-25 13:58:27 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,6 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::ITSMCondition;
+use Kernel::System::LinkObject;
 use Kernel::System::Valid;
 use Kernel::System::VirtualFS;
 use Data::Dumper;
@@ -24,7 +25,7 @@ use Data::Dumper;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.34 $) [1];
+$VERSION = qw($Revision: 1.35 $) [1];
 
 =head1 NAME
 
@@ -104,6 +105,7 @@ sub new {
     # create additional objects
     $Self->{ChangeObject}    = Kernel::System::ITSMChange->new( %{$Self} );
     $Self->{ConditionObject} = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
+    $Self->{LinkObject}      = Kernel::System::LinkObject->new(%Param);
     $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
     $Self->{ValidObject}     = Kernel::System::Valid->new( %{$Self} );
     $Self->{VirtualFSObject} = Kernel::System::VirtualFS->new( %{$Self} );
@@ -1222,6 +1224,7 @@ sub _CreateTemplateElements {
         ConditionAdd  => '_ConditionAdd',
         AttachmentAdd => '_AttachmentAdd',
         ExpressionAdd => '_ExpressionAdd',
+        LinkAdd       => '_LinkAdd',
     );
 
     # get action
@@ -1376,6 +1379,31 @@ sub _ITSMChangeSerialize {
         push @{ $OriginalData->{Children} }, { AttachmentAdd => { FileID => $FileID } };
     }
 
+    # get links to other object
+    my $LinkListWithData = $Self->{LinkObject}->LinkListWithData(
+        Object => 'ITSMChange',
+        Key    => $Change->{ChangeID},
+        State  => 'Valid',
+        UserID => $Param{UserID},
+    );
+
+    for my $TargetObject ( keys %{$LinkListWithData} ) {
+        for my $Type ( keys %{ $LinkListWithData->{$TargetObject} } ) {
+            for my $TargetID ( keys %{ $LinkListWithData->{$TargetObject}->{$Type}->{Source} } ) {
+                my $LinkInfo = {
+                    SourceObject => 'ITSMChange',
+                    SourceKey    => $Change->{ChangeID},
+                    TargetObject => $TargetObject,
+                    TargetKey    => $TargetID,
+                    Type         => $Type,
+                    State        => 'Valid',
+                    UserID       => $Param{UserID},
+                };
+                push @{ $OriginalData->{Children} }, { LinkAdd => $LinkInfo };
+            }
+        }
+    }
+
     if ( $Param{Return} eq 'HASH' ) {
         return $OriginalData;
     }
@@ -1462,11 +1490,15 @@ sub _ITSMWorkOrderSerialize {
     my %WorkOrderAttachments = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
         WorkOrderID => $WorkOrder->{WorkOrderID},
     );
+
     for my $FileID ( keys %WorkOrderAttachments ) {
 
         # save attachments to this template
         push @{ $OriginalData->{Children} }, { AttachmentAdd => { FileID => $FileID } };
     }
+
+    # get links to other object
+    # ...
 
     if ( $Param{Return} eq 'HASH' ) {
         return $OriginalData;
@@ -1938,6 +1970,18 @@ sub _ConditionAdd {
 
 =item _ExpressionAdd()
 
+Creates new expressions for a condition based on the given template. It
+returns a hash of information (change id it was created for, id is
+the expression id)
+
+    my %Info = $TemplateObject->_ExpressionAdd(
+        Data => {
+            # ... Params for ExpressionAdd
+        },
+        ChangeID => 1,
+        UserID   => 1,
+    );
+
 =cut
 
 sub _ExpressionAdd {
@@ -1992,6 +2036,17 @@ sub _ExpressionAdd {
 
 =item _AttachmentAdd()
 
+Creates new attachments for a change or a workorder based on the given template. It
+returns a hash of information (with just one key - "Success")
+
+    my %Info = $TemplateObject->_AttachmentAdd(
+        Data => {
+            # ... Params for AttachmentAdd
+        },
+        ChangeID => 1,
+        UserID   => 1,
+    );
+
 =cut
 
 sub _AttachmentAdd {
@@ -2036,6 +2091,66 @@ sub _AttachmentAdd {
             UserID   => $Param{UserID},
         );
     }
+
+    my %Info = (
+        Success => $Success,
+    );
+
+    return %Info;
+}
+
+=item _LinkAdd()
+
+Creates new links for a change or a workorder based on the given template. It
+returns a hash of information (with just one key - "Success")
+
+    my %Info = $TemplateObject->_LinkAdd(
+        Data => {
+            # ... Params for LinkAdd
+        },
+        ChangeID    => 1,
+        WorkOrderID => 123, # optional
+        UserID      => 1,
+    );
+
+=cut
+
+sub _LinkAdd {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(UserID Data)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    my $SourceKey;
+
+    if ( $Param{Data}->{SourceObject} eq 'ITSMChange' ) {
+        $SourceKey = $Param{ChangeID};
+    }
+    elsif ( $Param{Data}->{SourceObject} eq 'ITSMWorkOrder' ) {
+        $SourceKey = $Param{WorkOrderID};
+    }
+
+    if ( !$SourceKey ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need WorkOrderID or ChangeID!',
+        );
+        return;
+    }
+
+    my $Success = $Self->{LinkObject}->LinkAdd(
+        %{ $Param{Data} },
+        SourceKey => $SourceKey,
+        UserID    => $Param{UserID},
+    );
 
     my %Info = (
         Success => $Success,
@@ -2190,6 +2305,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.34 $ $Date: 2010-01-22 12:42:20 $
+$Revision: 1.35 $ $Date: 2010-01-25 13:58:27 $
 
 =cut
