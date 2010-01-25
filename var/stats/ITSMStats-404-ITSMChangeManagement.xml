@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 
 <otrs_stats>
 <Cache>0</Cache>
-<Description>This report calculates all tickets of type &quot;incident&quot; and all changes in the system.</Description>
+<Description>This report calculates all tickets of the chosen types and all changes in the system.</Description>
 <File></File>
 <Format>CSV</Format>
 <Format>Print</Format>
@@ -13,12 +13,19 @@
 <StatType>dynamic</StatType>
 <SumCol>0</SumCol>
 <SumRow>0</SumRow>
-<Title>Relation Incidents &lt;-&gt; Changes</Title>
-<UseAsValueSeries Element="Object" Fixed="1">
+<Title>Relation Tickets (by types) &lt;-&gt; Changes</Title>
+<UseAsValueSeries Element="Object">
 <SelectedValues>Changes</SelectedValues>
-<SelectedValues>Incidents</SelectedValues>
+<SelectedValues>Incident</SelectedValues>
+<SelectedValues>Incident::Disaster</SelectedValues>
+<SelectedValues>Incident::ServiceRequest</SelectedValues>
+<SelectedValues>Problem</SelectedValues>
+<SelectedValues>Problem::KnownError</SelectedValues>
+<SelectedValues>Problem::PendingRfC</SelectedValues>
+<SelectedValues>RfC</SelectedValues>
+<SelectedValues>default</SelectedValues>
 </UseAsValueSeries>
-<UseAsXvalue Element="TimePeriod" TimeScaleCount="1" TimeStart="2009-01-01 00:00:00" TimeStop="2010-12-31 23:59:59">
+<UseAsXvalue Element="TimePeriod" TimeScaleCount="1" TimeStart="2009-01-01 00:00:00" TimeStop="2037-12-31 23:59:59">
 <SelectedValues>Day</SelectedValues>
 </UseAsXvalue>
 <Valid>1</Valid>
