@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.53 2010-01-25 13:26:56 mae Exp $
+# $Id: ITSMCondition.t,v 1.54 2010-01-25 17:35:03 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1928,7 +1928,7 @@ for my $ExpressionID (@ExpressionIDs) {
 # check for default condition expressions
 my @ActionTests = (
     {
-        ActionSuccess => 0,
+        ActionSuccess => 1,
         SourceData    => {
             ActionAdd => {
                 ObjectID => {
@@ -1953,7 +1953,7 @@ my @ActionTests = (
                 # static fields
                 ConditionID => $ConditionIDs[0],
                 Selector    => $ChangeIDs[0],
-                ActionValue => 'New Change Title',
+                ActionValue => 'New Change Title' . int rand 1_000,
                 UserID      => 1,
             },
         },
@@ -1968,14 +1968,13 @@ for my $ActionTest (@ActionTests) {
     # store data of test cases locally
     my %SourceData;
     my $ActionID;
-    my %ActionAddSourceData;
-    my %ActionAddData;
 
     # extract source data
     if ( $ActionTest->{SourceData} ) {
         %SourceData = %{ $ActionTest->{SourceData} };
     }
 
+    # check for sour data
     next ACTIONTEST if !%SourceData;
 
     CREATEDATA:
@@ -1984,76 +1983,110 @@ for my $ActionTest (@ActionTests) {
         # add action
         if ( $CreateData eq 'ActionAdd' ) {
 
-            # extract ActionAdd data
-            %ActionAddSourceData = %{ $SourceData{$CreateData} };
-
-            # set static fields
-            my @StaticFields = qw( Selector ActionValue UserID ConditionID );
-
-            STATICFIELD:
-            for my $StaticField (@StaticFields) {
-
-                # ommit static field if it is not set
-                next STATICFIELD if !exists $ActionAddSourceData{$StaticField}
-                        || !defined $ActionAddSourceData{$StaticField};
-
-                # safe data
-                $ActionAddData{$StaticField} = $ActionAddSourceData{$StaticField};
-            }
-
-            # get all fields for ActionAdd
-            for my $ActionAddValue ( keys %ActionAddSourceData ) {
-
-                # ommit static fields
-                next if grep { $_ eq $ActionAddValue } @StaticFields;
-
-                # get values for fields
-                for my $FieldValue ( keys %{ $ActionAddSourceData{$ActionAddValue} } ) {
-
-                    # store gathered information in hash for adding
-                    $ActionAddData{$ActionAddValue} =
-                        $Self->{ConditionObject}->$FieldValue(
-                        %{ $ActionAddSourceData{$ActionAddValue}->{$FieldValue} },
-                        );
-                }
-            }
-
             # add action
-            $ActionID = $Self->{ConditionObject}->ActionAdd(
-                %ActionAddData,
-            ) || 0;
+            $ActionID = _ActionAdd( $SourceData{$CreateData} );
 
-            $Self->True(
-                $ActionID,
-                'Test ' . $TestCount++ . " - $CreateData -> $ActionID",
-            );
-
+            # check for action id
             next CREATEDATA if !$ActionID;
 
             # save created ID for deleting actions
             push @ActionIDs, $ActionID;
-
-            # check the added action
-            my $ActionGetData = $Self->{ConditionObject}->ActionGet(
-                ActionID => $ActionID,
-                UserID   => $ActionAddData{UserID},
-            );
-            $Self->True(
-                $ActionGetData,
-                'Test ' . $TestCount++ . ' - ActionAdd(): ActionGet',
-            );
-
-            # test values
-            delete $ActionAddData{UserID};
-            for my $TestValue ( keys %ActionAddData ) {
-                $Self->Is(
-                    $ActionGetData->{$TestValue},
-                    $ActionAddData{$TestValue},
-                    'Test ' . $TestCount++ . " - ActionAdd(): ActionGet -> $TestValue",
-                );
-            }
-        }    # end if ( $CreateData eq 'ActionAdd' )
+        }
     }
+}
+
+# check execution of actions
+ACTIONCOUNTER:
+for my $ActionCounter ( 0 .. ( ( scalar @ActionTests ) - 1 ) ) {
+
+    my $ActionID = $ActionIDs[$ActionCounter] || 0;
+
+    $Self->True(
+        $ActionID,
+        'Test ' . $TestCount++ . " - ActionExecute -> ActionID: $ActionID",
+    );
+
+    next ACTIONCOUNTER if !$ActionID;
+
+    # select assert function
+    my $TestSub = 'False';
+    if ( $ActionTests[$ActionCounter]->{ActionSuccess} ) {
+        $TestSub = 'True';
+    }
+
+    # test for result
+    $Self->$TestSub(
+        $Self->{ConditionObject}->ActionExecute(
+            ActionID => $ActionID,
+            UserID   => 1,
+            )
+            || 0,
+        'Test ' . $TestCount++ . " - ActionExecute -> ActionID: $ActionID",
+    );
+
+    # do not execute further checks if action
+    # is not supposed to be successfully
+    next ACTIONCOUNTER if !$ActionTests[$ActionCounter]->{ActionSuccess};
+
+    # check for updated action
+    my $Action = $Self->{ConditionObject}->ActionGet(
+        ActionID => $ActionID,
+        UserID   => 1,
+    );
+    $Self->True(
+        $Action,
+        'Test ' . $TestCount++ . " - ActionExecute -> ActionGet: $ActionID",
+    );
+    next ACTIONCOUNTER if !$Action;
+
+    # get object name
+    my $ObjectName = $Self->{ConditionObject}->ObjectLookup(
+        ObjectID => $Action->{ObjectID},
+        UserID   => 1,
+    );
+    $Self->True(
+        $ObjectName,
+        'Test ' . $TestCount++ . " - ActionExecute -> ObjectLookup: $ObjectName",
+    );
+    next ACTIONCOUNTER if !$ObjectName;
+
+    # get attribute name
+    my $AttributeName = $Self->{ConditionObject}->AttributeLookup(
+        AttributeID => $Action->{AttributeID},
+        UserID      => 1,
+    );
+    $Self->True(
+        $AttributeName,
+        'Test ' . $TestCount++ . " - ActionExecute -> AttributeLookup: $AttributeName",
+    );
+    next ACTIONCOUNTER if !$ObjectName;
+
+    # get object data
+    my $ObjectData;
+    if ( $ObjectName eq 'ITSMChange' ) {
+        $ObjectData = $Self->{ChangeObject}->ChangeGet(
+            ChangeID => $Action->{Selector},
+            UserID   => 1,
+        );
+    }
+    elsif ( $ObjectName eq 'ITSMWorkOrder' ) {
+        $ObjectData = $Self->{WorkOrderObject}->WorkOrderGet(
+            WorkOrderID => $Action->{Selector},
+            UserID      => 1,
+        );
+    }
+    $Self->True(
+        $AttributeName,
+        'Test ' . $TestCount++ . " - ActionExecute -> get ObjectData: $ObjectName",
+    );
+    next ACTIONCOUNTER if !$ObjectData;
+
+    # check for updated value
+    $Self->Is(
+        $ObjectData->{$AttributeName},
+        $Action->{ActionValue},
+        'Test ' . $TestCount++ . " - ActionExecute -> get changed data: $ObjectName",
+    );
 }
 
 # check for action delete
@@ -2097,5 +2130,83 @@ $Self->{ConfigObject}->Set(
     Key   => 'ITSMChange::SendNotifications',
     Value => $SendNotificationsOrg,
 );
+
+sub _ActionAdd {
+    my $ActionData = shift;
+
+    return if !$ActionData;
+    return if ref $ActionData ne 'HASH';
+
+    # hash for adding
+    my %ActionAdd;
+
+    # set static fields
+    my @StaticFields = qw( Selector ActionValue UserID ConditionID );
+
+    STATICFIELD:
+    for my $StaticField (@StaticFields) {
+
+        # ommit static field if it is not set
+        next STATICFIELD if !exists $ActionData->{$StaticField};
+        next STATICFIELD if !defined $ActionData->{$StaticField};
+
+        # safe data
+        $ActionAdd{$StaticField} = $ActionData->{$StaticField};
+    }
+
+    # get all fields for ActionAdd
+    for my $ActionAddValue ( keys %{$ActionData} ) {
+
+        # ommit static fields
+        next if grep { $_ eq $ActionAddValue } @StaticFields;
+
+        # get values for fields
+        for my $FieldValue ( keys %{ $ActionData->{$ActionAddValue} } ) {
+
+            # store gathered information in hash for adding
+            $ActionAdd{$ActionAddValue}
+                = $Self->{ConditionObject}->$FieldValue(
+                %{ $ActionData->{$ActionAddValue}->{$FieldValue} },
+                );
+        }
+    }
+
+    # add action
+    my $ActionID = $Self->{ConditionObject}->ActionAdd(
+        %ActionAdd,
+    ) || 0;
+
+    $Self->True(
+        $ActionID,
+        'Test ' . $TestCount++ . " - ActionAdd -> $ActionID",
+    );
+
+    # check for ActionID
+    return if !$ActionID;
+
+    # check the added action
+    my $ActionGet = $Self->{ConditionObject}->ActionGet(
+        ActionID => $ActionID,
+        UserID   => $ActionAdd{UserID},
+    );
+    $Self->True(
+        $ActionGet,
+        'Test ' . $TestCount++ . ' - ActionAdd(): ActionGet',
+    );
+
+    # delete UserID, it is not returned
+    delete $ActionAdd{UserID};
+
+    # test values
+    for my $TestValue ( keys %ActionAdd ) {
+        $Self->Is(
+            $ActionGet->{$TestValue},
+            $ActionAdd{$TestValue},
+            'Test ' . $TestCount++ . " - ActionAdd(): ActionGet -> $TestValue",
+        );
+    }
+
+    return $ActionID;
+}
 
 1;

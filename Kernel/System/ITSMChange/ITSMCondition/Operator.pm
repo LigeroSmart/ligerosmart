@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Operator.pm - all condition operator functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Operator.pm,v 1.17 2010-01-22 12:42:20 bes Exp $
+# $Id: Operator.pm,v 1.18 2010-01-25 17:35:03 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 =head1 NAME
 
@@ -347,7 +347,9 @@ Returns true or false (1/undef) if given values are equal.
         Attribute    => 'WorkOrderStateID',
         Selector     => '1234,                                 #  ( ObjectKey | any | all )
         ObjectData   => [ $WorkOrderData1, $WorkOrderData2 ],
-        CompareValue => 'SomeValue',
+        CompareValue => 'SomeValue',                           # or ActionValue
+        ObjectName   => 'ITSMWorkOrder',                       # needed for ActionValue
+        ActionValue  => 'SomeValue',                           # or CompareValue
         UserID       => 1234,
     );
 
@@ -367,14 +369,21 @@ sub OperatorExecute {
         }
     }
 
-    # handle 'CompareValue' in a special way
-    if ( !exists $Param{CompareValue} || !defined $Param{CompareValue} ) {
+    # handle 'CompareValue' and 'ActionValue' in a special way
+    if (
+        ( !exists $Param{CompareValue} || !defined $Param{CompareValue} )
+        && ( !exists $Param{ActionValue} || !defined $Param{ActionValue} )
+        )
+    {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'Need CompareValue!',
+            Message  => 'Need either CompareValue or ActionValue!',
         );
         return;
     }
+
+    # check needed params for actions
+    return if exists $Param{ActionValue} && !$Param{ObjectName};
 
     # get object data
     my $ObjectData = $Param{ObjectData};
@@ -386,6 +395,23 @@ sub OperatorExecute {
             Message  => 'ObjectData is not an array reference!',
         );
         return;
+    }
+
+    # for actions no 'all' or 'any' allowed
+    return if exists $Param{ActionValue} && $Param{Selector} eq 'all';
+    return if exists $Param{ActionValue} && $Param{Selector} eq 'any';
+
+    # execute operator for actions here
+    # no need to iterate over object in this case
+    if ( exists $Param{ActionValue} ) {
+        return $Self->_OperatorActionExecute(
+            OperatorName  => $Param{OperatorName},
+            ObjectName    => $Param{ObjectName},
+            Selector      => $Param{Selector},
+            AttributeName => $Param{Attribute},
+            ActionValue   => $Param{ActionValue},
+            UserID        => $Param{UserID},
+        );
     }
 
     # return false if no object data is given
@@ -486,10 +512,6 @@ sub _OperatorExecute {
         'not contains' => '_OperatorNotContains',
         'begins with'  => '_OperatorBeginsWith',
         'ends with'    => '_OperatorEndsWith',
-
-        # action operators
-        'set'  => '_OperatorIsEmpty',
-        'lock' => '_OperatorIsEmpty',
     );
 
     # get operator name
@@ -520,6 +542,90 @@ sub _OperatorExecute {
     my $Result = $Self->$Sub(
         Value1 => $Param{Value1},
         Value2 => $Param{Value2},
+    );
+
+    return $Result;
+}
+
+=item _OperatorActionExecute()
+
+Returns true or false (1/undef) if given action could be
+executed successfully.
+
+    my $Result = $ConditionObject->_OperatorActionExecute(
+        OperatorName  => 'set',
+        ObjectName    => 'ITSMChange',
+        Selector      => '1234'
+        AttributeName => 'ChangeStateID',
+        ActionValue   => '13',
+        UserID        => 1234,
+    );
+
+=cut
+
+sub _OperatorActionExecute {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(OperatorName ObjectName Selector AttributeName ActionValue UserID)) {
+        if ( !exists $Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # check needed stuff in a special way
+    for my $Argument (qw(ActionValue)) {
+        if ( !exists $Param{$Argument} || !defined $Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # map for operator action
+    my %OperatorAction = (
+        'set'  => '_OperatorSet',
+        'lock' => '_OperatorLock',
+    );
+
+    # get operator name
+    my $OperatorName = $Param{OperatorName};
+
+    # check for matching operator
+    if ( !exists $OperatorAction{$OperatorName} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "No matching operator for '$OperatorName' found!",
+        );
+        return;
+    }
+
+    # extract operator sub
+    my $Sub = $OperatorAction{$OperatorName};
+
+    # check for available function
+    if ( !$Self->can($Sub) ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "No function '$Sub' available for '$OperatorName'!",
+        );
+        return;
+    }
+
+    # execute extracted action
+    my $Result = $Self->$Sub(
+        OperatorName  => $Param{OperatorName},
+        ObjectName    => $Param{ObjectName},
+        Selector      => $Param{Selector},
+        AttributeName => $Param{AttributeName},
+        ActionValue   => $Param{ActionValue},
+        UserID        => $Param{UserID},
     );
 
     return $Result;
@@ -926,7 +1032,114 @@ sub _OperatorEndsWith {
     return $EndsWith;
 }
 
-# TODO: add 'set' operator
+=item _OperatorSet()
+
+Returns the success of setting a new value.
+
+    my $Result = $ConditionObject->_OperatorSet(
+        OperatorName  => 'set',
+        ObjectName    => 'ITSMChange',
+        Selector      => '1234'
+        AttributeName => 'ChangeStateID',
+        ActionValue   => '13',
+        UserID        => 1234,
+    );
+
+=cut
+
+sub _OperatorSet {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(OperatorName ObjectName Selector AttributeName ActionValue UserID)) {
+        if ( !exists $Param{$Argument} || !defined $Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # map for set action
+    my %OperatorAction = (
+        'ITSMChange'    => '_OperatorSetITSMChange',
+        'ITSMWorkOrder' => '_OperatorSetITSMWorkorder',
+    );
+
+    # get operator name
+    my $OperatorName = $Param{ObjectName};
+
+    # check for matching operator
+    if ( !exists $OperatorAction{$OperatorName} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "No matching operator for '$OperatorName' found!",
+        );
+        return;
+    }
+
+    # extract operator sub
+    my $Sub = $OperatorAction{$OperatorName};
+
+    # check for available function
+    if ( !$Self->can($Sub) ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "No function '$Sub' available for '$OperatorName'!",
+        );
+        return;
+    }
+
+    # execute extracted action
+    my $Result = $Self->$Sub(
+        OperatorName  => $Param{OperatorName},
+        ObjectName    => $Param{ObjectName},
+        Selector      => $Param{Selector},
+        AttributeName => $Param{AttributeName},
+        ActionValue   => $Param{ActionValue},
+        UserID        => $Param{UserID},
+    );
+
+    return $Result;
+}
+
+=item _OperatorSetITSMChange()
+
+Returns the success of setting a new value
+for a ITSMChange object.
+
+    my $Result = $ConditionObject->_OperatorSetITSMChange(
+        Selector      => 1234,
+        AttributeName => 'ChangeStateID',
+        ActionValue   => 12,
+        UserID        => 2345,
+    );
+
+=cut
+
+sub _OperatorSetITSMChange {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(Selector AttributeName ActionValue UserID)) {
+        if ( !exists $Param{$Argument} || !defined $Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # update change and return update result
+    return $Self->{ChangeObject}->ChangeUpdate(
+        ChangeID         => $Param{Selector},
+        $Param{Selector} => $Param{ActionValue},
+        UserID           => $Param{UserID},
+    );
+}
+
 # TODO: add 'lock' operator
 
 1;
@@ -945,6 +1158,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.17 $ $Date: 2010-01-22 12:42:20 $
+$Revision: 1.18 $ $Date: 2010-01-25 17:35:03 $
 
 =cut
