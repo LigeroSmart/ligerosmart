@@ -2,7 +2,7 @@
 # Kernel/System/Stats/Dynamic/ITSMChangeManagementChangesIncidents.pm
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagementChangesIncidents.pm,v 1.4 2010-01-24 08:46:53 reb Exp $
+# $Id: ITSMChangeManagementChangesIncidents.pm,v 1.5 2010-01-25 12:36:47 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,14 +16,10 @@ use warnings;
 
 use Kernel::System::ITSMChange;
 use Kernel::System::Ticket;
+use Kernel::System::Type;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
-
-my %Objects = (
-    1 => 'Incidents',
-    2 => 'Changes',
-);
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -43,6 +39,7 @@ sub new {
     # create needed objects
     $Self->{ChangeObject} = Kernel::System::ITSMChange->new( %{$Self} );
     $Self->{TicketObject} = Kernel::System::Ticket->new( %{$Self} );
+    $Self->{TypeObject}   = Kernel::System::Type->new( %{$Self} );
 
     return $Self;
 }
@@ -56,6 +53,10 @@ sub GetObjectName {
 sub GetObjectAttributes {
     my ( $Self, %Param ) = @_;
 
+    # get list of ticket types
+    my %Objects = $Self->{TypeObject}->TypeList( Valid => 1 );
+    $Objects{'-1'} = 'Changes';
+
     my @ObjectAttributes = (
         {
             Name             => 'Objects',
@@ -65,6 +66,7 @@ sub GetObjectAttributes {
             Element          => 'Object',
             Block            => 'MultiSelectField',
             Values           => \%Objects,
+            SelectedValues   => [ keys %Objects ],
         },
         {
             Name             => 'Timeperiod',
@@ -88,22 +90,13 @@ sub GetStatElement {
     my ( $Self, %Param ) = @_;
 
     # delete CreateTimeNewerData as we want to get *ALL* existing objects
-    delete $Param{CreateTimeNewerData};
+    delete $Param{CreateTimeNewerDate};
 
-    # if this cell should be filled with number of incidents
-    if ( $Param{Object}->[0] == 1 ) {
-        return $Self->{TicketObject}->TicketSearch(
-            UserID     => 1,
-            Result     => 'COUNT',
-            Permission => 'ro',
-            Limit      => 100_000_000,
-            Types      => ['Incident'],
-            %Param,
-        );
-    }
+    # for tickets the search option is "TicketCreateTimeOlderDate"
+    $Param{TicketCreateTimeOlderDate} = $Param{CreateTimeOlderDate};
 
     # if this cell should be filled with number of changes
-    elsif ( $Param{Object}->[0] == 2 ) {
+    if ( $Param{Object}->[0] == -1 ) {
         return $Self->{ChangeObject}->ChangeSearch(
             UserID     => 1,
             Result     => 'COUNT',
@@ -113,11 +106,27 @@ sub GetStatElement {
         );
     }
 
+    # if this cell should be filled with number of tickets
+    else {
+        return $Self->{TicketObject}->TicketSearch(
+            UserID     => 1,
+            Result     => 'COUNT',
+            Permission => 'ro',
+            Limit      => 100_000_000,
+            TypeIDs    => [ $Param{Object}->[0] ],
+            %Param,
+        );
+    }
+
     return;
 }
 
 sub ExportWrapper {
     my ( $Self, %Param ) = @_;
+
+    # get list of ticket types
+    my %Objects = $Self->{TypeObject}->TypeList( Valid => 1 );
+    $Objects{'-1'} = 'Changes';
 
     # wrap ids to used spelling
     for my $Use (qw(UseAsValueSeries UseAsRestriction UseAsXvalue)) {
@@ -147,6 +156,10 @@ sub ExportWrapper {
 
 sub ImportWrapper {
     my ( $Self, %Param ) = @_;
+
+    # get list of ticket types
+    my %Objects = $Self->{TypeObject}->TypeList( Valid => 1 );
+    $Objects{'-1'} = 'Changes';
 
     # wrap used spelling to ids
     for my $Use (qw(UseAsValueSeries UseAsRestriction UseAsXvalue)) {
