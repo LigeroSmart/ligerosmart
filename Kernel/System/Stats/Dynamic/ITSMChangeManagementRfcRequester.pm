@@ -2,7 +2,7 @@
 # Kernel/System/Stats/Dynamic/ITSMChangeManagementRfcRequester.pm - all advice functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagementRfcRequester.pm,v 1.2 2010-01-24 08:46:53 reb Exp $
+# $Id: ITSMChangeManagementRfcRequester.pm,v 1.3 2010-01-25 10:05:42 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::Ticket;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -55,12 +55,14 @@ sub GetObjectName {
 sub GetObjectAttributes {
     my ( $Self, %Param ) = @_;
 
+    my $RfCTypes = $Self->{ConfigObject}->Get('ITSMChange::AddChangeLinkTicketTypes');
+
     # get all rfcs
     my @TicketIDs = $Self->{TicketObject}->TicketSearch(
         UserID     => 1,
         Permission => 'ro',
         Limit      => 100_000_000,
-        Types      => ['RfC'],
+        Types      => $RfCTypes,
         Result     => 'ARRAY',
     );
 
@@ -144,13 +146,16 @@ sub GetStatElement {
     my $Key = $Type eq 'agent' ? 'OwnerIDs' : 'CustomerUserLogin';
     $Param{$Key} = [$ID];
 
+    # get ticket types that are handled as RfCs
+    my $RfCTypes = $Self->{ConfigObject}->Get('ITSMChange::AddChangeLinkTicketTypes');
+
     # search tickets
     my @TicketIDs = $Self->{TicketObject}->TicketSearch(
         UserID     => 1,
         Result     => 'ARRAY',
         Permission => 'ro',
         Limit      => 100_000_000,
-        Types      => ['RfC'],
+        Types      => $RfCTypes,
         %Param,
     );
 
