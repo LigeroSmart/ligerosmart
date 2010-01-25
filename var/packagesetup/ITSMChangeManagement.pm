@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.30 2010-01-22 12:42:20 bes Exp $
+# $Id: ITSMChangeManagement.pm,v 1.31 2010-01-25 10:09:09 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,7 +33,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.30 $) [1];
+$VERSION = qw($Revision: 1.31 $) [1];
 
 =head1 NAME
 
@@ -1430,38 +1430,29 @@ sub _DeleteSystemNotifications {
         'Change::ChangeCABDelete',
         'Change::ChangeLinkAdd',
         'Change::ChangeLinkDelete',
+        'Change::ChangeAttachmentAdd',
+        'Change::ChangeAttachmentDelete',
         'Change::ChangeDelete',
         'WorkOrder::WorkOrderAdd',
         'WorkOrder::WorkOrderUpdate',
-        'WorkOrder::WorkOrderDelete',
         'WorkOrder::WorkOrderLinkAdd',
         'WorkOrder::WorkOrderLinkDelete',
-        'WorkOrder::ChangeAttachmentAdd',
-        'WorkOrder::ChangeAttachmentDelete',
         'WorkOrder::WorkOrderAttachmentAdd',
         'WorkOrder::WorkOrderAttachmentDelete',
+        'WorkOrder::WorkOrderDelete',
     );
 
     # delete the entries
     for my $Type (@NotificationTypes) {
 
         # the default notification are defined for English and German
-        for my $Lang (qw(en de)) {
-
-            # delete agent notification
-            $Self->{DBObject}->Do(
-                SQL => 'DELETE FROM notifications '
-                    . 'WHERE notification_language = ? AND notification_type = ?',
-                Bind => [ \$Lang, \"${Lang}::Agent::${Type}" ],
-            );
-
-            # delete customer notification
-            $Self->{DBObject}->Do(
-                SQL => 'DELETE FROM notifications '
-                    . 'WHERE notification_language = ? AND notification_type = ?',
-                Bind => [ \$Lang, \"${Lang}::Customer::${Type}" ],
-            );
-        }
+        # there are notification for agents and customers
+        $Self->{DBObject}->Do(
+            SQL => 'DELETE FROM notifications '
+                . 'WHERE notification_language IN ("en", "de" ) '
+                . 'AND ( notification_type = ? OR notification_type = ? )',
+            Bind => [ \"Agent::${Type}", \"Customer::${Type}", ],
+        );
     }
 
     return 1;
@@ -1485,6 +1476,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.30 $ $Date: 2010-01-22 12:42:20 $
+$Revision: 1.31 $ $Date: 2010-01-25 10:09:09 $
 
 =cut
