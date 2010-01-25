@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/HistoryAdd.pm - HistoryAdd event module for ITSMChange
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: HistoryAdd.pm,v 1.31 2010-01-24 08:59:01 reb Exp $
+# $Id: HistoryAdd.pm,v 1.32 2010-01-25 13:57:23 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.31 $) [1];
+$VERSION = qw($Revision: 1.32 $) [1];
 
 =head1 NAME
 
@@ -347,12 +347,16 @@ sub Run {
             $Param{Data}->{ChangeID} = $WorkOrder->{ChangeID};
         }
 
+        my $ContentNew = join '%%',
+            $Param{Data}->{SourceObject} || $Param{Data}->{TargetObject},
+            $Param{Data}->{SourceKey} || $Param{Data}->{TargetKey};
+
         # tell history that a link was added
         return if !$Self->{HistoryObject}->HistoryAdd(
             ChangeID    => $Param{Data}->{ChangeID},
             WorkOrderID => $Param{Data}->{WorkOrderID},
             HistoryType => $Event,
-            ContentNew  => join( '%%', $Param{Data}->{SourceObject}, $Param{Data}->{SourceKey} ),
+            ContentNew  => $ContentNew,
             UserID      => $Param{UserID},
         );
     }
@@ -466,6 +470,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.31 $ $Date: 2010-01-24 08:59:01 $
+$Revision: 1.32 $ $Date: 2010-01-25 13:57:23 $
 
 =cut
