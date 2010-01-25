@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAgent.pm - the OTRS::ITSM::ChangeManagement workorder agent edit module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAgent.pm,v 1.32 2010-01-21 09:20:57 bes Exp $
+# $Id: AgentITSMWorkOrderAgent.pm,v 1.33 2010-01-25 15:29:32 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.32 $) [1];
+$VERSION = qw($Revision: 1.33 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -353,13 +353,13 @@ sub _CheckWorkOrderAgent {
     # hash for error info
     my %Errors;
 
-    # check change manager
+    # check workorder agent
     if ( !$Param{User} || !$Param{SelectedUser} ) {
         $Errors{User} = 1;
     }
     else {
 
-        # get changemanager data
+        # get workorder agent data
         my %User = $Self->{UserObject}->GetUserData(
             UserID => $Param{SelectedUser},
         );
