@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.31 2010-01-25 10:09:09 bes Exp $
+# $Id: ITSMChangeManagement.pm,v 1.32 2010-01-25 11:01:52 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,7 +33,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.31 $) [1];
+$VERSION = qw($Revision: 1.32 $) [1];
 
 =head1 NAME
 
@@ -1014,8 +1014,8 @@ sub _AddSystemNotifications {
         [
             'Agent::Change::ChangeCABDelete',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] CAB gelöscht',
-            'Change #<OTRS_CHANGE_ChangeNumber> mit gelöschtem CAB.' . $BasicChangeInfoEn,
+            '[Change #<OTRS_CHANGE_ChangeNumber>] CAB gelÃ¶scht',
+            'Change #<OTRS_CHANGE_ChangeNumber> mit gelÃ¶schtem CAB.' . $BasicChangeInfoEn,
         ],
         [
             'Agent::Change::ChangeCABDelete',
@@ -1026,8 +1026,8 @@ sub _AddSystemNotifications {
         [
             'Agent::Change::ChangeLinkAdd',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] RfC verknüpft',
-            'Change #<OTRS_CHANGE_ChangeNumber> mit verknüpftem RfC.' . $BasicChangeInfoDe,
+            '[Change #<OTRS_CHANGE_ChangeNumber>] RfC verknÃ¼pft',
+            'Change #<OTRS_CHANGE_ChangeNumber> mit verknÃ¼pftem RfC.' . $BasicChangeInfoDe,
         ],
         [
             'Agent::Change::ChangeLinkAdd',
@@ -1050,8 +1050,8 @@ sub _AddSystemNotifications {
         [
             'Agent::Change::ChangeDelete',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] gelöscht',
-            'Der Change #<OTRS_CHANGE_ChangeNumber> wurde gelöscht.',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] gelÃ¶scht',
+            'Der Change #<OTRS_CHANGE_ChangeNumber> wurde gelÃ¶scht.',
         ],
         [
             'Agent::Change::ChangeDelete',
@@ -1090,8 +1090,8 @@ sub _AddSystemNotifications {
         [
             'Agent::WorkOrder::WorkOrderDelete',
             'de',
-            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] gelöscht',
-            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde gelöscht.',
+            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] gelÃ¶scht',
+            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde gelÃ¶scht.',
         ],
         [
             'Agent::WorkOrder::WorkOrderDelete',
@@ -1102,8 +1102,8 @@ sub _AddSystemNotifications {
         [
             'Agent::WorkOrder::WorkOrderLinkAdd',
             'de',
-            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Ticket verknüpft',
-            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde mit einem Ticket verknüpft.'
+            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Ticket verknÃ¶pft',
+            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde mit einem Ticket verknÃ¶pft.'
                 . $BasicWorkOrderInfoDe,
         ],
         [
@@ -1117,7 +1117,7 @@ sub _AddSystemNotifications {
             'Agent::WorkOrder::WorkOrderLinkDelete',
             'de',
             '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Ticket entfernt',
-            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> ist mit einem Ticket nicht mehr verknüpft.'
+            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> ist mit einem Ticket nicht mehr verknÃ¼pft.'
                 . $BasicWorkOrderInfoDe,
         ],
         [
@@ -1142,8 +1142,8 @@ sub _AddSystemNotifications {
         [
             'Agent::Change::ChangeAttachmentDelete',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] Anhang gelöscht',
-            'Change #<OTRS_CHANGE_ChangeNumber> mit gelöschtem Anhang.' . $BasicChangeInfoDe,
+            '[Change #<OTRS_CHANGE_ChangeNumber>] Anhang gelÃ¶scht',
+            'Change #<OTRS_CHANGE_ChangeNumber> mit gelÃ¶schtem Anhang.' . $BasicChangeInfoDe,
         ],
         [
             'Agent::Change::ChangeAttachmentDelete',
@@ -1168,8 +1168,8 @@ sub _AddSystemNotifications {
         [
             'Agent::WorkOrder::WorkOrderAttachmentDelete',
             'de',
-            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Anhang gelöscht',
-            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> mit gelöschtem Anhang.'
+            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Anhang gelÃ¶scht',
+            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> mit gelÃ¶schtem Anhang.'
                 . $BasicWorkOrderInfoDe,
         ],
         [
@@ -1221,8 +1221,8 @@ sub _AddSystemNotifications {
         [
             'Customer::Change::ChangeCABDelete',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] CAB gelöscht',
-            'Change #<OTRS_CHANGE_ChangeNumber> mit gelöschtem CAB.' . $BasicChangeInfoEn,
+            '[Change #<OTRS_CHANGE_ChangeNumber>] CAB gelÃ¶scht',
+            'Change #<OTRS_CHANGE_ChangeNumber> mit gelÃ¶schtem CAB.' . $BasicChangeInfoEn,
         ],
         [
             'Customer::Change::ChangeCABDelete',
@@ -1233,8 +1233,8 @@ sub _AddSystemNotifications {
         [
             'Customer::Change::ChangeLinkAdd',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] RfC verknüpft',
-            'Change #<OTRS_CHANGE_ChangeNumber> mit verknüpftem RfC.' . $BasicChangeInfoDe,
+            '[Change #<OTRS_CHANGE_ChangeNumber>] RfC verknÃ¼pft',
+            'Change #<OTRS_CHANGE_ChangeNumber> mit verknÃ¼pftem RfC.' . $BasicChangeInfoDe,
         ],
         [
             'Customer::Change::ChangeLinkAdd',
@@ -1257,8 +1257,8 @@ sub _AddSystemNotifications {
         [
             'Customer::Change::ChangeDelete',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] gelöscht',
-            'Der Change #<OTRS_CHANGE_ChangeNumber> wurde gelöscht.',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] gelÃ¶scht',
+            'Der Change #<OTRS_CHANGE_ChangeNumber> wurde gelÃ¶scht.',
         ],
         [
             'Customer::Change::ChangeDelete',
@@ -1297,8 +1297,8 @@ sub _AddSystemNotifications {
         [
             'Customer::WorkOrder::WorkOrderDelete',
             'de',
-            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] gelöscht',
-            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde gelöscht.',
+            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] gelÃ¶scht',
+            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde gelÃ¶scht.',
         ],
         [
             'Customer::WorkOrder::WorkOrderDelete',
@@ -1309,8 +1309,8 @@ sub _AddSystemNotifications {
         [
             'Customer::WorkOrder::WorkOrderLinkAdd',
             'de',
-            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Ticket verknüpft',
-            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde mit einem Ticket verknüpft.'
+            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Ticket verknÃ¶pft',
+            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde mit einem Ticket verknÃ¶pft.'
                 . $BasicWorkOrderInfoDe,
         ],
         [
@@ -1324,7 +1324,7 @@ sub _AddSystemNotifications {
             'Customer::WorkOrder::WorkOrderLinkDelete',
             'de',
             '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Ticket entfernt',
-            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> ist mit einem Ticket nicht mehr verknüpft.'
+            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> ist mit einem Ticket nicht mehr verknÃ¼pft.'
                 . $BasicWorkOrderInfoDe,
         ],
         [
@@ -1349,8 +1349,8 @@ sub _AddSystemNotifications {
         [
             'Customer::Change::ChangeAttachmentDelete',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] Anhang gelöscht',
-            'Change #<OTRS_CHANGE_ChangeNumber> mit gelöschtem Anhang.' . $BasicChangeInfoDe,
+            '[Change #<OTRS_CHANGE_ChangeNumber>] Anhang gelÃ¶scht',
+            'Change #<OTRS_CHANGE_ChangeNumber> mit gelÃ¶schtem Anhang.' . $BasicChangeInfoDe,
         ],
         [
             'Customer::Change::ChangeAttachmentDelete',
@@ -1375,8 +1375,8 @@ sub _AddSystemNotifications {
         [
             'Customer::WorkOrder::WorkOrderAttachmentDelete',
             'de',
-            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Anhang gelöscht',
-            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> mit gelöschtem Anhang.'
+            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Anhang gelÃ¶scht',
+            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> mit gelÃ¶schtem Anhang.'
                 . $BasicWorkOrderInfoDe,
         ],
         [
@@ -1445,7 +1445,6 @@ sub _DeleteSystemNotifications {
     # delete the entries
     for my $Type (@NotificationTypes) {
 
-        # the default notification are defined for English and German
         # there are notification for agents and customers
         $Self->{DBObject}->Do(
             SQL => 'DELETE FROM notifications '
@@ -1476,6 +1475,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.31 $ $Date: 2010-01-25 10:09:09 $
+$Revision: 1.32 $ $Date: 2010-01-25 11:01:52 $
 
 =cut
