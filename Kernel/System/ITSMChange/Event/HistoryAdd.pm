@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/HistoryAdd.pm - HistoryAdd event module for ITSMChange
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: HistoryAdd.pm,v 1.32 2010-01-25 13:57:23 reb Exp $
+# $Id: HistoryAdd.pm,v 1.33 2010-01-25 15:27:30 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,10 +14,12 @@ package Kernel::System::ITSMChange::Event::HistoryAdd;
 use strict;
 use warnings;
 
+use Kernel::System::ITSMChange;
+use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.32 $) [1];
+$VERSION = qw($Revision: 1.33 $) [1];
 
 =head1 NAME
 
@@ -470,6 +472,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.32 $ $Date: 2010-01-25 13:57:23 $
+$Revision: 1.33 $ $Date: 2010-01-25 15:27:30 $
 
 =cut
