@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.51 2010-01-22 08:27:52 ub Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.52 2010-01-25 08:47:02 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.51 $) [1];
+$VERSION = qw($Revision: 1.52 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -84,7 +84,7 @@ sub Run {
         ElementChanged
         SaveAttachment FileID
         MoveTimeType MoveTimeYear MoveTimeMonth MoveTimeDay MoveTimeHour
-        MoveTimeMinute MoveTimeUsed
+        MoveTimeMinute MoveTimeUsed TemplateID
         )
         )
     {
@@ -475,6 +475,11 @@ sub Run {
             }
         }
 
+        # check whether a template was selected
+        if ( !$GetParam{TemplateID} ) {
+            push @ValidationErrors, 'InvalidTemplate';
+        }
+
         if ( !@ValidationErrors ) {
 
             # create change based on the template
@@ -589,8 +594,9 @@ sub Run {
         TemplateType  => 'ITSMChange',
     );
     my $TemplateSelectionString = $Self->{LayoutObject}->BuildSelection(
-        Name => 'TemplateID',
-        Data => $TemplateList,
+        Name         => 'TemplateID',
+        Data         => $TemplateList,
+        PossibleNone => 1,
     );
 
     # build drop-down with time types
@@ -631,7 +637,8 @@ sub Run {
     # show validation errors in ChangeTemplate block
     my %ValidationErrorNames;
     @ValidationErrorNames{@ValidationErrors} = (1) x @ValidationErrors;
-    for my $ChangeTemplateValidationError (qw(InvalidMoveTimeType InvalidMoveTime)) {
+    for my $ChangeTemplateValidationError (qw(InvalidMoveTimeType InvalidMoveTime InvalidTemplate))
+    {
         if ( $ValidationErrorNames{$ChangeTemplateValidationError} ) {
             $Self->{LayoutObject}->Block(
                 Name => $ChangeTemplateValidationError,

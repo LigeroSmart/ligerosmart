@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeInvolvedPersons.pm - the OTRS::ITSM::ChangeManagement change involved persons module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.33 2010-01-21 08:27:46 reb Exp $
+# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.34 2010-01-25 08:47:02 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::Template;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.33 $) [1];
+$VERSION = qw($Revision: 1.34 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -97,11 +97,15 @@ sub Run {
         ExpandCABMember1 ExpandCABMember2 CABMemberType CABMemberID
         ChangeBuilderID ChangeManagerID SelectedUser1 SelectedUser2
         MemberID ClearCABMember ClearUser1 ClearUser2
-        AddCABMember AddCABTemplate)
+        AddCABMember AddCABTemplate TemplateID)
         )
     {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
+
+    # Remember the reason why saving was not attempted.
+    # The entries are the names of the dtl validation error blocks.
+    my @ValidationErrors;
 
     # this is needed to handle user requests when autocompletion is turned off
     # %ExpandInfo gets info about chosen user and all available users
@@ -179,17 +183,23 @@ sub Run {
         }
         elsif ( $GetParam{AddCABTemplate} ) {
 
-            # create CAB based on the template
-            my $CreatedID = $Self->{TemplateObject}->TemplateDeSerialize(
-                TemplateID => $Self->{ParamObject}->GetParam( Param => 'TemplateID' ),
-                UserID     => $Self->{UserID},
-                ChangeID   => $ChangeID,
-            );
+            if ( $GetParam{TemplateID} ) {
 
-            # redirect to zoom mask, when adding was successful
-            return $Self->{LayoutObject}->Redirect(
-                OP => "Action=AgentITSMChangeInvolvedPersons&ChangeID=$ChangeID",
-            );
+                # create CAB based on the template
+                my $CreatedID = $Self->{TemplateObject}->TemplateDeSerialize(
+                    TemplateID => $GetParam{TemplateID},
+                    UserID     => $Self->{UserID},
+                    ChangeID   => $ChangeID,
+                );
+
+                # redirect to zoom mask, when adding was successful
+                return $Self->{LayoutObject}->Redirect(
+                    OP => "Action=AgentITSMChangeInvolvedPersons&ChangeID=$ChangeID",
+                );
+            }
+
+            # notify about the missing template id
+            push @ValidationErrors, 'InvalidTemplate';
         }
         elsif ($ExpandUser) {
 
@@ -437,8 +447,9 @@ sub Run {
         TemplateType  => 'CAB',
     );
     my $TemplateDropDown = $Self->{LayoutObject}->BuildSelection(
-        Name => 'TemplateID',
-        Data => $TemplateList,
+        Name         => 'TemplateID',
+        Data         => $TemplateList,
+        PossibleNone => 1,
     );
 
     # show block with template dropdown
@@ -448,6 +459,17 @@ sub Run {
             CABTemplateStrg => $TemplateDropDown,
         },
     );
+
+    # show validation errors in CABTemplate block
+    my %ValidationErrorNames;
+    @ValidationErrorNames{@ValidationErrors} = (1) x @ValidationErrors;
+    for my $ChangeTemplateValidationError (qw(InvalidTemplate)) {
+        if ( $ValidationErrorNames{$ChangeTemplateValidationError} ) {
+            $Self->{LayoutObject}->Block(
+                Name => $ChangeTemplateValidationError,
+            );
+        }
+    }
 
     # build CAB member search autocomplete field
     my $CABMemberAutoCompleteConfig

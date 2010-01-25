@@ -2,7 +2,7 @@
 # AgentITSMChangeInvolvedPersons.dtl - provides HTML form for AgentITSMChangeInvolvedPersons
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.23 2010-01-21 07:49:50 reb Exp $
+# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.24 2010-01-25 08:47:02 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -192,6 +192,10 @@ document.observe( "dom:loaded", function() {
 <!-- dtl:block:CABTemplate -->
                                         $Data{"CABTemplateStrg"}
 <!-- dtl:block:CABTemplate -->
+<!-- dtl:block:InvalidTemplate -->
+                                        <br />
+                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
+<!-- dtl:block:InvalidTemplate -->
                                     </td>
                                     <td>
                                         <input type="submit" class="button" name="AddCABTemplate" value="$Text{"Add"}">

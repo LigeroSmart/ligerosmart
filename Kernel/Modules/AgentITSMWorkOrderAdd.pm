@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAdd.pm - the OTRS::ITSM::ChangeManagement workorder add module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.pm,v 1.47 2010-01-21 12:57:38 bes Exp $
+# $Id: AgentITSMWorkOrderAdd.pm,v 1.48 2010-01-25 08:47:02 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::Template;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.47 $) [1];
+$VERSION = qw($Revision: 1.48 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -107,7 +107,7 @@ sub Run {
         PlannedEffort
         SaveAttachment FileID
         MoveTimeType MoveTimeYear MoveTimeMonth MoveTimeDay MoveTimeHour
-        MoveTimeMinute MoveTimeUsed
+        MoveTimeMinute MoveTimeUsed TemplateID
         )
         )
     {
@@ -364,9 +364,14 @@ sub Run {
             }
         }
 
+        # check whether a template was selected
+        if ( !$GetParam{TemplateID} ) {
+            push @ValidationErrors, 'InvalidTemplate';
+        }
+
         if ( !@ValidationErrors ) {
 
-            # create workorder from template
+            # create template based on the template
             my $WorkOrderID = $Self->{TemplateObject}->TemplateDeSerialize(
                 ChangeID        => $ChangeID,
                 TemplateID      => $Self->{ParamObject}->GetParam( Param => 'TemplateID' ),
@@ -442,8 +447,9 @@ sub Run {
         TemplateType  => 'ITSMWorkOrder',
     );
     my $TemplateSelectionString = $Self->{LayoutObject}->BuildSelection(
-        Name => 'TemplateID',
-        Data => $TemplateList,
+        Name         => 'TemplateID',
+        Data         => $TemplateList,
+        PossibleNone => 1,
     );
 
     # build drop-down with time types
@@ -485,7 +491,8 @@ sub Run {
     # show validation errors in WorkOrderTemplate block
     my %ValidationErrorNames;
     @ValidationErrorNames{@ValidationErrors} = (1) x @ValidationErrors;
-    for my $ChangeTemplateValidationError (qw(InvalidMoveTimeType InvalidMoveTime)) {
+    for my $ChangeTemplateValidationError (qw(InvalidMoveTimeType InvalidMoveTime InvalidTemplate))
+    {
         if ( $ValidationErrorNames{$ChangeTemplateValidationError} ) {
             $Self->{LayoutObject}->Block(
                 Name => $ChangeTemplateValidationError,
