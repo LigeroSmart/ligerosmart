@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.52 2010-01-22 12:42:20 bes Exp $
+# $Id: ITSMCondition.t,v 1.53 2010-01-25 13:26:56 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -439,7 +439,7 @@ for my $ObjectID (@ConditionObjectCreated) {
 my @ConditionAttributes = qw(
     ChangeTitle      CategoryID      ImpactID PriorityID PlannedEffort    AccountedTime
     ChangeManagerID  ChangeBuilderID WorkOrderAgentID
-    WorkOrderTitle   WorkOrderID     WorkOrderNumber     WorkOrderStateID WorkOrderTypeID
+    WorkOrderTitle   WorkOrderNumber WorkOrderStateID    WorkOrderTypeID
     PlannedStartTime PlannedEndTime  ActualStartTime     ActualEndTime
 );
 
@@ -1918,6 +1918,152 @@ for my $ExpressionID (@ExpressionIDs) {
             ExpressionID => $ExpressionID,
         ),
         'Test ' . $TestCount++ . " - ExpressionDelete -> ExpressionID: $ExpressionID",
+    );
+}
+
+#-------------------------
+# condition expression tests
+#-------------------------
+
+# check for default condition expressions
+my @ActionTests = (
+    {
+        ActionSuccess => 0,
+        SourceData    => {
+            ActionAdd => {
+                ObjectID => {
+                    ObjectLookup => {
+                        Name   => 'ITSMChange',
+                        UserID => 1,
+                    },
+                },
+                AttributeID => {
+                    AttributeLookup => {
+                        Name   => 'ChangeTitle',
+                        UserID => 1,
+                    },
+                },
+                OperatorID => {
+                    OperatorLookup => {
+                        Name   => 'set',
+                        UserID => 1,
+                    },
+                },
+
+                # static fields
+                ConditionID => $ConditionIDs[0],
+                Selector    => $ChangeIDs[0],
+                ActionValue => 'New Change Title',
+                UserID      => 1,
+            },
+        },
+    },
+);
+
+# check condition actions
+my @ActionIDs;
+ACTIONTEST:
+for my $ActionTest (@ActionTests) {
+
+    # store data of test cases locally
+    my %SourceData;
+    my $ActionID;
+    my %ActionAddSourceData;
+    my %ActionAddData;
+
+    # extract source data
+    if ( $ActionTest->{SourceData} ) {
+        %SourceData = %{ $ActionTest->{SourceData} };
+    }
+
+    next ACTIONTEST if !%SourceData;
+
+    CREATEDATA:
+    for my $CreateData ( keys %SourceData ) {
+
+        # add action
+        if ( $CreateData eq 'ActionAdd' ) {
+
+            # extract ActionAdd data
+            %ActionAddSourceData = %{ $SourceData{$CreateData} };
+
+            # set static fields
+            my @StaticFields = qw( Selector ActionValue UserID ConditionID );
+
+            STATICFIELD:
+            for my $StaticField (@StaticFields) {
+
+                # ommit static field if it is not set
+                next STATICFIELD if !exists $ActionAddSourceData{$StaticField}
+                        || !defined $ActionAddSourceData{$StaticField};
+
+                # safe data
+                $ActionAddData{$StaticField} = $ActionAddSourceData{$StaticField};
+            }
+
+            # get all fields for ActionAdd
+            for my $ActionAddValue ( keys %ActionAddSourceData ) {
+
+                # ommit static fields
+                next if grep { $_ eq $ActionAddValue } @StaticFields;
+
+                # get values for fields
+                for my $FieldValue ( keys %{ $ActionAddSourceData{$ActionAddValue} } ) {
+
+                    # store gathered information in hash for adding
+                    $ActionAddData{$ActionAddValue} =
+                        $Self->{ConditionObject}->$FieldValue(
+                        %{ $ActionAddSourceData{$ActionAddValue}->{$FieldValue} },
+                        );
+                }
+            }
+
+            # add action
+            $ActionID = $Self->{ConditionObject}->ActionAdd(
+                %ActionAddData,
+            ) || 0;
+
+            $Self->True(
+                $ActionID,
+                'Test ' . $TestCount++ . " - $CreateData -> $ActionID",
+            );
+
+            next CREATEDATA if !$ActionID;
+
+            # save created ID for deleting actions
+            push @ActionIDs, $ActionID;
+
+            # check the added action
+            my $ActionGetData = $Self->{ConditionObject}->ActionGet(
+                ActionID => $ActionID,
+                UserID   => $ActionAddData{UserID},
+            );
+            $Self->True(
+                $ActionGetData,
+                'Test ' . $TestCount++ . ' - ActionAdd(): ActionGet',
+            );
+
+            # test values
+            delete $ActionAddData{UserID};
+            for my $TestValue ( keys %ActionAddData ) {
+                $Self->Is(
+                    $ActionGetData->{$TestValue},
+                    $ActionAddData{$TestValue},
+                    'Test ' . $TestCount++ . " - ActionAdd(): ActionGet -> $TestValue",
+                );
+            }
+        }    # end if ( $CreateData eq 'ActionAdd' )
+    }
+}
+
+# check for action delete
+for my $ActionID (@ActionIDs) {
+    $Self->True(
+        $Self->{ConditionObject}->ActionDelete(
+            UserID   => 1,
+            ActionID => $ActionID,
+        ),
+        'Test ' . $TestCount++ . " - ActionDelete -> ActionID: $ActionID",
     );
 }
 
