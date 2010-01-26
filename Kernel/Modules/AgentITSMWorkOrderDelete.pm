@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderDelete.pm - the OTRS::ITSM::ChangeManagement workorder delete module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderDelete.pm,v 1.6 2010-01-20 17:38:06 bes Exp $
+# $Id: AgentITSMWorkOrderDelete.pm,v 1.7 2010-01-26 14:58:23 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -28,13 +28,16 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Object (qw(ParamObject DBObject LayoutObject LogObject ConfigObject)) {
+    for my $Object (
+        qw(ParamObject DBObject LayoutObject LogObject ConfigObject)
+        )
+    {
         if ( !$Self->{$Object} ) {
             $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
         }
     }
 
-    # create needed objects
+    # create additional objects
     $Self->{ChangeObject}    = Kernel::System::ITSMChange->new(%Param);
     $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
 
@@ -89,6 +92,7 @@ sub Run {
 
     if ( $Self->{Subaction} eq 'WorkOrderDelete' ) {
 
+        # delete the workorder
         my $CouldDeleteWorkOrder = $Self->{WorkOrderObject}->WorkOrderDelete(
             WorkOrderID => $WorkOrder->{WorkOrderID},
             UserID      => $Self->{UserID},
@@ -96,7 +100,7 @@ sub Run {
 
         if ($CouldDeleteWorkOrder) {
 
-            # redirect to change zoom mask, when update was successful
+            # redirect to change, when the deletion was successful
             return $Self->{LayoutObject}->Redirect(
                 OP => "Action=AgentITSMChangeZoom&ChangeID=$WorkOrder->{ChangeID}",
             );

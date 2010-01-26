@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.143 2010-01-26 14:17:24 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.144 2010-01-26 14:58:23 bes Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -105,6 +105,7 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMWorkOrderHistoryZoom.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMWorkOrderPrint.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMWorkOrderReport.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMWorkOrderTake.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMWorkOrderTemplate.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMWorkOrderZoom.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/ITSMChange.dtl"/>
