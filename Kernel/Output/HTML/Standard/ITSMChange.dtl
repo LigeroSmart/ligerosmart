@@ -2,7 +2,7 @@
 # ITSMChange.dtl - provides HTML elements for work order graph
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.dtl,v 1.20 2010-01-25 09:29:48 bes Exp $
+# $Id: ITSMChange.dtl,v 1.21 2010-01-26 11:39:50 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -104,7 +104,7 @@
                 </tr>
             </table>
             <span class="WorkOrderInformation">
-            <table width="400" cellpadding="3" cellspacing="0" width="400">
+            <table width="400" cellpadding="3" cellspacing="0">
                 <colgroup>
                     <col width="130">
                     <col width="270">
