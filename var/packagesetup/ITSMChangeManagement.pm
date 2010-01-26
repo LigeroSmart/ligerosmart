@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.32 2010-01-25 11:01:52 reb Exp $
+# $Id: ITSMChangeManagement.pm,v 1.33 2010-01-26 15:16:17 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,7 +33,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.32 $) [1];
+$VERSION = qw($Revision: 1.33 $) [1];
 
 =head1 NAME
 
@@ -960,6 +960,8 @@ sub _AddSystemNotifications {
         . "Workorder type: <OTRS_WORKORDER_WorkOrderType>\n"
         . "Current workorder state: <OTRS_WORKORDER_WorkOrderState>\n"
         . "\n"
+        . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMWorkOrderZoom&WorkOrderID=<OTRS_WORKORDER_WorkOrderID>\n"
+        . "\n"
         . "Your OTRS Notification Master\n";
 
     my $BasicWorkOrderInfoDe = "\n"
@@ -970,6 +972,8 @@ sub _AddSystemNotifications {
         . "Workorder Titel: <OTRS_WORKORDER_WorkOrderTitle>\n"
         . "Workorder Typ: <OTRS_WORKORDER_WorkOrderType>\n"
         . "Aktueller Workorder Status: <OTRS_WORKORDER_WorkOrderState>\n"
+        . "\n"
+        . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMWorkOrderZoom&WorkOrderID=<OTRS_WORKORDER_WorkOrderID>\n"
         . "\n"
         . "Ihr OTRS Notification Master\n";
 
@@ -1475,6 +1479,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.32 $ $Date: 2010-01-25 11:01:52 $
+$Revision: 1.33 $ $Date: 2010-01-26 15:16:17 $
 
 =cut
