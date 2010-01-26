@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.162 2010-01-26 15:52:34 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.163 2010-01-26 16:52:57 bes Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -2839,11 +2839,6 @@
                 <Item Key="Module">Kernel::System::ITSMChange::ITSMWorkOrder::Permission::ListAgentCheck</Item>
                 <Item Key="Required">0</Item>
                 <Item Key="Granted">1</Item>
-                <Item Key="List">
-                    <Array>
-                    </Array>
-                </Item>
-
             </Hash>
         </Setting>
     </ConfigItem>
