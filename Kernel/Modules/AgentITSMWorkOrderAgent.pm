@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAgent.pm - the OTRS::ITSM::ChangeManagement workorder agent edit module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAgent.pm,v 1.33 2010-01-25 15:29:32 bes Exp $
+# $Id: AgentITSMWorkOrderAgent.pm,v 1.34 2010-01-26 17:00:40 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.33 $) [1];
+$VERSION = qw($Revision: 1.34 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -108,13 +108,39 @@ sub Run {
     # handle the 'Save' subaction
     if ( $Self->{Subaction} eq 'Save' ) {
 
+        # workorder agent is empty and no button but the 'Save' button is clicked
+        if ( !$GetParam{User} && !$DoNotSave ) {
+
+            # setting workorder agent to empty
+            my $CouldUpdateWorkOrder = $Self->{WorkOrderObject}->WorkOrderUpdate(
+                WorkOrderID      => $WorkOrder->{WorkOrderID},
+                WorkOrderAgentID => undef,
+                UserID           => $Self->{UserID},
+            );
+
+            if ($CouldUpdateWorkOrder) {
+
+                # redirect to zoom mask
+                return $Self->{LayoutObject}->Redirect(
+                    OP => "Action=AgentITSMWorkOrderZoom&WorkOrderID=$WorkOrder->{WorkOrderID}",
+                );
+            }
+            else {
+
+                # show error message
+                return $Self->{LayoutObject}->ErrorScreen(
+                    Message =>
+                        "Was not able to set the workorder agent of the workorder '$WorkOrder->{WorkOrderID}' to empty!",
+                    Comment => 'Please contact the admin.',
+                );
+            }
+        }
+
         # if a workorder agent is selected and no button but the 'Save' button is clicked
-        if ( $GetParam{SelectedUser} && !$DoNotSave ) {
+        elsif ( $GetParam{SelectedUser} && !$DoNotSave ) {
 
             # workorder agent is required for an update
-            my %ErrorAllRequired = $Self->_CheckWorkOrderAgent(
-                %GetParam,
-            );
+            my %ErrorAllRequired = $Self->_CheckWorkOrderAgent(%GetParam);
 
             # if everything is fine
             if ( !%ErrorAllRequired ) {

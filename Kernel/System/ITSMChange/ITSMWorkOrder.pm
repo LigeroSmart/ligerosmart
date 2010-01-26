@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.83 2010-01-26 14:17:24 bes Exp $
+# $Id: ITSMWorkOrder.pm,v 1.84 2010-01-26 17:00:40 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.83 $) [1];
+$VERSION = qw($Revision: 1.84 $) [1];
 
 =head1 NAME
 
@@ -356,6 +356,7 @@ Leading and trailing whitespace is removed from C<WorkOrderTitle>.
 Passing undefined values is generally not allowed. An exception
 are the parameters C<PlannedStartTime>, C<PlannedEndTime>, C<ActualStartTime>, and C<ActualEndTime>.
 There passing C<undef> indicates that the workorder time should be cleared.
+Another exception is the WorkOrderAgentID. Pass undef for removing the workorder agent.
 
     my $Success = $WorkOrderObject->WorkOrderUpdate(
         WorkOrderID      => 4,
@@ -367,7 +368,7 @@ There passing C<undef> indicates that the workorder time should be cleared.
         WorkOrderState   => 'ready',                                   # (optional) or WorkOrderStateID => 157
         WorkOrderTypeID  => 161,                                       # (optional) or WorkOrderType => 'pir'
         WorkOrderType    => 'pir',                                     # (optional) or WorkOrderStateID => 161
-        WorkOrderAgentID => 8,                                         # (optional)
+        WorkOrderAgentID => 8,                                         # (optional) can be undef for removing the workorder agent
         PlannedStartTime => '2009-10-12 00:00:01',                     # (optional) 'undef' indicates clearing
         PlannedEndTime   => '2009-10-15 15:00:00',                     # (optional) 'undef' indicates clearing
         ActualStartTime  => '2009-10-14 00:00:01',                     # (optional) 'undef' indicates clearing
@@ -533,6 +534,11 @@ sub WorkOrderUpdate {
         if ( defined $Param{$Attribute} ) {
             $SQL .= "$Attribute{$Attribute} = ?, ";
             push @Bind, \$Param{$Attribute};
+        }
+
+        # it's ok when the WorkOrderAgentID is not defined
+        elsif ( $Attribute eq 'WorkOrderAgentID' && !defined $Param{$Attribute} ) {
+            $SQL .= "$Attribute{$Attribute} = NULL, ";
         }
 
         # attribute is not defined and is one of the time parameters
@@ -2387,6 +2393,7 @@ sub _GetWorkOrderNumber {
 
 Checks the params to WorkOrderAdd() and WorkOrderUpdate().
 There are no required parameters.
+The value for C<WorkOrderAgentID> can be undefined.
 
     my $Ok = $WorkOrderObject->_CheckWorkOrderParams(
         ChangeID         => 123,                                             # (optional)
@@ -2398,7 +2405,7 @@ There are no required parameters.
         ReportPlain      => 'Installed new server without problems',         # (optional)
         WorkOrderStateID => 4,                                               # (optional)
         WorkOrderTypeID  => 12,                                              # (optional)
-        WorkOrderAgentID => 8,                                               # (optional)
+        WorkOrderAgentID => 8,                                               # (optional) undef is allowed
         PlannedStartTime => '2009-10-01 10:33:00',                           # (optional)
         ActualStartTime  => '2009-10-01 10:33:00',                           # (optional)
         PlannedEndTime   => '2009-10-01 10:33:00',                           # (optional)
@@ -2442,7 +2449,11 @@ sub _CheckWorkOrderParams {
         next ARGUMENT if !exists $Param{$Argument};
 
         # check if param is not defined
-        if ( !defined $Param{$Argument} ) {
+        if ( $Argument eq 'WorkOrderAgentID' && !defined $Param{$Argument} ) {
+
+            # WorkOrderAgentID can be undefined
+        }
+        elsif ( !defined $Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
                 Message  => "The parameter '$Argument' must be defined!",
@@ -2694,6 +2705,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.83 $ $Date: 2010-01-26 14:17:24 $
+$Revision: 1.84 $ $Date: 2010-01-26 17:00:40 $
 
 =cut
