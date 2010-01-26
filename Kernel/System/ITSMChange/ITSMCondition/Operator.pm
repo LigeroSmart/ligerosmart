@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Operator.pm - all condition operator functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Operator.pm,v 1.18 2010-01-25 17:35:03 mae Exp $
+# $Id: Operator.pm,v 1.19 2010-01-26 10:04:41 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 =head1 NAME
 
@@ -405,12 +405,12 @@ sub OperatorExecute {
     # no need to iterate over object in this case
     if ( exists $Param{ActionValue} ) {
         return $Self->_OperatorActionExecute(
-            OperatorName  => $Param{OperatorName},
-            ObjectName    => $Param{ObjectName},
-            Selector      => $Param{Selector},
-            AttributeName => $Param{Attribute},
-            ActionValue   => $Param{ActionValue},
-            UserID        => $Param{UserID},
+            Operator    => $Param{OperatorName},
+            ObjectName  => $Param{ObjectName},
+            Selector    => $Param{Selector},
+            Attribute   => $Param{Attribute},
+            ActionValue => $Param{ActionValue},
+            UserID      => $Param{UserID},
         );
     }
 
@@ -553,12 +553,12 @@ Returns true or false (1/undef) if given action could be
 executed successfully.
 
     my $Result = $ConditionObject->_OperatorActionExecute(
-        OperatorName  => 'set',
-        ObjectName    => 'ITSMChange',
-        Selector      => '1234'
-        AttributeName => 'ChangeStateID',
-        ActionValue   => '13',
-        UserID        => 1234,
+        Operator    => 'set',
+        ObjectName  => 'ITSMChange',
+        Selector    => '1234'
+        Attribute   => 'ChangeStateID',
+        ActionValue => '13',
+        UserID      => 1234,
     );
 
 =cut
@@ -567,7 +567,7 @@ sub _OperatorActionExecute {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(OperatorName ObjectName Selector AttributeName ActionValue UserID)) {
+    for my $Argument (qw(Operator ObjectName Selector Attribute ActionValue UserID)) {
         if ( !exists $Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -595,7 +595,7 @@ sub _OperatorActionExecute {
     );
 
     # get operator name
-    my $OperatorName = $Param{OperatorName};
+    my $OperatorName = $Param{Operator};
 
     # check for matching operator
     if ( !exists $OperatorAction{$OperatorName} ) {
@@ -620,12 +620,12 @@ sub _OperatorActionExecute {
 
     # execute extracted action
     my $Result = $Self->$Sub(
-        OperatorName  => $Param{OperatorName},
-        ObjectName    => $Param{ObjectName},
-        Selector      => $Param{Selector},
-        AttributeName => $Param{AttributeName},
-        ActionValue   => $Param{ActionValue},
-        UserID        => $Param{UserID},
+        Operator    => $Param{Operator},
+        ObjectName  => $Param{ObjectName},
+        Selector    => $Param{Selector},
+        Attribute   => $Param{Attribute},
+        ActionValue => $Param{ActionValue},
+        UserID      => $Param{UserID},
     );
 
     return $Result;
@@ -1037,12 +1037,12 @@ sub _OperatorEndsWith {
 Returns the success of setting a new value.
 
     my $Result = $ConditionObject->_OperatorSet(
-        OperatorName  => 'set',
-        ObjectName    => 'ITSMChange',
-        Selector      => '1234'
-        AttributeName => 'ChangeStateID',
-        ActionValue   => '13',
-        UserID        => 1234,
+        Operator    => 'set',
+        ObjectName  => 'ITSMChange',
+        Selector    => '1234'
+        Attribute   => 'ChangeStateID',
+        ActionValue => '13',
+        UserID      => 1234,
     );
 
 =cut
@@ -1051,7 +1051,7 @@ sub _OperatorSet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(OperatorName ObjectName Selector AttributeName ActionValue UserID)) {
+    for my $Argument (qw(Operator ObjectName Selector Attribute ActionValue UserID)) {
         if ( !exists $Param{$Argument} || !defined $Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -1064,7 +1064,7 @@ sub _OperatorSet {
     # map for set action
     my %OperatorAction = (
         'ITSMChange'    => '_OperatorSetITSMChange',
-        'ITSMWorkOrder' => '_OperatorSetITSMWorkorder',
+        'ITSMWorkOrder' => '_OperatorSetITSMWorkOrder',
     );
 
     # get operator name
@@ -1093,12 +1093,12 @@ sub _OperatorSet {
 
     # execute extracted action
     my $Result = $Self->$Sub(
-        OperatorName  => $Param{OperatorName},
-        ObjectName    => $Param{ObjectName},
-        Selector      => $Param{Selector},
-        AttributeName => $Param{AttributeName},
-        ActionValue   => $Param{ActionValue},
-        UserID        => $Param{UserID},
+        Operator    => $Param{Operator},
+        ObjectName  => $Param{ObjectName},
+        Selector    => $Param{Selector},
+        Attribute   => $Param{Attribute},
+        ActionValue => $Param{ActionValue},
+        UserID      => $Param{UserID},
     );
 
     return $Result;
@@ -1110,10 +1110,10 @@ Returns the success of setting a new value
 for a ITSMChange object.
 
     my $Result = $ConditionObject->_OperatorSetITSMChange(
-        Selector      => 1234,
-        AttributeName => 'ChangeStateID',
-        ActionValue   => 12,
-        UserID        => 2345,
+        Selector    => 1234,
+        Attribute   => 'ChangeStateID',
+        ActionValue => 12,
+        UserID      => 2345,
     );
 
 =cut
@@ -1122,7 +1122,7 @@ sub _OperatorSetITSMChange {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(Selector AttributeName ActionValue UserID)) {
+    for my $Argument (qw(Selector Attribute ActionValue UserID)) {
         if ( !exists $Param{$Argument} || !defined $Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -1134,9 +1134,45 @@ sub _OperatorSetITSMChange {
 
     # update change and return update result
     return $Self->{ChangeObject}->ChangeUpdate(
-        ChangeID         => $Param{Selector},
-        $Param{Selector} => $Param{ActionValue},
-        UserID           => $Param{UserID},
+        ChangeID          => $Param{Selector},
+        $Param{Attribute} => $Param{ActionValue},
+        UserID            => $Param{UserID},
+    );
+}
+
+=item _OperatorSetITSMWorkOrder()
+
+Returns the success of setting a new value
+for a ITSMChange object.
+
+    my $Result = $ConditionObject->_OperatorSetITSMWorkOrder(
+        Selector    => 1234,
+        Attribute   => 'WorkOrderStateID',
+        ActionValue => 12,
+        UserID      => 2345,
+    );
+
+=cut
+
+sub _OperatorSetITSMWorkOrder {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(Selector Attribute ActionValue UserID)) {
+        if ( !exists $Param{$Argument} || !defined $Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # update workorder and return update result
+    return $Self->{WorkOrderObject}->WorkOrderUpdate(
+        WorkOrderID       => $Param{Selector},
+        $Param{Attribute} => $Param{ActionValue},
+        UserID            => $Param{UserID},
     );
 }
 
@@ -1158,6 +1194,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.18 $ $Date: 2010-01-25 17:35:03 $
+$Revision: 1.19 $ $Date: 2010-01-26 10:04:41 $
 
 =cut

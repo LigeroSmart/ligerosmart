@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.54 2010-01-25 17:35:03 mae Exp $
+# $Id: ITSMCondition.t,v 1.55 2010-01-26 10:04:42 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1954,6 +1954,37 @@ my @ActionTests = (
                 ConditionID => $ConditionIDs[0],
                 Selector    => $ChangeIDs[0],
                 ActionValue => 'New Change Title' . int rand 1_000,
+                UserID      => 1,
+            },
+        },
+    },
+    {
+        ActionSuccess => 1,
+        SourceData    => {
+            ActionAdd => {
+                ObjectID => {
+                    ObjectLookup => {
+                        Name   => 'ITSMWorkOrder',
+                        UserID => 1,
+                    },
+                },
+                AttributeID => {
+                    AttributeLookup => {
+                        Name   => 'WorkOrderTitle',
+                        UserID => 1,
+                    },
+                },
+                OperatorID => {
+                    OperatorLookup => {
+                        Name   => 'set',
+                        UserID => 1,
+                    },
+                },
+
+                # static fields
+                ConditionID => $ConditionIDs[0],
+                Selector    => $WorkOrderIDs[0],
+                ActionValue => 'New WorkOrderTitle Title' . int rand 1_000,
                 UserID      => 1,
             },
         },
