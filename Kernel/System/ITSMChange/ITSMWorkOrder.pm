@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.82 2010-01-22 08:33:57 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.83 2010-01-26 14:17:24 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.82 $) [1];
+$VERSION = qw($Revision: 1.83 $) [1];
 
 =head1 NAME
 
@@ -1777,18 +1777,22 @@ sub WorkOrderTypeList {
 
 Returns whether the agent C<UserID> has permissions of the type C<Type>
 on the workorder C<WorkOrderID>. The parameters are passed on to
-the permission modules that were registered under B<ITSMWorkOrder::Permission>.
+the permission modules that were registered in the permission registry.
+The standard permission registry is B<ITSMWorkOrder::Permission>, but
+that can be overridden with the parameter C<PermissionRegistry>.
 
 The optional option C<LogNo> turns off logging when access was denied.
 This is useful when the method is used for checking whether a link or an action should be shown.
 
     my $Access = $WorkOrderObject->Permission(
-        UserID      => 123,
-        Type        => 'ro',   # 'ro' and 'rw' are supported
-        WorkOrderID => 4444,
-        Cached      => 0,      # optional with default 1,
-                               # passing the value 0 is useful in test scripts
-        LogNo       => 1,      # optional, turns off logging when access is denied
+        UserID             => 123,
+        Type               => 'ro',   # 'ro' and 'rw' are supported
+        WorkOrderID        => 4444,
+        PermissionRegistry => 'ITMSWorkOrder::TakePermission',
+                                      # optional with default 'ITSMWorkOrder::Permission'
+        Cached             => 0,      # optional with default 1,
+                                      # passing the value 0 is useful in test scripts
+        LogNo              => 1,      # optional, turns off logging when access is denied
     );
 
 =cut
@@ -1807,9 +1811,12 @@ sub Permission {
         }
     }
 
+    # the place where the permission modules are registerd can be overridden by a parameter
+    my $Registry = $Param{PermissionRegistry} || 'ITSMWorkOrder::Permission';
+
     # run the relevant permission modules
-    if ( ref $Self->{ConfigObject}->Get('ITSMWorkOrder::Permission') eq 'HASH' ) {
-        my %Modules = %{ $Self->{ConfigObject}->Get('ITSMWorkOrder::Permission') };
+    if ( ref $Self->{ConfigObject}->Get($Registry) eq 'HASH' ) {
+        my %Modules = %{ $Self->{ConfigObject}->Get($Registry) };
         for my $Module ( sort keys %Modules ) {
 
             # log try of load module
@@ -2687,6 +2694,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.82 $ $Date: 2010-01-22 08:33:57 $
+$Revision: 1.83 $ $Date: 2010-01-26 14:17:24 $
 
 =cut

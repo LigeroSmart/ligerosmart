@@ -1,21 +1,21 @@
 # --
-# Kernel/Output/HTML/ITSMWorkOrderMenuWithPermissionFromChange.pm
+# Kernel/Output/HTML/ITSMWorkOrderMenuWithTakePermission.pm
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrderMenuWithPermissionFromChange.pm,v 1.5 2010-01-26 14:17:24 bes Exp $
+# $Id: ITSMWorkOrderMenuWithTakePermission.pm,v 1.1 2010-01-26 14:17:24 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::ITSMWorkOrderMenuWithPermissionFromChange;
+package Kernel::Output::HTML::ITSMWorkOrderMenuWithTakePermission;
 
 use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.1 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -31,9 +31,6 @@ sub new {
     {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
-
-    # create additional objects
-    $Self->{ChangeObject} = Kernel::System::ITSMChange->new(%Param);
 
     return $Self;
 }
@@ -56,7 +53,7 @@ sub Run {
 
     # get the required privilege, 'ro' or 'rw'
     my $RequiredPriv;
-    if ($FrontendConfig) {
+    if ( $FrontendConfig && $FrontendConfig->{Permission} ) {
 
         # get the required priv from the frontend configuration
         $RequiredPriv = $FrontendConfig->{Permission};
@@ -71,11 +68,13 @@ sub Run {
     else {
 
         # check permissions, based on the required privilege
-        $Access = $Self->{ChangeObject}->Permission(
-            Type     => $RequiredPriv,
-            ChangeID => $Param{WorkOrder}->{ChangeID},
-            UserID   => $Self->{UserID},
-            LogNo    => 1,
+        # query the permission modules registered in 'ITSMWorkOrder::TakePermission'
+        $Access = $Self->{WorkOrderObject}->Permission(
+            Type               => $RequiredPriv,
+            PermissionRegistry => 'ITSMWorkOrder::TakePermission',
+            WorkOrderID        => $Param{WorkOrder}->{WorkOrderID},
+            UserID             => $Self->{UserID},
+            LogNo              => 1,
         );
     }
 
