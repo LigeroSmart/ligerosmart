@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.161 2010-01-26 14:17:24 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.162 2010-01-26 15:52:34 bes Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -2816,8 +2816,8 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMWorkOrder::TakePermission###10-NoAgent" Required="0" Valid="1">
-        <Description Lang="en">Module to check whether no agent is set.</Description>
+    <ConfigItem Name="ITSMWorkOrder::TakePermission###10-EmptyAgent" Required="0" Valid="0">
+        <Description Lang="en">Module to check whether no workorder agent is set.</Description>
         <Description Lang="de">Modul zum Überprüfen ob es keinen Agenten für den Workorder gibt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Core::ITSMWorkOrder</SubGroup>
@@ -2829,7 +2829,7 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMWorkOrder::TakePermission###20-ListAgent" Required="0" Valid="1">
+    <ConfigItem Name="ITSMWorkOrder::TakePermission###20-ListAgent" Required="0" Valid="0">
         <Description Lang="en">Module to check whether the agent is contained in the configured list.</Description>
         <Description Lang="de">Modul zum Überprüfen ob der Agent in der konfigurierten Liste enthalten ist.</Description>
         <Group>ITSM Change Management</Group>
