@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition.pm - all condition functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.pm,v 1.28 2010-01-27 17:50:59 ub Exp $
+# $Id: ITSMCondition.pm,v 1.29 2010-01-27 20:10:13 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,8 +14,6 @@ package Kernel::System::ITSMChange::ITSMCondition;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange;
-use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::Valid;
 
 use base qw(Kernel::System::EventHandler);
@@ -26,7 +24,7 @@ use base qw(Kernel::System::ITSMChange::ITSMCondition::Expression);
 use base qw(Kernel::System::ITSMChange::ITSMCondition::Action);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.28 $) [1];
+$VERSION = qw($Revision: 1.29 $) [1];
 
 =head1 NAME
 
@@ -104,9 +102,7 @@ sub new {
     $Self->{Debug} = $Param{Debug} || 0;
 
     # create additional objects
-    $Self->{ChangeObject}    = Kernel::System::ITSMChange->new( %{$Self} );
-    $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
-    $Self->{ValidObject}     = Kernel::System::Valid->new( %{$Self} );
+    $Self->{ValidObject} = Kernel::System::Valid->new( %{$Self} );
 
     # init of event handler
     $Self->EventHandlerInit(
@@ -836,7 +832,7 @@ sub ConditionMatchStateLock {
     return if !@{$Conditions};
 
     # get all actions affecting this object
-    my @ConditionsAffected;
+    my @AffectedConditionIDs;
     CONDITIONID:
     for my $ConditionID ( @{$Conditions} ) {
         my $ConditionActions = $Self->ActionList(
@@ -860,10 +856,6 @@ sub ConditionMatchStateLock {
             # check action
             next ACTIONID if !$Action;
 
-            # TODO Delete debug output later!
-            use Data::Dumper;
-            print STDERR Dumper( 'ACTION', $Action, $Param{StateID} );
-
             # store only affected actions
             if (
                 $Action->{ObjectID}       eq $ObjectID
@@ -872,12 +864,31 @@ sub ConditionMatchStateLock {
                 && $Action->{ActionValue} eq $Param{StateID}
                 )
             {
-                push @ConditionsAffected, $Action->{ConditionID};
+                push @AffectedConditionIDs, $Action->{ConditionID};
             }
         }
     }
 
-    return 1;
+    # check for affected conditions
+    return if !@AffectedConditionIDs;
+
+    # check for positive condition matches
+    AFFECTEDCONDITIONID:
+    for my $AffectedConditionID (@AffectedConditionIDs) {
+
+        # get condition
+        my $ConditionMatch = $Self->_ConditionMatch(
+            ConditionID => $AffectedConditionID,
+            UserID      => $Param{UserID},
+        );
+        next AFFECTEDCONDITIONID if !$ConditionMatch;
+
+        # condition matched successfully
+        return 1 if $ConditionMatch;
+    }
+
+    # no condition matched
+    return;
 }
 
 =item ConditionCompareValueFieldType()
@@ -948,6 +959,128 @@ sub ConditionCompareValueFieldType {
     return $FieldType;
 }
 
+=begin Internal:
+
+=item _ConditionMatch()
+
+This function matches the given condition and executes 'no' actions.
+The optional parameter 'AttributesChanged' defines a list of attributes that were changed
+during e.g. a ChangeUpdate-Event. If a condition matches an expression, the attribute of the expression
+must be listed in 'AttributesChanged'.
+
+    my $Success = $ConditionObject->_ConditionMatch(
+        ConditionID       => 123,
+        AttributesChanged => { ITSMChange => [ ChangeTitle, ChangeDescription] },  # (optional)
+        UserID            => 1,
+    );
+
+=cut
+
+sub _ConditionMatch {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(ConditionID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # get condition data
+    my $ConditionData = $Self->ConditionGet(
+        ConditionID => $Param{ConditionID},
+        UserID      => $Param{UserID},
+    );
+
+    # check error
+    return if !$ConditionData;
+
+    # get all expressions for the given condition id
+    my $ExpressionIDsRef = $Self->ExpressionList(
+        ConditionID => $Param{ConditionID},
+        UserID      => $Param{UserID},
+    );
+
+    # check errors
+    return if !$ExpressionIDsRef;
+    return if ref $ExpressionIDsRef ne 'ARRAY';
+
+    # no error if just no expressions were found
+    return 0 if !@{$ExpressionIDsRef};
+
+    # count the number of expression ids
+    my $ExpressionIDCount = scalar @{$ExpressionIDsRef};
+
+    # to store the number of positive (true) expressions
+    my @ExpressionMatchResult;
+
+    # to store if the condition matches
+    my $ConditionMatch;
+
+    # try to match each expression
+    EXPRESSIONID:
+    for my $ExpressionID ( @{$ExpressionIDsRef} ) {
+
+        # normally give the list of changed attributes to ExpressionMatch() function
+        my $AttributesChanged = $Param{AttributesChanged};
+
+        # expression conjunction is 'all' and there is more than one expresion
+        if ( $ConditionData->{ExpressionConjunction} eq 'all' && $ExpressionIDCount > 1 ) {
+
+            # do not give the list of changed attributes to ExpressionMatch()
+            $AttributesChanged = undef;
+        }
+
+        # match expression
+        my $ExpressionMatch = $Self->ExpressionMatch(
+            ExpressionID      => $ExpressionID,
+            AttributesChanged => $AttributesChanged,
+            UserID            => $Param{UserID},
+        );
+
+        # set ConditionMatch true if ExpressionMatch is true and 'any' is requested
+        if ( $ConditionData->{ExpressionConjunction} eq 'any' && $ExpressionMatch ) {
+            return 1;
+        }
+
+        # condition is false at all, so return true
+        if ( $ConditionData->{ExpressionConjunction} eq 'all' && !$ExpressionMatch ) {
+            return 0;
+        }
+
+        # save current expression match result for later checks
+        push @ExpressionMatchResult, $ExpressionMatch;
+    }
+
+    # count all results which have a true value
+    my $TrueCount = scalar grep { $_ == 1 } @ExpressionMatchResult;
+
+    # if the condition did not match already, and not all expressions are true
+    if ( !$ConditionMatch && $TrueCount != $ExpressionIDCount ) {
+
+        # not all expressions have matched
+        return 0;
+    }
+
+    return 1;
+}
+
+=item _ConditionListByObject()
+
+return a list of all conditions ids of a given object.
+
+    my $ConditionIDsRef = $ConditionObject->_ConditionListByObject(
+        ObjectName => 'ITSMChange'
+        Selector   => 123,
+        UserID   => 1,
+    );
+
+=cut
+
 sub _ConditionListByObject {
     my ( $Self, %Param ) = @_;
 
@@ -966,6 +1099,8 @@ sub _ConditionListByObject {
     my $ChangeID;
 
     if ( $Param{ObjectName} eq 'ITSMChange' ) {
+
+        # selector is needed change id
         $ChangeID = $Param{Selector};
     }
     elsif ( $Param{ObjectName} eq 'ITSMWorkOrder' ) {
@@ -995,6 +1130,8 @@ sub _ConditionListByObject {
 
 1;
 
+=end Internal:
+
 =back
 
 =head1 TERMS AND CONDITIONS
@@ -1009,6 +1146,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.28 $ $Date: 2010-01-27 17:50:59 $
+$Revision: 1.29 $ $Date: 2010-01-27 20:10:13 $
 
 =cut

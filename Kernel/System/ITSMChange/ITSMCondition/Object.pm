@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Object.pm - all condition object functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Object.pm,v 1.20 2010-01-22 12:42:20 bes Exp $
+# $Id: Object.pm,v 1.21 2010-01-27 20:10:13 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 =head1 NAME
 
@@ -389,26 +389,26 @@ sub ObjectSelectorList {
         ObjectID => $Param{ObjectID},
     );
 
-    # define known objects and function calls
-    my %ObjectAction = (
-        ITSMChange    => '_ObjectSelectorListITSMChange',
-        ITSMWorkOrder => '_ObjectSelectorListITSMWorkOrder',
+    # get object backend
+    my $BackendObject = $Self->_ObjectLoadBackend(
+        Type => $ObjectName,
     );
+    return if !$BackendObject;
 
-    # check for manageable object
-    if ( !exists $ObjectAction{$ObjectName} ) {
+    # define default functions for backend
+    my $Sub = 'SelectorList';
+
+    # check for available function
+    if ( !$BackendObject->can($Sub) ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "No object action for $ObjectName found!",
+            Message  => "No function '$Sub' available for backend '$ObjectName'!",
         );
         return;
     }
 
-    # get the name of the action subroutine
-    my $ActionSub = $ObjectAction{$ObjectName};
-
     # execute the action subroutine
-    my $SelectorList = $Self->$ActionSub(
+    my $SelectorList = $BackendObject->$Sub(
         ConditionID => $Param{ConditionID},
         UserID      => $Param{UserID},
     ) || {};
@@ -453,31 +453,37 @@ sub ObjectCompareValueList {
         }
     }
 
-    # lookup object name
-    my $ObjectName = $Self->ObjectLookup(
-        ObjectID => $Param{ObjectID},
-    );
+    # set object name
+    my $ObjectName = $Param{ObjectName};
+    if ( $Param{ObjectID} ) {
+        $ObjectName = $Self->ObjectLookup(
+            ObjectID => $Param{ObjectID},
+        );
+    }
 
-    # define known objects and function calls
-    my %ObjectAction = (
-        ITSMChange    => '_ObjectCompareValueListITSMChange',
-        ITSMWorkOrder => '_ObjectCompareValueListITSMWorkOrder',
-    );
+    # get object type
+    my $ObjectType = $ObjectName;
 
-    # check for manageable object
-    if ( !exists $ObjectAction{$ObjectName} ) {
+    # get object backend
+    my $BackendObject = $Self->_ObjectLoadBackend(
+        Type => $ObjectType,
+    );
+    return if !$BackendObject;
+
+    # define default functions for backend
+    my $Sub = 'CompareValueList';
+
+    # check for available function
+    if ( !$BackendObject->can($Sub) ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "No object action for $ObjectName found!",
+            Message  => "No function '$Sub' available for backend '$ObjectType'!",
         );
         return;
     }
 
-    # get the name of the action subroutine
-    my $ActionSub = $ObjectAction{$ObjectName};
-
     # execute the action subroutine
-    my $CompareValueList = $Self->$ActionSub(
+    my $CompareValueList = $BackendObject->$Sub(
         AttributeName => $Param{AttributeName},
         UserID        => $Param{UserID},
     ) || {};
@@ -542,392 +548,84 @@ sub ObjectDataGet {
     # get object type
     my $ObjectType = $ObjectName;
 
-    # define known objects and function calls
-    my %ObjectAction = (
-        ITSMChange       => '_ObjectDataGetITSMChange',
-        ITSMWorkOrder    => '_ObjectDataGetITSMWorkOrder',
-        ITSMWorkOrderAll => '_ObjectDataGetITSMWorkOrderAll',
+    # get object backend
+    my $BackendObject = $Self->_ObjectLoadBackend(
+        Type => $ObjectType,
     );
+    return if !$BackendObject;
 
-    # define the needed selectors
-    my %ObjectSelector = (
-        ITSMChange    => 'ChangeID',
-        ITSMWorkOrder => 'WorkOrderID',
-    );
-
-    # check for manageable object
-    if ( !exists $ObjectAction{$ObjectType} ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "No object action for $ObjectType found!",
-        );
-        return;
-    }
-
-    # extract needed sub and selector
-    my $ActionSub      = $ObjectAction{$ObjectType};
-    my $ActionSelector = $ObjectSelector{$ObjectType};
+    # define default functions for backend
+    my $Sub = 'DataGet';
 
     # check for available function
-    if ( !$Self->can($ActionSub) ) {
+    if ( !$BackendObject->can($Sub) ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "No function '$ActionSub' available for '$ObjectType'!",
+            Message  => "No function '$Sub' available for backend '$ObjectType'!",
         );
         return;
-    }
-
-    # handle 'all' or 'any' selector in a special way
-    if ( $Param{Selector} =~ m{ ( all | any ) }xms ) {
-
-        # get function name for getting all objects
-        $ActionSub = $ObjectAction{ $ObjectType . 'All' };
-
-        # get all objects
-        my $AllObjects = $Self->$ActionSub(
-            ConditionID     => $Param{ConditionID},
-            $ActionSelector => $Param{Selector},
-            UserID          => $Param{UserID},
-        ) || [];
-
-        # return object data
-        return $AllObjects;
     }
 
     # get object data
-    my @ObjectData;
-    push @ObjectData, $Self->$ActionSub(
-        ConditionID     => $Param{ConditionID},
-        $ActionSelector => $Param{Selector},
-        UserID          => $Param{UserID},
-    ) || {};
+    my $ObjectData = $BackendObject->$Sub(
+        ConditionID => $Param{ConditionID},
+        Selector    => $Param{Selector},
+        UserID      => $Param{UserID},
+    ) || [];
 
-    # return object data
-    return \@ObjectData;
+    return $ObjectData;
 }
 
 =begin Internal:
 
-=item _ObjectDataGetITSMChange()
+=item _ObjectLoadBackend()
 
-Returns the change data as hash reference.
+Returns a newly loaded backend object
 
-    my $Change = $ConditionObject->_ObjectDataGetITSMChange();
-
-=cut
-
-sub _ObjectDataGetITSMChange {
-    my ( $Self, %Param ) = @_;
-
-    # get change data as anon hash ref
-    my $Change = $Self->{ChangeObject}->ChangeGet(%Param) || {};
-
-    # return change data
-    return $Change;
-}
-
-=item _ObjectDataGetITSMWorkOrder()
-
-Returns the workorder data as hash reference.
-
-    my $WorkOrder = $ConditionObject->_ObjectDataGetITSMWorkOrder();
-
-=cut
-
-sub _ObjectDataGetITSMWorkOrder {
-    my ( $Self, %Param ) = @_;
-
-    # get workorder data as anon hash ref
-    my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(%Param) || {};
-
-    # return workorder data
-    return $WorkOrder;
-}
-
-=item _ObjectDataGetITSMWorkOrderAll()
-
-Returns an array reference with hash references of all workorder data of a change.
-
-    my $WorkOrderIDsRef = $ConditionObject->_ObjectDataGetITSMWorkOrderAll();
-
-=cut
-
-sub _ObjectDataGetITSMWorkOrderAll {
-    my ( $Self, %Param ) = @_;
-
-    # get condition
-    my $ConditionData = $Self->ConditionGet(
-        ConditionID => $Param{ConditionID},
-        UserID      => $Param{UserID},
+    my $Result = $ConditionObject->_ObjectLoadBackend(
+        Type => 'ITSMChange',
     );
 
-    # check for condition
-    return if !$ConditionData;
+=cut
 
-    # get all workorder ids of change
-    my $WorkOrderIDs = $Self->{WorkOrderObject}->WorkOrderList(
-        ChangeID => $ConditionData->{ChangeID},
-        UserID   => $Param{UserID},
-    );
+sub _ObjectLoadBackend {
+    my ( $Self, %Param ) = @_;
 
-    # check for workorder ids
-    return if !$WorkOrderIDs;
-    return if ref $WorkOrderIDs ne 'ARRAY';
-    return if !@{$WorkOrderIDs};
-
-    # get workorder data
-    my @WorkOrderData;
-    WORKORDERID:
-    for my $WorkOrderID ( @{$WorkOrderIDs} ) {
-        my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
-            WorkOrderID => $WorkOrderID,
-            UserID      => $Param{UserID},
+    if ( !$Param{Type} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need Type!',
         );
-
-        # check workorder
-        next WORKORDERID if !$WorkOrder;
-
-        # add workorder to return array
-        push @WorkOrderData, $WorkOrder;
+        return;
     }
 
-    # return workorder data
-    return \@WorkOrderData;
-}
+    # define backend module name
+    my $ModuleName = 'Kernel::System::ITSMChange::ITSMCondition::Object::' . $Param{Type};
 
-=item _ObjectSelectorListITSMChange()
-
-Returns a list of all selectors available for the given change object id and condition id as hash reference
-
-    my $SelectorList = $ConditionObject->_ObjectSelectorListITSMChange(
-        ObjectID    => 1234,
-        ConditionID => 5,
-        UserID      => 1,
-    );
-
-Returns a hash reference like this:
-
-    $SelectorList = {
-        456 => 'Change# 2010011610000618',
-    }
-
-=cut
-
-sub _ObjectSelectorListITSMChange {
-    my ( $Self, %Param ) = @_;
-
-    # get condition data
-    my $ConditionData = $Self->ConditionGet(
-        ConditionID => $Param{ConditionID},
-        UserID      => $Param{UserID},
-    );
-
-    # check for error
-    return if !$ConditionData;
-
-    # get change data
-    my $ChangeData = $Self->{ChangeObject}->ChangeGet(
-        ChangeID => $ConditionData->{ChangeID},
-        UserID   => $Param{UserID},
-    );
-
-    # check error
-    return if !$ConditionData;
-
-    # build selector list
-    my %SelectorList;
-    if ($ChangeData) {
-        $SelectorList{ $ChangeData->{ChangeID} } = $ChangeData->{ChangeNumber};
-    }
-
-    return \%SelectorList;
-}
-
-=item _ObjectSelectorListITSMWorkOrder()
-
-Returns a list of all selectors available for the given workorder object id and condition id as hash reference
-
-    my $SelectorList = $ConditionObject->_ObjectSelectorListITSMWorkOrder(
-        ObjectID    => 1234,
-        ConditionID => 5,
-        UserID      => 1,
-    );
-
-Returns a hash reference like this:
-
-    $SelectorList = {
-        10    => '1 - WorkorderTitle of Workorder 1',
-        12    => '2 - WorkorderTitle of Workorder 2',
-        34    => '3 - WorkorderTitle of Workorder 3',
-        'any' => 'any',
-        'all' => 'all',
-    }
-
-=cut
-
-sub _ObjectSelectorListITSMWorkOrder {
-    my ( $Self, %Param ) = @_;
-
-    # get condition
-    my $ConditionData = $Self->ConditionGet(
-        ConditionID => $Param{ConditionID},
-        UserID      => $Param{UserID},
-    );
-
-    # check for condition
-    return if !$ConditionData;
-
-    # get all workorder ids of change
-    my $WorkOrderIDs = $Self->{WorkOrderObject}->WorkOrderList(
-        ChangeID => $ConditionData->{ChangeID},
-        UserID   => $Param{UserID},
-    );
-
-    # check for workorder ids
-    return if !$WorkOrderIDs;
-    return if ref $WorkOrderIDs ne 'ARRAY';
-
-    # build selector list
-    my %SelectorList;
-    for my $WorkOrderID ( @{$WorkOrderIDs} ) {
-
-        # get workorder data
-        my $WorkOrderData = $Self->{WorkOrderObject}->WorkOrderGet(
-            WorkOrderID => $WorkOrderID,
-            UserID      => $Param{UserID},
+    # load the backend module
+    if ( !$Self->{MainObject}->Require($ModuleName) ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Can't load backend module $Param{Type}!"
         );
-
-        $SelectorList{ $WorkOrderData->{WorkOrderID} }
-            = $WorkOrderData->{WorkOrderNumber} . ' - ' . $WorkOrderData->{WorkOrderTitle};
+        return;
     }
 
-    # add 'any' and 'all'
-    $SelectorList{'any'} = 'any';
-    $SelectorList{'all'} = 'all';
-
-    return \%SelectorList;
-}
-
-=item _ObjectCompareValueListITSMChange()
-
-Returns a list of available CompareValues for the given attribute id of a change object as hash reference.
-
-    my $CompareValueList = $ConditionObject->_ObjectCompareValueListITSMChange(
-        AttributeName => 'PriorityID',
-        UserID        => 1,
+    # create new instance
+    my $BackendObject = $ModuleName->new(
+        %{$Self},
+        %Param,
     );
 
-Returns a hash reference like this, for the change attribute 'Priority':
-
-    $CompareValueList = {
-        23    => '1 very low',
-        24    => '2 low',
-        25    => '3 normal',
-        26    => '4 high',
-        27    => '5 very high',
-    }
-
-=cut
-
-sub _ObjectCompareValueListITSMChange {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for my $Argument (qw(AttributeName UserID)) {
-        if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Argument!",
-            );
-            return;
-        }
-    }
-
-    # to store the list
-    my $CompareValueList = {};
-
-    # CategoryID, ImpactID, PriorityID
-    if ( $Param{AttributeName} =~ m{ \A ( Category | Impact | Priority ) ID \z }xms ) {
-
-        # remove 'ID' at the end of attribute
-        my $Type = $1;
-
-        # get the category or impact or priority list
-        $CompareValueList = $Self->{ChangeObject}->ChangePossibleCIPGet(
-            Type   => $Type,
-            UserID => $Param{UserID},
+    if ( !$BackendObject ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Can't create a new instance of backend module $Param{Type}!",
         );
+        return;
     }
 
-    # ChangeStateID
-    elsif ( $Param{AttributeName} eq 'ChangeStateID' ) {
-
-        # get change state list
-        $CompareValueList = $Self->{ChangeObject}->ChangePossibleStatesGet(
-            UserID => $Param{UserID},
-        );
-    }
-
-    return $CompareValueList;
-}
-
-=item _ObjectCompareValueListITSMWorkOrder()
-
-Returns a list of available CompareValues for the given attribute id of a workorder object as hash reference.
-
-    my $CompareValueList = $ConditionObject->_ObjectCompareValueListITSMWorkOrder(
-        AttributeName => 'WorkOrderStateID',
-        UserID        => 1,
-    );
-
-Returns a hash reference like this, for the workorder attribute 'WorkOrderStateID':
-
-    $CompareValueList = {
-        10    => 'created',
-        12    => 'accepted',
-        13    => 'ready',
-        14    => 'in progress',
-        15    => 'closed',
-        16    => 'canceled',
-    }
-=cut
-
-sub _ObjectCompareValueListITSMWorkOrder {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for my $Argument (qw(AttributeName UserID)) {
-        if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Argument!",
-            );
-            return;
-        }
-    }
-
-    # to store the list
-    my $CompareValueList = {};
-
-    # WorkOrderStateID
-    if ( $Param{AttributeName} eq 'WorkOrderStateID' ) {
-
-        # get workorder state list
-        $CompareValueList = $Self->{WorkOrderObject}->WorkOrderPossibleStatesGet(
-            UserID => $Param{UserID},
-        );
-    }
-
-    # WorkOrderTypeID
-    elsif ( $Param{AttributeName} eq 'WorkOrderTypeID' ) {
-
-        # get workorder type list
-        $CompareValueList = $Self->{WorkOrderObject}->WorkOrderTypeList(
-            UserID => $Param{UserID},
-        );
-    }
-
-    return $CompareValueList;
+    return $BackendObject;
 }
 
 1;
@@ -948,6 +646,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.20 $ $Date: 2010-01-22 12:42:20 $
+$Revision: 1.21 $ $Date: 2010-01-27 20:10:13 $
 
 =cut

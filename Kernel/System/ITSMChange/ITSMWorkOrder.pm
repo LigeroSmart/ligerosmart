@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.84 2010-01-26 17:00:40 bes Exp $
+# $Id: ITSMWorkOrder.pm,v 1.85 2010-01-27 20:10:13 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,11 +21,12 @@ use Kernel::System::Group;
 use Kernel::System::ITSMChange::ITSMStateMachine;
 use Kernel::System::VirtualFS;
 use Kernel::System::HTMLUtils;
+use Kernel::System::ITSMChange::ITSMCondition;
 
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.84 $) [1];
+$VERSION = qw($Revision: 1.85 $) [1];
 
 =head1 NAME
 
@@ -110,6 +111,7 @@ sub new {
     $Self->{StateMachineObject}   = Kernel::System::ITSMChange::ITSMStateMachine->new( %{$Self} );
     $Self->{HTMLUtilsObject}      = Kernel::System::HTMLUtils->new( %{$Self} );
     $Self->{VirtualFSObject}      = Kernel::System::VirtualFS->new( %{$Self} );
+    $Self->{ConditionObject}      = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
 
     # init of event handler
     $Self->EventHandlerInit(
@@ -1582,21 +1584,41 @@ sub WorkOrderPossibleStatesGet {
             UserID      => $Param{UserID},
         );
 
-        # get the possible next state ids
-        my $NextStateIDsRef = $Self->{StateMachineObject}->StateTransitionGet(
-            StateID => $WorkOrder->{WorkOrderStateID},
-            Class   => 'ITSM::ChangeManagement::WorkOrder::State',
+        # check for state lock
+        my $StateLock = $Self->{ConditionObject}->ConditionMatchStateLock(
+            ObjectName => 'ITSMWorkOrder',
+            Selector   => $Param{WorkOrderID},
+            UserID     => $Param{UserID},
         );
 
-        # add current workorder state id to list
-        my @NextStateIDs = sort ( @{$NextStateIDsRef}, $WorkOrder->{WorkOrderStateID} );
+        # get possible next states
+        my @NextStateIDs;
+
+        if ($StateLock) {
+
+            # set current only current state
+            @NextStateIDs = @{ $WorkOrder->{WorkOrderStateID} };
+        }
+        else {
+
+            # get the possible next state ids
+            my $NextStateIDsRef = $Self->{StateMachineObject}->StateTransitionGet(
+                StateID => $WorkOrder->{WorkOrderStateID},
+                Class   => 'ITSM::ChangeManagement::WorkOrder::State',
+            );
+
+            # add current workorder state id to list
+            my @NextStateIDs = sort ( @{$NextStateIDsRef}, $WorkOrder->{WorkOrderStateID} );
+        }
 
         # assemble the array of hash refs with only possible next states
         STATEID:
         for my $StateID (@NextStateIDs) {
 
+            # check state id
             next STATEID if !$StateID;
 
+            # store id and name in the array
             push @ArrayHashRef, {
                 Key   => $StateID,
                 Value => $StateList->{$StateID},
@@ -2705,6 +2727,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.84 $ $Date: 2010-01-26 17:00:40 $
+$Revision: 1.85 $ $Date: 2010-01-27 20:10:13 $
 
 =cut

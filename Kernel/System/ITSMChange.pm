@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.226 2010-01-22 12:42:20 bes Exp $
+# $Id: ITSMChange.pm,v 1.227 2010-01-27 20:10:13 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,13 +22,14 @@ use Kernel::System::CustomerUser;
 use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
 use Kernel::System::ITSMChange::ITSMStateMachine;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
+use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::HTMLUtils;
 use Kernel::System::VirtualFS;
 
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.226 $) [1];
+$VERSION = qw($Revision: 1.227 $) [1];
 
 =head1 NAME
 
@@ -115,6 +116,7 @@ sub new {
     $Self->{StateMachineObject}   = Kernel::System::ITSMChange::ITSMStateMachine->new( %{$Self} );
     $Self->{VirtualFSObject}      = Kernel::System::VirtualFS->new( %{$Self} );
     $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
+    $Self->{ConditionObject}      = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
     $Self->{CIPAllocateObject}    = Kernel::System::ITSMChange::ITSMChangeCIPAllocate->new(
         %{$Self},
     );
@@ -3064,6 +3066,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.226 $ $Date: 2010-01-22 12:42:20 $
+$Revision: 1.227 $ $Date: 2010-01-27 20:10:13 $
 
 =cut

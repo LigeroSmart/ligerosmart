@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.55 2010-01-26 10:04:42 mae Exp $
+# $Id: ITSMCondition.t,v 1.56 2010-01-27 20:10:14 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1951,9 +1951,71 @@ my @ActionTests = (
                 },
 
                 # static fields
-                ConditionID => $ConditionIDs[0],
+                ConditionID => $ConditionIDs[1],
                 Selector    => $ChangeIDs[0],
                 ActionValue => 'New Change Title' . int rand 1_000,
+                UserID      => 1,
+            },
+        },
+    },
+    {
+        ActionSuccess => 0,
+        SourceData    => {
+            ActionAdd => {
+                ObjectID => {
+                    ObjectLookup => {
+                        Name   => 'ITSMChange',
+                        UserID => 1,
+                    },
+                },
+                AttributeID => {
+                    AttributeLookup => {
+                        Name   => 'ChangeStateID',
+                        UserID => 1,
+                    },
+                },
+                OperatorID => {
+                    OperatorLookup => {
+                        Name   => 'lock',
+                        UserID => 1,
+                    },
+                },
+
+                # static fields
+                ConditionID => $ConditionIDs[1],
+                Selector    => $ChangeIDs[0],
+                ActionValue => 1,
+                UserID      => 1,
+            },
+        },
+    },
+    {
+        ActionSuccess => 1,
+        SourceData    => {
+            ActionAdd => {
+                ObjectID => {
+                    ObjectLookup => {
+                        Name   => 'ITSMChange',
+                        UserID => 1,
+                    },
+                },
+                AttributeID => {
+                    AttributeLookup => {
+                        Name   => 'ChangeManagerID',
+                        UserID => 1,
+                    },
+                },
+                OperatorID => {
+                    OperatorLookup => {
+                        Name   => 'set',
+                        UserID => 1,
+                    },
+                },
+
+                # static fields
+                ConditionID => $ConditionIDs[6],
+                Selector    => $ChangeIDs[1],
+                ActionValue => 1,
                 UserID      => 1,
             },
         },
@@ -2119,6 +2181,18 @@ for my $ActionCounter ( 0 .. ( ( scalar @ActionTests ) - 1 ) ) {
         'Test ' . $TestCount++ . " - ActionExecute -> get changed data: $ObjectName",
     );
 }
+
+# test for match state lock
+$Self->False(
+    $Self->{ConditionObject}->ConditionMatchStateLock(
+        ObjectName => 'ITSMChange',
+        Selector   => $ChangeIDs[0],
+        StateID    => 1,
+        UserID     => 1,
+        )
+        || 0,
+    'Test ' . $TestCount++ . " - ConditionMatchStateLock",
+);
 
 # check for action delete
 for my $ActionID (@ActionIDs) {

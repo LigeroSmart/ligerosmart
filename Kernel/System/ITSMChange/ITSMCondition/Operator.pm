@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Operator.pm - all condition operator functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Operator.pm,v 1.20 2010-01-27 14:52:50 mae Exp $
+# $Id: Operator.pm,v 1.21 2010-01-27 20:10:14 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 =head1 NAME
 
@@ -1060,38 +1060,29 @@ sub _OperatorSet {
         }
     }
 
-    # map for set action
-    my %OperatorAction = (
-        'ITSMChange'    => '_OperatorSetITSMChange',
-        'ITSMWorkOrder' => '_OperatorSetITSMWorkOrder',
-    );
-
     # get operator name
     my $OperatorName = $Param{ObjectName};
 
-    # check for matching operator
-    if ( !exists $OperatorAction{$OperatorName} ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "No matching operator for '$OperatorName' found!",
-        );
-        return;
-    }
+    # get operator backend
+    my $BackendObject = $Self->_OperatorLoadBackend(
+        Type => $OperatorName,
+    );
+    return if !$BackendObject;
 
-    # extract operator sub
-    my $Sub = $OperatorAction{$OperatorName};
+    # define default functions for backend
+    my $Sub = 'Run';
 
     # check for available function
-    if ( !$Self->can($Sub) ) {
+    if ( !$BackendObject->can($Sub) ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "No function '$Sub' available for '$OperatorName'!",
+            Message  => "No function '$Sub' available for backend '$OperatorName'!",
         );
         return;
     }
 
     # execute extracted action
-    my $Result = $Self->$Sub(
+    my $Result = $BackendObject->$Sub(
         Operator    => $Param{Operator},
         ObjectName  => $Param{ObjectName},
         Selector    => $Param{Selector},
@@ -1103,76 +1094,57 @@ sub _OperatorSet {
     return $Result;
 }
 
-=item _OperatorSetITSMChange()
+=begin Internal:
 
-Returns the success of setting a new value
-for a ITSMChange object.
+=item _OperatorLoadBackend()
 
-    my $Result = $ConditionObject->_OperatorSetITSMChange(
-        Selector    => 1234,
-        Attribute   => 'ChangeStateID',
-        ActionValue => 12,
-        UserID      => 2345,
+Returns a newly loaded backend object
+
+    my $Result = $ConditionObject->_OperatorLoadBackend(
+        Type => 'ITSMChange',
     );
 
 =cut
 
-sub _OperatorSetITSMChange {
+sub _OperatorLoadBackend {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
-    for my $Argument (qw(Selector Attribute ActionValue UserID)) {
-        if ( !exists $Param{$Argument} || !defined $Param{$Argument} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Argument!",
-            );
-            return;
-        }
+    if ( !$Param{Type} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need Type!',
+        );
+        return;
     }
 
-    # update change and return update result
-    return $Self->{ChangeObject}->ChangeUpdate(
-        ChangeID          => $Param{Selector},
-        $Param{Attribute} => $Param{ActionValue},
-        UserID            => $Param{UserID},
-    );
-}
+    # define backend module name
+    my $ModuleName = 'Kernel::System::ITSMChange::ITSMCondition::Operator::' . $Param{Type};
 
-=item _OperatorSetITSMWorkOrder()
-
-Returns the success of setting a new value
-for a ITSMChange object.
-
-    my $Result = $ConditionObject->_OperatorSetITSMWorkOrder(
-        Selector    => 1234,
-        Attribute   => 'WorkOrderStateID',
-        ActionValue => 12,
-        UserID      => 2345,
-    );
-
-=cut
-
-sub _OperatorSetITSMWorkOrder {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for my $Argument (qw(Selector Attribute ActionValue UserID)) {
-        if ( !exists $Param{$Argument} || !defined $Param{$Argument} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Argument!",
-            );
-            return;
-        }
+    # load the backend module
+    if ( !$Self->{MainObject}->Require($ModuleName) ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Can't load backend module $Param{Type}!"
+        );
+        return;
     }
 
-    # update workorder and return update result
-    return $Self->{WorkOrderObject}->WorkOrderUpdate(
-        WorkOrderID       => $Param{Selector},
-        $Param{Attribute} => $Param{ActionValue},
-        UserID            => $Param{UserID},
+    # create new instance
+    my $BackendObject = $ModuleName->new(
+        %{$Self},
+        %Param,
     );
+
+    # check for backend object
+    if ( !$BackendObject ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Can't create a new instance of backend module $Param{Type}!",
+        );
+        return;
+    }
+
+    return $BackendObject;
 }
 
 1;
@@ -1191,6 +1163,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.20 $ $Date: 2010-01-27 14:52:50 $
+$Revision: 1.21 $ $Date: 2010-01-27 20:10:14 $
 
 =cut
