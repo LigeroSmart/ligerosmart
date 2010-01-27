@@ -2,7 +2,7 @@
 # AgentITSMChangeCondition.dtl - provides HTML form for AgentITSMChangeCondition
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeCondition.dtl,v 1.4 2010-01-25 09:29:48 bes Exp $
+# $Id: AgentITSMChangeCondition.dtl,v 1.5 2010-01-27 18:11:13 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -53,7 +53,7 @@
                                     <td>$Text{"$QData{"Comment"}"}</td>
                                     <td align="center">$Text{"$QData{"Valid"}"}</td>
                                     <td>$TimeLong{"$QData{"ChangeTime"}"}</td>
-                                    <td width="10"><input class="button" type="submit" value="$Text{"Delete"}" name="DeleteCondition$QData{"ConditionID"}"></td>
+                                    <td width="10"><input class="button" type="submit" value="$Text{"Delete"}" name="DeleteConditionID::$QData{"ConditionID"}"></td>
                                 </tr>
 <!-- dtl:block:OverviewRow -->
                             </table>

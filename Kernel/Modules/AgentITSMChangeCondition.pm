@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeCondition.pm - the OTRS::ITSM::ChangeManagement condition overview module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeCondition.pm,v 1.2 2010-01-16 19:52:16 ub Exp $
+# $Id: AgentITSMChangeCondition.pm,v 1.3 2010-01-27 18:11:13 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -114,7 +114,7 @@ sub Run {
 
     # check if a condition should be deleted
     for my $ConditionID ( @{$ConditionIDsRef} ) {
-        if ( $Self->{ParamObject}->GetParam( Param => 'DeleteCondition' . $ConditionID ) ) {
+        if ( $Self->{ParamObject}->GetParam( Param => 'DeleteConditionID::' . $ConditionID ) ) {
 
             # delete the condition
             my $Success = $Self->{ConditionObject}->ConditionDelete(
