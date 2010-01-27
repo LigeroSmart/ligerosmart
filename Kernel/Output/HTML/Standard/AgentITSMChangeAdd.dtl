@@ -2,7 +2,7 @@
 # AgentITSMChangeAdd.dtl - provides HTML form for AgentITSMChangeAdd
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.dtl,v 1.44 2010-01-25 09:29:48 bes Exp $
+# $Id: AgentITSMChangeAdd.dtl,v 1.45 2010-01-27 09:50:51 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -158,7 +158,6 @@ function submit_compose() {
                                 <tr>
                                     <td class="contentkey">
                                         $Text{"Title"}:
-                                        <font color="red" title="$Text{"Required"}">*</font>
                                     </td>
                                     <td class="contentvalue">
                                         <input type="text" name="ChangeTitle" value="$QData{"ChangeTitle"}" size="70" maxlength="250">
@@ -197,7 +196,6 @@ $Include{"RichTextEditorITSM"}
                                 <tr>
                                     <td class="contentkey">
                                         $Text{"Category"}:
-                                        <font color="red" title="$Text{"Required"}">*</font>
                                     </td>
                                     <td class="contentvalue">
                                         $Data{"CategorySelectionString"}
@@ -210,7 +208,6 @@ $Include{"RichTextEditorITSM"}
                                 <tr>
                                     <td class="contentkey">
                                         $Text{"Impact"}:
-                                        <font color="red" title="$Text{"Required"}">*</font>
                                     </td>
                                     <td class="contentvalue">
                                         $Data{"ImpactSelectionString"}
@@ -223,7 +220,6 @@ $Include{"RichTextEditorITSM"}
                                 <tr>
                                     <td class="contentkey">
                                         $Text{"Priority"}:
-                                        <font color="red" title="$Text{"Required"}">*</font>
                                     </td>
                                     <td class="contentvalue">
                                         $Data{"PrioritySelectionString"}

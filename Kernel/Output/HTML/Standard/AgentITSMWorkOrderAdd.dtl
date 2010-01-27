@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderAdd.dtl - provides HTML form for AgentITSMWorkOrderAdd
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.dtl,v 1.40 2010-01-25 09:29:48 bes Exp $
+# $Id: AgentITSMWorkOrderAdd.dtl,v 1.41 2010-01-27 09:50:51 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -184,7 +184,6 @@ $Include{"RichTextEditorITSM"}
                                 <tr>
                                     <td class="contentkey">
                                         $Text{"Workorder Type"}:
-                                        <font color="red" title="$Text{"Required"}">*</font>
                                     </td>
                                     <td class="contentvalue">
 <!-- dtl:block:WorkOrderType -->
@@ -202,7 +201,6 @@ $Include{"RichTextEditorITSM"}
                                 <tr>
                                     <td class="contentkey">
                                         $Text{"Planned start time"}:
-                                        <font color="red" title="$Text{"Required"}">*</font>
                                     </td>
                                     <td class="contentvalue">
                                         $Data{"PlannedStartTimeString"}
@@ -215,7 +213,6 @@ $Include{"RichTextEditorITSM"}
                                 <tr>
                                     <td class="contentkey">
                                         $Text{"Planned end time"}:
-                                        <font color="red" title="$Text{"Required"}">*</font>
                                     </td>
                                     <td class="contentvalue">
                                         $Data{"PlannedEndTimeString"}
