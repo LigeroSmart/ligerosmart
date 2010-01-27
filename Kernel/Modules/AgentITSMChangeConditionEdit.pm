@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeConditionEdit.pm - the OTRS::ITSM::ChangeManagement condition edit module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeConditionEdit.pm,v 1.6 2010-01-27 12:40:14 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.pm,v 1.7 2010-01-27 18:14:26 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -52,7 +52,7 @@ sub Run {
     # store needed parameters in %GetParam
     my %GetParam;
     for my $ParamName (
-        qw(ChangeID ConditionID Name Comment ExpressionConjunction ValidID Save AddAction AddExpression)
+        qw(ChangeID ConditionID Name Comment ExpressionConjunction ValidID Save AddAction AddExpression NewExpression)
         )
     {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
@@ -162,6 +162,11 @@ sub Run {
         # if expression add button was pressed
         elsif ( $GetParam{AddExpression} ) {
 
+            # show the edit view again, but now with a new empty expression line
+            return $Self->{LayoutObject}->Redirect(
+                OP => "Action=AgentITSMChangeConditionEdit;ChangeID=$GetParam{ChangeID};"
+                    . "ConditionID=$GetParam{ConditionID};NewExpression=1",
+            );
         }
 
         # if action add button was pressed
@@ -169,7 +174,7 @@ sub Run {
 
         }
 
-        # get all expressions ids for the given condition id
+        # get all expression ids for the given condition id
         my $ExpressionIDsRef = $Self->{ConditionObject}->ExpressionList(
             ConditionID => $GetParam{ConditionID},
             UserID      => $Self->{UserID},
@@ -177,7 +182,8 @@ sub Run {
 
         # check if an expression should be deleted
         for my $ExpressionID ( @{$ExpressionIDsRef} ) {
-            if ( $Self->{ParamObject}->GetParam( Param => 'DeleteExpression' . $ExpressionID ) ) {
+            if ( $Self->{ParamObject}->GetParam( Param => 'DeleteExpressionID::' . $ExpressionID ) )
+            {
 
                 # delete the expression
                 my $Success = $Self->{ConditionObject}->ExpressionDelete(
@@ -195,16 +201,16 @@ sub Run {
 
                 # show the edit view again
                 return $Self->{LayoutObject}->Redirect(
-                    OP =>
-                        "Action=AgentITSMChangeConditionEdit;ChangeID=$GetParam{ChangeID};ConditionID=$GetParam{ConditionID}",
+                    OP => "Action=AgentITSMChangeConditionEdit;ChangeID=$GetParam{ChangeID};"
+                        . "ConditionID=$GetParam{ConditionID}",
                 );
             }
         }
 
         # show the edit view again
         return $Self->{LayoutObject}->Redirect(
-            OP =>
-                "Action=AgentITSMChangeConditionEdit;ChangeID=$GetParam{ChangeID};ConditionID=$GetParam{ConditionID}",
+            OP => "Action=AgentITSMChangeConditionEdit;ChangeID=$GetParam{ChangeID};"
+                . "ConditionID=$GetParam{ConditionID}",
         );
     }
 
@@ -242,6 +248,7 @@ sub Run {
             # show existing expressions
             $Self->_ExpressionOverview(
                 %ConditionData,
+                NewExpression => $GetParam{NewExpression},
             );
 
             # TODO
@@ -291,20 +298,40 @@ sub _ExpressionOverview {
 
     return if !$ExpressionIDsRef;
     return if ref $ExpressionIDsRef ne 'ARRAY';
-    return if !@{$ExpressionIDsRef};
+
+    my @ExpressionIDs = @{$ExpressionIDsRef};
+
+    # also show a new empty expression line
+    if ( $Param{NewExpression} ) {
+        push @ExpressionIDs, 'NEW';
+    }
+
+    return if !@ExpressionIDs;
 
     my %Data;
 
     EXPRESSIONID:
-    for my $ExpressionID ( sort { $a cmp $b } @{$ExpressionIDsRef} ) {
+    for my $ExpressionID ( sort { $a cmp $b } @ExpressionIDs ) {
 
-        # get condition data
-        my $ExpressionData = $Self->{ConditionObject}->ExpressionGet(
-            ExpressionID => $ExpressionID,
-            UserID       => $Self->{UserID},
-        );
+        # to store the date of an expression
+        my $ExpressionData = {};
 
-        next EXPRESSIONID if !$ExpressionData;
+        # set expression id to 'NEW' for further function calls
+        if ( $ExpressionID eq 'NEW' ) {
+            $ExpressionData->{ExpressionID} = $ExpressionID;
+        }
+
+        # get data for an existing expression
+        else {
+
+            # get condition data
+            $ExpressionData = $Self->{ConditionObject}->ExpressionGet(
+                ExpressionID => $ExpressionID,
+                UserID       => $Self->{UserID},
+            );
+
+            next EXPRESSIONID if !$ExpressionData;
+        }
 
         # output overview row
         $Self->{LayoutObject}->Block(
@@ -338,7 +365,6 @@ sub _ExpressionOverview {
         $Self->_ShowCompareValueField(
             %{$ExpressionData},
         );
-
     }
 
     return 1;
@@ -348,24 +374,8 @@ sub _ExpressionOverview {
 sub _ShowObjectSelection {
     my ( $Self, %Param ) = @_;
 
-    # get object list
-    my $ObjectList = $Self->{ConditionObject}->ObjectList(
-        UserID => $Self->{UserID},
-    );
-
-    # add an empty selection if no list is available or nothing is selected
-    my $PossibleNone = 0;
-    if ( !$ObjectList || !ref $ObjectList eq 'HASH' || !%{$ObjectList} || !$Param{ObjectID} ) {
-        $PossibleNone = 1;
-    }
-
-    # generate ObjectOptionString
-    my $ObjectOptionString = $Self->{LayoutObject}->BuildSelection(
-        Data         => $ObjectList,
-        Name         => 'ExpressionID' . $Param{ExpressionID} . '::ObjectID',
-        SelectedID   => $Param{ObjectID},
-        PossibleNone => $PossibleNone,
-    );
+    # get object selection list
+    my $ObjectOptionString = $Self->_GetObjectSelection(%Param);
 
     # output object selection
     $Self->{LayoutObject}->Block(
@@ -436,28 +446,35 @@ sub _ShowOperatorSelection {
 sub _ShowCompareValueField {
     my ( $Self, %Param ) = @_;
 
-    # lookup attribute name
-    my $AttributeName = $Self->{ConditionObject}->AttributeLookup(
-        AttributeID => $Param{AttributeID},
-    );
+    # set default field type
+    my $FieldType = 'Selection';
 
-    # check error
-    if ( !$AttributeName ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "AttributeID $Param{AttributeID} does not exist!",
+    # if an operator is set
+    if ( $Param{OperatorID} ) {
+
+        # lookup attribute name
+        $Param{AttributeName} = $Self->{ConditionObject}->AttributeLookup(
+            AttributeID => $Param{AttributeID},
         );
-        return;
+
+        # check error
+        if ( !$Param{AttributeName} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "AttributeID $Param{AttributeID} does not exist!",
+            );
+            return;
+        }
+
+        # get the field type
+        my $FieldType = $Self->{ConditionObject}->ConditionCompareValueFieldType(
+            ObjectID    => $Param{ObjectID},
+            AttributeID => $Param{AttributeID},
+            UserID      => $Self->{UserID},
+        );
+
+        return if !$FieldType;
     }
-
-    # get the field type
-    my $FieldType = $Self->{ConditionObject}->ConditionCompareValueFieldType(
-        ObjectID    => $Param{ObjectID},
-        AttributeID => $Param{AttributeID},
-        UserID      => $Self->{UserID},
-    );
-
-    return if !$FieldType;
 
     # TODO: Build date selection based on type: Date.
     # Temporarily display Dates as text.
@@ -481,7 +498,6 @@ sub _ShowCompareValueField {
         # get compare value selection list
         my $CompareValueOptionString = $Self->_GetCompareValueSelection(
             %Param,
-            AttributeName => $AttributeName,
         );
 
         # output selection
@@ -515,16 +531,48 @@ sub _ShowCompareValueField {
     return 1;
 }
 
+# get object dropdown field
+sub _GetObjectSelection {
+    my ( $Self, %Param ) = @_;
+
+    # get object list
+    my $ObjectList = $Self->{ConditionObject}->ObjectList(
+        UserID => $Self->{UserID},
+    );
+
+    # add an empty selection if no list is available or nothing is selected
+    my $PossibleNone = 0;
+    if ( !$ObjectList || !ref $ObjectList eq 'HASH' || !%{$ObjectList} || !$Param{ObjectID} ) {
+        $PossibleNone = 1;
+    }
+
+    # generate ObjectOptionString
+    my $ObjectOptionString = $Self->{LayoutObject}->BuildSelection(
+        Data         => $ObjectList,
+        Name         => 'ExpressionID::' . $Param{ExpressionID} . '::ObjectID',
+        SelectedID   => $Param{ObjectID},
+        PossibleNone => $PossibleNone,
+    );
+
+    return $ObjectOptionString;
+}
+
 # get selector dropdown field
 sub _GetSelectorSelection {
     my ( $Self, %Param ) = @_;
 
-    # get selector list
-    my $SelectorList = $Self->{ConditionObject}->ObjectSelectorList(
-        ObjectID    => $Param{ObjectID},
-        ConditionID => $Param{ConditionID},
-        UserID      => $Self->{UserID},
-    );
+    my $SelectorList = {};
+
+    # if an object is set
+    if ( $Param{ObjectID} ) {
+
+        # get selector list
+        $SelectorList = $Self->{ConditionObject}->ObjectSelectorList(
+            ObjectID    => $Param{ObjectID},
+            ConditionID => $Param{ConditionID},
+            UserID      => $Self->{UserID},
+        );
+    }
 
     # add an empty selection if no list is available or nothing is selected
     my $PossibleNone = 0;
@@ -536,7 +584,7 @@ sub _GetSelectorSelection {
     # generate SelectorOptionString
     my $SelectorOptionString = $Self->{LayoutObject}->BuildSelection(
         Data         => $SelectorList,
-        Name         => 'ExpressionID' . $Param{ExpressionID} . '::Selector',
+        Name         => 'ExpressionID::' . $Param{ExpressionID} . '::Selector',
         SelectedID   => $Param{Selector},
         PossibleNone => $PossibleNone,
     );
@@ -548,40 +596,46 @@ sub _GetSelectorSelection {
 sub _GetAttributeSelection {
     my ( $Self, %Param ) = @_;
 
-    # get list of all attribute
-    my $AllAttributes = $Self->{ConditionObject}->AttributeList(
-        UserID => $Self->{UserID},
-    );
-
-    # lookup object name
-    my $ObjectName = $Self->{ConditionObject}->ObjectLookup(
-        ObjectID => $Param{ObjectID},
-    );
-
-    # check error
-    if ( !$ObjectName ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "ObjectID $Param{ObjectID} does not exist!",
-        );
-        return;
-    }
-
-    # get object attribute mapping from sysconfig
-    my $ObjectAttributeMapping
-        = $Self->{ConfigObject}->Get( $ObjectName . '::Mapping::Object::Attribute' );
-
-    # get the valid attributes for the given object
+    # to store the attriutes
     my %Attributes;
-    ATTRIBUTEID:
-    for my $AttributeID ( keys %{$AllAttributes} ) {
-        next ATTRIBUTEID if !$ObjectAttributeMapping->{ $AllAttributes->{$AttributeID} };
-        $Attributes{$AttributeID} = $AllAttributes->{$AttributeID};
-    }
 
-    # remove 'ID' at the end of the attribute name for nicer display
-    for my $Attribute ( values %Attributes ) {
-        $Attribute =~ s{ ID \z }{}xms;
+    # if a selector is set
+    if ( $Param{Selector} ) {
+
+        # get list of all attribute
+        my $AllAttributes = $Self->{ConditionObject}->AttributeList(
+            UserID => $Self->{UserID},
+        );
+
+        # lookup object name
+        my $ObjectName = $Self->{ConditionObject}->ObjectLookup(
+            ObjectID => $Param{ObjectID},
+        );
+
+        # check error
+        if ( !$ObjectName ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "ObjectID $Param{ObjectID} does not exist!",
+            );
+            return;
+        }
+
+        # get object attribute mapping from sysconfig
+        my $ObjectAttributeMapping
+            = $Self->{ConfigObject}->Get( $ObjectName . '::Mapping::Object::Attribute' );
+
+        # get the valid attributes for the given object
+        ATTRIBUTEID:
+        for my $AttributeID ( keys %{$AllAttributes} ) {
+            next ATTRIBUTEID if !$ObjectAttributeMapping->{ $AllAttributes->{$AttributeID} };
+            $Attributes{$AttributeID} = $AllAttributes->{$AttributeID};
+        }
+
+        # remove 'ID' at the end of the attribute name for nicer display
+        for my $Attribute ( values %Attributes ) {
+            $Attribute =~ s{ ID \z }{}xms;
+        }
     }
 
     # add an empty selection if no list is available or nothing is selected
@@ -593,7 +647,7 @@ sub _GetAttributeSelection {
     # generate AttributeOptionString
     my $AttributeOptionString = $Self->{LayoutObject}->BuildSelection(
         Data         => \%Attributes,
-        Name         => 'ExpressionID' . $Param{ExpressionID} . '::AttributeID',
+        Name         => 'ExpressionID::' . $Param{ExpressionID} . '::AttributeID',
         SelectedID   => $Param{AttributeID},
         PossibleNone => $PossibleNone,
     );
@@ -605,60 +659,66 @@ sub _GetAttributeSelection {
 sub _GetOperatorSelection {
     my ( $Self, %Param ) = @_;
 
-    # lookup object name
-    my $ObjectName = $Self->{ConditionObject}->ObjectLookup(
-        ObjectID => $Param{ObjectID},
-    );
-
-    # check error
-    if ( !$ObjectName ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "ObjectID $Param{ObjectID} does not exist!",
-        );
-        return;
-    }
-
-    # lookup attribute name
-    my $AttributeName = $Self->{ConditionObject}->AttributeLookup(
-        AttributeID => $Param{AttributeID},
-    );
-
-    # check error
-    if ( !$AttributeName ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "AttributeID $Param{AttributeID} does not exist!",
-        );
-        return;
-    }
-
-    # get list of all operators
-    my $AllOperators = $Self->{ConditionObject}->OperatorList(
-        UserID => $Self->{UserID},
-    );
-
-    # get attribute operator mapping from sysconfig
-    my $AttributeOperatorMapping;
-    if ( $Self->{ConfigObject}->Get( $ObjectName . '::Mapping::Attribute::Operator' ) ) {
-        $AttributeOperatorMapping
-            = $Self->{ConfigObject}->Get( $ObjectName . '::Mapping::Attribute::Operator' )
-            ->{$AttributeName} || {};
-    }
-
-    # get allowed operators for the given attribute
+    # to store the operators
     my %Operators;
-    OPERATORID:
-    for my $OperatorID ( keys %{$AllOperators} ) {
 
-        # get operator name
-        my $OperatorName = $AllOperators->{$OperatorID};
+    # if an atribute is set
+    if ( $Param{AttributeID} ) {
 
-        # check if operator is allowed for this attribute
-        next OPERATORID if !$AttributeOperatorMapping->{$OperatorName};
+        # lookup object name
+        my $ObjectName = $Self->{ConditionObject}->ObjectLookup(
+            ObjectID => $Param{ObjectID},
+        );
 
-        # remember the operator
-        $Operators{$OperatorID} = $OperatorName;
+        # check error
+        if ( !$ObjectName ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "ObjectID $Param{ObjectID} does not exist!",
+            );
+            return;
+        }
+
+        # lookup attribute name
+        my $AttributeName = $Self->{ConditionObject}->AttributeLookup(
+            AttributeID => $Param{AttributeID},
+        );
+
+        # check error
+        if ( !$AttributeName ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "AttributeID $Param{AttributeID} does not exist!",
+            );
+            return;
+        }
+
+        # get list of all operators
+        my $AllOperators = $Self->{ConditionObject}->OperatorList(
+            UserID => $Self->{UserID},
+        );
+
+        # get attribute operator mapping from sysconfig
+        my $AttributeOperatorMapping;
+        if ( $Self->{ConfigObject}->Get( $ObjectName . '::Mapping::Attribute::Operator' ) ) {
+            $AttributeOperatorMapping
+                = $Self->{ConfigObject}->Get( $ObjectName . '::Mapping::Attribute::Operator' )
+                ->{$AttributeName} || {};
+        }
+
+        # get allowed operators for the given attribute
+        OPERATORID:
+        for my $OperatorID ( keys %{$AllOperators} ) {
+
+            # get operator name
+            my $OperatorName = $AllOperators->{$OperatorID};
+
+            # check if operator is allowed for this attribute
+            next OPERATORID if !$AttributeOperatorMapping->{$OperatorName};
+
+            # remember the operator
+            $Operators{$OperatorID} = $OperatorName;
+        }
     }
 
     # add an empty selection if no list is available or nothing is selected
@@ -670,7 +730,7 @@ sub _GetOperatorSelection {
     # generate OperatorOptionString
     my $OperatorOptionString = $Self->{LayoutObject}->BuildSelection(
         Data         => \%Operators,
-        Name         => 'ExpressionID' . $Param{ExpressionID} . '::OperatorID',
+        Name         => 'ExpressionID::' . $Param{ExpressionID} . '::OperatorID',
         SelectedID   => $Param{OperatorID},
         PossibleNone => $PossibleNone,
     );
@@ -682,12 +742,19 @@ sub _GetOperatorSelection {
 sub _GetCompareValueSelection {
     my ( $Self, %Param ) = @_;
 
-    # get compare value list
-    my $CompareValueList = $Self->{ConditionObject}->ObjectCompareValueList(
-        ObjectID      => $Param{ObjectID},
-        AttributeName => $Param{AttributeName},
-        UserID        => $Self->{UserID},
-    );
+    # to store the compare value list
+    my $CompareValueList = {};
+
+    # if an operator is set
+    if ( $Param{OperatorID} ) {
+
+        # get compare value list
+        $CompareValueList = $Self->{ConditionObject}->ObjectCompareValueList(
+            ObjectID      => $Param{ObjectID},
+            AttributeName => $Param{AttributeName},
+            UserID        => $Self->{UserID},
+        );
+    }
 
     # add an empty selection if no list is available or nothing is selected
     my $PossibleNone = 0;
@@ -704,7 +771,7 @@ sub _GetCompareValueSelection {
     # generate CompareValueOptionString
     my $CompareValueOptionString = $Self->{LayoutObject}->BuildSelection(
         Data         => $CompareValueList,
-        Name         => 'ExpressionID' . $Param{ExpressionID} . '::CompareValue',
+        Name         => 'ExpressionID::' . $Param{ExpressionID} . '::CompareValue',
         SelectedID   => $Param{CompareValue},
         PossibleNone => $PossibleNone,
     );
