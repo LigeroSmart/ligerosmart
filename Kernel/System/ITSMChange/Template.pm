@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template.pm - all template functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.36 2010-01-25 14:22:36 reb Exp $
+# $Id: Template.pm,v 1.37 2010-01-27 15:39:08 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Data::Dumper;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.36 $) [1];
+$VERSION = qw($Revision: 1.37 $) [1];
 
 =head1 NAME
 
@@ -104,9 +104,9 @@ sub new {
 
     # create additional objects
     $Self->{ChangeObject}    = Kernel::System::ITSMChange->new( %{$Self} );
-    $Self->{ConditionObject} = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
-    $Self->{LinkObject}      = Kernel::System::LinkObject->new(%Param);
     $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
+    $Self->{LinkObject}      = Kernel::System::LinkObject->new(%Param);
+    $Self->{ConditionObject} = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
     $Self->{ValidObject}     = Kernel::System::Valid->new( %{$Self} );
     $Self->{VirtualFSObject} = Kernel::System::VirtualFS->new( %{$Self} );
 
@@ -2331,6 +2331,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.36 $ $Date: 2010-01-25 14:22:36 $
+$Revision: 1.37 $ $Date: 2010-01-27 15:39:08 $
 
 =cut
