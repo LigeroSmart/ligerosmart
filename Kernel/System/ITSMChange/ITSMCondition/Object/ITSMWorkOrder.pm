@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Object/ITSMWorkOrder.pm - all itsm workorder object functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.2 2010-01-27 21:25:13 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.3 2010-01-27 21:56:54 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::ITSMCondition;
@@ -231,18 +231,9 @@ Returns a hash reference like this:
 sub SelectorList {
     my ( $Self, %Param ) = @_;
 
-    # get condition
-    my $ConditionData = $Self->ConditionGet(
-        ConditionID => $Param{ConditionID},
-        UserID      => $Param{UserID},
-    );
-
-    # check for condition
-    return if !$ConditionData;
-
     # get all workorder ids of change
     my $WorkOrderIDs = $Self->{WorkOrderObject}->WorkOrderList(
-        ChangeID => $ConditionData->{ChangeID},
+        ChangeID => $Param{ChangeID},
         UserID   => $Param{UserID},
     );
 
@@ -343,6 +334,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2010-01-27 21:25:13 $
+$Revision: 1.3 $ $Date: 2010-01-27 21:56:54 $
 
 =cut
