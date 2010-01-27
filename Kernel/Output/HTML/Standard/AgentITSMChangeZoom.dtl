@@ -2,7 +2,7 @@
 # AgentITSMChangeZoom.dtl - provides HTML form for AgentITSMChangeZoom
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.dtl,v 1.42 2010-01-27 17:46:48 ub Exp $
+# $Id: AgentITSMChangeZoom.dtl,v 1.43 2010-01-27 17:49:28 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -301,7 +301,7 @@
                     <td colspan="2">&nbsp;</td>
                 </tr>
                 <tr>
-                    <td class="mainkey">$Text{"ChangeAttribute::ChangeManager:"}</td>
+                    <td class="mainkey">$Text{"ChangeAttribute::ChangeManager"}:</td>
                     <td class="mainvalue">
 <!-- dtl:block:EmptyChangeManager -->
                         <div title="-">-</div>
@@ -317,7 +317,7 @@
                     <td colspan="2">&nbsp;</td>
                 </tr>
                 <tr>
-                    <td class="mainkey">$Text{"ChangeAttribute::ChangeBuilder:"}</td>
+                    <td class="mainkey">$Text{"ChangeAttribute::ChangeBuilder"}:</td>
                     <td class="mainvalue">
                         <div title="$QData{"ChangeBuilderUserLogin"} ($Quote{"$Data{"ChangeBuilderUserFirstname"} $Data{"ChangeBuilderUserLastname"}"})">
                             $QData{"ChangeBuilderUserLogin","15"} ($Quote{"$Data{"ChangeBuilderUserFirstname"} $Data{"ChangeBuilderUserLastname"}","15"})
