@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/NavBarChangeManager.pm
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: NavBarChangeManager.pm,v 1.2 2010-01-27 15:51:50 bes Exp $
+# $Id: NavBarChangeManager.pm,v 1.3 2010-01-27 17:46:48 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -43,7 +43,7 @@ sub Run {
     # define action, group, label, image and prio
     my $Action = 'AgentITSMChangeManager';
     my $Group  = 'itsm-change-manager';
-    my $Label  = 'ChangeAttribute::ChangerManager';
+    my $Label  = 'ChangeAttribute::ChangeManager';
     my $Image  = 'new-message.png';
     my $Prio   = '0991000';
 
