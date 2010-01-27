@@ -1,9 +1,9 @@
 #!/usr/bin/perl -w
 # --
-# bin/otrs.ITSMChangesCheck.pl - check pending tickets
+# bin/otrs.ITSMChangesCheck.pl - check itsm changes
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: otrs.ITSMChangesCheck.pl,v 1.2 2010-01-27 14:52:13 reb Exp $
+# $Id: otrs.ITSMChangesCheck.pl,v 1.3 2010-01-27 23:57:17 ub Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -31,7 +31,7 @@ use lib dirname($RealBin);
 use lib dirname($RealBin) . '/Kernel/cpan-lib';
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 use Date::Pcalc qw(Day_of_Week Day_of_Week_Abbreviation);
 use Kernel::Config;
